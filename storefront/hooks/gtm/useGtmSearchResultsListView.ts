@@ -1,32 +1,24 @@
+import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
+import { usePaginationContext } from 'components/Blocks/Pagination/usePaginationContext';
 import { getGtmProductsListEvent, getNewGtmEcommerceEvent } from 'helpers/gtm/eventFactories';
 import { gtmSafePushEvent } from 'helpers/gtm/gtm';
 import { useEffect, useRef } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { SearchType } from 'types/search';
+import { ListedProductType } from 'types/product';
 
-export const useGtmSearchResultsListView = (data: SearchType | undefined, searchQuery: string): void => {
+export const useGtmSearchResultsListView = (products: ListedProductType[], searchQuery: string): void => {
     const lastSearchQuery = useRef<string | undefined>(undefined);
-    const lastViewedSearchPageStartCursor = useRef<string | undefined>(undefined);
-    const { currentPage, pageSize } = useShopsysSelector((state) => state.user.pagination);
+    const lastViewedSearchPage = useRef<number | undefined>(undefined);
+    const [{ page }] = usePaginationContext();
     const { url } = useShopsysSelector((state) => state.domain);
 
     useEffect(() => {
-        if (
-            data !== undefined &&
-            (lastSearchQuery.current !== searchQuery ||
-                lastViewedSearchPageStartCursor.current !== data.productsSearch.pageInfo.startCursor)
-        ) {
+        if (lastSearchQuery.current !== searchQuery || lastViewedSearchPage.current !== page) {
             lastSearchQuery.current = searchQuery;
-            lastViewedSearchPageStartCursor.current = data.productsSearch.pageInfo.startCursor;
+            lastViewedSearchPage.current = page;
             const event = getNewGtmEcommerceEvent('ec.products_list', true);
-            event.ecommerce = getGtmProductsListEvent(
-                data.productsSearch.products,
-                'search result',
-                currentPage,
-                pageSize,
-                url,
-            );
+            event.ecommerce = getGtmProductsListEvent(products, 'search result', page, DEFAULT_PAGE_SIZE, url);
             gtmSafePushEvent(event);
         }
-    }, [data, searchQuery, currentPage, pageSize, url]);
+    }, [products, searchQuery, page, url]);
 };

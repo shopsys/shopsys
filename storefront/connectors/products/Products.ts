@@ -5,6 +5,7 @@ import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
 import { mapProductPriceData } from 'connectors/price/Prices';
 import {
     ListedProductConnectionFragmentApi,
+    ListedProductConnectionPreviewFragmentApi,
     ListedProductFragmentApi,
     ListedVariantFragmentApi,
     SliderProductFragmentApi,
@@ -14,6 +15,7 @@ import { mapProductFilterOptions } from 'helpers/filterOptions/mapProductFilterO
 import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useShopsysSelector } from 'redux/main';
 import {
+    ListedProductConnectionPreviewType,
     ListedProductConnectionType,
     ListedProductType,
     ListedVariantType,
@@ -79,6 +81,16 @@ export const mapListedProductConnectionType = (
         ...apiData,
         pageInfo: mapPageInfoApiData(apiData.pageInfo),
         products: mapListedProductTypes(apiData, currencyCode),
+        productFilterOptions: mapProductFilterOptions(apiData.productFilterOptions, currencyCode),
+    };
+};
+
+export const mapListedProductConnectionPreviewType = (
+    apiData: ListedProductConnectionPreviewFragmentApi,
+    currencyCode: string,
+): ListedProductConnectionPreviewType => {
+    return {
+        ...apiData,
         productFilterOptions: mapProductFilterOptions(apiData.productFilterOptions, currencyCode),
     };
 };

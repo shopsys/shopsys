@@ -1,28 +1,28 @@
+import { FlagDetailProductsWrapper } from './FlagDetailProductsWrapper';
 import { Heading } from 'components/Basic/Heading/Heading';
-import { Pagination } from 'components/Blocks/Pagination/Pagination';
-import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
+import { PaginationProvider } from 'components/Blocks/Pagination/PaginationProvider';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
+import { getNewPagination } from 'helpers/pagination/getNewPagination';
+import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
+import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { useRemoveSortFromUrlIfDefault } from 'hooks/filter/useRemoveSortFromUrlIfDefault';
-import { useGtmFlagProductListView } from 'hooks/gtm/useGtmFlagProductListView';
 import { useRouter } from 'next/router';
 import { FC, useRef } from 'react';
 import { FlagDetailType } from 'types/flag';
 
 type FlagDetailContentProps = {
     flag: FlagDetailType;
-    fetching: boolean;
 };
 
-export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag, fetching }) => {
+export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
-    useRemoveSortFromUrlIfDefault(flag.productConnection.orderingMode, flag.productConnection.defaultOrderingMode);
     const router = useRouter();
-    useGtmFlagProductListView(flag, getUrlWithoutGetParameters(router.asPath), fetching);
+    const currentPage = parsePageNumberFromQuery(router.query[PAGE_QUERY_PARAMETER_NAME]);
+    useRemoveSortFromUrlIfDefault(flag.productConnection.orderingMode, flag.productConnection.defaultOrderingMode);
 
     return (
-        <>
+        <PaginationProvider key={flag.uuid} {...getNewPagination(currentPage)}>
             <Webline>
                 <Heading type={'h1'}>{flag.name}</Heading>
             </Webline>
@@ -32,16 +32,9 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag, fetching }
                         sorting={flag.productConnection.orderingMode}
                         totalCount={flag.productConnection.totalCount}
                     />
-                    {flag.productConnection.products.length !== 0 && (
-                        <ProductsList
-                            products={flag.productConnection.products}
-                            gtmListName="flag"
-                            fetching={fetching}
-                        />
-                    )}
-                    <Pagination totalCount={flag.productConnection.totalCount} containerWrapRef={containerWrapRef} />
+                    <FlagDetailProductsWrapper flag={flag} containerWrapRef={containerWrapRef} />
                 </div>
             </Webline>
-        </>
+        </PaginationProvider>
     );
 };

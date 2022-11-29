@@ -1,6 +1,5 @@
 import { mapArticleDetail } from 'connectors/articleInterface/article/Article';
 import { mapBlogArticleDetail } from 'connectors/articleInterface/blogArticle/BlogArticle';
-import { mapBlogCategoryDetail } from 'connectors/blogCategory/BlogCategory';
 import { mapBrandDetail } from 'connectors/brands/Brands';
 import { mapCategoryDetailData } from 'connectors/categories/Categories';
 import { mapFlagDetailApiData } from 'connectors/flags/Flags';
@@ -23,7 +22,6 @@ export function useFriendlyUrlResolvedData(slug: string): { data: Maybe<Friendly
     const categoryDetailSort = getProductListSort(
         parseProductListSortFromQuery(router.query[SORT_QUERY_PARAMETER_NAME]),
     );
-    const pagination = useShopsysSelector((state) => state.user.pagination);
     const categoryParametersFilter = getFilterOptions(
         parseFilterOptionsFromQuery(router.query[FILTER_QUERY_PARAMETER_NAME]),
     );
@@ -31,8 +29,6 @@ export function useFriendlyUrlResolvedData(slug: string): { data: Maybe<Friendly
         variables: {
             slug,
             orderingMode: categoryDetailSort,
-            endCursorForPagination: pagination.paginationCursor,
-            pageSize: pagination.pageSize,
             filter: mapParametersFilter(categoryParametersFilter),
         },
     });
@@ -62,7 +58,7 @@ export function useFriendlyUrlResolvedData(slug: string): { data: Maybe<Friendly
         case 'Flag':
             return { data: mapFlagDetailApiData(data.slug, currentDomainConfig.currencyCode), fetching };
         case 'BlogCategory':
-            return { data: mapBlogCategoryDetail(data.slug), fetching };
+            return { data: data.slug, fetching };
         default:
             return { data: null, fetching };
     }

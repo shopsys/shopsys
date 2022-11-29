@@ -1,7 +1,7 @@
 import { SimpleArticleInterfaceType } from './articleInterface';
 import { ListedBrandType, SimpleBrandType } from 'types/brand';
 import { ListedCategoryType, SimpleCategoryConnectionType } from 'types/category';
-import { ListedProductConnectionType } from 'types/product';
+import { ListedProductConnectionPreviewType, ListedProductConnectionType } from 'types/product';
 
 export type AutocompleteSearchType = {
     articlesSearch: SimpleArticleInterfaceType[];
@@ -13,7 +13,7 @@ export type AutocompleteSearchType = {
 export type SearchType = {
     articlesSearch: SimpleArticleInterfaceType[];
     brandSearch: ListedBrandType[];
-    productsSearch: ListedProductConnectionType;
+    productsSearch: ListedProductConnectionPreviewType;
     categoriesSearch: {
         totalCount: number;
         categories: ListedCategoryType[];

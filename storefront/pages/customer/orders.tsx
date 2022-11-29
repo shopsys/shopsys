@@ -1,4 +1,5 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
 import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrdersContent } from 'components/Pages/Customer/Orders/OrdersContent';
@@ -8,17 +9,22 @@ import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
+import { getNewPagination } from 'helpers/pagination/getNewPagination';
+import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
+import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import { useRouter } from 'next/router';
 import { FC, useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
-import { initialState } from 'redux/slices/user';
 
 const OrdersPage: FC = () => {
     const t = useTypedTranslationFunction();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const currentDomainConfig = useShopsysSelector((state) => state.domain);
-    const ordersData = useOrders(currentDomainConfig);
+    const { query } = useRouter();
+    const currentPage = parsePageNumberFromQuery(query[PAGE_QUERY_PARAMETER_NAME]);
+    const ordersData = useOrders(currentDomainConfig, currentPage);
     const [customerUrl, customerOrdersUrl] = getInternationalizedStaticUrls(
         ['/customer', '/customer/orders'],
         domainUrl,
@@ -49,12 +55,14 @@ const OrdersPage: FC = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
+    const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
+
     return initServerSideProps(context, store, true, [
         {
             query: OrdersQueryDocumentApi,
             variables: {
-                after: store.getState().user.pagination.paginationCursor,
-                first: initialState.pagination.pageSize,
+                after: getNewPagination(page === 0 ? 1 : page),
+                pageSize: DEFAULT_PAGE_SIZE,
             },
         },
     ]);

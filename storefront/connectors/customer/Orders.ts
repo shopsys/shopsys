@@ -1,3 +1,4 @@
+import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
 import { getFirstImage } from 'connectors/image/Image';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
 import { mapPriceData } from 'connectors/price/Prices';
@@ -11,15 +12,16 @@ import {
     useOrdersQueryApi,
 } from 'graphql/generated';
 import { DomainConfigType } from 'helpers/domain/domain';
+import { getNewPagination } from 'helpers/pagination/getNewPagination';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
-import { useShopsysSelector } from 'redux/main';
-import { initialState } from 'redux/slices/user';
 import { ListedOrderConnectionType, ListedOrderType, OrderDetailItemType, OrderDetailType } from 'types/orders';
 
-export const useOrders = (currentDomainConfig: DomainConfigType): ListedOrderConnectionType | undefined => {
-    const { paginationCursor } = useShopsysSelector((state) => state.user.pagination);
+export const useOrders = (
+    currentDomainConfig: DomainConfigType,
+    page: number,
+): ListedOrderConnectionType | undefined => {
     const [{ data, error }] = useOrdersQueryApi({
-        variables: { after: paginationCursor, first: initialState.pagination.pageSize },
+        variables: { after: getNewPagination(page).endCursor ?? null, first: DEFAULT_PAGE_SIZE },
         requestPolicy: 'cache-and-network',
     });
     useQueryError(error);

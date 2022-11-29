@@ -1,3 +1,4 @@
+import { usePaginationContext } from '../Pagination/usePaginationContext';
 import { useProductFilterOptions } from '../Product/Filter/FilterContext/useFilterState';
 import {
     SortingBarItemLinkStyled,
@@ -26,7 +27,6 @@ import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { useRouter } from 'next/router';
 import { FC, useCallback, useEffect, useState } from 'react';
-import { useShopsysDispatch } from 'redux/main';
 
 type SortingBarProps = {
     totalCount: number;
@@ -38,7 +38,7 @@ const TEST_IDENTIFIER = 'blocks-sortingbar';
 export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount }) => {
     const router = useRouter();
     const t = useTypedTranslationFunction();
-    const dispatch = useShopsysDispatch();
+    const [, dispatch] = usePaginationContext();
     const sortingFromQuery = getProductListSort(parseProductListSortFromQuery(router.query[SORT_QUERY_PARAMETER_NAME]));
     const [selectedSort, setSelectedSort] = useState<ProductOrderingModeEnumApi | null>(sorting ?? sortingFromQuery);
     const { width } = useGetWindowSize();
@@ -98,7 +98,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount }) => {
                 setToggleSortMenu((prev) => !prev);
                 updateUrlWithCurrentSort(newSort);
                 setSelectedSort(newSort);
-                dispatch({ type: 'resetPagination', payload: { pageSize: 24 } });
+                dispatch({ type: 'resetPagination' });
             }
         },
         [dispatch, updateUrlWithCurrentSort],
@@ -109,7 +109,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount }) => {
             if (isNewSortDifferentThanCurrent(currentSort, newSort)) {
                 updateUrlWithCurrentSort(newSort);
                 setSelectedSort(newSort);
-                dispatch({ type: 'resetPagination', payload: { pageSize: 24 } });
+                dispatch({ type: 'resetPagination' });
             }
         },
         [dispatch, updateUrlWithCurrentSort],

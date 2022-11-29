@@ -31,13 +31,16 @@ export type SimpleProductConnectionType = {
     products: SimpleProductType[];
 };
 
-export type ListedProductConnectionType = {
-    products: ListedProductType[];
+export type ListedProductConnectionPreviewType = {
     productFilterOptions: FilterOptionsType | null;
-    totalCount: number;
-    pageInfo: PageInfoType;
     orderingMode: ProductOrderingModeEnumApi | null;
     defaultOrderingMode: ProductOrderingModeEnumApi | null;
+    totalCount: number;
+};
+
+export type ListedProductConnectionType = ListedProductConnectionPreviewType & {
+    products: ListedProductType[];
+    pageInfo: PageInfoType;
 };
 
 export type ListedProductType = {

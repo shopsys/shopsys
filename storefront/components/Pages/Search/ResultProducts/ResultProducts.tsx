@@ -9,15 +9,16 @@ type ResultProductsProps = {
     products: ListedProductType[];
     areProductsShowed: boolean;
     noProductsFound: boolean;
+    fetching: boolean;
 };
 
-export const ResultProducts: FC<ResultProductsProps> = ({ areProductsShowed, noProductsFound, products }) => {
+export const ResultProducts: FC<ResultProductsProps> = ({ areProductsShowed, noProductsFound, products, fetching }) => {
     const t = useTypedTranslationFunction();
 
     return (
         <>
-            {areProductsShowed && <ProductsList products={products} gtmListName="search result" />}
-            {areProductsShowed === false && noProductsFound === false && (
+            {areProductsShowed && <ProductsList products={products} gtmListName="search result" fetching={fetching} />}
+            {!areProductsShowed && !noProductsFound && (
                 <ResultProductsStyled>
                     <div>
                         <strong>{t('No results match the filter')}</strong>

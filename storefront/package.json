@@ -38,7 +38,7 @@
         "google-map-react": "^2.1.10",
         "graphql": "^15.5.1",
         "graphql-markdown": "^6.0.0",
-        "immer": "^9.0.15",
+        "immer": "^9.0.16",
         "js-base64": "^3.7.2",
         "jwt-decode": "^3.1.2",
         "keen-slider": "^5.5.1",

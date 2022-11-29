@@ -10,8 +10,6 @@ import { useMouseHoverDebounce } from 'hooks/ui/useMouseHoverDebounce';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { FC, useState } from 'react';
-import { useShopsysDispatch } from 'redux/main';
-import { initialState, userActions } from 'redux/slices/user';
 import { NavigationItem as NavigationItemType } from 'types/navigation';
 
 type NavigationItemProps = {
@@ -36,7 +34,6 @@ export const NavigationItem: FC<NavigationItemProps> = (props) => {
         }
     };
     const hasChildren = props.navigationItem.categoriesByColumns.length > 0;
-    const dispatch = useShopsysDispatch();
     const router = useRouter();
 
     return (
@@ -45,7 +42,6 @@ export const NavigationItem: FC<NavigationItemProps> = (props) => {
                 <NavigationItemStyled
                     onMouseEnter={openSubmenu}
                     onMouseLeave={hideSubmenu}
-                    onClick={() => dispatch(userActions.setPagination({ ...initialState.pagination }))}
                     data-testid={TEST_IDENTIFIER}
                 >
                     <NextLink href={props.navigationItem.link} passHref>

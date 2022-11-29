@@ -1,18 +1,22 @@
+import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
+import { usePaginationContext } from 'components/Blocks/Pagination/usePaginationContext';
 import { Maybe } from 'graphql/generated';
 import { getGtmProductsListEvent, getNewGtmEcommerceEvent } from 'helpers/gtm/eventFactories';
 import { getCategoryOrSeoCategoryGtmListName, gtmSafePushEvent } from 'helpers/gtm/gtm';
 import { useEffect, useRef } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { FriendlyUrlPageType } from 'types/friendlyUrl';
+import { ListedProductType } from 'types/product';
 
 export const useGtmCategoryProductListView = (
     data: Maybe<FriendlyUrlPageType> | undefined,
     slug: string,
+    products: ListedProductType[],
     fetching: boolean,
 ): void => {
     const lastViewedCategorySlug = useRef<string | undefined>(undefined);
-    const lastViewedCategoryPageStartCursor = useRef<string | undefined>(undefined);
-    const { currentPage, pageSize } = useShopsysSelector((state) => state.user.pagination);
+    const lastViewedCategoryPage = useRef<number | undefined>(undefined);
+    const [{ page }] = usePaginationContext();
     const { url } = useShopsysSelector((state) => state.domain);
 
     useEffect(() => {
@@ -20,22 +24,21 @@ export const useGtmCategoryProductListView = (
             data !== null &&
             data !== undefined &&
             data.__typename === 'Category' &&
-            (lastViewedCategorySlug.current !== slug ||
-                lastViewedCategoryPageStartCursor.current !== data.productConnection.pageInfo.startCursor) &&
+            (lastViewedCategorySlug.current !== slug || lastViewedCategoryPage.current !== page) &&
             !fetching
         ) {
             lastViewedCategorySlug.current = slug;
-            lastViewedCategoryPageStartCursor.current = data.productConnection.pageInfo.startCursor;
+            lastViewedCategoryPage.current = page;
             const event = getNewGtmEcommerceEvent('ec.products_list', true);
 
             event.ecommerce = getGtmProductsListEvent(
-                data.productConnection.products,
+                products,
                 getCategoryOrSeoCategoryGtmListName(data.originalCategorySlug),
-                currentPage,
-                pageSize,
+                page,
+                DEFAULT_PAGE_SIZE,
                 url,
             );
             gtmSafePushEvent(event);
         }
-    }, [data, slug, currentPage, pageSize, url, fetching]);
+    }, [data, slug, page, url, fetching, products]);
 };

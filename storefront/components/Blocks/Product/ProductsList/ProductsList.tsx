@@ -1,8 +1,9 @@
 import { ProductItem } from './ProductItem/ProductItem';
 import { ProductsListStyled } from './ProductsList.style';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
+import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
+import { usePaginationContext } from 'components/Blocks/Pagination/usePaginationContext';
 import { FC } from 'react';
-import { useShopsysSelector } from 'redux/main';
 import { GtmListNameType } from 'types/gtm';
 import { ListedProductType } from 'types/product';
 
@@ -15,7 +16,7 @@ type ProductsListProps = {
 const TEST_IDENTIFIER = 'blocks-product-list';
 
 export const ProductsList: FC<ProductsListProps> = ({ gtmListName, products, fetching }) => {
-    const { currentPage, pageSize } = useShopsysSelector((state) => state.user.pagination);
+    const [{ page }] = usePaginationContext();
 
     return (
         <ProductsListStyled data-testid={TEST_IDENTIFIER}>
@@ -23,7 +24,7 @@ export const ProductsList: FC<ProductsListProps> = ({ gtmListName, products, fet
                 <ProductItem
                     key={listedProductItem.uuid}
                     product={listedProductItem}
-                    listIndex={(currentPage - 1) * pageSize + index}
+                    listIndex={(page - 1) * DEFAULT_PAGE_SIZE + index}
                     gtmListName={gtmListName}
                 />
             ))}

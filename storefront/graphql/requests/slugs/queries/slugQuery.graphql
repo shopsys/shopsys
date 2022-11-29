@@ -1,10 +1,4 @@
-query SlugQuery(
-    $slug: String!
-    $orderingMode: ProductOrderingModeEnum
-    $endCursorForPagination: String
-    $pageSize: Int
-    $filter: ProductFilter
-) {
+query SlugQuery($slug: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) {
     slug(slug: $slug) {
         __typename
         ... on RegularProduct {
