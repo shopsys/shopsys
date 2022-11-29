@@ -30,7 +30,7 @@ class SlugResolverMap extends ResolverMap
             'Slug' => [
                 self::RESOLVE_TYPE => function ($data) {
                     if ($data instanceof Article) {
-                        return 'Article';
+                        return 'ArticleSite';
                     }
 
                     if ($data instanceof BlogCategory) {
@@ -76,7 +76,7 @@ class SlugResolverMap extends ResolverMap
         if (array_key_exists(self::SLUG_TYPE, $data)) {
             switch ($data[self::SLUG_TYPE]) {
                 case self::SLUG_TYPE_ARTICLE:
-                    return 'Article';
+                    return 'ArticleSite';
                 case self::SLUG_TYPE_BLOG_ARTICLE:
                     return 'BlogArticle';
             }

@@ -27,7 +27,7 @@ class ArticlesSearchTest extends GraphQlTestCase
                         'name' => t('Blog article for search testing', [], 'dataFixtures', $firstDomainLocale),
                     ],
                     [
-                        '__typename' => 'Article',
+                        '__typename' => 'ArticleSite',
                         'name' => t('Article for search testing', [], 'dataFixtures', $firstDomainLocale),
                     ],
                 ],
