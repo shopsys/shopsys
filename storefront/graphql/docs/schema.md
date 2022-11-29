@@ -12,9 +12,10 @@
     * [AdvertCode](#advertcode)
     * [AdvertImage](#advertimage)
     * [AdvertPosition](#advertposition)
-    * [Article](#article)
     * [ArticleConnection](#articleconnection)
     * [ArticleEdge](#articleedge)
+    * [ArticleLink](#articlelink)
+    * [ArticleSite](#articlesite)
     * [Availability](#availability)
     * [BlogArticle](#blogarticle)
     * [BlogArticleConnection](#blogarticleconnection)
@@ -133,6 +134,7 @@
     * [Breadcrumb](#breadcrumb)
     * [CartInterface](#cartinterface)
     * [CustomerUser](#customeruser)
+    * [NotBlogArticleInterface](#notblogarticleinterface)
     * [ParameterFilterOptionInterface](#parameterfilteroptioninterface)
     * [PriceInterface](#priceinterface)
     * [Product](#product)
@@ -205,7 +207,7 @@ Returns list of adverts, optionally filtered by `positionName`
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>article</strong></td>
-<td valign="top"><a href="#article">Article</a></td>
+<td valign="top"><a href="#notblogarticleinterface">NotBlogArticleInterface</a></td>
 <td>
 
 Returns article filtered using UUID or URL slug
@@ -220,6 +222,11 @@ Returns article filtered using UUID or URL slug
 <tr>
 <td colspan="2" align="right" valign="top">uuid</td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>ArticleLink</strong></td>
+<td valign="top"><a href="#articlelink">ArticleLink</a></td>
 <td></td>
 </tr>
 <tr>
@@ -260,6 +267,11 @@ and `after` keywords and filtered by `placement`
 An array of the required articles placements
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>ArticleSite</strong></td>
+<td valign="top"><a href="#articlesite">ArticleSite</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>articlesSearch</strong></td>
@@ -481,7 +493,7 @@ Returns category filtered using UUID or URL slug
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>cookiesArticle</strong></td>
-<td valign="top"><a href="#article">Article</a></td>
+<td valign="top"><a href="#articlesite">ArticleSite</a></td>
 <td>
 
 Returns information about cookies article
@@ -733,7 +745,7 @@ Return personal data page content and URL
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>privacyPolicyArticle</strong></td>
-<td valign="top"><a href="#article">Article</a></td>
+<td valign="top"><a href="#articlesite">ArticleSite</a></td>
 <td>
 
 Returns privacy policy article
@@ -913,7 +925,7 @@ Returns list of stores that can be paginated using `first`, `last`, `before` and
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>termsAndConditionsArticle</strong></td>
-<td valign="top"><a href="#article">Article</a></td>
+<td valign="top"><a href="#articlesite">ArticleSite</a></td>
 <td>
 
 Returns Terms and Conditions article
@@ -1608,7 +1620,155 @@ Position of advert
 </tbody>
 </table>
 
-### Article
+### ArticleConnection
+
+A connection to a list of items.
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>edges</strong></td>
+<td valign="top">[<a href="#articleedge">ArticleEdge</a>]</td>
+<td>
+
+Information to aid in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>pageInfo</strong></td>
+<td valign="top"><a href="#pageinfo">PageInfo</a>!</td>
+<td>
+
+Information to aid in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>totalCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Total number of articles
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ArticleEdge
+
+An edge in a connection.
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>cursor</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+A cursor for use in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>node</strong></td>
+<td valign="top"><a href="#notblogarticleinterface">NotBlogArticleInterface</a></td>
+<td>
+
+The item at the end of the edge.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ArticleLink
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>createdAt</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a>!</td>
+<td>
+
+Creation date time of the article link
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>external</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+If the the article should be open in a new tab
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Name of article link, used as anchor text
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>placement</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Placement of the article link
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>url</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Destination url of article link
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID of the article link
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ArticleSite
 
 <table>
 <thead>
@@ -1716,85 +1876,6 @@ Text of article
 <td>
 
 UUID
-
-</td>
-</tr>
-</tbody>
-</table>
-
-### ArticleConnection
-
-A connection to a list of items.
-
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="right">Argument</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="2" valign="top"><strong>edges</strong></td>
-<td valign="top">[<a href="#articleedge">ArticleEdge</a>]</td>
-<td>
-
-Information to aid in pagination.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>pageInfo</strong></td>
-<td valign="top"><a href="#pageinfo">PageInfo</a>!</td>
-<td>
-
-Information to aid in pagination.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>totalCount</strong></td>
-<td valign="top"><a href="#int">Int</a>!</td>
-<td>
-
-Total number of articles
-
-</td>
-</tr>
-</tbody>
-</table>
-
-### ArticleEdge
-
-An edge in a connection.
-
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="right">Argument</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="2" valign="top"><strong>cursor</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-A cursor for use in pagination.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>node</strong></td>
-<td valign="top"><a href="#article">Article</a></td>
-<td>
-
-The item at the end of the edge.
 
 </td>
 </tr>
@@ -9484,6 +9565,68 @@ Phone number
 <td>
 
 UUID
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### NotBlogArticleInterface
+
+Represents an article that is not a blog article
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>createdAt</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a>!</td>
+<td>
+
+creation date time of the article
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>external</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+If the the article should be open in a new tab
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+name of article link
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>placement</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+placement of the article
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID of the article link
 
 </td>
 </tr>
