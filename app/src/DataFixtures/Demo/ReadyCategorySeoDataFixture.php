@@ -17,7 +17,7 @@ use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 
 class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    public const READY_CATEGORY_SEO_ELECTRONICS_WITHOUT_HDMI = 'ready_category_seo_electronics_without_hdmi';
+    public const READY_CATEGORY_SEO_ELECTRONICS_WITHOUT_HDMI_PROMOTION = 'ready_category_seo_electronics_without_hdmi_promotion';
     public const READY_CATEGORY_SEO_TV_FROM_CHEAPEST = 'ready_category_seo_tv_from_cheapest';
     public const READY_CATEGORY_SEO_TV_IN_SALE = 'ready_category_seo_tv_in_sale';
     public const READY_CATEGORY_SEO_TV_PLASMA_WITH_HDMI = 'ready_category_seo_tv_plasma_with_hdmi';
@@ -66,124 +66,132 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
      */
     public function load(ObjectManager $manager)
     {
+        $firstDomain = $this->domain->getDomainConfigById(1);
+        $firstDomainId = $firstDomain->getId();
+        $firstDomainLocale = $firstDomain->getLocale();
+
         $choseCategorySeoMixCombinationArray = [
-            'domainId' => 1,
+            'domainId' => $firstDomainId,
             'categoryId' => 8,
-            'flagId' => 1,
+            'flagId' => 3,
             'ordering' => ProductListOrderingConfig::ORDER_BY_PRIORITY,
             'parameterValueIdsByParameterIds' => [
+                // 'Water Tank Volume' => 2 l
                 38 => 75,
+                // 'Bean Hopper Capacity' => 400 g
                 40 => 79,
+                // 'Pressure' => '15 bar'
                 37 => 73,
+                // 'Milk Container Capacity' => '600 ml'
                 39 => 77,
             ],
         ];
 
         $this->createReadyCategorySeoMix(
             ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
-            '2 litrové kávovary - novinky',
-            ['2-litrove-kavovary-novinky', 'nove-2-litrove-kavovary-vedlejsi-adresa-ktera-by-mela-byt-presmerovana-na-hlavni'],
-            1
-        );
-
-        $choseCategorySeoMixCombinationArray['flagId'] = 2;
-        $this->createReadyCategorySeoMix(
-            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
-            'Nejprodávanější 2 litrové kávovary',
-            ['nejprodavanejsi-2-litrove-kavovary'],
-            1
-        );
-
-        $choseCategorySeoMixCombinationArray['flagId'] = 3;
-        $this->createReadyCategorySeoMix(
-            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
-            '2 litrové kávovary v akci',
+            t('2 litre coffeemakers in sale', [], 'dataFixtures', $firstDomainLocale),
             ['2-litrove-kavovary-v-akci'],
-            1
+            $firstDomainId
         );
+
+        /** @var \App\Model\Category\Category $categoryElectronics */
+        $categoryElectronics = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
 
         $choseCategorySeoMixCombinationArray = [
-            'domainId' => 1,
-            'categoryId' => 2,
+            'domainId' => $firstDomainId,
+            'categoryId' => $categoryElectronics->getId(),
         ];
-
-        $choseCategorySeoMixCombinationArray['flagId'] = 1;
-        $choseCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_PRIORITY;
-        $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
-            1 => 1,
-            5 => 7,
-        ];
-        $this->createReadyCategorySeoMix(
-            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
-            'Elektro Novinky - TOP - 27" - HDMI',
-            ['elektro-novinky-top-27-hdmi', 'nakupte-url-elektro-novinky-top-27-hdmi'],
-            1
-        );
-
         $choseCategorySeoMixCombinationArray['flagId'] = 2;
         $choseCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_PRIORITY;
         $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
-            1 => 1,
+            // 'HDMI' => 'No'
             5 => 11,
         ];
         $this->createReadyCategorySeoMix(
             ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
-            'Elektro nejprodávanější - A-Z - 27" - bez HDMI',
-            ['elektro-nejprodavanejsi-a-z-27-bez-hdmi', 'nakupte-elektro-nejprodavanejsi-a-z-27-bez-hdmi'],
-            1
+            t('Electronics without HDMI in sale', [], 'dataFixtures', $firstDomainLocale),
+            ['elektro-bez-hdmi-akce'],
+            $firstDomainId,
+            self::READY_CATEGORY_SEO_ELECTRONICS_WITHOUT_HDMI_PROMOTION
         );
 
-        $choseCategorySeoMixCombinationArray['flagId'] = 3;
-        $choseCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_PRICE_ASC;
         $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
-            1 => 13,
-            5 => 11,
+            // 'Screen size' => '30"'
+            1 => 9,
+            // 'Technology' => 'LED'
+            2 => 3,
         ];
         $this->createReadyCategorySeoMix(
             ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
-            'Elektro Akce - od nejlevnějšího - 47 - bez hdmi',
-            ['elektro-akce-od-nejlevnejsiho-47-bez-hdmi', 'nakupte-akce-nejprodavanejsi-od-nejlevnejsiho-47-bez-hdmi'],
-            1
+            t('Electronics with LED technology and size 30 inch in sale', [], 'dataFixtures', $firstDomainLocale),
+            ['elektro-led-uhlopricka-30-akce'],
+            $firstDomainId
         );
 
         $choseCategorySeoMixCombinationArray['flagId'] = null;
-        $choseCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_PRIORITY;
+        $choseCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_PRICE_DESC;
+        $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [];
+        $this->createReadyCategorySeoMix(
+            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            t('Electronics from most expensive', [], 'dataFixtures', $firstDomainLocale),
+            ['elektro-od-nejdrazsiho'],
+            $firstDomainId
+        );
+
+        $choseCategorySeoMixCombinationArray['flagId'] = null;
         $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
-            5 => 7,
+            // 'USB' => 'Yes'
+            4 => 7,
+            // 'Technology' => 'LED'
+            2 => 3,
+            // 'Resolution' => '1920×1080 (Full HD)'
+            3 => 5,
         ];
         $this->createReadyCategorySeoMix(
             ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
-            'Elektro s HDMI',
-            ['elektro-s-hdmi', 'nakupte-elektro-s-hdmi'],
-            1
+            t('Full HD Electronics with LED technology and USB', [], 'dataFixtures', $firstDomainLocale),
+            ['elektro-full-hd-led-usb'],
+            $firstDomainId
+        );
+
+        $choseCategorySeoMixCombinationArray['flagId'] = null;
+        $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
+            // 'Colour' => 'Black'
+            62 => 199,
+        ];
+        $this->createReadyCategorySeoMix(
+            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            t('Electronics in black', [], 'dataFixtures', $firstDomainLocale),
+            ['elektro-barva-cerna'],
+            $firstDomainId
         );
 
         $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
-            5 => 11,
+            // 'Colour' => 'Red'
+            62 => 197,
         ];
         $this->createReadyCategorySeoMix(
             ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
-            'Elektro bez HDMI',
-            ['elektro-bez-hdmi', 'nakupte-elektro-bez-hdmi'],
-            1,
-            self::READY_CATEGORY_SEO_ELECTRONICS_WITHOUT_HDMI
+            t('Electronics in red', [], 'dataFixtures', $firstDomainLocale),
+            ['elektro-barva-cervena'],
+            $firstDomainId
         );
 
         /** @var \App\Model\Category\Category $categoryTv */
         $categoryTv = $this->getReference(CategoryDataFixture::CATEGORY_TV);
         $choseCategorySeoMixCombinationArray = [
-            'domainId' => 1,
+            'domainId' => $firstDomainId,
             'categoryId' => $categoryTv->getId(),
             'flagId' => null,
             'ordering' => ProductListOrderingConfig::ORDER_BY_PRICE_ASC,
             'parameterValueIdsByParameterIds' => [],
         ];
-        $firstDomainLocale = $this->domain->getDomainConfigById(1)->getLocale();
+
         $this->createReadyCategorySeoMix(
             ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
             t('TV, audio from the cheapest', [], 'dataFixtures', $firstDomainLocale),
             ['televize-audio-nejlevnejsi'],
-            1,
+            $firstDomainId,
             self::READY_CATEGORY_SEO_TV_FROM_CHEAPEST
         );
 
@@ -195,7 +203,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
             t('TV, audio in sale', [], 'dataFixtures', $firstDomainLocale),
             ['televize-audio-vyprodej'],
-            1,
+            $firstDomainId,
             self::READY_CATEGORY_SEO_TV_IN_SALE
         );
 
@@ -212,7 +220,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
             t('TV, audio plasma with HDMI', [], 'dataFixtures', $firstDomainLocale),
             ['televize-audio-plasma-s-hdmi'],
-            1,
+            $firstDomainId,
             self::READY_CATEGORY_SEO_TV_PLASMA_WITH_HDMI
         );
 
@@ -222,24 +230,20 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $newFlag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
         /** @var \App\Model\Product\Parameter\Parameter $usbParameter */
         $usbParameter = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('USB', [], 'dataFixtures', $firstDomainLocale));
-        /** @var \App\Model\Product\Parameter\Parameter $warrantyParameter */
-        $warrantyParameter = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY);
         $choseCategorySeoMixCombinationArray = [
-            'domainId' => 1,
+            'domainId' => $firstDomainId,
             'categoryId' => $categoryPc->getId(),
             'flagId' => $newFlag->getId(),
             'ordering' => ProductListOrderingConfig::ORDER_BY_PRICE_DESC,
             'parameterValueIdsByParameterIds' => [
                 $usbParameter->getId() => $this->getParameterValueId(t('Yes', [], 'dataFixtures', $firstDomainLocale), $firstDomainLocale),
-                $warrantyParameter->getId() => $this->getParameterValueId(t('4', [], 'dataFixtures', $firstDomainLocale), $firstDomainLocale),
             ],
         ];
-        $firstDomainLocale = $this->domain->getDomainConfigById(1)->getLocale();
         $this->createReadyCategorySeoMix(
             ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
             t('New computers with USB', [], 'dataFixtures', $firstDomainLocale),
             ['nove-pc-s-usb'],
-            1,
+            $firstDomainId,
             self::READY_CATEGORY_SEO_PC_NEW_WITH_USB
         );
     }

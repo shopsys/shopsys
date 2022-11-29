@@ -85,11 +85,30 @@ class CategoryTest extends GraphQlTestCase
                         ],
                     ],
                     'readyCategorySeoMixLinks' => [
-                        ['name' => 'Elektro Akce - od nejlevnějšího - 47 - bez hdmi', 'slug' => 'elektro-akce-od-nejlevnejsiho-47-bez-hdmi'],
-                        ['name' => 'Elektro bez HDMI', 'slug' => 'elektro-bez-hdmi'],
-                        ['name' => 'Elektro nejprodávanější - A-Z - 27" - bez HDMI', 'slug' => 'elektro-nejprodavanejsi-a-z-27-bez-hdmi'],
-                        ['name' => 'Elektro Novinky - TOP - 27" - HDMI', 'slug' => 'elektro-novinky-top-27-hdmi'],
-                        ['name' => 'Elektro s HDMI', 'slug' => 'elektro-s-hdmi'],
+                        [
+                            'name' => t('Electronics without HDMI in sale', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'slug' => 'elektro-bez-hdmi-akce',
+                        ],
+                        [
+                            'name' => t('Electronics from most expensive', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'slug' => 'elektro-od-nejdrazsiho',
+                        ],
+                        [
+                            'name' => t('Electronics with LED technology and size 30 inch in sale', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'slug' => 'elektro-led-uhlopricka-30-akce',
+                        ],
+                        [
+                            'name' => t('Electronics in black', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'slug' => 'elektro-barva-cerna',
+                        ],
+                        [
+                            'name' => t('Electronics in red', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'slug' => 'elektro-barva-cervena',
+                        ],
+                        [
+                            'name' => t('Full HD Electronics with LED technology and USB', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'slug' => 'elektro-full-hd-led-usb',
+                        ],
                     ],
                     'linkedCategories' => [
                         ['name' => t('Food', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
