@@ -117,6 +117,14 @@ class Article extends BaseArticle
     }
 
     /**
+     * @return bool
+     */
+    public function isLinkType(): bool
+    {
+        return $this->type === self::TYPE_LINK;
+    }
+
+    /**
      * @return int
      */
     public function getPosition(): int
