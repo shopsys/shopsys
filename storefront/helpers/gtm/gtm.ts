@@ -43,7 +43,7 @@ export const useGtmCartEventInfo = (): GtmCartInfoEventType => {
 
         let products: GtmCartItemType[] | undefined = undefined;
         if (cart.items.length > 0) {
-            products = cart.items.map((cartItem, index) => mapGtmCartItemType(cartItem, index, domain.url));
+            products = cart.items.map((cartItem, index) => mapGtmCartItemType(cartItem, domain.url, index));
         }
 
         const coupons: string[] = [];
@@ -178,7 +178,7 @@ export const getGtmPurchaseData = (
         valueWithTax: cart.totalPrice.priceWithVat,
         valueTax: cart.totalPrice.vatAmount,
         currency: cart.totalPrice.currencyCode,
-        products: cart.items.map((cartItem: CartItemType, index) => mapGtmCartItemType(cartItem, index, domainUrl)),
+        products: cart.items.map((cartItem: CartItemType, index) => mapGtmCartItemType(cartItem, domainUrl, index)),
         paymentType: payment.name,
         paymentPrice: payment.price.priceWithoutVat,
         paymentPriceWithTax: payment.price.priceWithVat,

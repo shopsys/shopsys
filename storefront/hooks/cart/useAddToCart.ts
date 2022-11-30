@@ -10,9 +10,9 @@ import { GtmListNameType, GtmMessageOriginType } from 'types/gtm';
 
 export type AddToCartAction = (
     productUuid: string,
-    listIndex: number,
     quantity: number,
     gtmListName: GtmListNameType,
+    listIndex?: number,
     isAbsoluteQuantity?: boolean,
 ) => Promise<AddToCartMutationApi['AddToCart'] | null>;
 
@@ -25,7 +25,7 @@ export const useAddToCart = (origin: GtmMessageOriginType): [AddToCartAction, bo
     const { cart } = useCurrentCart();
 
     const addToCartAction = useCallback<AddToCartAction>(
-        async (productUuid, listIndex, quantity, gtmListName, isAbsoluteQuantity = false) => {
+        async (productUuid, quantity, gtmListName, listIndex, isAbsoluteQuantity = false) => {
             const itemToBeAdded = cart?.items.find((item) => item.product.uuid === productUuid);
             const initialQuantity = itemToBeAdded?.quantity ?? 0;
             const addToCartActionResult = await addToCart({
@@ -77,10 +77,10 @@ export const useAddToCart = (origin: GtmMessageOriginType): [AddToCartAction, bo
                 currencyCode,
                 absoluteEventValue,
                 absoluteEventValueWithTax,
-                listIndex,
                 quantityDifference,
                 gtmListName,
                 url,
+                listIndex,
             );
 
             return addToCartResult;

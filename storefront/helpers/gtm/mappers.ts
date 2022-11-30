@@ -12,14 +12,21 @@ import {
 
 export const mapGtmCartItemType = (
     cartItem: CartItemType,
-    listIndex: number,
     domainUrl: string,
+    listIndex?: number,
     quantity?: number,
-): GtmCartItemType => ({
-    ...mapGtmProductInterface(cartItem.product, domainUrl),
-    listIndex: listIndex + 1,
-    quantity: quantity ?? cartItem.quantity,
-});
+): GtmCartItemType => {
+    const gtmCartItem = {
+        ...mapGtmProductInterface(cartItem.product, domainUrl),
+        quantity: quantity ?? cartItem.quantity,
+    };
+
+    if (listIndex !== undefined) {
+        gtmCartItem.listIndex = listIndex + 1;
+    }
+
+    return gtmCartItem;
+};
 
 export const mapGtmListedProductType = (
     product: ListedProductType | SimpleProductType,
