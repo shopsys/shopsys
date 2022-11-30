@@ -20,6 +20,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { desktopFirstSizes, mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
+import { SEARCH_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { useComponentUpdate } from 'hooks/helpers/useComponentUpdate';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
@@ -56,7 +57,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
     const [areBrandsResultsVisible, setBrandsResultsVisibility] = useState(false);
     const [areCategoriesResultsVisible, setCategoriesResultsVisibility] = useState(false);
     const [numberOfVisible, setNumberOfVisible] = useState(0);
-    const [oldRouterQuery, setOldRouterQuery] = useState(router.query.q);
+    const [oldRouterQuery, setOldRouterQuery] = useState(router.query[SEARCH_QUERY_PARAMETER_NAME]);
     const [queryPathWasChanged, setQueryPathWasChanged] = useState(false);
     const [routerQueryChanged, setRouterQueryChanged] = useState(false);
 
@@ -99,11 +100,11 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
     };
 
     useComponentUpdate(() => {
-        if (oldRouterQuery !== router.query.q) {
+        if (oldRouterQuery !== router.query[SEARCH_QUERY_PARAMETER_NAME]) {
             setQueryPathWasChanged(true);
-            setOldRouterQuery(router.query.q);
+            setOldRouterQuery(router.query[SEARCH_QUERY_PARAMETER_NAME]);
         }
-    }, [router.query.q]);
+    }, [router.query]);
 
     useComponentUpdate(() => {
         if (queryPathWasChanged) {
@@ -120,7 +121,9 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
         <>
             <Breadcrumbs breadcrumb={breadcrumbs} />
             <Webline>
-                <Heading type={'h1'}>{`${t('Search results for')} "${getStringFromUrlQuery(router.query.q)}"`}</Heading>
+                <Heading type={'h1'}>{`${t('Search results for')} "${getStringFromUrlQuery(
+                    router.query[SEARCH_QUERY_PARAMETER_NAME],
+                )}"`}</Heading>
             </Webline>
             {currentPage === 1 && (
                 <>

@@ -1,4 +1,4 @@
-import { showInfoMessage, showSuccessMessage } from 'components/Helpers/Toasts';
+import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { LoginVariablesApi, useLoginApi, useLogoutApi } from 'graphql/generated';
 import { removeTokensFromCookies, setTokensToCookie } from 'helpers/auth/tokens';
 import { canUseDom } from 'helpers/misc/canUseDom';
@@ -27,10 +27,11 @@ export const useAuth = (): { login: typeof login; logout: typeof logout } => {
                 if (accessToken && refreshToken) {
                     dispatch(userActions.setCartUuid(null));
                     setTokensToCookie(accessToken, refreshToken);
-                    showSuccessMessage(t('Successfully logged in'));
 
                     if (loginResult.data.Login.showCartMergeInfo === true) {
-                        showInfoMessage(t('Your cart has been modified. Please check the changes.'));
+                        dispatch(userActions.setLoginLoading('loading-with-cart-modifications'));
+                    } else {
+                        dispatch(userActions.setLoginLoading('loading'));
                     }
 
                     if (canUseDom()) {
@@ -41,7 +42,7 @@ export const useAuth = (): { login: typeof login; logout: typeof logout } => {
 
             return loginResult;
         },
-        [dispatch, loginMutation, router.asPath, t],
+        [dispatch, loginMutation, router.asPath],
     );
 
     const logout = useCallback(async () => {

@@ -1,12 +1,18 @@
-import { useRemoveFromCartMutationApi } from 'graphql/generated';
+import { CartFragmentApi, useRemoveFromCartMutationApi } from 'graphql/generated';
 import { onRemoveCartItemGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { userActions } from 'redux/slices/user';
 import { CartItemType } from 'types/cart';
 import { GtmListNameType } from 'types/gtm';
 
-export const useRemoveFromCart = (): typeof removeItemFromCartAction => {
-    const [, removeItemFromCart] = useRemoveFromCartMutationApi();
+export type RemoveFromCartHandler = (
+    cartItem: CartItemType,
+    listIndex: number,
+    gtmListName: GtmListNameType,
+) => Promise<CartFragmentApi | undefined | null>;
+
+export const useRemoveFromCart = (): [RemoveFromCartHandler, boolean] => {
+    const [{ fetching }, removeItemFromCart] = useRemoveFromCartMutationApi();
     const { cartUuid } = useShopsysSelector((state) => state.user);
     const { currencyCode, url } = useShopsysSelector((state) => state.domain);
     const dispatch = useShopsysDispatch();
@@ -40,5 +46,5 @@ export const useRemoveFromCart = (): typeof removeItemFromCartAction => {
         return removeItemFromCartActionResult.data?.RemoveFromCart ?? null;
     };
 
-    return removeItemFromCartAction;
+    return [removeItemFromCartAction, fetching];
 };

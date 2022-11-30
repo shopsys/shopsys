@@ -1,6 +1,8 @@
-import { SearchButtonStyled, SearchTextInputStyled } from './TextInput.style';
+import { SearchButtonStyled, SearchTextInputStyled, TextInputLoadingWrapper } from './TextInput.style';
 import { Icon } from 'components/Basic/Icon/Icon';
+import { Loader } from 'components/Basic/Loader/Loader';
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper/LabelWrapper';
+import { theme } from 'components/Theme/main';
 import { FC, InputHTMLAttributes, KeyboardEventHandler } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
@@ -11,6 +13,7 @@ type SearchInputProps = NativeProps & {
     isSearchButtonDisabled?: boolean;
     onEnterPressCallback?: () => void;
     testIdentifier: string;
+    isLoading: boolean;
 };
 
 export const SearchInput: FC<SearchInputProps> = ({
@@ -20,6 +23,7 @@ export const SearchInput: FC<SearchInputProps> = ({
     value,
     onEnterPressCallback,
     testIdentifier,
+    isLoading,
 }) => {
     const enterKeyPressHandler: KeyboardEventHandler<HTMLInputElement> = (event) => {
         if (event.key === 'Enter' && onEnterPressCallback !== undefined) {
@@ -41,6 +45,11 @@ export const SearchInput: FC<SearchInputProps> = ({
             <SearchButtonStyled type="submit" disabled={isSearchButtonDisabled}>
                 <Icon iconType="icon" icon="Search" />
             </SearchButtonStyled>
+            {isLoading && (
+                <TextInputLoadingWrapper>
+                    <Loader iconSize={30} color={theme.color.white} />
+                </TextInputLoadingWrapper>
+            )}
         </LabelWrapper>
     );
 };

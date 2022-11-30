@@ -10,17 +10,17 @@ import { Image } from 'components/Basic/Image/Image';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton/RemoveCartItemButton';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import NextLink from 'next/link';
-import { FC } from 'react';
+import { FC, MouseEventHandler } from 'react';
 import { CartItemType } from 'types/cart';
 
 type ListItemProps = {
     cartItem: CartItemType;
-    listIndex: number;
+    onItemRemove: MouseEventHandler<HTMLButtonElement>;
 };
 
 const TEST_IDENTIFIER = 'layout-header-cart-listitem';
 
-export const ListItem: FC<ListItemProps> = ({ cartItem, listIndex }) => {
+export const ListItem: FC<ListItemProps> = ({ cartItem, onItemRemove }) => {
     const formatPrice = useFormatPrice();
 
     return (
@@ -37,7 +37,7 @@ export const ListItem: FC<ListItemProps> = ({ cartItem, listIndex }) => {
                     {formatPrice(cartItem.product.price.priceWithVat * cartItem.quantity)}
                 </ListItemPriceStyled>
             </ListItemDetailStyled>
-            <RemoveCartItemButton cartItem={cartItem} listIndex={listIndex} />
+            <RemoveCartItemButton onItemRemove={onItemRemove} />
         </ListItemStyled>
     );
 };

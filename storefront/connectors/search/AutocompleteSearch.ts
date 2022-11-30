@@ -13,7 +13,7 @@ import { AutocompleteSearchType } from 'types/search';
 
 export const MINIMAL_SEARCH_QUERY_LENGTH = 3 as const;
 
-export const useAutocompleteSearch = (autocompleteSearch: string): AutocompleteSearchType | undefined => {
+export const useAutocompleteSearch = (autocompleteSearch: string): [AutocompleteSearchType | undefined, boolean] => {
     const [result] = useAutocompleteSearchQueryApi({
         variables: {
             search: autocompleteSearch,
@@ -28,11 +28,13 @@ export const useAutocompleteSearch = (autocompleteSearch: string): AutocompleteS
     useQueryError(result.error);
 
     return useMemo(
-        () =>
+        () => [
             autocompleteSearch.length < MINIMAL_SEARCH_QUERY_LENGTH || !result.data
                 ? undefined
                 : mapSearchResult(result.data, currencyCode),
-        [autocompleteSearch.length, currencyCode, result.data],
+            result.fetching,
+        ],
+        [autocompleteSearch.length, currencyCode, result.data, result.fetching],
     );
 };
 

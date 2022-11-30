@@ -19,7 +19,7 @@ import {
     useCartQueryApi,
 } from 'graphql/generated';
 import { ApplicationErrors } from 'helpers/errors/applicationErrors';
-import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
+import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { Translate } from 'next-translate';
@@ -180,7 +180,7 @@ export const mapCartItem = (apiData: CartItemFragmentApi, currencyCode: string):
 export const handleCartModifications = (
     cartModifications: CartModificationsFragmentApi,
     t: Translate,
-    changePaymentInCart: ReturnType<typeof useChangePaymentInCart>,
+    changePaymentInCart: ChangePaymentHandler,
 ): void => {
     handleCartTransportModifications(cartModifications.transportModifications, t, changePaymentInCart);
     handleCartPaymentModifications(cartModifications.paymentModifications, t);
@@ -191,7 +191,7 @@ export const handleCartModifications = (
 const handleCartTransportModifications = (
     transportModifications: CartTransportModificationsFragmentApi,
     t: Translate,
-    changePaymentInCart: ReturnType<typeof useChangePaymentInCart>,
+    changePaymentInCart: ChangePaymentHandler,
 ): void => {
     if (transportModifications.transportPriceChanged) {
         showInfoMessage(t('The price of the transport you selected has changed.'), 'cart');

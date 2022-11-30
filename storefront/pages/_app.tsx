@@ -1,7 +1,8 @@
 import { Canonical } from 'components/Basic/Head/Canonical/Canonical';
 import { PortalContainer } from 'components/Basic/Portal/Portal.style';
 import { GtmHeadScript } from 'components/Helpers/GtmHeadScript';
-import { Error500Content } from 'components/Pages/ErrorPage/500/Error500Content';
+import { showInfoMessage, showSuccessMessage } from 'components/Helpers/Toasts';
+import { Error500ContentWithBoundary } from 'components/Pages/ErrorPage/500/Error500Content';
 import { Error503Content } from 'components/Pages/ErrorPage/503/Error503Content';
 import { ShopsysGlobalProvider } from 'context/ShopsysGlobalProvider/ShopsysGlobalProvider';
 import { extend, locale } from 'dayjs';
@@ -13,6 +14,7 @@ import { getDomainConfig } from 'helpers/domain/domain';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useReloadCart } from 'hooks/cart/useReloadCart';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import i18nConfig from 'i18n';
 import 'lightgallery/css/lg-thumbnail.css';
 import 'lightgallery/css/lightgallery.css';
@@ -28,7 +30,8 @@ import { PropsWithChildren, ReactElement, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
+import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
+import { userActions } from 'redux/slices/user';
 import { getUrqlExchanges } from 'urql/exchanges';
 import { fetcher } from 'urql/fetcher';
 
@@ -44,12 +47,31 @@ type AppProps = {
     ErrorProps;
 
 function MyApp({ Component, pageProps, err }: AppProps): ReactElement {
+    const t = useTypedTranslationFunction();
     const router = useRouter();
     const { url, defaultLocale } = useShopsysSelector((state) => state.domain);
     const userConsentCookie = getUserConsentCookie();
+    const { loginLoading } = useShopsysSelector((state) => state.user);
+    const dispatch = useShopsysDispatch();
+
     useReloadCart();
 
     locale(defaultLocale);
+
+    useEffect(() => {
+        if (loginLoading === 'not-loading') {
+            return;
+        }
+
+        showSuccessMessage(t('Successfully logged in'));
+
+        if (loginLoading === 'loading-with-cart-modifications') {
+            showInfoMessage(t('Your cart has been modified. Please check the changes.'));
+        }
+
+        dispatch(userActions.setLoginLoading('not-loading'));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         Nprogress.configure({ showSpinner: false, minimum: 0.2 });
@@ -104,7 +126,7 @@ function MyApp({ Component, pageProps, err }: AppProps): ReactElement {
             <ShopsysGlobalProvider>
                 <PortalContainer id="portal" />
                 <ToastContainer autoClose={6000} position="top-center" theme="colored" />
-                <ErrorBoundary FallbackComponent={Error500Content}>
+                <ErrorBoundary FallbackComponent={Error500ContentWithBoundary}>
                     {userConsentCookie === null && !isConsentUpdatePage && <UserConsentContainer />}
                     {pageProps.isMaintenance ? <Error503Content /> : <Component {...pageProps} err={err} />}
                 </ErrorBoundary>

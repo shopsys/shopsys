@@ -1,6 +1,9 @@
+import { Icon } from 'components/Basic/Icon/Icon';
+import { Loader } from 'components/Basic/Loader/Loader';
 import { AddToCartPopup } from 'components/Blocks/Product/AddToCartPopup/AddToCartPopup';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
+import { theme } from 'components/Theme/main';
 import { mapAddToCartPopupData } from 'connectors/cart/Cart';
 import { useAddToCart } from 'hooks/cart/useAddToCart';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -22,7 +25,7 @@ const TEST_IDENTIFIER = 'blocks-product-addtocart';
 export const AddToCart: FC<AddToCartProps> = ({ productUuid, minQuantity, maxQuantity, gtmListName, listIndex }) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
-    const changeCartItemQuantity = useAddToCart(gtmListName);
+    const [changeCartItemQuantity, fetching] = useAddToCart(gtmListName);
     const [popupData, setPopupData] = useState<AddToCartPopupDataType | null>(null);
     const { currencyCode } = useShopsysSelector((state) => state.domain);
 
@@ -51,7 +54,12 @@ export const AddToCart: FC<AddToCartProps> = ({ productUuid, minQuantity, maxQua
                 onClick={onAddToCartHandler}
                 testIdentifier={TEST_IDENTIFIER}
             >
-                {t('Add to cart')}
+                {fetching ? (
+                    <Loader iconSize={16} color={theme.color.white} />
+                ) : (
+                    <Icon iconType="icon" icon="Cart" color={theme.color.white} />
+                )}
+                <span>{t('Add to cart')}</span>
             </Button>
             {popupData !== null && (
                 <AddToCartPopup isVisible onCloseCallback={() => setPopupData(null)} product={popupData} />

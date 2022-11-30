@@ -16,7 +16,7 @@ export const Error404Content: FC = () => {
     const t = useTypedTranslationFunction();
 
     return (
-        <CommonLayout>
+        <CommonLayout title={t('Something wrong happened... Page not found')}>
             <Webline>
                 <ErrorPageStyled>
                     <ErrorPageTextStyled>

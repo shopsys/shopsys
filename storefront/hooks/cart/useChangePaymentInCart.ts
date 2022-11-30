@@ -1,6 +1,6 @@
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
-import { useChangePaymentInCartMutationApi } from 'graphql/generated';
+import { CartFragmentApi, useChangePaymentInCartMutationApi } from 'graphql/generated';
 import { onPaymentChangeGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import { useGtmCartEventInfo } from 'helpers/gtm/gtm';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -8,8 +8,13 @@ import { useLatest } from 'hooks/ui/useLatest';
 import { useCallback } from 'react';
 import { useShopsysSelector } from 'redux/main';
 
-export const useChangePaymentInCart = (): typeof changePaymentHandler => {
-    const [, changePaymentInCart] = useChangePaymentInCartMutationApi();
+export type ChangePaymentHandler = (
+    newPaymentUuid: string | null,
+    newGoPayBankSwift: string | null,
+) => Promise<CartFragmentApi | undefined | null>;
+
+export const useChangePaymentInCart = (): [ChangePaymentHandler, boolean] => {
+    const [{ fetching }, changePaymentInCart] = useChangePaymentInCartMutationApi();
     const { cartUuid } = useShopsysSelector((state) => state.user);
     const { currencyCode } = useShopsysSelector((state) => state.domain);
     const t = useTypedTranslationFunction();
@@ -17,8 +22,8 @@ export const useChangePaymentInCart = (): typeof changePaymentHandler => {
 
     const gtmCart = useLatest(gtmCartEventInfo.cart);
 
-    const changePaymentHandler = useCallback(
-        async (newPaymentUuid: string | null, newGoPayBankSwift: string | null) => {
+    const changePaymentHandler = useCallback<ChangePaymentHandler>(
+        async (newPaymentUuid, newGoPayBankSwift) => {
             const changePaymentResult = await changePaymentInCart(
                 {
                     input: { paymentUuid: newPaymentUuid, paymentGoPayBankSwift: newGoPayBankSwift, cartUuid },
@@ -51,5 +56,5 @@ export const useChangePaymentInCart = (): typeof changePaymentHandler => {
         [cartUuid, changePaymentInCart, currencyCode, gtmCart, t],
     );
 
-    return changePaymentHandler;
+    return [changePaymentHandler, fetching];
 };

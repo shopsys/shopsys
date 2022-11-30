@@ -46,8 +46,13 @@ export const OrderSummaryContentWrapperStyled = styled.div(
 );
 
 export const OrderSummaryContentStyled = styled.div`
+    position: relative;
     display: flex;
     flex-direction: column;
+`;
+
+export const TransportAndPaymentPreviewWrapperStyled = styled.div`
+    position: relative;
 `;
 
 export const ProductsPreviewStyled = styled.div`

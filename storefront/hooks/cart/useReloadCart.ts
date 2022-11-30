@@ -9,7 +9,7 @@ import { useShopsysSelector } from 'redux/main';
 
 export const useReloadCart = (): void => {
     const { modifications, refetchCart } = useCurrentCart(false);
-    const changePaymentInCart = useChangePaymentInCart();
+    const [changePaymentInCart] = useChangePaymentInCart();
     const t = useTypedTranslationFunction();
     const router = useRouter();
     const slug = useMemo(() => getUrlWithoutGetParameters(router.asPath), [router.asPath]);

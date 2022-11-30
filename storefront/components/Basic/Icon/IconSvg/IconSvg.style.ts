@@ -1,15 +1,22 @@
 import { styled } from 'components/Theme/main';
+import { CSSProperties, HTMLAttributes } from 'react';
 import { css } from 'styled-components';
 
-export const IconSvgStyled = styled.i(
-    ({ theme }) => css`
+type IconSvgStyleProps = HTMLAttributes<HTMLElement> & {
+    $width: number;
+    $height: number;
+    $color?: CSSProperties['color'];
+};
+
+export const IconSvgStyled = styled.i<IconSvgStyleProps>(
+    ({ theme, $width, $height, $color = theme.color.base }) => css`
         display: inline-flex;
         line-height: 0;
-        width: 14px;
-        height: 14px;
+        width: ${$width}px;
+        height: ${$height}px;
         text-align: center;
 
-        color: ${theme.color.base};
+        color: ${$color};
         font-style: normal;
         text-transform: none;
 

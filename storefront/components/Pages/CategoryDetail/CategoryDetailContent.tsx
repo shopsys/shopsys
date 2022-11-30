@@ -114,7 +114,11 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                             totalCount={category.productConnection.totalCount}
                         />
                         {category.productConnection.products.length !== 0 ? (
-                            <ProductsList products={category.productConnection.products} gtmListName={gtmListName} />
+                            <ProductsList
+                                products={category.productConnection.products}
+                                gtmListName={gtmListName}
+                                fetching={fetching}
+                            />
                         ) : (
                             <CategoryDetailContentMessageStyled>
                                 <div>

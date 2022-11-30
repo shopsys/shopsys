@@ -17,6 +17,7 @@ import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     PAGE_QUERY_PARAMETER_NAME,
+    SEARCH_QUERY_PARAMETER_NAME,
     SORT_QUERY_PARAMETER_NAME,
 } from 'helpers/queryParams/queryParamNames';
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
@@ -42,7 +43,7 @@ const SearchPage: FC<ServerSidePropsType> = () => {
     const searchParametersFilter = getFilterOptions(
         parseFilterOptionsFromQuery(router.query[FILTER_QUERY_PARAMETER_NAME]),
     );
-    const searchQuery = useMemo(() => getStringFromUrlQuery(router.query.q), [router.query.q]);
+    const searchQuery = getStringFromUrlQuery(router.query[SEARCH_QUERY_PARAMETER_NAME]);
     const searchResults = useSearch(searchQuery, searchProductsSort, paginationCursor, searchParametersFilter);
 
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], domainUrl);
@@ -75,7 +76,10 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     const optionsFilter = getFilterOptions(parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME]));
     store.dispatch(
         userActions.setPagination(
-            getNewPagination(parsePageNumberFromQuery(context.query.page), initialState.pagination.pageSize),
+            getNewPagination(
+                parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]),
+                initialState.pagination.pageSize,
+            ),
         ),
     );
 
@@ -83,7 +87,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
         {
             query: SearchQueryDocumentApi,
             variables: {
-                search: getStringFromUrlQuery(context.query.q),
+                search: getStringFromUrlQuery(context.query[SEARCH_QUERY_PARAMETER_NAME]),
                 orderingMode,
                 after: store.getState().user.pagination.paginationCursor,
                 filter: mapParametersFilter(optionsFilter),

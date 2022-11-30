@@ -6,6 +6,7 @@ import {
     OrderActionRightStyled,
     OrderActionStyled,
 } from './OrderAction.style';
+import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -20,6 +21,7 @@ type OrderActionProps = {
     withGapBottom?: boolean;
     withGapTop?: boolean;
     nextStepClickHandler?: () => void;
+    isLoading?: boolean;
 };
 
 const TEST_IDENTIFIER = 'blocks-orderaction-';
@@ -33,6 +35,7 @@ export const OrderAction: FC<OrderActionProps> = ({
     nextStepClickHandler,
     withGapBottom,
     withGapTop,
+    isLoading,
 }) => {
     const router = useRouter();
 
@@ -63,7 +66,8 @@ export const OrderAction: FC<OrderActionProps> = ({
                     hasDisabledLook={hasDisabledLook}
                     onClick={onNextStepHandler}
                 >
-                    {buttonNext}
+                    {isLoading && <Loader iconSize={20} />}
+                    <span>{buttonNext}</span>
                     <OrderActionButtonNextIconStyled alt="" iconType="icon" icon="Arrow" />
                 </Button>
             </OrderActionRightStyled>

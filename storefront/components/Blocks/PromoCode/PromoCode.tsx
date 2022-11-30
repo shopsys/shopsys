@@ -8,7 +8,10 @@ import {
     PromoCodeStyled,
 } from './PromoCode.style';
 import { PromoCodeInfo } from './PromoCodeInfo/PromoCodeInfo';
+import { Loader } from 'components/Basic/Loader/Loader';
+import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
+import { theme } from 'components/Theme/main';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
 import { useApplyPromoCodeToCart } from 'hooks/cart/useApplyPromoCodeToCart';
@@ -36,8 +39,8 @@ export const PromoCode: FC = () => {
     const cssTransitionRef = useRef<HTMLDivElement>(null);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useState(false);
     const [promoCodeValue, setPromoCodeValue] = useState<string>(promoCode === null ? '' : promoCode);
-    const applyPromoCode = useApplyPromoCodeToCart();
-    const removePromoCode = useRemovePromoCodeFromCart();
+    const [applyPromoCode, fetchingApplyPromoCode] = useApplyPromoCodeToCart();
+    const [removePromoCode, fetchingRemovePromoCode] = useRemovePromoCodeFromCart();
 
     const promoCodeValidationMessages = useMemo(() => {
         const errors: Partial<TransportAndPaymentErrorsType> = {};
@@ -93,7 +96,10 @@ export const PromoCode: FC = () => {
         <>
             <PromoCodeStyled contentElementHeight={contentElementHeight} data-testid={TEST_IDENTIFIER}>
                 {promoCode !== null ? (
-                    <PromoCodeInfo promoCode={promoCode} onRemovePromoCodeCallback={onRemovePromoCodeHandler} />
+                    <>
+                        {fetchingRemovePromoCode && <LoaderWithOverlay iconSize={20} />}
+                        <PromoCodeInfo promoCode={promoCode} onRemovePromoCodeCallback={onRemovePromoCodeHandler} />
+                    </>
                 ) : (
                     <>
                         <PromoCodeButtonStyled
@@ -127,6 +133,7 @@ export const PromoCode: FC = () => {
                                         data-testid={TEST_IDENTIFIER + '-apply-button'}
                                         onClick={onApplyPromoCodeHandler}
                                     >
+                                        {fetchingApplyPromoCode && <Loader iconSize={16} color={theme.color.white} />}
                                         {t('Apply')}
                                     </PromoCodeContentButtonStyled>
                                 </PromoCodeContentStyled>

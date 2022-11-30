@@ -85,7 +85,7 @@ export const Filter: FC<FilterProps> = ({ slug, originalSlug, orderingMode, defa
             delete routerQueryWithoutAllParameter[FILTER_QUERY_PARAMETER_NAME];
         } else {
             delete routerQueryWithoutAllParameter[PAGE_QUERY_PARAMETER_NAME];
-            routerQueryWithoutAllParameter.filter = actualUrlQueryWithoutDefaultPriceFilter;
+            routerQueryWithoutAllParameter[FILTER_QUERY_PARAMETER_NAME] = actualUrlQueryWithoutDefaultPriceFilter;
         }
 
         if (sortingFromQuery === null && originalSlug !== null && orderingMode !== null) {
