@@ -100,6 +100,13 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
         [openPacketeryPopup],
     );
 
+    const handlePaymentChange = useCallback(
+        async (newPaymentUuid: string | null) => {
+            await changePaymentInCart(newPaymentUuid, paymentGoPayBankSwift);
+        },
+        [paymentGoPayBankSwift, changePaymentInCart],
+    );
+
     const handleTransportChange = useCallback(
         async (newTransportUuid: string | null) => {
             const potentialNewTransport = transports.find((transport) => transport.uuid === newTransportUuid);
@@ -109,6 +116,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
 
             if (potentialNewTransport === undefined) {
                 await changeTransportInCart(null, null);
+                await handlePaymentChange(null);
 
                 return;
             }
@@ -130,14 +138,14 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                 await changeTransportInCart(newTransportUuid, null);
             }
         },
-        [changeTransportInCart, transports, openPersonalPickupPopup, transport?.uuid, preSelectedPickupPlace],
-    );
-
-    const handlePaymentChange = useCallback(
-        async (newPaymentUuid: string | null) => {
-            await changePaymentInCart(newPaymentUuid, paymentGoPayBankSwift);
-        },
-        [paymentGoPayBankSwift, changePaymentInCart],
+        [
+            changeTransportInCart,
+            transports,
+            openPersonalPickupPopup,
+            transport?.uuid,
+            preSelectedPickupPlace,
+            handlePaymentChange,
+        ],
     );
 
     const handleGoPaySwiftChange = useCallback(
