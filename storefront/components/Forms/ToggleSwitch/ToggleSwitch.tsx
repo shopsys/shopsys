@@ -1,15 +1,32 @@
 import { ToggleSwitchLabel, ToggleSwitchStyled, ToggleSwitchWrapper } from './ToggleSwitch.style';
-import { FC } from 'react';
-import { ControllerRenderProps } from 'react-hook-form';
+import { forwardRef, InputHTMLAttributes } from 'react';
+import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
-type ToggleSwitchProps = {
-    id: string;
-    fieldRef?: ControllerRenderProps<any, any>;
+type NativeProps = ExtractNativePropsFromDefault<
+    InputHTMLAttributes<HTMLInputElement>,
+    'id' | 'onChange' | 'name',
+    'onBlur'
+>;
+
+type ToggleSwitchProps = NativeProps & {
+    value: any;
 };
 
-export const ToggleSwitch: FC<ToggleSwitchProps> = ({ id, fieldRef }) => (
-    <ToggleSwitchWrapper>
-        <ToggleSwitchStyled id={id} type="checkbox" checked={fieldRef?.value} {...fieldRef} />
-        <ToggleSwitchLabel htmlFor={fieldRef?.name} />
-    </ToggleSwitchWrapper>
+export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
+    ({ id, name, onChange, value, onBlur }, toggleSwitchForwardedRef) => (
+        <ToggleSwitchWrapper>
+            <ToggleSwitchStyled
+                id={id}
+                type="checkbox"
+                checked={value}
+                name={name}
+                onChange={onChange}
+                ref={toggleSwitchForwardedRef}
+                onBlur={onBlur}
+            />
+            <ToggleSwitchLabel htmlFor={id} />
+        </ToggleSwitchWrapper>
+    ),
 );
+
+ToggleSwitch.displayName = 'ToggleSwitch';

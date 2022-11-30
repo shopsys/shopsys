@@ -1,58 +1,51 @@
 import { showInfoMessage, showSuccessMessage } from 'components/Helpers/Toasts';
-import {
-    LoginApi,
-    LoginVariablesApi,
-    LogoutApi,
-    LogoutVariablesApi,
-    useLoginApi,
-    useLogoutApi,
-} from 'graphql/generated';
+import { LoginVariablesApi, useLoginApi, useLogoutApi } from 'graphql/generated';
 import { removeTokensFromCookies, setTokensToCookie } from 'helpers/auth/tokens';
 import { canUseDom } from 'helpers/misc/canUseDom';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
+import { useCallback } from 'react';
 import { useShopsysDispatch } from 'redux/main';
 import { userActions } from 'redux/slices/user';
-import { UseMutationState } from 'urql';
 
-export const useAuth = (): [
-    [UseMutationState<LoginApi, LoginVariablesApi>, typeof loginHandler],
-    [UseMutationState<LogoutApi, LogoutVariablesApi>, typeof logoutHandler],
-] => {
-    const [loginUseMutationResponse, login] = useLoginApi();
-    const [logoutUseMutationResponse, logout] = useLogoutApi();
+export const useAuth = (): { login: typeof login; logout: typeof logout } => {
+    const [, loginMutation] = useLoginApi();
+    const [, logoutMutation] = useLogoutApi();
     const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
 
     const router = useRouter();
 
-    const loginHandler = async (variables: LoginVariablesApi, rewriteUrl?: string) => {
-        const loginResult = await login(variables);
+    const login = useCallback(
+        async (variables: LoginVariablesApi, rewriteUrl?: string) => {
+            const loginResult = await loginMutation(variables);
 
-        if (loginResult.error !== undefined) {
-            return;
-        }
+            if (loginResult.data !== undefined) {
+                const accessToken = loginResult.data.Login.tokens.accessToken;
+                const refreshToken = loginResult.data.Login.tokens.refreshToken;
 
-        const accessToken = loginResult.data?.Login.tokens.accessToken;
-        const refreshToken = loginResult.data?.Login.tokens.refreshToken;
+                if (accessToken && refreshToken) {
+                    dispatch(userActions.setCartUuid(null));
+                    setTokensToCookie(accessToken, refreshToken);
+                    showSuccessMessage(t('Successfully logged in'));
 
-        if (accessToken !== undefined && refreshToken !== undefined) {
-            dispatch(userActions.setCartUuid(null));
-            setTokensToCookie(accessToken, refreshToken);
-            showSuccessMessage(t('Successfully logged in'));
+                    if (loginResult.data.Login.showCartMergeInfo === true) {
+                        showInfoMessage(t('Your cart has been modified. Please check the changes.'));
+                    }
 
-            if (loginResult.data?.Login.showCartMergeInfo === true) {
-                showInfoMessage(t('Your cart has been modified. Please check the changes.'));
+                    if (canUseDom()) {
+                        window.location.href = rewriteUrl ?? router.asPath;
+                    }
+                }
             }
 
-            if (canUseDom()) {
-                window.location.href = rewriteUrl ?? router.asPath;
-            }
-        }
-    };
+            return loginResult;
+        },
+        [dispatch, loginMutation, router.asPath, t],
+    );
 
-    const logoutHandler = async () => {
-        const logoutResult = await logout({});
+    const logout = useCallback(async () => {
+        const logoutResult = await logoutMutation({});
 
         if (logoutResult.data?.Logout === true) {
             removeTokensFromCookies();
@@ -62,10 +55,9 @@ export const useAuth = (): [
                 router.reload();
             }
         }
-    };
 
-    return [
-        [loginUseMutationResponse, loginHandler],
-        [logoutUseMutationResponse, logoutHandler],
-    ];
+        return logoutResult;
+    }, [logoutMutation, router, t]);
+
+    return { login, logout };
 };

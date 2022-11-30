@@ -35,7 +35,6 @@ export const Adverts: FC<AdvertsProps> = ({
     const adverts = useAdverts();
     const [isMobile, setIsMobile] = useState(false);
     const { width } = useGetWindowSize();
-    const WrapperComponent = withWebline ? Webline : Fragment;
     const isPositionNameSet = adverts?.some((item) => item.positionName === positionName);
 
     useResizeWidthEffect(
@@ -50,45 +49,39 @@ export const Adverts: FC<AdvertsProps> = ({
         return null;
     }
 
-    return (
-        <WrapperComponent className={className}>
-            <AdvertsStyled withGapTop={withGapTop} withGapBottom={withGapBottom}>
-                {adverts?.map(
-                    (item, index) =>
-                        shouldBeShown(item, positionName, currentCategory) &&
-                        (item.__typename === 'AdvertImage' ? (
-                            <Fragment key={index}>
-                                {item.link !== undefined ? (
-                                    <NextLink href={item.link} passHref>
-                                        <a target="_blank">
-                                            {isMobile ? (
-                                                <Image
-                                                    image={item.imageMobile}
-                                                    type={item.positionName}
-                                                    alt={item.name}
-                                                />
-                                            ) : (
-                                                <Image image={item.image} type={item.positionName} alt={item.name} />
-                                            )}
-                                        </a>
-                                    </NextLink>
-                                ) : (
-                                    <>
-                                        {isMobile ? (
-                                            <Image image={item.imageMobile} type={item.positionName} alt={item.name} />
-                                        ) : (
-                                            <Image image={item.image} type={item.positionName} alt={item.name} />
-                                        )}
-                                    </>
-                                )}
-                            </Fragment>
-                        ) : (
-                            <div dangerouslySetInnerHTML={{ __html: item.code }} key={index} />
-                        )),
-                )}
-            </AdvertsStyled>
-        </WrapperComponent>
+    const content = (
+        <AdvertsStyled withGapTop={withGapTop} withGapBottom={withGapBottom}>
+            {adverts?.map(
+                (item, index) =>
+                    shouldBeShown(item, positionName, currentCategory) &&
+                    (item.__typename === 'AdvertImage' ? (
+                        <Fragment key={index}>
+                            {item.link !== undefined ? (
+                                <NextLink href={item.link} passHref>
+                                    <a target="_blank">
+                                        <Image
+                                            image={isMobile ? item.imageMobile : item.image}
+                                            type={item.positionName}
+                                            alt={item.name}
+                                        />
+                                    </a>
+                                </NextLink>
+                            ) : (
+                                <Image
+                                    image={isMobile ? item.imageMobile : item.image}
+                                    type={item.positionName}
+                                    alt={item.name}
+                                />
+                            )}
+                        </Fragment>
+                    ) : (
+                        <div dangerouslySetInnerHTML={{ __html: item.code }} key={index} />
+                    )),
+            )}
+        </AdvertsStyled>
     );
+
+    return withWebline ? wrapWithWebline(content, className) : content;
 };
 
 const shouldBeShown = (
@@ -108,4 +101,8 @@ const shouldBeShown = (
         }
     }
     return positionName !== 'productListMiddle' && advert.positionName === positionName;
+};
+
+const wrapWithWebline = (content: JSX.Element, className: string | undefined) => {
+    return <Webline className={className}>{content}</Webline>;
 };

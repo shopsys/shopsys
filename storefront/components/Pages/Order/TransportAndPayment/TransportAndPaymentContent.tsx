@@ -3,6 +3,7 @@ import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { LastOrderFragmentApi, useStoreQueryApi } from 'graphql/generated';
+import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
 import { getGtmPickupPlaceFromLastOrder, getGtmPickupPlaceFromStore } from 'helpers/gtm/mappers';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getPacketeryCookie } from 'helpers/packetery';
@@ -90,7 +91,7 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
     }, [transport, payment, paymentGoPayBankSwift, pickupPlace?.identifier, t]);
 
     const onSelectTransportAndPaymentHandler = () => {
-        if (Object.keys(transportAndPaymentValidationMessages).length > 0) {
+        if (hasValidationErrors(transportAndPaymentValidationMessages)) {
             setErrorPopupVisibility(true);
 
             return;
@@ -130,7 +131,7 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
             <OrderAction
                 buttonBack={t('Back')}
                 buttonNext={t('Contact information')}
-                hasDisabledLook={Object.keys(transportAndPaymentValidationMessages).length > 0}
+                hasDisabledLook={hasValidationErrors(transportAndPaymentValidationMessages)}
                 withGapTop={true}
                 withGapBottom={true}
                 buttonBackLink={cartUrl}

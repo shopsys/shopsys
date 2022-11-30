@@ -12,22 +12,22 @@ import {
 } from './RegistrationContent.style';
 import { User } from './User/User';
 import { Button } from 'components/Forms/Button/Button';
-import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
+import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLine';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
-import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
 import { showInfoMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useRegistrationMutationApi } from 'graphql/generated';
 import { setTokensToCookie } from 'helpers/auth/tokens';
-import { useHandleErrorPopupVisibility } from 'hooks/forms/useHandleErrorPopupVisibility';
-import { useHandleFormErrors } from 'hooks/forms/useHandleFormErrors';
-import { useHandleFormSuccessfulSubmit } from 'hooks/forms/useHandleFormSuccessfulSubmit';
+import { blurInput } from 'helpers/forms/blurInput';
+import { clearForm } from 'helpers/forms/clearForm';
+import { handleFormErrors } from 'helpers/forms/handleFormErrors';
+import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Image from 'next/image';
-import { FC } from 'react';
-import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
+import { FC, useCallback } from 'react';
+import { FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { RegistrationFormType } from 'types/form';
@@ -38,47 +38,42 @@ type RegistrationContentProps = {
 
 export const RegistrationContent: FC<RegistrationContentProps> = ({ breadcrumbs }) => {
     const t = useTypedTranslationFunction();
-    const [registerResult, register] = useRegistrationMutationApi();
+    const [, register] = useRegistrationMutationApi();
     const { cartUuid } = useShopsysSelector((state) => state.user);
     const [formProviderMethods, defaultValues] = useRegistrationForm();
     const formMeta = useRegistrationFormMeta(formProviderMethods);
-    const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
+    const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
 
-    useHandleFormErrors(registerResult.error, formProviderMethods, 'other', formMeta.messages.error);
-    useHandleFormSuccessfulSubmit(
-        registerResult,
-        formProviderMethods,
-        defaultValues,
-        () => {
-            const accessToken = registerResult.data?.Register.tokens.accessToken;
-            const refreshToken = registerResult.data?.Register.tokens.refreshToken;
+    const onRegistrationHandler = useCallback<SubmitHandler<RegistrationFormType>>(
+        async (data) => {
+            blurInput();
+            const registerResult = await register({
+                ...data,
+                password: data.passwordFirst,
+                previousCartUuid: cartUuid,
+                country: data.country.value,
+                companyCustomer: data.customer === 'companyCustomer',
+            });
 
-            if (accessToken !== undefined && refreshToken !== undefined) {
+            if (registerResult.data?.Register !== undefined) {
+                const accessToken = registerResult.data.Register.tokens.accessToken;
+                const refreshToken = registerResult.data.Register.tokens.refreshToken;
+
                 setTokensToCookie(accessToken, refreshToken);
                 showSuccessMessage(formMeta.messages.successAndLogged);
 
-                if (registerResult.data?.Register.showCartMergeInfo === true) {
+                if (registerResult.data.Register.showCartMergeInfo === true) {
                     showInfoMessage(t('Your cart has been modified. Please check the changes.'));
                 }
-            } else {
-                showSuccessMessage(formMeta.messages.success);
+
+                window.location.href = '/';
             }
 
-            window.location.href = '/';
+            handleFormErrors(registerResult.error, formProviderMethods, 'other', t, formMeta.messages.error);
+            clearForm(registerResult.error, formProviderMethods, defaultValues);
         },
-        { blur: true, reset: true },
+        [cartUuid, formMeta.messages, formProviderMethods, register, t, defaultValues],
     );
-
-    const onRegistrationHandler: SubmitHandler<RegistrationFormType> = async (data, event) => {
-        event?.preventDefault();
-        await register({
-            ...data,
-            password: data.passwordFirst,
-            previousCartUuid: cartUuid,
-            country: data.country.value,
-            companyCustomer: data.customer === 'companyCustomer',
-        });
-    };
 
     const customerValue = useWatch({ name: formMeta.fields.customer.name, control: formProviderMethods.control });
 
@@ -124,42 +119,24 @@ export const RegistrationContent: FC<RegistrationContentProps> = ({ breadcrumbs 
                             <Address />
                         </ContentSectionStyled>
 
-                        <Controller
+                        <CheckboxControlled
                             name={formMeta.fields.gdprAgreement.name}
-                            render={({ field, fieldState: { error } }) => (
-                                <ChoiceFormLine>
-                                    <Checkbox
-                                        id={formMeta.formName + '-' + formMeta.fields.gdprAgreement.name}
-                                        name={formMeta.fields.gdprAgreement.name}
-                                        label={formMeta.fields.gdprAgreement.label}
-                                        fieldRef={field}
-                                        required
-                                    />
-                                    <FormLineError
-                                        error={error}
-                                        inputType="checkbox"
-                                        testIdentifier={
-                                            formMeta.formName + '-' + formMeta.fields.gdprAgreement.name + '-error'
-                                        }
-                                    />
-                                </ChoiceFormLine>
-                            )}
+                            control={formProviderMethods.control}
+                            formName={formMeta.formName}
+                            render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
+                            checkboxProps={{
+                                label: formMeta.fields.gdprAgreement.label,
+                            }}
                         />
-
-                        <ChoiceFormLine>
-                            <Controller
-                                name={formMeta.fields.newsletterSubscription.name}
-                                render={({ field }) => (
-                                    <Checkbox
-                                        id={formMeta.formName + '-' + formMeta.fields.newsletterSubscription.name}
-                                        name={formMeta.fields.newsletterSubscription.name}
-                                        label={formMeta.fields.newsletterSubscription.label}
-                                        fieldRef={field}
-                                    />
-                                )}
-                            />
-                        </ChoiceFormLine>
-
+                        <CheckboxControlled
+                            name={formMeta.fields.newsletterSubscription.name}
+                            control={formProviderMethods.control}
+                            formName={formMeta.formName}
+                            render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
+                            checkboxProps={{
+                                label: formMeta.fields.newsletterSubscription.label,
+                            }}
+                        />
                         <ButtonWrapperStyled>
                             <Button type="submit">{t('Sign up')}</Button>
                         </ButtonWrapperStyled>

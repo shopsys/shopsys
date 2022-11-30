@@ -1,5 +1,5 @@
+import { useCheckedParameters, useFilterState } from 'components/Blocks/Product/Filter/FilterContext/useFilterState';
 import { getIndexOfParameter } from 'components/Blocks/Product/Filter/helpers/getIndexOfParameter';
-import { getIndexOfParameterValue } from 'components/Blocks/Product/Filter/helpers/getIndexOfParameterValue';
 import {
     SelectedParametersListItemRemoveStyled,
     SelectedParametersListItemStyled,
@@ -7,25 +7,16 @@ import {
     SelectedParametersNameStyled,
 } from 'components/Blocks/Product/Filter/SelectedParameters/SelectedParameters.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC, Fragment } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
-import { FilterFormParameterType, FilterFormType, FilterOptionsType } from 'types/productFilter';
-
-type ParametersProps = {
-    filterOptions: FilterOptionsType;
-    checkedParameters: FilterFormParameterType[];
-};
+import { FC, Fragment, useMemo } from 'react';
+import { FilterFormParameterType } from 'types/productFilter';
 
 const TEST_IDENTIFIER = 'blocks-product-filter-selectedparameters-parameters-';
 
-export const Parameters: FC<ParametersProps> = ({ filterOptions, checkedParameters }) => {
+export const Parameters: FC = () => {
     const t = useTypedTranslationFunction();
-
-    const formProviderMethods = useFormContext<FilterFormType>();
-    const parametersValue = useWatch({
-        name: 'parameters',
-        control: formProviderMethods.control,
-    });
+    const checkedParameters = useCheckedParameters();
+    const [state, dispatch] = useFilterState();
+    const filterOptions = useMemo(() => state.options, [state.options]);
 
     const isMinMaxValueVisible = (
         filteredParameter: FilterFormParameterType,
@@ -40,30 +31,6 @@ export const Parameters: FC<ParametersProps> = ({ filterOptions, checkedParamete
             parameter?.__typename === 'ParameterSliderFilterOption' &&
             parameter[valueType] !== filteredParameter[valueType]
         );
-    };
-
-    const onUncheckParameter = (parameterUuid: string, parameterValueUuid: string) => () => {
-        const indexOfParameter = getIndexOfParameter(filterOptions.parameters ?? [], parameterUuid);
-        const indexOfValue = getIndexOfParameterValue(
-            filterOptions.parameters ?? [],
-            indexOfParameter,
-            parameterValueUuid,
-        );
-
-        formProviderMethods.setValue(`parameters.${indexOfParameter}.values.${indexOfValue}`, {
-            ...parametersValue[indexOfParameter].values[indexOfValue],
-            checked: false,
-        });
-    };
-
-    const onUncheckSliderParameter = (parameterUuid: string) => () => {
-        const indexOfParameter = getIndexOfParameter(filterOptions.parameters ?? [], parameterUuid);
-
-        formProviderMethods.setValue(`parameters.${indexOfParameter}`, {
-            ...parametersValue[indexOfParameter],
-            minimalValue: null,
-            maximalValue: null,
-        });
     };
 
     return (
@@ -100,7 +67,12 @@ export const Parameters: FC<ParametersProps> = ({ filterOptions, checkedParamete
                                     alt=""
                                     iconType="icon"
                                     icon="RemoveThin"
-                                    onClick={onUncheckSliderParameter(filteredParameter.parameterUuid)}
+                                    onClick={() =>
+                                        dispatch({
+                                            type: 'uncheckSliderParameter',
+                                            payload: filteredParameter.parameterUuid,
+                                        })
+                                    }
                                 />
                             </SelectedParametersListItemStyled>
                         </SelectedParametersListStyled>
@@ -122,10 +94,15 @@ export const Parameters: FC<ParametersProps> = ({ filterOptions, checkedParamete
                                                 alt=""
                                                 iconType="icon"
                                                 icon="RemoveThin"
-                                                onClick={onUncheckParameter(
-                                                    filteredParameter.parameterUuid,
-                                                    value.uuid,
-                                                )}
+                                                onClick={() =>
+                                                    dispatch({
+                                                        type: 'uncheckParameter',
+                                                        payload: {
+                                                            uuid: filteredParameter.parameterUuid,
+                                                            valueUuid: value.uuid,
+                                                        },
+                                                    })
+                                                }
                                                 data-testid={TEST_IDENTIFIER + 'remove-' + index}
                                             />
                                         </SelectedParametersListItemStyled>

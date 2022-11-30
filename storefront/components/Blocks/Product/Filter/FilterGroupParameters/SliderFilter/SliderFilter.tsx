@@ -1,7 +1,6 @@
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
-import { FC, useCallback } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
-import { FilterFormType } from 'types/productFilter';
+import { useFilterState } from 'components/Blocks/Product/Filter/FilterContext/useFilterState';
+import { FC, useCallback, useMemo } from 'react';
 
 type SliderFilterProps = {
     parameterParentIndex: number;
@@ -10,27 +9,46 @@ type SliderFilterProps = {
 };
 
 export const SliderFilter: FC<SliderFilterProps> = ({ min, max, parameterParentIndex }) => {
-    const minValueName = `parameters.${parameterParentIndex}.minimalValue` as const;
-    const maxValueName = `parameters.${parameterParentIndex}.maximalValue` as const;
-
-    const { control, setValue } = useFormContext<FilterFormType>();
-    const [minimalValue, maximalValue] = useWatch({
-        name: [minValueName, maxValueName],
-        control,
-    });
+    const [state, dispatch] = useFilterState();
+    const minimalValue = useMemo(
+        () => state.selected.parameters[parameterParentIndex]?.minimalValue,
+        [parameterParentIndex, state.selected.parameters],
+    );
+    const maximalValue = useMemo(
+        () => state.selected.parameters[parameterParentIndex]?.maximalValue,
+        [parameterParentIndex, state.selected.parameters],
+    );
 
     const setMinimalPrice = useCallback(
         (value: number) => {
-            setValue(minValueName, value !== min ? value : null);
+            if (minimalValue !== value) {
+                dispatch({
+                    type: 'setSliderParameter',
+                    payload: {
+                        value: value !== min ? value : null,
+                        type: 'minimalValue',
+                        index: parameterParentIndex,
+                    },
+                });
+            }
         },
-        [min, minValueName, setValue],
+        [dispatch, min, minimalValue, parameterParentIndex],
     );
 
     const setMaximalPrice = useCallback(
         (value: number) => {
-            setValue(maxValueName, value !== max ? value : null);
+            if (maximalValue !== value) {
+                dispatch({
+                    type: 'setSliderParameter',
+                    payload: {
+                        value: value !== max ? value : null,
+                        type: 'maximalValue',
+                        index: parameterParentIndex,
+                    },
+                });
+            }
         },
-        [max, maxValueName, setValue],
+        [dispatch, max, maximalValue, parameterParentIndex],
     );
 
     return (

@@ -4,7 +4,7 @@ import {
 } from './ContactInformationFormWrapper.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
-import { Textarea } from 'components/Forms/Textarea/Textarea';
+import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
 import { ContactInformationAddress } from 'components/Pages/Order/ContactInformation/ContactInformationAddress/ContactInformationAddress';
 import { ContactInformationCompany } from 'components/Pages/Order/ContactInformation/ContactInformationCompany/ContactInformationCompany';
 import { ContactInformationCustomer } from 'components/Pages/Order/ContactInformation/ContactInformationCustomer/ContactInformationCustomer';
@@ -13,7 +13,7 @@ import { ContactInformationUser } from 'components/Pages/Order/ContactInformatio
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useRef, useState } from 'react';
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
 import { ContactInformationFormType } from 'types/form';
 
@@ -70,22 +70,20 @@ export const ContactInformationFormWrapper: FC<ContactInformationFormWrapperProp
                         <ContactInformationDeliveryAddress />
 
                         <Heading type="h3">{t('Note')}</Heading>
-                        <FormLine bottomGap lg="65%">
-                            <Controller
-                                name={formMeta.fields.note.name}
-                                render={({ field, fieldState: { isTouched, invalid } }) => (
-                                    <Textarea
-                                        id={formMeta.formName + '-' + formMeta.fields.note.name}
-                                        name={formMeta.fields.note.name}
-                                        label={formMeta.fields.note.label}
-                                        fieldRef={field}
-                                        isTouched={isTouched}
-                                        hasError={invalid}
-                                        rows={3}
-                                    />
-                                )}
-                            />
-                        </FormLine>
+                        <TextareaControlled
+                            name={formMeta.fields.note.name}
+                            control={formProviderMethods.control}
+                            formName={formMeta.formName}
+                            render={(textarea) => (
+                                <FormLine bottomGap lg="65%">
+                                    {textarea}
+                                </FormLine>
+                            )}
+                            textareaProps={{
+                                label: formMeta.fields.note.label,
+                                rows: 3,
+                            }}
+                        />
                     </div>
                 </div>
             </CSSTransition>

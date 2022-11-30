@@ -1,8 +1,7 @@
-import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-type AutocompleteSearchFormStyledProps = {
+type AutocompleteSearchInnerStyledProps = {
     isActive: boolean;
 };
 
@@ -30,7 +29,7 @@ export const AutocompleteSearchInStyled = styled.div(
     `,
 );
 
-export const AutocompleteSearchFormStyled = styled.form<AutocompleteSearchFormStyledProps>(
+export const AutocompleteSearchInnerStyled = styled.div<AutocompleteSearchInnerStyledProps>(
     ({ theme, isActive }) => css`
         position: relative;
         display: flex;
@@ -69,18 +68,6 @@ export const AutocompleteSearchFormStyled = styled.form<AutocompleteSearchFormSt
         }
     `,
 );
-
-export const AutocompleteSearchTextInputStyled = styled(TextInput)`
-    width: 100%;
-    margin-bottom: 0;
-
-    &::-webkit-search-decoration,
-    &::-webkit-search-cancel-button,
-    &::-webkit-search-results-button,
-    &::-webkit-search-results-decoration {
-        -webkit-appearance: none;
-    }
-`;
 
 export const AutocompleteSearchRemoveButtonStyled = styled.div(
     ({ theme }) => css`

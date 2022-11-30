@@ -22,7 +22,7 @@ export const NotificationBars: FC = () => {
     const { isUserLoggedIn, user } = useCurrentUserData();
     const [isAdminLoggedInAsUser, setIsAdminLoggedAsUser] = useState(false);
     const theme = useTheme() as Theme;
-    const [, [, logout]] = useAuth();
+    const { logout } = useAuth();
 
     useEffect(() => {
         try {

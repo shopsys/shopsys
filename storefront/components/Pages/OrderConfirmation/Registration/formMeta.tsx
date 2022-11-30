@@ -35,9 +35,14 @@ export const useRegistrationAfterOrderForm = (): [
 type RegistrationAfterOrderFormMetaType = {
     formName: string;
     fields: {
-        [key in keyof RegistrationAfterOrderFormType]: {
-            name: key;
+        privacyPolicy: {
+            name: 'privacyPolicy';
             label: string | JSX.Element;
+            errorMessage: string | undefined;
+        };
+        password: {
+            name: 'password';
+            label: string;
             errorMessage: string | undefined;
         };
     };

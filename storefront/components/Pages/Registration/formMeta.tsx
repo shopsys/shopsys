@@ -115,13 +115,23 @@ type RegistrationFormMetaType = {
     formName: string;
     messages: {
         error: string;
-        success: string;
         successAndLogged: string;
     };
     fields: {
-        [key in keyof RegistrationFormType]: {
+        [key in keyof Omit<RegistrationFormType, 'passwordFirst' | 'passwordSecond'>]: {
             name: key;
             label: string | JSX.Element;
+            errorMessage: string | undefined;
+        };
+    } & {
+        passwordFirst: {
+            name: 'passwordFirst';
+            label: string;
+            errorMessage: string | undefined;
+        };
+        passwordSecond: {
+            name: 'passwordSecond';
+            label: string;
             errorMessage: string | undefined;
         };
     };
@@ -148,7 +158,6 @@ export const useRegistrationFormMeta = (
             formName: 'registration-form',
             messages: {
                 error: t('Could not create account'),
-                success: t('Your account has been created'),
                 successAndLogged: t('Your account has been created and you are logged in now'),
             },
             fields: {

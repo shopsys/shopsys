@@ -7,21 +7,20 @@ import { Form } from 'components/Forms/Form/Form';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
 import { FormColumn } from 'components/Forms/Lib/FormColumn/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
-import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
-import { Textarea } from 'components/Forms/Textarea/Textarea';
-import { TextInput } from 'components/Forms/TextInput/TextInput';
+import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
+import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useContactMutationApi, useSettingsQueryApi } from 'graphql/generated';
-import { useHandleErrorPopupVisibility } from 'hooks/forms/useHandleErrorPopupVisibility';
-import { useHandleFormErrors } from 'hooks/forms/useHandleFormErrors';
-import { useHandleFormSuccessfulSubmit } from 'hooks/forms/useHandleFormSuccessfulSubmit';
+import { clearForm } from 'helpers/forms/clearForm';
+import { handleFormErrors } from 'helpers/forms/handleFormErrors';
+import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useGetPrivacyPolicyUrl } from 'hooks/routes/useGetPrivacyPolicyUrl';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
-import React, { FC } from 'react';
-import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import React, { FC, useCallback } from 'react';
+import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
 import { ContactFormType } from 'types/form';
 
@@ -29,28 +28,25 @@ export const ContactContent: FC = () => {
     const t = useTypedTranslationFunction();
     const [formProviderMethods, defaultValues] = useContactForm();
     const formMeta = useContactFormMeta(formProviderMethods);
-
     const [{ data }] = useSettingsQueryApi({ requestPolicy: 'cache-only' });
-
     const { url } = useShopsysSelector((state) => state.domain);
     const gdprUrl = useGetPrivacyPolicyUrl();
+    const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
+    const [, contact] = useContactMutationApi();
 
-    const [contactResult, contactMutation] = useContactMutationApi();
-    useHandleFormSuccessfulSubmit(
-        contactResult,
-        formProviderMethods,
-        defaultValues,
-        () => showSuccessMessage(formMeta.messages.success),
-        { reset: true },
+    const onSubmitHandler = useCallback<SubmitHandler<ContactFormType>>(
+        async (values) => {
+            const contactResult = await contact({ input: values });
+
+            if (contactResult.data?.Contact !== undefined) {
+                showSuccessMessage(formMeta.messages.success);
+            }
+
+            handleFormErrors(contactResult.error, formProviderMethods, 'other', t, formMeta.messages.error);
+            clearForm(contactResult.error, formProviderMethods, defaultValues);
+        },
+        [contact, formMeta.messages, formProviderMethods, t, defaultValues],
     );
-    useHandleFormErrors(contactResult.error, formProviderMethods, 'other', formMeta.messages.error);
-    const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
-
-    const onSubmitHandler: SubmitHandler<ContactFormType> = async (values, event) => {
-        event?.preventDefault();
-
-        await contactMutation({ input: values });
-    };
 
     return (
         <StaticUrlGuard domainUrl={url}>
@@ -62,93 +58,57 @@ export const ContactContent: FC = () => {
                     )}
                     <FormProvider {...formProviderMethods}>
                         <Form onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}>
-                            <FormColumn lg="65%">
-                                <FormLine bottomGap width="100%" lg="50%">
-                                    <Controller
-                                        name={formMeta.fields.name.name}
-                                        render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                            <>
-                                                <TextInput
-                                                    id={formMeta.formName + '-' + formMeta.fields.name.name}
-                                                    name={formMeta.fields.name.name}
-                                                    label={formMeta.fields.name.label}
-                                                    required
-                                                    type="text"
-                                                    isTouched={isTouched}
-                                                    hasError={invalid}
-                                                    fieldRef={field}
-                                                />
-                                                <FormLineError
-                                                    error={error}
-                                                    inputType="text-input"
-                                                    testIdentifier={
-                                                        formMeta.formName + '-' + formMeta.fields.name.name + '-error'
-                                                    }
-                                                />
-                                            </>
-                                        )}
-                                    />
-                                </FormLine>
-                            </FormColumn>
-                            <FormColumn lg="65%">
-                                <FormLine bottomGap width="100%" lg="50%">
-                                    <Controller
-                                        name={formMeta.fields.email.name}
-                                        render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                            <>
-                                                <TextInput
-                                                    id={formMeta.formName + '-' + formMeta.fields.email.name}
-                                                    name={formMeta.fields.email.name}
-                                                    label={formMeta.fields.email.label}
-                                                    required
-                                                    type="email"
-                                                    isTouched={isTouched}
-                                                    hasError={invalid}
-                                                    fieldRef={field}
-                                                />
-                                                <FormLineError
-                                                    error={error}
-                                                    inputType="text-input"
-                                                    testIdentifier={
-                                                        formMeta.formName + '-' + formMeta.fields.email.name + '-error'
-                                                    }
-                                                />
-                                            </>
-                                        )}
-                                    />
-                                </FormLine>
-                            </FormColumn>
-                            <FormColumn lg="65%">
-                                <FormLine bottomGap width="100%">
-                                    <Controller
-                                        name={formMeta.fields.message.name}
-                                        render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                            <>
-                                                <Textarea
-                                                    id={formMeta.formName + '-' + formMeta.fields.message.name}
-                                                    name={formMeta.fields.message.name}
-                                                    label={formMeta.fields.message.label}
-                                                    required
-                                                    isTouched={isTouched}
-                                                    hasError={invalid}
-                                                    fieldRef={field}
-                                                    rows={4}
-                                                />
-                                                <FormLineError
-                                                    error={error}
-                                                    inputType="textarea"
-                                                    testIdentifier={
-                                                        formMeta.formName +
-                                                        '-' +
-                                                        formMeta.fields.message.name +
-                                                        '-error'
-                                                    }
-                                                />
-                                            </>
-                                        )}
-                                    />
-                                </FormLine>
-                            </FormColumn>
+                            <TextInputControlled
+                                control={formProviderMethods.control}
+                                name={formMeta.fields.name.name}
+                                render={(textInput) => (
+                                    <FormColumn lg="65%">
+                                        <FormLine bottomGap width="100%" lg="50%">
+                                            {textInput}
+                                        </FormLine>
+                                    </FormColumn>
+                                )}
+                                formName={formMeta.formName}
+                                textInputProps={{
+                                    label: formMeta.fields.name.label,
+                                    required: true,
+                                    type: 'text',
+                                }}
+                            />
+                            <TextInputControlled
+                                control={formProviderMethods.control}
+                                name={formMeta.fields.email.name}
+                                render={(textInput) => (
+                                    <FormColumn lg="65%">
+                                        <FormLine bottomGap width="100%" lg="50%">
+                                            {textInput}
+                                        </FormLine>
+                                    </FormColumn>
+                                )}
+                                formName={formMeta.formName}
+                                textInputProps={{
+                                    label: formMeta.fields.email.label,
+                                    required: true,
+                                    type: 'email',
+                                }}
+                            />
+                            <TextareaControlled
+                                name={formMeta.fields.message.name}
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                render={(textarea) => (
+                                    <FormColumn lg="65%">
+                                        <FormLine bottomGap width="100%">
+                                            {textarea}
+                                        </FormLine>
+                                    </FormColumn>
+                                )}
+                                textareaProps={{
+                                    label: formMeta.fields.message.label,
+                                    required: true,
+                                    rows: 4,
+                                }}
+                            />
                             <ContactTextStyled>
                                 <Trans
                                     i18nKey="ContactFormInfo"

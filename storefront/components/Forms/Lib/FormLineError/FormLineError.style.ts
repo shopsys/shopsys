@@ -9,7 +9,7 @@ const localVariables = {
 
 type ErrorIconStyledProps = {
     inputType: 'textarea' | 'text-input' | 'checkbox' | 'text-input-password' | 'select';
-    textInputSize?: 'small';
+    textInputSize?: 'small' | 'default';
 };
 
 export const FormFieldErrorStyled = styled.div`

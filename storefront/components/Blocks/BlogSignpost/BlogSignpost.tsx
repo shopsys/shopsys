@@ -40,7 +40,7 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
                                 {blogCategory.name}
                             </BlogSignpostItemStyled>
                         </NextLink>
-                        {blogCategory.children.length > 0 && (
+                        {blogCategory.children !== undefined && blogCategory.children.length > 0 && (
                             <Children blogCategory={blogCategory} activeItem={activeItem} itemLevel={1} />
                         )}
                     </Fragment>

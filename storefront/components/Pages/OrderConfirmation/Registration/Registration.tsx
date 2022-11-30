@@ -9,25 +9,24 @@ import {
     RegistrationStyled,
 } from './Registration.style';
 import { Button } from 'components/Forms/Button/Button';
-import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
+import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLine';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
-import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
-import { TextInput } from 'components/Forms/TextInput/TextInput';
+import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { useRegistrationMutationApi } from 'graphql/generated';
 import { setTokensToCookie } from 'helpers/auth/tokens';
-import { useHandleErrorPopupVisibility } from 'hooks/forms/useHandleErrorPopupVisibility';
+import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import Trans from 'next-translate/Trans';
 import { FC } from 'react';
-import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysDispatch } from 'redux/main';
 import { userActions } from 'redux/slices/user';
 import { RegistrationAfterOrderFormType } from 'types/form';
@@ -41,7 +40,7 @@ export const Registration: FC = () => {
     const t = useTypedTranslationFunction();
     const [formProviderMethods] = useRegistrationAfterOrderForm();
     const formMeta = useRegistrationAfterOrderFormMeta(formProviderMethods);
-    const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
+    const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
 
     useEffectOnce(() => {
         return () => {
@@ -104,59 +103,31 @@ export const Registration: FC = () => {
                         <RegistrationFormStyled>
                             <Form onSubmit={formProviderMethods.handleSubmit(onRegistrationSubmitHandler)}>
                                 <FormProvider {...formProviderMethods}>
-                                    <Controller
+                                    <PasswordInputControlled
+                                        control={formProviderMethods.control}
                                         name={formMeta.fields.password.name}
-                                        render={({ field, fieldState: { error, invalid, isTouched } }) => (
+                                        render={(passwordInput) => (
                                             <RegistrationFormItemStyled>
-                                                <FormLine>
-                                                    <TextInput
-                                                        id={formMeta.formName + '-' + formMeta.fields.password.name}
-                                                        name={formMeta.fields.password.name}
-                                                        label={formMeta.fields.password.label}
-                                                        type="password"
-                                                        fieldRef={field}
-                                                        required
-                                                        isTouched={isTouched}
-                                                        hasError={invalid}
-                                                    />
-                                                    <FormLineError
-                                                        inputType="text-input-password"
-                                                        error={error}
-                                                        testIdentifier={
-                                                            formMeta.formName +
-                                                            '-' +
-                                                            formMeta.fields.password.name +
-                                                            '-error'
-                                                        }
-                                                    />
-                                                </FormLine>
+                                                <FormLine>{passwordInput}</FormLine>
                                             </RegistrationFormItemStyled>
                                         )}
+                                        formName={formMeta.formName}
+                                        passwordInputProps={{
+                                            label: formMeta.fields.password.label,
+                                        }}
                                     />
-                                    <Controller
+                                    <CheckboxControlled
                                         name={formMeta.fields.privacyPolicy.name}
-                                        render={({ field, fieldState: { error } }) => (
+                                        control={formProviderMethods.control}
+                                        formName={formMeta.formName}
+                                        render={(checkbox) => (
                                             <RegistrationFormItemStyled>
-                                                <ChoiceFormLine>
-                                                    <Checkbox
-                                                        name={formMeta.fields.privacyPolicy.name}
-                                                        label={formMeta.fields.privacyPolicy.label}
-                                                        fieldRef={field}
-                                                        required
-                                                    />
-                                                    <FormLineError
-                                                        inputType="checkbox"
-                                                        error={error}
-                                                        testIdentifier={
-                                                            formMeta.formName +
-                                                            '-' +
-                                                            formMeta.fields.privacyPolicy.name +
-                                                            '-error'
-                                                        }
-                                                    />
-                                                </ChoiceFormLine>
+                                                <ChoiceFormLine>{checkbox}</ChoiceFormLine>
                                             </RegistrationFormItemStyled>
                                         )}
+                                        checkboxProps={{
+                                            label: formMeta.fields.privacyPolicy.label,
+                                        }}
                                     />
                                     <Button
                                         testIdentifier={TEST_IDENTIFIER}

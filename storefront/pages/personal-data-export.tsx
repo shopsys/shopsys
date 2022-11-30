@@ -2,7 +2,7 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
 import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PersonalDataExportContent } from 'components/Pages/PersonalData/Export/PersonalDataExportContent';
-import { PersonalDataPageTextQueryDocumentApi } from 'graphql/generated';
+import { PersonalDataPageTextQueryDocumentApi, usePersonalDataPageTextQueryApi } from 'graphql/generated';
 import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
@@ -20,6 +20,7 @@ const PersonalDataExportPage: FC = () => {
         () => [{ name: t('Personal Data Export'), slug: personalDataExportUrl }],
         [personalDataExportUrl, t],
     );
+    const [personalDataPageTextResult] = usePersonalDataPageTextQueryApi();
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other', breadcrumbs);
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
@@ -27,7 +28,10 @@ const PersonalDataExportPage: FC = () => {
         <StaticUrlGuard domainUrl={domainUrl}>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Personal Data Export')}>
-                <PersonalDataExportContent breadcrumbs={breadcrumbs} />
+                <PersonalDataExportContent
+                    breadcrumbs={breadcrumbs}
+                    contentSiteText={personalDataPageTextResult.data?.personalDataPage?.exportSiteContent}
+                />
             </CommonLayout>
         </StaticUrlGuard>
     );

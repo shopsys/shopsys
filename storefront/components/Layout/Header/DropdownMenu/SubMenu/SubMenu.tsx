@@ -14,7 +14,7 @@ export const SubMenu: FC = () => {
     const domainConfig = useShopsysSelector((state) => state.domain);
     const { isUserLoggedIn } = useCurrentUserData();
     const [storesUrl, loginUrl] = getInternationalizedStaticUrls(['/stores', '/login'], domainConfig.url);
-    const [, [, logout]] = useAuth();
+    const { logout } = useAuth();
 
     return (
         <SubMenuStyled data-testid={TEST_IDENTIFIER}>

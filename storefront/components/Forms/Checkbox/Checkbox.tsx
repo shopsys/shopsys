@@ -1,63 +1,47 @@
 import { CheckboxStyled } from './Checkbox.style';
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper/LabelWrapper';
-import { FC, InputHTMLAttributes, ReactNode } from 'react';
-import { ControllerRenderProps } from 'react-hook-form';
+import { FC, forwardRef, InputHTMLAttributes, ReactNode } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
-    'name',
-    'id' | 'disabled' | 'required'
+    'id' | 'onChange',
+    'name' | 'disabled' | 'required' | 'onBlur'
 >;
 
-type CheckboxProps = NativeProps & {
-    label: string | ReactNode | ReactNode[];
+export type CheckboxProps = NativeProps & {
+    value: boolean;
+    label: ReactNode;
     count?: number;
     testIdentifier?: string;
-} & (
-        | {
-              value: unknown;
-              fieldRef?: never;
-              onChange: (...event: any[]) => void;
-          }
-        | {
-              value?: never;
-              fieldRef: ControllerRenderProps<any, any>;
-              onChange?: never;
-          }
-    );
-
-export const Checkbox: FC<CheckboxProps> = ({
-    id,
-    name,
-    label,
-    count,
-    required,
-    disabled,
-    fieldRef,
-    onChange,
-    value,
-    testIdentifier,
-}) => {
-    return (
-        <LabelWrapper
-            label={label}
-            count={count}
-            required={required}
-            htmlFor={id === undefined ? name + 'checkbox-id' : id}
-            inputType="checkbox"
-            checked={fieldRef ? fieldRef.value : value}
-        >
-            <CheckboxStyled
-                disabled={disabled}
-                required={required}
-                id={id === undefined ? name + 'checkbox-id' : id}
-                {...(fieldRef ?? {})}
-                checked={fieldRef ? fieldRef.value : value}
-                onChange={fieldRef ? fieldRef.onChange : onChange}
-                type="checkbox"
-                data-testid={testIdentifier}
-            />
-        </LabelWrapper>
-    );
 };
+
+export const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, CheckboxProps>(
+    ({ id, name, label, count, required, disabled, onChange, value, testIdentifier }, checkboxForwardedRef) => {
+        return (
+            <LabelWrapper
+                label={label}
+                count={count}
+                required={required}
+                htmlFor={id}
+                checked={value}
+                inputType="checkbox"
+            >
+                <CheckboxStyled
+                    id={id}
+                    disabled={disabled}
+                    required={required}
+                    name={name}
+                    onChange={onChange}
+                    type="checkbox"
+                    checked={value}
+                    value={value as any}
+                    ref={checkboxForwardedRef}
+                    data-testid={testIdentifier}
+                />
+            </LabelWrapper>
+        );
+    },
+);
+
+Checkbox.displayName = 'Checkbox';

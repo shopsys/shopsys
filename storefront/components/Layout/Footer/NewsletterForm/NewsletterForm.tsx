@@ -7,44 +7,53 @@ import {
 } from './NewsletterForm.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Button } from 'components/Forms/Button/Button';
-import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
+import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLine';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
-import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
-import { TextInput } from 'components/Forms/TextInput/TextInput';
+import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { useNewsletterSubscribeMutationApi } from 'graphql/generated';
-import { useHandleErrorPopupVisibility } from 'hooks/forms/useHandleErrorPopupVisibility';
-import { useHandleFormErrors } from 'hooks/forms/useHandleFormErrors';
-import { useHandleFormSuccessfulSubmit } from 'hooks/forms/useHandleFormSuccessfulSubmit';
+import { blurInput } from 'helpers/forms/blurInput';
+import { clearForm } from 'helpers/forms/clearForm';
+import { handleFormErrors } from 'helpers/forms/handleFormErrors';
+import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC } from 'react';
-import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { FC, useCallback } from 'react';
+import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';
 
 const TEST_IDENTIFIER = 'layout-footer-newsletterform';
 
 export const NewsletterForm: FC = () => {
     const t = useTypedTranslationFunction();
-    const [subscribeToNewsletterResult, subscribeToNewsletter] = useNewsletterSubscribeMutationApi();
+    const [, subscribeToNewsletter] = useNewsletterSubscribeMutationApi();
     const [formProviderMethods, defaultValues] = useNewsletterForm();
     const formMeta = useNewsletterFormMeta(formProviderMethods);
-    const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
-    useHandleFormErrors(subscribeToNewsletterResult.error, formProviderMethods, 'footer', formMeta.messages.error);
-    useHandleFormSuccessfulSubmit(
-        subscribeToNewsletterResult,
-        formProviderMethods,
-        defaultValues,
-        () => showSuccessMessage(formMeta.messages.success),
-        { blur: true, reset: true },
-    );
+    const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
 
-    const onSubscribeToNewsletterHandler: SubmitHandler<NewsletterFormType> = async (data, event) => {
-        event?.preventDefault();
-        await subscribeToNewsletter(data);
-    };
+    const onSubscribeToNewsletterHandler = useCallback<SubmitHandler<NewsletterFormType>>(
+        async (data) => {
+            blurInput();
+            const subscribeToNewsletterResult = await subscribeToNewsletter(data);
+
+            if (subscribeToNewsletterResult.data?.NewsletterSubscribe !== undefined) {
+                showSuccessMessage(formMeta.messages.success);
+            }
+
+            handleFormErrors(
+                subscribeToNewsletterResult.error,
+                formProviderMethods,
+                'footer',
+                t,
+                formMeta.messages.error,
+            );
+
+            clearForm(subscribeToNewsletterResult.error, formProviderMethods, defaultValues);
+        },
+        [formMeta.messages, formProviderMethods, subscribeToNewsletter, t, defaultValues],
+    );
 
     return (
         <>
@@ -54,34 +63,18 @@ export const NewsletterForm: FC = () => {
                     <FormProvider {...formProviderMethods}>
                         <Form onSubmit={formProviderMethods.handleSubmit(onSubscribeToNewsletterHandler)}>
                             <NewsletterFormInputWrapperStyled>
-                                <FormLine>
-                                    <Controller
-                                        name={formMeta.fields.email.name}
-                                        render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                            <>
-                                                <TextInput
-                                                    id={formMeta.formName + '-' + formMeta.fields.email.name}
-                                                    name={formMeta.fields.email.name}
-                                                    label={formMeta.fields.email.label}
-                                                    required
-                                                    type="text"
-                                                    inputSize="small"
-                                                    isTouched={isTouched}
-                                                    hasError={invalid}
-                                                    fieldRef={field}
-                                                />
-                                                <FormLineError
-                                                    textInputSize="small"
-                                                    error={error}
-                                                    inputType="text-input"
-                                                    testIdentifier={
-                                                        formMeta.formName + '-' + formMeta.fields.email.name + '-error'
-                                                    }
-                                                />
-                                            </>
-                                        )}
-                                    />
-                                </FormLine>
+                                <TextInputControlled
+                                    control={formProviderMethods.control}
+                                    name={formMeta.fields.email.name}
+                                    render={(textInput) => <FormLine>{textInput}</FormLine>}
+                                    formName={formMeta.formName}
+                                    textInputProps={{
+                                        inputSize: 'small',
+                                        label: formMeta.fields.email.label,
+                                        required: true,
+                                        type: 'text',
+                                    }}
+                                />
                                 <NewsletterFormButtonWrapperStyled>
                                     <Button
                                         type="submit"
@@ -92,32 +85,16 @@ export const NewsletterForm: FC = () => {
                                     </Button>
                                 </NewsletterFormButtonWrapperStyled>
                             </NewsletterFormInputWrapperStyled>
-                            <ChoiceFormLine>
-                                <Controller
-                                    name={formMeta.fields.privacyPolicy.name}
-                                    render={({ fieldState: { error }, field }) => (
-                                        <>
-                                            <Checkbox
-                                                id={formMeta.formName + '-' + formMeta.fields.privacyPolicy.name}
-                                                name={formMeta.fields.privacyPolicy.name}
-                                                label={formMeta.fields.privacyPolicy.label}
-                                                required
-                                                fieldRef={field}
-                                            />
-                                            <FormLineError
-                                                error={error}
-                                                inputType="checkbox"
-                                                testIdentifier={
-                                                    formMeta.formName +
-                                                    '-' +
-                                                    formMeta.fields.privacyPolicy.name +
-                                                    '-error'
-                                                }
-                                            />
-                                        </>
-                                    )}
-                                />
-                            </ChoiceFormLine>
+                            <CheckboxControlled
+                                name={formMeta.fields.privacyPolicy.name}
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
+                                checkboxProps={{
+                                    label: formMeta.fields.privacyPolicy.label,
+                                    required: true,
+                                }}
+                            />
                         </Form>
                     </FormProvider>
                 </NewsletterFormColumnStyled>

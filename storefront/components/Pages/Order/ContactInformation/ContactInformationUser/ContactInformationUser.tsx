@@ -1,12 +1,11 @@
 import { Heading } from 'components/Basic/Heading/Heading';
 import { FormColumn } from 'components/Forms/Lib/FormColumn/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
-import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
-import { TextInput } from 'components/Forms/TextInput/TextInput';
+import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { useShopsysDispatch } from 'redux/main';
 import { contactInformationActions } from 'redux/slices/contactInformation';
 import { ContactInformationFormType } from 'types/form';
@@ -16,93 +15,59 @@ export const ContactInformationUser: FC = () => {
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<ContactInformationFormType>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
-    const [telephoneValue, firstNameValue, lastNameValue] = useWatch({
-        name: [formMeta.fields.telephone.name, formMeta.fields.firstName.name, formMeta.fields.lastName.name],
-        control: formProviderMethods.control,
-    });
 
     return (
         <>
             <Heading type="h3">{t('Customer information')}</Heading>
-            <FormLine bottomGap lg="65%">
-                <Controller
-                    name={formMeta.fields.telephone.name}
-                    render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                        <>
-                            <TextInput
-                                id={formMeta.formName + '-' + formMeta.fields.telephone.name}
-                                name={formMeta.fields.telephone.name}
-                                label={formMeta.fields.telephone.label}
-                                required
-                                type="text"
-                                isTouched={isTouched}
-                                hasError={invalid}
-                                fieldRef={field}
-                                onBlurCapture={() => dispatch(contactInformationActions.setTelephone(telephoneValue))}
-                            />
-                            <FormLineError
-                                error={error}
-                                inputType="text-input"
-                                testIdentifier={formMeta.formName + '-' + formMeta.fields.telephone.name + '-error'}
-                            />
-                        </>
-                    )}
-                />
-            </FormLine>
-
+            <TextInputControlled
+                control={formProviderMethods.control}
+                name={formMeta.fields.telephone.name}
+                render={(textInput) => (
+                    <FormLine bottomGap lg="65%">
+                        {textInput}
+                    </FormLine>
+                )}
+                formName={formMeta.formName}
+                textInputProps={{
+                    label: formMeta.fields.telephone.label,
+                    required: true,
+                    type: 'text',
+                    onBlur: (event) => dispatch(contactInformationActions.setTelephone(event.currentTarget.value)),
+                }}
+            />
             <FormColumn lg="65%">
-                <FormLine bottomGap width="100%" lg="50%">
-                    <Controller
-                        name={formMeta.fields.firstName.name}
-                        render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                            <>
-                                <TextInput
-                                    id={formMeta.formName + '-' + formMeta.fields.firstName.name}
-                                    name={formMeta.fields.firstName.name}
-                                    label={formMeta.fields.firstName.label}
-                                    required
-                                    type="text"
-                                    isTouched={isTouched}
-                                    hasError={invalid}
-                                    fieldRef={field}
-                                    onBlurCapture={() =>
-                                        dispatch(contactInformationActions.setFirstName(firstNameValue))
-                                    }
-                                />
-                                <FormLineError
-                                    error={error}
-                                    inputType="text-input"
-                                    testIdentifier={formMeta.formName + '-' + formMeta.fields.firstName.name + '-error'}
-                                />
-                            </>
-                        )}
-                    />
-                </FormLine>
-                <FormLine bottomGap width="100%" lg="50%">
-                    <Controller
-                        name={formMeta.fields.lastName.name}
-                        render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                            <>
-                                <TextInput
-                                    id={formMeta.formName + '-' + formMeta.fields.lastName.name}
-                                    name={formMeta.fields.lastName.name}
-                                    label={formMeta.fields.lastName.label}
-                                    required
-                                    type="text"
-                                    isTouched={isTouched}
-                                    hasError={invalid}
-                                    fieldRef={field}
-                                    onBlurCapture={() => dispatch(contactInformationActions.setLastName(lastNameValue))}
-                                />
-                                <FormLineError
-                                    error={error}
-                                    inputType="text-input"
-                                    testIdentifier={formMeta.formName + '-' + formMeta.fields.lastName.name + '-error'}
-                                />
-                            </>
-                        )}
-                    />
-                </FormLine>
+                <TextInputControlled
+                    control={formProviderMethods.control}
+                    name={formMeta.fields.firstName.name}
+                    render={(textInput) => (
+                        <FormLine bottomGap width="100%" lg="50%">
+                            {textInput}
+                        </FormLine>
+                    )}
+                    formName={formMeta.formName}
+                    textInputProps={{
+                        label: formMeta.fields.firstName.label,
+                        required: true,
+                        type: 'text',
+                        onBlur: (event) => dispatch(contactInformationActions.setFirstName(event.currentTarget.value)),
+                    }}
+                />
+                <TextInputControlled
+                    control={formProviderMethods.control}
+                    name={formMeta.fields.lastName.name}
+                    render={(textInput) => (
+                        <FormLine bottomGap width="100%" lg="50%">
+                            {textInput}
+                        </FormLine>
+                    )}
+                    formName={formMeta.formName}
+                    textInputProps={{
+                        label: formMeta.fields.lastName.label,
+                        required: true,
+                        type: 'text',
+                        onBlur: (event) => dispatch(contactInformationActions.setLastName(event.currentTarget.value)),
+                    }}
+                />
             </FormColumn>
         </>
     );

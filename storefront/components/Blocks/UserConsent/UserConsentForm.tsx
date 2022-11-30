@@ -2,7 +2,7 @@ import { useUserConsentForm, useUserConsentFormMeta } from './formMeta';
 import { ConsentButtonsRowStyled, ConsentNameStyled, ConsentRowStyled } from './UserConsentForm.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Button } from 'components/Forms/Button/Button';
-import { ToggleSwitch } from 'components/Forms/ToggleSwitch/ToggleSwitch';
+import { ToggleSwitchControlled } from 'components/Forms/ToggleSwitch/ToggleSwitchControlled';
 import { setUserConsentCookie } from 'helpers/cookies/setUserConsentCookie';
 import { onConsentUpdateGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import { getGtmConsentInfo } from 'helpers/gtm/gtm';
@@ -10,7 +10,7 @@ import { useGetCookiesUrl } from 'hooks/routes/useGetCookiesUrl';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { FC, useCallback } from 'react';
-import { Controller, FormProvider } from 'react-hook-form';
+import { FormProvider } from 'react-hook-form';
 import { UserConsentFormType } from 'types/form';
 
 type UserConsentFormProps = {
@@ -61,27 +61,39 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                     }}
                 />
             </p>
-            <ConsentRowStyled>
-                <ConsentNameStyled>{t('Marketing')}</ConsentNameStyled>
-                <Controller
-                    name={formMeta.fields.marketing.name}
-                    render={({ field }) => <ToggleSwitch id={formMeta.fields.marketing.name} fieldRef={field} />}
-                />
-            </ConsentRowStyled>
-            <ConsentRowStyled>
-                <ConsentNameStyled>{t('Statistics')}</ConsentNameStyled>
-                <Controller
-                    name={formMeta.fields.statistics.name}
-                    render={({ field }) => <ToggleSwitch id={formMeta.fields.statistics.name} fieldRef={field} />}
-                />
-            </ConsentRowStyled>
-            <ConsentRowStyled>
-                <ConsentNameStyled>{t('Preferences')}</ConsentNameStyled>
-                <Controller
-                    name={formMeta.fields.preferences.name}
-                    render={({ field }) => <ToggleSwitch id={formMeta.fields.preferences.name} fieldRef={field} />}
-                />
-            </ConsentRowStyled>
+            <ToggleSwitchControlled
+                control={formProviderMethods.control}
+                formName={formMeta.formName}
+                name={formMeta.fields.marketing.name}
+                render={(toggleSwitch) => (
+                    <ConsentRowStyled>
+                        <ConsentNameStyled>{t('Marketing')}</ConsentNameStyled>
+                        {toggleSwitch}
+                    </ConsentRowStyled>
+                )}
+            />
+            <ToggleSwitchControlled
+                control={formProviderMethods.control}
+                formName={formMeta.formName}
+                name={formMeta.fields.statistics.name}
+                render={(toggleSwitch) => (
+                    <ConsentRowStyled>
+                        <ConsentNameStyled>{t('Statistics')}</ConsentNameStyled>
+                        {toggleSwitch}
+                    </ConsentRowStyled>
+                )}
+            />
+            <ToggleSwitchControlled
+                control={formProviderMethods.control}
+                formName={formMeta.formName}
+                name={formMeta.fields.preferences.name}
+                render={(toggleSwitch) => (
+                    <ConsentRowStyled>
+                        <ConsentNameStyled>{t('Preferences')}</ConsentNameStyled>
+                        {toggleSwitch}
+                    </ConsentRowStyled>
+                )}
+            />
             <ConsentButtonsRowStyled>
                 <Button
                     testIdentifier="blocks-userconsent-save"

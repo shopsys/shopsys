@@ -18,19 +18,19 @@ import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
-import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
-import { TextInput } from 'components/Forms/TextInput/TextInput';
+import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
+import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
+import { blurInput } from 'helpers/forms/blurInput';
+import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
-import { useHandleFormErrors } from 'hooks/forms/useHandleFormErrors';
-import { useHandleFormSuccessfulSubmit } from 'hooks/forms/useHandleFormSuccessfulSubmit';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { Translate } from 'next-translate';
 import Image from 'next/image';
 import NextLink from 'next/link';
-import { FC } from 'react';
-import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { FC, useCallback } from 'react';
+import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
 import * as Yup from 'yup';
 
@@ -45,72 +45,46 @@ export const Login: FC = () => {
         url,
     );
     const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: '', password: '' });
-    const [[loginResult, login]] = useAuth();
+    const { login } = useAuth();
 
-    useHandleFormSuccessfulSubmit(loginResult, formProviderMethods, { email: '', password: '' }, undefined, {
-        blur: true,
-    });
-    useHandleFormErrors(loginResult.error, formProviderMethods, 'login popup');
+    const onLoginHandler = useCallback<SubmitHandler<{ email: string; password: string }>>(
+        async (data) => {
+            blurInput();
+            const loginResponse = await login({
+                email: data.email,
+                password: data.password,
+                previousCartUuid: cartUuid,
+            });
 
-    const onLoginHandler: SubmitHandler<{ email: string; password: string }> = (data, event) => {
-        event?.preventDefault();
-        login({ email: data.email, password: data.password, previousCartUuid: cartUuid });
-    };
+            handleFormErrors(loginResponse.error, formProviderMethods, 'login popup', t);
+        },
+        [login, cartUuid, formProviderMethods, t],
+    );
 
     return (
         <LoginStyled data-testid={TEST_IDENTIFIER}>
             <LoginColumnStyled>
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}>
-                        <Controller
+                        <TextInputControlled
+                            control={formProviderMethods.control}
                             name="email"
-                            render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                <>
-                                    <FormLine bottomGap>
-                                        <TextInput
-                                            id="login_form-email"
-                                            name="email"
-                                            label={t('Your email')}
-                                            required
-                                            type="text"
-                                            isTouched={isTouched}
-                                            hasError={invalid}
-                                            fieldRef={field}
-                                        />
-                                        <FormLineError
-                                            textInputSize="small"
-                                            error={error}
-                                            inputType="text-input"
-                                            testIdentifier="login_form-email-error"
-                                        />
-                                    </FormLine>
-                                </>
-                            )}
+                            render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                            formName="login-form"
+                            textInputProps={{
+                                label: t('Your email'),
+                                required: true,
+                                type: 'text',
+                            }}
                         />
-                        <Controller
+                        <PasswordInputControlled
+                            control={formProviderMethods.control}
                             name="password"
-                            render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                <>
-                                    <FormLine>
-                                        <TextInput
-                                            id="login_form-password"
-                                            name="password"
-                                            label={t('Password')}
-                                            required
-                                            type="password"
-                                            isTouched={isTouched}
-                                            hasError={invalid}
-                                            fieldRef={field}
-                                        />
-                                        <FormLineError
-                                            textInputSize="small"
-                                            error={error}
-                                            inputType="text-input-password"
-                                            testIdentifier="login_form-password-error"
-                                        />
-                                    </FormLine>
-                                </>
-                            )}
+                            render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
+                            formName="login-form"
+                            passwordInputProps={{
+                                label: t('Password'),
+                            }}
                         />
                         <ButtonsStyled>
                             <ButtonWrapperStyled>

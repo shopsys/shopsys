@@ -1,3 +1,4 @@
+import { useProductFilterOptions } from '../Product/Filter/FilterContext/useFilterState';
 import {
     SortingBarItemLinkStyled,
     SortingBarItemLinkWrapStyled,
@@ -17,7 +18,6 @@ import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { getFilterUrlQueryForSortingInSeoCategory } from 'helpers/filterOptions/getFilterUrlQueryForSortingInSeoCategory';
 import { getQueryWithoutAllParameter } from 'helpers/filterOptions/getQueryWithoutAllParameter';
 import { shallowReplaceIfDifferent } from 'helpers/filterOptions/shallowReplaceIfDifferent';
-import { canUseDom } from 'helpers/misc/canUseDom';
 import { FILTER_QUERY_PARAMETER_NAME, SORT_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
@@ -25,20 +25,17 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { useRouter } from 'next/router';
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { useShopsysDispatch } from 'redux/main';
-import { initialState, userActions } from 'redux/slices/user';
-import { FilterOptionsType } from 'types/productFilter';
 
 type SortingBarProps = {
     totalCount: number;
     sorting: ProductOrderingModeEnumApi | null;
-    productFilterOptions?: FilterOptionsType;
 };
 
 const TEST_IDENTIFIER = 'blocks-sortingbar';
 
-export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, productFilterOptions }) => {
+export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount }) => {
     const router = useRouter();
     const t = useTypedTranslationFunction();
     const dispatch = useShopsysDispatch();
@@ -46,6 +43,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, productFi
     const [selectedSort, setSelectedSort] = useState<ProductOrderingModeEnumApi | null>(sorting ?? sortingFromQuery);
     const { width } = useGetWindowSize();
     const [isMobileSortBarVisible, setMobileSortBarVisible] = useState(true);
+    const productFilterOptions = useProductFilterOptions();
     useResizeWidthEffect(
         width,
         mobileFirstSizes.vl,
@@ -64,40 +62,29 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, productFi
         setSelectedSort(sorting);
     }, [sorting]);
 
-    const deepComparedProductFilterOptions = useMemo(
-        () => productFilterOptions ?? null,
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        [JSON.stringify(productFilterOptions)],
-    );
-
     const updateUrlWithCurrentSort = useCallback(
         (sort: string) => {
-            if (!canUseDom()) {
-                return;
-            }
-
             const pathname = router.asPath.split('?')[0];
             const queryParams = getQueryWithoutAllParameter(router);
 
             queryParams[SORT_QUERY_PARAMETER_NAME] = sort;
 
             const filterUrlQuery =
-                deepComparedProductFilterOptions !== null
-                    ? getFilterUrlQueryForSortingInSeoCategory(deepComparedProductFilterOptions)
-                    : null;
+                productFilterOptions !== null ? getFilterUrlQueryForSortingInSeoCategory(productFilterOptions) : null;
+
             if (filterUrlQuery !== null) {
                 queryParams[FILTER_QUERY_PARAMETER_NAME] = filterUrlQuery;
             }
 
             shallowReplaceIfDifferent(router, { pathname, query: queryParams });
         },
-        [router, deepComparedProductFilterOptions],
+        [router, productFilterOptions],
     );
 
     const onSelectSortMenu = useCallback(
         (currentSort: ProductOrderingModeEnumApi | null, newSort: ProductOrderingModeEnumApi) => () => {
+            setToggleSortMenu((prev) => !prev);
             if (isNewSortDifferentThanCurrent(currentSort, newSort)) {
-                setToggleSortMenu((prev) => !prev);
                 updateUrlWithCurrentSort(newSort);
                 setSelectedSort(newSort);
             }
@@ -111,7 +98,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, productFi
                 setToggleSortMenu((prev) => !prev);
                 updateUrlWithCurrentSort(newSort);
                 setSelectedSort(newSort);
-                dispatch(userActions.setPagination({ ...initialState.pagination }));
+                dispatch({ type: 'resetPagination', payload: { pageSize: 24 } });
             }
         },
         [dispatch, updateUrlWithCurrentSort],
@@ -122,7 +109,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, productFi
             if (isNewSortDifferentThanCurrent(currentSort, newSort)) {
                 updateUrlWithCurrentSort(newSort);
                 setSelectedSort(newSort);
-                dispatch(userActions.setPagination({ ...initialState.pagination }));
+                dispatch({ type: 'resetPagination', payload: { pageSize: 24 } });
             }
         },
         [dispatch, updateUrlWithCurrentSort],

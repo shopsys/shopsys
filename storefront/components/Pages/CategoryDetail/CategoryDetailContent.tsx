@@ -15,6 +15,7 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { Filter } from 'components/Blocks/Product/Filter/Filter';
+import { FilterProvider } from 'components/Blocks/Product/Filter/FilterContext/FilterProvider';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -61,70 +62,76 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
 
     const gtmListName = useMemo(() => getCategoryOrSeoCategoryGtmListName(category.originalCategorySlug), [category]);
 
+    if (category.productConnection.productFilterOptions === null) {
+        return null;
+    }
+
     return (
-        <Webline>
-            {isFiltered && <MetaRobots content="noindex, follow" />}
-            <CategoryDetailStyled ref={containerWrapRef}>
-                <CategoryDetailPanelStyled isOpen={isPanelOpen} ref={panelWrapRef}>
-                    {category.productConnection.productFilterOptions !== null && (
+        <FilterProvider
+            key={category.slug}
+            originalSlug={category.originalCategorySlug}
+            productFilterOptions={category.productConnection.productFilterOptions}
+        >
+            <Webline>
+                {isFiltered && <MetaRobots content="noindex, follow" />}
+                <CategoryDetailStyled ref={containerWrapRef}>
+                    <CategoryDetailPanelStyled isOpen={isPanelOpen} ref={panelWrapRef}>
                         <Filter
                             key={category.slug}
-                            productFilterOptions={category.productConnection.productFilterOptions}
                             slug={category.slug}
                             originalSlug={category.originalCategorySlug}
                             orderingMode={category.productConnection.orderingMode}
                             defaultOrderingMode={category.productConnection.defaultOrderingMode}
                         />
-                    )}
-                    <Overlay isHiddenOnDesktop onClick={handlePanelOpenerClick} />
-                </CategoryDetailPanelStyled>
-                <CategoryDetailContentStyled>
-                    <CategoryDetailAdvertsStyled positionName="productList" />
-                    <Heading type={'h1'}>{category.seoH1 !== null ? category.seoH1 : category.name}</Heading>
-                    {category.description !== null &&
-                        category.description !== '' &&
-                        (query[PAGE_QUERY_PARAMETER_NAME] ?? 1) === 1 && (
-                            <CategoryDetailDescriptionStyled
-                                dangerouslySetInnerHTML={{ __html: category.description }}
-                            ></CategoryDetailDescriptionStyled>
+                        <Overlay isHiddenOnDesktop onClick={handlePanelOpenerClick} />
+                    </CategoryDetailPanelStyled>
+                    <CategoryDetailContentStyled>
+                        <CategoryDetailAdvertsStyled positionName="productList" />
+                        <Heading type={'h1'}>{category.seoH1 !== null ? category.seoH1 : category.name}</Heading>
+                        {category.description !== null &&
+                            category.description !== '' &&
+                            (query[PAGE_QUERY_PARAMETER_NAME] ?? 1) === 1 && (
+                                <CategoryDetailDescriptionStyled
+                                    dangerouslySetInnerHTML={{ __html: category.description }}
+                                ></CategoryDetailDescriptionStyled>
+                            )}
+                        <CategoryDetailAdvertsStyled positionName="productListMiddle" currentCategory={category} />
+                        <SubcategoriesSimpleNavigationStyled
+                            listedItems={[...category.children, ...category.linkedCategories]}
+                        />
+                        <AdvancedSeoCategories readyCategorySeoMixLinks={category.readyCategorySeoMixLinks} />
+                        <CategoryDetailPanelOpenerStyled
+                            id="js-category-detail-panel"
+                            ref={buttonRef}
+                            onClick={handlePanelOpenerClick}
+                            isOpen={isPanelOpen}
+                        >
+                            <CategoryDetailPanelIconStyled iconType="icon" icon="Filter" />
+                            {t('Filter')}
+                        </CategoryDetailPanelOpenerStyled>
+                        <SortingBar
+                            sorting={category.productConnection.orderingMode}
+                            totalCount={category.productConnection.totalCount}
+                        />
+                        {category.productConnection.products.length !== 0 ? (
+                            <ProductsList products={category.productConnection.products} gtmListName={gtmListName} />
+                        ) : (
+                            <CategoryDetailContentMessageStyled>
+                                <div>
+                                    <strong>{t('No results match the filter')}</strong>
+                                </div>
+                                <div>
+                                    <Trans i18nKey="ProductsNoResults" components={{ 0: <br /> }} />
+                                </div>
+                            </CategoryDetailContentMessageStyled>
                         )}
-                    <CategoryDetailAdvertsStyled positionName="productListMiddle" currentCategory={category} />
-                    <SubcategoriesSimpleNavigationStyled
-                        listedItems={[...category.children, ...category.linkedCategories]}
-                    />
-                    <AdvancedSeoCategories readyCategorySeoMixLinks={category.readyCategorySeoMixLinks} />
-                    <CategoryDetailPanelOpenerStyled
-                        id="js-category-detail-panel"
-                        ref={buttonRef}
-                        onClick={handlePanelOpenerClick}
-                        isOpen={isPanelOpen}
-                    >
-                        <CategoryDetailPanelIconStyled iconType="icon" icon="Filter" />
-                        {t('Filter')}
-                    </CategoryDetailPanelOpenerStyled>
-                    <SortingBar
-                        sorting={category.productConnection.orderingMode}
-                        totalCount={category.productConnection.totalCount}
-                        productFilterOptions={category.productConnection.productFilterOptions!}
-                    />
-                    {category.productConnection.products.length !== 0 ? (
-                        <ProductsList products={category.productConnection.products} gtmListName={gtmListName} />
-                    ) : (
-                        <CategoryDetailContentMessageStyled>
-                            <div>
-                                <strong>{t('No results match the filter')}</strong>
-                            </div>
-                            <div>
-                                <Trans i18nKey="ProductsNoResults" components={{ 0: <br /> }} />
-                            </div>
-                        </CategoryDetailContentMessageStyled>
-                    )}
-                    <Pagination
-                        totalCount={category.productConnection.totalCount}
-                        containerWrapRef={containerWrapRef}
-                    />
-                </CategoryDetailContentStyled>
-            </CategoryDetailStyled>
-        </Webline>
+                        <Pagination
+                            totalCount={category.productConnection.totalCount}
+                            containerWrapRef={containerWrapRef}
+                        />
+                    </CategoryDetailContentStyled>
+                </CategoryDetailStyled>
+            </Webline>
+        </FilterProvider>
     );
 };

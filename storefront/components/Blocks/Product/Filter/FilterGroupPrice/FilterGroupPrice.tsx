@@ -1,3 +1,4 @@
+import { useFilterState } from '../FilterContext/useFilterState';
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
 import {
     FilterGroupArrowStyled,
@@ -5,53 +6,44 @@ import {
     FilterGroupStyled,
     FilterGroupTitleStyled,
 } from 'components/Blocks/Product/Filter/FilterGroup/FilterGroup.style';
-import { FC, useCallback, useState } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
-import { FilterFormType } from 'types/productFilter';
+import { FC, useCallback, useMemo, useState } from 'react';
 
 type FilterGroupPriceProps = {
     title: string;
     isOpen: boolean;
-    maximalPrice: number;
-    minimalPrice: number;
 };
 
 const TEST_IDENTIFIER = 'blocks-product-filter-filtergroup-price';
 
-export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, isOpen, minimalPrice, maximalPrice }) => {
+export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, isOpen }) => {
     const [isGroupOpen, setIsGroupOpen] = useState(isOpen);
-
-    const handleGroupClick = () => {
-        setIsGroupOpen(!isGroupOpen);
-    };
-
-    const { control, setValue } = useFormContext<FilterFormType>();
-    const [minimalPriceValue, maximalPriceValue] = useWatch({
-        name: ['minimalPrice', 'maximalPrice'],
-        control,
-    });
+    const [state, dispatch] = useFilterState();
+    const minimalPrice = useMemo(() => state.options.minimalPrice, [state.options.minimalPrice]);
+    const maximalPrice = useMemo(() => state.options.maximalPrice, [state.options.maximalPrice]);
+    const minimalPriceValue = useMemo(() => state.selected.minimalPrice, [state.selected.minimalPrice]);
+    const maximalPriceValue = useMemo(() => state.selected.maximalPrice, [state.selected.maximalPrice]);
 
     const setMinimalPrice = useCallback(
         (value: number) => {
             if (minimalPriceValue !== value) {
-                setValue('minimalPrice', value);
+                dispatch({ type: 'setMinimalPrice', payload: value });
             }
         },
-        [minimalPriceValue, setValue],
+        [dispatch, minimalPriceValue],
     );
 
     const setMaximalPrice = useCallback(
         (value: number) => {
             if (maximalPriceValue !== value) {
-                setValue('maximalPrice', value);
+                dispatch({ type: 'setMaximalPrice', payload: value });
             }
         },
-        [maximalPriceValue, setValue],
+        [dispatch, maximalPriceValue],
     );
 
     return (
         <FilterGroupStyled data-testid={TEST_IDENTIFIER}>
-            <FilterGroupTitleStyled onClick={handleGroupClick}>
+            <FilterGroupTitleStyled onClick={() => setIsGroupOpen((currentGroupVisibility) => !currentGroupVisibility)}>
                 {title}
                 <FilterGroupArrowStyled alt="" iconType="icon" icon="Arrow" isOpen={isGroupOpen} />
             </FilterGroupTitleStyled>

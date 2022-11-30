@@ -11,6 +11,7 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { Filter } from 'components/Blocks/Product/Filter/Filter';
+import { FilterProvider } from 'components/Blocks/Product/Filter/FilterContext/FilterProvider';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Button } from 'components/Forms/Button/Button';
@@ -191,41 +192,46 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
                     )}
                 </>
             )}
-
-            <SearchResultsWeblineStyled>
-                <Heading type={'h3'}>{t('Found products')}</Heading>
-                <SearchResultsStyled ref={containerWrapRef}>
-                    {searchResults.productsSearch.productFilterOptions?.maximalPrice !== 0 &&
-                        searchResults.productsSearch.productFilterOptions !== null && (
+            {searchResults.productsSearch.productFilterOptions !== null && (
+                <FilterProvider
+                    key="products-search"
+                    originalSlug={null}
+                    productFilterOptions={searchResults.productsSearch.productFilterOptions}
+                >
+                    <SearchResultsWeblineStyled>
+                        <Heading type={'h3'}>{t('Found products')}</Heading>
+                        <SearchResultsStyled ref={containerWrapRef}>
                             <SearchResultsPanelStyled>
                                 <Filter
-                                    productFilterOptions={searchResults.productsSearch.productFilterOptions}
                                     slug={searchUrl}
                                     originalSlug={null}
                                     orderingMode={searchResults.productsSearch.orderingMode}
                                 />
                                 <Overlay isHiddenOnDesktop onClick={handlePanelOpenerClick} />
                             </SearchResultsPanelStyled>
-                        )}
-                    <SearchResultsContentStyled
-                        isPanelActive={searchResults.productsSearch.productFilterOptions?.maximalPrice !== 0}
-                    >
-                        <SortingBar
-                            sorting={searchResults.productsSearch.orderingMode}
-                            totalCount={searchResults.productsSearch.totalCount}
-                        />
-                        <ResultProducts
-                            products={searchResults.productsSearch.products}
-                            areProductsShowed={searchResults.productsSearch.totalCount > 0}
-                            noProductsFound={searchResults.productsSearch.productFilterOptions?.maximalPrice === 0}
-                        />
-                        <Pagination
-                            totalCount={searchResults.productsSearch.totalCount}
-                            containerWrapRef={containerWrapRef}
-                        />
-                    </SearchResultsContentStyled>
-                </SearchResultsStyled>
-            </SearchResultsWeblineStyled>
+                            <SearchResultsContentStyled
+                                isPanelActive={searchResults.productsSearch.productFilterOptions.maximalPrice !== 0}
+                            >
+                                <SortingBar
+                                    sorting={searchResults.productsSearch.orderingMode}
+                                    totalCount={searchResults.productsSearch.totalCount}
+                                />
+                                <ResultProducts
+                                    products={searchResults.productsSearch.products}
+                                    areProductsShowed={searchResults.productsSearch.totalCount > 0}
+                                    noProductsFound={
+                                        searchResults.productsSearch.productFilterOptions.maximalPrice === 0
+                                    }
+                                />
+                                <Pagination
+                                    totalCount={searchResults.productsSearch.totalCount}
+                                    containerWrapRef={containerWrapRef}
+                                />
+                            </SearchResultsContentStyled>
+                        </SearchResultsStyled>
+                    </SearchResultsWeblineStyled>
+                </FilterProvider>
+            )}
         </>
     );
 };

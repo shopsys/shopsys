@@ -2,7 +2,7 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
 import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PersonalDataOverviewContent } from 'components/Pages/PersonalData/Overview/PersonalDataOverviewContent';
-import { PersonalDataPageTextQueryDocumentApi } from 'graphql/generated';
+import { PersonalDataPageTextQueryDocumentApi, usePersonalDataPageTextQueryApi } from 'graphql/generated';
 import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
@@ -16,6 +16,7 @@ const PersonalDataOverviewPage: FC = () => {
     const t = useTypedTranslationFunction();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [personalDataOverviewUrl] = getInternationalizedStaticUrls(['/personal-data-overview'], domainUrl);
+    const [personalDataPageTextResult] = usePersonalDataPageTextQueryApi();
     const breadcrumbs = useMemo(
         () => [{ name: t('Personal Data Overview'), slug: personalDataOverviewUrl }],
         [personalDataOverviewUrl, t],
@@ -27,7 +28,10 @@ const PersonalDataOverviewPage: FC = () => {
         <StaticUrlGuard domainUrl={domainUrl}>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Personal Data Overview')}>
-                <PersonalDataOverviewContent breadcrumbs={breadcrumbs} />
+                <PersonalDataOverviewContent
+                    breadcrumbs={breadcrumbs}
+                    contentSiteText={personalDataPageTextResult.data?.personalDataPage?.displaySiteContent}
+                />
             </CommonLayout>
         </StaticUrlGuard>
     );

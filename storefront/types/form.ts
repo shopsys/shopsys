@@ -2,17 +2,9 @@ import { CustomerTypeEnum } from './customer';
 import { GtmConsentInfoType } from './gtm';
 import { SelectOptionType } from './selectOptions';
 
-export type PromoCodeFormType = {
-    promoCode: string;
-};
-
 export type NewsletterFormType = {
     email: string;
     privacyPolicy: boolean;
-};
-
-export type AutocompleteSearchFormType = {
-    autocompleteSearchQuery: string;
 };
 
 // EXTEND CUSTOMER CONTACT INFORMATION FORM HERE
@@ -41,10 +33,6 @@ export type ContactInformationFormType = {
     deliveryAddressUuid: string | null;
     newsletterSubscription: boolean;
     note: string;
-};
-
-export type PickupPlaceFormType = {
-    pickupPlace: string;
 };
 
 export type RegistrationAfterOrderFormType = {

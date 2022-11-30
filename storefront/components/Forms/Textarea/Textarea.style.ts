@@ -10,11 +10,11 @@ const localVariables = {
 } as const;
 
 type TextareaStyledProps = {
-    inputState?: 'success' | 'error';
+    hasError?: boolean;
 };
 
 export const TextareaStyled = styled.textarea<TextareaStyledProps>(
-    ({ theme, inputState }) => css`
+    ({ theme, hasError }) => css`
         resize: vertical;
         box-sizing: border-box;
         width: 100%;
@@ -33,19 +33,12 @@ export const TextareaStyled = styled.textarea<TextareaStyledProps>(
             color: transparent;
         }
 
-        ${inputState === 'error' &&
+        ${hasError &&
         css`
             box-shadow: none;
             background-color: ${theme.color.white};
             border-color: ${theme.color.red};
         `}
-
-        ${inputState === 'success' &&
-        css`
-            border: 1px solid ${theme.color.green};
-            border-radius: ${theme.radius.medium};
-            box-shadow: ${theme.boxShadow.green};
-        `};
 
         &:disabled,
         &[readonly] {

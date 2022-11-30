@@ -1,8 +1,7 @@
 import { SelectStyled } from './Select.style';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper/LabelWrapper';
-import { FC } from 'react';
-import { ControllerRenderProps } from 'react-hook-form';
+import { FC, ReactNode } from 'react';
 import { components, Props } from 'react-select';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
@@ -14,9 +13,7 @@ type NativeProps = ExtractNativePropsFromDefault<
 
 type SelectProps = NativeProps & {
     hasError: boolean;
-    fieldRef?: ControllerRenderProps<any, any>;
-    label: string | JSX.Element;
-    required?: boolean;
+    label: ReactNode;
 };
 
 const customStyles = {
@@ -46,15 +43,19 @@ const Control = (props: any) => {
     );
 };
 
-export const Select: FC<SelectProps> = (props) => {
+export const Select: FC<SelectProps> = ({ hasError, label, onChange, options, defaultValue, isDisabled, value }) => {
     return (
         <SelectStyled
-            {...props}
-            {...props.fieldRef}
+            label={label}
+            onChange={onChange}
+            options={options}
+            defaultValue={defaultValue}
+            isDisabled={isDisabled}
+            value={value}
             classNamePrefix="select"
             styles={customStyles}
-            inputStateError={props.hasError}
-            placeholder={props.label}
+            inputStateError={hasError}
+            placeholder={label}
             components={{ Control, DropdownIndicator }}
             isSearchable={false}
         />

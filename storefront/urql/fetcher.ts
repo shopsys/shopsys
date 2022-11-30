@@ -19,7 +19,7 @@ const createInit = (init?: RequestInit | undefined) => ({
 
 export const fetcher =
     () =>
-    async (input: RequestInfo, init?: RequestInit | undefined): Promise<Response> => {
+    async (input: URL | RequestInfo, init?: RequestInit | undefined): Promise<Response> => {
         let client: RedisClientType | null = null;
 
         if (!isServer() || !init || publicRuntimeConfig.graphqlRedisCache !== '1') {

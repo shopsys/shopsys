@@ -1,3 +1,4 @@
+import { useFilterState } from '../FilterContext/useFilterState';
 import { SliderFilter } from './SliderFilter/SliderFilter';
 import {
     FilterGroupArrowStyled,
@@ -9,9 +10,8 @@ import {
 } from 'components/Blocks/Product/Filter/FilterGroup/FilterGroup.style';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { CheckboxColor } from 'components/Forms/CheckboxColor/CheckboxColor';
-import { FC, useCallback, useState } from 'react';
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import { ParametersCheckboxType, ParametersCheckboxValuesType, ParametersType } from 'types/productFilter';
+import { FC, useMemo, useState } from 'react';
+import { ParametersType } from 'types/productFilter';
 
 type FilterGroupParametersProps = {
     title: string;
@@ -29,78 +29,98 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
     parameterParentIndex,
     data,
 }) => {
-    const formProviderMethods = useFormContext();
-    const parameterValue = useWatch({
-        control: formProviderMethods.control,
-        name: `parameters.${parameterParentIndex}.values`,
-    });
     const [isGroupCollapsed, setIsGroupCollapsed] = useState(isDefaultCollapsed);
-
-    const handleGroupClick = () => {
-        setIsGroupCollapsed(!isGroupCollapsed);
-    };
-
-    const onChangeParameterValueHandler = useCallback(
-        (dataItem: ParametersCheckboxValuesType, index: number) => () => {
-            formProviderMethods.setValue(`parameters.${parameterParentIndex}.values.${index}`, {
-                ...dataItem,
-                checked: !(parameterValue[index].checked as boolean),
-            });
-        },
-        [formProviderMethods, parameterValue, parameterParentIndex],
+    const [state, dispatch] = useFilterState();
+    const selectedParameters = useMemo(
+        () => (state.selected.parameters.length > 0 ? state.selected.parameters[parameterParentIndex] : undefined),
+        [parameterParentIndex, state.selected.parameters],
+    );
+    const parameters = useMemo(
+        () => state.options.parameters?.[parameterParentIndex],
+        [parameterParentIndex, state.options.parameters],
     );
 
     return (
         <FilterGroupStyled data-testid={getTestIdentifier(parameterParentIndex)}>
-            <FilterGroupTitleStyled onClick={handleGroupClick}>
+            <FilterGroupTitleStyled
+                onClick={() => setIsGroupCollapsed((currentGroupVisibility) => !currentGroupVisibility)}
+            >
                 {title}
                 <FilterGroupArrowStyled alt="" iconType="icon" icon="Arrow" isOpen={!isGroupCollapsed} />
             </FilterGroupTitleStyled>
             <FilterGroupContentStyled isOpen={!isGroupCollapsed}>
-                {data?.__typename === 'ParameterCheckboxFilterOption' &&
-                    data.values.map((dataItem, index) => (
-                        <Controller
-                            key={dataItem.uuid}
-                            name={`parameters.${parameterParentIndex}.values.${index}.checked`}
-                            render={({ field }) => (
-                                <FilterGroupContentItemStyled
-                                    key={dataItem.uuid}
-                                    isDisabled={data.values[index]?.count === 0}
-                                    isActive={field.value}
-                                    data-testid={getTestIdentifier(parameterParentIndex) + '-' + index}
-                                >
-                                    <Checkbox
-                                        name={field.name}
-                                        label={dataItem.text}
-                                        onChange={onChangeParameterValueHandler(dataItem, index)}
-                                        value={parameterValue[index].checked}
-                                        count={(data as ParametersCheckboxType).values[index]?.count}
-                                    />
-                                </FilterGroupContentItemStyled>
-                            )}
-                        />
-                    ))}
-                {data?.__typename === 'ParameterColorFilterOption' && (
-                    <FilterGroupColorStyled>
-                        {data.values.map((dataItem, index) => (
-                            <Controller
+                {parameters?.__typename === 'ParameterCheckboxFilterOption' &&
+                    parameters.values.map((dataItem, index) => {
+                        const item = selectedParameters?.values[index] ?? undefined;
+                        const id = `parameters.${parameterParentIndex}.values.${index}.checked`;
+
+                        return (
+                            <FilterGroupContentItemStyled
                                 key={dataItem.uuid}
-                                name={`parameters.${parameterParentIndex}.values.${index}.checked`}
-                                render={({ field }) => (
-                                    <>
-                                        <CheckboxColor
-                                            name={field.name}
-                                            id={field.name}
-                                            bgColor={dataItem.rgbHex ?? undefined}
-                                            onChange={onChangeParameterValueHandler(dataItem, index)}
-                                            value={parameterValue[index].checked}
-                                            testIdentifier={getTestIdentifier(index)}
-                                            label={dataItem.text}
-                                        />
-                                    </>
-                                )}
-                            />
-                        ))}
+                                isDisabled={dataItem.count === 0}
+                                isActive={item?.checked ?? false}
+                                data-testid={getTestIdentifier(parameterParentIndex) + '-' + index}
+                            >
+                                <Checkbox
+                                    id={id}
+                                    name={id}
+                                    label={dataItem.text}
+                                    onChange={
+                                        item
+                                            ? () =>
+                                                  dispatch({
+                                                      type: 'setParameter',
+                                                      payload: {
+                                                          value: {
+                                                              ...item,
+                                                              checked: !item.checked,
+                                                          },
+                                                          parameterIndex: parameterParentIndex,
+                                                          valueIndex: index,
+                                                      },
+                                                  })
+                                            : () => void null
+                                    }
+                                    value={item?.checked ?? false}
+                                    count={dataItem.count}
+                                />
+                            </FilterGroupContentItemStyled>
+                        );
+                    })}
+                {parameters?.__typename === 'ParameterColorFilterOption' && (
+                    <FilterGroupColorStyled>
+                        {parameters.values.map((dataItem, index) => {
+                            const item = selectedParameters?.values[index] ?? undefined;
+                            const id = `parameters.${parameterParentIndex}.values.${index}.checked`;
+
+                            return (
+                                <CheckboxColor
+                                    key={dataItem.uuid}
+                                    bgColor={dataItem.rgbHex ?? undefined}
+                                    testIdentifier={getTestIdentifier(index)}
+                                    id={id}
+                                    name={id}
+                                    onChange={
+                                        item
+                                            ? () =>
+                                                  dispatch({
+                                                      type: 'setParameter',
+                                                      payload: {
+                                                          value: {
+                                                              ...item,
+                                                              checked: !item.checked,
+                                                          },
+                                                          parameterIndex: parameterParentIndex,
+                                                          valueIndex: index,
+                                                      },
+                                                  })
+                                            : () => void null
+                                    }
+                                    value={item?.checked ?? false}
+                                    label={dataItem.text}
+                                />
+                            );
+                        })}
                     </FilterGroupColorStyled>
                 )}
                 {data?.__typename === 'ParameterSliderFilterOption' && (

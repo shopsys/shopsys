@@ -13,7 +13,7 @@ export type BlogCategoryDetailType = {
 };
 
 export type ListedBlogCategoryType = SimpleBlogCategoryType & {
-    children: ListedBlogCategoryType[];
+    children?: ListedBlogCategoryType[];
 };
 
 export type SimpleBlogCategoryType = {

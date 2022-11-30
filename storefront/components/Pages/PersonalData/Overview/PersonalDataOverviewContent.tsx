@@ -4,57 +4,56 @@ import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
-import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
-import { TextInput } from 'components/Forms/TextInput/TextInput';
+import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { UserText } from 'components/Helpers/UserText/UserText';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import {
-    PersonalDataAccessRequestTypeEnumApi,
-    usePersonalDataPageTextQueryApi,
-    usePersonalDataRequestMutationApi,
-} from 'graphql/generated';
-import { useHandleErrorPopupVisibility } from 'hooks/forms/useHandleErrorPopupVisibility';
-import { useHandleFormErrors } from 'hooks/forms/useHandleFormErrors';
-import { useHandleFormSuccessfulSubmit } from 'hooks/forms/useHandleFormSuccessfulSubmit';
+import { PersonalDataAccessRequestTypeEnumApi, usePersonalDataRequestMutationApi } from 'graphql/generated';
+import { blurInput } from 'helpers/forms/blurInput';
+import { clearForm } from 'helpers/forms/clearForm';
+import { handleFormErrors } from 'helpers/forms/handleFormErrors';
+import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC, useEffect } from 'react';
-import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { FC, useCallback } from 'react';
+import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { PersonalDataOverviewFormType } from 'types/form';
 
 type PersonalDataOverviewContentProps = {
     breadcrumbs: BreadcrumbItemType[];
+    contentSiteText: string | undefined;
 };
 
-export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> = ({ breadcrumbs }) => {
+export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> = ({ breadcrumbs, contentSiteText }) => {
     const t = useTypedTranslationFunction();
-    const [personalDataPageTextResult] = usePersonalDataPageTextQueryApi();
-    const [personalDataOverviewResult, personalDataOverview] = usePersonalDataRequestMutationApi();
+    const [, personalDataOverview] = usePersonalDataRequestMutationApi();
     const [formProviderMethods] = usePersonalDataOverviewForm();
     const formMeta = usePersonalDataOverviewFormMeta(formProviderMethods);
-    const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
+    const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
 
-    useHandleFormErrors(personalDataOverviewResult.error, formProviderMethods, 'other', formMeta.messages.error);
-    useHandleFormSuccessfulSubmit(personalDataOverviewResult, formProviderMethods, { email: '' }, undefined, {
-        blur: true,
-        reset: true,
-    });
+    const onPersonalDataOverviewHandler = useCallback<SubmitHandler<PersonalDataOverviewFormType>>(
+        async (data) => {
+            blurInput();
+            const personalDataOverviewResult = await personalDataOverview({
+                email: data.email,
+                type: PersonalDataAccessRequestTypeEnumApi.DisplayApi,
+            });
 
-    const personalDataMutationType = 'display' as PersonalDataAccessRequestTypeEnumApi;
+            if (personalDataOverviewResult.data?.RequestPersonalDataAccess !== undefined) {
+                showSuccessMessage(formMeta.messages.success);
+            }
 
-    const onPersonalDataOverviewHandler: SubmitHandler<PersonalDataOverviewFormType> = async (data, event) => {
-        event?.preventDefault();
-        await personalDataOverview({ email: data.email, type: personalDataMutationType });
-    };
-
-    useEffect(() => {
-        if (personalDataOverviewResult.data?.RequestPersonalDataAccess !== undefined) {
-            showSuccessMessage(formMeta.messages.success);
-        }
-    }, [formMeta.messages.success, personalDataOverviewResult]);
-
-    const contentSiteText = personalDataPageTextResult.data?.personalDataPage?.displaySiteContent;
+            handleFormErrors(
+                personalDataOverviewResult.error,
+                formProviderMethods,
+                'other',
+                t,
+                formMeta.messages.error,
+            );
+            clearForm(personalDataOverviewResult.error, formProviderMethods, { email: '' });
+        },
+        [personalDataOverview, formMeta.messages, t, formProviderMethods],
+    );
 
     return (
         <>
@@ -66,32 +65,16 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
                 )}
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onPersonalDataOverviewHandler)}>
-                        <Controller
+                        <TextInputControlled
+                            control={formProviderMethods.control}
                             name={formMeta.fields.email.name}
-                            render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                <>
-                                    <FormLine>
-                                        <TextInput
-                                            id={formMeta.formName + '-' + formMeta.fields.email.name}
-                                            name={formMeta.fields.email.name}
-                                            label={formMeta.fields.email.label}
-                                            required
-                                            type="text"
-                                            isTouched={isTouched}
-                                            hasError={invalid}
-                                            fieldRef={field}
-                                        />
-                                        <FormLineError
-                                            textInputSize="small"
-                                            error={error}
-                                            inputType="text-input"
-                                            testIdentifier={
-                                                formMeta.formName + '-' + formMeta.fields.email.name + '-error'
-                                            }
-                                        />
-                                    </FormLine>
-                                </>
-                            )}
+                            render={(textInput) => <FormLine>{textInput}</FormLine>}
+                            formName={formMeta.formName}
+                            textInputProps={{
+                                label: formMeta.fields.email.label,
+                                required: true,
+                                type: 'text',
+                            }}
                         />
                         <ButtonWrapperStyled>
                             <Button type="submit">{t('Send')}</Button>

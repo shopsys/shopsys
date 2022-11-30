@@ -40,7 +40,7 @@ const getDefaultParameterValues = (
         return [];
     }
 
-    function getValues(parameter: ParametersType): FilterFormParameterValuesType[] {
+    const getValues = (parameter: ParametersType): FilterFormParameterValuesType[] => {
         if (!('values' in parameter)) {
             return [];
         }
@@ -59,7 +59,7 @@ const getDefaultParameterValues = (
                 rgbHex: 'rgbHex' in value ? value.rgbHex : null,
             };
         });
-    }
+    };
 
     return productFilterOptions.parameters.map((parameter) => {
         return {

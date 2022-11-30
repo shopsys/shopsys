@@ -1,114 +1,64 @@
-import { PasswordVisibilityToggleStyled, SearchButtonStyled, TextInputStyled } from './TextInput.style';
-import { Icon } from 'components/Basic/Icon/Icon';
-import { getStateAfterValidation } from 'components/Forms/Helpers/getStateAfterValidation';
+import { TextInputStyled } from './TextInput.style';
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper/LabelWrapper';
-import { FC, InputHTMLAttributes, useEffect, useState } from 'react';
-import { ControllerRenderProps } from 'react-hook-form';
+import { forwardRef, InputHTMLAttributes, ReactNode } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
-    never,
-    'name' | 'id' | 'disabled' | 'style' | 'required' | 'onBlurCapture' | 'onChange' | 'onKeyPress' | 'className'
+    'id' | 'onChange',
+    'name' | 'disabled' | 'required' | 'onBlur' | 'onKeyPress' | 'className' | 'type'
 >;
 
-type TextInputProps = NativeProps & {
-    label: string | JSX.Element;
-    type: 'text' | 'password' | 'email' | 'tel' | 'search' | 'number';
+export type TextInputProps = NativeProps & {
+    value: any;
+    label: ReactNode;
     hasError?: boolean;
-    isTouched?: boolean;
-    inputSize?: 'small';
-    placeholderType?: 'static';
-    variant?: 'searchInHeader';
-    markSuccessfulWhenValid?: boolean;
-    fieldRef?: ControllerRenderProps<any, any>;
-    isSearchButtonDisabled?: boolean;
-    value?: number | string;
     testIdentifier?: string;
+    inputSize?: 'small' | 'default';
 };
 
-export const TextInput: FC<TextInputProps> = ({
-    label,
-    type,
-    disabled,
-    fieldRef,
-    hasError,
-    id,
-    inputSize,
-    isSearchButtonDisabled,
-    isTouched,
-    markSuccessfulWhenValid,
-    name,
-    onBlurCapture,
-    onChange,
-    onKeyPress,
-    placeholderType,
-    required,
-    style,
-    value,
-    variant,
-    className,
-    testIdentifier,
-}) => {
-    const [inputState, setInputState] = useState<'success' | 'error' | undefined>(undefined);
-    const [inputType, setInputType] = useState<'text' | 'password' | 'email' | 'tel' | 'search' | 'number'>(type);
-
-    const togglePasswordVisibilityHandler = () => {
-        setInputType((currentInputType) => {
-            if (currentInputType === 'password') {
-                return 'text';
-            }
-            if (currentInputType === 'text') {
-                return 'password';
-            }
-            return currentInputType;
-        });
-    };
-
-    useEffect(() => {
-        setInputState(getStateAfterValidation(hasError, isTouched, markSuccessfulWhenValid));
-    }, [hasError, isTouched, markSuccessfulWhenValid]);
-
-    return (
-        <LabelWrapper
-            label={label}
-            placeholderType={placeholderType}
-            required={required}
-            htmlFor={id}
-            inputType="text-input"
-        >
-            <TextInputStyled
-                className={className}
-                disabled={disabled}
-                id={id}
-                inputSize={inputSize}
-                name={name}
-                onBlurCapture={onBlurCapture}
-                onChange={onChange}
-                onKeyPress={onKeyPress}
-                placeholderType={placeholderType}
-                required={required}
-                style={style}
-                value={value}
-                variant={variant}
-                inputState={inputState}
-                type={inputType}
-                placeholder={typeof label === 'string' ? label : ' '}
-                {...fieldRef}
-                data-testid={testIdentifier}
-            />
-            {type === 'password' && (
-                <PasswordVisibilityToggleStyled
-                    src="/svg/eye.svg"
-                    isVisible={inputType === 'text'}
-                    onClick={togglePasswordVisibilityHandler}
+export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
+    (
+        {
+            label,
+            hasError,
+            inputSize = 'default',
+            name,
+            id,
+            disabled,
+            required,
+            onBlur,
+            onChange,
+            onKeyPress,
+            className,
+            testIdentifier,
+            value,
+            type,
+        },
+        textInputForwarderRef,
+    ) => {
+        return (
+            <LabelWrapper className={className} label={label} required={required} htmlFor={id} inputType="text-input">
+                <TextInputStyled
+                    className={className}
+                    disabled={disabled}
+                    id={id}
+                    inputSize={inputSize}
+                    name={name}
+                    onBlur={onBlur}
+                    onChange={onChange}
+                    onKeyPress={onKeyPress}
+                    required={required}
+                    value={value}
+                    hasError={hasError}
+                    type={type}
+                    placeholder={typeof label === 'string' ? label : ' '}
+                    data-testid={testIdentifier}
+                    ref={textInputForwarderRef}
                 />
-            )}
-            {variant === 'searchInHeader' && (
-                <SearchButtonStyled type="submit" disabled={isSearchButtonDisabled}>
-                    <Icon iconType="icon" icon="Search" />
-                </SearchButtonStyled>
-            )}
-        </LabelWrapper>
-    );
-};
+            </LabelWrapper>
+        );
+    },
+);
+
+TextInput.displayName = 'TextInput';

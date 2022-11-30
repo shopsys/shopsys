@@ -4,18 +4,18 @@ import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
-import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError';
-import { TextInput } from 'components/Forms/TextInput/TextInput';
+import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { usePasswordRecoveryMutationApi } from 'graphql/generated';
 import 'helpers//localization/getInternationalizedStaticUrls';
-import { useHandleErrorPopupVisibility } from 'hooks/forms/useHandleErrorPopupVisibility';
-import { useHandleFormErrors } from 'hooks/forms/useHandleFormErrors';
-import { useHandleFormSuccessfulSubmit } from 'hooks/forms/useHandleFormSuccessfulSubmit';
+import { blurInput } from 'helpers/forms/blurInput';
+import { clearForm } from 'helpers/forms/clearForm';
+import { handleFormErrors } from 'helpers/forms/handleFormErrors';
+import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC } from 'react';
-import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { FC, useCallback } from 'react';
+import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { PasswordResetFormType } from 'types/form';
 
@@ -25,61 +25,52 @@ type ResetPasswordContentProps = {
 
 export const ResetPasswordContent: FC<ResetPasswordContentProps> = ({ breadcrumbs }) => {
     const t = useTypedTranslationFunction();
-    const [resetPasswordResult, resetPassword] = usePasswordRecoveryMutationApi();
+    const [, resetPassword] = usePasswordRecoveryMutationApi();
     const [formProviderMethods, defaultValues] = usePasswordResetForm();
     const formMeta = usePasswordResetFormMeta(formProviderMethods);
-    const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
-    useHandleFormErrors(resetPasswordResult.error, formProviderMethods, 'other', formMeta.messages.error);
-    useHandleFormSuccessfulSubmit(
-        resetPasswordResult,
-        formProviderMethods,
-        defaultValues,
-        () => showSuccessMessage(formMeta.messages.success),
-        { blur: true, reset: true },
-    );
+    const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
 
-    const onResetPasswordHandler: SubmitHandler<PasswordResetFormType> = async (data, event) => {
-        event?.preventDefault();
-        await resetPassword(data);
-    };
+    const {
+        fieldState: { invalid },
+        field: { value },
+    } = useController({ name: formMeta.fields.email.name, control: formProviderMethods.control });
+
+    const onResetPasswordHandler = useCallback<SubmitHandler<PasswordResetFormType>>(
+        async (data) => {
+            blurInput();
+            const resetPasswordResult = await resetPassword(data);
+
+            if (resetPasswordResult.data?.RequestPasswordRecovery !== undefined) {
+                showSuccessMessage(formMeta.messages.success);
+            }
+
+            handleFormErrors(resetPasswordResult.error, formProviderMethods, 'other', t, formMeta.messages.error);
+            clearForm(resetPasswordResult.error, formProviderMethods, defaultValues);
+        },
+        [formMeta.messages, formProviderMethods, resetPassword, t, defaultValues],
+    );
 
     return (
         <>
             <SimpleLayout heading={t('Forgotten password')} breadcrumb={breadcrumbs}>
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onResetPasswordHandler)}>
-                        <Controller
+                        <TextInputControlled
+                            control={formProviderMethods.control}
                             name={formMeta.fields.email.name}
-                            render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                <>
-                                    <FormLine>
-                                        <TextInput
-                                            id={formMeta.formName + '-' + formMeta.fields.email.name}
-                                            name={formMeta.fields.email.name}
-                                            label={formMeta.fields.email.label}
-                                            required
-                                            type="text"
-                                            isTouched={isTouched}
-                                            hasError={invalid}
-                                            fieldRef={field}
-                                        />
-                                        <FormLineError
-                                            textInputSize="small"
-                                            error={error}
-                                            inputType="text-input"
-                                            testIdentifier={
-                                                formMeta.formName + '-' + formMeta.fields.email.name + '-error'
-                                            }
-                                        />
-                                    </FormLine>
-                                    <ButtonWrapperStyled>
-                                        <Button type="submit" hasDisabledLook={invalid || field.value.length === 0}>
-                                            {t('Reset password')}
-                                        </Button>
-                                    </ButtonWrapperStyled>
-                                </>
-                            )}
+                            render={(textInput) => <FormLine>{textInput}</FormLine>}
+                            formName={formMeta.formName}
+                            textInputProps={{
+                                label: formMeta.fields.email.label,
+                                required: true,
+                                type: 'text',
+                            }}
                         />
+                        <ButtonWrapperStyled>
+                            <Button type="submit" hasDisabledLook={invalid || value.length === 0}>
+                                {t('Reset password')}
+                            </Button>
+                        </ButtonWrapperStyled>
                     </Form>
                 </FormProvider>
             </SimpleLayout>

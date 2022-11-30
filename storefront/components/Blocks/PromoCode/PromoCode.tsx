@@ -1,4 +1,3 @@
-import { usePromoCodeForm, usePromoCodeFormMeta } from './formMeta';
 import {
     PromoCodeButtonIconStyled,
     PromoCodeButtonStyled,
@@ -9,15 +8,22 @@ import {
     PromoCodeStyled,
 } from './PromoCode.style';
 import { PromoCodeInfo } from './PromoCodeInfo/PromoCodeInfo';
-import { Form } from 'components/Forms/Form/Form';
+import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
 import { useCurrentCart } from 'connectors/cart/Cart';
+import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
 import { useApplyPromoCodeToCart } from 'hooks/cart/useApplyPromoCodeToCart';
 import { useRemovePromoCodeFromCart } from 'hooks/cart/useRemovePromoCodeFromCart';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC, useEffect, useRef, useState } from 'react';
-import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
+import { ChangeEventHandler, FC, MouseEventHandler, useCallback, useMemo, useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import { PromoCodeFormType } from 'types/form';
+
+type TransportAndPaymentErrorsType = {
+    promoCode: {
+        name: 'promoCode';
+        label: string;
+        errorMessage: string | undefined;
+    };
+};
 
 const TEST_IDENTIFIER = 'blocks-promocode';
 
@@ -28,11 +34,24 @@ export const PromoCode: FC = () => {
     const [contentElementHeight, setContentElementHeight] = useState(0);
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
-    const [formProviderMethods] = usePromoCodeForm();
-    const { setValue } = formProviderMethods;
-    const formMeta = usePromoCodeFormMeta(formProviderMethods);
+    const [isErrorPopupVisible, setErrorPopupVisibility] = useState(false);
+    const [promoCodeValue, setPromoCodeValue] = useState<string>(promoCode === null ? '' : promoCode);
     const applyPromoCode = useApplyPromoCodeToCart();
     const removePromoCode = useRemovePromoCodeFromCart();
+
+    const promoCodeValidationMessages = useMemo(() => {
+        const errors: Partial<TransportAndPaymentErrorsType> = {};
+
+        if (promoCodeValue.length === 0) {
+            errors.promoCode = {
+                name: 'promoCode',
+                label: t('Coupon'),
+                errorMessage: t('This field is required'),
+            };
+        }
+
+        return errors;
+    }, [promoCodeValue, t]);
 
     const calcHeight = () => {
         if (contentElement.current) {
@@ -40,79 +59,88 @@ export const PromoCode: FC = () => {
         }
     };
 
-    const onApplyPromoCodeHandler: SubmitHandler<PromoCodeFormType> = async (data, event) => {
-        event?.preventDefault();
-        applyPromoCode(data.promoCode, formMeta.messages.addPromoCode);
-    };
+    const onApplyPromoCodeHandler: MouseEventHandler<HTMLButtonElement> = useCallback(async () => {
+        if (hasValidationErrors(promoCodeValidationMessages)) {
+            setErrorPopupVisibility(true);
 
-    const onRemovePromoCodeHandler = async (promoCode: string) => {
-        removePromoCode(promoCode, formMeta.messages.removePromoCode);
-    };
-
-    useEffect(() => {
-        if (promoCode === null) {
-            setValue('promoCode', '');
+            return;
         }
-    }, [promoCode, setValue]);
+
+        applyPromoCode(promoCodeValue, {
+            success: t('Promo code was added to the order.'),
+            error: t('There was an error while adding a promo code to the order.'),
+        });
+    }, [applyPromoCode, promoCodeValidationMessages, promoCodeValue, t]);
+
+    const onRemovePromoCodeHandler = useCallback(
+        async (promoCode: string) => {
+            removePromoCode(promoCode, {
+                success: t('Promo code was removed from the order.'),
+                error: t('There was an error while removing the promo code from the order.'),
+            });
+        },
+        [removePromoCode, t],
+    );
+
+    const onChangePromoCodeValueHandler: ChangeEventHandler<HTMLInputElement> = useCallback(
+        (event) => {
+            setPromoCodeValue(event.currentTarget.value);
+        },
+        [setPromoCodeValue],
+    );
 
     return (
-        <PromoCodeStyled contentElementHeight={contentElementHeight} data-testid={TEST_IDENTIFIER}>
-            {promoCode !== null ? (
-                <PromoCodeInfo promoCode={promoCode} onRemovePromoCodeCallback={onRemovePromoCodeHandler} />
-            ) : (
-                <>
-                    <PromoCodeButtonStyled
-                        onClick={() => setIsContentVisible(!isContentVisible)}
-                        data-testid={TEST_IDENTIFIER + '-add-button'}
-                    >
-                        <PromoCodeButtonIconStyled alt="" iconType="icon" icon="Plus" />
-                        {t('I have a discount coupon')}
-                    </PromoCodeButtonStyled>
-                    <CSSTransition
-                        in={isContentVisible}
-                        timeout={300}
-                        classNames="promoCode"
-                        onEnter={calcHeight}
-                        onExit={calcHeight}
-                        unmountOnExit
-                        nodeRef={cssTransitionRef}
-                    >
-                        <PromoCodeContentWrapperStyled ref={cssTransitionRef}>
-                            <PromoCodeContentStyled ref={contentElement}>
-                                <FormProvider {...formProviderMethods}>
-                                    <Form
-                                        onSubmit={formProviderMethods.handleSubmit(onApplyPromoCodeHandler)}
-                                        style={{ display: 'flex' }}
+        <>
+            <PromoCodeStyled contentElementHeight={contentElementHeight} data-testid={TEST_IDENTIFIER}>
+                {promoCode !== null ? (
+                    <PromoCodeInfo promoCode={promoCode} onRemovePromoCodeCallback={onRemovePromoCodeHandler} />
+                ) : (
+                    <>
+                        <PromoCodeButtonStyled
+                            onClick={() => setIsContentVisible(!isContentVisible)}
+                            data-testid={TEST_IDENTIFIER + '-add-button'}
+                        >
+                            <PromoCodeButtonIconStyled alt="" iconType="icon" icon="Plus" />
+                            {t('I have a discount coupon')}
+                        </PromoCodeButtonStyled>
+                        <CSSTransition
+                            in={isContentVisible}
+                            timeout={300}
+                            classNames="promoCode"
+                            onEnter={calcHeight}
+                            onExit={calcHeight}
+                            unmountOnExit
+                            nodeRef={cssTransitionRef}
+                        >
+                            <PromoCodeContentWrapperStyled ref={cssTransitionRef}>
+                                <PromoCodeContentStyled ref={contentElement}>
+                                    <PromoCodeContentInputStyled
+                                        id={TEST_IDENTIFIER + '-input'}
+                                        type="text"
+                                        label={t('Coupon')}
+                                        value={promoCodeValue}
+                                        onChange={onChangePromoCodeValueHandler}
+                                    />
+                                    <PromoCodeContentButtonStyled
+                                        type="submit"
+                                        hasDisabledLook={hasValidationErrors(promoCodeValidationMessages)}
+                                        data-testid={TEST_IDENTIFIER + '-apply-button'}
+                                        onClick={onApplyPromoCodeHandler}
                                     >
-                                        <Controller
-                                            name={formMeta.fields.promoCode.name}
-                                            control={formProviderMethods.control}
-                                            render={({ field }) => (
-                                                <>
-                                                    <PromoCodeContentInputStyled
-                                                        type="text"
-                                                        id={formMeta.formName + '-' + formMeta.fields.promoCode.name}
-                                                        label={formMeta.fields.promoCode.label}
-                                                        fieldRef={field}
-                                                        style={{ width: '100%', marginBottom: '0' }}
-                                                    />
-                                                    <PromoCodeContentButtonStyled
-                                                        type="submit"
-                                                        isDisabled={!formProviderMethods.formState.isValid}
-                                                        data-testid={TEST_IDENTIFIER + '-apply-button'}
-                                                    >
-                                                        {t('Apply')}
-                                                    </PromoCodeContentButtonStyled>
-                                                </>
-                                            )}
-                                        />
-                                    </Form>
-                                </FormProvider>
-                            </PromoCodeContentStyled>
-                        </PromoCodeContentWrapperStyled>
-                    </CSSTransition>
-                </>
-            )}
-        </PromoCodeStyled>
+                                        {t('Apply')}
+                                    </PromoCodeContentButtonStyled>
+                                </PromoCodeContentStyled>
+                            </PromoCodeContentWrapperStyled>
+                        </CSSTransition>
+                    </>
+                )}
+            </PromoCodeStyled>
+            <ErrorPopup
+                isVisible={isErrorPopupVisible}
+                onCloseCallback={() => setErrorPopupVisibility(false)}
+                fields={promoCodeValidationMessages}
+                origin="cart"
+            />
+        </>
     );
 };
