@@ -159,11 +159,14 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
      */
     public function load(ObjectManager $manager)
     {
+        $parameterColorNamesByLocale = [];
+        $parameterMaterialNamesByLocale = [];
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $parameterColorNamesByLocale[$locale] = t('Color', [], 'dataFixtures', $locale);
+            $parameterMaterialNamesByLocale[$locale] = t('Material', [], 'dataFixtures', $locale);
+        }
         $parameterColor = $this->createParameter(
-            [
-                'cs' => 'Barva',
-                'sk' => 'Farba',
-            ],
+            $parameterColorNamesByLocale,
             [
                 $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS),
                 $this->getReference(CategoryDataFixture::CATEGORY_TV),
@@ -172,10 +175,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
             Parameter::AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT
         );
         $parameterMaterial = $this->createParameter(
-            [
-                'cs' => 'Materiál',
-                'sk' => 'Materiál',
-            ],
+            $parameterMaterialNamesByLocale,
             [
                 $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS),
                 $this->getReference(CategoryDataFixture::CATEGORY_TV),
@@ -184,43 +184,41 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
             Parameter::AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT
         );
 
-        $parameterValueRedCs = $this->getParameterValue('cs', 'červená', '#ff0000');
-        $parameterValueRedSk = $this->getParameterValue('sk', 'červená', '#ff0000');
-        $parameterValueBlackCs = $this->getParameterValue('cs', 'černá', '#000000');
-        $parameterValueBlackSk = $this->getParameterValue('sk', 'čierná', '#000000');
-
-        $parameterValueMetalCs = $this->getParameterValue('cs', 'kov');
-        $parameterValueMetalSk = $this->getParameterValue('sk', 'kov');
-        $parameterValueWoodCs = $this->getParameterValue('cs', 'dřevo');
-        $parameterValueWoodSk = $this->getParameterValue('sk', 'drevo');
-        $parameterValuePlasticCs = $this->getParameterValue('cs', 'plast');
-
         /** @var \App\Model\Product\Product $product1 */
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
-        $this->addParameterValueToProduct($product1, $parameterColor, $parameterValueRedCs);
-        $this->addParameterValueToProduct($product1, $parameterColor, $parameterValueRedSk);
-        $this->addParameterValueToProduct($product1, $parameterMaterial, $parameterValueMetalCs);
-        $this->addParameterValueToProduct($product1, $parameterMaterial, $parameterValueMetalSk);
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $parameterValueRed = $this->getParameterValue($locale, t('red', [], 'dataFixtures', $locale), '#ff0000');
+            $this->addParameterValueToProduct($product1, $parameterColor, $parameterValueRed);
+            $parameterValueMetal = $this->getParameterValue($locale, t('metal', [], 'dataFixtures', $locale));
+            $this->addParameterValueToProduct($product1, $parameterMaterial, $parameterValueMetal);
+        }
 
         /** @var \App\Model\Product\Product $product2 */
         $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '2');
-        $this->addParameterValueToProduct($product2, $parameterColor, $parameterValueBlackCs);
-        $this->addParameterValueToProduct($product2, $parameterColor, $parameterValueBlackSk);
-        $this->addParameterValueToProduct($product2, $parameterMaterial, $parameterValueMetalCs);
-        $this->addParameterValueToProduct($product2, $parameterMaterial, $parameterValueMetalSk);
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $parameterValueRed = $this->getParameterValue($locale, t('black', [], 'dataFixtures', $locale), '#000000');
+            $this->addParameterValueToProduct($product2, $parameterColor, $parameterValueRed);
+            $parameterValueMetal = $this->getParameterValue($locale, t('metal', [], 'dataFixtures', $locale));
+            $this->addParameterValueToProduct($product2, $parameterMaterial, $parameterValueMetal);
+        }
 
         /** @var \App\Model\Product\Product $product3 */
         $product3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '3');
-        $this->addParameterValueToProduct($product3, $parameterColor, $parameterValueRedCs);
-        $this->addParameterValueToProduct($product3, $parameterColor, $parameterValueRedSk);
-        $this->addParameterValueToProduct($product3, $parameterMaterial, $parameterValuePlasticCs);
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $parameterValueRed = $this->getParameterValue($locale, t('red', [], 'dataFixtures', $locale), '#ff0000');
+            $this->addParameterValueToProduct($product3, $parameterColor, $parameterValueRed);
+            $parameterValueMetal = $this->getParameterValue($locale, t('plastic', [], 'dataFixtures', $locale));
+            $this->addParameterValueToProduct($product3, $parameterMaterial, $parameterValueMetal);
+        }
 
         /** @var \App\Model\Product\Product $product4 */
         $product4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '4');
-        $this->addParameterValueToProduct($product4, $parameterColor, $parameterValueRedCs);
-        $this->addParameterValueToProduct($product4, $parameterColor, $parameterValueRedSk);
-        $this->addParameterValueToProduct($product4, $parameterMaterial, $parameterValueWoodCs);
-        $this->addParameterValueToProduct($product4, $parameterMaterial, $parameterValueWoodSk);
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $parameterValueRed = $this->getParameterValue($locale, t('red', [], 'dataFixtures', $locale), '#ff0000');
+            $this->addParameterValueToProduct($product4, $parameterColor, $parameterValueRed);
+            $parameterValueMetal = $this->getParameterValue($locale, t('wood', [], 'dataFixtures', $locale));
+            $this->addParameterValueToProduct($product4, $parameterMaterial, $parameterValueMetal);
+        }
 
         $this->createSliderParameterWithValuesAndAssignThemToProducts();
         $this->makeSomeExistingParametersSlider();

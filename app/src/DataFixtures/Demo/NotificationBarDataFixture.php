@@ -14,23 +14,15 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class NotificationBarDataFixture extends AbstractReferenceFixture
 {
     /**
-     * @var \App\Model\NotificationBar\NotificationBarFacade
-     */
-    private $notificationBarFacade;
-
-    /**
-     * @var \App\Model\NotificationBar\NotificationBarDataFactory
-     */
-    private $notificationBarDataFactory;
-
-    /**
      * @param \App\Model\NotificationBar\NotificationBarFacade $notificationBarFacade
      * @param \App\Model\NotificationBar\NotificationBarDataFactory $notificationBarDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(NotificationBarFacade $notificationBarFacade, NotificationBarDataFactory $notificationBarDataFactory)
-    {
-        $this->notificationBarFacade = $notificationBarFacade;
-        $this->notificationBarDataFactory = $notificationBarDataFactory;
+    public function __construct(
+        readonly private NotificationBarFacade $notificationBarFacade,
+        readonly private NotificationBarDataFactory $notificationBarDataFactory,
+        readonly private Domain $domain
+    ) {
     }
 
     /**
@@ -38,15 +30,17 @@ class NotificationBarDataFixture extends AbstractReferenceFixture
      */
     public function load(ObjectManager $manager)
     {
-        $notificationBarData = $this->notificationBarDataFactory->create();
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $notificationBarData = $this->notificationBarDataFactory->create();
 
-        $notificationBarData->domainId = Domain::FIRST_DOMAIN_ID;
-        $notificationBarData->text = 'Notifikace v liště, upozornění na novou akci.';
-        $notificationBarData->validityFrom = new DateTime('today midnight');
-        $notificationBarData->validityTo = new DateTime('+7 days midnight');
-        $notificationBarData->rgbColor = '#000000';
-        $notificationBarData->hidden = false;
+            $notificationBarData->domainId = $domainConfig->getId();
+            $notificationBarData->text = t('Notification in the bar, notification of a new event.', [], 'dataFixtures', $domainConfig->getLocale());
+            $notificationBarData->validityFrom = new DateTime('today midnight');
+            $notificationBarData->validityTo = new DateTime('+7 days midnight');
+            $notificationBarData->rgbColor = '#000000';
+            $notificationBarData->hidden = false;
 
-        $this->notificationBarFacade->create($notificationBarData);
+            $this->notificationBarFacade->create($notificationBarData);
+        }
     }
 }

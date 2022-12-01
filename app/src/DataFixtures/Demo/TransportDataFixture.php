@@ -79,9 +79,13 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $transportData->deliveryCode = 'A';
         $transportData->typeOfDeliveryKey = 1;
         $transportData->maxWeight = 5000;
+        $transportData->trackingUrl = 'https://www.postaonline.cz/trackandtrace/-/zasilka/cislo?parcelNumbers={tracking_number}';
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $transportData->name[$locale] = t('Czech post', [], 'dataFixtures', $locale);
+            $transportData->trackingInstructions[$locale] = t('To track your package, click on this link: <a href="{tracking_url}">{tracking_number}</a>.', [], 'dataFixtures', $locale);
+            $transportData->description[$locale] = t('Czech state post service.', [], 'dataFixtures', $locale);
+            $transportData->instructions[$locale] = t('the Czech Post will try to deliver your parcel on time, but it will not succeed and despite the constant presence of your person at home, it will not catch you and you will have to pick up the parcel personally at the counter. Here, however, you have to endure an endlessly long line and an eternally grumpy lady postman.', [], 'dataFixtures', $locale);
         }
 
         $this->setPriceForAllDomains($transportData, Money::create('99.95'));

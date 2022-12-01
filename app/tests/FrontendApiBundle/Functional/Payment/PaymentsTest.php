@@ -44,8 +44,8 @@ class PaymentsTest extends GraphQlTestCase
             }
         ';
 
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
-        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $this->domain->getId());
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
+        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $this->domain->getId());
 
         $arrayExpected = [
             'data' => [
@@ -61,7 +61,7 @@ class PaymentsTest extends GraphQlTestCase
                         'instruction' => null,
                         'position' => 0,
                         'type' => 'basic',
-                        'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatZero),
+                        'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
                         'images' => [
                             [
                                 'position' => null,
@@ -83,7 +83,7 @@ class PaymentsTest extends GraphQlTestCase
                         'instruction' => null,
                         'position' => 1,
                         'type' => 'basic',
-                        'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('50', $vatZero),
+                        'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.59', $vatHigh),
                         'images' => [
                             [
                                 'position' => null,
@@ -104,7 +104,7 @@ class PaymentsTest extends GraphQlTestCase
                         'instruction' => null,
                         'position' => 2,
                         'type' => 'basic',
-                        'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
+                        'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatHigh),
                         'images' => [
                             [
                                 'position' => null,
@@ -125,7 +125,7 @@ class PaymentsTest extends GraphQlTestCase
                         'instruction' => null,
                         'position' => 3,
                         'type' => 'goPay',
-                        'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
+                        'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatHigh),
                         'images' => [],
                         'transports' => [
                             ['name' => t('PPL', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
@@ -145,7 +145,7 @@ class PaymentsTest extends GraphQlTestCase
                         'instruction' => null,
                         'position' => 4,
                         'type' => 'goPay',
-                        'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
+                        'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatHigh),
                         'images' => [],
                         'transports' => [
                             ['name' => t('Czech post', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
@@ -167,7 +167,7 @@ class PaymentsTest extends GraphQlTestCase
                         'instruction' => null,
                         'position' => 5,
                         'type' => 'basic',
-                        'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatZero),
+                        'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatHigh),
                         'images' => [],
                         'transports' => [
                             ['name' => t('Drone delivery', [], 'dataFixtures', $this->getLocaleForFirstDomain())],

@@ -25,8 +25,8 @@ export const payment = {
     cash: 'Hotově',
     onDelivery: {
         name: 'Dobírka',
-        priceWithVat: '50 Kč',
-        priceWithoutVat: '50 Kč',
+        priceWithVat: '60 Kč',
+        priceWithoutVat: '49,59 Kč',
     },
 };
 export const placeholder = {
@@ -68,7 +68,7 @@ export const textCode = 'Kód';
 export const totalPrice = {
     cart1: '3 499 Kč',
     cart2: '12 310 Kč',
-    order1: '3 670 Kč',
+    order1: '3 680 Kč',
 };
 export const transport = {
     personalCollection: {

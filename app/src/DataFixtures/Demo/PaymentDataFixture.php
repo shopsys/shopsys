@@ -203,7 +203,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     {
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
-            $vat = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domain->getId());
+            $vat = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domain->getId());
             /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
             $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
 

@@ -128,8 +128,12 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         $mainPageBlogCategoryData = $this->blogCategoryDataFactory->createFromBlogCategory($mainPageBlogCategory);
         foreach ($this->domain->getAll() as $domain) {
             $locale = $domain->getLocale();
-            $mainPageBlogCategoryData->names[$locale] = t('Hlavní stránka blogu - %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
-            $mainPageBlogCategoryData->descriptions[$locale] = t('description - Hlavní stránka blogu - %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
+            $domainId = $domain->getId();
+            $mainPageBlogCategoryData->names[$locale] = t('Main blog page - %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
+            $mainPageBlogCategoryData->descriptions[$locale] = t('description - Main blog page - %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
+            $mainPageBlogCategoryData->seoH1s[$domainId] = t('Main blog page - %locale% - H1', ['%locale%' => $locale], 'dataFixtures', $locale);
+            $mainPageBlogCategoryData->seoMetaDescriptions[$domainId] = t('Main blog page - %locale% - meta description', ['%locale%' => $locale], 'dataFixtures', $locale);
+            $mainPageBlogCategoryData->seoTitles[$domainId] = t('Main blog page - %locale% - Title', ['%locale%' => $locale], 'dataFixtures', $locale);
         }
         $this->blogCategoryFacade->edit($mainPageBlogCategory->getId(), $mainPageBlogCategoryData);
 
@@ -189,18 +193,19 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         foreach ($this->domain->getAll() as $domain) {
             $locale = $domain->getLocale();
             if ($subcategoryOrder === 1) {
-                $h1 = t('První podsekce %locale% - h1', ['%locale%' => $locale], 'dataFixtures', $locale);
-                $title = t('title - První podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
-                $name = t('První podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
-                $description = t('description - První podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
+                $h1 = t('First subsection %locale% - h1', ['%locale%' => $locale], 'dataFixtures', $locale);
+                $title = t('title - First subsection %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
+                $name = t('First subsection %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
+                $description = t('description - First subsection %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
             } else {
-                $h1 = t('Druhá podsekce %locale% - h1', ['%locale%' => $locale], 'dataFixtures', $locale);
-                $title = t('title - Druhá podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
-                $name = t('Druhá podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
-                $description = t('description - Druhá podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
+                $h1 = t('Second subsection %locale% - h1', ['%locale%' => $locale], 'dataFixtures', $locale);
+                $title = t('title - Second subsection %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
+                $name = t('Second subsection %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
+                $description = t('description - Second subsection %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
             }
             $blogCategoryData->seoH1s[$domain->getId()] = $h1;
             $blogCategoryData->seoTitles[$domain->getId()] = $title;
+            $blogCategoryData->seoMetaDescriptions[$domain->getId()] = $description;
             $blogCategoryData->names[$locale] = $name;
             $blogCategoryData->descriptions[$locale] = $description;
         }
@@ -221,7 +226,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         $blogArticleData->publishDate = new DateTime(sprintf('-3 hours +%s minutes', $this->articleCounter));
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $blogArticleData->names[$locale] = t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => $this->articleCounter, '%locale%' => $locale], 'dataFixtures', $locale);
+            $blogArticleData->names[$locale] = t('Blog article example %counter% %locale%', ['%counter%' => $this->articleCounter, '%locale%' => $locale], 'dataFixtures', $locale);
             $blogArticleData->descriptions[$locale] = t('description - Lorem ipsum dolor sit amet, {products=9177759,7700768,9146508} consectetur {products=9177759,9176508} adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue.', [], 'dataFixtures', $locale);
             $blogArticleData->perexes[$locale] = t('%locale% perex - lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu.', ['%locale%' => $locale], 'dataFixtures', $locale);
         }
@@ -229,8 +234,9 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         foreach ($this->domain->getAll() as $domain) {
             $locale = $domain->getLocale();
             $blogArticleData->blogCategoriesByDomainId[$domain->getId()] = $blogCategories;
-            $blogArticleData->seoTitles[$domain->getId()] = t('title - Ukázkový článek blogu %counter% %locale%', ['%counter%' => $this->articleCounter, '%locale%' => $locale], 'dataFixtures', $locale);
-            $blogArticleData->seoH1s[$domain->getId()] = t('Ukázkový článek blogu %counter% %locale% - H1', ['%counter%' => $this->articleCounter, '%locale%' => $locale], 'dataFixtures', $locale);
+            $blogArticleData->seoTitles[$domain->getId()] = t('title - Blog article example %counter% %locale%', ['%counter%' => $this->articleCounter, '%locale%' => $locale], 'dataFixtures', $locale);
+            $blogArticleData->seoH1s[$domain->getId()] = t('Blog article example %counter% %locale% - H1', ['%counter%' => $this->articleCounter, '%locale%' => $locale], 'dataFixtures', $locale);
+            $blogArticleData->seoMetaDescriptions[$domain->getId()] = t('Blog article example %counter% %locale% - Meta description', ['%counter%' => $this->articleCounter, '%locale%' => $locale], 'dataFixtures', $locale);
         }
 
         $this->articleCounter++;

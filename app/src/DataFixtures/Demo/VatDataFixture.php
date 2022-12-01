@@ -75,7 +75,7 @@ class VatDataFixture extends AbstractReferenceFixture
         $vatData = $this->vatDataFactory->create();
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            if ($domainId !== 1) {
+            if ($domainId !== Domain::FIRST_DOMAIN_ID) {
                 $vatData->name = 'Zero rate';
                 $vatData->percent = '0';
                 $this->createVat($vatData, $domainId, self::VAT_ZERO);

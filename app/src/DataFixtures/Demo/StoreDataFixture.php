@@ -98,13 +98,16 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
      */
     private function getDemoData(): array
     {
+        $firstDomainConfig = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
+        $secondDomainConfig = $this->domain->getDomainConfigById(Domain::SECOND_DOMAIN_ID);
+
         return [
             [
                 self::ATTR_NAME => 'Ostrava',
                 self::ATTR_IS_DEFAULT => true,
                 self::ATTR_IS_ENABLED_BY_DOMAIN => self::ENABLED_FIRST_DOMAIN,
                 self::ATTR_STOCK => $this->getReference(StocksDataFixture::STOCK_PREFIX . 4),
-                self::ATTR_DESCRIPTION => null,
+                self::ATTR_DESCRIPTION => t('Store in Ostrava Přívoz', [], 'dataFixtures', $firstDomainConfig->getLocale()),
                 self::ATTR_EXTERNAL_ID => null,
                 self::ATTR_STREET => 'Koksární 10',
                 self::ATTR_CITY => 'Ostrava',
@@ -121,7 +124,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_IS_DEFAULT => false,
                 self::ATTR_IS_ENABLED_BY_DOMAIN => self::ENABLED_FIRST_DOMAIN,
                 self::ATTR_STOCK => null,
-                self::ATTR_DESCRIPTION => null,
+                self::ATTR_DESCRIPTION => t('Store v Pardubice', [], 'dataFixtures', $firstDomainConfig->getLocale()),
                 self::ATTR_EXTERNAL_ID => null,
                 self::ATTR_STREET => 'Bratranců Veverkových 2722',
                 self::ATTR_CITY => 'Pardubice',
@@ -138,7 +141,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_IS_DEFAULT => false,
                 self::ATTR_IS_ENABLED_BY_DOMAIN => self::ENABLED_SECOND_DOMAIN,
                 self::ATTR_STOCK => $this->getReference(StocksDataFixture::STOCK_PREFIX . 14),
-                self::ATTR_DESCRIPTION => null,
+                self::ATTR_DESCRIPTION => t('Store in Žilina', [], 'dataFixtures', $secondDomainConfig->getLocale()),
                 self::ATTR_EXTERNAL_ID => null,
                 self::ATTR_STREET => 'Pribinova 62',
                 self::ATTR_CITY => 'Žilina',

@@ -26,7 +26,7 @@ BillingAddressInputObjectDecorator:
                             message: "Prosím zadejte vaše město"
                     -   Length:
                             max: 30
-                            maxMessage: "City cannot be longer than {{ limit }} characters"
+                            maxMessage: "City name cannot be longer than {{ limit }} characters"
             postcode:
                 type: "String!"
                 description: "Billing address zip code (will be on the tax invoice)"

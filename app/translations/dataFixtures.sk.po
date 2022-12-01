@@ -490,6 +490,15 @@ msgstr ""
 msgid "BROTHER PT-H300"
 msgstr ""
 
+msgid "Blog article example %counter% %locale%"
+msgstr ""
+
+msgid "Blog article example %counter% %locale% - H1"
+msgstr ""
+
+msgid "Blog article example %counter% %locale% - Meta description"
+msgstr ""
+
 msgid "Blog article for search testing"
 msgstr ""
 
@@ -658,6 +667,9 @@ msgstr ""
 msgid "Czech republic"
 msgstr ""
 
+msgid "Czech state post service."
+msgstr ""
+
 msgid "D-Link"
 msgstr ""
 
@@ -778,12 +790,6 @@ msgstr ""
 msgid "Drone delivery"
 msgstr ""
 
-msgid "Druhá podsekce %locale%"
-msgstr ""
-
-msgid "Druhá podsekce %locale% - h1"
-msgstr ""
-
 msgid "DéLonghi ECAM 44.660.B. Start the morning with your favorite drink with the DeLonghi ECAM 44.660.B Eletta automatic coffee maker"
 msgstr ""
 
@@ -845,6 +851,12 @@ msgid "Filter carbon OPK4290"
 msgstr ""
 
 msgid "Filter input VP-9161 / SF-9162 / SF-8210"
+msgstr ""
+
+msgid "First subsection %locale%"
+msgstr ""
+
+msgid "First subsection %locale% - h1"
 msgstr ""
 
 msgid "Floor nozzle metal VP-9310"
@@ -967,9 +979,6 @@ msgstr ""
 msgid "High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D."
 msgstr ""
 
-msgid "Hlavní stránka blogu - %locale%"
-msgstr ""
-
 msgid "Hlavní údaje"
 msgstr ""
 
@@ -1062,6 +1071,21 @@ msgstr ""
 
 msgid "Magazine capacity for beans"
 msgstr ""
+
+msgid "Main blog page - %locale%"
+msgstr ""
+
+msgid "Main blog page - %locale% - H1"
+msgstr ""
+
+msgid "Main blog page - %locale% - Title"
+msgstr ""
+
+msgid "Main blog page - %locale% - meta description"
+msgstr ""
+
+msgid "Material"
+msgstr "Materiál"
 
 msgid "Maximum size"
 msgstr ""
@@ -1183,6 +1207,9 @@ msgstr ""
 msgid "No"
 msgstr ""
 
+msgid "Notification in the bar, notification of a new event."
+msgstr "Upozornenie v lište, upozornenie na novú udalosť."
+
 msgid "Nozzle with brush VP-4290"
 msgstr ""
 
@@ -1262,6 +1289,9 @@ msgid "Other"
 msgstr ""
 
 msgid "Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.)."
+msgstr ""
+
+msgid "Our electronics include devices used for entertainment, communicationsand home office activities."
 msgstr ""
 
 msgid "Overall performance"
@@ -1372,12 +1402,6 @@ msgstr ""
 msgid "Processor frequency (GHz)"
 msgstr ""
 
-msgid "První podsekce %locale%"
-msgstr ""
-
-msgid "První podsekce %locale% - h1"
-msgstr ""
-
 msgid "Práce v Shopsys"
 msgstr ""
 
@@ -1483,6 +1507,12 @@ msgstr ""
 msgid "Screen size"
 msgstr ""
 
+msgid "Second subsection %locale%"
+msgstr ""
+
+msgid "Second subsection %locale% - h1"
+msgstr ""
+
 msgid "Sencor SDB 4002M4"
 msgstr ""
 
@@ -1568,6 +1598,15 @@ msgid "Speakers 2 x 3W RMS, 2.0 stereo, portable, volume control, frequency rang
 msgstr ""
 
 msgid "Spolupráce"
+msgstr ""
+
+msgid "Store in Ostrava Přívoz"
+msgstr ""
+
+msgid "Store in Žilina"
+msgstr ""
+
+msgid "Store v Pardubice"
 msgstr ""
 
 msgid "Super LCD"
@@ -1732,6 +1771,9 @@ msgstr ""
 msgid "Ticket for 100 Czech crowns"
 msgstr ""
 
+msgid "To track your package, click on this link: <a href=\"{tracking_url}\">{tracking_number}</a>."
+msgstr ""
+
 msgid "To track your package, click on this link: <a href=\"{tracking_url}\">{tracking_url}</a>."
 msgstr ""
 
@@ -1754,12 +1796,6 @@ msgid "Type nozzles: Universal. Diameter: 32 mm. Turbobrush: Big."
 msgstr ""
 
 msgid "USB"
-msgstr ""
-
-msgid "Ukázkový článek blogu %counter% %locale%"
-msgstr ""
-
-msgid "Ukázkový článek blogu %counter% %locale% - H1"
 msgstr ""
 
 msgid "Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts."
@@ -1859,7 +1895,7 @@ msgid "battery"
 msgstr ""
 
 msgid "black"
-msgstr ""
+msgstr "čierná"
 
 msgid "classic"
 msgstr ""
@@ -1867,16 +1903,49 @@ msgstr ""
 msgid "cm"
 msgstr ""
 
-msgid "description - Druhá podsekce %locale%"
-msgstr ""
-
-msgid "description - Hlavní stránka blogu - %locale%"
+msgid "description - First subsection %locale%"
 msgstr ""
 
 msgid "description - Lorem ipsum dolor sit amet, {products=9177759,7700768,9146508} consectetur {products=9177759,9176508} adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue."
 msgstr ""
 
-msgid "description - První podsekce %locale%"
+msgid "description - Main blog page - %locale%"
+msgstr ""
+
+msgid "description - Second subsection %locale%"
+msgstr ""
+
+msgid "description of 2 litre coffeemakers in sale seo category"
+msgstr ""
+
+msgid "description of Electronics from most expensive seo category"
+msgstr ""
+
+msgid "description of Electronics in black seo category"
+msgstr ""
+
+msgid "description of Electronics in red seo category"
+msgstr ""
+
+msgid "description of Electronics with LED technology and size 30 inch in sale seo category"
+msgstr ""
+
+msgid "description of Electronics without HDMI in sale seo category"
+msgstr ""
+
+msgid "description of Full HD Electronics with LED technology and USB seo category"
+msgstr ""
+
+msgid "description of New computers with USB seo category"
+msgstr ""
+
+msgid "description of TV, audio from the cheapest seo category"
+msgstr ""
+
+msgid "description of TV, audio in sale seo category"
+msgstr ""
+
+msgid "description of TV, audio plasma with HDMI seo category"
 msgstr ""
 
 msgid "fits into VP812x VP9520"
@@ -1909,6 +1978,39 @@ msgstr ""
 msgid "media 210MB, 24min., writing speed 24x, slim box"
 msgstr ""
 
+msgid "meta description of 2 litre coffeemakers in sale seo category"
+msgstr ""
+
+msgid "meta description of Electronics from most expensive seo category"
+msgstr ""
+
+msgid "meta description of Electronics in black seo category"
+msgstr ""
+
+msgid "meta description of Electronics in red seo category"
+msgstr ""
+
+msgid "meta description of Electronics with LED technology and size 30 inch in sale seo category"
+msgstr ""
+
+msgid "meta description of Full HD Electronics with LED technology and USB seo category"
+msgstr ""
+
+msgid "meta description of New computers with USB seo category"
+msgstr ""
+
+msgid "meta description of TV, audio from the cheapest seo category"
+msgstr ""
+
+msgid "meta description of TV, audio in sale seo category"
+msgstr ""
+
+msgid "meta description of TV, audio plasma with HDMI seo category"
+msgstr ""
+
+msgid "metal"
+msgstr "kov"
+
 msgid "m³"
 msgstr ""
 
@@ -1930,26 +2032,101 @@ msgstr ""
 msgid "perex"
 msgstr ""
 
+msgid "plastic"
+msgstr "plast"
+
 msgid "plazmová"
+msgstr ""
+
+msgid "red"
+msgstr "červená"
+
+msgid "short description of 2 litre coffeemakers in sale seo category"
+msgstr ""
+
+msgid "short description of Electronics from most expensive seo category"
+msgstr ""
+
+msgid "short description of Electronics in black seo category"
+msgstr ""
+
+msgid "short description of Electronics in red seo category"
+msgstr ""
+
+msgid "short description of Electronics with LED technology and size 30 inch in sale seo category"
+msgstr ""
+
+msgid "short description of Electronics without HDMI in sale seo category"
+msgstr ""
+
+msgid "short description of Full HD Electronics with LED technology and USB seo category"
+msgstr ""
+
+msgid "short description of New computers with USB seo category"
+msgstr ""
+
+msgid "short description of TV, audio from the cheapest seo category"
+msgstr ""
+
+msgid "short description of TV, audio in sale seo category"
+msgstr ""
+
+msgid "short description of TV, audio plasma with HDMI seo category"
 msgstr ""
 
 msgid "t"
 msgstr ""
 
+msgid "the Czech Post will try to deliver your parcel on time, but it will not succeed and despite the constant presence of your person at home, it will not catch you and you will have to pick up the parcel personally at the counter. Here, however, you have to endure an endlessly long line and an eternally grumpy lady postman."
+msgstr "česká pošta se pokusí doručit vaši zásilku včas, avšak to se jí nepovede a i přes neustálou přítomnost vaší osoby doma, vás nezastihne a budete muset osobně vyzvednout zásilku na přepážce. Zde však musíte vyrtpět nekonečně dlouhou řadu a věčně mrzutou paníé pošťačku."
+
 msgid "title"
 msgstr ""
 
-msgid "title - Druhá podsekce %locale%"
+msgid "title - Blog article example %counter% %locale%"
 msgstr ""
 
-msgid "title - První podsekce %locale%"
+msgid "title - First subsection %locale%"
 msgstr ""
 
-msgid "title - Ukázkový článek blogu %counter% %locale%"
+msgid "title - Second subsection %locale%"
+msgstr ""
+
+msgid "title of 2 litre coffeemakers in sale seo category"
+msgstr ""
+
+msgid "title of Electronics from most expensive seo category"
+msgstr ""
+
+msgid "title of Electronics in black seo category"
+msgstr ""
+
+msgid "title of Electronics in red seo category"
+msgstr ""
+
+msgid "title of Electronics with LED technology and size 30 inch in sale seo category"
+msgstr ""
+
+msgid "title of Full HD Electronics with LED technology and USB seo category"
+msgstr ""
+
+msgid "title of New computers with USB seo category"
+msgstr ""
+
+msgid "title of TV, audio from the cheapest seo category"
+msgstr ""
+
+msgid "title of TV, audio in sale seo category"
+msgstr ""
+
+msgid "title of TV, audio plasma with HDMI seo category"
 msgstr ""
 
 msgid "white"
 msgstr ""
+
+msgid "wood"
+msgstr "drevo"
 
 msgid "| Commerce Cloud"
 msgstr ""
