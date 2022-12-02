@@ -1,5 +1,5 @@
 module.exports = {
-    createOldCatalogs: true,
+    createOldCatalogs: false,
     defaultNamespace: 'common',
     indentation: 4,
     keepRemoved: false,
