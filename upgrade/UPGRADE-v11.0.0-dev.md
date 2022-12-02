@@ -947,3 +947,20 @@ There you can find links to upgrade notes for other versions too.
     - since Symfony 5.0 are all Events from `Symfony\Component\HttpKernel\Event` namespace final and cannot be mocked
 - use logger methods as they're specified in PSR-3 ([#2483](https://github.com/shopsys/shopsys/pull/2483))
     - replace any usages of `Logger::add<Emergency|Alert|Critical|Notice|Debug|Error|Warning|Info>` with corresponding call of `emergency|alert|critical|notice|debug|error|warning|info` method
+- update to Symfony 5.4 ([#2496](https://github.com/shopsys/shopsys/pull/2496))
+    - see Symfony upgrade notes:
+        - ([Upgrade from 4.4 to 5.0](https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.0.md))
+        - ([Upgrade from 5.0 to 5.1](https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.1.md))
+        - ([Upgrade from 5.1 to 5.2](https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.2.md))
+        - ([Upgrade from 5.2 to 5.3](https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.3.md))
+        - ([Upgrade from 5.3 to 5.4](https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.4.md))
+    - here is quick summary you need to know, but we still encourage you to ready Symfony upgrade notes
+        - in Request and Request events `masterRequest` has been renamed to `mainRequest` so you have to update your usages accordingly
+        - you no longer need to use `Constraint/Date` in your date form types as validation is done by underlying type hinted code ([more described in Symfony Upgrade notes](https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.0.md#validator))
+        - use `Symfony\Component\Security\Core\Exception\UsernameNotFoundException` instead of `Symfony\Component\Security\Core\Exception\UserNotFoundException`
+        - `Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken` does no longer have second argument credentials so update your usages accordingly
+        - support for `bundle:controller:action` syntax has been removed, use `serviceOrFqcn::method` instead ([more info in Symfony Upgrade notes](https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.0.md#frameworkbundle))
+        - in functional and application tests requesting of container is changed from public method (`$this->getContainer()`) to static method (`self::getContainer()`) so you have to update your code accordingly
+        - we have moved code for requesting application from `FunctionalTestCase` tests to new `ApplicationTestCase` so functional tests and application tests are now separated
+    - many typehints were added so run `php phing phpstan` to find occurrences in your code that need to be updated accordingly
+    - also see #project-base-diff for more information about changes needed to be done in your project
