@@ -2,13 +2,11 @@ import { RedisClientType } from '@node-redis/client';
 import { captureException } from '@sentry/nextjs';
 import md5 from 'crypto-js/md5';
 import { isServer } from 'helpers/misc/isServer';
-import getConfig from 'next/config';
 
-const { publicRuntimeConfig } = getConfig();
 const CACHE_REGEXP = `@redisCache\\(\\s?ttl:\\s?([0-9]*)\\s?\\)`;
 const QUERY_NAME_REGEXP = `query\\s([A-z]*)(\\([A-z:!0-9$,\\s]*\\))?\\s@redisCache`;
 const REDIS_URL = `redis://${process.env.REDIS_HOST}`;
-const REDIS_PREFIX = `${process.env.REDIS_PREFIX}:fe:queryCache:`;
+const REDIS_PREFIX_PATTERN = `${process.env.REDIS_PREFIX}:fe:queryCache:`;
 
 const removeDirectiveFromQuery = (query: string) => query.replace(new RegExp(CACHE_REGEXP), '');
 
@@ -22,7 +20,7 @@ export const fetcher =
     async (input: URL | RequestInfo, init?: RequestInit | undefined): Promise<Response> => {
         let client: RedisClientType | null = null;
 
-        if (!isServer() || !init || publicRuntimeConfig.graphqlRedisCache !== '1') {
+        if (!isServer() || !init || process.env.GRAPHQL_REDIS_CACHE !== '1') {
             return fetch(input, createInit(init));
         }
 
@@ -41,7 +39,7 @@ export const fetcher =
             const body = removeDirectiveFromQuery(init.body);
             const host = (init.headers ? new Headers(init.headers) : new Headers()).get('OriginalHost');
             const [, queryName] = init.body.match(QUERY_NAME_REGEXP) ?? [];
-            const hash = `${REDIS_PREFIX}${host}:${queryName}:${md5(body).toString().substring(0, 7)}`;
+            const hash = `${REDIS_PREFIX_PATTERN}${host}:${queryName}:${md5(body).toString().substring(0, 7)}`;
 
             const createRedisClient = (await import('redis')).createClient;
 
