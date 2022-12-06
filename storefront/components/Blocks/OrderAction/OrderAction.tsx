@@ -51,7 +51,7 @@ export const OrderAction: FC<OrderActionProps> = ({
     return (
         <OrderActionStyled withGapBottom={withGapBottom} withGapTop={withGapTop}>
             <OrderActionLeftStyled data-testid={TEST_IDENTIFIER + 'back'}>
-                <NextLink href={buttonBackLink} passHref shallow prefetch>
+                <NextLink href={buttonBackLink} passHref shallow>
                     <OrderActionLinkBackStyled>
                         <OrderActionButtonBackIconStyled alt="" iconType="icon" icon="Arrow" />
                         {buttonBack}

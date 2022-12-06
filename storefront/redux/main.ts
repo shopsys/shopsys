@@ -16,7 +16,7 @@ const makeStore = wrapMakeStore(() =>
         middleware: (getDefaultMiddleware) =>
             getDefaultMiddleware().prepend(
                 nextReduxCookieMiddleware({
-                    compress: process.env.NODE_ENV !== 'development',
+                    compress: process.env.NODE_ENV === 'production',
                     subtrees: ['cart.isCartEmpty', 'user', 'domain', 'contactInformation'],
                 }),
             ),
