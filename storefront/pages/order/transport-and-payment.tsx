@@ -9,9 +9,7 @@ import { useTransports } from 'connectors/transports/Transports';
 import { useLastOrderQueryApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
-import { handleOrderPagesRedirect } from 'helpers/misc/handleOrderPagesRedirect';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
-import { createClient } from 'helpers/urql/createClient';
 import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
 import { useChangeTransportInCart } from 'hooks/cart/useChangeTransportInCart';
 import { useGtmPaymentShippingView } from 'hooks/gtm/useGtmPaymentShippingView';
@@ -19,7 +17,6 @@ import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import React, { FC } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
-import { ssrExchange } from 'urql';
 
 const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
     const { cartUuid } = useShopsysSelector((state) => state.user);
@@ -66,15 +63,7 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     getServerSidePropsWithRedisClient(
-        (redisClient) => async (context) => {
-            const ssrCache = ssrExchange({ isClient: false });
-            const client = await createClient(context, store, ssrCache, redisClient);
-            const redirect = await handleOrderPagesRedirect(context, store, client);
-
-            return redirect === false
-                ? initServerSideProps({ context, store, client, ssrCache, redisClient })
-                : redirect;
-        },
+        (redisClient) => async (context) => initServerSideProps({ context, store, redisClient }),
         store,
     ),
 );

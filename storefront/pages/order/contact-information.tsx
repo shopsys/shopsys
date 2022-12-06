@@ -18,9 +18,7 @@ import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { onPurchaseOrderGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
-import { handleOrderPagesRedirect } from 'helpers/misc/handleOrderPagesRedirect';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
-import { createClient } from 'helpers/urql/createClient';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandleContactInformationNonTextChanges';
 import { useGtmShippingDataView } from 'hooks/gtm/useGtmShippingDataView';
@@ -32,7 +30,6 @@ import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { contactInformationActions } from 'redux/slices/contactInformation';
 import { userActions } from 'redux/slices/user';
-import { ssrExchange } from 'urql';
 
 const ContactInformationPage: FC<ServerSidePropsType> = () => {
     const router = useRouter();
@@ -182,15 +179,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     getServerSidePropsWithRedisClient(
-        (redisClient) => async (context) => {
-            const ssrCache = ssrExchange({ isClient: false });
-            const client = await createClient(context, store, ssrCache, redisClient);
-            const redirect = await handleOrderPagesRedirect(context, store, client);
-
-            return redirect === false
-                ? initServerSideProps({ context, store, client, ssrCache, redisClient })
-                : redirect;
-        },
+        (redisClient) => async (context) => initServerSideProps({ context, store, redisClient }),
         store,
     ),
 );
