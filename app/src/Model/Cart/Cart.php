@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart as BaseCart;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 
 /**
  * @ORM\Table(name="carts")
@@ -96,7 +97,11 @@ class Cart extends BaseCart
     {
         $quantifiedProducts = [];
         foreach ($this->items as $item) {
-            $quantifiedProducts[$item->getId()] = new QuantifiedProduct($item->getProduct(), $item->getQuantity());
+            try {
+                $quantifiedProducts[$item->getId()] = new QuantifiedProduct($item->getProduct(), $item->getQuantity());
+            } catch (ProductNotFoundException $productNotFoundException) {
+                continue;
+            }
         }
 
         return $quantifiedProducts;
@@ -109,8 +114,12 @@ class Cart extends BaseCart
     {
         $totalWeight = 0;
         foreach ($this->items as $item) {
-            $product = $item->getProduct();
-            $totalWeight += $product->getWeight() * $item->getQuantity();
+            try {
+                $product = $item->getProduct();
+                $totalWeight += $product->getWeight() * $item->getQuantity();
+            } catch (ProductNotFoundException $productNotFoundException) {
+                continue;
+            }
         }
 
         return $totalWeight;
