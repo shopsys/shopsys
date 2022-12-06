@@ -2769,6 +2769,11 @@ Cart item UUID
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>someProductWasRemovedFromEshop</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>transportModifications</strong></td>
 <td valign="top"><a href="#carttransportmodificationsresult">CartTransportModificationsResult</a>!</td>
 <td></td>

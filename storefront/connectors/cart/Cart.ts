@@ -90,12 +90,22 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
             payment: result.data.cart.payment === null ? null : mapPayment(result.data.cart.payment, currencyCode),
             paymentGoPayBankSwift: result.data.cart.paymentGoPayBankSwift,
             promoCode: result.data.cart.promoCode,
-            isLoaded: true,
+            isLoaded: !result.fetching,
             isInitiallyLoaded: isInitiallyLoaded,
             modifications: result.data.cart.modifications,
             refetchCart,
         };
-    }, [currencyCode, result.data, result.error, t, cartUuid, isUserLoggedIn, isInitiallyLoaded, refetchCart]);
+    }, [
+        result.data,
+        result.error,
+        result.fetching,
+        isInitiallyLoaded,
+        cartUuid,
+        isUserLoggedIn,
+        currencyCode,
+        refetchCart,
+        t,
+    ]);
 };
 
 const getEmptyCart = (
@@ -182,10 +192,17 @@ export const handleCartModifications = (
     t: Translate,
     changePaymentInCart: ChangePaymentHandler,
 ): void => {
+    handleRemovedProductFromEshopModifications(cartModifications.someProductWasRemovedFromEshop, t);
     handleCartTransportModifications(cartModifications.transportModifications, t, changePaymentInCart);
     handleCartPaymentModifications(cartModifications.paymentModifications, t);
     handleCartItemModifications(cartModifications.itemModifications, t);
     handleCartPromoCodeModifications(cartModifications.promoCodeModifications, t);
+};
+
+const handleRemovedProductFromEshopModifications = (someProductWasRemovedFromEshop: boolean, t: Translate): void => {
+    if (someProductWasRemovedFromEshop) {
+        showInfoMessage(t('Some product was removed from e-shop and your cart was recalculated.'), 'cart');
+    }
 };
 
 const handleCartTransportModifications = (

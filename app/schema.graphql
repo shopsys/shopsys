@@ -389,6 +389,7 @@ type CartModificationsResult {
   itemModifications: CartItemModificationsResult!
   paymentModifications: CartPaymentModificationsResult!
   promoCodeModifications: CartPromoCodeModificationsResult!
+  someProductWasRemovedFromEshop: Boolean!
   transportModifications: CartTransportModificationsResult!
 }
 
