@@ -2,9 +2,6 @@ fragment BlogCategoryDetailFragment on BlogCategory {
     __typename
     uuid
     name
-    blogArticles(after: $endCursorForPagination, first: $pageSize) {
-        ...BlogArticleConnectionFragment
-    }
     ...BreadcrumbFragment
     seoTitle
     seoMetaDescription

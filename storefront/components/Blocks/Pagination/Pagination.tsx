@@ -1,16 +1,12 @@
 import { PaginationButtonStyled, PaginationWrapperStyled } from './Pagination.style';
-import { isElementVisible } from 'components/Helpers/isElementVisible';
-import { mobileFirstSizes } from 'components/Theme/mediaQueries';
+import { usePaginationContext } from './usePaginationContext';
 import { getNewPagination } from 'helpers/pagination/getNewPagination';
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
-import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
+import { useMediaMin } from 'hooks/ui/useMediaMin';
 import { usePagination } from 'hooks/ui/usePagination';
-import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { FC, Fragment, RefObject, useCallback, useEffect, useState } from 'react';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
-import { initialState, userActions } from 'redux/slices/user';
+import { FC, Fragment, RefObject, useCallback } from 'react';
 
 type PaginationProps = {
     totalCount: number;
@@ -18,44 +14,25 @@ type PaginationProps = {
 };
 
 const TEST_IDENTIFIER = 'blocks-pagination';
+export const DEFAULT_PAGE_SIZE = 9;
 
 export const Pagination: FC<PaginationProps> = ({ totalCount, containerWrapRef }) => {
     const router = useRouter();
-    const dispatch = useShopsysDispatch();
-    const { width } = useGetWindowSize();
-    const [isMobilePaginationVisible, setMobilePaginationVisible] = useState(false);
-    useResizeWidthEffect(
-        width,
-        mobileFirstSizes.sm,
-        () => setMobilePaginationVisible(false),
-        () => setMobilePaginationVisible(true),
-        () => setMobilePaginationVisible(isElementVisible([{ min: 0, max: 480 }], width)),
-    );
-    const paginationState = useShopsysSelector((state) => state.user.pagination);
-
-    const paginationButtons = usePagination(
-        totalCount,
-        paginationState.currentPage,
-        isMobilePaginationVisible,
-        initialState.pagination.pageSize,
-    );
+    const isDesktop = useMediaMin('sm');
+    const [{ page: currentPage }, dispatch] = usePaginationContext();
+    const paginationButtons = usePagination(totalCount, currentPage, !isDesktop, DEFAULT_PAGE_SIZE);
 
     const asPathWithoutQueryParams = router.asPath.split('?')[0];
     const queryParamsWithoutPage = { ...router.query };
     delete queryParamsWithoutPage.all;
     delete queryParamsWithoutPage[PAGE_QUERY_PARAMETER_NAME];
 
-    useEffect(() => {
-        dispatch(userActions.setPagination({ ...initialState.pagination }));
-    }, [dispatch, asPathWithoutQueryParams]);
-
     const onChangePage = useCallback(
         (page: number) => () => {
-            dispatch(
-                userActions.setPagination({
-                    ...getNewPagination(page, initialState.pagination.pageSize),
-                }),
-            );
+            dispatch({
+                type: 'setPagination',
+                payload: getNewPagination(page),
+            });
             if (containerWrapRef !== null && containerWrapRef.current !== null) {
                 containerWrapRef.current.scrollIntoView();
             }
@@ -67,10 +44,6 @@ export const Pagination: FC<PaginationProps> = ({ totalCount, containerWrapRef }
         return null;
     }
 
-    if (paginationState.currentPage > paginationButtons[paginationButtons.length - 1]) {
-        dispatch(userActions.setPagination({ ...initialState.pagination }));
-    }
-
     return (
         <PaginationWrapperStyled data-testid={TEST_IDENTIFIER}>
             {paginationButtons.map((pageNumber, index, array) => (
@@ -78,7 +51,7 @@ export const Pagination: FC<PaginationProps> = ({ totalCount, containerWrapRef }
                     {isDotKey(array[index - 1] ?? null, pageNumber) && (
                         <PaginationButtonStyled dotButton>&#8230;</PaginationButtonStyled>
                     )}
-                    {paginationState.currentPage === pageNumber ? (
+                    {currentPage === pageNumber ? (
                         <PaginationButtonStyled data-testid={TEST_IDENTIFIER + '-' + pageNumber} active>
                             {pageNumber}
                         </PaginationButtonStyled>

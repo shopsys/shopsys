@@ -1,11 +1,9 @@
-import { BlogArticleConnectionType } from './blogArticle';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 
 export type BlogCategoryDetailType = {
     __typename: 'BlogCategory';
     uuid: string;
     name: string;
-    blogArticles: BlogArticleConnectionType | null;
     breadcrumb: BreadcrumbItemType[];
     seoTitle: string | null;
     seoMetaDescription: string | null;

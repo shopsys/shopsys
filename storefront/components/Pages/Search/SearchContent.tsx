@@ -1,33 +1,24 @@
-import { ResultProducts } from './ResultProducts/ResultProducts';
+import { ProductsSearch } from './ProductsSearch/ProductsSearch';
 import {
     SearchResultsBlockStyled,
-    SearchResultsContentStyled,
-    SearchResultsPanelStyled,
-    SearchResultsStyled,
     SearchResultsWeblineStyled,
     ShowResultsButtonWrapperStyled,
 } from './SearchContent.style';
 import { Heading } from 'components/Basic/Heading/Heading';
-import { Overlay } from 'components/Basic/Overlay/Overlay';
-import { Pagination } from 'components/Blocks/Pagination/Pagination';
-import { Filter } from 'components/Blocks/Product/Filter/Filter';
-import { FilterProvider } from 'components/Blocks/Product/Filter/FilterContext/FilterProvider';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
-import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Button } from 'components/Forms/Button/Button';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { desktopFirstSizes, mobileFirstSizes } from 'components/Theme/mediaQueries';
-import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
 import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
-import { SEARCH_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
+import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { useComponentUpdate } from 'hooks/helpers/useComponentUpdate';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { useRouter } from 'next/router';
-import { FC, useRef, useState } from 'react';
-import { useShopsysSelector } from 'redux/main';
+import { FC, useState } from 'react';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { SearchType } from 'types/search';
 
@@ -45,19 +36,13 @@ type SearchContentProps = {
 export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrumbs }) => {
     const router = useRouter();
     const t = useTypedTranslationFunction();
-    const [isPanelOpen, setIsPanelOpen] = useState(false);
-    const containerWrapRef = useRef<null | HTMLDivElement>(null);
-    const panelWrapRef = useRef<null | HTMLDivElement>(null);
-    const buttonRef = useRef<null | HTMLDivElement>(null);
-    const domainUrl = useShopsysSelector((state) => state.domain.url);
-    const [searchUrl] = getInternationalizedStaticUrls(['/search'], domainUrl);
     const { width } = useGetWindowSize();
-    const { currentPage } = useShopsysSelector((state) => state.user.pagination);
+    const currentPage = parsePageNumberFromQuery(router.query[PAGE_QUERY_PARAMETER_NAME]);
     const [areArticlesResultsVisible, setArticlesResultsVisibility] = useState(false);
     const [areBrandsResultsVisible, setBrandsResultsVisibility] = useState(false);
     const [areCategoriesResultsVisible, setCategoriesResultsVisibility] = useState(false);
     const [numberOfVisible, setNumberOfVisible] = useState(0);
-    const [oldRouterQuery, setOldRouterQuery] = useState(router.query[SEARCH_QUERY_PARAMETER_NAME]);
+    const [oldRouterQuery, setOldRouterQuery] = useState(router.query.q);
     const [queryPathWasChanged, setQueryPathWasChanged] = useState(false);
     const [routerQueryChanged, setRouterQueryChanged] = useState(false);
 
@@ -84,27 +69,12 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
         () => setNumberOfVisible(NUMBER_OF_VISIBLE_ITEMS.NOT_LARGE_DESKTOP),
     );
 
-    const handlePanelOpenerClick = () => {
-        setIsPanelOpen(!isPanelOpen);
-
-        let newPosition = 0;
-        const newPositionOffset = 20;
-
-        if (buttonRef.current !== null) {
-            newPosition = buttonRef.current.offsetTop + buttonRef.current.clientHeight + newPositionOffset;
-        }
-
-        if (panelWrapRef.current !== null) {
-            panelWrapRef.current.style.cssText = 'top: ' + newPosition + 'px';
-        }
-    };
-
     useComponentUpdate(() => {
-        if (oldRouterQuery !== router.query[SEARCH_QUERY_PARAMETER_NAME]) {
+        if (oldRouterQuery !== router.query.q) {
             setQueryPathWasChanged(true);
-            setOldRouterQuery(router.query[SEARCH_QUERY_PARAMETER_NAME]);
+            setOldRouterQuery(router.query.q);
         }
-    }, [router.query]);
+    }, [router.query.q]);
 
     useComponentUpdate(() => {
         if (queryPathWasChanged) {
@@ -121,9 +91,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
         <>
             <Breadcrumbs breadcrumb={breadcrumbs} />
             <Webline>
-                <Heading type={'h1'}>{`${t('Search results for')} "${getStringFromUrlQuery(
-                    router.query[SEARCH_QUERY_PARAMETER_NAME],
-                )}"`}</Heading>
+                <Heading type={'h1'}>{`${t('Search results for')} "${getStringFromUrlQuery(router.query.q)}"`}</Heading>
             </Webline>
             {currentPage === 1 && (
                 <>
@@ -195,46 +163,10 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
                     )}
                 </>
             )}
-            {searchResults.productsSearch.productFilterOptions !== null && (
-                <FilterProvider
-                    key="products-search"
-                    originalSlug={null}
-                    productFilterOptions={searchResults.productsSearch.productFilterOptions}
-                >
-                    <SearchResultsWeblineStyled>
-                        <Heading type={'h3'}>{t('Found products')}</Heading>
-                        <SearchResultsStyled ref={containerWrapRef}>
-                            <SearchResultsPanelStyled>
-                                <Filter
-                                    slug={searchUrl}
-                                    originalSlug={null}
-                                    orderingMode={searchResults.productsSearch.orderingMode}
-                                />
-                                <Overlay isHiddenOnDesktop onClick={handlePanelOpenerClick} />
-                            </SearchResultsPanelStyled>
-                            <SearchResultsContentStyled
-                                isPanelActive={searchResults.productsSearch.productFilterOptions.maximalPrice !== 0}
-                            >
-                                <SortingBar
-                                    sorting={searchResults.productsSearch.orderingMode}
-                                    totalCount={searchResults.productsSearch.totalCount}
-                                />
-                                <ResultProducts
-                                    products={searchResults.productsSearch.products}
-                                    areProductsShowed={searchResults.productsSearch.totalCount > 0}
-                                    noProductsFound={
-                                        searchResults.productsSearch.productFilterOptions.maximalPrice === 0
-                                    }
-                                />
-                                <Pagination
-                                    totalCount={searchResults.productsSearch.totalCount}
-                                    containerWrapRef={containerWrapRef}
-                                />
-                            </SearchResultsContentStyled>
-                        </SearchResultsStyled>
-                    </SearchResultsWeblineStyled>
-                </FilterProvider>
-            )}
+            <SearchResultsWeblineStyled>
+                <Heading type={'h3'}>{t('Found products')}</Heading>
+                <ProductsSearch productsSearch={searchResults.productsSearch} />
+            </SearchResultsWeblineStyled>
         </>
     );
 };

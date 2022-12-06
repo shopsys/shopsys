@@ -1,6 +1,6 @@
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { ImageType } from 'types/image';
-import { ListedProductConnectionType } from 'types/product';
+import { ListedProductConnectionPreviewType } from 'types/product';
 
 export type SimpleCategoryType = {
     __typename?: 'Category';
@@ -41,7 +41,7 @@ export type CategoryDetailType = {
     originalCategorySlug: string | null;
     seoH1: string | null;
     children: ListedCategoryType[];
-    productConnection: ListedProductConnectionType;
+    productConnection: ListedProductConnectionPreviewType;
     readyCategorySeoMixLinks: ReadyCategorySeoMixLink[];
     linkedCategories: ListedCategoryType[];
     seoTitle: string | null;

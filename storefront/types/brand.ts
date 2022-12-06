@@ -1,6 +1,6 @@
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { ImageType } from 'types/image';
-import { ListedProductConnectionType } from 'types/product';
+import { ListedProductConnectionPreviewType } from 'types/product';
 
 export type BrandDetailType = {
     __typename: 'Brand';
@@ -11,7 +11,7 @@ export type BrandDetailType = {
     seoH1: string | null;
     image: ImageType | null;
     description: string | null;
-    productConnection: ListedProductConnectionType;
+    productConnection: ListedProductConnectionPreviewType;
     seoTitle: string | null;
     seoMetaDescription: string | null;
 };

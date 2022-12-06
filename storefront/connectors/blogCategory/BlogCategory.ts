@@ -1,7 +1,5 @@
-import { mapBlogArticleConnection } from 'connectors/articleInterface/blogArticle/BlogArticle';
-import { BlogCategoryDetailFragmentApi, useBlogCategoriesApi } from 'graphql/generated';
+import { useBlogCategoriesApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
-import { BlogCategoryDetailType } from 'types/blogCategory';
 
 export const useBlogUrl = (): string | undefined => {
     const [{ data, error }] = useBlogCategoriesApi();
@@ -12,12 +10,4 @@ export const useBlogUrl = (): string | undefined => {
     }
 
     return undefined;
-};
-
-export const mapBlogCategoryDetail = (apiData: BlogCategoryDetailFragmentApi): BlogCategoryDetailType => {
-    return {
-        ...apiData,
-        __typename: 'BlogCategory',
-        blogArticles: mapBlogArticleConnection(apiData.blogArticles),
-    };
 };

@@ -1,12 +1,16 @@
+import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
+import { PaginationState } from 'components/Blocks/Pagination/types';
 import { encode } from 'js-base64';
-import { PaginationType } from 'redux/slices/user/index';
 
-export const getNewPagination = (page: number, pageSize: number): PaginationType => {
+export const getNewPagination = (
+    page: number,
+    pageSize: number = DEFAULT_PAGE_SIZE,
+    endCursorProp: string | null = null,
+): PaginationState => {
     if (page > 1) {
-        const endCursor = page * pageSize - (pageSize + 1);
-        const encodedCursor = encode('arrayconnection:' + endCursor.toString());
-        return { pageSize, currentPage: page, paginationCursor: encodedCursor };
+        const endCursor = endCursorProp ?? encode('arrayconnection:' + (page * pageSize - (pageSize + 1)).toString());
+        return { page, endCursor };
     }
 
-    return { pageSize, currentPage: 1, paginationCursor: '' };
+    return { page: 1, endCursor: '' };
 };

@@ -21,40 +21,22 @@ import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOp
 import { useGtmPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getGtmPageInfoForFriendlyUrl } from 'helpers/gtm/gtm';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
-import { getNewPagination } from 'helpers/pagination/getNewPagination';
-import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
-import {
-    FILTER_QUERY_PARAMETER_NAME,
-    PAGE_QUERY_PARAMETER_NAME,
-    SORT_QUERY_PARAMETER_NAME,
-} from 'helpers/queryParams/queryParamNames';
+import { FILTER_QUERY_PARAMETER_NAME, SORT_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { getSeoTitleAndDescriptionForFriendlyUrlPage } from 'helpers/seo/getSeoTitleAndDescriptionForFriendlyUrlPage';
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
 import { createClient } from 'helpers/urql/createClient';
 import { useGtmFriendlyPageView } from 'hooks/gtm/useGtmFriendlyPageView';
 import { useRouter } from 'next/router';
-import { FC, useEffect } from 'react';
-import { nextReduxWrapper, useShopsysDispatch } from 'redux/main';
-import { initialState, userActions } from 'redux/slices/user';
+import { FC } from 'react';
+import { nextReduxWrapper } from 'redux/main';
 import { FriendlyUrlPageType } from 'types/friendlyUrl';
 import { MainVariantDetailType, ProductDetailType } from 'types/product';
 import { ssrExchange } from 'urql';
 
 const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
     const router = useRouter();
-    const dispatch = useShopsysDispatch();
-    const pageParam = router.query[PAGE_QUERY_PARAMETER_NAME];
-
-    useEffect(() => {
-        dispatch(
-            userActions.setPagination(
-                getNewPagination(parsePageNumberFromQuery(pageParam), initialState.pagination.pageSize),
-            ),
-        );
-    }, [dispatch, pageParam]);
-
     const slug = getUrlWithoutGetParameters(router.asPath);
     const { data, fetching } = useFriendlyUrlResolvedData(slug);
 
@@ -73,7 +55,7 @@ const renderContent = (data: Maybe<FriendlyUrlPageType>, fetching: boolean) => {
                 data,
             );
         case 'Category':
-            return wrapContent(<CategoryDetailContent category={data} fetching={fetching} />, data);
+            return wrapContent(<CategoryDetailContent category={data} />, data);
         case 'Store':
             return wrapContent(<StoreDetailContent store={data} />, data);
         case 'Article':
@@ -81,9 +63,9 @@ const renderContent = (data: Maybe<FriendlyUrlPageType>, fetching: boolean) => {
         case 'BlogArticle':
             return wrapContent(<BlogArticleDetailContent blogArticle={data} />, data);
         case 'Brand':
-            return wrapContent(<BrandDetailContent brand={data} fetching={fetching} />, data);
+            return wrapContent(<BrandDetailContent brand={data} />, data);
         case 'Flag':
-            return wrapContent(<FlagDetailContent flag={data} fetching={fetching} />, data);
+            return wrapContent(<FlagDetailContent flag={data} />, data);
         case 'BlogCategory':
             return wrapContent(<BlogCategoryContent blogCategory={data} />, data);
         default:
@@ -104,23 +86,12 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     const { url } = initDomainConfig(context, store);
     const orderingMode = getProductListSort(parseProductListSortFromQuery(context.query[SORT_QUERY_PARAMETER_NAME]));
     const optionsFilter = getFilterOptions(parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME]));
-    store.dispatch(
-        userActions.setPagination(
-            getNewPagination(
-                parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]),
-                initialState.pagination.pageSize,
-            ),
-        ),
-    );
-
     const exchange = ssrExchange({ isClient: false });
     const client = await createClient(context, store, exchange);
 
     const slugQueryVariables: SlugQueryVariablesApi = {
         slug: getServerSideInternationalizedStaticUrl(context, url),
         orderingMode,
-        endCursorForPagination: store.getState().user.pagination.paginationCursor,
-        pageSize: initialState.pagination.pageSize,
         filter: mapParametersFilter(optionsFilter),
     };
 

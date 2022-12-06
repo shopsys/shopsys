@@ -3,13 +3,17 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { Image } from 'components/Basic/Image/Image';
 import { TableGrid } from 'components/Basic/TableGrid/TableGrid';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
+import { PaginationProvider } from 'components/Blocks/Pagination/PaginationProvider';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { HeadingWrapperStyled } from 'components/Layout/SimpleLayout/SimpleLayout.style';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getNewPagination } from 'helpers/pagination/getNewPagination';
+import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
+import { useRouter } from 'next/router';
 import { FC, useRef } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { BreadcrumbItemType } from 'types/breadcrumb';
@@ -29,9 +33,11 @@ export const OrdersContent: FC<OrdersContentProps> = ({ breadcrumbs, orders, tot
     const { url } = useShopsysSelector((state) => state.domain);
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
     const [customerOrderDetailUrl] = getInternationalizedStaticUrls(['/customer/order-detail'], url);
+    const { query } = useRouter();
+    const currentPage = parsePageNumberFromQuery(query.page);
 
     return (
-        <>
+        <PaginationProvider {...getNewPagination(currentPage)}>
             <Webline>
                 <HeadingWrapperStyled>
                     <Heading type="h1">{t('My orders')}</Heading>
@@ -114,6 +120,6 @@ export const OrdersContent: FC<OrdersContentProps> = ({ breadcrumbs, orders, tot
                     />
                 </Webline>
             </div>
-        </>
+        </PaginationProvider>
     );
 };

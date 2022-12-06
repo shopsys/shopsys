@@ -13,10 +13,10 @@ import { Image } from 'components/Basic/Image/Image';
 import NextLink from 'next/link';
 import { FC, Fragment } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { BlogArticleConnectionType } from 'types/blogArticle';
+import { ListedBlogArticleType } from 'types/blogArticle';
 
 type BlogArticlesListProps = {
-    blogArticles: BlogArticleConnectionType;
+    blogArticles: ListedBlogArticleType[];
 };
 
 const TEST_IDENTIFIER = 'pages-blogcategory-blogarticleslist-';
@@ -26,7 +26,7 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles }) =>
 
     return (
         <ListStyled>
-            {blogArticles.edges.map((blogArticle, blogArticleIndex) => (
+            {blogArticles.map((blogArticle, blogArticleIndex) => (
                 <ListItemStyled key={blogArticle.uuid} data-testid={TEST_IDENTIFIER + blogArticleIndex}>
                     <ListItemImageStyled data-testid={TEST_IDENTIFIER + blogArticleIndex + '-image'}>
                         <NextLink href={blogArticle.link} passHref>

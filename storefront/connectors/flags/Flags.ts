@@ -1,4 +1,4 @@
-import { mapListedProductConnectionType } from 'connectors/products/Products';
+import { mapListedProductConnectionPreviewType } from 'connectors/products/Products';
 import { FlagDetailFragmentApi } from 'graphql/generated';
 import { FlagDetailType } from 'types/flag';
 
@@ -6,6 +6,6 @@ export const mapFlagDetailApiData = (apiData: FlagDetailFragmentApi, currencyCod
     return {
         ...apiData,
         __typename: 'Flag',
-        productConnection: mapListedProductConnectionType(apiData.products, currencyCode),
+        productConnection: mapListedProductConnectionPreviewType(apiData.products, currencyCode),
     };
 };

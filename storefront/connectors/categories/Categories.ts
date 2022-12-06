@@ -1,5 +1,5 @@
 import { getFirstImage } from 'connectors/image/Image';
-import { mapListedProductConnectionType } from 'connectors/products/Products';
+import { mapListedProductConnectionPreviewType } from 'connectors/products/Products';
 import {
     CategoryDetailFragmentApi,
     ListedCategoryConnectionFragmentApi,
@@ -22,7 +22,7 @@ export const mapCategoryDetailData = (
     return {
         ...apiCategoryDetailData,
         __typename: 'Category',
-        productConnection: mapListedProductConnectionType(apiCategoryDetailData.products, currencyCode),
+        productConnection: mapListedProductConnectionPreviewType(apiCategoryDetailData.products, currencyCode),
         children: apiCategoryDetailData.children.map((child) => mapListedCategoryApiData(child)),
         linkedCategories: apiCategoryDetailData.linkedCategories.map((child) => mapListedCategoryApiData(child)),
     };

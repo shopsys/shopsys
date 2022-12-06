@@ -1,20 +1,37 @@
 import { logException } from '../errors/logException';
 import { createClient } from '../urql/createClient';
+import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
 import { DocumentNode } from 'graphql';
 import {
     AdvertsQueryDocumentApi,
     ArticlePlacementTypeEnumApi,
     ArticlesQueryDocumentApi,
+    BlogCategoryArticlesDocumentApi,
+    BrandProductsQueryDocumentApi,
+    CategoryProductsQueryDocumentApi,
     CurrentCustomerUserQueryApi,
     CurrentCustomerUserQueryDocumentApi,
+    FlagProductsQueryDocumentApi,
     NavigationQueryDocumentApi,
     NotificationBarsDocumentApi,
     SettingsQueryDocumentApi,
 } from 'graphql/generated';
+import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
+import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
+import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
 import {
     getInternationalizedStaticUrls,
     getServerSideInternationalizedStaticUrl,
 } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getNewPagination } from 'helpers/pagination/getNewPagination';
+import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
+import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
+import {
+    FILTER_QUERY_PARAMETER_NAME,
+    PAGE_QUERY_PARAMETER_NAME,
+    SORT_QUERY_PARAMETER_NAME,
+} from 'helpers/queryParams/queryParamNames';
+import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import loadNamespaces from 'next-translate/loadNamespaces';
 import { SSRData, SSRExchange } from 'next-urql';
@@ -76,6 +93,48 @@ export async function initServerSideProps(
             const parsedSlug = slugResult?.data.slug.slug;
             const trimmedUrl = getServerSideInternationalizedStaticUrl(context, domainConfig.url);
 
+            const entityWithProductsResult = resolvedQueries.find(
+                (query) =>
+                    query.data?.slug?.__typename === 'Category' ||
+                    query.data?.slug?.__typename === 'Brand' ||
+                    query.data?.slug?.__typename === 'Flag' ||
+                    query.data?.slug?.__typename === 'BlogCategory',
+            );
+
+            if (entityWithProductsResult) {
+                let document;
+
+                if (entityWithProductsResult.data.slug.__typename === 'Category') {
+                    document = CategoryProductsQueryDocumentApi;
+                } else if (entityWithProductsResult.data.slug.__typename === 'Brand') {
+                    document = BrandProductsQueryDocumentApi;
+                } else if (entityWithProductsResult.data.slug.__typename === 'Flag') {
+                    document = FlagProductsQueryDocumentApi;
+                } else if (entityWithProductsResult.data.slug.__typename === 'BlogCategory') {
+                    document = BlogCategoryArticlesDocumentApi;
+                }
+
+                const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
+                const orderingMode = getProductListSort(
+                    getStringFromUrlQuery(context.query[SORT_QUERY_PARAMETER_NAME]),
+                );
+                const filter = getFilterOptions(
+                    parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME]),
+                );
+
+                if (document !== undefined) {
+                    await currentClient
+                        .query(document, {
+                            endCursor: getNewPagination(page === 0 ? 1 : page).endCursor,
+                            orderingMode,
+                            filter: mapParametersFilter(filter),
+                            uuid: entityWithProductsResult.data.slug.uuid,
+                            pageSize: DEFAULT_PAGE_SIZE,
+                        })
+                        .toPromise();
+                }
+            }
+
             if (parsedSlug !== undefined && parsedSlug !== trimmedUrl) {
                 return {
                     redirect: {
@@ -107,6 +166,7 @@ export async function initServerSideProps(
             }
             const isMaintenance = resolvedQueries.some((query) => query.error?.response.status === 503);
             if (isMaintenance) {
+                // eslint-disable-next-line require-atomic-updates
                 context.res.statusCode = 503;
             }
 

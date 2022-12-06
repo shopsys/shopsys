@@ -10,7 +10,6 @@ export type PaginationType = {
 type LoginLoadingStatus = 'not-loading' | 'loading' | 'loading-with-cart-modifications';
 
 type InitialState = {
-    pagination: PaginationType;
     canAccessOrderConfirmation: boolean;
     lastOrderUuid: string;
     lastOrderPaymentType: string;
@@ -20,11 +19,6 @@ type InitialState = {
 };
 
 export const initialState = {
-    pagination: {
-        currentPage: 1,
-        paginationCursor: '',
-        pageSize: 9,
-    },
     canAccessOrderConfirmation: false,
     urlHash: undefined,
     cartUuid: null,
@@ -35,9 +29,6 @@ export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setPagination(state, action: PayloadAction<PaginationType>) {
-            state.pagination = action.payload;
-        },
         setOrderConfirmationAccess(state, action: PayloadAction<boolean>) {
             state.canAccessOrderConfirmation = action.payload;
         },

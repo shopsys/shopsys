@@ -1,30 +1,28 @@
+import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
 import { mapSimpleArticlesInterface } from 'connectors/articleInterface/ArticleInterface';
 import { mapListedBrandsApiData } from 'connectors/brands/Brands';
 import { mapListedCategoryConnectionApiData } from 'connectors/categories/Categories';
-import { mapListedProductConnectionType } from 'connectors/products/Products';
+import { mapListedProductConnectionPreviewType } from 'connectors/products/Products';
 import { ProductOrderingModeEnumApi, SearchQueryApi, useSearchQueryApi } from 'graphql/generated';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { isServer } from 'helpers/misc/isServer';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useEffect, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { initialState, PaginationType } from 'redux/slices/user';
 import { FilterOptionsUrlQueryType } from 'types/productFilter';
 import { SearchType } from 'types/search';
 
 export const useSearch = (
     searchQuery: string,
     searchProductsSort: ProductOrderingModeEnumApi | null,
-    searchProductsPagination: PaginationType['paginationCursor'],
     optionsFilter: FilterOptionsUrlQueryType | null,
 ): SearchType | undefined => {
     const [result] = useSearchQueryApi({
         variables: {
             search: searchQuery,
             orderingMode: searchProductsSort,
-            after: searchProductsPagination,
             filter: mapParametersFilter(optionsFilter),
-            first: initialState.pagination.pageSize,
+            pageSize: DEFAULT_PAGE_SIZE,
         },
     });
     const { currencyCode } = useShopsysSelector((state) => state.domain);
@@ -55,6 +53,6 @@ const mapSearchResult = (apiData: SearchQueryApi | undefined, currencyCode: stri
         articlesSearch: mapSimpleArticlesInterface(apiData.articlesSearch),
         brandSearch: mapListedBrandsApiData(apiData.brandSearch),
         categoriesSearch: mapListedCategoryConnectionApiData(apiData.categoriesSearch),
-        productsSearch: mapListedProductConnectionType(apiData.productsSearch, currencyCode),
+        productsSearch: mapListedProductConnectionPreviewType(apiData.productsSearch, currencyCode),
     };
 };
