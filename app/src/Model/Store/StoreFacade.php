@@ -182,11 +182,11 @@ class StoreFacade
 
     /**
      * @param int $domainId
-     * @param int $limit
-     * @param int $offset
+     * @param int|null $limit
+     * @param int|null $offset
      * @return \App\Model\Store\Store[]
      */
-    public function getStoresListEnabledOnDomain(int $domainId, int $limit, int $offset): array
+    public function getStoresListEnabledOnDomain(int $domainId, ?int $limit = null, ?int $offset = null): array
     {
         return $this->storeRepository->getStoresEnabledOnDomain($domainId, $limit, $offset);
     }
