@@ -6,6 +6,7 @@ import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { Footer } from 'components/Layout/Footer/Footer';
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { EmptyCartWrapper } from 'components/Pages/Cart/EmptyCartWrapper';
 import { ContactInformationContent } from 'components/Pages/Order/ContactInformation/ContactInformationContent';
 import {
     useContactInformationForm,
@@ -40,7 +41,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
         ['/order/transport-and-payment', '/order-confirmation'],
         domainUrl,
     );
-    const { pickupPlace, transport, payment, promoCode, cart } = useCurrentCart();
+    const currentCart = useCurrentCart();
     const t = useTypedTranslationFunction();
     const [{ fetching }, createOrder] = useCreateOrderMutationApi();
     const [formProviderMethods, defaultValues] = useContactInformationForm();
@@ -48,7 +49,12 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('shipping data');
     useGtmStaticPageView(gtmStaticPageViewEvent);
-    useGtmShippingDataView(transport, pickupPlace, payment?.name, gtmStaticPageViewEvent);
+    useGtmShippingDataView(
+        currentCart.transport,
+        currentCart.pickupPlace,
+        currentCart.payment?.name,
+        gtmStaticPageViewEvent,
+    );
     useHandleContactInformationNonTextChanges(formProviderMethods.control, formMeta);
 
     const onCreateOrderHandler = useCallback<SubmitHandler<typeof defaultValues>>(
@@ -57,7 +63,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
 
             let deliveryInfo;
 
-            if (pickupPlace !== null) {
+            if (currentCart.pickupPlace !== null) {
                 deliveryInfo = {
                     deliveryFirstName: formValues.differentDeliveryAddress
                         ? formValues.deliveryFirstName
@@ -73,14 +79,16 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                         : formValues.telephone,
                     deliveryStreet: formValues.differentDeliveryAddress
                         ? formValues.deliveryStreet
-                        : pickupPlace.street,
-                    deliveryCity: formValues.differentDeliveryAddress ? formValues.deliveryCity : pickupPlace.city,
+                        : currentCart.pickupPlace.street,
+                    deliveryCity: formValues.differentDeliveryAddress
+                        ? formValues.deliveryCity
+                        : currentCart.pickupPlace.city,
                     deliveryPostcode: formValues.differentDeliveryAddress
                         ? formValues.deliveryPostcode
-                        : pickupPlace.postcode,
+                        : currentCart.pickupPlace.postcode,
                     deliveryCountry: formValues.differentDeliveryAddress
                         ? formValues.deliveryCountry.value
-                        : pickupPlace.country.code,
+                        : currentCart.pickupPlace.country.code,
                     differentDeliveryAddress: true,
                 };
             } else {
@@ -106,13 +114,18 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                 country: formValues.country.value,
             });
 
-            if (createOrderResult.data !== undefined && cart !== null && transport !== null && payment !== null) {
+            if (
+                createOrderResult.data !== undefined &&
+                currentCart.cart !== null &&
+                currentCart.transport !== null &&
+                currentCart.payment !== null
+            ) {
                 onPurchaseOrderGtmEventHandler(
-                    cart,
-                    transport,
-                    pickupPlace,
-                    payment,
-                    promoCode,
+                    currentCart.cart,
+                    currentCart.transport,
+                    currentCart.pickupPlace,
+                    currentCart.payment,
+                    currentCart.promoCode,
                     createOrderResult.data.CreateOrder.number,
                     domainUrl,
                 );
@@ -128,51 +141,53 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
             handleFormErrors(createOrderResult.error, formProviderMethods, 'shipping data', t, formMeta.messages.error);
         },
         [
-            cart,
-            cartUuid,
-            createOrder,
             dispatch,
-            domainUrl,
-            formMeta.messages.error,
+            currentCart.pickupPlace,
+            currentCart.cart,
+            currentCart.transport,
+            currentCart.payment,
+            currentCart.promoCode,
+            createOrder,
+            cartUuid,
             formProviderMethods,
-            payment,
-            pickupPlace,
-            promoCode,
             t,
-            transport,
-            orderConfirmationUrl,
+            formMeta.messages.error,
+            domainUrl,
             router,
+            orderConfirmationUrl,
         ],
     );
 
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
             <MetaRobots content="noindex" />
-            <FormProvider {...formProviderMethods}>
-                <Form onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}>
-                    <OrderLayout activeStep={3}>
-                        <ContactInformationContent />
-                        <OrderAction
-                            buttonBack={t('Back')}
-                            buttonNext={t('Submit order')}
-                            hasDisabledLook={!formProviderMethods.formState.isValid}
-                            withGapTop={false}
-                            withGapBottom
-                            buttonBackLink={transportAndPaymentUrl}
-                            isLoading={fetching}
-                        />
-                    </OrderLayout>
-                </Form>
-            </FormProvider>
-            <Webline type={'dark'}>
-                <Footer simpleFooter />
-            </Webline>
-            <ErrorPopup
-                isVisible={isErrorPopupVisible}
-                onCloseCallback={() => setErrorPopupVisibility(false)}
-                fields={formMeta.fields}
-                origin="shipping data"
-            />
+            <EmptyCartWrapper currentCart={currentCart} title={t('Order')}>
+                <OrderLayout activeStep={3}>
+                    <FormProvider {...formProviderMethods}>
+                        <Form onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}>
+                            <ContactInformationContent />
+                            <OrderAction
+                                buttonBack={t('Back')}
+                                buttonNext={t('Submit order')}
+                                hasDisabledLook={!formProviderMethods.formState.isValid}
+                                withGapTop={false}
+                                withGapBottom
+                                buttonBackLink={transportAndPaymentUrl}
+                                isLoading={fetching}
+                            />
+                        </Form>
+                    </FormProvider>
+                </OrderLayout>
+                <Webline type={'dark'}>
+                    <Footer simpleFooter />
+                </Webline>
+                <ErrorPopup
+                    isVisible={isErrorPopupVisible}
+                    onCloseCallback={() => setErrorPopupVisibility(false)}
+                    fields={formMeta.fields}
+                    origin="shipping data"
+                />
+            </EmptyCartWrapper>
         </StaticUrlGuard>
     );
 };
