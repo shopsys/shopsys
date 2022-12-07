@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use App\Model\Category\Category as AppCategory;
+use App\Model\Stock\ProductStockData;
 use App\Model\Stock\ProductStockFacade;
 use App\Model\Stock\StockFacade;
+use App\Model\Store\ProductStoreData;
 use App\Model\Store\ProductStoreFacade;
 use App\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -443,14 +445,47 @@ class ProductFacade extends BaseProductFacade
      */
     private function editProductStockAndStoreRelation(ProductData $productData, Product $product): void
     {
-        foreach ($productData->stockProductData as $productStockData) {
-            $stock = $this->stockFacade->getById($productStockData->stockId);
-            $this->productStockFacade->editProductStockRelation($product, $stock, $productStockData);
-        }
+        $this->editProductStockRelation($productData, $product);
+        $this->editProductStoreRelation($productData, $product);
+    }
 
-        foreach ($productData->productStoreData as $productStoreData) {
-            $store = $this->storeFacade->getById($productStoreData->storeId);
-            $this->productStoreFacade->editProductStoreRelation($product, $store, $productStoreData);
-        }
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     * @param \App\Model\Product\Product $product
+     */
+    private function editProductStockRelation(ProductData $productData, Product $product): void
+    {
+        $stockIds = array_map(
+            fn (ProductStockData $productStockData): int => $productStockData->stockId,
+            $productData->stockProductData
+        );
+
+        $stocksIndexedById = $this->stockFacade->getStocksByIdsIndexedById($stockIds);
+
+        $this->productStockFacade->editProductStockRelations(
+            $product,
+            $stocksIndexedById,
+            $productData->stockProductData
+        );
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     * @param \App\Model\Product\Product $product
+     */
+    private function editProductStoreRelation(ProductData $productData, Product $product): void
+    {
+        $storeIds = array_map(
+            fn (ProductStoreData $productStoreData): int => $productStoreData->storeId,
+            $productData->productStoreData
+        );
+
+        $storesIndexedById = $this->storeFacade->getStoresByIdsIndexedById($storeIds);
+
+        $this->productStoreFacade->editProductStoreRelations(
+            $product,
+            $storesIndexedById,
+            $productData->productStoreData
+        );
     }
 }

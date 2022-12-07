@@ -47,6 +47,20 @@ class StockRepository
     }
 
     /**
+     * @param int[] $stockIds
+     * @return \App\Model\Stock\Stock[]
+     */
+    public function getStocksByIdsIndexedById(array $stockIds): array
+    {
+        return $this->getStockRepository()
+            ->createQueryBuilder('s', 's.id')
+            ->where('s.id IN (:stockIds)')
+            ->setParameter('stockIds', $stockIds)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * @return \Doctrine\ORM\QueryBuilder
      */
     private function getQueryBuilder(): QueryBuilder

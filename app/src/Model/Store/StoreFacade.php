@@ -146,6 +146,15 @@ class StoreFacade
     }
 
     /**
+     * @param int[] $storeIds
+     * @return \App\Model\Store\Store[]
+     */
+    public function getStoresByIdsIndexedById(array $storeIds): array
+    {
+        return $this->storeRepository->getStoresByIdsIndexedById($storeIds);
+    }
+
+    /**
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getAllStoresQueryBuilder(): QueryBuilder

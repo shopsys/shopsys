@@ -90,6 +90,33 @@ class ProductStoreRepository
     }
 
     /**
+     * @param int[] $storeIds
+     * @param \App\Model\Product\Product $product
+     * @return \App\Model\Store\ProductStore[]
+     */
+    public function getProductStoresByStoresAndProductIndexedByStoreId(array $storeIds, Product $product): array
+    {
+        /** @var array{productStore: \App\Model\Store\ProductStore, storeId: int} $productStores */
+        $productStores = $this->em->createQueryBuilder()
+            ->select('ps productStore, IDENTITY(ps.store) storeId')
+            ->from(ProductStore::class, 'ps')
+            ->where('ps.product = :product')
+            ->andWhere('ps.store IN (:storeIds)')
+            ->setParameter('product', $product)
+            ->setParameter('storeIds', $storeIds)
+            ->getQuery()
+            ->getResult();
+
+        $productStoresIndexedByStoreId = [];
+
+        foreach ($productStores as $productStore) {
+            $productStoresIndexedByStoreId[$productStore['storeId']] = $productStore['productStore'];
+        }
+
+        return $productStoresIndexedByStoreId;
+    }
+
+    /**
      * @param int $storeId
      */
     public function createProductStoreRelationForStoreId(int $storeId): void
