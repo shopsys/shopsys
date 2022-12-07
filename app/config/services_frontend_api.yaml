@@ -15,6 +15,7 @@ services:
             Overblog\DataLoader\DataLoaderInterface $flagsBatchLoader: '@flags_batch_loader'
             Overblog\DataLoader\DataLoaderInterface $brandsBatchLoader: '@brands_batch_loader'
             Overblog\DataLoader\DataLoaderInterface $orderItemsBatchLoader: '@order_items_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $storesBatchLoader: '@stores_batch_loader'
 
     resolverMaps:
         namespace: App\FrontendApi\

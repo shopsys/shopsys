@@ -219,4 +219,13 @@ class StoreFacade
     {
         return $this->storeRepository->getByIdEnabledOnDomain($id, $domainId);
     }
+
+    /**
+     * @param int[] $storeIds
+     * @return \App\Model\Store\Store[]
+     */
+    public function getStoresByIds(array $storeIds): array
+    {
+        return $this->storeRepository->getStoresByIds($storeIds);
+    }
 }

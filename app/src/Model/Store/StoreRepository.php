@@ -180,4 +180,18 @@ class StoreRepository
 
         return $store;
     }
+
+    /**
+     * @param int[] $storeIds
+     * @return \App\Model\Store\Store[]
+     */
+    public function getStoresByIds(array $storeIds): array
+    {
+        $queryBuilder = $this->getQueryBuilder()
+            ->select('s')
+            ->where('s.id IN (:storeIds)')
+            ->setParameter('storeIds', $storeIds);
+
+        return $queryBuilder->getQuery()->execute();
+    }
 }

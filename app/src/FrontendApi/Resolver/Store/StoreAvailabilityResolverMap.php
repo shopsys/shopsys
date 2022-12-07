@@ -4,31 +4,22 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Store;
 
-use App\Model\Store\Exception\StoreNotFoundException;
-use App\Model\Store\StoreFacade;
+use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class StoreAvailabilityResolverMap extends ResolverMap
 {
     /**
-     * @var \App\Model\Store\StoreFacade
+     * @var \Overblog\DataLoader\DataLoaderInterface
      */
-    private StoreFacade $storeFacade;
+    private DataLoaderInterface $storesBatchLoader;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     * @param \Overblog\DataLoader\DataLoaderInterface $storesBatchLoader
      */
-    private Domain $domain;
-
-    /**
-     * @param \App\Model\Store\StoreFacade $storeFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     */
-    public function __construct(StoreFacade $storeFacade, Domain $domain)
+    public function __construct(DataLoaderInterface $storesBatchLoader)
     {
-        $this->storeFacade = $storeFacade;
-        $this->domain = $domain;
+        $this->storesBatchLoader = $storesBatchLoader;
     }
 
     /**
@@ -42,14 +33,7 @@ class StoreAvailabilityResolverMap extends ResolverMap
                 'availabilityInformation' => static fn ($storeAvailability) => $storeAvailability['availability_information'],
                 'availabilityStatus' => static fn ($storeAvailability) => $storeAvailability['availability_status'],
                 'store' => function ($storeAvailability) {
-                    try {
-                        return $this->storeFacade->getByIdEnabledOnDomain(
-                            $storeAvailability['store_id'],
-                            $this->domain->getId()
-                        );
-                    } catch (StoreNotFoundException $e) {
-                        return null;
-                    }
+                    return $this->storesBatchLoader->load($storeAvailability['store_id']);
                 },
             ],
         ];
