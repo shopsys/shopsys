@@ -303,13 +303,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      */
     public function getSlug(Product $product): string
     {
-        $friendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl(
-            $this->domain->getId(),
-            'front_product_detail',
-            $product->getId()
-        );
-
-        return '/' . $friendlyUrl->getSlug();
+        return '/' . $this->friendlyUrlFacade->getMainFriendlyUrlSlug($this->domain->getId(), 'front_product_detail', $product->getId());
     }
 
     /**

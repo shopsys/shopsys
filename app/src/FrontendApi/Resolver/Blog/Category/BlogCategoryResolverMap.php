@@ -64,14 +64,10 @@ class BlogCategoryResolverMap extends ResolverMap
                     return $parent !== null && $parent->getParent() !== null ? $parent : null;
                 },
                 'slug' => function (BlogCategory $blogCategory) {
-                    $friendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl($this->domain->getId(), 'front_blogcategory_detail', $blogCategory->getId());
-
-                    return '/' . $friendlyUrl->getSlug();
+                    return '/' . $this->friendlyUrlFacade->getMainFriendlyUrlSlug($this->domain->getId(), 'front_blogcategory_detail', $blogCategory->getId());
                 },
                 'link' => function (BlogCategory $blogCategory) {
-                    $friendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl($this->domain->getId(), 'front_blogcategory_detail', $blogCategory->getId());
-
-                    return $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl);
+                    return $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityIdOnCurrentDomain('front_blogcategory_detail', $blogCategory->getId());
                 },
                 'children' => function (BlogCategory $blogCategory) {
                     return $this->blogCategoryFacade->getAllVisibleChildrenByBlogCategoryAndDomainId(

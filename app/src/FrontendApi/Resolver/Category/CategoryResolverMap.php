@@ -102,13 +102,13 @@ class CategoryResolverMap extends BaseCategoryResolverMap
      */
     private function getSlug(int $entityId, string $routeName): string
     {
-        $friendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl(
+        $friendlyUrlSlug = $this->friendlyUrlFacade->getMainFriendlyUrlSlug(
             $this->domain->getId(),
             $routeName,
             $entityId
         );
 
-        return '/' . $friendlyUrl->getSlug();
+        return '/' . $friendlyUrlSlug;
     }
 
     /**

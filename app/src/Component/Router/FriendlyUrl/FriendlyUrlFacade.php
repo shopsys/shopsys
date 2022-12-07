@@ -129,4 +129,46 @@ class FriendlyUrlFacade extends BaseFriendlyUrlFacade
 
         return $friendlyUrl;
     }
+
+    /**
+     * @param int $domainId
+     * @param string $routeName
+     * @param int $entityId
+     * @return string
+     */
+    public function getMainFriendlyUrlSlug(int $domainId, string $routeName, int $entityId): string
+    {
+        $cacheKey = $this->friendlyUrlCacheKeyProvider->getMainFriendlyUrlSlugCacheKey(
+            $routeName,
+            $domainId,
+            $entityId
+        );
+
+        /** @var string|null $friendlyUrlSlug */
+        $friendlyUrlSlug = $this->mainFriendlyUrlSlugCache->get($cacheKey, function () use ($domainId, $routeName, $entityId) {
+            $friendlyUrl = $this->friendlyUrlRepository->findMainFriendlyUrl($domainId, $routeName, $entityId);
+
+            return $friendlyUrl?->getSlug();
+        });
+
+        if ($friendlyUrlSlug === null) {
+            throw new FriendlyUrlNotFoundException(sprintf('Main friendly URL not found for route "%s", domain ID "%d", and entity ID "%d".', $routeName, $domainId, $entityId));
+        }
+
+        return $friendlyUrlSlug;
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $routeName
+     * @param int $entityId
+     * @return string
+     */
+    public function getAbsoluteUrlByRouteNameAndEntityId(int $domainId, string $routeName, int $entityId): string
+    {
+        $mainFriendlyUrlSlug = $this->getMainFriendlyUrlSlug($domainId, $routeName, $entityId);
+        $domainConfig = $this->domain->getDomainConfigById($domainId);
+
+        return $domainConfig->getUrl() . '/' . $mainFriendlyUrlSlug;
+    }
 }

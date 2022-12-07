@@ -52,12 +52,12 @@ class BrandResolverMap extends BaseBrandResolverMap
      */
     private function getSlug(Brand $brand): string
     {
-        $friendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl(
+        $friendlyUrlSlug = $this->friendlyUrlFacade->getMainFriendlyUrlSlug(
             $this->domain->getId(),
             'front_brand_detail',
             $brand->getId()
         );
 
-        return '/' . $friendlyUrl->getSlug();
+        return '/' . $friendlyUrlSlug;
     }
 }

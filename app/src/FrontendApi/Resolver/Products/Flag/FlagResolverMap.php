@@ -55,12 +55,12 @@ class FlagResolverMap extends ResolverMap
      */
     private function getSlug(Flag $flag): string
     {
-        $friendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl(
+        $friendlyUrlSlug = $this->friendlyUrlFacade->getMainFriendlyUrlSlug(
             $this->domain->getId(),
             'front_flag_detail',
             $flag->getId()
         );
 
-        return '/' . $friendlyUrl->getSlug();
+        return '/' . $friendlyUrlSlug;
     }
 }
