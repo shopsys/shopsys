@@ -35,7 +35,7 @@ class PromoCodeLimitResolver
      */
     public function getLimitByPromoCode(PromoCode $promoCode, array $quantifiedProducts): ?PromoCodeLimit
     {
-        $totalCartPrice = $this->calculator->calculateTotalPrice($promoCode, $quantifiedProducts)->getPriceWithVat();
+        $totalCartPrice = $this->calculator->calculateTotalPrice($quantifiedProducts)->getPriceWithVat();
 
         return $this->promoCodeLimitRepository->getHighestLimitByPromoCodeAndTotalPrice(
             $promoCode,

@@ -124,7 +124,6 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
         $this->buildProductsWithSaleForm($builder);
         $this->buildCategoriesWithSaleFormGroup($builder);
         $this->buildBrandsWithSaleFormGroup($builder);
-        $this->buildByCartContentFormGroup($builder);
     }
 
     /**
@@ -341,23 +340,6 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
             'multiple' => true,
         ]);
         $builder->add($displayCategoriesGroup);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     */
-    private function buildByCartContentFormGroup(FormBuilderInterface $builder): void
-    {
-        $cartContentGroup = $builder->create('cartContentGroup', GroupType::class, [
-            'label' => t('Apply according to the content of the cart'),
-        ]);
-
-        $cartContentGroup->add('applyOnSecondProduct', YesNoType::class, [
-            'label' => t('Applies to the second product in the cart'),
-            'required' => false,
-        ]);
-
-        $builder->add($cartContentGroup);
     }
 
     /**

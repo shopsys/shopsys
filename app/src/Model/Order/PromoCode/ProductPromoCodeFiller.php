@@ -107,9 +107,6 @@ class ProductPromoCodeFiller
     {
         $promoCodeDiscountPercentPerProduct = [];
         foreach ($quantifiedProducts as $quantifiedProduct) {
-            if ($validEnteredPromoCode->isApplyOnSecondProduct() && $quantifiedProduct->getQuantity() < 2) {
-                continue;
-            }
             /** @var \App\Model\Product\Product $product */
             $product = $quantifiedProduct->getProduct();
             $allowedProduct = $this->filterProductByPromoCodeFlags($product, $validEnteredPromoCode);

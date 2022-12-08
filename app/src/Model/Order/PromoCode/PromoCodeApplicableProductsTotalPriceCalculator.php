@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\Order\PromoCode;
 
-use App\Model\Product\Pricing\QuantifiedProductPriceCalculation;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation;
 
 class PromoCodeApplicableProductsTotalPriceCalculator
 {
@@ -17,12 +17,7 @@ class PromoCodeApplicableProductsTotalPriceCalculator
     private CurrentCustomerUser $currentCustomerUser;
 
     /**
-     * @var \App\Model\Order\PromoCode\ProductPromoCodeFiller
-     */
-    private ProductPromoCodeFiller $productPromoCodeFiller;
-
-    /**
-     * @var \App\Model\Product\Pricing\QuantifiedProductPriceCalculation
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation
      */
     private QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation;
 
@@ -33,42 +28,33 @@ class PromoCodeApplicableProductsTotalPriceCalculator
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \App\Model\Order\PromoCode\ProductPromoCodeFiller $productPromoCodeFiller
-     * @param \App\Model\Product\Pricing\QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         CurrentCustomerUser $currentCustomerUser,
-        ProductPromoCodeFiller $productPromoCodeFiller,
         QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation,
         Domain $domain
     ) {
         $this->currentCustomerUser = $currentCustomerUser;
-        $this->productPromoCodeFiller = $productPromoCodeFiller;
         $this->quantifiedProductPriceCalculation = $quantifiedProductPriceCalculation;
         $this->domain = $domain;
     }
 
     /**
-     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
      * @param array $quantifiedProducts
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function calculateTotalPrice(PromoCode $promoCode, array $quantifiedProducts): Price
+    public function calculateTotalPrice(array $quantifiedProducts): Price
     {
         $domainId = $this->domain->getId();
         /** @var \App\Model\Customer\User\CustomerUser $currentCustomer */
         $currentCustomer = $this->currentCustomerUser->findCurrentCustomerUser();
-        $promoCodePerProduct = $this->productPromoCodeFiller->getPromoCodePerProductByDomainId(
-            $quantifiedProducts,
-            $domainId,
-            $promoCode
-        );
-        $quantifiedProductsPrices = $this->quantifiedProductPriceCalculation->calculatePromoCodeApplicablePrices(
+
+        $quantifiedProductsPrices = $this->quantifiedProductPriceCalculation->calculatePrices(
             $quantifiedProducts,
             $domainId,
             $currentCustomer,
-            $promoCodePerProduct
         );
 
         return $this->countTotalPrice($quantifiedProductsPrices);
