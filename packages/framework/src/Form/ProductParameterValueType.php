@@ -8,9 +8,9 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 class ProductParameterValueType extends AbstractType
 {
     /**
-     * @return string
+     * @inheritDoc
      */
-    public function getParent()
+    public function getParent(): ?string
     {
         return CollectionType::class;
     }

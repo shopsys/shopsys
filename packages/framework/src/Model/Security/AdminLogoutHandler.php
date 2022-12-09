@@ -5,9 +5,8 @@ namespace Shopsys\FrameworkBundle\Model\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
 
-class AdminLogoutHandler implements LogoutSuccessHandlerInterface
+class AdminLogoutHandler
 {
     /**
      * @var \Symfony\Component\Routing\RouterInterface

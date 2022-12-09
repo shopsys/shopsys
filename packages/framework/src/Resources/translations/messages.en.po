@@ -1465,9 +1465,6 @@ msgstr ""
 msgid "No brands found. You have to create some first."
 msgstr ""
 
-msgid "No categories found. You have to create some first."
-msgstr ""
-
 msgid "No countries found. You have to create some first."
 msgstr ""
 
@@ -2453,9 +2450,6 @@ msgid "before"
 msgstr ""
 
 msgid "brands"
-msgstr ""
-
-msgid "category"
 msgstr ""
 
 msgid "countries"

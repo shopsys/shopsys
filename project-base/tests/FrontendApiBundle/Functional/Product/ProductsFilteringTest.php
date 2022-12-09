@@ -159,7 +159,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
 
-        $parameterFacade = $this->getContainer()->get(ParameterFacade::class);
+        $parameterFacade = self::getContainer()->get(ParameterFacade::class);
         $parameter = $parameterFacade->getById(self::PARAMETER_NUMBER_OF_BUTTONS_ID);
 
         $parameterValue = $parameterFacade->getParameterValueByValueTextAndLocale(

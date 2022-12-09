@@ -14,7 +14,7 @@ class FragmentHandler extends LazyLoadingFragmentHandler
      *
      * {@inheritdoc}
      */
-    protected function deliver(Response $response)
+    protected function deliver(Response $response): ?string
     {
         if (!$response->isRedirection()) {
             return parent::deliver($response);
@@ -36,7 +36,7 @@ class FragmentHandler extends LazyLoadingFragmentHandler
      *
      * {@inheritdoc}
      */
-    public function render($uri, $renderer = 'inline', array $options = [])
+    public function render($uri, $renderer = 'inline', array $options = []): ?string
     {
         if (!isset($options['ignore_errors'])) {
             $options['ignore_errors'] = false;

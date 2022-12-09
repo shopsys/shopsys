@@ -66,7 +66,7 @@ You can read more about upgrading Symfony application to Flex <https://symfony.c
 - change rendering of embedded controllers in templates from three-part notation to standard string syntax for controllers, eg.
     ```diff
     -   {{ render(controller('ShopsysShopBundle:Front/Heureka:embedWidget')) }}
-    +   {{ render(controller('App\\Controller\\Front\\HeurekaController:embedWidgetAction')) }}
+    +   {{ render(controller('App\\Controller\\Front\\HeurekaController::embedWidgetAction')) }}
     ```
     - _Tip: you can use regular expression search for `ShopsysShopBundle:Front/(\w+):(\w+)` and replace with `App\\Controller\\Front\\$1Controller:$2Action` in Twig files_
 - update constant in `templates/Front/Content/Product/filterFormMacro.html.twig`
@@ -81,7 +81,7 @@ You can read more about upgrading Symfony application to Flex <https://symfony.c
 - change redirect/forward calls in controllers from three-part notation to fully qualified name, eg.
     ```diff
     -   return $this->forward('ShopsysShopBundle:Front/FlashMessage:index');
-    +   return $this->forward(FlashMessageController::class . ':indexAction');
+    +   return $this->forward(FlashMessageController::class . '::indexAction');
     ```
 - move overridden bundle templates from `app/Resources/views/` to `templates/bundle` (see more about template overriding <https://symfony.com/doc/current/bundles/override.html#templates>)
 

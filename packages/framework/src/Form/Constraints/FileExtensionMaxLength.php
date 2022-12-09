@@ -19,14 +19,20 @@ class FileExtensionMaxLength extends Constraint
      */
     public $limit;
 
-    public function getRequiredOptions()
+    /**
+     * {@inheritdoc}
+     */
+    public function getRequiredOptions(): array
     {
         return [
             'limit',
         ];
     }
 
-    public function getDefaultOption()
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefaultOption(): ?string
     {
         return 'limit';
     }

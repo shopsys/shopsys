@@ -35,13 +35,14 @@ class DateTimeType extends AbstractType
             'widget' => 'single_text',
             'format' => static::FORMAT_PHP,
             'view_timezone' => $this->displayTimeZoneProvider->getDisplayTimeZone()->getName(),
+            'html5' => false,
         ]);
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
-    public function getParent(): string
+    public function getParent(): ?string
     {
         return SymfonyDateTimeType::class;
     }

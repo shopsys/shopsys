@@ -24,7 +24,7 @@ class DomainAwareSecurityHeadersSetter
      */
     public function onKernelResponse(ResponseEvent $event): void
     {
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return;
         }
 

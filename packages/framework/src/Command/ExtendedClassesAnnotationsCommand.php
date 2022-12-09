@@ -115,7 +115,7 @@ class ExtendedClassesAnnotationsCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $symfonyStyle = new SymfonyStyle($input, $output);
         $isDryRun = (bool)$input->getOption(static::DRY_RUN);

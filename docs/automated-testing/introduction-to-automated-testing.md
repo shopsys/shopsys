@@ -5,6 +5,7 @@ For this reason Shopsys Framework comes with 5 types of automated tests:
 
 * [Unit tests](#unit-tests)
 * [Functional tests](#functional-tests)
+* [Application tests](#application-tests)
 * [HTTP smoke tests](#http-smoke-tests)
 * [Acceptance tests](#acceptance-tests-aka-functional-tests-or-selenium-tests)
 * [Performance tests](#performance-tests)
@@ -113,6 +114,19 @@ All tests are isolated from each other thanks to database transactions. This mea
 ##### [`\Tests\App\Test\FunctionalTestCase`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/App/Test/FunctionalTestCase.php)
 Tests do not use database transactions, so they are quicker.
 Use `FunctionalTestCase` if you are sure that you won't commit anything into the database.
+
+### Application tests
+When you need to check your direct response from application by accessing it directly via URL, application tests are way to go.
+`ApplicationTestCase` is used for example in our frontend API testing `GraphlQlTestCase`
+
+#### Advantages:
+* application behavior is tested directly not via mocked code
+
+#### Disadvantages:
+* tests can be slower than functional or unit tests
+
+#### Example:
+See test class [`\Tests\App\Functional\Controller\HomepageControllerTest`](https://github.com/shopsys/shopsys/blob/master/project-base/tests/App/Functional/Controller/HomepageControllerTest.php).
 
 ### HTTP smoke tests
 Test HTTP codes returned by individual controller actions provided by the routing (e.g. product detail page should return *200 OK* for a visible product and *404 Not Found* for a hidden one).

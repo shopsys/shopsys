@@ -23,7 +23,7 @@ class PositionExtensionTest extends FunctionalTestCase
     private function getForm(): FormInterface
     {
         /** @var \Symfony\Component\Form\FormFactoryInterface $formFactory */
-        $formFactory = $this->getContainer()->get('form.factory');
+        $formFactory = self::getContainer()->get('form.factory');
 
         $builder = $formFactory->createBuilder();
 

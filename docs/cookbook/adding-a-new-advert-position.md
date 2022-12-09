@@ -44,7 +44,7 @@ Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry:
 Render the new advert on the product detail page (or wherever else you want) by adding the following line into the corresponding twig template.
 
 ```twig
-{{ render(controller('App\\Controller\\Front\\AdvertController:boxAction',{'positionName' : 'productDetail'})) }}
+{{ render(controller('App\\Controller\\Front\\AdvertController::boxAction',{'positionName' : 'productDetail'})) }}
 ```
 
 If you misspell the position name (or otherwise use a non-registered one) an exception will be thrown including the list of all registered positions.

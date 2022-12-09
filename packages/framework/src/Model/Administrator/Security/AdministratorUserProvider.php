@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Shopsys\FrameworkBundle\Model\Security\UniqueLoginInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationExpiredException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -59,7 +59,7 @@ class AdministratorUserProvider implements UserProviderInterface
                 'Unable to find an active admin Shopsys\FrameworkBundle\Model\Administrator\Administrator object identified by "%s".',
                 $username
             );
-            throw new UsernameNotFoundException($message, 0);
+            throw new UserNotFoundException($message, 0);
         }
 
         return $administrator;
@@ -99,7 +99,7 @@ class AdministratorUserProvider implements UserProviderInterface
         }
 
         if ($freshAdministrator === null) {
-            throw new UsernameNotFoundException('Unable to find an active admin');
+            throw new UserNotFoundException('Unable to find an active admin');
         }
 
         if ($freshAdministrator instanceof Administrator) {

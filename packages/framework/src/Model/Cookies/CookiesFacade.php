@@ -117,7 +117,7 @@ class CookiesFacade
         if ($this->environment === EnvironmentType::ACCEPTANCE) {
             return true;
         }
-        $masterRequest = $this->requestStack->getMasterRequest();
+        $masterRequest = $this->requestStack->getMainRequest();
 
         return $masterRequest->cookies->has(static::EU_COOKIES_COOKIE_CONSENT_NAME);
     }

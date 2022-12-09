@@ -7,6 +7,10 @@ services:
         autoconfigure: true
         public: true
 
+    test.client:
+        alias: Tests\App\Test\Client
+    Tests\App\Test\Client:
+
     Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver:
         class: Tests\App\Functional\EntityExtension\OverwritableEntityNameResolver
         arguments:

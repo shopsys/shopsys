@@ -26,7 +26,7 @@ class AdministrationFacade
      */
     public function isInAdmin(): bool
     {
-        $masterRequest = $this->requestStack->getMasterRequest();
+        $masterRequest = $this->requestStack->getMainRequest();
 
         if ($masterRequest === null) {
             return false;

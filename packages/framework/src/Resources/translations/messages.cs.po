@@ -1465,9 +1465,6 @@ msgstr "Nebyly nalezeny žádné dostupnosti. Nejprve musíte nějaké vytvořit
 msgid "No brands found. You have to create some first."
 msgstr "Nebyly nalezeny žádné značky. Nejprve musíte nějaké vytvořit."
 
-msgid "No categories found. You have to create some first."
-msgstr "Nebyly nalezeny žádné kategorie. Nejprve musíte nějaké vytvořit."
-
 msgid "No countries found. You have to create some first."
 msgstr "Nebyly nalezeny žádné státy. Nejprve musíte nějaké vytvořit."
 
@@ -2454,9 +2451,6 @@ msgstr "před"
 
 msgid "brands"
 msgstr "značek"
-
-msgid "category"
-msgstr "kategorie"
 
 msgid "countries"
 msgstr "státy"

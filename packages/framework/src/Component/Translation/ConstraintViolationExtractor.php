@@ -79,7 +79,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * @inheritdoc
      */
-    public function enterNode(Node $node)
+    public function enterNode(Node $node): int|Node|null
     {
         if ($node instanceof ClassMethod) {
             $this->setCurrentExecutionContextVariableNamesFromNode($node);
@@ -151,7 +151,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * @inheritdoc
      */
-    public function beforeTraverse(array $nodes)
+    public function beforeTraverse(array $nodes): ?array
     {
         return null;
     }
@@ -159,7 +159,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * @inheritdoc
      */
-    public function leaveNode(Node $node)
+    public function leaveNode(Node $node): int|Node|null
     {
         if ($node instanceof ClassMethod) {
             $this->currentExecutionContextVariableNames = [];
@@ -171,7 +171,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * @inheritdoc
      */
-    public function afterTraverse(array $nodes)
+    public function afterTraverse(array $nodes): ?array
     {
         return null;
     }

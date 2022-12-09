@@ -1,10 +1,10 @@
 front_cart:
     path: /kosik/
-    defaults: { _controller: App\Controller\Front\CartController:indexAction }
+    defaults: { _controller: App\Controller\Front\CartController::indexAction }
 
 front_contact:
     path: /kontakt/
-    defaults: { _controller: App\Controller\Front\ContactFormController:indexAction }
+    defaults: { _controller: App\Controller\Front\ContactFormController::indexAction }
 
 front_customer_edit:
     path: /zakaznik/upravit-udaje/
@@ -32,7 +32,7 @@ front_logout:
 
 front_order_index:
     path: /objednavka/
-    defaults: { _controller: App\Controller\Front\OrderController:indexAction }
+    defaults: { _controller: App\Controller\Front\OrderController::indexAction }
 
 front_order_sent:
     path: /potvrzeni-objednavky/
@@ -60,7 +60,7 @@ front_brand_list:
 
 front_personal_data:
     path: /prehled-osobnich-udaju/
-    defaults: { _controller: App\Controller\Front\PersonalDataController:indexAction }
+    defaults: { _controller: App\Controller\Front\PersonalDataController::indexAction }
 
 front_personal_data_access:
     path: /prehled-osobnich-udaju/{hash}/

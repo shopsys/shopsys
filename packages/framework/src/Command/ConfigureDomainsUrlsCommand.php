@@ -38,16 +38,15 @@ class ConfigureDomainsUrlsCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Copies domain URL configuration from .dist template if it\'s not set yet');
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @inheritdoc
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($this->localFilesystem->exists($this->configFilepath)) {
             $output->writeln('<fg=green>URLs for domains were already configured.</fg=green>');

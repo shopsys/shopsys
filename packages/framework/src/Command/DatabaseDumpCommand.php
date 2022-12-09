@@ -37,7 +37,7 @@ class DatabaseDumpCommand extends Command
     /**
      * {@inheritDoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Dump database')
@@ -46,11 +46,9 @@ class DatabaseDumpCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @return int
+     * @inheritdoc
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // --schema=public option is used in order to dump only "public" schema which contains the application data
         // --no-owner option ensures that the dump can be imported on system with different database username

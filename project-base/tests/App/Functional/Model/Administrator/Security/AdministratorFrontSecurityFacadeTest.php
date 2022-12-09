@@ -43,11 +43,9 @@ class AdministratorFrontSecurityFacadeTest extends TransactionFunctionalTestCase
     {
         /** @var \App\Model\Administrator\Administrator $administrator */
         $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
-        $password = '';
         $roles = $administrator->getRoles();
         $token = new UsernamePasswordToken(
             $administrator,
-            $password,
             AdministratorFrontSecurityFacade::ADMINISTRATION_CONTEXT,
             $roles
         );

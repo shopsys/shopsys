@@ -63,9 +63,9 @@ class DeliveryAddressChoiceType extends AbstractType
     }
 
     /**
-     * @return string|null
+     * @inheritDoc
      */
-    public function getParent()
+    public function getParent(): ?string
     {
         return ChoiceType::class;
     }

@@ -5,7 +5,7 @@
 
 {% block main_content %}
     <div class="wrap-divider wrap-divider--bottom">
-        {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\UnitController:settingAction')) }}
+        {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\UnitController::settingAction')) }}
     </div>
 
     {{ gridView.render() }}

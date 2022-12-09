@@ -20,8 +20,8 @@ class DomainsConfigLoaderTest extends FunctionalTestCase
 
     public function testLoadDomainConfigsFromYaml()
     {
-        $domainsConfigFilepath = $this->getContainer()->getParameter('shopsys.domain_config_filepath');
-        $domainsUrlsConfigFilepath = $this->getContainer()->getParameter('shopsys.domain_urls_config_filepath');
+        $domainsConfigFilepath = self::getContainer()->getParameter('shopsys.domain_config_filepath');
+        $domainsUrlsConfigFilepath = self::getContainer()->getParameter('shopsys.domain_urls_config_filepath');
         $domainConfigs = $this->domainsConfigLoader->loadDomainConfigsFromYaml(
             $domainsConfigFilepath,
             $domainsUrlsConfigFilepath
@@ -36,7 +36,7 @@ class DomainsConfigLoaderTest extends FunctionalTestCase
 
     public function testLoadDomainConfigsFromYamlConfigFileNotFound()
     {
-        $domainsUrlsConfigFilepath = $this->getContainer()->getParameter('shopsys.domain_urls_config_filepath');
+        $domainsUrlsConfigFilepath = self::getContainer()->getParameter('shopsys.domain_urls_config_filepath');
 
         $this->expectException(FileNotFoundException::class);
         $this->domainsConfigLoader->loadDomainConfigsFromYaml('nonexistentFilename', $domainsUrlsConfigFilepath);
@@ -44,7 +44,7 @@ class DomainsConfigLoaderTest extends FunctionalTestCase
 
     public function testLoadDomainConfigsFromYamlUrlsConfigFileNotFound()
     {
-        $domainsConfigFilepath = $this->getContainer()->getParameter('shopsys.domain_config_filepath');
+        $domainsConfigFilepath = self::getContainer()->getParameter('shopsys.domain_config_filepath');
 
         $this->expectException(FileNotFoundException::class);
         $this->domainsConfigLoader->loadDomainConfigsFromYaml($domainsConfigFilepath, 'nonexistentFilename');

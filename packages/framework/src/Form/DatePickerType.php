@@ -20,7 +20,7 @@ class DatePickerType extends AbstractType
     protected $displayTimeZoneProvider;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
+     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface|null $displayTimeZoneProvider
      */
     public function __construct(?DisplayTimeZoneProviderInterface $displayTimeZoneProvider = null)
     {
@@ -35,6 +35,7 @@ class DatePickerType extends AbstractType
         $defaults = [
             'widget' => 'single_text',
             'format' => static::FORMAT_PHP,
+            'html5' => false,
         ];
 
         if ($this->displayTimeZoneProvider !== null) {
@@ -44,7 +45,10 @@ class DatePickerType extends AbstractType
         $resolver->setDefaults($defaults);
     }
 
-    public function getParent()
+    /**
+     * @inheritDoc
+     */
+    public function getParent(): ?string
     {
         return DateType::class;
     }

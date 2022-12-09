@@ -91,7 +91,7 @@
                                               href="{{ productView.isInStock ? 'http://schema.org/InStock' : 'http://schema.org/OutOfStock' }}"
                                         >
                                     </div>
-                                    {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', { productActionView: productView.actionView, type: 'large'} )) }}
+                                    {{ render(controller('App\\Controller\\Front\\CartController::productActionAction', { productActionView: productView.actionView, type: 'large'} )) }}
                                 {% else %}
                                     {% if productView.mainCategoryId is not null %}
                                         <div>
@@ -200,7 +200,7 @@
                                         {{ variant.sellingPrice.priceWithVat|price }}
                                     </td>
                                     <td class="table-variants__cell table-variants__cell--action">
-                                        {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', {productActionView: variant.action})) }}
+                                        {{ render(controller('App\\Controller\\Front\\CartController::productActionAction', {productActionView: variant.action})) }}
                                     </td>
                                 </tr>
                             {% endfor %}

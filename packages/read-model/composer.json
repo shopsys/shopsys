@@ -26,9 +26,9 @@
         "shopsys/framework": "11.0.x-dev",
         "shopsys/migrations": "11.0.x-dev",
         "shopsys/plugin-interface": "11.0.x-dev",
-        "symfony/config": "^4.4",
-        "symfony/dependency-injection": "^4.4",
-        "symfony/http-kernel": "^4.4.13",
+        "symfony/config": "^5.4",
+        "symfony/dependency-injection": "^5.4",
+        "symfony/http-kernel": "^5.4",
         "webmozart/assert": "^1.4"
     },
     "require-dev": {

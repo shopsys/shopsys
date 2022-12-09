@@ -28,21 +28,18 @@
         "doctrine/orm": "^2.5",
         "jdorn/sql-formatter": "^1.2",
         "psr/log": "^1.0",
-        "symfony/config": "^3.4|^4.0",
-        "symfony/console": "^3.4|^4.0",
-        "symfony/dependency-injection": "^3.4|^4.0",
-        "symfony/filesystem": "^3.4|^4.0",
-        "symfony/framework-bundle": "^3.4|^4.0",
-        "symfony/http-kernel": "^3.4|^4.4.13",
-        "symfony/templating": "^3.4|^4.0",
-        "symfony/yaml": "^3.4|^4.0"
+        "symfony/config": "^5.4",
+        "symfony/console": "^5.4",
+        "symfony/dependency-injection": "^5.4",
+        "symfony/filesystem": "^5.4",
+        "symfony/framework-bundle": "^5.4",
+        "symfony/http-kernel": "^5.4",
+        "symfony/templating": "^5.4",
+        "symfony/yaml": "^5.4"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5.20",
         "shopsys/coding-standards": "11.0.x-dev"
-    },
-    "conflict": {
-        "symfony/dependency-injection": "3.4.15|3.4.16"
     },
     "extra": {
         "branch-alias": {

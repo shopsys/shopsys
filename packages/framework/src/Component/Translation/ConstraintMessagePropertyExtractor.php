@@ -72,7 +72,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     /**
      * @inheritdoc
      */
-    public function enterNode(Node $node)
+    public function enterNode(Node $node): int|Node|null
     {
         if ($node instanceof Class_) {
             $this->isInsideConstraintClass = $this->isConstraintClass($node);
@@ -88,7 +88,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     /**
      * @inheritdoc
      */
-    public function leaveNode(Node $node)
+    public function leaveNode(Node $node): int|Node|null
     {
         if ($node instanceof Class_) {
             $this->isInsideConstraintClass = false;
@@ -135,7 +135,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     /**
      * @inheritdoc
      */
-    public function beforeTraverse(array $nodes)
+    public function beforeTraverse(array $nodes): ?array
     {
         return null;
     }
@@ -143,7 +143,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     /**
      * @inheritdoc
      */
-    public function afterTraverse(array $nodes)
+    public function afterTraverse(array $nodes): ?array
     {
         return null;
     }

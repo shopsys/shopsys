@@ -142,7 +142,7 @@ There is a new base html layout with horizontal menu and product filter placed i
                   </div>
             +     <div class="web__line">
             +         <div class="web__container">
-            +             {{ render(controller('App\\Controller\\Front\\CategoryController:panelAction', { request: app.request } )) }}
+            +             {{ render(controller('App\\Controller\\Front\\CategoryController::panelAction', { request: app.request } )) }}
             +         </div>
             +     </div>
             ```

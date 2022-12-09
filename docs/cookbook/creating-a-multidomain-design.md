@@ -53,7 +53,7 @@ In your new `footer.my-design.html.twig`, re-order the elements in the div eleme
         <a class="menu__item__link" href="{{ url('front_contact') }}">{{ 'Contact'|trans }}</a>
         {{ getShopInfoPhoneNumber() }}
         {{ getShopInfoEmail() }}
-        {{ render(controller('App\\Controller\\Front\\ArticleController:footerAction')) }}
+        {{ render(controller('App\\Controller\\Front\\ArticleController::footerAction')) }}
     </div>
 ```
 

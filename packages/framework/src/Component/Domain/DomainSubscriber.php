@@ -27,7 +27,7 @@ class DomainSubscriber implements EventSubscriberInterface
      */
     public function onKernelRequest(RequestEvent $event): void
     {
-        if ($event->isMasterRequest()) {
+        if ($event->isMainRequest()) {
             try {
                 $this->domain->getId();
             } catch (NoDomainSelectedException $exception) {
@@ -37,9 +37,9 @@ class DomainSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             // Setting domain by request must be done before loading other services (eg.: routing, localization...)

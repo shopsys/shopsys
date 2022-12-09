@@ -13,7 +13,10 @@ class Contains extends Constraint
 
     public $needle = null;
 
-    public function getRequiredOptions()
+    /**
+     * {@inheritdoc}
+     */
+    public function getRequiredOptions(): array
     {
         return [
             'needle',

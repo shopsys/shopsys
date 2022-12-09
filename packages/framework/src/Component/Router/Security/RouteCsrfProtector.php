@@ -99,7 +99,7 @@ class RouteCsrfProtector implements EventSubscriberInterface
      */
     protected function isProtected(ControllerEvent $event): bool
     {
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return false;
         }
 

@@ -14,7 +14,7 @@ class DenyScriptNameInRequestPathListener implements EventSubscriberInterface
      */
     public function onKernelRequest(RequestEvent $event): void
     {
-        if ($event->isMasterRequest()) {
+        if ($event->isMainRequest()) {
             $request = $event->getRequest();
             if ($request->getBasePath() !== $request->getBaseUrl()) {
                 throw new NotFoundHttpException(
@@ -28,9 +28,9 @@ class DenyScriptNameInRequestPathListener implements EventSubscriberInterface
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             // Check for access URL with script file has to be done after setting Domain in DomainSubscriber

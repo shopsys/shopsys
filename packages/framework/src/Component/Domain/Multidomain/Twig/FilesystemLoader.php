@@ -37,7 +37,7 @@ class FilesystemLoader extends BaseFilesystemLoader
      *
      * @inheritdoc
      */
-    protected function findTemplate($template, $throw = true)
+    protected function findTemplate($template, $throw = true): string|false|null
     {
         $templateName = (string)$template;
         $multidesignTemplate = null;

@@ -6,9 +6,8 @@ use Shopsys\FrameworkBundle\Model\Order\OrderFlowFacade;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
 
-class FrontLogoutHandler implements LogoutSuccessHandlerInterface
+class FrontLogoutHandler
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\OrderFlowFacade

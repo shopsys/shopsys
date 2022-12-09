@@ -202,7 +202,7 @@ class GridView
      */
     public function getUrl(?array $parameters = null, $removeParameters = null)
     {
-        $masterRequest = $this->requestStack->getMasterRequest();
+        $masterRequest = $this->requestStack->getMainRequest();
         $routeParameters = $this->grid->getUrlParameters($parameters, $removeParameters);
 
         return $this->router->generate(

@@ -20,7 +20,7 @@ The rest of the work is done automatically and URLs provided by these providers 
 ```yaml
 front_<entity_name>_detail:
     path: friendly-url
-    defaults: { _controller: App\Controller\Front\<entity_name>Controller:detailAction }
+    defaults: { _controller: App\Controller\Front\<entity_name>Controller::detailAction }
 ```
 
 this will route all URLs you have provided in `getFriendlyUrlData` method to `<entity_name>Controller::detailAction` method and provide you with ID of entity matching that URL

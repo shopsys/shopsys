@@ -71,7 +71,6 @@ class Authenticator
     {
         $token = new UsernamePasswordToken(
             $customerUser,
-            $customerUser->getPassword(),
             'frontend',
             $customerUser->getRoles()
         );

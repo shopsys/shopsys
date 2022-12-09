@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Component\EntityExtension;
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\Decorator\EntityManagerDecorator as BaseEntityManagerDecorator;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query;
 
 class EntityManagerDecorator extends BaseEntityManagerDecorator
 {
@@ -37,7 +38,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     /**
      * {@inheritdoc}
      */
-    public function createQueryBuilder()
+    public function createQueryBuilder(): QueryBuilder
     {
         return new QueryBuilder($this, $this->entityNameResolver);
     }
@@ -45,7 +46,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     /**
      * {@inheritdoc}
      */
-    public function createQuery($dql = '')
+    public function createQuery($dql = ''): Query
     {
         $resolvedDql = $this->entityNameResolver->resolveIn($dql);
 
@@ -55,7 +56,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     /**
      * {@inheritdoc}
      */
-    public function getReference($entityName, $id)
+    public function getReference($entityName, $id): ?object
     {
         $resolvedEntityName = $this->entityNameResolver->resolve($entityName);
 
@@ -65,7 +66,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     /**
      * {@inheritdoc}
      */
-    public function getPartialReference($entityName, $identifier)
+    public function getPartialReference($entityName, $identifier): ?object
     {
         $resolvedEntityName = $this->entityNameResolver->resolve($entityName);
 
@@ -75,7 +76,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     /**
      * {@inheritdoc}
      */
-    public function find($entityName, $id, $lockMode = null, $lockVersion = null)
+    public function find($entityName, $id, $lockMode = null, $lockVersion = null): ?object
     {
         $resolvedEntityName = $this->entityNameResolver->resolve($entityName);
 
@@ -85,7 +86,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     /**
      * {@inheritdoc}
      */
-    public function clear($objectName = null)
+    public function clear($objectName = null): void
     {
         if ($objectName !== null) {
             $objectName = $this->entityNameResolver->resolve($objectName);

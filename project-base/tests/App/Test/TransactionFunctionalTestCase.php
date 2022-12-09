@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace Tests\App\Test;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 abstract class TransactionFunctionalTestCase extends FunctionalTestCase
 {
-    use SymfonyTestContainer;
-
     /**
      * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      * @inject

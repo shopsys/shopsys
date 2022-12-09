@@ -33,7 +33,7 @@ class TransactionalMasterRequestListener
      */
     public function onKernelRequest(RequestEvent $event): void
     {
-        if ($event->isMasterRequest() && !$this->inTransaction) {
+        if ($event->isMainRequest() && !$this->inTransaction) {
             $this->em->beginTransaction();
             $this->inTransaction = true;
         }
@@ -44,7 +44,7 @@ class TransactionalMasterRequestListener
      */
     public function onKernelResponse(ResponseEvent $event): void
     {
-        if ($event->isMasterRequest() && $this->inTransaction) {
+        if ($event->isMainRequest() && $this->inTransaction) {
             $this->em->commit();
             $this->inTransaction = false;
         }
@@ -55,7 +55,7 @@ class TransactionalMasterRequestListener
      */
     public function onKernelException(ExceptionEvent $event): void
     {
-        if ($event->isMasterRequest() && $this->inTransaction) {
+        if ($event->isMainRequest() && $this->inTransaction) {
             $this->em->rollback();
             $this->inTransaction = false;
         }

@@ -26,7 +26,7 @@ class ImagesIdsToImagesTransformer implements DataTransformerInterface
      * @param \Shopsys\FrameworkBundle\Component\Image\Image[]|null $images
      * @return int[]
      */
-    public function transform($images)
+    public function transform($images): array
     {
         $imagesIds = [];
 
@@ -41,9 +41,9 @@ class ImagesIdsToImagesTransformer implements DataTransformerInterface
 
     /**
      * @param int[] $imagesIds
-     * @return \Shopsys\FrameworkBundle\Component\Image\Image[]|null
+     * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
-    public function reverseTransform($imagesIds)
+    public function reverseTransform($imagesIds): array
     {
         $images = [];
 

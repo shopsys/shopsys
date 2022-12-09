@@ -59,7 +59,7 @@ class CronCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Runs background jobs. Should be executed periodically by system CRON every 5 minutes.')
@@ -74,10 +74,9 @@ class CronCommand extends Command
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @inheritdoc
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $optionList = $input->getOption(self::OPTION_LIST);
         $optionInstanceName = $input->getOption(self::OPTION_INSTANCE_NAME);

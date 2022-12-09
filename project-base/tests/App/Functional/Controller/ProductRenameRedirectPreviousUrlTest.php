@@ -7,17 +7,13 @@ namespace Tests\App\Functional\Controller;
 use App\DataFixtures\Demo\ProductDataFixture;
 use Faker\Provider\Text;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
-use Tests\App\Test\FunctionalTestCase;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
+use Tests\App\Test\ApplicationTestCase;
 
-class ProductRenameRedirectPreviousUrlTest extends FunctionalTestCase
+class ProductRenameRedirectPreviousUrlTest extends ApplicationTestCase
 {
-    use SymfonyTestContainer;
-
     private const TESTED_PRODUCT_ID = 100;
 
     /**
@@ -37,12 +33,6 @@ class ProductRenameRedirectPreviousUrlTest extends FunctionalTestCase
      * @inject
      */
     private FriendlyUrlFacade $friendlyUrlFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
-     * @inject
-     */
-    protected EntityManagerDecorator $em;
 
     public function testPreviousUrlRedirect(): void
     {
@@ -70,7 +60,11 @@ class ProductRenameRedirectPreviousUrlTest extends FunctionalTestCase
             $firstDomainUrl
         );
 
-        $client = $this->findClient(true, null, null, [], ['HTTP_HOST' => $firstDomainUrl, 'HTTPS' => $isSecured]);
+        $client = self::getCurrentClient();
+        $this->configureCurrentClient(null, null, [
+            'HTTP_HOST' => $firstDomainUrl,
+            'HTTPS' => $isSecured,
+        ]);
         $client->request('GET', '/' . $previousFriendlyUrlSlug);
 
         // Should be 301 (moved permanently), because old product urls should be permanently redirected

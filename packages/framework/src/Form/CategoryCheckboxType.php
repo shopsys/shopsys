@@ -58,9 +58,9 @@ class CategoryCheckboxType extends AbstractType
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): ?string
     {
         return CheckboxType::class;
     }

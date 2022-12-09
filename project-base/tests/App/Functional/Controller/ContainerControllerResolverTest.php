@@ -14,13 +14,13 @@ class ContainerControllerResolverTest extends FunctionalTestCase
 {
     public function testRedirectControllerObtainableWithResolver(): void
     {
-        $containerControllerResolver = new ContainerControllerResolver($this->getContainer());
+        $containerControllerResolver = new ContainerControllerResolver(self::getContainer());
 
         $request = Request::create('/');
 
         $request->attributes->set(
             '_controller',
-            'Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController:redirectAction'
+            'Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController::redirectAction'
         );
 
         $controller = $containerControllerResolver->getController($request);

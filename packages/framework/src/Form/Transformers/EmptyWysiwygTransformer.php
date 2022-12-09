@@ -10,7 +10,7 @@ class EmptyWysiwygTransformer implements DataTransformerInterface
      * @param mixed $value
      * @return mixed
      */
-    public function reverseTransform($value)
+    public function reverseTransform($value): mixed
     {
         return $value;
     }
@@ -19,7 +19,7 @@ class EmptyWysiwygTransformer implements DataTransformerInterface
      * @param mixed $value
      * @return mixed
      */
-    public function transform($value)
+    public function transform($value): mixed
     {
         $trimmedValue = strip_tags(preg_replace('/\s|\&nbsp\;/', '', $value));
         if ($trimmedValue === '') {

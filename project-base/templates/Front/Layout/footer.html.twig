@@ -4,14 +4,14 @@
         {% block newsletter_subscription %}
             <div class="web__line web__line--grey clearfix dont-print">
                 <div class="web__container">
-                    {{ render(controller('App\\Controller\\Front\\NewsletterController:subscriptionAction')) }}
+                    {{ render(controller('App\\Controller\\Front\\NewsletterController::subscriptionAction')) }}
                 </div>
             </div>
         {% endblock %}
 
         <div class="web__line web__line--grey dont-print">
             <div class="web__container">
-                {{ render(controller('App\\Controller\\Front\\AdvertController:boxAction',{'positionName' : 'footer'})) }}
+                {{ render(controller('App\\Controller\\Front\\AdvertController::boxAction',{'positionName' : 'footer'})) }}
             </div>
         </div>
         <div class="web__line">
@@ -23,7 +23,7 @@
                 <div class="footer__bottom__articles">
                     {{ getShopInfoPhoneNumber() }}
                     {{ getShopInfoEmail() }}
-                    {{ render(controller('App\\Controller\\Front\\ArticleController:footerAction')) }}
+                    {{ render(controller('App\\Controller\\Front\\ArticleController::footerAction')) }}
                     <a class="menu__item__link" href="{{ url('front_contact') }}">{{ 'Contact'|trans }}</a>
                 </div>
             </footer>

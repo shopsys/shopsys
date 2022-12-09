@@ -4,7 +4,7 @@ parameters:
         maximumNumberOfProcesses: 5
     treatPhpDocTypesAsCertain: false
     symfony:
-        containerXmlPath: '%currentWorkingDirectory%/project-base/var/cache/dev/srcApp_KernelDevDebugContainer.xml'
+        containerXmlPath: '%currentWorkingDirectory%/project-base/var/cache/dev/App_KernelDevDebugContainer.xml'
         constantHassers: false
 
     ignoreErrors:
@@ -18,9 +18,6 @@ parameters:
         -
             message: '#^Property Shopsys\\FrameworkBundle\\Model\\Order\\Order::\$payment \(Shopsys\\FrameworkBundle\\Model\\Payment\\Payment\) does not accept null\.$#'
             path: %currentWorkingDirectory%/packages/framework/src/Model/Order/Order.php
-        -
-            message: '#^Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required\.$#'
-            path: %currentWorkingDirectory%/packages/framework/src/*
         -
             message: '#^Unsafe usage of new static\(\).#'
             path: %currentWorkingDirectory%/packages/framework/*

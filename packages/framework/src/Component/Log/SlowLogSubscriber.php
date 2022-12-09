@@ -36,7 +36,7 @@ class SlowLogSubscriber implements EventSubscriberInterface
      */
     public function initStartTime(RequestEvent $event): void
     {
-        if ($event->isMasterRequest()) {
+        if ($event->isMainRequest()) {
             $this->startTime = microtime(true);
         }
     }
@@ -67,9 +67,9 @@ class SlowLogSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::REQUEST => ['initStartTime', 512],

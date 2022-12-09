@@ -21,7 +21,7 @@ class VaryResponseByXRequestedWithHeaderListener
      */
     public function onKernelResponse(ResponseEvent $event): void
     {
-        if ($event->isMasterRequest()) {
+        if ($event->isMainRequest()) {
             $event->getResponse()->headers->set('Vary', 'X-Requested-With');
         }
     }
