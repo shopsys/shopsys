@@ -1003,3 +1003,5 @@ There you can find links to upgrade notes for other versions too.
     - `Shopsys\FrameworkBundle\Component\Translation\PhpFileExtractor` class:
         - constant `DEFAULT_MESSAGE_DOMAIN` has been removed, use `Shopsys\FrameworkBundle\Component\Translation\Translator::DEFAULT_TRANSLATION_DOMAIN` instead
     - also see #project-base-diff for more information about changes needed to be done in your project
+- added new `demo-data` phing target that does the same as `db-demo` plus exports data to Elasticsearch so we suggest you to use new phing target instead ([#2520](https://github.com/shopsys/shopsys/pull/2520))
+    - see #project-base-diff for more information about changes needed to be done in your project

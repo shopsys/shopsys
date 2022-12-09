@@ -138,8 +138,8 @@ When a locale is not supported by the operating system the command explains the 
 
 The command is designed to be run only during the first creation of the database but as it uses `IF NOT EXISTS` commands, it can be manually run on existing database in order to create new DB extensions or collations, too.
 
-#### db-demo
-Drops all data in the database and creates a new one with demo data.
+#### demo-data
+Wipes Postgres DB, recreates structure, fills with demo data and then exports data to Elasticsearch.
 
 #### test-db-demo
 Drops all data in the test database and creates a new one with demo data and exports products to elasticsearch test index.
