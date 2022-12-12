@@ -8,6 +8,7 @@ import { OrderDetailQueryDocumentApi } from 'graphql/generated';
 import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
@@ -38,20 +39,28 @@ const OrderDetailPage: FC = () => {
     );
 };
 
-export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
-    if (typeof context.query.orderNumber !== 'string') {
-        return {
-            redirect: {
-                destination: '/',
-                statusCode: 301,
-            },
-        };
-    }
+export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
+    getServerSidePropsWithRedisClient((redisClient) => async (context) => {
+        if (typeof context.query.orderNumber !== 'string') {
+            return {
+                redirect: {
+                    destination: '/',
+                    statusCode: 301,
+                },
+            };
+        }
+        initDomainConfig(context, store);
 
-    initDomainConfig(context, store);
-    return initServerSideProps(context, store, true, [
-        { query: OrderDetailQueryDocumentApi, variables: { orderNumber: context.query.orderNumber } },
-    ]);
-});
+        return initServerSideProps({
+            context,
+            store,
+            authenticationRequired: true,
+            prefetchedQueries: [
+                { query: OrderDetailQueryDocumentApi, variables: { orderNumber: context.query.orderNumber } },
+            ],
+            redisClient,
+        });
+    }),
+);
 
 export default OrderDetailPage;

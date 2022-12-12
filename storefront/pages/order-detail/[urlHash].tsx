@@ -8,6 +8,7 @@ import { OrderDetailByHashQueryDocumentApi } from 'graphql/generated';
 import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
@@ -38,20 +39,27 @@ const OrderDetailByHashPage: FC = () => {
     );
 };
 
-export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
-    if (typeof context.params?.urlHash !== 'string') {
-        return {
-            redirect: {
-                destination: '/',
-                statusCode: 301,
-            },
-        };
-    }
+export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
+    getServerSidePropsWithRedisClient((redisClient) => async (context) => {
+        if (typeof context.params?.urlHash !== 'string') {
+            return {
+                redirect: {
+                    destination: '/',
+                    statusCode: 301,
+                },
+            };
+        }
+        initDomainConfig(context, store);
 
-    initDomainConfig(context, store);
-    return initServerSideProps(context, store, false, [
-        { query: OrderDetailByHashQueryDocumentApi, variables: { urlHash: context.params.urlHash } },
-    ]);
-});
+        return initServerSideProps({
+            context,
+            store,
+            prefetchedQueries: [
+                { query: OrderDetailByHashQueryDocumentApi, variables: { urlHash: context.params.urlHash } },
+            ],
+            redisClient,
+        });
+    }),
+);
 
 export default OrderDetailByHashPage;

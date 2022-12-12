@@ -1,11 +1,10 @@
-import { RedisClientType } from '@node-redis/client';
 import { captureException } from '@sentry/nextjs';
 import md5 from 'crypto-js/md5';
 import { isServer } from 'helpers/misc/isServer';
+import { RedisClientType, RedisModules, RedisScripts } from 'redis';
 
 const CACHE_REGEXP = `@redisCache\\(\\s?ttl:\\s?([0-9]*)\\s?\\)`;
 const QUERY_NAME_REGEXP = `query\\s([A-z]*)(\\([A-z:!0-9$,\\s]*\\))?\\s@redisCache`;
-const REDIS_URL = `redis://${process.env.REDIS_HOST}`;
 const REDIS_PREFIX_PATTERN = `${process.env.REDIS_PREFIX}:fe:queryCache:`;
 
 const removeDirectiveFromQuery = (query: string) => query.replace(new RegExp(CACHE_REGEXP), '');
@@ -16,10 +15,8 @@ const createInit = (init?: RequestInit | undefined) => ({
 });
 
 export const fetcher =
-    () =>
+    (redisClient: RedisClientType<any & RedisModules, RedisScripts>) =>
     async (input: URL | RequestInfo, init?: RequestInit | undefined): Promise<Response> => {
-        let client: RedisClientType | null = null;
-
         if (!isServer() || !init || process.env.GRAPHQL_REDIS_CACHE !== '1') {
             return fetch(input, createInit(init));
         }
@@ -28,7 +25,6 @@ export const fetcher =
             if (typeof init.body !== 'string' || !init.body.match(CACHE_REGEXP)) {
                 return fetch(input, createInit(init));
             }
-
             const [, rawTtl] = init.body.match(CACHE_REGEXP) as string[];
             const ttl = parseInt(rawTtl, 10);
 
@@ -41,26 +37,13 @@ export const fetcher =
             const [, queryName] = init.body.match(QUERY_NAME_REGEXP) ?? [];
             const hash = `${REDIS_PREFIX_PATTERN}${host}:${queryName}:${md5(body).toString().substring(0, 7)}`;
 
-            const createRedisClient = (await import('redis')).createClient;
-
-            client = createRedisClient({
-                url: REDIS_URL,
-                socket: {
-                    connectTimeout: 5000,
-                },
-            });
-
-            await client.connect();
-
-            const fromCache = await client.get(hash);
-
+            const fromCache = await redisClient.get(hash);
             if (fromCache !== null) {
                 const response = new Response(JSON.stringify({ data: JSON.parse(fromCache) }), {
                     statusText: 'OK',
                     status: 200,
                     headers: { 'Content-Type': 'application/json' },
                 });
-
                 return Promise.resolve(response);
             }
 
@@ -72,9 +55,8 @@ export const fetcher =
             const res = await result.json();
 
             if (res.data !== undefined) {
-                await client.set(hash, JSON.stringify(res.data), { EX: ttl });
+                await redisClient.set(hash, JSON.stringify(res.data), { EX: ttl });
             }
-
             return Promise.resolve(
                 new Response(JSON.stringify(res), {
                     statusText: 'OK',
@@ -86,9 +68,5 @@ export const fetcher =
             captureException(e);
 
             return fetch(input, createInit(init));
-        } finally {
-            if (client?.isOpen) {
-                await client.disconnect();
-            }
         }
     };

@@ -7,6 +7,7 @@ import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -45,9 +46,12 @@ const EditProfilePage: FC = () => {
     );
 };
 
-export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
-    initDomainConfig(context, store);
-    return initServerSideProps(context, store, true);
-});
+export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
+    getServerSidePropsWithRedisClient((redisClient) => async (context) => {
+        initDomainConfig(context, store);
+
+        return initServerSideProps({ context, store, authenticationRequired: true, redisClient });
+    }),
+);
 
 export default EditProfilePage;

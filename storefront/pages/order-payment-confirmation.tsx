@@ -4,6 +4,7 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PaymentConfirmationContent } from 'components/Pages/Order/PaymentConfirmation/PaymentConfirmationContent';
 import { OrderSentPageContentDocumentApi, useCheckPaymentStatusMutationApi } from 'graphql/generated';
 import { initDomainConfig } from 'helpers/domain/initDomainConfig';
+import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
@@ -55,22 +56,27 @@ const getOrderUuid = (orderIdentifier: string[] | string | undefined) => {
     return orderUuidParam;
 };
 
-export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
-    initDomainConfig(context, store);
-    const orderUuid = getOrderUuid(context.query.orderIdentifier);
+export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
+    getServerSidePropsWithRedisClient((redisClient) => async (context) => {
+        initDomainConfig(context, store);
+        const orderUuid = getOrderUuid(context.query.orderIdentifier);
 
-    if (orderUuid === '') {
-        return {
-            redirect: {
-                destination: '/',
-                statusCode: 301,
-            },
-        };
-    }
+        if (orderUuid === '') {
+            return {
+                redirect: {
+                    destination: '/',
+                    statusCode: 301,
+                },
+            };
+        }
 
-    return initServerSideProps(context, store, false, [
-        { query: OrderSentPageContentDocumentApi, variables: { orderUuid } },
-    ]);
-});
+        return initServerSideProps({
+            context,
+            store,
+            prefetchedQueries: [{ query: OrderSentPageContentDocumentApi, variables: { orderUuid } }],
+            redisClient,
+        });
+    }),
+);
 
 export default OrderPaymentConfirmationPage;

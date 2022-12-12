@@ -1,6 +1,7 @@
 import { GetServerSidePropsContext } from 'next';
 import { initUrqlClient, SSRExchange } from 'next-urql';
 import getConfig from 'next/config';
+import { RedisClientType, RedisModules, RedisScripts } from 'redis';
 import { AppStore } from 'redux/main';
 import { Client } from 'urql';
 import { getUrqlExchanges } from 'urql/exchanges';
@@ -10,10 +11,12 @@ export const createClient = async (
     context: GetServerSidePropsContext,
     store: AppStore,
     ssrCache: SSRExchange,
+    redisClient: RedisClientType<any & RedisModules, RedisScripts>,
 ): Promise<Client | null> => {
     const { serverRuntimeConfig } = getConfig();
     const domainConfig = store.getState().domain;
     const publicGraphqlEndpoint = new URL(domainConfig.publicGraphqlEndpoint);
+    const fetch = fetcher(redisClient);
 
     return initUrqlClient(
         {
@@ -25,7 +28,7 @@ export const createClient = async (
                     'X-Forwarded-Proto': publicGraphqlEndpoint.protocol === 'https:' ? 'on' : 'off',
                 },
             },
-            fetch: fetcher(),
+            fetch,
         },
         false,
     );

@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { logException } from '../errors/logException';
 import { createClient } from '../urql/createClient';
 import { getUnauthenticatedRedirectSSR } from './getUnauthenticatedRedirectSSR';
@@ -34,6 +35,7 @@ import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import loadNamespaces from 'next-translate/loadNamespaces';
 import { SSRData, SSRExchange } from 'next-urql';
+import { RedisClientType, RedisModules, RedisScripts } from 'redis';
 import { AppStore } from 'redux/main';
 import { Client, ssrExchange } from 'urql';
 
@@ -42,27 +44,29 @@ export type ServerSidePropsType = {
     isMaintenance: boolean;
 };
 
-export async function initServerSideProps(
-    context: GetServerSidePropsContext,
-    store: AppStore,
+type InitServerSidePropsParameters = {
+    context: GetServerSidePropsContext;
+    store: AppStore;
+    authenticationRequired?: boolean;
+    prefetchedQueries?: { query: string | DocumentNode; variables?: { [key: string]: unknown } }[];
+    redisClient: RedisClientType<any & RedisModules, RedisScripts>;
+    client?: Client | null;
+    ssrCache?: SSRExchange;
+};
+
+export const initServerSideProps = async ({
+    context,
+    store,
     authenticationRequired = false,
-    prefetchedQueries: { query: string | DocumentNode; variables?: { [key: string]: unknown } }[] = [],
-    client: Client | null = null,
-    ssrCache: SSRExchange | null = null,
-): Promise<GetServerSidePropsResult<ServerSidePropsType>> {
+    prefetchedQueries = [],
+    redisClient,
+    client,
+    ssrCache,
+}: InitServerSidePropsParameters): Promise<GetServerSidePropsResult<ServerSidePropsType>> => {
     try {
         const domainConfig = store.getState().domain;
-        let currentClient = client;
-        let currentSsrCache = ssrCache;
-
-        if (currentSsrCache === null) {
-            currentSsrCache = ssrExchange({ isClient: false });
-        }
-
-        if (currentClient === null) {
-            // eslint-disable-next-line require-atomic-updates
-            currentClient = await createClient(context, store, currentSsrCache);
-        }
+        const currentSsrCache = ssrCache ?? ssrExchange({ isClient: false });
+        const currentClient = client ?? (await createClient(context, store, currentSsrCache, redisClient));
 
         if (currentClient !== null) {
             prefetchedQueries.push({ query: NotificationBarsDocumentApi });
@@ -85,7 +89,7 @@ export async function initServerSideProps(
 
             const resolvedQueries = await Promise.all(
                 prefetchedQueries.map((queryObject) =>
-                    currentClient!.query(queryObject.query, queryObject.variables).toPromise(),
+                    currentClient.query(queryObject.query, queryObject.variables).toPromise(),
                 ),
             );
             const slugResult = resolvedQueries.find((query) => query.data?.slug?.slug !== undefined);
@@ -173,4 +177,4 @@ export async function initServerSideProps(
         logException(e);
         throw e;
     }
-}
+};

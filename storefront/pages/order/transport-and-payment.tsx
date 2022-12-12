@@ -9,6 +9,7 @@ import { useTransports } from 'connectors/transports/Transports';
 import { useLastOrderQueryApi } from 'graphql/generated';
 import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
+import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { handleOrderPagesRedirect } from 'helpers/misc/handleOrderPagesRedirect';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { createClient } from 'helpers/urql/createClient';
@@ -64,13 +65,15 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
     );
 };
 
-export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
-    initDomainConfig(context, store);
-    const ssrCache = ssrExchange({ isClient: false });
-    const client = await createClient(context, store, ssrCache);
-    const redirect = await handleOrderPagesRedirect(context, store, client);
+export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
+    getServerSidePropsWithRedisClient((redisClient) => async (context) => {
+        initDomainConfig(context, store);
+        const ssrCache = ssrExchange({ isClient: false });
+        const client = await createClient(context, store, ssrCache, redisClient);
+        const redirect = await handleOrderPagesRedirect(context, store, client);
 
-    return redirect === false ? initServerSideProps(context, store, false, [], client, ssrCache) : redirect;
-});
+        return redirect === false ? initServerSideProps({ context, store, client, ssrCache, redisClient }) : redirect;
+    }),
+);
 
 export default TransportAndPaymentPage;

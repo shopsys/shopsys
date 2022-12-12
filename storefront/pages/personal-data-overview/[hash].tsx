@@ -4,6 +4,7 @@ import { Error404Content } from 'components/Pages/ErrorPage/404/Error404Content'
 import { PersonalDataDetailContent } from 'components/Pages/PersonalData/Detail/PersonalDataDetailContent';
 import { PersonalDataDetailQueryDocumentApi, usePersonalDataDetailQueryApi } from 'graphql/generated';
 import { initDomainConfig } from 'helpers/domain/initDomainConfig';
+import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
 import { NextPage } from 'next';
@@ -30,14 +31,19 @@ const PersonalDataOverviewByHashPage: NextPage = () => {
     );
 };
 
-export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
-    initDomainConfig(context, store);
+export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
+    getServerSidePropsWithRedisClient((redisClient) => async (context) => {
+        initDomainConfig(context, store);
 
-    const hash = context.query.hash ?? '';
+        const hash = context.query.hash ?? '';
 
-    return initServerSideProps(context, store, false, [
-        { query: PersonalDataDetailQueryDocumentApi, variables: { hash } },
-    ]);
-});
+        return initServerSideProps({
+            context,
+            store,
+            prefetchedQueries: [{ query: PersonalDataDetailQueryDocumentApi, variables: { hash } }],
+            redisClient,
+        });
+    }),
+);
 
 export default PersonalDataOverviewByHashPage;

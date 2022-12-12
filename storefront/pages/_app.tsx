@@ -33,7 +33,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { userActions } from 'redux/slices/user';
 import { getUrqlExchanges } from 'urql/exchanges';
-import { fetcher } from 'urql/fetcher';
 
 extend(LocalizedFormat);
 
@@ -152,7 +151,11 @@ export default nextReduxWrapper.withRedux(
         (ssrExchange) => ({
             url: getApiUrl(),
             exchanges: getUrqlExchanges(ssrExchange),
-            fetch: fetcher(),
+            /**
+             * Fetcher is not provided here as it is not needed and
+             * we cannot provide it, because we would need to create
+             * a Redis client
+             */
         }),
         { ssr: false },
     )(
