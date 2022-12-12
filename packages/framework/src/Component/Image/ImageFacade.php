@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Image;
 
 use Doctrine\ORM\EntityManagerInterface;
-use League\Flysystem\FileNotFoundException;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
+use League\Flysystem\UnableToDeleteFile;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
@@ -35,7 +35,7 @@ class ImageFacade
     protected $imageRepository;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     protected $filesystem;
 
@@ -74,7 +74,7 @@ class ImageFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageRepository $imageRepository
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface $imageFactory
@@ -86,7 +86,7 @@ class ImageFacade
         EntityManagerInterface $em,
         ImageConfig $imageConfig,
         ImageRepository $imageRepository,
-        FilesystemInterface $filesystem,
+        FilesystemOperator $filesystem,
         FileUpload $fileUpload,
         ImageLocator $imageLocator,
         ImageFactoryInterface $imageFactory,
@@ -476,7 +476,7 @@ class ImageFacade
                         $this->fileUpload->getTemporaryFilepath($sourceImage->getFilename())
                     )
                 );
-            } catch (FileNotFoundException $exception) {
+            } catch (UnableToDeleteFile $exception) {
                 $this->logger->error('Image could not be copied because file was not found', [$exception]);
                 continue;
             }

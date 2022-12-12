@@ -35,8 +35,8 @@ services:
 
     App\Model\Category\CurrentCategoryResolver: ~
 
-    League\Flysystem\FilesystemInterface:
-        alias: main_filesystem
+    League\Flysystem\FilesystemOperator:
+        alias: 'main_filesystem'
 
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface:
         alias: App\Model\Administrator\AdministratorDataFactory

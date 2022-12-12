@@ -2,7 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Sitemap;
 
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -33,7 +33,7 @@ class SitemapDumperFactory
     protected $mountManager;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     protected $filesystem;
 
@@ -45,7 +45,7 @@ class SitemapDumperFactory
     /**
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Shopsys\FrameworkBundle\Model\Sitemap\SitemapFilePrefixer $sitemapFilePrefixer
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
@@ -53,7 +53,7 @@ class SitemapDumperFactory
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         Filesystem $localFilesystem,
-        FilesystemInterface $filesystem,
+        FilesystemOperator $filesystem,
         MountManager $mountManager,
         SitemapFilePrefixer $sitemapFilePrefixer,
         UrlGeneratorInterface $urlGenerator

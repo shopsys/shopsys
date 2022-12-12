@@ -2,9 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Component\FileUpload;
 
-use League\Flysystem\FileNotFoundException;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
+use League\Flysystem\UnableToDeleteFile;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToEntityFailedException;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\UploadFailedException;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
@@ -43,7 +43,7 @@ class FileUpload
     protected $mountManager;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     protected $filesystem;
 
@@ -58,7 +58,7 @@ class FileUpload
      * @param string $imageDir
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention $fileNamingConvention
      * @param \League\Flysystem\MountManager $mountManager
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
      */
     public function __construct(
@@ -67,7 +67,7 @@ class FileUpload
         $imageDir,
         FileNamingConvention $fileNamingConvention,
         MountManager $mountManager,
-        FilesystemInterface $filesystem,
+        FilesystemOperator $filesystem,
         ParameterBagInterface $parameterBag
     ) {
         $this->temporaryDir = $temporaryDir;
@@ -108,7 +108,7 @@ class FileUpload
             $filepath = $this->getTemporaryFilepath($filename);
             try {
                 $this->filesystem->delete($filepath);
-            } catch (FileNotFoundException $ex) {
+            } catch (UnableToDeleteFile $ex) {
                 return false;
             }
         }

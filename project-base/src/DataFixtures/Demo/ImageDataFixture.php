@@ -9,7 +9,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
@@ -32,7 +32,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
     private $targetDomainImagesDirectory;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     private $filesystem;
 
@@ -60,7 +60,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
      * @param mixed $dataFixturesImagesDirectory
      * @param mixed $targetImagesDirectory
      * @param mixed $targetDomainImagesDirectory
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Symfony\Component\Filesystem\Filesystem $symfonyFilesystem
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -69,7 +69,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         $dataFixturesImagesDirectory,
         $targetImagesDirectory,
         $targetDomainImagesDirectory,
-        FilesystemInterface $filesystem,
+        FilesystemOperator $filesystem,
         Filesystem $symfonyFilesystem,
         MountManager $mountManager,
         EntityManagerInterface $em

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
@@ -17,7 +17,7 @@ class UploadedFileLocator
     protected $uploadedFileDir;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     protected $filesystem;
 
@@ -28,12 +28,12 @@ class UploadedFileLocator
 
     /**
      * @param string $uploadedFileDir
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      */
     public function __construct(
         string $uploadedFileDir,
-        FilesystemInterface $filesystem,
+        FilesystemOperator $filesystem,
         DomainRouterFactory $domainRouterFactory
     ) {
         $this->uploadedFileDir = $uploadedFileDir;

@@ -1012,3 +1012,7 @@ There you can find links to upgrade notes for other versions too.
     - also see #project-base-diff for more information about changes needed to be done in your project
 - added new `demo-data` phing target that does the same as `db-demo` plus exports data to Elasticsearch so we suggest you to use new phing target instead ([#2520](https://github.com/shopsys/shopsys/pull/2520))
     - see #project-base-diff for more information about changes needed to be done in your project
+- resolve deprecations after update to Symfony 5.4 ([#2521](https://github.com/shopsys/shopsys/pull/2521))
+    - `League\Flysystem\FilesystemOperator` is now used for autoload of abstract filesystem classes instead of `League\Flysystem\FilesystemInterface` update such occurrences in your project
+    - some methods have been renamed in flysystem e.g. `getSize` to `fileSize` etc. run `php phing phpstan` to find such places and replace your usages accordingly
+    - also see #project-base-diff for more information about changes needed to be done in your project

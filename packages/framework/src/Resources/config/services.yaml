@@ -46,10 +46,14 @@ services:
         calls:
             - [seed, ['%faker.seed%']]
 
+    Shopsys\FrameworkBundle\Controller\ElFinder\ElfinderController: ~
+
     FM\ElfinderBundle\Controller\ElFinderController:
         class: Shopsys\FrameworkBundle\Controller\ElFinder\ElfinderController
-        calls:
-            - { method: setContainer, arguments: [ '@service_container' ] }
+        tags: ['controller.service_arguments']
+        arguments:
+            $params: '%fm_elfinder%'
+            $loader: '@fm_elfinder.loader'
 
     fragment.handler:
         class: Shopsys\FrameworkBundle\Component\HttpFoundation\FragmentHandler
@@ -87,7 +91,7 @@ services:
         alias: Shopsys\FrameworkBundle\Component\Translation\NormalizingExtractorManager
 
     main_filesystem:
-        class: League\Flysystem\FilesystemInterface
+        class: League\Flysystem\FilesystemOperator
         factory: ['@Shopsys\FrameworkBundle\Component\Filesystem\MainFilesystemFactory', create]
         # public service is necessary for ElFinderBundle
         public: true
@@ -97,7 +101,7 @@ services:
             $projectDir: '%kernel.project_dir%'
 
     local_filesystem:
-        class: League\Flysystem\FilesystemInterface
+        class: League\Flysystem\FilesystemOperator
         factory: ['@Shopsys\FrameworkBundle\Component\Filesystem\LocalFilesystemFactory', create]
 
     NinjaMutex\Lock\LockInterface:

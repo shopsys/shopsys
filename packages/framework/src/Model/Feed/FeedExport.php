@@ -3,7 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Feed;
 
 use Doctrine\ORM\EntityManagerInterface;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
@@ -30,7 +30,7 @@ class FeedExport
     protected $feedRenderer;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     protected $filesystem;
 
@@ -78,7 +78,7 @@ class FeedExport
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInterface $feed
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedRenderer $feedRenderer
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -90,7 +90,7 @@ class FeedExport
         FeedInterface $feed,
         DomainConfig $domainConfig,
         FeedRenderer $feedRenderer,
-        FilesystemInterface $filesystem,
+        FilesystemOperator $filesystem,
         Filesystem $localFilesystem,
         MountManager $mountManager,
         EntityManagerInterface $em,

@@ -3,7 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\Domain;
 
 use Exception;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToFolderFailedException;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Symfony\Bridge\Monolog\Logger;
@@ -25,19 +25,19 @@ class DomainIconResizer
     protected $logger;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     protected $filesystem;
 
     /**
      * @param \Symfony\Bridge\Monolog\Logger $logger
      * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor $imageProcessor
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
         Logger $logger,
         ImageProcessor $imageProcessor,
-        FilesystemInterface $filesystem
+        FilesystemOperator $filesystem
     ) {
         $this->logger = $logger;
         $this->imageProcessor = $imageProcessor;
@@ -62,7 +62,8 @@ class DomainIconResizer
         $targetFilePath = $domainImagesDirectory . '/' . $domainId . '.' . ImageProcessor::EXTENSION_PNG;
 
         try {
-            $this->filesystem->put($targetFilePath, $resizedImage);
+            $this->filesystem->delete($targetFilePath);
+            $this->filesystem->write($targetFilePath, $resizedImage);
         } catch (Exception $ex) {
             $message = 'Move file from temporary directory to domain directory failed';
             $moveToFolderFailedException = new MoveToFolderFailedException(

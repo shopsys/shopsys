@@ -2,7 +2,7 @@
 
 namespace Tests\FrameworkBundle\Unit\Component\Image;
 
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
@@ -34,9 +34,9 @@ class DirectoryStructureCreatorTest extends TestCase
             ),
         ];
         $imageConfig = new ImageConfig($imageEntityConfigByClass, new EntityNameResolver([]));
-        $filesystemMock = $this->createMock(FilesystemInterface::class);
+        $filesystemMock = $this->createMock(FilesystemOperator::class);
         $filesystemMock
-            ->method('createDir')
+            ->method('createDirectory')
             ->withConsecutive(
                 ['imageDir/entityName1/sizeName1_1/'],
                 ['imageDir/entityName2/type/sizeName2_1/']

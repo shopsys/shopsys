@@ -3,7 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Feed;
 
 use Doctrine\ORM\EntityManagerInterface;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Symfony\Component\Filesystem\Filesystem;
@@ -16,7 +16,7 @@ class FeedExportFactory
     protected $feedRendererFactory;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     protected $filesystem;
 
@@ -42,7 +42,7 @@ class FeedExportFactory
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedRendererFactory $feedRendererFactory
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedPathProvider $feedPathProvider
      * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
@@ -50,7 +50,7 @@ class FeedExportFactory
      */
     public function __construct(
         FeedRendererFactory $feedRendererFactory,
-        FilesystemInterface $filesystem,
+        FilesystemOperator $filesystem,
         EntityManagerInterface $em,
         FeedPathProvider $feedPathProvider,
         Filesystem $localFilesystem,
