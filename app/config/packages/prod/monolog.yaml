@@ -1,0 +1,5 @@
+monolog:
+    handlers:
+        sentry:
+            type: service
+            id: Sentry\Monolog\Handler

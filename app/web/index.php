@@ -3,7 +3,7 @@
 use App\Environment;
 use App\Kernel;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
-use Symfony\Component\Debug\Debug;
+use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\HttpFoundation\Request;
 
 if (file_exists(__DIR__ . '/../MAINTENANCE')) {
