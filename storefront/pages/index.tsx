@@ -13,7 +13,6 @@ import {
     PromotedProductsQueryDocumentApi,
     SliderItemsQueryDocumentApi,
 } from 'graphql/generated';
-import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
@@ -52,22 +51,21 @@ const HomePage: FC<ServerSidePropsType> = () => {
 };
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
-    getServerSidePropsWithRedisClient((redisClient) => async (context) => {
-        initDomainConfig(context, store);
-        const ssprops = await initServerSideProps({
-            context,
-            store,
-            redisClient,
-            prefetchedQueries: [
-                { query: PromotedCategoriesQueryDocumentApi },
-                { query: SliderItemsQueryDocumentApi },
-                { query: PromotedProductsQueryDocumentApi },
-                { query: BlogArticlesQueryDocumentApi, variables: blogPreviewVariables },
-            ],
-        });
-
-        return ssprops;
-    }),
+    getServerSidePropsWithRedisClient(
+        (redisClient) => async (context) =>
+            initServerSideProps({
+                context,
+                store,
+                redisClient,
+                prefetchedQueries: [
+                    { query: PromotedCategoriesQueryDocumentApi },
+                    { query: SliderItemsQueryDocumentApi },
+                    { query: PromotedProductsQueryDocumentApi },
+                    { query: BlogArticlesQueryDocumentApi, variables: blogPreviewVariables },
+                ],
+            }),
+        store,
+    ),
 );
 
 export default HomePage;

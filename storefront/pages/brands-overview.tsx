@@ -2,7 +2,6 @@ import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BrandsContent } from 'components/Pages/Brands/BrandsContent';
 import { BrandsQueryDocumentApi } from 'graphql/generated';
-import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
@@ -27,16 +26,17 @@ const BrandsOverviewPage: FC<ServerSidePropsType> = () => {
 };
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
-    getServerSidePropsWithRedisClient((redisClient) => async (context) => {
-        initDomainConfig(context, store);
-
-        return initServerSideProps({
-            context,
-            store,
-            prefetchedQueries: [{ query: BrandsQueryDocumentApi }],
-            redisClient,
-        });
-    }),
+    getServerSidePropsWithRedisClient(
+        (redisClient) => async (context) => {
+            return initServerSideProps({
+                context,
+                store,
+                prefetchedQueries: [{ query: BrandsQueryDocumentApi }],
+                redisClient,
+            });
+        },
+        store,
+    ),
 );
 
 export default BrandsOverviewPage;

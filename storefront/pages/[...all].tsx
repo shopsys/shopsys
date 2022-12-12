@@ -14,7 +14,6 @@ import { ProductDetailMainVariantContent } from 'components/Pages/ProductDetail/
 import { StoreDetailContent } from 'components/Pages/StoreDetail/StoreDetailContent';
 import { useFriendlyUrlResolvedData } from 'connectors/friendlyUrls/FriendlyUrls';
 import { Maybe, SlugQueryApi, SlugQueryDocumentApi, SlugQueryVariablesApi } from 'graphql/generated';
-import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
@@ -84,60 +83,64 @@ const wrapContent = (content: JSX.Element, data: FriendlyUrlPageType) => (
 );
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
-    getServerSidePropsWithRedisClient((redisClient) => async (context) => {
-        const { url } = initDomainConfig(context, store);
-        const orderingMode = getProductListSort(
-            parseProductListSortFromQuery(context.query[SORT_QUERY_PARAMETER_NAME]),
-        );
-        const optionsFilter = getFilterOptions(parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME]));
-        const ssrCache = ssrExchange({ isClient: false });
-        const client = await createClient(context, store, ssrCache, redisClient);
+    getServerSidePropsWithRedisClient(
+        (redisClient, domainConfig) => async (context) => {
+            const orderingMode = getProductListSort(
+                parseProductListSortFromQuery(context.query[SORT_QUERY_PARAMETER_NAME]),
+            );
+            const optionsFilter = getFilterOptions(
+                parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME]),
+            );
+            const ssrCache = ssrExchange({ isClient: false });
+            const client = await createClient(context, store, ssrCache, redisClient);
 
-        const slugQueryVariables: SlugQueryVariablesApi = {
-            slug: getServerSideInternationalizedStaticUrl(context, url),
-            orderingMode,
-            filter: mapParametersFilter(optionsFilter),
-        };
-
-        let initServerSideData = await initServerSideProps({
-            context,
-            store,
-            prefetchedQueries: [
-                {
-                    query: SlugQueryDocumentApi,
-                    variables: slugQueryVariables,
-                },
-            ],
-            client,
-            ssrCache,
-            redisClient,
-        });
-
-        const slugQueryResult = client?.readQuery<SlugQueryApi, SlugQueryVariablesApi>(
-            SlugQueryDocumentApi,
-            slugQueryVariables,
-        );
-
-        if (slugQueryResult?.data?.slug?.__typename === 'Variant') {
-            initServerSideData = {
-                redirect: {
-                    statusCode: 301,
-                    destination: slugQueryResult.data.slug.mainVariant?.slug ?? '/',
-                },
+            const slugQueryVariables: SlugQueryVariablesApi = {
+                slug: getServerSideInternationalizedStaticUrl(context, domainConfig.url),
+                orderingMode,
+                filter: mapParametersFilter(optionsFilter),
             };
-        }
 
-        if (
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-            (!slugQueryResult || slugQueryResult.data === undefined || slugQueryResult.data === null) &&
-            !(context.res.statusCode === 503)
-        ) {
-            // eslint-disable-next-line require-atomic-updates
-            context.res.statusCode = 404;
-        }
+            let initServerSideData = await initServerSideProps({
+                context,
+                store,
+                prefetchedQueries: [
+                    {
+                        query: SlugQueryDocumentApi,
+                        variables: slugQueryVariables,
+                    },
+                ],
+                client,
+                ssrCache,
+                redisClient,
+            });
 
-        return initServerSideData;
-    }),
+            const slugQueryResult = client?.readQuery<SlugQueryApi, SlugQueryVariablesApi>(
+                SlugQueryDocumentApi,
+                slugQueryVariables,
+            );
+
+            if (slugQueryResult?.data?.slug?.__typename === 'Variant') {
+                initServerSideData = {
+                    redirect: {
+                        statusCode: 301,
+                        destination: slugQueryResult.data.slug.mainVariant?.slug ?? '/',
+                    },
+                };
+            }
+
+            if (
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                (!slugQueryResult || slugQueryResult.data === undefined || slugQueryResult.data === null) &&
+                !(context.res.statusCode === 503)
+            ) {
+                // eslint-disable-next-line require-atomic-updates
+                context.res.statusCode = 404;
+            }
+
+            return initServerSideData;
+        },
+        store,
+    ),
 );
 
 export default FriendlyUrlPage;

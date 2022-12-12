@@ -4,7 +4,6 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { EditProfileContent } from 'components/Pages/Customer/EditProfile/EditProfileContent';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
@@ -47,11 +46,11 @@ const EditProfilePage: FC = () => {
 };
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
-    getServerSidePropsWithRedisClient((redisClient) => async (context) => {
-        initDomainConfig(context, store);
-
-        return initServerSideProps({ context, store, authenticationRequired: true, redisClient });
-    }),
+    getServerSidePropsWithRedisClient(
+        (redisClient) => async (context) =>
+            initServerSideProps({ context, store, authenticationRequired: true, redisClient }),
+        store,
+    ),
 );
 
 export default EditProfilePage;

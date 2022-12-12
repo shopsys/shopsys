@@ -5,7 +5,6 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { SearchContent } from 'components/Pages/Search/SearchContent';
 import { useSearch } from 'connectors/search/Search';
 import { SearchProductsQueryDocumentApi, SearchQueryDocumentApi } from 'graphql/generated';
-import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
@@ -59,42 +58,46 @@ const SearchPage: FC<ServerSidePropsType> = () => {
 };
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
-    getServerSidePropsWithRedisClient((redisClient) => async (context) => {
-        initDomainConfig(context, store);
-        const orderingMode = getProductListSort(
-            parseProductListSortFromQuery(context.query[SORT_QUERY_PARAMETER_NAME]),
-        );
-        const optionsFilter = getFilterOptions(parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME]));
-        const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
-        const filter = mapParametersFilter(optionsFilter);
-        const search = getStringFromUrlQuery(context.query[SEARCH_QUERY_PARAMETER_NAME]);
+    getServerSidePropsWithRedisClient(
+        (redisClient) => async (context) => {
+            const orderingMode = getProductListSort(
+                parseProductListSortFromQuery(context.query[SORT_QUERY_PARAMETER_NAME]),
+            );
+            const optionsFilter = getFilterOptions(
+                parseFilterOptionsFromQuery(context.query[FILTER_QUERY_PARAMETER_NAME]),
+            );
+            const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
+            const filter = mapParametersFilter(optionsFilter);
+            const search = getStringFromUrlQuery(context.query[SEARCH_QUERY_PARAMETER_NAME]);
 
-        return initServerSideProps({
-            context,
-            store,
-            prefetchedQueries: [
-                {
-                    query: SearchQueryDocumentApi,
-                    variables: {
-                        search,
-                        orderingMode,
-                        filter,
+            return initServerSideProps({
+                context,
+                store,
+                prefetchedQueries: [
+                    {
+                        query: SearchQueryDocumentApi,
+                        variables: {
+                            search,
+                            orderingMode,
+                            filter,
+                        },
                     },
-                },
-                {
-                    query: SearchProductsQueryDocumentApi,
-                    variables: {
-                        search,
-                        orderingMode,
-                        filter,
-                        endCursor: getNewPagination(page === 0 ? 1 : page).endCursor,
-                        pageSize: DEFAULT_PAGE_SIZE,
+                    {
+                        query: SearchProductsQueryDocumentApi,
+                        variables: {
+                            search,
+                            orderingMode,
+                            filter,
+                            endCursor: getNewPagination(page === 0 ? 1 : page).endCursor,
+                            pageSize: DEFAULT_PAGE_SIZE,
+                        },
                     },
-                },
-            ],
-            redisClient,
-        });
-    }),
+                ],
+                redisClient,
+            });
+        },
+        store,
+    ),
 );
 
 export default SearchPage;

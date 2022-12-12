@@ -2,7 +2,6 @@ import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { LoginContent } from 'components/Pages/Login/LoginContent';
 import { CurrentCustomerUserQueryApi, CurrentCustomerUserQueryDocumentApi } from 'graphql/generated';
-import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
@@ -32,38 +31,39 @@ const LoginPage: FC<ServerSidePropsType> = () => {
 };
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
-    getServerSidePropsWithRedisClient((redisClient) => async (context) => {
-        initDomainConfig(context, store);
+    getServerSidePropsWithRedisClient(
+        (redisClient) => async (context) => {
+            const ssrCache = ssrExchange({ isClient: false });
+            const client = await createClient(context, store, ssrCache, redisClient);
+            const serverSideProps = await initServerSideProps({ context, store, client, ssrCache, redisClient });
 
-        const ssrCache = ssrExchange({ isClient: false });
-        const client = await createClient(context, store, ssrCache, redisClient);
-        const serverSideProps = await initServerSideProps({ context, store, client, ssrCache, redisClient });
+            const customerQueryResult = client?.readQuery<CurrentCustomerUserQueryApi>(
+                CurrentCustomerUserQueryDocumentApi,
+                {},
+            );
+            const isLogged =
+                customerQueryResult?.data?.currentCustomerUser !== undefined &&
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                customerQueryResult?.data?.currentCustomerUser !== null;
 
-        const customerQueryResult = client?.readQuery<CurrentCustomerUserQueryApi>(
-            CurrentCustomerUserQueryDocumentApi,
-            {},
-        );
-        const isLogged =
-            customerQueryResult?.data?.currentCustomerUser !== undefined &&
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-            customerQueryResult?.data?.currentCustomerUser !== null;
+            if (isLogged) {
+                let redirectUrl = '/';
+                if (typeof context.query.r === 'string') {
+                    redirectUrl = context.query.r;
+                }
 
-        if (isLogged) {
-            let redirectUrl = '/';
-            if (typeof context.query.r === 'string') {
-                redirectUrl = context.query.r;
+                return {
+                    redirect: {
+                        statusCode: 302,
+                        destination: redirectUrl,
+                    },
+                };
             }
 
-            return {
-                redirect: {
-                    statusCode: 302,
-                    destination: redirectUrl,
-                },
-            };
-        }
-
-        return serverSideProps;
-    }),
+            return serverSideProps;
+        },
+        store,
+    ),
 );
 
 export default LoginPage;

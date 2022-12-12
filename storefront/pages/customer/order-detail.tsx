@@ -5,7 +5,6 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrderDetailContent } from 'components/Pages/Customer/OrderDetail/OrderDetailContent';
 import { useOrderDetail } from 'connectors/customer/Orders';
 import { OrderDetailQueryDocumentApi } from 'graphql/generated';
-import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
@@ -40,27 +39,29 @@ const OrderDetailPage: FC = () => {
 };
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
-    getServerSidePropsWithRedisClient((redisClient) => async (context) => {
-        if (typeof context.query.orderNumber !== 'string') {
-            return {
-                redirect: {
-                    destination: '/',
-                    statusCode: 301,
-                },
-            };
-        }
-        initDomainConfig(context, store);
+    getServerSidePropsWithRedisClient(
+        (redisClient) => async (context) => {
+            if (typeof context.query.orderNumber !== 'string') {
+                return {
+                    redirect: {
+                        destination: '/',
+                        statusCode: 301,
+                    },
+                };
+            }
 
-        return initServerSideProps({
-            context,
-            store,
-            authenticationRequired: true,
-            prefetchedQueries: [
-                { query: OrderDetailQueryDocumentApi, variables: { orderNumber: context.query.orderNumber } },
-            ],
-            redisClient,
-        });
-    }),
+            return initServerSideProps({
+                context,
+                store,
+                authenticationRequired: true,
+                prefetchedQueries: [
+                    { query: OrderDetailQueryDocumentApi, variables: { orderNumber: context.query.orderNumber } },
+                ],
+                redisClient,
+            });
+        },
+        store,
+    ),
 );
 
 export default OrderDetailPage;

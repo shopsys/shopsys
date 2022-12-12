@@ -13,7 +13,6 @@ import {
 } from 'components/Pages/Order/ContactInformation/formMeta';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useCreateOrderMutationApi } from 'graphql/generated';
-import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { onPurchaseOrderGtmEventHandler } from 'helpers/gtm/eventHandlers';
@@ -182,14 +181,18 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
 };
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
-    getServerSidePropsWithRedisClient((redisClient) => async (context) => {
-        initDomainConfig(context, store);
-        const ssrCache = ssrExchange({ isClient: false });
-        const client = await createClient(context, store, ssrCache, redisClient);
-        const redirect = await handleOrderPagesRedirect(context, store, client);
+    getServerSidePropsWithRedisClient(
+        (redisClient) => async (context) => {
+            const ssrCache = ssrExchange({ isClient: false });
+            const client = await createClient(context, store, ssrCache, redisClient);
+            const redirect = await handleOrderPagesRedirect(context, store, client);
 
-        return redirect === false ? initServerSideProps({ context, store, client, ssrCache, redisClient }) : redirect;
-    }),
+            return redirect === false
+                ? initServerSideProps({ context, store, client, ssrCache, redisClient })
+                : redirect;
+        },
+        store,
+    ),
 );
 
 export default ContactInformationPage;

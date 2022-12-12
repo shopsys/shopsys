@@ -2,7 +2,6 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
 import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CustomerContent } from 'components/Pages/Customer/CustomerContent';
-import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
@@ -31,11 +30,11 @@ const CustomerPage: FC = () => {
 };
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
-    getServerSidePropsWithRedisClient((redisClient) => async (context) => {
-        initDomainConfig(context, store);
-
-        return initServerSideProps({ context, store, authenticationRequired: true, redisClient });
-    }),
+    getServerSidePropsWithRedisClient(
+        (redisClient) => async (context) =>
+            initServerSideProps({ context, store, authenticationRequired: true, redisClient }),
+        store,
+    ),
 );
 
 export default CustomerPage;

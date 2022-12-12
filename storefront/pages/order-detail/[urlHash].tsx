@@ -5,7 +5,6 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrderDetailContent } from 'components/Pages/Customer/OrderDetail/OrderDetailContent';
 import { useOrderDetailByHash } from 'connectors/customer/Orders';
 import { OrderDetailByHashQueryDocumentApi } from 'graphql/generated';
-import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
@@ -40,26 +39,28 @@ const OrderDetailByHashPage: FC = () => {
 };
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
-    getServerSidePropsWithRedisClient((redisClient) => async (context) => {
-        if (typeof context.params?.urlHash !== 'string') {
-            return {
-                redirect: {
-                    destination: '/',
-                    statusCode: 301,
-                },
-            };
-        }
-        initDomainConfig(context, store);
+    getServerSidePropsWithRedisClient(
+        (redisClient) => async (context) => {
+            if (typeof context.params?.urlHash !== 'string') {
+                return {
+                    redirect: {
+                        destination: '/',
+                        statusCode: 301,
+                    },
+                };
+            }
 
-        return initServerSideProps({
-            context,
-            store,
-            prefetchedQueries: [
-                { query: OrderDetailByHashQueryDocumentApi, variables: { urlHash: context.params.urlHash } },
-            ],
-            redisClient,
-        });
-    }),
+            return initServerSideProps({
+                context,
+                store,
+                prefetchedQueries: [
+                    { query: OrderDetailByHashQueryDocumentApi, variables: { urlHash: context.params.urlHash } },
+                ],
+                redisClient,
+            });
+        },
+        store,
+    ),
 );
 
 export default OrderDetailByHashPage;

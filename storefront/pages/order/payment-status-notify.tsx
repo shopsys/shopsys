@@ -1,5 +1,4 @@
 import { useCheckPaymentStatusMutationApi } from 'graphql/generated';
-import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
@@ -33,11 +32,10 @@ const PaymentStatusNotifyPage: FC<ServerSidePropsType> = () => {
 };
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
-    getServerSidePropsWithRedisClient((redisClient) => async (context) => {
-        initDomainConfig(context, store);
-
-        return initServerSideProps({ context, store, redisClient });
-    }),
+    getServerSidePropsWithRedisClient(
+        (redisClient) => async (context) => initServerSideProps({ context, store, redisClient }),
+        store,
+    ),
 );
 
 export default PaymentStatusNotifyPage;
