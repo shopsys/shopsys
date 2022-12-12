@@ -35,7 +35,7 @@ export const placeholder = {
     phone: 'Telefon',
     firstName: 'Jméno',
     lastName: 'Příjmení',
-    street: 'Ulice a číslo popisné',
+    street: 'Ulice a č. popisné',
     city: 'Město',
     postCode: 'PSČ',
     coupone: 'Kupón',

@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'components/Basic/Link/Link';
+import { VALIDATION_CONSTANTS } from 'components/Forms/validationConstants';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useGetPrivacyPolicyUrl } from 'hooks/routes/useGetPrivacyPolicyUrl';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -18,17 +19,17 @@ export const useRegistrationForm = (): [UseFormReturn<RegistrationFormType>, Reg
             passwordFirst: Yup.string()
                 .required(t('Please enter password'))
                 .min(
-                    6,
+                    VALIDATION_CONSTANTS.passwordMinLength,
                     t('Password must be at least {{ count }} characters long', {
-                        count: 6,
+                        count: VALIDATION_CONSTANTS.passwordMinLength,
                     }),
                 ),
             passwordSecond: Yup.string()
                 .required(t('Please enter password'))
                 .min(
-                    6,
+                    VALIDATION_CONSTANTS.passwordMinLength,
                     t('Password must be at least {{ count }} characters long', {
-                        count: 6,
+                        count: VALIDATION_CONSTANTS.passwordMinLength,
                     }),
                 )
                 .oneOf([Yup.ref('passwordFirst'), null], t('Passwords must match')),
@@ -38,22 +39,50 @@ export const useRegistrationForm = (): [UseFormReturn<RegistrationFormType>, Reg
                 .matches(/^[0-9+]*$/, t('Please enter only numbers and the + character'))
                 .test(
                     'more-than-8',
-                    t('Telephone number cannot be shorter than 9 characters'),
-                    (value) => value !== undefined && value.length >= 9,
+                    t('Telephone number cannot be shorter than {{ telephoneMinLength }} characters', {
+                        telephoneMinLength: VALIDATION_CONSTANTS.telephoneMinLength,
+                    }),
+                    (value) => value !== undefined && value.length >= VALIDATION_CONSTANTS.telephoneMinLength,
+                )
+                .max(
+                    VALIDATION_CONSTANTS.telephoneMaxLength,
+                    t('telephone must be at most {{ max }} characters', {
+                        max: VALIDATION_CONSTANTS.telephoneMaxLength,
+                    }),
                 ),
-            firstName: Yup.string().required(t('Please enter first name')),
-            lastName: Yup.string().required(t('Please enter last name')),
+            firstName: Yup.string()
+                .required(t('Please enter first name'))
+                .max(
+                    VALIDATION_CONSTANTS.firstNameMaxLength,
+                    t('first name must be at most {{ max }} characters', {
+                        max: VALIDATION_CONSTANTS.firstNameMaxLength,
+                    }),
+                ),
+            lastName: Yup.string()
+                .required(t('Please enter last name'))
+                .max(
+                    VALIDATION_CONSTANTS.lastNameMaxLength,
+                    t('last name must be at most {{ max }} characters', {
+                        max: VALIDATION_CONSTANTS.lastNameMaxLength,
+                    }),
+                ),
             street: Yup.string()
                 .required(t('Please enter street'))
                 .matches(/\D/, t('The street must contain a letter'))
-                .matches(/\d/, t('The street must contain a number')),
-            city: Yup.string().required(t('Please enter city')),
+                .matches(/\d/, t('The street must contain a number'))
+                .max(
+                    VALIDATION_CONSTANTS.streetMaxLength,
+                    t('street must be at most {{ max }} characters', { max: VALIDATION_CONSTANTS.streetMaxLength }),
+                ),
+            city: Yup.string().required(t('Please enter city')).max(VALIDATION_CONSTANTS.cityMaxLength),
             postcode: Yup.string()
                 .required(t('Please enter zip code'))
                 .test(
                     'less-than-or-equals-5',
-                    t('Zip code cannot be longer than 5 characters'),
-                    (value) => value !== undefined && value.length <= 5,
+                    t('Zip code cannot be longer than {{ postcodeLength }} characters', {
+                        postcodeLength: VALIDATION_CONSTANTS.postcodeLength,
+                    }),
+                    (value) => value !== undefined && value.length <= VALIDATION_CONSTANTS.postcodeLength,
                 ),
             country: Yup.object()
                 .shape({
@@ -68,7 +97,14 @@ export const useRegistrationForm = (): [UseFormReturn<RegistrationFormType>, Reg
                 ),
             companyName: Yup.string().when('customer', {
                 is: (customer: string) => customer === 'companyCustomer',
-                then: Yup.string().required(t('Please enter company name')),
+                then: Yup.string()
+                    .required(t('Please enter company name'))
+                    .max(
+                        VALIDATION_CONSTANTS.companyNameMaxLength,
+                        t('company name must be at most {{ max }} characters', {
+                            max: VALIDATION_CONSTANTS.companyNameMaxLength,
+                        }),
+                    ),
                 otherwise: Yup.string(),
             }),
             companyNumber: Yup.string().when('customer', {
@@ -78,12 +114,19 @@ export const useRegistrationForm = (): [UseFormReturn<RegistrationFormType>, Reg
                     .matches(/^[0-9]*$/, t('Please enter only numbers'))
                     .test(
                         'equals-8',
-                        t('This value must be exactly 8 characters'),
-                        (value) => value !== undefined && value.length === 8,
+                        t('This value must be exactly {{ companyNumberLength }} characters', {
+                            companyNumberLength: VALIDATION_CONSTANTS.companyNumberMaxLength,
+                        }),
+                        (value) => value !== undefined && value.length === VALIDATION_CONSTANTS.companyNumberMaxLength,
                     ),
                 otherwise: Yup.string(),
             }),
-            companyTaxNumber: Yup.string(),
+            companyTaxNumber: Yup.string().max(
+                        VALIDATION_CONSTANTS.companyTaxNumberMaxLength,
+                        t('company tax number must be at most {{ max }} characters', {
+                            max: VALIDATION_CONSTANTS.companyTaxNumberMaxLength,
+                        }),
+                    ),
 
             gdprAgreement: Yup.boolean().isTrue(t('You have to agree with our privacy policy')),
             newsletterSubscription: Yup.boolean(),
