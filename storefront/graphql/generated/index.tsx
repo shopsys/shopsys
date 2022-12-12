@@ -5134,7 +5134,7 @@ export function useNewsletterSubscribeMutationApi() {
   return Urql.useMutation<NewsletterSubscribeMutationApi, NewsletterSubscribeMutationVariablesApi>(NewsletterSubscribeMutationDocumentApi);
 };
 export const NotificationBarsDocumentApi = gql`
-    query NotificationBars {
+    query NotificationBars @redisCache(ttl: 3600) {
   notificationBars {
     ...NotificationBarsFragment
   }
@@ -5513,7 +5513,7 @@ export function useSearchQueryApi(options: Omit<Urql.UseQueryArgs<SearchQueryVar
   return Urql.useQuery<SearchQueryApi>({ query: SearchQueryDocumentApi, ...options });
 };
 export const SettingsQueryDocumentApi = gql`
-    query SettingsQuery {
+    query SettingsQuery @redisCache(ttl: 3600) {
   settings {
     pricing {
       ...PricingSettingFragment
