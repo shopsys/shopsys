@@ -119,13 +119,16 @@ export const useContactInformationForm = (): [
                     ),
                 otherwise: Yup.string(),
             }),
-            companyTaxNumber: Yup.string().max(
-                        VALIDATION_CONSTANTS.companyTaxNumberMaxLength,
-                        t('company tax number must be at most {{ max }} characters', {
-                            max: VALIDATION_CONSTANTS.companyTaxNumberMaxLength,
-                        }),
-                    ),
-
+            companyTaxNumber: Yup.string().when('customer', {
+                is: (customer: string) => customer === 'companyCustomer',
+                then: Yup.string()
+                .matches(/^[0-9A-Z]*([0-9]+[A-Z]+|[A-Z]+[0-9]+)[0-9A-Z]*$/, t('Please check Tax number format'))
+                .max(
+                    VALIDATION_CONSTANTS.companyTaxNumberMaxLength,
+                    t('company tax number must be at most {{ max }} characters', { max: VALIDATION_CONSTANTS.companyTaxNumberMaxLength }),
+                ),
+                otherwise: Yup.string(),
+            }),
             differentDeliveryAddress: Yup.boolean(),
             deliveryFirstName: Yup.string().when('differentDeliveryAddress', {
                 is: true,

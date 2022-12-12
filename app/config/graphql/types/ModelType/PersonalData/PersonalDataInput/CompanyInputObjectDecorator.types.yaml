@@ -12,7 +12,7 @@ CompanyInputObjectDecorator:
                 description: "The customer’s company name (required when companyCustomer is true)"
                 validation:
                     -   NotBlank:
-                            message: "Vyplňte prosím název společnosti"
+                            message: "Please enter company name"
                             groups: "companyCustomer"
                     -   Length:
                             max: 100
@@ -23,16 +23,15 @@ CompanyInputObjectDecorator:
                 description: "The customer’s company identification number (required when companyCustomer is true)"
                 validation:
                     -   NotBlank:
-                            message: "Vyplňte prosím IČ"
+                            message: "Please enter identification number"
                             groups: "companyCustomer"
                     -   Length:
-                            min: 8
                             max: 50
-                            exactMessage: "Identification number has to be exactly {{ limit }} characters long"
+                            maxMessage: "Identification number cannot be longer than {{ limit }} characters"
                             groups: "companyCustomer"
                     -   Regex:
                             pattern: '/^[0-9]+$/' # see \App\Component\Validator\RegexValidationRule::COMPANY_NUMBER_REGEX
-                            message: "Prosím, zadávejte pouze čísla"
+                            message: "Please fill in numbers only"
                             groups: "companyCustomer"
             companyTaxNumber:
                 type: "String"

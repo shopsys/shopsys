@@ -121,13 +121,16 @@ export const useRegistrationForm = (): [UseFormReturn<RegistrationFormType>, Reg
                     ),
                 otherwise: Yup.string(),
             }),
-            companyTaxNumber: Yup.string().max(
-                        VALIDATION_CONSTANTS.companyTaxNumberMaxLength,
-                        t('company tax number must be at most {{ max }} characters', {
-                            max: VALIDATION_CONSTANTS.companyTaxNumberMaxLength,
-                        }),
-                    ),
-
+            companyTaxNumber: Yup.string().when('customer', {
+                is: (customer: string) => customer === 'companyCustomer',
+                then: Yup.string()
+                .matches(/^[0-9A-Z]*([0-9]+[A-Z]+|[A-Z]+[0-9]+)[0-9A-Z]*$/, t('Please check Tax number format'))
+                .max(
+                    VALIDATION_CONSTANTS.companyTaxNumberMaxLength,
+                    t('company tax number must be at most {{ max }} characters', { max: VALIDATION_CONSTANTS.companyTaxNumberMaxLength }),
+                ),
+                otherwise: Yup.string(),
+            }),
             gdprAgreement: Yup.boolean().isTrue(t('You have to agree with our privacy policy')),
             newsletterSubscription: Yup.boolean(),
         }),
