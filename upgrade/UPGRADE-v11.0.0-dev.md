@@ -947,7 +947,7 @@ There you can find links to upgrade notes for other versions too.
         - Example:
         ```diff
         - resolve: "@=resolver('categoriesSearch', [args])"
-        + resolve: "@=query('categoriesSearch', args)"
+        + resolve: "@=query('categoriesSearch', arg1, arg2, ...)"
         ```
     - change `service` expression function to `query` in your types defined in yaml files
         - it is no longer supported to use private services in @=service function
