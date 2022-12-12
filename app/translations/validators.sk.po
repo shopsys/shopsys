@@ -142,6 +142,12 @@ msgstr ""
 msgid "Please enter new password"
 msgstr ""
 
+msgid "Please enter only numbers and the + character"
+msgstr ""
+
+msgid "Please enter new password"
+msgstr ""
+
 msgid "Please enter password"
 msgstr "Prosím zadajte heslo"
 
@@ -164,6 +170,21 @@ msgid "Please enter the quantity."
 msgstr ""
 
 msgid "Please enter the whole number."
+msgstr ""
+
+msgid "Please enter valid email"
+msgstr ""
+
+msgid "Please enter your email address"
+msgstr ""
+
+msgid "Please enter your name"
+msgstr ""
+
+msgid "Please enter your postal code"
+msgstr ""
+
+msgid "Please enter your street"
 msgstr ""
 
 msgid "Please enter valid delivery address UUID"
@@ -323,12 +344,6 @@ msgid "Transport type name cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Transport with provided UUID is not available"
-msgstr ""
-
-msgid "Ulice musí obsahovat písmena"
-msgstr ""
-
-msgid "Ulice musí obsahovat číslo"
 msgstr ""
 
 msgid "Uploaded file is to large ({{ size }} {{ suffix }}). Maximum size of an file is {{ limit }} {{ suffix }}."

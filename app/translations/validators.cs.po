@@ -16,6 +16,9 @@ msgstr ""
 msgid "Chybný formát RGB HEX : #336699 nebo #ABC"
 msgstr ""
 
+msgid "City cannot be longer than {{ limit }} characters"
+msgstr "Název města nesmí být delší než {{ limit }} znaků"
+
 msgid "City name cannot be longer than {{ limit }} characters"
 msgstr "Název města nesmí být delší než {{ limit }} znaků"
 
@@ -92,7 +95,7 @@ msgid "Pickup place with provided UUID is not available"
 msgstr "Odběrné místo se zadaným UUID není dostupné"
 
 msgid "Please check Tax number format"
-msgstr "Zkontrolujte formát DIČ"
+msgstr "Prosím zkontrolujte formát DIČ"
 
 msgid "Please choose article placement"
 msgstr ""
@@ -140,7 +143,13 @@ msgid "Please enter name"
 msgstr ""
 
 msgid "Please enter new password"
-msgstr ""
+msgstr "Vyplňte prosím nové heslo"
+
+msgid "Please enter only numbers and the + character"
+msgstr "Prosím, zadávejte pouze čísla a znak +"
+
+msgid "Please enter only numbers and the + sign"
+msgstr "Prosím vyplňte čísla a znak +"
 
 msgid "Please enter password"
 msgstr "Vyplňte prosím heslo"
@@ -272,7 +281,7 @@ msgid "Sklad s tímto externím kódem již existuje"
 msgstr ""
 
 msgid "Street cannot be longer than {{ limit }} characters"
-msgstr "Název ulice nemůže být delší než {{ limit }} znaků"
+msgstr "Ulice a č. popisné nesmí být delší než {{ limit }} znaků"
 
 msgid "Street name cannot be longer than {{ limit }} characters"
 msgstr "Název ulice nesmí být delší než {{ limit }} znaků"
@@ -314,7 +323,7 @@ msgid "There are no products in the cart"
 msgstr ""
 
 msgid "This email is already registered"
-msgstr ""
+msgstr "Tento email je již registrován"
 
 msgid "Transport must be set in cart before sending the order"
 msgstr "Doprava musí být vybrána před odesláním objednávky"

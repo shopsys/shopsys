@@ -1295,7 +1295,11 @@ Set default delivery address by Uuid
 <tr>
 <td colspan="2" align="right" valign="top">deliveryAddressUuid</td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
-<td></td>
+<td>
+
+Set delivery address by Uuid
+
+</td>
 </tr>
 </tbody>
 </table>

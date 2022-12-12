@@ -15,7 +15,7 @@ CompanyInputObjectDecorator:
                             message: "Vyplňte prosím název společnosti"
                             groups: "companyCustomer"
                     -   Length:
-                            max: 30
+                            max: 100
                             maxMessage: "Company name cannot be longer than {{ limit }} characters"
                             groups: "companyCustomer"
             companyNumber:
@@ -27,7 +27,7 @@ CompanyInputObjectDecorator:
                             groups: "companyCustomer"
                     -   Length:
                             min: 8
-                            max: 8
+                            max: 50
                             exactMessage: "Identification number has to be exactly {{ limit }} characters long"
                             groups: "companyCustomer"
                     -   Regex:
