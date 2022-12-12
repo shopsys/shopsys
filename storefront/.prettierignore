@@ -1,5 +1,8 @@
 .next/
-public/
+public/fonts/
+public/icons/
+public/images/
+public/svg/
 node_modules/
 coverage/
 __snapshots__/
@@ -8,3 +11,4 @@ package-lock.json
 generated/
 */dist/
 pages/_error.js
+schema.graphql.json
