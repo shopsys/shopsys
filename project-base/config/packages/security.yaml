@@ -1,5 +1,5 @@
 security:
-    encoders:
+    password_hashers:
         Symfony\Component\Security\Core\User\UserInterface:
             algorithm: bcrypt
             cost: 12
