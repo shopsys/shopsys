@@ -1017,4 +1017,5 @@ There you can find links to upgrade notes for other versions too.
     - some methods have been renamed in flysystem e.g. `getSize` to `fileSize` etc. run `php phing phpstan` to find such places and replace your usages accordingly
     - sessions are no longer handled by snc_redis, but newly by Symfony handler, theirs definition moved from `config/packages/snc_redis.yaml` to `config/services.yaml` review these files if you need specific settings for sessions
     - Redis Docker image has been updated from version 5 to version 7, update your Docker files, CI and production settings accordingly
+    - with new authenticator manager enabled paths definitions in `packages/security.yaml` needs roles changed from `IS_AUTHENTICATED_ANONYMOUSLY` to new `PUBLIC_ACCESS` as `IS_AUTHENTICATED_ANONYMOUSLY` is deprecated
     - also see #project-base-diff for more information about changes needed to be done in your project

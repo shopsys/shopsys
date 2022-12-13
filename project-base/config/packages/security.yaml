@@ -1,4 +1,5 @@
 security:
+    enable_authenticator_manager: true
     password_hashers:
         Symfony\Component\Security\Core\User\UserInterface:
             algorithm: bcrypt
@@ -22,9 +23,9 @@ security:
         administration:
             pattern: ^/(admin/|efconnect|elfinder)
             user_checker: Shopsys\FrameworkBundle\Model\Security\AdministratorChecker
-            anonymous: ~
             provider: administrators
             access_denied_url: "/admin/access-denied/"
+            entry_point: form_login
             form_login:
                 check_path: admin_login_check
                 login_path: admin_login
@@ -43,14 +44,13 @@ security:
             pattern: ^/graphql
             provider: frontend_api_user_identities
             stateless: true
-            anonymous: true
             guard:
                 authenticators:
                     - Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator
         frontend:
             pattern: ^/
-            anonymous: ~
             provider: user_identities
+            entry_point: form_login
             form_login:
                 check_path: front_login_check
                 login_path: front_login
@@ -75,14 +75,14 @@ security:
 
     access_control:
         # same pattern must be in routing_front.yaml
-        - { path: ^/login-as-remembered-user/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login-as-remembered-user/$, roles: PUBLIC_ACCESS }
         - { path: ^/admin/superadmin/, roles: ROLE_SUPER_ADMIN }
         - { path: ^/admin/cron/*, roles: ROLE_SUPER_ADMIN }
         - { path: ^/admin/currency/, roles: ROLE_SUPER_ADMIN }
         - { path: ^/admin/translation/list/$, roles: ROLE_SUPER_ADMIN }
-        - { path: ^/admin/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/authorization/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/$, roles: PUBLIC_ACCESS }
+        - { path: ^/admin/authorization/$, roles: PUBLIC_ACCESS }
         - { path: ^/admin/, roles: ROLE_ADMIN }
         - { path: ^/efconnect, roles: ROLE_ADMIN }
         - { path: ^/elfinder, roles: ROLE_ADMIN }
-        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: PUBLIC_ACCESS }
