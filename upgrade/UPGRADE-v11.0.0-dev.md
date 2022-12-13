@@ -1015,4 +1015,6 @@ There you can find links to upgrade notes for other versions too.
 - resolve deprecations after update to Symfony 5.4 ([#2521](https://github.com/shopsys/shopsys/pull/2521))
     - `League\Flysystem\FilesystemOperator` is now used for autoload of abstract filesystem classes instead of `League\Flysystem\FilesystemInterface` update such occurrences in your project
     - some methods have been renamed in flysystem e.g. `getSize` to `fileSize` etc. run `php phing phpstan` to find such places and replace your usages accordingly
+    - sessions are no longer handled by snc_redis, but newly by Symfony handler, theirs definition moved from `config/packages/snc_redis.yaml` to `config/services.yaml` review these files if you need specific settings for sessions
+    - Redis Docker image has been updated from version 5 to version 7, update your Docker files, CI and production settings accordingly
     - also see #project-base-diff for more information about changes needed to be done in your project

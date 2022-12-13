@@ -903,7 +903,6 @@ services:
             $allClients: !tagged snc_redis.client
             $persistentClients:
                 - '@snc_redis.global'
-                - '@snc_redis.session'
 
     Shopsys\FrameworkBundle\Component\Redis\RedisVersionsFacade:
         arguments:

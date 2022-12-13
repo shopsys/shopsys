@@ -19,17 +19,9 @@ snc_redis:
             dsn: 'redis://%env(REDIS_HOST)%'
             options:
                 prefix: '%env(REDIS_PREFIX)%'
-        session:
-            type: 'phpredis'
-            alias: 'session'
-            dsn: 'redis://%env(REDIS_HOST)%'
         main_friendly_url_slugs:
             type: 'phpredis'
             alias: 'main_friendly_url_slugs'
             dsn: 'redis://%env(REDIS_HOST)%'
             options:
                 prefix: '%env(REDIS_PREFIX)%%build-version%:cache:main_friendly_url_slugs:'
-    session:
-        client: 'session'
-        ttl: 604800
-        prefix: '%env(REDIS_PREFIX)%session:'
