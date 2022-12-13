@@ -22,9 +22,9 @@ class MailTemplateGridFactory extends BaseMailTemplateGridFactory
     {
         $grid = parent::create();
 
-        $grid->addColumn('orderStatus', 'orderStatusName', t('Stav bjednávky'), true);
-        $grid->addColumn('transport', 'transportName', t('Doprava'), true);
-        $grid->addColumn('payment', 'paymentName', t('Platba'), true);
+        $grid->addColumn('orderStatus', 'orderStatusName', t('Order status'), true);
+        $grid->addColumn('transport', 'transportName', t('Transport'), true);
+        $grid->addColumn('payment', 'paymentName', t('Payment'), true);
         $grid->addDeleteActionColumn('admin_mail_deletetemplate', ['id' => 'mt.id']);
 
         $grid->setTheme(
