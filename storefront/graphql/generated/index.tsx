@@ -1418,14 +1418,6 @@ export type OrderProductInputApi = {
   uuid: Scalars['Uuid'];
 };
 
-export type OrderStepsAccessibilityApi = {
-  __typename?: 'OrderStepsAccessibility';
-  /** Check whether the user can access the contact information step */
-  canAccessContactInformation: Scalars['Boolean'];
-  /** Check whether the user can access the transport and payment step */
-  canAccessTransportAndPayment: Scalars['Boolean'];
-};
-
 /** Information about pagination in a connection. */
 export type PageInfoApi = {
   __typename?: 'PageInfo';
@@ -1971,8 +1963,6 @@ export type QueryApi = {
   order: Maybe<OrderApi>;
   /** Returns HTML content for order sent page. */
   orderSentPageContent: Scalars['String'];
-  /** Checks whether user can access the transport and payment or the contact info steps */
-  orderStepsAccessibility: OrderStepsAccessibilityApi;
   /** Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords */
   orders: Maybe<OrderConnectionApi>;
   /** Returns payment filtered using UUID */
@@ -2117,11 +2107,6 @@ export type QueryOrderArgsApi = {
 
 export type QueryOrderSentPageContentArgsApi = {
   orderUuid: Scalars['Uuid'];
-};
-
-
-export type QueryOrderStepsAccessibilityArgsApi = {
-  cartInput: Maybe<CartInputApi>;
 };
 
 

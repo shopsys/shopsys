@@ -1146,13 +1146,6 @@ input OrderProductInput {
   uuid: Uuid!
 }
 
-type OrderStepsAccessibility {
-  """Check whether the user can access the contact information step"""
-  canAccessContactInformation: Boolean!
-  """Check whether the user can access the transport and payment step"""
-  canAccessTransportAndPayment: Boolean!
-}
-
 """Information about pagination in a connection."""
 type PageInfo {
   """When paginating forwards, the cursor to continue."""
@@ -1654,8 +1647,6 @@ type Query {
   orders(after: String, before: String, first: Int, last: Int): OrderConnection
   """Returns HTML content for order sent page."""
   orderSentPageContent(orderUuid: Uuid!): String!
-  """Checks whether user can access the transport and payment or the contact info steps"""
-  orderStepsAccessibility(cartInput: CartInput): OrderStepsAccessibility!
   ParameterCheckboxFilterOption: ParameterCheckboxFilterOption
   ParameterColorFilterOption: ParameterColorFilterOption
   ParameterSliderFilterOption: ParameterSliderFilterOption
