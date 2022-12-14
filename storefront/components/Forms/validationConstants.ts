@@ -8,7 +8,7 @@ export const VALIDATION_CONSTANTS = {
     firstNameMaxLength: 100,
     lastNameMaxLength: 100,
     companyNameMaxLength: 100,
-    companyNumberMaxLength: 50,
+    companyNumberExactLength: 8,
     companyTaxNumberMaxLength: 50,
     passwordMinLength: 6,
 } as const;
