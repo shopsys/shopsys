@@ -32,7 +32,7 @@ export const getUserFriendlyErrors = (originalError: CombinedError, t: Translate
                     continue;
                 }
 
-                if (hasErrorMessage(error.extensions.userCode)) {
+                if (hasErrorMessage(error.extensions.userCode, t)) {
                     errors.applicationError = {
                         type: error.extensions.userCode,
                         message: getErrorMessage(error.extensions.userCode, t),
