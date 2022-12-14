@@ -156,10 +156,18 @@ export async function initServerSideProps(
                     customerQueryResult?.data?.currentCustomerUser !== null;
 
                 if (!isLogged) {
+                    const [loginUrl, redirectTargetUrlWithLeadingSlash] = getInternationalizedStaticUrls(
+                        ['/login', context.resolvedUrl],
+                        domainConfig.url,
+                    );
+                    const redirectTargetUrl = redirectTargetUrlWithLeadingSlash.slice(1);
+                    const redirectQuery = redirectTargetUrl.length > 0 ? `?r=${redirectTargetUrl}` : '';
+                    const logginUrlWithRedirect = `${loginUrl}${redirectQuery}`;
+
                     return {
                         redirect: {
                             statusCode: 302,
-                            destination: getInternationalizedStaticUrls(['/login'], domainConfig.url)[0],
+                            destination: logginUrlWithRedirect,
                         },
                     };
                 }
