@@ -671,10 +671,10 @@ msgid "External scripts"
 msgstr "Měřící skripty"
 
 msgid "External transaction ID"
-msgstr ""
+msgstr "Externí indentifikátor transakce"
 
 msgid "External transaction status"
-msgstr ""
+msgstr "Externí status transakce"
 
 msgid "Externí ID můstku"
 msgstr ""
@@ -1253,7 +1253,7 @@ msgid "Page you are looking for either no longer exists or you entered wrong add
 msgstr "Stránka, kterou hledáte buďto již neexistuje, nebo jste zadali špatnou adresu."
 
 msgid "Paid amount"
-msgstr ""
+msgstr "Zaplacená částka"
 
 msgid "Parameter"
 msgstr ""
@@ -1286,10 +1286,10 @@ msgid "Payment instructions"
 msgstr ""
 
 msgid "Payment method name"
-msgstr ""
+msgstr "Název platební metody"
 
 msgid "Payment transactions"
-msgstr ""
+msgstr "Platební transakce"
 
 msgid "Percents"
 msgstr "Procenta"
@@ -1532,13 +1532,13 @@ msgid "Referenced products"
 msgstr "Odkazované produkty"
 
 msgid "Refund amount"
-msgstr ""
+msgstr "Refundovat částku"
 
 msgid "Refundable amount"
-msgstr ""
+msgstr "Refundovatelná částka "
 
 msgid "Refunded amount"
-msgstr ""
+msgstr "Refundovaná částka"
 
 msgid "Related products"
 msgstr "Související produkty"
@@ -2147,7 +2147,7 @@ msgid "You are allowed to set up two factor authentication only to yourself."
 msgstr ""
 
 msgid "You can refund only %refundableAmount%."
-msgstr ""
+msgstr "Mužete refundovat pouze %refundableAmount%."
 
 msgid "You can upload following formats: PNG, JPG"
 msgstr ""
