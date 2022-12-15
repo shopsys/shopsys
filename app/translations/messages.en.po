@@ -1597,7 +1597,7 @@ msgstr ""
 msgid "Soubor se nepodařilo nalézt na hlavním uložišti. Zkuste to, prosím, znovu nebo kontaktujte správce obchodu."
 msgstr ""
 
-msgid "Stav bjednávky"
+msgid "Stav objednávky"
 msgstr ""
 
 msgid "Stav objednávky"

@@ -1207,6 +1207,9 @@ msgstr "Položky objednávky"
 msgid "Order number"
 msgstr "Číslo objednávky"
 
+msgid "Order status"
+msgstr "Stav objednávky"
+
 msgid "Order statuses - full"
 msgstr "Stavy objednávek - vše"
 
@@ -1275,6 +1278,9 @@ msgstr "Heslo"
 
 msgid "Password again"
 msgstr "Heslo znovu"
+
+msgid "Payment"
+msgstr "Platba"
 
 msgid "Payment instructions"
 msgstr ""
@@ -1717,9 +1723,6 @@ msgstr ""
 msgid "Soubor se nepodařilo nalézt na hlavním uložišti. Zkuste to, prosím, znovu nebo kontaktujte správce obchodu."
 msgstr ""
 
-msgid "Stav bjednávky"
-msgstr ""
-
 msgid "Stav objednávky"
 msgstr ""
 
@@ -1887,6 +1890,9 @@ msgstr "Číslo zásilky"
 
 msgid "Transfers - view"
 msgstr "Přehlad chyb v přenosech - zobrazení"
+
+msgid "Transport"
+msgstr "Doprava"
 
 msgid "Transport type"
 msgstr "Typ dopravy"
