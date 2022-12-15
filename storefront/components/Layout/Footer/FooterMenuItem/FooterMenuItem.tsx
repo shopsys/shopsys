@@ -5,13 +5,13 @@ import {
     FooterMenuListItemStyled,
     FooterMenuListStyled,
 } from './FooterMenuItem.style';
-import { SimpleArticleFragmentApi } from 'graphql/generated';
+import { SimpleNotBlogArticleFragmentApi } from 'graphql/generated';
 import NextLink from 'next/link';
 import { FC } from 'react';
 
 type FooterMenuItemProps = {
     title: string;
-    items: SimpleArticleFragmentApi[];
+    items: SimpleNotBlogArticleFragmentApi[];
 };
 
 const TEST_IDENTIFIER = 'layout-footer-footermenuitem';
@@ -22,7 +22,7 @@ export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => (
         <FooterMenuListStyled>
             {items.map((item) => (
                 <FooterMenuListItemStyled key={item.uuid}>
-                    <NextLink href={item.slug} passHref>
+                    <NextLink href={item.__typename === 'ArticleSite' ? item.slug : item.url} passHref>
                         <FooterMenuListItemLinkStyled
                             target={item.external ? '_blank' : undefined}
                             rel={item.external ? 'nofollow noreferrer noopener' : undefined}

@@ -1,8 +1,8 @@
-fragment SimpleArticleFragment on Article {
+fragment SimpleArticleLinkFragment on ArticleLink {
     __typename
     uuid
     name
-    slug
+    url
     placement
     external
 }

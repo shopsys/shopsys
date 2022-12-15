@@ -22,3 +22,28 @@ ArticleQuery:
                     search:
                         type: "String!"
                 description: "Returns list of searched articles and blog articles"
+            article:
+                type: 'NotBlogArticleInterface'
+                resolve: "@=resolver('article', [args['uuid'], args['urlSlug']])"
+                args:
+                    uuid:
+                        type: "Uuid"
+                    urlSlug:
+                        type: "String"
+                description: "Returns article filtered using UUID or URL slug"
+            termsAndConditionsArticle:
+                type: 'ArticleSite'
+                resolve: "@=resolver('termsAndConditionsArticle')"
+                description: "Returns Terms and Conditions article"
+            privacyPolicyArticle:
+                type: 'ArticleSite'
+                resolve: "@=resolver('privacyPolicyArticle')"
+                description: "Returns privacy policy article"
+            cookiesArticle:
+                type: 'ArticleSite'
+                resolve: "@=resolver('cookiesArticle')"
+                description: "Returns information about cookies article"
+            ArticleSite:
+                type: "ArticleSite"
+            ArticleLink:
+                type: "ArticleLink"

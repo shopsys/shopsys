@@ -63,8 +63,6 @@ class ArticleExportRepository
     public function getAllVisibleArticleSitesByDomainId(int $domainId, int $limit, int $lastProcessedId): array
     {
         return $this->articleRepository->getVisibleArticlesByDomainIdQueryBuilder($domainId)
-            ->andWhere('a.type = :type')
-            ->setParameter('type', Article::TYPE_SITE)
             ->andWhere('a.id > :lastProcessedId')
             ->setParameter('lastProcessedId', $lastProcessedId)
             ->setMaxResults($limit)
@@ -81,9 +79,7 @@ class ArticleExportRepository
     public function getVisibleArticleSitesByDomainIdAndArticleIds(int $domainId, array $articleIds): array
     {
         return $this->articleRepository->getVisibleArticlesByDomainIdQueryBuilder($domainId)
-            ->andWhere('a.type = :type')
             ->andWhere('a.id IN (:articleIds)')
-            ->setParameter('type', Article::TYPE_SITE)
             ->setParameter('articleIds', $articleIds)
             ->getQuery()
             ->getResult();
@@ -99,10 +95,16 @@ class ArticleExportRepository
         $articleId = $article->getId();
         $mainFriendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl($domainId, 'front_article_detail', $articleId);
 
+        if ($article->isLinkType()) {
+            $url = $article->getUrl();
+        } else {
+            $url = $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($mainFriendlyUrl);
+        }
+
         return [
             'name' => $article->getName(),
             'text' => $article->getText(),
-            'url' => $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($mainFriendlyUrl),
+            'url' => $url,
             'uuid' => $article->getUuid(),
             'placement' => $article->getPlacement(),
             'seoH1' => $article->getSeoH1(),
@@ -114,6 +116,7 @@ class ArticleExportRepository
             'breadcrumb' => $this->breadcrumbFacade->getBreadcrumbOnDomain($articleId, 'front_article_detail', $domainId),
             'external' => $article->isExternal(),
             'createdAt' => $article->getCreatedAt()->format('Y-m-d H:i:s'),
+            'type' => $article->getType(),
         ];
     }
 }

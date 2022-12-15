@@ -97,7 +97,68 @@ input ApplyPromoCodeToCartInput {
   promoCode: String!
 }
 
-type Article implements Breadcrumb & Slug & ArticleInterface {
+"""A connection to a list of items."""
+type ArticleConnection {
+  """Information to aid in pagination."""
+  edges: [ArticleEdge]
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+  """Total number of articles"""
+  totalCount: Int!
+}
+
+"""An edge in a connection."""
+type ArticleEdge {
+  """A cursor for use in pagination."""
+  cursor: String!
+  """The item at the end of the edge."""
+  node: NotBlogArticleInterface
+}
+
+"""Represents entity that is considered to be an article on the eshop"""
+interface ArticleInterface {
+  breadcrumb: [Link!]!
+  name: String!
+  seoH1: String
+  seoMetaDescription: String
+  seoTitle: String
+  slug: String!
+  text: String
+  uuid: Uuid!
+}
+
+type ArticleLink implements NotBlogArticleInterface {
+  """Creation date time of the article link"""
+  createdAt: DateTime!
+  """If the the article should be open in a new tab"""
+  external: Boolean!
+  """Name of article link, used as anchor text"""
+  name: String!
+  """Placement of the article link"""
+  placement: String!
+  """Destination url of article link"""
+  url: String!
+  """UUID of the article link"""
+  uuid: Uuid!
+}
+
+"""Possible placements of an article (used as an input for 'articles' query)"""
+enum ArticlePlacementTypeEnum {
+  """Articles in 1st footer column"""
+  footer1
+  """Articles in 2nd footer column"""
+  footer2
+  """Articles in 3rd footer column"""
+  footer3
+  """Articles in 4th footer column"""
+  footer4
+  """Articles in top menu"""
+  topMenu
+  """Articles without specific placement"""
+  none
+}
+
+type ArticleSite implements Breadcrumb & Slug & NotBlogArticleInterface & ArticleInterface {
   """Hierarchy of the current element in relation to the structure"""
   breadcrumb: [Link!]!
   """Date and time of the article creation"""
@@ -120,52 +181,6 @@ type Article implements Breadcrumb & Slug & ArticleInterface {
   text: String
   """UUID"""
   uuid: Uuid!
-}
-
-"""A connection to a list of items."""
-type ArticleConnection {
-  """Information to aid in pagination."""
-  edges: [ArticleEdge]
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-  """Total number of articles"""
-  totalCount: Int!
-}
-
-"""An edge in a connection."""
-type ArticleEdge {
-  """A cursor for use in pagination."""
-  cursor: String!
-  """The item at the end of the edge."""
-  node: Article
-}
-
-"""Represents entity that is considered to be an article on the eshop"""
-interface ArticleInterface {
-  breadcrumb: [Link!]!
-  name: String!
-  seoH1: String
-  seoMetaDescription: String
-  seoTitle: String
-  slug: String!
-  text: String
-  uuid: Uuid!
-}
-
-"""Possible placements of an article (used as an input for 'articles' query)"""
-enum ArticlePlacementTypeEnum {
-  """Articles in 1st footer column"""
-  footer1
-  """Articles in 2nd footer column"""
-  footer2
-  """Articles in 3rd footer column"""
-  footer3
-  """Articles in 4th footer column"""
-  footer4
-  """Articles in top menu"""
-  topMenu
-  """Articles without specific placement"""
-  none
 }
 
 """Represents an availability"""
@@ -926,6 +941,20 @@ input NewsletterSubscriptionDataInput {
   email: String!
 }
 
+"""Represents an article that is not a blog article"""
+interface NotBlogArticleInterface {
+  """creation date time of the article"""
+  createdAt: DateTime!
+  """If the the article should be open in a new tab"""
+  external: Boolean!
+  """name of article link"""
+  name: String!
+  """placement of the article"""
+  placement: String!
+  """UUID of the article link"""
+  uuid: Uuid!
+}
+
 """Represents a notification supposed to be displayed on all pages"""
 type NotificationBar {
   """Notification bar images"""
@@ -1552,7 +1581,8 @@ type Query {
   """Returns list of adverts, optionally filtered by `positionName`"""
   adverts(positionName: String): [Advert!]!
   """Returns article filtered using UUID or URL slug"""
-  article(urlSlug: String, uuid: Uuid): Article
+  article(urlSlug: String, uuid: Uuid): NotBlogArticleInterface
+  ArticleLink: ArticleLink
   """
   Returns list of articles that can be paginated using `first`, `last`, `before`
   and `after` keywords and filtered by `placement`
@@ -1565,6 +1595,7 @@ type Query {
     """An array of the required articles placements"""
     placement: [ArticlePlacementTypeEnum!] = []
   ): ArticleConnection!
+  ArticleSite: ArticleSite
   """Returns list of searched articles and blog articles"""
   articlesSearch(search: String!): [ArticleInterface!]!
   """Returns blog article filtered using UUID or URL slug"""
@@ -1591,7 +1622,7 @@ type Query {
   category(urlSlug: String, uuid: Uuid): Category
   CompanyCustomerUser: CompanyCustomerUser
   """Returns information about cookies article"""
-  cookiesArticle: Article
+  cookiesArticle: ArticleSite
   """Returns available countries"""
   countries: [Country!]!
   """Returns currently logged in customer user"""
@@ -1631,7 +1662,7 @@ type Query {
   """Return personal data page content and URL"""
   personalDataPage: PersonalDataPage
   """Returns privacy policy article"""
-  privacyPolicyArticle: Article
+  privacyPolicyArticle: ArticleSite
   """Returns product filtered using UUID or URL slug"""
   product(urlSlug: String, uuid: Uuid): Product
   """Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"""
@@ -1653,7 +1684,7 @@ type Query {
   """Returns list of stores that can be paginated using `first`, `last`, `before` and `after` keywords"""
   stores(after: String, before: String, first: Int, last: Int): StoreConnection!
   """Returns Terms and Conditions article"""
-  termsAndConditionsArticle: Article
+  termsAndConditionsArticle: ArticleSite
   """Returns complete list of transport methods"""
   transport(uuid: Uuid!): Transport
   """Returns available transport methods based on the current cart state"""

@@ -1,4 +1,4 @@
-import { SimpleArticleType } from './article';
+import { SimpleArticleSiteType } from './article';
 import { SimpleBlogArticleType } from './blogArticle';
 
-export type SimpleArticleInterfaceType = SimpleArticleType | SimpleBlogArticleType;
+export type SimpleArticleInterfaceType = SimpleArticleSiteType | SimpleBlogArticleType;

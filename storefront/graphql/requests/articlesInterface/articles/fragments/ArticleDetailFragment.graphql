@@ -1,4 +1,4 @@
-fragment ArticleDetailFragment on Article {
+fragment ArticleDetailFragment on ArticleSite {
     __typename
     uuid
     slug

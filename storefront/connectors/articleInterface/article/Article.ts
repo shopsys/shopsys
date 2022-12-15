@@ -1,14 +1,14 @@
-import { ArticleDetailFragmentApi, SimpleArticleFragmentApi } from 'graphql/generated';
-import { ArticleDetailType, SimpleArticleType } from 'types/article';
+import { ArticleDetailFragmentApi, SimpleArticleSiteFragmentApi } from 'graphql/generated';
+import { ArticleDetailType, SimpleArticleSiteType } from 'types/article';
 
 export const mapArticleDetail = (apiData: ArticleDetailFragmentApi): ArticleDetailType => {
     return {
         ...apiData,
-        __typename: 'Article',
+        __typename: 'ArticleSite',
     };
 };
 
-export const mapSimpleArticle = (apiData: SimpleArticleFragmentApi): SimpleArticleType => {
+export const mapSimpleArticleSite = (apiData: SimpleArticleSiteFragmentApi): SimpleArticleSiteType => {
     return {
         ...apiData,
     };

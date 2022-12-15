@@ -108,7 +108,7 @@ export const getGtmPageInfoForFriendlyUrl = (
         case 'Store':
             defaultPageInfo.type = 'store';
             break;
-        case 'Article':
+        case 'ArticleSite':
             defaultPageInfo.type = 'text';
             break;
         case 'BlogArticle':

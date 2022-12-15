@@ -5,7 +5,7 @@ query ArticlesQuery(
     articles(placement: $placement, first: $first) {
         edges {
             node {
-               ...SimpleArticleFragment
+               ...SimpleNotBlogArticleFragment
             }
         }
     }

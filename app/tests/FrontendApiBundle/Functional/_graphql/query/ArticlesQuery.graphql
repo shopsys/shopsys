@@ -8,18 +8,19 @@ query ArticlesQuery(
     articles(first: $first, last: $last, before: $before, after: $after, placement: $placement) {
         edges {
             node {
-                uuid
-                name
-                placement
-                text
-                seoH1
-                seoTitle
-                seoMetaDescription
-                slug
-                text
-                breadcrumb {
-                    slug
+                ... on ArticleSite {
+                    uuid
                     name
+                    placement
+                    text
+                    seoH1
+                    seoTitle
+                    seoMetaDescription
+                    slug
+                    breadcrumb {
+                        slug
+                        name
+                    }
                 }
             }
         }

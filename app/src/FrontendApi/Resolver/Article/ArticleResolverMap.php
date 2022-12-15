@@ -14,7 +14,7 @@ class ArticleResolverMap extends ResolverMap
      */
     protected function map(): array
     {
-        $map['Article'] = [
+        $map['ArticleSite'] = [
             'slug' => function (array $articleData) {
                 return '/' . $articleData['mainSlug'];
             },

@@ -19,7 +19,7 @@ class ArticlesSearchResolverMap extends ResolverMap
                 self::RESOLVE_TYPE => function ($data) {
                     if (isset($data['index'])) {
                         if ($data['index'] === 'article') {
-                            return 'Article';
+                            return 'ArticleSite';
                         }
 
                         if ($data['index'] === 'blog_article') {

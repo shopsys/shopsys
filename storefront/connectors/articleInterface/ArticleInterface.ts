@@ -1,4 +1,4 @@
-import { mapSimpleArticle } from './article/Article';
+import { mapSimpleArticleSite } from './article/Article';
 import { mapSimpleBlogArticle } from './blogArticle/BlogArticle';
 import { SimpleArticleInterfaceFragmentApi } from 'graphql/generated';
 import { SimpleArticleInterfaceType } from 'types/articleInterface';
@@ -7,8 +7,8 @@ const mapSimpleArticleInterface = (
     apiData: SimpleArticleInterfaceFragmentApi,
 ): SimpleArticleInterfaceType | undefined => {
     switch (apiData.__typename) {
-        case 'Article':
-            return mapSimpleArticle(apiData);
+        case 'ArticleSite':
+            return mapSimpleArticleSite(apiData);
         case 'BlogArticle':
             return mapSimpleBlogArticle(apiData);
         default:

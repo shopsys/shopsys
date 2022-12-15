@@ -58,7 +58,7 @@ const renderContent = (data: Maybe<FriendlyUrlPageType>, fetching: boolean) => {
             return wrapContent(<CategoryDetailContent category={data} />, data);
         case 'Store':
             return wrapContent(<StoreDetailContent store={data} />, data);
-        case 'Article':
+        case 'ArticleSite':
             return wrapContent(<ArticleDetailContent article={data} />, data);
         case 'BlogArticle':
             return wrapContent(<BlogArticleDetailContent blogArticle={data} />, data);

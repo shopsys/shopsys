@@ -1,7 +1,7 @@
 ArticleConnection:
     type: relay-connection
     config:
-        nodeType: Article
+        nodeType: NotBlogArticleInterface
         connectionFields:
             totalCount:
                 type: "Int!"

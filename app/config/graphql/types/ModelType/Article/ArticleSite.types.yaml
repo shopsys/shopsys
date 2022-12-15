@@ -1,4 +1,4 @@
-Article:
+ArticleSite:
     type: object
     inherits:
         - 'ArticleDecorator'
@@ -6,17 +6,18 @@ Article:
         interfaces:
             - 'Breadcrumb'
             - 'Slug'
+            - 'NotBlogArticleInterface'
             - 'ArticleInterface'
         fields:
+            createdAt:
+                type: "DateTime!"
+                description: "Date and time of the article creation"
+            external:
+                type: "Boolean!"
+                description: "If the the article should be open in a new tab"
             slug:
                 type: "String!"
                 description: "Article URL slug"
             breadcrumb:
                 type: "[Link!]!"
                 description: "Hierarchy of the current element in relation to the structure"
-            external:
-                type: "Boolean!"
-                description: "If the the article should be open in a new tab"
-            createdAt:
-                type: "DateTime!"
-                description: "Date and time of the article creation"
