@@ -802,20 +802,20 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                   "parameters": [
                     {
                       "isCollapsed": false,
-                      "name": "' . t('Materiál', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                      "name": "' . t('Material', [], 'dataFixtures', $this->firstDomainLocale) . '",
                       "values": [
                         {
-                          "text": "plast",
+                          "text": "' . t('plastic', [], 'dataFixtures', $this->firstDomainLocale) . '",
                           "count": 1
                         }
                       ]
                     },
                     {
                       "isCollapsed": false,
-                      "name": "' . t('Barva', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                      "name": "' . t('Color', [], 'dataFixtures', $this->firstDomainLocale) . '",
                       "values": [
                         {
-                          "text": "' . t('červená', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                          "text": "' . t('red', [], 'dataFixtures', $this->firstDomainLocale) . '",
                           "count": 1
                         }
                       ]

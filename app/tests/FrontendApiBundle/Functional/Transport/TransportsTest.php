@@ -92,7 +92,7 @@ class TransportsTest extends GraphQlTestCase
                 'transports' => [
                     [
                         'name' => t('Czech post', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
-                        'description' => null,
+                        'description' => t('Czech state post service.', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
                         'instruction' => null,
                         'position' => 0,
                         'daysUntilDelivery' => 5,

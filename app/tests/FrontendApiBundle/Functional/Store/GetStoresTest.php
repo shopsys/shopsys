@@ -151,7 +151,7 @@ class GetStoresTest extends GraphQlTestCase
             [
                 'name' => t('Ostrava', [], 'dataFixtures', $firstDomainLocale),
                 'isDefault' => true,
-                'description' => null,
+                'description' => t('Prodejna v Ostravě Přívoze', [], 'dataFixture', $firstDomainLocale),
                 'street' => 'Koksární 10',
                 'city' => 'Ostrava',
                 'postcode' => '70200',
@@ -166,7 +166,7 @@ class GetStoresTest extends GraphQlTestCase
             ], [
                 'name' => t('Pardubice', [], 'dataFixtures', $firstDomainLocale),
                 'isDefault' => false,
-                'description' => null,
+                'description' => t('Prodejna v Pardubicích', [], 'dataFixture', $firstDomainLocale),
                 'street' => 'Bratranců Veverkových 2722',
                 'city' => 'Pardubice',
                 'postcode' => '53002',

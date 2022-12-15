@@ -136,9 +136,9 @@ class BlogCategoryTest extends GraphQlTestCase
                 'blogCategory' => [
                     'blogArticles' => [
                         'edges' => [
-                            ['node' => ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 30, '%locale%' => $locale], 'dataFixtures', $locale)]],
-                            ['node' => ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 29, '%locale%' => $locale], 'dataFixtures', $locale)]],
-                            ['node' => ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 28, '%locale%' => $locale], 'dataFixtures', $locale)]],
+                            ['node' => ['name' => t('Blog article example %counter% %locale%', ['%counter%' => 30, '%locale%' => $locale], 'dataFixtures', $locale)]],
+                            ['node' => ['name' => t('Blog article example %counter% %locale%', ['%counter%' => 29, '%locale%' => $locale], 'dataFixtures', $locale)]],
+                            ['node' => ['name' => t('Blog article example %counter% %locale%', ['%counter%' => 28, '%locale%' => $locale], 'dataFixtures', $locale)]],
                         ],
                     ],
                 ],
@@ -171,9 +171,9 @@ class BlogCategoryTest extends GraphQlTestCase
                 'blogCategory' => [
                     'blogArticles' => [
                         'edges' => [
-                            ['node' => ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 29, '%locale%' => $locale], 'dataFixtures', $locale)]],
-                            ['node' => ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 28, '%locale%' => $locale], 'dataFixtures', $locale)]],
-                            ['node' => ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 27, '%locale%' => $locale], 'dataFixtures', $locale)]],
+                            ['node' => ['name' => t('Blog article example %counter% %locale%', ['%counter%' => 29, '%locale%' => $locale], 'dataFixtures', $locale)]],
+                            ['node' => ['name' => t('Blog article example %counter% %locale%', ['%counter%' => 28, '%locale%' => $locale], 'dataFixtures', $locale)]],
+                            ['node' => ['name' => t('Blog article example %counter% %locale%', ['%counter%' => 27, '%locale%' => $locale], 'dataFixtures', $locale)]],
                         ],
                     ],
                 ],
@@ -241,15 +241,15 @@ class BlogCategoryTest extends GraphQlTestCase
             'data' => [
                 'blogCategory' => [
                     'uuid' => $this->blogCategory->getUuid(),
-                    'name' => t('První podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
-                    'description' => t('description - První podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
+                    'name' => t('First subsection %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
+                    'description' => t('description - First subsection %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
                     'parent' => [
-                        'name' => t('Hlavní stránka blogu - %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
+                        'name' => t('Main blog page - %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
                     ],
                     'children' => [],
-                    'seoTitle' => t('title - První podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
-                    'seoH1' => t('První podsekce %locale% - h1', ['%locale%' => $locale], 'dataFixtures', $locale),
-                    'seoMetaDescription' => null,
+                    'seoTitle' => t('title - First subsection %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
+                    'seoH1' => t('First subsection %locale% - h1', ['%locale%' => $locale], 'dataFixtures', $locale),
+                    'seoMetaDescription' => t('description - First subsection %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
                     'link' => $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl),
                     'slug' => '/' . $friendlyUrl->getSlug(),
                     'breadcrumb' => [
@@ -258,18 +258,18 @@ class BlogCategoryTest extends GraphQlTestCase
                             'slug' => $firstBlogCategorySlug,
                         ],
                         [
-                            'name' => t('První podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
+                            'name' => t('First subsection %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
                             'slug' => $this->urlGenerator->generate('front_blogcategory_detail', ['id' => $this->blogCategory->getId()]),
                         ],
                     ],
                     'blogCategoriesTree' => [
                         [
-                            'name' => t('Hlavní stránka blogu - %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
+                            'name' => t('Main blog page - %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
                             'children' => [
                                 [
-                                    'name' => t('První podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
+                                    'name' => t('First subsection %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
                                 ], [
-                                    'name' => t('Druhá podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
+                                    'name' => t('Second subsection %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
                                 ],
                             ],
                         ],

@@ -529,7 +529,38 @@ class RetrieveCartTest extends GraphQlTestCase
             'catalogNumber' => '9177759',
             'partNumber' => 'SLE 22F46DM4',
             'ean' => '8845781245930',
-            'usps' => [],
+            'usps' => [
+                t(
+                    'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                t(
+                    'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                t(
+                    'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                t(
+                    'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                t(
+                    'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+            ],
             'hasPreorder' => false,
             'files' => [],
             'storeAvailabilities' => [

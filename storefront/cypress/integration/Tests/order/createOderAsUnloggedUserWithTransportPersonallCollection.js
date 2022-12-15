@@ -10,7 +10,6 @@ import {
     totalPrice,
     transport,
     url,
-    zeroRate,
 } from '../../../fixtures/demodata';
 import { checkProductInCart } from '../../Functions/cart';
 import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/cartPopupWindow';
@@ -122,7 +121,7 @@ it('Creating an order as unlogged user with one item, Personal collection and Ca
         products.helloKitty.priceWithoutVat,
         products.helloKitty.priceWithVat,
     );
-    checkOneItemInOrderDetail('1', payment.cash, freePrice, '1', zeroRate, freePrice, freePrice);
+    checkOneItemInOrderDetail('1', payment.cash, freePrice, '1', standartRate, freePrice, freePrice);
     checkOneItemInOrderDetail(
         '2', // row number
         transport.personalCollection.name,

@@ -26,8 +26,6 @@ class AbstractOrderTestCase extends GraphQlTestCase
         $domainId = $this->domain->getId();
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
         $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId);
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
-        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
 
         return [
             0 => [
@@ -40,10 +38,10 @@ class AbstractOrderTestCase extends GraphQlTestCase
             ],
             1 => [
                 'name' => t('Cash on delivery', [], 'dataFixtures', $firstDomainLocale),
-                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('50', $vatZero),
-                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('50', $vatZero),
+                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.59', $vatHigh),
+                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.59', $vatHigh),
                 'quantity' => 1,
-                'vatRate' => '0.0000',
+                'vatRate' => '21.0000',
                 'unit' => null,
             ],
             2 => [

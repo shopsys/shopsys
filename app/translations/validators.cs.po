@@ -16,17 +16,14 @@ msgstr ""
 msgid "Chybný formát RGB HEX : #336699 nebo #ABC"
 msgstr ""
 
-msgid "City cannot be longer than {{ limit }} characters"
-msgstr ""
-
 msgid "City name cannot be longer than {{ limit }} characters"
 msgstr "Název města nesmí být delší než {{ limit }} znaků"
 
 msgid "Company name cannot be longer than {{ limit }} characters"
-msgstr ""
+msgstr "Název společnosti nesmí být delší než {{ limit }} znaků"
 
 msgid "Email cannot be longer than {{ limit }} characters"
-msgstr ""
+msgstr "E-mail nesmí být delší než {{ limit }} znaků"
 
 msgid "External ID cannot be longer than {{ limit }} characters"
 msgstr "Externí ID nesmí být delší než {{ limit }} znaků"
@@ -35,7 +32,7 @@ msgid "Externí ID můstku nesmí být delší než {{ limit }} znaků"
 msgstr ""
 
 msgid "First name cannot be longer than {{ limit }} characters"
-msgstr ""
+msgstr "Jméno nesmí být delší než {{ limit }} znaků"
 
 msgid "Flag \"{{ flagName }}\" is selected multiple times."
 msgstr "Příznak \"{{ flagName }}\" je zvolen několikrát."
@@ -65,7 +62,7 @@ msgid "Image can be only in JPG, GIF or PNG format"
 msgstr ""
 
 msgid "Last name cannot be longer than {{ limit }} characters"
-msgstr ""
+msgstr "Příjmení nesmí být delší než {{ limit }} znaků"
 
 msgid "Minimal and maximal value are not supported as an input for other than \"slider\" type parameter. Use \"values\" instead."
 msgstr "Minimální a maximalní hodnota nejsou podporovány jako vstup pro parametry jiného typu než \"slider\". Namísto toho použijte \"values\"."
@@ -74,13 +71,13 @@ msgid "Name cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "New password must be at least {{ limit }} characters long"
-msgstr ""
+msgstr "Nové heslo musí být delší než {{ limit }} znaků"
 
 msgid "Název skladu nesmí být delší než {{ limit }} znaků"
 msgstr ""
 
 msgid "Password must be at least {{ limit }} characters long"
-msgstr ""
+msgstr "Heslo musí být delší než {{ limit }} znaků"
 
 msgid "Passwords do not match"
 msgstr "Hesla se neshodují"
@@ -95,7 +92,7 @@ msgid "Pickup place with provided UUID is not available"
 msgstr "Odběrné místo se zadaným UUID není dostupné"
 
 msgid "Please check Tax number format"
-msgstr ""
+msgstr "Zkontrolujte formát DIČ"
 
 msgid "Please choose article placement"
 msgstr ""
@@ -125,10 +122,10 @@ msgid "Please enter date of creation"
 msgstr "Vyplňte prosím datum vytvoření"
 
 msgid "Please enter email"
-msgstr ""
+msgstr "Vyplňte prosím e-mail"
 
 msgid "Please enter first name"
-msgstr ""
+msgstr "Vyplňte prosím křestní jméno"
 
 msgid "Please enter flag color"
 msgstr ""
@@ -137,7 +134,7 @@ msgid "Please enter flag name in all languages"
 msgstr "Prosím zadejte název příznaku ve všech jazycích"
 
 msgid "Please enter last name"
-msgstr ""
+msgstr "Vyplňte prosím příjmení"
 
 msgid "Please enter name"
 msgstr ""
@@ -155,7 +152,7 @@ msgid "Please enter street"
 msgstr "Vyplňte prosím ulici"
 
 msgid "Please enter telephone number"
-msgstr ""
+msgstr "Vyplňte prosím telefonní číslo"
 
 msgid "Please enter the message"
 msgstr "Vyplňte prosím zprávu"
@@ -170,10 +167,10 @@ msgid "Please enter the whole number."
 msgstr "Zadejte prosím celé číslo."
 
 msgid "Please enter valid delivery address UUID"
-msgstr ""
+msgstr "Vyplňte prosím platné UUID doručovací adresy"
 
 msgid "Please enter valid email"
-msgstr ""
+msgstr "Vyplňte prosím platný e-mail"
 
 msgid "Please enter your email address"
 msgstr "Vyplňte prosím e-mail"
@@ -185,7 +182,7 @@ msgid "Please enter zip code"
 msgstr "Vyplňte prosím PSČ"
 
 msgid "Postcode cannot be longer than {{ limit }} characters"
-msgstr ""
+msgstr "PSČ nesmí být delší než {{ limit }} znaků"
 
 msgid "Product prefix name cannot be longer than {{ limit }} characters"
 msgstr ""
@@ -275,19 +272,19 @@ msgid "Sklad s tímto externím kódem již existuje"
 msgstr ""
 
 msgid "Street cannot be longer than {{ limit }} characters"
-msgstr ""
+msgstr "Název ulice nemůže být delší než {{ limit }} znaků"
 
 msgid "Street name cannot be longer than {{ limit }} characters"
 msgstr "Název ulice nesmí být delší než {{ limit }} znaků"
 
 msgid "Tax number cannot be longer than {{ limit }} characters"
-msgstr ""
+msgstr "DIČ nesmí být delší než {{ limit }} znaků"
 
 msgid "Telephone number cannot be longer than {{ limit }} characters"
-msgstr ""
+msgstr "Telefonní číslo nesmí být delší než {{ limit }} znaků"
 
 msgid "Telephone number cannot be shorter than {{ limit }} characters"
-msgstr ""
+msgstr "Telefonní číslo nesmí být kratší než {{ limit }} znaků"
 
 msgid "The identifier must contain two characters"
 msgstr "Identifikátor musí obsahovat dva znaky"

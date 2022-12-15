@@ -96,7 +96,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
             "defaultDeliveryAddress": {
                 "uuid": "' . $defaultDeliveryAddress->getUuid() . '",
                 "companyName": "Rockpoint",
-                "street": "Rudná",
+                "street": "Rudná 123",
                 "city": "Ostrava",
                 "postcode": "70030",
                 "telephone": "123456789",
@@ -110,7 +110,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
                 {
                     "uuid": "' . $defaultDeliveryAddress->getUuid() . '",
                     "companyName": "Rockpoint",
-                    "street": "Rudná",
+                    "street": "Rudná 123",
                     "city": "Ostrava",
                     "postcode": "70030",
                     "telephone": "123456789",

@@ -16,9 +16,6 @@ msgstr ""
 msgid "Chybný formát RGB HEX : #336699 nebo #ABC"
 msgstr ""
 
-msgid "City cannot be longer than {{ limit }} characters"
-msgstr ""
-
 msgid "City name cannot be longer than {{ limit }} characters"
 msgstr "Názov mesta nemôže byť dlhší, než {{ limit }} znakov"
 

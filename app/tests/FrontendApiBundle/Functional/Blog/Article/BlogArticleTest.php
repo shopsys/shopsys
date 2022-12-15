@@ -168,18 +168,18 @@ class BlogArticleTest extends GraphQlTestCase
         return [
             'data' => [
                 'blogArticle' => [
-                    'name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 1, '%locale%' => $locale], 'dataFixtures', $locale),
+                    'name' => t('Blog article example %counter% %locale%', ['%counter%' => 1, '%locale%' => $locale], 'dataFixtures', $locale),
                     'uuid' => $this->blogArticle->getUuid(),
                     'text' => t('description - Lorem ipsum dolor sit amet, {products=9177759,7700768,9146508} consectetur {products=9177759,9176508} adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue.', [], 'dataFixtures', $locale),
                     'createdAt' => $this->blogArticle->getCreatedAt()->format(DATE_ATOM),
                     'visibleOnHomepage' => true,
                     'publishDate' => $this->blogArticle->getPublishDate()->format(DATE_ATOM),
                     'perex' => t('%locale% perex - lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu.', ['%locale%' => $locale], 'dataFixtures', $locale),
-                    'seoTitle' => t('title - Ukázkový článek blogu %counter% %locale%', ['%counter%' => 1, '%locale%' => $locale], 'dataFixtures', $locale),
-                    'seoMetaDescription' => null,
-                    'seoH1' => t('Ukázkový článek blogu %counter% %locale% - H1', ['%counter%' => 1, '%locale%' => $locale], 'dataFixtures', $locale),
+                    'seoTitle' => t('title - Blog article example %counter% %locale%', ['%counter%' => 1, '%locale%' => $locale], 'dataFixtures', $locale),
+                    'seoMetaDescription' => t('Blog article example %counter% %locale% - Meta description', ['%counter%' => 1, '%locale%' => $locale], 'dataFixtures', $locale),
+                    'seoH1' => t('Blog article example %counter% %locale% - H1', ['%counter%' => 1, '%locale%' => $locale], 'dataFixtures', $locale),
                     'blogCategories' => [
-                        ['name' => t('Hlavní stránka blogu - %locale%', ['%locale%' => $locale], 'dataFixtures', $locale)],
+                        ['name' => t('Main blog page - %locale%', ['%locale%' => $locale], 'dataFixtures', $locale)],
                     ],
                     'link' => $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl),
                     'slug' => '/' . $friendlyUrl->getSlug(),
@@ -200,7 +200,7 @@ class BlogArticleTest extends GraphQlTestCase
                             'slug' => $firstBlogCategorySlug,
                         ],
                         [
-                            'name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 1, '%locale%' => $locale], 'dataFixtures', $locale),
+                            'name' => t('Blog article example %counter% %locale%', ['%counter%' => 1, '%locale%' => $locale], 'dataFixtures', $locale),
                             'slug' => '/' . $friendlyUrl->getSlug(),
                         ],
                     ],

@@ -6166,6 +6166,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     private function createProduct(ProductData $productData): Product
     {
+        $this->fillShortDescriptionUpsBySeoDescription($productData);
         $productData->uuid = array_pop($this->uuidPool);
         /** @var \App\Model\Product\Product $product */
         $product = $this->productFacade->create($productData);
@@ -6173,6 +6174,20 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->addProductReference($product);
 
         return $product;
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    private function fillShortDescriptionUpsBySeoDescription(ProductData $productData): void
+    {
+        foreach ($productData->seoMetaDescriptions as $domainId => $seoDescription) {
+            $productData->shortDescriptionUsp1[$domainId] = $seoDescription;
+            $productData->shortDescriptionUsp2[$domainId] = $seoDescription;
+            $productData->shortDescriptionUsp3[$domainId] = $seoDescription;
+            $productData->shortDescriptionUsp4[$domainId] = $seoDescription;
+            $productData->shortDescriptionUsp5[$domainId] = $seoDescription;
+        }
     }
 
     /**

@@ -9,7 +9,6 @@ import {
     totalPrice,
     transport,
     url,
-    zeroRate,
 } from '../../../fixtures/demodata';
 import { checkProductInCart } from '../../Functions/cart';
 import { checkProductAndGoToCartFromCartPopupWindow } from '../../Functions/cartPopupWindow';
@@ -124,7 +123,7 @@ it('Creating an order as unlogged user with one item, Czech post and cash on del
         payment.onDelivery.name,
         payment.onDelivery.priceWithVat,
         '1', // item quantity
-        zeroRate,
+        standartRate,
         payment.onDelivery.priceWithoutVat,
         payment.onDelivery.priceWithVat,
     );

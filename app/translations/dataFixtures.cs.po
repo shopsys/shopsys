@@ -499,6 +499,15 @@ msgstr "Autentifikační kód pro dvoufaktorovou autentifikaci: {authentication_
 msgid "BROTHER PT-H300"
 msgstr "BROTHER PT-H300"
 
+msgid "Blog article example %counter% %locale%"
+msgstr "Ukázkový článek blogu %counter% %locale%"
+
+msgid "Blog article example %counter% %locale% - H1"
+msgstr "Ukázkový článek blogu %counter% %locale% - H1"
+
+msgid "Blog article example %counter% %locale% - Meta description"
+msgstr "Ukázkový článek blogu %counter% %locale% - meta popisek"
+
 msgid "Blog article for search testing"
 msgstr ""
 
@@ -667,6 +676,9 @@ msgstr "Česká pošta - balík do ruky"
 msgid "Czech republic"
 msgstr "Česká republika"
 
+msgid "Czech state post service."
+msgstr "Česká pošta."
+
 msgid "D-Link"
 msgstr "D-Link"
 
@@ -787,12 +799,6 @@ msgstr ""
 msgid "Drone delivery"
 msgstr "Doprava dronem"
 
-msgid "Druhá podsekce %locale%"
-msgstr ""
-
-msgid "Druhá podsekce %locale% - h1"
-msgstr ""
-
 msgid "DéLonghi ECAM 44.660.B. Start the morning with your favorite drink with the DeLonghi ECAM 44.660.B Eletta automatic coffee maker"
 msgstr "DeLonghi ECAM 44.660 B Luxusní plnoautomatický kávovar Eletta Plus v černé barvě s nerezovými částmi,1450 W"
 
@@ -855,6 +861,12 @@ msgstr "Filtr uhlíkový OPK4290"
 
 msgid "Filter input VP-9161 / SF-9162 / SF-8210"
 msgstr "Filtr vstupní VP-9161/VP-9162/VP-8210"
+
+msgid "First subsection %locale%"
+msgstr "První podsekce %locale%"
+
+msgid "First subsection %locale% - h1"
+msgstr "První podsekce %locale% - h1"
 
 msgid "Floor nozzle metal VP-9310"
 msgstr "Hubice podlahová kovová VP-9310"
@@ -976,9 +988,6 @@ msgstr "S touto jednoduchou a cenově dostupnou multifunkční tiskárnou HP Des
 msgid "High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D."
 msgstr "Canon EH-22L - pouzdro pro EOS 650D"
 
-msgid "Hlavní stránka blogu - %locale%"
-msgstr ""
-
 msgid "Hlavní údaje"
 msgstr ""
 
@@ -1071,6 +1080,21 @@ msgstr "MIO Cyclo 100, cyklopočítač na jízdní kolo, 1,8\""
 
 msgid "Magazine capacity for beans"
 msgstr "Kapacita zásobníku na zrna"
+
+msgid "Main blog page - %locale%"
+msgstr "Hlavní stránka blogu - %locale%"
+
+msgid "Main blog page - %locale% - H1"
+msgstr "Hlavní stránka blogu - %locale% - H1"
+
+msgid "Main blog page - %locale% - Title"
+msgstr "Hlavní stránka blogu - %locale% - Titulek"
+
+msgid "Main blog page - %locale% - meta description"
+msgstr "Hlavní stránka blogu - %locale% - meta popisek"
+
+msgid "Material"
+msgstr "Materiál"
 
 msgid "Maximum size"
 msgstr "Maximální formát"
@@ -1192,6 +1216,9 @@ msgstr "Nikon VH-520"
 msgid "No"
 msgstr "Ne"
 
+msgid "Notification in the bar, notification of a new event."
+msgstr "Notifikace v liště, upozornění na novou akci."
+
 msgid "Nozzle with brush VP-4290"
 msgstr "Hubice s kartáčem VP-4290"
 
@@ -1272,6 +1299,9 @@ msgstr "Pevné"
 
 msgid "Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.)."
 msgstr "Spotřební elektronika zahrnuje elektronická zařízení každodenního (nebo alespoň častého) použití pro komunikaci, v kanceláři i doma."
+
+msgid "Our electronics include devices used for entertainment, communicationsand home office activities."
+msgstr "Naše elektronika zahrnuje zařízení používaná pro zábavu, komunikaci a domácí kancelářské aktivity."
 
 msgid "Overall performance"
 msgstr "Celkový výkon"
@@ -1384,12 +1414,6 @@ msgstr "Frekvence procesoru"
 msgid "Processor frequency (GHz)"
 msgstr "Frekvence procesoru (GHz)"
 
-msgid "První podsekce %locale%"
-msgstr ""
-
-msgid "První podsekce %locale% - h1"
-msgstr ""
-
 msgid "Práce v Shopsys"
 msgstr ""
 
@@ -1495,6 +1519,12 @@ msgstr "Samsung UE75HU7500 (UHD)"
 msgid "Screen size"
 msgstr "Úhlopříčka"
 
+msgid "Second subsection %locale%"
+msgstr "Druhá podsekce %locale%"
+
+msgid "Second subsection %locale% - h1"
+msgstr "Druhá podsekce %locale% - h1"
+
 msgid "Sencor SDB 4002M4"
 msgstr "Sencor SDB 4002M4 (HDMI)"
 
@@ -1581,6 +1611,15 @@ msgstr "Kapesní reproduktor pro MP3 přehrávače, mobilní telefony, počíta�
 
 msgid "Spolupráce"
 msgstr ""
+
+msgid "Store in Ostrava Přívoz"
+msgstr "Prodejna v Ostravě Přívoze"
+
+msgid "Store in Žilina"
+msgstr "Prodejna v Žilině"
+
+msgid "Store v Pardubice"
+msgstr "Prodejna v Pardubicích"
 
 msgid "Super LCD"
 msgstr "Super LCD"
@@ -1744,6 +1783,9 @@ msgstr "Poukázka na 100 CZK"
 msgid "Ticket for 100 Czech crowns"
 msgstr "Poukázka na 100 korun českých"
 
+msgid "To track your package, click on this link: <a href=\"{tracking_url}\">{tracking_number}</a>."
+msgstr "Chcete-li sledovat svůj balíček, klikněte na tento odkaz: <a href=\"{tracking_url}\">{tracking_number}</a>."
+
 msgid "To track your package, click on this link: <a href=\"{tracking_url}\">{tracking_url}</a>."
 msgstr "Pro sledování Vaši zásilky klikněte na tento odkaz: <a href=\"{tracking_url}\">{tracking_url}</a>."
 
@@ -1767,12 +1809,6 @@ msgstr "Typ hubice: Univerzální. Průměr: 32 mm. Turbokartáč: Velký."
 
 msgid "USB"
 msgstr "USB"
-
-msgid "Ukázkový článek blogu %counter% %locale%"
-msgstr ""
-
-msgid "Ukázkový článek blogu %counter% %locale% - H1"
-msgstr ""
 
 msgid "Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts."
 msgstr "Použití parní trouby Concept  je překvapivě všestranné. Lze v ní připravit předkrmy, polévky, maso, ryby, zeleninu, vegetariánská jídla, knedlíky, rýži, ovoce i dezerty."
@@ -1879,17 +1915,50 @@ msgstr "klasické"
 msgid "cm"
 msgstr ""
 
-msgid "description - Druhá podsekce %locale%"
-msgstr ""
-
-msgid "description - Hlavní stránka blogu - %locale%"
-msgstr ""
+msgid "description - First subsection %locale%"
+msgstr "popis - První podsekce %locale%"
 
 msgid "description - Lorem ipsum dolor sit amet, {products=9177759,7700768,9146508} consectetur {products=9177759,9176508} adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue."
 msgstr ""
 
-msgid "description - První podsekce %locale%"
-msgstr ""
+msgid "description - Main blog page - %locale%"
+msgstr "popis - Hlavní stránka blogu %locale%"
+
+msgid "description - Second subsection %locale%"
+msgstr "popis - Druhá podsekce %locale%"
+
+msgid "description of 2 litre coffeemakers in sale seo category"
+msgstr "popis 'dvoulitrové kávovary' seo kategorie"
+
+msgid "description of Electronics from most expensive seo category"
+msgstr "popis 'Elektronika od nejdražší' seo kategorie"
+
+msgid "description of Electronics in black seo category"
+msgstr "popis 'Elektronika v černé' seo kategorie"
+
+msgid "description of Electronics in red seo category"
+msgstr "popis 'Elektronika v červené' seo kategorie"
+
+msgid "description of Electronics with LED technology and size 30 inch in sale seo category"
+msgstr "popis 'elektronika s LED technologií a velikosti 30 palců ve slevě' seo kategorie"
+
+msgid "description of Electronics without HDMI in sale seo category"
+msgstr "popis 'Elektronika bez HDMI ve slevě' seo kategorie"
+
+msgid "description of Full HD Electronics with LED technology and USB seo category"
+msgstr "popis 'Full HD elekronika s LED technologií a USB' seo kategorie"
+
+msgid "description of New computers with USB seo category"
+msgstr "popis 'Nové počítače s USB' seo kategorie"
+
+msgid "description of TV, audio from the cheapest seo category"
+msgstr "popis 'Nejlevnější televize a audio' seo kategorie"
+
+msgid "description of TV, audio in sale seo category"
+msgstr "popis 'Televize a audio ve slevě' seo kategorie"
+
+msgid "description of TV, audio plasma with HDMI seo category"
+msgstr "popis 'Televize a audie s plasmovou technologií a HDMI' seo kategorie"
 
 msgid "fits into VP812x VP9520"
 msgstr "pasuje do VP812x VP9520"
@@ -1921,6 +1990,39 @@ msgstr ""
 msgid "media 210MB, 24min., writing speed 24x, slim box"
 msgstr "médium 210MB, 24min., rychlost zápisu 24x, slim box"
 
+msgid "meta description of 2 litre coffeemakers in sale seo category"
+msgstr "meta popis 'dvoulitrové kávovary' seo kategorie"
+
+msgid "meta description of Electronics from most expensive seo category"
+msgstr "meta popis 'Elektronika od nejdražší' seo kategorie"
+
+msgid "meta description of Electronics in black seo category"
+msgstr "meta popis 'Elektronika v černé' seo kategorie"
+
+msgid "meta description of Electronics in red seo category"
+msgstr "meta popis 'Elektronika v červené' seo kategorie"
+
+msgid "meta description of Electronics with LED technology and size 30 inch in sale seo category"
+msgstr "meta popis 'elektronika s LED technologií a velikosti 30 palců ve slevě' seo kategorie"
+
+msgid "meta description of Full HD Electronics with LED technology and USB seo category"
+msgstr "meta popis 'Full HD elekronika s LED technologií a USB' seo kategorie"
+
+msgid "meta description of New computers with USB seo category"
+msgstr "meta popis 'Nové počítače s USB' seo kategorie"
+
+msgid "meta description of TV, audio from the cheapest seo category"
+msgstr "meta popis 'Nejlevnější televize a audio' seo kategorie"
+
+msgid "meta description of TV, audio in sale seo category"
+msgstr "meta popis 'Televize a audio ve slevě' seo kategorie"
+
+msgid "meta description of TV, audio plasma with HDMI seo category"
+msgstr "meta popis 'Televize a audio ve slevě' seo kategorie"
+
+msgid "metal"
+msgstr "kov"
+
 msgid "m³"
 msgstr "m³"
 
@@ -1942,26 +2044,101 @@ msgstr "ks"
 msgid "perex"
 msgstr ""
 
+msgid "plastic"
+msgstr "plast"
+
 msgid "plazmová"
 msgstr ""
+
+msgid "red"
+msgstr "červená"
+
+msgid "short description of 2 litre coffeemakers in sale seo category"
+msgstr "krátký popis 'dvoulitrové kávovary' seo kategorie"
+
+msgid "short description of Electronics from most expensive seo category"
+msgstr "krátký popis 'Elektronika od nejdražší' seo kategorie"
+
+msgid "short description of Electronics in black seo category"
+msgstr "krátký popis 'Elektronika v černé' seo kategorie"
+
+msgid "short description of Electronics in red seo category"
+msgstr "krátký popis 'Elektronika v červené' seo kategorie"
+
+msgid "short description of Electronics with LED technology and size 30 inch in sale seo category"
+msgstr "krátký popis 'elektronika s LED technologií a velikosti 30 palců ve slevě' seo kategorie"
+
+msgid "short description of Electronics without HDMI in sale seo category"
+msgstr "krátký popis 'Elektronika bez HDMI ve slevě' seo kategorie"
+
+msgid "short description of Full HD Electronics with LED technology and USB seo category"
+msgstr "krátký popis 'Full HD elekronika s LED technologií a USB' seo kategorie"
+
+msgid "short description of New computers with USB seo category"
+msgstr "krátký popis 'Nové počítače s USB' seo kategorie"
+
+msgid "short description of TV, audio from the cheapest seo category"
+msgstr "krátký popis 'Nejlevnější televize a audio' seo kategorie"
+
+msgid "short description of TV, audio in sale seo category"
+msgstr "krátký popis 'Televize a audio ve slevě' seo kategorie"
+
+msgid "short description of TV, audio plasma with HDMI seo category"
+msgstr "krátký popis 'Televize a audio ve slevě' seo kategorie"
 
 msgid "t"
 msgstr ""
 
+msgid "the Czech Post will try to deliver your parcel on time, but it will not succeed and despite the constant presence of your person at home, it will not catch you and you will have to pick up the parcel personally at the counter. Here, however, you have to endure an endlessly long line and an eternally grumpy lady postman."
+msgstr "Česká pošta se pokusí doručit Vaši zásilku včas, avšak to se jí nepovede a i přes neustálou přítomnost Vaší osoby doma, Vás nezastihne a budete muset osobně vyzvednout zásilku na přepážce. Zde však musíte vytrpět nekonečně dlouhou řadu a věčně mrzutou paní pošťačku."
+
 msgid "title"
-msgstr ""
+msgstr "titulek"
 
-msgid "title - Druhá podsekce %locale%"
-msgstr ""
+msgid "title - Blog article example %counter% %locale%"
+msgstr "titulek - Ukázkový článek blogu %counter% %locale%"
 
-msgid "title - První podsekce %locale%"
-msgstr ""
+msgid "title - First subsection %locale%"
+msgstr "titulek - První podsekce %locale%"
 
-msgid "title - Ukázkový článek blogu %counter% %locale%"
-msgstr ""
+msgid "title - Second subsection %locale%"
+msgstr "titulek - Druhé podsekce %locale%"
+
+msgid "title of 2 litre coffeemakers in sale seo category"
+msgstr "titulek 'dvoulitrové kávovary' seo kategorie"
+
+msgid "title of Electronics from most expensive seo category"
+msgstr "titulek 'Elektronika od nejdražší' seo kategorie"
+
+msgid "title of Electronics in black seo category"
+msgstr "titulek 'Elektronika v černé' seo kategorie"
+
+msgid "title of Electronics in red seo category"
+msgstr "titulek 'Elektronika v červené' seo kategorie"
+
+msgid "title of Electronics with LED technology and size 30 inch in sale seo category"
+msgstr "titulek 'elektronika s LED technologií a velikosti 30 palců ve slevě' seo kategorie"
+
+msgid "title of Full HD Electronics with LED technology and USB seo category"
+msgstr "titulek 'Full HD elekronika s LED technologií a USB' seo kategorie"
+
+msgid "title of New computers with USB seo category"
+msgstr "titulek 'Nové počítače s USB' seo kategorie"
+
+msgid "title of TV, audio from the cheapest seo category"
+msgstr "titulek 'Nejlevnější televize a audio' seo kategorie"
+
+msgid "title of TV, audio in sale seo category"
+msgstr "titulek 'Televize a audio ve slevě' seo kategorie"
+
+msgid "title of TV, audio plasma with HDMI seo category"
+msgstr "titulek 'Televize a audio ve slevě' seo kategorie"
 
 msgid "white"
 msgstr "bílá"
+
+msgid "wood"
+msgstr "dřevo"
 
 msgid "| Commerce Cloud"
 msgstr ""
