@@ -81,12 +81,6 @@ class PromoCode extends BasePromoCode
     private $massGenerateBatchId;
 
     /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    protected $applyOnSecondProduct;
-
-    /**
      * @var int
      * @ORM\Column(type="integer")
      */
@@ -113,7 +107,6 @@ class PromoCode extends BasePromoCode
         $this->massGenerate = $promoCodeData->massGenerate;
         $this->prefix = $promoCodeData->prefix;
         $this->massGenerateBatchId = $promoCodeData->massGenerateBatchId;
-        $this->applyOnSecondProduct = $promoCodeData->applyOnSecondProduct;
         $this->discountType = $promoCodeData->discountType;
         $this->registeredCustomerUserOnly = $promoCodeData->registeredCustomerUserOnly;
     }
@@ -179,14 +172,6 @@ class PromoCode extends BasePromoCode
     public function getPrefix(): ?string
     {
         return $this->prefix;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isApplyOnSecondProduct(): bool
-    {
-        return $this->applyOnSecondProduct;
     }
 
     /**

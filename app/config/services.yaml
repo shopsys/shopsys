@@ -445,9 +445,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductDiscountCalculation:
         alias: App\Model\Product\Pricing\QuantifiedProductDiscountCalculation
 
-    Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation:
-        alias: App\Model\Product\Pricing\QuantifiedProductPriceCalculation
-
     Shopsys\FrameworkBundle\Model\Product\ProductBreadcrumbGenerator:
         alias: App\Model\Product\ProductBreadcrumbGenerator
 

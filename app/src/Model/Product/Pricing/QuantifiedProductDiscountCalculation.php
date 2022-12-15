@@ -90,7 +90,6 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
                 $quantifiedProducts,
                 $promoCodePerProduct,
                 $quantifiedItemsPrices,
-                $promoCode,
                 $promoCodeLimit,
                 $currency
             );
@@ -143,15 +142,6 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
         $percent = $promoCodeLimit->getDiscount();
         if ($percent === null) {
             return null;
-        }
-
-        if ($promoCode->isApplyOnSecondProduct()) {
-            return $this->calculateDiscountOnSecondProductRoundedByCurrency(
-                $quantifiedProduct,
-                $quantifiedItemPrice,
-                $percent,
-                $currency
-            );
         }
 
         return $this->calculateDiscountRoundedByCurrency($quantifiedItemPrice, $percent, $currency);
@@ -221,43 +211,6 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice $quantifiedItemPrice
-     * @param string $percent
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
-     */
-    private function calculateDiscountOnSecondProductRoundedByCurrency(
-        QuantifiedProduct $quantifiedProduct,
-        QuantifiedItemPrice $quantifiedItemPrice,
-        string $percent,
-        Currency $currency
-    ): ?Price {
-        $quantity = $quantifiedProduct->getQuantity();
-        $unitPriceWithVat = $quantifiedItemPrice->getUnitPrice()->getPriceWithVat();
-
-        $discountedProductQuantity = intdiv($quantity, 2);
-        $discountMultiplier = (string)((float)$percent / 100);
-        $singleDiscountFromUnitPrice = $unitPriceWithVat->multiply($discountMultiplier);
-
-        $singleDiscountWithVat = $this->rounding->roundPriceWithVatByCurrency(
-            $singleDiscountFromUnitPrice,
-            $currency
-        );
-        $discountWithVat = $singleDiscountWithVat->multiply($discountedProductQuantity);
-
-        if ($discountWithVat->isZero()) {
-            return null;
-        }
-
-        $vat = $quantifiedItemPrice->getVat();
-        $discountVatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($discountWithVat, $vat);
-        $discountWithoutVat = $discountWithVat->subtract($discountVatAmount);
-
-        return new Price($discountWithoutVat, $discountWithVat);
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @return array
      */
@@ -312,7 +265,6 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param \App\Model\Order\PromoCode\PromoCode[] $promoCodePerProduct
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemsPrices
-     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
      * @param \App\Model\Order\PromoCode\PromoCodeLimit $promoCodeLimit
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
@@ -322,12 +274,10 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
         array $quantifiedProducts,
         array $promoCodePerProduct,
         array $quantifiedItemsPrices,
-        PromoCode $promoCode,
         PromoCodeLimit $promoCodeLimit,
         Currency $currency
     ): array {
         $cartPromoCodeApplicableProductsTotalPrice = $this->totalPriceCalculator->calculateTotalPrice(
-            $promoCode,
             $quantifiedProducts
         );
         $sumPriceWithVat = $cartPromoCodeApplicableProductsTotalPrice->getPriceWithVat();
