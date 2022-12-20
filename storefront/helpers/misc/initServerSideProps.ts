@@ -1,5 +1,7 @@
 import { logException } from '../errors/logException';
 import { createClient } from '../urql/createClient';
+import { getUnauthenticatedRedirectSSR } from './getUnauthenticatedRedirectSSR';
+import { isUserLoggedInSSR } from './isUserLoggedInSSR';
 import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
 import { DocumentNode } from 'graphql';
 import {
@@ -9,7 +11,6 @@ import {
     BlogCategoryArticlesDocumentApi,
     BrandProductsQueryDocumentApi,
     CategoryProductsQueryDocumentApi,
-    CurrentCustomerUserQueryApi,
     CurrentCustomerUserQueryDocumentApi,
     FlagProductsQueryDocumentApi,
     NavigationQueryDocumentApi,
@@ -19,13 +20,11 @@ import {
 import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
-import {
-    getInternationalizedStaticUrls,
-    getServerSideInternationalizedStaticUrl,
-} from 'helpers/localization/getInternationalizedStaticUrls';
+import { getServerSideInternationalizedStaticUrl } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getNewPagination } from 'helpers/pagination/getNewPagination';
 import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
 import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
+import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import {
     FILTER_QUERY_PARAMETER_NAME,
     PAGE_QUERY_PARAMETER_NAME,
@@ -145,33 +144,16 @@ export async function initServerSideProps(
             }
 
             if (authenticationRequired) {
-                const customerQueryResult = currentClient.readQuery<CurrentCustomerUserQueryApi>(
-                    CurrentCustomerUserQueryDocumentApi,
-                    {},
-                );
+                const isUserLoggedIn = isUserLoggedInSSR(currentClient);
 
-                const isLogged =
-                    customerQueryResult?.data?.currentCustomerUser !== undefined &&
-                    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                    customerQueryResult?.data?.currentCustomerUser !== null;
-
-                if (!isLogged) {
-                    const [loginUrl, redirectTargetUrlWithLeadingSlash] = getInternationalizedStaticUrls(
-                        ['/login', context.resolvedUrl],
+                if (!isUserLoggedIn) {
+                    return getUnauthenticatedRedirectSSR(
+                        getUrlWithoutGetParameters(context.resolvedUrl),
                         domainConfig.url,
                     );
-                    const redirectTargetUrl = redirectTargetUrlWithLeadingSlash.slice(1);
-                    const redirectQuery = redirectTargetUrl.length > 0 ? `?r=${redirectTargetUrl}` : '';
-                    const logginUrlWithRedirect = `${loginUrl}${redirectQuery}`;
-
-                    return {
-                        redirect: {
-                            statusCode: 302,
-                            destination: logginUrlWithRedirect,
-                        },
-                    };
                 }
             }
+
             const isMaintenance = resolvedQueries.some((query) => query.error?.response.status === 503);
             if (isMaintenance) {
                 // eslint-disable-next-line require-atomic-updates
