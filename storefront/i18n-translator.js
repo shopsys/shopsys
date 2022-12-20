@@ -24,8 +24,7 @@ export async function getFreshTranslates(locale, namespace) {
     return fillEmptyTranslatesWithKeys(mergedTranslates);
 }
 
-function fillEmptyTranslatesWithKeys(translates)
-{
+function fillEmptyTranslatesWithKeys(translates) {
     for (let key in translates) {
         if (translates[key] === undefined || translates[key] === null || translates[key] === '') {
             translates[key] = key;

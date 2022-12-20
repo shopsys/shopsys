@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { withSentryConfig } = require('@sentry/nextjs');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const nextTranslate = require('next-translate');
 
 const staticUrls = {
@@ -72,8 +73,8 @@ const moduleExports = nextTranslate({
     publicRuntimeConfig: {
         googleMapApiKey: process.env.GOOGLE_MAP_API_KEY,
         packeteryApiKey: process.env.PACKETERY_API_KEY,
-        sentryDsn: process.env.SENTRY_DSN || '',
-        sentryEnvironment: process.env.SENTRY_ENVIRONMENT || '',
+        sentryDsn: process.env.SENTRY_DSN ?? '',
+        sentryEnvironment: process.env.SENTRY_ENVIRONMENT ?? '',
         domains: [
             {
                 publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1,
@@ -157,7 +158,9 @@ const moduleExports = nextTranslate({
 });
 
 const SentryWebpackPluginOptions = {
-    errorHandler: (err, invokeErr, compilation) => { compilation.warnings.push('Sentry CLI Plugin: ' + err.message) }
+    errorHandler: (err, invokeErr, compilation) => {
+        compilation.warnings.push('Sentry CLI Plugin: ' + err.message);
+    },
 };
 
 module.exports = withSentryConfig(moduleExports, SentryWebpackPluginOptions);

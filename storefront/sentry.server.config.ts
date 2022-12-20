@@ -1,5 +1,6 @@
 import * as Sentry from '@sentry/nextjs';
 import getConfig from 'next/config';
+
 const { publicRuntimeConfig } = getConfig();
 
 const dsn: string = publicRuntimeConfig.sentryDsn;

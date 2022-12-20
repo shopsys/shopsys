@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 // TODO extend this while taking "load more" functionality from Tescoma
-export const useListingForPagination = <T extends unknown>(items: T[]): [T[]] => {
+export const useListingForPagination = <T>(items: T[]): [T[]] => {
     const [itemList, setItemList] = useState(items);
     const itemsRef = useRef(items);
 
