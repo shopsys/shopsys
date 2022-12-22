@@ -7,7 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Product;
 use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 
-class ProductsSearch extends ProductsGraphQlTestCase
+class ProductsSearchTest extends ProductsGraphQlTestCase
 {
     public function testSearchInAllProducts(): void
     {
@@ -43,10 +43,8 @@ class ProductsSearch extends ProductsGraphQlTestCase
 
     public function testSearchInCategory(): void
     {
-        $categoryElectronics = $this->getReferenceForDomain(
-            CategoryDataFixture::CATEGORY_ELECTRONICS,
-            $this->domain->getId()
-        );
+        /** @var \App\Model\Category\Category $categoryElectronics */
+        $categoryElectronics = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
 
         $query = '
             {
@@ -74,10 +72,8 @@ class ProductsSearch extends ProductsGraphQlTestCase
 
     public function testSearchInBrand(): void
     {
-        $canonBrand = $this->getReferenceForDomain(
-            BrandDataFixture::BRAND_CANON,
-            $this->domain->getId()
-        );
+        /** @var \App\Model\Product\Brand\Brand $canonBrand */
+        $canonBrand = $this->getReference(BrandDataFixture::BRAND_CANON);
 
         $query = '
             {

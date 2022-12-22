@@ -977,3 +977,5 @@ There you can find links to upgrade notes for other versions too.
         - we have moved code for requesting application from `FunctionalTestCase` tests to new `ApplicationTestCase` so functional tests and application tests are now separated
     - many typehints were added so run `php phing phpstan` to find occurrences in your code that need to be updated accordingly
     - also see #project-base-diff for more information about changes needed to be done in your project
+- fix tests for product searching ([#2524](https://github.com/shopsys/shopsys/pull/2524))
+    - see #project-base-diff for more information about changes needed to be done in your project
