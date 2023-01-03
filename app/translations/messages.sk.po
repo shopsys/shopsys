@@ -127,9 +127,6 @@ msgstr ""
 msgid "Ano"
 msgstr ""
 
-msgid "Applies to the second product in the cart"
-msgstr ""
-
 msgid "Apply according to customer"
 msgstr ""
 
@@ -137,9 +134,6 @@ msgid "Apply according to date and time limit"
 msgstr ""
 
 msgid "Apply according to product flags"
-msgstr ""
-
-msgid "Apply according to the content of the cart"
 msgstr ""
 
 msgid "Apply according to the total price of the order"
