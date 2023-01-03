@@ -863,7 +863,9 @@ There you can find links to upgrade notes for other versions too.
         ```
     - `transchoice()` method was removed from `\Shopsys\FrameworkBundle\Component\Translation\Translator`, use `trans()` with `count` parameter instead
     - static `tc()` method was removed from `\Shopsys\FrameworkBundle\Component\Translation\Translator`, use `t()` with `count` parameter instead
-    - static `tc()` function was removed from global namespace, use `t()` with `count` parameter instead 
+    - static `tc()` function was removed from global namespace, use `t()` with `count` parameter instead
+- update to latest version heureka/overeno-zakazniky package ([#2526](https://github.com/shopsys/shopsys/pull/2526))
+    - see #project-base-diff to update your project
 
 ## Composer dependencies
 

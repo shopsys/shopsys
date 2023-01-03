@@ -49,7 +49,7 @@
         "fakerphp/faker": "^1.19.0",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
         "helios-ag/fm-elfinder-bundle": "^10.0.4",
-        "heureka/overeno-zakazniky": "^2.0.6",
+        "heureka/overeno-zakazniky": "^4.0.1",
         "intervention/image": "^2.3.14",
         "jms/serializer-bundle": "^4.0.2",
         "jms/translation-bundle": "^1.6.2",
