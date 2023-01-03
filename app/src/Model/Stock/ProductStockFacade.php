@@ -84,19 +84,42 @@ class ProductStockFacade
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param \App\Model\Stock\Stock $stock
-     * @param \App\Model\Stock\ProductStockData $productStockData
+     * @param \App\Model\Stock\Stock[] $stocksIndexedById
+     * @param \App\Model\Stock\ProductStockData[] $productStockDataItems
      */
-    public function editProductStockRelation(Product $product, Stock $stock, ProductStockData $productStockData): void
-    {
-        $productStock = $this->productStockRepository->findProductStockByStockAndProduct($stock, $product);
-        if (!$productStock) {
-            $productStock = new ProductStock($stock, $product);
-            $this->em->persist($productStock);
+    public function editProductStockRelations(
+        Product $product,
+        array $stocksIndexedById,
+        array $productStockDataItems
+    ): void {
+        $productStocksIndexedByStockId = $this->productStockRepository->getProductStocksByStocksAndProductIndexedByStockId(
+            array_keys($stocksIndexedById),
+            $product
+        );
+
+        foreach ($stocksIndexedById as $stockId => $stock) {
+            $filteredProductStockDataItem = array_filter($productStockDataItems, fn ($productStockDataItem) => $productStockDataItem->stockId === $stockId);
+            $productStockData = reset($filteredProductStockDataItem);
+
+            $productStock = $productStocksIndexedByStockId[$stockId] ?? $this->createProductStock($product, $stock);
+            $productStock->edit($productStockData);
         }
-        $productStock->edit($productStockData);
 
         $this->em->flush();
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param \App\Model\Stock\Stock $stock
+     * @return \App\Model\Stock\ProductStock
+     */
+    private function createProductStock(Product $product, Stock $stock): ProductStock
+    {
+        $productStock = new ProductStock($stock, $product);
+        $this->em->persist($productStock);
+        $this->em->flush();
+
+        return $productStock;
     }
 
     /**

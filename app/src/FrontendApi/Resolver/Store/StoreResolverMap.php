@@ -54,12 +54,12 @@ class StoreResolverMap extends ResolverMap
      */
     private function getSlug(Store $store): string
     {
-        $friendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl(
+        $friendlyUrlSlug = $this->friendlyUrlFacade->getMainFriendlyUrlSlug(
             $this->domain->getId(),
             'front_stores_detail',
             $store->getId()
         );
 
-        return '/' . $friendlyUrl->getSlug();
+        return '/' . $friendlyUrlSlug;
     }
 }

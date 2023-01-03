@@ -33,19 +33,42 @@ class ProductStoreFacade
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param \App\Model\Store\Store $store
-     * @param \App\Model\Store\ProductStoreData $productStoreData
+     * @param \App\Model\Store\Store[] $storesIndexedById
+     * @param \App\Model\Store\ProductStoreData[] $productStoreDataItems
      */
-    public function editProductStoreRelation(Product $product, Store $store, ProductStoreData $productStoreData): void
-    {
-        $productStore = $this->productStoreRepository->findProductStoreByStoreAndProduct($store, $product);
-        if (!$productStore) {
-            $productStore = new ProductStore($store, $product);
-            $this->em->persist($productStore);
+    public function editProductStoreRelations(
+        Product $product,
+        array $storesIndexedById,
+        array $productStoreDataItems
+    ): void {
+        $productStoresIndexedByStoreId = $this->productStoreRepository->getProductStoresByStoresAndProductIndexedByStoreId(
+            array_keys($storesIndexedById),
+            $product
+        );
+
+        foreach ($storesIndexedById as $storeId => $store) {
+            $filteredProductStoreDataItem = array_filter($productStoreDataItems, fn ($productStoreDataItem) => $productStoreDataItem->storeId === $storeId);
+            $productStoreData = array_pop($filteredProductStoreDataItem);
+
+            $productStore = $productStoresIndexedByStoreId[$storeId] ?? $this->createProductStore($product, $store);
+            $productStore->edit($productStoreData);
         }
-        $productStore->edit($productStoreData);
 
         $this->em->flush();
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param \App\Model\Store\Store $store
+     * @return \App\Model\Store\ProductStore
+     */
+    public function createProductStore(Product $product, Store $store): ProductStore
+    {
+        $productStore = new ProductStore($store, $product);
+        $this->em->persist($productStore);
+        $this->em->flush();
+
+        return $productStore;
     }
 
     /**

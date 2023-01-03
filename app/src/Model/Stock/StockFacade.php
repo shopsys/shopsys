@@ -138,6 +138,15 @@ class StockFacade
     }
 
     /**
+     * @param int[] $stockIds
+     * @return \App\Model\Stock\Stock[]
+     */
+    public function getStocksByIdsIndexedById(array $stockIds): array
+    {
+        return $this->stockRepository->getStocksByIdsIndexedById($stockIds);
+    }
+
+    /**
      * @param int $domainId
      * @return \App\Model\Stock\Stock[]
      */

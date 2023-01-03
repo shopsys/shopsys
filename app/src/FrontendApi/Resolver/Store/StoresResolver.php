@@ -46,7 +46,6 @@ class StoresResolver implements ResolverInterface, AliasedInterface
     public function resolver(Argument $argument)
     {
         PageSizeValidator::checkMaxPageSize($argument);
-        $this->setDefaultFirstOffsetIfNecessary($argument);
         $domainId = $this->domain->getId();
 
         $paginator = new Paginator(function ($offset, $limit) use ($domainId) {

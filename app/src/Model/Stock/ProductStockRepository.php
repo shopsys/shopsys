@@ -62,6 +62,33 @@ class ProductStockRepository
     }
 
     /**
+     * @param int[] $stockIds
+     * @param \App\Model\Product\Product $product
+     * @return \App\Model\Stock\ProductStock[]
+     */
+    public function getProductStocksByStocksAndProductIndexedByStockId(array $stockIds, Product $product): array
+    {
+        /** @var array{productStock: \App\Model\Stock\ProductStock, stockId: int} $productStocks */
+        $productStocks = $this->em->createQueryBuilder()
+            ->select('ps productStock, IDENTITY(ps.stock) stockId')
+            ->from(ProductStock::class, 'ps')
+            ->where('ps.product = :product')
+            ->andWhere('ps.stock IN (:stockIds)')
+            ->setParameter('product', $product)
+            ->setParameter('stockIds', $stockIds)
+            ->getQuery()
+            ->getResult();
+
+        $productStocksIndexedByStockId = [];
+
+        foreach ($productStocks as $productStock) {
+            $productStocksIndexedByStockId[$productStock['stockId']] = $productStock['productStock'];
+        }
+
+        return $productStocksIndexedByStockId;
+    }
+
+    /**
      * @param \App\Model\Product\Product $product
      * @return \App\Model\Stock\ProductStock[]
      */

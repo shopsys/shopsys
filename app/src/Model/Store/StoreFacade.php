@@ -146,6 +146,15 @@ class StoreFacade
     }
 
     /**
+     * @param int[] $storeIds
+     * @return \App\Model\Store\Store[]
+     */
+    public function getStoresByIdsIndexedById(array $storeIds): array
+    {
+        return $this->storeRepository->getStoresByIdsIndexedById($storeIds);
+    }
+
+    /**
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getAllStoresQueryBuilder(): QueryBuilder
@@ -182,11 +191,11 @@ class StoreFacade
 
     /**
      * @param int $domainId
-     * @param int $limit
-     * @param int $offset
+     * @param int|null $limit
+     * @param int|null $offset
      * @return \App\Model\Store\Store[]
      */
-    public function getStoresListEnabledOnDomain(int $domainId, int $limit, int $offset): array
+    public function getStoresListEnabledOnDomain(int $domainId, ?int $limit = null, ?int $offset = null): array
     {
         return $this->storeRepository->getStoresEnabledOnDomain($domainId, $limit, $offset);
     }
@@ -218,5 +227,14 @@ class StoreFacade
     public function getByIdEnabledOnDomain(int $id, int $domainId): Store
     {
         return $this->storeRepository->getByIdEnabledOnDomain($id, $domainId);
+    }
+
+    /**
+     * @param int[] $storeIds
+     * @return \App\Model\Store\Store[]
+     */
+    public function getStoresByIds(array $storeIds): array
+    {
+        return $this->storeRepository->getStoresByIds($storeIds);
     }
 }
