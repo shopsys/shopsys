@@ -25,7 +25,7 @@ class CategoryTranslation extends AbstractTranslation
     protected $name;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getName()
     {
