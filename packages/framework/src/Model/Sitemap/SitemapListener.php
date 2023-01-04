@@ -72,7 +72,7 @@ class SitemapListener implements EventSubscriberInterface
 
         $this->addHomepageUrl($generator, $domainConfig, $section, static::PRIORITY_HOMEPAGE);
 
-        $productSitemapItems = $this->sitemapFacade->getSitemapItemsForVisibleProducts($domainConfig);
+        $productSitemapItems = $this->sitemapFacade->getSitemapItemsForListableProducts($domainConfig);
         $this->addUrlsBySitemapItems(
             $productSitemapItems,
             $generator,
