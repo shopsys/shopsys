@@ -843,3 +843,7 @@ services:
 
     Shopsys\FrameworkBundle\Component\EntityExtension\EntityExtensionSubscriber:
         alias: App\Component\EntityExtension\EntityExtensionSubscriber
+
+    App\Model\Navigation\NavigationSaveOrderingListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
