@@ -33,7 +33,7 @@ class RedisController extends AdminBaseController
      */
     public function cleanAction(Request $request): Response
     {
-        $this->cleanStorefrontCacheFacade->cleanStorefrontCache();
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache();
 
         $this->addSuccessFlashTwig(
             t('Storefront queries cache has been cleaned.')

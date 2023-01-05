@@ -44,7 +44,7 @@ class CleanStorefrontQueryCacheCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->cleanStorefrontCacheFacade->cleanStorefrontCache();
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache();
 
         return CommandResultCodes::RESULT_OK;
     }
