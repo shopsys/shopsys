@@ -3,8 +3,8 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { StoresContent } from 'components/Pages/Stores/StoresContent';
 import { useStores } from 'connectors/stores/Stores';
 import { StoresQueryDocumentApi } from 'graphql/generated';
-import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
+import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -28,13 +28,17 @@ const StoresPage: FC<ServerSidePropsType> = () => {
     );
 };
 
-export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
-    initDomainConfig(context, store);
-    return initServerSideProps(context, store, false, [
-        {
-            query: StoresQueryDocumentApi,
-        },
-    ]);
-});
+export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
+    getServerSidePropsWithRedisClient(
+        (redisClient) => async (context) =>
+            initServerSideProps({
+                context,
+                store,
+                prefetchedQueries: [{ query: StoresQueryDocumentApi }],
+                redisClient,
+            }),
+        store,
+    ),
+);
 
 export default StoresPage;

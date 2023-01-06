@@ -4,9 +4,9 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrderConfirmationContent } from 'components/Pages/OrderConfirmation/OrderConfirmationContent';
 import { Registration } from 'components/Pages/OrderConfirmation/Registration/Registration';
 import { OrderSentPageContentDocumentApi } from 'graphql/generated';
-import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -34,11 +34,22 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     );
 };
 
-export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
-    initDomainConfig(context, store);
-    return initServerSideProps(context, store, false, [
-        { query: OrderSentPageContentDocumentApi, variables: { orderUuid: store.getState().user.lastOrderUuid } },
-    ]);
-});
+export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
+    getServerSidePropsWithRedisClient(
+        (redisClient) => async (context) =>
+            initServerSideProps({
+                context,
+                store,
+                prefetchedQueries: [
+                    {
+                        query: OrderSentPageContentDocumentApi,
+                        variables: { orderUuid: store.getState().user.lastOrderUuid },
+                    },
+                ],
+                redisClient,
+            }),
+        store,
+    ),
+);
 
 export default OrderConfirmationPage;

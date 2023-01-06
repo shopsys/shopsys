@@ -5,9 +5,9 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrdersContent } from 'components/Pages/Customer/Orders/OrdersContent';
 import { useOrders } from 'connectors/customer/Orders';
 import { OrdersQueryDocumentApi } from 'graphql/generated';
-import { initDomainConfig } from 'helpers/domain/initDomainConfig';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { getNewPagination } from 'helpers/pagination/getNewPagination';
 import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
@@ -53,19 +53,29 @@ const OrdersPage: FC = () => {
     );
 };
 
-export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
-    initDomainConfig(context, store);
-    const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
+export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
+    getServerSidePropsWithRedisClient(
+        (redisClient) => async (context) => {
+            const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
 
-    return initServerSideProps(context, store, true, [
-        {
-            query: OrdersQueryDocumentApi,
-            variables: {
-                after: getNewPagination(page === 0 ? 1 : page),
-                pageSize: DEFAULT_PAGE_SIZE,
-            },
+            return initServerSideProps({
+                context,
+                store,
+                authenticationRequired: true,
+                prefetchedQueries: [
+                    {
+                        query: OrdersQueryDocumentApi,
+                        variables: {
+                            after: getNewPagination(page === 0 ? 1 : page).endCursor ?? null,
+                            pageSize: DEFAULT_PAGE_SIZE,
+                        },
+                    },
+                ],
+                redisClient,
+            });
         },
-    ]);
-});
+        store,
+    ),
+);
 
 export default OrdersPage;
