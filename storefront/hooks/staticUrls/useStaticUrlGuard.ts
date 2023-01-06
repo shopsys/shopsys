@@ -4,8 +4,8 @@ export const useStaticUrlGuard = (path: string, domainUrl: string): boolean => {
     const { publicRuntimeConfig } = getConfig();
     const pathSegments = path.split('/');
 
-    for (const key in publicRuntimeConfig.availableStaticUrls[domainUrl]) {
-        const rewriteKey = publicRuntimeConfig.availableStaticUrls[domainUrl][key];
+    for (const key in publicRuntimeConfig.staticRewritePaths[domainUrl]) {
+        const rewriteKey = publicRuntimeConfig.staticRewritePaths[domainUrl][key];
 
         if (typeof rewriteKey !== 'string') {
             continue;
