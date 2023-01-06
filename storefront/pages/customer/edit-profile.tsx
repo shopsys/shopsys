@@ -1,5 +1,4 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
-import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { EditProfileContent } from 'components/Pages/Customer/EditProfile/EditProfileContent';
@@ -32,7 +31,7 @@ const EditProfilePage: FC = () => {
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
     return (
-        <StaticUrlGuard domainUrl={domainUrl}>
+        <>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Edit profile')}>
                 <SimpleLayout heading={t('Edit profile')} breadcrumb={breadcrumbs}>
@@ -41,7 +40,7 @@ const EditProfilePage: FC = () => {
                     )}
                 </SimpleLayout>
             </CommonLayout>
-        </StaticUrlGuard>
+        </>
     );
 };
 

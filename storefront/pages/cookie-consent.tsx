@@ -1,4 +1,3 @@
-import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CookieConsentContent } from 'components/Pages/CookieConsent/CookieConsentContent';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
@@ -19,11 +18,9 @@ const CookieConsentPage: FC<ServerSidePropsType> = () => {
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
     return (
-        <StaticUrlGuard domainUrl={domainUrl}>
-            <CommonLayout title={t('Cookie consent update')}>
-                <CookieConsentContent breadcrumbs={breadcrumbs} />
-            </CommonLayout>
-        </StaticUrlGuard>
+        <CommonLayout title={t('Cookie consent update')}>
+            <CookieConsentContent breadcrumbs={breadcrumbs} />
+        </CommonLayout>
     );
 };
 

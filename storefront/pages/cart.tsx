@@ -1,7 +1,6 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { OrderSteps } from 'components/Blocks/OrderSteps/OrderSteps';
-import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { CartList } from 'components/Pages/Cart/CartList/CartList';
@@ -28,7 +27,7 @@ const CartPage: FC<ServerSidePropsType> = () => {
     const currentCart = useCurrentCart();
 
     return (
-        <StaticUrlGuard domainUrl={domainUrl}>
+        <>
             <MetaRobots content="noindex" />
             <EmptyCartWrapper currentCart={currentCart} title={t('Cart')} isCartPage>
                 <CommonLayout title={t('Cart')}>
@@ -48,7 +47,7 @@ const CartPage: FC<ServerSidePropsType> = () => {
                     </Webline>
                 </CommonLayout>
             </EmptyCartWrapper>
-        </StaticUrlGuard>
+        </>
     );
 };
 

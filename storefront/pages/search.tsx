@@ -1,6 +1,5 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
 import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
-import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { SearchContent } from 'components/Pages/Search/SearchContent';
 import { useSearch } from 'connectors/search/Search';
@@ -48,12 +47,12 @@ const SearchPage: FC<ServerSidePropsType> = () => {
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
     return (
-        <StaticUrlGuard domainUrl={domainUrl}>
+        <>
             <MetaRobots content="noindex, nofollow" />
             <CommonLayout title={t('Search')}>
                 <SearchContent searchResults={searchResults} breadcrumbs={breadcrumbs} />
             </CommonLayout>
-        </StaticUrlGuard>
+        </>
     );
 };
 

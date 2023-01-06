@@ -1,5 +1,4 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
-import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PersonalDataExportContent } from 'components/Pages/PersonalData/Export/PersonalDataExportContent';
 import { PersonalDataPageTextQueryDocumentApi, usePersonalDataPageTextQueryApi } from 'graphql/generated';
@@ -25,7 +24,7 @@ const PersonalDataExportPage: FC = () => {
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
     return (
-        <StaticUrlGuard domainUrl={domainUrl}>
+        <>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Personal Data Export')}>
                 <PersonalDataExportContent
@@ -33,7 +32,7 @@ const PersonalDataExportPage: FC = () => {
                     contentSiteText={personalDataPageTextResult.data?.personalDataPage?.exportSiteContent}
                 />
             </CommonLayout>
-        </StaticUrlGuard>
+        </>
     );
 };
 

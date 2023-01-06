@@ -1,5 +1,4 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
-import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PaymentConfirmationContent } from 'components/Pages/Order/PaymentConfirmation/PaymentConfirmationContent';
 import { OrderSentPageContentDocumentApi, useCheckPaymentStatusMutationApi } from 'graphql/generated';
@@ -9,11 +8,10 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
-import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
+import { nextReduxWrapper } from 'redux/main';
 
 const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
-    const domainUrl = useShopsysSelector((state) => state.domain.url);
     const router = useRouter();
     const [checkPaymentStatusResult, checkPaymentStatus] = useCheckPaymentStatusMutationApi();
 
@@ -30,7 +28,7 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
     });
 
     return (
-        <StaticUrlGuard domainUrl={domainUrl}>
+        <>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Order sent')}>
                 <PaymentConfirmationContent
@@ -38,7 +36,7 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
                     orderUuid={orderUuidParam}
                 />
             </CommonLayout>
-        </StaticUrlGuard>
+        </>
     );
 };
 

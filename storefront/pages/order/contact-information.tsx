@@ -2,7 +2,6 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { Form } from 'components/Forms/Form/Form';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
-import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { Footer } from 'components/Layout/Footer/Footer';
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -159,7 +158,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
     );
 
     return (
-        <StaticUrlGuard domainUrl={domainUrl}>
+        <>
             <MetaRobots content="noindex" />
             <EmptyCartWrapper currentCart={currentCart} title={t('Order')}>
                 <OrderLayout activeStep={3}>
@@ -188,7 +187,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                     origin="shipping data"
                 />
             </EmptyCartWrapper>
-        </StaticUrlGuard>
+        </>
     );
 };
 

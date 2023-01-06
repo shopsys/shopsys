@@ -1,4 +1,3 @@
-import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BrandsContent } from 'components/Pages/Brands/BrandsContent';
 import { BrandsQueryDocumentApi } from 'graphql/generated';
@@ -8,20 +7,17 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServe
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
-import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
+import { nextReduxWrapper } from 'redux/main';
 
 const BrandsOverviewPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
-    const domainUrl = useShopsysSelector((state) => state.domain.url);
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other');
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
     return (
-        <StaticUrlGuard domainUrl={domainUrl}>
-            <CommonLayout title={t('Brands')}>
-                <BrandsContent />
-            </CommonLayout>
-        </StaticUrlGuard>
+        <CommonLayout title={t('Brands')}>
+            <BrandsContent />
+        </CommonLayout>
     );
 };
 

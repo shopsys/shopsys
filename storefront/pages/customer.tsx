@@ -1,5 +1,4 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
-import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CustomerContent } from 'components/Pages/Customer/CustomerContent';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
@@ -20,12 +19,12 @@ const CustomerPage: FC = () => {
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
     return (
-        <StaticUrlGuard domainUrl={domainUrl}>
+        <>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Customer')}>
                 <CustomerContent breadcrumbs={breadcrumbs} />
             </CommonLayout>
-        </StaticUrlGuard>
+        </>
     );
 };
 

@@ -1,5 +1,4 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
-import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PersonalDataOverviewContent } from 'components/Pages/PersonalData/Overview/PersonalDataOverviewContent';
 import { PersonalDataPageTextQueryDocumentApi, usePersonalDataPageTextQueryApi } from 'graphql/generated';
@@ -25,7 +24,7 @@ const PersonalDataOverviewPage: FC = () => {
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
     return (
-        <StaticUrlGuard domainUrl={domainUrl}>
+        <>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Personal Data Overview')}>
                 <PersonalDataOverviewContent
@@ -33,7 +32,7 @@ const PersonalDataOverviewPage: FC = () => {
                     contentSiteText={personalDataPageTextResult.data?.personalDataPage?.displaySiteContent}
                 />
             </CommonLayout>
-        </StaticUrlGuard>
+        </>
     );
 };
 
