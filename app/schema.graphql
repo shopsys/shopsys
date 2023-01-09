@@ -908,7 +908,10 @@ type Mutation {
   """Request access to personal data"""
   RequestPersonalDataAccess(input: PersonalDataAccessRequestInput!): PersonalDataPage!
   """Set default delivery address by Uuid"""
-  SetDefaultDeliveryAddress(deliveryAddressUuid: Uuid!): CustomerUser!
+  SetDefaultDeliveryAddress(
+    """Set delivery address by Uuid"""
+    deliveryAddressUuid: Uuid!
+  ): CustomerUser!
 }
 
 """Represents a navigation structure item"""

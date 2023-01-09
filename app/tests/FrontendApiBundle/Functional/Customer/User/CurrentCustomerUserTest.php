@@ -284,13 +284,13 @@ mutation {
         $expectedViolationMessages = [
             0 => t(
                 'First name cannot be longer than {{ limit }} characters',
-                ['{{ limit }}' => 30],
+                ['{{ limit }}' => 100],
                 'validators',
                 $firstDomainLocale
             ),
             1 => t(
                 'Last name cannot be longer than {{ limit }} characters',
-                ['{{ limit }}' => 30],
+                ['{{ limit }}' => 100],
                 'validators',
                 $firstDomainLocale
             ),
@@ -330,7 +330,7 @@ mutation {
                 postcode: "54321"
                 companyCustomer: true
                 companyName: "  "
-                companyNumber: "9876543210"
+                companyNumber: "9876543210123212313212321321321312313123213213131231321321323"
                 companyTaxNumber: "123"
             }) {
                 firstName

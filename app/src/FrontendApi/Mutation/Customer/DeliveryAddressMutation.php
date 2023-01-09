@@ -14,7 +14,6 @@ use App\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
-use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DeliveryAddressNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 
@@ -68,13 +67,10 @@ class DeliveryAddressMutation implements MutationInterface, AliasedInterface
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return \App\Model\Customer\DeliveryAddress[]
      */
-    public function deleteDeliveryAddress(Argument $argument, InputValidator $validator): array
+    public function deleteDeliveryAddress(Argument $argument): array
     {
-        $validator->validate();
-
         $deliveryAddressUuid = $argument['deliveryAddressUuid'];
 
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */

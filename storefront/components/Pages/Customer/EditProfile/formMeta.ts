@@ -1,4 +1,19 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import {
+    validateCity,
+    validateCompanyNameRequired,
+    validateCompanyNumber,
+    validateCompanyTaxNumber,
+    validateCountry,
+    validateEmail,
+    validateFirstName,
+    validateFirstPassword,
+    validateLastName,
+    validatePostcode,
+    validateSecondPassword,
+    validateStreet,
+    validateTelephoneRequired,
+} from 'components/Forms/validationRules';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useMemo } from 'react';
@@ -13,83 +28,39 @@ export const useCustomerChangeProfileForm = (
 
     const resolver = yupResolver(
         Yup.object().shape({
-            email: Yup.string().required(t('Please enter email')).email(t('This value is not a valid email')).min(5),
+            email: validateEmail(t),
             passwordFirst: Yup.string().when('passwordOld', {
                 is: (passwordOld: string) => passwordOld.length > 0,
-                then: Yup.string().min(
-                    6,
-                    t('Password must be at least {{ count }} characters long', {
-                        postProcess: 'interval',
-                        count: 6,
-                    }),
-                ),
+                then: validateFirstPassword(t),
                 otherwise: Yup.string(),
             }),
             passwordSecond: Yup.string().when('passwordFirst', {
                 is: (passwordFirst: string) => passwordFirst.length > 0,
-                then: Yup.string()
-                    .required(t('Fill first password'))
-                    .oneOf([Yup.ref('passwordFirst'), null], t('Passwords must match'))
-                    .min(
-                        6,
-                        t('Password must be at least {{ count }} characters long', {
-                            postProcess: 'interval',
-                            count: 6,
-                        }),
-                    ),
+                then: validateSecondPassword(t),
                 otherwise: Yup.string(),
             }),
-            telephone: Yup.string()
-                .required(t('Please enter phone number'))
-                .matches(/^[0-9+]*$/, t('Please enter only numbers and the + character'))
-                .test(
-                    'more-than-8',
-                    t('Telephone number cannot be shorter than 9 characters'),
-                    (value) => value !== undefined && value.length >= 9,
-                ),
-            firstName: Yup.string().required(t('Please enter first name')),
-            lastName: Yup.string().required(t('Please enter last name')),
-            street: Yup.string()
-                .required(t('Please enter street'))
-                .matches(/\D/, t('The street must contain a letter'))
-                .matches(/\d/, t('The street must contain a number')),
-            city: Yup.string().required(t('Please enter city')),
-            postcode: Yup.string()
-                .required(t('Please enter zip code'))
-                .test(
-                    'less-than-or-equals-5',
-                    t('Zip code cannot be longer than 5 characters'),
-                    (value) => value !== undefined && value.length <= 5,
-                ),
-            country: Yup.object()
-                .shape({
-                    label: Yup.string().required(),
-                    value: Yup.string().required(),
-                })
-                .required(t('Please enter country'))
-                .test(
-                    'non-null-or-empty-string',
-                    t('Please enter country'),
-                    (value: { label: string; value: string }) => value.value !== '',
-                ),
+            telephone: validateTelephoneRequired(t),
+            firstName: validateFirstName(t),
+            lastName: validateLastName(t),
+            street: validateStreet(t),
+            city: validateCity(t),
+            postcode: validatePostcode(t),
+            country: validateCountry(t),
             companyName: Yup.string().when('customer', {
                 is: (customer: string) => customer === 'companyCustomer',
-                then: Yup.string().required(t('Please enter company name')),
+                then: validateCompanyNameRequired(t),
                 otherwise: Yup.string(),
             }),
             companyNumber: Yup.string().when('customer', {
                 is: (customer: string) => customer === 'companyCustomer',
-                then: Yup.string()
-                    .required(t('Please enter identification number'))
-                    .matches(/^[0-9]*$/, t('Please enter only numbers'))
-                    .test(
-                        'equals-8',
-                        t('This value must be exactly 8 characters'),
-                        (value) => value !== undefined && value.length === 8,
-                    ),
+                then: validateCompanyNumber(t),
                 otherwise: Yup.string(),
             }),
-            companyTaxNumber: Yup.string(),
+            companyTaxNumber: Yup.string().when('customer', {
+                is: (customer: string) => customer === 'companyCustomer',
+                then: validateCompanyTaxNumber(t),
+                otherwise: Yup.string(),
+            }),
         }),
     );
 

@@ -52,6 +52,9 @@ msgstr ""
 msgid "Heslo musí obsahovat velké, malé písmena, číslice a musí být delší než 10 znaků."
 msgstr ""
 
+msgid "Identification number cannot be longer than {{ limit }} characters"
+msgstr ""
+
 msgid "Identification number has to be exactly {{ limit }} characters long"
 msgstr "Identifikačné číslo musí obsahovať presne {{ limit }} znakov"
 
@@ -118,6 +121,9 @@ msgstr "Prosím zadajte mesto"
 msgid "Please enter code"
 msgstr ""
 
+msgid "Please enter company name"
+msgstr ""
+
 msgid "Please enter date of creation"
 msgstr ""
 
@@ -133,6 +139,9 @@ msgstr ""
 msgid "Please enter flag name in all languages"
 msgstr ""
 
+msgid "Please enter identification number"
+msgstr ""
+
 msgid "Please enter last name"
 msgstr ""
 
@@ -140,6 +149,12 @@ msgid "Please enter name"
 msgstr ""
 
 msgid "Please enter new password"
+msgstr ""
+
+msgid "Please enter only numbers and the + character"
+msgstr ""
+
+msgid "Please enter only numbers and the + sign"
 msgstr ""
 
 msgid "Please enter password"
@@ -166,10 +181,10 @@ msgstr ""
 msgid "Please enter the whole number."
 msgstr ""
 
-msgid "Please enter valid delivery address UUID"
+msgid "Please enter valid email"
 msgstr ""
 
-msgid "Please enter valid email"
+msgid "Please enter your city"
 msgstr ""
 
 msgid "Please enter your email address"
@@ -178,8 +193,17 @@ msgstr ""
 msgid "Please enter your name"
 msgstr ""
 
+msgid "Please enter your postal code"
+msgstr ""
+
+msgid "Please enter your street"
+msgstr ""
+
 msgid "Please enter zip code"
 msgstr "Prosím zadajte PSČ"
+
+msgid "Please fill in numbers only"
+msgstr ""
 
 msgid "Postcode cannot be longer than {{ limit }} characters"
 msgstr ""
@@ -229,21 +253,6 @@ msgstr ""
 msgid "Prosím vyplňte GTM ID"
 msgstr ""
 
-msgid "Prosím zadejte vaše město"
-msgstr ""
-
-msgid "Prosím zadejte vaše poštovní směrovací číslo"
-msgstr ""
-
-msgid "Prosím zadejte vaší ulici"
-msgstr ""
-
-msgid "Prosím, zadávejte pouze čísla"
-msgstr ""
-
-msgid "Prosím, zadávejte pouze čísla a znak +"
-msgstr ""
-
 msgid "Provided hash is not valid."
 msgstr "Zadaný hash nie je validný."
 
@@ -269,6 +278,12 @@ msgid "Selected transport weight limit has been exceeded"
 msgstr ""
 
 msgid "Sklad s tímto externím kódem již existuje"
+msgstr ""
+
+msgid "Street and house number must contain a number"
+msgstr ""
+
+msgid "Street and house number must contain letters"
 msgstr ""
 
 msgid "Street cannot be longer than {{ limit }} characters"
@@ -325,12 +340,6 @@ msgstr ""
 msgid "Transport with provided UUID is not available"
 msgstr ""
 
-msgid "Ulice musí obsahovat písmena"
-msgstr ""
-
-msgid "Ulice musí obsahovat číslo"
-msgstr ""
-
 msgid "Uploaded file is to large ({{ size }} {{ suffix }}). Maximum size of an file is {{ limit }} {{ suffix }}."
 msgstr ""
 
@@ -340,9 +349,6 @@ msgstr ""
 msgid "User with provided email address does not exist."
 msgstr "Používateľ s uvedenou e-mailovou adresou neexistuje."
 
-msgid "Vyplňte prosím IČ"
-msgstr ""
-
 msgid "Vyplňte prosím URL"
 msgstr ""
 
@@ -350,9 +356,6 @@ msgid "Vyplňte prosím URL odkazu"
 msgstr ""
 
 msgid "Vyplňte prosím název skladu"
-msgstr ""
-
-msgid "Vyplňte prosím název společnosti"
 msgstr ""
 
 msgid "Vyplňte prosím název článku"

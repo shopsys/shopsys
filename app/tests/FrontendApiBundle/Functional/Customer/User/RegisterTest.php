@@ -69,13 +69,13 @@ class RegisterTest extends GraphQlTestCase
         $expectedViolationMessages = [
             0 => t(
                 'First name cannot be longer than {{ limit }} characters',
-                ['{{ limit }}' => 30],
+                ['{{ limit }}' => 100],
                 'validators',
                 $firstDomainLocale
             ),
             1 => t(
                 'Last name cannot be longer than {{ limit }} characters',
-                ['{{ limit }}' => 30],
+                ['{{ limit }}' => 100],
                 'validators',
                 $firstDomainLocale
             ),

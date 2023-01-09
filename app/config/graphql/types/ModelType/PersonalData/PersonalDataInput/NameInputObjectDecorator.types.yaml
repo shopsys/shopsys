@@ -10,7 +10,7 @@ NameInputObjectDecorator:
                     -   NotBlank:
                             message: "Please enter first name"
                     -   Length:
-                            max: 30
+                            max: 100
                             maxMessage: "First name cannot be longer than {{ limit }} characters"
             lastName:
                 type: "String!"
@@ -19,5 +19,5 @@ NameInputObjectDecorator:
                     -   NotBlank:
                             message: "Please enter last name"
                     -   Length:
-                            max: 30
+                            max: 100
                             maxMessage: "Last name cannot be longer than {{ limit }} characters"
