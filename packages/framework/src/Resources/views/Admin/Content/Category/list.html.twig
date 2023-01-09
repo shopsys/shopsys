@@ -17,10 +17,13 @@
 
     {% macro categoryTreeItem(categoriesWithPreloadedChildren, isFirstLevel) %}
         {% import _self as self %}
-        <ul class="js-category-tree-items {{ isFirstLevel ? 'form-tree__content' : '' }}">
+        <ul class="js-category-tree-items js-category-tree-form-children-container {{ isFirstLevel ? 'form-tree__content' : '' }}">
             {% for categoryWithPreloadedChildren in categoriesWithPreloadedChildren %}
-                <li class="js-category-tree-item form-tree__item" id="js-category-tree-{{ categoryWithPreloadedChildren.category.id }}">
-                    <div class="js-category-tree-item-line form-tree__item__drag">
+                <li class="js-category-tree-item form-tree__item js-category-tree-form-item"
+                    id="js-category-tree-{{ categoryWithPreloadedChildren.category.id }}"
+                    data-has-children="{{ categoryWithPreloadedChildren.children|length ? 'true' }}">
+                    <div class="js-category-tree-item-line form-tree__item__drag form-tree__item__click">
+                        <span class="js-category-tree-form-item-icon form-tree__item__icon form-tree__item__icon--level sprite sprite-level"></span>
                         <img src="{{ asset('public/admin/images/icons/level.png') }}" class="form-tree__item__icon form-tree__item__icon--level" />
                         <span class="js-category-tree-item-line  js-category-tree-item-handle form-tree__item__name">{{ categoryWithPreloadedChildren.category.name }}</span>
                         <span class="js-category-tree-item-icons form-tree__item__controls">
@@ -49,7 +52,7 @@
     {% if isForAllDomains %}
         <div class="wrap-divider">
             <div class="form-line">
-                <div id="js-category-tree-sorting" class="form-tree form-tree--open form-tree--dragable">
+                <div id="js-category-tree-sorting" class="js-category-tree-form form-tree form-tree--open form-tree--dragable">
                     {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true) }}
                 </div>
             </div>
@@ -73,7 +76,7 @@
         </div>
         <div class="wrap-divider">
             <div class="form-line">
-                <div class="form-tree form-tree--open form-tree--dragable">
+                <div class="js-category-tree-form form-tree form-tree--open form-tree--dragable">
                     {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true) }}
                 </div>
             </div>
