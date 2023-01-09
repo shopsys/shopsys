@@ -149,7 +149,8 @@
         "symfony/workflow": "^5.4",
         "tracy/tracy": "^2.4.13",
         "twig/twig": "^2.12",
-        "webmozart/assert": "^1.4"
+        "webmozart/assert": "^1.4",
+        "webonyx/graphql-php": "^14.5"
     },
     "require-dev": {
         "ext-pgsql": "*",
