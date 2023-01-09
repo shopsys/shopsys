@@ -3,7 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Heureka;
 
 use Exception;
-use Heureka\ShopCertification;
+use Heureka\ShopCertification\Exception as HeurekaShopCertificationException;
 use Shopsys\FrameworkBundle\Model\Heureka\Exception\LocaleNotSupportedException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Symfony\Bridge\Monolog\Logger;
@@ -58,7 +58,7 @@ class HeurekaFacade
             $heurekaShopCertification->logOrder();
         } catch (LocaleNotSupportedException $ex) {
             $this->logError($ex, $order);
-        } catch (ShopCertification\Exception $ex) {
+        } catch (HeurekaShopCertificationException $ex) {
             $this->logError($ex, $order);
         }
     }
