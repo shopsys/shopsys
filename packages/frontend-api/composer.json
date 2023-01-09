@@ -33,7 +33,8 @@
         "symfony/dependency-injection": "^5.4",
         "symfony/http-foundation": "^5.4",
         "symfony/http-kernel": "^5.4",
-        "symfony/routing": "^5.4"
+        "symfony/routing": "^5.4",
+        "webonyx/graphql-php": "^14.5"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5.20",
