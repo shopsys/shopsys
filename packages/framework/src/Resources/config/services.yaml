@@ -988,3 +988,10 @@ services:
             $debug: '%kernel.debug%'
             $environment: '%kernel.environment%'
             $overwriteDomainUrl: '%env(default::OVERWRITE_DOMAIN_URL)%'
+
+    Shopsys\FrameworkBundle\Component\HttpKernel\Profiler\FileProfilerStorage:
+        arguments:
+            $dsn: 'file:%kernel.project_dir%/var/cache/profiler'
+
+    profiler.storage:
+        alias: Shopsys\FrameworkBundle\Component\HttpKernel\Profiler\FileProfilerStorage
