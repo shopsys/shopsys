@@ -114,6 +114,10 @@ services:
         arguments:
             - '@annotation_reader'
 
+    Shopsys\FrameworkBundle\Command\RouterDebugCommandForDomain:
+        arguments:
+            $routerDebugCommand: '@console.command.router_debug'
+
     Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider: ~
 
     Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder:
