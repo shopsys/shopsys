@@ -65,6 +65,7 @@
         "jms/translation-bundle": "^1.6.2",
         "knplabs/knp-menu-bundle": "^3.2",
         "league/flysystem": "^1.1.4",
+        "league/flysystem-cached-adapter": "^1.1.0",
         "litipk/php-bignumbers": "^0.8.6",
         "nette/utils": "^3.0",
         "nikic/php-parser": "^4.0",
