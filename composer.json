@@ -148,7 +148,7 @@
         "symfony/webpack-encore-bundle": "^1.7",
         "symfony/workflow": "^5.4",
         "tracy/tracy": "^2.4.13",
-        "twig/twig": "^2.12",
+        "twig/twig": "^2.15.4",
         "webmozart/assert": "^1.4",
         "webonyx/graphql-php": "^14.5"
     },

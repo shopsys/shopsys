@@ -866,6 +866,8 @@ There you can find links to upgrade notes for other versions too.
     - static `tc()` function was removed from global namespace, use `t()` with `count` parameter instead
 - update to latest version heureka/overeno-zakazniky package ([#2526](https://github.com/shopsys/shopsys/pull/2526))
     - see #project-base-diff to update your project
+- update twig/twig to v2.15.4 in order to fix CVE-2022-39261 ([#2527](https://github.com/shopsys/shopsys/pull/2527))
+    - see #project-base-diff to update your project
 
 ## Composer dependencies
 
