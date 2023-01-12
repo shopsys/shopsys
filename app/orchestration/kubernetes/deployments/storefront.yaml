@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: storefront
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: storefront
+    template:
+        metadata:
+            labels:
+                app: storefront
+        spec:
+            affinity:
+                podAntiAffinity:
+                    preferredDuringSchedulingIgnoredDuringExecution:
+                        -   weight: 100
+                            podAffinityTerm:
+                                topologyKey: "kubernetes.io/hostname"
+                                labelSelector:
+                                    matchExpressions:
+                                        -   key: app
+                                            operator: In
+                                            values:
+                                                - storefront
+            containers:
+                -   name: storefront
+                    image: "{{STOREFRONT_TAG}}"
+                    ports:
+                        -   name: storefront
+                            containerPort: 3000
+                            protocol: TCP
+                    lifecycle:
+                        preStop:
+                            exec:
+                                command:
+                                    - sleep
+                                    - '5'
+                    resources:
+                        limits:
+                            cpu: "2"
+                        requests:
+                            cpu: "0.3"
+                    livenessProbe:
+                        httpGet:
+                            path: /api/health
+                            port: 3000
+                        initialDelaySeconds: 30
+                        periodSeconds: 5
+                        timeoutSeconds: 5
+                    readinessProbe:
+                        httpGet:
+                            path: /api/health
+                            port: 3000
+                        initialDelaySeconds: 5
+                        periodSeconds: 5
+                        timeoutSeconds: 5
+            imagePullSecrets:
+                -   name: dockerregistry
