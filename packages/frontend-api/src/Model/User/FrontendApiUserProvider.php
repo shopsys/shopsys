@@ -44,6 +44,15 @@ class FrontendApiUserProvider implements UserProviderInterface
     }
 
     /**
+     * @param string $identifier
+     * @return \Symfony\Component\Security\Core\User\UserInterface
+     */
+    public function loadUserByIdentifier(string $identifier): UserInterface
+    {
+        return $this->loadUserByUsername($identifier);
+    }
+
+    /**
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      * @return \Symfony\Component\Security\Core\User\UserInterface
      */

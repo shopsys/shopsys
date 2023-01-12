@@ -66,6 +66,15 @@ class AdministratorUserProvider implements UserProviderInterface
     }
 
     /**
+     * @param string $identifier
+     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
+     */
+    public function loadUserByIdentifier(string $identifier): Administrator
+    {
+        return $this->loadUserByUsername($identifier);
+    }
+
+    /**
      * @param \Symfony\Component\Security\Core\User\UserInterface $userInterface
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */

@@ -56,6 +56,15 @@ class FrontendCustomerUserProvider implements UserProviderInterface
     }
 
     /**
+     * @param string $identifier
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+     */
+    public function loadUserByIdentifier(string $identifier): CustomerUser
+    {
+        return $this->loadUserByUsername($identifier);
+    }
+
+    /**
      * @param \Symfony\Component\Security\Core\User\UserInterface $userInterface
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
