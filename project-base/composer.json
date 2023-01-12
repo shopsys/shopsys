@@ -66,7 +66,7 @@
         "shopsys/google-cloud-bundle": "11.0.x-dev",
         "shopsys/migrations": "11.0.x-dev",
         "shopsys/plugin-interface": "11.0.x-dev",
-        "shopsys/postgres-search-bundle": "^0.2",
+        "shopsys/postgres-search-bundle": "^0.3",
         "shopsys/product-feed-google": "11.0.x-dev",
         "shopsys/product-feed-heureka": "11.0.x-dev",
         "shopsys/product-feed-heureka-delivery": "11.0.x-dev",
