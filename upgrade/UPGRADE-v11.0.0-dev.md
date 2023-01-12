@@ -1024,4 +1024,10 @@ There you can find links to upgrade notes for other versions too.
         - __construct(DomainChoiceHandler $domainChoiceHelper, RouterInterface $router, ?FileLinkFormatter $fileLinkFormatter = null)
         + __construct(DomainChoiceHandler $domainChoiceHelper, RouterDebugCommand $routerDebugCommand, KernelInterface $kernel)
         ```
+    - `Shopsys\FrameworkBundle\Command\RouterMatchCommandForDomain` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(DomainChoiceHandler $domainChoiceHelper, RouterInterface $router)
+        + __construct(DomainChoiceHandler $domainChoiceHelper, RouterMatchCommand $routerMatchCommand, KernelInterface $kernel)
+        ```
     - also see #project-base-diff for more information about changes needed to be done in your project

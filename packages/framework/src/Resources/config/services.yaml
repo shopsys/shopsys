@@ -118,6 +118,10 @@ services:
         arguments:
             $routerDebugCommand: '@console.command.router_debug'
 
+    Shopsys\FrameworkBundle\Command\RouterMatchCommandForDomain:
+        arguments:
+            $routerMatchCommand: '@console.command.router_match'
+
     Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider: ~
 
     Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder:
