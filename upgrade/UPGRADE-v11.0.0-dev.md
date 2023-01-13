@@ -868,6 +868,8 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
 - update twig/twig to v2.15.4 in order to fix CVE-2022-39261 ([#2527](https://github.com/shopsys/shopsys/pull/2527))
     - see #project-base-diff to update your project
+- fill missing customer demo data for smooth testing of application ([#2529](https://github.com/shopsys/shopsys/pull/2529))
+    - see #project-base-diff to update your project
 
 ## Composer dependencies
 
