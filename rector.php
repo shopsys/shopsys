@@ -11,7 +11,7 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $rectorConfig->rules([
-        \Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRector::class,
+        /*\Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRector::class,
         \Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromReturnNewRector::class,
         \Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictBoolReturnExprRector::class,
         \Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictNativeCallRector::class,
@@ -29,8 +29,10 @@ return static function (RectorConfig $rectorConfig): void {
          * - $phpParserNode = $unionedType instanceof NullType && $typeKind === TypeKind::PROPERTY ? new Name('null') : $this->phpStanStaticTypeMapper->mapToPhpParserNode($unionedType, $typeKind);
          * + $phpParserNode = $unionedType instanceof NullType && in_array($typeKind, [TypeKind::PROPERTY, TypeKind::RETURN, TypeKind::PARAM], true) ? new Name('null') : $this->phpStanStaticTypeMapper->mapToPhpParserNode($unionedType, $typeKind);
          */
-        \Shopsys\FrameworkBundle\Component\Rector\ReturnTypeDeclarationByPhpDocRector::class,
-        \Rector\TypeDeclaration\Rector\ClassMethod\AddReturnTypeDeclarationBasedOnParentClassMethodRector::class,
+        //\Shopsys\FrameworkBundle\Component\Rector\ReturnTypeDeclarationByPhpDocRector::class,
+        //\Rector\TypeDeclaration\Rector\ClassMethod\AddReturnTypeDeclarationBasedOnParentClassMethodRector::class,
+
+        \Shopsys\FrameworkBundle\Component\Rector\PhpDocParamTypeByTypeHintRector::class,
     ]);
 
     // register a single rule
