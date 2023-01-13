@@ -12,35 +12,13 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory as BaseOrderItemFa
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
-use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
+/**
+ * @method \App\Model\Order\Item\OrderItem createProduct(\App\Model\Order\Order $order, string $name, \Shopsys\FrameworkBundle\Model\Pricing\Price $price, string $vatPercent, int $quantity, string|null $unitName, string|null $catnum, \App\Model\Product\Product|null $product = null)
+ */
 class OrderItemFactory extends BaseOrderItemFactory
 {
-    /**
-     * @param \App\Model\Order\Order $order
-     * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     * @param string $vatPercent
-     * @param int $quantity
-     * @param string|null $unitName
-     * @param string|null $catnum
-     * @param \App\Model\Product\Product|null $product
-     * @return \App\Model\Order\Item\OrderItem
-     */
-    public function createProduct(
-        BaseOrder $order,
-        string $name,
-        Price $price,
-        string $vatPercent,
-        int $quantity,
-        ?string $unitName,
-        ?string $catnum,
-        ?BaseProduct $product = null
-    ): BaseOrderItem {
-        throw new BadMethodCallException('Use ' . self::class . '::createProductByOrderItemData() instead of this method');
-    }
-
     /**
      * @param \App\Model\Order\Order $order
      * @param string $name
