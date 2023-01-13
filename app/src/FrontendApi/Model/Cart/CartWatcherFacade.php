@@ -100,14 +100,30 @@ class CartWatcherFacade
     {
         $this->cartWithModificationsResult = new CartWithModificationsResult($cart);
 
+        $this->checkRemovedProductsItems($cart);
+        $this->checkNotListableItems($cart);
         $this->checkUnavailableStockQuantityItems($cart);
         $this->checkModifiedPrices($cart);
-        $this->checkNotListableItems($cart);
         $this->checkPromoCodeValidity($cart);
 
         $this->em->flush();
 
         return $this->transportAndPaymentWatcherFacade->checkTransportAndPayment($this->cartWithModificationsResult, $cart);
+    }
+
+    /**
+     * @param \App\Model\Cart\Cart $cart
+     */
+    private function checkRemovedProductsItems(Cart $cart): void
+    {
+        foreach ($cart->getItems() as $cartItem) {
+            if (!$cartItem->hasProduct()) {
+                $cart->removeItemById($cartItem->getId());
+                $this->em->remove($cartItem);
+
+                $this->cartWithModificationsResult->setCartHasRemovedProducts();
+            }
+        }
     }
 
     /**

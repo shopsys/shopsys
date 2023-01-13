@@ -22,4 +22,3 @@ Query:
         - 'GoPayQuery'
         - 'LanguageConstantQuery'
         - 'SettingsQuery'
-        - 'OrderStepsAccessQuery'

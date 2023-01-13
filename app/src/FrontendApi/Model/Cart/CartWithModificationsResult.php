@@ -20,13 +20,14 @@ class CartWithModificationsResult
     protected Cart $cart;
 
     /**
-     * @var array<string, array>
+     * @var array<string, array|bool>
      */
     private array $cartModifications = [
         'itemModifications' => [],
         'transportModifications' => [],
         'paymentModifications' => [],
         'promoCodeModifications' => [],
+        'someProductWasRemovedFromEshop' => false,
     ];
 
     /**
@@ -156,6 +157,11 @@ class CartWithModificationsResult
     public function addNoLongerAvailableCartItemDueToQuantity(CartItem $cartItem): void
     {
         $this->itemModifications['noLongerAvailableCartItemsDueToQuantity'][] = $cartItem;
+    }
+
+    public function setCartHasRemovedProducts(): void
+    {
+        $this->cartModifications['someProductWasRemovedFromEshop'] = true;
     }
 
     /**

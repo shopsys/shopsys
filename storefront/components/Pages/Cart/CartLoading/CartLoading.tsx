@@ -7,9 +7,9 @@ const TEST_IDENTIFIER = 'blocks-cartloading';
 
 export const CartLoading: FC = () => {
     return (
-        <Webline>
+        <Webline style={{ minHeight: '75rem' }}>
             <CartLoadingWrapperStyled data-testid={TEST_IDENTIFIER}>
-                <Loader />
+                <Loader iconSize={50} />
             </CartLoadingWrapperStyled>
         </Webline>
     );

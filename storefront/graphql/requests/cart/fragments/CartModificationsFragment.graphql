@@ -12,4 +12,5 @@ fragment CartModificationsFragment on CartModificationsResult {
     promoCodeModifications {
         ...CartPromoCodeModificationsFragment
     }
+    someProductWasRemovedFromEshop
 }

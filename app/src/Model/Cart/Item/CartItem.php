@@ -60,4 +60,12 @@ class CartItem extends BaseCartItem
     {
         return $this->uuid;
     }
+
+    /**
+     * @return bool
+     */
+    public function hasProduct(): bool
+    {
+        return $this->product !== null;
+    }
 }

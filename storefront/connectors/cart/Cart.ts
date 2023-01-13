@@ -23,13 +23,12 @@ import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { Translate } from 'next-translate';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { AddToCartPopupDataType, CartItemType, CartType, CurrentCartType } from 'types/cart';
 import { CombinedError, OperationContext } from 'urql';
 
 export const useCurrentCart = (fromCache = true): CurrentCartType => {
-    const [isInitiallyLoaded, setInitialLoadedState] = useState(false);
     const { isUserLoggedIn } = useCurrentUserData();
     const { cartUuid } = useShopsysSelector((state) => state.user);
     const { currencyCode } = useShopsysSelector((state) => state.domain);
@@ -41,67 +40,61 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
         requestPolicy: fromCache ? 'cache-first' : 'network-only',
     });
 
-    useEffect(() => {
-        if (cartUuid === null && !isUserLoggedIn) {
-            setInitialLoadedState(true);
-
-            return;
-        }
-
-        if (!result.fetching) {
-            setInitialLoadedState(true);
-        }
-    }, [cartUuid, isUserLoggedIn, result.fetching]);
-
     return useMemo(() => {
-        if (result.data === undefined) {
-            return getEmptyCart(isInitiallyLoaded, refetchCart, false);
-        }
-
-        if (isInitiallyLoaded !== true) {
-            setInitialLoadedState(true);
-        }
-
-        if (cartUuid === null && !isUserLoggedIn) {
-            return getEmptyCart(isInitiallyLoaded, refetchCart, true);
-        }
-
         if (result.error !== undefined) {
             // EXTEND CART ERRORS HERE
             handleCartError(result.error, t);
-
-            return getEmptyCart(isInitiallyLoaded, refetchCart, true);
         }
 
-        if (result.data.cart === null) {
-            // EXTEND EMPTY CART HERE
-            return getEmptyCart(isInitiallyLoaded, refetchCart, true);
+        if (
+            result.data === undefined ||
+            result.fetching ||
+            (cartUuid === null && !isUserLoggedIn) ||
+            result.error !== undefined ||
+            result.data.cart === null
+        ) {
+            return getEmptyCart(!result.fetching, result.stale, refetchCart);
         }
+
         // EXTEND CART UPDATE HERE
         const mappedCart = mapCart(result.data.cart, currencyCode);
 
         const mappedTransport =
             result.data.cart.transport === null ? null : mapTransport(result.data.cart.transport, currencyCode);
+
+        const mappedPayment =
+            result.data.cart.payment === null ? null : mapPayment(result.data.cart.payment, currencyCode);
+
         return {
             cart: mappedCart,
             isCartEmpty: mappedCart.items.length === 0,
             transport: mappedTransport,
             pickupPlace: getSelectedPickupPlace(mappedTransport, result.data.cart.selectedPickupPlaceIdentifier),
-            payment: result.data.cart.payment === null ? null : mapPayment(result.data.cart.payment, currencyCode),
+            payment: mappedPayment,
             paymentGoPayBankSwift: result.data.cart.paymentGoPayBankSwift,
             promoCode: result.data.cart.promoCode,
-            isLoaded: true,
-            isInitiallyLoaded: isInitiallyLoaded,
+            isLoading: result.stale,
+            isInitiallyLoaded: !result.fetching,
             modifications: result.data.cart.modifications,
             refetchCart,
         };
-    }, [currencyCode, result.data, result.error, t, cartUuid, isUserLoggedIn, isInitiallyLoaded, refetchCart]);
+    }, [
+        result.data,
+        result.error,
+        result.fetching,
+        result.stale,
+        cartUuid,
+        isUserLoggedIn,
+        currencyCode,
+        refetchCart,
+        t,
+    ]);
 };
 
 const getEmptyCart = (
     isInitiallyLoaded: boolean,
+    isLoading: boolean,
     refetchCart: (opts?: Partial<OperationContext> | undefined) => void,
-    isLoaded = true,
 ): CurrentCartType => ({
     cart: null,
     isCartEmpty: true,
@@ -110,7 +103,7 @@ const getEmptyCart = (
     payment: null,
     paymentGoPayBankSwift: null,
     promoCode: null,
-    isLoaded,
+    isLoading,
     isInitiallyLoaded,
     modifications: null,
     refetchCart,
@@ -182,10 +175,17 @@ export const handleCartModifications = (
     t: Translate,
     changePaymentInCart: ChangePaymentHandler,
 ): void => {
+    handleRemovedProductFromEshopModifications(cartModifications.someProductWasRemovedFromEshop, t);
     handleCartTransportModifications(cartModifications.transportModifications, t, changePaymentInCart);
     handleCartPaymentModifications(cartModifications.paymentModifications, t);
     handleCartItemModifications(cartModifications.itemModifications, t);
     handleCartPromoCodeModifications(cartModifications.promoCodeModifications, t);
+};
+
+const handleRemovedProductFromEshopModifications = (someProductWasRemovedFromEshop: boolean, t: Translate): void => {
+    if (someProductWasRemovedFromEshop) {
+        showInfoMessage(t('Some product was removed from e-shop and your cart was recalculated.'), 'cart');
+    }
 };
 
 const handleCartTransportModifications = (

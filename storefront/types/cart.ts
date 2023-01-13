@@ -18,7 +18,7 @@ export type CurrentCartType = {
     payment: PaymentType | null;
     paymentGoPayBankSwift: string | null;
     promoCode: string | null;
-    isLoaded: boolean;
+    isLoading: boolean;
     isInitiallyLoaded: boolean;
     modifications: CartModificationsFragmentApi | null;
     refetchCart: (opts?: Partial<OperationContext> | undefined) => void;
