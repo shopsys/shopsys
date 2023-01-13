@@ -62,7 +62,7 @@ class NotificationBarFormType extends AbstractType
                     new NotBlank(['message' => 'Please enter flag color']),
                     new Length([
                         'max' => 7,
-                        'maxMessage' => 'Flag color in must be in valid hexadecimal code e.g. #3333ff',
+                        'maxMessage' => 'Flag color must be in valid hexadecimal code e.g. #3333ff',
                     ]),
                 ],
             ])
