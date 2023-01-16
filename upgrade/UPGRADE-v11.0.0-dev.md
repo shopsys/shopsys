@@ -1044,4 +1044,57 @@ There you can find links to upgrade notes for other versions too.
         - method `getUser` has been removed without substitution
         - method `supportsRememberMe` has been removed without substitution
         - method `start` has been removed without substitution
-      - also see #project-base-diff for more information about changes needed to be done in your project
+    - `Shopsys\FrameworkBundle\Component\Translation\Translator` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(TranslatorInterface & LocaleAwareInterface $originalTranslator, TranslatorBagInterface $originalTranslatorBag, TranslatorInterface & LocaleAwareInterface $identityTranslator, MessageIdNormalizer $messageIdNormalizer)
+        + __construct(TranslatorInterface|LocaleAwareInterface|DataCollectorTranslator $originalTranslator, TranslatorBagInterface|DataCollectorTranslator $originalTranslatorBag, TranslatorInterface|LocaleAwareInterface|IdentityTranslator $identityTranslator, MessageIdNormalizer $messageIdNormalizer)
+    - `Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(Domain $domain, SessionInterface $session)
+        + __construct(Domain $domain, RequestStack $requestStack)
+        ```
+    - `Shopsys\FrameworkBundle\Component\Form\FormTimeProvider` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(SessionInterface $session)
+        + __construct(Domain $domain, RequestStack $requestStack)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(SessionInterface $session, AdministratorUserProvider $administratorUserProvider, AccessDecisionManagerInterface $accessDecisionManager, AuthorizationCheckerInterface $authorizationChecker)
+        + __construct(RequestStack $requestStack, AdministratorUserProvider $administratorUserProvider, AccessDecisionManagerInterface $accessDecisionManager, AuthorizationCheckerInterface $authorizationChecker)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(CurrentCustomerUser $currentCustomerUser, SessionInterface $session)
+        + __construct(CurrentCustomerUser $currentCustomerUser, RequestStack $requestStack)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(PromoCodeFacade $promoCodeFacade, SessionInterface $session)
+        + __construct(PromoCodeFacade $promoCodeFacade, RequestStack $requestStack)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(TokenStorageInterface $tokenStorage, EventDispatcherInterface $eventDispatcher, SessionInterface $session, CustomerUserRepository $customerUserRepository, AdministratorFrontSecurityFacade $administratorFrontSecurityFacade)
+        + __construct(TokenStorageInterface $tokenStorage, EventDispatcherInterface $eventDispatcher, CustomerUserRepository $customerUserRepository, AdministratorFrontSecurityFacade $administratorFrontSecurityFacade, RequestStack $requestStack)
+        ```
+    - `Shopsys\FrameworkBundle\Controller\Admin\CategoryController` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(CategoryFacade $categoryFacade, CategoryDataFactoryInterface $categoryDataFactory, SessionInterface $session, Domain $domain, BreadcrumbOverrider $breadcrumbOverrider)
+        + __construct(CategoryFacade $categoryFacade, CategoryDataFactoryInterface $categoryDataFactory, Domain $domain, BreadcrumbOverrider $breadcrumbOverrider, RequestStack $requestStack)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Order\Watcher\TransportAndPaymentWatcher` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(SessionInterface $session, PaymentPriceCalculation $paymentPriceCalculation, TransportPriceCalculation $transportPriceCalculation)
+        + __construct(RequestStack $requestStack, PaymentPriceCalculation $paymentPriceCalculation, TransportPriceCalculation $transportPriceCalculation)
+        ```
+    - also see #project-base-diff for more information about changes needed to be done in your project

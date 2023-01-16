@@ -13,12 +13,12 @@ use Symfony\Component\Translation\TranslatorBagInterface;
 class TranslatorTest extends TestCase
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Translation\Translator
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Translation\Translator|\Symfony\Component\Translation\DataCollectorTranslator
      */
     private $originalTranslatorMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Translation\TranslatorBagInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Translation\TranslatorBagInterface|\Symfony\Component\Translation\DataCollectorTranslator
      */
     private $originalTranslatorBagMock;
 
@@ -42,6 +42,7 @@ class TranslatorTest extends TestCase
         $this->originalTranslatorMock = $this->getMockBuilder(SymfonyTranslator::class)
             ->setConstructorArgs(['en'])
             ->getMock();
+        // @phpstan-ignore-next-line
         $this->originalTranslatorBagMock = $this->getMockBuilder(TranslatorBagInterface::class)->getMock();
         $this->messageIdNormalizerMock = $this->getMockBuilder(MessageIdNormalizer::class)->getMock();
         $this->identityTranslator = new IdentityTranslator();

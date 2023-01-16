@@ -3,6 +3,8 @@
 namespace Shopsys\FrameworkBundle\Component\Translation;
 
 use Shopsys\FrameworkBundle\Component\Translation\Exception\InstanceNotInjectedException;
+use Symfony\Component\Translation\DataCollectorTranslator;
+use Symfony\Component\Translation\IdentityTranslator;
 use Symfony\Component\Translation\MessageCatalogueInterface;
 use Symfony\Component\Translation\TranslatorBagInterface;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
@@ -20,41 +22,17 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
     protected static ?self $self;
 
     /**
-     * @var \Symfony\Contracts\Translation\TranslatorInterface&\Symfony\Contracts\Translation\LocaleAwareInterface
-     */
-    protected TranslatorInterface & LocaleAwareInterface $originalTranslator;
-
-    /**
-     * @var \Symfony\Component\Translation\TranslatorBagInterface
-     */
-    protected TranslatorBagInterface $originalTranslatorBag;
-
-    /**
-     * @var \Symfony\Contracts\Translation\TranslatorInterface&\Symfony\Contracts\Translation\LocaleAwareInterface
-     */
-    protected TranslatorInterface & LocaleAwareInterface $identityTranslator;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Translation\MessageIdNormalizer
-     */
-    protected MessageIdNormalizer $messageIdNormalizer;
-
-    /**
-     * @param \Symfony\Contracts\Translation\TranslatorInterface&\Symfony\Contracts\Translation\LocaleAwareInterface $originalTranslator
-     * @param \Symfony\Component\Translation\TranslatorBagInterface $originalTranslatorBag
-     * @param \Symfony\Contracts\Translation\TranslatorInterface&\Symfony\Contracts\Translation\LocaleAwareInterface $identityTranslator
+     * @param \Symfony\Contracts\Translation\TranslatorInterface|\Symfony\Contracts\Translation\LocaleAwareInterface|\Symfony\Component\Translation\DataCollectorTranslator $originalTranslator
+     * @param \Symfony\Component\Translation\TranslatorBagInterface|\Symfony\Component\Translation\DataCollectorTranslator $originalTranslatorBag
+     * @param \Symfony\Contracts\Translation\TranslatorInterface|\Symfony\Contracts\Translation\LocaleAwareInterface|\Symfony\Component\Translation\IdentityTranslator $identityTranslator
      * @param \Shopsys\FrameworkBundle\Component\Translation\MessageIdNormalizer $messageIdNormalizer
      */
     public function __construct(
-        TranslatorInterface & LocaleAwareInterface $originalTranslator,
-        TranslatorBagInterface $originalTranslatorBag,
-        TranslatorInterface & LocaleAwareInterface $identityTranslator,
-        MessageIdNormalizer $messageIdNormalizer
+        protected readonly TranslatorInterface|LocaleAwareInterface|DataCollectorTranslator $originalTranslator,
+        protected readonly TranslatorBagInterface|DataCollectorTranslator $originalTranslatorBag,
+        protected readonly TranslatorInterface|LocaleAwareInterface|IdentityTranslator $identityTranslator,
+        protected readonly MessageIdNormalizer $messageIdNormalizer
     ) {
-        $this->originalTranslator = $originalTranslator;
-        $this->originalTranslatorBag = $originalTranslatorBag;
-        $this->identityTranslator = $identityTranslator;
-        $this->messageIdNormalizer = $messageIdNormalizer;
     }
 
     /**
@@ -161,5 +139,17 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
         }
 
         return self::$self->trans($id, $parameters, $domain, $locale);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCatalogues(): array
+    {
+        if ($this->originalTranslator instanceof DataCollectorTranslator) {
+            return $this->originalTranslator->getCatalogues();
+        }
+
+        return [];
     }
 }
