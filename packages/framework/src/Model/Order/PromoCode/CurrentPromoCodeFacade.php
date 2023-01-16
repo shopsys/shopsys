@@ -3,38 +3,28 @@
 namespace Shopsys\FrameworkBundle\Model\Order\PromoCode;
 
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class CurrentPromoCodeFacade
 {
     protected const PROMO_CODE_SESSION_KEY = 'promoCode';
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
-     */
-    protected $session;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade
-     */
-    protected $promoCodeFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      */
-    public function __construct(PromoCodeFacade $promoCodeFacade, SessionInterface $session)
-    {
-        $this->promoCodeFacade = $promoCodeFacade;
-        $this->session = $session;
+    public function __construct(
+        protected readonly PromoCodeFacade $promoCodeFacade,
+        protected readonly RequestStack $requestStack,
+    ) {
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null
      */
-    public function getValidEnteredPromoCodeOrNull()
+    public function getValidEnteredPromoCodeOrNull(): ?PromoCode
     {
-        $enteredCode = $this->session->get(static::PROMO_CODE_SESSION_KEY);
+        $enteredCode = $this->requestStack->getSession()->get(static::PROMO_CODE_SESSION_KEY);
         if ($enteredCode === null) {
             return null;
         }
@@ -45,17 +35,17 @@ class CurrentPromoCodeFacade
     /**
      * @param string $enteredCode
      */
-    public function setEnteredPromoCode($enteredCode)
+    public function setEnteredPromoCode(string $enteredCode): void
     {
         $promoCode = $this->promoCodeFacade->findPromoCodeByCode($enteredCode);
         if ($promoCode === null) {
             throw new InvalidPromoCodeException($enteredCode);
         }
-        $this->session->set(static::PROMO_CODE_SESSION_KEY, $enteredCode);
+        $this->requestStack->getSession()->set(static::PROMO_CODE_SESSION_KEY, $enteredCode);
     }
 
-    public function removeEnteredPromoCode()
+    public function removeEnteredPromoCode(): void
     {
-        $this->session->remove(static::PROMO_CODE_SESSION_KEY);
+        $this->requestStack->getSession()->remove(static::PROMO_CODE_SESSION_KEY);
     }
 }

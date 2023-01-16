@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class TransportAndPaymentWatcher
 {
@@ -20,33 +20,15 @@ class TransportAndPaymentWatcher
     protected const SESSION_PAYMENT_PRICES = 'payment_prices';
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
-     */
-    protected $session;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation
-     */
-    protected $paymentPriceCalculation;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation
-     */
-    protected $transportPriceCalculation;
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      */
     public function __construct(
-        SessionInterface $session,
-        PaymentPriceCalculation $paymentPriceCalculation,
-        TransportPriceCalculation $transportPriceCalculation
+        protected readonly RequestStack $requestStack,
+        protected readonly PaymentPriceCalculation $paymentPriceCalculation,
+        protected readonly TransportPriceCalculation $transportPriceCalculation,
     ) {
-        $this->session = $session;
-        $this->paymentPriceCalculation = $paymentPriceCalculation;
-        $this->transportPriceCalculation = $transportPriceCalculation;
     }
 
     /**
@@ -230,7 +212,7 @@ class TransportAndPaymentWatcher
         OrderPreview $orderPreview,
         int $domainId
     ): void {
-        $this->session->set(static::SESSION_ROOT, [
+        $this->requestStack->getSession()->set(static::SESSION_ROOT, [
             static::SESSION_TRANSPORT_PRICES => $this->getTransportPrices(
                 $transports,
                 $currency,
@@ -251,7 +233,7 @@ class TransportAndPaymentWatcher
      */
     protected function getRememberedTransportAndPayment(): array
     {
-        return $this->session->get(static::SESSION_ROOT, [
+        return $this->requestStack->getSession()->get(static::SESSION_ROOT, [
             static::SESSION_TRANSPORT_PRICES => [],
             static::SESSION_PAYMENT_PRICES => [],
         ]);

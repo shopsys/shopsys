@@ -2,11 +2,13 @@
 
 namespace Shopsys\FrameworkBundle\Model\Administrator\Security;
 
+use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException;
 use Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -21,47 +23,23 @@ class AdministratorFrontSecurityFacade
     public const ADMINISTRATION_CONTEXT = 'administration';
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
-     */
-    protected $session;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorUserProvider
-     */
-    protected $administratorUserProvider;
-
-    /**
-     * @var \Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface
-     */
-    protected $accessDecisionManager;
-
-    /**
-     * @var \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
-     */
-    protected $authorizationChecker;
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorUserProvider $administratorUserProvider
      * @param \Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface $accessDecisionManager
      * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $authorizationChecker
      */
     public function __construct(
-        SessionInterface $session,
-        AdministratorUserProvider $administratorUserProvider,
-        AccessDecisionManagerInterface $accessDecisionManager,
-        AuthorizationCheckerInterface $authorizationChecker
+        protected readonly RequestStack $requestStack,
+        protected readonly AdministratorUserProvider $administratorUserProvider,
+        protected readonly AccessDecisionManagerInterface $accessDecisionManager,
+        protected readonly AuthorizationCheckerInterface $authorizationChecker,
     ) {
-        $this->session = $session;
-        $this->administratorUserProvider = $administratorUserProvider;
-        $this->accessDecisionManager = $accessDecisionManager;
-        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
      * @return bool
      */
-    public function isAdministratorLogged()
+    public function isAdministratorLogged(): bool
     {
         try {
             $token = $this->getAdministratorToken();
@@ -82,15 +60,19 @@ class AdministratorFrontSecurityFacade
     /**
      * @return bool
      */
-    public function isAdministratorLoggedAsCustomer()
+    public function isAdministratorLoggedAsCustomer(): bool
     {
-        return $this->session->has(LoginAsUserFacade::SESSION_LOGIN_AS);
+        try {
+            return $this->requestStack->getSession()->has(LoginAsUserFacade::SESSION_LOGIN_AS);
+        } catch (SessionNotFoundException) {
+            return false;
+        }
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
-    public function getCurrentAdministrator()
+    public function getCurrentAdministrator(): Administrator
     {
         if ($this->isAdministratorLogged()) {
             /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $user */
@@ -106,9 +88,14 @@ class AdministratorFrontSecurityFacade
      * @return \Symfony\Component\Security\Core\Authentication\Token\TokenInterface
      * @see \Symfony\Component\Security\Http\Firewall\ContextListener::handle()
      */
-    protected function getAdministratorToken()
+    protected function getAdministratorToken(): TokenInterface
     {
-        $serializedToken = $this->session->get('_security_' . static::ADMINISTRATION_CONTEXT);
+        try {
+            $serializedToken = $this->requestStack->getSession()->get('_security_' . static::ADMINISTRATION_CONTEXT);
+        } catch (SessionNotFoundException) {
+            $serializedToken = null;
+        }
+
         if ($serializedToken === null) {
             $message = 'Token not found.';
             throw new InvalidTokenException($message);
@@ -129,7 +116,7 @@ class AdministratorFrontSecurityFacade
      * @see \Symfony\Component\Security\Http\Firewall\ContextListener::handle()
      * @see \Symfony\Component\Security\Core\Authentication\Token\AbstractToken::setUser()
      */
-    protected function refreshUserInToken(TokenInterface $token)
+    protected function refreshUserInToken(TokenInterface $token): void
     {
         $user = $token->getUser();
         if (!$user instanceof UserInterface) {

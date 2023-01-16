@@ -2,41 +2,36 @@
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class CustomerUserIdentifierFactory
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    protected $currentCustomerUser;
-
-    /**
-     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
-     */
-    protected $session;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      */
-    public function __construct(CurrentCustomerUser $currentCustomerUser, SessionInterface $session)
-    {
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->session = $session;
+    public function __construct(
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly RequestStack $requestStack,
+    ) {
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier
      */
-    public function get()
+    public function get(): CustomerUserIdentifier
     {
-        $cartIdentifier = $this->session->getId();
+        try {
+            $cartIdentifier = $this->requestStack->getSession()->getId();
+        } catch (SessionNotFoundException) {
+            $cartIdentifier = '';
+        }
 
         // when session is not started, returning empty string is behavior of session_id()
         if ($cartIdentifier === '') {
-            $this->session->start();
-            $cartIdentifier = $this->session->getId();
+            $this->requestStack->getSession()->start();
+            $cartIdentifier = $this->requestStack->getSession()->getId();
         }
 
         return new CustomerUserIdentifier($cartIdentifier, $this->currentCustomerUser->findCurrentCustomerUser());
@@ -46,7 +41,7 @@ class CustomerUserIdentifierFactory
      * @param string $cartIdentifier
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier
      */
-    public function getOnlyWithCartIdentifier($cartIdentifier)
+    public function getOnlyWithCartIdentifier(string $cartIdentifier): CustomerUserIdentifier
     {
         return new CustomerUserIdentifier($cartIdentifier, null);
     }
