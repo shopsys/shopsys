@@ -79,7 +79,7 @@
         "shopsys/form-types-bundle": "11.0.x-dev",
         "shopsys/jsformvalidator-bundle": "^1.7.0",
         "shopsys/migrations": "11.0.x-dev",
-        "shopsys/ordered-form": "^5.0",
+        "shopsys/ordered-form": "^5.2",
         "shopsys/plugin-interface": "11.0.x-dev",
         "shopsys/postgres-search-bundle": "^0.3",
         "snc/redis-bundle": "^4.4.1",

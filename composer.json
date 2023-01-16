@@ -120,7 +120,7 @@
         "roave/better-reflection": "^5.4.0",
         "sensio/framework-extra-bundle": "^5.2",
         "shopsys/jsformvalidator-bundle": "^1.7.0",
-        "shopsys/ordered-form": "^5.0",
+        "shopsys/ordered-form": "^5.2",
         "shopsys/postgres-search-bundle": "^0.3",
         "sinergi/browser-detector": "^6.1",
         "snc/redis-bundle": "^4.4.1",
