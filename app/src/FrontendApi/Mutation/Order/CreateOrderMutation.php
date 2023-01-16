@@ -32,6 +32,8 @@ use Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade;
  */
 class CreateOrderMutation extends BaseCreateOrderMutation
 {
+    public const VALIDATION_GROUP_BEFORE_DEFAULT = 'beforeDefaultValidation';
+
     /**
      * @param \App\FrontendApi\Model\Order\OrderDataFactory $orderDataFactory
      * @param \App\FrontendApi\Model\Order\PlaceOrderFacade $placeOrderFacade
@@ -157,5 +159,14 @@ class CreateOrderMutation extends BaseCreateOrderMutation
         if (array_key_exists('payment', $input) && $input['payment'] !== null) {
             throw new DeprecatedFieldUserError('Usage of "payment" input is deprecated, we do not work with this field anymore, the payment is taken from the server cart instead.');
         }
+    }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return array|string[]
+     */
+    protected function computeValidationGroups(Argument $argument): array
+    {
+        return array_merge([self::VALIDATION_GROUP_BEFORE_DEFAULT], parent::computeValidationGroups($argument));
     }
 }
