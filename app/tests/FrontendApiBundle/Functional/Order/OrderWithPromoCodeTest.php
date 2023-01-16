@@ -7,7 +7,6 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\PromoCodeDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
-use App\FrontendApi\Model\Component\Constraints\PromoCode;
 use App\Model\Order\PromoCode\PromoCodeDataFactory;
 use App\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
@@ -38,10 +37,14 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
         $expected = [
             'data' => [
                 'CreateOrder' => [
-                    'totalPrice' => AbstractOrderTestCase::getSerializedOrderTotalPriceByExpectedOrderItems(
-                        $expectedOrderItems
-                    ),
-                    'items' => $expectedOrderItems,
+                    'orderCreated' => true,
+                    'order' => [
+                        'totalPrice' => AbstractOrderTestCase::getSerializedOrderTotalPriceByExpectedOrderItems(
+                            $expectedOrderItems
+                        ),
+                        'items' => $expectedOrderItems,
+                    ],
+                    'cart' => null,
                 ],
             ],
         ];
@@ -76,12 +79,18 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
         $mutation = $this->getMutation($cartUuid);
         $response = $this->getResponseContentForQuery($mutation);
 
-        self::assertArrayHasKey('errors', $response);
-
-        $violations = $this->getErrorsExtensionValidationFromResponse($response);
-
-        self::assertArrayHasKey('input.promoCode', $violations);
-        self::assertEquals(PromoCode::INVALID_ERROR, $violations['input.promoCode'][0]['code']);
+        $this->assertArrayHasKey('data', $response);
+        $this->assertArrayHasKey('CreateOrder', $response['data']);
+        $this->assertArrayHasKey('orderCreated', $response['data']['CreateOrder']);
+        $this->assertFalse($response['data']['CreateOrder']['orderCreated']);
+        $this->assertArrayHasKey('cart', $response['data']['CreateOrder']);
+        $this->assertArrayHasKey('promoCode', $response['data']['CreateOrder']['cart']);
+        $this->assertNull($response['data']['CreateOrder']['cart']['promoCode']);
+        $this->assertArrayHasKey('modifications', $response['data']['CreateOrder']['cart']);
+        $this->assertArrayHasKey('promoCodeModifications', $response['data']['CreateOrder']['cart']['modifications']);
+        $this->assertArrayHasKey('noLongerApplicablePromoCode', $response['data']['CreateOrder']['cart']['modifications']['promoCodeModifications']);
+        $this->assertCount(1, $response['data']['CreateOrder']['cart']['modifications']['promoCodeModifications']['noLongerApplicablePromoCode']);
+        $this->assertEquals('test', $response['data']['CreateOrder']['cart']['modifications']['promoCodeModifications']['noLongerApplicablePromoCode'][0]);
     }
 
     /**
@@ -152,26 +161,37 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
                             differentDeliveryAddress: false
                         }
                     ) {
-                        totalPrice {
-                            priceWithVat
-                            priceWithoutVat
-                            vatAmount
-                        }
-                        items {
-                            name
-                            unitPrice {
-                                priceWithVat
-                                priceWithoutVat
-                                vatAmount
-                            }
+                        orderCreated
+                        order {
                             totalPrice {
                                 priceWithVat
                                 priceWithoutVat
                                 vatAmount
                             }
-                            quantity
-                            vatRate
-                            unit
+                            items {
+                                name
+                                unitPrice {
+                                    priceWithVat
+                                    priceWithoutVat
+                                    vatAmount
+                                }
+                                totalPrice {
+                                    priceWithVat
+                                    priceWithoutVat
+                                    vatAmount
+                                }
+                                quantity
+                                vatRate
+                                unit
+                            }
+                        }
+                        cart {
+                            promoCode
+                            modifications {
+                                promoCodeModifications {
+                                    noLongerApplicablePromoCode
+                                }
+                            }
                         }                        
                     }
                 }';

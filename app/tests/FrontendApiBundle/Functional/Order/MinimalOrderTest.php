@@ -15,42 +15,44 @@ class MinimalOrderTest extends AbstractOrderTestCase
         $expected = [
             'data' => [
                 'CreateOrder' => [
-                    'transport' => [
-                        'name' => t('Czech post', [], 'dataFixtures', $firstDomainLocale),
+                    'order' => [
+                        'transport' => [
+                            'name' => t('Czech post', [], 'dataFixtures', $firstDomainLocale),
+                        ],
+                        'payment' => [
+                            'name' => t('Cash on delivery', [], 'dataFixtures', $firstDomainLocale),
+                        ],
+                        'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),
+                        'totalPrice' => AbstractOrderTestCase::getSerializedOrderTotalPriceByExpectedOrderItems(
+                            $expectedOrderItems
+                        ),
+                        'items' => $expectedOrderItems,
+                        'firstName' => 'firstName',
+                        'lastName' => 'lastName',
+                        'email' => 'user@example.com',
+                        'telephone' => '+53 123456789',
+                        'companyName' => null,
+                        'companyNumber' => null,
+                        'companyTaxNumber' => null,
+                        'street' => '123 Fake Street',
+                        'city' => 'Springfield',
+                        'postcode' => '12345',
+                        'country' => [
+                            'code' => 'CZ',
+                        ],
+                        'differentDeliveryAddress' => false,
+                        'deliveryFirstName' => 'firstName',
+                        'deliveryLastName' => 'lastName',
+                        'deliveryCompanyName' => null,
+                        'deliveryTelephone' => '+53 123456789',
+                        'deliveryStreet' => '123 Fake Street',
+                        'deliveryCity' => 'Springfield',
+                        'deliveryPostcode' => '12345',
+                        'deliveryCountry' => [
+                            'code' => 'CZ',
+                        ],
+                        'note' => null,
                     ],
-                    'payment' => [
-                        'name' => t('Cash on delivery', [], 'dataFixtures', $firstDomainLocale),
-                    ],
-                    'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),
-                    'totalPrice' => AbstractOrderTestCase::getSerializedOrderTotalPriceByExpectedOrderItems(
-                        $expectedOrderItems
-                    ),
-                    'items' => $expectedOrderItems,
-                    'firstName' => 'firstName',
-                    'lastName' => 'lastName',
-                    'email' => 'user@example.com',
-                    'telephone' => '+53 123456789',
-                    'companyName' => null,
-                    'companyNumber' => null,
-                    'companyTaxNumber' => null,
-                    'street' => '123 Fake Street',
-                    'city' => 'Springfield',
-                    'postcode' => '12345',
-                    'country' => [
-                        'code' => 'CZ',
-                    ],
-                    'differentDeliveryAddress' => false,
-                    'deliveryFirstName' => 'firstName',
-                    'deliveryLastName' => 'lastName',
-                    'deliveryCompanyName' => null,
-                    'deliveryTelephone' => '+53 123456789',
-                    'deliveryStreet' => '123 Fake Street',
-                    'deliveryCity' => 'Springfield',
-                    'deliveryPostcode' => '12345',
-                    'deliveryCountry' => [
-                        'code' => 'CZ',
-                    ],
-                    'note' => null,
                 ],
             ],
         ];
@@ -92,59 +94,61 @@ class MinimalOrderTest extends AbstractOrderTestCase
                             differentDeliveryAddress: false
                         }
                     ) {
-                        transport {
-                            name
-                        }
-                        payment {
-                            name
-                        }
-                        status
-                        totalPrice {
-                            priceWithVat
-                            priceWithoutVat
-                            vatAmount
-                        }
-                        items {
-                            name
-                            unitPrice {
-                                priceWithVat
-                                priceWithoutVat
-                                vatAmount
+                        order {
+                            transport {
+                                name
                             }
+                            payment {
+                                name
+                            }
+                            status
                             totalPrice {
                                 priceWithVat
                                 priceWithoutVat
                                 vatAmount
                             }
-                            quantity
-                            vatRate
-                            unit
+                            items {
+                                name
+                                unitPrice {
+                                    priceWithVat
+                                    priceWithoutVat
+                                    vatAmount
+                                }
+                                totalPrice {
+                                    priceWithVat
+                                    priceWithoutVat
+                                    vatAmount
+                                }
+                                quantity
+                                vatRate
+                                unit
+                            }
+                            firstName
+                            lastName
+                            email
+                            telephone
+                            companyName
+                            companyNumber
+                            companyTaxNumber
+                            street
+                            city
+                            postcode
+                            country {
+                                code
+                            }
+                            differentDeliveryAddress
+                            deliveryFirstName
+                            deliveryLastName
+                            deliveryCompanyName
+                            deliveryTelephone
+                            deliveryStreet
+                            deliveryCity
+                            deliveryPostcode
+                            deliveryCountry {
+                                code
+                            }
+                            note
                         }
-                        firstName
-                        lastName
-                        email
-                        telephone
-                        companyName
-                        companyNumber
-                        companyTaxNumber
-                        street
-                        city
-                        postcode
-                        country {
-                            code
-                        }
-                        differentDeliveryAddress
-                        deliveryFirstName
-                        deliveryLastName
-                        deliveryCompanyName
-                        deliveryTelephone
-                        deliveryStreet
-                        deliveryCity
-                        deliveryPostcode
-                        deliveryCountry {
-                            code
-                        }
-                        note
                     }
                 }';
     }

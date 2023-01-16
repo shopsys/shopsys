@@ -55,7 +55,7 @@ class GetOrderSentPageContentTest extends AbstractOrderTestCase
             'differentDeliveryAddress' => false,
         ]);
 
-        $orderUuid = $this->getResponseDataForGraphQlType($response, 'CreateOrder')['uuid'];
+        $orderUuid = $this->getResponseDataForGraphQlType($response, 'CreateOrder')['order']['uuid'];
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/OrderSentPageContentQuery.graphql', [
             'orderUuid' => $orderUuid,
         ]);

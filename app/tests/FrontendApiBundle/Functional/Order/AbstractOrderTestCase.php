@@ -217,7 +217,9 @@ class AbstractOrderTestCase extends GraphQlTestCase
                             differentDeliveryAddress: false
                         }
                     ) {
-                        uuid
+                        order{
+                            uuid
+                        }
                     }
                 }';
     }

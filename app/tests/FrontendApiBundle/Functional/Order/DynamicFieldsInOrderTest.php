@@ -26,18 +26,20 @@ class DynamicFieldsInOrderTest extends AbstractOrderTestCase
 
         $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
+        $this->assertArrayHasKey('order', $responseData);
+        $orderData = $responseData['order'];
 
-        $this->assertArrayHasKey('uuid', $responseData);
-        $this->assertIsString($responseData['uuid']);
+        $this->assertArrayHasKey('uuid', $orderData);
+        $this->assertIsString($orderData['uuid']);
 
-        $this->assertArrayHasKey('number', $responseData);
-        $this->assertIsString($responseData['number']);
+        $this->assertArrayHasKey('number', $orderData);
+        $this->assertIsString($orderData['number']);
 
-        $this->assertArrayHasKey('urlHash', $responseData);
-        $this->assertIsString($responseData['urlHash']);
+        $this->assertArrayHasKey('urlHash', $orderData);
+        $this->assertIsString($orderData['urlHash']);
 
-        $this->assertArrayHasKey('creationDate', $responseData);
-        $this->assertIsString($responseData['creationDate']);
+        $this->assertArrayHasKey('creationDate', $orderData);
+        $this->assertIsString($orderData['creationDate']);
     }
 
     /**
@@ -72,10 +74,12 @@ class DynamicFieldsInOrderTest extends AbstractOrderTestCase
                             deliveryPostcode: "13453"
                         }
                     ) {
-                        uuid
-                        number
-                        urlHash
-                        creationDate
+                        order {
+                            uuid
+                            number
+                            urlHash
+                            creationDate
+                        }
                     }
                 }';
     }

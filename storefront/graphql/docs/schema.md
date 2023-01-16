@@ -36,6 +36,7 @@
     * [CategoryHierarchyItem](#categoryhierarchyitem)
     * [CompanyCustomerUser](#companycustomeruser)
     * [Country](#country)
+    * [CreateOrderResult](#createorderresult)
     * [DeliveryAddress](#deliveryaddress)
     * [File](#file)
     * [Flag](#flag)
@@ -1078,7 +1079,7 @@ Send message to the site owner
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>CreateOrder</strong></td>
-<td valign="top"><a href="#order">Order</a>!</td>
+<td valign="top"><a href="#createorderresult">CreateOrderResult</a>!</td>
 <td>
 
 Creates complete order with products and addresses
@@ -3371,6 +3372,36 @@ Country code in ISO 3166-1 alpha-2
 Localized country name
 
 </td>
+</tr>
+</tbody>
+</table>
+
+### CreateOrderResult
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>cart</strong></td>
+<td valign="top"><a href="#cart">Cart</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>order</strong></td>
+<td valign="top"><a href="#order">Order</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderCreated</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
 </tr>
 </tbody>
 </table>

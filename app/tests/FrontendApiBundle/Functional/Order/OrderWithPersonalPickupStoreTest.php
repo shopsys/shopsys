@@ -18,15 +18,17 @@ class OrderWithPersonalPickupStoreTest extends AbstractOrderTestCase
         $expected = [
             'data' => [
                 'CreateOrder' => [
-                    'deliveryFirstName' => 'firstName',
-                    'deliveryLastName' => 'lastName',
-                    'deliveryCompanyName' => 'Shopsys',
-                    'deliveryTelephone' => '+53 123456789',
-                    'deliveryStreet' => $store->getStreet(),
-                    'deliveryCity' => $store->getCity(),
-                    'deliveryPostcode' => $store->getPostcode(),
-                    'deliveryCountry' => [
-                        'code' => $store->getCountry()->getCode(),
+                    'order' => [
+                        'deliveryFirstName' => 'firstName',
+                        'deliveryLastName' => 'lastName',
+                        'deliveryCompanyName' => 'Shopsys',
+                        'deliveryTelephone' => '+53 123456789',
+                        'deliveryStreet' => $store->getStreet(),
+                        'deliveryCity' => $store->getCity(),
+                        'deliveryPostcode' => $store->getPostcode(),
+                        'deliveryCountry' => [
+                            'code' => $store->getCountry()->getCode(),
+                        ],
                     ],
                 ],
             ],
@@ -71,15 +73,17 @@ class OrderWithPersonalPickupStoreTest extends AbstractOrderTestCase
                             differentDeliveryAddress: false
                         }
                     ) {
-                        deliveryFirstName
-                        deliveryLastName
-                        deliveryCompanyName
-                        deliveryTelephone
-                        deliveryStreet
-                        deliveryCity
-                        deliveryPostcode
-                        deliveryCountry {
-                            code
+                        order {
+                            deliveryFirstName
+                            deliveryLastName
+                            deliveryCompanyName
+                            deliveryTelephone
+                            deliveryStreet
+                            deliveryCity
+                            deliveryPostcode
+                            deliveryCountry {
+                                code
+                            }
                         }
                     }
                 }';

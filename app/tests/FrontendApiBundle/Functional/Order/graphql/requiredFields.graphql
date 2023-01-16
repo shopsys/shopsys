@@ -4,6 +4,8 @@ mutation {
             note:"Thank You"
         }
     ) {
-        uuid
+        order {
+            uuid
+        }
     }
 }

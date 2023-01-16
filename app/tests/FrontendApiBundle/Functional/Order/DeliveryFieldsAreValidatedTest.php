@@ -100,59 +100,61 @@ class DeliveryFieldsAreValidatedTest extends AbstractOrderTestCase
                             ]
                         }
                     ) {
-                        transport {
-                            name
-                        }
-                        payment {
-                            name
-                        }
-                        status
-                        totalPrice {
-                            priceWithVat
-                            priceWithoutVat
-                            vatAmount
-                        }
-                        items {
-                            name
-                            unitPrice {
-                                priceWithVat
-                                priceWithoutVat
-                                vatAmount
+                        order {
+                            transport {
+                                name
                             }
+                            payment {
+                                name
+                            }
+                            status
                             totalPrice {
                                 priceWithVat
                                 priceWithoutVat
                                 vatAmount
                             }
-                            quantity
-                            vatRate
-                            unit
+                            items {
+                                name
+                                unitPrice {
+                                    priceWithVat
+                                    priceWithoutVat
+                                    vatAmount
+                                }
+                                totalPrice {
+                                    priceWithVat
+                                    priceWithoutVat
+                                    vatAmount
+                                }
+                                quantity
+                                vatRate
+                                unit
+                            }
+                            firstName
+                            lastName
+                            email
+                            telephone
+                            companyName
+                            companyNumber
+                            companyTaxNumber
+                            street
+                            city
+                            postcode
+                            country {
+                                code
+                            }
+                            differentDeliveryAddress
+                            deliveryFirstName
+                            deliveryLastName
+                            deliveryCompanyName
+                            deliveryTelephone
+                            deliveryStreet
+                            deliveryCity
+                            deliveryPostcode
+                            deliveryCountry {
+                                code
+                            }
+                            note
                         }
-                        firstName
-                        lastName
-                        email
-                        telephone
-                        companyName
-                        companyNumber
-                        companyTaxNumber
-                        street
-                        city
-                        postcode
-                        country {
-                            code
-                        }
-                        differentDeliveryAddress
-                        deliveryFirstName
-                        deliveryLastName
-                        deliveryCompanyName
-                        deliveryTelephone
-                        deliveryStreet
-                        deliveryCity
-                        deliveryPostcode
-                        deliveryCountry {
-                            code
-                        }
-                        note
                     }
                 }';
     }

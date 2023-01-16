@@ -87,7 +87,9 @@ class ProductInOrderValidationTest extends AbstractOrderTestCase
                             differentDeliveryAddress: false
                         }
                     ) {
-                        uuid
+                        order {
+                            uuid
+                        }
                     }
                 }';
 
