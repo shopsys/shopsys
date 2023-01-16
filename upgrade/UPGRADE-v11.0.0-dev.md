@@ -1030,4 +1030,18 @@ There you can find links to upgrade notes for other versions too.
         - __construct(DomainChoiceHandler $domainChoiceHelper, RouterInterface $router)
         + __construct(DomainChoiceHandler $domainChoiceHelper, RouterMatchCommand $routerMatchCommand, KernelInterface $kernel)
         ```
-    - also see #project-base-diff for more information about changes needed to be done in your project
+    - `Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(TokenFacade $tokenFacade)
+        + __construct(TokenFacade $tokenFacade, FrontendApiUserProvider $frontendApiUserProvider)
+        ```
+        - method `__construct` changed its interface:
+        ```diff
+        - checkCredentials($credentials, UserInterface $user): bool
+        + checkCredentials(?string $credentials): bool
+        ```
+        - method `getUser` has been removed without substitution
+        - method `supportsRememberMe` has been removed without substitution
+        - method `start` has been removed without substitution
+      - also see #project-base-diff for more information about changes needed to be done in your project

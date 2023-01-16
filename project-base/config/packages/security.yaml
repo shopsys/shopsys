@@ -44,9 +44,8 @@ security:
             pattern: ^/graphql
             provider: frontend_api_user_identities
             stateless: true
-            guard:
-                authenticators:
-                    - Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator
+            custom_authenticators:
+                - Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator
         frontend:
             pattern: ^/
             provider: user_identities

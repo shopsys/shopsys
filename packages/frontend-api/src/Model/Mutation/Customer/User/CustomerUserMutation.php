@@ -85,7 +85,7 @@ class CustomerUserMutation extends BaseTokenMutation implements MutationInterfac
         CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         CustomerUserFacade $customerUserFacade,
         CustomerUserDataFactory $customerUserDataFactory,
-        TokenFacade $tokenFacade
+        TokenFacade $tokenFacade,
     ) {
         parent::__construct($tokenStorage);
 
