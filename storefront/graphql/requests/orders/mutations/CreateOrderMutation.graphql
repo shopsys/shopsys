@@ -54,11 +54,17 @@ mutation CreateOrderMutation(
             newsletterSubscription: $newsletterSubscription
         }
     ) {
-        number
-        uuid
-        urlHash
-        payment {
-            type
+        orderCreated
+        order {
+            number
+            uuid
+            urlHash
+            payment {
+                type
+            }
+        }
+        cart {
+            ...CartFragment
         }
     }
 }

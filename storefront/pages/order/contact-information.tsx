@@ -11,7 +11,7 @@ import {
     useContactInformationForm,
     useContactInformationFormMeta,
 } from 'components/Pages/Order/ContactInformation/formMeta';
-import { useCurrentCart } from 'connectors/cart/Cart';
+import { handleCartModifications, useCurrentCart } from 'connectors/cart/Cart';
 import { useCreateOrderMutationApi } from 'graphql/generated';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
@@ -19,6 +19,7 @@ import { onPurchaseOrderGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
+import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandleContactInformationNonTextChanges';
 import { useGtmShippingDataView } from 'hooks/gtm/useGtmShippingDataView';
@@ -41,6 +42,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
         domainUrl,
     );
     const currentCart = useCurrentCart();
+    const [changePaymentInCart] = useChangePaymentInCart();
     const t = useTypedTranslationFunction();
     const [{ fetching }, createOrder] = useCreateOrderMutationApi();
     const [formProviderMethods, defaultValues] = useContactInformationForm();
@@ -115,6 +117,8 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
 
             if (
                 createOrderResult.data !== undefined &&
+                createOrderResult.data.CreateOrder.orderCreated === true &&
+                createOrderResult.data.CreateOrder.order !== null &&
                 currentCart.cart !== null &&
                 currentCart.transport !== null &&
                 currentCart.payment !== null
@@ -125,16 +129,24 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                     currentCart.pickupPlace,
                     currentCart.payment,
                     currentCart.promoCode,
-                    createOrderResult.data.CreateOrder.number,
+                    createOrderResult.data.CreateOrder.order.number,
                     domainUrl,
                 );
 
                 dispatch(userActions.setCartUuid(null));
                 dispatch(userActions.setOrderConfirmationAccess(true));
-                dispatch(userActions.setOrderUrlHash(createOrderResult.data.CreateOrder.urlHash));
-                dispatch(userActions.setLastOrderUuid(createOrderResult.data.CreateOrder.uuid));
-                dispatch(userActions.setLastOrderPaymentType(createOrderResult.data.CreateOrder.payment.type));
+                dispatch(userActions.setOrderUrlHash(createOrderResult.data.CreateOrder.order.urlHash));
+                dispatch(userActions.setLastOrderUuid(createOrderResult.data.CreateOrder.order.uuid));
+                dispatch(userActions.setLastOrderPaymentType(createOrderResult.data.CreateOrder.order.payment.type));
                 router.push(orderConfirmationUrl);
+            }
+
+            if (
+                createOrderResult.data !== undefined &&
+                createOrderResult.data.CreateOrder.orderCreated === false &&
+                createOrderResult.data.CreateOrder.cart !== null
+            ) {
+                handleCartModifications(createOrderResult.data.CreateOrder.cart.modifications, t, changePaymentInCart);
             }
 
             handleFormErrors(createOrderResult.error, formProviderMethods, 'shipping data', t, formMeta.messages.error);
@@ -154,6 +166,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
             domainUrl,
             router,
             orderConfirmationUrl,
+            changePaymentInCart,
         ],
     );
 
