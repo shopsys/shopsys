@@ -39,3 +39,7 @@ services:
 
     Lcobucci\JWT\Configuration:
         factory: ['@Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationFactory', create]
+
+    Shopsys\FrontendApiBundle\Component\SessionChecker\SessionChecker:
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: -999 } # must be run before the session is closed (in Symfony\Component\HttpKernel\EventListener\SessionListener::onKernelResponse)

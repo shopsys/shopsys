@@ -876,6 +876,25 @@ There you can find links to upgrade notes for other versions too.
 - session is valid for a year and the cart is now only deleted after 130 days from the user's last activity ([#2537](https://github.com/shopsys/shopsys/pull/2537))
     - see #project-base-diff to update your project
 
+- avoid the session starting in the frontend API ([#2497](https://github.com/shopsys/shopsys/pull/2497))
+    - beware, the changes might affect you even if you do not use the FE API in your project
+    - class `Shopsys\FrameworkBundle\Component\Error\LogoutExceptionSubscriber`:
+        - property `$flashBag` was removed, you can use `$this->flashBagProvider->getFlashBag()` to access the implementation of `FlashBagInterface` instead
+        - the constructor changed the interface:
+        ```diff
+            public function __construct(
+        -        FlashBagInterface $flashBag,
+        +        FlashBagProvider $flashBagProvider,
+        ```
+    - class `Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade`:
+        - property `$flashBag` was removed, you can use `$this->flashBagProvider->getFlashBag()` to access the implementation of `FlashBagInterface` instead
+        - the constructor changed the interface:
+        ```diff
+            public function __construct(
+        -        FlashBagInterface $flashBag,
+        +        FlashBagProvider $flashBagProvider,
+        ```
+
 ## Composer dependencies
 
 - replace swiftmailer with symfony/mailer ([#2470](https://github.com/shopsys/shopsys/pull/2470))

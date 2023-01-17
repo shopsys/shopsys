@@ -88,6 +88,15 @@ class CartMigrationFacade
      */
     public function onKernelController(ControllerEvent $event): void
     {
+        $frontendApiControllerClass = 'Shopsys\FrontendApiBundle\Controller\FrontendApiController';
+        $controller = $event->getController();
+        if (is_array($controller) && isset($controller[0])) {
+            $controller = $controller[0];
+        }
+
+        if ($controller instanceof $frontendApiControllerClass) {
+            return;
+        }
         $session = $event->getRequest()->getSession();
 
         $previousCartIdentifier = $session->get(static::SESSION_PREVIOUS_CART_IDENTIFIER);

@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Error;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\FlashMessage\FlashBagProvider;
 use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessage;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\RouterInterface;
@@ -18,9 +18,9 @@ use Symfony\Component\Security\Core\Exception\LogoutException;
 class LogoutExceptionSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface
+     * @var \Shopsys\FrameworkBundle\Component\FlashMessage\FlashBagProvider
      */
-    protected $flashBag;
+    protected FlashBagProvider $flashBagProvider;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
@@ -38,18 +38,18 @@ class LogoutExceptionSubscriber implements EventSubscriberInterface
     protected $domain;
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag
+     * @param \Shopsys\FrameworkBundle\Component\FlashMessage\FlashBagProvider $flashBagProvider
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Symfony\Component\Routing\RouterInterface $router
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        FlashBagInterface $flashBag,
+        FlashBagProvider $flashBagProvider,
         CurrentCustomerUser $currentCustomerUser,
         RouterInterface $router,
         Domain $domain
     ) {
-        $this->flashBag = $flashBag;
+        $this->flashBagProvider = $flashBagProvider;
         $this->currentCustomerUser = $currentCustomerUser;
         $this->router = $router;
         $this->domain = $domain;
@@ -78,7 +78,7 @@ class LogoutExceptionSubscriber implements EventSubscriberInterface
                 $domainId = $this->currentCustomerUser->findCurrentCustomerUser()->getDomainId();
                 $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
-                $this->flashBag->add(
+                $this->flashBagProvider->getFlashBag()?->add(
                     FlashMessage::KEY_ERROR,
                     t(
                         'There was an error during logout attempt. If you really want to sign out, please try it again.',

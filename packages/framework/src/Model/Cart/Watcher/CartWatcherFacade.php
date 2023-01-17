@@ -3,11 +3,11 @@
 namespace Shopsys\FrameworkBundle\Model\Cart\Watcher;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\FlashMessage\FlashBagProvider;
 use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessage;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Twig\Environment;
 
 abstract class CartWatcherFacade
@@ -28,9 +28,9 @@ abstract class CartWatcherFacade
     protected $currentCustomerUser;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface
+     * @var \Shopsys\FrameworkBundle\Component\FlashMessage\FlashBagProvider
      */
-    protected $flashBag;
+    protected FlashBagProvider $flashBagProvider;
 
     /**
      * @var \Twig\Environment
@@ -38,20 +38,20 @@ abstract class CartWatcherFacade
     protected $twigEnvironment;
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag
+     * @param \Shopsys\FrameworkBundle\Component\FlashMessage\FlashBagProvider $flashBagProvider
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher $cartWatcher
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Twig\Environment $twigEnvironment
      */
     public function __construct(
-        FlashBagInterface $flashBag,
+        FlashBagProvider $flashBagProvider,
         EntityManagerInterface $em,
         CartWatcher $cartWatcher,
         CurrentCustomerUser $currentCustomerUser,
         Environment $twigEnvironment
     ) {
-        $this->flashBag = $flashBag;
+        $this->flashBagProvider = $flashBagProvider;
         $this->em = $em;
         $this->cartWatcher = $cartWatcher;
         $this->currentCustomerUser = $currentCustomerUser;
@@ -79,7 +79,7 @@ abstract class CartWatcherFacade
         );
 
         foreach ($modifiedItems as $cartItem) {
-            $this->flashBag->add(FlashMessage::KEY_INFO, $messageTemplate->render(['name' => $cartItem->getName()]));
+            $this->flashBagProvider->getFlashBag()?->add(FlashMessage::KEY_INFO, $messageTemplate->render(['name' => $cartItem->getName()]));
         }
 
         if (count($modifiedItems) > 0) {
@@ -100,12 +100,13 @@ abstract class CartWatcherFacade
             $this->getMessageForNoLongerAvailableExistingProduct()
         );
 
+        $flashBag = $this->flashBagProvider->getFlashBag();
         foreach ($notVisibleItems as $cartItem) {
             try {
                 $productName = $cartItem->getName();
-                $this->flashBag->add(FlashMessage::KEY_ERROR, $messageTemplate->render(['name' => $productName]));
+                $flashBag?->add(FlashMessage::KEY_ERROR, $messageTemplate->render(['name' => $productName]));
             } catch (ProductNotFoundException $e) {
-                $this->flashBag->add(
+                $flashBag?->add(
                     FlashMessage::KEY_ERROR,
                     $this->getMessageForNoLongerAvailableProduct()
                 );
