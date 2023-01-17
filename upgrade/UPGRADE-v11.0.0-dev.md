@@ -870,6 +870,9 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
 - fill missing customer demo data for smooth testing of application ([#2529](https://github.com/shopsys/shopsys/pull/2529))
     - see #project-base-diff to update your project
+- remove product variant urls from sitemap ([#2530](https://github.com/shopsys/shopsys/pull/2530))
+    - replace usages of `SitemapFacade::getSitemapItemsForVisibleProducts()` with `SitemapFacade::getSitemapItemsForListableProducts()` in your project as old method no longer exists
+    - replace usages of `SitemapRepository::getSitemapItemsForVisibleProducts()` with `SitemapRepository::getSitemapItemsForListableProducts()` in your project as old method no longer exists
 
 ## Composer dependencies
 
