@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -24,7 +25,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * )
  * @ORM\Entity
  */
-class CustomerUser implements UserInterface, TimelimitLoginInterface
+class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -271,7 +272,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @return string
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
