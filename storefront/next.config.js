@@ -71,6 +71,7 @@ const moduleExports = nextTranslate({
         internalGraphqlEndpoint: process.env.INTERNAL_GRAPHQL_ENDPOINT,
     },
     publicRuntimeConfig: {
+        reduxExpirationDays: process.env.REDUX_EXPIRATION_DAYS,
         googleMapApiKey: process.env.GOOGLE_MAP_API_KEY,
         packeteryApiKey: process.env.PACKETERY_API_KEY,
         sentryDsn: process.env.SENTRY_DSN ?? '',
