@@ -26,7 +26,7 @@ import { useGtmShippingDataView } from 'hooks/gtm/useGtmShippingDataView';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { contactInformationActions } from 'redux/slices/contactInformation';
@@ -41,6 +41,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
         ['/order/transport-and-payment', '/order-confirmation'],
         domainUrl,
     );
+    const [orderCreating, setOrderCreating] = useState(false);
     const currentCart = useCurrentCart();
     const [changePaymentInCart] = useChangePaymentInCart();
     const t = useTypedTranslationFunction();
@@ -60,6 +61,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
 
     const onCreateOrderHandler = useCallback<SubmitHandler<typeof defaultValues>>(
         async (formValues) => {
+            setOrderCreating(true);
             dispatch(contactInformationActions.setContactInformation(formValues));
 
             let deliveryInfo;
@@ -139,7 +141,9 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                 dispatch(userActions.setLastOrderUuid(createOrderResult.data.CreateOrder.order.uuid));
                 dispatch(userActions.setLastOrderPaymentType(createOrderResult.data.CreateOrder.order.payment.type));
                 router.push(orderConfirmationUrl);
+                return;
             }
+            setOrderCreating(false);
 
             if (
                 createOrderResult.data !== undefined &&
@@ -173,7 +177,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <EmptyCartWrapper currentCart={currentCart} title={t('Order')}>
+            <EmptyCartWrapper currentCart={currentCart} title={t('Order')} enableHandling={!orderCreating}>
                 <OrderLayout activeStep={3}>
                     <FormProvider {...formProviderMethods}>
                         <Form onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}>

@@ -12,9 +12,16 @@ type EmptyCartWrapperProps = {
     currentCart: CurrentCartType;
     title: string;
     isCartPage?: boolean;
+    enableHandling?: boolean;
 };
 
-export const EmptyCartWrapper: FC<EmptyCartWrapperProps> = ({ currentCart, title, children, isCartPage = false }) => {
+export const EmptyCartWrapper: FC<EmptyCartWrapperProps> = ({
+    currentCart,
+    title,
+    children,
+    isCartPage = false,
+    enableHandling = true,
+}) => {
     const router = useRouter();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [transportAndPaymentUrl] = getInternationalizedStaticUrls(['/order/transport-and-payment'], domainUrl);
@@ -23,6 +30,10 @@ export const EmptyCartWrapper: FC<EmptyCartWrapperProps> = ({ currentCart, title
     const isLoading = !currentCart.isInitiallyLoaded || currentCart.isLoading;
 
     useEffect(() => {
+        if (enableHandling === false) {
+            return;
+        }
+
         if (isLoading) {
             setInitiatedLoading(true);
         }
@@ -37,7 +48,15 @@ export const EmptyCartWrapper: FC<EmptyCartWrapperProps> = ({ currentCart, title
                 setIsLoadingVisible(false);
             }
         }
-    }, [initiatedLoading, isLoading, currentCart.payment, currentCart.transport, router, transportAndPaymentUrl]);
+    }, [
+        initiatedLoading,
+        isLoading,
+        currentCart.payment,
+        currentCart.transport,
+        router,
+        transportAndPaymentUrl,
+        enableHandling,
+    ]);
 
     if (isLoadingVisible) {
         return isCartPage ? (
