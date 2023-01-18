@@ -1,6 +1,6 @@
-# [Upgrade from v9.1.2 to v9.1.3-dev](https://github.com/shopsys/shopsys/compare/v9.1.2...9.1)
+# [Upgrade from v9.1.2 to v9.1.3](https://github.com/shopsys/shopsys/compare/v9.1.2...9.1)
 
-This guide contains instructions to upgrade from version v9.1.2 to v9.1.3-dev.
+This guide contains instructions to upgrade from version v9.1.2 to v9.1.3.
 
 **Before you start, don't forget to take a look at [general instructions](https://github.com/shopsys/shopsys/blob/7.3/UPGRADE.md) about upgrading.**
 There you can find links to upgrade notes for other versions too.
@@ -16,8 +16,8 @@ There you can find links to upgrade notes for other versions too.
   - allow plugins in your `composer.json`
     - this is required when using composer in version `2.2.0` and above. If you are running your project in docker, you might need to re-build your docker image to get the upgraded composer.
   - upgrade `composer/composer` to `^1.10.23` so you get rid of [the security problem](https://github.com/composer/composer/security/advisories/GHSA-frqg-7g38-6gcf) 
-- fix your standards
-  - extract parts of `CustomerUserDataFixture::getCustomerUserUpdateData()` into private methods to lower the cyclomatic complexity of the method
+  - fix your standards
+    - extract parts of `CustomerUserDataFixture::getCustomerUserUpdateData()` into private methods to lower the cyclomatic complexity of the method
   - see #project-base-diff to update your project
 - extract part of `install.sh` script into a new separate file (`configure.sh`) ([#2404](https://github.com/shopsys/shopsys/pull/2404))
   - see #project-base-diff to update your project
