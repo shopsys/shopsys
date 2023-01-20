@@ -35,7 +35,7 @@ export const EmptyCartWrapper: FC<EmptyCartWrapperProps> = ({
             return;
         }
 
-        if (isLoading) {
+        if (isLoading || currentCart.isCartEmpty) {
             setInitiatedLoading(true);
         }
 
