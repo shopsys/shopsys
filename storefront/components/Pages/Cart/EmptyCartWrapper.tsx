@@ -31,6 +31,7 @@ export const EmptyCartWrapper: FC<EmptyCartWrapperProps> = ({
 
     useEffect(() => {
         if (enableHandling === false) {
+            setIsLoadingVisible(true);
             return;
         }
 
@@ -40,8 +41,9 @@ export const EmptyCartWrapper: FC<EmptyCartWrapperProps> = ({
 
         if (initiatedLoading && !isLoading) {
             if (
-                (currentCart.transport === null || currentCart.payment === null) &&
-                router.route === '/order/contact-information'
+                currentCart.isCartEmpty === false &&
+                router.route === '/order/contact-information' &&
+                (currentCart.transport === null || currentCart.payment === null)
             ) {
                 router.replace(transportAndPaymentUrl);
             } else {
@@ -53,6 +55,7 @@ export const EmptyCartWrapper: FC<EmptyCartWrapperProps> = ({
         isLoading,
         currentCart.payment,
         currentCart.transport,
+        currentCart.isCartEmpty,
         router,
         transportAndPaymentUrl,
         enableHandling,
