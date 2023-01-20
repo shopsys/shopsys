@@ -35,7 +35,7 @@ export const fetcher =
             const body = removeDirectiveFromQuery(init.body);
             const host = (init.headers ? new Headers(init.headers) : new Headers()).get('OriginalHost');
             const [, queryName] = init.body.match(QUERY_NAME_REGEXP) ?? [];
-            const hash = `${REDIS_PREFIX_PATTERN}${host}:${queryName}:${md5(body).toString().substring(0, 7)}`;
+            const hash = `${REDIS_PREFIX_PATTERN}${queryName}:${host}:${md5(body).toString().substring(0, 7)}`;
 
             const fromCache = await redisClient.get(hash);
             if (fromCache !== null) {

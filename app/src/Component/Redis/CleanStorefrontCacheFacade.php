@@ -8,6 +8,8 @@ use Redis;
 
 class CleanStorefrontCacheFacade
 {
+    public const NAVIGATION_QUERY_KEY_PART = 'NavigationQuery';
+
     /**
      * @var \Redis
      */
@@ -22,27 +24,29 @@ class CleanStorefrontCacheFacade
         $this->storefrontGraphqlQueryClient = $storefrontGraphqlQueryClient;
     }
 
-    public function cleanStorefrontCache(): void
+    /**
+     * @param string $queryKey
+     */
+    public function cleanStorefrontGraphqlQueryCache(string $queryKey = ''): void
     {
         $prefix = (string)$this->storefrontGraphqlQueryClient->getOption(Redis::OPT_PREFIX);
 
-        $keyPattern = $prefix . '*';
-
+        $keyPattern = $prefix . $queryKey . '*';
         $iterator = null;
         $toRemove = [];
 
         do {
             $keys = $this->storefrontGraphqlQueryClient->scan($iterator, $keyPattern);
 
-            if ($keys === false) {
+            if ($keys === false || count($keys) === 0) {
                 continue;
             }
 
             foreach ($keys as $key) {
                 $toRemove[] = str_replace($prefix, '', $key);
             }
-
-            $this->storefrontGraphqlQueryClient->unlink($toRemove);
         } while (is_numeric($iterator) && $iterator > 0);
+
+        $this->storefrontGraphqlQueryClient->unlink($toRemove);
     }
 }

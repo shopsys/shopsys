@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Navigation;
 
+use App\Component\Redis\CleanStorefrontCacheFacade;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
@@ -11,41 +12,19 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 class NavigationItemFacade
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
-     */
-    private EntityManagerDecorator $em;
-
-    /**
-     * @var \App\Model\Navigation\NavigationItemRepository
-     */
-    private NavigationItemRepository $navigationItemRepository;
-
-    /**
-     * @var \App\Model\Navigation\NavigationItemCategoryFacade
-     */
-    private NavigationItemCategoryFacade $navigationItemCategoryFacade;
-
-    /**
-     * @var \App\Model\Navigation\NavigationItemDetailFactory
-     */
-    private NavigationItemDetailFactory $navigationItemDetailFactory;
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $entityManager
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \App\Model\Navigation\NavigationItemRepository $navigationItemRepository
      * @param \App\Model\Navigation\NavigationItemCategoryFacade $navigationItemCategoryFacade
      * @param \App\Model\Navigation\NavigationItemDetailFactory $navigationItemDetailFactory
+     * @param \App\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
      */
     public function __construct(
-        EntityManagerDecorator $entityManager,
-        NavigationItemRepository $navigationItemRepository,
-        NavigationItemCategoryFacade $navigationItemCategoryFacade,
-        NavigationItemDetailFactory $navigationItemDetailFactory
+        private readonly EntityManagerDecorator $em,
+        private readonly NavigationItemRepository $navigationItemRepository,
+        private readonly NavigationItemCategoryFacade $navigationItemCategoryFacade,
+        private readonly NavigationItemDetailFactory $navigationItemDetailFactory,
+        private readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
     ) {
-        $this->em = $entityManager;
-        $this->navigationItemRepository = $navigationItemRepository;
-        $this->navigationItemCategoryFacade = $navigationItemCategoryFacade;
-        $this->navigationItemDetailFactory = $navigationItemDetailFactory;
     }
 
     /**
@@ -102,6 +81,8 @@ class NavigationItemFacade
         $this->navigationItemCategoryFacade
             ->refreshCategoriesForNavigationItem($navigationItem, $navigationItemData);
 
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::NAVIGATION_QUERY_KEY_PART);
+
         return $navigationItem;
     }
 
@@ -121,6 +102,8 @@ class NavigationItemFacade
 
         $this->navigationItemCategoryFacade
             ->refreshCategoriesForNavigationItem($navigationItem, $navigationItemData);
+
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::NAVIGATION_QUERY_KEY_PART);
 
         return $navigationItem;
     }
@@ -154,5 +137,7 @@ class NavigationItemFacade
     {
         $this->em->remove($navigationItem);
         $this->em->flush();
+
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::NAVIGATION_QUERY_KEY_PART);
     }
 }
