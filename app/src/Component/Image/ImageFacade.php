@@ -266,10 +266,6 @@ class ImageFacade extends BaseImageFacade
      */
     protected function getAdditionalImageUrl(DomainConfig $domainConfig, int $additionalSizeIndex, BaseImage $image, ?string $sizeName)
     {
-        if (!$this->imageLocator->imageExists($image)) {
-            throw new ImageNotFoundException();
-        }
-
         $cacheId = $this->getCacheIdForImageUrl(
             $image->getId(),
             $domainConfig->getId(),
@@ -281,6 +277,10 @@ class ImageFacade extends BaseImageFacade
         return $this->cache->get(
             $cacheId,
             function () use ($image, $domainConfig, $additionalSizeIndex, $sizeName) {
+                if (!$this->imageLocator->imageExists($image)) {
+                    throw new ImageNotFoundException();
+                }
+
                 $seoEntityName = $this->getSeoNameByImageAndLocale($image, $domainConfig->getLocale());
                 $friendlyUrlSeoEntityName = $this->getFriendlyUrlSlug($seoEntityName);
 
