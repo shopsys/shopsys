@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Article;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
@@ -111,6 +112,13 @@ class ArticleFormType extends AbstractType
                     new Constraints\NotBlank(['message' => 'Please enter article content']),
                 ],
                 'label' => t('Content'),
+            ])
+            ->add('createdAt', DatePickerType::class, [
+                'required' => true,
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please enter date of creation']),
+                ],
+                'label' => t('Creation date'),
             ]);
 
         $builderSeoData = $builder->create('seo', GroupType::class, [

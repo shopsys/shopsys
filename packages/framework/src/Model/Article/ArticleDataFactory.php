@@ -83,6 +83,7 @@ class ArticleDataFactory implements ArticleDataFactoryInterface
         $articleData->placement = $article->getPlacement();
         $articleData->hidden = $article->isHidden();
         $articleData->seoH1 = $article->getSeoH1();
+        $articleData->createdAt = $article->getCreatedAt();
 
         foreach ($this->domain->getAll() as $domainConfig) {
             $articleData->urls->mainFriendlyUrlsByDomainId[$domainConfig->getId()] =
