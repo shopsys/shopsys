@@ -207,3 +207,30 @@ Basically, there is no definite answer to the question of how many tests are eno
 It depends on how much we want to be sure that things will not break in future and how much time are we willing to invest into that.
 
 Be aware that very high test coverage can lead to expensive maintenance that may overweight the benefits.
+
+## Running tests
+This command starts the build of a clean test environment, initializes the test data into a separate database, and prepares the tests to run. 
+Subsequently, unit, functional and smoke tests are performed.
+```sh
+php phing tests
+```
+
+### Run only functional tests
+If you have already run tests and want to run only functional tests, you can use the following command to do so. 
+However, keep in mind that the test environment must already be prepared, see previous point.
+```sh
+php phing tests-functional
+```
+
+### Run single functional test
+Sometimes you may want to debug individual test without running the whole functional test suite (which can take several minutes).
+```sh
+php phing tests-functional-single
+```
+
+### Run only smoke tests
+If you have already run tests and want to run only smoke tests, you can use the following command to do so.
+However, keep in mind that the test environment must already be prepared, see previous point.
+```sh
+php phing tests-smoke
+```
