@@ -33,6 +33,7 @@ twig:
         - 'Admin/Form/rolesType.html.twig'
         - 'Admin/Form/paymentTransactionsFormTheme.html.twig'
         - 'Admin/Form/languageConstantFormTheme.html.twig'
+        - 'Admin/Form/grapesJsType.html.twig'
     strict_variables: true
     globals:
         globalMultipleFormSetting: '@Shopsys\FrameworkBundle\Component\Form\MultipleFormSetting'

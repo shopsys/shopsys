@@ -65,7 +65,9 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
                         {formatDate(blogArticle.publishDate, 'l')}
                     </BlogArticleDate>
                     {textWithProductNames !== null && (
-                        <UserText htmlContent={textWithProductNames} testIdentifier={TEST_IDENTIFIER + 'content'} />
+                        <div className="gjs-editable" data-gjs-type="editable">
+                            <UserText htmlContent={textWithProductNames} testIdentifier={TEST_IDENTIFIER + 'content'} />
+                        </div>
                     )}
                 </BlogArticleTextContent>
 
