@@ -40,9 +40,6 @@ msgstr ""
 msgid "EAN cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Each parameter can be used only once"
-msgstr ""
-
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr ""
 

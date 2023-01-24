@@ -40,9 +40,6 @@ msgstr "Kód státu {{ country_code }} neexistuje. Povolené kódy státu jsou {
 msgid "EAN cannot be longer than {{ limit }} characters"
 msgstr "EAN nesmí být delší než {{ limit }} znaků"
 
-msgid "Each parameter can be used only once"
-msgstr "Každý parametr může být nastaven pouze jednou"
-
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr "E-mail nesmí být delší než {{ limit }} znaků"
 
