@@ -18,7 +18,11 @@ const Index: FC = () => {
             <BlogArticleWrapper>
                 <BlogArticleTextContent>
                     <BlogArticleDate>{new Date().toLocaleDateString() + ''}</BlogArticleDate>
-                    <UserTextStyled className="gjs-editable" data-gjs-type="editable" />
+                    <UserTextStyled
+                        className="gjs-editable"
+                        data-gjs-type="editable"
+                        style={{ paddingTop: 15, paddingBottom: 15 }}
+                    />
                 </BlogArticleTextContent>
             </BlogArticleWrapper>
         </Webline>

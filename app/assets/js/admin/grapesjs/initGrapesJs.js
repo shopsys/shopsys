@@ -33,29 +33,42 @@ class Grapesjs {
             height: '100%'
         });
 
-        const content = $('#' + textareaId).val();
+        const content = $.get({
+            url: frontendUrl,
+            async: false
+        }).responseText;
 
-        grapesjs.init({
+        const editor = grapesjs.init({
             container: '#grapesjs',
             components: content,
             height: '100%',
             width: '100%',
             storageManager: false,
             noticeOnUnload: false,
-            plugins: ['gjs-preset-webpage', 'customButtons'],
+            exportWrapper: true,
+            wrapperIsBody: false,
+            plugins: ['gjs-preset-webpage', 'nonEditablePage', 'customButtons'],
             pluginsOpts: {
                 'gjs-preset-webpage': {
                     exportOpts: false,
-                    navbarOpts: false
+                    navbarOpts: false,
+                    formsOpts: false,
+                    customStyleManager: []
                 },
                 'customButtons': {
                     textareaId: textareaId
                 }
             },
             styleManager: {
-                clearProperties: true
+                clearProperties: true,
+                sectors: []
             }
         });
+
+        editor.Panels.getButton('options', 'sw-visibility').set('active', 1);
+
+        const editableContent = $('#' + textareaId).val();
+        editor.getWrapper().find('.gjs-editable')[0].append(editableContent);
     }
 }
 
