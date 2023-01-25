@@ -6,7 +6,8 @@ framework:
     router:
         utf8: true
         strict_requirements: true
-    form: ~
+    form:
+        legacy_error_messages: false
     csrf_protection: ~
     validation: { enable_annotations: true }
     trusted_hosts: ~
