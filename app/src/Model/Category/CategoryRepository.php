@@ -228,9 +228,7 @@ class CategoryRepository extends BaseCategoryRepository
     public function getAllVisibleByDomainIdQueryBuilder($domainId)
     {
         $queryBuilder = $this->getAllQueryBuilder()
-            ->join('c.domains', 'cd')
-            ->andWhere('cd.domainId = :domainId')
-            ->andWhere('cd.visible = TRUE');
+            ->join('c.domains', 'cd', Join::WITH, 'cd.domainId = :domainId AND cd.visible = TRUE');
 
         $queryBuilder->setParameter('domainId', $domainId);
 

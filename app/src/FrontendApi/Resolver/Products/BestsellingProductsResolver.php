@@ -6,7 +6,6 @@ namespace App\FrontendApi\Resolver\Products;
 
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
-use App\Model\Product\Product;
 use GraphQL\Executor\Promise\Promise;
 use InvalidArgumentException;
 use Overblog\DataLoader\DataLoaderInterface;
@@ -18,7 +17,7 @@ use Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingPr
 class BestsellingProductsResolver implements ResolverInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade
+     * @var \App\Model\Product\BestsellingProduct\CachedBestsellingProductFacade
      */
     private CachedBestsellingProductFacade $cachedBestsellingProductFacade;
 
@@ -38,7 +37,7 @@ class BestsellingProductsResolver implements ResolverInterface
     private DataLoaderInterface $productsSellableByIdsBatchLoader;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade $cachedBestsellingProductFacade
+     * @param \App\Model\Product\BestsellingProduct\CachedBestsellingProductFacade $cachedBestsellingProductFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
@@ -75,18 +74,10 @@ class BestsellingProductsResolver implements ResolverInterface
             );
         }
 
-        /** @var \App\Model\Product\Product[] $bestsellingProducts */
-        $bestsellingProducts = $this->cachedBestsellingProductFacade->getAllOfferedBestsellingProducts(
+        $bestsellingProductsIds = $this->cachedBestsellingProductFacade->getAllOfferedBestsellingProductIds(
             $this->domain->getId(),
             $category,
             $this->currentCustomerUser->getPricingGroup()
-        );
-
-        $bestsellingProductsIds = array_map(
-            static function (Product $product) {
-                return $product->getId();
-            },
-            $bestsellingProducts
         );
 
         return $this->productsSellableByIdsBatchLoader->load($bestsellingProductsIds);

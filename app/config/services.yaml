@@ -847,3 +847,6 @@ services:
     App\Model\Navigation\NavigationSaveOrderingListener:
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
+    Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade:
+        alias: App\Model\Product\BestsellingProduct\CachedBestsellingProductFacade
