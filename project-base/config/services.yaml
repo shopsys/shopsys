@@ -36,6 +36,12 @@ services:
             - '@Redis'
             - { 'prefix': '%env(REDIS_PREFIX)%session:', ttl: 604800 }
 
+    Psr\Container\ContainerInterface:
+        alias: service_container
+
+    Symfony\Component\DependencyInjection\ContainerInterface:
+        alias: service_container
+
     App\Form\Front\Order\DomainAwareOrderFlowFactory: ~
 
     Shopsys\FrameworkBundle\Model\Order\OrderFlowFactoryInterface:
