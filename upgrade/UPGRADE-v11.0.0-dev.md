@@ -1175,4 +1175,16 @@ There you can find links to upgrade notes for other versions too.
       - __construct(CustomerUserRefreshTokenChainDataFactoryInterface $customerUserRefreshTokenChainDataFactory, CustomerUserRefreshTokenChainFactoryInterface $customerUserRefreshTokenChainFactory, EncoderFactoryInterface $encoderFactory, CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository)
       + __construct(CustomerUserRefreshTokenChainDataFactoryInterface $customerUserRefreshTokenChainDataFactory, CustomerUserRefreshTokenChainFactoryInterface $customerUserRefreshTokenChainFactory, PasswordHasherFactoryInterface $passwordHasherFactory, CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository)
       ```
+    - `Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade` class:
+        - method `__construct` changed its interface:
+      ```diff
+      - __construct(FlashBagInterface $flashBag, EntityManagerInterface $em, CartWatcher $cartWatcher, CurrentCustomerUser $currentCustomerUser, Environment $twigEnvironment)
+      + __construct(RequestStack $requestStack, EntityManagerInterface $em, CartWatcher $cartWatcher, CurrentCustomerUser $currentCustomerUser, Environment $twigEnvironment)
+      ```
+    - `Shopsys\FrameworkBundle\Component\Error\LogoutExceptionSubscriber` class:
+        - method `__construct` changed its interface:
+      ```diff
+      - __construct(FlashBagInterface $flashBag, CurrentCustomerUser $currentCustomerUser, RouterInterface $router, Domain $domain)
+      + __construct(RequestStack $requestStack, CurrentCustomerUser $currentCustomerUser, RouterInterface $router, Domain $domain)
+      ```
     - also see #project-base-diff for more information about changes needed to be done in your project
