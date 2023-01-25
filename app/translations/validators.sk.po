@@ -127,6 +127,9 @@ msgstr ""
 msgid "Please enter email"
 msgstr ""
 
+msgid "Please enter email content"
+msgstr ""
+
 msgid "Please enter first name"
 msgstr ""
 
@@ -345,6 +348,9 @@ msgstr ""
 
 msgid "User with provided email address does not exist."
 msgstr "Používateľ s uvedenou e-mailovou adresou neexistuje."
+
+msgid "Variable {{ needle }} is required"
+msgstr ""
 
 msgid "Vyplňte prosím URL"
 msgstr ""

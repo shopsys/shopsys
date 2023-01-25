@@ -613,6 +613,9 @@ msgstr ""
 msgid "Editing banner"
 msgstr "Upravit banner"
 
+msgid "Editing email template - %name%"
+msgstr "Editace šablony emailu - %name%"
+
 msgid "Editing flag"
 msgstr "Editace příznaku"
 
@@ -639,6 +642,12 @@ msgstr "E-mail"
 
 msgid "Email newsletter"
 msgstr "E-maily zpravodaje"
+
+msgid "Email settings modified."
+msgstr "Nastavení emailu bylo upraveno."
+
+msgid "Email template <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Byla upravena e-mailová šablona <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
 
 msgid "Emailová šablona <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla vytvořena."
 msgstr ""
@@ -682,6 +691,9 @@ msgstr "Externí status transakce"
 msgid "Externí ID můstku"
 msgstr ""
 
+msgid "Facebook URL"
+msgstr ""
+
 msgid "Feeds - view"
 msgstr "XML Feedy - zobrazení"
 
@@ -708,6 +720,12 @@ msgstr "Příznaky - vše"
 
 msgid "Flags - view"
 msgstr "Příznaky - zobrazení"
+
+msgid "Footer"
+msgstr ""
+
+msgid "Footer Text"
+msgstr "Text v patičce"
 
 msgid "For registered customers only"
 msgstr "Pouze pro registrované zákazníky"
@@ -817,6 +835,9 @@ msgstr ""
 msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
 msgstr ""
 
+msgid "Instagram URL"
+msgstr ""
+
 msgid "Instalační manuál"
 msgstr ""
 
@@ -912,6 +933,9 @@ msgstr "Nastavení právních podmínek upraveno."
 
 msgid "Limits"
 msgstr "Limity"
+
+msgid "LinkedIn URL"
+msgstr "LinkedIn URL"
 
 msgid "List of language constants"
 msgstr "Přehled jazykových konstant"
@@ -1361,6 +1385,9 @@ msgid "Položka navigace <strong>{{ name }}</strong> byla smazána"
 msgstr ""
 
 msgid "Popis kategorie"
+msgstr ""
+
+msgid "Position of image"
 msgstr ""
 
 msgid "Postcode"
@@ -1825,6 +1852,9 @@ msgstr "Nastavení obchodních podmínek"
 msgid "Text"
 msgstr ""
 
+msgid "Text with image"
+msgstr ""
+
 msgid "Text zobrazený pod bannerem"
 msgstr ""
 
@@ -1848,6 +1878,9 @@ msgstr ""
 
 msgid "This status can't be deleted. This is automatically assigned status to all new orders."
 msgstr ""
+
+msgid "TikTok URL"
+msgstr "TikTok URL"
 
 msgid "Time format: \"hh:mm\", e.g.: \"07:45\", \"23:05\""
 msgstr "Formát času: \"hh:mm\", např.: \"07:45\", \"23:05\""
@@ -2169,6 +2202,9 @@ msgstr ""
 
 msgid "You have to set redirect code for redirect."
 msgstr "Pro nastavení přesměrování musíte zadat typ přesměrování."
+
+msgid "Youtube URL"
+msgstr ""
 
 msgid "Zadany kod neni spravny"
 msgstr ""

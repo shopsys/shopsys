@@ -47,3 +47,6 @@ fos_ck_editor:
         sharedspace:
             path: '/bundles/fosckeditor/plugins/sharedspace/'
             filename: 'plugin.js'
+        strinsert:
+            path: '/bundles/fosckeditor/plugins/strinsert/'
+            filename: 'plugin.js'

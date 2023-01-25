@@ -276,6 +276,9 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Flag\FlagGridFactory:
         alias: App\Model\Product\Flag\FlagGridFactory
 
+    Shopsys\FrameworkBundle\Controller\Admin\MailController:
+        class: App\Controller\Admin\MailController
+
     Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface:
         alias: App\Model\Product\ProductOnCurrentDomainElasticFacade
 
@@ -850,3 +853,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade:
         alias: App\Model\Product\BestsellingProduct\CachedBestsellingProductFacade
+
+    Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade:
+        alias: App\Model\Mail\Setting\MailSettingFacade
+
+    App\Model\Mail\MailTemplateBuilder: ~

@@ -180,6 +180,13 @@ team of {domain}
             'orderStatus' => $mailTemplateData->orderStatus,
         ]);
 
+        $mailTemplateData->body = <<<EOT
+            <img id="ivrlj" src="{$this->domain->getDomainConfigById($domainId)->getUrl()}/public/frontend/mail/logo.png" style="box-sizing: border-box; color: black; margin: 0 0 30px 0;">
+            <div id="ih6z5" style="box-sizing: border-box; padding: 10px;">
+                <div>{$mailTemplateData->body}</div>
+            </div>
+        EOT;
+
         if ($mailTemplate === null) {
             $mailTemplate = $this->mailTemplateFactory->create($name, $domainId, $mailTemplateData);
         } else {

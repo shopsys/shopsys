@@ -604,6 +604,9 @@ msgstr ""
 msgid "Editing banner"
 msgstr ""
 
+msgid "Editing email template - %name%"
+msgstr ""
+
 msgid "Editing flag"
 msgstr ""
 
@@ -629,6 +632,12 @@ msgid "Email"
 msgstr "Email"
 
 msgid "Email newsletter"
+msgstr ""
+
+msgid "Email settings modified."
+msgstr ""
+
+msgid "Email template <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr ""
 
 msgid "Emailová šablona <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla vytvořena."
@@ -673,6 +682,9 @@ msgstr ""
 msgid "Externí ID můstku"
 msgstr ""
 
+msgid "Facebook URL"
+msgstr ""
+
 msgid "Feeds - view"
 msgstr ""
 
@@ -698,6 +710,12 @@ msgid "Flags - full"
 msgstr ""
 
 msgid "Flags - view"
+msgstr ""
+
+msgid "Footer"
+msgstr ""
+
+msgid "Footer Text"
 msgstr ""
 
 msgid "For registered customers only"
@@ -808,6 +826,9 @@ msgstr ""
 msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
 msgstr ""
 
+msgid "Instagram URL"
+msgstr ""
+
 msgid "Instalační manuál"
 msgstr "Inštalačný manuál"
 
@@ -902,6 +923,9 @@ msgid "Legal conditions settings modified."
 msgstr ""
 
 msgid "Limits"
+msgstr ""
+
+msgid "LinkedIn URL"
 msgstr ""
 
 msgid "List of language constants"
@@ -1349,6 +1373,9 @@ msgid "Položka navigace <strong>{{ name }}</strong> byla smazána"
 msgstr ""
 
 msgid "Popis kategorie"
+msgstr ""
+
+msgid "Position of image"
 msgstr ""
 
 msgid "Postcode"
@@ -1804,6 +1831,9 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
+msgid "Text with image"
+msgstr ""
+
 msgid "Text zobrazený pod bannerem"
 msgstr ""
 
@@ -1823,6 +1853,9 @@ msgid "This status can't be deleted, because there is a functionality bounded to
 msgstr ""
 
 msgid "This status can't be deleted. This is automatically assigned status to all new orders."
+msgstr ""
+
+msgid "TikTok URL"
 msgstr ""
 
 msgid "Time format: \"hh:mm\", e.g.: \"07:45\", \"23:05\""
@@ -2126,6 +2159,9 @@ msgid "You have successfully paid order."
 msgstr ""
 
 msgid "You have to set redirect code for redirect."
+msgstr ""
+
+msgid "Youtube URL"
 msgstr ""
 
 msgid "Z Vašeho košíku bylo z důvodu nedostupnosti odstraněno zbožéí: <strong>{{ name }}</strong>. Prosím zkontrolujte si svojí objednávku."

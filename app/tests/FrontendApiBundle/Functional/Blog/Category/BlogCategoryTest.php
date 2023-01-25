@@ -136,8 +136,8 @@ class BlogCategoryTest extends GraphQlTestCase
                 'blogCategory' => [
                     'blogArticles' => [
                         'edges' => [
-                            ['node' => ['name' => t('GrapesJS page', [], 'dataFixtures', $locale)]],
                             ['node' => ['name' => t('Blog article for products testing', [], 'dataFixtures', $locale)]],
+                            ['node' => ['name' => t('GrapesJS page', [], 'dataFixtures', $locale)]],
                             ['node' => ['name' => t('Blog article example %counter% %locale%', ['%counter%' => 30, '%locale%' => $locale], 'dataFixtures', $locale)]],
                         ],
                     ],
@@ -171,8 +171,8 @@ class BlogCategoryTest extends GraphQlTestCase
                 'blogCategory' => [
                     'blogArticles' => [
                         'edges' => [
-                            ['node' => ['name' => t('GrapesJS page', [], 'dataFixtures', $locale)]],
                             ['node' => ['name' => t('Blog article for products testing', [], 'dataFixtures', $locale)]],
+                            ['node' => ['name' => t('GrapesJS page', [], 'dataFixtures', $locale)]],
                             ['node' => ['name' => t('Blog article example %counter% %locale%', ['%counter%' => 29, '%locale%' => $locale], 'dataFixtures', $locale)]],
                         ],
                     ],
