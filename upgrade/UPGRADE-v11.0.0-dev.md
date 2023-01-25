@@ -1157,4 +1157,22 @@ There you can find links to upgrade notes for other versions too.
         - __construct(FrontendCustomerUserProvider $frontendCustomerUserProvider, UserPasswordEncoderInterface $userPasswordEncoder, TokenFacade $tokenFacade)
         + __construct(FrontendCustomerUserProvider $frontendCustomerUserProvider, UserPasswordHasherInterface $userPasswordHasher, TokenFacade $tokenFacade)
         ```
+    - `Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(EntityManagerInterface $em, AdministratorRepository $administratorRepository, AdministratorFactoryInterface $administratorFactory, AdministratorRoleFacade $administratorRoleFacade, EncoderFactoryInterface $encoderFactory, TokenStorageInterface $tokenStorage)
+        + __construct(EntityManagerInterface $em, AdministratorRepository $administratorRepository, AdministratorFactoryInterface $administratorFactory, AdministratorRoleFacade $administratorRoleFacade, PasswordHasherFactoryInterface $passwordHasherFactory, TokenStorageInterface $tokenStorage)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(EntityManagerInterface $em, CustomerUserRepository $customerUserRepository, EncoderFactoryInterface $encoderFactory, ResetPasswordMailFacade $resetPasswordMailFacade, HashGenerator $hashGenerator, CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade)
+        + __construct(EntityManagerInterface $em, CustomerUserRepository $customerUserRepository, PasswordHasherFactoryInterface $passwordHasherFactory, ResetPasswordMailFacade $resetPasswordMailFacade, HashGenerator $hashGenerator, CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade` class:
+      - method `__construct` changed its interface:
+      ```diff
+      - __construct(CustomerUserRefreshTokenChainDataFactoryInterface $customerUserRefreshTokenChainDataFactory, CustomerUserRefreshTokenChainFactoryInterface $customerUserRefreshTokenChainFactory, EncoderFactoryInterface $encoderFactory, CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository)
+      + __construct(CustomerUserRefreshTokenChainDataFactoryInterface $customerUserRefreshTokenChainDataFactory, CustomerUserRefreshTokenChainFactoryInterface $customerUserRefreshTokenChainFactory, PasswordHasherFactoryInterface $passwordHasherFactory, CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository)
+      ```
     - also see #project-base-diff for more information about changes needed to be done in your project

@@ -3,75 +3,40 @@
 namespace Shopsys\FrameworkBundle\Model\Administrator;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingLastAdministratorException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSelfException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSuperadminException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DuplicateUserNameException;
 use Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade;
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class AdministratorFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository
-     */
-    protected $administratorRepository;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFactoryInterface
-     */
-    protected $administratorFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade
-     */
-    protected $administratorRoleFacade;
-
-    /**
-     * @var \Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface
-     */
-    protected $encoderFactory;
-
-    /**
-     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
-     */
-    protected $tokenStorage;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository $administratorRepository
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFactoryInterface $administratorFactory
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade $administratorRoleFacade
-     * @param \Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface $encoderFactory
+     * @param \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      */
     public function __construct(
-        EntityManagerInterface $em,
-        AdministratorRepository $administratorRepository,
-        AdministratorFactoryInterface $administratorFactory,
-        AdministratorRoleFacade $administratorRoleFacade,
-        EncoderFactoryInterface $encoderFactory,
-        TokenStorageInterface $tokenStorage
+        protected readonly EntityManagerInterface $em,
+        protected readonly AdministratorRepository $administratorRepository,
+        protected readonly AdministratorFactoryInterface $administratorFactory,
+        protected readonly AdministratorRoleFacade $administratorRoleFacade,
+        protected readonly PasswordHasherFactoryInterface $passwordHasherFactory,
+        protected readonly TokenStorageInterface $tokenStorage
     ) {
-        $this->administratorRepository = $administratorRepository;
-        $this->em = $em;
-        $this->administratorFactory = $administratorFactory;
-        $this->administratorRoleFacade = $administratorRoleFacade;
-        $this->encoderFactory = $encoderFactory;
-        $this->tokenStorage = $tokenStorage;
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
-    public function create(AdministratorData $administratorData)
+    public function create(AdministratorData $administratorData): Administrator
     {
         $administratorByUserName = $this->administratorRepository->findByUserName($administratorData->username);
         if ($administratorByUserName !== null) {
@@ -93,7 +58,7 @@ class AdministratorFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
-    public function edit($administratorId, AdministratorData $administratorData)
+    public function edit($administratorId, AdministratorData $administratorData): Administrator
     {
         $administrator = $this->administratorRepository->getById($administratorId);
         $this->checkUsername($administrator, $administratorData->username);
@@ -130,15 +95,15 @@ class AdministratorFacade
      */
     protected function setPassword(Administrator $administrator, string $password): void
     {
-        $encoder = $this->encoderFactory->getEncoder($administrator);
-        $passwordHash = $encoder->encodePassword($password, $administrator->getSalt());
+        $passwordHasher = $this->passwordHasherFactory->getPasswordHasher($administrator);
+        $passwordHash = $passwordHasher->hash($password);
         $administrator->setPasswordHash($passwordHash);
     }
 
     /**
      * @param int $administratorId
      */
-    public function delete($administratorId)
+    public function delete(int $administratorId): void
     {
         $administrator = $this->administratorRepository->getById($administratorId);
         $this->checkForDelete($administrator);
@@ -149,7 +114,7 @@ class AdministratorFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      */
-    protected function checkForDelete(Administrator $administrator)
+    protected function checkForDelete(Administrator $administrator): void
     {
         $adminCountExcludingSuperadmin = $this->administratorRepository->getCountExcludingSuperadmin();
         if ($adminCountExcludingSuperadmin === 1) {
@@ -167,7 +132,7 @@ class AdministratorFacade
      * @param string $administratorUsername
      * @param string $newPassword
      */
-    public function changePassword($administratorUsername, $newPassword)
+    public function changePassword(string $administratorUsername, string $newPassword): void
     {
         $administrator = $this->administratorRepository->getByUserName($administratorUsername);
         $this->setPassword($administrator, $newPassword);
@@ -178,7 +143,7 @@ class AdministratorFacade
      * @param int $administratorId
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
-    public function getById($administratorId)
+    public function getById(int $administratorId): Administrator
     {
         return $this->administratorRepository->getById($administratorId);
     }
@@ -186,7 +151,7 @@ class AdministratorFacade
     /**
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getAllListableQueryBuilder()
+    public function getAllListableQueryBuilder(): QueryBuilder
     {
         return $this->administratorRepository->getAllListableQueryBuilder();
     }
@@ -194,7 +159,7 @@ class AdministratorFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
      */
-    public function setRolesChangedNow(Administrator $administrator)
+    public function setRolesChangedNow(Administrator $administrator): void
     {
         $administrator->setRolesChangedNow();
         $this->em->flush();

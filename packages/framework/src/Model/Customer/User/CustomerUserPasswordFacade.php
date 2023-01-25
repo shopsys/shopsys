@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\InvalidResetPasswordHashUserException;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 
 class CustomerUserPasswordFacade
 {
@@ -16,64 +16,28 @@ class CustomerUserPasswordFacade
     public const MINIMUM_PASSWORD_LENGTH = 6;
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository
-     */
-    protected $customerUserRepository;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade
-     */
-    protected $resetPasswordMailFacade;
-
-    /**
-     * @var \Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface
-     */
-    protected $encoderFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\String\HashGenerator
-     */
-    protected $hashGenerator;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade
-     */
-    protected $customerUserRefreshTokenChainFacade;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
-     * @param \Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface $encoderFactory
+     * @param \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade $resetPasswordMailFacade
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
      */
     public function __construct(
-        EntityManagerInterface $em,
-        CustomerUserRepository $customerUserRepository,
-        EncoderFactoryInterface $encoderFactory,
-        ResetPasswordMailFacade $resetPasswordMailFacade,
-        HashGenerator $hashGenerator,
-        CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
+        protected readonly EntityManagerInterface $em,
+        protected readonly CustomerUserRepository $customerUserRepository,
+        protected readonly PasswordHasherFactoryInterface $passwordHasherFactory,
+        protected readonly ResetPasswordMailFacade $resetPasswordMailFacade,
+        protected readonly HashGenerator $hashGenerator,
+        protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
     ) {
-        $this->em = $em;
-        $this->customerUserRepository = $customerUserRepository;
-        $this->encoderFactory = $encoderFactory;
-        $this->resetPasswordMailFacade = $resetPasswordMailFacade;
-        $this->hashGenerator = $hashGenerator;
-        $this->customerUserRefreshTokenChainFacade = $customerUserRefreshTokenChainFacade;
     }
 
     /**
      * @param string $email
      * @param int $domainId
      */
-    public function resetPassword($email, $domainId)
+    public function resetPassword(string $email, int $domainId): void
     {
         $customerUser = $this->customerUserRepository->getCustomerUserByEmailAndDomain($email, $domainId);
 
@@ -90,7 +54,7 @@ class CustomerUserPasswordFacade
      * @param string|null $hash
      * @return bool
      */
-    public function isResetPasswordHashValid($email, $domainId, $hash)
+    public function isResetPasswordHashValid(string $email, int $domainId, ?string $hash): bool
     {
         $customerUser = $this->customerUserRepository->getCustomerUserByEmailAndDomain($email, $domainId);
 
@@ -123,8 +87,8 @@ class CustomerUserPasswordFacade
      */
     public function changePassword(CustomerUser $customerUser, string $password): void
     {
-        $encoder = $this->encoderFactory->getEncoder($customerUser);
-        $passwordHash = $encoder->encodePassword($password, null);
+        $passwordHasher = $this->passwordHasherFactory->getPasswordHasher($customerUser);
+        $passwordHash = $passwordHasher->hash($password);
         $customerUser->setPasswordHash($passwordHash);
 
         $this->em->flush();
