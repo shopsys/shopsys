@@ -43,14 +43,11 @@ class AdministratorFrontSecurityFacade
     {
         try {
             $token = $this->getAdministratorToken();
-        } catch (
-            InvalidTokenException |
-            AuthenticationException $e
-        ) {
+        } catch (InvalidTokenException | AuthenticationException) {
             return false;
         }
 
-        if (!$token->isAuthenticated()) {
+        if ($token->getUser() === null) {
             return false;
         }
 
