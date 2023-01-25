@@ -172,6 +172,14 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return string
      */
+    public function getUserIdentifier(): string
+    {
+        return $this->username;
+    }
+
+    /**
+     * @return string
+     */
     public function getRealName()
     {
         return $this->realName;
@@ -345,7 +353,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @inheritDoc
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         $roles = [];
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole $role */
@@ -359,7 +367,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @inheritDoc
      */
-    public function getSalt()
+    public function getSalt(): ?string
     {
         return null; // bcrypt include salt in password hash
     }
