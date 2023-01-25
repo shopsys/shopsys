@@ -1,5 +1,5 @@
 import { CommonLayout } from '../components/Layout/CommonLayout';
-import { UserTextStyled } from 'components/Helpers/UserText/UserText.style';
+import { GrapesJsStyled } from 'components/Helpers/UserText/UserText.style';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ArticleTitle } from 'components/Pages/Article/ArticleDetailContent.style';
 import {
@@ -20,11 +20,11 @@ const Index: FC = () => {
                 <BlogArticleWrapper>
                     <BlogArticleTextContent>
                         <BlogArticleDate>{new Date().toLocaleDateString() + ''}</BlogArticleDate>
-                        <UserTextStyled
+                        <GrapesJsStyled
                             className="gjs-editable"
                             data-gjs-type="editable"
                             style={{ paddingTop: 15, paddingBottom: 15 }}
-                        ></UserTextStyled>
+                        ></GrapesJsStyled>
                     </BlogArticleTextContent>
                 </BlogArticleWrapper>
             </Webline>

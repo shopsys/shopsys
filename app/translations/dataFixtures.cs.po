@@ -10,6 +10,9 @@ msgstr ""
 msgid "%brandName% SEO Title"
 msgstr ""
 
+msgid "GrapesJS page"
+msgstr ""
+
 msgid "%locale% perex - lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu."
 msgstr ""
 

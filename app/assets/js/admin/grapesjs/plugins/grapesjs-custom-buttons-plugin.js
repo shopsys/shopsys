@@ -22,7 +22,14 @@ export default grapesjs.plugins.add('customButtons', (editor, options) => {
             const html = editor.getHtml();
             let styles = editor.getStyle();
             const filteredStyles = JSON.parse(JSON.stringify(styles)).filter(function (node) {
-                return node.selectors !== undefined && node.selectors.length !== 0 && node.selectors[0].startsWith('#');
+                const containsCorrectSelector = node.selectors !== undefined
+                    && node.selectors.length !== 0
+                    && typeof node.selectors[0] !== 'object'
+                    && (node.selectors[0].startsWith('#') || node.selectors[0].startsWith('gcss'));
+
+                const containsCorrectAddSelector = node.selectorsAdd !== undefined && node.selectorsAdd.startsWith('.gcss');
+
+                return containsCorrectSelector || containsCorrectAddSelector;
             });
             editor.setStyle(filteredStyles);
             const css = editor.getCss();

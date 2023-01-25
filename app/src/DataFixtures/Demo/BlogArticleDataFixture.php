@@ -175,6 +175,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
 
         $this->createBlogArticleForSearchingTest();
         $this->createBlockArticleForProductsTest();
+        $this->createBlockArticleWithGrapesJs();
 
         $this->blogVisibilityFacade->refreshBlogArticlesVisibility();
         $this->blogVisibilityFacade->refreshBlogCategoriesVisibility();
@@ -228,7 +229,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $blogArticleData->names[$locale] = t('Blog article example %counter% %locale%', ['%counter%' => $this->articleCounter, '%locale%' => $locale], 'dataFixtures', $locale);
-            $blogArticleData->descriptions[$locale] = '<div>' . t('description - Lorem ipsum dolor sit amet, <div class="gjs-products" data-products="9177759,7700768,9146508"><div class="gjs-product" data-product="9177759"></div><div class="gjs-product" data-product="7700768"></div><div class="gjs-product" data-product="9146508"></div></div> consectetur <div class="gjs-products" data-products="9177759,9176508"><div class="gjs-product" data-product="9177759"></div><div class="gjs-product" data-product="9176508"></div></div> adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue.', [], 'dataFixtures', $locale) . '</div>';
+            $blogArticleData->descriptions[$locale] = '<div class="gjs-text-ckeditor">' . t('description - Lorem ipsum dolor sit amet, <div class="gjs-products" data-products="9177759,7700768,9146508"><div class="gjs-product" data-product="9177759"></div><div class="gjs-product" data-product="7700768"></div><div class="gjs-product" data-product="9146508"></div></div> consectetur <div class="gjs-products" data-products="9177759,9176508"><div class="gjs-product" data-product="9177759"></div><div class="gjs-product" data-product="9176508"></div></div> adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue.', [], 'dataFixtures', $locale) . '</div>';
             $blogArticleData->perexes[$locale] = t('%locale% perex - lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu.', ['%locale%' => $locale], 'dataFixtures', $locale);
         }
 
@@ -278,38 +279,19 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
             $blogArticleData->names[$locale] = t('Blog article for products testing', [], 'dataFixtures', $locale);
             $blogArticleData->descriptions[$locale] = str_replace(['    ', PHP_EOL], '', trim(<<<EOT
 <section>
-    <div>Samsung Galaxy Core 2 I</div>
-    <div class="gjs-products" data-products="123456789.01,123456789.02,123456789.03,123456789.04,123456789.05,123456789.06,123456789.07,123456789.08">
-        <div class="gjs-product" data-product="123456789.01"></div>
-        <div class="gjs-product" data-product="123456789.02"></div>
-        <div class="gjs-product" data-product="123456789.03"></div>
-        <div class="gjs-product" data-product="123456789.04"></div>
-        <div class="gjs-product" data-product="123456789.05"></div>
-        <div class="gjs-product" data-product="123456789.06"></div>
-        <div class="gjs-product" data-product="123456789.07"></div>
-        <div class="gjs-product" data-product="123456789.08"></div>
+    <div class="gjs-text-ckeditor"><h2>Produkty 1</h2></div>
+    <div class="gjs-products" data-products="9177759,9176508,5960453,9772572,8981018">
+        <div class="gjs-product" data-product="9177759"></div>
+        <div class="gjs-product" data-product="9176508"></div>
+        <div class="gjs-product" data-product="5960453"></div>
+        <div class="gjs-product" data-product="9772572"></div>
+        <div class="gjs-product" data-product="8981018"></div>
     </div>
-    <div>Samsung Galaxy Core 2 II</div>
-    <div class="gjs-products" data-products="123456789.01,123456789.02,123456789.03,123456789.04,123456789.05,123456789.06,123456789.07,123456789.08">
-        <div class="gjs-product" data-product="123456789.01"></div>
-        <div class="gjs-product" data-product="123456789.02"></div>
-        <div class="gjs-product" data-product="123456789.03"></div>
-        <div class="gjs-product" data-product="123456789.04"></div>
-        <div class="gjs-product" data-product="123456789.05"></div>
-        <div class="gjs-product" data-product="123456789.06"></div>
-        <div class="gjs-product" data-product="123456789.07"></div>
-        <div class="gjs-product" data-product="123456789.08"></div>
-    </div>
-    <div>Samsung Galaxy Core 2 III</div>
-    <div class="gjs-products" data-products="123456789.01,123456789.02,123456789.03,123456789.04,123456789.05,123456789.06,123456789.07,123456789.08">
-        <div class="gjs-product" data-product="123456789.01"></div>
-        <div class="gjs-product" data-product="123456789.02"></div>
-        <div class="gjs-product" data-product="123456789.03"></div>
-        <div class="gjs-product" data-product="123456789.04"></div>
-        <div class="gjs-product" data-product="123456789.05"></div>
-        <div class="gjs-product" data-product="123456789.06"></div>
-        <div class="gjs-product" data-product="123456789.07"></div>
-        <div class="gjs-product" data-product="123456789.08"></div>
+    <div class="gjs-text-ckeditor"><h2>Produkty 2</h2></div>
+    <div class="gjs-products" data-products="9177759,9176508,5960453">
+        <div class="gjs-product" data-product="9177759"></div>
+        <div class="gjs-product" data-product="9176508"></div>
+        <div class="gjs-product" data-product="5960453"></div>
     </div>
 </section>
 EOT));
@@ -322,6 +304,54 @@ EOT));
             $blogArticleData->blogCategoriesByDomainId[$domain->getId()] = [$this->getReference(self::FIRST_DEMO_BLOG_CATEGORY), $this->getReference(self::FIRST_DEMO_BLOG_SUBCATEGORY)];
             $blogArticleData->seoTitles[$domain->getId()] = t('Blog article for products testing', [], 'dataFixtures', $locale);
             $blogArticleData->seoH1s[$domain->getId()] = t('Blog article for products testing', [], 'dataFixtures', $locale);
+        }
+
+        $this->blogArticleFacade->create($blogArticleData);
+
+        $this->articleCounter++;
+    }
+
+    private function createBlockArticleWithGrapesJs(): void
+    {
+        $blogArticleData = $this->blogArticleDataFactory->create();
+        $blogArticleData->publishDate = new DateTime('-2 hours');
+        $firstDomainUrl = $this->domain->getDomainConfigById(1)->getUrl();
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $blogArticleData->names[$locale] = t('GrapesJS page', [], 'dataFixtures', $locale);
+            $blogArticleData->descriptions[$locale] = str_replace(['    ', PHP_EOL], '', trim(<<<EOT
+<style>#i3wiwe{padding-top:15px;padding-bottom:15px;}#i47xqe{color:black;}#ijhc4t{color:black;width:533px;height:324px;}#ie4jei{color:black;width:1157px;}</style><div class="gjs-text-ckeditor"><p>Ať už vyb&iacute;r&aacute;te pracovn&iacute; židli pro sebe nebo pro sv&eacute; zaměstnance, při v&yacute;běru kancel&aacute;řsk&eacute; židle berte v &uacute;vahu n&aacute;sleduj&iacute;c&iacute; faktory:</p>
+
+<ul>
+	<li>Kolik hodin denně budete na židli sedět</li>
+	<li>Existuj&iacute;c&iacute; zdravotn&iacute; omezen&iacute; a hmotnost sed&iacute;c&iacute;ho</li>
+	<li>Prostor nutn&yacute; pro pohyb na židli</li>
+	<li>Možnosti nastaven&iacute; a v&yacute;bava kancel&aacute;řsk&eacute; židle</li>
+</ul>
+
+<h2>Kolik hodin denně budete na židli sedět</h2>
+Pokud budete židli využ&iacute;vat pouze kr&aacute;tkodobě, pak si vystač&iacute;te se z&aacute;kladn&iacute;m modelem židle s permanentn&iacute;m mechanismem a nastaviteln&yacute;m sklonem opěradla. Pokud ale na židli budete sedět vět&scaron;inu pracovn&iacute; doby, vyplat&iacute; se do židle opravdu investovat. Spr&aacute;vn&aacute; pracovn&iacute; židle mus&iacute; umožňovat individu&aacute;ln&iacute; nastaven&iacute;, dle v&yacute;&scaron;ky, hmotnosti, tvaru těla a potřeby uživatele. Doporučujeme proto zvolit <strong>synchronn&iacute;</strong>, <strong>asynchronn&iacute;</strong> nebo <strong>houpac&iacute; mechaniku</strong>, kter&eacute; automaticky přizpůsobuj&iacute; z&aacute;dov&eacute; a sedac&iacute; opěry židle pohybům trupu, přičemž zaji&scaron;ťuj&iacute; permanentn&iacute; oporu v z&aacute;dov&eacute; oblasti.<br />
+<br />
+<strong>TIP:</strong><a href="{$firstDomainUrl}" id="ieevs4">Přečtěte si v&iacute;ce informac&iacute; o mechanik&aacute;ch kancel&aacute;řsk&yacute;ch židl&iacute;</a>
+
+<h2>Existuj&iacute;c&iacute; zdravotn&iacute; omezen&iacute; a hmotnost sed&iacute;c&iacute;ho</h2>
+Komfortn&iacute; a zdrav&eacute; sezen&iacute; zajist&iacute; tak&eacute; anatomicky tvarovan&yacute; sed&aacute;k se zaoblen&yacute;m okrajem, kter&yacute; umožňuje pohodln&eacute; sezen&iacute; bez tlaku na spodn&iacute; č&aacute;st stehen, dostatečně velk&yacute; opěr&aacute;k podp&iacute;raj&iacute;c&iacute; z&aacute;da po cel&eacute; jejich d&eacute;lce a po celou dobu sezen&iacute; a <strong>bedern&iacute; opěrka</strong>. Aby v&aacute;m židle dlouhodobě sloužila, věnujte pozornost tak&eacute; maxim&aacute;ln&iacute; <strong>nosnosti židl&iacute;</strong>.<br />
+<br />
+<strong>TIP:</strong><a href="{$firstDomainUrl}" id="iauj76">U každ&eacute; kancel&aacute;řsk&eacute; židle uv&aacute;d&iacute;me jej&iacute; nosnost</a>
+
+<h2>Prostor nutn&yacute; pro pohyb na židli</h2>
+Při v&yacute;běru židle mějte na paměti i celkov&yacute; pracovn&iacute; prostor. Čast&yacute;m omezen&iacute;m je např. v&yacute;&scaron;ka stolu, kdy područky se nevejdou pod stůl (lze vyře&scaron;it např. v&yacute;&scaron;kově staviteln&yacute;mi područkami), kolečka mohou nar&aacute;žet do skř&iacute;n&iacute; nebo kontejnerů, prostor za z&aacute;dy sed&iacute;c&iacute;ho neumožňuje zhoupnut&iacute;, apod.<br />
+<br />
+<strong>TIP:</strong> U každ&eacute; kancel&aacute;řsk&eacute; židle uv&aacute;d&iacute;me rozměry: celkov&aacute; v&yacute;&scaron;ka, v&yacute;&scaron;ka sed&aacute;ku, hloubka sed&aacute;ku, &scaron;&iacute;řka &scaron;ed&aacute;ku, v&yacute;&scaron;ka opěr&aacute;ku, v&yacute;&scaron;ka područky nad sed&aacute;kem, ...<br />
+<br />
+&nbsp;</div><div class="row"><div class="column"><img id="i47xqe" src="{$firstDomainUrl}/content/wysiwyg/chair.png"/></div><div class="column"><img id="ijhc4t" src="{$firstDomainUrl}/content/wysiwyg/sitting-properly-diagram%201.png"/></div></div><div class="gjs-text-ckeditor"><h2>Možnosti nastaven&iacute; kancel&aacute;řsk&eacute; židle</h2>
+Hlavn&iacute;mi parametry pro v&yacute;běr kancel&aacute;řsk&eacute; židle je typ mechaniky židle, možnosti nastaven&iacute; v&yacute;&scaron;ky, hloubky sed&aacute;ku, a dal&scaron;&iacute; v&yacute;bava jako bedern&iacute; opěrka, nastaviteln&eacute; područky (opěrky rukou).<br />
+&nbsp;</div><img id="ie4jei" src="{$firstDomainUrl}/content/wysiwyg/Bitmap-2.png"/><div class="gjs-products" data-products="9177759,9176508,5965879P,5960453"><div data-product="9177759" data-product-name="22&quot; Sencor SLE 22F46DM4 HELLO KITTY" class="gjs-product"></div><div data-product="9176508" data-product-name="32&quot; Philips 32PFL4308" class="gjs-product"></div><div data-product="5965879P" data-product-name="47&quot; LG 47LA790V (FHD)" class="gjs-product"></div><div data-product="5960453" data-product-name="A4tech myš X-710BK, OSCAR Game, 2000DPI, černá" class="gjs-product"></div></div>
+EOT));
+        }
+
+        foreach ($this->domain->getAll() as $domain) {
+            $blogArticleData->blogCategoriesByDomainId[$domain->getId()] = [$this->getReference(self::FIRST_DEMO_BLOG_CATEGORY), $this->getReference(self::FIRST_DEMO_BLOG_SUBCATEGORY)];
         }
 
         $this->blogArticleFacade->create($blogArticleData);

@@ -11,7 +11,7 @@ const localVariables = {
     userTextLineHeight: '1.6',
 } as const;
 
-export const UserTextStyled = styled.section(
+export const UserTextBasicStyled = css(
     ({ theme }) => css`
         font-size: ${localVariables.userTextFontSize};
         line-height: ${localVariables.userTextLineHeight};
@@ -95,6 +95,119 @@ export const UserTextStyled = styled.section(
             height: auto;
 
             border-radius: ${theme.radius.big};
+        }
+    `,
+);
+
+export const UserTextStyled = styled.section`
+    ${UserTextBasicStyled}
+`;
+
+export const GrapesJsStyled = styled.section(
+    ({ theme }) => css`
+        ${UserTextBasicStyled}
+        div, p {
+            padding: 4px 0;
+        }
+
+        ul,
+        ol {
+            display: grid;
+        }
+
+        .row {
+            display: block;
+            width: 100%;
+
+            @media ${theme.mediaQueries.queryLg} {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            & .column {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+                padding: 10px;
+
+                &:first-child {
+                    padding-left: 0;
+                }
+
+                &:last-child {
+                    padding-right: 0;
+                }
+            }
+        }
+
+        .video {
+            overflow: hidden;
+            padding-bottom: 56.25%;
+            position: relative;
+            height: 0;
+
+            iframe {
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+            }
+        }
+
+        .gjs-text-with-image {
+            width: 100%;
+
+            & .clear {
+                clear: both;
+                padding: 0;
+            }
+
+            & .inner {
+                & .image {
+                    width: 100%;
+                    margin-bottom: 16px;
+
+                    @media ${theme.mediaQueries.queryLg} {
+                        width: 200px;
+                        margin-bottom: 14px;
+                    }
+
+                    @media ${theme.mediaQueries.queryXl} {
+                        width: 350px;
+                        margin-bottom: 14px;
+                    }
+                }
+
+                &.left .image {
+                    @media ${theme.mediaQueries.queryLg} {
+                        float: left;
+                        margin-right: 30px;
+                        margin-left: 0;
+                    }
+
+                    @media ${theme.mediaQueries.queryXl} {
+                        float: left;
+                        margin-right: 30px;
+                        margin-left: -200px;
+                    }
+                }
+
+                &.right .image {
+                    @media ${theme.mediaQueries.queryLg} {
+                        float: right;
+                        margin-left: 30px;
+                        margin-right: 0;
+                    }
+
+                    @media ${theme.mediaQueries.queryXl} {
+                        float: right;
+                        margin-left: 30px;
+                        margin-right: -200px;
+                    }
+                }
+            }
         }
     `,
 );

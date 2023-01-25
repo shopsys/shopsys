@@ -4,6 +4,8 @@ import 'grapesjs-preset-webpage';
 import 'grapesjs-plugin-ckeditor';
 import './plugins/grapesjs-custom-buttons-plugin';
 import './plugins/grapesjs-products-plugin';
+import './plugins/grapesjs-text-with-image-plugin';
+import './plugins/grapesjs-custom-blocks-plugin';
 import './grapesjs-non-editable-page';
 import 'magnific-popup';
 
@@ -51,7 +53,7 @@ class Grapesjs {
             fromElement: false,
             storageManager: false,
             noticeOnUnload: false,
-            plugins: ['gjs-preset-webpage', 'gjs-plugin-ckeditor', 'nonEditablePage', 'customButtons', 'products'],
+            plugins: ['gjs-preset-webpage', 'gjs-plugin-ckeditor', 'nonEditablePage', 'customButtons', 'products', 'text-with-image', 'custom-blocks'],
             pluginsOpts: {
                 'gjs-plugin-ckeditor': {
                     options: {
@@ -71,7 +73,7 @@ class Grapesjs {
                 'gjs-preset-webpage': {
                     blocks: [],
                     blocksBasicOpts: {
-                        blocks: ['column1', 'column2', 'text', 'image', 'video', 'map']
+                        blocks: ['image', 'map']
                     },
                     exportOpts: false,
                     navbarOpts: false,
