@@ -90,7 +90,7 @@ class OrderFlow extends FormFlow
         foreach ($this->getSteps() as $step) {
             $stepForm = $this->createFormForStep($step->getNumber());
             if ($this->getRequest()->request->has($stepForm->getName())) {
-                $stepData[$step->getNumber()] = $this->getRequest()->request->get($stepForm->getName());
+                $stepData[$step->getNumber()] = $this->getRequest()->request->all($stepForm->getName());
             }
         }
 
