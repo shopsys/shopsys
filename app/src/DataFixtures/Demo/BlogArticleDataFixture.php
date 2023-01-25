@@ -174,6 +174,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         }
 
         $this->createBlogArticleForSearchingTest();
+        $this->createBlockArticleForProductsTest();
 
         $this->blogVisibilityFacade->refreshBlogArticlesVisibility();
         $this->blogVisibilityFacade->refreshBlogCategoriesVisibility();
@@ -227,7 +228,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $blogArticleData->names[$locale] = t('Blog article example %counter% %locale%', ['%counter%' => $this->articleCounter, '%locale%' => $locale], 'dataFixtures', $locale);
-            $blogArticleData->descriptions[$locale] = '<div>' . t('description - Lorem ipsum dolor sit amet, {products=9177759,7700768,9146508} consectetur {products=9177759,9176508} adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue.', [], 'dataFixtures', $locale) . '</div>';
+            $blogArticleData->descriptions[$locale] = '<div>' . t('description - Lorem ipsum dolor sit amet, <div class="gjs-products" data-products="9177759,7700768,9146508"><div class="gjs-product" data-product="9177759"></div><div class="gjs-product" data-product="7700768"></div><div class="gjs-product" data-product="9146508"></div></div> consectetur <div class="gjs-products" data-products="9177759,9176508"><div class="gjs-product" data-product="9177759"></div><div class="gjs-product" data-product="9176508"></div></div> adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue.', [], 'dataFixtures', $locale) . '</div>';
             $blogArticleData->perexes[$locale] = t('%locale% perex - lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu.', ['%locale%' => $locale], 'dataFixtures', $locale);
         }
 
@@ -261,6 +262,66 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
             $blogArticleData->blogCategoriesByDomainId[$domain->getId()] = [$this->getReference(self::FIRST_DEMO_BLOG_CATEGORY), $this->getReference(self::FIRST_DEMO_BLOG_SUBCATEGORY)];
             $blogArticleData->seoTitles[$domain->getId()] = t('title', ['%counter%' => $this->articleCounter, '%locale%' => $locale], 'dataFixtures', $locale);
             $blogArticleData->seoH1s[$domain->getId()] = t('Heading', ['%counter%' => $this->articleCounter, '%locale%' => $locale], 'dataFixtures', $locale);
+        }
+
+        $this->blogArticleFacade->create($blogArticleData);
+
+        $this->articleCounter++;
+    }
+
+    private function createBlockArticleForProductsTest(): void
+    {
+        $blogArticleData = $this->blogArticleDataFactory->create();
+        $blogArticleData->publishDate = new DateTime('-2 hours');
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $blogArticleData->names[$locale] = t('Blog article for products testing', [], 'dataFixtures', $locale);
+            $blogArticleData->descriptions[$locale] = str_replace(['    ', PHP_EOL], '', trim(<<<EOT
+<section>
+    <div>Samsung Galaxy Core 2 I</div>
+    <div class="gjs-products" data-products="123456789.01,123456789.02,123456789.03,123456789.04,123456789.05,123456789.06,123456789.07,123456789.08">
+        <div class="gjs-product" data-product="123456789.01"></div>
+        <div class="gjs-product" data-product="123456789.02"></div>
+        <div class="gjs-product" data-product="123456789.03"></div>
+        <div class="gjs-product" data-product="123456789.04"></div>
+        <div class="gjs-product" data-product="123456789.05"></div>
+        <div class="gjs-product" data-product="123456789.06"></div>
+        <div class="gjs-product" data-product="123456789.07"></div>
+        <div class="gjs-product" data-product="123456789.08"></div>
+    </div>
+    <div>Samsung Galaxy Core 2 II</div>
+    <div class="gjs-products" data-products="123456789.01,123456789.02,123456789.03,123456789.04,123456789.05,123456789.06,123456789.07,123456789.08">
+        <div class="gjs-product" data-product="123456789.01"></div>
+        <div class="gjs-product" data-product="123456789.02"></div>
+        <div class="gjs-product" data-product="123456789.03"></div>
+        <div class="gjs-product" data-product="123456789.04"></div>
+        <div class="gjs-product" data-product="123456789.05"></div>
+        <div class="gjs-product" data-product="123456789.06"></div>
+        <div class="gjs-product" data-product="123456789.07"></div>
+        <div class="gjs-product" data-product="123456789.08"></div>
+    </div>
+    <div>Samsung Galaxy Core 2 III</div>
+    <div class="gjs-products" data-products="123456789.01,123456789.02,123456789.03,123456789.04,123456789.05,123456789.06,123456789.07,123456789.08">
+        <div class="gjs-product" data-product="123456789.01"></div>
+        <div class="gjs-product" data-product="123456789.02"></div>
+        <div class="gjs-product" data-product="123456789.03"></div>
+        <div class="gjs-product" data-product="123456789.04"></div>
+        <div class="gjs-product" data-product="123456789.05"></div>
+        <div class="gjs-product" data-product="123456789.06"></div>
+        <div class="gjs-product" data-product="123456789.07"></div>
+        <div class="gjs-product" data-product="123456789.08"></div>
+    </div>
+</section>
+EOT));
+
+            $blogArticleData->perexes[$locale] = t('Blog article for products testing', [], 'dataFixtures', $locale);
+        }
+
+        foreach ($this->domain->getAll() as $domain) {
+            $locale = $domain->getLocale();
+            $blogArticleData->blogCategoriesByDomainId[$domain->getId()] = [$this->getReference(self::FIRST_DEMO_BLOG_CATEGORY), $this->getReference(self::FIRST_DEMO_BLOG_SUBCATEGORY)];
+            $blogArticleData->seoTitles[$domain->getId()] = t('Blog article for products testing', [], 'dataFixtures', $locale);
+            $blogArticleData->seoH1s[$domain->getId()] = t('Blog article for products testing', [], 'dataFixtures', $locale);
         }
 
         $this->blogArticleFacade->create($blogArticleData);

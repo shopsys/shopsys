@@ -381,7 +381,13 @@ class RouteConfigCustomization
             ->customizeByRouteName('admin_languageconstant_delete', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Constants using translation keys from StoreFront')
                     ->setParameter('key', 'Cart');
-            });
+            })
+            ->customizeByRouteName('admin_product_productnamesbycatnums', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Use catnums instead of ID')
+                    ->setParameter('catnums', '9177759,7700768,9146508')
+                    ->setExpectedStatusCode(200);
+            })
+        ;
     }
 
     /**

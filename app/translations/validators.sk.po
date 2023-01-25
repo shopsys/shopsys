@@ -37,9 +37,6 @@ msgstr ""
 msgid "Flag \"{{ flagName }}\" is selected multiple times."
 msgstr ""
 
-msgid "Flag color in must be in valid hexadecimal code e.g. #3333ff"
-msgstr ""
-
 msgid "Flag color must be in valid hexadecimal code e.g. #3333ff"
 msgstr ""
 

@@ -1,7 +1,9 @@
 import Register from 'framework/common/utils/Register';
 import grapesjs from 'grapesjs';
 import 'grapesjs-preset-webpage';
-import './grapesjs-custom-buttons-plugin';
+import './plugins/grapesjs-custom-buttons-plugin';
+import './plugins/grapesjs-products-plugin';
+import './grapesjs-non-editable-page';
 
 class Grapesjs {
 
@@ -47,7 +49,7 @@ class Grapesjs {
             noticeOnUnload: false,
             exportWrapper: true,
             wrapperIsBody: false,
-            plugins: ['gjs-preset-webpage', 'nonEditablePage', 'customButtons'],
+            plugins: ['gjs-preset-webpage', 'nonEditablePage', 'customButtons', 'products'],
             pluginsOpts: {
                 'gjs-preset-webpage': {
                     exportOpts: false,

@@ -86,4 +86,23 @@ class ProductController extends BaseProductController
 
         return new JsonResponse($productByCatnum !== null);
     }
+
+    /**
+     * This route is used by GrapesJS to load Names of products
+     *
+     * @Route("/product/names-by-catnums/{catnums}")
+     * @param string $catnums
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function productNamesByCatnumsAction(string $catnums): JsonResponse
+    {
+        $response = [];
+        $products = $this->productFacade->findAllByCatnums(explode(',', $catnums));
+
+        foreach ($products as $product) {
+            $response[$product->getCatnum()] = $product->getName();
+        }
+
+        return new JsonResponse($response);
+    }
 }

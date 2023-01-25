@@ -265,6 +265,9 @@ msgstr ""
 msgid "Catalog number"
 msgstr "Katalogové číslo"
 
+msgid "Catalog numbers delimited by comma"
+msgstr ""
+
 msgid "Categories"
 msgstr "Kategorie"
 
@@ -481,9 +484,6 @@ msgstr ""
 msgid "Dnů do doručení"
 msgstr ""
 
-msgid "Do popisu lze vložit proměnnou, která bude nahrazena za produkty. Název proměnné je {products=XXXXXX,XXXXXX} kde XXXXXX je katalogové číslo produktu. Zobrazeny jsou produkty, které nejsou skryté a současně nejsou vyřazené z prodeje."
-msgstr ""
-
 msgid "Do you really want to delete this category even with their SEO mixes?"
 msgstr "Opravdu chcete smazat tuto kategorii i s jejich SEO mixy?"
 
@@ -549,6 +549,9 @@ msgstr "Identifikace e-shopu - vše"
 
 msgid "E-shop identification - view"
 msgstr "Identifikace e-shopu - zobrazení"
+
+msgid "Edit"
+msgstr ""
 
 msgid "Edit store"
 msgstr "Upravit prodejnu"
@@ -907,14 +910,14 @@ msgstr "Obchodní podmínky - zobrazení"
 msgid "Legal conditions settings modified."
 msgstr "Nastavení právních podmínek upraveno."
 
-msgid "Legenda:"
-msgstr ""
-
 msgid "Limits"
 msgstr "Limity"
 
 msgid "List of language constants"
 msgstr "Přehled jazykových konstant"
+
+msgid "List of products"
+msgstr ""
 
 msgid "List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)"
 msgstr ""
@@ -1073,6 +1076,9 @@ msgid "No orders status found."
 msgstr ""
 
 msgid "No page found."
+msgstr ""
+
+msgid "No products are set. Please add some in the component settings."
 msgstr ""
 
 msgid "No store is created. You have to create one first."

@@ -23,7 +23,6 @@ twig:
         - 'Admin/Form/blogCategoriesType.html.twig'
         - 'Admin/Form/blogCategoryCheckboxType.html.twig'
         - 'Admin/Form/productDetailFormTheme.html.twig'
-        - 'Admin/Form/blogArticleFormTheme.html.twig'
         - 'Admin/Form/productsFormTheme.html.twig'
         - 'Admin/Form/promoCodeLimitFormTheme.html.twig'
         - 'Admin/Form/imageuploadFields.html.twig'

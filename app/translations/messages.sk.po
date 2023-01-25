@@ -109,9 +109,6 @@ msgstr ""
 msgid "All domains"
 msgstr ""
 
-msgid "All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically."
-msgstr ""
-
 msgid "Amount"
 msgstr "Počet"
 
@@ -257,6 +254,9 @@ msgid "Cancel"
 msgstr ""
 
 msgid "Catalog number"
+msgstr ""
+
+msgid "Catalog numbers delimited by comma"
 msgstr ""
 
 msgid "Categories"
@@ -475,9 +475,6 @@ msgstr ""
 msgid "Dnů do doručení"
 msgstr ""
 
-msgid "Do popisu lze vložit proměnnou, která bude nahrazena za produkty. Název proměnné je {products=XXXXXX,XXXXXX} kde XXXXXX je katalogové číslo produktu. Zobrazeny jsou produkty, které nejsou skryté a současně nejsou vyřazené z prodeje."
-msgstr ""
-
 msgid "Do you really want to delete this category even with their SEO mixes?"
 msgstr ""
 
@@ -542,6 +539,9 @@ msgid "E-shop identification - full"
 msgstr ""
 
 msgid "E-shop identification - view"
+msgstr ""
+
+msgid "Edit"
 msgstr ""
 
 msgid "Edit store"
@@ -901,13 +901,13 @@ msgstr ""
 msgid "Legal conditions settings modified."
 msgstr ""
 
-msgid "Legenda:"
-msgstr ""
-
 msgid "Limits"
 msgstr ""
 
 msgid "List of language constants"
+msgstr ""
+
+msgid "List of products"
 msgstr ""
 
 msgid "List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)"
@@ -1072,6 +1072,9 @@ msgstr ""
 msgid "No page found."
 msgstr ""
 
+msgid "No products are set. Please add some in the component settings."
+msgstr ""
+
 msgid "No store is created. You have to create one first."
 msgstr ""
 
@@ -1197,9 +1200,6 @@ msgstr "URL adresa detailu objednávky"
 
 msgid "Order has not been sent to GoPay"
 msgstr "Objednávka nebola odoslaná do GoPay"
-
-msgid "Order items"
-msgstr ""
 
 msgid "Order number"
 msgstr "Číslo objednávky"
@@ -1660,9 +1660,6 @@ msgstr ""
 msgid "Set as default"
 msgstr ""
 
-msgid "Set prices manually"
-msgstr ""
-
 msgid "Settings"
 msgstr ""
 
@@ -1846,15 +1843,6 @@ msgstr ""
 msgid "Top products - view"
 msgstr ""
 
-msgid "Total"
-msgstr ""
-
-msgid "Total excluding VAT"
-msgstr ""
-
-msgid "Total including VAT"
-msgstr ""
-
 msgid "Total order price (including VAT)"
 msgstr "Celková cena objednávky (s DPH)"
 
@@ -1963,12 +1951,6 @@ msgstr ""
 msgid "Unavailable"
 msgstr ""
 
-msgid "Unit"
-msgstr ""
-
-msgid "Unit price excluding VAT"
-msgstr ""
-
 msgid "Unit price including VAT"
 msgstr "Cena za jednotku s DPH"
 
@@ -2006,9 +1988,6 @@ msgid "Use stocks"
 msgstr ""
 
 msgid "User translation"
-msgstr ""
-
-msgid "VAT rate (%)"
 msgstr ""
 
 msgid "Valid from (date)"

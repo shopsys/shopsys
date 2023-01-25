@@ -21,8 +21,10 @@ type BlogArticleDetailContentProps = {
 };
 
 const TEST_IDENTIFIER = 'pages-blogarticle-';
-const PRODUCT_STRING_PATTERN = /\{[^}]*\}/g;
-const CATALOG_NUMBERS_PATTERN = /[0-9]+/g;
+const PRODUCT_STRING_PATTERN =
+    /<div class="gjs-product" data-product=".+?"><\/div>|<div data-product=".+?" class="gjs-product"><\/div>/g;
+const PRODUCTS_STRING_PATTERN =
+    /<div class="gjs-products" data-products=".+?"><\/div>|<div data-products=".+?" class="gjs-products"><\/div>/g;
 
 export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ blogArticle }) => {
     const t = useTypedTranslationFunction();
@@ -33,19 +35,29 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
                 return null;
             }
 
-            const replaceProductString = (matchedString: string): string => {
-                const replaceProducts = (product: string): string => {
-                    const namedProduct = blogArticle.blogArticleProducts.find(
-                        (blogArticleProduct) => blogArticleProduct.catalogNumber.toString() === product,
-                    );
-                    if (namedProduct === undefined) {
-                        return ' ';
+            return text
+                .replaceAll(PRODUCT_STRING_PATTERN, '')
+                .replaceAll(PRODUCTS_STRING_PATTERN, (productsComponents) => {
+                    const products = /data-products="(?<products>.+?)"/g.exec(productsComponents)?.groups?.products;
+
+                    if (products !== undefined) {
+                        return products
+                            .split(',')
+                            .map((product) => {
+                                const namedProduct = blogArticle.blogArticleProducts.find(
+                                    (blogArticleProduct) => blogArticleProduct.catalogNumber.toString() === product,
+                                );
+
+                                return namedProduct
+                                    ? `<a href='${namedProduct.slug}'> ${namedProduct.fullName}</a>`
+                                    : undefined;
+                            })
+                            .filter(Boolean)
+                            .join(', ');
                     }
-                    return `<a href='${namedProduct.slug}'> ${namedProduct.fullName}</a>`;
-                };
-                return matchedString.replaceAll(CATALOG_NUMBERS_PATTERN, replaceProducts).slice(10).slice(0, -1);
-            };
-            return text.replaceAll(PRODUCT_STRING_PATTERN, replaceProductString);
+
+                    return '';
+                });
         };
 
         return addProductNamesToText(blogArticle.text);
