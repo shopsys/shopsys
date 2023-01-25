@@ -14,7 +14,7 @@
 {% block main_content %}
 
     {{ getOrderSentPageScripts(order)|raw }}
-    {{ render(controller('App\\Controller\\Front\\ScriptController:embedOrderSentPageGoogleAnalyticsScriptAction', {order: order})) }}
+    {{ render(controller('App\\Controller\\Front\\ScriptController::embedOrderSentPageGoogleAnalyticsScriptAction', {order: order})) }}
 
     <div class="web__line">
         <div class="web__container">

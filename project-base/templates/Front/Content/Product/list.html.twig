@@ -29,7 +29,7 @@
                 {{ render(controller('App\\Controller\\Front\\CategoryController::categoryListAction', {categories: visibleChildren})) }}
             {% endif %}
 
-            {{ render(controller('App\\Controller\\Front\\BestsellingProductController:listAction', { category: category })) }}
+            {{ render(controller('App\\Controller\\Front\\BestsellingProductController::listAction', { category: category })) }}
 
             <div class="box-list js-product-list-with-filter">
                 {% if paginationResult.results|length > 0 or filterFormSubmitted %}
@@ -57,7 +57,7 @@
                 <div class="box-list__content">
                     <div class="js-product-list-ajax-filter-products-with-controls">
                         <div>
-                            {{ render(controller('App\\Controller\\Front\\ProductController:selectOrderingModeForListAction')) }}
+                            {{ render(controller('App\\Controller\\Front\\ProductController::selectOrderingModeForListAction')) }}
                         </div>
                         {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: filterFormSubmitted} %}
                     </div>
