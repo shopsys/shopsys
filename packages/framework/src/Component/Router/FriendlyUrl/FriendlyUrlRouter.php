@@ -6,44 +6,15 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlRouteNotFoundException;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
 
 class FriendlyUrlRouter implements RouterInterface
 {
     /**
-     * @var \Symfony\Component\Routing\RequestContext
+     * @var \Symfony\Component\Routing\RouteCollection|null
      */
-    protected $context;
-
-    /**
-     * @var \Symfony\Component\Config\Loader\LoaderInterface
-     */
-    protected $configLoader;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlGenerator
-     */
-    protected $friendlyUrlGenerator;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlMatcher
-     */
-    protected $friendlyUrlMatcher;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
-    protected $domainConfig;
-
-    /**
-     * @var string
-     */
-    protected $friendlyUrlRouterResourceFilepath;
-
-    /**
-     * @var \Symfony\Component\Routing\RouteCollection
-     */
-    protected $collection;
+    protected ?RouteCollection $collection = null;
 
     /**
      * @param \Symfony\Component\Routing\RequestContext $context
@@ -54,25 +25,19 @@ class FriendlyUrlRouter implements RouterInterface
      * @param string $friendlyUrlRouterResourceFilepath
      */
     public function __construct(
-        RequestContext $context,
-        LoaderInterface $configLoader,
-        FriendlyUrlGenerator $friendlyUrlGenerator,
-        FriendlyUrlMatcher $friendlyUrlMatcher,
-        DomainConfig $domainConfig,
-        $friendlyUrlRouterResourceFilepath
+        protected RequestContext $context,
+        protected readonly LoaderInterface $configLoader,
+        protected readonly FriendlyUrlGenerator $friendlyUrlGenerator,
+        protected readonly FriendlyUrlMatcher $friendlyUrlMatcher,
+        protected readonly DomainConfig $domainConfig,
+        protected readonly string $friendlyUrlRouterResourceFilepath,
     ) {
-        $this->context = $context;
-        $this->configLoader = $configLoader;
-        $this->friendlyUrlGenerator = $friendlyUrlGenerator;
-        $this->friendlyUrlMatcher = $friendlyUrlMatcher;
-        $this->domainConfig = $domainConfig;
-        $this->friendlyUrlRouterResourceFilepath = $friendlyUrlRouterResourceFilepath;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getContext()
+    public function getContext(): RequestContext
     {
         return $this->context;
     }
@@ -80,7 +45,7 @@ class FriendlyUrlRouter implements RouterInterface
     /**
      * {@inheritdoc}
      */
-    public function setContext(RequestContext $context)
+    public function setContext(RequestContext $context): void
     {
         $this->context = $context;
     }
@@ -88,7 +53,7 @@ class FriendlyUrlRouter implements RouterInterface
     /**
      * {@inheritdoc}
      */
-    public function getRouteCollection()
+    public function getRouteCollection(): RouteCollection
     {
         if ($this->collection === null) {
             $this->collection = $this->configLoader->load($this->friendlyUrlRouterResourceFilepath);
@@ -100,7 +65,7 @@ class FriendlyUrlRouter implements RouterInterface
     /**
      * {@inheritdoc}
      */
-    public function generate($routeName, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
+    public function generate(string $routeName, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         return $this->friendlyUrlGenerator->generateFromRouteCollection(
             $this->getRouteCollection(),
@@ -117,7 +82,7 @@ class FriendlyUrlRouter implements RouterInterface
      * @param int $referenceType
      * @return string
      */
-    public function generateByFriendlyUrl(FriendlyUrl $friendlyUrl, array $parameters = [], $referenceType = self::ABSOLUTE_PATH)
+    public function generateByFriendlyUrl(FriendlyUrl $friendlyUrl, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         $routeName = $friendlyUrl->getRouteName();
         $route = $this->getRouteCollection()->get($routeName);
@@ -141,7 +106,7 @@ class FriendlyUrlRouter implements RouterInterface
     /**
      * {@inheritdoc}
      */
-    public function match($pathinfo)
+    public function match(string $pathinfo): array
     {
         return $this->friendlyUrlMatcher->match($pathinfo, $this->getRouteCollection(), $this->domainConfig);
     }
