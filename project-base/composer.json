@@ -94,7 +94,7 @@
         "symfony/webpack-encore-bundle": "^1.7",
         "symfony/workflow": "^5.4",
         "tracy/tracy": "^2.4.13",
-        "twig/twig": "^2.15.4",
+        "twig/twig": "^3.5.0",
         "webmozart/assert": "^1.4"
     },
     "require-dev": {
