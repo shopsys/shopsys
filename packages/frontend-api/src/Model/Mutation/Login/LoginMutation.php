@@ -11,39 +11,21 @@ use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 
 class LoginMutation implements MutationInterface, AliasedInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider
-     */
-    protected $frontendUserProvider;
-
-    /**
-     * @var \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface
-     */
-    protected $userPasswordEncoder;
-
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Token\TokenFacade
-     */
-    protected $tokenFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider $frontendCustomerUserProvider
-     * @param \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface $userPasswordEncoder
+     * @param \Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface $userPasswordHasher
      * @param \Shopsys\FrontendApiBundle\Model\Token\TokenFacade $tokenFacade
      */
     public function __construct(
-        FrontendCustomerUserProvider $frontendCustomerUserProvider,
-        UserPasswordEncoderInterface $userPasswordEncoder,
-        TokenFacade $tokenFacade
+        protected readonly FrontendCustomerUserProvider $frontendCustomerUserProvider,
+        protected readonly UserPasswordHasherInterface $userPasswordHasher,
+        protected readonly TokenFacade $tokenFacade
     ) {
-        $this->frontendUserProvider = $frontendCustomerUserProvider;
-        $this->userPasswordEncoder = $userPasswordEncoder;
-        $this->tokenFacade = $tokenFacade;
     }
 
     /**
@@ -55,12 +37,12 @@ class LoginMutation implements MutationInterface, AliasedInterface
         $input = $argument['input'];
 
         try {
-            $user = $this->frontendUserProvider->loadUserByUsername($input['email']);
-        } catch (UserNotFoundException $e) {
+            $user = $this->frontendCustomerUserProvider->loadUserByUsername($input['email']);
+        } catch (UserNotFoundException) {
             throw new UserError('Log in failed.');
         }
 
-        if (!$this->userPasswordEncoder->isPasswordValid($user, $input['password'])) {
+        if (!$this->userPasswordHasher->isPasswordValid($user, $input['password'])) {
             throw new UserError('Log in failed.');
         }
 

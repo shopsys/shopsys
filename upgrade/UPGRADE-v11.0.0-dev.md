@@ -1151,4 +1151,10 @@ There you can find links to upgrade notes for other versions too.
         - __construct(FrontendCustomerUserProvider $frontendCustomerUserProvider, UserPasswordEncoderInterface $userPasswordEncoder, CustomerUserPasswordFacade $customerUserPasswordFacade, CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade, TokenStorageInterface $tokenStorage, CustomerUserUpdateDataFactory $customerUserUpdateDataFactory, CustomerUserFacade $customerUserFacade, CustomerUserDataFactory $customerUserDataFactory, TokenFacade $tokenFacade)
         + __construct(TokenStorageInterface $tokenStorage, FrontendCustomerUserProvider $frontendCustomerUserProvider, UserPasswordHasherInterface $userPasswordHasher, CustomerUserPasswordFacade $customerUserPasswordFacade, CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade, CustomerUserUpdateDataFactory $customerUserUpdateDataFactory, CustomerUserFacade $customerUserFacade, CustomerUserDataFactory $customerUserDataFactory, TokenFacade $tokenFacade)
         ```
+    - `Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(FrontendCustomerUserProvider $frontendCustomerUserProvider, UserPasswordEncoderInterface $userPasswordEncoder, TokenFacade $tokenFacade)
+        + __construct(FrontendCustomerUserProvider $frontendCustomerUserProvider, UserPasswordHasherInterface $userPasswordHasher, TokenFacade $tokenFacade)
+        ```
     - also see #project-base-diff for more information about changes needed to be done in your project
