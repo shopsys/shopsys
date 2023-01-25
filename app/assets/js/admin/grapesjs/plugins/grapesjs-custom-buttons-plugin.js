@@ -20,8 +20,15 @@ export default grapesjs.plugins.add('customButtons', (editor, options) => {
         className: 'fa fa-save',
         command (editor) {
             const html = editor.getHtml();
+            let styles = editor.getStyle();
+            const filteredStyles = JSON.parse(JSON.stringify(styles)).filter(function (node) {
+                return node.selectors !== undefined && node.selectors.length !== 0 && node.selectors[0].startsWith('#');
+            });
+            editor.setStyle(filteredStyles);
+            const css = editor.getCss();
 
-            $('#' + textareaId).val(html);
+            const exported = '<style>' + css + '</style>' + html;
+            $('#' + textareaId).val(exported);
             $('body').removeAttr('style');
             $('#grapesjs').removeAttr('style').removeAttr('class');
             editor.destroy();

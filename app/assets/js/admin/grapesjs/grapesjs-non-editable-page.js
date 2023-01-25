@@ -16,7 +16,7 @@ export default grapesjs.plugins.add('nonEditablePage', (editor, options) => {
             // Return always the content of editable content (defined below)
             toHTML (opts) {
                 const editable = this.findType('editable')[0];
-                return editable ? editable.toHTML(opts) : '';
+                return editable ? editable.getInnerHTML() : '';
             }
         },
         view: {

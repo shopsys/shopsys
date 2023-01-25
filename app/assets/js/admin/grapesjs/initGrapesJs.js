@@ -1,9 +1,11 @@
 import Register from 'framework/common/utils/Register';
 import grapesjs from 'grapesjs';
 import 'grapesjs-preset-webpage';
+import 'grapesjs-plugin-ckeditor';
 import './plugins/grapesjs-custom-buttons-plugin';
 import './plugins/grapesjs-products-plugin';
 import './grapesjs-non-editable-page';
+import 'magnific-popup';
 
 class Grapesjs {
 
@@ -18,7 +20,8 @@ class Grapesjs {
             $(element).on('click', event => {
                 const frontendUrl = $(element).data('template-url');
                 const textareaId = $(element).data('textarea-id');
-                this.openGrapesEditor(event, frontendUrl, textareaId);
+                const elfinderUrl = $(element).data('elfinder-url');
+                this.openGrapesEditor(event, frontendUrl, textareaId, elfinderUrl);
             });
 
             isAnyButtonOnPage = true;
@@ -29,7 +32,7 @@ class Grapesjs {
         }
     }
 
-    openGrapesEditor (event, frontendUrl, textareaId) {
+    openGrapesEditor (event, frontendUrl, textareaId, elfinderUrl) {
         $('body').css({
             overflow: 'hidden',
             height: '100%'
@@ -45,17 +48,46 @@ class Grapesjs {
             components: content,
             height: '100%',
             width: '100%',
+            fromElement: false,
             storageManager: false,
             noticeOnUnload: false,
-            exportWrapper: true,
-            wrapperIsBody: false,
-            plugins: ['gjs-preset-webpage', 'nonEditablePage', 'customButtons', 'products'],
+            plugins: ['gjs-preset-webpage', 'gjs-plugin-ckeditor', 'nonEditablePage', 'customButtons', 'products'],
             pluginsOpts: {
+                'gjs-plugin-ckeditor': {
+                    options: {
+                        enterMode: 2,
+                        toolbar: [
+                            { name: 'basicstyles', items: ['Bold', 'Italic', 'Strike', '-', 'RemoveFormat'] },
+                            { name: 'format', items: ['Format'] },
+                            { name: 'size', items: ['FontSize'] },
+                            { name: 'links', items: ['Link', 'Unlink'] },
+                            { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
+                            { name: 'colors', items: ['TextColor', 'BGColor'] },
+                            { name: 'document', items: ['Source'] },
+                            { name: 'insert', items: ['SpecialChar'] }
+                        ]
+                    }
+                },
                 'gjs-preset-webpage': {
+                    blocks: [],
+                    blocksBasicOpts: {
+                        blocks: ['column1', 'column2', 'text', 'image', 'video', 'map']
+                    },
                     exportOpts: false,
                     navbarOpts: false,
                     formsOpts: false,
-                    customStyleManager: []
+                    customStyleManager: [
+                        {
+                            name: 'General',
+                            open: false,
+                            buildProps: ['border', 'border-radius', 'background-color']
+                        },
+                        {
+                            name: 'Layout',
+                            open: false,
+                            buildProps: ['margin', 'padding']
+                        }
+                    ]
                 },
                 'customButtons': {
                     textareaId: textareaId
@@ -64,6 +96,28 @@ class Grapesjs {
             styleManager: {
                 clearProperties: true,
                 sectors: []
+            },
+            assetManager: {
+                custom: {
+                    open (props) {
+                        $.magnificPopup.open({
+                            items: { src: elfinderUrl },
+                            type: 'iframe',
+                            closeOnBgClick: true,
+                            callbacks: {
+                                close: function () {
+                                    props.close();
+                                }
+                            }
+                        });
+
+                        window.document.fileManagerInsertImageCallback = function (selector, url) {
+                            props.options.target.set('src', url);
+                            $.magnificPopup.close();
+                            props.close();
+                        };
+                    }
+                }
             }
         });
 

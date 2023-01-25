@@ -71,6 +71,11 @@ Encore
                     ignore: ['assets/public/admin/svg/**/*']
                 },
                 force: true
+            },
+            {
+                from: 'assets/extra',
+                to: '../../web',
+                force: true
             }
         ]
     }))

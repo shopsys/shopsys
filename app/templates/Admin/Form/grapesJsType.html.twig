@@ -7,6 +7,7 @@
                     class="btn js-grapesjs-button"
                     data-textarea-id="{{ form.vars.id }}"
                     data-template-url="{{ getDomainUrlByLocale(form.vars.name) ~ constant('App\\Form\\Admin\\GrapesJsType::GRAPESJS_TEMPLATE_PATH') }}"
+                    data-elfinder-url="{{ url('elfinder', {instance: 'grapesJs'}) }}"
                     style="margin-left: 70px; margin-top: 3px;">
                 {{ 'Edit'|trans }}
             </button>
