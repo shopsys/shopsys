@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Acceptance\acceptance;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\App\Acceptance\acceptance\PageObject\Admin\EntityEditPage;
 use Tests\App\Acceptance\acceptance\PageObject\Admin\LoginPage;
 use Tests\App\Test\Codeception\AcceptanceTester;
@@ -27,9 +28,13 @@ class PaymentImageUploadCest
         $me->amOnPage('/admin/payment/edit/1');
         $entityEditPage->uploadTestImage(self::IMAGE_UPLOAD_FIELD_ID, self::TEST_IMAGE_NAME);
         $me->clickByName(self::SAVE_BUTTON_NAME);
-        $me->seeTranslationAdmin('Payment <strong><a href="{{ url }}">{{ name }}</a></strong> modified', 'messages', [
-            '{{ url }}' => '',
-            '{{ name }}' => t('Credit card', [], 'dataFixtures', $me->getAdminLocale()),
-        ]);
+        $me->seeTranslationAdmin(
+            'Payment <strong><a href="{{ url }}">{{ name }}</a></strong> modified',
+            Translator::DEFAULT_TRANSLATION_DOMAIN,
+            [
+                '{{ url }}' => '',
+                '{{ name }}' => t('Credit card', [], 'dataFixtures', $me->getAdminLocale()),
+            ]
+        );
     }
 }

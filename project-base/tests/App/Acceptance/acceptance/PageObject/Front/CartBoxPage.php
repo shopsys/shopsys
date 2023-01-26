@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Acceptance\acceptance\PageObject\Front;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
 
 class CartBoxPage extends AbstractPage
@@ -28,7 +29,7 @@ class CartBoxPage extends AbstractPage
                 '%count%' => $expectedCount,
                 '%priceWithVat%' => $expectedFormattedPriceWithCurrency,
             ],
-            'messages',
+            Translator::DEFAULT_TRANSLATION_DOMAIN,
             $this->tester->getFrontendLocale()
         );
 

@@ -8,6 +8,7 @@ use Facebook\WebDriver\Exception\NoSuchElementException;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverKeys;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
 
 class CartPage extends AbstractPage
@@ -45,7 +46,7 @@ class CartPage extends AbstractPage
             Money::create($price)
         );
         $orderPriceCell = $this->getTotalProductsPriceCell();
-        $message = t('Total price including VAT', [], 'messages', $this->tester->getFrontendLocale());
+        $message = t('Total price including VAT', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $this->tester->seeInElement($message . ': ' . $formattedPriceWithCurrency, $orderPriceCell);
     }
 
@@ -236,7 +237,7 @@ class CartPage extends AbstractPage
     {
         $this->tester->clickByTranslationFrontend(
             'Go to cart',
-            'messages',
+            Translator::DEFAULT_TRANSLATION_DOMAIN,
             [],
             WebDriverBy::cssSelector('#window-main-container')
         );
@@ -251,7 +252,7 @@ class CartPage extends AbstractPage
         $productName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
         $this->tester->seeTranslationFrontend(
             'Product <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) added to the cart',
-            'messages',
+            Translator::DEFAULT_TRANSLATION_DOMAIN,
             [
                 '{{ name }}' => $productName,
                 '{{ quantity|formatNumber }}' => $quantity,

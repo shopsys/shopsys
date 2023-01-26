@@ -13,6 +13,7 @@ use PhpParser\Parser\Php7;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Translation\PhpFileExtractorFactory;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use SplFileInfo;
 
 class PhpFileExtractorTest extends TestCase
@@ -25,7 +26,7 @@ class PhpFileExtractorTest extends TestCase
 
         $expected = new MessageCatalogue();
 
-        $message = new Message('trans test', 'messages');
+        $message = new Message('trans test', Translator::DEFAULT_TRANSLATION_DOMAIN);
         $message->addSource(new FileSource($fileName, 16));
         $expected->add($message);
 
@@ -33,7 +34,7 @@ class PhpFileExtractorTest extends TestCase
         $message->addSource(new FileSource($fileName, 17));
         $expected->add($message);
 
-        $message = new Message('t test', 'messages');
+        $message = new Message('t test', Translator::DEFAULT_TRANSLATION_DOMAIN);
         $message->addSource(new FileSource($fileName, 19));
         $expected->add($message);
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Acceptance\acceptance\PageObject\Front;
 
 use Facebook\WebDriver\WebDriverBy;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
 use Tests\FrameworkBundle\Test\Codeception\FrontCheckbox;
 
@@ -149,7 +150,7 @@ class OrderPage extends AbstractPage
     {
         $this->tester->clickByTranslationFrontend(
             'Go to cart',
-            'messages',
+            Translator::DEFAULT_TRANSLATION_DOMAIN,
             [],
             WebDriverBy::cssSelector('#window-main-container')
         );

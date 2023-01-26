@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Error;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessage;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -83,7 +84,7 @@ class LogoutExceptionSubscriber implements EventSubscriberInterface
                     t(
                         'There was an error during logout attempt. If you really want to sign out, please try it again.',
                         [],
-                        'messages',
+                        Translator::DEFAULT_TRANSLATION_DOMAIN,
                         $locale
                     )
                 );

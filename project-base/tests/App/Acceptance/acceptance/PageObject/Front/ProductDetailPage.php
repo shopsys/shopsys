@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Acceptance\acceptance\PageObject\Front;
 
 use Facebook\WebDriver\WebDriverBy;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
 
 class ProductDetailPage extends AbstractPage
@@ -23,7 +24,7 @@ class ProductDetailPage extends AbstractPage
         );
         $this->tester->clickByTranslationFrontend(
             'Add to cart',
-            'messages',
+            Translator::DEFAULT_TRANSLATION_DOMAIN,
             [],
             WebDriverBy::cssSelector(self::PRODUCT_DETAIL_MAIN_WRAPPER)
         );

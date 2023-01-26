@@ -983,3 +983,22 @@ There you can find links to upgrade notes for other versions too.
     - also see #project-base-diff for more information about changes needed to be done in your project
 - fix tests for product searching ([#2524](https://github.com/shopsys/shopsys/pull/2524))
     - see #project-base-diff for more information about changes needed to be done in your project
+- little translation tweaks for better developer experience ([2549](https://github.com/shopsys/shopsys/pull/2549))
+    - `Shopsys\FrameworkBundle\Component\Translation\Translator` class:
+        - constant `DEFAULT_DOMAIN` renamed to `DEFAULT_TRANSLATION_DOMAIN` and its visibility changed to `public`
+    - global function `t` changed its interface:
+    ```diff
+    -  function t($id, array $parameters = [], $domain = null, $locale = null)
+    +  function t(string $id, array $parameters = [], ?string $translationDomain = null, ?string $locale = null): string
+    ```
+    - `Shopsys\FrameworkBundle\Twig\TranslationExtension` class:
+        - method `transHtml` changed its interface:
+        ```diff
+        -  transHtml(Environment $twig, $message, array $arguments = [], $domain = null, $locale = null)
+        +  transHtml(Environment $twig, string $message, array $arguments = [], ?string $translationDomain = null, ?string $locale = null): string
+        ```
+    - `Shopsys\FrameworkBundle\Component\Translation\JsFileExtractor` class:
+        - constant `DEFAULT_MESSAGE_DOMAIN` has been removed, use `Shopsys\FrameworkBundle\Component\Translation\Translator::DEFAULT_TRANSLATION_DOMAIN` instead
+    - `Shopsys\FrameworkBundle\Component\Translation\PhpFileExtractor` class:
+        - constant `DEFAULT_MESSAGE_DOMAIN` has been removed, use `Shopsys\FrameworkBundle\Component\Translation\Translator::DEFAULT_TRANSLATION_DOMAIN` instead
+    - also see #project-base-diff for more information about changes needed to be done in your project

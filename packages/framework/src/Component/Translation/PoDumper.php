@@ -13,7 +13,7 @@ class PoDumper implements DumperInterface
      * @param string $domain
      * @return string
      */
-    public function dump(MessageCatalogue $catalogue, $domain = 'messages')
+    public function dump(MessageCatalogue $catalogue, $domain = Translator::DEFAULT_TRANSLATION_DOMAIN)
     {
         $output = 'msgid ""' . "\n";
         $output .= 'msgstr ""' . "\n";

@@ -13,8 +13,6 @@ class JsFileExtractor implements FileVisitorInterface
 {
     protected const DUMP_FILE = 'translationsDump.json';
 
-    protected const DEFAULT_MESSAGE_DOMAIN = 'messages';
-
     /**
      * @var \JMS\TranslationBundle\Model\MessageCatalogue
      */
@@ -40,7 +38,7 @@ class JsFileExtractor implements FileVisitorInterface
         foreach ($translationsDump as $translation) {
             $message = new Message(
                 $translation['id'],
-                $translation['domain'] ?? static::DEFAULT_MESSAGE_DOMAIN
+                $translation['domain'] ?? Translator::DEFAULT_TRANSLATION_DOMAIN
             );
             $message->addSource(new FileSource(
                 $translation['source'],
