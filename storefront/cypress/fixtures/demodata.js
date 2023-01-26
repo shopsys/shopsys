@@ -100,5 +100,6 @@ export const url = {
         thanYouPage: '/potvrzeni-objednavky',
         detail: '/detail-objednavky/',
     },
+    login: '/prihlaseni',
 };
 export const zeroRate = '0 %';

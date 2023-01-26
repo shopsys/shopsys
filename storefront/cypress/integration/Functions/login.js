@@ -3,12 +3,17 @@ import { checkSuccesfulLoginIconInHeader, clickOnUserIconInHeader } from './head
 
 export function succesfulLogInFromHeader(email, password) {
     clickOnUserIconInHeader();
-    fillInEmailAndPasswordForLogin(email, password);
+    fillInEmailAndPasswordInLayoutPopup(email, password);
     cy.get('[data-testid="layout-popup"]').contains(buttonName.logIn).click();
     checkSuccesfulLoginIconInHeader();
 }
 
-export function fillInEmailAndPasswordForLogin(email, password) {
+export function fillInEmailAndPasswordInLayoutPopup(email, password) {
     cy.get('[data-testid="layout-popup"] #login-form-email').type(email);
     cy.get('[data-testid="layout-popup"] #login-formpassword').type(password);
+}
+
+export function fillInEmailAndPasswordOnLoginPage(email, password) {
+    cy.get('#login-form-email').type(email);
+    cy.get('#login-formpassword').type(password);
 }

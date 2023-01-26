@@ -1,3 +1,4 @@
+/// <reference types="Cypress" />
 import { customer1 } from '../../../fixtures/demodata';
 import { succesfulLogInFromHeader } from '../../Functions/login';
 
