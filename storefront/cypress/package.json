@@ -4,6 +4,6 @@
     "description": "Acceptance tests of Shopsys Commerce Cloud Storefront",
     "private": true,
     "devDependencies": {
-        "cypress": "^9.7.0"
+        "cypress": "^12.3.0"
     }
 }
