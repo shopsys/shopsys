@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Tests\FrameworkBundle\Unit\Model\Customer\Mock\TokenMock;
 
 class CurrentCustomerUserTest extends TestCase
 {
@@ -97,10 +97,18 @@ class CurrentCustomerUserTest extends TestCase
      */
     private function getTokenStorageMockForCustomerUser(CustomerUser $customerUser)
     {
-        $tokenMock = $this->getMockBuilder(TokenInterface::class)
-            ->setMethods(['getUser'])
-            ->getMockForAbstractClass();
-        $tokenMock->method('getUser')->willReturn($customerUser);
+        /**
+         * Until version 6 of symfony, the TokenInterface mock needs to be mocked manually.
+         * The function getUserIdentifier() is included in the interface only with annotation and therefore cannot be mocked using the phpunit tool.
+         * Since version 6 of symfony, this function is then integrated into the interface. It is possible to remove the manual implementation of the mocked class.
+         */
+//        $tokenMock = $this->getMockBuilder(TokenMock::class)
+//            ->setMethods(['getUser'])
+//            ->getMockForAbstractClass();
+//        $tokenMock->method('getUser')->willReturn($customerUser);
+//        $tokenMock->expects($this->any())->method('getUserIdentifier')->willReturn($customerUser->getEmail());
+
+        $tokenMock = new TokenMock($customerUser);
 
         $tokenStorageMock = $this->getMockBuilder(TokenStorage::class)
             ->setMethods(['getToken'])

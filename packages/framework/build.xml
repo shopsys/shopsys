@@ -880,6 +880,16 @@
         </if>
     </target>
 
+    <target name="set-functional-test-name">
+        <input propertyName="test.functional.name" message="Enter functional test name to run:"/>
+        <if>
+            <equals arg1="${test.functional.name}" arg2=""/>
+            <then>
+                <fail message="Functional name is not set. Enter functional test name to be run"/>
+            </then>
+        </if>
+    </target>
+
     <target name="standards" depends="phplint,ecs,annotations-check,phpstan,twig-lint,yaml-standards,eslint-check" description="Checks coding standards."/>
 
     <target name="standards-diff" depends="phplint-diff,ecs-diff,annotations-check,phpstan,twig-lint-diff,yaml-standards,eslint-check-diff" description="Checks coding standards in changed files."/>
@@ -1181,6 +1191,48 @@
                     <arg value="--configuration"/>
                     <arg value="${path.root}/phpunit.xml"/>
                 </exec>
+            </else>
+        </if>
+    </target>
+
+    <target name="tests-functional-single" depends="set-functional-test-name,production-protection,clean,test-clean-redis,domains-info-load" description="Runs custom functional test.">
+        <if>
+            <istrue value="${domains-info.is-multidomain}"/>
+            <then>
+                <if>
+                    <not><equals arg1="${test.functional.name}" arg2="all"/></not>
+                    <then>
+                        <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
+                            <arg value="--colors=always"/>
+                            <arg value="--testsuite"/>
+                            <arg value="Functional"/>
+                            <arg value="--exclude-group"/>
+                            <arg value="singledomain"/>
+                            <arg value="--configuration"/>
+                            <arg value="${path.root}/phpunit.xml"/>
+                            <arg value="--filter"/>
+                            <arg value="${test.functional.name}"/>
+                        </exec>
+                    </then>
+                </if>
+            </then>
+            <else>
+                <if>
+                    <not><equals arg1="${test.functional.name}" arg2="all"/></not>
+                    <then>
+                        <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
+                            <arg value="--colors=always"/>
+                            <arg value="--testsuite"/>
+                            <arg value="Functional"/>
+                            <arg value="--exclude-group"/>
+                            <arg value="multidomain"/>
+                            <arg value="--configuration"/>
+                            <arg value="${path.root}/phpunit.xml"/>
+                            <arg value="--filter="/>
+                            <arg value="${test.functional.name}"/>
+                        </exec>
+                    </then>
+                </if>
             </else>
         </if>
     </target>
