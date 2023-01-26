@@ -20,3 +20,11 @@ export function searchProductByNameTypeEnterAndCheckResult(productName, productC
 export function typeToSearchInput(searchText) {
     cy.get('[data-testid="layout-header-search-autocomplete-input"]').type(searchText);
 }
+
+export function clickOnUserIconInHeader() {
+    cy.get('[data-testid="layout-header-menuiconic-2"] [data-testid="basic-icon-iconsvg-User"]').click();
+}
+
+export function checkSuccesfulLoginIconInHeader() {
+    cy.get('[data-testid="layout-header-menuiconic-2"] [data-testid="basic-icon-iconsvg-User"]');
+}

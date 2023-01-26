@@ -1,4 +1,7 @@
 export const brandSencor = 'Sencor';
+export const buttonName = {
+    logIn: 'Přihlásit',
+};
 export const categories = {
     elektro: {
         name: 'Elektro',
@@ -14,6 +17,7 @@ export const customer1 = {
     billingStreet: 'fakturační ulice 1/15a',
     billingCity: 'fakturační město',
     billingPostCode: '70200',
+    password: 'user123',
 };
 export const flashMessages = {
     successfulSaveCookiesOptions: 'Vaše nastavení souborů cookies bylo uloženo.',
