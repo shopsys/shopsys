@@ -36,18 +36,30 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     getServerSidePropsWithRedisClient(
-        (redisClient) => async (context) =>
-            initServerSideProps({
+        (redisClient) => async (context) => {
+            const orderUuid = store.getState().user.lastOrderUuid;
+
+            if (typeof orderUuid !== 'string' || orderUuid.length === 0) {
+                return {
+                    redirect: {
+                        destination: getInternationalizedStaticUrls(['/cart'], store.getState().domain.url)[0] ?? '/',
+                        statusCode: 301,
+                    },
+                };
+            }
+
+            return initServerSideProps({
                 context,
                 store,
                 prefetchedQueries: [
                     {
                         query: OrderSentPageContentDocumentApi,
-                        variables: { orderUuid: store.getState().user.lastOrderUuid },
+                        variables: { orderUuid },
                     },
                 ],
                 redisClient,
-            }),
+            });
+        },
         store,
     ),
 );
