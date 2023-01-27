@@ -56,7 +56,8 @@ class Grapesjs {
 
         const content = $.get({
             url: frontendUrl,
-            async: false
+            async: false,
+            crossDomain: true
         }).responseText;
 
         const editor = grapesjs.init({
