@@ -38,6 +38,26 @@ export default grapesjs.plugins.add('mail-template', editor => {
         }
     });
 
+    editor.Components.addType('text-ckeditor', {
+        isComponent: element => element.classList && element.classList.contains('gjs-text-ckeditor'),
+        extend: 'text',
+        model: {
+            defaults: {
+                attributes: {
+                    class: ['gjs-text-ckeditor'],
+                    'data-gjs-type': 'text'
+                }
+            }
+        }
+    });
+
+    editor.Blocks.add('text-ckeditor', {
+        label: 'Text',
+        category: 'Basic',
+        attributes: { class: 'gjs-fonts gjs-f-text' },
+        content: { type: 'text-ckeditor', content: 'Insert your text here', activeOnRender: 1 }
+    });
+
     // Patch for getCss to return always the content
     // from editable component
     editor.getModel().getCss = () => {

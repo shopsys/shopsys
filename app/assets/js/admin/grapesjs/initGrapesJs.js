@@ -163,6 +163,8 @@ class Grapesjs {
             fromElement: false,
             storageManager: false,
             noticeOnUnload: false,
+            avoidInlineStyle: false,
+            forceClass: false,
             plugins: ['gjs-preset-newsletter', 'gjs-plugin-ckeditor', 'customButtons', 'mail-template'],
             pluginsOpts: {
                 'gjs-preset-newsletter': {
@@ -235,6 +237,7 @@ class Grapesjs {
         editor.BlockManager.remove('link');
         editor.BlockManager.remove('grid-items');
         editor.BlockManager.remove('list-items');
+        editor.BlockManager.remove('text');
 
         CKEDITOR.on('instanceReady', function (e) {
             editor.RichTextEditor.updatePosition();
