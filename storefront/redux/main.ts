@@ -2,6 +2,7 @@ import { contactInformationSlice } from './slices/contactInformation';
 import { domainSlice } from './slices/domain';
 import { userSlice } from './slices/user';
 import { configureStore } from '@reduxjs/toolkit';
+import { getCartExpireDate } from 'helpers/cookies/getCartExpireDate';
 import { nextReduxCookieMiddleware, wrapMakeStore } from 'next-redux-cookie-wrapper';
 import { createWrapper } from 'next-redux-wrapper';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
@@ -18,6 +19,7 @@ const makeStore = wrapMakeStore(() =>
                 nextReduxCookieMiddleware({
                     compress: process.env.NODE_ENV === 'production',
                     subtrees: ['cart.isCartEmpty', 'user', 'domain', 'contactInformation'],
+                    expires: getCartExpireDate(),
                 }),
             ),
     }),

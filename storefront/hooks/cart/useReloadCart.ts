@@ -1,5 +1,6 @@
 import { useChangePaymentInCart } from './useChangePaymentInCart';
 import { handleCartModifications, useCurrentCart } from 'connectors/cart/Cart';
+import { extendCartExpireDate } from 'helpers/cookies/getCartExpireDate';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
@@ -19,6 +20,8 @@ export const useReloadCart = (): void => {
     useEffect(() => {
         if (cartUuid !== null || isUserLoggedIn) {
             refetchCart();
+
+            extendCartExpireDate();
         }
     }, [slug, refetchCart, isUserLoggedIn, cartUuid]);
 
