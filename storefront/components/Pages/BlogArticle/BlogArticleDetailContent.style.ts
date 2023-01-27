@@ -11,29 +11,6 @@ export const BlogArticleWrapper = styled.div`
     padding: 0 20px;
 `;
 
-export const ProductSectionWrapper = styled.div(
-    ({ theme }) => css`
-        padding: 3px;
-        margin-bottom: 35px;
-
-        border: 0;
-        border-radius: ${localVariables.radius};
-        background-color: ${theme.color.white};
-    `,
-);
-
-export const ProductSectionTitle = styled.h3(
-    ({ theme }) => css`
-        margin-bottom: 25px;
-        line-height: ${theme.lineHeight.default};
-
-        text-transform: uppercase;
-        font-size: ${theme.fontSize.default};
-        color: ${theme.color.primary};
-        font-weight: 600;
-    `,
-);
-
 export const BlogArticleTextContent = styled.div`
     display: flex;
     flex-direction: column;
