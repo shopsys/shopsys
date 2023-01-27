@@ -93,16 +93,6 @@ class Grapesjs {
                     navbarOpts: false,
                     formsOpts: false,
                     customStyleManager: [
-                        {
-                            name: 'General',
-                            open: false,
-                            buildProps: ['border', 'border-radius', 'background-color']
-                        },
-                        {
-                            name: 'Layout',
-                            open: false,
-                            buildProps: ['margin', 'padding']
-                        }
                     ]
                 },
                 'customButtons': {
@@ -111,6 +101,7 @@ class Grapesjs {
             },
             styleManager: {
                 clearProperties: true,
+                appendTo: document.createElement('div'), // disable rendering a styleManager
                 sectors: []
             },
             assetManager: {
