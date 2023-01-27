@@ -180,6 +180,12 @@ team of {domain}
             'orderStatus' => $mailTemplateData->orderStatus,
         ]);
 
+        $mailTemplateData->body = <<<EOT
+            <div style="box-sizing: border-box; padding: 10px;">
+                <div class="gjs-text-ckeditor">{$mailTemplateData->body}</div>
+            </div>
+        EOT;
+
         if ($mailTemplate === null) {
             $mailTemplate = $this->mailTemplateFactory->create($name, $domainId, $mailTemplateData);
         } else {

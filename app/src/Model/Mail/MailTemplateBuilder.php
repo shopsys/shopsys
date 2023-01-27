@@ -81,10 +81,12 @@ class MailTemplateBuilder
                                     <tbody style="box-sizing: border-box;">
                                         <tr style="box-sizing: border-box;">
                                             <td bgcolor="#fff" style="box-sizing: border-box; padding-top: 30px; padding-bottom: 30px; padding-left: 30px; padding-right: 30px; background-color: #fff;">
-                                                <img src="{$this->getBaseUrl($domainId)}/public/frontend/mail/logo.png" style="box-sizing: border-box; color: black; margin: 0 0 30px 0;">
-                                                <div style="box-sizing: border-box; padding: 10px;" data-gjs-type="editable" class="gjs-editable">
-                                                    <div class="gjs-text-ckeditor">{$content}</div>
-                                                </div>
+                                                <img src="{$this->getBaseUrl($domainId)}/public/frontend/mail/logo.png" style="box-sizing: border-box; color: black; margin: 0;">
+                                            </td>
+                                        </tr>
+                                        <tr style="box-sizing: border-box;">
+                                            <td bgcolor="#fff" style="box-sizing: border-box; padding-top: 30px; padding-bottom: 30px; padding-left: 30px; padding-right: 30px; background-color: #fff;" data-gjs-type="editable" class="gjs-editable">
+                                                {$content}
                                             </td>
                                         </tr>
                                     </tbody>
