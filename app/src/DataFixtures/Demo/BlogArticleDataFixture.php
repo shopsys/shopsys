@@ -344,9 +344,9 @@ Při v&yacute;běru židle mějte na paměti i celkov&yacute; pracovn&iacute; pr
 <br />
 <strong>TIP:</strong> U každ&eacute; kancel&aacute;řsk&eacute; židle uv&aacute;d&iacute;me rozměry: celkov&aacute; v&yacute;&scaron;ka, v&yacute;&scaron;ka sed&aacute;ku, hloubka sed&aacute;ku, &scaron;&iacute;řka &scaron;ed&aacute;ku, v&yacute;&scaron;ka opěr&aacute;ku, v&yacute;&scaron;ka područky nad sed&aacute;kem, ...<br />
 <br />
-&nbsp;</div><div class="row"><div class="column"><img id="i47xqe" src="{$firstDomainUrl}/content/wysiwyg/chair.png"/></div><div class="column"><img id="ijhc4t" src="{$firstDomainUrl}/content/wysiwyg/sitting-properly-diagram%201.png"/></div></div><div class="gjs-text-ckeditor"><h2>Možnosti nastaven&iacute; kancel&aacute;řsk&eacute; židle</h2>
+&nbsp;</div><div class="gjs-text-ckeditor"><h2>Možnosti nastaven&iacute; kancel&aacute;řsk&eacute; židle</h2>
 Hlavn&iacute;mi parametry pro v&yacute;běr kancel&aacute;řsk&eacute; židle je typ mechaniky židle, možnosti nastaven&iacute; v&yacute;&scaron;ky, hloubky sed&aacute;ku, a dal&scaron;&iacute; v&yacute;bava jako bedern&iacute; opěrka, nastaviteln&eacute; područky (opěrky rukou).<br />
-&nbsp;</div><img id="ie4jei" src="{$firstDomainUrl}/content/wysiwyg/Bitmap-2.png"/><div class="gjs-products" data-products="9177759,9176508,5965879P,5960453"><div data-product="9177759" data-product-name="22&quot; Sencor SLE 22F46DM4 HELLO KITTY" class="gjs-product"></div><div data-product="9176508" data-product-name="32&quot; Philips 32PFL4308" class="gjs-product"></div><div data-product="5965879P" data-product-name="47&quot; LG 47LA790V (FHD)" class="gjs-product"></div><div data-product="5960453" data-product-name="A4tech myš X-710BK, OSCAR Game, 2000DPI, černá" class="gjs-product"></div></div>
+&nbsp;</div><div class="gjs-products" data-products="9177759,9176508,5965879P,5960453"><div data-product="9177759" data-product-name="22&quot; Sencor SLE 22F46DM4 HELLO KITTY" class="gjs-product"></div><div data-product="9176508" data-product-name="32&quot; Philips 32PFL4308" class="gjs-product"></div><div data-product="5965879P" data-product-name="47&quot; LG 47LA790V (FHD)" class="gjs-product"></div><div data-product="5960453" data-product-name="A4tech myš X-710BK, OSCAR Game, 2000DPI, černá" class="gjs-product"></div></div>
 EOT));
         }
 
