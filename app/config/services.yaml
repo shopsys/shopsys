@@ -624,7 +624,9 @@ services:
         alias: App\Component\Image\ImageFacade
 
     App\Component\Image\ImageFacade:
-        arguments: ['%shopsys.image_url_prefix%']
+        arguments:
+            $imageUrlPrefix: '%shopsys.image_url_prefix%'
+            $cache: '@image_cache'
         calls:
             - { method: setCdnDomain, arguments: [ '%env(CDN_DOMAIN)%' ] }
 

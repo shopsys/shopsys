@@ -10,13 +10,15 @@ use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
+use Psr\Log\LoggerInterface;
+use Shopsys\Cdn\Component\Image\ImageFacade as CdnImageFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Image as BaseImage;
-use Shopsys\FrameworkBundle\Component\Image\ImageFacade as BaseImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Shopsys\FrameworkBundle\Component\Image\ImageRepository;
@@ -39,21 +41,11 @@ use Symfony\Contracts\Cache\CacheInterface;
  * @method \App\Component\Image\Image[] getImagesByEntitiesIndexedByEntityId(int[] $entityIds, string $entityClass)
  * @method \App\Component\Image\Image[] getImagesByEntityId(int $id, string $entityClass)
  */
-class ImageFacade extends BaseImageFacade
+class ImageFacade extends CdnImageFacade
 {
     public const AKENEO_MAIN_IMAGE_TYPE = 'image_main';
     public const NOIMAGE_FILENAME = 'noimage.png';
     public const OPTIMIZED_NOIMAGE_FILENAME = 'optimized-' . self::NOIMAGE_FILENAME;
-
-    /**
-     * @var \Symfony\Contracts\Cache\CacheInterface|\Symfony\Component\Cache\Adapter\AdapterInterface
-     */
-    protected CacheInterface|AdapterInterface $cache;
-
-    /**
-     * @var string|null
-     */
-    private $cdnDomain;
 
     /**
      * @param mixed $imageUrlPrefix
@@ -65,7 +57,9 @@ class ImageFacade extends BaseImageFacade
      * @param \App\Component\Image\ImageLocator $imageLocator
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface $imageFactory
      * @param \League\Flysystem\MountManager $mountManager
-     * @param \Symfony\Contracts\Cache\CacheInterface $cache
+     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Symfony\Contracts\Cache\CacheInterface|\Symfony\Component\Cache\Adapter\AdapterInterface $cache
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         $imageUrlPrefix,
@@ -77,7 +71,9 @@ class ImageFacade extends BaseImageFacade
         ImageLocator $imageLocator,
         ImageFactoryInterface $imageFactory,
         MountManager $mountManager,
-        CacheInterface $cache
+        LoggerInterface $logger,
+        private readonly CacheInterface|AdapterInterface $cache,
+        private readonly Domain $domain,
     ) {
         parent::__construct(
             $imageUrlPrefix,
@@ -88,21 +84,9 @@ class ImageFacade extends BaseImageFacade
             $fileUpload,
             $imageLocator,
             $imageFactory,
-            $mountManager
+            $mountManager,
+            $logger
         );
-
-        $this->cache = $cache;
-    }
-
-    /**
-     * @param string $cdnDomain
-     */
-    public function setCdnDomain(string $cdnDomain): void
-    {
-        // When you do not want to use CDN, it is used value '//' as workaround by https://github.com/symfony/symfony/issues/28391
-        if (trim($cdnDomain, '/') !== '') {
-            $this->cdnDomain = $cdnDomain;
-        }
     }
 
     /**
@@ -523,20 +507,6 @@ class ImageFacade extends BaseImageFacade
     }
 
     /**
-     * @param string $imageUrl
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
-    private function replaceDomainUrlByCdnDomain(string $imageUrl, DomainConfig $domainConfig): string
-    {
-        if ($this->cdnDomain === null) {
-            return $imageUrl;
-        }
-
-        return str_replace($domainConfig->getUrl(), $this->cdnDomain, $imageUrl);
-    }
-
-    /**
      * @return bool
      */
     public function clearImageCache(): bool
@@ -611,5 +581,28 @@ class ImageFacade extends BaseImageFacade
 
         $this->cache->delete($cacheIdForSingleEntity);
         $this->cache->delete($cacheIdForMultipleEntities);
+    }
+
+    /**
+     * @param string|null $content
+     * @return string|null
+     */
+    public function replaceImageUrlsByCdn(?string $content): ?string
+    {
+        if ($this->cdnDomain === null || $content === null) {
+            return $content;
+        }
+
+        $escapedDomainUrls = [];
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $escapedDomainUrls[] = preg_quote($domainConfig->getUrl(), '/');
+        }
+
+        $domainsPattern = implode('|', $escapedDomainUrls);
+        $pattern = '/((' . $domainsPattern . ')\/)(content|public)/i';
+
+        $replacement = $this->cdnDomain . '/$3';
+
+        return preg_replace($pattern, $replacement, $content);
     }
 }

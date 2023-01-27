@@ -554,3 +554,5 @@ App\Migrations\Version20221205123619:
     skip: false
 App\Migrations\Version20220830204025:
     skip: false
+App\Migrations\Version20221205123619:
+    skip: false

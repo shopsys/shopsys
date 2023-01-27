@@ -80,6 +80,7 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/src/Model/Security/Roles.php',
             __DIR__ . '/src/Model/Security/MenuItemsGrantedRolesSetting.php',
             __DIR__ . '/src/Form/Admin/Mail/MailTemplateFormTypeExtension.php',
+            __DIR__ . '/src/Migrations/Version20221205123619.php',
         ],
         ClassTraitAndInterfaceLengthSniff::class => [
             __DIR__ . '/tests/App/Functional/Model/Product/ProductVisibilityRepositoryTest.php',

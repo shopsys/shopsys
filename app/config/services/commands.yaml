@@ -6,3 +6,7 @@ services:
 
     App\Command\:
         resource: '../../src/Command'
+
+    App\Command\ReplaceCdnDomainUrlCommand:
+        arguments:
+            $cdnDomainUrl: '%env(CDN_DOMAIN)%'
