@@ -1,6 +1,6 @@
 export const brandSencor = 'Sencor';
 export const buttonName = {
-    logIn: 'Přihlásit',
+    login: 'Přihlásit',
 };
 export const categories = {
     elektro: {
@@ -23,7 +23,11 @@ export const flashMessages = {
     successfulSaveCookiesOptions: 'Vaše nastavení souborů cookies bylo uloženo.',
 };
 export const freePrice = 'Zdarma';
-export const linkToOrderDetail = 'zde';
+export const link = {
+    orderDetail: 'zde',
+    loginInHeader: 'Přihlášení',
+    myAccount: 'Můj účet',
+};
 export const orderNote = 'poznámka v objednávce';
 export const payment = {
     cash: 'Hotově',

@@ -1,4 +1,4 @@
-import { url } from '../../fixtures/demodata';
+import { link, url } from '../../fixtures/demodata';
 
 export function clickOnCategoryFromMenu(categoryName) {
     cy.get('[data-testid="layout-header-navigation"] [data-testid="layout-header-navigation-navigationitem"]')
@@ -25,6 +25,6 @@ export function clickOnUserIconInHeader() {
     cy.get('[data-testid="layout-header-menuiconic-2"] [data-testid="basic-icon-iconsvg-User"]').click();
 }
 
-export function checkSuccesfulLoginIconInHeader() {
-    cy.get('[data-testid="layout-header-menuiconic-2"] [data-testid="basic-icon-iconsvg-User"]');
+export function checkUserIsLoggedIn() {
+    cy.get('[data-testid="layout-header-menuiconic-2"]').contains(link.myAccount);
 }
