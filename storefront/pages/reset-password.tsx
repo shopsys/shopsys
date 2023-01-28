@@ -1,4 +1,3 @@
-import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ResetPasswordContent } from 'components/Pages/ResetPassword/ResetPasswordContent';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
@@ -22,11 +21,9 @@ const ResetPasswordPage: FC<ServerSidePropsType> = () => {
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
     return (
-        <StaticUrlGuard domainUrl={domainUrl}>
-            <CommonLayout title={t('Forgotten password')}>
-                <ResetPasswordContent breadcrumbs={breadcrumbs} />
-            </CommonLayout>
-        </StaticUrlGuard>
+        <CommonLayout title={t('Forgotten password')}>
+            <ResetPasswordContent breadcrumbs={breadcrumbs} />
+        </CommonLayout>
     );
 };
 

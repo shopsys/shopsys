@@ -1,6 +1,5 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
 import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
-import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrdersContent } from 'components/Pages/Customer/Orders/OrdersContent';
 import { useOrders } from 'connectors/customer/Orders';
@@ -40,7 +39,7 @@ const OrdersPage: FC = () => {
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
     return (
-        <StaticUrlGuard domainUrl={domainUrl}>
+        <>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('My orders')}>
                 <OrdersContent
@@ -49,7 +48,7 @@ const OrdersPage: FC = () => {
                     breadcrumbs={breadcrumbs}
                 />
             </CommonLayout>
-        </StaticUrlGuard>
+        </>
     );
 };
 

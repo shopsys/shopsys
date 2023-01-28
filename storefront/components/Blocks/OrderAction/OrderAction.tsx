@@ -41,7 +41,7 @@ export const OrderAction: FC<OrderActionProps> = ({
 
     const onNextStepHandler = () => {
         if (buttonNextLink !== undefined) {
-            router.push(buttonNextLink, undefined, { shallow: true });
+            router.push(buttonNextLink, undefined);
         }
         if (nextStepClickHandler !== undefined) {
             nextStepClickHandler();
@@ -51,7 +51,7 @@ export const OrderAction: FC<OrderActionProps> = ({
     return (
         <OrderActionStyled withGapBottom={withGapBottom} withGapTop={withGapTop}>
             <OrderActionLeftStyled data-testid={TEST_IDENTIFIER + 'back'}>
-                <NextLink href={buttonBackLink} passHref shallow>
+                <NextLink href={buttonBackLink} passHref>
                     <OrderActionLinkBackStyled>
                         <OrderActionButtonBackIconStyled alt="" iconType="icon" icon="Arrow" />
                         {buttonBack}

@@ -2,64 +2,8 @@
 const { withSentryConfig } = require('@sentry/nextjs');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const nextTranslate = require('next-translate');
-
-const staticUrls = {
-    [process.env.DOMAIN_HOSTNAME_1]: {
-        '/search': '/hledani',
-        '/cart': '/kosik',
-        '/contact': '/kontakt',
-        '/order/transport-and-payment': '/objednavka/doprava-a-platba',
-        '/order/contact-information': '/objednavka/kontaktni-udaje',
-        '/reset-password': '/zapomenute-heslo',
-        '/order-confirmation': '/potvrzeni-objednavky',
-        '/stores': '/obchodni-domy',
-        '/brands-overview': '/prehled-znacek',
-        '/login': '/prihlaseni',
-        '/customer': '/zakaznik',
-        '/customer/edit-profile': '/zakaznik/upravit-udaje',
-        '/customer/orders': '/zakaznik/objednavky',
-        '/customer/order-detail': '/zakaznik/detail-objednavky',
-        '/registration': '/registrace',
-        '/new-password': '/nove-heslo',
-        '/personal-data-overview': '/prehled-osobnich-udaju',
-        '/personal-data-overview/:hash': '/prehled-osobnich-udaju/:hash',
-        '/personal-data-export': '/export-osobnich-udaju',
-        '/order-payment-confirmation': '/potvrzeni-platby-objednavky',
-        '/order/payment-status-notify': '/order/payment-status-notify',
-        '/order-detail/:urlHash': '/detail-objednavky/:urlHash',
-        '/cookie-consent': '/souhlas-se-soubory-cookies',
-        '/abandoned-cart/:cartUuid': '/opusteny-kosik/:cartUuid',
-    },
-    [process.env.DOMAIN_HOSTNAME_2]: {
-        '/search': '/hladanie',
-        '/cart': '/kosik',
-        '/contact': '/kontakt',
-        '/order/transport-and-payment': '/objednavka/doprava-a-platba',
-        '/order/contact-information': '/objednavka/kontaktne-udaje',
-        '/reset-password': '/zapomenute-heslo',
-        '/order-confirmation': '/potvrdenie-objednavky',
-        '/stores': '/obchodne-domy',
-        '/brands-overview': '/prehled-znacek',
-        '/login': '/prihlasenie',
-        '/customer': '/zakaznik',
-        '/customer/edit-profile': '/zakaznik/upravit-udaje',
-        '/customer/orders': '/zakaznik/objednavky',
-        '/customer/order-detail': '/zakaznik/detail-objednavky',
-        '/registration': '/registracia',
-        '/new-password': '/nove-heslo',
-        '/personal-data-overview': '/prehlad-osobnych-udajov',
-        '/personal-data-overview/:hash': '/prehlad-osobnych-udajov/:hash',
-        '/personal-data-export': '/export-osobnych-udajov',
-        '/order-payment-confirmation': '/potvrdenie-platby-objednavky',
-        '/order/payment-status-notify': '/order/payment-status-notify',
-        '/order-detail/:urlHash': '/detail-objednavky/:urlHash',
-        '/cookie-consent': '/souhlas-se-soubory-cookies',
-        '/abandoned-cart/:cartUuid': '/opusteny-kosik/:cartUuid',
-    },
-};
-
-// copy first domain as new third domain for acceptance (cypress) tests
-staticUrls['http://' + process.env.ACCEPTANCE_DOMAIN_HOST + '/'] = staticUrls[process.env.DOMAIN_HOSTNAME_1];
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const STATIC_REWRITE_PATHS = require('./config/staticRewritePaths');
 
 const moduleExports = nextTranslate({
     reactStrictMode: true,
@@ -117,21 +61,7 @@ const moduleExports = nextTranslate({
                 gtmId: process.env.GTM_ID,
             },
         ],
-        availableStaticUrls: staticUrls,
-    },
-    async rewrites() {
-        const mappedRewrites = [];
-
-        for (const domainHostName in this.publicRuntimeConfig.availableStaticUrls) {
-            for (const key of Object.keys(this.publicRuntimeConfig.availableStaticUrls[domainHostName])) {
-                mappedRewrites.push({
-                    source: this.publicRuntimeConfig.availableStaticUrls[domainHostName][key],
-                    destination: key,
-                });
-            }
-        }
-
-        return mappedRewrites;
+        staticRewritePaths: STATIC_REWRITE_PATHS,
     },
     eslint: {
         ignoreDuringBuilds: true,

@@ -1,4 +1,3 @@
-import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { LoginContent } from 'components/Pages/Login/LoginContent';
 import { CurrentCustomerUserQueryApi, CurrentCustomerUserQueryDocumentApi } from 'graphql/generated';
@@ -22,11 +21,9 @@ const LoginPage: FC<ServerSidePropsType> = () => {
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
     return (
-        <StaticUrlGuard domainUrl={domainUrl}>
-            <CommonLayout title={t('Login')}>
-                <LoginContent breadcrumbs={breadcrumbs} />
-            </CommonLayout>
-        </StaticUrlGuard>
+        <CommonLayout title={t('Login')}>
+            <LoginContent breadcrumbs={breadcrumbs} />
+        </CommonLayout>
     );
 };
 

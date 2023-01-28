@@ -1,5 +1,4 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
-import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { NewPasswordContent } from 'components/Pages/NewPassword/NewPasswordContent';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
@@ -42,12 +41,12 @@ const NewPasswordPage: FC<ServerSidePropsType> = () => {
     }
 
     return (
-        <StaticUrlGuard domainUrl={domainUrl}>
+        <>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Set new password')}>
                 <NewPasswordContent hash={hashParam} email={emailParam} breadcrumbs={breadcrumbs} />
             </CommonLayout>
-        </StaticUrlGuard>
+        </>
     );
 };
 

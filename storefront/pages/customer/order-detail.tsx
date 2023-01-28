@@ -1,6 +1,5 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
 import { PageGuard } from 'components/Helpers/PageGuard';
-import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrderDetailContent } from 'components/Pages/Customer/OrderDetail/OrderDetailContent';
 import { useOrderDetail } from 'connectors/customer/Orders';
@@ -27,14 +26,14 @@ const OrderDetailPage: FC = () => {
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
     return (
-        <StaticUrlGuard domainUrl={domainConfig.url}>
+        <>
             <MetaRobots content="noindex" />
             <PageGuard accessCondition={order !== null} errorRedirectUrl={customerOrdersUrl}>
                 <CommonLayout title={`${t('Order number')} ${order?.number}`}>
                     <OrderDetailContent order={order!} breadcrumbs={breadcrumbs} />
                 </CommonLayout>
             </PageGuard>
-        </StaticUrlGuard>
+        </>
     );
 };
 

@@ -1,4 +1,3 @@
-import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Error404Content } from 'components/Pages/ErrorPage/404/Error404Content';
 import { PersonalDataDetailContent } from 'components/Pages/PersonalData/Detail/PersonalDataDetailContent';
@@ -8,10 +7,9 @@ import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
+import { nextReduxWrapper } from 'redux/main';
 
 const PersonalDataOverviewByHashPage: NextPage = () => {
-    const domainUrl = useShopsysSelector((state) => state.domain.url);
     const { query } = useRouter();
     const hash = getStringFromUrlQuery(query.hash);
 
@@ -22,11 +20,9 @@ const PersonalDataOverviewByHashPage: NextPage = () => {
     }
 
     return (
-        <StaticUrlGuard domainUrl={domainUrl}>
-            <CommonLayout>
-                <PersonalDataDetailContent data={data} />
-            </CommonLayout>
-        </StaticUrlGuard>
+        <CommonLayout>
+            <PersonalDataDetailContent data={data} />
+        </CommonLayout>
     );
 };
 

@@ -1,4 +1,3 @@
-import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { RegistrationContent } from 'components/Pages/Registration/RegistrationContent';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
@@ -19,11 +18,9 @@ const RegistrationPage: FC<ServerSidePropsType> = () => {
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
     return (
-        <StaticUrlGuard domainUrl={domainUrl}>
-            <CommonLayout title={t('Registration')}>
-                <RegistrationContent breadcrumbs={breadcrumbs} />
-            </CommonLayout>
-        </StaticUrlGuard>
+        <CommonLayout title={t('Registration')}>
+            <RegistrationContent breadcrumbs={breadcrumbs} />
+        </CommonLayout>
     );
 };
 

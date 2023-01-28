@@ -9,7 +9,6 @@ import { FormColumn } from 'components/Forms/Lib/FormColumn/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useContactMutationApi, useSettingsQueryApi } from 'graphql/generated';
@@ -21,7 +20,6 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import Trans from 'next-translate/Trans';
 import React, { FC, useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
-import { useShopsysSelector } from 'redux/main';
 import { ContactFormType } from 'types/form';
 
 export const ContactContent: FC = () => {
@@ -29,7 +27,6 @@ export const ContactContent: FC = () => {
     const [formProviderMethods, defaultValues] = useContactForm();
     const formMeta = useContactFormMeta(formProviderMethods);
     const [{ data }] = useSettingsQueryApi({ requestPolicy: 'cache-only' });
-    const { url } = useShopsysSelector((state) => state.domain);
     const gdprUrl = useGetPrivacyPolicyUrl();
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
     const [, contact] = useContactMutationApi();
@@ -49,7 +46,7 @@ export const ContactContent: FC = () => {
     );
 
     return (
-        <StaticUrlGuard domainUrl={url}>
+        <>
             <ContactWrapper>
                 <Webline>
                     <Heading1Styled>{t('Write to us')}</Heading1Styled>
@@ -136,6 +133,6 @@ export const ContactContent: FC = () => {
                 fields={formMeta.fields}
                 origin="other"
             />
-        </StaticUrlGuard>
+        </>
     );
 };

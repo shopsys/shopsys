@@ -1,6 +1,5 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
-import { StaticUrlGuard } from 'components/Helpers/StaticUrlGuard';
 import { Footer } from 'components/Layout/Footer/Footer';
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -28,7 +27,6 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
     const transports = useTransports(cartUuid);
     const [{ data }] = useLastOrderQueryApi({ requestPolicy: 'network-only', pause: !isUserLoggedIn });
     const currentCart = useCurrentCart();
-    const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [changeTransportInCart, isTransportSelectionLoading] = useChangeTransportInCart();
     const [changePaymentInCart, isPaymentSelectionLoading] = useChangePaymentInCart();
 
@@ -37,7 +35,7 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
     useGtmPaymentShippingView(gtmStaticPageViewEvent);
 
     return (
-        <StaticUrlGuard domainUrl={domainUrl}>
+        <>
             <MetaRobots content="noindex" />
             <EmptyCartWrapper currentCart={currentCart} title={t('Order')}>
                 <OrderLayout
@@ -61,7 +59,7 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
                     <Footer simpleFooter />
                 </Webline>
             </EmptyCartWrapper>
-        </StaticUrlGuard>
+        </>
     );
 };
 
