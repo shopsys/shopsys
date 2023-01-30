@@ -136,7 +136,7 @@ class Category extends AbstractTranslatableEntity
 
     /**
      * @param string|null $locale
-     * @return string
+     * @return string|null
      */
     public function getName($locale = null)
     {
