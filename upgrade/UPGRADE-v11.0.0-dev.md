@@ -875,6 +875,8 @@ There you can find links to upgrade notes for other versions too.
     - replace usages of `SitemapRepository::getSitemapItemsForVisibleProducts()` with `SitemapRepository::getSitemapItemsForListableProducts()` in your project as old method no longer exists
 - session is valid for a year and the cart is now only deleted after 130 days from the user's last activity ([#2537](https://github.com/shopsys/shopsys/pull/2537))
     - see #project-base-diff to update your project
+- adding an index to the columns lft,rgt ([#2537](https://github.com/shopsys/shopsys/pull/2537))
+    - see #project-base-diff to update your project
 
 ## Composer dependencies
 
