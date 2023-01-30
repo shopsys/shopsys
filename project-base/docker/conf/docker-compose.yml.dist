@@ -45,13 +45,14 @@ services:
         image: redis:5.0-alpine
         container_name: shopsys-framework-redis
 
-    redis-admin:
-        image: erikdubbelboer/phpredisadmin:v1.10.2
-        container_name: shopsys-framework-redis-admin
+    redis-commander:
+        container_name: shopsys-framework-redis-commander
+        image: ghcr.io/joeferner/redis-commander:latest
+        restart: always
         environment:
-            - REDIS_1_HOST=redis
+            - REDIS_HOSTS=redis
         ports:
-            - "1600:80"
+            - "1600:8081"
 
     selenium-server:
         image: selenium/standalone-chrome:3.141.5
