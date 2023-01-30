@@ -227,7 +227,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
         $articleData = $this->articleDataFactory->create();
         $articleData->domainId = $domainId;
         $articleData->name = $data[self::ATTRIBUTE_NAME_KEY];
-        $articleData->text = $data[self::ATTRIBUTE_TEXT_KEY];
+        $articleData->text = '<div class="gjs-text-ckeditor">' . $data[self::ATTRIBUTE_TEXT_KEY] . '</div>';
         $articleData->placement = $data[self::ATTRIBUTE_PLACEMENT_KEY];
         $articleData->seoH1 = $data[self::ATTRIBUTE_SEO_H1_KEY] ?? null;
         $articleData->seoTitle = $data[self::ATTRIBUTE_SEO_TITLE_KEY] ?? null;

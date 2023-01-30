@@ -6,7 +6,6 @@ namespace App\Form\Admin;
 
 use App\Model\Article\Article;
 use App\Model\Article\ArticleData;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Article\ArticleFormType;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
@@ -69,7 +68,7 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
             'trim' => true,
         ]);
 
-        $builderArticleDataGroup->add('text', CKEditorType::class, [
+        $builderArticleDataGroup->add('text', GrapesJsType::class, [
             'required' => true,
             'constraints' => [
                 new Constraints\NotBlank([

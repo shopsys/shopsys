@@ -16,7 +16,7 @@ const Index: FC = () => {
     return (
         <CommonLayout title={'Customer'}>
             <Webline>
-                <ArticleTitle>Blog title</ArticleTitle>
+                <ArticleTitle>Blog or Article title</ArticleTitle>
                 <BlogArticleWrapper>
                     <BlogArticleTextContent>
                         <BlogArticleDate>{new Date().toLocaleDateString() + ''}</BlogArticleDate>
