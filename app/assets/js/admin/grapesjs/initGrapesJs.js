@@ -129,14 +129,18 @@ class Grapesjs {
             }
         });
 
-        editor.Panels.getButton('options', 'sw-visibility').set('active', 1);
-
         CKEDITOR.on('instanceReady', function (e) {
             editor.RichTextEditor.updatePosition();
         });
 
-        const editableContent = $('#' + textareaId).val();
-        editor.getWrapper().find('.gjs-editable')[0].append(editableContent);
+        editor.once('load', () => {
+            editor.Panels.getButton('options', 'sw-visibility').set('active', 1);
+
+            const editableContent = $('#' + textareaId).val();
+            const wrapper = editor.getWrapper();
+            const myComponent = wrapper.find('.gjs-editable')[0];
+            myComponent.append(editableContent);
+        });
     }
 
     openGrapesMailEditor (event, textareaId, elfinderUrl, templateHtml, bodyVariables) {
