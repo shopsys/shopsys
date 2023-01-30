@@ -18,8 +18,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class CartFacade
 {
-    protected const DAYS_LIMIT_FOR_UNREGISTERED = 60;
-    protected const DAYS_LIMIT_FOR_REGISTERED = 120;
+    protected const DAYS_LIMIT = 130;
 
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
@@ -252,6 +251,9 @@ class CartFacade
 
                 return null;
             }
+
+            $cart->setModifiedNow();
+            $this->em->flush();
         }
 
         return $cart;
@@ -290,6 +292,9 @@ class CartFacade
 
             $this->em->persist($cart);
             $this->em->flush();
+        } else {
+            $cart->setModifiedNow();
+            $this->em->flush();
         }
 
         return $cart;
@@ -311,7 +316,7 @@ class CartFacade
 
     public function deleteOldCarts()
     {
-        $this->cartRepository->deleteOldCartsForUnregisteredCustomerUsers(static::DAYS_LIMIT_FOR_UNREGISTERED);
-        $this->cartRepository->deleteOldCartsForRegisteredCustomerUsers(static::DAYS_LIMIT_FOR_REGISTERED);
+        $this->cartRepository->deleteOldCartsForUnregisteredCustomerUsers(static::DAYS_LIMIT);
+        $this->cartRepository->deleteOldCartsForRegisteredCustomerUsers(static::DAYS_LIMIT);
     }
 }

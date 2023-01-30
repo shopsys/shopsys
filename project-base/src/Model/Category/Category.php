@@ -11,7 +11,13 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
 
 /**
  * @Gedmo\Tree(type="nested")
- * @ORM\Table(name="categories")
+ * @ORM\Table(
+ *     name="categories",
+ *     indexes={
+ *         @ORM\Index(columns={"lft"}),
+ *         @ORM\Index(columns={"rgt"}),
+ *     }
+ * )
  * @ORM\Entity
  * @property \App\Model\Category\Category|null $parent
  * @property \App\Model\Category\Category[]|\Doctrine\Common\Collections\Collection $children

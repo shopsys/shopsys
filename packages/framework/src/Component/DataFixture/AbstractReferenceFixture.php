@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\DataFixture;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\DBAL\Driver\Middleware as MiddlewareInterface;
+use Doctrine\DBAL\Logging\Middleware as LoggingMiddleware;
+use Doctrine\ORM\EntityManagerInterface;
 
 abstract class AbstractReferenceFixture implements FixtureInterface
 {
@@ -12,6 +15,20 @@ abstract class AbstractReferenceFixture implements FixtureInterface
      * @var \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade
      */
     protected $persistentReferenceFacade;
+
+    /**
+     * @required
+     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     */
+    public function removeLoggingMiddlewareFromEntityManager(EntityManagerInterface $entityManager): void
+    {
+        $middlewaresWithoutLoggingMiddleware = array_values(array_filter(
+            $entityManager->getConnection()->getConfiguration()->getMiddlewares(),
+            fn (MiddlewareInterface $middleware) => !($middleware instanceof LoggingMiddleware)
+        ));
+        $entityManager->getConnection()->getConfiguration()->setMiddlewares($middlewaresWithoutLoggingMiddleware);
+        $entityManager->clear();
+    }
 
     /**
      * @required

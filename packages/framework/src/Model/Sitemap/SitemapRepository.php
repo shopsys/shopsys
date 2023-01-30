@@ -49,9 +49,9 @@ class SitemapRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
      */
-    public function getSitemapItemsForVisibleProducts(DomainConfig $domainConfig, PricingGroup $pricingGroup)
+    public function getSitemapItemsForListableProducts(DomainConfig $domainConfig, PricingGroup $pricingGroup)
     {
-        $queryBuilder = $this->productRepository->getAllVisibleQueryBuilder($domainConfig->getId(), $pricingGroup);
+        $queryBuilder = $this->productRepository->getAllListableQueryBuilder($domainConfig->getId(), $pricingGroup);
         $queryBuilder
             ->select('fu.slug')
             ->join(

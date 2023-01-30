@@ -863,7 +863,20 @@ There you can find links to upgrade notes for other versions too.
         ```
     - `transchoice()` method was removed from `\Shopsys\FrameworkBundle\Component\Translation\Translator`, use `trans()` with `count` parameter instead
     - static `tc()` method was removed from `\Shopsys\FrameworkBundle\Component\Translation\Translator`, use `t()` with `count` parameter instead
-    - static `tc()` function was removed from global namespace, use `t()` with `count` parameter instead 
+    - static `tc()` function was removed from global namespace, use `t()` with `count` parameter instead
+- update to latest version heureka/overeno-zakazniky package ([#2526](https://github.com/shopsys/shopsys/pull/2526))
+    - see #project-base-diff to update your project
+- update twig/twig to v2.15.4 in order to fix CVE-2022-39261 ([#2527](https://github.com/shopsys/shopsys/pull/2527))
+    - see #project-base-diff to update your project
+- fill missing customer demo data for smooth testing of application ([#2529](https://github.com/shopsys/shopsys/pull/2529))
+    - see #project-base-diff to update your project
+- remove product variant urls from sitemap ([#2530](https://github.com/shopsys/shopsys/pull/2530))
+    - replace usages of `SitemapFacade::getSitemapItemsForVisibleProducts()` with `SitemapFacade::getSitemapItemsForListableProducts()` in your project as old method no longer exists
+    - replace usages of `SitemapRepository::getSitemapItemsForVisibleProducts()` with `SitemapRepository::getSitemapItemsForListableProducts()` in your project as old method no longer exists
+- session is valid for a year and the cart is now only deleted after 130 days from the user's last activity ([#2537](https://github.com/shopsys/shopsys/pull/2537))
+    - see #project-base-diff to update your project
+- adding an index to the columns lft,rgt ([#2537](https://github.com/shopsys/shopsys/pull/2537))
+    - see #project-base-diff to update your project
 
 ## Composer dependencies
 

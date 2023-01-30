@@ -17,6 +17,7 @@ framework:
         # Disable the default PHP session garbage collection.
         # Session garbage collection is responsibility of hosting.
         gc_probability: 0
+        cookie_lifetime: 31536000 # 365 days * 24 hours * 3600 seconds
     fragments: ~
     http_method_override: true
     profiler:

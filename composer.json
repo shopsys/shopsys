@@ -93,7 +93,7 @@
         "google/cloud-storage": "^1.10",
         "guzzlehttp/guzzle": "^6.3",
         "helios-ag/fm-elfinder-bundle": "^10.0.4",
-        "heureka/overeno-zakazniky": "^2.0.6",
+        "heureka/overeno-zakazniky": "^4.0.1",
         "intervention/image": "^2.3.14",
         "jdorn/sql-formatter": "^1.2",
         "jms/metadata": "^2.6.1",
@@ -102,6 +102,7 @@
         "knplabs/knp-menu-bundle": "^3.2",
         "lcobucci/jwt": "^4.1.5",
         "league/flysystem": "^1.1.4",
+        "league/flysystem-cached-adapter": "^1.1.0",
         "litipk/php-bignumbers": "^0.8.6",
         "nette/utils": "^3.0",
         "nikic/php-parser": "^4.0",
@@ -148,8 +149,9 @@
         "symfony/webpack-encore-bundle": "^1.7",
         "symfony/workflow": "^5.4",
         "tracy/tracy": "^2.4.13",
-        "twig/twig": "^2.12",
-        "webmozart/assert": "^1.4"
+        "twig/twig": "^2.15.4",
+        "webmozart/assert": "^1.4",
+        "webonyx/graphql-php": "^14.5"
     },
     "require-dev": {
         "ext-pgsql": "*",

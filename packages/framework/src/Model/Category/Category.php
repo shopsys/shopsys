@@ -12,7 +12,13 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
  * @Gedmo\Tree(type="nested")
- * @ORM\Table(name="categories")
+ * @ORM\Table(
+ *     name="categories",
+ *     indexes={
+ *         @ORM\Index(columns={"lft"}),
+ *         @ORM\Index(columns={"rgt"}),
+ *     }
+ * )
  * @ORM\Entity
  * @method \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation translation(?string $locale = null)
  */
