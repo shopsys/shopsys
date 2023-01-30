@@ -190,7 +190,6 @@ export const GrapesJsStyled = styled.section(
                     @media ${theme.mediaQueries.queryXl} {
                         float: left;
                         margin-right: 30px;
-                        margin-left: -200px;
                     }
                 }
 
@@ -204,7 +203,6 @@ export const GrapesJsStyled = styled.section(
                     @media ${theme.mediaQueries.queryXl} {
                         float: right;
                         margin-left: 30px;
-                        margin-right: -200px;
                     }
                 }
             }

@@ -1,3 +1,15 @@
+.gjs-layer {
+    * {
+        box-sizing: initial;
+    }
+
+    &.open {
+        .gjs-layer-caret {
+            transform: rotate(180deg);
+        }
+    }
+}
+
 .gjs-editor-cont {
     width: 100% !important;
     height: 100%;
@@ -11,11 +23,13 @@
     background-color: #fff;
 }
 
-.gjs-two-color, .gjs-two-color-h:hover {
+.gjs-two-color,
+.gjs-two-color-h:hover {
     color: #252525;
 }
 
-.gjs-four-color, .gjs-four-color-h:hover {
+.gjs-four-color,
+.gjs-four-color-h:hover {
     color: #009bd9;
 }
 
@@ -26,8 +40,8 @@
 
 .gjs-editor {
     box-sizing: border-box;
-    font-family: Roboto,Arial,Helvetica,sans-serif;
-    font-size: .75rem;
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    font-size: 0.75rem;
     height: 100%;
     position: relative;
 }
@@ -61,7 +75,7 @@
     color: #009bd9;
 }
 
-.gjs-radio-item input:checked+.gjs-radio-item-label {
+.gjs-radio-item input:checked + .gjs-radio-item-label {
     background: #fcbd46;
     color: #fff;
 }
@@ -76,7 +90,8 @@
     width: 0;
 }
 
-.gjs-field-arrow-d, .gjs-field-arrow-u {
+.gjs-field-arrow-d,
+.gjs-field-arrow-u {
     border-left: 3px solid transparent;
     border-right: 4px solid transparent;
     border-top: 4px solid #888;
@@ -98,7 +113,10 @@
     color: #fff;
 }
 
-.gjs-clm-tags .gjs-sm-stack #gjs-sm-add, .gjs-color-main, .gjs-off-prv, .gjs-sm-sector .gjs-sm-stack #gjs-sm-add {
+.gjs-clm-tags .gjs-sm-stack #gjs-sm-add,
+.gjs-color-main,
+.gjs-off-prv,
+.gjs-sm-sector .gjs-sm-stack #gjs-sm-add {
     fill: #252525;
     color: #252525;
 }
@@ -114,7 +132,7 @@
     width: 45%;
 }
 
-.gjs-am-file-uploader>form {
+.gjs-am-file-uploader > form {
     background-color: #f3f3f3;
     border: 2px dashed #aeb4ba;
     border-radius: 3px;
@@ -130,7 +148,16 @@
     color: #364353;
 }
 
-.gjs-btn-prim, .gjs-btn-prim:active {
+.gjs-btn-prim,
+.gjs-btn-prim:active {
     background-color: #fcbd46;
     color: #fff;
+}
+
+.gjs-field input[type="checkbox"]:checked + .gjs-chk-icon {
+    border-color: #009bd9;
+}
+
+.gjs-clm-tags #gjs-clm-new {
+    color: #000;
 }
