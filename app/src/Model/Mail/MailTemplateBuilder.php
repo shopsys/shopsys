@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Mail;
 
+use App\Component\Image\ImageFacade;
 use App\Model\Mail\Setting\MailSettingFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
@@ -12,10 +13,12 @@ class MailTemplateBuilder
     /**
      * @param \App\Model\Mail\Setting\MailSettingFacade $mailSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Image\ImageFacade $imageFacade
      */
     public function __construct(
         private readonly MailSettingFacade $mailSettingFacade,
-        private readonly Domain $domain
+        private readonly Domain $domain,
+        private readonly ImageFacade $imageFacade
     ) {
     }
 
@@ -23,9 +26,9 @@ class MailTemplateBuilder
      * @param int $domainId
      * @return string
      */
-    private function getBaseUrl(int $domainId): string
+    private function getContentBaseUrl(int $domainId): string
     {
-        return $this->domain->getDomainConfigById($domainId)->getUrl();
+        return $this->imageFacade->getCdnDomain() ?? $this->domain->getDomainConfigById($domainId)->getUrl();
     }
 
     /**
@@ -53,7 +56,7 @@ class MailTemplateBuilder
             $footerIconsHtml .= <<<EOT
                 <td {$itemPadding}>
                     <a href="{$footerIconUrl}" style="border:none;text-decoration:none" target="_blank">
-                        <img alt="{$footerIconName}" border="0" src="{$this->getBaseUrl($domainId)}/public/frontend/mail/{$footerIconName}.png" width="32" height="32" style="color: black; width: 32px; height: 32px;">
+                        <img alt="{$footerIconName}" border="0" src="{$this->getContentBaseUrl($domainId)}/public/frontend/mail/{$footerIconName}.png" width="32" height="32" style="color: black; width: 32px; height: 32px;">
                     </a>
                 </td>
             EOT;
@@ -81,7 +84,7 @@ class MailTemplateBuilder
                                     <tbody style="box-sizing: border-box;">
                                         <tr style="box-sizing: border-box;">
                                             <td bgcolor="#fff" style="box-sizing: border-box; padding-top: 30px; padding-bottom: 30px; padding-left: 30px; padding-right: 30px; background-color: #fff;">
-                                                <img src="{$this->getBaseUrl($domainId)}/public/frontend/mail/logo.png" style="box-sizing: border-box; color: black; margin: 0;">
+                                                <img src="{$this->getContentBaseUrl($domainId)}/public/frontend/mail/logo.png" style="box-sizing: border-box; color: black; margin: 0;">
                                             </td>
                                         </tr>
                                         <tr style="box-sizing: border-box;">

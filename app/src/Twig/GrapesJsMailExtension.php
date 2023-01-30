@@ -32,10 +32,10 @@ class GrapesJsMailExtension extends AbstractExtension
     }
 
     /**
-     * @param string $content
+     * @param string|null $content
      * @return string
      */
-    public function getMailTemplate(string $content): string
+    public function getMailTemplate(?string $content): string
     {
         return $this->mailTemplateBuilder->getMailTemplateWithContent($this->adminDomainTabsFacade->getSelectedDomainId(), $content);
     }

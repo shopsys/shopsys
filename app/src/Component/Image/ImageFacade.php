@@ -605,4 +605,12 @@ class ImageFacade extends CdnImageFacade
 
         return preg_replace($pattern, $replacement, $content);
     }
+
+    /**
+     * @return string|null
+     */
+    public function getCdnDomain(): ?string
+    {
+        return $this->cdnDomain;
+    }
 }
