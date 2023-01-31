@@ -22,7 +22,7 @@ export default grapesjs.plugins.add('customButtons', (editor, options) => {
         command (editor) {
             if (isMail === true) {
                 var template = editor.runCommand('gjs-get-inlined-html');
-                $('#' + textareaId).val(template);
+                $('#' + textareaId).html(template).val(template);
             } else {
                 const html = editor.getHtml();
                 let styles = editor.getStyle();
@@ -40,7 +40,7 @@ export default grapesjs.plugins.add('customButtons', (editor, options) => {
                 const css = editor.getCss();
 
                 const exported = '<style>' + css + '</style>' + html;
-                $('#' + textareaId).val(exported);
+                $('#' + textareaId).html(exported).val(exported);
             }
 
             $('body').removeAttr('style');

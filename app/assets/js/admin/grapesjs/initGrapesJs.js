@@ -148,12 +148,15 @@ class Grapesjs {
             overflow: 'hidden',
             height: '100%'
         });
+        const editableContent = $('#' + textareaId).val();
+        const $templateHtml = $('<div>' + templateHtml + '</div>');
+        $templateHtml.find('.gjs-editable').append(editableContent);
 
         const variables = JSON.parse(JSON.stringify(bodyVariables));
 
         const editor = grapesjs.init({
             container: '#grapesjs',
-            components: templateHtml,
+            components: $templateHtml.html(),
             height: '100%',
             width: '100%',
             fromElement: false,
