@@ -21,7 +21,6 @@ use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\SetMutualDependenciesToVersi
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\StopMergingReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\TestYourBranchLocallyReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\UpdateChangelogReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\UpdateListOfSupportedVersionsReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\UpdateUpgradeReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\ValidateConflictsInComposerJsonReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\ValidateRequireFormatInComposerJsonReleaseWorker;
@@ -48,7 +47,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(GenerateApiaryBlueprintReleaseWorker::class);
     $services->set(DumpTranslationsReleaseWorker::class);
     $services->set(SetFrameworkBundleVersionReleaseWorker::class);
-    $services->set(UpdateListOfSupportedVersionsReleaseWorker::class);
     $services->set(ResolveDocsTodoReleaseWorker::class);
     $services->set(UpdateChangelogReleaseWorker::class);
     $services->set(UpdateUpgradeReleaseWorker::class);
