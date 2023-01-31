@@ -6,6 +6,7 @@ namespace Shopsys\Releaser\GithubActions;
 
 use Shopsys\Releaser\Guzzle\ApiCaller;
 use Shopsys\Releaser\Packagist\PackageProvider;
+use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 
 final class GithubActionsStatusReporter
 {
@@ -15,29 +16,6 @@ final class GithubActionsStatusReporter
      * @var string[]
      */
     private const EXTRA_PACKAGES = [];
-
-    /**
-     * Packages that are not tested on GitHub Actions - old packages or forks
-     *
-     * @var string[]
-     */
-    private const EXCLUDED_PACKAGES = [
-        // forks
-        'shopsys/jsformvalidator-bundle',
-        'shopsys/changelog-linker',
-        'shopsys/doctrine-orm',
-        'shopsys/jparser',
-        'shopsys/monorepo-builder',
-        'shopsys/postgres-search-bundle',
-        // old packages
-        'shopsys/syscart',
-        'shopsys/sysconfig',
-        'shopsys/sysreports',
-        'shopsys/sysstdlib',
-        'shopsys/backend-api',
-        'shopsys/phpstorm-inspect',
-        'shopsys/product-feed-interface',
-    ];
 
     /**
      * @var \Shopsys\Releaser\Packagist\PackageProvider
@@ -72,7 +50,7 @@ final class GithubActionsStatusReporter
      */
     public function getStatusForPackagesByOrganizationAndBranch(string $organization, string $branch, string $githubToken): array
     {
-        $packages = $this->packageProvider->getPackagesByOrganization($organization, self::EXCLUDED_PACKAGES);
+        $packages = $this->packageProvider->getPackagesByOrganization($organization, AbstractShopsysReleaseWorker::EXCLUDED_PACKAGES);
         $packages = array_merge($packages, self::EXTRA_PACKAGES);
 
         $urls = $this->createApiUrls($packages, $branch);

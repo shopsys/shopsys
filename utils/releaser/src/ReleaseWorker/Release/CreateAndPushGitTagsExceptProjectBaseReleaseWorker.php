@@ -16,27 +16,11 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
      *
      * @var string[]
      */
-    private const EXCLUDED_PACKAGES = [
+    public const EXCLUDED_PACKAGES = parent::EXCLUDED_PACKAGES + [
         // excluded from the initial tagging as there needs to be another commit with composer.lock and package-lock.json
         // @see https://github.com/shopsys/shopsys/pull/1264
         'shopsys/shopsys',
         'shopsys/project-base',
-        // not maintained anymore
-        'shopsys/product-feed-interface',
-        'shopsys/phpstorm-inspect',
-        'shopsys/changelog-linker',
-        'shopsys/monorepo-builder',
-        'shopsys/backend-api',
-        // forks
-        'shopsys/postgres-search-bundle',
-        'shopsys/doctrine-orm',
-        'shopsys/jparser',
-        'shopsys/ordered-form',
-        // not related packages
-        'shopsys/syscart',
-        'shopsys/sysconfig',
-        'shopsys/sysreports',
-        'shopsys/sysstdlib',
     ];
 
     /**

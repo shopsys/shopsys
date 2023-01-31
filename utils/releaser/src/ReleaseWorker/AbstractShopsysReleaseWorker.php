@@ -20,6 +20,32 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 abstract class AbstractShopsysReleaseWorker implements ReleaseWorkerInterface, StageAwareInterface
 {
     /**
+     * Packages that are not released - old packages or forks
+     *
+     * @var string[]
+     */
+    public const EXCLUDED_PACKAGES = [
+        // not maintained anymore
+        'shopsys/product-feed-interface',
+        'shopsys/phpstorm-inspect',
+        'shopsys/changelog-linker',
+        'shopsys/monorepo-builder',
+        'shopsys/backend-api',
+        // forks
+        'shopsys/postgres-search-bundle',
+        'shopsys/doctrine-orm',
+        'shopsys/jparser',
+        'shopsys/ordered-form',
+        'shopsys/changelog-linker',
+        'shopsys/jsformvalidator-bundle',
+        // not related packages
+        'shopsys/syscart',
+        'shopsys/sysconfig',
+        'shopsys/sysreports',
+        'shopsys/sysstdlib',
+    ];
+
+    /**
      * @var \Symfony\Component\Console\Style\SymfonyStyle
      */
     protected $symfonyStyle;
