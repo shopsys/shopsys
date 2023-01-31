@@ -47,7 +47,7 @@ final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysRelease
      */
     public function work(Version $version): void
     {
-        $packagesWithVersions = $this->packageProvider->getPackagesWithVersionsByOrganization('shopsys');
+        $packagesWithVersions = $this->packageProvider->getPackagesWithVersionsByOrganization('shopsys', self::EXCLUDED_PACKAGES);
 
         $packageWithoutVersion = [];
         $versionsAsString = $version->getOriginalString();
