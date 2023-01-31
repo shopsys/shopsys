@@ -74,7 +74,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
      */
     public function work(Version $version): void
     {
-        $this->nextDevelopmentVersionString = $this->askForNextDevelopmentVersion($version, true)->getVersionString();
+        $this->nextDevelopmentVersionString = $this->askForNextDevelopmentVersion($version, true)->getOriginalString();
 
         $this->updateUpgradeFileForMonorepo($version);
         $this->createUpgradeFileForNewVersionFromDevelopmentVersion($version);
@@ -88,8 +88,8 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         $versionString = $version->getOriginalString();
         $this->symfonyStyle->note(sprintf(
             'Typically, you need to:
-            - check the correctness of the order of Shopsys packages and sections, 
-            - check whether there are no duplicated instructions for modifying docker related files, 
+            - check the correctness of the order of Shopsys packages and sections,
+            - check whether there are no duplicated instructions for modifying docker related files,
             - change the links from master to the %1$s version in UPGRADE-%1$s.md file.',
             $versionString
         ));
@@ -174,7 +174,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         $content = $this->twigEnvironment->render(
             'UPGRADE-next-development-version.md.twig',
             [
-                'versionString' => $version->getVersionString(),
+                'versionString' => $version->getOriginalString(),
                 'initialBranchName' => $this->initialBranchName,
                 'nextDevelopmentVersion' => $this->nextDevelopmentVersionString,
             ]
