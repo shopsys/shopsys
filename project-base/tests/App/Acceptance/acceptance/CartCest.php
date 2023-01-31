@@ -127,7 +127,7 @@ class CartCest
         $floatingWindowPage->closeFloatingWindow();
         $cartBoxPage->seeCountAndPriceRoundedByCurrencyInCartBox(1, '10497');
         $me->amOnLocalizedRoute('front_cart');
-        $me->seeTranslationFrontend($productName, 'dataFixtures');
+        $me->seeTranslationFrontend($productName, Translator::DATA_FIXTURES_TRANSLATION_DOMAIN);
     }
 
     /**

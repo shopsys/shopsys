@@ -18,7 +18,7 @@ class OrderPage extends AbstractPage
      */
     public function assertTransportIsNotSelected($transportTitle)
     {
-        $translatedTransportTitle = t($transportTitle, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $translatedTransportTitle = t($transportTitle, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $this->tester->dontSeeCheckboxIsCheckedByLabel($translatedTransportTitle);
     }
 
@@ -27,7 +27,7 @@ class OrderPage extends AbstractPage
      */
     public function assertTransportIsSelected($transportTitle)
     {
-        $translatedTransportTitle = t($transportTitle, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $translatedTransportTitle = t($transportTitle, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $this->tester->seeCheckboxIsCheckedByLabel($translatedTransportTitle);
     }
 
@@ -50,7 +50,7 @@ class OrderPage extends AbstractPage
     public function assertPaymentIsNotSelected($paymentTitle)
     {
         $this->scrollToPaymentForm();
-        $translatedPaymentTitle = t($paymentTitle, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $translatedPaymentTitle = t($paymentTitle, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $this->tester->dontSeeCheckboxIsCheckedByLabel($translatedPaymentTitle);
     }
 
@@ -60,7 +60,7 @@ class OrderPage extends AbstractPage
     public function assertPaymentIsSelected($paymentTitle)
     {
         $this->scrollToPaymentForm();
-        $translatedPaymentTitle = t($paymentTitle, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $translatedPaymentTitle = t($paymentTitle, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $this->tester->seeCheckboxIsCheckedByLabel($translatedPaymentTitle);
     }
 

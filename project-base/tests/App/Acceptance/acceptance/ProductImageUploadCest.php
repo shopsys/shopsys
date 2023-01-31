@@ -36,7 +36,7 @@ class ProductImageUploadCest
                 '{{ product|productDisplayName }}' => t(
                     '22" Sencor SLE 22F46DM4 HELLO KITTY',
                     [],
-                    'dataFixtures',
+                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $me->getAdminLocale()
                 ),
             ]

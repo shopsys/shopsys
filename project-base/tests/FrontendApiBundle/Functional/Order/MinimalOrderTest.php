@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 class MinimalOrderTest extends AbstractOrderTestCase
 {
@@ -19,12 +20,12 @@ class MinimalOrderTest extends AbstractOrderTestCase
             'data' => [
                 'CreateOrder' => [
                     'transport' => [
-                        'name' => t('Czech post', [], 'dataFixtures', $firstDomainLocale),
+                        'name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     ],
                     'payment' => [
-                        'name' => t('Cash on delivery', [], 'dataFixtures', $firstDomainLocale),
+                        'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     ],
-                    'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),
+                    'status' => t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'totalPrice' => AbstractOrderTestCase::getSerializedOrderTotalPriceByExpectedOrderItems(
                         $expectedOrderItems
                     ),

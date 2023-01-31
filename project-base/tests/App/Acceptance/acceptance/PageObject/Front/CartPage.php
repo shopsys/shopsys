@@ -77,7 +77,7 @@ class CartPage extends AbstractPage
      */
     public function assertProductIsInCartByName($productName)
     {
-        $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $translatedProductName = t($productName, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $this->tester->see($translatedProductName, WebDriverBy::cssSelector('.test-cart-item-name'));
     }
 
@@ -86,7 +86,7 @@ class CartPage extends AbstractPage
      */
     public function assertProductIsNotInCartByName($productName)
     {
-        $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $translatedProductName = t($productName, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $this->tester->dontSee($translatedProductName, WebDriverBy::cssSelector('.test-cart-item-name'));
     }
 
@@ -107,7 +107,7 @@ class CartPage extends AbstractPage
      */
     private function findProductRowInCartByName($productName)
     {
-        $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $translatedProductName = t($productName, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $rows = $this->webDriver->findElements(WebDriverBy::cssSelector('.test-cart-item'));
 
         foreach ($rows as $row) {
@@ -222,7 +222,7 @@ class CartPage extends AbstractPage
      */
     private function getProductTotalPriceByName(string $productName): string
     {
-        $productName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $productName = t($productName, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $productPriceCell = $this->getProductPriceCellByName($productName);
 
         $productPriceWithoutCurrencySymbol = preg_replace('/[^0-9.,]/', '', $productPriceCell->getText());
@@ -249,7 +249,7 @@ class CartPage extends AbstractPage
      */
     public function seeSuccessMessageForAddedProducts(string $productName, int $quantity): void
     {
-        $productName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $productName = t($productName, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $this->tester->seeTranslationFrontend(
             'Product <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) added to the cart',
             Translator::DEFAULT_TRANSLATION_DOMAIN,

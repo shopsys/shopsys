@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Product;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class PromotedProductsTest extends GraphQlTestCase
@@ -20,9 +21,9 @@ class PromotedProductsTest extends GraphQlTestCase
         ';
 
         $productsExpected = [
-            ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Genius repro SP-M120 black', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Canon MG3550', [], 'dataFixtures', $firstDomainLocale)],
+            ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Genius repro SP-M120 black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Canon MG3550', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
         ];
 
         $graphQlType = 'promotedProducts';

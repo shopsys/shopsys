@@ -8,6 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
@@ -65,14 +66,14 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
         $availabilityData = $this->availabilityDataFactory->create();
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $availabilityData->name[$locale] = t('Preparing', [], 'dataFixtures', $locale);
+            $availabilityData->name[$locale] = t('Preparing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $availabilityData->dispatchTime = 14;
         $this->createAvailability($availabilityData, self::AVAILABILITY_PREPARING);
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $availabilityData->name[$locale] = t('In stock', [], 'dataFixtures', $locale);
+            $availabilityData->name[$locale] = t('In stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $availabilityData->dispatchTime = 0;
@@ -80,14 +81,14 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
         $this->setting->set(Setting::DEFAULT_AVAILABILITY_IN_STOCK, $inStockAvailability->getId());
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $availabilityData->name[$locale] = t('On request', [], 'dataFixtures', $locale);
+            $availabilityData->name[$locale] = t('On request', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $availabilityData->dispatchTime = 7;
         $this->createAvailability($availabilityData, self::AVAILABILITY_ON_REQUEST);
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $availabilityData->name[$locale] = t('Out of stock', [], 'dataFixtures', $locale);
+            $availabilityData->name[$locale] = t('Out of stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $availabilityData->dispatchTime = null;

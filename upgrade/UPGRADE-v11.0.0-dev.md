@@ -986,6 +986,7 @@ There you can find links to upgrade notes for other versions too.
 - little translation tweaks for better developer experience ([2549](https://github.com/shopsys/shopsys/pull/2549))
     - `Shopsys\FrameworkBundle\Component\Translation\Translator` class:
         - constant `DEFAULT_DOMAIN` renamed to `DEFAULT_TRANSLATION_DOMAIN` and its visibility changed to `public`
+        - added public constant `DATA_FIXTURES_TRANSLATION_DOMAIN` to use for data fixtures translations
     - global function `t` changed its interface:
     ```diff
     -  function t($id, array $parameters = [], $domain = null, $locale = null)

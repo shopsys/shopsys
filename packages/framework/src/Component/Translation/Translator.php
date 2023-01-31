@@ -11,6 +11,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleAwareInterface
 {
     public const DEFAULT_TRANSLATION_DOMAIN = 'messages';
+    public const DATA_FIXTURES_TRANSLATION_DOMAIN = 'dataFixtures';
     public const SOURCE_LOCALE = 'en';
 
     /**

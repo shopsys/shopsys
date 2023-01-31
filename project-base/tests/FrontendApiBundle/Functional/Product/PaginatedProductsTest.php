@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Product;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class PaginatedProductsTest extends GraphQlTestCase
@@ -39,11 +40,11 @@ class PaginatedProductsTest extends GraphQlTestCase
             [
                 'orderingMode' => 'NAME_ASC',
                 'expectedOrderedProducts' => [
-                    ['name' => t('100 Czech crowns ticket', [], 'dataFixtures', $firstDomainLocale)],
-                    ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale)],
-                    ['name' => t('27” Hyundai T27D590EY', [], 'dataFixtures', $firstDomainLocale)],
-                    ['name' => t('27” Hyundai T27D590EZ', [], 'dataFixtures', $firstDomainLocale)],
-                    ['name' => t('30” Hyundai 22MT44D', [], 'dataFixtures', $firstDomainLocale)],
+                    ['name' => t('100 Czech crowns ticket', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                    ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                    ['name' => t('27” Hyundai T27D590EY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                    ['name' => t('27” Hyundai T27D590EZ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                    ['name' => t('30” Hyundai 22MT44D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
                 ],
             ],
             [
@@ -52,13 +53,13 @@ class PaginatedProductsTest extends GraphQlTestCase
                     ['name' => t(
                         'ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue',
                         [],
-                        'dataFixtures',
+                        Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                         $firstDomainLocale
                     )],
-                    ['name' => t('YENKEE YSP 1005WH white', [], 'dataFixtures', $firstDomainLocale)],
-                    ['name' => t('Xtreamer SW5', [], 'dataFixtures', $firstDomainLocale)],
-                    ['name' => t('Xtreamer SW4', [], 'dataFixtures', $firstDomainLocale)],
-                    ['name' => t('Winch throttle silver VP-9711/12', [], 'dataFixtures', $firstDomainLocale)],
+                    ['name' => t('YENKEE YSP 1005WH white', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                    ['name' => t('Xtreamer SW5', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                    ['name' => t('Xtreamer SW4', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                    ['name' => t('Winch throttle silver VP-9711/12', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
                 ],
             ],
             [
@@ -67,16 +68,16 @@ class PaginatedProductsTest extends GraphQlTestCase
                     ['name' => t(
                         'Reflective tape for safe movement on the road',
                         [],
-                        'dataFixtures',
+                        Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                         $firstDomainLocale
                     )],
-                    ['name' => t('CD-R VERBATIM 210MB', [], 'dataFixtures', $firstDomainLocale)],
-                    ['name' => t('Prime flour 1 kg', [], 'dataFixtures', $firstDomainLocale)],
-                    ['name' => t('Million-euro toilet paper', [], 'dataFixtures', $firstDomainLocale)],
+                    ['name' => t('CD-R VERBATIM 210MB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                    ['name' => t('Prime flour 1 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                    ['name' => t('Million-euro toilet paper', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
                     ['name' => t(
                         'Aquila Aquagym non-carbonated spring water',
                         [],
-                        'dataFixtures',
+                        Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                         $firstDomainLocale
                     )],
                 ],
@@ -84,11 +85,11 @@ class PaginatedProductsTest extends GraphQlTestCase
             [
                 'orderingMode' => 'PRICE_DESC',
                 'expectedOrderedProducts' => [
-                    ['name' => t('Samsung UE75HU7500 (UHD)', [], 'dataFixtures', $firstDomainLocale)],
-                    ['name' => t('OKI MC861cdxn+ (01318206)', [], 'dataFixtures', $firstDomainLocale)],
-                    ['name' => t('OKI MC861cdxm', [], 'dataFixtures', $firstDomainLocale)],
-                    ['name' => t('JURA Impressa J9 TFT Carbon', [], 'dataFixtures', $firstDomainLocale)],
-                    ['name' => t('Canon EOS 700E', [], 'dataFixtures', $firstDomainLocale)],
+                    ['name' => t('Samsung UE75HU7500 (UHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                    ['name' => t('OKI MC861cdxn+ (01318206)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                    ['name' => t('OKI MC861cdxm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                    ['name' => t('JURA Impressa J9 TFT Carbon', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                    ['name' => t('Canon EOS 700E', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
                 ],
             ],
         ];

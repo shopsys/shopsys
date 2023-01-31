@@ -39,7 +39,7 @@ class ProductAdvancedSearchPage extends AbstractPage
      */
     public function assertFoundProductByName($productName)
     {
-        $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getAdminLocale());
+        $translatedProductName = t($productName, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getAdminLocale());
         $this->tester->seeTranslationAdminInCss($translatedProductName, '.test-grid-column-name');
     }
 

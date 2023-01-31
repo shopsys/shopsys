@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Product;
 use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
 class ProductsFilteringTest extends ProductsGraphQlTestCase
@@ -42,7 +43,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
         ';
 
         $productsExpected = [
-            ['name' => t('Apple iPhone 5S 64GB, gold', [], 'dataFixtures', $this->firstDomainLocale)],
+            ['name' => t('Apple iPhone 5S 64GB, gold', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
         ];
 
         $this->assertProducts($query, 'products', $productsExpected);
@@ -65,7 +66,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
         ';
 
         $productsExpected = [
-            ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $this->firstDomainLocale)],
+            ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
         ];
 
         $this->assertProducts($query, 'products', $productsExpected);
@@ -88,7 +89,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
         ';
 
         $productsExpected = [
-            ['name' => t('OKI MC861cdxm', [], 'dataFixtures', $this->firstDomainLocale)],
+            ['name' => t('OKI MC861cdxm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
         ];
 
         $this->assertProducts($query, 'products', $productsExpected);
@@ -114,7 +115,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
             ['name' => t(
                 'ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue',
                 [],
-                'dataFixtures',
+                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $this->firstDomainLocale
             )],
         ];
@@ -137,17 +138,17 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
         ';
 
         $productsNotExpected = [
-            ['name' => t('D-link', [], 'dataFixtures', $this->firstDomainLocale)],
-            ['name' => t('Samsung Galaxy Core 2 (SM-G355) - black', [], 'dataFixtures', $this->firstDomainLocale)],
-            ['name' => t('Samsung Galaxy Core Plus (SM-G350) - white', [], 'dataFixtures', $this->firstDomainLocale)],
-            ['name' => t('Apple iPhone 5S 64GB, gold', [], 'dataFixtures', $this->firstDomainLocale)],
-            ['name' => t('HTC Desire 816 White', [], 'dataFixtures', $this->firstDomainLocale)],
-            ['name' => t('Million-euro toilet paper', [], 'dataFixtures', $this->firstDomainLocale)],
-            ['name' => t('Pot holder, black', [], 'dataFixtures', $this->firstDomainLocale)],
+            ['name' => t('D-link', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
+            ['name' => t('Samsung Galaxy Core 2 (SM-G355) - black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
+            ['name' => t('Samsung Galaxy Core Plus (SM-G350) - white', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
+            ['name' => t('Apple iPhone 5S 64GB, gold', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
+            ['name' => t('HTC Desire 816 White', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
+            ['name' => t('Million-euro toilet paper', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
+            ['name' => t('Pot holder, black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
             ['name' => t(
                 'Reflective tape for safe movement on the road',
                 [],
-                'dataFixtures',
+                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $this->firstDomainLocale
             )],
         ];
@@ -163,7 +164,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
         $parameter = $parameterFacade->getById(self::PARAMETER_NUMBER_OF_BUTTONS_ID);
 
         $parameterValue = $parameterFacade->getParameterValueByValueTextAndLocale(
-            t('5', [], 'dataFixtures', $this->firstDomainLocale),
+            t('5', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
             $this->firstDomainLocale
         );
 
@@ -197,7 +198,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
             ['name' => t(
                 'A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,',
                 [],
-                'dataFixtures',
+                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $this->firstDomainLocale
             )],
         ];

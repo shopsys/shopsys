@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Category;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CategoriesTest extends GraphQlTestCase
@@ -22,11 +23,11 @@ class CategoriesTest extends GraphQlTestCase
         $arrayExpected = [
             'data' => [
                 'categories' => [
-                    ['name' => t('Electronics', [], 'dataFixtures', $firstDomainLocale)],
-                    ['name' => t('Books', [], 'dataFixtures', $firstDomainLocale)],
-                    ['name' => t('Toys', [], 'dataFixtures', $firstDomainLocale)],
-                    ['name' => t('Garden tools', [], 'dataFixtures', $firstDomainLocale)],
-                    ['name' => t('Food', [], 'dataFixtures', $firstDomainLocale)],
+                    ['name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                    ['name' => t('Books', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                    ['name' => t('Toys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                    ['name' => t('Garden tools', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                    ['name' => t('Food', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
                 ],
             ],
         ];
@@ -49,14 +50,14 @@ class CategoriesTest extends GraphQlTestCase
 
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $expected = [
-            'name' => t('Electronics', [], 'dataFixtures', $firstDomainLocale),
+            'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             'children' => [
-                ['name' => t('TV, audio', [], 'dataFixtures', $firstDomainLocale)],
-                ['name' => t('Cameras & Photo', [], 'dataFixtures', $firstDomainLocale)],
-                ['name' => t('Printers', [], 'dataFixtures', $firstDomainLocale)],
-                ['name' => t('Personal Computers & accessories', [], 'dataFixtures', $firstDomainLocale)],
-                ['name' => t('Mobile Phones', [], 'dataFixtures', $firstDomainLocale)],
-                ['name' => t('Coffee Machines', [], 'dataFixtures', $firstDomainLocale)],
+                ['name' => t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                ['name' => t('Cameras & Photo', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                ['name' => t('Printers', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                ['name' => t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                ['name' => t('Mobile Phones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                ['name' => t('Coffee Machines', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             ],
         ];
 

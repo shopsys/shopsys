@@ -33,7 +33,7 @@ class PaymentImageUploadCest
             Translator::DEFAULT_TRANSLATION_DOMAIN,
             [
                 '{{ url }}' => '',
-                '{{ name }}' => t('Credit card', [], 'dataFixtures', $me->getAdminLocale()),
+                '{{ name }}' => t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $me->getAdminLocale()),
             ]
         );
     }

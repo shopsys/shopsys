@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\FriendlyUrl;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class FriendlyUrlTest extends GraphQlTestCase
@@ -68,27 +69,27 @@ class FriendlyUrlTest extends GraphQlTestCase
             [
                 'graphQlType' => 'brand',
                 'urlSlug' => 'canon/',
-                'expectedName' => t('Canon', [], 'dataFixtures', $this->getFirstDomainLocale()),
+                'expectedName' => t('Canon', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
             ],
             [
                 'graphQlType' => 'brand',
                 'urlSlug' => 'canon',
-                'expectedName' => t('Canon', [], 'dataFixtures', $this->getFirstDomainLocale()),
+                'expectedName' => t('Canon', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
             ],
             [
                 'graphQlType' => 'article',
                 'urlSlug' => 'terms-and-conditions/',
-                'expectedName' => t('Terms and conditions', [], 'dataFixtures', $this->getFirstDomainLocale()),
+                'expectedName' => t('Terms and conditions', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
             ],
             [
                 'graphQlType' => 'category',
                 'urlSlug' => 'electronics/',
-                'expectedName' => t('Electronics', [], 'dataFixtures', $this->getFirstDomainLocale()),
+                'expectedName' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
             ],
             [
                 'graphQlType' => 'product',
                 'urlSlug' => 'canon-mg3550/',
-                'expectedName' => t('Canon MG3550', [], 'dataFixtures', $this->getFirstDomainLocale()),
+                'expectedName' => t('Canon MG3550', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
             ],
         ];
     }

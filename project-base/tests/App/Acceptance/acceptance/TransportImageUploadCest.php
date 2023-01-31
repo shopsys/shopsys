@@ -33,7 +33,7 @@ class TransportImageUploadCest
             Translator::DEFAULT_TRANSLATION_DOMAIN,
             [
                 '{{ url }}' => '',
-                '{{ name }}' => t('Czech post', [], 'dataFixtures', $me->getAdminLocale()),
+                '{{ name }}' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $me->getAdminLocale()),
             ]
         );
     }

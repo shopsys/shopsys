@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Article;
 
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -119,12 +120,12 @@ class GetArticleTest extends GraphQlTestCase
             [
                 'termsAndConditionsArticle',
                 [
-                    'name' => t('Terms and conditions', [], 'dataFixtures', $firstDomainLocale),
+                    'name' => t('Terms and conditions', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'placement' => Article::PLACEMENT_FOOTER,
                     'text' => t(
                         'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
                         [],
-                        'dataFixtures',
+                        Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                         $firstDomainLocale
                     ),
                     'seoH1' => null,
@@ -135,12 +136,12 @@ class GetArticleTest extends GraphQlTestCase
             [
                 'privacyPolicyArticle',
                 [
-                    'name' => t('Privacy policy', [], 'dataFixtures', $firstDomainLocale),
+                    'name' => t('Privacy policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'placement' => Article::PLACEMENT_NONE,
                     'text' => t(
                         'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
                         [],
-                        'dataFixtures',
+                        Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                         $firstDomainLocale
                     ),
                     'seoH1' => null,
@@ -151,12 +152,12 @@ class GetArticleTest extends GraphQlTestCase
             [
                 'cookiesArticle',
                 [
-                    'name' => t('Information about cookies', [], 'dataFixtures', $firstDomainLocale),
+                    'name' => t('Information about cookies', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'placement' => Article::PLACEMENT_NONE,
                     'text' => t(
                         'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
                         [],
-                        'dataFixtures',
+                        Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                         $firstDomainLocale
                     ),
                     'seoH1' => null,

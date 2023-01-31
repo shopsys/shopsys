@@ -7,6 +7,7 @@ namespace App\DataFixtures\Demo;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagData;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
@@ -55,7 +56,7 @@ class FlagDataFixture extends AbstractReferenceFixture
         $flagData = $this->flagDataFactory->create();
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $flagData->name[$locale] = t('New [noun]', [], 'dataFixtures', $locale);
+            $flagData->name[$locale] = t('New [noun]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $flagData->rgbColor = '#efd6ff';
@@ -63,7 +64,7 @@ class FlagDataFixture extends AbstractReferenceFixture
         $this->createFlag($flagData, self::FLAG_NEW_PRODUCT);
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $flagData->name[$locale] = t('TOP', [], 'dataFixtures', $locale);
+            $flagData->name[$locale] = t('TOP', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $flagData->rgbColor = '#d6fffa';
@@ -71,7 +72,7 @@ class FlagDataFixture extends AbstractReferenceFixture
         $this->createFlag($flagData, self::FLAG_TOP_PRODUCT);
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $flagData->name[$locale] = t('Action', [], 'dataFixtures', $locale);
+            $flagData->name[$locale] = t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $flagData->rgbColor = '#f9ffd6';

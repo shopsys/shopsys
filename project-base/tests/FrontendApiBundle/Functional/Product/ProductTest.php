@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Product;
 
 use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Product\Product;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -43,7 +44,7 @@ class ProductTest extends GraphQlTestCase
                     'name' => t(
                         '22" Sencor SLE 22F46DM4 HELLO KITTY',
                         [],
-                        'dataFixtures',
+                        Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                         $this->getLocaleForFirstDomain()
                     ),
                 ],
@@ -114,7 +115,7 @@ class ProductTest extends GraphQlTestCase
         $shortDescription = t(
             'Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback',
             [],
-            'dataFixtures',
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $firstDomainLocale
         );
 
@@ -124,49 +125,49 @@ class ProductTest extends GraphQlTestCase
         return [
             'data' => [
                 'product' => [
-                    'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale),
+                    'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'shortDescription' => $shortDescription,
                     'seoH1' => t(
                         'Hello Kitty Television',
                         [],
-                        'dataFixtures',
+                        Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                         $firstDomainLocale
                     ),
                     'seoTitle' => t(
                         'Hello Kitty TV',
                         [],
-                        'dataFixtures',
+                        Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                         $firstDomainLocale
                     ),
                     'seoMetaDescription' => t(
                         'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
                         [],
-                        'dataFixtures',
+                        Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                         $firstDomainLocale
                     ),
                     'link' => $this->getLocalizedPathOnFirstDomainByRouteName('front_product_detail', ['id' => 1]),
                     'unit' => [
-                        'name' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
+                        'name' => t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     ],
                     'availability' => [
-                        'name' => t('In stock', [], 'dataFixtures', $firstDomainLocale),
+                        'name' => t('In stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     ],
                     'stockQuantity' => 300,
                     'categories' => [
                         [
-                            'name' => t('Electronics', [], 'dataFixtures', $firstDomainLocale),
+                            'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         ],
                         [
-                            'name' => t('TV, audio', [], 'dataFixtures', $firstDomainLocale),
+                            'name' => t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         ],
                     ],
                     'flags' => [
                         [
-                            'name' => t('TOP', [], 'dataFixtures', $firstDomainLocale),
+                            'name' => t('TOP', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'rgbColor' => '#d6fffa',
                         ],
                         [
-                            'name' => t('Action', [], 'dataFixtures', $firstDomainLocale),
+                            'name' => t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'rgbColor' => '#f9ffd6',
                         ],
                     ],
@@ -179,60 +180,60 @@ class ProductTest extends GraphQlTestCase
                             'name' => t(
                                 'Kabel HDMI A - HDMI A M/M 2m gold-plated connectors High Speed HD',
                                 [],
-                                'dataFixtures',
+                                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                                 $firstDomainLocale
                             ),
                         ],
                         [
-                            'name' => t('Defender 2.0 SPK-480', [], 'dataFixtures', $firstDomainLocale),
+                            'name' => t('Defender 2.0 SPK-480', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         ],
                     ],
                     'isSellingDenied' => false,
                     'description' => t(
                         'Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback (DivX, XviD, MP3, WMA, JPEG), HDMI, SCART, VGA, pink execution, energ. Class B',
                         [],
-                        'dataFixtures',
+                        Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                         $firstDomainLocale
                     ),
                     'orderingPriority' => 1,
                     'parameters' => [
                         [
-                            'name' => t('HDMI', [], 'dataFixtures', $firstDomainLocale),
+                            'name' => t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'values' => [
                                 [
-                                    'text' => t('Yes', [], 'dataFixtures', $firstDomainLocale),
+                                    'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                                 ],
                             ],
                         ],
                         [
-                            'name' => t('Resolution', [], 'dataFixtures', $firstDomainLocale),
+                            'name' => t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'values' => [
                                 [
-                                    'text' => t('1920×1080 (Full HD)', [], 'dataFixtures', $firstDomainLocale),
+                                    'text' => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                                 ],
                             ],
                         ],
                         [
-                            'name' => t('Screen size', [], 'dataFixtures', $firstDomainLocale),
+                            'name' => t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'values' => [
                                 [
-                                    'text' => t('27"', [], 'dataFixtures', $firstDomainLocale),
+                                    'text' => t('27"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                                 ],
                             ],
                         ],
                         [
-                            'name' => t('Technology', [], 'dataFixtures', $firstDomainLocale),
+                            'name' => t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'values' => [
                                 [
-                                    'text' => t('LED', [], 'dataFixtures', $firstDomainLocale),
+                                    'text' => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                                 ],
                             ],
                         ],
                         [
-                            'name' => t('USB', [], 'dataFixtures', $firstDomainLocale),
+                            'name' => t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'values' => [
                                 [
-                                    'text' => t('Yes', [], 'dataFixtures', $firstDomainLocale),
+                                    'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                                 ],
                             ],
                         ],

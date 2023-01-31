@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ReadModelBundle\Functional\Product\Listed;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductView;
@@ -42,13 +43,13 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
             t(
                 'Kabel HDMI A - HDMI A M/M 2m gold-plated connectors High Speed HD',
                 [],
-                'dataFixtures',
+                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $firstDomainLocale
             ),
             $listedProductViews[$productId1]->getName()
         );
         $this->assertEquals(
-            t('Defender 2.0 SPK-480', [], 'dataFixtures', $firstDomainLocale),
+            t('Defender 2.0 SPK-480', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             $listedProductViews[$productId2]->getName()
         );
     }
@@ -88,7 +89,7 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
         $this->assertArrayHasKey(1, $listedProductViews);
         $this->assertInstanceOf(ListedProductView::class, $listedProductViews[1]);
         $this->assertEquals(
-            t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale),
+            t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             $listedProductViews[1]->getName()
         );
     }
@@ -105,7 +106,7 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
         $this->assertArrayHasKey($firstTopProductId, $listedProductViews);
         $this->assertInstanceOf(ListedProductView::class, $listedProductViews[$firstTopProductId]);
         $this->assertEquals(
-            t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale),
+            t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             $listedProductViews[$firstTopProductId]->getName()
         );
     }
