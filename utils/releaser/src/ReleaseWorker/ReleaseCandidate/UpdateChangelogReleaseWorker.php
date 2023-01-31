@@ -38,7 +38,7 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
                 $githubToken,
                 $this->initialBranchName,
                 trim($lastVersionOnCurrentBranch),
-                $version->getVersionString(),
+                $version->getOriginalString(),
             )
         );
 
