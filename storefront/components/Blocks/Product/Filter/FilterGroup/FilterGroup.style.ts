@@ -93,3 +93,24 @@ export const FilterGroupArrowStyled = styled(Icon)<FilterGroupStyledProps>(
               `};
     `,
 );
+
+export const ShowAllButtonStyled = styled.button(
+    ({ theme }) => css`
+        width: fit-content;
+        padding: 0;
+
+        font-size: ${theme.fontSize.small};
+        border: 0;
+        background: none;
+        outline: 0;
+        color: ${theme.color.black};
+        cursor: pointer;
+        text-decoration: underline;
+
+        &:hover {
+            text-decoration: none;
+            background: none;
+            color: ${theme.color.primary};
+        }
+    `,
+);
