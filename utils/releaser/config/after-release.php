@@ -18,6 +18,7 @@ use Shopsys\Releaser\ReleaseWorker\AfterRelease\RemoveLockFilesReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\SetFrameworkBundleVersionToDevReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\SetMutualDependenciesToDevelopmentVersionReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\VerifyInitialBranchReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\CheckCorrectReleaseVersionReleaseWorker;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 /**
@@ -26,6 +27,7 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
 
+    $services->set(CheckCorrectReleaseVersionReleaseWorker::class);
     $services->set(VerifyInitialBranchReleaseWorker::class);
     $services->set(CheckUncommittedChangesReleaseWorker::class);
     $services->set(CheckPackagesOnPackagistReleaseWorker::class);

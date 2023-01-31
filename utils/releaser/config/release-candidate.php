@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Shopsys\Releaser\ReleaseWorker\CheckCorrectReleaseVersionReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\BuildProjectBaseOnHeimdallReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckBranchSplitReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckLatestVersionOfReleaserReleaseWorker;
@@ -34,6 +35,7 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
 
+    $services->set(CheckCorrectReleaseVersionReleaseWorker::class);
     $services->set(CheckLatestVersionOfReleaserReleaseWorker::class);
     $services->set(VerifyInitialBranchReleaseWorker::class);
     $services->set(CheckUncommittedChangesReleaseWorker::class);

@@ -196,6 +196,12 @@ abstract class AbstractShopsysReleaseWorker implements ReleaseWorkerInterface, S
         $question->setValidator(static function ($answer) {
             $version = new Version($answer);
 
+            if (!str_starts_with($version->getOriginalString(), 'v')) {
+                throw new RuntimeException(
+                    'Development version name must start with \'v\''
+                );
+            }
+
             if (!$version->hasPreReleaseSuffix()) {
                 throw new RuntimeException(
                     'Development version must be suffixed (with \'-dev\', \'-alpha1\', ...)'
