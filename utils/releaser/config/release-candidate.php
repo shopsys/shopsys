@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\BuildProjectBaseOnHeimdallReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckBranchSplitReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckLatestVersionOfReleaserReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckNewDoctrineReleaseReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckPackagesGithubActionsBuildsReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckReleaseBlogPostReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckShopsysInstallReleaseWorker;
@@ -46,7 +45,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(StopMergingReleaseWorker::class);
     $services->set(ValidateRequireFormatInComposerJsonReleaseWorker::class);
     $services->set(ValidateConflictsInComposerJsonReleaseWorker::class);
-    $services->set(CheckNewDoctrineReleaseReleaseWorker::class);
     $services->set(GenerateApiaryBlueprintReleaseWorker::class);
     $services->set(DumpTranslationsReleaseWorker::class);
     $services->set(SetFrameworkBundleVersionReleaseWorker::class);
