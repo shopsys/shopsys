@@ -132,6 +132,9 @@ class Grapesjs {
         CKEDITOR.on('instanceReady', function (e) {
             editor.RichTextEditor.updatePosition();
         });
+        editor.on('rte:enable', (event) => {
+            editor.RichTextEditor.updatePosition();
+        });
 
         editor.once('load', () => {
             editor.Panels.getButton('options', 'sw-visibility').set('active', 1);
@@ -239,6 +242,9 @@ class Grapesjs {
         editor.BlockManager.remove('text');
 
         CKEDITOR.on('instanceReady', function (e) {
+            editor.RichTextEditor.updatePosition();
+        });
+        editor.on('rte:enable', (event) => {
             editor.RichTextEditor.updatePosition();
         });
     }
