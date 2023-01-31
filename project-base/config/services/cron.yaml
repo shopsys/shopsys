@@ -52,6 +52,10 @@ services:
         tags:
             - { name: shopsys.cron, hours: '4', minutes: '0', readableName: 'Generate Sitemap' }
 
+    Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '4', minutes: '10', readableName: 'Generate image sitemap' }
+
     Shopsys\FrameworkBundle\Component\FileUpload\DeleteOldUploadedFilesCronModule:
         tags:
             - { name: shopsys.cron, hours: '5', minutes: '0', readableName: 'Delete old temporary uploaded files' }

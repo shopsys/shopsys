@@ -995,3 +995,19 @@ services:
 
     profiler.storage:
         alias: Shopsys\FrameworkBundle\Component\HttpKernel\Profiler\FileProfilerStorage
+
+
+    Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapDumperFactory:
+        arguments:
+            - '@event_dispatcher'
+
+    Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapFacade:
+        arguments:
+            - '%shopsys.sitemaps_dir%'
+            - '%shopsys.sitemaps_url_prefix%'
+
+    Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapListener:
+        tags:
+            - { name: 'kernel.event_subscriber', priority: 100 }
+
+    Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapFilePrefixer: ~
