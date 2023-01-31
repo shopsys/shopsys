@@ -20,7 +20,11 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 abstract class AbstractShopsysReleaseWorker implements ReleaseWorkerInterface, StageAwareInterface
 {
     /**
-     * Packages that are not released - old packages or forks
+     * If you modify this list do not forget updating:
+     *      /.ci/monorepo_functions.sh
+     *      /docs/introduction/monorepo.md
+     *      /CHANGELOG.md
+     *      "replace" section in monorepo's composer.json as well
      *
      * @var string[]
      */
