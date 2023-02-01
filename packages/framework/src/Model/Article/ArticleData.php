@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Article;
 
+use DateTime;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 
 class ArticleData
@@ -56,9 +57,15 @@ class ArticleData
      */
     public $uuid;
 
+    /**
+     * @var \DateTime|null
+     */
+    public $createdAt;
+
     public function __construct()
     {
         $this->urls = new UrlListData();
         $this->hidden = false;
+        $this->createdAt = new DateTime();
     }
 }

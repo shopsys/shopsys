@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Article;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Ramsey\Uuid\Uuid;
@@ -91,6 +92,12 @@ class Article implements OrderableEntityInterface
     protected $hidden;
 
     /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime")
+     */
+    protected DateTime $createdAt;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
      */
     public function __construct(ArticleData $articleData)
@@ -121,6 +128,7 @@ class Article implements OrderableEntityInterface
         $this->seoH1 = $articleData->seoH1;
         $this->placement = $articleData->placement;
         $this->hidden = $articleData->hidden;
+        $this->createdAt = $articleData->createdAt ?? new DateTime();
     }
 
     /**
@@ -217,5 +225,13 @@ class Article implements OrderableEntityInterface
     public function isHidden()
     {
         return $this->hidden;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
     }
 }

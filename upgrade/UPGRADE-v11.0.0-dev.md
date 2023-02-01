@@ -877,6 +877,8 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
 - adding an index to the columns lft,rgt ([#2537](https://github.com/shopsys/shopsys/pull/2537))
     - see #project-base-diff to update your project
+- Fix editing attribute created at of article, attribute created at has been moved from project base to framework ([#2546](https://github.com/shopsys/shopsys/pull/2546))
+    - see #project-base-diff to update your project
 
 ## Composer dependencies
 
