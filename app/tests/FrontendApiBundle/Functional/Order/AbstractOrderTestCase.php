@@ -217,7 +217,23 @@ class AbstractOrderTestCase extends GraphQlTestCase
                             differentDeliveryAddress: false
                         }
                     ) {
-                        uuid
+                        order {
+                            uuid
+                        }
+                        cart {
+                            modifications {
+                                paymentModifications {
+                                    paymentPriceChanged
+                                    paymentUnavailable
+                                }
+                                transportModifications {
+                                    transportUnavailable
+                                    transportPriceChanged
+                                    personalPickupStoreUnavailable
+                                    transportWeightLimitExceeded
+                                }
+                            }
+                        }
                     }
                 }';
     }

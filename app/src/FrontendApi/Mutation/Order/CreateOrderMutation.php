@@ -4,23 +4,22 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Mutation\Order;
 
-use App\FrontendApi\Exception\ValidationError;
+use App\Component\Deprecation\DeprecatedMethodException;
 use App\FrontendApi\Model\Cart\CartFacade;
-use App\FrontendApi\Model\Component\Constraints\PromoCode;
+use App\FrontendApi\Model\Cart\CartWatcherFacade;
+use App\FrontendApi\Model\Order\CreateOrderResult;
+use App\FrontendApi\Model\Order\CreateOrderResultFactory;
 use App\FrontendApi\Mutation\Order\Exception\DeprecatedFieldUserError;
 use App\FrontendApi\Mutation\Order\Exception\OrderEmailsNotSentUserError;
-use App\FrontendApi\Mutation\Order\Exception\OrderEmptyCartUserError;
 use App\Model\Customer\DeliveryAddress;
 use App\Model\Customer\DeliveryAddressFacade;
 use App\Model\Customer\User\CustomerUser;
-use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Mail\Exception\MailException;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
-use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeException;
 use Shopsys\FrontendApiBundle\Model\Mutation\Order\CreateOrderMutation as BaseCreateOrderMutation;
 use Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade;
@@ -33,25 +32,7 @@ use Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade;
  */
 class CreateOrderMutation extends BaseCreateOrderMutation
 {
-    /**
-     * @var \App\FrontendApi\Model\Cart\CartFacade
-     */
-    private CartFacade $cartFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    private CurrentCustomerUser $currentCustomerUser;
-
-    /**
-     * @var \App\Model\Order\PromoCode\CurrentPromoCodeFacade
-     */
-    private CurrentPromoCodeFacade $currentPromoCodeFacade;
-
-    /**
-     * @var \App\Model\Customer\DeliveryAddressFacade
-     */
-    private DeliveryAddressFacade $deliveryAddressFacade;
+    public const VALIDATION_GROUP_BEFORE_DEFAULT = 'beforeDefaultValidation';
 
     /**
      * @param \App\FrontendApi\Model\Order\OrderDataFactory $orderDataFactory
@@ -59,32 +40,51 @@ class CreateOrderMutation extends BaseCreateOrderMutation
      * @param \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      * @param \App\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
+     * @param \App\FrontendApi\Model\Cart\CartWatcherFacade $cartWatcherFacade
+     * @param \App\FrontendApi\Model\Order\CreateOrderResultFactory $createOrderResultFactory
      */
     public function __construct(
         OrderDataFactory $orderDataFactory,
         PlaceOrderFacade $placeOrderFacade,
         OrderMailFacade $orderMailFacade,
-        CartFacade $cartFacade,
-        CurrentCustomerUser $currentCustomerUser,
-        CurrentPromoCodeFacade $currentPromoCodeFacade,
-        DeliveryAddressFacade $deliveryAddressFacade
+        private readonly CartFacade $cartFacade,
+        private readonly CurrentCustomerUser $currentCustomerUser,
+        private readonly DeliveryAddressFacade $deliveryAddressFacade,
+        private readonly CartWatcherFacade $cartWatcherFacade,
+        private readonly CreateOrderResultFactory $createOrderResultFactory
     ) {
         parent::__construct($orderDataFactory, $placeOrderFacade, $orderMailFacade);
-
-        $this->cartFacade = $cartFacade;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->currentPromoCodeFacade = $currentPromoCodeFacade;
-        $this->deliveryAddressFacade = $deliveryAddressFacade;
     }
 
     /**
+     * @return string[]
+     */
+    public static function getAliases(): array
+    {
+        return [
+            'createOrderWithResult' => 'create_order',
+        ];
+    }
+
+    /**
+     * @deprecated Method is deprecated. Use "createOrderWithResult()" instead.
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return \App\Model\Order\Order
      */
     public function createOrder(Argument $argument, InputValidator $validator): Order
+    {
+        throw new DeprecatedMethodException();
+    }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
+     * @throws \Overblog\GraphQLBundle\Validator\Exception\ArgumentsValidationException
+     * @return \App\FrontendApi\Model\Order\CreateOrderResult
+     */
+    public function createOrderWithResult(Argument $argument, InputValidator $validator): CreateOrderResult
     {
         $validationGroups = $this->computeValidationGroups($argument);
         $validator->validate($validationGroups);
@@ -97,27 +97,26 @@ class CreateOrderMutation extends BaseCreateOrderMutation
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         $cart = $this->cartFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
+
+        $cartWithModifications = $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
+        if ($cartWithModifications->isCartModified()) {
+            return $this->createOrderResultFactory->getCreateOrderResultByCartWithModifications(
+                $cartWithModifications
+            );
+        }
+
         $this->orderDataFactory->updateOrderDataFromCart($orderData, $cart);
-
-        $quantifiedProducts = $cart->getQuantifiedProducts();
-        if (count($quantifiedProducts) === 0) {
-            throw new OrderEmptyCartUserError('There are no products in the cart.');
-        }
-
-        $promoCode = $cart->getFirstAppliedPromoCode();
-        if ($promoCode !== null) {
-            try {
-                $this->currentPromoCodeFacade->getValidatedPromoCode($promoCode->getCode(), $cart);
-            } catch (PromoCodeException $exception) {
-                throw new ValidationError($exception->getMessage(), PromoCode::INVALID_ERROR, 'input.promoCode');
-            }
-        }
 
         /** @var string|null $deliveryAddressUuid */
         $deliveryAddressUuid = $input['deliveryAddressUuid'];
         $deliveryAddress = $this->resolveDeliveryAddress($deliveryAddressUuid, $customerUser);
 
-        $order = $this->placeOrderFacade->placeOrder($orderData, $quantifiedProducts, $promoCode, $deliveryAddress);
+        $order = $this->placeOrderFacade->placeOrder(
+            $orderData,
+            $cart->getQuantifiedProducts(),
+            $cart->getFirstAppliedPromoCode(),
+            $deliveryAddress
+        );
         $this->cartFacade->deleteCart($cart);
 
         try {
@@ -126,7 +125,7 @@ class CreateOrderMutation extends BaseCreateOrderMutation
             throw new OrderEmailsNotSentUserError('Unable to send some emails, please contact us for order verification.');
         }
 
-        return $order;
+        return $this->createOrderResultFactory->getCreateOrderResultByOrder($order);
     }
 
     /**
@@ -160,5 +159,14 @@ class CreateOrderMutation extends BaseCreateOrderMutation
         if (array_key_exists('payment', $input) && $input['payment'] !== null) {
             throw new DeprecatedFieldUserError('Usage of "payment" input is deprecated, we do not work with this field anymore, the payment is taken from the server cart instead.');
         }
+    }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return array|string[]
+     */
+    protected function computeValidationGroups(Argument $argument): array
+    {
+        return array_merge([self::VALIDATION_GROUP_BEFORE_DEFAULT], parent::computeValidationGroups($argument));
     }
 }

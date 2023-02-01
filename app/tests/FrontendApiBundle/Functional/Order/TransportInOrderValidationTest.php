@@ -102,9 +102,13 @@ class TransportInOrderValidationTest extends AbstractOrderTestCase
         $mutation = $this->getCreateOrderMutationFromDemoCart();
         $response = $this->getResponseContentForQuery($mutation);
 
-        $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
-        $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
-        $this->assertSame(TransportInOrder::CHANGED_TRANSPORT_PRICE_ERROR, $validationErrors['input'][0]['code']);
+        $this->assertArrayHasKey('data', $response);
+        $this->assertArrayHasKey('CreateOrder', $response['data']);
+        $this->assertArrayHasKey('cart', $response['data']['CreateOrder']);
+        $this->assertArrayHasKey('modifications', $response['data']['CreateOrder']['cart']);
+        $this->assertArrayHasKey('transportModifications', $response['data']['CreateOrder']['cart']['modifications']);
+        $this->assertArrayHasKey('transportPriceChanged', $response['data']['CreateOrder']['cart']['modifications']['transportModifications']);
+        $this->assertTrue($response['data']['CreateOrder']['cart']['modifications']['transportModifications']['transportPriceChanged']);
     }
 
     public function testDisabledPickupPlaceUnavailable(): void
@@ -120,9 +124,13 @@ class TransportInOrderValidationTest extends AbstractOrderTestCase
         $mutation = $this->getCreateOrderMutationFromDemoCart();
         $response = $this->getResponseContentForQuery($mutation);
 
-        $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
-        $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
-        $this->assertSame(TransportInOrder::PICKUP_PLACE_UNAVAILABLE_ERROR, $validationErrors['input'][0]['code']);
+        $this->assertArrayHasKey('data', $response);
+        $this->assertArrayHasKey('CreateOrder', $response['data']);
+        $this->assertArrayHasKey('cart', $response['data']['CreateOrder']);
+        $this->assertArrayHasKey('modifications', $response['data']['CreateOrder']['cart']);
+        $this->assertArrayHasKey('transportModifications', $response['data']['CreateOrder']['cart']['modifications']);
+        $this->assertArrayHasKey('personalPickupStoreUnavailable', $response['data']['CreateOrder']['cart']['modifications']['transportModifications']);
+        $this->assertTrue($response['data']['CreateOrder']['cart']['modifications']['transportModifications']['personalPickupStoreUnavailable']);
     }
 
     public function testDeletedPickupPlaceUnavailable(): void
@@ -137,9 +145,13 @@ class TransportInOrderValidationTest extends AbstractOrderTestCase
         $mutation = $this->getCreateOrderMutationFromDemoCart();
         $response = $this->getResponseContentForQuery($mutation);
 
-        $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
-        $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
-        $this->assertSame(TransportInOrder::PICKUP_PLACE_UNAVAILABLE_ERROR, $validationErrors['input'][0]['code']);
+        $this->assertArrayHasKey('data', $response);
+        $this->assertArrayHasKey('CreateOrder', $response['data']);
+        $this->assertArrayHasKey('cart', $response['data']['CreateOrder']);
+        $this->assertArrayHasKey('modifications', $response['data']['CreateOrder']['cart']);
+        $this->assertArrayHasKey('transportModifications', $response['data']['CreateOrder']['cart']['modifications']);
+        $this->assertArrayHasKey('personalPickupStoreUnavailable', $response['data']['CreateOrder']['cart']['modifications']['transportModifications']);
+        $this->assertTrue($response['data']['CreateOrder']['cart']['modifications']['transportModifications']['personalPickupStoreUnavailable']);
     }
 
     public function testRequiredPickupPlaceIdentifier(): void
@@ -170,9 +182,13 @@ class TransportInOrderValidationTest extends AbstractOrderTestCase
         $mutation = $this->getCreateOrderMutationFromDemoCart();
         $response = $this->getResponseContentForQuery($mutation);
 
-        $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
-        $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
-        $this->assertSame(TransportInOrder::WEIGHT_LIMIT_EXCEEDED_ERROR, $validationErrors['input'][0]['code']);
+        $this->assertArrayHasKey('data', $response);
+        $this->assertArrayHasKey('CreateOrder', $response['data']);
+        $this->assertArrayHasKey('cart', $response['data']['CreateOrder']);
+        $this->assertArrayHasKey('modifications', $response['data']['CreateOrder']['cart']);
+        $this->assertArrayHasKey('transportModifications', $response['data']['CreateOrder']['cart']['modifications']);
+        $this->assertArrayHasKey('transportWeightLimitExceeded', $response['data']['CreateOrder']['cart']['modifications']['transportModifications']);
+        $this->assertTrue($response['data']['CreateOrder']['cart']['modifications']['transportModifications']['transportWeightLimitExceeded']);
     }
 
     private function hidePplTransport(): void

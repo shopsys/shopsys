@@ -54,61 +54,96 @@ mutation CreateOrder(
             newsletterSubscription: $newsletterSubscription
         }
     ) {
-        uuid
-        transport {
+        order {
             uuid
-            name
-        }
-        payment {
-            uuid
-            name
-        }
-        status
-        totalPrice {
-            priceWithVat
-            priceWithoutVat
-            vatAmount
-        }
-        items {
-            name
-            unitPrice {
-                priceWithVat
-                priceWithoutVat
-                vatAmount
+            transport {
+                uuid
+                name
             }
+            payment {
+                uuid
+                name
+            }
+            status
             totalPrice {
                 priceWithVat
                 priceWithoutVat
                 vatAmount
             }
-            quantity
-            vatRate
-            unit
+            items {
+                name
+                unitPrice {
+                    priceWithVat
+                    priceWithoutVat
+                    vatAmount
+                }
+                totalPrice {
+                    priceWithVat
+                    priceWithoutVat
+                    vatAmount
+                }
+                quantity
+                vatRate
+                unit
+            }
+            firstName
+            lastName
+            email
+            telephone
+            companyName
+            companyNumber
+            companyTaxNumber
+            street
+            city
+            postcode
+            country {
+                code
+            }
+            differentDeliveryAddress
+            deliveryFirstName
+            deliveryLastName
+            deliveryCompanyName
+            deliveryTelephone
+            deliveryStreet
+            deliveryCity
+            deliveryPostcode
+            deliveryCountry {
+                code
+            }
+            note
         }
-        firstName
-        lastName
-        email
-        telephone
-        companyName
-        companyNumber
-        companyTaxNumber
-        street
-        city
-        postcode
-        country {
-            code
+        orderCreated
+        cart {
+            modifications {
+                itemModifications {
+                    cartItemsWithChangedQuantity {
+                        uuid
+                    }
+                    cartItemsWithModifiedPrice {
+                        uuid
+                    }
+                    noLongerAvailableCartItemsDueToQuantity {
+                        uuid
+                    }
+                    noLongerListableCartItems {
+                        uuid
+                    }
+                }
+                paymentModifications {
+                    paymentPriceChanged
+                    paymentUnavailable
+                }
+                promoCodeModifications {
+                    noLongerApplicablePromoCode
+                }
+                transportModifications {
+                    personalPickupStoreUnavailable
+                    transportPriceChanged
+                    transportUnavailable
+                    transportWeightLimitExceeded
+                }
+                someProductWasRemovedFromEshop
+            }
         }
-        differentDeliveryAddress
-        deliveryFirstName
-        deliveryLastName
-        deliveryCompanyName
-        deliveryTelephone
-        deliveryStreet
-        deliveryCity
-        deliveryPostcode
-        deliveryCountry {
-            code
-        }
-        note
     }
 }

@@ -582,6 +582,12 @@ type Country {
   name: String!
 }
 
+type CreateOrderResult {
+  cart: Cart
+  order: Order
+  orderCreated: Boolean!
+}
+
 """Represents an currently logged customer user"""
 interface CustomerUser {
   """Billing address city name"""
@@ -878,7 +884,7 @@ type Mutation {
   """Send message to the site owner"""
   Contact(input: ContactInput!): Boolean!
   """Creates complete order with products and addresses"""
-  CreateOrder(input: OrderInput!): Order!
+  CreateOrder(input: OrderInput!): CreateOrderResult!
   """Delete delivery address by Uuid"""
   DeleteDeliveryAddress(deliveryAddressUuid: Uuid!): [DeliveryAddress!]!
   """Edit delivery address by Uuid"""

@@ -5,9 +5,12 @@ OrderInput:
     config:
         validation:
             -   App\FrontendApi\Model\Component\Constraints\AppPaymentTransportRelation: ~
-            -   App\FrontendApi\Model\Component\Constraints\TransportInOrder: ~
-            -   App\FrontendApi\Model\Component\Constraints\PaymentInOrder: ~
-            -   App\FrontendApi\Model\Component\Constraints\ProductInOrder: ~
+            -   App\FrontendApi\Model\Component\Constraints\ProductInOrder:
+                    groups: "beforeDefaultValidation"
+            -   App\FrontendApi\Model\Component\Constraints\TransportInOrder:
+                    groups: "beforeDefaultValidation"
+            -   App\FrontendApi\Model\Component\Constraints\PaymentInOrder:
+                    groups: "beforeDefaultValidation"
         fields:
             products:
                 type: "[OrderProductInput!]"

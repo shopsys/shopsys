@@ -6,9 +6,16 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\FrontendApi\Model\Component\Constraints\ProductInOrder;
+use App\Model\Product\ProductFacade;
 
 class ProductInOrderValidationTest extends AbstractOrderTestCase
 {
+    /**
+     * @var \App\Model\Product\ProductFacade
+     * @inject
+     */
+    private ProductFacade $productFacade;
+
     public function testOrderWithoutProductCannotBeCreated(): void
     {
         $cartUuid = $this->addProductToCartAndRemoveIt();
@@ -21,6 +28,31 @@ class ProductInOrderValidationTest extends AbstractOrderTestCase
 
         $errorCodes = array_map(static fn (array $validationError) => $validationError['code'], $validationErrors);
         self::assertContainsEquals(ProductInOrder::NO_PRODUCT_IN_ORDER_ERROR, $errorCodes);
+    }
+
+    public function testOrderWithRemovedProductsByAdmin(): void
+    {
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '77');
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
+            'productUuid' => $product->getUuid(),
+            'quantity' => 1,
+        ]);
+
+        $cartUuid = $response['data']['AddToCart']['cart']['uuid'];
+        $this->addCzechPostTransportToCart($cartUuid);
+        $this->addCashOnDeliveryPaymentToCart($cartUuid);
+
+        $this->productFacade->delete($product->getId());
+
+        $response = $this->createOrder($cartUuid);
+        $this->assertArrayHasKey('data', $response);
+        $this->assertArrayHasKey('CreateOrder', $response['data']);
+        $this->assertArrayHasKey('cart', $response['data']['CreateOrder']);
+        $this->assertArrayHasKey('modifications', $response['data']['CreateOrder']['cart']);
+        $this->assertArrayHasKey('someProductWasRemovedFromEshop', $response['data']['CreateOrder']['cart']['modifications']);
+        $this->assertTrue($response['data']['CreateOrder']['cart']['modifications']['someProductWasRemovedFromEshop']);
     }
 
     /**
@@ -87,7 +119,14 @@ class ProductInOrderValidationTest extends AbstractOrderTestCase
                             differentDeliveryAddress: false
                         }
                     ) {
-                        uuid
+                        order {
+                            uuid
+                        }
+                        cart {
+                            modifications {
+                                someProductWasRemovedFromEshop
+                            }
+                        }
                     }
                 }';
 

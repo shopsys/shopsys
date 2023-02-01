@@ -12,9 +12,16 @@ type EmptyCartWrapperProps = {
     currentCart: CurrentCartType;
     title: string;
     isCartPage?: boolean;
+    enableHandling?: boolean;
 };
 
-export const EmptyCartWrapper: FC<EmptyCartWrapperProps> = ({ currentCart, title, children, isCartPage = false }) => {
+export const EmptyCartWrapper: FC<EmptyCartWrapperProps> = ({
+    currentCart,
+    title,
+    children,
+    isCartPage = false,
+    enableHandling = true,
+}) => {
     const router = useRouter();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [transportAndPaymentUrl] = getInternationalizedStaticUrls(['/order/transport-and-payment'], domainUrl);
@@ -23,21 +30,36 @@ export const EmptyCartWrapper: FC<EmptyCartWrapperProps> = ({ currentCart, title
     const isLoading = !currentCart.isInitiallyLoaded || currentCart.isLoading;
 
     useEffect(() => {
-        if (isLoading) {
+        if (enableHandling === false) {
+            setIsLoadingVisible(true);
+            return;
+        }
+
+        if (isLoading || currentCart.isCartEmpty) {
             setInitiatedLoading(true);
         }
 
         if (initiatedLoading && !isLoading) {
             if (
-                (currentCart.transport === null || currentCart.payment === null) &&
-                router.route === '/order/contact-information'
+                currentCart.isCartEmpty === false &&
+                router.route === '/order/contact-information' &&
+                (currentCart.transport === null || currentCart.payment === null)
             ) {
                 router.replace(transportAndPaymentUrl);
             } else {
                 setIsLoadingVisible(false);
             }
         }
-    }, [initiatedLoading, isLoading, currentCart.payment, currentCart.transport, router, transportAndPaymentUrl]);
+    }, [
+        initiatedLoading,
+        isLoading,
+        currentCart.payment,
+        currentCart.transport,
+        currentCart.isCartEmpty,
+        router,
+        transportAndPaymentUrl,
+        enableHandling,
+    ]);
 
     if (isLoadingVisible) {
         return isCartPage ? (

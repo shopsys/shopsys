@@ -69,9 +69,13 @@ class PaymentInOrderValidationTest extends AbstractOrderTestCase
         $mutation = $this->getCreateOrderMutationFromDemoCart();
         $response = $this->getResponseContentForQuery($mutation);
 
-        $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
-        $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
-        $this->assertSame(PaymentInOrder::CHANGED_PAYMENT_PRICE_ERROR, $validationErrors['input'][0]['code']);
+        $this->assertArrayHasKey('data', $response);
+        $this->assertArrayHasKey('CreateOrder', $response['data']);
+        $this->assertArrayHasKey('cart', $response['data']['CreateOrder']);
+        $this->assertArrayHasKey('modifications', $response['data']['CreateOrder']['cart']);
+        $this->assertArrayHasKey('paymentModifications', $response['data']['CreateOrder']['cart']['modifications']);
+        $this->assertArrayHasKey('paymentPriceChanged', $response['data']['CreateOrder']['cart']['modifications']['paymentModifications']);
+        $this->assertTrue($response['data']['CreateOrder']['cart']['modifications']['paymentModifications']['paymentPriceChanged']);
     }
 
     private function hideCardPayment(): void
