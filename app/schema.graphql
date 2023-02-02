@@ -69,6 +69,8 @@ type AdvertCode implements Advert {
 type AdvertImage implements Advert {
   """Restricted categories of the advert (the advert is shown in these categories only)"""
   categories: [Category!]!
+  """Adverts first image by params"""
+  firstImage(size: String = null, type: String = null): Image
   """Advert image"""
   image(size: String = null, sizes: [String!] = null, type: String = null): [Image!]!
   """Advert link"""
@@ -198,6 +200,8 @@ type BlogArticle implements Breadcrumb & Slug & ArticleInterface {
   breadcrumb: [Link!]!
   """Date and time of the blog article creation"""
   createdAt: DateTime!
+  """Blog article image by params"""
+  firstImage(size: String = null, type: String = null): Image
   """Blog article images"""
   images(sizes: [String!] = null, type: String = null): [Image!]!
   """The blog article absolute URL"""
@@ -279,6 +283,8 @@ type Brand implements Breadcrumb & Slug & ProductListable {
   breadcrumb: [Link!]!
   """Brand description"""
   description: String
+  """Brand image by params"""
+  firstImage(size: String = null, type: String = null): Image
   """Brand images"""
   images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
   """Brand main URL"""
@@ -421,6 +427,8 @@ type Category implements Breadcrumb & Slug & ProductListable {
   children: [Category!]!
   """Localized category description (domain dependent)"""
   description: String
+  """Category image by params"""
+  firstImage(size: String = null, type: String = null): Image
   """Category images"""
   images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
   """A list of categories linked to the given category"""
@@ -813,6 +821,8 @@ type MainVariant implements Product & Breadcrumb & Slug {
   exposedStoresCount: Int!
   """List of downloadable files"""
   files: [File!]!
+  """Product image by params"""
+  firstImage(size: String = null, type: String = null): Image
   """List of flags"""
   flags: [Flag!]!
   """The full name of the product, which consists of a prefix, name, and a suffix"""
@@ -967,6 +977,8 @@ interface NotBlogArticleInterface {
 
 """Represents a notification supposed to be displayed on all pages"""
 type NotificationBar {
+  """Notification bar image by params"""
+  firstImage(size: String = null, type: String = null): Image
   """Notification bar images"""
   images(sizes: [String!] = null, type: String = null): [Image!]!
   """Color of the notification"""
@@ -1301,6 +1313,8 @@ scalar Password
 type Payment {
   """Localized payment description (domain dependent)"""
   description: String
+  """Payment image by params"""
+  firstImage(size: String = null, type: String = null): Image
   """Additional data for GoPay payment"""
   goPayPaymentMethod: GoPayPaymentMethod
   """Payment images"""
@@ -1430,6 +1444,8 @@ interface Product {
   exposedStoresCount: Int!
   """List of downloadable files"""
   files: [File!]!
+  """Product image by params"""
+  firstImage(size: String = null, type: String = null): Image
   """List of flags"""
   flags: [Flag!]!
   """The full name of the product, which consists of a prefix, name, and a suffix"""
@@ -1792,6 +1808,8 @@ type RegularProduct implements Product & Breadcrumb & Slug {
   exposedStoresCount: Int!
   """List of downloadable files"""
   files: [File!]!
+  """Product image by params"""
+  firstImage(size: String = null, type: String = null): Image
   """List of flags"""
   flags: [Flag!]!
   """The full name of the product, which consists of a prefix, name, and a suffix"""
@@ -1880,6 +1898,8 @@ type SliderItem {
   extendedText: String
   """Target link of text below slider"""
   extendedTextLink: String
+  """Slider item image by params"""
+  firstImage(size: String = null, type: String = null): Image
   """GTM creative"""
   gtmCreative: String
   """GTM ID"""
@@ -1976,6 +1996,8 @@ type Transport {
   daysUntilDelivery: Int!
   """Localized transport description (domain dependent)"""
   description: String
+  """Transport image by params"""
+  firstImage(size: String = null, type: String = null): Image
   """Transport images"""
   images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
   """Localized transport instruction (domain dependent)"""
@@ -2044,6 +2066,8 @@ type Variant implements Product & Breadcrumb & Slug {
   exposedStoresCount: Int!
   """List of downloadable files"""
   files: [File!]!
+  """Product image by params"""
+  firstImage(size: String = null, type: String = null): Image
   """List of flags"""
   flags: [Flag!]!
   """The full name of the product, which consists of a prefix, name, and a suffix"""

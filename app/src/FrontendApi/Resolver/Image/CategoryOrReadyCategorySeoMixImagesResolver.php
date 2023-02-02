@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Image;
 
+use App\FrontendApi\Model\Image\ImageBatchLoadData;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use GraphQL\Executor\Promise\Promise;
 use InvalidArgumentException;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 
-class CategoryOrReadyCategorySeoMixImagesResolver extends AbstractImagesResolver implements AliasedInterface
+class CategoryOrReadyCategorySeoMixImagesResolver extends ImagesResolver implements AliasedInterface
 {
+    private const CATEGORY_ENTITY_NAME = 'category';
+
     /**
      * @param \App\Model\Category\Category|\App\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
      * @param string|null $type
@@ -34,7 +37,42 @@ class CategoryOrReadyCategorySeoMixImagesResolver extends AbstractImagesResolver
             );
         }
 
-        return $this->resolveByEntityId($categoryId, 'category', $type, $sizes);
+        return $this->resolveByEntityId($categoryId, self::CATEGORY_ENTITY_NAME, $type, $sizes);
+    }
+
+    /**
+     * @param \App\Model\Category\Category|\App\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
+     * @param string|null $type
+     * @param string|null $size
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function resolveMainImageByCategoryOrReadyCategorySeoMix($categoryOrReadyCategorySeoMix, ?string $type, ?string $size): Promise
+    {
+        if ($categoryOrReadyCategorySeoMix instanceof Category) {
+            $categoryId = $categoryOrReadyCategorySeoMix->getId();
+        } elseif ($categoryOrReadyCategorySeoMix instanceof ReadyCategorySeoMix) {
+            $categoryId = $categoryOrReadyCategorySeoMix->getCategory()->getId();
+        } else {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The "$categoryOrReadyCategorySeoMix" argument must be an instance of "%s" or "%s".',
+                    Category::class,
+                    ReadyCategorySeoMix::class
+                ),
+            );
+        }
+
+        $sizes = $size === null ? [] : [$size];
+        $sizeConfigs = $this->getSizeConfigs($type, $sizes, self::CATEGORY_ENTITY_NAME);
+
+        return $this->firstImageBatchLoader->load(
+            new ImageBatchLoadData(
+                $categoryId,
+                self::CATEGORY_ENTITY_NAME,
+                $sizeConfigs,
+                $type
+            )
+        );
     }
 
     /**
@@ -42,6 +80,9 @@ class CategoryOrReadyCategorySeoMixImagesResolver extends AbstractImagesResolver
      */
     public static function getAliases(): array
     {
-        return ['resolveByCategoryOrReadyCategorySeoMix' => 'categoryOrReadyCategorySeoMixImageResolver'];
+        return [
+            'resolveByCategoryOrReadyCategorySeoMix' => 'resolveByCategoryOrReadyCategorySeoMix',
+            'resolveMainImageByCategoryOrReadyCategorySeoMix' => 'resolveMainImageByCategoryOrReadyCategorySeoMix',
+        ];
     }
 }

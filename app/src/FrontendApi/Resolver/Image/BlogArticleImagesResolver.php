@@ -7,7 +7,7 @@ namespace App\FrontendApi\Resolver\Image;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 
-class BlogArticleImagesResolver extends AbstractImagesResolver implements AliasedInterface
+class BlogArticleImagesResolver extends ImagesResolver implements AliasedInterface
 {
     public const ENTITY_NAME = 'blogArticle';
 
@@ -23,10 +23,24 @@ class BlogArticleImagesResolver extends AbstractImagesResolver implements Aliase
     }
 
     /**
+     * @param array $data
+     * @param string|null $type
+     * @param string|null $size
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function resolveMainImageByBlogArticle(array $data, ?string $type, ?string $size): Promise
+    {
+        return $this->resolveMainImageByEntityId($data['id'], self::ENTITY_NAME, $type, $size);
+    }
+
+    /**
      * @return array<string, string>
      */
     public static function getAliases(): array
     {
-        return ['resolveByBlogArticle' => 'blogArticleImageResolver'];
+        return [
+            'resolveByBlogArticle' => 'resolveByBlogArticle',
+            'resolveMainImageByBlogArticle' => 'resolveMainImageByBlogArticle',
+        ];
     }
 }

@@ -21,11 +21,22 @@ Payment:
             images:
                 type: "[Image!]!"
                 description: "Payment images"
-                resolve: '@=resolver("paymentImageResolver", [value, args["type"], args["sizes"]])'
+                resolve: '@=resolver("resolveImagesByEntity", [value, args["type"], args["sizes"]])'
                 args:
                     type:
                         type: "String"
                         defaultValue: null
                     sizes:
                         type: "[String!]"
+                        defaultValue: null
+            mainImage:
+                type: "Image"
+                description: "Payment image by params"
+                resolve: '@=resolver("resolveMainImageByEntity", [value, args["type"], args["size"]])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    size:
+                        type: "String"
                         defaultValue: null

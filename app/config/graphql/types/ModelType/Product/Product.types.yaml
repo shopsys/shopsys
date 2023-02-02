@@ -63,7 +63,7 @@ Product:
             images:
                 type: "[Image!]!"
                 description: "Product images"
-                resolve: '@=resolver("productImageResolver", [value, args["type"], args["sizes"]])'
+                resolve: '@=resolver("resolveImagesByProduct", [value, args["type"], args["sizes"]])'
                 args:
                     type:
                         type: "String"
@@ -79,3 +79,14 @@ Product:
                 type: "[Product!]!"
             parameters:
                 type: "[Parameter!]!"
+            mainImage:
+                type: "Image"
+                description: "Product image by params"
+                resolve: '@=resolver("resolveMainImageByProduct", [value, args["type"], args["size"]])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    size:
+                        type: "String"
+                        defaultValue: null

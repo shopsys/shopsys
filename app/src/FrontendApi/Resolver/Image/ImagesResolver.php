@@ -9,6 +9,7 @@ use App\FrontendApi\Resolver\Image\Exception\ImageSizeInvalidUserError;
 use App\FrontendApi\Resolver\Image\Exception\ImageTypeInvalidUserError;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageSizeNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageTypeNotFoundException;
@@ -17,41 +18,55 @@ use Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig;
 use Shopsys\FrontendApiBundle\Component\Image\ImageFacade as FrontendApiImageFacade;
 
-abstract class AbstractImagesResolver implements ResolverInterface
+class ImagesResolver implements ResolverInterface, AliasedInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
-     */
-    private ImageConfig $imageConfig;
-
-    /**
-     * @var \Shopsys\FrontendApiBundle\Component\Image\ImageFacade
-     */
-    protected FrontendApiImageFacade $frontendApiImageFacade;
-
-    /**
-     * @var string
-     */
-    protected static string $entityName;
-
-    /**
-     * @var \Overblog\DataLoader\DataLoaderInterface
-     */
-    protected DataLoaderInterface $imagesBatchLoader;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \Shopsys\FrontendApiBundle\Component\Image\ImageFacade $frontendApiImageFacade
      * @param \Overblog\DataLoader\DataLoaderInterface $imagesBatchLoader
+     * @param \Overblog\DataLoader\DataLoaderInterface $firstImageBatchLoader
      */
     public function __construct(
-        ImageConfig $imageConfig,
-        FrontendApiImageFacade $frontendApiImageFacade,
-        DataLoaderInterface $imagesBatchLoader
+        protected readonly ImageConfig $imageConfig,
+        protected readonly FrontendApiImageFacade $frontendApiImageFacade,
+        protected readonly DataLoaderInterface $imagesBatchLoader,
+        protected readonly DataLoaderInterface $firstImageBatchLoader
     ) {
-        $this->imageConfig = $imageConfig;
-        $this->frontendApiImageFacade = $frontendApiImageFacade;
-        $this->imagesBatchLoader = $imagesBatchLoader;
+    }
+
+    /**
+     * @param object $entity
+     * @param string|null $type
+     * @param string|null $size
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function resolveMainImageByEntity(object $entity, ?string $type, ?string $size): Promise
+    {
+        $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
+
+        return $this->resolveMainImageByEntityId($entity->getId(), $imageEntityConfig->getEntityName(), $type, $size);
+    }
+
+    /**
+     * @param int $entityId
+     * @param string $entityName
+     * @param string|null $type
+     * @param string|null $size
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function resolveMainImageByEntityId(int $entityId, string $entityName, ?string $type, ?string $size): Promise
+    {
+        $sizes = $size === null ? [] : [$size];
+        $sizeConfigs = $this->getSizeConfigs($type, $sizes, $entityName);
+
+        return $this->firstImageBatchLoader->load(
+            new ImageBatchLoadData(
+                $entityId,
+                $entityName,
+                $sizeConfigs,
+                $type
+            )
+        );
     }
 
     /**
@@ -60,9 +75,22 @@ abstract class AbstractImagesResolver implements ResolverInterface
      * @param array|null $sizes
      * @return \GraphQL\Executor\Promise\Promise
      */
-    public function resolveByEntity(object $entity, ?string $type, ?array $sizes): Promise
+    public function resolveImagesByEntity(object $entity, ?string $type, ?array $sizes): Promise
     {
-        return $this->resolveByEntityId($entity->getId(), static::$entityName, $type, $sizes);
+        $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
+
+        return $this->resolveByEntityId($entity->getId(), $imageEntityConfig->getEntityName(), $type, $sizes);
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public static function getAliases(): array
+    {
+        return [
+            'resolveImagesByEntity' => 'resolveImagesByEntity',
+            'resolveMainImageByEntity' => 'resolveMainImageByEntity',
+        ];
     }
 
     /**

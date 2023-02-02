@@ -54,11 +54,22 @@ BlogArticle:
             images:
                 type: "[Image!]!"
                 description: "Blog article images"
-                resolve: '@=resolver("blogArticleImageResolver", [value, args["type"], args["sizes"]])'
+                resolve: '@=resolver("resolveByBlogArticle", [value, args["type"], args["sizes"]])'
                 args:
                     type:
                         type: "String"
                         defaultValue: null
                     sizes:
                         type: "[String!]"
+                        defaultValue: null
+            mainImage:
+                type: "Image"
+                description: "Blog article image by params"
+                resolve: '@=resolver("resolveMainImageByBlogArticle", [value, args["type"], args["size"]])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    size:
+                        type: "String"
                         defaultValue: null

@@ -10,7 +10,7 @@ use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
 
-class AdvertImagesResolver extends AbstractImagesResolver implements AliasedInterface
+class AdvertImagesResolver extends ImagesResolver implements AliasedInterface
 {
     private const ENTITY_NAME = 'noticer';
 
@@ -37,6 +37,17 @@ class AdvertImagesResolver extends AbstractImagesResolver implements AliasedInte
     /**
      * @param \App\Model\Advert\Advert $advert
      * @param string|null $type
+     * @param string|null $size
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function resolveMainImageByAdvert(Advert $advert, ?string $type, ?string $size): Promise
+    {
+        return $this->resolveMainImageByEntityId($advert->getId(), self::ENTITY_NAME, $type, $size);
+    }
+
+    /**
+     * @param \App\Model\Advert\Advert $advert
+     * @param string|null $type
      * @param array|null $sizes
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]
      */
@@ -54,6 +65,9 @@ class AdvertImagesResolver extends AbstractImagesResolver implements AliasedInte
      */
     public static function getAliases(): array
     {
-        return ['resolveByAdvert' => 'advertImageResolver'];
+        return [
+            'resolveByAdvert' => 'resolveByAdvert',
+            'resolveMainImageByAdvert' => 'resolveMainImageByAdvert',
+        ];
     }
 }

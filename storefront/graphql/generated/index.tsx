@@ -98,6 +98,8 @@ export type AdvertImageApi = AdvertApi & {
   __typename?: 'AdvertImage';
   /** Restricted categories of the advert (the advert is shown in these categories only) */
   categories: Array<CategoryApi>;
+  /** Adverts first image by params */
+  firstImage: Maybe<ImageApi>;
   /** Advert image */
   image: Array<ImageApi>;
   /** Advert link */
@@ -110,6 +112,12 @@ export type AdvertImageApi = AdvertApi & {
   type: Scalars['String'];
   /** UUID */
   uuid: Scalars['Uuid'];
+};
+
+
+export type AdvertImageFirstImageArgsApi = {
+  size?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 
@@ -241,6 +249,8 @@ export type BlogArticleApi = ArticleInterfaceApi & BreadcrumbApi & SlugApi & {
   breadcrumb: Array<LinkApi>;
   /** Date and time of the blog article creation */
   createdAt: Scalars['DateTime'];
+  /** Blog article image by params */
+  firstImage: Maybe<ImageApi>;
   /** Blog article images */
   images: Array<ImageApi>;
   /** The blog article absolute URL */
@@ -267,6 +277,12 @@ export type BlogArticleApi = ArticleInterfaceApi & BreadcrumbApi & SlugApi & {
   uuid: Scalars['Uuid'];
   /** Indicates whether the blog article is displayed on homepage */
   visibleOnHomepage: Scalars['Boolean'];
+};
+
+
+export type BlogArticleFirstImageArgsApi = {
+  size?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 
@@ -341,6 +357,8 @@ export type BrandApi = BreadcrumbApi & ProductListableApi & SlugApi & {
   breadcrumb: Array<LinkApi>;
   /** Brand description */
   description: Maybe<Scalars['String']>;
+  /** Brand image by params */
+  firstImage: Maybe<ImageApi>;
   /** Brand images */
   images: Array<ImageApi>;
   /** Brand main URL */
@@ -359,6 +377,13 @@ export type BrandApi = BreadcrumbApi & ProductListableApi & SlugApi & {
   slug: Scalars['String'];
   /** UUID */
   uuid: Scalars['Uuid'];
+};
+
+
+/** Represents a brand */
+export type BrandFirstImageArgsApi = {
+  size?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 
@@ -512,6 +537,8 @@ export type CategoryApi = BreadcrumbApi & ProductListableApi & SlugApi & {
   children: Array<CategoryApi>;
   /** Localized category description (domain dependent) */
   description: Maybe<Scalars['String']>;
+  /** Category image by params */
+  firstImage: Maybe<ImageApi>;
   /** Category images */
   images: Array<ImageApi>;
   /** A list of categories linked to the given category */
@@ -539,6 +566,13 @@ export type CategoryApi = BreadcrumbApi & ProductListableApi & SlugApi & {
   slug: Scalars['String'];
   /** UUID */
   uuid: Scalars['Uuid'];
+};
+
+
+/** Represents a category */
+export type CategoryFirstImageArgsApi = {
+  size?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 
@@ -958,6 +992,8 @@ export type MainVariantApi = BreadcrumbApi & ProductApi & SlugApi & {
   exposedStoresCount: Scalars['Int'];
   /** List of downloadable files */
   files: Array<FileApi>;
+  /** Product image by params */
+  firstImage: Maybe<ImageApi>;
   /** List of flags */
   flags: Array<FlagApi>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
@@ -1006,6 +1042,13 @@ export type MainVariantApi = BreadcrumbApi & ProductApi & SlugApi & {
   /** UUID */
   uuid: Scalars['Uuid'];
   variants: Array<VariantApi>;
+};
+
+
+/** Represents a product */
+export type MainVariantFirstImageArgsApi = {
+  size?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 
@@ -1229,12 +1272,21 @@ export type NotBlogArticleInterfaceApi = {
 /** Represents a notification supposed to be displayed on all pages */
 export type NotificationBarApi = {
   __typename?: 'NotificationBar';
+  /** Notification bar image by params */
+  firstImage: Maybe<ImageApi>;
   /** Notification bar images */
   images: Array<ImageApi>;
   /** Color of the notification */
   rgbColor: Scalars['String'];
   /** Message of the notification */
   text: Scalars['String'];
+};
+
+
+/** Represents a notification supposed to be displayed on all pages */
+export type NotificationBarFirstImageArgsApi = {
+  size?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 
@@ -1580,6 +1632,8 @@ export type PaymentApi = {
   __typename?: 'Payment';
   /** Localized payment description (domain dependent) */
   description: Maybe<Scalars['String']>;
+  /** Payment image by params */
+  firstImage: Maybe<ImageApi>;
   /** Additional data for GoPay payment */
   goPayPaymentMethod: Maybe<GoPayPaymentMethodApi>;
   /** Payment images */
@@ -1598,6 +1652,13 @@ export type PaymentApi = {
   type: Scalars['String'];
   /** UUID */
   uuid: Scalars['Uuid'];
+};
+
+
+/** Represents a payment */
+export type PaymentFirstImageArgsApi = {
+  size?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 
@@ -1728,6 +1789,8 @@ export type ProductApi = {
   exposedStoresCount: Scalars['Int'];
   /** List of downloadable files */
   files: Array<FileApi>;
+  /** Product image by params */
+  firstImage: Maybe<ImageApi>;
   /** List of flags */
   flags: Array<FlagApi>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
@@ -1775,6 +1838,13 @@ export type ProductApi = {
   usps: Array<Scalars['String']>;
   /** UUID */
   uuid: Scalars['Uuid'];
+};
+
+
+/** Represents a product */
+export type ProductFirstImageArgsApi = {
+  size?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 
@@ -2276,6 +2346,8 @@ export type RegularProductApi = BreadcrumbApi & ProductApi & SlugApi & {
   exposedStoresCount: Scalars['Int'];
   /** List of downloadable files */
   files: Array<FileApi>;
+  /** Product image by params */
+  firstImage: Maybe<ImageApi>;
   /** List of flags */
   flags: Array<FlagApi>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
@@ -2323,6 +2395,13 @@ export type RegularProductApi = BreadcrumbApi & ProductApi & SlugApi & {
   usps: Array<Scalars['String']>;
   /** UUID */
   uuid: Scalars['Uuid'];
+};
+
+
+/** Represents a product */
+export type RegularProductFirstImageArgsApi = {
+  size?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 
@@ -2375,6 +2454,8 @@ export type SliderItemApi = {
   extendedText: Maybe<Scalars['String']>;
   /** Target link of text below slider */
   extendedTextLink: Maybe<Scalars['String']>;
+  /** Slider item image by params */
+  firstImage: Maybe<ImageApi>;
   /** GTM creative */
   gtmCreative: Maybe<Scalars['String']>;
   /** GTM ID */
@@ -2387,6 +2468,12 @@ export type SliderItemApi = {
   name: Scalars['String'];
   /** UUID */
   uuid: Scalars['Uuid'];
+};
+
+
+export type SliderItemFirstImageArgsApi = {
+  size?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 
@@ -2483,6 +2570,8 @@ export type TransportApi = {
   daysUntilDelivery: Scalars['Int'];
   /** Localized transport description (domain dependent) */
   description: Maybe<Scalars['String']>;
+  /** Transport image by params */
+  firstImage: Maybe<ImageApi>;
   /** Transport images */
   images: Array<ImageApi>;
   /** Localized transport instruction (domain dependent) */
@@ -2503,6 +2592,13 @@ export type TransportApi = {
   transportType: TransportTypeApi;
   /** UUID */
   uuid: Scalars['Uuid'];
+};
+
+
+/** Represents a transport */
+export type TransportFirstImageArgsApi = {
+  size?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 
@@ -2565,6 +2661,8 @@ export type VariantApi = BreadcrumbApi & ProductApi & SlugApi & {
   exposedStoresCount: Scalars['Int'];
   /** List of downloadable files */
   files: Array<FileApi>;
+  /** Product image by params */
+  firstImage: Maybe<ImageApi>;
   /** List of flags */
   flags: Array<FlagApi>;
   /** The full name of the product, which consists of a prefix, name, and a suffix */
@@ -2613,6 +2711,13 @@ export type VariantApi = BreadcrumbApi & ProductApi & SlugApi & {
   usps: Array<Scalars['String']>;
   /** UUID */
   uuid: Scalars['Uuid'];
+};
+
+
+/** Represents a product */
+export type VariantFirstImageArgsApi = {
+  size?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 

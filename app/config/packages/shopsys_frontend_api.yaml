@@ -36,6 +36,9 @@ overblog_dataloader:
         imagesBatchLoader:
             alias: "images_batch_loader"
             batch_load_fn: "@App\\FrontendApi\\Model\\Image\\ImagesBatchLoader:loadByBatchData"
+        firstImageBatchLoader:
+            alias: "first_image_batch_loader"
+            batch_load_fn: "@App\\FrontendApi\\Model\\Image\\FirstImageBatchLoader:loadByBatchData"
         readyCategorySeoMixesBatchLoader:
             alias: "ready_category_seo_mixes_batch_loader"
             batch_load_fn: "@App\\FrontendApi\\Model\\Category\\ReadyCategorySeoMixBatchLoader:loadByCategoryIds"

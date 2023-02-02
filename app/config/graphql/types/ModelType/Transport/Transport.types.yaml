@@ -25,13 +25,24 @@ Transport:
             images:
                 type: "[Image!]!"
                 description: "Transport images"
-                resolve: '@=resolver("transportImageResolver", [value, args["type"], args["sizes"]])'
+                resolve: '@=resolver("resolveImagesByEntity", [value, args["type"], args["sizes"]])'
                 args:
                     type:
                         type: "String"
                         defaultValue: null
                     sizes:
                         type: "[String!]"
+                        defaultValue: null
+            mainImage:
+                type: "Image"
+                description: "Transport image by params"
+                resolve: '@=resolver("resolveMainImageByEntity", [value, args["type"], args["size"]])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    size:
+                        type: "String"
                         defaultValue: null
             isPersonalPickup:
                 type: "Boolean!"
