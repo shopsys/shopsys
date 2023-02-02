@@ -34,7 +34,7 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
         $this->symfonyStyle->note('In order to generate new changelog entries you need to run this command outside of container:');
         $this->symfonyStyle->write(
             sprintf(
-                'docker run -it --rm -v "$(pwd)":/usr/local/src/your-app ferrarimarco/github-changelog-generator github_changelog_generator --token %s --release-branch %s --since-tag %s --future-release %s',
+                'docker run -it --rm -v "$(pwd)":/usr/local/src/your-app githubchangeloggenerator/github-changelog-generator github_changelog_generator --token %s --release-branch %s --since-tag %s --future-release %s',
                 $githubToken,
                 $this->initialBranchName,
                 trim($lastVersionOnCurrentBranch),
