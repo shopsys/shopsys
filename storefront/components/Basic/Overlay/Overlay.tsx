@@ -1,15 +1,18 @@
-import { OverlayStyled } from './Overlay.style';
-import { FC, MouseEventHandler } from 'react';
+import { OverlayStyled, OverlayWrapperStyled } from './Overlay.style';
+import { OverlayProps } from './propTypes';
+import { FC } from 'react';
+import { CSSTransition } from 'react-transition-group';
 
-type OverlayProps = {
-    onClick: MouseEventHandler;
-    isHiddenOnDesktop?: boolean;
+export const Overlay: FC<OverlayProps> = (props) => {
+    const testIdentifier = 'basic-overlay';
+
+    return (
+        <OverlayWrapperStyled data-testid={testIdentifier}>
+            <CSSTransition in timeout={500} classNames="overlay" unmountOnExit>
+                <OverlayStyled {...props} onClick={props.onClick}>
+                    {props.children}
+                </OverlayStyled>
+            </CSSTransition>
+        </OverlayWrapperStyled>
+    );
 };
-
-const TEST_IDENTIFIER = 'basic-overlay';
-
-export const Overlay: FC<OverlayProps> = ({ onClick, children, isHiddenOnDesktop }) => (
-    <OverlayStyled onClick={onClick} isHiddenOnDesktop={isHiddenOnDesktop} data-testid={TEST_IDENTIFIER}>
-        {children}
-    </OverlayStyled>
-);

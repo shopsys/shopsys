@@ -13,7 +13,7 @@ import {
 } from './Header.style';
 import { Logo } from './Logo/Logo';
 import { MenuIconic } from './MenuIconic/MenuIconic';
-import { Overlay } from 'components/Layout/Overlay/Overlay';
+import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { FC, useCallback, useState } from 'react';
 
 type HeaderProps = {
@@ -51,7 +51,7 @@ export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
                     <HeaderCartStyled>
                         <Cart />
                     </HeaderCartStyled>
-                    <Overlay isActive={isMenuOpened} onCloseHandler={onMenuToggleHandler} />
+                    <Overlay $isActive={isMenuOpened} onClick={onMenuToggleHandler} $isHiddenOnDesktop />
                 </>
             )}
         </HeaderStyled>
