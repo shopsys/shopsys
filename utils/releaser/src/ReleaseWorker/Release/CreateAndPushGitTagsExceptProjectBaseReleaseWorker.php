@@ -73,6 +73,12 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
             $this->processRunner->run('git config --global credential.helper "cache --timeout=3600"');
         }
 
+        $this->symfonyStyle->note(
+            'You will be asked for your Github credentials if you have not saved them yet.
+            As we require two factor authentication, you will need to provide repo scope token instead of password.
+            Token can be generated here: https://github.com/settings/tokens/new'
+        );
+
         $this->symfonyStyle->note('Cloning all packages. Please wait.');
         foreach ($packageNames as $packageName) {
             $this->symfonyStyle->note(sprintf('Cloning shopsys/%s. This can take a while.', $packageName));
