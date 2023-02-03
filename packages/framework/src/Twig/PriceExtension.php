@@ -9,6 +9,7 @@ use CommerceGuys\Intl\NumberFormat\NumberFormatRepositoryInterface;
 use Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -175,7 +176,7 @@ class PriceExtension extends AbstractExtension
     public function priceTextWithCurrencyByCurrencyIdAndLocaleFilter(Money $price, int $currencyId, string $locale): string
     {
         if ($price->isZero()) {
-            return t('Free', [], 'messages', $locale);
+            return t('Free', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale);
         }
         $currency = $this->currencyFacade->getById($currencyId);
         return $this->formatCurrency($price, $currency, $locale);

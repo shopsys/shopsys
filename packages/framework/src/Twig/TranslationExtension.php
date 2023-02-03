@@ -34,20 +34,25 @@ class TranslationExtension extends AbstractExtension
      *
      * Helpful for protection from XSS when providing user input as translation argument
      *
-     * @see \Symfony\Bridge\Twig\Extension\TranslationExtension::trans()
      * @param \Twig\Environment $twig
      * @param string $message
      * @param array $arguments
-     * @param string|null $domain
+     * @param string|null $translationDomain
      * @param string|null $locale
      * @return string
+     * @see \Symfony\Bridge\Twig\Extension\TranslationExtension::trans()
      */
-    public function transHtml(Environment $twig, $message, array $arguments = [], $domain = null, $locale = null)
-    {
+    public function transHtml(
+        Environment $twig,
+        string $message,
+        array $arguments = [],
+        ?string $translationDomain = null,
+        ?string $locale = null
+    ): string {
         $defaultTransCallable = $twig->getFilter('trans')->getCallable();
         $escapedArguments = $this->getEscapedElements($twig, $arguments);
 
-        return $defaultTransCallable($message, $escapedArguments, $domain, $locale);
+        return $defaultTransCallable($message, $escapedArguments, $translationDomain, $locale);
     }
 
     /**

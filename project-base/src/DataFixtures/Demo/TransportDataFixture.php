@@ -9,6 +9,7 @@ use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
@@ -66,7 +67,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $transportData = $this->transportDataFactory->create();
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $transportData->name[$locale] = t('Czech post', [], 'dataFixtures', $locale);
+            $transportData->name[$locale] = t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $this->setPriceForAllDomains($transportData, Money::create('99.95'));
@@ -75,7 +76,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $transportData = $this->transportDataFactory->create();
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $transportData->name[$locale] = t('PPL', [], 'dataFixtures', $locale);
+            $transportData->name[$locale] = t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $this->setPriceForAllDomains($transportData, Money::create('199.95'));
@@ -84,17 +85,17 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $transportData = $this->transportDataFactory->create();
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $transportData->name[$locale] = t('Personal collection', [], 'dataFixtures', $locale);
+            $transportData->name[$locale] = t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $transportData->description[$locale] = t(
                 'You will be welcomed by friendly staff!',
                 [],
-                'dataFixtures',
+                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $locale
             );
             $transportData->instructions[$locale] = t(
                 'We are looking forward to your visit.',
                 [],
-                'dataFixtures',
+                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $locale
             );
         }

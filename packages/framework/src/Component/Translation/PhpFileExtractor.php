@@ -21,8 +21,6 @@ use Twig\Node\Node as TwigNode;
 
 class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
 {
-    protected const DEFAULT_MESSAGE_DOMAIN = 'messages';
-
     /**
      * @var \PhpParser\NodeTraverser
      */
@@ -140,7 +138,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
                 $this->file
             );
         }
-        return static::DEFAULT_MESSAGE_DOMAIN;
+        return Translator::DEFAULT_TRANSLATION_DOMAIN;
     }
 
     /**

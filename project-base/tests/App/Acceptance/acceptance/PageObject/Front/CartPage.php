@@ -8,6 +8,7 @@ use Facebook\WebDriver\Exception\NoSuchElementException;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverKeys;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
 
 class CartPage extends AbstractPage
@@ -45,7 +46,7 @@ class CartPage extends AbstractPage
             Money::create($price)
         );
         $orderPriceCell = $this->getTotalProductsPriceCell();
-        $message = t('Total price including VAT', [], 'messages', $this->tester->getFrontendLocale());
+        $message = t('Total price including VAT', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $this->tester->seeInElement($message . ': ' . $formattedPriceWithCurrency, $orderPriceCell);
     }
 
@@ -76,7 +77,7 @@ class CartPage extends AbstractPage
      */
     public function assertProductIsInCartByName($productName)
     {
-        $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $translatedProductName = t($productName, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $this->tester->see($translatedProductName, WebDriverBy::cssSelector('.test-cart-item-name'));
     }
 
@@ -85,7 +86,7 @@ class CartPage extends AbstractPage
      */
     public function assertProductIsNotInCartByName($productName)
     {
-        $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $translatedProductName = t($productName, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $this->tester->dontSee($translatedProductName, WebDriverBy::cssSelector('.test-cart-item-name'));
     }
 
@@ -106,7 +107,7 @@ class CartPage extends AbstractPage
      */
     private function findProductRowInCartByName($productName)
     {
-        $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $translatedProductName = t($productName, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $rows = $this->webDriver->findElements(WebDriverBy::cssSelector('.test-cart-item'));
 
         foreach ($rows as $row) {
@@ -221,7 +222,7 @@ class CartPage extends AbstractPage
      */
     private function getProductTotalPriceByName(string $productName): string
     {
-        $productName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $productName = t($productName, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $productPriceCell = $this->getProductPriceCellByName($productName);
 
         $productPriceWithoutCurrencySymbol = preg_replace('/[^0-9.,]/', '', $productPriceCell->getText());
@@ -236,7 +237,7 @@ class CartPage extends AbstractPage
     {
         $this->tester->clickByTranslationFrontend(
             'Go to cart',
-            'messages',
+            Translator::DEFAULT_TRANSLATION_DOMAIN,
             [],
             WebDriverBy::cssSelector('#window-main-container')
         );
@@ -248,10 +249,10 @@ class CartPage extends AbstractPage
      */
     public function seeSuccessMessageForAddedProducts(string $productName, int $quantity): void
     {
-        $productName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $productName = t($productName, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $this->tester->seeTranslationFrontend(
             'Product <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) added to the cart',
-            'messages',
+            Translator::DEFAULT_TRANSLATION_DOMAIN,
             [
                 '{{ name }}' => $productName,
                 '{{ quantity|formatNumber }}' => $quantity,

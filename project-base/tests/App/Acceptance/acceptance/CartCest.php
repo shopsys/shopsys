@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Acceptance\acceptance;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\App\Acceptance\acceptance\PageObject\Front\CartBoxPage;
 use Tests\App\Acceptance\acceptance\PageObject\Front\CartPage;
 use Tests\App\Acceptance\acceptance\PageObject\Front\FloatingWindowPage;
@@ -126,7 +127,7 @@ class CartCest
         $floatingWindowPage->closeFloatingWindow();
         $cartBoxPage->seeCountAndPriceRoundedByCurrencyInCartBox(1, '10497');
         $me->amOnLocalizedRoute('front_cart');
-        $me->seeTranslationFrontend($productName, 'dataFixtures');
+        $me->seeTranslationFrontend($productName, Translator::DATA_FIXTURES_TRANSLATION_DOMAIN);
     }
 
     /**
@@ -186,7 +187,7 @@ class CartCest
         $cartPage->removeProductFromCart('PANASONIC DMC FT5EP');
         $me->seeTranslationFrontend(
             'Your cart is unfortunately empty. To create order, you have to <a href="%url%">choose</a> some product first',
-            'messages',
+            Translator::DEFAULT_TRANSLATION_DOMAIN,
             [
                 '%url%' => '',
             ]

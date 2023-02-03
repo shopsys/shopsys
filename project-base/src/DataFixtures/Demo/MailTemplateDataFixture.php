@@ -7,6 +7,7 @@ namespace App\DataFixtures\Demo;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateData;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactoryInterface;
@@ -58,7 +59,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture
             $mailTemplateData->subject = t(
                 'Thank you for your order no. {number} placed at {date}',
                 [],
-                'dataFixtures',
+                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $locale
             );
             $mailTemplateData->body = t('Dear customer,<br /><br />'
@@ -76,47 +77,47 @@ class MailTemplateDataFixture extends AbstractReferenceFixture
                 . 'Note: {note} <br />'
                 . 'Products: {products} <br />'
                 . '{transport_instructions} <br />'
-                . '{payment_instructions}', [], 'dataFixtures', $locale);
+                . '{payment_instructions}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
             $this->createMailTemplate($manager, 'order_status_1', $mailTemplateData, $domainId);
 
             $mailTemplateData->sendMail = false;
-            $mailTemplateData->subject = t('Order status has changed', [], 'dataFixtures', $locale);
+            $mailTemplateData->subject = t('Order status has changed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $mailTemplateData->body = t('Dear customer, <br /><br />'
-                . 'Your order is being processed.', [], 'dataFixtures', $locale);
+                . 'Your order is being processed.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
             $this->createMailTemplate($manager, 'order_status_2', $mailTemplateData, $domainId);
 
-            $mailTemplateData->subject = t('Order status has changed', [], 'dataFixtures', $locale);
+            $mailTemplateData->subject = t('Order status has changed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $mailTemplateData->body = t('Dear customer, <br /><br />'
-                . 'Processing your order has been finished.', [], 'dataFixtures', $locale);
+                . 'Processing your order has been finished.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
             $this->createMailTemplate($manager, 'order_status_3', $mailTemplateData, $domainId);
 
-            $mailTemplateData->subject = t('Order status has changed', [], 'dataFixtures', $locale);
+            $mailTemplateData->subject = t('Order status has changed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $mailTemplateData->body = t('Dear customer, <br /><br />'
-                . 'Your order has been cancelled.', [], 'dataFixtures', $locale);
+                . 'Your order has been cancelled.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
             $this->createMailTemplate($manager, 'order_status_4', $mailTemplateData, $domainId);
 
             $mailTemplateData->sendMail = true;
-            $mailTemplateData->subject = t('Reset password request', [], 'dataFixtures', $locale);
+            $mailTemplateData->subject = t('Reset password request', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $mailTemplateData->body = t('Dear customer.<br /><br />'
-                . 'You can set a new password following this link: <a href="{new_password_url}">{new_password_url}</a>', [], 'dataFixtures', $locale);
+                . 'You can set a new password following this link: <a href="{new_password_url}">{new_password_url}</a>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
             $this->createMailTemplate($manager, MailTemplate::RESET_PASSWORD_NAME, $mailTemplateData, $domainId);
 
-            $mailTemplateData->subject = t('Registration completed', [], 'dataFixtures', $locale);
+            $mailTemplateData->subject = t('Registration completed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $mailTemplateData->body = t('Dear customer, <br /><br />'
                 . 'your registration is completed. <br />'
                 . 'Name: {first_name} {last_name}<br />'
                 . 'Email: {email}<br />'
                 . 'E-shop link: {url}<br />'
-                . 'Log in page: {login_page}', [], 'dataFixtures', $locale);
+                . 'Log in page: {login_page}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
             $this->createMailTemplate($manager, MailTemplate::REGISTRATION_CONFIRM_NAME, $mailTemplateData, $domainId);
 
-            $mailTemplateData->subject = t('Personal information overview - {domain}', [], 'dataFixtures', $locale);
+            $mailTemplateData->subject = t('Personal information overview - {domain}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $mailTemplateData->body = t('Dear customer, <br /><br />
             based on your email {email}, we are sending you a link to your personal details. By clicking on the link below, you will be taken to a page listing all the<br/>
             personal details which we have in evidence in our online store {domain}. 
@@ -124,11 +125,11 @@ class MailTemplateDataFixture extends AbstractReferenceFixture
             To overview your personal information please click here - {url} <br/>
             The link is valid for next 24 hours.<br/>
             Best Regards <br/><br/>
-            team of {domain}', [], 'dataFixtures', $locale);
+            team of {domain}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
             $this->createMailTemplate($manager, MailTemplate::PERSONAL_DATA_ACCESS_NAME, $mailTemplateData, $domainId);
 
-            $mailTemplateData->subject = t('Personal information export - {domain}', [], 'dataFixtures', $locale);
+            $mailTemplateData->subject = t('Personal information export - {domain}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $mailTemplateData->body = t('Dear customer, <br/><br/>
 based on your email {email}, we are sending you a link where you can download your personal details registered on our online store in readable format. Clicking on the link will take you to a page where you’ll be able to download these informations, which we have in evidence in our online store {domain}. 
 <br/><br/>
@@ -137,7 +138,7 @@ The link is valid for next 24 hours.
 <br/><br/>
 Best regards<br/>
 team of {domain}
-', [], 'dataFixtures', $locale);
+', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
             $this->createMailTemplate($manager, MailTemplate::PERSONAL_DATA_EXPORT_NAME, $mailTemplateData, $domainId);
         }

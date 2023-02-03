@@ -7,6 +7,7 @@ namespace App\DataFixtures\Demo;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
@@ -40,7 +41,7 @@ class AdvertDataFixture extends AbstractReferenceFixture
     {
         $advertData = $this->advertDataFactory->create();
         $advertData->domainId = Domain::FIRST_DOMAIN_ID;
-        $advertData->name = t('Demo advert', [], 'dataFixtures');
+        $advertData->name = t('Demo advert', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN);
         $advertData->type = Advert::TYPE_CODE;
         $advertData->hidden = false;
         $advertData->positionName = 'footer';

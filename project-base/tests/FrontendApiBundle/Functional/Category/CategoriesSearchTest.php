@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Category;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CategoriesSearchTest extends GraphQlTestCase
@@ -22,7 +23,7 @@ class CategoriesSearchTest extends GraphQlTestCase
             }';
 
         $categoriesExpected = [
-            ['name' => t('TV, audio', [], 'dataFixtures', $this->getFirstDomainLocale())],
+            ['name' => t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale())],
         ];
 
         $this->assertCategories($query, $categoriesExpected);
@@ -42,7 +43,7 @@ class CategoriesSearchTest extends GraphQlTestCase
             }';
 
         $categoriesExpected = [
-            ['name' => t('Cameras & Photo', [], 'dataFixtures', $this->getFirstDomainLocale())],
+            ['name' => t('Cameras & Photo', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale())],
         ];
 
         $this->assertCategories($query, $categoriesExpected);
@@ -62,8 +63,8 @@ class CategoriesSearchTest extends GraphQlTestCase
             }';
 
         $categoriesExpected = [
-            ['name' => t('Personal Computers & accessories', [], 'dataFixtures', $this->getFirstDomainLocale())],
-            ['name' => t('TV, audio', [], 'dataFixtures', $this->getFirstDomainLocale())],
+            ['name' => t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale())],
+            ['name' => t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale())],
         ];
 
         $this->assertCategories($query, $categoriesExpected);

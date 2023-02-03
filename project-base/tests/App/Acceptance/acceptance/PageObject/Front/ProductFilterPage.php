@@ -7,6 +7,7 @@ namespace Tests\App\Acceptance\acceptance\PageObject\Front;
 use Facebook\WebDriver\Exception\NoSuchElementException;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverKeys;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
 use Tests\App\Test\Codeception\AcceptanceTester;
 use Tests\App\Test\Codeception\Module\StrictWebDriver;
@@ -83,7 +84,7 @@ class ProductFilterPage extends AbstractPage
      */
     private function findParameterElementByLabel($parameterLabel)
     {
-        $translatedParameterLabel = t($parameterLabel, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $translatedParameterLabel = t($parameterLabel, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $parameterItems = $this->webDriver->findElements(
             WebDriverBy::cssSelector('#product_filter_form_parameters .test-product-filter-parameter')
         );
@@ -115,7 +116,7 @@ class ProductFilterPage extends AbstractPage
      */
     private function getLabelElementByParameterValueText($parameterElement, $parameterValueText)
     {
-        $translatedParameterValueText = t($parameterValueText, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $translatedParameterValueText = t($parameterValueText, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $parameterValueDivs = $parameterElement->findElements(
             WebDriverBy::cssSelector('.test-product-filter-parameter-value')
         );

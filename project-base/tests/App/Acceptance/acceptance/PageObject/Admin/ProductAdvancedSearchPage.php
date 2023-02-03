@@ -6,6 +6,7 @@ namespace Tests\App\Acceptance\acceptance\PageObject\Admin;
 
 use Facebook\WebDriver\WebDriverBy;
 use PHPUnit\Framework\Assert;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
 
 class ProductAdvancedSearchPage extends AbstractPage
@@ -27,7 +28,7 @@ class ProductAdvancedSearchPage extends AbstractPage
 
         $this->tester->clickByTranslationAdmin(
             'Search [verb]',
-            'messages',
+            Translator::DEFAULT_TRANSLATION_DOMAIN,
             [],
             WebDriverBy::cssSelector('#js-advanced-search-rules-box')
         );
@@ -38,7 +39,7 @@ class ProductAdvancedSearchPage extends AbstractPage
      */
     public function assertFoundProductByName($productName)
     {
-        $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getAdminLocale());
+        $translatedProductName = t($productName, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getAdminLocale());
         $this->tester->seeTranslationAdminInCss($translatedProductName, '.test-grid-column-name');
     }
 

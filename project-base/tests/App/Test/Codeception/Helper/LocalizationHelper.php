@@ -6,8 +6,11 @@ namespace Tests\App\Test\Codeception\Helper;
 
 use Codeception\Module;
 use Codeception\TestInterface;
+use Facebook\WebDriver\WebDriverBy;
+use Facebook\WebDriver\WebDriverElement;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Tests\App\Test\Codeception\Module\StrictWebDriver;
@@ -57,81 +60,81 @@ class LocalizationHelper extends Module
 
     /**
      * @param string $id
-     * @param string $domain
+     * @param string $translationDomain
      * @param array $parameters
      */
-    public function seeTranslationFrontend(string $id, string $domain = 'messages', array $parameters = [])
+    public function seeTranslationFrontend(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = []): void
     {
-        $translatedMessage = t($id, $parameters, $domain, $this->getFrontendLocale());
+        $translatedMessage = t($id, $parameters, $translationDomain, $this->getFrontendLocale());
         $this->webDriver->see(strip_tags($translatedMessage));
     }
 
     /**
      * @param string $id
-     * @param string $domain
+     * @param string $translationDomain
      * @param array $parameters
      */
-    public function dontSeeTranslationFrontend(string $id, string $domain = 'messages', array $parameters = [])
+    public function dontSeeTranslationFrontend(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = []): void
     {
-        $translatedMessage = t($id, $parameters, $domain, $this->getFrontendLocale());
+        $translatedMessage = t($id, $parameters, $translationDomain, $this->getFrontendLocale());
         $this->webDriver->dontSee(strip_tags($translatedMessage));
     }
 
     /**
      * @param string $id
-     * @param string $domain
+     * @param string $translationDomain
      * @param array $parameters
      */
-    public function seeTranslationAdmin(string $id, string $domain = 'messages', array $parameters = [])
+    public function seeTranslationAdmin(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = []): void
     {
-        $translatedMessage = t($id, $parameters, $domain, $this->getAdminLocale());
+        $translatedMessage = t($id, $parameters, $translationDomain, $this->getAdminLocale());
         $this->webDriver->see(strip_tags($translatedMessage));
     }
 
     /**
      * @param string $id
      * @param string $css
-     * @param string $domain
+     * @param string $translationDomain
      * @param array $parameters
      */
-    public function seeTranslationAdminInCss(string $id, string $css, string $domain = 'messages', array $parameters = [])
+    public function seeTranslationAdminInCss(string $id, string $css, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = []): void
     {
-        $translatedMessage = t($id, $parameters, $domain, $this->getAdminLocale());
+        $translatedMessage = t($id, $parameters, $translationDomain, $this->getAdminLocale());
         $this->webDriver->seeInCss(strip_tags($translatedMessage), $css);
     }
 
     /**
      * @param string $id
-     * @param string $domain
+     * @param string $translationDomain
      * @param array $parameters
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      */
-    public function clickByTranslationAdmin(string $id, string $domain = 'messages', array $parameters = [], $contextSelector = null)
+    public function clickByTranslationAdmin(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = [], WebDriverBy|WebDriverElement|null $contextSelector = null): void
     {
-        $translatedMessage = t($id, $parameters, $domain, $this->getAdminLocale());
+        $translatedMessage = t($id, $parameters, $translationDomain, $this->getAdminLocale());
         $this->webDriver->clickByText(strip_tags($translatedMessage), $contextSelector);
     }
 
     /**
      * @param string $id
-     * @param string $domain
+     * @param string $translationDomain
      * @param array $parameters
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      */
-    public function clickByTranslationFrontend(string $id, string $domain = 'messages', array $parameters = [], $contextSelector = null)
+    public function clickByTranslationFrontend(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = [], WebDriverBy|WebDriverElement|null $contextSelector = null)
     {
-        $translatedMessage = t($id, $parameters, $domain, $this->getFrontendLocale());
+        $translatedMessage = t($id, $parameters, $translationDomain, $this->getFrontendLocale());
         $this->webDriver->clickByText(strip_tags($translatedMessage), $contextSelector);
     }
 
     /**
      * @param string $id
-     * @param string $domain
+     * @param string $translationDomain
      * @param array $parameters
      */
-    public function checkOptionByLabelTranslationFrontend(string $id, string $domain = 'messages', array $parameters = [])
+    public function checkOptionByLabelTranslationFrontend(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = []): void
     {
-        $translatedMessage = t($id, $parameters, $domain, $this->getFrontendLocale());
+        $translatedMessage = t($id, $parameters, $translationDomain, $this->getFrontendLocale());
         $this->webDriver->checkOptionByLabel($translatedMessage);
     }
 
@@ -167,7 +170,7 @@ class LocalizationHelper extends Module
      * @param string $routeName
      * @param array $parameters
      */
-    public function amOnLocalizedRoute(string $routeName, array $parameters = [])
+    public function amOnLocalizedRoute(string $routeName, array $parameters = []): void
     {
         $this->webDriver->amOnPage($this->getLocalizedPathOnFirstDomainByRouteName($routeName, $parameters));
     }

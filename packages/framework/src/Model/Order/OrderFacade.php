@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException;
@@ -613,7 +614,7 @@ class OrderFacade
         if ($orderPreview->getRoundingPrice() !== null) {
             $this->orderItemFactory->createProduct(
                 $order,
-                t('Rounding', [], 'messages', $locale),
+                t('Rounding', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale),
                 $orderPreview->getRoundingPrice(),
                 '0',
                 1,
@@ -634,7 +635,7 @@ class OrderFacade
     {
         $name = sprintf(
             '%s %s - %s',
-            t('Promo code', [], 'messages', $locale),
+            t('Promo code', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale),
             $this->numberFormatterExtension->formatPercent(-$discountPercent, $locale),
             $orderItem->getName()
         );

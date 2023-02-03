@@ -85,7 +85,7 @@ To do that we can just create a new record in `src/DataFixtures/Demo/MailTemplat
 +           If you did not perform this action, you can recover access by entering {email} into the form at {password_reset_url}
 +           <br/><br/>
 +           Best regards
-+           ', [], 'dataFixtures', $locale);
++           ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 +
 +           $this->createMailTemplate($manager, PasswordChangedMail::MAIL_TEMPLATE_NAME, $mailTemplateData, $domainId);
 ```

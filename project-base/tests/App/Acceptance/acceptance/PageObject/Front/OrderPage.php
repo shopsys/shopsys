@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Acceptance\acceptance\PageObject\Front;
 
 use Facebook\WebDriver\WebDriverBy;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
 use Tests\FrameworkBundle\Test\Codeception\FrontCheckbox;
 
@@ -17,7 +18,7 @@ class OrderPage extends AbstractPage
      */
     public function assertTransportIsNotSelected($transportTitle)
     {
-        $translatedTransportTitle = t($transportTitle, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $translatedTransportTitle = t($transportTitle, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $this->tester->dontSeeCheckboxIsCheckedByLabel($translatedTransportTitle);
     }
 
@@ -26,7 +27,7 @@ class OrderPage extends AbstractPage
      */
     public function assertTransportIsSelected($transportTitle)
     {
-        $translatedTransportTitle = t($transportTitle, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $translatedTransportTitle = t($transportTitle, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $this->tester->seeCheckboxIsCheckedByLabel($translatedTransportTitle);
     }
 
@@ -49,7 +50,7 @@ class OrderPage extends AbstractPage
     public function assertPaymentIsNotSelected($paymentTitle)
     {
         $this->scrollToPaymentForm();
-        $translatedPaymentTitle = t($paymentTitle, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $translatedPaymentTitle = t($paymentTitle, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $this->tester->dontSeeCheckboxIsCheckedByLabel($translatedPaymentTitle);
     }
 
@@ -59,7 +60,7 @@ class OrderPage extends AbstractPage
     public function assertPaymentIsSelected($paymentTitle)
     {
         $this->scrollToPaymentForm();
-        $translatedPaymentTitle = t($paymentTitle, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $translatedPaymentTitle = t($paymentTitle, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $this->tester->seeCheckboxIsCheckedByLabel($translatedPaymentTitle);
     }
 
@@ -149,7 +150,7 @@ class OrderPage extends AbstractPage
     {
         $this->tester->clickByTranslationFrontend(
             'Go to cart',
-            'messages',
+            Translator::DEFAULT_TRANSLATION_DOMAIN,
             [],
             WebDriverBy::cssSelector('#window-main-container')
         );

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Acceptance\acceptance;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\App\Acceptance\acceptance\PageObject\Admin\EntityEditPage;
 use Tests\App\Acceptance\acceptance\PageObject\Admin\LoginPage;
 use Tests\App\Test\Codeception\AcceptanceTester;
@@ -29,10 +30,10 @@ class TransportImageUploadCest
         $me->clickByName(self::SAVE_BUTTON_NAME);
         $me->seeTranslationAdmin(
             'Shipping <strong><a href="{{ url }}">{{ name }}</a></strong> was modified',
-            'messages',
+            Translator::DEFAULT_TRANSLATION_DOMAIN,
             [
                 '{{ url }}' => '',
-                '{{ name }}' => t('Czech post', [], 'dataFixtures', $me->getAdminLocale()),
+                '{{ name }}' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $me->getAdminLocale()),
             ]
         );
     }

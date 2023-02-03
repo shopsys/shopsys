@@ -8,6 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitData;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
@@ -63,12 +64,12 @@ class UnitDataFixture extends AbstractReferenceFixture
         $unitData = $this->unitDataFactory->create();
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $unitData->name[$locale] = t('m³', [], 'dataFixtures', $locale);
+            $unitData->name[$locale] = t('m³', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $this->createUnit($unitData, self::UNIT_CUBIC_METERS);
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $unitData->name[$locale] = t('pcs', [], 'dataFixtures', $locale);
+            $unitData->name[$locale] = t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $this->createUnit($unitData, self::UNIT_PIECES);
 

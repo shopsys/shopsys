@@ -8,6 +8,7 @@ use JMS\TranslationBundle\Model\MessageCatalogue;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Translation\JsFileExtractor;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use SplFileInfo;
 
 class JsFileExtractorTest extends TestCase
@@ -22,11 +23,11 @@ class JsFileExtractorTest extends TestCase
         $catalogue = $this->extract(__DIR__ . '/Resources/' . $fileName);
         $expected = new MessageCatalogue();
 
-        $message = new Message('trans test', 'messages');
+        $message = new Message('trans test', Translator::DEFAULT_TRANSLATION_DOMAIN);
         $message->addSource(new FileSource($fileName, 3));
         $expected->add($message);
 
-        $message = new Message('transChoice test', 'messages');
+        $message = new Message('transChoice test', Translator::DEFAULT_TRANSLATION_DOMAIN);
         $message->addSource(new FileSource($fileName, 5));
         $expected->add($message);
 
@@ -38,7 +39,7 @@ class JsFileExtractorTest extends TestCase
         $message->addSource(new FileSource($fileName, 9));
         $expected->add($message);
 
-        $message = new Message('concatenated message', 'messages');
+        $message = new Message('concatenated message', Translator::DEFAULT_TRANSLATION_DOMAIN);
         $message->addSource(new FileSource($fileName, 11));
         $expected->add($message);
 

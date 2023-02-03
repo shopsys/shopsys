@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Payment;
 
 use App\DataFixtures\Demo\VatDataFixture;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class PaymentsTest extends GraphQlTestCase
@@ -40,11 +41,11 @@ class PaymentsTest extends GraphQlTestCase
             'data' => [
                 'payments' => [
                     [
-                        'name' => t('Credit card', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                        'name' => t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                         'description' => t(
                             'Quick, cheap and reliable!',
                             [],
-                            'dataFixtures',
+                            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                             $this->getLocaleForFirstDomain()
                         ),
                         'instruction' => null,
@@ -55,12 +56,12 @@ class PaymentsTest extends GraphQlTestCase
                             ['url' => $this->getFullUrlPath('/content-test/images/payment/original/53.jpg')],
                         ],
                         'transports' => [
-                            ['name' => t('PPL', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
-                            ['name' => t('Personal collection', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                            ['name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                            ['name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                         ],
                     ],
                     [
-                        'name' => t('Cash on delivery', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                        'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                         'description' => null,
                         'instruction' => null,
                         'position' => 1,
@@ -70,11 +71,11 @@ class PaymentsTest extends GraphQlTestCase
                             ['url' => $this->getFullUrlPath('/content-test/images/payment/original/55.jpg')],
                         ],
                         'transports' => [
-                            ['name' => t('Czech post', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                            ['name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                         ],
                     ],
                     [
-                        'name' => t('Cash', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                        'name' => t('Cash', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                         'description' => null,
                         'instruction' => null,
                         'position' => 2,
@@ -84,7 +85,7 @@ class PaymentsTest extends GraphQlTestCase
                             ['url' => $this->getFullUrlPath('/content-test/images/payment/original/54.jpg')],
                         ],
                         'transports' => [
-                            ['name' => t('Personal collection', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                            ['name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                         ],
                     ],
                 ],

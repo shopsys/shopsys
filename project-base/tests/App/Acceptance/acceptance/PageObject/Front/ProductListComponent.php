@@ -7,6 +7,7 @@ namespace Tests\App\Acceptance\acceptance\PageObject\Front;
 use Facebook\WebDriver\Exception\NoSuchElementException;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverElement;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
 
 class ProductListComponent extends AbstractPage
@@ -36,7 +37,7 @@ class ProductListComponent extends AbstractPage
      */
     private function findProductListItemByName($productName, WebDriverElement $context)
     {
-        $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $translatedProductName = t($productName, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $productItems = $context->findElements(WebDriverBy::cssSelector('.test-list-products-item'));
 
         foreach ($productItems as $item) {

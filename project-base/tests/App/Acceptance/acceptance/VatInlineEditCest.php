@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Acceptance\acceptance;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\App\Acceptance\acceptance\PageObject\Admin\InlineEditPage;
 use Tests\App\Acceptance\acceptance\PageObject\Admin\LoginPage;
 use Tests\App\Test\Codeception\AcceptanceTester;
@@ -52,8 +53,12 @@ class VatInlineEditCest
         $inlineEditPage->delete($newRowId);
 
         $inlineEditPage->assertDontSeeRow($newRowId);
-        $me->seeTranslationAdmin('VAT <strong>%name%</strong> deleted', 'messages', [
-            '%name%' => 'test created',
-        ]);
+        $me->seeTranslationAdmin(
+            'VAT <strong>%name%</strong> deleted',
+            Translator::DEFAULT_TRANSLATION_DOMAIN,
+            [
+                '%name%' => 'test created',
+            ]
+        );
     }
 }
