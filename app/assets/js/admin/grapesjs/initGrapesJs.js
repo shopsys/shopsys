@@ -11,21 +11,16 @@ import './plugins/grapesjs-custom-blocks-plugin';
 import './plugins/grapesjs-mail-template-plugin';
 import 'magnific-popup';
 
-class Grapesjs {
+export default class InitGrapesJs {
 
     static init ($container) {
-        // eslint-disable-next-line no-new
-        new Grapesjs($container);
-    }
-
-    constructor ($container) {
         let isAnyButtonOnPage = false;
         $container.filterAllNodes('.js-grapesjs-button').each((index, element) => {
             $(element).on('click', event => {
                 const frontendUrl = $(element).data('template-url');
                 const textareaId = $(element).data('textarea-id');
                 const elfinderUrl = $(element).data('elfinder-url');
-                this.openGrapesEditor(event, frontendUrl, textareaId, elfinderUrl);
+                InitGrapesJs.openGrapesEditor(event, frontendUrl, textareaId, elfinderUrl);
             });
 
             isAnyButtonOnPage = true;
@@ -37,7 +32,7 @@ class Grapesjs {
                 const elfinderUrl = $(element).data('elfinder-url');
                 const templateHtml = $(element).data('template');
                 const bodyVariables = $(element).data('variables');
-                this.openGrapesMailEditor(event, textareaId, elfinderUrl, templateHtml, bodyVariables);
+                InitGrapesJs.openGrapesMailEditor(event, textareaId, elfinderUrl, templateHtml, bodyVariables);
             });
 
             isAnyButtonOnPage = true;
@@ -48,7 +43,7 @@ class Grapesjs {
         }
     }
 
-    openGrapesEditor (event, frontendUrl, textareaId, elfinderUrl) {
+    static openGrapesEditor (event, frontendUrl, textareaId, elfinderUrl) {
         $('body').css({
             overflow: 'hidden',
             height: '100%'
@@ -146,7 +141,7 @@ class Grapesjs {
         });
     }
 
-    openGrapesMailEditor (event, textareaId, elfinderUrl, templateHtml, bodyVariables) {
+    static openGrapesMailEditor (event, textareaId, elfinderUrl, templateHtml, bodyVariables) {
         $('body').css({
             overflow: 'hidden',
             height: '100%'
@@ -250,4 +245,4 @@ class Grapesjs {
     }
 }
 
-(new Register()).registerCallback(Grapesjs.init, 'Grapesjs.init');
+(new Register()).registerCallback(InitGrapesJs.init, 'InitGrapesJs.init');
