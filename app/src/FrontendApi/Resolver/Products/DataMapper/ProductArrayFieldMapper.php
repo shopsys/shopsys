@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Products\DataMapper;
 
 use App\Component\Deprecation\DeprecatedMethodException;
+use App\Model\Product\Availability\AvailabilityStatusEnum;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
@@ -170,7 +171,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     {
         return [
             'name' => $data['availability'],
-            'status' => $data['availability_status'],
+            'status' => $data['availability_status'], // after update graphql bundle we can expose availability status as enum: AvailabilityStatusEnum::from($data['availability_status'])
         ];
     }
 
@@ -213,6 +214,11 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
      */
     public function getStoreAvailabilities(array $data): array
     {
+        // after update graphql bundle (to v1 - support php8.1) we can expose availability status as enum
+//        foreach ($data['store_availabilities_information'] as $storeIndex => $storeAvailabilitiesInformation) {
+//            $data['store_availabilities_information'][$storeIndex]['availability_status'] = AvailabilityStatusEnum::from($storeAvailabilitiesInformation['availability_status']);
+//        }
+
         return $data['store_availabilities_information'];
     }
 

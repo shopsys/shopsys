@@ -7,44 +7,19 @@ namespace App\Model\Product\Availability;
 class ProductStoreAvailabilityInformation
 {
     /**
-     * @var string
-     */
-    private string $storeName;
-
-    /**
-     * @var int
-     */
-    private int $storeId;
-
-    /**
-     * @var string
-     */
-    private string $availabilityInformation;
-
-    /**
-     * @var bool
-     */
-    private bool $exposedProduct;
-
-    /**
-     * @var string
-     */
-    private string $availabilityStatus;
-
-    /**
      * @param string $storeName
      * @param int $storeId
      * @param string $availabilityInformation
      * @param bool $exposedProduct
-     * @param string $availabilityStatus
+     * @param \App\Model\Product\Availability\AvailabilityStatusEnum $availabilityStatus
      */
-    public function __construct(string $storeName, int $storeId, string $availabilityInformation, bool $exposedProduct, string $availabilityStatus)
-    {
-        $this->storeName = $storeName;
-        $this->storeId = $storeId;
-        $this->availabilityInformation = $availabilityInformation;
-        $this->exposedProduct = $exposedProduct;
-        $this->availabilityStatus = $availabilityStatus;
+    public function __construct(
+        private readonly string $storeName,
+        private readonly int $storeId,
+        private readonly string $availabilityInformation,
+        private readonly bool $exposedProduct,
+        private readonly AvailabilityStatusEnum $availabilityStatus
+    ) {
     }
 
     /**
@@ -80,9 +55,9 @@ class ProductStoreAvailabilityInformation
     }
 
     /**
-     * @return string
+     * @return \App\Model\Product\Availability\AvailabilityStatusEnum
      */
-    public function getAvailabilityStatus(): string
+    public function getAvailabilityStatus(): AvailabilityStatusEnum
     {
         return $this->availabilityStatus;
     }

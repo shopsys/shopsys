@@ -15,9 +15,6 @@ class ProductAvailabilityFacade
 {
     private const DAYS_IN_WEEK = 7;
 
-    private const AVAILABILITY_STATUS_IN_STOCK = 'in-stock';
-    private const AVAILABILITY_STATUS_OUT_OF_STOCK = 'out-of-stock';
-
     /**
      * @var \App\Model\Stock\ProductStockFacade
      */
@@ -128,15 +125,15 @@ class ProductAvailabilityFacade
     /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
-     * @return string
+     * @return \App\Model\Product\Availability\AvailabilityStatusEnum
      */
-    public function getProductAvailabilityStatusByDomainId(Product $product, int $domainId): string
+    public function getProductAvailabilityStatusByDomainId(Product $product, int $domainId): AvailabilityStatusEnum
     {
         if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
-            return self::AVAILABILITY_STATUS_IN_STOCK;
+            return AvailabilityStatusEnum::InStock;
         }
 
-        return self::AVAILABILITY_STATUS_OUT_OF_STOCK;
+        return AvailabilityStatusEnum::OutOfStock;
     }
 
     /**
@@ -287,10 +284,10 @@ class ProductAvailabilityFacade
         $productStoresAvailabilityInformationList = [];
         foreach ($productStores as $productStore) {
             $availabilityInformation = t('Ihned k odběru');
-            $availabilityStatus = self::AVAILABILITY_STATUS_IN_STOCK;
+            $availabilityStatus = AvailabilityStatusEnum::InStock;
 
             if ($isOutOfStock) {
-                $availabilityStatus = self::AVAILABILITY_STATUS_OUT_OF_STOCK;
+                $availabilityStatus = AvailabilityStatusEnum::OutOfStock;
                 $availabilityInformation = t('Unavailable');
             } else {
                 $stock = $productStore->getStore()->getStock();

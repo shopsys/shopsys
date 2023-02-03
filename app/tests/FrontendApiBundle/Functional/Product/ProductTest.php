@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Product;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use App\Model\Product\Availability\AvailabilityStatusEnum;
 use App\Model\Product\Product;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -203,7 +204,7 @@ class ProductTest extends GraphQlTestCase
                     ],
                     'availability' => [
                         'name' => t('In stock', [], 'dataFixtures', $firstDomainLocale),
-                        'status' => 'in-stock',
+                        'status' => AvailabilityStatusEnum::InStock->name,
                     ],
                     'stockQuantity' => 2700,
                     'categories' => [
@@ -400,14 +401,14 @@ class ProductTest extends GraphQlTestCase
                             ],
                             'exposed' => true,
                             'availabilityInformation' => 'Ihned k odběru',
-                            'availabilityStatus' => 'in-stock',
+                            'availabilityStatus' => AvailabilityStatusEnum::InStock->name,
                         ], [
                             'store' => [
                                 'name' => 'Pardubice',
                             ],
                             'exposed' => false,
                             'availabilityInformation' => 'K dispozici za týden',
-                            'availabilityStatus' => 'in-stock',
+                            'availabilityStatus' => AvailabilityStatusEnum::InStock->name,
                         ],
                     ],
                     'availableStoresCount' => 1,

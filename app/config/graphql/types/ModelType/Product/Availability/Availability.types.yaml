@@ -8,5 +8,5 @@ Availability:
                 type: "String!"
                 description: "Localized availability name (domain dependent)"
             status:
-                type: "String!"
+                type: "AvailabilityStatusEnum!"
                 description: "Availability status in a format suitable for usage in the code"

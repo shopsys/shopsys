@@ -117,6 +117,7 @@
     * [TransportInput](#transportinput)
   * [Enums](#enums)
     * [ArticlePlacementTypeEnum](#articleplacementtypeenum)
+    * [AvailabilityStatusEnum](#availabilitystatusenum)
     * [PersonalDataAccessRequestTypeEnum](#personaldataaccessrequesttypeenum)
     * [ProductOrderingModeEnum](#productorderingmodeenum)
   * [Scalars](#scalars)
@@ -1916,7 +1917,7 @@ Localized availability name (domain dependent)
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>status</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#availabilitystatusenum">AvailabilityStatusEnum</a>!</td>
 <td>
 
 Availability status in a format suitable for usage in the code
@@ -7101,7 +7102,7 @@ Detailed information about availability
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>availabilityStatus</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#availabilitystatusenum">AvailabilityStatusEnum</a>!</td>
 <td>
 
 Availability status in a format suitable for usage in the code
@@ -9278,6 +9279,35 @@ Articles in top menu
 <td>
 
 Articles without specific placement
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### AvailabilityStatusEnum
+
+Product Availability statuses
+
+<table>
+<thead>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>InStock</strong></td>
+<td>
+
+Product availability status in stock
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>OutOfStock</strong></td>
+<td>
+
+Product availability status out of stock
 
 </td>
 </tr>

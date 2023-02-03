@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Product;
 
 use App\DataFixtures\Demo\VatDataFixture;
+use App\Model\Product\Availability\AvailabilityStatusEnum;
 
 class ProductsTest extends ProductsGraphQlTestCase
 {
@@ -150,7 +151,7 @@ class ProductsTest extends ProductsGraphQlTestCase
                 ],
                 'availability' => [
                     'name' => t('In stock', [], 'dataFixtures', $firstDomainLocale),
-                    'status' => 'in-stock',
+                    'status' => AvailabilityStatusEnum::InStock->name,
                 ],
                 'stockQuantity' => 900,
                 'categories' => [

@@ -190,7 +190,15 @@ type Availability {
   """Localized availability name (domain dependent)"""
   name: String!
   """Availability status in a format suitable for usage in the code"""
-  status: String!
+  status: AvailabilityStatusEnum!
+}
+
+"""Product Availability statuses"""
+enum AvailabilityStatusEnum {
+  """Product availability status in stock"""
+  InStock
+  """Product availability status out of stock"""
+  OutOfStock
 }
 
 type BlogArticle implements Breadcrumb & Slug & ArticleInterface {
@@ -1960,7 +1968,7 @@ type StoreAvailability {
   """Detailed information about availability"""
   availabilityInformation: String!
   """Availability status in a format suitable for usage in the code"""
-  availabilityStatus: String!
+  availabilityStatus: AvailabilityStatusEnum!
   """Is product exposed on this store"""
   exposed: Boolean!
   """Store"""

@@ -3,7 +3,7 @@ import { AvailabilityFragmentApi, StoreAvailabilityFragmentApi } from 'graphql/g
 import { AvailabilityStatusType, AvailabilityType, StoreAvailabilityType } from 'types/availability';
 
 const mapAvailabilityStatus = (availabilityStatus: string): AvailabilityStatusType => {
-    return (availabilityStatus === 'in-stock' ? 'in-stock' : 'out-of-stock') as AvailabilityStatusType;
+    return (availabilityStatus === 'InStock' ? 'in-stock' : 'out-of-stock') as AvailabilityStatusType;
 };
 
 export const mapAvailabilityData = (availabilityApiData: AvailabilityFragmentApi): AvailabilityType => {
