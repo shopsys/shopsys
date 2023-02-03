@@ -116,13 +116,13 @@
 
     <target name="build" depends="build-deploy-part-1-db-independent,build-deploy-part-2-db-dependent" description="Builds application for production preserving your DB."/>
 
-    <target name="build-demo" depends="production-protection,wipe,build-version-generate,composer-prod,redis-check,dirs-create,assets,npm,db-demo,elasticsearch-index-recreate,elasticsearch-export,error-pages-generate,warmup,clean-redis-old" description="Builds application for production with clean demo DB."/>
+    <target name="build-demo" depends="production-protection,wipe,build-version-generate,composer-prod,redis-check,dirs-create,assets,npm,demo-data,error-pages-generate,warmup,clean-redis-old" description="Builds application for production with clean demo DB."/>
 
-    <target name="build-demo-ci" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,db-demo,elasticsearch-index-recreate,elasticsearch-export,error-pages-generate,tests-acceptance-build,clean-redis-old,checks-ci" description="Builds application for development with clean demo DB and runs CI checks."/>
+    <target name="build-demo-ci" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,demo-data,error-pages-generate,tests-acceptance-build,clean-redis-old,checks-ci" description="Builds application for development with clean demo DB and runs CI checks."/>
 
-    <target name="build-demo-dev" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,db-demo,elasticsearch-index-recreate,elasticsearch-export,error-pages-generate,tests-acceptance-build,clean-redis-old,checks" description="Builds application for development with clean demo DB and runs checks on changed files."/>
+    <target name="build-demo-dev" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,demo-data,error-pages-generate,tests-acceptance-build,clean-redis-old,checks" description="Builds application for development with clean demo DB and runs checks on changed files."/>
 
-    <target name="build-demo-dev-quick" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,dirs-create,test-dirs-create,assets,npm,db-demo,elasticsearch-index-recreate,elasticsearch-export,clean-redis-old" description="Builds application for development with clean demo DB while skipping nonessential steps."/>
+    <target name="build-demo-dev-quick" depends="production-protection,build-version-generate,wipe-excluding-logs,composer-dev,dirs-create,test-dirs-create,assets,npm,demo-data,clean-redis-old" description="Builds application for development with clean demo DB while skipping nonessential steps."/>
 
     <target name="build-deploy-part-1-db-independent" depends="build-version-generate,clean,composer-prod,dirs-create,assets,npm" description="First part of application build for production preserving your DB (can be run without maintenance page)."/>
 
@@ -252,7 +252,7 @@
         </exec>
     </target>
 
-    <target name="db-demo" depends="production-protection,db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,domains-urls-replace" description="Creates DB and fills it with demo data"/>
+    <target name="db-demo" depends="production-protection,db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,domains-urls-replace" description="Creates DB and fills it with demo data" hidden="true"/>
 
     <target name="db-fixtures-demo" depends="production-protection" description="Loads demo data fixtures." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
@@ -308,6 +308,8 @@
             <arg value="shopsys:schema:create"/>
         </exec>
     </target>
+
+    <target name="demo-data" depends="production-protection,db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,domains-urls-replace,elasticsearch-export" description="Wipes Postgres DB, recreates structure, fills with demo data and then exports data to Elasticsearch"/>
 
     <target name="diff-files" description="Finds changed files (against origin/master) and saves them into properties." hidden="true">
         <exec executable="${path.git.executable}" outputProperty="git.status.output" returnProperty="git.status.returnCode">
