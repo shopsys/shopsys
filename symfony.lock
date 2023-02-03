@@ -407,9 +407,6 @@
     "phing/phing": {
         "version": "2.16.1"
     },
-    "php-cs-fixer/diff": {
-        "version": "v2.0.2"
-    },
     "php-http/message-factory": {
         "version": "v1.0.2"
     },
