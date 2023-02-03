@@ -32,19 +32,19 @@ msgid "Add another flag"
 msgstr "Přidat další příznak"
 
 msgid "Add another parameter"
-msgstr ""
+msgstr "Přidat další parametr"
 
 msgid "Add some flag"
 msgstr "Přidejte nějaký příznak"
 
 msgid "Add some parameters"
-msgstr ""
+msgstr "Přidat parametr"
 
 msgid "Administration"
-msgstr ""
+msgstr "Administrace"
 
 msgid "Administrator"
-msgstr ""
+msgstr "Administrátor"
 
 msgid "Administrator role group"
 msgstr "Skupiny práv pro administrátora"
@@ -74,7 +74,7 @@ msgid "Advanced SEO categories"
 msgstr "Rozšířené SEO kategorií"
 
 msgid "Advanced search"
-msgstr ""
+msgstr "Pokročilé vyhledávání"
 
 msgid "Advertising <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> modified"
 msgstr ""
@@ -164,22 +164,22 @@ msgid "Articles - view"
 msgstr "Články - zobrazení"
 
 msgid "Articles in footer"
-msgstr ""
+msgstr "Články v patičce"
 
 msgid "Articles in upper menu"
-msgstr ""
+msgstr "Články v horním menu"
 
 msgid "Articles without positioning"
-msgstr ""
+msgstr "Články bez umístění"
 
 msgid "Assign to category"
-msgstr ""
+msgstr "Přiřazení do kategorie"
 
 msgid "Authentication code"
-msgstr ""
+msgstr "Autentikační kód"
 
 msgid "Authenticator key"
-msgstr ""
+msgstr "Autentikační klíč"
 
 msgid "Back to overview"
 msgstr "Zpět na přehled"
@@ -260,13 +260,13 @@ msgid "CMS"
 msgstr "CMS"
 
 msgid "Cancel"
-msgstr ""
+msgstr "Zrušit"
 
 msgid "Catalog number"
 msgstr "Katalogové číslo"
 
 msgid "Catalog numbers delimited by comma"
-msgstr ""
+msgstr "Katalogová čísla oddělená čárkou"
 
 msgid "Categories"
 msgstr "Kategorie"
@@ -284,7 +284,7 @@ msgid "Categories extended SEO - view"
 msgstr "Rozšířené SEO kategorií - zobrazení"
 
 msgid "Category"
-msgstr ""
+msgstr "Kategorie"
 
 msgid "Category with prefilled filters"
 msgstr "Kategorie s předvyplněnými filtry"
@@ -311,10 +311,10 @@ msgid "Clean Storefront Query Cache"
 msgstr "Vymazat cache s graphql dotazy na FE"
 
 msgid "Code"
-msgstr ""
+msgstr "Kód"
 
 msgid "Color"
-msgstr ""
+msgstr "Barva"
 
 msgid "Color parameter values - full"
 msgstr "Hodnota parametru typu barva - vše"
@@ -329,7 +329,7 @@ msgid "Company number"
 msgstr "IČO"
 
 msgid "Confirm authentication code"
-msgstr ""
+msgstr "Potvrzení autentikačního kódu"
 
 msgid "Contact form - full"
 msgstr "Kontaktní formulář - vše"
@@ -551,7 +551,7 @@ msgid "E-shop identification - view"
 msgstr "Identifikace e-shopu - zobrazení"
 
 msgid "Edit"
-msgstr ""
+msgstr "Upravit"
 
 msgid "Edit store"
 msgstr "Upravit prodejnu"
@@ -722,7 +722,7 @@ msgid "Flags - view"
 msgstr "Příznaky - zobrazení"
 
 msgid "Footer"
-msgstr ""
+msgstr "Patička"
 
 msgid "Footer Text"
 msgstr "Text v patičce"
@@ -917,7 +917,7 @@ msgid "Last name"
 msgstr "Příjmení"
 
 msgid "Last order"
-msgstr ""
+msgstr "Poslední objednávka"
 
 msgid "Legal conditions"
 msgstr "Právní podmínky"
@@ -941,13 +941,13 @@ msgid "List of language constants"
 msgstr "Přehled jazykových konstant"
 
 msgid "List of products"
-msgstr ""
+msgstr "Seznam produktů"
 
 msgid "List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)"
-msgstr ""
+msgstr "Seznam produktů v objednávce (název, množství, cena za jednotku včetně DPH, celková cena za položku včetně DPH)"
 
 msgid "Location"
-msgstr ""
+msgstr "Lokace"
 
 msgid "Log in"
 msgstr "Přihlásit se"
@@ -1103,7 +1103,7 @@ msgid "No page found."
 msgstr ""
 
 msgid "No products are set. Please add some in the component settings."
-msgstr ""
+msgstr "Nejsou nastavené žádné produkty. Přidejte prosím produkt v nastavení komponenty."
 
 msgid "No store is created. You have to create one first."
 msgstr "Žádná prodejna není vytvořena. Nejdříve musíte nějakou vytvořit."
@@ -1388,7 +1388,7 @@ msgid "Popis kategorie"
 msgstr ""
 
 msgid "Position of image"
-msgstr ""
+msgstr "Pozice obrázku"
 
 msgid "Postcode"
 msgstr "PSČ"
@@ -1853,7 +1853,7 @@ msgid "Text"
 msgstr ""
 
 msgid "Text with image"
-msgstr ""
+msgstr "Text s obrázkem"
 
 msgid "Text zobrazený pod bannerem"
 msgstr ""

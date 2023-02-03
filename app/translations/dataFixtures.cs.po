@@ -509,10 +509,10 @@ msgid "Blog article example %counter% %locale% - Meta description"
 msgstr "Ukázkový článek blogu %counter% %locale% - meta popisek"
 
 msgid "Blog article for products testing"
-msgstr ""
+msgstr "Článek blogu pro testování produktů"
 
 msgid "Blog article for search testing"
-msgstr ""
+msgstr "Článek blogu pro testování vyhledávání"
 
 msgid "Bluetooth"
 msgstr "Bluetooth"
