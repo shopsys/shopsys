@@ -1,4 +1,7 @@
 export const brandSencor = 'Sencor';
+export const buttonName = {
+    login: 'Přihlásit',
+};
 export const categories = {
     elektro: {
         name: 'Elektro',
@@ -14,12 +17,17 @@ export const customer1 = {
     billingStreet: 'fakturační ulice 1/15a',
     billingCity: 'fakturační město',
     billingPostCode: '70200',
+    password: 'user123',
 };
 export const flashMessages = {
     successfulSaveCookiesOptions: 'Vaše nastavení souborů cookies bylo uloženo.',
 };
 export const freePrice = 'Zdarma';
-export const linkToOrderDetail = 'zde';
+export const link = {
+    orderDetail: 'zde',
+    loginInHeader: 'Přihlášení',
+    myAccount: 'Můj účet',
+};
 export const orderNote = 'poznámka v objednávce';
 export const payment = {
     cash: 'Hotově',
@@ -96,5 +104,6 @@ export const url = {
         thanYouPage: '/potvrzeni-objednavky',
         detail: '/detail-objednavky/',
     },
+    login: '/prihlaseni',
 };
 export const zeroRate = '0 %';

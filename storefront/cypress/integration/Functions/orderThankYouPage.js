@@ -1,4 +1,4 @@
-import { linkToOrderDetail, placeholder, url } from '../../fixtures/demodata';
+import { link, placeholder, url } from '../../fixtures/demodata';
 
 export function checkFinishOrderPageAsUnregistredCustomer() {
     cy.url().should('contain', url.order.thanYouPage);
@@ -7,6 +7,6 @@ export function checkFinishOrderPageAsUnregistredCustomer() {
 }
 
 export function clickOnOrderDetailButtonOnThankYouPage() {
-    cy.get('[data-testid="pages-orderconfirmation"]').contains(linkToOrderDetail).click();
+    cy.get('[data-testid="pages-orderconfirmation"]').contains(link.orderDetail).click();
     cy.url().should('contain', url.order.detail);
 }
