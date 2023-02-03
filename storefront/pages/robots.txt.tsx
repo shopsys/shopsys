@@ -35,6 +35,7 @@ const getRobotsTxtContent = (domain: string, domainId: number): string => {
             '/personal-data-overview',
             '/order/contact-information',
             '/order/transport-and-payment',
+            '/grapesjs-template',
             { url: '/order-detail/:urlHash', param: '*' },
         ],
         domain,
