@@ -80,10 +80,6 @@ exports[`test render list item 1`] = `
   }
 }
 
-@media @query-lg {
-
-}
-
 <a
   className="c0"
   data-testid="blocks-simplenavigation-listitem"
