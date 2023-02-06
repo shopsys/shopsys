@@ -1,3 +1,4 @@
+import '../styles/globals.css';
 import { Canonical } from 'components/Basic/Head/Canonical/Canonical';
 import { PortalContainer } from 'components/Basic/Portal/Portal.style';
 import { GtmHeadScript } from 'components/Helpers/GtmHeadScript';
