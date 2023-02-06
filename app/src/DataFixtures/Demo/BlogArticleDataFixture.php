@@ -278,7 +278,6 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         foreach ($this->domain->getAllLocales() as $locale) {
             $blogArticleData->names[$locale] = t('Blog article for products testing', [], 'dataFixtures', $locale);
             $blogArticleData->descriptions[$locale] = str_replace(['    ', PHP_EOL], '', trim(<<<EOT
-<section>
     <div class="gjs-text-ckeditor"><h2>Produkty 1</h2></div>
     <div class="gjs-products" data-products="9177759,9176508,5960453,9772572,8981018">
         <div class="gjs-product" data-product="9177759"></div>
@@ -293,7 +292,6 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         <div class="gjs-product" data-product="9176508"></div>
         <div class="gjs-product" data-product="5960453"></div>
     </div>
-</section>
 EOT));
 
             $blogArticleData->perexes[$locale] = t('Blog article for products testing', [], 'dataFixtures', $locale);
