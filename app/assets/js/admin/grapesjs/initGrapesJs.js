@@ -44,10 +44,7 @@ export default class InitGrapesJs {
     }
 
     static openGrapesEditor (event, frontendUrl, textareaId, elfinderUrl) {
-        $('body').css({
-            overflow: 'hidden',
-            height: '100%'
-        });
+        InitGrapesJs.setupBodyForGrapesJsEditor();
 
         const content = $.get({
             url: frontendUrl,
@@ -142,10 +139,7 @@ export default class InitGrapesJs {
     }
 
     static openGrapesMailEditor (event, textareaId, elfinderUrl, templateHtml, bodyVariables) {
-        $('body').css({
-            overflow: 'hidden',
-            height: '100%'
-        });
+        InitGrapesJs.setupBodyForGrapesJsEditor();
         const editableContent = $('#' + textareaId).val();
         const $templateHtml = $('<div>' + templateHtml + '</div>');
         $templateHtml.find('.gjs-editable').append(editableContent);
@@ -242,6 +236,12 @@ export default class InitGrapesJs {
         editor.on('rte:enable', (event) => {
             editor.RichTextEditor.updatePosition();
         });
+    }
+
+    static setupBodyForGrapesJsEditor () {
+        if (!$('body').hasClass('grapes-js-editor-opened')) {
+            $('body').addClass('grapes-js-editor-opened');
+        }
     }
 }
 

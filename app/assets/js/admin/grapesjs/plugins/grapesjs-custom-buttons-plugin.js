@@ -4,6 +4,14 @@ import FormChangeInfo from 'framework/admin/components/FormChangeInfo';
 const BUTTON_CLOSE = 'close';
 const BUTTON_SAVE = 'save';
 
+const resetBody = (editor) => {
+    if ($('body').hasClass('grapes-js-editor-opened')) {
+        $('body').removeClass('grapes-js-editor-opened');
+    }
+    $('#grapesjs').removeAttr('style').removeAttr('class');
+    editor.destroy();
+};
+
 export default grapesjs.plugins.add('customButtons', (editor, options) => {
 
     const panels = editor.Panels;
@@ -43,9 +51,7 @@ export default grapesjs.plugins.add('customButtons', (editor, options) => {
                 $('#' + textareaId).html(exported).val(exported);
             }
 
-            $('body').removeAttr('style');
-            $('#grapesjs').removeAttr('style').removeAttr('class');
-            editor.destroy();
+            resetBody(editor);
             FormChangeInfo.showInfo();
         }
     });
@@ -55,9 +61,7 @@ export default grapesjs.plugins.add('customButtons', (editor, options) => {
         context: BUTTON_CLOSE,
         className: 'fa fa-times',
         command (editor) {
-            $('body').removeAttr('style');
-            $('#grapesjs').removeAttr('style').removeAttr('class');
-            editor.destroy();
+            resetBody(editor);
         }
     });
 });
