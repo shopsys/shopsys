@@ -42,7 +42,7 @@
         "phpunit/phpunit": "^9.5.20",
         "shopsys/coding-standards": "10.0.x-dev",
         "twig/extensions": "^1.5.1",
-        "twig/twig": "^2.12"
+        "twig/twig": "^2.15.4"
     },
     "extra": {
         "branch-alias": {

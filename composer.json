@@ -150,7 +150,7 @@
         "symfony/workflow": "^4.4.0",
         "tracy/tracy": "^2.4.13",
         "twig/extensions": "^1.5.1",
-        "twig/twig": "^2.12",
+        "twig/twig": "^2.15.4",
         "webmozart/assert": "^1.4"
     },
     "require-dev": {
