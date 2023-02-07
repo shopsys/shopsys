@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    @apply h-full min-h-full;
+}
+
+body {
+    @apply min-h-full;
+}
+
+body,
+form,
+input,
+select,
+button,
+p,
+pre,
+dfn,
+address,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+img,
+table,
+tr,
+td,
+th,
+textarea {
+    @apply font-base text-small leading-default text-base lg:text-default;
+}
+
+img:not(.icon):not(.responsive-image) {
+    @apply max-w-full;
+    image-rendering: -webkit-optimize-contrast;
+}
+
+td,
+th {
+    @apply text-left;
+}
+
+hr {
+    @apply h-[1px];
+}
+
+dfn {
+    @apply not-italic;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+p {
+    @apply break-words;
+}
+
+a {
+    @apply cursor-pointer text-greyDark underline outline-none hover:text-primary hover:underline;
+}
+
+b,
+strong {
+    @apply font-extrabold;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    @apply m-0;
+    -webkit-appearance: none;
+}
+
+/* Firefox */
+input[type='number'] {
+    -moz-appearance: textfield;
+}

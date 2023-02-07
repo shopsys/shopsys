@@ -206,7 +206,7 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcr
                                         <td className="text-right" data-testid={TEST_IDENTIFIER + 'item-quantity'}>
                                             {item.quantity} {item.unit}
                                         </td>
-                                        <td className="text-right nowrap" data-testid={TEST_IDENTIFIER + 'item-vat'}>
+                                        <td className="nowrap text-right" data-testid={TEST_IDENTIFIER + 'item-vat'}>
                                             {parseFloat(item.vatRate)} %
                                         </td>
                                         <td className="text-right" data-testid={TEST_IDENTIFIER + 'item-price'}>

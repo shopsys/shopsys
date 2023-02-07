@@ -17,6 +17,15 @@
         "typeRoots": ["./node_modules/@types", "./theme"],
         "incremental": true
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "jest.config.js", "next.config.js"],
+    "include": [
+        "next-env.d.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        "jest.config.js",
+        "next.config.js",
+        "tailwind.config.js",
+        "prettier.config.js",
+        "postcss.config.js"
+    ],
     "exclude": ["node_modules"]
 }
