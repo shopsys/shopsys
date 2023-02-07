@@ -34,6 +34,9 @@ type FilterProps = {
 };
 
 const TEST_IDENTIFIER = 'blocks-product-filter';
+const DEFAULT_NUMBER_OF_SHOWN_FLAGS = 5;
+const DEFAULT_NUMBER_OF_SHOWN_BRANDS = 5;
+const DEFAULT_NUMBER_OF_SHOWN_PARAMETERS = 5;
 
 export const Filter: FC<FilterProps> = ({ slug, originalSlug, orderingMode, defaultOrderingMode }) => {
     const t = useTypedTranslationFunction();
@@ -63,6 +66,24 @@ export const Filter: FC<FilterProps> = ({ slug, originalSlug, orderingMode, defa
         },
         [productFilterOptions.parameters, parametersValue],
     );
+
+    const isFilteredByDefaultlyHiddenParameterValue = useCallback(
+        (parameterUuid: string) => {
+            const parameter =
+                parametersValue.length > 0
+                    ? parametersValue[getIndexOfParameter(productFilterOptions.parameters ?? [], parameterUuid)]
+                    : null;
+
+            return parameter?.values.slice(DEFAULT_NUMBER_OF_SHOWN_PARAMETERS).some((value) => value.checked) === true;
+        },
+        [productFilterOptions.parameters, parametersValue],
+    );
+
+    const getAreByDefaultAllFlagsShown = () =>
+        state.selected.flags.slice(DEFAULT_NUMBER_OF_SHOWN_FLAGS).some((flag) => flag.checked);
+
+    const getAreByDefaultAllBrandsShown = () =>
+        state.selected.brands.slice(DEFAULT_NUMBER_OF_SHOWN_BRANDS).some((brand) => brand.checked);
 
     useEffect(() => {
         const routerQueryWithoutAllParameter = getQueryWithoutAllParameter(router);
@@ -110,26 +131,46 @@ export const Filter: FC<FilterProps> = ({ slug, originalSlug, orderingMode, defa
             <FilterStyled data-testid={TEST_IDENTIFIER}>
                 <FilterGroupPrice title={t('Price')} isOpen />
                 <FilterGroupInStock title={t('Availability')} inStockCount={productFilterOptions.inStock} isOpen />
-                {productFilterOptions.flags.length > 0 && <FilterGroup title={t('Flags')} filterField="flags" isOpen />}
+                {productFilterOptions.flags.length > 0 && (
+                    <FilterGroup
+                        title={t('Flags')}
+                        filterField="flags"
+                        isOpen
+                        defaultNumberOfShownFlagsOrBrands={DEFAULT_NUMBER_OF_SHOWN_FLAGS}
+                        areByDefaultAllFlagsOrBrandsShown={getAreByDefaultAllFlagsShown()}
+                    />
+                )}
                 {productFilterOptions.brands.length > 0 && (
-                    <FilterGroup title={t('Brands')} filterField="brands" isOpen />
+                    <FilterGroup
+                        title={t('Brands')}
+                        filterField="brands"
+                        isOpen
+                        defaultNumberOfShownFlagsOrBrands={DEFAULT_NUMBER_OF_SHOWN_BRANDS}
+                        areByDefaultAllFlagsOrBrandsShown={getAreByDefaultAllBrandsShown()}
+                    />
                 )}
                 {productFilterOptions.parameters !== undefined &&
-                    productFilterOptions.parameters.map((parametersItem, index) => (
-                        <FilterGroupParameters
-                            key={parametersItem.uuid}
-                            parameterParentIndex={index}
-                            title={parametersItem.name}
-                            data={productFilterOptions.parameters?.[index]}
-                            isDefaultCollapsed={
-                                parametersItem.isCollapsed &&
-                                getIsNotFilteredByParameter(
-                                    parametersItem.uuid,
-                                    productFilterOptions.parameters?.[index],
-                                )
-                            }
-                        />
-                    ))}
+                    productFilterOptions.parameters.map((parametersItem, index) => {
+                        const isNotFilteredByParameter = getIsNotFilteredByParameter(
+                            parametersItem.uuid,
+                            productFilterOptions.parameters?.[index],
+                        );
+
+                        return (
+                            <FilterGroupParameters
+                                key={parametersItem.uuid}
+                                parameterParentIndex={index}
+                                title={parametersItem.name}
+                                data={productFilterOptions.parameters?.[index]}
+                                isDefaultCollapsed={parametersItem.isCollapsed && isNotFilteredByParameter}
+                                defaultNumberOfShownParameters={DEFAULT_NUMBER_OF_SHOWN_PARAMETERS}
+                                areByDefaultAllParametersShown={
+                                    !isNotFilteredByParameter &&
+                                    isFilteredByDefaultlyHiddenParameterValue(parametersItem.uuid)
+                                }
+                            />
+                        );
+                    })}
             </FilterStyled>
         </>
     );
