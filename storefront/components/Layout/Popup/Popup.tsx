@@ -53,7 +53,7 @@ export const Popup: FC<PopupProps> = ({ isVisible, onCloseCallback, children, hi
 
     return (
         <Portal>
-            <Overlay onClick={onClickCloseActionHandler}></Overlay>
+            <Overlay $isActive={isVisible} onClick={onClickCloseActionHandler}></Overlay>
             <PopupWrapper role="dialog" aria-modal data-testid={TEST_IDENTIFIER}>
                 {hideCloseButton !== true && (
                     <PopupHeaderStyled>

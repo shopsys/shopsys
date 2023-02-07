@@ -14,7 +14,6 @@ type PanelStyledProps = {
 
 export const CategoryDetailStyled = styled.div(
     ({ theme }) => css`
-        position: relative;
         display: flex;
         flex-direction: column;
         margin-bottom: 30px;
@@ -33,20 +32,26 @@ export const CategoryDetailAdvertsStyled = styled(Adverts)`
 
 export const CategoryDetailPanelStyled = styled.div<PanelStyledProps>(
     ({ theme, isOpen }) => css`
-        display: none;
-        position: absolute;
-        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 40px;
+        max-width: 400px;
+        transform: translateX(-100%);
 
         ${isOpen &&
         css`
-            display: block;
-            z-index: ${theme.zIndex.overlay};
+            z-index: ${theme.zIndex.aboveOverlay};
+            transition: all ${theme.transition};
+            transform: translateX(0);
         `};
 
         @media ${theme.mediaQueries.queryVl} {
             position: static;
-            display: block;
             width: ${localVariables.categoryDetailPanelWidth};
+            transform: translateX(0);
+            transition: none;
         }
     `,
 );
@@ -68,8 +73,8 @@ export const CategoryDetailDescriptionStyled = styled.div`
     margin-bottom: 16px;
 `;
 
-export const CategoryDetailPanelOpenerStyled = styled.div<PanelStyledProps>(
-    ({ theme, isOpen }) => css`
+export const CategoryDetailPanelOpenerStyled = styled.div(
+    ({ theme }) => css`
         position: relative;
         display: flex;
         flex-direction: row;
@@ -79,11 +84,6 @@ export const CategoryDetailPanelOpenerStyled = styled.div<PanelStyledProps>(
         line-height: 27px;
         padding: 11px 32px 10px;
         margin-bottom: 10px;
-
-        ${isOpen === true &&
-        css`
-            z-index: ${theme.zIndex.overlay};
-        `}
 
         cursor: pointer;
         color: ${theme.color.white};

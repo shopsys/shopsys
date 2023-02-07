@@ -9,16 +9,19 @@ const localVariables = {
 
 export const SelectedParametersStyled = styled.div(
     ({ theme }) => css`
-        position: relative;
-        margin-bottom: 20px;
         padding: 28px 14px 14px;
         z-index: ${theme.zIndex.aboveOverlay};
 
         background-color: ${theme.color.blueLight};
-        border-radius: ${theme.radius.big};
 
         @media ${theme.mediaQueries.queryVl} {
             z-index: 0;
+            margin-bottom: 20px;
+            border-radius: ${theme.radius.big};
+        }
+
+        @media ${theme.mediaQueries.queryNotLargeDesktop} {
+            border-bottom: 1px solid ${theme.color.greyLight};
         }
     `,
 );
