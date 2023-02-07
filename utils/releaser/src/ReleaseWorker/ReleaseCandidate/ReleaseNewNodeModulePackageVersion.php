@@ -35,11 +35,11 @@ class ReleaseNewNodeModulePackageVersion extends AbstractShopsysReleaseWorker
 # go to packages/framework/assets
 
 npm login
-# pass your credentials (login, password, email)
+# pass your credentials (login, password, email) (these credentials are available in BitWarden)
 
 npm publish
 
-# set new version attribute to %s in project-base/package.json
+# set new version of @shopsys/framework to %s in project-base/package.json
 
 # commit the changes manually with "npm package is now updated for %s release
 ',
@@ -47,7 +47,8 @@ npm publish
             $version->getVersionString(),
             $version->getVersionString()
         ));
-        $this->confirm('Confirm the new version of NPM package is published and changes are committed');
+        $this->confirm('Confirm the new version of NPM package is published');
+        $this->confirm('Confirm that you have updated version of @shopsys/framework in project-base/package.json and committed changes');
     }
 
     /**

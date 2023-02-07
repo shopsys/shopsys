@@ -10,9 +10,6 @@
             "homepage": "https://www.shopsys.com/"
         }
     ],
-    "conflict": {
-        "friendsofphp/php-cs-fixer": ">=3.3.2"
-    },
     "require": {
         "php": "^8.0 || ^8.1",
         "ext-tokenizer": "*",

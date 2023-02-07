@@ -53,7 +53,11 @@ class ComposerJsonFilesProvider
             ->files()
             ->ignoreUnreadableDirs()
             ->in($this->packageDirectories)
-            ->exclude('vendor')
+            ->exclude([
+                'vendor',
+                '.npm-global',
+                'node_modules',
+            ])
             ->name('composer.json');
 
         return $this->finderSanitizer->sanitize($finder);

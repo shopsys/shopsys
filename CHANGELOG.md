@@ -19,7 +19,6 @@ There is a list of all the repositories maintained by monorepo:
 * [shopsys/product-feed-zbozi]
 * [shopsys/google-cloud-bundle]
 * [shopsys/read-model]
-* [shopsys/backend-api]
 * [shopsys/frontend-api]
 
 Packages are formatted by release version. You can see all the changes done to package that you carry about with this tree.

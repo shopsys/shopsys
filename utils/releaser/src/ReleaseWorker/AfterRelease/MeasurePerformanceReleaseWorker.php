@@ -25,7 +25,11 @@ final class MeasurePerformanceReleaseWorker extends AbstractShopsysReleaseWorker
     public function work(Version $version): void
     {
         $this->symfonyStyle->note(
-            'See https://docs.google.com/document/d/1VRQOl_c2KkDekMUkLPwencUVhE3UPtvkQQSywNtjyX8/edit#heading=h.2h92hrp89r2b'
+            'Consider this step for patch version release.
+            For other releases do these steps:
+            - run branch-stress-test on Heimdall http://heimdall:8080/view/Performance%20tests/job/branch-stress-tests/
+            - look at the results at workspace http://heimdall:8080/view/Performance%20tests/job/branch-stress-tests/ws/results/
+            - add mean values for 1 and 32 users to https://docs.google.com/spreadsheets/d/1su0ARnJh0zySXb6vMd4TaGBixAzhXR6pHqij25j2zxg/edit#gid=0'
         );
         $this->confirm('Confirm the performance test is finished');
     }

@@ -20,6 +20,36 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 abstract class AbstractShopsysReleaseWorker implements ReleaseWorkerInterface, StageAwareInterface
 {
     /**
+     * If you modify this list do not forget updating:
+     *      /.ci/monorepo_functions.sh
+     *      /docs/introduction/monorepo.md
+     *      /CHANGELOG.md
+     *      "replace" section in monorepo's composer.json as well
+     *
+     * @var string[]
+     */
+    public const EXCLUDED_PACKAGES = [
+        // not maintained anymore
+        'shopsys/product-feed-interface',
+        'shopsys/phpstorm-inspect',
+        'shopsys/changelog-linker',
+        'shopsys/monorepo-builder',
+        'shopsys/backend-api',
+        // forks
+        'shopsys/postgres-search-bundle',
+        'shopsys/doctrine-orm',
+        'shopsys/jparser',
+        'shopsys/ordered-form',
+        'shopsys/changelog-linker',
+        'shopsys/jsformvalidator-bundle',
+        // not related packages
+        'shopsys/syscart',
+        'shopsys/sysconfig',
+        'shopsys/sysreports',
+        'shopsys/sysstdlib',
+    ];
+
+    /**
      * @var \Symfony\Component\Console\Style\SymfonyStyle
      */
     protected $symfonyStyle;
@@ -165,6 +195,12 @@ abstract class AbstractShopsysReleaseWorker implements ReleaseWorkerInterface, S
         );
         $question->setValidator(static function ($answer) {
             $version = new Version($answer);
+
+            if (!str_starts_with($version->getOriginalString(), 'v')) {
+                throw new RuntimeException(
+                    'Development version name must start with \'v\''
+                );
+            }
 
             if (!$version->hasPreReleaseSuffix()) {
                 throw new RuntimeException(

@@ -16,7 +16,7 @@ final class CheckShopsysInstallReleaseWorker extends AbstractCheckShopsysInstall
      */
     public function getDescription(Version $version): string
     {
-        return '[Manually] Install Shopsys Framework (project-base) using an installation guide (using Docker on Mac or Windows and natively)';
+        return '[Manually] Install Shopsys Framework (project-base) using installation guides on all supported operating systems.';
     }
 
     /**
@@ -32,7 +32,6 @@ final class CheckShopsysInstallReleaseWorker extends AbstractCheckShopsysInstall
      */
     public function work(Version $version): void
     {
-        $versionStringWithoutPrefix = ltrim($version->getVersionString(), 'v');
         $branchName = $this->createBranchName($version);
 
         $this->symfonyStyle->note(sprintf(
@@ -51,7 +50,7 @@ docker rmi --force $(docker images -q)
 
 # install the application following the corresponding installation guide',
             $branchName,
-            $versionStringWithoutPrefix
+            $version->getVersionString()
         ));
 
         parent::work($version);

@@ -26,4 +26,28 @@ final class CheckShopsysInstallReleaseWorker extends AbstractCheckShopsysInstall
     {
         return Stage::AFTER_RELEASE;
     }
+
+    /**
+     * @param \PharIo\Version\Version $version
+     */
+    public function work(Version $version): void
+    {
+        $this->symfonyStyle->note(sprintf(
+            'Instructions for installation:
+
+git clone https://github.com/shopsys/project-base.git
+git checkout %1$s
+
+# remove all docker containers
+docker rm $(docker ps -a -q)
+
+# remove all docker images
+docker rmi --force $(docker images -q)
+
+# install the application following the corresponding installation guide',
+            $version->getVersionString()
+        ));
+
+        parent::work($version);
+    }
 }

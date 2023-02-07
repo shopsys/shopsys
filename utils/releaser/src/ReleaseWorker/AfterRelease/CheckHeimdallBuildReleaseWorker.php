@@ -35,7 +35,7 @@ final class CheckHeimdallBuildReleaseWorker extends AbstractShopsysReleaseWorker
         $this->symfonyStyle->note(
             sprintf(
                 'You should discard the deletion of the application in Kubernetes for the new tag, ie. in the job configuration (http://heimdall:8080/job/%s/configure), remove "kubectl delete namespace ${JOB_NAME} || true" from post-build tasks) so the e-shop instance is available.',
-                $version->getVersionString()
+                $version->getOriginalString()
             )
         );
         $this->confirm(

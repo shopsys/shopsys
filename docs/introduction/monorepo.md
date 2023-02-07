@@ -40,7 +40,6 @@ If you are interested, you can read more about the monorepo approach here - http
 * [shopsys/monorepo-tools](https://github.com/shopsys/monorepo-tools)
 * [shopsys/google-cloud-bundle](https://github.com/shopsys/google-cloud-bundle)
 * [shopsys/read-model](https://github.com/shopsys/read-model)
-* [shopsys/backend-api](https://github.com/shopsys/backend-api)
 * [shopsys/frontend-api](https://github.com/shopsys/frontend-api)
 
 !!! note
