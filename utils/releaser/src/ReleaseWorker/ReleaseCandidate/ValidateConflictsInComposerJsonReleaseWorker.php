@@ -34,6 +34,10 @@ final class ValidateConflictsInComposerJsonReleaseWorker extends AbstractShopsys
      */
     private $intervalEvaluator;
 
+    private const IGNORED_CONFLICT_PACKAGES = [
+        'symfony/symfony' => '*',
+    ];
+
     /**
      * @param \Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider $composerJsonFilesProvider
      * @param \Symplify\ComposerJsonManipulator\FileSystem\JsonFileManager $jsonFileManager
@@ -72,6 +76,13 @@ final class ValidateConflictsInComposerJsonReleaseWorker extends AbstractShopsys
             }
 
             foreach ($jsonContent[self::CONFLICT_SECTION] as $packageName => $version) {
+                if (
+                    array_key_exists($packageName, self::IGNORED_CONFLICT_PACKAGES) &&
+                    self::IGNORED_CONFLICT_PACKAGES[$packageName] === $version
+                ) {
+                    continue;
+                }
+
                 if ($this->intervalEvaluator->isClosedInterval($version)) {
                     continue;
                 }

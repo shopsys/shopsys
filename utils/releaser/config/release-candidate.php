@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
+use Shopsys\Releaser\ReleaseWorker\CheckCorrectReleaseVersionReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\BuildProjectBaseOnHeimdallReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckNewDoctrineReleaseReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckBranchSplitReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckLatestVersionOfReleaserReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckPackagesGithubActionsBuildsReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckReleaseBlogPostReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckShopsysInstallReleaseWorker;
@@ -20,7 +22,6 @@ use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\SetMutualDependenciesToVersi
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\StopMergingReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\TestYourBranchLocallyReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\UpdateChangelogReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\UpdateListOfSupportedVersionsReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\UpdateUpgradeReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\ValidateConflictsInComposerJsonReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\ValidateRequireFormatInComposerJsonReleaseWorker;
@@ -34,19 +35,20 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
 
+    $services->set(CheckCorrectReleaseVersionReleaseWorker::class);
+    $services->set(CheckLatestVersionOfReleaserReleaseWorker::class);
     $services->set(VerifyInitialBranchReleaseWorker::class);
     $services->set(CheckUncommittedChangesReleaseWorker::class);
+    $services->set(CheckBranchSplitReleaseWorker::class);
     $services->set(CheckPackagesGithubActionsBuildsReleaseWorker::class);
     $services->set(CreateBranchReleaseWorker::class);
     $services->set(CheckReleaseBlogPostReleaseWorker::class);
     $services->set(StopMergingReleaseWorker::class);
     $services->set(ValidateRequireFormatInComposerJsonReleaseWorker::class);
     $services->set(ValidateConflictsInComposerJsonReleaseWorker::class);
-    $services->set(CheckNewDoctrineReleaseReleaseWorker::class);
     $services->set(GenerateApiaryBlueprintReleaseWorker::class);
     $services->set(DumpTranslationsReleaseWorker::class);
     $services->set(SetFrameworkBundleVersionReleaseWorker::class);
-    $services->set(UpdateListOfSupportedVersionsReleaseWorker::class);
     $services->set(ResolveDocsTodoReleaseWorker::class);
     $services->set(UpdateChangelogReleaseWorker::class);
     $services->set(UpdateUpgradeReleaseWorker::class);

@@ -16,27 +16,11 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
      *
      * @var string[]
      */
-    private const EXCLUDED_PACKAGES = [
+    public const EXCLUDED_PACKAGES = parent::EXCLUDED_PACKAGES + [
         // excluded from the initial tagging as there needs to be another commit with composer.lock and package-lock.json
         // @see https://github.com/shopsys/shopsys/pull/1264
         'shopsys/shopsys',
         'shopsys/project-base',
-        // not maintained anymore
-        'shopsys/product-feed-interface',
-        'shopsys/phpstorm-inspect',
-        'shopsys/changelog-linker',
-        'shopsys/monorepo-builder',
-        'shopsys/backend-api',
-        // forks
-        'shopsys/postgres-search-bundle',
-        'shopsys/doctrine-orm',
-        'shopsys/jparser',
-        'shopsys/ordered-form',
-        // not related packages
-        'shopsys/syscart',
-        'shopsys/sysconfig',
-        'shopsys/sysreports',
-        'shopsys/sysstdlib',
     ];
 
     /**
@@ -73,6 +57,27 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
 
         $tempDirectory = trim($this->processRunner->run('mktemp -d -t shopsys-release-XXXX'));
         $packageNamesWithProblems = [];
+
+        $this->symfonyStyle->note(sprintf(
+            'In case you do not have saved GIT credentials you may want to cache them temporarily so you do not need to fill them for each repository.'
+            . ' This can be done by using following command `%s`',
+            'git config --global credential.helper "cache --timeout=3600"'
+        ));
+
+        $gitCredentialsResponse = $this->symfonyStyle->ask(
+            'Do you want to enable saving GIT credentials for one hour?',
+            'yes'
+        );
+
+        if ($gitCredentialsResponse === 'yes') {
+            $this->processRunner->run('git config --global credential.helper "cache --timeout=3600"');
+        }
+
+        $this->symfonyStyle->note(
+            'You will be asked for your Github credentials if you have not saved them yet.
+            As we require two factor authentication, you will need to provide repo scope token instead of password.
+            Token can be generated here: https://github.com/settings/tokens/new'
+        );
 
         $this->symfonyStyle->note('Cloning all packages. Please wait.');
         foreach ($packageNames as $packageName) {
@@ -111,12 +116,6 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
                 $packageNamesWithProblems[] = $packageName;
             }
         }
-
-        $this->symfonyStyle->note(sprintf(
-            'In case you do not have saved GIT credentials you may want to cache them temporarily so you do not need to fill them for each repository.'
-            . ' This can be done by using following command `%s`',
-            'git config --global credential.helper "cache --timeout=3600"'
-        ));
 
         if (count($packageNamesWithProblems) === 0) {
             foreach ($packageNames as $packageName) {

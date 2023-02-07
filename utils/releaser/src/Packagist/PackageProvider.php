@@ -33,11 +33,12 @@ final class PackageProvider
 
     /**
      * @param string $organization
+     * @param string[] $excludedPackages
      * @return mixed[]
      */
-    public function getPackagesWithVersionsByOrganization(string $organization): array
+    public function getPackagesWithVersionsByOrganization(string $organization, array $excludedPackages = []): array
     {
-        $packages = $this->getPackagesByOrganization($organization);
+        $packages = $this->getPackagesByOrganization($organization, $excludedPackages);
         $packagesWithVersions = [];
         foreach ($packages as $package) {
             $packagesWithVersions[$package] = $this->getPackageVersions($package);

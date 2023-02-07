@@ -24,7 +24,7 @@ final class CreateBranchReleaseWorker extends AbstractShopsysReleaseWorker
      */
     public function work(Version $version): void
     {
-        $this->processRunner->run('git checkout -b ' . $this->createBranchName($version));
+        $this->processRunner->run('git checkout -B ' . $this->createBranchName($version));
     }
 
     /**

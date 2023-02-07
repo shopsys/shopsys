@@ -17,7 +17,9 @@ use Shopsys\Releaser\ReleaseWorker\AfterRelease\PostInfoToSlackReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\RemoveLockFilesReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\SetFrameworkBundleVersionToDevReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\SetMutualDependenciesToDevelopmentVersionReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\AfterRelease\UpdateDemoProjectBaseReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\VerifyInitialBranchReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\CheckCorrectReleaseVersionReleaseWorker;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 /**
@@ -26,6 +28,7 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
 
+    $services->set(CheckCorrectReleaseVersionReleaseWorker::class);
     $services->set(VerifyInitialBranchReleaseWorker::class);
     $services->set(CheckUncommittedChangesReleaseWorker::class);
     $services->set(CheckPackagesOnPackagistReleaseWorker::class);
@@ -41,5 +44,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(EnsureReleaseHighlightsPostIsReleasedReleaseWorker::class);
     $services->set(PostInfoToSlackReleaseWorker::class);
     $services->set(MergeBranchToTheHigherBranchesReleaseWorker::class);
+    $services->set(UpdateDemoProjectBaseReleaseWorker::class);
     $services->set(BeHappyReleaseWorker::class);
 };
