@@ -5,14 +5,12 @@ import {
     ListedCategoryConnectionFragmentApi,
     ListedCategoryFragmentApi,
     SimpleCategoryConnectionFragmentApi,
-    SimpleCategoryFragmentApi,
 } from 'graphql/generated';
 import {
     CategoryDetailType,
     ListedCategoryConnectionType,
     ListedCategoryType,
     SimpleCategoryConnectionType,
-    SimpleCategoryType,
 } from 'types/category';
 
 export const mapCategoryDetailData = (
@@ -43,15 +41,11 @@ export const mapSimpleCategoryConnectionApiData = (
     if (apiData.edges !== null) {
         for (const categoryEdge of apiData.edges) {
             if (categoryEdge?.node !== undefined && categoryEdge.node !== null) {
-                mappedCategories.push(mapSimpleCategoryApiData(categoryEdge.node));
+                mappedCategories.push(categoryEdge.node);
             }
         }
     }
     return { totalCount: apiData.totalCount, categories: mappedCategories };
-};
-
-const mapSimpleCategoryApiData = (apiData: SimpleCategoryFragmentApi): SimpleCategoryType => {
-    return apiData;
 };
 
 export const mapListedCategoryConnectionApiData = (
@@ -68,8 +62,4 @@ export const mapListedCategoryConnectionApiData = (
     }
 
     return { totalCount: apiData.totalCount, categories: mappedCategories };
-};
-
-export const mapSimpleCategories = (apiData: SimpleCategoryFragmentApi[]): SimpleCategoryType[] => {
-    return apiData.map((simpleCategoryApiData) => mapSimpleCategoryApiData(simpleCategoryApiData));
 };

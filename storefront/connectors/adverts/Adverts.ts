@@ -1,4 +1,3 @@
-import { mapSimpleCategories } from 'connectors/categories/Categories';
 import { getFirstImage } from 'connectors/image/Image';
 import { AdvertsFragmentApi, useAdvertsQueryApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
@@ -28,7 +27,6 @@ const mapAdverts = (apiData: AdvertsFragmentApi[]): AdvertType[] => {
                       imageMobile: getFirstImage(advertItem.imageMobile),
                   }
                 : { ...advertItem }),
-            categories: mapSimpleCategories(advertItem.categories),
         });
     }
 

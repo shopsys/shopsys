@@ -1,16 +1,11 @@
+import { SimpleCategoryFragmentApi } from 'graphql/generated';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { ImageType } from 'types/image';
 import { ListedProductConnectionPreviewType } from 'types/product';
 
-export type SimpleCategoryType = {
-    __typename?: 'Category';
-    name: string;
-    slug: string;
-};
-
 export type SimpleCategoryConnectionType = {
     totalCount: number;
-    categories: SimpleCategoryType[];
+    categories: SimpleCategoryFragmentApi[];
 };
 
 export type ListedCategoryType = {

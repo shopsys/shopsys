@@ -1,4 +1,4 @@
-import { SimpleCategoryType } from 'types/category';
+import { SimpleCategoryFragmentApi } from 'graphql/generated';
 import { ImageType } from 'types/image';
 
 export type AdvertType = AdvertImageType | AdvertCodeType;
@@ -8,7 +8,7 @@ type AdvertCommonType = {
     type: string;
     positionName: string;
     name: string;
-    categories: SimpleCategoryType[];
+    categories: SimpleCategoryFragmentApi[];
 };
 
 type AdvertImageType = AdvertCommonType & {
