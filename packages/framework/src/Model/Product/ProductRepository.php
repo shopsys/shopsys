@@ -527,15 +527,27 @@ class ProductRepository
         PricingGroup $pricingGroup,
         $locale
     ) {
+        if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_RELEVANCE) {
+            $queryBuilder->addOrderBy('relevance', 'asc');
+            $queryBuilder->addOrderBy('p.id', 'asc');
+
+            return;
+        }
+
+        $queryBuilder->join('p.calculatedAvailability', 'pca');
+        $queryBuilder->addSelect('CASE WHEN pca.dispatchTime IS NULL THEN 1 ELSE 0 END as HIDDEN dispatchTimeIsNull');
+        $queryBuilder->orderBy('dispatchTimeIsNull', 'ASC');
+        $queryBuilder->addOrderBy('pca.dispatchTime', 'ASC');
+
         switch ($orderingModeId) {
             case ProductListOrderingConfig::ORDER_BY_NAME_ASC:
                 $collation = $this->localization->getCollationByLocale($locale);
-                $queryBuilder->orderBy("COLLATE(pt.name, '" . $collation . "')", 'asc');
+                $queryBuilder->addOrderBy("COLLATE(pt.name, '" . $collation . "')", 'asc');
                 break;
 
             case ProductListOrderingConfig::ORDER_BY_NAME_DESC:
                 $collation = $this->localization->getCollationByLocale($locale);
-                $queryBuilder->orderBy("COLLATE(pt.name, '" . $collation . "')", 'desc');
+                $queryBuilder->addOrderBy("COLLATE(pt.name, '" . $collation . "')", 'desc');
                 break;
 
             case ProductListOrderingConfig::ORDER_BY_PRICE_ASC:
@@ -545,7 +557,7 @@ class ProductRepository
                     'pcp',
                     'pcp.product = p AND pcp.pricingGroup = :pricingGroup'
                 );
-                $queryBuilder->orderBy('pcp.priceWithVat', 'asc');
+                $queryBuilder->addOrderBy('pcp.priceWithVat', 'asc');
                 $queryBuilder->setParameter('pricingGroup', $pricingGroup);
                 break;
 
@@ -556,16 +568,12 @@ class ProductRepository
                     'pcp',
                     'pcp.product = p AND pcp.pricingGroup = :pricingGroup'
                 );
-                $queryBuilder->orderBy('pcp.priceWithVat', 'desc');
+                $queryBuilder->addOrderBy('pcp.priceWithVat', 'desc');
                 $queryBuilder->setParameter('pricingGroup', $pricingGroup);
                 break;
 
-            case ProductListOrderingConfig::ORDER_BY_RELEVANCE:
-                $queryBuilder->orderBy('relevance', 'asc');
-                break;
-
             case ProductListOrderingConfig::ORDER_BY_PRIORITY:
-                $queryBuilder->orderBy('p.orderingPriority', 'desc');
+                $queryBuilder->addOrderBy('p.orderingPriority', 'desc');
                 $collation = $this->localization->getCollationByLocale($locale);
                 $queryBuilder->addOrderBy("COLLATE(pt.name, '" . $collation . "')", 'asc');
                 break;

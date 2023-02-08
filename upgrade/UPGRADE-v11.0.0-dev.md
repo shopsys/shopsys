@@ -888,6 +888,9 @@ There you can find links to upgrade notes for other versions too.
       - PRIORITY_CATEGORIES
       - PRIORITY_PRODUCTS
       - PRIORITY_ARTICLES
+- product ordering in all product lists has been changed, now are products ordered primary by availability dispatch time. 
+    In stock as first and out of stock as last.  ([#2555](https://github.com/shopsys/shopsys/pull/2555))
+  - see #project-base-diff to update your project
 
 ## Composer dependencies
 

@@ -244,6 +244,7 @@ class ProductExportRepository
             'calculated_selling_denied' => $product->getCalculatedSellingDenied(),
             'selling_denied' => $product->isSellingDenied(),
             'availability' => $product->getCalculatedAvailability()->getName($locale),
+            'availability_dispatch_time' => $product->getCalculatedAvailability()->getDispatchTime(),
             'is_main_variant' => $product->isMainVariant(),
             'is_variant' => $product->isVariant(),
             'detail_url' => $detailUrl,

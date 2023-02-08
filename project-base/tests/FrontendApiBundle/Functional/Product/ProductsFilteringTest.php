@@ -113,7 +113,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
 
         $productsExpected = [
             ['name' => t(
-                'ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue',
+                'Reflective tape for safe movement on the road',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $this->firstDomainLocale

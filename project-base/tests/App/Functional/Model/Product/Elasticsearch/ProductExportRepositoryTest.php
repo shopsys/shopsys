@@ -47,6 +47,7 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'description',
             'short_description',
             'availability',
+            'availability_dispatch_time',
             'brand',
             'brand_name',
             'brand_url',
