@@ -4,10 +4,3 @@ export type SimpleArticleSiteType = {
     slug: string;
     external: boolean;
 };
-
-export type SimpleArticleLinkType = {
-    __typename: 'ArticleLink';
-    name: string;
-    url: string;
-    external: boolean;
-};
