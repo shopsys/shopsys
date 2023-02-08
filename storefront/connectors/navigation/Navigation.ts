@@ -3,16 +3,10 @@ import {
     CategoriesByColumnFragmentApi,
     ColumnCategoriesFragmentApi,
     NavigationQueryApi,
-    NavigationSubCategoriesLinkFragmentApi,
     useNavigationQueryApi,
 } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
-import {
-    NavigationCategoriesColumn,
-    NavigationCategory,
-    NavigationItem,
-    NavigationSubCategory,
-} from 'types/navigation';
+import { NavigationCategoriesColumn, NavigationCategory, NavigationItem } from 'types/navigation';
 
 export function useNavigationItems(): NavigationItem[] {
     const [{ data, error }] = useNavigationQueryApi();
@@ -50,21 +44,10 @@ function mapNavigationCategoriesByColumns(
     return mappedCategoriesByColumns;
 }
 
-const mapSubCategories = (apiData: NavigationSubCategoriesLinkFragmentApi['children']): NavigationSubCategory[] => {
-    return apiData.map((subCategory) => {
-        return {
-            name: subCategory.name,
-            slug: subCategory.slug,
-        };
-    });
-};
-
 const mapCategories = (data: ColumnCategoriesFragmentApi['categories']): NavigationCategory[] => {
     const mappedCategories = [];
+
     for (const category of data) {
-        if (!(0 in category.images)) {
-            continue;
-        }
         const mappedImage = getFirstImage(category.images);
         if (mappedImage === null) {
             continue;
@@ -73,9 +56,10 @@ const mapCategories = (data: ColumnCategoriesFragmentApi['categories']): Navigat
         mappedCategories.push({
             name: category.name,
             slug: category.slug,
-            children: mapSubCategories(category.children),
+            children: category.children,
             image: mappedImage,
         });
     }
+
     return mappedCategories;
 };

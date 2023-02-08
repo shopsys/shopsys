@@ -1,15 +1,11 @@
 import { ImageType } from './image';
-
-export type NavigationSubCategory = {
-    name: string;
-    slug: string;
-};
+import { NavigationSubCategoriesLinkFragmentApi } from 'graphql/generated';
 
 export type NavigationCategory = {
     name: string;
     slug: string;
     image: ImageType;
-    children: NavigationSubCategory[];
+    children: NavigationSubCategoriesLinkFragmentApi['children'];
 };
 
 export type NavigationCategoriesColumn = {

@@ -1,21 +1,18 @@
 import { DropdownMenuContext } from 'components/Layout/Header/DropdownMenu/DropdownMenuContext';
 import { DropdownSlideRight } from 'components/Layout/Header/DropdownMenu/SlideRight/DropdownSlideRight';
+import { NavigationSubCategoriesLinkFragmentApi } from 'graphql/generated';
 import NextLink from 'next/link';
 import { useContext, useEffect, useState } from 'react';
 import * as smoothscroll from 'smoothscroll-polyfill';
 import { twJoin } from 'tailwind-merge';
 import { DropdownItemType } from 'types/dropdown';
-import {
-    NavigationCategory as NavigationCategoryType,
-    NavigationItem as NavigationItemType,
-    NavigationSubCategory as NavigationSubCategoryType,
-} from 'types/navigation';
+import { NavigationCategory as NavigationCategoryType, NavigationItem as NavigationItemType } from 'types/navigation';
 
 type DropdownItemProps = DropdownItemType & {
     variant?: 'small';
     navigationItem?: NavigationItemType;
     columnCategory?: NavigationCategoryType;
-    columnCategoryChild?: NavigationSubCategoryType;
+    columnCategoryChild?: NavigationSubCategoriesLinkFragmentApi['children'][number];
 };
 
 const TEST_IDENTIFIER = 'layout-header-dropdownmenu-item';
