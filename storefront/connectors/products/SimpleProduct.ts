@@ -1,4 +1,3 @@
-import { getFirstImage } from 'connectors/image/Image';
 import { mapProductPriceData } from 'connectors/price/Prices';
 import { SimpleProductFragmentApi } from 'graphql/generated';
 import { SimpleProductType } from 'types/product';
@@ -10,7 +9,6 @@ export const mapSimpleProductApiData = (
     return {
         ...simpleProductApiData,
         price: mapProductPriceData(simpleProductApiData.price, currencyCode),
-        image: getFirstImage(simpleProductApiData.images),
         unitName: simpleProductApiData.unit.name,
         categoryNames: simpleProductApiData.categories.map((category) => category.name),
     };

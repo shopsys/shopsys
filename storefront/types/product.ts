@@ -1,7 +1,12 @@
 import { SimpleBrandType } from './brand';
 import { ProductCartItemType } from './cart';
 import { FilterOptionsType } from './productFilter';
-import { AvailabilityFragmentApi, ProductOrderingModeEnumApi, StoreAvailabilityFragmentApi } from 'graphql/generated';
+import {
+    AvailabilityFragmentApi,
+    ImageSizesFragmentApi,
+    ProductOrderingModeEnumApi,
+    StoreAvailabilityFragmentApi,
+} from 'graphql/generated';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { SimpleFlagType } from 'types/flag';
 import { ImageType } from 'types/image';
@@ -79,7 +84,7 @@ export type ProductDetailInterfaceType = {
     catalogNumber: string;
     ean: string | null;
     description: string;
-    images: ImageType[];
+    images: ImageSizesFragmentApi[];
     price: ProductPriceType;
     parameters: ProductParameterType[];
     stockQuantity: number;

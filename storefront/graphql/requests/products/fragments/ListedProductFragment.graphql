@@ -9,7 +9,9 @@ fragment ListedProductFragment on Product {
     flags {
         ...SimpleFlagFragment
     }
-    ...ProductImagesListFragment
+    image: mainImage {
+        ...ImageSizesFragment
+    }
     ...ProductPriceFragment
     availability {
         ...AvailabilityFragment

@@ -1,5 +1,4 @@
 import { mapListedVariantType, mapSliderProductApiData } from './Products';
-import { mapImageSizesTypeApiData } from 'connectors/image/Image';
 import { mapProductPriceData } from 'connectors/price/Prices';
 import {
     ImageSizesFragmentApi,
@@ -21,7 +20,6 @@ const mapProductDetailInterface = (
         description: productDetailApiData.description !== null ? productDetailApiData.description : '',
         price: mapProductPriceData(productDetailApiData.price, currencyCode),
         accessories: mapSliderProductApiData(productDetailApiData.accessories, currencyCode),
-        images: mapImageSizesTypeApiData(productDetailApiData.images),
         categoryNames: productDetailApiData.categories.map((category) => category.name),
     };
 };
@@ -41,7 +39,9 @@ export const mapProductDetailApiData = (
 const mapVariantImages = (variants: ListedVariantFragmentApi[]): ImageSizesFragmentApi[] => {
     const mappedImages = [];
     for (const variant of variants) {
-        mappedImages.push(...variant.images);
+        if (variant.image !== null) {
+            mappedImages.push(variant.image);
+        }
     }
     return mappedImages;
 };
@@ -53,7 +53,7 @@ export const mapMainVariantDetailApiData = (
     return {
         ...mapProductDetailInterface(apiData, currencyCode),
         __typename: 'MainVariant',
-        images: mapImageSizesTypeApiData([...apiData.images, ...mapVariantImages(apiData.variants)]),
+        images: [...apiData.images, ...mapVariantImages(apiData.variants)],
         variants: apiData.variants.map((variant) => mapListedVariantType(variant, currencyCode)),
     };
 };

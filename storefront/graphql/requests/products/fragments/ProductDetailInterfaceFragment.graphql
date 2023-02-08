@@ -11,7 +11,9 @@ fragment ProductDetailInterfaceFragment on Product {
     catalogNumber
     ean
     description
-    ...ProductDetailImagesFragment
+    images {
+        ...ImageSizesFragment
+    }
     ...ProductPriceFragment
     parameters {
         ...ParameterFragment

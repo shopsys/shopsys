@@ -1,5 +1,4 @@
 import { showErrorMessage, showInfoMessage } from 'components/Helpers/Toasts';
-import { getFirstImage } from 'connectors/image/Image';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { mapPayment } from 'connectors/payments/Payment';
 import { mapPriceData, mapProductPriceData } from 'connectors/price/Prices';
@@ -162,7 +161,6 @@ export const mapCartItem = (apiData: CartItemFragmentApi, currencyCode: string):
         product: {
             ...apiData.product,
             price: mapProductPriceData(apiData.product.price, currencyCode),
-            image: getFirstImage(apiData.product.images),
             categoryNames: apiData.product.categories.map((category) => category.name),
         },
     };

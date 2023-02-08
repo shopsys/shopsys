@@ -6,7 +6,9 @@ fragment SimpleProductFragment on Product {
     fullName
     slug
     ...ProductPriceFragment
-    ...ProductImagesListFragment
+    image: mainImage {
+        ...ImageSizesFragment
+    }
     unit {
         name
     }

@@ -1,4 +1,3 @@
-import { getFirstImage } from 'connectors/image/Image';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
 import { mapProductPriceData } from 'connectors/price/Prices';
 import {
@@ -25,7 +24,6 @@ export const mapListedProductType = (apiData: ListedProductFragmentApi, currency
         ...apiData,
         isMainVariant: apiData.__typename === 'MainVariant',
         price: mapProductPriceData(apiData.price, currencyCode),
-        image: getFirstImage(apiData.images),
         categoryNames: apiData.categories.map((category) => category.name),
     };
 };
@@ -64,7 +62,6 @@ const mapSliderItemProductType = (apiData: SliderProductFragmentApi, currencyCod
         ...apiData,
         isMainVariant: apiData.__typename === 'MainVariant',
         price: mapProductPriceData(apiData.price, currencyCode),
-        image: getFirstImage(apiData.images),
         categoryNames: apiData.categories.map((category) => category.name),
     };
 };

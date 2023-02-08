@@ -10,7 +10,9 @@ fragment ListedVariantFragment on Variant {
     flags {
         ...SimpleFlagFragment
     }
-    ...ProductImagesThumbnailFragment
+    image: mainImage {
+        ...ImageSizesFragment
+    }
     ...ProductPriceFragment
     availability {
         ...AvailabilityFragment
