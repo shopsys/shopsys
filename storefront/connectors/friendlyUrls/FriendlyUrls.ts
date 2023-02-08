@@ -1,4 +1,3 @@
-import { mapArticleDetail } from 'connectors/articleInterface/article/Article';
 import { mapBlogArticleDetail } from 'connectors/articleInterface/blogArticle/BlogArticle';
 import { mapBrandDetail } from 'connectors/brands/Brands';
 import { mapCategoryDetailData } from 'connectors/categories/Categories';
@@ -50,7 +49,7 @@ export function useFriendlyUrlResolvedData(slug: string): { data: Maybe<Friendly
         case 'Store':
             return { data: mapStoreDetailApiData(data.slug), fetching };
         case 'ArticleSite':
-            return { data: mapArticleDetail(data.slug), fetching };
+            return { data: data.slug, fetching };
         case 'BlogArticle':
             return { data: mapBlogArticleDetail(data.slug, currentDomainConfig), fetching };
         case 'Brand':
