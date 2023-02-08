@@ -3,7 +3,7 @@ import {
     AUTOCOMPLETE_PRODUCT_LIMIT,
 } from 'components/Layout/Header/AutocompleteSearch/Autocomplete';
 import { mapSimpleArticlesInterface } from 'connectors/articleInterface/ArticleInterface';
-import { mapSimpleCategoryConnectionApiData } from 'connectors/categories/Categories';
+import { mapConnectionEdges } from 'connectors/connection/Connection';
 import { mapListedProductConnectionType } from 'connectors/products/Products';
 import { AutocompleteSearchQueryApi, useAutocompleteSearchQueryApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
@@ -42,7 +42,10 @@ const mapSearchResult = (apiData: AutocompleteSearchQueryApi, currencyCode: stri
     return {
         ...apiData,
         articlesSearch: mapSimpleArticlesInterface(apiData.articlesSearch),
-        categoriesSearch: mapSimpleCategoryConnectionApiData(apiData.categoriesSearch),
+        categoriesSearch: {
+            totalCount: apiData.categoriesSearch.totalCount,
+            categories: mapConnectionEdges(apiData.categoriesSearch.edges),
+        },
         productsSearch: mapListedProductConnectionType(apiData.productsSearch, currencyCode),
     };
 };

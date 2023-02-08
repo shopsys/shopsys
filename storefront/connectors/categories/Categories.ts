@@ -1,17 +1,7 @@
 import { getFirstImage } from 'connectors/image/Image';
 import { mapListedProductConnectionPreviewType } from 'connectors/products/Products';
-import {
-    CategoryDetailFragmentApi,
-    ListedCategoryConnectionFragmentApi,
-    ListedCategoryFragmentApi,
-    SimpleCategoryConnectionFragmentApi,
-} from 'graphql/generated';
-import {
-    CategoryDetailType,
-    ListedCategoryConnectionType,
-    ListedCategoryType,
-    SimpleCategoryConnectionType,
-} from 'types/category';
+import { CategoryDetailFragmentApi, ListedCategoryFragmentApi } from 'graphql/generated';
+import { CategoryDetailType, ListedCategoryType } from 'types/category';
 
 export const mapCategoryDetailData = (
     apiCategoryDetailData: CategoryDetailFragmentApi,
@@ -31,35 +21,4 @@ export const mapListedCategoryApiData = (listedCategoryApiData: ListedCategoryFr
         ...listedCategoryApiData,
         image: getFirstImage(listedCategoryApiData.images),
     };
-};
-
-export const mapSimpleCategoryConnectionApiData = (
-    apiData: SimpleCategoryConnectionFragmentApi,
-): SimpleCategoryConnectionType => {
-    const mappedCategories = [];
-
-    if (apiData.edges !== null) {
-        for (const categoryEdge of apiData.edges) {
-            if (categoryEdge?.node !== undefined && categoryEdge.node !== null) {
-                mappedCategories.push(categoryEdge.node);
-            }
-        }
-    }
-    return { totalCount: apiData.totalCount, categories: mappedCategories };
-};
-
-export const mapListedCategoryConnectionApiData = (
-    apiData: ListedCategoryConnectionFragmentApi,
-): ListedCategoryConnectionType => {
-    const mappedCategories = [];
-
-    if (apiData.edges !== null) {
-        for (const categoryEdge of apiData.edges) {
-            if (categoryEdge?.node !== undefined && categoryEdge.node !== null) {
-                mappedCategories.push(mapListedCategoryApiData(categoryEdge.node));
-            }
-        }
-    }
-
-    return { totalCount: apiData.totalCount, categories: mappedCategories };
 };

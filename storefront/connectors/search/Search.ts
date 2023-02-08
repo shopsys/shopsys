@@ -1,7 +1,7 @@
 import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
 import { mapSimpleArticlesInterface } from 'connectors/articleInterface/ArticleInterface';
 import { mapListedBrandsApiData } from 'connectors/brands/Brands';
-import { mapListedCategoryConnectionApiData } from 'connectors/categories/Categories';
+import { mapConnectionEdges } from 'connectors/connection/Connection';
 import { mapListedProductConnectionPreviewType } from 'connectors/products/Products';
 import { ProductOrderingModeEnumApi, SearchQueryApi, useSearchQueryApi } from 'graphql/generated';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
@@ -52,7 +52,10 @@ const mapSearchResult = (apiData: SearchQueryApi | undefined, currencyCode: stri
     return {
         articlesSearch: mapSimpleArticlesInterface(apiData.articlesSearch),
         brandSearch: mapListedBrandsApiData(apiData.brandSearch),
-        categoriesSearch: mapListedCategoryConnectionApiData(apiData.categoriesSearch),
+        categoriesSearch: {
+            totalCount: apiData.categoriesSearch.totalCount,
+            categories: mapConnectionEdges(apiData.categoriesSearch.edges),
+        },
         productsSearch: mapListedProductConnectionPreviewType(apiData.productsSearch, currencyCode),
     };
 };
