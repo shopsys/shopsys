@@ -78,8 +78,8 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         $this->nextDevelopmentVersionString = $this->askForNextDevelopmentVersion($version, true)->getOriginalString();
 
         $this->updateUpgradeFileForMonorepo($version);
-        $this->createUpgradeFileForNewVersionFromDevelopmentVersion($version);
-        $this->createUpgradeFileForNextDevelopmentVersion($version);
+        $this->createUpgradeFileForNewVersionFromDevelopmentVersion($version, $initialBranchName);
+        $this->createUpgradeFileForNextDevelopmentVersion($version, $initialBranchName);
         $this->updateGeneralUpgradeFile($version);
 
         $this->symfonyStyle->success(Message::SUCCESS);
@@ -101,7 +101,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         $this->confirm('Confirm that all #project-base-diff occurrences has been replaced by correct project-base commit links.');
         $this->confirm('Confirm that all upgrading files are ready for the release.');
 
-        $this->commit('upgrade files are now updated for %s release');
+        $this->commit(sprintf('upgrade files are now updated for %s release', $version->getVersionString()));
     }
 
     /**
@@ -133,7 +133,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
     /**
      * @param \PharIo\Version\Version $version
      */
-    private function createUpgradeFileForNewVersionFromDevelopmentVersion(Version $version)
+    private function createUpgradeFileForNewVersionFromDevelopmentVersion(Version $version, string $initialBranchName)
     {
         $upgradeFilePath = getcwd() . '/upgrade/UPGRADE-' . $version->getOriginalString() . '-dev.md';
         $upgradeFileInfo = new SmartFileInfo($upgradeFilePath);
@@ -141,7 +141,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         $newUpgradeContent = $this->versionUpgradeFileManipulator->processFileToString(
             $upgradeFileInfo,
             $version,
-            $this->initialBranchName
+            $initialBranchName
         );
 
         FileSystem::write($upgradeFilePath, $newUpgradeContent);
@@ -170,13 +170,13 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
     /**
      * @param \PharIo\Version\Version $version
      */
-    private function createUpgradeFileForNextDevelopmentVersion(Version $version)
+    private function createUpgradeFileForNextDevelopmentVersion(Version $version, string $initialBranchName)
     {
         $content = $this->twigEnvironment->render(
             'UPGRADE-next-development-version.md.twig',
             [
                 'versionString' => $version->getOriginalString(),
-                'initialBranchName' => $this->initialBranchName,
+                'initialBranchName' => $initialBranchName,
                 'nextDevelopmentVersion' => $this->nextDevelopmentVersionString,
             ]
         );
