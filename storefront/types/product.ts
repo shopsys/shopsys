@@ -1,8 +1,7 @@
 import { SimpleBrandType } from './brand';
 import { ProductCartItemType } from './cart';
 import { FilterOptionsType } from './productFilter';
-import { AvailabilityFragmentApi, ProductOrderingModeEnumApi } from 'graphql/generated';
-import {  StoreAvailabilityType } from 'types/availability';
+import { AvailabilityFragmentApi, ProductOrderingModeEnumApi, StoreAvailabilityFragmentApi } from 'graphql/generated';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { SimpleFlagType } from 'types/flag';
 import { ImageType } from 'types/image';
@@ -63,7 +62,7 @@ export type ListedProductType = {
 };
 
 export type ListedVariantType = ListedProductType & {
-    storeAvailabilities: StoreAvailabilityType[];
+    storeAvailabilities: StoreAvailabilityFragmentApi[];
 };
 
 export type SliderProductItemType = ListedProductType;
@@ -97,7 +96,7 @@ export type ProductDetailInterfaceType = {
 export type ProductDetailType = ProductDetailInterfaceType & {
     __typename: 'MainVariant' | 'RegularProduct' | 'Variant';
     shortDescription: string;
-    storeAvailabilities: StoreAvailabilityType[];
+    storeAvailabilities: StoreAvailabilityFragmentApi[];
     availableStoresCount: number;
     exposedStoresCount: number;
 };

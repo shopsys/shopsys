@@ -4,14 +4,13 @@ import { BrandDetailType } from './brand';
 import { CategoryDetailType } from './category';
 import { FlagDetailType } from './flag';
 import { MainVariantDetailType, ProductDetailType } from './product';
-import { StoreDetailType } from './store';
-import { ArticleDetailFragmentApi } from 'graphql/generated';
+import { ArticleDetailFragmentApi, StoreDetailFragmentApi } from 'graphql/generated';
 
 export type FriendlyUrlPageType =
     | ProductDetailType
     | MainVariantDetailType
     | CategoryDetailType
-    | StoreDetailType
+    | StoreDetailFragmentApi
     | ArticleDetailFragmentApi
     | BlogArticleDetailType
     | BlogCategoryDetailType

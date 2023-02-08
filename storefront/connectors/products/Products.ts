@@ -1,4 +1,3 @@
-import { mapStoreAvailabilities } from 'connectors/availability/Availability';
 import { getFirstImage } from 'connectors/image/Image';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
 import { mapProductPriceData } from 'connectors/price/Prices';
@@ -33,8 +32,8 @@ export const mapListedProductType = (apiData: ListedProductFragmentApi, currency
 
 export const mapListedVariantType = (apiData: ListedVariantFragmentApi, currencyCode: string): ListedVariantType => {
     return {
+        ...apiData,
         ...mapListedProductType(apiData, currencyCode),
-        storeAvailabilities: mapStoreAvailabilities(apiData.storeAvailabilities),
     };
 };
 

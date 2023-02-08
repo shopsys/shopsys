@@ -1,13 +1,13 @@
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
+import { AvailabilityStatusEnumApi, StoreAvailabilityFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
 import { forwardRef } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { StoreAvailabilityType } from 'types/availability';
 
 type ProductDetailAvailabilityListProps = {
-    storeAvailabilities: StoreAvailabilityType[];
+    storeAvailabilities: StoreAvailabilityFragmentApi[];
 };
 
 const TEST_IDENTIFIER = 'pages-productdetail-availabilitylist-';
@@ -20,7 +20,7 @@ export const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, Produc
             <div className="block w-full vl:max-w-xl">
                 <Heading type="h3">{t('Availability in stores')}</Heading>
                 <ul ref={ref}>
-                    {storeAvailabilities.map((storeAvailability, index) => (
+                    {storeAvailabilities.map((storeAvailability, index) => storeAvailability.store!== null&&(
                         <li
                             className="flex w-full items-center border-b border-greyLighter py-4"
                             key={index}
@@ -32,8 +32,8 @@ export const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, Produc
                             <span
                                 className={twJoin(
                                     'flex-1 pr-3 text-sm',
-                                    storeAvailability.availabilityStatus === 'in-stock' && 'text-inStock',
-                                    storeAvailability.availabilityStatus === 'out-of-stock' && 'text-red',
+                                    storeAvailability.availabilityStatus === AvailabilityStatusEnumApi.InStockApi && 'text-inStock',
+                                    storeAvailability.availabilityStatus === AvailabilityStatusEnumApi.OutOfStockApi && 'text-red',
                                 )}
                                 data-testid={TEST_IDENTIFIER + index + '-availability'}
                             >

@@ -3,6 +3,7 @@ import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
+import { ListedStoreFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Image from 'next/image';
 import NextLink from 'next/link';
@@ -10,10 +11,9 @@ import { useCallback, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { twJoin } from 'tailwind-merge';
 import { BreadcrumbItemType } from 'types/breadcrumb';
-import { ListedStoreType } from 'types/store';
 
 type StoresContentProps = {
-    stores: ListedStoreType[];
+    stores: ListedStoreFragmentApi[];
     breadcrumbs: BreadcrumbItemType[];
 };
 
