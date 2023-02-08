@@ -29,6 +29,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 The changelog is generated during the release process using [Github Changelog Generator](https://github.com/github-changelog-generator/github-changelog-generator) since `v9.1.1` release.
 
+## [v10.0.5](https://github.com/shopsys/shopsys/compare/v10.0.4...v10.0.5) (2023-02-08)
+
+:top: Upgrading
+
+- \[framework\] update heureka/overeno-zakazniky to latest version 4.0.1 [\#2534](https://github.com/shopsys/shopsys/pull/2534) ([RostislavKreisinger](https://github.com/RostislavKreisinger))
+
+:warning: Security
+- \[shopsys\] update twig/twig to v2.15.4 [\#2527](https://github.com/shopsys/shopsys/pull/2527) ([RostislavKreisinger](https://github.com/RostislavKreisinger))
+
 ## [v10.0.4](https://github.com/shopsys/shopsys/compare/v10.0.3...v10.0.4) (2022-11-14)
 
 :top: Upgrading
@@ -129,6 +138,20 @@ The changelog is generated during the release process using [Github Changelog Ge
 - \[shopsys\] changed entity extension subscriber class [\#2405](https://github.com/shopsys/shopsys/pull/2405) ([grossmannmartin](https://github.com/grossmannmartin))
 - \[shopsys\] replaced jakub-onderka/php-parallel-lint with php-parallel-lint [\#2399](https://github.com/shopsys/shopsys/pull/2399) ([grossmannmartin](https://github.com/grossmannmartin))
 - \[backend-api\] backend api is now put under review for future changes [\#2422](https://github.com/shopsys/shopsys/pull/2422) ([grossmannmartin](https://github.com/grossmannmartin))
+
+## [v9.1.3](https://github.com/shopsys/shopsys/compare/v9.1.2...v9.1.3) (2023-01-18)
+
+:bug: Bug Fixes
+
+- \[project-base\] fixed memory limit for phpunit [\#2398](https://github.com/shopsys/shopsys/pull/2398) ([grossmannmartin](https://github.com/grossmannmartin))
+
+:warning: Security
+
+- composer updates [\#2397](https://github.com/shopsys/shopsys/pull/2397) ([vitek-rostislav](https://github.com/vitek-rostislav))
+
+**Merged pull requests:**
+
+- \[framework\] update heureka/overeno-zakazniky to latest version 4.0.1 [\#2534](https://github.com/shopsys/shopsys/pull/2534) ([RostislavKreisinger](https://github.com/RostislavKreisinger))
 
 ## [v9.1.2](https://github.com/shopsys/shopsys/compare/v9.1.1...v9.1.2) (2021-07-01)
 
