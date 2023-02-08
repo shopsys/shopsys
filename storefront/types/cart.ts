@@ -1,8 +1,7 @@
-import { AvailabilityType } from './availability';
 import { SimpleBrandType } from './brand';
 import { ImageType } from './image';
 import { PaymentType } from './payment';
-import { CartModificationsFragmentApi } from 'graphql/generated';
+import { AvailabilityFragmentApi, CartModificationsFragmentApi } from 'graphql/generated';
 import { SimpleFlagType } from 'types/flag';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { PriceType, ProductPriceType } from 'types/price';
@@ -32,7 +31,7 @@ export type ProductCartItemType = {
     flags: SimpleFlagType[];
     image: ImageType | null;
     price: ProductPriceType;
-    availability: AvailabilityType;
+    availability: AvailabilityFragmentApi;
     stockQuantity: number;
     availableStoresCount: number;
     catalogNumber: string;

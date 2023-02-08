@@ -1,5 +1,5 @@
 import { mapListedVariantType, mapSliderProductApiData } from './Products';
-import { mapAvailabilityData, mapStoreAvailabilities } from 'connectors/availability/Availability';
+import { mapStoreAvailabilities } from 'connectors/availability/Availability';
 import { mapImageSizesTypeApiData } from 'connectors/image/Image';
 import { mapProductPriceData } from 'connectors/price/Prices';
 import {
@@ -24,7 +24,6 @@ const mapProductDetailInterface = (
         accessories: mapSliderProductApiData(productDetailApiData.accessories, currencyCode),
         images: mapImageSizesTypeApiData(productDetailApiData.images),
         categoryNames: productDetailApiData.categories.map((category) => category.name),
-        availability: mapAvailabilityData(productDetailApiData.availability),
     };
 };
 

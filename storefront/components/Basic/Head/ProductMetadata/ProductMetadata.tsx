@@ -1,3 +1,4 @@
+import { AvailabilityStatusEnumApi } from 'graphql/generated';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { MainVariantDetailType, ProductDetailType } from 'types/product';
@@ -36,7 +37,7 @@ export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
                                 price: product.price.priceWithVat,
                                 itemCondition: 'https://schema.org/NewCondition',
                                 availability:
-                                    product.availability.status === 'in-stock'
+                                    product.availability.status === AvailabilityStatusEnumApi.InStockApi
                                         ? 'https://schema.org/InStock'
                                         : 'https://schema.org/OutOfStock',
                             },

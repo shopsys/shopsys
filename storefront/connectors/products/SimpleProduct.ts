@@ -1,4 +1,3 @@
-import { mapAvailabilityData } from 'connectors/availability/Availability';
 import { getFirstImage } from 'connectors/image/Image';
 import { mapProductPriceData } from 'connectors/price/Prices';
 import { SimpleProductFragmentApi } from 'graphql/generated';
@@ -14,6 +13,5 @@ export const mapSimpleProductApiData = (
         image: getFirstImage(simpleProductApiData.images),
         unitName: simpleProductApiData.unit.name,
         categoryNames: simpleProductApiData.categories.map((category) => category.name),
-        availability: mapAvailabilityData(simpleProductApiData.availability),
     };
 };

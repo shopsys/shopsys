@@ -1,8 +1,8 @@
 import { SimpleBrandType } from './brand';
 import { ProductCartItemType } from './cart';
 import { FilterOptionsType } from './productFilter';
-import { ProductOrderingModeEnumApi } from 'graphql/generated';
-import { AvailabilityType, StoreAvailabilityType } from 'types/availability';
+import { AvailabilityFragmentApi, ProductOrderingModeEnumApi } from 'graphql/generated';
+import {  StoreAvailabilityType } from 'types/availability';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { SimpleFlagType } from 'types/flag';
 import { ImageType } from 'types/image';
@@ -23,7 +23,7 @@ export type SimpleProductType = {
     brand: SimpleBrandType | null;
     categoryNames: string[];
     flags: SimpleFlagType[];
-    availability: AvailabilityType;
+    availability: AvailabilityFragmentApi;
 };
 
 export type SimpleProductConnectionType = {
@@ -53,7 +53,7 @@ export type ListedProductType = {
     exposedStoresCount: number;
     flags: SimpleFlagType[];
     image: ImageType | null;
-    availability: AvailabilityType;
+    availability: AvailabilityFragmentApi;
     price: ProductPriceType;
     isMainVariant: boolean;
     catalogNumber: string;
@@ -89,7 +89,7 @@ export type ProductDetailInterfaceType = {
     categoryNames: string[];
     flags: SimpleFlagType[];
     isSellingDenied: boolean;
-    availability: AvailabilityType;
+    availability: AvailabilityFragmentApi;
     seoTitle: string | null;
     seoMetaDescription: string | null;
 };
