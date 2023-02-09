@@ -12,9 +12,10 @@ final class CreateAndCommitLockFilesReleaseWorker extends AbstractShopsysRelease
 {
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return 'Create and commit composer.lock, symfony.lock, package-lock.json, and migrations-lock.yml and [Manually] push it';
     }

@@ -31,9 +31,10 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return sprintf(
             'Check the release date of "%s" version is "%s" in CHANGELOG.md. If necessary, the date is updated and the change is committed to "%s" branch',

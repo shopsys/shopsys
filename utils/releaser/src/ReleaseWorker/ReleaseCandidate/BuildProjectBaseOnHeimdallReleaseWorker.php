@@ -12,9 +12,10 @@ final class BuildProjectBaseOnHeimdallReleaseWorker extends AbstractShopsysRelea
 {
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return '[Manually] Build project-base on Heimdall';
     }

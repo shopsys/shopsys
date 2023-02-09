@@ -38,9 +38,10 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return 'Create and push git tags for packages excluding monorepo and project-base';
     }

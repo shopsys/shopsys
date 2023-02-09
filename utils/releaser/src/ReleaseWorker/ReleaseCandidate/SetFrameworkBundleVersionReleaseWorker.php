@@ -30,9 +30,10 @@ final class SetFrameworkBundleVersionReleaseWorker extends AbstractShopsysReleas
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return 'Set ShopsysFrameworkBundle version to released version and commit it.';
     }

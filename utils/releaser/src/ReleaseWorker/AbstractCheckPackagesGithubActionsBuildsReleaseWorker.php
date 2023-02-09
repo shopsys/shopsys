@@ -32,9 +32,10 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return 'Check GitHub Actions build status for all packages';
     }

@@ -10,9 +10,10 @@ abstract class AbstractCheckUncommittedChangesReleaseWorker extends AbstractShop
 {
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return 'Check the repository for any uncommitted changes';
     }

@@ -12,9 +12,10 @@ final class VerifyMinorUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
 {
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return '[Manually] Verify there are no BC-breaks when releasing a minor version';
     }

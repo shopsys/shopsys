@@ -14,9 +14,10 @@ final class TestYourBranchLocallyReleaseWorker extends AbstractShopsysReleaseWor
 {
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return 'Test your branch locally - running composer-dev, standards and tests - this might take a few minutes';
     }

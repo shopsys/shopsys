@@ -10,9 +10,10 @@ abstract class AbstractVerifyInitialBranchReleaseWorker extends AbstractShopsysR
 {
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return 'Verify that you\'re releasing on the proper branch';
     }

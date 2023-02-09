@@ -12,9 +12,10 @@ final class CheckReleaseBlogPostReleaseWorker extends AbstractShopsysReleaseWork
 {
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return '[Manually] Ensure "Release highlights" post will be prepared for release on https://blog.shopsys.com in a few days';
     }

@@ -12,9 +12,10 @@ final class ForceYourBranchSplitReleaseWorker extends AbstractShopsysReleaseWork
 {
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return '[Manually] Push and force-split your branch';
     }

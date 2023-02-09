@@ -20,9 +20,10 @@ final class CheckoutToReleaseCandidateBranchReleaseWorker extends AbstractShopsy
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return sprintf('Checkout to "%s" branch', $this->createBranchName($version));
     }

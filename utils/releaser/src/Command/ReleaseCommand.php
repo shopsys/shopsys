@@ -112,7 +112,7 @@ final class ReleaseCommand extends Command
         $isDryRun = (bool)$input->getOption(Option::DRY_RUN);
 
         foreach ($activeReleaseWorkers as $releaseWorker) {
-            $title = sprintf('%d/%d) %s', ++$step, $totalWorkerCount, $releaseWorker->getDescription($version));
+            $title = sprintf('%d/%d) %s', ++$step, $totalWorkerCount, $releaseWorker->getDescription($version, $initialBranchName));
             $this->symfonyStyle->title($title);
             $this->printReleaseWorkerMetadata($releaseWorker);
 

@@ -21,9 +21,10 @@ final class GenerateApiaryBlueprintReleaseWorker extends AbstractShopsysReleaseW
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return 'Generate Apiary.io blueprint "php phing frontend-api-generate-apiary-blueprint" and commit it';
     }
