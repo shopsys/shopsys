@@ -58,7 +58,7 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
         /**
          * @see https://regex101.com/r/izBgtv/6
          */
-        $pattern = '#\#\# \[' . preg_quote($version->getVersionString()) . '\]\(.*\) - (\d+-\d+-\d+)#';
+        $pattern = '#\#\# \[' . preg_quote($version->getOriginalString()) . '\]\(.*\) \((\d+-\d+-\d+)\)#';
         $match = Strings::match($fileContent, $pattern);
         if ($match === null) {
             $this->symfonyStyle->error(
