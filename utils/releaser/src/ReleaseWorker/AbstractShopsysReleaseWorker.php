@@ -13,11 +13,9 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Process\Process;
-use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface;
-use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\StageAwareInterface;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
-abstract class AbstractShopsysReleaseWorker implements ReleaseWorkerInterface, StageAwareInterface
+abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 {
     /**
      * If you modify this list do not forget updating:
@@ -67,7 +65,7 @@ abstract class AbstractShopsysReleaseWorker implements ReleaseWorkerInterface, S
     /**
      * @var string
      */
-    protected $initialBranchName;
+    protected $currentBranchName;
 
     /**
      * @required
@@ -80,7 +78,7 @@ abstract class AbstractShopsysReleaseWorker implements ReleaseWorkerInterface, S
         $this->symfonyStyle = $symfonyStyle;
         $this->processRunner = $processRunner;
         $this->questionHelper = $questionHelper;
-        $this->initialBranchName = $this->getProcessResult(['git', 'rev-parse', '--abbrev-ref', 'HEAD']);
+        $this->currentBranchName = $this->getProcessResult(['git', 'rev-parse', '--abbrev-ref', 'HEAD']);
     }
 
     /**

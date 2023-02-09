@@ -62,8 +62,9 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = 'master'): void
     {
         foreach ($this->composerJsonFilesProvider->provideAll() as $smartFileInfo) {
             $jsonContent = $this->jsonFileManager->loadFromFileInfo($smartFileInfo);

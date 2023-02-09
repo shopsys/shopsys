@@ -71,8 +71,9 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = 'master'): void
     {
         $this->nextDevelopmentVersionString = $this->askForNextDevelopmentVersion($version, true)->getOriginalString();
 
@@ -122,7 +123,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         $newUpgradeContent = $this->monorepoUpgradeFileManipulator->processFileToString(
             $upgradeFileInfo,
             $version,
-            $this->initialBranchName,
+            $this->currentBranchName,
             $this->nextDevelopmentVersionString
         );
 

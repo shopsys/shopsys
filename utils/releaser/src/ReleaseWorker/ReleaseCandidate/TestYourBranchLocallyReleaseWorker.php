@@ -23,8 +23,9 @@ final class TestYourBranchLocallyReleaseWorker extends AbstractShopsysReleaseWor
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = 'master'): void
     {
         try {
             $output = $this->processRunner->run('php phing composer-dev standards tests');

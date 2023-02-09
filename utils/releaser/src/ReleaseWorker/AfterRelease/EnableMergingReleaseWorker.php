@@ -16,21 +16,22 @@ final class EnableMergingReleaseWorker extends AbstractShopsysReleaseWorker
      */
     public function getDescription(Version $version): string
     {
-        return sprintf('[Manually] Enable merging to "%s" branch', $this->initialBranchName);
+        return sprintf('[Manually] Enable merging to "%s" branch', $this->currentBranchName);
     }
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = 'master'): void
     {
         $this->symfonyStyle->note(
             sprintf(
                 'Enable merging to "%s" - let your colleagues know in "team_ssfw_devs" Slack channel, and erase the red cross from the "merge" column on the whiteboard in the office.',
-                $this->initialBranchName
+                $this->currentBranchName
             )
         );
-        $this->confirm(sprintf('Confirm merging to "%s" is enabled.', $this->initialBranchName));
+        $this->confirm(sprintf('Confirm merging to "%s" is enabled.', $this->currentBranchName));
     }
 
     /**

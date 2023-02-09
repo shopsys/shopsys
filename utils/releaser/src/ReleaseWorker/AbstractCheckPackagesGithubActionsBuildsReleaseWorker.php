@@ -46,8 +46,9 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = 'master'): void
     {
         $this->symfonyStyle->note('It is necessary to set Github token before checking Github Actions builds');
         $githubToken = $this->symfonyStyle->ask(
