@@ -132,6 +132,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
     private function createUpgradeFileForNewVersionFromDevelopmentVersion(Version $version, string $initialBranchName)
     {
@@ -169,6 +170,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
     private function createUpgradeFileForNextDevelopmentVersion(Version $version, string $initialBranchName)
     {
