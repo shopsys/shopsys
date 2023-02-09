@@ -1188,3 +1188,5 @@ There you can find links to upgrade notes for other versions too.
       + __construct(RequestStack $requestStack, CurrentCustomerUser $currentCustomerUser, RouterInterface $router, Domain $domain)
       ```
     - also see #project-base-diff for more information about changes needed to be done in your project
+- lock version of npm `jquery-ui` to version `1.12.1` in order to fix category sorting in admin ([#2558](https://github.com/shopsys/shopsys/pull/2558))
+    - see #project-base-diff for more information about changes needed to be done in your project

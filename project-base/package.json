@@ -61,7 +61,7 @@
         "codemirror": "^5.49.2",
         "counterup2": "^1.0.4",
         "jquery-hoverintent": "^1.10.1",
-        "jquery-ui": "^1.12.1",
+        "jquery-ui": "1.12.1",
         "jquery-ui-touch-punch": "^0.2.3",
         "jquery.cookie": "^1.4.1",
         "magnific-popup": "^1.1.0",
