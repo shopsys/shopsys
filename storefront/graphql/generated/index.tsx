@@ -2846,7 +2846,7 @@ export type BlogCategoriesApi = { __typename?: 'Query', blogCategories: Array<{ 
 
 export type BlogCategoryArticlesVariablesApi = Exact<{
   uuid: Scalars['Uuid'];
-  endCursorForPagination: Scalars['String'];
+  endCursor: Scalars['String'];
   pageSize: Maybe<Scalars['Int']>;
 }>;
 
@@ -4994,9 +4994,9 @@ export function useBlogCategoriesApi(options: Omit<Urql.UseQueryArgs<BlogCategor
   return Urql.useQuery<BlogCategoriesApi>({ query: BlogCategoriesDocumentApi, ...options });
 };
 export const BlogCategoryArticlesDocumentApi = gql`
-    query BlogCategoryArticles($uuid: Uuid!, $endCursorForPagination: String!, $pageSize: Int) {
+    query BlogCategoryArticles($uuid: Uuid!, $endCursor: String!, $pageSize: Int) {
   blogCategory(uuid: $uuid) {
-    blogArticles(after: $endCursorForPagination, first: $pageSize) {
+    blogArticles(after: $endCursor, first: $pageSize) {
       ...BlogArticleConnectionFragment
     }
   }

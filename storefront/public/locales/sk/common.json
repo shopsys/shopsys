@@ -177,6 +177,7 @@
     "Order sent": "Objednávka odoslaná",
     "Overview": "Prehľad",
     "Package number": "Číslo zásielky",
+    "page {{ currentPage }} from {{ totalPages }}": "",
     "Parameters": "Parametry",
     "Password": "Heslo",
     "Password again": "Heslo znova",

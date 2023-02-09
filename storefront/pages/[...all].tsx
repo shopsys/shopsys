@@ -1,4 +1,7 @@
+import { PaginationProvider } from '../components/Blocks/Pagination/PaginationProvider';
 import { getServerSideInternationalizedStaticUrl } from '../helpers/localization/getInternationalizedStaticUrls';
+import { getNewPagination } from '../helpers/pagination/getNewPagination';
+import { parsePageNumberFromQuery } from '../helpers/pagination/parsePageNumberFromQuery';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -22,13 +25,17 @@ import { getGtmPageInfoForFriendlyUrl } from 'helpers/gtm/gtm';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
-import { FILTER_QUERY_PARAMETER_NAME, SORT_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
+import {
+    FILTER_QUERY_PARAMETER_NAME,
+    PAGE_QUERY_PARAMETER_NAME,
+    SORT_QUERY_PARAMETER_NAME,
+} from 'helpers/queryParams/queryParamNames';
 import { getSeoTitleAndDescriptionForFriendlyUrlPage } from 'helpers/seo/getSeoTitleAndDescriptionForFriendlyUrlPage';
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
 import { createClient } from 'helpers/urql/createClient';
 import { useGtmFriendlyPageView } from 'hooks/gtm/useGtmFriendlyPageView';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import { FC } from 'react';
 import { nextReduxWrapper } from 'redux/main';
 import { FriendlyUrlPageType } from 'types/friendlyUrl';
@@ -42,10 +49,10 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
 
     const gtmFriendlyUrlPageViewEvent = useGtmPageViewEvent(getGtmPageInfoForFriendlyUrl(data, slug, data?.breadcrumb));
     useGtmFriendlyPageView(gtmFriendlyUrlPageViewEvent, slug, fetching);
-    return renderContent(data, fetching);
+    return renderContent(data, fetching, router);
 };
 
-const renderContent = (data: Maybe<FriendlyUrlPageType>, fetching: boolean) => {
+const renderContent = (data: Maybe<FriendlyUrlPageType>, fetching: boolean, router: NextRouter) => {
     switch (data?.__typename) {
         case 'RegularProduct':
             return wrapContent(<ProductDetailContent product={data as ProductDetailType} fetching={fetching} />, data);
@@ -55,7 +62,7 @@ const renderContent = (data: Maybe<FriendlyUrlPageType>, fetching: boolean) => {
                 data,
             );
         case 'Category':
-            return wrapContent(<CategoryDetailContent category={data} />, data);
+            return wrapPaginatedContent(<CategoryDetailContent category={data} />, data, router);
         case 'Store':
             return wrapContent(<StoreDetailContent store={data} />, data);
         case 'ArticleSite':
@@ -67,7 +74,7 @@ const renderContent = (data: Maybe<FriendlyUrlPageType>, fetching: boolean) => {
         case 'Flag':
             return wrapContent(<FlagDetailContent flag={data} />, data);
         case 'BlogCategory':
-            return wrapContent(<BlogCategoryContent blogCategory={data} />, data);
+            return wrapPaginatedContent(<BlogCategoryContent blogCategory={data} />, data, router);
         default:
             return <Error404Content />;
     }
@@ -81,6 +88,21 @@ const wrapContent = (content: JSX.Element, data: FriendlyUrlPageType) => (
         {content}
     </CommonLayout>
 );
+
+const wrapPaginatedContent = (content: JSX.Element, data: FriendlyUrlPageType, router: NextRouter) => {
+    const currentPage = parsePageNumberFromQuery(router.query[PAGE_QUERY_PARAMETER_NAME]);
+
+    return (
+        <CommonLayout {...getSeoTitleAndDescriptionForFriendlyUrlPage(data)}>
+            <Webline>
+                <Breadcrumbs key="breadcrumb" breadcrumb={data.breadcrumb} />
+            </Webline>
+            <PaginationProvider key={data.uuid} {...getNewPagination(currentPage)}>
+                {content}
+            </PaginationProvider>
+        </CommonLayout>
+    );
+};
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     getServerSidePropsWithRedisClient(

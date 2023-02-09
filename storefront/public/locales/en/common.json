@@ -171,6 +171,7 @@
     "Order sent": "Order sent",
     "Overview": "Overview",
     "Package number": "Package number",
+    "page {{ currentPage }} from {{ totalPages }}": "page {{ currentPage }} from {{ totalPages }}",
     "Parameters": "Parameters",
     "Password": "Password",
     "Password again": "Password again",

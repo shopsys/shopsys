@@ -1,29 +1,23 @@
 import { BlogArticlesList } from './BlogArticlesList/BlogArticlesList';
-import { DEFAULT_PAGE_SIZE, Pagination } from 'components/Blocks/Pagination/Pagination';
-import { usePaginationContext } from 'components/Blocks/Pagination/usePaginationContext';
+import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { mapBlogArticleConnection } from 'connectors/articleInterface/blogArticle/BlogArticle';
-import { useBlogCategoryArticlesApi } from 'graphql/generated';
+import { BlogCategoryArticlesApi } from 'graphql/generated';
 import { FC, useMemo, useRef } from 'react';
 import { ListedBlogArticleType } from 'types/blogArticle';
 
 type BlogCategoryArticlesWrapperProps = {
-    uuid: string;
+    blogCategoryArticles?: BlogCategoryArticlesApi;
 };
 
-export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> = ({ uuid }) => {
+export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> = ({ blogCategoryArticles }) => {
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
-    const [{ endCursor }] = usePaginationContext();
-
-    const [{ data }] = useBlogCategoryArticlesApi({
-        variables: { uuid, endCursorForPagination: endCursor ?? '', pageSize: DEFAULT_PAGE_SIZE },
-    });
 
     const mappedArticles: ListedBlogArticleType[] = useMemo(
         () =>
-            data?.blogCategory?.blogArticles.edges !== undefined
-                ? mapBlogArticleConnection(data.blogCategory.blogArticles)?.edges ?? []
+            blogCategoryArticles?.blogCategory?.blogArticles.edges !== undefined
+                ? mapBlogArticleConnection(blogCategoryArticles.blogCategory.blogArticles)?.edges ?? []
                 : [],
-        [data?.blogCategory?.blogArticles],
+        [blogCategoryArticles?.blogCategory?.blogArticles],
     );
 
     return (
@@ -31,7 +25,7 @@ export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> =
             <BlogArticlesList blogArticles={mappedArticles} />
             <Pagination
                 containerWrapRef={containerWrapRef}
-                totalCount={data?.blogCategory?.blogArticles.totalCount ?? 0}
+                totalCount={blogCategoryArticles?.blogCategory?.blogArticles.totalCount ?? 0}
             />
         </>
     );
