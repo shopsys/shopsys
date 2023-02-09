@@ -12,9 +12,10 @@ class ReleaseNewNodeModulePackageVersion extends AbstractShopsysReleaseWorker
 {
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return sprintf(
             '[Manually] Release and set new node module package version to "%s"',

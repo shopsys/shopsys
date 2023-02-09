@@ -55,9 +55,10 @@ final class ValidateConflictsInComposerJsonReleaseWorker extends AbstractShopsys
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return 'Make sure that "conflict" versions in all composer.json files are closed interval';
     }

@@ -12,9 +12,10 @@ final class EnsureReleaseHighlightsPostIsReleasedReleaseWorker extends AbstractS
 {
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return '[Manually] Ensure "Release highlights" is released';
     }

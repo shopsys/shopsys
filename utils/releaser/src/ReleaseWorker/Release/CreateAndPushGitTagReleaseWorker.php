@@ -12,9 +12,10 @@ final class CreateAndPushGitTagReleaseWorker extends AbstractShopsysReleaseWorke
 {
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return 'Create, [Manually] push a git tag, and [Manually - if not on master branch] split monorepo';
     }

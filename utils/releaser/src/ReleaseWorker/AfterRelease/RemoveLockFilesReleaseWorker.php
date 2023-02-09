@@ -12,9 +12,10 @@ final class RemoveLockFilesReleaseWorker extends AbstractShopsysReleaseWorker
 {
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return 'Remove lock files from the repository, commit the change, and [Manually] push';
     }

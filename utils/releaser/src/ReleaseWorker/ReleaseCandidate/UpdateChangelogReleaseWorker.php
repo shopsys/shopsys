@@ -12,9 +12,10 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
 {
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return 'Dump new features to CHANGELOG.md, clean from placeholders and [Manually] check everything is ok';
     }

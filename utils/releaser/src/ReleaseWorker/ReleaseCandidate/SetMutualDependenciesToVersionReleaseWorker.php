@@ -43,9 +43,10 @@ final class SetMutualDependenciesToVersionReleaseWorker extends AbstractShopsysR
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return sprintf('Set mutual package dependencies to "%s" version', $version->getVersionString());
     }

@@ -12,9 +12,10 @@ final class CheckLatestVersionOfReleaserReleaseWorker extends AbstractShopsysRel
 {
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return '[Manually] Check that you are using latest version of Releaser.';
     }

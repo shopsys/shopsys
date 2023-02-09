@@ -12,9 +12,10 @@ final class CheckCorrectReleaseVersionReleaseWorker extends AbstractShopsysRelea
 {
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return 'Check that correct version string has been entered.';
     }

@@ -35,9 +35,10 @@ final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysRelease
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = 'master'): string
     {
         return 'Check there are new versions of all packages on packagist';
     }
