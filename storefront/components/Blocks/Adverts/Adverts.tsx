@@ -3,13 +3,13 @@ import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useAdverts } from 'connectors/adverts/Adverts';
+import { AdvertsFragmentApi } from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import NextLink from 'next/link';
 import { Fragment, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { AdvertType } from 'types/advert';
 import { CategoryDetailType } from 'types/category';
 
 type PositionNameType = 'productList' | 'footer' | 'header' | 'productListMiddle' | 'cartPreview';
@@ -54,7 +54,7 @@ export const Adverts: FC<AdvertsProps> = ({
                     shouldBeShown(item, positionName, currentCategory) &&
                     (item.__typename === 'AdvertImage' ? (
                         <Fragment key={index}>
-                            {item.link !== undefined ? (
+                            {item.link !== null ? (
                                 <NextLink href={item.link} passHref>
                                     <a target="_blank">
                                         <Image
@@ -91,7 +91,7 @@ export const Adverts: FC<AdvertsProps> = ({
 };
 
 const shouldBeShown = (
-    advert: AdvertType,
+    advert: AdvertsFragmentApi,
     positionName: PositionNameType,
     currentCategory?: CategoryDetailType,
 ): boolean => {
