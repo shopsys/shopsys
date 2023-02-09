@@ -30,8 +30,9 @@ final class GenerateApiaryBlueprintReleaseWorker extends AbstractShopsysReleaseW
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = 'master'): void
     {
         $this->processRunner->run('php phing frontend-api-generate-apiary-blueprint');
 

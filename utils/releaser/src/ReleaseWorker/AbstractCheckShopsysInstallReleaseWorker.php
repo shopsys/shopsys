@@ -19,8 +19,9 @@ abstract class AbstractCheckShopsysInstallReleaseWorker extends AbstractShopsysR
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = 'master'): void
     {
         $this->confirm('Confirm Shopsys project-base installation works');
     }

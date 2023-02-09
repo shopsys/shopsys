@@ -21,8 +21,9 @@ final class VerifyMinorUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = 'master'): void
     {
         $this->symfonyStyle->note(sprintf(
             'When releasing a minor version, you need to verify there are no BC-breaks. Suggested steps:

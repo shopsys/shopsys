@@ -21,8 +21,9 @@ final class ForceYourBranchSplitReleaseWorker extends AbstractShopsysReleaseWork
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = 'master'): void
     {
         $this->symfonyStyle->note('Push your branch and split it using tool-monorepo-force-split-branch on Heimdall');
         $this->symfonyStyle->note('Do not worry, it is quite common that some builds fail on Github Actions at this point.');

@@ -54,8 +54,9 @@ final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends Abstr
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = 'master'): void
     {
         $developmentVersion = $this->getDevelopmentVersionString($version);
         $this->dependencyUpdater->updateFileInfosWithPackagesAndVersion(
@@ -71,15 +72,15 @@ final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends Abstr
             )
         );
         $this->confirm(
-            sprintf('Confirm you have pushed the new commit into the "%s" branch', $this->initialBranchName)
+            sprintf('Confirm you have pushed the new commit into the "%s" branch', $this->currentBranchName)
         );
-        if ($this->initialBranchName === 'master') {
+        if ($this->currentBranchName === 'master') {
             return;
         }
 
         $this->symfonyStyle->note(
             sprintf('You are not on master branch so you have to split "%s" branch using tool-monorepo-force-split-branch manually on Heimdall now.
-            You will need the split monorepo later for verifying local intallation.', $this->initialBranchName)
+            You will need the split monorepo later for verifying local intallation.', $this->currentBranchName)
         );
         $this->confirm('Confirm the monorepo split is running.');
     }

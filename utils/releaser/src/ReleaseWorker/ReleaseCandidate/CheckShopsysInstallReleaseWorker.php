@@ -29,8 +29,9 @@ final class CheckShopsysInstallReleaseWorker extends AbstractCheckShopsysInstall
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = 'master'): void
     {
         $branchName = $this->createBranchName($version);
 

@@ -21,8 +21,9 @@ final class EnsureReleaseHighlightsPostIsReleasedReleaseWorker extends AbstractS
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = 'master'): void
     {
         $this->confirm('Confirm the post is released');
     }

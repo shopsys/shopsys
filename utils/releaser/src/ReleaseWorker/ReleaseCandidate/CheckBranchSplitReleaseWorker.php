@@ -21,8 +21,9 @@ final class CheckBranchSplitReleaseWorker extends AbstractShopsysReleaseWorker
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = 'master'): void
     {
         $this->symfonyStyle->note('Branches other than master branch are not automatically split.');
         $this->symfonyStyle->note('In next step you will be asked to check status on Github actions, in order to do that you must now ensure, that the branch of version you are releasing is correctly split.');

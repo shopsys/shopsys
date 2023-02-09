@@ -29,8 +29,9 @@ final class CheckoutToReleaseCandidateBranchReleaseWorker extends AbstractShopsy
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = 'master'): void
     {
         $this->processRunner->run('git checkout ' . $this->createBranchName($version));
     }

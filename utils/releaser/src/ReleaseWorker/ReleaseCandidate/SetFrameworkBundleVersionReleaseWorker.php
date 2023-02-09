@@ -39,8 +39,9 @@ final class SetFrameworkBundleVersionReleaseWorker extends AbstractShopsysReleas
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = 'master'): void
     {
         $this->updateFrameworkBundleVersion($version);
 

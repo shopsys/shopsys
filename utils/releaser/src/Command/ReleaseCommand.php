@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Shopsys\Releaser\Command;
 
+use InvalidArgumentException;
 use Shopsys\Releaser\ReleaseWorker\ReleaseWorkerProvider;
+use Shopsys\Releaser\ReleaseWorker\StageWorkerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface;
 use Symplify\MonorepoBuilder\Release\Guard\ReleaseGuard;
 use Symplify\MonorepoBuilder\Release\ValueObject\SemVersion;
 use Symplify\MonorepoBuilder\Release\Version\VersionFactory;
@@ -22,6 +23,7 @@ use Symplify\PackageBuilder\Console\ShellCode;
 final class ReleaseCommand extends Command
 {
     private const RESUME_STEP = 'resume-step';
+    private const INITIAL_BRANCH_NAME = 'initial-branch';
 
     /**
      * @var \Symfony\Component\Console\Style\SymfonyStyle
@@ -83,6 +85,7 @@ final class ReleaseCommand extends Command
 
         $this->addOption(Option::STAGE, null, InputOption::VALUE_REQUIRED, 'Name of stage to perform');
         $this->addOption(self::RESUME_STEP, null, InputOption::VALUE_REQUIRED, 'Number of step to start from');
+        $this->addOption(self::INITIAL_BRANCH_NAME, null, InputOption::VALUE_REQUIRED, 'Name of branch you are releasing version on');
     }
 
     /**
@@ -95,6 +98,7 @@ final class ReleaseCommand extends Command
         // validation phase
         $stage = $this->resolveStage($input);
         $step = $this->resolveStep($input);
+        $initialBranchName = $this->resolveInitialBranchName($input);
 
         $this->releaseGuard->guardStage($stage);
 
@@ -113,7 +117,7 @@ final class ReleaseCommand extends Command
             $this->printReleaseWorkerMetadata($releaseWorker);
 
             if (!$isDryRun) {
-                $releaseWorker->work($version);
+                $releaseWorker->work($version, $initialBranchName);
             }
         }
 
@@ -153,9 +157,24 @@ final class ReleaseCommand extends Command
     }
 
     /**
-     * @param \Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface $releaseWorker
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @return string
      */
-    private function printReleaseWorkerMetadata(ReleaseWorkerInterface $releaseWorker): void
+    private function resolveInitialBranchName(InputInterface $input): string
+    {
+        $initialBranchName = $input->getOption(self::INITIAL_BRANCH_NAME);
+
+        if ($initialBranchName === null) {
+            throw new InvalidArgumentException('Initial branch name must be provided.');
+        }
+
+        return (string)$initialBranchName;
+    }
+
+    /**
+     * @param \Shopsys\Releaser\ReleaseWorker\StageWorkerInterface $releaseWorker
+     */
+    private function printReleaseWorkerMetadata(StageWorkerInterface $releaseWorker): void
     {
         if (!$this->symfonyStyle->isVerbose()) {
             return;

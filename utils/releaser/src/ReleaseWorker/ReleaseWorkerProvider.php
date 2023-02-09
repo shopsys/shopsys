@@ -9,12 +9,12 @@ use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\StageAwareInterface;
 class ReleaseWorkerProvider
 {
     /**
-     * @var \Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface[]
+     * @var \Shopsys\Releaser\ReleaseWorker\StageWorkerInterface[]
      */
     private array $releaseWorkers;
 
     /**
-     * @param \Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface[] $releaseWorkers
+     * @param \Shopsys\Releaser\ReleaseWorker\StageWorkerInterface[] $releaseWorkers
      */
     public function __construct(array $releaseWorkers)
     {
@@ -22,7 +22,7 @@ class ReleaseWorkerProvider
     }
 
     /**
-     * @return \Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface[]
+     * @return \Shopsys\Releaser\ReleaseWorker\StageWorkerInterface[]
      */
     public function provide(): array
     {
@@ -32,7 +32,7 @@ class ReleaseWorkerProvider
     /**
      * @param string|null $stage
      * @param int $step
-     * @return \Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface[]
+     * @return \Shopsys\Releaser\ReleaseWorker\StageWorkerInterface[]
      */
     public function provideByStage(?string $stage, int $step): array
     {

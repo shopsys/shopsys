@@ -47,8 +47,9 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = 'master'): void
     {
         $packages = $this->packageProvider->getPackagesByOrganization('shopsys', self::EXCLUDED_PACKAGES);
         $packageNames = str_replace('shopsys/', '', $packages);
@@ -90,7 +91,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
                     'cd %s/%s && git checkout %s && git tag %s',
                     $tempDirectory,
                     $packageName,
-                    $this->initialBranchName,
+                    $this->currentBranchName,
                     $versionString
                 )
             );

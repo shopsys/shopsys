@@ -21,8 +21,9 @@ final class CreateReleaseNotesReleaseWorker extends AbstractShopsysReleaseWorker
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = 'master'): void
     {
         $this->symfonyStyle->note(
             'See https://github.com/shopsys/shopsys/releases. Use "Draft a new release" button for creating a new release. If you are not sure about the release name or description, you can get inspired by the previous releases.'

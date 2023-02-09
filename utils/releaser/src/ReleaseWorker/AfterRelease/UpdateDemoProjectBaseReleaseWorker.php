@@ -19,8 +19,9 @@ final class UpdateDemoProjectBaseReleaseWorker extends AbstractShopsysReleaseWor
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = 'master'): void
     {
         $this->symfonyStyle->note(
             'If you are releasing new highest version yet, you need to update https://gitlab.shopsys.cz/ss6-projects/demo-project-base repository with new project-base.
