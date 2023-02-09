@@ -1,14 +1,9 @@
-import { useNotificationBarsApi } from 'graphql/generated';
+import { NotificationBarsFragmentApi, useNotificationBarsApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
-import { NotificationBarsType } from 'types/notificationBars';
 
-export const useNotificationBars = (): NotificationBarsType[] => {
+export const useNotificationBars = (): NotificationBarsFragmentApi[] | undefined => {
     const [{ data, error }] = useNotificationBarsApi();
     useQueryError(error);
 
-    if (data?.notificationBars) {
-        return data.notificationBars;
-    }
-
-    return [];
+    return data?.notificationBars ?? undefined;
 };
