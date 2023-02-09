@@ -10,10 +10,11 @@ import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import { useCountriesAsSelectOptions } from 'connectors/country/Country';
+import { useCountries } from 'connectors/country/Country';
+import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
 import { useShopsysDispatch } from 'redux/main';
@@ -40,10 +41,12 @@ export const ContactInformationDeliveryAddress: FC = () => {
     const isCustomAddressSelected = deliveryAddressUuidValue === '';
     const showAddressSelection = isUserLoggedIn && !pickupPlace && (!user || user.deliveryAddresses.length > 0);
 
-    const countrySelectOptions = useCountriesAsSelectOptions();
+    const countries = useCountries();
+    const countriesAsSelectOptions = useMemo(() => mapCountriesToSelectOptions(countries), [countries]);
+
     useEffect(() => {
         if (differentDeliveryAddressValue === true) {
-            const selectedCountryOption = countrySelectOptions.find((option) => {
+            const selectedCountryOption = countriesAsSelectOptions.find((option) => {
                 return option.value === pickupPlace?.country.code;
             });
             if (selectedCountryOption !== undefined && pickupPlace !== null) {
@@ -67,7 +70,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
     }, [
         pickupPlace,
         differentDeliveryAddressValue,
-        countrySelectOptions,
+        countriesAsSelectOptions,
         getValues,
         setValue,
         formMeta.fields.deliveryFirstName.name,
@@ -93,10 +96,10 @@ export const ContactInformationDeliveryAddress: FC = () => {
                 (address) => address.uuid === deliveryAddressUuidValue,
             );
             const selectedCountryOption =
-                countrySelectOptions.find((option) => option.value === deliveryAddress?.country) ??
-                countrySelectOptions.find((option) => option.value === user?.country.code);
+                countriesAsSelectOptions.find((option) => option.value === deliveryAddress?.country) ??
+                countriesAsSelectOptions.find((option) => option.value === user?.country.code);
 
-            if (selectedCountryOption !== undefined || countrySelectOptions.length > 0) {
+            if (selectedCountryOption !== undefined || countriesAsSelectOptions.length > 0) {
                 setValue(formMeta.fields.deliveryFirstName.name, deliveryAddress?.firstName ?? '');
                 setValue(formMeta.fields.deliveryLastName.name, deliveryAddress?.lastName ?? '');
                 setValue(formMeta.fields.deliveryCompanyName.name, deliveryAddress?.companyName ?? '');
@@ -105,12 +108,15 @@ export const ContactInformationDeliveryAddress: FC = () => {
                     setValue(formMeta.fields.deliveryStreet.name, deliveryAddress?.street ?? '');
                     setValue(formMeta.fields.deliveryCity.name, deliveryAddress?.city ?? '');
                     setValue(formMeta.fields.deliveryPostcode.name, deliveryAddress?.postcode ?? '');
-                    setValue(formMeta.fields.deliveryCountry.name, selectedCountryOption ?? countrySelectOptions[0]);
+                    setValue(
+                        formMeta.fields.deliveryCountry.name,
+                        selectedCountryOption ?? countriesAsSelectOptions[0],
+                    );
                 }
             }
         }
     }, [
-        countrySelectOptions,
+        countriesAsSelectOptions,
         deliveryAddressUuidValue,
         formMeta.fields.deliveryCity.name,
         formMeta.fields.deliveryCompanyName.name,
@@ -127,7 +133,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
         user?.deliveryAddresses,
     ]);
 
-    if (countrySelectOptions.length === 0) {
+    if (countriesAsSelectOptions.length === 0) {
         return null;
     }
 
@@ -369,7 +375,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                             <Select
                                                                 label={formMeta.fields.deliveryCountry.label}
                                                                 hasError={invalid}
-                                                                options={countrySelectOptions}
+                                                                options={countriesAsSelectOptions}
                                                                 onChange={(...data) => {
                                                                     field.onChange(...data);
                                                                     dispatch(
@@ -378,7 +384,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                                         ),
                                                                     );
                                                                 }}
-                                                                value={countrySelectOptions.find(
+                                                                value={countriesAsSelectOptions.find(
                                                                     (option) => option.value === field.value.value,
                                                                 )}
                                                             />

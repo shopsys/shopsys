@@ -1,4 +1,4 @@
-import { CountryType } from 'types/country';
+import { CountryFragmentApi } from 'graphql/generated';
 
 export type PickupPlaceType = {
     identifier: string;
@@ -8,5 +8,5 @@ export type PickupPlaceType = {
     street: string;
     postcode: string;
     city: string;
-    country: CountryType;
+    country: CountryFragmentApi;
 };

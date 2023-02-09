@@ -105,6 +105,7 @@ export const getGtmPickupPlaceFromStore = (
     name: store.name,
     city: store.city,
     country: {
+        __typename: 'Country',
         name: store.country.name,
         code: store.country.code,
     },
@@ -122,6 +123,7 @@ export const getGtmPickupPlaceFromLastOrder = (
     name: '',
     city: lastOrder.deliveryCity ?? '',
     country: {
+        __typename: 'Country',
         name: lastOrder.deliveryCountry?.name ?? '',
         code: lastOrder.deliveryCountry?.code ?? '',
     },

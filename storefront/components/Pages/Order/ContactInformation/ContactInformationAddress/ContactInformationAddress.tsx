@@ -5,9 +5,10 @@ import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError'
 import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
-import { useCountriesAsSelectOptions } from 'connectors/country/Country';
+import { useCountries } from 'connectors/country/Country';
+import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { useShopsysDispatch } from 'redux/main';
 import { contactInformationActions } from 'redux/slices/contactInformation';
@@ -19,19 +20,20 @@ export const ContactInformationAddress: FC = () => {
     const formProviderMethods = useFormContext<ContactInformationFormType>();
     const { setValue } = formProviderMethods;
     const formMeta = useContactInformationFormMeta(formProviderMethods);
-    const countrySelectOptions = useCountriesAsSelectOptions();
+    const countries = useCountries();
+    const countriesAsSelectOptions = useMemo(() => mapCountriesToSelectOptions(countries), [countries]);
     const [countryValue] = useWatch({
         name: [formMeta.fields.country.name],
         control: formProviderMethods.control,
     });
 
     useEffect(() => {
-        if (countrySelectOptions.length > 0 && countryValue.value === '') {
-            setValue(formMeta.fields.country.name, countrySelectOptions[0]);
+        if (countriesAsSelectOptions.length > 0 && countryValue.value === '') {
+            setValue(formMeta.fields.country.name, countriesAsSelectOptions[0]);
         }
-    }, [countrySelectOptions, countryValue, formMeta.fields.country.name, setValue]);
+    }, [countriesAsSelectOptions, countryValue, formMeta.fields.country.name, setValue]);
 
-    if (countrySelectOptions.length === 0) {
+    if (countriesAsSelectOptions.length === 0) {
         return null;
     }
 
@@ -92,9 +94,9 @@ export const ContactInformationAddress: FC = () => {
                         <>
                             <Select
                                 label={formMeta.fields.country.label}
-                                options={countrySelectOptions}
+                                options={countriesAsSelectOptions}
                                 onChange={field.onChange}
-                                value={countrySelectOptions.find((option) => option.value === field.value.value)}
+                                value={countriesAsSelectOptions.find((option) => option.value === field.value.value)}
                                 hasError={invalid}
                             />
                             <FormLineError

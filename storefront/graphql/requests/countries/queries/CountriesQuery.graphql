@@ -1,6 +1,5 @@
 query CountriesQuery {
     countries {
-        name
-        code
+        ...CountryFragment
     }
 }

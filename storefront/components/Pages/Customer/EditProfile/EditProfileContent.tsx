@@ -16,11 +16,13 @@ import {
     useCustomerChangeProfileForm,
     useCustomerChangeProfileFormMeta,
 } from 'components/Pages/Customer/EditProfile/formMeta';
-import { useCountriesAsSelectOptions } from 'connectors/country/Country';
+import { useCountries } from 'connectors/country/Country';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { useChangePasswordMutationApi, useChangePersonalDataMutationApi } from 'graphql/generated';
+import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import { useMemo } from 'react';
 import { Controller, FormProvider, Path, SubmitHandler, UseFormReturn } from 'react-hook-form';
 import { CurrentCustomerType } from 'types/customer';
 import { CustomerChangeProfileFormType } from 'types/form';
@@ -45,7 +47,8 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
     });
     const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
-    const countrySelectOptions = useCountriesAsSelectOptions();
+    const countries = useCountries();
+    const countriesAsSelectOptions = useMemo(() => mapCountriesToSelectOptions(countries), [countries]);
     const [, changePassword] = useChangePasswordMutationApi();
 
     const onSubmitCustomerChangeProfileFormHandler: SubmitHandler<CustomerChangeProfileFormType> = async (
@@ -380,9 +383,9 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             render={({ fieldState: { invalid, error }, field }) => (
                                 <>
                                     <Select
-                                        options={countrySelectOptions}
+                                        options={countriesAsSelectOptions}
                                         onChange={field.onChange}
-                                        value={countrySelectOptions.find(
+                                        value={countriesAsSelectOptions.find(
                                             (option) => option.value === field.value.value,
                                         )}
                                         hasError={invalid}
