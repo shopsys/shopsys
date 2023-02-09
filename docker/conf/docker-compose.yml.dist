@@ -39,6 +39,7 @@ services:
                 project_root: project-base
         container_name: shopsys-framework-php-fpm
         volumes:
+            - ~/.gitconfig:/home/www-data/.gitconfig
             - .:/var/www/html
         ports:
             - "35729:35729"
