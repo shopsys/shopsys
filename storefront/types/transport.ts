@@ -1,4 +1,4 @@
-import { ImageType } from 'types/image';
+import { ImageSizesFragmentApi } from 'graphql/generated';
 import { PaymentType } from 'types/payment';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { PriceType } from 'types/price';
@@ -9,7 +9,7 @@ export type TransportType = {
     description: string;
     instruction: string;
     price: PriceType;
-    image: ImageType | null;
+    images: ImageSizesFragmentApi[];
     payments: PaymentType[];
     daysUntilDelivery: number;
     isPersonalPickup: boolean;

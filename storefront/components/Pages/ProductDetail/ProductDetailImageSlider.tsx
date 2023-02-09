@@ -1,5 +1,6 @@
 import { ProductFlags } from 'components/Blocks/Product/Flags/ProductFlags';
 import { theme } from 'components/Theme/main';
+import { ImageSizesFragmentApi } from 'graphql/generated';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
 import lgThumbnail from 'lightgallery/plugins/thumbnail';
@@ -7,10 +8,9 @@ import LightGallery from 'lightgallery/react';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { SimpleFlagType } from 'types/flag';
-import { ImageType } from 'types/image';
 
 type ProductDetailImageSliderProps = {
-    galleryItems: ImageType[];
+    galleryItems: ImageSizesFragmentApi[];
     flags: SimpleFlagType[];
 };
 
@@ -50,12 +50,12 @@ export const ProductDetailImageSlider: FC<ProductDetailImageSliderProps> = ({ ga
                         <div
                             key={index}
                             className="keen-slider__slide lightboxItem flex max-h-[250px] min-h-[250px] w-full items-center justify-center sm:max-h-[300px] sm:min-h-[300px] md:max-h-[330px] md:min-h-[330px]"
-                            data-src={galleryItem.sizes?.find((size) => size.size === 'default')?.url}
+                            data-src={galleryItem.sizes.find((size) => size.size === 'default')?.url}
                         >
                             <img
                                 className="h-full w-full object-contain "
                                 loading="lazy"
-                                src={galleryItem.sizes?.find((size) => size.size === 'default')?.url}
+                                src={galleryItem.sizes.find((size) => size.size === 'default')?.url}
                             />
                         </div>
                     ))}

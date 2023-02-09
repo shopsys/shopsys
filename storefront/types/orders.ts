@@ -1,5 +1,5 @@
-import { ImageType } from './image';
 import { PriceType } from './price';
+import { ImageSizesFragmentApi } from 'graphql/generated';
 import { PageInfoType } from 'types/pageInfo';
 
 export type ListedOrderType = {
@@ -11,7 +11,7 @@ export type ListedOrderType = {
     };
     transport: {
         name: string;
-        image: ImageType | null;
+        images: ImageSizesFragmentApi[];
     };
     payment: string;
     totalPrice: PriceType;

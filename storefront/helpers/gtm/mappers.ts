@@ -1,4 +1,5 @@
 import { LastOrderFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
+import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { CartItemType } from 'types/cart';
 import { GtmCartItemType, GtmListedProductType, GtmProductInterface, GtmShippingInfoType } from 'types/gtm';
 import { PickupPlaceType } from 'types/pickupPlace';
@@ -71,12 +72,14 @@ const mapGtmProductInterface = (productInterface: ProductInterfaceType, domainUr
 
 const mapGtmProductInterfaceImageUrl = (productInterface: ProductInterfaceType): string | undefined => {
     if ('image' in productInterface) {
-        return productInterface.image?.sizes?.find((size) => size.size === 'default')?.url;
+        return productInterface.image?.sizes.find((size) => size.size === 'default')?.url;
     }
 
-    return productInterface.images.length > 0
-        ? productInterface.images[0].sizes?.find((size) => size.size === 'default')?.url
-        : undefined;
+    if ('images' in productInterface && Array.isArray(productInterface.images)) {
+        return getFirstImageOrNull(productInterface.images)?.sizes.find((size) => size.size === 'default')?.url;
+    }
+
+    return undefined;
 };
 
 export const mapGtmShippingInfo = (pickupPlace: PickupPlaceType | null): GtmShippingInfoType => {

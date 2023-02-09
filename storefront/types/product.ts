@@ -9,7 +9,6 @@ import {
 } from 'graphql/generated';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { SimpleFlagType } from 'types/flag';
-import { ImageType } from 'types/image';
 import { PageInfoType } from 'types/pageInfo';
 import { ProductParameterType } from 'types/parameter';
 import { ProductPriceType } from 'types/price';
@@ -22,7 +21,7 @@ export type SimpleProductType = {
     slug: string;
     fullName: string;
     price: ProductPriceType;
-    image: ImageType | null;
+    image: ImageSizesFragmentApi | null;
     unitName: string;
     brand: SimpleBrandType | null;
     categoryNames: string[];
@@ -56,7 +55,7 @@ export type ListedProductType = {
     availableStoresCount: number;
     exposedStoresCount: number;
     flags: SimpleFlagType[];
-    image: ImageType | null;
+    image: ImageSizesFragmentApi | null;
     availability: AvailabilityFragmentApi;
     price: ProductPriceType;
     isMainVariant: boolean;

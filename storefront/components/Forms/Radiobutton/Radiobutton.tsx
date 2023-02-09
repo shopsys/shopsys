@@ -1,8 +1,8 @@
 import { LabelWrapper } from '../Lib/LabelWrapper/LabelWrapper';
 import { Image } from 'components/Basic/Image/Image';
+import { ImageSizesFragmentApi } from 'graphql/generated';
 import { forwardRef, InputHTMLAttributes, MouseEventHandler, ReactNode, useCallback } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
-import { ImageType } from 'types/image';
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
@@ -15,7 +15,7 @@ export type RadiobuttonProps = NativeProps & {
     checked: InputHTMLAttributes<HTMLInputElement>['checked'];
     testIdentifier?: string;
     label: ReactNode;
-    image?: ImageType | null;
+    image?: ImageSizesFragmentApi | null;
     onChangeCallback?: (newValue: string | null) => void;
 };
 

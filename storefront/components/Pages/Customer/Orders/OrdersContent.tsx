@@ -6,6 +6,7 @@ import { PaginationProvider } from 'components/Blocks/Pagination/PaginationProvi
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { getNewPagination } from 'helpers/pagination/getNewPagination';
 import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
@@ -80,7 +81,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ breadcrumbs, orders, tot
                                     <td data-testid={TEST_IDENTIFIER + 'transport'}>
                                         <div className="relative top-1 mr-1 inline-flex w-10 justify-center">
                                             <Image
-                                                image={order.transport.image}
+                                                image={getFirstImageOrNull(order.transport.images)}
                                                 type="default"
                                                 alt={order.transport.name}
                                                 maxWidth={36}

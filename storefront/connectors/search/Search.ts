@@ -1,6 +1,4 @@
 import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
-import { mapSimpleArticlesInterface } from 'connectors/articleInterface/ArticleInterface';
-import { mapListedBrandsApiData } from 'connectors/brands/Brands';
 import { mapConnectionEdges } from 'connectors/connection/Connection';
 import { mapListedProductConnectionPreviewType } from 'connectors/products/Products';
 import { ProductOrderingModeEnumApi, SearchQueryApi, useSearchQueryApi } from 'graphql/generated';
@@ -50,8 +48,8 @@ const mapSearchResult = (apiData: SearchQueryApi | undefined, currencyCode: stri
     }
 
     return {
-        articlesSearch: mapSimpleArticlesInterface(apiData.articlesSearch),
-        brandSearch: mapListedBrandsApiData(apiData.brandSearch),
+        articlesSearch: apiData.articlesSearch,
+        brandSearch: apiData.brandSearch,
         categoriesSearch: {
             totalCount: apiData.categoriesSearch.totalCount,
             categories: mapConnectionEdges(apiData.categoriesSearch.edges),

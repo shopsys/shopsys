@@ -1,65 +1,13 @@
-import { getFirstImage } from 'connectors/image/Image';
-import {
-    CategoriesByColumnFragmentApi,
-    ColumnCategoriesFragmentApi,
-    NavigationQueryApi,
-    useNavigationQueryApi,
-} from 'graphql/generated';
+import { useNavigationQueryApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
-import { NavigationCategoriesColumn, NavigationCategory, NavigationItem } from 'types/navigation';
+import { NavigationItem } from 'types/navigation';
 
 export function useNavigationItems(): NavigationItem[] {
     const [{ data, error }] = useNavigationQueryApi();
     useQueryError(error);
 
     if (data?.navigation !== undefined) {
-        return mapNavigation(data.navigation);
+        return data.navigation;
     }
     return [];
 }
-
-function mapNavigation(data: NavigationQueryApi['navigation']): NavigationItem[] {
-    const mappedNavigation = [];
-
-    for (const navigationItem of data) {
-        mappedNavigation.push({
-            ...navigationItem,
-            categoriesByColumns: mapNavigationCategoriesByColumns(navigationItem.categoriesByColumns),
-        });
-    }
-    return mappedNavigation;
-}
-
-function mapNavigationCategoriesByColumns(
-    categoriesByColumns: CategoriesByColumnFragmentApi['categoriesByColumns'],
-): NavigationCategoriesColumn[] {
-    const mappedCategoriesByColumns = [];
-    for (const categoriesByColumn of categoriesByColumns) {
-        mappedCategoriesByColumns.push({
-            ...categoriesByColumn,
-            categories: mapCategories(categoriesByColumn.categories),
-        });
-    }
-
-    return mappedCategoriesByColumns;
-}
-
-const mapCategories = (data: ColumnCategoriesFragmentApi['categories']): NavigationCategory[] => {
-    const mappedCategories = [];
-
-    for (const category of data) {
-        const mappedImage = getFirstImage(category.images);
-        if (mappedImage === null) {
-            continue;
-        }
-
-        mappedCategories.push({
-            name: category.name,
-            slug: category.slug,
-            children: category.children,
-            image: mappedImage,
-        });
-    }
-
-    return mappedCategories;
-};

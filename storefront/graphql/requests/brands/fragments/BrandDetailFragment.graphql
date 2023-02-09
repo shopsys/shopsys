@@ -6,7 +6,7 @@ fragment BrandDetailFragment on Brand {
     name
     seoH1
     description
-    brandImages: images {
+    images {
         ...ImageSizesFragment
     }
     ...ListedProductsPreviewFragment

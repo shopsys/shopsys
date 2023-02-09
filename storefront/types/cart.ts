@@ -1,7 +1,6 @@
 import { SimpleBrandType } from './brand';
-import { ImageType } from './image';
 import { PaymentType } from './payment';
-import { AvailabilityFragmentApi, CartModificationsFragmentApi } from 'graphql/generated';
+import { AvailabilityFragmentApi, CartModificationsFragmentApi, ImageSizesFragmentApi } from 'graphql/generated';
 import { SimpleFlagType } from 'types/flag';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { PriceType, ProductPriceType } from 'types/price';
@@ -29,7 +28,7 @@ export type ProductCartItemType = {
     slug: string;
     fullName: string;
     flags: SimpleFlagType[];
-    image: ImageType | null;
+    image: ImageSizesFragmentApi | null;
     price: ProductPriceType;
     availability: AvailabilityFragmentApi;
     stockQuantity: number;

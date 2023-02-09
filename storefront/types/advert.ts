@@ -1,5 +1,4 @@
-import { SimpleCategoryFragmentApi } from 'graphql/generated';
-import { ImageType } from 'types/image';
+import { ImageSizesFragmentApi, SimpleCategoryFragmentApi } from 'graphql/generated';
 
 export type AdvertType = AdvertImageType | AdvertCodeType;
 
@@ -13,8 +12,8 @@ type AdvertCommonType = {
 
 type AdvertImageType = AdvertCommonType & {
     __typename: 'AdvertImage';
-    image: ImageType | null;
-    imageMobile: ImageType | null;
+    image: ImageSizesFragmentApi[];
+    imageMobile: ImageSizesFragmentApi[];
     link?: string;
 };
 

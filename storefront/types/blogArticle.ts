@@ -1,6 +1,6 @@
 import { SimpleBlogCategoryType } from './blogCategory';
+import { ImageSizesFragmentApi } from 'graphql/generated';
 import { BreadcrumbItemType } from 'types/breadcrumb';
-import { ImageType } from 'types/image';
 import { PageInfoType } from 'types/pageInfo';
 import { SliderProductItemType } from 'types/product';
 
@@ -10,7 +10,7 @@ export type BlogArticleDetailType = {
     name: string;
     slug: string;
     link: string;
-    image: ImageType | null;
+    images: ImageSizesFragmentApi[];
     breadcrumb: BreadcrumbItemType[];
     text: string | null;
     publishDate: string;
@@ -30,7 +30,7 @@ export type ListedBlogArticleType = {
     name: string;
     link: string;
     slug: string;
-    image: ImageType | null;
+    images: ImageSizesFragmentApi[];
     publishDate: string;
     perex: string | null;
     blogCategories: SimpleBlogCategoryType[];
@@ -40,5 +40,5 @@ export type SimpleBlogArticleType = {
     __typename?: 'BlogArticle';
     name: string;
     slug: string;
-    image: ImageType | null;
+    images: ImageSizesFragmentApi[];
 };

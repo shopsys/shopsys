@@ -2,7 +2,6 @@ import {
     AUTOCOMPLETE_CATEGORY_LIMIT,
     AUTOCOMPLETE_PRODUCT_LIMIT,
 } from 'components/Layout/Header/AutocompleteSearch/Autocomplete';
-import { mapSimpleArticlesInterface } from 'connectors/articleInterface/ArticleInterface';
 import { mapConnectionEdges } from 'connectors/connection/Connection';
 import { mapListedProductConnectionType } from 'connectors/products/Products';
 import { AutocompleteSearchQueryApi, useAutocompleteSearchQueryApi } from 'graphql/generated';
@@ -41,7 +40,6 @@ export const useAutocompleteSearch = (autocompleteSearch: string): [Autocomplete
 const mapSearchResult = (apiData: AutocompleteSearchQueryApi, currencyCode: string): AutocompleteSearchType => {
     return {
         ...apiData,
-        articlesSearch: mapSimpleArticlesInterface(apiData.articlesSearch),
         categoriesSearch: {
             totalCount: apiData.categoriesSearch.totalCount,
             categories: mapConnectionEdges(apiData.categoriesSearch.edges),

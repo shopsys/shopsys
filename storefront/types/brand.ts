@@ -1,5 +1,5 @@
+import { ImageSizesFragmentApi } from 'graphql/generated';
 import { BreadcrumbItemType } from 'types/breadcrumb';
-import { ImageType } from 'types/image';
 import { ListedProductConnectionPreviewType } from 'types/product';
 
 export type BrandDetailType = {
@@ -9,7 +9,7 @@ export type BrandDetailType = {
     breadcrumb: BreadcrumbItemType[];
     name: string;
     seoH1: string | null;
-    image: ImageType | null;
+    images: ImageSizesFragmentApi[];
     description: string | null;
     productConnection: ListedProductConnectionPreviewType;
     seoTitle: string | null;
@@ -20,7 +20,7 @@ export type ListedBrandType = {
     uuid: string;
     name: string;
     slug: string;
-    image: ImageType | null;
+    images: ImageSizesFragmentApi[];
 };
 
 export type SimpleBrandType = {

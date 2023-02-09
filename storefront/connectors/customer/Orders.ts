@@ -1,5 +1,4 @@
 import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
-import { getFirstImage } from 'connectors/image/Image';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
 import { mapPriceData } from 'connectors/price/Prices';
 import {
@@ -68,10 +67,6 @@ const mapListedOrder = (apiOrder: ListedOrderFragmentApi, currentDomainConfig: D
         number: apiOrder.number.toString(),
         creationDate: new Date(apiOrder.creationDate).toLocaleDateString(currentDomainConfig.defaultLocale),
         items: { quantity: apiOrder.items.length - 2 }, // -2 => we need to remove transport and payment
-        transport: {
-            name: apiOrder.transport.name,
-            image: getFirstImage(apiOrder.transport.images),
-        },
         payment: apiOrder.payment.name,
         totalPrice: mapPriceData(apiOrder.totalPrice, currentDomainConfig.currencyCode),
     };

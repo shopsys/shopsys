@@ -1,4 +1,4 @@
-import { ImageType } from 'types/image';
+import { ImageSizesFragmentApi } from 'graphql/generated';
 
 export type SliderItemType = {
     uuid: string;
@@ -6,6 +6,6 @@ export type SliderItemType = {
     link: string;
     extendedText: string;
     extendedTextLink: string;
-    webImages: ImageType | null;
-    mobileImages: ImageType | null;
+    webImages: ImageSizesFragmentApi[];
+    mobileImages: ImageSizesFragmentApi[];
 };

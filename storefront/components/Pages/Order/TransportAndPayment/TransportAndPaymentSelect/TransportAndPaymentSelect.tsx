@@ -9,6 +9,7 @@ import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/P
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useGoPaySwiftsQueryApi } from 'graphql/generated';
 import { logException } from 'helpers/errors/logException';
+import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { mapPacketeryExtendedPoint, packeteryPick, removePacketeryCookie, setPacketeryCookie } from 'helpers/packetery';
 import { PacketeryExtendedPoint } from 'helpers/packetery/types';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
@@ -214,7 +215,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     value={transportItem.uuid}
                     checked={isActive}
                     testIdentifier={TEST_IDENTIFIER + 'transport-item-input'}
-                    image={transportItem.image}
+                    image={getFirstImageOrNull(transportItem.images)}
                     onChangeCallback={handleTransportChange}
                     label={
                         <TransportAndPaymentSelectItemLabel
@@ -243,7 +244,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     value={paymentItem.uuid}
                     checked={isActive}
                     testIdentifier={TEST_IDENTIFIER + 'payment-item-input'}
-                    image={paymentItem.image}
+                    image={getFirstImageOrNull(paymentItem.images)}
                     onChangeCallback={handlePaymentChange}
                     label={
                         <TransportAndPaymentSelectItemLabel

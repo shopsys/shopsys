@@ -1,5 +1,4 @@
-import { PriceFragmentApi } from 'graphql/generated';
-import { ImageType } from 'types/image';
+import { ImageSizesFragmentApi, PriceFragmentApi } from 'graphql/generated';
 import { PriceType } from 'types/price';
 
 export const PaymentTypeEnum = {
@@ -25,6 +24,6 @@ export type PaymentType = {
     instruction: string;
     goPayPaymentMethod: GoPayPaymentMethodType | undefined;
     price: PriceType;
-    image: ImageType | null;
+    images: ImageSizesFragmentApi[];
     type: string;
 };

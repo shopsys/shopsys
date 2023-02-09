@@ -3,6 +3,8 @@ import { Image } from 'components/Basic/Image/Image';
 import { ProductFlags } from 'components/Blocks/Product/Flags/ProductFlags';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
+import { ImageSizesFragmentApi } from 'graphql/generated';
+import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import lgThumbnail from 'lightgallery/plugins/thumbnail';
@@ -10,10 +12,9 @@ import LightGallery from 'lightgallery/react';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { SimpleFlagType } from 'types/flag';
-import { ImageType } from 'types/image';
 
 type ProductDetailGalleryProps = {
-    images: ImageType[];
+    images: ImageSizesFragmentApi[];
     productName: string;
     flags: SimpleFlagType[];
 };
@@ -34,8 +35,9 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
         return null;
     }
 
-    const mainImage = images[0];
-    const mainImageUrl = images[0].sizes?.find((size) => size.size === 'default')?.url;
+    const firstImage = getFirstImageOrNull(images);
+    const mainImage = firstImage;
+    const mainImageUrl = firstImage?.sizes.find((size) => size.size === 'default')?.url;
 
     return isSliderVisible ? (
         <ProductDetailImageSlider galleryItems={images} flags={flags} />
@@ -60,7 +62,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
                                     'lightboxItem relative block w-20 cursor-pointer lg:mb-3 lg:h-16 lg:rounded-md lg:bg-greyVeryLight lg:p-2 lg:transition lg:hover:bg-greyLighter',
                                     index > 6 && 'hidden',
                                 )}
-                                data-src={image.sizes?.find((size) => size.size === 'default')?.url}
+                                data-src={image.sizes.find((size) => size.size === 'default')?.url}
                             >
                                 <Image
                                     image={image}

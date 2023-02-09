@@ -1,22 +1,15 @@
 import { mapConnectionEdges } from 'connectors/connection/Connection';
-import { getFirstImage } from 'connectors/image/Image';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
 import { mapListedProductType } from 'connectors/products/Products';
 import {
     BlogArticleConnectionFragmentApi,
     BlogArticleDetailFragmentApi,
     ListedBlogArticleFragmentApi,
-    SimpleBlogArticleFragmentApi,
     useBlogArticlesQueryApi,
 } from 'graphql/generated';
 import { DomainConfigType } from 'helpers/domain/domain';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
-import {
-    BlogArticleConnectionType,
-    BlogArticleDetailType,
-    ListedBlogArticleType,
-    SimpleBlogArticleType,
-} from 'types/blogArticle';
+import { BlogArticleConnectionType, BlogArticleDetailType, ListedBlogArticleType } from 'types/blogArticle';
 
 export const blogPreviewVariables = { first: 6, onlyHomepageArticles: true };
 
@@ -29,10 +22,7 @@ export const useBlogPreviewArticles = (): ListedBlogArticleType[] => {
         return [];
     }
 
-    return mapConnectionEdges<ListedBlogArticleFragmentApi, ListedBlogArticleType>(
-        data.blogArticles.edges,
-        mapListedBlogArticle,
-    );
+    return mapConnectionEdges<ListedBlogArticleFragmentApi, ListedBlogArticleType>(data.blogArticles.edges);
 };
 
 export const mapBlogArticleDetail = (
@@ -42,7 +32,6 @@ export const mapBlogArticleDetail = (
     return {
         ...apiData,
         __typename: 'BlogArticle',
-        image: getFirstImage(apiData.blogArticlesGridImages),
         blogArticleProducts: apiData.blogArticleProducts.map((product) =>
             mapListedProductType(product, currentDomainConfig.currencyCode),
         ),
@@ -59,23 +48,6 @@ export const mapBlogArticleConnection = (
     return {
         ...apiData,
         pageInfo: mapPageInfoApiData(apiData.pageInfo),
-        edges: mapConnectionEdges<ListedBlogArticleFragmentApi, ListedBlogArticleType>(
-            apiData.edges,
-            mapListedBlogArticle,
-        ),
-    };
-};
-
-export const mapListedBlogArticle = (apiData: ListedBlogArticleFragmentApi): ListedBlogArticleType => {
-    return {
-        ...apiData,
-        image: getFirstImage(apiData.images),
-    };
-};
-
-export const mapSimpleBlogArticle = (apiData: SimpleBlogArticleFragmentApi): SimpleBlogArticleType => {
-    return {
-        ...apiData,
-        image: getFirstImage(apiData.images),
+        edges: mapConnectionEdges<ListedBlogArticleFragmentApi, ListedBlogArticleType>(apiData.edges),
     };
 };

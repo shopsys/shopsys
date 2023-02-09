@@ -1,6 +1,5 @@
-import { SimpleCategoryFragmentApi } from 'graphql/generated';
+import { ImageSizesFragmentApi, SimpleCategoryFragmentApi } from 'graphql/generated';
 import { BreadcrumbItemType } from 'types/breadcrumb';
-import { ImageType } from 'types/image';
 import { ListedProductConnectionPreviewType } from 'types/product';
 
 export type SimpleCategoryConnectionType = {
@@ -12,7 +11,7 @@ export type ListedCategoryType = {
     uuid: string;
     name: string;
     slug: string;
-    image: ImageType | null;
+    images: ImageSizesFragmentApi[];
     totalCount?: number;
 };
 

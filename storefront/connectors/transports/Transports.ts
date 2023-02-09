@@ -1,4 +1,3 @@
-import { getFirstImage } from 'connectors/image/Image';
 import { mapPayment } from 'connectors/payments/Payment';
 import { mapPriceData } from 'connectors/price/Prices';
 import { mapPickupPlacesApiData } from 'connectors/transports/pickupPlace/PickupPlace';
@@ -28,7 +27,6 @@ export const mapTransport = (
         ...apiData,
         description: apiData.description !== null ? apiData.description : '',
         instruction: apiData.instruction !== null ? apiData.instruction : '',
-        image: getFirstImage(apiData.images),
         price: mapPriceData(apiData.price, currencyCode),
         payments: apiData.payments.map((payment) => mapPayment(payment, currencyCode)),
         stores: apiData.stores !== null ? mapPickupPlacesApiData(apiData.stores) : [],

@@ -1,5 +1,6 @@
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
+import { getFirstImageOrNull } from 'helpers/mappers/image';
 import NextLink from 'next/link';
 import { Fragment } from 'react';
 import { ListedBlogArticleType } from 'types/blogArticle';
@@ -19,7 +20,7 @@ export const Side: FC<SideProps> = ({ blogSideItems }) => {
                         <NextLink href={blogSideItem.link} passHref>
                             <a className="relative flex w-full">
                                 <Image
-                                    image={blogSideItem.image}
+                                    image={getFirstImageOrNull(blogSideItem.images)}
                                     type="listAside"
                                     alt="alt"
                                     className="max-h-20 rounded"

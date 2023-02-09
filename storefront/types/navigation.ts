@@ -1,10 +1,9 @@
-import { ImageType } from './image';
-import { NavigationSubCategoriesLinkFragmentApi } from 'graphql/generated';
+import { ImageSizesFragmentApi, NavigationSubCategoriesLinkFragmentApi } from 'graphql/generated';
 
 export type NavigationCategory = {
     name: string;
     slug: string;
-    image: ImageType;
+    images: ImageSizesFragmentApi[];
     children: NavigationSubCategoriesLinkFragmentApi['children'];
 };
 

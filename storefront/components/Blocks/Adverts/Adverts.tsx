@@ -3,6 +3,7 @@ import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useAdverts } from 'connectors/adverts/Adverts';
+import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import NextLink from 'next/link';
@@ -57,7 +58,11 @@ export const Adverts: FC<AdvertsProps> = ({
                                 <NextLink href={item.link} passHref>
                                     <a target="_blank">
                                         <Image
-                                            image={isMobile ? item.imageMobile : item.image}
+                                            image={
+                                                isMobile
+                                                    ? getFirstImageOrNull(item.imageMobile)
+                                                    : getFirstImageOrNull(item.image)
+                                            }
                                             type={item.positionName}
                                             alt={item.name}
                                         />
@@ -65,7 +70,11 @@ export const Adverts: FC<AdvertsProps> = ({
                                 </NextLink>
                             ) : (
                                 <Image
-                                    image={isMobile ? item.imageMobile : item.image}
+                                    image={
+                                        isMobile
+                                            ? getFirstImageOrNull(item.imageMobile)
+                                            : getFirstImageOrNull(item.image)
+                                    }
                                     type={item.positionName}
                                     alt={item.name}
                                 />

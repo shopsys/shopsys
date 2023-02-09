@@ -5,6 +5,7 @@ import { PaginationProvider } from 'components/Blocks/Pagination/PaginationProvi
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { UserText } from 'components/Helpers/UserText/UserText';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { getNewPagination } from 'helpers/pagination/getNewPagination';
 import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
@@ -31,7 +32,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
                 <Heading type="h1">{brand.seoH1 !== null ? brand.seoH1 : brand.name}</Heading>
                 <div className="mb-5 flex w-full flex-col justify-start md:flex-row">
                     <div className="mr-5 min-w-[13.75rem] self-start" data-testid={TEST_IDENTIFIER + 'image'}>
-                        <Image image={brand.image} type="default" alt={brand.name} />
+                        <Image image={getFirstImageOrNull(brand.images)} type="default" alt={brand.name} />
                     </div>
                     <div
                         className="self-start  md:self-center [&>section]:text-base [&>section]:text-dark"

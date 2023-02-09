@@ -1,4 +1,3 @@
-import { getFirstImage } from 'connectors/image/Image';
 import { SliderItemFragmentApi, useSliderItemsQueryApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { SliderItemType } from 'types/sliderItem';
@@ -19,8 +18,6 @@ const mapSliderItemApiData = (apiData: SliderItemFragmentApi): SliderItemType =>
         ...apiData,
         extendedText: apiData.extendedText === null ? '' : apiData.extendedText,
         extendedTextLink: apiData.extendedTextLink === null ? '' : apiData.extendedTextLink,
-        webImages: getFirstImage(apiData.webImages),
-        mobileImages: getFirstImage(apiData.mobileImages),
     };
 };
 
