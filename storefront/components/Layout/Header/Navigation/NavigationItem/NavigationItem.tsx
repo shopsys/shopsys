@@ -1,11 +1,11 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { NavigationLeaf } from 'components/Layout/Header/Navigation/NavigationLeaf/NavigationLeaf';
+import { CategoriesByColumnFragmentApi } from 'graphql/generated';
 import NextLink from 'next/link';
 import { twJoin } from 'tailwind-merge';
-import { NavigationItem as NavigationItemType } from 'types/navigation';
 
 type NavigationItemProps = {
-    navigationItem: NavigationItemType;
+    navigationItem: CategoriesByColumnFragmentApi;
 };
 
 const TEST_IDENTIFIER = 'layout-header-navigation-navigationitem';

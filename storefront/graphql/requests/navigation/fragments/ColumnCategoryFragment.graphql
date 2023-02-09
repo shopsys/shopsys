@@ -1,0 +1,7 @@
+fragment ColumnCategoryFragment on Category {
+    __typename
+    name
+    slug
+    ...CategoryImagesDefaultFragment
+    ...NavigationSubCategoriesLinkFragment
+}

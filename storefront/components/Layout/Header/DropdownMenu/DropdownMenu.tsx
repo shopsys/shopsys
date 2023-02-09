@@ -24,7 +24,7 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggle
     const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
     const [menuHeight, setMenuHeight] = useState<number>();
 
-    if (navigationItems.length === 0) {
+    if (navigationItems === undefined || navigationItems.length === 0) {
         return null;
     }
 

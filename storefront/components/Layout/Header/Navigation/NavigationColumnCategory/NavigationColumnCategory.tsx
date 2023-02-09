@@ -1,11 +1,11 @@
 import { Image } from 'components/Basic/Image/Image';
 import { NavigationSubList } from 'components/Layout/Header/Navigation/NavigationSubList/NavigationSubList';
+import { ColumnCategoryFragmentApi } from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import NextLink from 'next/link';
-import { NavigationCategory } from 'types/navigation';
 
 type NavigationColumnCategoryProps = {
-    columnCategory: NavigationCategory;
+    columnCategory: ColumnCategoryFragmentApi;
 };
 
 const TEST_IDENTIFIER = 'layout-header-navigation-navigationcolumncategory';

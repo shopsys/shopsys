@@ -3048,9 +3048,11 @@ export type ImageSizeFragmentApi = { __typename: 'ImageSize', size: string, url:
 
 export type ImageSizesFragmentApi = { __typename: 'Image', sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> };
 
-export type CategoriesByColumnFragmentApi = { __typename: 'NavigationItem', categoriesByColumns: Array<{ __typename: 'NavigationItemCategoriesByColumns', columnNumber: number, categories: Array<{ __typename: 'Category', name: string, slug: string, images: Array<{ __typename: 'Image', sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }>, children: Array<{ __typename: 'Category', name: string, slug: string }> }> }> };
+export type CategoriesByColumnFragmentApi = { __typename: 'NavigationItem', name: string, link: string, categoriesByColumns: Array<{ __typename: 'NavigationItemCategoriesByColumns', columnNumber: number, categories: Array<{ __typename: 'Category', name: string, slug: string, images: Array<{ __typename: 'Image', sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }>, children: Array<{ __typename: 'Category', name: string, slug: string }> }> }> };
 
-export type ColumnCategoriesFragmentApi = { __typename: 'NavigationItemCategoriesByColumns', categories: Array<{ __typename: 'Category', name: string, slug: string, images: Array<{ __typename: 'Image', sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }>, children: Array<{ __typename: 'Category', name: string, slug: string }> }> };
+export type ColumnCategoriesFragmentApi = { __typename: 'NavigationItemCategoriesByColumns', columnNumber: number, categories: Array<{ __typename: 'Category', name: string, slug: string, images: Array<{ __typename: 'Image', sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }>, children: Array<{ __typename: 'Category', name: string, slug: string }> }> };
+
+export type ColumnCategoryFragmentApi = { __typename: 'Category', name: string, slug: string, images: Array<{ __typename: 'Image', sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }>, children: Array<{ __typename: 'Category', name: string, slug: string }> };
 
 export type NavigationQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
@@ -4366,25 +4368,31 @@ export const NavigationSubCategoriesLinkFragmentApi = gql`
   }
 }
     `;
-export const ColumnCategoriesFragmentApi = gql`
-    fragment ColumnCategoriesFragment on NavigationItemCategoriesByColumns {
+export const ColumnCategoryFragmentApi = gql`
+    fragment ColumnCategoryFragment on Category {
   __typename
-  categories {
-    __typename
-    name
-    slug
-    ...CategoryImagesDefaultFragment
-    ...NavigationSubCategoriesLinkFragment
-  }
+  name
+  slug
+  ...CategoryImagesDefaultFragment
+  ...NavigationSubCategoriesLinkFragment
 }
     ${CategoryImagesDefaultFragmentApi}
 ${NavigationSubCategoriesLinkFragmentApi}`;
+export const ColumnCategoriesFragmentApi = gql`
+    fragment ColumnCategoriesFragment on NavigationItemCategoriesByColumns {
+  __typename
+  columnNumber
+  categories {
+    ...ColumnCategoryFragment
+  }
+}
+    ${ColumnCategoryFragmentApi}`;
 export const CategoriesByColumnFragmentApi = gql`
     fragment CategoriesByColumnFragment on NavigationItem {
   __typename
+  name
+  link
   categoriesByColumns {
-    __typename
-    columnNumber
     ...ColumnCategoriesFragment
   }
 }
@@ -5190,8 +5198,6 @@ export function useCurrentCustomerUserQueryApi(options: Omit<Urql.UseQueryArgs<C
 export const NavigationQueryDocumentApi = gql`
     query NavigationQuery @redisCache(ttl: 3600) {
   navigation {
-    name
-    link
     ...CategoriesByColumnFragment
   }
 }

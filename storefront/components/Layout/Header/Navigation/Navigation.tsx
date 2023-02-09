@@ -6,7 +6,7 @@ const TEST_IDENTIFIER = 'layout-header-navigation';
 export const Navigation: FC = () => {
     const navigationItems = useNavigationItems();
 
-    if (navigationItems.length === 0) {
+    if (navigationItems === undefined || navigationItems.length === 0) {
         return null;
     }
 

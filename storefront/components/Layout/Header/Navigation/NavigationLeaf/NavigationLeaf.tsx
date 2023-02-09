@@ -1,8 +1,8 @@
 import { NavigationColumnCategory } from 'components/Layout/Header/Navigation/NavigationColumnCategory/NavigationColumnCategory';
-import { NavigationCategoriesColumn } from 'types/navigation';
+import { ColumnCategoriesFragmentApi } from 'graphql/generated';
 
 type NavigationLeafProps = {
-    columnCategories: NavigationCategoriesColumn[];
+    columnCategories: ColumnCategoriesFragmentApi[];
 };
 
 const TEST_IDENTIFIER = 'layout-header-navigation-navigationleaf-';

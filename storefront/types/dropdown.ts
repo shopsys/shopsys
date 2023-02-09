@@ -1,4 +1,4 @@
-import { NavigationItem as NavigationItemType } from 'types/navigation';
+import { NavigationQueryApi } from 'graphql/generated';
 
 export type DropdownListLevels = 'primary' | 'secondary' | 'tertiary';
 
@@ -8,6 +8,6 @@ export type DropdownItemType = {
 };
 
 export type DropdownListProps = {
-    navigationItems: NavigationItemType[];
+    navigationItems: NavigationQueryApi['navigation'];
     historyOfIndexes: (number | string | undefined)[];
 };

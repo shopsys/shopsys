@@ -1,8 +1,8 @@
 import { DropdownItem } from 'components/Layout/Header/DropdownMenu/Item/DropdownItem';
-import { NavigationItem as NavigationItemType } from 'types/navigation';
+import { CategoriesByColumnFragmentApi } from 'graphql/generated';
 
 type PrimaryListProps = {
-    navigationItems: NavigationItemType[];
+    navigationItems: CategoriesByColumnFragmentApi[];
 };
 
 export const PrimaryList: FC<PrimaryListProps> = ({ navigationItems }) => (
