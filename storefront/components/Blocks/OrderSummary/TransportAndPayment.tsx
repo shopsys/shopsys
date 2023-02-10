@@ -5,13 +5,12 @@ import {
     OrderSummaryTextAndImage,
 } from './OrderSummaryElements';
 import { Image } from 'components/Basic/Image/Image';
-import { SimplePaymentFragmentApi } from 'graphql/generated';
+import { SimplePaymentFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { TransportType } from 'types/transport';
 
 type TransportAndPaymentProps = {
-    transport: TransportType | null;
+    transport: TransportWithAvailablePaymentsAndStoresFragmentApi | null;
     payment: SimplePaymentFragmentApi | null;
 };
 

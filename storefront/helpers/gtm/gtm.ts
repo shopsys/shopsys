@@ -2,7 +2,11 @@ import { getRandomPageId } from './helpers';
 import { mapGtmCartItemType, mapGtmShippingInfo } from './mappers';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { MD5 } from 'crypto-js';
-import { SimplePaymentFragmentApi } from 'graphql/generated';
+import {
+    ListedStoreFragmentApi,
+    SimplePaymentFragmentApi,
+    TransportWithAvailablePaymentsAndStoresFragmentApi,
+} from 'graphql/generated';
 import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
 import { DomainConfigType } from 'helpers/domain/domain';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
@@ -28,8 +32,6 @@ import {
     GtmSearchEventType,
     GtmUserInfoType,
 } from 'types/gtm';
-import { PickupPlaceType } from 'types/pickupPlace';
-import { TransportType } from 'types/transport';
 
 export const useGtmCartEventInfo = (): GtmCartInfoEventType => {
     const { cart, promoCode, isInitiallyLoaded } = useCurrentCart();
@@ -156,8 +158,8 @@ export const gtmSafePushEvent = (event: GtmPageViewEventType | GtmEcommerceEvent
 
 export const getGtmPurchaseData = (
     cart: CartType,
-    transport: TransportType,
-    pickupPlace: PickupPlaceType | null,
+    transport: TransportWithAvailablePaymentsAndStoresFragmentApi,
+    pickupPlace: ListedStoreFragmentApi | null,
     payment: SimplePaymentFragmentApi,
     promoCode: string | null,
     orderNumber: string,

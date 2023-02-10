@@ -7,14 +7,15 @@ import {
     getNewGtmEcommerceEvent,
 } from './eventFactories';
 import { getGtmPurchaseData, gtmSafePushEvent } from './gtm';
-import { mapTransport } from 'connectors/transports/Transports';
-import { SimplePaymentFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
+import {
+    ListedStoreFragmentApi,
+    SimplePaymentFragmentApi,
+    TransportWithAvailablePaymentsAndStoresFragmentApi,
+} from 'graphql/generated';
 import { DomainConfigType } from 'helpers/domain/domain';
 import { CartItemType, CartType } from 'types/cart';
 import { GtmCartInfoType, GtmConsentInfoType, GtmConsentUpdateType, GtmListNameType, GtmSectionType } from 'types/gtm';
-import { PickupPlaceType } from 'types/pickupPlace';
 import { ListedProductType, SimpleProductType } from 'types/product';
-import { TransportType } from 'types/transport';
 
 export const onClickProductDetailGtmEventHandler = (
     product: ListedProductType | SimpleProductType,
@@ -81,13 +82,17 @@ export const onChangeCartItemGtmEventHandler = (
 export const onTransportChangeGtmEventHandler = (
     gtmCartInfo: GtmCartInfoType | undefined | null,
     updatedTransport: TransportWithAvailablePaymentsAndStoresFragmentApi | null,
-    updatedPickupPlace: PickupPlaceType | null,
+    updatedPickupPlace: ListedStoreFragmentApi | null,
     updatedPaymentName: string | undefined,
 ): void => {
     if (gtmCartInfo && updatedTransport !== null) {
         const event = getNewGtmEcommerceEvent('ec.shipping_info', true);
-        const mappedTransport = mapTransport(updatedTransport);
-        event.ecommerce = getGtmShippingInfoEvent(gtmCartInfo, mappedTransport, updatedPickupPlace, updatedPaymentName);
+        event.ecommerce = getGtmShippingInfoEvent(
+            gtmCartInfo,
+            updatedTransport,
+            updatedPickupPlace,
+            updatedPaymentName,
+        );
         gtmSafePushEvent(event);
     }
 };
@@ -105,8 +110,8 @@ export const onPaymentChangeGtmEventHandler = (
 
 export const onPurchaseOrderGtmEventHandler = (
     cart: CartType,
-    transport: TransportType,
-    pickupPlace: PickupPlaceType | null,
+    transport: TransportWithAvailablePaymentsAndStoresFragmentApi,
+    pickupPlace: ListedStoreFragmentApi | null,
     payment: SimplePaymentFragmentApi,
     promoCode: string | null,
     orderNumber: string,

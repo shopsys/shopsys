@@ -7,7 +7,12 @@ import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer/PacketeryContainer';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import { SimplePaymentFragmentApi, useGoPaySwiftsQueryApi } from 'graphql/generated';
+import {
+    ListedStoreFragmentApi,
+    SimplePaymentFragmentApi,
+    TransportWithAvailablePaymentsAndStoresFragmentApi,
+    useGoPaySwiftsQueryApi,
+} from 'graphql/generated';
 import { logException } from 'helpers/errors/logException';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { mapPacketeryExtendedPoint, packeteryPick, removePacketeryCookie, setPacketeryCookie } from 'helpers/packetery';
@@ -19,14 +24,12 @@ import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import getConfig from 'next/config';
 import { useCallback, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { PickupPlaceType } from 'types/pickupPlace';
-import { TransportType } from 'types/transport';
 
 const { publicRuntimeConfig } = getConfig();
 
 type TransportAndPaymentSelectProps = {
-    transports: TransportType[];
-    lastOrderPickupPlace: PickupPlaceType | null;
+    transports: TransportWithAvailablePaymentsAndStoresFragmentApi[];
+    lastOrderPickupPlace: ListedStoreFragmentApi | null;
     lastOrderTransportUuid: string | null;
     lastOrderPaymentUuid: string | null;
     changeTransportInCart: ChangeTransportHandler;
@@ -47,15 +50,21 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
 }) => {
     const t = useTypedTranslationFunction();
     const { defaultLocale, currencyCode } = useShopsysSelector((state) => state.domain);
-    const [preSelectedTransport, setPreselectedTransport] = useState<TransportType | null>(null);
-    const [preSelectedPickupPlace, setPreSelectedPickupPlace] = useState<PickupPlaceType | null>(lastOrderPickupPlace);
+    const [preSelectedTransport, setPreselectedTransport] =
+        useState<TransportWithAvailablePaymentsAndStoresFragmentApi | null>(null);
+    const [preSelectedPickupPlace, setPreSelectedPickupPlace] = useState<ListedStoreFragmentApi | null>(
+        lastOrderPickupPlace,
+    );
     const { transport, pickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
     const [getGoPaySwiftsResult] = useGoPaySwiftsQueryApi({ variables: { currencyCode } });
 
     const isPickupPlaceSelected = pickupPlace !== null;
 
     const onSelectPacketeryPickupPlaceCallback = useCallback(
-        (packeteryPoint: PacketeryExtendedPoint | null, packeteryTransport: TransportType) => {
+        (
+            packeteryPoint: PacketeryExtendedPoint | null,
+            packeteryTransport: TransportWithAvailablePaymentsAndStoresFragmentApi,
+        ) => {
             if (packeteryPoint !== null) {
                 const mappedPacketeryPoint = mapPacketeryExtendedPoint(packeteryPoint);
                 setPacketeryCookie(mappedPacketeryPoint);
@@ -66,7 +75,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     );
 
     const openPacketeryPopup = useCallback(
-        (newTransport: TransportType) => {
+        (newTransport: TransportWithAvailablePaymentsAndStoresFragmentApi) => {
             if (!isPickupPlaceSelected) {
                 const packeteryApiKey = publicRuntimeConfig.packeteryApiKey;
                 if (packeteryApiKey === undefined || packeteryApiKey.length === 0) {
@@ -87,7 +96,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     );
 
     const openPersonalPickupPopup = useCallback(
-        (newTransport: TransportType) => {
+        (newTransport: TransportWithAvailablePaymentsAndStoresFragmentApi) => {
             if (newTransport.transportType.code === 'packetery') {
                 openPacketeryPopup(newTransport);
 
@@ -178,7 +187,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
         removePacketeryCookie();
     };
 
-    const onChangePickupPlaceHandler = (selectedPickupPlace: PickupPlaceType | null) => {
+    const onChangePickupPlaceHandler = (selectedPickupPlace: ListedStoreFragmentApi | null) => {
         if (selectedPickupPlace !== null && preSelectedTransport !== null) {
             changeTransportInCart(preSelectedTransport.uuid, selectedPickupPlace);
         } else {
@@ -194,14 +203,17 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
         setPreselectedTransport(null);
     };
 
-    const getPickupPlaceDetail = (transportItem: TransportType) => {
+    const getPickupPlaceDetail = (transportItem: TransportWithAvailablePaymentsAndStoresFragmentApi) => {
         return transport?.uuid === transportItem.uuid &&
-            transportItem.stores.some((store) => store.identifier === pickupPlace?.identifier)
+            transportItem.stores?.edges?.some((storeEdge) => storeEdge?.node?.identifier === pickupPlace?.identifier)
             ? pickupPlace
             : null;
     };
 
-    const renderTransportListItem = (transportItem: TransportType, isActive: boolean) => {
+    const renderTransportListItem = (
+        transportItem: TransportWithAvailablePaymentsAndStoresFragmentApi,
+        isActive: boolean,
+    ) => {
         return (
             <TransportAndPaymentListItem
                 key={transportItem.uuid}

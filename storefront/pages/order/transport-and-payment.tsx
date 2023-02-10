@@ -42,7 +42,7 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
                     activeStep={2}
                     isTransportOrPaymentLoading={Boolean(isTransportSelectionLoading) || isPaymentSelectionLoading}
                 >
-                    {transports.length === 0 || (data === undefined && isUserLoggedIn) ? (
+                    {transports === undefined || transports.length === 0 || (data === undefined && isUserLoggedIn) ? (
                         <LoaderWithOverlay />
                     ) : (
                         <TransportAndPaymentContent

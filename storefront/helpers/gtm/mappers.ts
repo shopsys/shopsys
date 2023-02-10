@@ -2,7 +2,6 @@ import { LastOrderFragmentApi, ListedStoreFragmentApi } from 'graphql/generated'
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { CartItemType } from 'types/cart';
 import { GtmCartItemType, GtmListedProductType, GtmProductInterface, GtmShippingInfoType } from 'types/gtm';
-import { PickupPlaceType } from 'types/pickupPlace';
 import {
     ListedProductType,
     MainVariantDetailType,
@@ -82,13 +81,16 @@ const mapGtmProductInterfaceImageUrl = (productInterface: ProductInterfaceType):
     return undefined;
 };
 
-export const mapGtmShippingInfo = (pickupPlace: PickupPlaceType | null): GtmShippingInfoType => {
+export const mapGtmShippingInfo = (pickupPlace: ListedStoreFragmentApi | null): GtmShippingInfoType => {
     let shippingDetail = '';
     const shippingExtra = [];
 
     if (pickupPlace !== null) {
         shippingDetail = `${pickupPlace.name}, ${pickupPlace.street}, ${pickupPlace.city}, ${pickupPlace.country.name}, ${pickupPlace.postcode}`;
-        shippingExtra.push(pickupPlace.openingHoursHtml);
+
+        if (pickupPlace.openingHoursHtml !== null) {
+            shippingExtra.push(pickupPlace.openingHoursHtml);
+        }
     }
 
     return {
@@ -100,7 +102,11 @@ export const mapGtmShippingInfo = (pickupPlace: PickupPlaceType | null): GtmShip
 export const getGtmPickupPlaceFromStore = (
     pickupPlaceIdentifier: string,
     store: ListedStoreFragmentApi,
-): PickupPlaceType => ({
+): ListedStoreFragmentApi => ({
+    __typename: 'Store',
+    locationLatitude: null,
+    locationLongitude: null,
+    slug: '',
     identifier: pickupPlaceIdentifier,
     name: store.name,
     city: store.city,
@@ -118,7 +124,11 @@ export const getGtmPickupPlaceFromStore = (
 export const getGtmPickupPlaceFromLastOrder = (
     pickupPlaceIdentifier: string,
     lastOrder: LastOrderFragmentApi,
-): PickupPlaceType => ({
+): ListedStoreFragmentApi => ({
+    __typename: 'Store',
+    locationLatitude: null,
+    locationLongitude: null,
+    slug: '',
     identifier: pickupPlaceIdentifier,
     name: '',
     city: lastOrder.deliveryCity ?? '',
@@ -127,8 +137,8 @@ export const getGtmPickupPlaceFromLastOrder = (
         name: lastOrder.deliveryCountry?.name ?? '',
         code: lastOrder.deliveryCountry?.code ?? '',
     },
-    description: '',
-    openingHoursHtml: '',
+    description: null,
+    openingHoursHtml: null,
     postcode: lastOrder.deliveryPostcode ?? '',
     street: lastOrder.deliveryStreet ?? '',
 });

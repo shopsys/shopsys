@@ -1,13 +1,12 @@
+import { ListedStoreFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
 import { getGtmShippingInfoEvent, getNewGtmEcommerceEvent } from 'helpers/gtm/eventFactories';
 import { gtmSafePushEvent } from 'helpers/gtm/gtm';
 import { useEffect, useRef } from 'react';
 import { GtmPageViewEventType } from 'types/gtm';
-import { PickupPlaceType } from 'types/pickupPlace';
-import { TransportType } from 'types/transport';
 
 export const useGtmShippingDataView = (
-    transport: TransportType | null,
-    pickupPlace: PickupPlaceType | null,
+    transport: TransportWithAvailablePaymentsAndStoresFragmentApi | null,
+    pickupPlace: ListedStoreFragmentApi | null,
     paymentName: string | undefined,
     gtmStaticPageViewEvent: GtmPageViewEventType,
 ): void => {

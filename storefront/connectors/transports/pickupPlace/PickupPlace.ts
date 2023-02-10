@@ -1,12 +1,14 @@
-import { ListedStoreConnectionFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
+import {
+    ListedStoreConnectionFragmentApi,
+    ListedStoreFragmentApi,
+    TransportWithAvailablePaymentsAndStoresFragmentApi,
+} from 'graphql/generated';
 import { getPacketeryCookie } from 'helpers/packetery';
-import { PickupPlaceType } from 'types/pickupPlace';
-import { TransportType } from 'types/transport';
 
 export const getSelectedPickupPlace = (
-    transport: TransportType | null,
+    transport: TransportWithAvailablePaymentsAndStoresFragmentApi | null,
     pickupPlaceIdentifier: string | null | undefined,
-): PickupPlaceType | null => {
+): ListedStoreFragmentApi | null => {
     if (transport === null || pickupPlaceIdentifier === null) {
         return null;
     }
@@ -15,20 +17,16 @@ export const getSelectedPickupPlace = (
         return getPacketeryCookie();
     }
 
-    const pickupPlace = transport.stores.find((place) => place.identifier === pickupPlaceIdentifier);
-    return pickupPlace === undefined ? null : pickupPlace;
+    const pickupPlace = transport.stores?.edges?.find(
+        (pickupPlaceNode) => pickupPlaceNode?.node?.identifier === pickupPlaceIdentifier,
+    );
+
+    return pickupPlace?.node === undefined ? null : pickupPlace.node;
 };
 
-const mapPickupPlaceApiData = (pickupPlace: ListedStoreFragmentApi): PickupPlaceType => {
-    return {
-        ...pickupPlace,
-        identifier: pickupPlace.uuid,
-        description: pickupPlace.description !== null ? pickupPlace.description : '',
-        openingHoursHtml: pickupPlace.openingHoursHtml !== null ? pickupPlace.openingHoursHtml : '',
-    };
-};
-
-export const mapPickupPlacesApiData = (storesConnectionApi: ListedStoreConnectionFragmentApi): PickupPlaceType[] => {
+export const mapPickupPlacesApiData = (
+    storesConnectionApi: ListedStoreConnectionFragmentApi,
+): ListedStoreFragmentApi[] => {
     if (storesConnectionApi.edges === null) {
         return [];
     }
@@ -36,7 +34,7 @@ export const mapPickupPlacesApiData = (storesConnectionApi: ListedStoreConnectio
     const mappedStores = [];
     for (const edge of storesConnectionApi.edges) {
         if (edge?.node !== undefined && edge.node !== null) {
-            mappedStores.push(mapPickupPlaceApiData(edge.node));
+            mappedStores.push(edge.node);
         }
     }
 

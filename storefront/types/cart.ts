@@ -3,21 +3,21 @@ import {
     AvailabilityFragmentApi,
     CartModificationsFragmentApi,
     ImageSizesFragmentApi,
+    ListedStoreFragmentApi,
     PriceFragmentApi,
     ProductPriceFragmentApi,
     SimplePaymentFragmentApi,
+    TransportWithAvailablePaymentsAndStoresFragmentApi,
 } from 'graphql/generated';
 import { SimpleFlagType } from 'types/flag';
-import { PickupPlaceType } from 'types/pickupPlace';
 import { SimpleProductType } from 'types/product';
-import { TransportType } from 'types/transport';
 import { OperationContext } from 'urql';
 
 export type CurrentCartType = {
     cart: CartType | null;
     isCartEmpty: boolean;
-    transport: TransportType | null;
-    pickupPlace: PickupPlaceType | null;
+    transport: TransportWithAvailablePaymentsAndStoresFragmentApi | null;
+    pickupPlace: ListedStoreFragmentApi | null;
     payment: SimplePaymentFragmentApi | null;
     paymentGoPayBankSwift: string | null;
     promoCode: string | null;

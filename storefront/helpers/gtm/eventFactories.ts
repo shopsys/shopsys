@@ -1,7 +1,11 @@
 import { getGtmConsentInfo, getGtmPageInfoType, getGtmUserInfo, useGtmCartEventInfo } from './gtm';
 import { getGtmDeviceType } from './helpers';
 import { mapGtmCartItemType, mapGtmListedProductType, mapGtmProductDetailType, mapGtmShippingInfo } from './mappers';
-import { SimplePaymentFragmentApi } from 'graphql/generated';
+import {
+    ListedStoreFragmentApi,
+    SimplePaymentFragmentApi,
+    TransportWithAvailablePaymentsAndStoresFragmentApi,
+} from 'graphql/generated';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
@@ -27,10 +31,8 @@ import {
     GtmSectionType,
     GtmShippingInfoEventType,
 } from 'types/gtm';
-import { PickupPlaceType } from 'types/pickupPlace';
 import { ListedProductType, MainVariantDetailType, ProductDetailType, SimpleProductType } from 'types/product';
 import { AutocompleteSearchType } from 'types/search';
-import { TransportType } from 'types/transport';
 
 export const useGtmStaticPageViewEvent = (
     pageType: GtmPageType,
@@ -95,8 +97,8 @@ export const getGtmChangeCartItemEvent = (
 
 export const getGtmShippingInfoEvent = (
     cartInfoType: GtmCartInfoType,
-    transport: TransportType,
-    pickupPlace: PickupPlaceType | null,
+    transport: TransportWithAvailablePaymentsAndStoresFragmentApi,
+    pickupPlace: ListedStoreFragmentApi | null,
     paymentName: string | undefined,
 ): GtmShippingInfoEventType => {
     const { shippingDetail, shippingExtra } = mapGtmShippingInfo(pickupPlace);

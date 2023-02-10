@@ -2,7 +2,6 @@ import { showErrorMessage, showInfoMessage } from 'components/Helpers/Toasts';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { mapSimpleProductApiData } from 'connectors/products/SimpleProduct';
 import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
-import { mapTransport } from 'connectors/transports/Transports';
 import {
     AddToCartMutationApi,
     CartFragmentApi,
@@ -54,13 +53,14 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
         // EXTEND CART UPDATE HERE
         const mappedCart = mapCart(result.data.cart);
 
-        const mappedTransport = result.data.cart.transport === null ? null : mapTransport(result.data.cart.transport);
-
         return {
             cart: mappedCart,
             isCartEmpty: mappedCart.items.length === 0,
-            transport: mappedTransport,
-            pickupPlace: getSelectedPickupPlace(mappedTransport, result.data.cart.selectedPickupPlaceIdentifier),
+            transport: result.data.cart.transport,
+            pickupPlace: getSelectedPickupPlace(
+                result.data.cart.transport,
+                result.data.cart.selectedPickupPlaceIdentifier,
+            ),
             payment: result.data.cart.payment,
             paymentGoPayBankSwift: result.data.cart.paymentGoPayBankSwift,
             promoCode: result.data.cart.promoCode,

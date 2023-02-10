@@ -2,7 +2,12 @@ import { TransportAndPaymentSelect } from './TransportAndPaymentSelect/Transport
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import { LastOrderFragmentApi, useStoreQueryApi } from 'graphql/generated';
+import {
+    LastOrderFragmentApi,
+    ListedStoreFragmentApi,
+    TransportWithAvailablePaymentsAndStoresFragmentApi,
+    useStoreQueryApi,
+} from 'graphql/generated';
 import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
 import { getGtmPickupPlaceFromLastOrder, getGtmPickupPlaceFromStore } from 'helpers/gtm/mappers';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
@@ -13,11 +18,9 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { PickupPlaceType } from 'types/pickupPlace';
-import { TransportType } from 'types/transport';
 
 type TransportAndPaymentContentProps = {
-    transports: TransportType[];
+    transports: TransportWithAvailablePaymentsAndStoresFragmentApi[];
     lastOrder: LastOrderFragmentApi | null;
     changeTransportInCart: ChangeTransportHandler;
     changePaymentInCart: ChangePaymentHandler;
@@ -113,7 +116,7 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
         router.push(contactInformationUrl);
     };
 
-    const lastOrderPickupPlace: PickupPlaceType | null = useMemo(() => {
+    const lastOrderPickupPlace: ListedStoreFragmentApi | null = useMemo(() => {
         if (lastOrder?.pickupPlaceIdentifier === undefined || lastOrder.pickupPlaceIdentifier === null) {
             return null;
         }
