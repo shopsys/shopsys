@@ -37,7 +37,7 @@ final class CheckPackagesGithubActionsBuildsReleaseWorker extends AbstractCheckP
      */
     public function work(Version $version, string $initialBranchName = 'master'): void
     {
-        $this->releasingBranchName = $version->getVersionString();
+        $this->releasingBranchName = $version->getOriginalString();
 
         parent::work($version);
     }
