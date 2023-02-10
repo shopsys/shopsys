@@ -1,5 +1,4 @@
-import { PriceType } from './price';
-import { ImageSizesFragmentApi } from 'graphql/generated';
+import { ImageSizesFragmentApi, PriceFragmentApi } from 'graphql/generated';
 import { PageInfoType } from 'types/pageInfo';
 
 export type ListedOrderType = {
@@ -14,7 +13,7 @@ export type ListedOrderType = {
         images: ImageSizesFragmentApi[];
     };
     payment: string;
-    totalPrice: PriceType;
+    totalPrice: PriceFragmentApi;
 };
 
 export type ListedOrderConnectionType = {
@@ -25,8 +24,8 @@ export type ListedOrderConnectionType = {
 
 export type OrderDetailItemType = {
     name: string;
-    unitPrice: PriceType;
-    totalPrice: PriceType;
+    unitPrice: PriceFragmentApi;
+    totalPrice: PriceFragmentApi;
     vatRate: string;
     quantity: number;
     unit: string;

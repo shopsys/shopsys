@@ -1,4 +1,5 @@
 import { Image } from 'components/Basic/Image/Image';
+import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { CartItemType } from 'types/cart';
 
@@ -24,7 +25,7 @@ export const SingleProduct: FC<SingleProductProps> = ({ item }) => {
                     <span data-testid={TEST_IDENTIFIER + 'name'}>{item.product.fullName}</span>
                 </span>
                 <strong className="ml-auto w-24 text-right text-sm" data-testid={TEST_IDENTIFIER + 'price'}>
-                    {formatPrice(item.product.price.priceWithVat * item.quantity)}{' '}
+                    {formatPrice(mapPriceForCalculations(item.product.price.priceWithVat) * item.quantity)}
                 </strong>
             </div>
         </li>

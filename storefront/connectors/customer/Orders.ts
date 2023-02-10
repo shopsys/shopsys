@@ -1,6 +1,5 @@
 import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
-import { mapPriceData } from 'connectors/price/Prices';
 import {
     ListedOrderFragmentApi,
     OrderDetailFragmentApi,
@@ -68,7 +67,6 @@ const mapListedOrder = (apiOrder: ListedOrderFragmentApi, currentDomainConfig: D
         creationDate: new Date(apiOrder.creationDate).toLocaleDateString(currentDomainConfig.defaultLocale),
         items: { quantity: apiOrder.items.length - 2 }, // -2 => we need to remove transport and payment
         payment: apiOrder.payment.name,
-        totalPrice: mapPriceData(apiOrder.totalPrice, currentDomainConfig.currencyCode),
     };
 };
 
@@ -121,18 +119,13 @@ const mapOrderDetailApiData = (
         deliveryCountry: apiOrderDetailData.deliveryCountry !== null ? apiOrderDetailData.deliveryCountry.name : '',
         note: apiOrderDetailData.note !== null ? apiOrderDetailData.note : '',
         promoCode: apiOrderDetailData.promoCode !== null ? apiOrderDetailData.promoCode : '',
-        items: mapOrderDetailItems(apiOrderDetailData.items, currentDomainConfig.currencyCode),
+        items: mapOrderDetailItems(apiOrderDetailData.items),
     };
 };
 
-const mapOrderDetailItems = (
-    apiOrderDetailItemData: OrderDetailItemFragmentApi[],
-    currencyCode: string,
-): OrderDetailItemType[] => {
+const mapOrderDetailItems = (apiOrderDetailItemData: OrderDetailItemFragmentApi[]): OrderDetailItemType[] => {
     const mappedItems = apiOrderDetailItemData.map((item) => ({
         ...item,
-        unitPrice: mapPriceData(item.unitPrice, currencyCode),
-        totalPrice: mapPriceData(item.totalPrice, currencyCode),
         unit: item.unit !== null ? item.unit : '',
     }));
 

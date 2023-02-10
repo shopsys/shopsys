@@ -2,7 +2,9 @@ import { getRandomPageId } from './helpers';
 import { mapGtmCartItemType, mapGtmShippingInfo } from './mappers';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { MD5 } from 'crypto-js';
+import { SimplePaymentFragmentApi } from 'graphql/generated';
 import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
+import { DomainConfigType } from 'helpers/domain/domain';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { canUseDom } from 'helpers/misc/canUseDom';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
@@ -26,7 +28,6 @@ import {
     GtmSearchEventType,
     GtmUserInfoType,
 } from 'types/gtm';
-import { PaymentType } from 'types/payment';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { TransportType } from 'types/transport';
 
@@ -69,8 +70,8 @@ export const useGtmCartEventInfo = (): GtmCartInfoEventType => {
             cart: {
                 urlCart,
                 currency: domain.currencyCode,
-                value: cart.totalItemsPrice.priceWithoutVat,
-                valueWithTax: cart.totalItemsPrice.priceWithVat,
+                value: Number.parseFloat(cart.totalItemsPrice.priceWithoutVat),
+                valueWithTax: Number.parseFloat(cart.totalItemsPrice.priceWithVat),
                 products,
                 coupons,
             },
@@ -157,10 +158,10 @@ export const getGtmPurchaseData = (
     cart: CartType,
     transport: TransportType,
     pickupPlace: PickupPlaceType | null,
-    payment: PaymentType,
+    payment: SimplePaymentFragmentApi,
     promoCode: string | null,
     orderNumber: string,
-    domainUrl: string,
+    domainConfig: DomainConfigType,
 ): GtmPurchaseType => {
     const coupons: string[] = [];
     if (promoCode !== null) {
@@ -173,20 +174,22 @@ export const getGtmPurchaseData = (
         reviewConsents: getGtmReviewConsents(),
         id: orderNumber,
         coupons: coupons,
-        discountAmount: cart.totalDiscountPrice.priceWithVat,
-        value: cart.totalPrice.priceWithoutVat,
-        valueWithTax: cart.totalPrice.priceWithVat,
-        valueTax: cart.totalPrice.vatAmount,
-        currency: cart.totalPrice.currencyCode,
-        products: cart.items.map((cartItem: CartItemType, index) => mapGtmCartItemType(cartItem, domainUrl, index)),
+        discountAmount: Number.parseFloat(cart.totalDiscountPrice.priceWithVat),
+        value: Number.parseFloat(cart.totalPrice.priceWithoutVat),
+        valueWithTax: Number.parseFloat(cart.totalPrice.priceWithVat),
+        valueTax: Number.parseFloat(cart.totalPrice.vatAmount),
+        currency: domainConfig.currencyCode,
+        products: cart.items.map((cartItem: CartItemType, index) =>
+            mapGtmCartItemType(cartItem, domainConfig.url, index),
+        ),
         paymentType: payment.name,
         paymentPrice: payment.price.priceWithoutVat,
         paymentPriceWithTax: payment.price.priceWithVat,
         shippingType: transport.name,
         shippingDetail: shippingDetail,
         shippingExtra: shippingExtra,
-        shippingPrice: transport.price.priceWithoutVat,
-        shippingPriceWithTax: transport.price.priceWithVat,
+        shippingPrice: Number.parseFloat(transport.price.priceWithoutVat),
+        shippingPriceWithTax: Number.parseFloat(transport.price.priceWithVat),
     };
 };
 

@@ -17,7 +17,6 @@ export type ChangeTransportHandler = (
 export const useChangeTransportInCart = (): [ChangeTransportHandler, boolean] => {
     const [{ fetching }, changeTransportInCart] = useChangeTransportInCartMutationApi();
     const { cartUuid } = useShopsysSelector((state) => state.user);
-    const { currencyCode } = useShopsysSelector((state) => state.domain);
     const t = useTypedTranslationFunction();
     const gtmCartEventInfo = useGtmCartEventInfo();
 
@@ -55,12 +54,11 @@ export const useChangeTransportInCart = (): [ChangeTransportHandler, boolean] =>
                 changeTransportResult.data?.ChangeTransportInCart.transport ?? null,
                 newPickupPlace,
                 changeTransportResult.data?.ChangeTransportInCart.payment?.name,
-                currencyCode,
             );
 
             return changeTransportResult.data?.ChangeTransportInCart;
         },
-        [cartUuid, changeTransportInCart, currencyCode, gtmCart, t],
+        [cartUuid, changeTransportInCart, gtmCart, t],
     );
 
     return [changeTransportHandler, fetching];

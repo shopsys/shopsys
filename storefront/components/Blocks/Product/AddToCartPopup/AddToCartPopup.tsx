@@ -5,6 +5,7 @@ import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
@@ -47,7 +48,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ isVisible, onCloseCall
                     <div className="mt-2 lg:mt-0 lg:w-5/12 lg:pl-4 lg:text-right">
                         <div className="block text-primary" data-testid={TEST_IDENTIFIER + '-price'}>
                             {`${product.quantity} ${product.unitName}, ${formatPrice(
-                                product.quantity * product.price.priceWithVat,
+                                product.quantity * mapPriceForCalculations(product.price.priceWithVat),
                             )}`}
                         </div>
                     </div>

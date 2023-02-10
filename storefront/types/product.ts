@@ -5,13 +5,13 @@ import {
     AvailabilityFragmentApi,
     ImageSizesFragmentApi,
     ProductOrderingModeEnumApi,
+    ProductPriceFragmentApi,
     StoreAvailabilityFragmentApi,
 } from 'graphql/generated';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { SimpleFlagType } from 'types/flag';
 import { PageInfoType } from 'types/pageInfo';
 import { ProductParameterType } from 'types/parameter';
-import { ProductPriceType } from 'types/price';
 
 export type SimpleProductType = {
     __typename?: 'MainVariant' | 'RegularProduct' | 'Variant';
@@ -20,7 +20,7 @@ export type SimpleProductType = {
     catalogNumber: string;
     slug: string;
     fullName: string;
-    price: ProductPriceType;
+    price: ProductPriceFragmentApi;
     image: ImageSizesFragmentApi | null;
     unitName: string;
     brand: SimpleBrandType | null;
@@ -57,7 +57,7 @@ export type ListedProductType = {
     flags: SimpleFlagType[];
     image: ImageSizesFragmentApi | null;
     availability: AvailabilityFragmentApi;
-    price: ProductPriceType;
+    price: ProductPriceFragmentApi;
     isMainVariant: boolean;
     catalogNumber: string;
     brand: SimpleBrandType | null;
@@ -84,7 +84,7 @@ export type ProductDetailInterfaceType = {
     ean: string | null;
     description: string;
     images: ImageSizesFragmentApi[];
-    price: ProductPriceType;
+    price: ProductPriceFragmentApi;
     parameters: ProductParameterType[];
     stockQuantity: number;
     accessories: SliderProductItemType[];

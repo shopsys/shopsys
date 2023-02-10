@@ -5,9 +5,9 @@ import { PickupPlaceType } from 'types/pickupPlace';
 
 type TransportAndPaymentSelectItemLabelProps = {
     name: string;
-    price?: { priceWithVat: number; priceWithoutVat: number; vatAmount: number };
+    price?: { priceWithVat: string; priceWithoutVat: string; vatAmount: string };
     daysUntilDelivery?: number;
-    description?: string;
+    description?: string | null;
     pickupPlaceDetail?: PickupPlaceType | null;
 };
 

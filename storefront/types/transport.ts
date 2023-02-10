@@ -1,16 +1,14 @@
-import { ImageSizesFragmentApi } from 'graphql/generated';
-import { PaymentType } from 'types/payment';
+import { ImageSizesFragmentApi, PriceFragmentApi, SimplePaymentFragmentApi } from 'graphql/generated';
 import { PickupPlaceType } from 'types/pickupPlace';
-import { PriceType } from 'types/price';
 
 export type TransportType = {
     uuid: string;
     name: string;
     description: string;
     instruction: string;
-    price: PriceType;
+    price: PriceFragmentApi;
     images: ImageSizesFragmentApi[];
-    payments: PaymentType[];
+    payments: SimplePaymentFragmentApi[];
     daysUntilDelivery: number;
     isPersonalPickup: boolean;
     stores: PickupPlaceType[];

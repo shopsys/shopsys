@@ -7,7 +7,6 @@ import {
     ListedBlogArticleFragmentApi,
     useBlogArticlesQueryApi,
 } from 'graphql/generated';
-import { DomainConfigType } from 'helpers/domain/domain';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { BlogArticleConnectionType, BlogArticleDetailType, ListedBlogArticleType } from 'types/blogArticle';
 
@@ -25,16 +24,11 @@ export const useBlogPreviewArticles = (): ListedBlogArticleType[] => {
     return mapConnectionEdges<ListedBlogArticleFragmentApi, ListedBlogArticleType>(data.blogArticles.edges);
 };
 
-export const mapBlogArticleDetail = (
-    apiData: BlogArticleDetailFragmentApi,
-    currentDomainConfig: DomainConfigType,
-): BlogArticleDetailType => {
+export const mapBlogArticleDetail = (apiData: BlogArticleDetailFragmentApi): BlogArticleDetailType => {
     return {
         ...apiData,
         __typename: 'BlogArticle',
-        blogArticleProducts: apiData.blogArticleProducts.map((product) =>
-            mapListedProductType(product, currentDomainConfig.currencyCode),
-        ),
+        blogArticleProducts: apiData.blogArticleProducts.map((product) => mapListedProductType(product)),
     };
 };
 

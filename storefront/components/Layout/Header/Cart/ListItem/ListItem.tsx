@@ -1,5 +1,6 @@
 import { Image } from 'components/Basic/Image/Image';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton/RemoveCartItemButton';
+import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import NextLink from 'next/link';
 import { MouseEventHandler } from 'react';
@@ -32,7 +33,7 @@ export const ListItem: FC<ListItemProps> = ({ cartItem, onItemRemove }) => {
                 </NextLink>
                 <span className="pr-3 text-sm">{cartItem.quantity + cartItem.product.unit.name}</span>
                 <span className="w-28 break-words pr-4 text-right text-sm font-bold text-primary">
-                    {formatPrice(cartItem.product.price.priceWithVat * cartItem.quantity)}
+                    {formatPrice(mapPriceForCalculations(cartItem.product.price.priceWithVat) * cartItem.quantity)}
                 </span>
             </div>
             <RemoveCartItemButton onItemRemove={onItemRemove} />

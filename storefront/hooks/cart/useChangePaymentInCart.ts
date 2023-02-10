@@ -16,7 +16,6 @@ export type ChangePaymentHandler = (
 export const useChangePaymentInCart = (): [ChangePaymentHandler, boolean] => {
     const [{ fetching }, changePaymentInCart] = useChangePaymentInCartMutationApi();
     const { cartUuid } = useShopsysSelector((state) => state.user);
-    const { currencyCode } = useShopsysSelector((state) => state.domain);
     const t = useTypedTranslationFunction();
     const gtmCartEventInfo = useGtmCartEventInfo();
 
@@ -48,12 +47,11 @@ export const useChangePaymentInCart = (): [ChangePaymentHandler, boolean] => {
             onPaymentChangeGtmEventHandler(
                 gtmCart.current,
                 changePaymentResult.data?.ChangePaymentInCart.payment ?? null,
-                currencyCode,
             );
 
             return changePaymentResult.data?.ChangePaymentInCart;
         },
-        [cartUuid, changePaymentInCart, currencyCode, gtmCart, t],
+        [cartUuid, changePaymentInCart, gtmCart, t],
     );
 
     return [changePaymentHandler, fetching];

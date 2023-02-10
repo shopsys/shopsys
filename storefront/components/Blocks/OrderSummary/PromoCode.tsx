@@ -5,13 +5,13 @@ import {
     OrderSummaryRowWrapper,
     OrderSummaryTextAndImage,
 } from './OrderSummaryElements';
+import { PriceFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { PriceType } from 'types/price';
 
 type PromoCodeProps = {
     promoCode: string;
-    discount: PriceType;
+    discount: PriceFragmentApi;
 };
 
 const TEST_IDENTIFIER = 'blocks-ordersummary-promocode';

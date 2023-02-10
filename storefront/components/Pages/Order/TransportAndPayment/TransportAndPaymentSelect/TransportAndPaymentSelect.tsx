@@ -7,7 +7,7 @@ import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer/PacketeryContainer';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import { useGoPaySwiftsQueryApi } from 'graphql/generated';
+import { SimplePaymentFragmentApi, useGoPaySwiftsQueryApi } from 'graphql/generated';
 import { logException } from 'helpers/errors/logException';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { mapPacketeryExtendedPoint, packeteryPick, removePacketeryCookie, setPacketeryCookie } from 'helpers/packetery';
@@ -19,7 +19,6 @@ import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import getConfig from 'next/config';
 import { useCallback, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { PaymentType } from 'types/payment';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { TransportType } from 'types/transport';
 
@@ -231,7 +230,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
         );
     };
 
-    const renderPaymentListItem = (paymentItem: PaymentType, isActive: boolean) => {
+    const renderPaymentListItem = (paymentItem: SimplePaymentFragmentApi, isActive: boolean) => {
         return (
             <TransportAndPaymentListItem
                 key={paymentItem.uuid}

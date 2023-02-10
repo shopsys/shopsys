@@ -2,6 +2,7 @@ import { CartListItemInfo } from './CartListItemInfo/CartListItemInfo';
 import { Image } from 'components/Basic/Image/Image';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton/RemoveCartItemButton';
+import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { AddToCartAction } from 'hooks/cart/useAddToCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -79,7 +80,7 @@ export const CartListItem: FC<CartListItemProps> = ({ item, listIndex, onItemRem
                 data-testid={TEST_IDENTIFIER + 'totalprice'}
             >
                 <span className="text-sm text-primary lg:text-base">
-                    {formatPrice(item.product.price.priceWithVat * item.quantity)}
+                    {formatPrice(mapPriceForCalculations(item.product.price.priceWithVat) * item.quantity)}
                 </span>
             </div>
             <div className="absolute right-3 top-3 flex items-center lg:right-0 lg:top-4 vl:static">

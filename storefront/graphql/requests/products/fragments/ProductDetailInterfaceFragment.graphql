@@ -14,7 +14,9 @@ fragment ProductDetailInterfaceFragment on Product {
     images {
         ...ImageSizesFragment
     }
-    ...ProductPriceFragment
+    price {
+        ...ProductPriceFragment
+    }
     parameters {
         ...ParameterFragment
     }

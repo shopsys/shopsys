@@ -1,10 +1,7 @@
-fragment ProductPriceFragment on Product {
+fragment ProductPriceFragment on ProductPrice {
     __typename
-    price {
-        __typename
-        priceWithVat
-        priceWithoutVat
-        vatAmount
-        isPriceFrom
-    }
+    priceWithVat
+    priceWithoutVat
+    vatAmount
+    isPriceFrom
 }

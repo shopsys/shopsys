@@ -1,6 +1,7 @@
 import { getGtmConsentInfo, getGtmPageInfoType, getGtmUserInfo, useGtmCartEventInfo } from './gtm';
 import { getGtmDeviceType } from './helpers';
 import { mapGtmCartItemType, mapGtmListedProductType, mapGtmProductDetailType, mapGtmShippingInfo } from './mappers';
+import { SimplePaymentFragmentApi } from 'graphql/generated';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
@@ -26,7 +27,6 @@ import {
     GtmSectionType,
     GtmShippingInfoEventType,
 } from 'types/gtm';
-import { PaymentType } from 'types/payment';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { ListedProductType, MainVariantDetailType, ProductDetailType, SimpleProductType } from 'types/product';
 import { AutocompleteSearchType } from 'types/search';
@@ -111,14 +111,14 @@ export const getGtmShippingInfoEvent = (
         shippingType: transport.name,
         shippingDetail: shippingDetail,
         shippingExtra: shippingExtra,
-        shippingPrice: transport.price.priceWithoutVat,
-        shippingPriceWithTax: transport.price.priceWithVat,
+        shippingPrice: Number.parseFloat(transport.price.priceWithoutVat),
+        shippingPriceWithTax: Number.parseFloat(transport.price.priceWithVat),
     };
 };
 
 export const getGtmPaymentInfoEvent = (
     cartInfoType: GtmCartInfoType,
-    payment: PaymentType,
+    payment: SimplePaymentFragmentApi,
 ): GtmPaymentInfoEventType => ({
     value: cartInfoType.value,
     valueWithTax: cartInfoType.valueWithTax,
@@ -163,8 +163,8 @@ export const getGtmProductDetailEvent = (
     domainUrl: string,
 ): GtmProductDetailEventType => ({
     currency: currencyCode,
-    value: product.price.priceWithoutVat,
-    valueWithTax: product.price.priceWithVat,
+    value: Number.parseFloat(product.price.priceWithoutVat),
+    valueWithTax: Number.parseFloat(product.price.priceWithVat),
     products: [mapGtmProductDetailType(product, domainUrl)],
 });
 

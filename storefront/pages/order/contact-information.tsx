@@ -35,11 +35,11 @@ import { userActions } from 'redux/slices/user';
 const ContactInformationPage: FC<ServerSidePropsType> = () => {
     const router = useRouter();
     const dispatch = useShopsysDispatch();
-    const domainUrl = useShopsysSelector((state) => state.domain.url);
+    const domainConfig = useShopsysSelector((state) => state.domain);
     const { cartUuid } = useShopsysSelector((state) => state.user);
     const [transportAndPaymentUrl, orderConfirmationUrl] = getInternationalizedStaticUrls(
         ['/order/transport-and-payment', '/order-confirmation'],
-        domainUrl,
+        domainConfig.url,
     );
     const [orderCreating, setOrderCreating] = useState(false);
     const currentCart = useCurrentCart();
@@ -132,7 +132,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                     currentCart.payment,
                     currentCart.promoCode,
                     createOrderResult.data.CreateOrder.order.number,
-                    domainUrl,
+                    domainConfig,
                 );
 
                 dispatch(userActions.setCartUuid(null));
@@ -167,7 +167,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
             formProviderMethods,
             t,
             formMeta.messages.error,
-            domainUrl,
+            domainConfig,
             router,
             orderConfirmationUrl,
             changePaymentInCart,

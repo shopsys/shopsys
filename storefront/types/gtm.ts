@@ -196,8 +196,8 @@ export type GtmPurchaseType = {
     coupons: string[];
     discountAmount: number;
     paymentType: string;
-    paymentPrice: number;
-    paymentPriceWithTax: number;
+    paymentPrice: string;
+    paymentPriceWithTax: string;
     shippingPrice: number;
     shippingPriceWithTax: number;
     shippingType: string;
@@ -273,8 +273,8 @@ export type GtmPaymentInfoEventType = {
     coupons: string[];
     currency: string;
     paymentType: string;
-    paymentPrice: number;
-    paymentPriceWithTax: number;
+    paymentPrice: string;
+    paymentPriceWithTax: string;
     products: GtmCartItemType[];
 };
 

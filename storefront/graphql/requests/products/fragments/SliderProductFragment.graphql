@@ -13,7 +13,9 @@ fragment SliderProductFragment on Product {
     image: mainImage {
         ...ImageSizesFragment
     }
-    ...ProductPriceFragment
+    price {
+        ...ProductPriceFragment
+    }
     availability {
         ...AvailabilityFragment
     }

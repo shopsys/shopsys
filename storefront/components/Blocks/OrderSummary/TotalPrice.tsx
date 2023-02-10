@@ -1,10 +1,10 @@
-import { OrderSummaryContent } from './OrderSummaryElements';
-import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { PriceType } from 'types/price';
+import { PriceFragmentApi } from "graphql/generated";
+import { useFormatPrice } from "hooks/formatting/useFormatPrice";
+import { useTypedTranslationFunction } from "hooks/typescript/useTypedTranslationFunction";
+import { OrderSummaryContent } from "./OrderSummaryElements";
 
 type TotalPriceProps = {
-    totalPrice: PriceType;
+    totalPrice: PriceFragmentApi;
 };
 
 const TEST_IDENTIFIER = 'blocks-ordersummary-totalprice';

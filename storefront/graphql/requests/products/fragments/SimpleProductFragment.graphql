@@ -5,7 +5,9 @@ fragment SimpleProductFragment on Product {
     catalogNumber
     fullName
     slug
-    ...ProductPriceFragment
+    price {
+        ...ProductPriceFragment
+    }
     image: mainImage {
         ...ImageSizesFragment
     }

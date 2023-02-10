@@ -5,7 +5,6 @@ import { ProductExposedStoresCount } from 'components/Blocks/Product/Availabilit
 import { ProductFlags } from 'components/Blocks/Product/Flags/ProductFlags';
 import { ProductPrice } from 'components/Blocks/Product/Price/ProductPrice';
 import { onClickProductDetailGtmEventHandler } from 'helpers/gtm/eventHandlers';
-import { getFirstImageOrNull } from 'helpers/mappers/image';
 import NextLink from 'next/link';
 import { useCallback } from 'react';
 import { useShopsysSelector } from 'redux/main';

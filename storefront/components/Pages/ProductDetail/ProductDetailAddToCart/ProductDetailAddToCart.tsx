@@ -8,7 +8,6 @@ import { useAddToCart } from 'hooks/cart/useAddToCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRef, useState } from 'react';
-import { useShopsysSelector } from 'redux/main';
 import { AddToCartPopupDataType } from 'types/cart';
 import { ProductDetailType } from 'types/product';
 
@@ -24,7 +23,6 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
     const formatPrice = useFormatPrice();
     const [changeCartItemQuantity, fetching] = useAddToCart('product');
     const [popupData, setPopupData] = useState<AddToCartPopupDataType | null>(null);
-    const { currencyCode } = useShopsysSelector((state) => state.domain);
 
     const onAddToCartHandler = async () => {
         if (spinboxRef.current === null) {
@@ -33,7 +31,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
 
         const addToCartResult = await changeCartItemQuantity(product.uuid, spinboxRef.current.valueAsNumber, 'detail');
         spinboxRef.current!.valueAsNumber = 1;
-        setPopupData(mapAddToCartPopupData(addToCartResult, currencyCode));
+        setPopupData(mapAddToCartPopupData(addToCartResult));
     };
 
     return (

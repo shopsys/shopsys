@@ -1,5 +1,4 @@
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
-import { mapProductPriceData } from 'connectors/price/Prices';
 import {
     ListedProductConnectionFragmentApi,
     ListedProductConnectionPreviewFragmentApi,
@@ -10,7 +9,6 @@ import {
 } from 'graphql/generated';
 import { mapProductFilterOptions } from 'helpers/filterOptions/mapProductFilterOptions';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
-import { useShopsysSelector } from 'redux/main';
 import {
     ListedProductConnectionPreviewType,
     ListedProductConnectionType,
@@ -19,24 +17,22 @@ import {
     SliderProductItemType,
 } from 'types/product';
 
-export const mapListedProductType = (apiData: ListedProductFragmentApi, currencyCode: string): ListedProductType => {
+export const mapListedProductType = (apiData: ListedProductFragmentApi): ListedProductType => {
     return {
         ...apiData,
         isMainVariant: apiData.__typename === 'MainVariant',
-        price: mapProductPriceData(apiData.price, currencyCode),
         categoryNames: apiData.categories.map((category) => category.name),
     };
 };
 
-export const mapListedVariantType = (apiData: ListedVariantFragmentApi, currencyCode: string): ListedVariantType => {
+export const mapListedVariantType = (apiData: ListedVariantFragmentApi): ListedVariantType => {
     return {
         ...apiData,
-        ...mapListedProductType(apiData, currencyCode),
+        ...mapListedProductType(apiData),
     };
 };
 
 export const usePromotedProducts = (): SliderProductItemType[] | undefined => {
-    const { currencyCode } = useShopsysSelector((state) => state.domain);
     const [{ data, error }] = usePromotedProductsQueryApi();
     useQueryError(error);
 
@@ -45,23 +41,19 @@ export const usePromotedProducts = (): SliderProductItemType[] | undefined => {
         return undefined;
     }
 
-    return mapSliderProductApiData(apiData, currencyCode);
+    return mapSliderProductApiData(apiData);
 };
 
-export const mapSliderProductApiData = (
-    apiData: SliderProductFragmentApi[],
-    currencyCode: string,
-): SliderProductItemType[] => {
+export const mapSliderProductApiData = (apiData: SliderProductFragmentApi[]): SliderProductItemType[] => {
     return apiData.map((apiProduct) => {
-        return mapSliderItemProductType(apiProduct, currencyCode);
+        return mapSliderItemProductType(apiProduct);
     });
 };
 
-const mapSliderItemProductType = (apiData: SliderProductFragmentApi, currencyCode: string): SliderProductItemType => {
+const mapSliderItemProductType = (apiData: SliderProductFragmentApi): SliderProductItemType => {
     return {
         ...apiData,
         isMainVariant: apiData.__typename === 'MainVariant',
-        price: mapProductPriceData(apiData.price, currencyCode),
         categoryNames: apiData.categories.map((category) => category.name),
     };
 };
@@ -73,7 +65,7 @@ export const mapListedProductConnectionType = (
     return {
         ...apiData,
         pageInfo: mapPageInfoApiData(apiData.pageInfo),
-        products: mapListedProductTypes(apiData, currencyCode),
+        products: mapListedProductTypes(apiData),
         productFilterOptions: mapProductFilterOptions(apiData.productFilterOptions, currencyCode),
     };
 };
@@ -88,10 +80,7 @@ export const mapListedProductConnectionPreviewType = (
     };
 };
 
-const mapListedProductTypes = (
-    apiData: ListedProductConnectionFragmentApi,
-    currencyCode: string,
-): ListedProductType[] => {
+const mapListedProductTypes = (apiData: ListedProductConnectionFragmentApi): ListedProductType[] => {
     const result = [];
 
     if (apiData.edges !== null) {
@@ -99,7 +88,7 @@ const mapListedProductTypes = (
             if (edge?.node === undefined || edge.node === null) {
                 continue;
             }
-            result.push(mapListedProductType(edge.node, currencyCode));
+            result.push(mapListedProductType(edge.node));
         }
     }
 

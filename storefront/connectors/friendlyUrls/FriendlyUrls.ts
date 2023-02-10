@@ -40,9 +40,9 @@ export function useFriendlyUrlResolvedData(slug: string): { data: Maybe<Friendly
 
     switch (data.slug.__typename) {
         case 'RegularProduct':
-            return { data: mapProductDetailApiData(data.slug, currentDomainConfig.currencyCode), fetching };
+            return { data: mapProductDetailApiData(data.slug), fetching };
         case 'MainVariant':
-            return { data: mapMainVariantDetailApiData(data.slug, currentDomainConfig.currencyCode), fetching };
+            return { data: mapMainVariantDetailApiData(data.slug), fetching };
         case 'Category':
             return { data: mapCategoryDetailData(data.slug, currentDomainConfig.currencyCode), fetching };
         case 'Store':
@@ -50,7 +50,7 @@ export function useFriendlyUrlResolvedData(slug: string): { data: Maybe<Friendly
         case 'ArticleSite':
             return { data: data.slug, fetching };
         case 'BlogArticle':
-            return { data: mapBlogArticleDetail(data.slug, currentDomainConfig), fetching };
+            return { data: mapBlogArticleDetail(data.slug), fetching };
         case 'Brand':
             return { data: mapBrandDetail(data.slug, currentDomainConfig.currencyCode), fetching };
         case 'Flag':

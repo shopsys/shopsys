@@ -13,7 +13,9 @@ fragment ListedVariantFragment on Variant {
     image: mainImage {
         ...ImageSizesFragment
     }
-    ...ProductPriceFragment
+    price {
+        ...ProductPriceFragment
+    }
     availability {
         ...AvailabilityFragment
     }

@@ -5,14 +5,14 @@ import {
     OrderSummaryTextAndImage,
 } from './OrderSummaryElements';
 import { Image } from 'components/Basic/Image/Image';
+import { SimplePaymentFragmentApi } from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { PaymentType } from 'types/payment';
 import { TransportType } from 'types/transport';
 
 type TransportAndPaymentProps = {
     transport: TransportType | null;
-    payment: PaymentType | null;
+    payment: SimplePaymentFragmentApi | null;
 };
 
 const TEST_IDENTIFIER = 'blocks-ordersummary';

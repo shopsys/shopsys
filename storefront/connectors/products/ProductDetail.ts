@@ -1,5 +1,4 @@
 import { mapListedVariantType, mapSliderProductApiData } from './Products';
-import { mapProductPriceData } from 'connectors/price/Prices';
 import {
     ImageSizesFragmentApi,
     ListedVariantFragmentApi,
@@ -11,26 +10,21 @@ import { MainVariantDetailType, ProductDetailInterfaceType, ProductDetailType } 
 
 const mapProductDetailInterface = (
     productDetailApiData: ProductDetailInterfaceFragmentApi,
-    currencyCode: string,
 ): ProductDetailInterfaceType => {
     return {
         ...productDetailApiData,
         namePrefix: productDetailApiData.namePrefix !== null ? productDetailApiData.namePrefix : '',
         nameSuffix: productDetailApiData.nameSuffix !== null ? productDetailApiData.nameSuffix : '',
         description: productDetailApiData.description !== null ? productDetailApiData.description : '',
-        price: mapProductPriceData(productDetailApiData.price, currencyCode),
-        accessories: mapSliderProductApiData(productDetailApiData.accessories, currencyCode),
+        accessories: mapSliderProductApiData(productDetailApiData.accessories),
         categoryNames: productDetailApiData.categories.map((category) => category.name),
     };
 };
 
-export const mapProductDetailApiData = (
-    productDetailApiData: ProductDetailFragmentApi,
-    currencyCode: string,
-): ProductDetailType => {
+export const mapProductDetailApiData = (productDetailApiData: ProductDetailFragmentApi): ProductDetailType => {
     return {
         ...productDetailApiData,
-        ...mapProductDetailInterface(productDetailApiData, currencyCode),
+        ...mapProductDetailInterface(productDetailApiData),
         __typename: productDetailApiData.__typename,
         shortDescription: productDetailApiData.shortDescription !== null ? productDetailApiData.shortDescription : '',
     };
@@ -46,14 +40,11 @@ const mapVariantImages = (variants: ListedVariantFragmentApi[]): ImageSizesFragm
     return mappedImages;
 };
 
-export const mapMainVariantDetailApiData = (
-    apiData: MainVariantDetailFragmentApi,
-    currencyCode: string,
-): MainVariantDetailType => {
+export const mapMainVariantDetailApiData = (apiData: MainVariantDetailFragmentApi): MainVariantDetailType => {
     return {
-        ...mapProductDetailInterface(apiData, currencyCode),
+        ...mapProductDetailInterface(apiData),
         __typename: 'MainVariant',
         images: [...apiData.images, ...mapVariantImages(apiData.variants)],
-        variants: apiData.variants.map((variant) => mapListedVariantType(variant, currencyCode)),
+        variants: apiData.variants.map((variant) => mapListedVariantType(variant)),
     };
 };

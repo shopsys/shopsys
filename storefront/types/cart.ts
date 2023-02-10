@@ -1,9 +1,14 @@
 import { SimpleBrandType } from './brand';
-import { PaymentType } from './payment';
-import { AvailabilityFragmentApi, CartModificationsFragmentApi, ImageSizesFragmentApi } from 'graphql/generated';
+import {
+    AvailabilityFragmentApi,
+    CartModificationsFragmentApi,
+    ImageSizesFragmentApi,
+    PriceFragmentApi,
+    ProductPriceFragmentApi,
+    SimplePaymentFragmentApi,
+} from 'graphql/generated';
 import { SimpleFlagType } from 'types/flag';
 import { PickupPlaceType } from 'types/pickupPlace';
-import { PriceType, ProductPriceType } from 'types/price';
 import { SimpleProductType } from 'types/product';
 import { TransportType } from 'types/transport';
 import { OperationContext } from 'urql';
@@ -13,7 +18,7 @@ export type CurrentCartType = {
     isCartEmpty: boolean;
     transport: TransportType | null;
     pickupPlace: PickupPlaceType | null;
-    payment: PaymentType | null;
+    payment: SimplePaymentFragmentApi | null;
     paymentGoPayBankSwift: string | null;
     promoCode: string | null;
     isLoading: boolean;
@@ -29,7 +34,7 @@ export type ProductCartItemType = {
     fullName: string;
     flags: SimpleFlagType[];
     image: ImageSizesFragmentApi | null;
-    price: ProductPriceType;
+    price: ProductPriceFragmentApi;
     availability: AvailabilityFragmentApi;
     stockQuantity: number;
     availableStoresCount: number;
@@ -49,9 +54,9 @@ export type CartItemType = {
 
 export type CartType = {
     items: CartItemType[];
-    totalPrice: PriceType;
-    totalItemsPrice: PriceType;
-    totalDiscountPrice: PriceType;
+    totalPrice: PriceFragmentApi;
+    totalItemsPrice: PriceFragmentApi;
+    totalDiscountPrice: PriceFragmentApi;
     remainingAmountWithVatForFreeTransport: number | null;
 };
 

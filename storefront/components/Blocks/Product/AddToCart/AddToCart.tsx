@@ -7,7 +7,6 @@ import { mapAddToCartPopupData } from 'connectors/cart/Cart';
 import { useAddToCart } from 'hooks/cart/useAddToCart';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRef, useState } from 'react';
-import { useShopsysSelector } from 'redux/main';
 import { AddToCartPopupDataType } from 'types/cart';
 import { GtmListNameType } from 'types/gtm';
 
@@ -26,7 +25,6 @@ export const AddToCart: FC<AddToCartProps> = ({ productUuid, minQuantity, maxQua
     const t = useTypedTranslationFunction();
     const [changeCartItemQuantity, fetching] = useAddToCart(gtmListName);
     const [popupData, setPopupData] = useState<AddToCartPopupDataType | null>(null);
-    const { currencyCode } = useShopsysSelector((state) => state.domain);
 
     const onAddToCartHandler = async () => {
         if (spinboxRef.current === null) {
@@ -40,7 +38,7 @@ export const AddToCart: FC<AddToCartProps> = ({ productUuid, minQuantity, maxQua
             listIndex,
         );
         spinboxRef.current!.valueAsNumber = 1;
-        setPopupData(mapAddToCartPopupData(addToCartResult, currencyCode));
+        setPopupData(mapAddToCartPopupData(addToCartResult));
     };
 
     return (
