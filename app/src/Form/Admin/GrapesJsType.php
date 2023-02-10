@@ -42,6 +42,8 @@ class GrapesJsType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
+        $view->vars['allow_products'] = $options['allow_products'];
+
         parent::buildView($view, $form, $options);
     }
 
@@ -58,12 +60,15 @@ class GrapesJsType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'entry_options' => [
-                'attr' => [
-                    'class' => 'js-grapesjs_textarea',
+        $resolver->setDefined(['allow_products'])
+            ->setAllowedTypes('allow_products', 'boolean')
+            ->setDefaults([
+                'allow_products' => false,
+                'entry_options' => [
+                    'attr' => [
+                        'class' => 'js-grapesjs_textarea',
+                    ],
                 ],
-            ],
-        ]);
+            ]);
     }
 }

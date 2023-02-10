@@ -20,7 +20,8 @@ export default class InitGrapesJs {
                 const frontendUrl = $(element).data('template-url');
                 const textareaId = $(element).data('textarea-id');
                 const elfinderUrl = $(element).data('elfinder-url');
-                InitGrapesJs.openGrapesEditor(event, frontendUrl, textareaId, elfinderUrl);
+                const allowProducts = $(element).data('allow-products');
+                InitGrapesJs.openGrapesEditor(event, frontendUrl, textareaId, elfinderUrl, allowProducts);
             });
 
             isAnyButtonOnPage = true;
@@ -43,7 +44,7 @@ export default class InitGrapesJs {
         }
     }
 
-    static openGrapesEditor (event, frontendUrl, textareaId, elfinderUrl) {
+    static openGrapesEditor (event, frontendUrl, textareaId, elfinderUrl, allowProducts) {
         InitGrapesJs.setupBodyForGrapesJsEditor();
 
         const content = $.get({
@@ -51,6 +52,11 @@ export default class InitGrapesJs {
             async: false,
             crossDomain: true
         }).responseText;
+
+        const plugins = ['gjs-preset-webpage', 'gjs-plugin-ckeditor', 'nonEditablePage', 'customButtons', 'text-with-image', 'custom-blocks'];
+        if (allowProducts) {
+            plugins.push('products');
+        }
 
         const editor = grapesjs.init({
             container: '#grapesjs',
@@ -60,7 +66,7 @@ export default class InitGrapesJs {
             fromElement: false,
             storageManager: false,
             noticeOnUnload: false,
-            plugins: ['gjs-preset-webpage', 'gjs-plugin-ckeditor', 'nonEditablePage', 'customButtons', 'products', 'text-with-image', 'custom-blocks'],
+            plugins: plugins,
             pluginsOpts: {
                 'gjs-plugin-ckeditor': {
                     options: {
