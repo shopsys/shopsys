@@ -15,11 +15,6 @@ export type ListedCategoryType = {
     totalCount?: number;
 };
 
-export type ListedCategoryConnectionType = {
-    totalCount: number;
-    categories: ListedCategoryType[];
-};
-
 export type ReadyCategorySeoMixLink = {
     name: string;
     slug: string;

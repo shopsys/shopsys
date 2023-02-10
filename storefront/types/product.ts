@@ -29,11 +29,6 @@ export type SimpleProductType = {
     availability: AvailabilityFragmentApi;
 };
 
-export type SimpleProductConnectionType = {
-    totalCount: number;
-    products: SimpleProductType[];
-};
-
 export type ListedProductConnectionPreviewType = {
     productFilterOptions: FilterOptionsType | null;
     orderingMode: ProductOrderingModeEnumApi | null;
