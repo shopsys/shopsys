@@ -45,6 +45,7 @@ class RobotsController extends FrontBaseController
         $sitemapFilePrefix = $this->sitemapFilePrefixer->getSitemapFilePrefixForDomain($this->domain->getId());
 
         $sitemapUrl = $this->domain->getUrl() . $this->sitemapsUrlPrefix . '/' . $sitemapFilePrefix . '.xml';
+        $imageSitemapUrl = $this->domain->getUrl() . $this->sitemapsUrlPrefix . '/' . $sitemapFilePrefix . '_image' . '.xml';
 
         $response = new Response();
         $response->headers->set('Content-Type', 'text/plain');
@@ -53,6 +54,7 @@ class RobotsController extends FrontBaseController
             '@ShopsysFramework/Common/robots.txt.twig',
             [
                 'sitemapUrl' => $sitemapUrl,
+                'imageSitemapUrl' => $imageSitemapUrl,
             ],
             $response
         );

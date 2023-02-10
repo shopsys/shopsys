@@ -13,25 +13,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SitemapListener implements EventSubscriberInterface
 {
-    protected const PRIORITY_HOMEPAGE = 1;
-    protected const PRIORITY_CATEGORIES = 0.8;
-    protected const PRIORITY_PRODUCTS = 0.7;
-    protected const PRIORITY_ARTICLES = 0.5;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Sitemap\SitemapFacade
-     */
-    protected $sitemapFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
-     */
-    protected $domainRouterFactory;
+    protected const PRIORITY_NONE = null;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Sitemap\SitemapFacade $sitemapFacade
@@ -39,13 +21,10 @@ class SitemapListener implements EventSubscriberInterface
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      */
     public function __construct(
-        SitemapFacade $sitemapFacade,
-        Domain $domain,
-        DomainRouterFactory $domainRouterFactory
+        protected readonly SitemapFacade $sitemapFacade,
+        protected readonly Domain $domain,
+        protected readonly DomainRouterFactory $domainRouterFactory
     ) {
-        $this->sitemapFacade = $sitemapFacade;
-        $this->domain = $domain;
-        $this->domainRouterFactory = $domainRouterFactory;
     }
 
     /**
@@ -68,9 +47,14 @@ class SitemapListener implements EventSubscriberInterface
 
         /** @var \Presta\SitemapBundle\Service\AbstractGenerator $generator */
         $generator = $event->getUrlContainer();
+        $generator->setDefaults([
+            'priority' => static::PRIORITY_NONE,
+            'changefreq' => null,
+            'lastmod' => null,
+        ]);
         $domainConfig = $this->domain->getDomainConfigById($domainId);
 
-        $this->addHomepageUrl($generator, $domainConfig, $section, static::PRIORITY_HOMEPAGE);
+        $this->addHomepageUrl($generator, $domainConfig, $section, static::PRIORITY_NONE);
 
         $productSitemapItems = $this->sitemapFacade->getSitemapItemsForListableProducts($domainConfig);
         $this->addUrlsBySitemapItems(
@@ -78,7 +62,7 @@ class SitemapListener implements EventSubscriberInterface
             $generator,
             $domainConfig,
             $section,
-            static::PRIORITY_PRODUCTS
+            static::PRIORITY_NONE
         );
 
         $categorySitemapItems = $this->sitemapFacade->getSitemapItemsForVisibleCategories($domainConfig);
@@ -87,7 +71,7 @@ class SitemapListener implements EventSubscriberInterface
             $generator,
             $domainConfig,
             $section,
-            static::PRIORITY_CATEGORIES
+            static::PRIORITY_NONE
         );
 
         $articleSitemapItems = $this->sitemapFacade->getSitemapItemsForArticlesOnDomain($domainConfig);
@@ -96,7 +80,7 @@ class SitemapListener implements EventSubscriberInterface
             $generator,
             $domainConfig,
             $section,
-            static::PRIORITY_ARTICLES
+            static::PRIORITY_NONE
         );
     }
 

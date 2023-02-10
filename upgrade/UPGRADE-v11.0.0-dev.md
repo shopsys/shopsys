@@ -881,6 +881,13 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
 - old phpRedisAdmin has been replaced with new Redis Commander ([#2550](https://github.com/shopsys/shopsys/pull/2550))
     - see #project-base-diff to update your project
+- update sitemaps and add product image sitemap ([#2551](https://github.com/shopsys/shopsys/pull/2551))
+    - see #project-base-diff to update your project
+    - from SitemapLister was removed unused constants for page priorities:
+      - PRIORITY_HOMEPAGE
+      - PRIORITY_CATEGORIES
+      - PRIORITY_PRODUCTS
+      - PRIORITY_ARTICLES
 
 ## Composer dependencies
 
