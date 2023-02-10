@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Blog\Category;
 
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade;
 use App\Model\Blog\Category\BlogCategory;
 use App\Model\Blog\Category\BlogCategoryFacade;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
@@ -13,33 +14,17 @@ use Shopsys\Cdn\Component\Domain\Domain;
 class BlogCategoryResolverMap extends ResolverMap
 {
     /**
-     * @var \Shopsys\Cdn\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private FriendlyUrlFacade $friendlyUrlFacade;
-
-    /**
-     * @var \App\Model\Blog\Category\BlogCategoryFacade
-     */
-    private BlogCategoryFacade $blogCategoryFacade;
-
-    /**
      * @param \Shopsys\Cdn\Component\Domain\Domain $domain
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
+     * @param \App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade
      */
     public function __construct(
-        Domain $domain,
-        FriendlyUrlFacade $friendlyUrlFacade,
-        BlogCategoryFacade $blogCategoryFacade
+        private readonly Domain $domain,
+        private readonly FriendlyUrlFacade $friendlyUrlFacade,
+        private readonly BlogCategoryFacade $blogCategoryFacade,
+        private readonly BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade
     ) {
-        $this->domain = $domain;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->blogCategoryFacade = $blogCategoryFacade;
     }
 
     /**
@@ -80,6 +65,9 @@ class BlogCategoryResolverMap extends ResolverMap
                         $this->blogCategoryFacade->getRootBlogCategory(),
                         $this->domain->getId()
                     );
+                },
+                'articlesTotalCount' => function (BlogCategory $blogCategory) {
+                    return $this->blogArticleElasticsearchFacade->getByBlogCategoryTotalCount($blogCategory);
                 },
             ],
         ];

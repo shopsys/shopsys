@@ -47,3 +47,6 @@ BlogCategory:
             blogCategoriesTree:
                 type: "[BlogCategory!]!"
                 description: "Tho whole blog categories tree (used for blog navigation rendering)"
+            articlesTotalCount:
+                type: "Int!"
+                description: "Total count of blog articles in this category"

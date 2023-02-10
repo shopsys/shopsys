@@ -2207,6 +2207,15 @@ The item at the end of the edge.
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>articlesTotalCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Total count of blog articles in this category
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>blogArticles</strong></td>
 <td valign="top"><a href="#blogarticleconnection">BlogArticleConnection</a>!</td>
 <td>
