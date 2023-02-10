@@ -26,9 +26,10 @@ final class RemoveLockFilesReleaseWorker extends AbstractShopsysReleaseWorker
      */
     public function work(Version $version, string $initialBranchName = 'master'): void
     {
-        $this->processRunner->run('git rm project-base/composer.lock');
-        $this->processRunner->run('git rm project-base/package-lock.json');
-        $this->processRunner->run('git rm project-base/migrations-lock.yml');
+        $this->processRunner->run('git rm project-base/composer.lock --ignore-unmatch');
+        $this->processRunner->run('git rm project-base/package-lock.json --ignore-unmatch');
+        $this->processRunner->run('git rm project-base/migrations-lock.yml --ignore-unmatch');
+        $this->processRunner->run('git rm project-base/symfony.lock --ignore-unmatch');
         $this->commit('removed locked versions of dependencies for unreleased version');
 
         if ($this->currentBranchName === 'master') {
