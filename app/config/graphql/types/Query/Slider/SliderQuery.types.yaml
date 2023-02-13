@@ -4,5 +4,5 @@ SliderQuery:
         fields:
             sliderItems:
                 type: '[SliderItem!]!'
-                resolve: "@=resolver('sliderItems')"
+                resolve: "@=resolver('resolveSliderItems')"
                 description: "Returns a complete list of the slider items"

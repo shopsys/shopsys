@@ -8,5 +8,5 @@ CartQuery:
                     cartInput:
                         type: CartInput
                         validation: cascade
-                resolve: "@=resolver('getCart', [args])"
+                resolve: "@=resolver('resolveCart', [args])"
                 description: "Return cart of logged customer or cart by UUID for anonymous user"

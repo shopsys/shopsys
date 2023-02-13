@@ -34,7 +34,7 @@ class BlogCategoriesResolver implements ResolverInterface, AliasedInterface
     /**
      * @return \App\Model\Blog\Category\BlogCategory[]
      */
-    public function resolve(): array
+    public function resolveBlogCategories(): array
     {
         return $this->blogCategoryFacade->getAllVisibleChildrenByBlogCategoryAndDomainId(
             $this->blogCategoryFacade->getRootBlogCategory(),
@@ -48,7 +48,7 @@ class BlogCategoriesResolver implements ResolverInterface, AliasedInterface
     public static function getAliases(): array
     {
         return [
-            'resolve' => 'blogCategories',
+            'resolveBlogCategories' => 'resolveBlogCategories',
         ];
     }
 }

@@ -140,8 +140,8 @@ class PersonalDataResolver implements ResolverInterface, AliasedInterface
     public static function getAliases(): array
     {
         return [
-            'resolvePersonalDataPage' => 'personalDataPage',
-            'resolvePersonalDataAccess' => 'accessPersonalData',
+            'resolvePersonalDataPage' => 'resolvePersonalDataPage',
+            'resolvePersonalDataAccess' => 'resolvePersonalDataAccess',
         ];
     }
 }

@@ -12,7 +12,7 @@ class CurrentCustomerUserResolver extends BaseCurrentCustomerUserResolver
     /**
      * @return \App\Model\Customer\User\CustomerUser|null
      */
-    public function resolveNullable(): ?CustomerUser
+    public function resolveNullableCurrentCustomerUser(): ?CustomerUser
     {
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
@@ -26,7 +26,7 @@ class CurrentCustomerUserResolver extends BaseCurrentCustomerUserResolver
     public static function getAliases(): array
     {
         return [
-            'resolveNullable' => 'currentCustomerUser',
+            'resolveNullableCurrentCustomerUser' => 'resolveNullableCurrentCustomerUser',
         ];
     }
 }

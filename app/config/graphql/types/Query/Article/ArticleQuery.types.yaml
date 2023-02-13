@@ -5,7 +5,7 @@ ArticleQuery:
             articles:
                 type: "ArticleConnection!"
                 argsBuilder: "Relay::Connection"
-                resolve: "@=resolver('articles', [args, args['placement']])"
+                resolve: "@=resolver('resolveArticles', [args, args['placement']])"
                 complexity: "@=dynamicPaginationComplexity(args)"
                 args:
                     placement:
@@ -17,14 +17,14 @@ ArticleQuery:
                 description: "Returns list of articles that can be paginated using `first`, `last`, `before` and `after` keywords and filtered by `placement`"
             articlesSearch:
                 type: "[ArticleInterface!]!"
-                resolve: "@=resolver('articlesSearch', [args])"
+                resolve: "@=resolver('resolveArticlesSearch', [args])"
                 args:
                     search:
                         type: "String!"
                 description: "Returns list of searched articles and blog articles"
             article:
                 type: 'NotBlogArticleInterface'
-                resolve: "@=resolver('article', [args['uuid'], args['urlSlug']])"
+                resolve: "@=resolver('resolveArticle', [args['uuid'], args['urlSlug']])"
                 args:
                     uuid:
                         type: "Uuid"
@@ -33,15 +33,15 @@ ArticleQuery:
                 description: "Returns article filtered using UUID or URL slug"
             termsAndConditionsArticle:
                 type: 'ArticleSite'
-                resolve: "@=resolver('termsAndConditionsArticle')"
+                resolve: "@=resolver('resolveTermsAndConditionsArticle')"
                 description: "Returns Terms and Conditions article"
             privacyPolicyArticle:
                 type: 'ArticleSite'
-                resolve: "@=resolver('privacyPolicyArticle')"
+                resolve: "@=resolver('resolvePrivacyPolicyArticle')"
                 description: "Returns privacy policy article"
             cookiesArticle:
                 type: 'ArticleSite'
-                resolve: "@=resolver('cookiesArticle')"
+                resolve: "@=resolver('resolveCookiesArticle')"
                 description: "Returns information about cookies article"
             ArticleSite:
                 type: "ArticleSite"

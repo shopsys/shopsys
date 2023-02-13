@@ -38,7 +38,7 @@ class LastOrderResolver implements ResolverInterface, AliasedInterface
     /**
      * @return \App\Model\Order\Order|null
      */
-    public function resolve(): ?Order
+    public function resolveLastOrder(): ?Order
     {
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
@@ -54,6 +54,6 @@ class LastOrderResolver implements ResolverInterface, AliasedInterface
      */
     public static function getAliases(): array
     {
-        return ['resolve' => 'lastOrder'];
+        return ['resolveLastOrder' => 'resolveLastOrder'];
     }
 }

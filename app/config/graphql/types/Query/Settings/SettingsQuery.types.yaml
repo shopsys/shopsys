@@ -4,5 +4,5 @@ SettingsQuery:
         fields:
             settings:
                 type: 'Settings'
-                resolve: "@=resolver('settings')"
+                resolve: "@=resolver('resolveSettings')"
                 description: "Returns current setting"

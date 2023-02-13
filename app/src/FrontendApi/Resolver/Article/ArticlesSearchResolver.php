@@ -30,7 +30,7 @@ class ArticlesSearchResolver implements ResolverInterface, AliasedInterface
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return array
      */
-    public function articlesSearch(Argument $argument): array
+    public function resolveArticlesSearch(Argument $argument): array
     {
         return $this->combinedArticleElasticsearchFacade->getArticlesBySearchText(
             $argument['search'] ?? '',
@@ -44,7 +44,7 @@ class ArticlesSearchResolver implements ResolverInterface, AliasedInterface
     public static function getAliases(): array
     {
         return [
-            'articlesSearch' => 'articlesSearch',
+            'resolveArticlesSearch' => 'resolveArticlesSearch',
         ];
     }
 }

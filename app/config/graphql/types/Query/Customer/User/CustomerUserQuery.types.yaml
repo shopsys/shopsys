@@ -8,7 +8,7 @@ CustomerUserQuery:
                 type: 'RegularCustomerUser'
             currentCustomerUser:
                 type: 'CustomerUser'
-                resolve: "@=resolver('currentCustomerUser')"
+                resolve: "@=resolver('resolveNullableCurrentCustomerUser')"
                 description: "Returns currently logged in customer user"
             isCustomerUserRegistered:
                 type: Boolean!
@@ -23,5 +23,5 @@ CustomerUserQuery:
                             -   Length:
                                     max: 255
                                     maxMessage: "Email cannot be longer than {{ limit }} characters"
-                resolve: "@=resolver('isCustomerUserRegistered', [args['email']])"
+                resolve: "@=resolver('resolveIsCustomerUserRegistered', [args['email']])"
                 description: "Check if email is registered"

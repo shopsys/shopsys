@@ -53,7 +53,7 @@ class StoreResolver implements ResolverInterface, AliasedInterface
      * @param string|null $urlSlug
      * @return \App\Model\Store\Store
      */
-    public function resolver(?string $uuid = null, ?string $urlSlug = null): Store
+    public function resolveStore(?string $uuid = null, ?string $urlSlug = null): Store
     {
         if ($uuid !== null) {
             try {
@@ -78,7 +78,7 @@ class StoreResolver implements ResolverInterface, AliasedInterface
     public static function getAliases(): array
     {
         return [
-            'resolver' => 'store',
+            'resolveStore' => 'resolveStore',
         ];
     }
 

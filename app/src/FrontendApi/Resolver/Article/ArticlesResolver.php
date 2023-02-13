@@ -36,7 +36,7 @@ class ArticlesResolver implements ResolverInterface, AliasedInterface
      * @param string[] $placements
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
      */
-    public function resolve(Argument $argument, array $placements)
+    public function resolveArticles(Argument $argument, array $placements)
     {
         PageSizeValidator::checkMaxPageSize($argument);
         $this->setDefaultFirstOffsetIfNecessary($argument);
@@ -66,7 +66,7 @@ class ArticlesResolver implements ResolverInterface, AliasedInterface
     public static function getAliases(): array
     {
         return [
-            'resolve' => 'articles',
+            'resolveArticles' => 'resolveArticles',
         ];
     }
 }

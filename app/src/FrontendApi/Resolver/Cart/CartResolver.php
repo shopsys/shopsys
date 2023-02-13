@@ -48,7 +48,7 @@ class CartResolver implements ResolverInterface, AliasedInterface
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \App\FrontendApi\Model\Cart\CartWithModificationsResult|null
      */
-    public function resolve(Argument $argument): ?CartWithModificationsResult
+    public function resolveCart(Argument $argument): ?CartWithModificationsResult
     {
         $input = CartInputDefaultValueInitializer::initializeDefaultValues($argument);
 
@@ -69,7 +69,7 @@ class CartResolver implements ResolverInterface, AliasedInterface
     public static function getAliases(): array
     {
         return [
-            'resolve' => 'getCart',
+            'resolveCart' => 'resolveCart',
         ];
     }
 }

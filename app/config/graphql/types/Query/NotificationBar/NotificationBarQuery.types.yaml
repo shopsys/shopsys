@@ -4,5 +4,5 @@ NotificationBarQuery:
         fields:
             notificationBars:
                 type: '[NotificationBar!]'
-                resolve: "@=resolver('notificationBars')"
+                resolve: "@=resolver('resolveNotificationBars')"
                 description: "Returns a list of notifications supposed to be displayed on all pages"

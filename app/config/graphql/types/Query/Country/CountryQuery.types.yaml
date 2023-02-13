@@ -4,5 +4,5 @@ CountryQuery:
         fields:
             countries:
                 type: '[Country!]!'
-                resolve: "@=resolver('countries')"
+                resolve: "@=resolver('resolveCountries')"
                 description: "Returns available countries"

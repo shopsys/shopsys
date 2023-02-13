@@ -34,7 +34,7 @@ class FlagsResolver implements ResolverInterface, AliasedInterface
     /**
      * @return \App\Model\Product\Flag\Flag[]
      */
-    public function resolver(): array
+    public function resolveFlags(): array
     {
         return $this->flagFacade->getAllVisibleFlags($this->domain->getLocale());
     }
@@ -45,7 +45,7 @@ class FlagsResolver implements ResolverInterface, AliasedInterface
     public static function getAliases(): array
     {
         return [
-            'resolver' => 'flags',
+            'resolveFlags' => 'resolveFlags',
         ];
     }
 }

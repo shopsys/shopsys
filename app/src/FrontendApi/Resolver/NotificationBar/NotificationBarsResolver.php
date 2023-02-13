@@ -34,7 +34,7 @@ class NotificationBarsResolver implements ResolverInterface, AliasedInterface
     /**
      * @return \App\Model\NotificationBar\NotificationBar[]|null
      */
-    public function resolve(): ?array
+    public function resolveNotificationBars(): ?array
     {
         return $this->notificationBarFacade->findVisibleAndValidByDomainId($this->domain->getId());
     }
@@ -44,6 +44,6 @@ class NotificationBarsResolver implements ResolverInterface, AliasedInterface
      */
     public static function getAliases(): array
     {
-        return ['resolve' => 'notificationBars'];
+        return ['resolveNotificationBars' => 'resolveNotificationBars'];
     }
 }

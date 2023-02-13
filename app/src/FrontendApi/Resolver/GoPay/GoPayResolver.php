@@ -37,7 +37,7 @@ class GoPayResolver implements ResolverInterface, AliasedInterface
      * @param string $currencyCode
      * @return \App\Model\GoPay\BankSwift\GoPayBankSwift[]
      */
-    public function getGoPaySwifts(string $currencyCode): array
+    public function resolveGoPaySwifts(string $currencyCode): array
     {
         $currency = $this->currencyFacade->getByCode($currencyCode);
 
@@ -50,7 +50,7 @@ class GoPayResolver implements ResolverInterface, AliasedInterface
     public static function getAliases(): array
     {
         return [
-            'getGoPaySwifts' => 'getGoPaySwifts',
+            'resolveGoPaySwifts' => 'resolveGoPaySwifts',
         ];
     }
 }

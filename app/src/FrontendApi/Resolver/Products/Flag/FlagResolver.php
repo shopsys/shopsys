@@ -49,7 +49,7 @@ class FlagResolver implements ResolverInterface, AliasedInterface
      * @param string|null $urlSlug
      * @return \App\Model\Product\Flag\Flag
      */
-    public function resolveByUuidOrUrlSlug(?string $uuid = null, ?string $urlSlug = null): Flag
+    public function resolveFlagByUuidOrUrlSlug(?string $uuid = null, ?string $urlSlug = null): Flag
     {
         if ($uuid !== null) {
             try {
@@ -93,7 +93,7 @@ class FlagResolver implements ResolverInterface, AliasedInterface
     public static function getAliases(): array
     {
         return [
-            'resolveByUuidOrUrlSlug' => 'flag',
+            'resolveFlagByUuidOrUrlSlug' => 'resolveFlagByUuidOrUrlSlug',
         ];
     }
 }

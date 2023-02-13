@@ -4,7 +4,7 @@ CategoryQuery:
         fields:
             promotedCategories:
                 type: '[Category!]!'
-                resolve: "@=resolver('promotedCategoriesResolver')"
+                resolve: "@=resolver('resolvePromotedCategories')"
                 description: "Returns promoted categories"
             categoriesSearch:
                 type: "CategoryConnection!"

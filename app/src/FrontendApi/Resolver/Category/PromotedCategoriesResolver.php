@@ -36,7 +36,7 @@ class PromotedCategoriesResolver implements ResolverInterface, AliasedInterface
     /**
      * @return \App\Model\Category\Category[]
      */
-    public function resolve(): array
+    public function resolvePromotedCategories(): array
     {
         return $this->promotedCategoryFacade->getVisiblePromotedCategoriesOnDomain($this->domain->getCurrentDomainConfig());
     }
@@ -46,6 +46,6 @@ class PromotedCategoriesResolver implements ResolverInterface, AliasedInterface
      */
     public static function getAliases(): array
     {
-        return ['resolve' => 'promotedCategoriesResolver'];
+        return ['resolvePromotedCategories' => 'resolvePromotedCategories'];
     }
 }
