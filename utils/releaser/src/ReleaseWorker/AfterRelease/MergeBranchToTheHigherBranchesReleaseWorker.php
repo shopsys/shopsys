@@ -13,7 +13,7 @@ final class MergeBranchToTheHigherBranchesReleaseWorker extends AbstractShopsysR
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = 'master'): string
+    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
     {
         return '[Manually] Merge the branch with the release to the higher development branches.';
     }
@@ -22,7 +22,7 @@ final class MergeBranchToTheHigherBranchesReleaseWorker extends AbstractShopsysR
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = 'master'): void
+    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
     {
         $this->symfonyStyle->note(
             'You need to gradually merge the branch with the new release to all the higher development branches.'

@@ -15,7 +15,7 @@ final class SendBranchForReviewAndTestsReleaseWorker extends AbstractShopsysRele
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = 'master'): string
+    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
     {
         return '[Manually] Send the branch for review and tests';
     }
@@ -24,7 +24,7 @@ final class SendBranchForReviewAndTestsReleaseWorker extends AbstractShopsysRele
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = 'master'): void
+    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
     {
         $this->symfonyStyle->note(
             'Keep in mind that if there are any notes from the code review or tests, you need to address them, commit and push the fixes, force-split your branch using tool-monorepo-force-split-branch and build test-rc-project-base special job on Heimdall'

@@ -15,7 +15,7 @@ final class CreateAndPushGitTagReleaseWorker extends AbstractShopsysReleaseWorke
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = 'master'): string
+    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
     {
         return 'Create, [Manually] push a git tag, and [Manually - if not on master branch] split monorepo';
     }
@@ -24,7 +24,7 @@ final class CreateAndPushGitTagReleaseWorker extends AbstractShopsysReleaseWorke
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = 'master'): void
+    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
     {
         $versionString = $version->getOriginalString();
         $this->processRunner->run('git tag ' . $versionString);
@@ -33,7 +33,7 @@ final class CreateAndPushGitTagReleaseWorker extends AbstractShopsysReleaseWorke
         );
 
         $this->confirm(sprintf('Confirm that tag "%s" is pushed', $versionString));
-        if ($this->currentBranchName === 'master') {
+        if ($this->currentBranchName === AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME) {
             $this->symfonyStyle->note(
                 'Rest assured, after you push the tagged master branch, the new tag will be propagated to packagist once the project is built and split on Heimdall automatically.'
             );

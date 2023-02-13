@@ -15,7 +15,7 @@ final class CheckReleaseBlogPostReleaseWorker extends AbstractShopsysReleaseWork
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = 'master'): string
+    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
     {
         return '[Manually] Ensure "Release highlights" post will be prepared for release on https://blog.shopsys.com in a few days';
     }
@@ -24,7 +24,7 @@ final class CheckReleaseBlogPostReleaseWorker extends AbstractShopsysReleaseWork
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = 'master'): void
+    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
     {
         $this->confirm('Confirm the post will be prepared in a few days');
     }

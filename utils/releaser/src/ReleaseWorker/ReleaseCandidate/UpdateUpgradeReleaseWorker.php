@@ -65,7 +65,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = 'master'): string
+    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
     {
         return 'Prepare all upgrading files for the release.';
     }
@@ -74,7 +74,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = 'master'): void
+    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
     {
         $this->nextDevelopmentVersionString = $this->askForNextDevelopmentVersion($version, true)->getOriginalString();
 

@@ -41,7 +41,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = 'master'): string
+    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
     {
         return 'Create and push git tags for packages excluding monorepo and project-base';
     }
@@ -50,7 +50,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = 'master'): void
+    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
     {
         $packages = $this->packageProvider->getPackagesByOrganization('shopsys', array_merge(parent::EXCLUDED_PACKAGES, self::EXCLUDED_PACKAGES));
         $packageNames = str_replace('shopsys/', '', $packages);

@@ -45,7 +45,7 @@ final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends Abstr
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = 'master'): string
+    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
     {
         return sprintf(
             'Set mutual package dependencies to "%s" version',
@@ -57,7 +57,7 @@ final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends Abstr
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = 'master'): void
+    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
     {
         $developmentVersion = $this->getDevelopmentVersionString($version);
         $this->dependencyUpdater->updateFileInfosWithPackagesAndVersion(
@@ -75,7 +75,7 @@ final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends Abstr
         $this->confirm(
             sprintf('Confirm you have pushed the new commit into the "%s" branch', $this->currentBranchName)
         );
-        if ($this->currentBranchName === 'master') {
+        if ($this->currentBranchName === AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME) {
             return;
         }
 

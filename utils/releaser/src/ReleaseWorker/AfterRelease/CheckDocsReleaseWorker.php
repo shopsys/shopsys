@@ -15,7 +15,7 @@ final class CheckDocsReleaseWorker extends AbstractShopsysReleaseWorker
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = 'master'): string
+    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
     {
         return '[Manually] Check documentation is released, version is present and latest highest version is set as default';
     }
@@ -24,7 +24,7 @@ final class CheckDocsReleaseWorker extends AbstractShopsysReleaseWorker
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = 'master'): void
+    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
     {
         $this->symfonyStyle->note('If you are releasing major or minor version, check that this version is present on https://docs.shopsys.com/');
         $this->symfonyStyle->note('Also check that current highest major or minor version is set as default on https://readthedocs.org/dashboard/shopsys-knowledge-base/advanced/');

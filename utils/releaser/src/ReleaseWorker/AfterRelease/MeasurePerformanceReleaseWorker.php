@@ -15,7 +15,7 @@ final class MeasurePerformanceReleaseWorker extends AbstractShopsysReleaseWorker
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = 'master'): string
+    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
     {
         return '[Manually] Measure the performance on Performator';
     }
@@ -24,7 +24,7 @@ final class MeasurePerformanceReleaseWorker extends AbstractShopsysReleaseWorker
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = 'master'): void
+    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
     {
         $this->symfonyStyle->note(
             'Consider this step for patch version release.

@@ -13,7 +13,7 @@ abstract class AbstractVerifyInitialBranchReleaseWorker extends AbstractShopsysR
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = 'master'): string
+    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
     {
         return 'Verify that you\'re releasing on the proper branch';
     }
@@ -22,7 +22,7 @@ abstract class AbstractVerifyInitialBranchReleaseWorker extends AbstractShopsysR
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = 'master'): void
+    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
     {
         $this->symfonyStyle->note(
             'It is important to perform the release process on the proper branch, i.e. on 7.3 branch when releasing 7.3.x patch version, and on master when releasing new minor version for the current release.'

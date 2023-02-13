@@ -15,7 +15,7 @@ final class CreateReleaseNotesReleaseWorker extends AbstractShopsysReleaseWorker
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = 'master'): string
+    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
     {
         return '[Manually] Create release notes for the new release on Github (link the changelog here)';
     }
@@ -24,7 +24,7 @@ final class CreateReleaseNotesReleaseWorker extends AbstractShopsysReleaseWorker
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = 'master'): void
+    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
     {
         $this->symfonyStyle->note(
             'See https://github.com/shopsys/shopsys/releases. Use "Draft a new release" button for creating a new release. If you are not sure about the release name or description, you can get inspired by the previous releases.'

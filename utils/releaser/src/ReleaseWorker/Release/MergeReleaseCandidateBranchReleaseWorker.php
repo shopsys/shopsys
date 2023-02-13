@@ -15,7 +15,7 @@ final class MergeReleaseCandidateBranchReleaseWorker extends AbstractShopsysRele
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = 'master'): string
+    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
     {
         return sprintf(
             '[Manually] Merge "%s" branch into "%s"',
@@ -28,7 +28,7 @@ final class MergeReleaseCandidateBranchReleaseWorker extends AbstractShopsysRele
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = 'master'): void
+    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
     {
         $this->symfonyStyle->note('You need to create a merge commit locally.');
         $this->symfonyStyle->warning(sprintf(
@@ -43,7 +43,7 @@ final class MergeReleaseCandidateBranchReleaseWorker extends AbstractShopsysRele
             )
         );
 
-        if ($this->currentBranchName === 'master') {
+        if ($this->currentBranchName === AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME) {
             $this->symfonyStyle->note(
                 'Rest assured, after the master branch is built on Heimdall, it is split automatically (using http://heimdall:8080/view/Tools/job/tool-monorepo-split/)'
             );

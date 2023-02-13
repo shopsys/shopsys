@@ -15,7 +15,7 @@ final class CheckLatestVersionOfReleaserReleaseWorker extends AbstractShopsysRel
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = 'master'): string
+    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
     {
         return '[Manually] Check that you are using latest version of Releaser.';
     }
@@ -32,7 +32,7 @@ final class CheckLatestVersionOfReleaserReleaseWorker extends AbstractShopsysRel
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = 'master'): void
+    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
     {
         $this->symfonyStyle->note(
             'It is possible, that in current master branch there is improved version of Releaser.
