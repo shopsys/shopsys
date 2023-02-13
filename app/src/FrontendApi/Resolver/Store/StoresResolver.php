@@ -61,7 +61,7 @@ class StoresResolver implements ResolverInterface, AliasedInterface
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object|null
      */
-    public function resolverByTransport(Transport $transport, Argument $argument)
+    public function resolveStoresByTransport(Transport $transport, Argument $argument)
     {
         if ($transport->isPersonalPickup()) {
             return $this->resolver($argument);
@@ -89,7 +89,7 @@ class StoresResolver implements ResolverInterface, AliasedInterface
     {
         return [
             'resolver' => 'stores',
-            'resolverByTransport' => 'storesByTransport',
+            'resolveStoresByTransport' => 'resolveStoresByTransport',
         ];
     }
 }

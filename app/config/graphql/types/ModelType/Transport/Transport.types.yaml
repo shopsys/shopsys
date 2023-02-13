@@ -13,7 +13,7 @@ Transport:
             stores:
                 type: "StoreConnection"
                 description: "Stores available for personal pickup"
-                resolve: "@=resolver('storesByTransport', [value, args])"
+                resolve: "@=resolver('resolveStoresByTransport', [value, args])"
             price:
                 type: "Price!"
                 description: "Transport price"
