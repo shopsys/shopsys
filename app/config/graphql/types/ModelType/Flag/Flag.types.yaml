@@ -21,7 +21,7 @@ Flag:
                     builder: "PaginatorArgumentsBuilder"
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
-                resolve: "@=resolver('productsByFlag', [args, value])"
+                resolve: "@=resolver('resolveProductsByFlag', [args, value])"
             breadcrumb:
                 type: "[Link!]!"
                 description: "Hierarchy of the current element in relation to the structure"

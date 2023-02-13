@@ -112,7 +112,7 @@ class ProductsResolver extends BaseProductsResolver
      * @param \App\Model\Product\Flag\Flag $flag
      * @return \GraphQL\Executor\Promise\Promise
      */
-    public function resolveByFlag(Argument $argument, Flag $flag): Promise
+    public function resolveProductsByFlag(Argument $argument, Flag $flag): Promise
     {
         PageSizeValidator::checkMaxPageSize($argument);
 
@@ -241,7 +241,7 @@ class ProductsResolver extends BaseProductsResolver
     {
         $aliases = parent::getAliases();
 
-        $aliases['resolveByFlag'] = 'productsByFlag';
+        $aliases['resolveProductsByFlag'] = 'resolveProductsByFlag';
 
         return $aliases;
     }
