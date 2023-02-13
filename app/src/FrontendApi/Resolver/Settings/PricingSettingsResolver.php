@@ -34,7 +34,7 @@ class PricingSettingsResolver implements ResolverInterface, AliasedInterface
     /**
      * @return array{defaultCurrencyCode: string, minimumFractionDigits: int}
      */
-    public function resolve(): array
+    public function resolvePricingSettings(): array
     {
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
 
@@ -49,6 +49,6 @@ class PricingSettingsResolver implements ResolverInterface, AliasedInterface
      */
     public static function getAliases(): array
     {
-        return ['resolve' => 'pricingSettings'];
+        return ['resolvePricingSettings' => 'resolvePricingSettings'];
     }
 }

@@ -36,7 +36,7 @@ class SeoSettingsResolver implements ResolverInterface, AliasedInterface
     /**
      * @return array{title: string, titleAddOn: string, metaDescription: string}
      */
-    public function resolve(): array
+    public function resolveSeoSettings(): array
     {
         return [
             'title' => $this->seoSettingFacade->getTitleMainPage($this->domain->getId()),
@@ -50,6 +50,6 @@ class SeoSettingsResolver implements ResolverInterface, AliasedInterface
      */
     public static function getAliases(): array
     {
-        return ['resolve' => 'seoSettings'];
+        return ['resolveSeoSettings' => 'resolveSeoSettings'];
     }
 }
