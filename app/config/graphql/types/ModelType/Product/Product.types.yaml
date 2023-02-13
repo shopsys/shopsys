@@ -74,7 +74,7 @@ Product:
             price:
                 type: "ProductPrice!"
                 description: "Product price"
-                resolve: '@=resolver("productPriceResolver", [value])'
+                resolve: '@=resolver("resolveByProduct", [value])'
             accessories:
                 type: "[Product!]!"
             parameters:

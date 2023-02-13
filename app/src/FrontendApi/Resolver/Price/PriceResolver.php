@@ -180,7 +180,7 @@ class PriceResolver extends BasePriceResolver
     {
         // parent not called intentionally, see https://github.com/shopsys/shopsys/issues/2384
         return [
-            'resolveByProduct' => 'productPriceResolver',
+            'resolveByProduct' => 'resolveByProduct',
         ];
     }
 }
