@@ -69,12 +69,12 @@ type AdvertCode implements Advert {
 type AdvertImage implements Advert {
   """Restricted categories of the advert (the advert is shown in these categories only)"""
   categories: [Category!]!
-  """Adverts first image by params"""
-  firstImage(size: String = null, type: String = null): Image
   """Advert image"""
   image(size: String = null, sizes: [String!] = null, type: String = null): [Image!]!
   """Advert link"""
   link: String
+  """Adverts first image by params"""
+  mainImage(size: String = null, type: String = null): Image
   """Name of advert"""
   name: String!
   """Position of advert"""
@@ -208,12 +208,12 @@ type BlogArticle implements Breadcrumb & Slug & ArticleInterface {
   breadcrumb: [Link!]!
   """Date and time of the blog article creation"""
   createdAt: DateTime!
-  """Blog article image by params"""
-  firstImage(size: String = null, type: String = null): Image
   """Blog article images"""
   images(sizes: [String!] = null, type: String = null): [Image!]!
   """The blog article absolute URL"""
   link: String!
+  """Blog article image by params"""
+  mainImage(size: String = null, type: String = null): Image
   """The blog article title"""
   name: String!
   """The blog article perex"""
@@ -291,12 +291,12 @@ type Brand implements Breadcrumb & Slug & ProductListable {
   breadcrumb: [Link!]!
   """Brand description"""
   description: String
-  """Brand image by params"""
-  firstImage(size: String = null, type: String = null): Image
   """Brand images"""
   images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
   """Brand main URL"""
   link: String!
+  """Brand image by params"""
+  mainImage(size: String = null, type: String = null): Image
   """Brand name"""
   name: String!
   """Paginated and ordered products of brand"""
@@ -435,12 +435,12 @@ type Category implements Breadcrumb & Slug & ProductListable {
   children: [Category!]!
   """Localized category description (domain dependent)"""
   description: String
-  """Category image by params"""
-  firstImage(size: String = null, type: String = null): Image
   """Category images"""
   images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
   """A list of categories linked to the given category"""
   linkedCategories: [Category!]!
+  """Category image by params"""
+  mainImage(size: String = null, type: String = null): Image
   """Localized category name (domain dependent)"""
   name: String!
   """
@@ -829,8 +829,6 @@ type MainVariant implements Product & Breadcrumb & Slug {
   exposedStoresCount: Int!
   """List of downloadable files"""
   files: [File!]!
-  """Product image by params"""
-  firstImage(size: String = null, type: String = null): Image
   """List of flags"""
   flags: [Flag!]!
   """The full name of the product, which consists of a prefix, name, and a suffix"""
@@ -845,6 +843,8 @@ type MainVariant implements Product & Breadcrumb & Slug {
   isUsingStock: Boolean!
   """Product link"""
   link: String!
+  """Product image by params"""
+  mainImage(size: String = null, type: String = null): Image
   """Localized product name (domain dependent)"""
   name: String!
   """Name prefix"""
@@ -985,10 +985,10 @@ interface NotBlogArticleInterface {
 
 """Represents a notification supposed to be displayed on all pages"""
 type NotificationBar {
-  """Notification bar image by params"""
-  firstImage(size: String = null, type: String = null): Image
   """Notification bar images"""
   images(sizes: [String!] = null, type: String = null): [Image!]!
+  """Notification bar image by params"""
+  mainImage(size: String = null, type: String = null): Image
   """Color of the notification"""
   rgbColor: String!
   """Message of the notification"""
@@ -1321,14 +1321,14 @@ scalar Password
 type Payment {
   """Localized payment description (domain dependent)"""
   description: String
-  """Payment image by params"""
-  firstImage(size: String = null, type: String = null): Image
   """Additional data for GoPay payment"""
   goPayPaymentMethod: GoPayPaymentMethod
   """Payment images"""
   images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
   """Localized payment instruction (domain dependent)"""
   instruction: String
+  """Payment image by params"""
+  mainImage(size: String = null, type: String = null): Image
   """Payment name"""
   name: String!
   """Payment position"""
@@ -1452,8 +1452,6 @@ interface Product {
   exposedStoresCount: Int!
   """List of downloadable files"""
   files: [File!]!
-  """Product image by params"""
-  firstImage(size: String = null, type: String = null): Image
   """List of flags"""
   flags: [Flag!]!
   """The full name of the product, which consists of a prefix, name, and a suffix"""
@@ -1468,6 +1466,8 @@ interface Product {
   isUsingStock: Boolean!
   """Product link"""
   link: String!
+  """Product image by params"""
+  mainImage(size: String = null, type: String = null): Image
   """Localized product name (domain dependent)"""
   name: String!
   """Name prefix"""
@@ -1816,8 +1816,6 @@ type RegularProduct implements Product & Breadcrumb & Slug {
   exposedStoresCount: Int!
   """List of downloadable files"""
   files: [File!]!
-  """Product image by params"""
-  firstImage(size: String = null, type: String = null): Image
   """List of flags"""
   flags: [Flag!]!
   """The full name of the product, which consists of a prefix, name, and a suffix"""
@@ -1832,6 +1830,8 @@ type RegularProduct implements Product & Breadcrumb & Slug {
   isUsingStock: Boolean!
   """Product link"""
   link: String!
+  """Product image by params"""
+  mainImage(size: String = null, type: String = null): Image
   """Localized product name (domain dependent)"""
   name: String!
   """Name prefix"""
@@ -1906,8 +1906,6 @@ type SliderItem {
   extendedText: String
   """Target link of text below slider"""
   extendedTextLink: String
-  """Slider item image by params"""
-  firstImage(size: String = null, type: String = null): Image
   """GTM creative"""
   gtmCreative: String
   """GTM ID"""
@@ -1916,6 +1914,8 @@ type SliderItem {
   images(sizes: [String!] = null, type: String = null): [Image!]!
   """Target link"""
   link: String!
+  """Slider item image by params"""
+  mainImage(size: String = null, type: String = null): Image
   """Slider name"""
   name: String!
   """UUID"""
@@ -2004,14 +2004,14 @@ type Transport {
   daysUntilDelivery: Int!
   """Localized transport description (domain dependent)"""
   description: String
-  """Transport image by params"""
-  firstImage(size: String = null, type: String = null): Image
   """Transport images"""
   images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
   """Localized transport instruction (domain dependent)"""
   instruction: String
   """Pointer telling if the transport is of type personal pickup"""
   isPersonalPickup: Boolean!
+  """Transport image by params"""
+  mainImage(size: String = null, type: String = null): Image
   """Transport name"""
   name: String!
   """List of assigned payments"""
@@ -2074,8 +2074,6 @@ type Variant implements Product & Breadcrumb & Slug {
   exposedStoresCount: Int!
   """List of downloadable files"""
   files: [File!]!
-  """Product image by params"""
-  firstImage(size: String = null, type: String = null): Image
   """List of flags"""
   flags: [Flag!]!
   """The full name of the product, which consists of a prefix, name, and a suffix"""
@@ -2090,6 +2088,8 @@ type Variant implements Product & Breadcrumb & Slug {
   isUsingStock: Boolean!
   """Product link"""
   link: String!
+  """Product image by params"""
+  mainImage(size: String = null, type: String = null): Image
   mainVariant: MainVariant
   """Localized product name (domain dependent)"""
   name: String!

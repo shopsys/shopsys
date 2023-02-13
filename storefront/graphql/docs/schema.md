@@ -1507,25 +1507,6 @@ Restricted categories of the advert (the advert is shown in these categories onl
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstImage</strong></td>
-<td valign="top"><a href="#image">Image</a></td>
-<td>
-
-Adverts first image by params
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">type</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>image</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
@@ -1557,6 +1538,25 @@ Advert image
 Advert link
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Adverts first image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
@@ -1967,25 +1967,6 @@ Date and time of the blog article creation
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstImage</strong></td>
-<td valign="top"><a href="#image">Image</a></td>
-<td>
-
-Blog article image by params
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">type</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
@@ -2012,6 +1993,25 @@ Blog article images
 The blog article absolute URL
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Blog article image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
@@ -2384,25 +2384,6 @@ Brand description
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstImage</strong></td>
-<td valign="top"><a href="#image">Image</a></td>
-<td>
-
-Brand image by params
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">type</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
@@ -2434,6 +2415,25 @@ Brand images
 Brand main URL
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Brand image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
@@ -2965,25 +2965,6 @@ Localized category description (domain dependent)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstImage</strong></td>
-<td valign="top"><a href="#image">Image</a></td>
-<td>
-
-Category image by params
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">type</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
@@ -3015,6 +2996,25 @@ Category images
 A list of categories linked to the given category
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Category image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
@@ -4246,25 +4246,6 @@ List of downloadable files
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstImage</strong></td>
-<td valign="top"><a href="#image">Image</a></td>
-<td>
-
-Product image by params
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">type</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>flags</strong></td>
 <td valign="top">[<a href="#flag">Flag</a>!]!</td>
 <td>
@@ -4342,6 +4323,25 @@ Product images
 Product link
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Product image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
@@ -4628,25 +4628,6 @@ Represents a notification supposed to be displayed on all pages
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>firstImage</strong></td>
-<td valign="top"><a href="#image">Image</a></td>
-<td>
-
-Notification bar image by params
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">type</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
@@ -4658,6 +4639,25 @@ Notification bar images
 <tr>
 <td colspan="2" align="right" valign="top">sizes</td>
 <td valign="top">[<a href="#string">String</a>!]</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Notification bar image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
@@ -5682,25 +5682,6 @@ Localized payment description (domain dependent)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstImage</strong></td>
-<td valign="top"><a href="#image">Image</a></td>
-<td>
-
-Payment image by params
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">type</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>goPayPaymentMethod</strong></td>
 <td valign="top"><a href="#gopaypaymentmethod">GoPayPaymentMethod</a></td>
 <td>
@@ -5741,6 +5722,25 @@ Payment images
 Localized payment instruction (domain dependent)
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Payment image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
@@ -6472,25 +6472,6 @@ List of downloadable files
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstImage</strong></td>
-<td valign="top"><a href="#image">Image</a></td>
-<td>
-
-Product image by params
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">type</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>flags</strong></td>
 <td valign="top">[<a href="#flag">Flag</a>!]!</td>
 <td>
@@ -6568,6 +6549,25 @@ Product images
 Product link
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Product image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
@@ -6841,25 +6841,6 @@ Target link of text below slider
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstImage</strong></td>
-<td valign="top"><a href="#image">Image</a></td>
-<td>
-
-Slider item image by params
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">type</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>gtmCreative</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -6904,6 +6885,25 @@ Slider item images
 Target link
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Slider item image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
@@ -7267,25 +7267,6 @@ Localized transport description (domain dependent)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstImage</strong></td>
-<td valign="top"><a href="#image">Image</a></td>
-<td>
-
-Transport image by params
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">type</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
@@ -7326,6 +7307,25 @@ Localized transport instruction (domain dependent)
 Pointer telling if the transport is of type personal pickup
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Transport image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
@@ -7561,25 +7561,6 @@ List of downloadable files
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstImage</strong></td>
-<td valign="top"><a href="#image">Image</a></td>
-<td>
-
-Product image by params
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">type</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>flags</strong></td>
 <td valign="top">[<a href="#flag">Flag</a>!]!</td>
 <td>
@@ -7657,6 +7638,25 @@ Product images
 Product link
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Product image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>mainVariant</strong></td>
@@ -10063,25 +10063,6 @@ List of downloadable files
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstImage</strong></td>
-<td valign="top"><a href="#image">Image</a></td>
-<td>
-
-Product image by params
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">size</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">type</td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>flags</strong></td>
 <td valign="top">[<a href="#flag">Flag</a>!]!</td>
 <td>
@@ -10159,6 +10140,25 @@ Product images
 Product link
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Product image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
