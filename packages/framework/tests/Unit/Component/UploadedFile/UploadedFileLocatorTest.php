@@ -2,7 +2,7 @@
 
 namespace Tests\FrameworkBundle\Unit\Component\UploadedFile;
 
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
@@ -88,7 +88,7 @@ class UploadedFileLocatorTest extends TestCase
     {
         $uploadedFileDir = __DIR__ . '/UploadedFileLocatorData/';
 
-        $filesystemMock = $this->createMock(FilesystemInterface::class);
+        $filesystemMock = $this->createMock(FilesystemOperator::class);
         $filesystemMock->method('has')->willReturn($has);
 
         $domainRouterFactoryMock = $this->getMockBuilder(DomainRouterFactory::class)

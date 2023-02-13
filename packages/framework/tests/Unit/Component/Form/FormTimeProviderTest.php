@@ -6,6 +6,7 @@ use DateTime;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Form\FormTimeProvider;
 use Shopsys\FrameworkBundle\Component\Form\TimedFormTypeExtension;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class FormTimeProviderTest extends TestCase
@@ -28,12 +29,17 @@ class FormTimeProviderTest extends TestCase
     {
         $sessionMock = $this->getMockBuilder(Session::class)
             ->disableOriginalConstructor()
-            ->setMethods(['get', 'has'])
+            ->onlyMethods(['get', 'has'])
+            ->getMock();
+        $requestStackMock = $this->getMockBuilder(RequestStack::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['getSession'])
             ->getMock();
         $sessionMock->expects($this->atLeastOnce())->method('get')->willReturn(new DateTime($formCreatedAt));
         $sessionMock->expects($this->atLeastOnce())->method('has')->willReturn(true);
+        $requestStackMock->expects($this->atLeastOnce())->method('getSession')->willReturn($sessionMock);
 
-        $formTimeProvider = new FormTimeProvider($sessionMock);
+        $formTimeProvider = new FormTimeProvider($requestStackMock);
 
         $options[TimedFormTypeExtension::OPTION_MINIMUM_SECONDS] = $minimumSeconds;
         $this->assertSame($isValid, $formTimeProvider->isFormTimeValid('formName', $options));

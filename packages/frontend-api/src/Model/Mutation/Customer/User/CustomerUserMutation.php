@@ -19,84 +19,35 @@ use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Shopsys\FrontendApiBundle\Model\Mutation\BaseTokenMutation;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 
 class CustomerUserMutation extends BaseTokenMutation implements MutationInterface, AliasedInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider
-     */
-    protected $frontendCustomerUserProvider;
-
-    /**
-     * @var \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface
-     */
-    protected $userPasswordEncoder;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade
-     */
-    protected $customerUserPasswordFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade
-     */
-    protected $customerUserRefreshTokenChainFacade;
-
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory
-     */
-    protected $customerUserUpdateDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
-     */
-    protected $customerUserFacade;
-
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory
-     */
-    protected $customerUserDataFactory;
-
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Token\TokenFacade
-     */
-    protected $tokenFacade;
-
-    /**
+     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider $frontendCustomerUserProvider
-     * @param \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface $userPasswordEncoder
+     * @param \Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface $userPasswordHasher
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
-     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
      * @param \Shopsys\FrontendApiBundle\Model\Token\TokenFacade $tokenFacade
      */
     public function __construct(
-        FrontendCustomerUserProvider $frontendCustomerUserProvider,
-        UserPasswordEncoderInterface $userPasswordEncoder,
-        CustomerUserPasswordFacade $customerUserPasswordFacade,
-        CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
         TokenStorageInterface $tokenStorage,
-        CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
-        CustomerUserFacade $customerUserFacade,
-        CustomerUserDataFactory $customerUserDataFactory,
-        TokenFacade $tokenFacade
+        protected readonly FrontendCustomerUserProvider $frontendCustomerUserProvider,
+        protected readonly UserPasswordHasherInterface $userPasswordHasher,
+        protected readonly CustomerUserPasswordFacade $customerUserPasswordFacade,
+        protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
+        protected readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
+        protected readonly CustomerUserFacade $customerUserFacade,
+        protected readonly CustomerUserDataFactory $customerUserDataFactory,
+        protected readonly TokenFacade $tokenFacade,
     ) {
         parent::__construct($tokenStorage);
-
-        $this->frontendCustomerUserProvider = $frontendCustomerUserProvider;
-        $this->userPasswordEncoder = $userPasswordEncoder;
-        $this->customerUserPasswordFacade = $customerUserPasswordFacade;
-        $this->customerUserRefreshTokenChainFacade = $customerUserRefreshTokenChainFacade;
-        $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
-        $this->customerUserFacade = $customerUserFacade;
-        $this->customerUserDataFactory = $customerUserDataFactory;
-        $this->tokenFacade = $tokenFacade;
     }
 
     /**
@@ -117,7 +68,7 @@ class CustomerUserMutation extends BaseTokenMutation implements MutationInterfac
             throw new UserError('This account doesn\'t exist or password is incorrect');
         }
 
-        if (!$this->userPasswordEncoder->isPasswordValid($customerUser, $input['oldPassword'])) {
+        if (!$this->userPasswordHasher->isPasswordValid($customerUser, $input['oldPassword'])) {
             throw new UserError('This account doesn\'t exist or password is incorrect');
         }
 

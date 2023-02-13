@@ -8,25 +8,20 @@ use Doctrine\ORM\QueryBuilder as BaseQueryBuilder;
 class QueryBuilder extends BaseQueryBuilder
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
-     */
-    protected $entityNameResolver;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
-    public function __construct(EntityManagerInterface $em, EntityNameResolver $entityNameResolver)
-    {
+    public function __construct(
+        EntityManagerInterface $em,
+        protected readonly EntityNameResolver $entityNameResolver
+    ) {
         parent::__construct($em);
-
-        $this->entityNameResolver = $entityNameResolver;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getDQL()
+    public function getDQL(): string
     {
         return $this->entityNameResolver->resolveIn(parent::getDQL());
     }

@@ -2,7 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Component\Image\Processing;
 
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
@@ -26,7 +26,7 @@ class ImageGenerator
     protected $imageConfig;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     protected $filesystem;
 
@@ -34,13 +34,13 @@ class ImageGenerator
      * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor $imageProcessor
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
         ImageProcessor $imageProcessor,
         ImageLocator $imageLocator,
         ImageConfig $imageConfig,
-        FilesystemInterface $filesystem
+        FilesystemOperator $filesystem
     ) {
         $this->imageProcessor = $imageProcessor;
         $this->imageLocator = $imageLocator;
@@ -66,7 +66,8 @@ class ImageGenerator
 
         $interventionImage->encode();
 
-        $this->filesystem->put($targetImageFilepath, $interventionImage);
+        $this->filesystem->delete($targetImageFilepath);
+        $this->filesystem->write($targetImageFilepath, $interventionImage);
 
         return $targetImageFilepath;
     }
@@ -95,7 +96,8 @@ class ImageGenerator
 
         $interventionImage->encode();
 
-        $this->filesystem->put($targetImageFilepath, $interventionImage);
+        $this->filesystem->delete($targetImageFilepath);
+        $this->filesystem->write($targetImageFilepath, $interventionImage);
 
         return $targetImageFilepath;
     }

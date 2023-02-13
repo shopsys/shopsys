@@ -6,13 +6,14 @@ framework:
     router:
         utf8: true
         strict_requirements: true
-    form: ~
+    form:
+        legacy_error_messages: false
     csrf_protection: ~
     validation: { enable_annotations: true }
     trusted_hosts: ~
     session:
         storage_factory_id: session.storage.factory.native
-        handler_id: snc_redis.session.handler
+        handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler
         cookie_httponly: true
         # Disable the default PHP session garbage collection.
         # Session garbage collection is responsibility of hosting.

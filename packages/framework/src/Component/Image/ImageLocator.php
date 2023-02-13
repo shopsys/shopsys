@@ -2,7 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Component\Image;
 
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 
 class ImageLocator
@@ -20,16 +20,16 @@ class ImageLocator
     protected $imageConfig;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     protected $filesystem;
 
     /**
      * @param mixed $imageDir
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      */
-    public function __construct($imageDir, ImageConfig $imageConfig, FilesystemInterface $filesystem)
+    public function __construct($imageDir, ImageConfig $imageConfig, FilesystemOperator $filesystem)
     {
         $this->imageDir = $imageDir;
         $this->imageConfig = $imageConfig;

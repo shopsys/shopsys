@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Token;
 
 use GraphQL\Error\FormattedError;
-use InvalidArgumentException;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,84 +12,62 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
+use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
+use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CustomCredentials;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
-class TokenAuthenticator extends AbstractGuardAuthenticator
+class TokenAuthenticator extends AbstractAuthenticator
 {
     protected const HEADER_AUTHORIZATION = 'Authorization';
-
     protected const BEARER = 'Bearer ';
 
     /**
-     * @var \Shopsys\FrontendApiBundle\Model\Token\TokenFacade
-     */
-    protected $tokenFacade;
-
-    /**
      * @param \Shopsys\FrontendApiBundle\Model\Token\TokenFacade $tokenFacade
+     * @param \Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider $frontendApiUserProvider
      */
-    public function __construct(TokenFacade $tokenFacade)
-    {
-        $this->tokenFacade = $tokenFacade;
+    public function __construct(
+        protected readonly TokenFacade $tokenFacade,
+        protected readonly FrontendApiUserProvider $frontendApiUserProvider,
+    ) {
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return bool
+     * @inheritDoc
      */
-    public function supports(Request $request): bool
-    {
-        return $request->headers->has(static::HEADER_AUTHORIZATION) && strpos(
-            $request->headers->get(static::HEADER_AUTHORIZATION),
-            static::BEARER
-        ) === 0;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return string|null
-     */
-    public function getCredentials(Request $request): ?string
+    public function authenticate(Request $request): Passport
     {
         $authorizationHeader = $request->headers->get(static::HEADER_AUTHORIZATION);
 
-        return substr($authorizationHeader, strlen(static::BEARER));
-    }
-
-    /**
-     * @param string|null $credentials
-     * @param \Symfony\Component\Security\Core\User\UserProviderInterface $userProvider
-     * @return \Shopsys\FrontendApiBundle\Model\User\FrontendApiUser|null
-     */
-    public function getUser($credentials, UserProviderInterface $userProvider): ?FrontendApiUser
-    {
-        if ($credentials === null) {
-            return null;
+        if ($authorizationHeader === null) {
+            throw new CustomUserMessageAuthenticationException('Authorization header not provided.');
         }
 
-        if (!$userProvider instanceof FrontendApiUserProvider) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The user provider must be an instance of %s ("%s" was given).',
-                    FrontendApiUserProvider::class,
-                    get_class($userProvider)
-                )
-            );
-        }
+        $credentials = substr($authorizationHeader, strlen(static::BEARER));
 
         $token = $this->tokenFacade->getTokenByString($credentials);
 
-        return $userProvider->loadUserByToken($token);
+        $email = $token->claims()->get(FrontendApiUser::CLAIM_EMAIL);
+
+        return new Passport(
+            new UserBadge($email, function () use ($token) {
+                return $this->frontendApiUserProvider->loadUserByToken($token);
+            }),
+            new CustomCredentials(
+                function (string $credentials) {
+                    return $this->checkCredentials($credentials);
+                },
+                $credentials
+            ),
+        );
     }
 
     /**
      * @param string|null $credentials
-     * @param \Shopsys\FrontendApiBundle\Model\User\FrontendApiUser $user
      * @return bool
      */
-    public function checkCredentials($credentials, UserInterface $user): bool
+    public function checkCredentials(?string $credentials): bool
     {
         $this->tokenFacade->getTokenByString($credentials);
 
@@ -99,11 +76,24 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return bool
+     */
+    public function supports(Request $request): bool
+    {
+        return $request->headers->has(static::HEADER_AUTHORIZATION) &&
+            str_starts_with(
+                $request->headers->get(static::HEADER_AUTHORIZATION),
+                static::BEARER
+            );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
-     * @param string $providerKey
+     * @param string $firewallName
      * @return \Symfony\Component\HttpFoundation\Response|null
      */
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         return null;
     }
@@ -120,32 +110,5 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
         ];
 
         return new JsonResponse($responseData, Response::HTTP_UNAUTHORIZED);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Security\Core\Exception\AuthenticationException|null $authException
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function start(Request $request, ?AuthenticationException $authException = null): Response
-    {
-        $responseData = [
-            'errors' => [
-                'message' => 'Authentication Required',
-                'extensions' => [
-                    'category' => 'token',
-                ],
-            ],
-        ];
-
-        return new JsonResponse($responseData, Response::HTTP_UNAUTHORIZED);
-    }
-
-    /**
-     * @return bool
-     */
-    public function supportsRememberMe(): bool
-    {
-        return false;
     }
 }

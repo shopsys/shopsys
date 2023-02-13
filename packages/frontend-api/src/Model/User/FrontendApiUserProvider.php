@@ -11,16 +11,11 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 class FrontendApiUserProvider implements UserProviderInterface
 {
     /**
-     * @var \Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactoryInterface
-     */
-    protected $frontendApiUserFactory;
-
-    /**
      * @param \Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactoryInterface $frontendApiUserFactory
      */
-    public function __construct(FrontendApiUserFactoryInterface $frontendApiUserFactory)
-    {
-        $this->frontendApiUserFactory = $frontendApiUserFactory;
+    public function __construct(
+        protected readonly FrontendApiUserFactoryInterface $frontendApiUserFactory,
+    ) {
     }
 
     /**
@@ -33,13 +28,24 @@ class FrontendApiUserProvider implements UserProviderInterface
     }
 
     /**
-     * @param mixed $username
+     * @param string $username
      * @return \Symfony\Component\Security\Core\User\UserInterface
      */
-    public function loadUserByUsername($username): UserInterface
+    public function loadUserByUsername(string $username): UserInterface
     {
         throw new NotImplementedException(
             'Method "loadUserByUsername" is not implement. Use method  "loadUserByToken"'
+        );
+    }
+
+    /**
+     * @param string $identifier
+     * @return \Symfony\Component\Security\Core\User\UserInterface
+     */
+    public function loadUserByIdentifier(string $identifier): UserInterface
+    {
+        throw new NotImplementedException(
+            'Method "loadUserByIdentifier" is not implement. Use method  "loadUserByToken"'
         );
     }
 

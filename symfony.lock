@@ -330,9 +330,6 @@
     "league/flysystem": {
         "version": "1.0.57"
     },
-    "league/flysystem-cached-adapter": {
-        "version": "1.0.9"
-    },
     "league/mime-type-detection": {
         "version": "1.5.1"
     },
@@ -646,9 +643,6 @@
     },
     "studio-42/elfinder": {
         "version": "2.1.50"
-    },
-    "superbalist/flysystem-google-storage": {
-        "version": "7.2.2"
     },
     "symfony-cmf/routing": {
         "version": "2.1.0"

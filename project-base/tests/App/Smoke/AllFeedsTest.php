@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Smoke;
 
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Feed\FeedFacade;
 use Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface;
@@ -19,10 +19,10 @@ class AllFeedsTest extends FunctionalTestCase
     private FeedFacade $feedFacade;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      * @inject
      */
-    private FilesystemInterface $filesystem;
+    private FilesystemOperator $filesystem;
 
     /**
      * @return array

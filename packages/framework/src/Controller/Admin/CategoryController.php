@@ -12,8 +12,8 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CategoryController extends AdminBaseController
@@ -21,57 +21,28 @@ class CategoryController extends AdminBaseController
     protected const ALL_DOMAINS = 0;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
-     */
-    protected $breadcrumbOverrider;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface
-     */
-    protected $categoryDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
-     */
-    protected $categoryFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
-
-    /**
-     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
-     */
-    protected $session;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface $categoryDataFactory
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      */
     public function __construct(
-        CategoryFacade $categoryFacade,
-        CategoryDataFactoryInterface $categoryDataFactory,
-        SessionInterface $session,
-        Domain $domain,
-        BreadcrumbOverrider $breadcrumbOverrider
+        protected readonly CategoryFacade $categoryFacade,
+        protected readonly CategoryDataFactoryInterface $categoryDataFactory,
+        protected readonly Domain $domain,
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+        protected readonly RequestStack $requestStack,
     ) {
-        $this->categoryFacade = $categoryFacade;
-        $this->categoryDataFactory = $categoryDataFactory;
-        $this->session = $session;
-        $this->domain = $domain;
-        $this->breadcrumbOverrider = $breadcrumbOverrider;
     }
 
     /**
      * @Route("/category/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param mixed $id
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id): Response
     {
         $category = $this->categoryFacade->getById($id);
         $categoryData = $this->categoryDataFactory->createFromCategory($category);
@@ -112,8 +83,9 @@ class CategoryController extends AdminBaseController
     /**
      * @Route("/category/new/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): Response
     {
         $categoryData = $this->categoryDataFactory->create();
 
@@ -149,14 +121,15 @@ class CategoryController extends AdminBaseController
     /**
      * @Route("/category/list/")
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request): Response
     {
         if (count($this->domain->getAll()) > 1) {
             if ($request->query->has('domain')) {
                 $domainId = (int)$request->query->get('domain');
             } else {
-                $domainId = (int)$this->session->get('categories_selected_domain_id', static::ALL_DOMAINS);
+                $domainId = (int)$this->requestStack->getSession()->get('categories_selected_domain_id', static::ALL_DOMAINS);
             }
         } else {
             $domainId = static::ALL_DOMAINS;
@@ -170,7 +143,7 @@ class CategoryController extends AdminBaseController
             }
         }
 
-        $this->session->set('categories_selected_domain_id', $domainId);
+        $this->requestStack->getSession()->set('categories_selected_domain_id', $domainId);
 
         if ($domainId === static::ALL_DOMAINS) {
             $categoriesWithPreloadedChildren = $this->categoryFacade->getAllCategoriesWithPreloadedChildren(
@@ -209,8 +182,9 @@ class CategoryController extends AdminBaseController
      * @Route("/category/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id): Response
     {
         try {
             $fullName = $this->categoryFacade->getById($id)->getName();
@@ -230,9 +204,12 @@ class CategoryController extends AdminBaseController
         return $this->redirectToRoute('admin_category_list');
     }
 
-    public function listDomainTabsAction()
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listDomainTabsAction(): Response
     {
-        $domainId = $this->session->get('categories_selected_domain_id', static::ALL_DOMAINS);
+        $domainId = $this->requestStack->getSession()->get('categories_selected_domain_id', static::ALL_DOMAINS);
 
         return $this->render('@ShopsysFramework/Admin/Content/Category/domainTabs.html.twig', [
             'domainConfigs' => $this->domain->getAll(),
@@ -244,12 +221,10 @@ class CategoryController extends AdminBaseController
      * @Route("/category/branch/{domainId}/{id}", requirements={"domainId" = "\d+", "id" = "\d+"}, condition="request.isXmlHttpRequest()")
      * @param int $domainId
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function loadBranchJsonAction($domainId, $id)
+    public function loadBranchJsonAction(int $domainId, int $id): Response
     {
-        $domainId = (int)$domainId;
-        $id = (int)$id;
-
         $parentCategory = $this->categoryFacade->getById($id);
         $categories = $parentCategory->getChildren();
 

@@ -947,7 +947,7 @@ There you can find links to upgrade notes for other versions too.
         - Example:
         ```diff
         - resolve: "@=resolver('categoriesSearch', [args])"
-        + resolve: "@=query('categoriesSearch', args)"
+        + resolve: "@=query('categoriesSearch', arg1, arg2, ...)"
         ```
     - change `service` expression function to `query` in your types defined in yaml files
         - it is no longer supported to use private services in @=service function
@@ -1012,3 +1012,179 @@ There you can find links to upgrade notes for other versions too.
     - also see #project-base-diff for more information about changes needed to be done in your project
 - added new `demo-data` phing target that does the same as `db-demo` plus exports data to Elasticsearch so we suggest you to use new phing target instead ([#2520](https://github.com/shopsys/shopsys/pull/2520))
     - see #project-base-diff for more information about changes needed to be done in your project
+- resolve deprecations after update to Symfony 5.4 ([#2521](https://github.com/shopsys/shopsys/pull/2521))
+    - `League\Flysystem\FilesystemOperator` is now used for autoload of abstract filesystem classes instead of `League\Flysystem\FilesystemInterface` update such occurrences in your project
+    - some methods have been renamed in flysystem e.g. `getSize` to `fileSize` etc. run `php phing phpstan` to find such places and replace your usages accordingly
+    - sessions are no longer handled by snc_redis, but newly by Symfony handler, theirs definition moved from `config/packages/snc_redis.yaml` to `config/services.yaml` review these files if you need specific settings for sessions
+    - Redis Docker image has been updated from version 5 to version 7, update your Docker files, CI and production settings accordingly
+    - with new authenticator manager enabled paths definitions in `packages/security.yaml` needs roles changed from `IS_AUTHENTICATED_ANONYMOUSLY` to new `PUBLIC_ACCESS` as `IS_AUTHENTICATED_ANONYMOUSLY` is deprecated
+    - `Shopsys\FrameworkBundle\Command\RouterDebugCommandForDomain` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(DomainChoiceHandler $domainChoiceHelper, RouterInterface $router, ?FileLinkFormatter $fileLinkFormatter = null)
+        + __construct(DomainChoiceHandler $domainChoiceHelper, RouterDebugCommand $routerDebugCommand, KernelInterface $kernel)
+        ```
+    - `Shopsys\FrameworkBundle\Command\RouterMatchCommandForDomain` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(DomainChoiceHandler $domainChoiceHelper, RouterInterface $router)
+        + __construct(DomainChoiceHandler $domainChoiceHelper, RouterMatchCommand $routerMatchCommand, KernelInterface $kernel)
+        ```
+    - `Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(TokenFacade $tokenFacade)
+        + __construct(TokenFacade $tokenFacade, FrontendApiUserProvider $frontendApiUserProvider)
+        ```
+        - method `__construct` changed its interface:
+        ```diff
+        - checkCredentials($credentials, UserInterface $user): bool
+        + checkCredentials(?string $credentials): bool
+        ```
+        - method `getUser` has been removed without substitution
+        - method `supportsRememberMe` has been removed without substitution
+        - method `start` has been removed without substitution
+    - `Shopsys\FrameworkBundle\Component\Translation\Translator` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(TranslatorInterface & LocaleAwareInterface $originalTranslator, TranslatorBagInterface $originalTranslatorBag, TranslatorInterface & LocaleAwareInterface $identityTranslator, MessageIdNormalizer $messageIdNormalizer)
+        + __construct(TranslatorInterface|LocaleAwareInterface|DataCollectorTranslator $originalTranslator, TranslatorBagInterface|DataCollectorTranslator $originalTranslatorBag, TranslatorInterface|LocaleAwareInterface|IdentityTranslator $identityTranslator, MessageIdNormalizer $messageIdNormalizer)
+    - `Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(Domain $domain, SessionInterface $session)
+        + __construct(Domain $domain, RequestStack $requestStack)
+        ```
+    - `Shopsys\FrameworkBundle\Component\Form\FormTimeProvider` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(SessionInterface $session)
+        + __construct(Domain $domain, RequestStack $requestStack)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(SessionInterface $session, AdministratorUserProvider $administratorUserProvider, AccessDecisionManagerInterface $accessDecisionManager, AuthorizationCheckerInterface $authorizationChecker)
+        + __construct(RequestStack $requestStack, AdministratorUserProvider $administratorUserProvider, AccessDecisionManagerInterface $accessDecisionManager, AuthorizationCheckerInterface $authorizationChecker)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(CurrentCustomerUser $currentCustomerUser, SessionInterface $session)
+        + __construct(CurrentCustomerUser $currentCustomerUser, RequestStack $requestStack)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(PromoCodeFacade $promoCodeFacade, SessionInterface $session)
+        + __construct(PromoCodeFacade $promoCodeFacade, RequestStack $requestStack)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(TokenStorageInterface $tokenStorage, EventDispatcherInterface $eventDispatcher, SessionInterface $session, CustomerUserRepository $customerUserRepository, AdministratorFrontSecurityFacade $administratorFrontSecurityFacade)
+        + __construct(TokenStorageInterface $tokenStorage, EventDispatcherInterface $eventDispatcher, CustomerUserRepository $customerUserRepository, AdministratorFrontSecurityFacade $administratorFrontSecurityFacade, RequestStack $requestStack)
+        ```
+    - `Shopsys\FrameworkBundle\Controller\Admin\CategoryController` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(CategoryFacade $categoryFacade, CategoryDataFactoryInterface $categoryDataFactory, SessionInterface $session, Domain $domain, BreadcrumbOverrider $breadcrumbOverrider)
+        + __construct(CategoryFacade $categoryFacade, CategoryDataFactoryInterface $categoryDataFactory, Domain $domain, BreadcrumbOverrider $breadcrumbOverrider, RequestStack $requestStack)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Order\Watcher\TransportAndPaymentWatcher` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(SessionInterface $session, PaymentPriceCalculation $paymentPriceCalculation, TransportPriceCalculation $transportPriceCalculation)
+        + __construct(RequestStack $requestStack, PaymentPriceCalculation $paymentPriceCalculation, TransportPriceCalculation $transportPriceCalculation)
+        ```
+    - `Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(Domain $domain, SessionInterface $session)
+        + __construct(Domain $domain, RequestStack $requestStack)
+        ```
+    - `Shopsys\FrameworkBundle\Component\Form\FormTimeProvider` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(SessionInterface $session)
+        + __construct(Domain $domain, RequestStack $requestStack)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(SessionInterface $session, AdministratorUserProvider $administratorUserProvider, AccessDecisionManagerInterface $accessDecisionManager, AuthorizationCheckerInterface $authorizationChecker)
+        + __construct(RequestStack $requestStack, AdministratorUserProvider $administratorUserProvider, AccessDecisionManagerInterface $accessDecisionManager, AuthorizationCheckerInterface $authorizationChecker)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(CurrentCustomerUser $currentCustomerUser, SessionInterface $session)
+        + __construct(CurrentCustomerUser $currentCustomerUser, RequestStack $requestStack)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(PromoCodeFacade $promoCodeFacade, SessionInterface $session)
+        + __construct(PromoCodeFacade $promoCodeFacade, RequestStack $requestStack)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(TokenStorageInterface $tokenStorage, EventDispatcherInterface $eventDispatcher, SessionInterface $session, CustomerUserRepository $customerUserRepository, AdministratorFrontSecurityFacade $administratorFrontSecurityFacade)
+        + __construct(TokenStorageInterface $tokenStorage, EventDispatcherInterface $eventDispatcher, CustomerUserRepository $customerUserRepository, AdministratorFrontSecurityFacade $administratorFrontSecurityFacade, RequestStack $requestStack)
+        ```
+    - `Shopsys\FrameworkBundle\Controller\Admin\CategoryController` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(CategoryFacade $categoryFacade, CategoryDataFactoryInterface $categoryDataFactory, SessionInterface $session, Domain $domain, BreadcrumbOverrider $breadcrumbOverrider)
+        + __construct(CategoryFacade $categoryFacade, CategoryDataFactoryInterface $categoryDataFactory, Domain $domain, BreadcrumbOverrider $breadcrumbOverrider, RequestStack $requestStack)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Order\Watcher\TransportAndPaymentWatcher` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(SessionInterface $session, PaymentPriceCalculation $paymentPriceCalculation, TransportPriceCalculation $transportPriceCalculation)
+        + __construct(RequestStack $requestStack, PaymentPriceCalculation $paymentPriceCalculation, TransportPriceCalculation $transportPriceCalculation)
+        ```
+    - `Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\CustomerUserMutation` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(FrontendCustomerUserProvider $frontendCustomerUserProvider, UserPasswordEncoderInterface $userPasswordEncoder, CustomerUserPasswordFacade $customerUserPasswordFacade, CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade, TokenStorageInterface $tokenStorage, CustomerUserUpdateDataFactory $customerUserUpdateDataFactory, CustomerUserFacade $customerUserFacade, CustomerUserDataFactory $customerUserDataFactory, TokenFacade $tokenFacade)
+        + __construct(TokenStorageInterface $tokenStorage, FrontendCustomerUserProvider $frontendCustomerUserProvider, UserPasswordHasherInterface $userPasswordHasher, CustomerUserPasswordFacade $customerUserPasswordFacade, CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade, CustomerUserUpdateDataFactory $customerUserUpdateDataFactory, CustomerUserFacade $customerUserFacade, CustomerUserDataFactory $customerUserDataFactory, TokenFacade $tokenFacade)
+        ```
+    - `Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(FrontendCustomerUserProvider $frontendCustomerUserProvider, UserPasswordEncoderInterface $userPasswordEncoder, TokenFacade $tokenFacade)
+        + __construct(FrontendCustomerUserProvider $frontendCustomerUserProvider, UserPasswordHasherInterface $userPasswordHasher, TokenFacade $tokenFacade)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(EntityManagerInterface $em, AdministratorRepository $administratorRepository, AdministratorFactoryInterface $administratorFactory, AdministratorRoleFacade $administratorRoleFacade, EncoderFactoryInterface $encoderFactory, TokenStorageInterface $tokenStorage)
+        + __construct(EntityManagerInterface $em, AdministratorRepository $administratorRepository, AdministratorFactoryInterface $administratorFactory, AdministratorRoleFacade $administratorRoleFacade, PasswordHasherFactoryInterface $passwordHasherFactory, TokenStorageInterface $tokenStorage)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(EntityManagerInterface $em, CustomerUserRepository $customerUserRepository, EncoderFactoryInterface $encoderFactory, ResetPasswordMailFacade $resetPasswordMailFacade, HashGenerator $hashGenerator, CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade)
+        + __construct(EntityManagerInterface $em, CustomerUserRepository $customerUserRepository, PasswordHasherFactoryInterface $passwordHasherFactory, ResetPasswordMailFacade $resetPasswordMailFacade, HashGenerator $hashGenerator, CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade` class:
+      - method `__construct` changed its interface:
+      ```diff
+      - __construct(CustomerUserRefreshTokenChainDataFactoryInterface $customerUserRefreshTokenChainDataFactory, CustomerUserRefreshTokenChainFactoryInterface $customerUserRefreshTokenChainFactory, EncoderFactoryInterface $encoderFactory, CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository)
+      + __construct(CustomerUserRefreshTokenChainDataFactoryInterface $customerUserRefreshTokenChainDataFactory, CustomerUserRefreshTokenChainFactoryInterface $customerUserRefreshTokenChainFactory, PasswordHasherFactoryInterface $passwordHasherFactory, CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository)
+      ```
+    - `Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade` class:
+        - method `__construct` changed its interface:
+      ```diff
+      - __construct(FlashBagInterface $flashBag, EntityManagerInterface $em, CartWatcher $cartWatcher, CurrentCustomerUser $currentCustomerUser, Environment $twigEnvironment)
+      + __construct(RequestStack $requestStack, EntityManagerInterface $em, CartWatcher $cartWatcher, CurrentCustomerUser $currentCustomerUser, Environment $twigEnvironment)
+      ```
+    - `Shopsys\FrameworkBundle\Component\Error\LogoutExceptionSubscriber` class:
+        - method `__construct` changed its interface:
+      ```diff
+      - __construct(FlashBagInterface $flashBag, CurrentCustomerUser $currentCustomerUser, RouterInterface $router, Domain $domain)
+      + __construct(RequestStack $requestStack, CurrentCustomerUser $currentCustomerUser, RouterInterface $router, Domain $domain)
+      ```
+    - also see #project-base-diff for more information about changes needed to be done in your project

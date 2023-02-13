@@ -2,12 +2,12 @@
 
 namespace Shopsys\FrameworkBundle\Component\Filesystem;
 
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 
 interface FilesystemFactoryInterface
 {
     /**
-     * @return \League\Flysystem\FilesystemInterface
+     * @return \League\Flysystem\FilesystemOperator
      */
-    public function create(): FilesystemInterface;
+    public function create(): FilesystemOperator;
 }

@@ -2,8 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Model\Feed;
 
-use League\Flysystem\FileNotFoundException;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
+use League\Flysystem\UnableToRetrieveMetadata;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
@@ -30,7 +30,7 @@ class FeedFacade
     protected $feedPathProvider;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     protected $filesystem;
 
@@ -39,14 +39,14 @@ class FeedFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedExportFactory $feedExportFactory
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedPathProvider $feedPathProvider
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
         FeedRegistry $feedRegistry,
         ProductVisibilityFacade $productVisibilityFacade,
         FeedExportFactory $feedExportFactory,
         FeedPathProvider $feedPathProvider,
-        FilesystemInterface $filesystem
+        FilesystemOperator $filesystem
     ) {
         $this->feedRegistry = $feedRegistry;
         $this->productVisibilityFacade = $productVisibilityFacade;
@@ -148,8 +148,8 @@ class FeedFacade
         $filePath = $this->feedPathProvider->getFeedFilepath($feedInfo, $domainConfig);
 
         try {
-            return (int)$this->filesystem->getTimestamp($filePath);
-        } catch (FileNotFoundException $fileNotFundException) {
+            return $this->filesystem->lastModified($filePath);
+        } catch (UnableToRetrieveMetadata $fileNotFundException) {
             return null;
         }
     }

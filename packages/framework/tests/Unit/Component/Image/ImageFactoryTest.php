@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Image;
 
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
@@ -87,7 +87,7 @@ class ImageFactoryTest extends TestCase
     {
         $fileNamingConvention = new FileNamingConvention();
         $mountManager = new MountManager();
-        $abstractFilesystem = $this->createMock(FilesystemInterface::class);
+        $abstractFilesystem = $this->createMock(FilesystemOperator::class);
         $parameterBag = new ParameterBag();
         $parameterBag->set('kernel.project_dir', sys_get_temp_dir());
 

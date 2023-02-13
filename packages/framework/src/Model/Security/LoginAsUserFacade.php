@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
 use Shopsys\FrameworkBundle\Model\Security\Exception\LoginAsRememberedUserException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
@@ -19,49 +19,19 @@ class LoginAsUserFacade
     public const SESSION_LOGIN_AS = 'loginAsUser';
 
     /**
-     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
-     */
-    protected $tokenStorage;
-
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected $eventDispatcher;
-
-    /**
-     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
-     */
-    protected $session;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository
-     */
-    protected $customerUserRepository;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade
-     */
-    protected $administratorFrontSecurityFacade;
-
-    /**
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      */
     public function __construct(
-        TokenStorageInterface $tokenStorage,
-        EventDispatcherInterface $eventDispatcher,
-        SessionInterface $session,
-        CustomerUserRepository $customerUserRepository,
-        AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
+        protected readonly TokenStorageInterface $tokenStorage,
+        protected readonly EventDispatcherInterface $eventDispatcher,
+        protected readonly CustomerUserRepository $customerUserRepository,
+        protected readonly AdministratorFrontSecurityFacade $administratorFrontSecurityFacade,
+        protected readonly RequestStack $requestStack,
     ) {
-        $this->tokenStorage = $tokenStorage;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->session = $session;
-        $this->customerUserRepository = $customerUserRepository;
-        $this->administratorFrontSecurityFacade = $administratorFrontSecurityFacade;
     }
 
     /**
@@ -69,7 +39,7 @@ class LoginAsUserFacade
      */
     public function rememberLoginAsUser(CustomerUser $customerUser)
     {
-        $this->session->set(static::SESSION_LOGIN_AS, serialize($customerUser));
+        $this->requestStack->getSession()->set(static::SESSION_LOGIN_AS, serialize($customerUser));
     }
 
     /**
@@ -81,12 +51,12 @@ class LoginAsUserFacade
             throw new LoginAsRememberedUserException('Access denied');
         }
 
-        if (!$this->session->has(static::SESSION_LOGIN_AS)) {
+        if (!$this->requestStack->getSession()->has(static::SESSION_LOGIN_AS)) {
             throw new LoginAsRememberedUserException('User not set.');
         }
 
         /** @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $unserializedUser */
-        $unserializedUser = unserialize($this->session->get(static::SESSION_LOGIN_AS));
+        $unserializedUser = unserialize($this->requestStack->getSession()->get(static::SESSION_LOGIN_AS));
 
         $freshUser = $this->customerUserRepository->getCustomerUserById($unserializedUser->getId());
 

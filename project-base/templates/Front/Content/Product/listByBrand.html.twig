@@ -38,7 +38,7 @@
                     </div>
 
                     <div>
-                        {{ render(controller('App\\Controller\\Front\\ProductController:selectOrderingModeForListByBrandAction')) }}
+                        {{ render(controller('App\\Controller\\Front\\ProductController::selectOrderingModeForListByBrandAction')) }}
                         {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: false } %}
                     </div>
                 </div>

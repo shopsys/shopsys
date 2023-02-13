@@ -4,7 +4,6 @@ namespace Shopsys\FrameworkBundle\Component\Filesystem\Flysystem;
 
 use Barryvdh\elFinderFlysystemDriver\Driver;
 use elFinder;
-use Shopsys\FrameworkBundle\Component\Filesystem\Flysystem\Plugin\GetUrl;
 
 class VolumeDriver extends Driver
 {
@@ -14,24 +13,26 @@ class VolumeDriver extends Driver
 
         $thumbnailPath = $this->options['tmbPath'];
 
-        if ($thumbnailPath) {
-            if (!$this->fs->has($thumbnailPath)) {
-                if ($this->_mkdir($thumbnailPath, '')) {
-                    $this->_chmod($thumbnailPath, $this->options['tmbPathMode']);
-                } else {
-                    $thumbnailPath = '';
-                }
-            }
+        if (!$thumbnailPath) {
+            return;
+        }
 
-            $stat = $this->_stat($thumbnailPath);
-
-            if ($this->_dirExists($thumbnailPath) && $stat['read']) {
-                $this->tmbPath = $thumbnailPath;
-                $this->tmbPathWritable = $stat['write'];
+        if (!$this->fs->has($thumbnailPath)) {
+            if ($this->_mkdir($thumbnailPath, '')) {
+                $this->_chmod($thumbnailPath, $this->options['tmbPathMode']);
+            } else {
+                $thumbnailPath = '';
             }
         }
 
-        $this->fs->addPlugin(new GetUrl($this->options));
+        $stat = $this->_stat($thumbnailPath);
+
+        if (!$this->_dirExists($thumbnailPath) || !$stat['read']) {
+            return;
+        }
+
+        $this->tmbPath = $thumbnailPath;
+        $this->tmbPathWritable = $stat['write'];
     }
 
     /**
@@ -41,7 +42,7 @@ class VolumeDriver extends Driver
     public function tmb($hash)
     {
         $thumbnailPath = $this->decode($hash);
-        $stat = $this->_stat($thumbnailPath, $hash);
+        $stat = $this->stat($thumbnailPath);
 
         if (isset($stat['tmb'])) {
             $res = (string)$stat['tmb'] === '1' ? $this->createTmb($thumbnailPath, $stat) : $stat['tmb'];
@@ -51,11 +52,18 @@ class VolumeDriver extends Driver
                 $fallback = $this->options['resourcePath'] . DIRECTORY_SEPARATOR . strtolower($type) . '.png';
                 if (is_file($fallback)) {
                     $res = $this->tmbname($stat);
-                    if (!$this->fs->put($fallback, $this->createThumbnailPath($res))) {
-                        $res = false;
-                    }
+                    $this->fs->delete($fallback);
+                    $this->fs->write($fallback, $this->createThumbnailPath($res));
                 }
             }
+            // tmb garbage collection
+            if ($res && $this->options['tmbGcMaxlifeHour'] && $this->options['tmbGcPercentage'] > 0) {
+                $rand = mt_rand(1, 10000);
+                if ($rand <= $this->options['tmbGcPercentage'] * 100) {
+                    register_shutdown_function(['elFinder', 'GlobGC'], $this->tmbPath . DIRECTORY_SEPARATOR . '*.png', $this->options['tmbGcMaxlifeHour'] * 3600);
+                }
+            }
+
             return $res;
         }
         return false;
@@ -107,6 +115,7 @@ class VolumeDriver extends Driver
             if ($fp === false) {
                 return false;
             }
+
             $this->_save($fp, $this->tmbPath, $name, $stat);
             unlink($this->createThumbnailPath($name));
         }

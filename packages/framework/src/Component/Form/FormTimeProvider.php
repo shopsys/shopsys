@@ -3,21 +3,16 @@
 namespace Shopsys\FrameworkBundle\Component\Form;
 
 use DateTime;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class FormTimeProvider
 {
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      */
-    protected $session;
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     */
-    public function __construct(SessionInterface $session)
-    {
-        $this->session = $session;
+    public function __construct(
+        protected readonly RequestStack $requestStack,
+    ) {
     }
 
     /**
@@ -28,7 +23,7 @@ class FormTimeProvider
     {
         $startTime = new DateTime();
         $key = $this->getSessionKey($name);
-        $this->session->set($key, $startTime);
+        $this->requestStack->getSession()->set($key, $startTime);
         return $startTime;
     }
 
@@ -61,7 +56,7 @@ class FormTimeProvider
     public function hasFormTime($name)
     {
         $key = $this->getSessionKey($name);
-        return $this->session->has($key);
+        return $this->requestStack->getSession()->has($key);
     }
 
     /**
@@ -72,7 +67,7 @@ class FormTimeProvider
     {
         $key = $this->getSessionKey($name);
         if ($this->hasFormTime($name)) {
-            return $this->session->get($key);
+            return $this->requestStack->getSession()->get($key);
         }
         return null;
     }
@@ -83,7 +78,7 @@ class FormTimeProvider
     public function removeFormTime($name)
     {
         $key = $this->getSessionKey($name);
-        $this->session->remove($key);
+        $this->requestStack->getSession()->remove($key);
     }
 
     /**

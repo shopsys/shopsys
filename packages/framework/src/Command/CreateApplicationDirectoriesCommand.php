@@ -2,7 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Command;
 
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\Config;
+use League\Flysystem\FilesystemOperator;
+use League\Flysystem\Visibility;
 use Shopsys\FrameworkBundle\Component\Image\DirectoryStructureCreator as ImageDirectoryStructureCreator;
 use Shopsys\FrameworkBundle\Component\UploadedFile\DirectoryStructureCreator as UploadedFileDirectoryStructureCreator;
 use Symfony\Component\Console\Command\Command;
@@ -38,7 +40,7 @@ class CreateApplicationDirectoriesCommand extends Command
     protected static $defaultName = 'shopsys:create-directories';
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     private $filesystem;
 
@@ -62,7 +64,7 @@ class CreateApplicationDirectoriesCommand extends Command
      * @param array $defaultPublicDirectories
      * @param array|null $internalDirectories
      * @param array|null $publicDirectories
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
      * @param \Shopsys\FrameworkBundle\Component\Image\DirectoryStructureCreator $imageDirectoryStructureCreator
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\DirectoryStructureCreator $uploadedFileDirectoryStructureCreator
@@ -72,7 +74,7 @@ class CreateApplicationDirectoriesCommand extends Command
         $defaultPublicDirectories,
         $internalDirectories,
         $publicDirectories,
-        FilesystemInterface $filesystem,
+        FilesystemOperator $filesystem,
         Filesystem $localFilesystem,
         ImageDirectoryStructureCreator $imageDirectoryStructureCreator,
         UploadedFileDirectoryStructureCreator $uploadedFileDirectoryStructureCreator
@@ -116,7 +118,7 @@ class CreateApplicationDirectoriesCommand extends Command
         $internalDirectories = $this->getInternalDirectories();
 
         foreach ($publicDirectories as $directory) {
-            $this->filesystem->createDir($directory);
+            $this->filesystem->createDirectory($directory, [Config::OPTION_VISIBILITY => Visibility::PUBLIC]);
         }
 
         $this->localFilesystem->mkdir($internalDirectories);

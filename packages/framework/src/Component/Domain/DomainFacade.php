@@ -2,7 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Component\Domain;
 
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 
 class DomainFacade
@@ -18,7 +18,7 @@ class DomainFacade
     protected $domainIconResizer;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     protected $filesystem;
 
@@ -36,14 +36,14 @@ class DomainFacade
      * @param mixed $domainImagesDirectory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Domain\DomainIconResizer $domainIconResizer
-     * @param \League\Flysystem\FilesystemInterface $fileSystem
+     * @param \League\Flysystem\FilesystemOperator $fileSystem
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
      */
     public function __construct(
         $domainImagesDirectory,
         Domain $domain,
         DomainIconResizer $domainIconResizer,
-        FilesystemInterface $fileSystem,
+        FilesystemOperator $fileSystem,
         FileUpload $fileUpload
     ) {
         $this->domainImagesDirectory = $domainImagesDirectory;

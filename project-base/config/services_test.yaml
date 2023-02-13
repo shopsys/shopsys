@@ -30,7 +30,13 @@ services:
 
     Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository: ~
 
-    League\Flysystem\FilesystemInterface:
-        alias: main_filesystem
+    League\Flysystem\FilesystemOperator:
+        alias: 'main_filesystem'
 
     Tests\App\Functional\EntityExtension\EntityExtensionTestHelper: ~
+
+    Symfony\Component\HttpFoundation\RequestStack:
+        class: Tests\App\Test\HttpFoundation\RequestStack
+        arguments:
+            $container: '@test.service_container'
+            $requestStack: '@request_stack'

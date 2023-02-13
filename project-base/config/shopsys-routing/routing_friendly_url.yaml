@@ -3,16 +3,16 @@
 
 front_article_detail:
     path: friendly-url
-    defaults: { _controller: App\Controller\Front\ArticleController:detailAction }
+    defaults: { _controller: App\Controller\Front\ArticleController::detailAction }
 
 front_product_detail:
     path: friendly-url
-    defaults: { _controller: App\Controller\Front\ProductController:detailAction }
+    defaults: { _controller: App\Controller\Front\ProductController::detailAction }
 
 front_product_list:
     path: friendly-url
-    defaults: { _controller: App\Controller\Front\ProductController:listByCategoryAction }
+    defaults: { _controller: App\Controller\Front\ProductController::listByCategoryAction }
 
 front_brand_detail:
     path: friendly-url
-    defaults: { _controller: App\Controller\Front\ProductController:listByBrandAction }
+    defaults: { _controller: App\Controller\Front\ProductController::listByBrandAction }

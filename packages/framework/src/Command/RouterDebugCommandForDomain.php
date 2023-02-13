@@ -4,14 +4,18 @@ namespace Shopsys\FrameworkBundle\Command;
 
 use Shopsys\FrameworkBundle\Component\Console\DomainChoiceHandler;
 use Symfony\Bundle\FrameworkBundle\Command\RouterDebugCommand;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Completion\CompletionInput;
+use Symfony\Component\Console\Completion\CompletionSuggestions;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\HttpKernel\Debug\FileLinkFormatter;
-use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 
-// @phpstan-ignore-next-line
-class RouterDebugCommandForDomain extends RouterDebugCommand
+class RouterDebugCommandForDomain extends Command
 {
     /**
      * @var string
@@ -19,20 +23,53 @@ class RouterDebugCommandForDomain extends RouterDebugCommand
     protected static $defaultName = 'debug:router';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Console\DomainChoiceHandler
+     * @var string
      */
-    private $domainChoiceHelper;
+    protected static $defaultDescription = 'Display current routes for an application';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Console\DomainChoiceHandler $domainChoiceHelper
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param \Symfony\Component\HttpKernel\Debug\FileLinkFormatter|null $fileLinkFormatter
+     * @param \Symfony\Bundle\FrameworkBundle\Command\RouterDebugCommand $routerDebugCommand
+     * @param \Symfony\Component\HttpKernel\KernelInterface $kernel
      */
-    public function __construct(DomainChoiceHandler $domainChoiceHelper, RouterInterface $router, ?FileLinkFormatter $fileLinkFormatter = null)
-    {
-        $this->domainChoiceHelper = $domainChoiceHelper;
+    public function __construct(
+        private readonly DomainChoiceHandler $domainChoiceHelper,
+        private readonly RouterDebugCommand $routerDebugCommand,
+        private readonly KernelInterface $kernel
+    ) {
+        parent::__construct();
+    }
 
-        parent::__construct($router, $fileLinkFormatter);
+    /**
+     * {@inheritdoc}
+     */
+    protected function configure()
+    {
+        $this
+            ->setDefinition([
+                new InputArgument('name', InputArgument::OPTIONAL, 'A route name'),
+                new InputOption('show-controllers', null, InputOption::VALUE_NONE, 'Show assigned controllers in overview'),
+                new InputOption('format', null, InputOption::VALUE_REQUIRED, 'The output format (txt, xml, json, or md)', 'txt'),
+                new InputOption('raw', null, InputOption::VALUE_NONE, 'To output raw route(s)'),
+            ])
+            ->setDescription(self::$defaultDescription)
+            ->setHelp(
+                <<<'EOF'
+The <info>%command.name%</info> displays the configured routes:
+
+  <info>php %command.full_name%</info>
+
+EOF
+            )
+        ;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function complete(CompletionInput $input, CompletionSuggestions $suggestions): void
+    {
+        $this->routerDebugCommand->complete($input, $suggestions);
     }
 
     /**
@@ -43,6 +80,11 @@ class RouterDebugCommandForDomain extends RouterDebugCommand
         $io = new SymfonyStyle($input, $output);
         $this->domainChoiceHelper->chooseDomainAndSwitch($io);
 
-        return parent::execute($input, $output);
+        $application = new Application($this->kernel);
+        $application->setAutoExit(false);
+
+        $this->routerDebugCommand->setApplication($application);
+
+        return $this->routerDebugCommand->run($input, $output);
     }
 }

@@ -88,6 +88,14 @@ class FrontendApiUser implements UserInterface
         return $this->email;
     }
 
+    /**
+     * @return string
+     */
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
+
     public function eraseCredentials(): void
     {
     }

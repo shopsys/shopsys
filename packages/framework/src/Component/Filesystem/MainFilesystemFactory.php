@@ -2,9 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Component\Filesystem;
 
-use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 
 class MainFilesystemFactory implements FilesystemFactoryInterface
 {
@@ -22,11 +22,11 @@ class MainFilesystemFactory implements FilesystemFactoryInterface
     }
 
     /**
-     * @return \League\Flysystem\FilesystemInterface
+     * @return \League\Flysystem\FilesystemOperator
      */
-    public function create(): FilesystemInterface
+    public function create(): FilesystemOperator
     {
-        $adapter = new Local($this->projectDir);
+        $adapter = new LocalFilesystemAdapter($this->projectDir);
 
         return new Filesystem($adapter);
     }

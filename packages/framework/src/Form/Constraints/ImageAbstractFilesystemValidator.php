@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Constraints;
 
 use League\Flysystem\MountManager;
+use League\Flysystem\UnableToCopyFile;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\File as FileObject;
@@ -52,9 +53,9 @@ class ImageAbstractFilesystemValidator extends ImageValidator
         $localFileUniqueName = $this->fileUpload->getTemporaryFilepath(uniqid() . $value->getFilename());
         $localPath = $this->parameterBag->get('kernel.project_dir') . $localFileUniqueName;
 
-        $copyResult = $this->mountManager->copy('main://' . $abstractPath, 'local://' . $localPath);
-
-        if ($copyResult === false) {
+        try {
+            $this->mountManager->copy('main://' . $abstractPath, 'local://' . $localPath);
+        } catch (UnableToCopyFile $e) {
             $this->context->buildViolation(
                 'This image could not be found. Please remove it and try to upload it again.'
             )

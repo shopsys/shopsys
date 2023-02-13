@@ -118,7 +118,7 @@
                     {% endif %}
                 </div>
                 <div id="js-order-preview" class="box-order__cart" data-url="{{ url('front_order_preview') }}">
-                    {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
+                    {{ render(controller('App\\Controller\\Front\\OrderController::previewAction', {
                         transportId: transport is empty ? null : transport.id,
                         paymentId: payment is empty ? null : payment.id
                     })) }}

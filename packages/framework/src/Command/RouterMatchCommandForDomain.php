@@ -6,13 +6,16 @@ namespace Shopsys\FrameworkBundle\Command;
 
 use Shopsys\FrameworkBundle\Component\Console\DomainChoiceHandler;
 use Symfony\Bundle\FrameworkBundle\Command\RouterMatchCommand;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 
-// @phpstan-ignore-next-line
-class RouterMatchCommandForDomain extends RouterMatchCommand
+class RouterMatchCommandForDomain extends Command
 {
     /**
      * @var string
@@ -20,19 +23,49 @@ class RouterMatchCommandForDomain extends RouterMatchCommand
     protected static $defaultName = 'router:match';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Console\DomainChoiceHandler
+     * @var string
      */
-    private $domainChoiceHelper;
+    protected static $defaultDescription = 'Help debug routes by simulating a path info match';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Console\DomainChoiceHandler $domainChoiceHelper
-     * @param \Symfony\Component\Routing\RouterInterface $router
+     * @param \Symfony\Bundle\FrameworkBundle\Command\RouterMatchCommand $routerMatchCommand
+     * @param \Symfony\Component\HttpKernel\KernelInterface $kernel
      */
-    public function __construct(DomainChoiceHandler $domainChoiceHelper, RouterInterface $router)
-    {
-        $this->domainChoiceHelper = $domainChoiceHelper;
+    public function __construct(
+        private readonly DomainChoiceHandler $domainChoiceHelper,
+        private readonly RouterMatchCommand $routerMatchCommand,
+        private readonly KernelInterface $kernel
+    ) {
+        parent::__construct();
+    }
 
-        parent::__construct($router);
+    /**
+     * {@inheritdoc}
+     */
+    protected function configure()
+    {
+        $this
+            ->setDefinition([
+                new InputArgument('path_info', InputArgument::REQUIRED, 'A path info'),
+                new InputOption('method', null, InputOption::VALUE_REQUIRED, 'Set the HTTP method'),
+                new InputOption('scheme', null, InputOption::VALUE_REQUIRED, 'Set the URI scheme (usually http or https)'),
+                new InputOption('host', null, InputOption::VALUE_REQUIRED, 'Set the URI host'),
+            ])
+            ->setDescription(self::$defaultDescription)
+            ->setHelp(
+                <<<'EOF'
+The <info>%command.name%</info> shows which routes match a given request and which don't and for what reason:
+
+  <info>php %command.full_name% /foo</info>
+
+or
+
+  <info>php %command.full_name% /foo --method POST --scheme https --host symfony.com --verbose</info>
+
+EOF
+            )
+        ;
     }
 
     /**
@@ -41,8 +74,14 @@ class RouterMatchCommandForDomain extends RouterMatchCommand
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
+
         $this->domainChoiceHelper->chooseDomainAndSwitch($io);
 
-        return parent::execute($input, $output);
+        $application = new Application($this->kernel);
+        $application->setAutoExit(false);
+
+        $this->routerMatchCommand->setApplication($application);
+
+        return $this->routerMatchCommand->run($input, $output);
     }
 }

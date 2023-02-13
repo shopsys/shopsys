@@ -7,7 +7,7 @@ namespace Tests\App\Functional\Model\Administrator\Security;
 use App\DataFixtures\Demo\AdministratorDataFixture;
 use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
@@ -29,10 +29,10 @@ class AdministratorFrontSecurityFacadeTest extends TransactionFunctionalTestCase
     private AdministratorActivityFacade $administratorActivityFacade;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
+     * @var \Symfony\Component\HttpFoundation\RequestStack
      * @inject
      */
-    protected SessionInterface $session;
+    protected RequestStack $requestStack;
 
     public function testIsAdministratorLoggedNot()
     {
@@ -50,7 +50,7 @@ class AdministratorFrontSecurityFacadeTest extends TransactionFunctionalTestCase
             $roles
         );
 
-        $this->session->set(
+        $this->requestStack->getSession()->set(
             '_security_' . AdministratorFrontSecurityFacade::ADMINISTRATION_CONTEXT,
             serialize($token)
         );

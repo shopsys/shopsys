@@ -2,7 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Sitemap;
 
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Presta\SitemapBundle\DependencyInjection\Configuration;
 use Presta\SitemapBundle\Service\Dumper;
@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class SitemapDumper extends Dumper
 {
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     protected $abstractFilesystem;
 
@@ -27,7 +27,7 @@ class SitemapDumper extends Dumper
     /**
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem
-     * @param \League\Flysystem\FilesystemInterface $abstractFilesystem
+     * @param \League\Flysystem\FilesystemOperator $abstractFilesystem
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      * @param string $sitemapFilePrefix
@@ -36,7 +36,7 @@ class SitemapDumper extends Dumper
     public function __construct(
         EventDispatcherInterface $dispatcher,
         Filesystem $filesystem,
-        FilesystemInterface $abstractFilesystem,
+        FilesystemOperator $abstractFilesystem,
         MountManager $mountManager,
         UrlGeneratorInterface $urlGenerator,
         string $sitemapFilePrefix = Configuration::DEFAULT_FILENAME,
@@ -81,9 +81,10 @@ class SitemapDumper extends Dumper
      */
     protected function deleteExistingSitemaps(string $targetDir): void
     {
-        $files = array_filter($this->abstractFilesystem->listContents($targetDir), function ($file) {
-            return strpos($file['filename'], $this->sitemapFilePrefix) === 0;
+        $files = $this->abstractFilesystem->listContents($targetDir)->filter(function ($file) {
+            return str_contains($file['path'], $this->sitemapFilePrefix);
         });
+
         foreach ($files as $file) {
             $this->abstractFilesystem->delete($file['path']);
         }

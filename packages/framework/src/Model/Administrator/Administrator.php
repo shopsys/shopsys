@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\Exception\MandatoryAdministrator
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Shopsys\FrameworkBundle\Model\Security\UniqueLoginInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -21,7 +22,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *   }
  * )
  */
-class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLoginInterface
+class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLoginInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -171,6 +172,14 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @return string
      */
+    public function getUserIdentifier(): string
+    {
+        return $this->username;
+    }
+
+    /**
+     * @return string
+     */
     public function getRealName()
     {
         return $this->realName;
@@ -185,9 +194,9 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -344,7 +353,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @inheritDoc
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         $roles = [];
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole $role */
@@ -358,7 +367,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @inheritDoc
      */
-    public function getSalt()
+    public function getSalt(): ?string
     {
         return null; // bcrypt include salt in password hash
     }

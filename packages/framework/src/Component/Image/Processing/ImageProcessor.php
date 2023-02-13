@@ -6,7 +6,7 @@ use Intervention\Image\Constraint;
 use Intervention\Image\Exception\NotReadableException;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageAdditionalSizeConfig;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
@@ -32,17 +32,17 @@ class ImageProcessor
     protected $imageManager;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     protected $filesystem;
 
     /**
      * @param \Intervention\Image\ImageManager $imageManager
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
         ImageManager $imageManager,
-        FilesystemInterface $filesystem
+        FilesystemOperator $filesystem
     ) {
         $this->imageManager = $imageManager;
         $this->filesystem = $filesystem;

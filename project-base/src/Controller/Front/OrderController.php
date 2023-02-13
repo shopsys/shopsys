@@ -6,6 +6,7 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Order\DomainAwareOrderFlowFactory;
 use App\Model\Order\FrontOrderData;
+use App\Model\Order\Order;
 use App\Model\Order\OrderData;
 use App\Model\Order\OrderDataMapper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -26,8 +27,8 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class OrderController extends FrontBaseController
 {
@@ -99,11 +100,6 @@ class OrderController extends FrontBaseController
     private $transportPriceCalculation;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
-     */
-    private $session;
-
-    /**
      * @var \App\Model\LegalConditions\LegalConditionsFacade
      */
     private $legalConditionsFacade;
@@ -125,7 +121,6 @@ class OrderController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Model\Order\OrderDataMapper $orderDataMapper
      * @param \App\Form\Front\Order\DomainAwareOrderFlowFactory $domainAwareOrderFlowFactory
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \Shopsys\FrameworkBundle\Model\Order\Watcher\TransportAndPaymentWatcher $transportAndPaymentWatcher
      * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \App\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
@@ -143,7 +138,6 @@ class OrderController extends FrontBaseController
         CurrencyFacade $currencyFacade,
         OrderDataMapper $orderDataMapper,
         DomainAwareOrderFlowFactory $domainAwareOrderFlowFactory,
-        SessionInterface $session,
         TransportAndPaymentWatcher $transportAndPaymentWatcher,
         OrderMailFacade $orderMailFacade,
         LegalConditionsFacade $legalConditionsFacade,
@@ -160,14 +154,17 @@ class OrderController extends FrontBaseController
         $this->currencyFacade = $currencyFacade;
         $this->orderDataMapper = $orderDataMapper;
         $this->domainAwareOrderFlowFactory = $domainAwareOrderFlowFactory;
-        $this->session = $session;
         $this->transportAndPaymentWatcher = $transportAndPaymentWatcher;
         $this->orderMailFacade = $orderMailFacade;
         $this->legalConditionsFacade = $legalConditionsFacade;
         $this->newsletterFacade = $newsletterFacade;
     }
 
-    public function indexAction()
+    /**
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function indexAction(RequestStack $requestStack): Response
     {
         $cart = $this->cartFacade->findCartOfCurrentCustomerUser();
         if ($cart === null) {
@@ -232,7 +229,7 @@ class OrderController extends FrontBaseController
 
                 $this->sendMail($order);
 
-                $this->session->set(self::SESSION_CREATED_ORDER, $order->getId());
+                $requestStack->getSession()->set(self::SESSION_CREATED_ORDER, $order->getId());
 
                 return $this->redirectToRoute('front_order_sent');
             }
@@ -289,8 +286,9 @@ class OrderController extends FrontBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function previewAction(Request $request)
+    public function previewAction(Request $request): Response
     {
         $transportId = $request->get('transportId');
         $paymentId = $request->get('paymentId');
@@ -325,7 +323,7 @@ class OrderController extends FrontBaseController
         OrderPreview $orderPreview,
         array $transports,
         array $payments
-    ) {
+    ): void {
         $transportAndPaymentCheckResult = $this->transportAndPaymentWatcher->checkTransportAndPayment(
             $orderData,
             $orderPreview,
@@ -352,7 +350,10 @@ class OrderController extends FrontBaseController
         }
     }
 
-    public function saveOrderFormAction()
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function saveOrderFormAction(): Response
     {
         $flow = $this->domainAwareOrderFlowFactory->create();
         $flow->bind(new FrontOrderData());
@@ -362,10 +363,14 @@ class OrderController extends FrontBaseController
         return new Response();
     }
 
-    public function sentAction()
+    /**
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function sentAction(RequestStack $requestStack): Response
     {
-        $orderId = $this->session->get(self::SESSION_CREATED_ORDER, null);
-        $this->session->remove(self::SESSION_CREATED_ORDER);
+        $orderId = $requestStack->getSession()->get(self::SESSION_CREATED_ORDER, null);
+        $requestStack->getSession()->remove(self::SESSION_CREATED_ORDER);
 
         if ($orderId === null) {
             return $this->redirectToRoute('front_cart');
@@ -377,12 +382,18 @@ class OrderController extends FrontBaseController
         ]);
     }
 
-    public function termsAndConditionsAction()
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function termsAndConditionsAction(): Response
     {
         return $this->getTermsAndConditionsResponse();
     }
 
-    public function termsAndConditionsDownloadAction()
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function termsAndConditionsDownloadAction(): Response
     {
         $response = $this->getTermsAndConditionsResponse();
 
@@ -396,7 +407,7 @@ class OrderController extends FrontBaseController
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function getTermsAndConditionsResponse()
+    private function getTermsAndConditionsResponse(): Response
     {
         return $this->render('Front/Content/Order/legalConditions.html.twig', [
             'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions(
@@ -408,7 +419,7 @@ class OrderController extends FrontBaseController
     /**
      * @param \App\Model\Order\Order $order
      */
-    private function sendMail($order)
+    private function sendMail(Order $order): void
     {
         $mailTemplate = $this->orderMailFacade->getMailTemplateByStatusAndDomainId(
             $order->getStatus(),

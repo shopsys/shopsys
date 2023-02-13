@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
-use League\Flysystem\FileNotFoundException;
+use League\Flysystem\FilesystemOperationFailed;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -96,7 +96,7 @@ class Mailer
                     $this->mailTemplateFacade->getMailTemplateAttachmentFilepath($attachment),
                     $attachment->getNameWithExtension()
                 );
-            } catch (FileNotFoundException $exception) {
+            } catch (FilesystemOperationFailed $exception) {
                 $this->logger->error('Attachment could not be added because file was not found.', [$exception]);
                 continue;
             }

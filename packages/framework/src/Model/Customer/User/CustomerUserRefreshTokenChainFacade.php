@@ -5,46 +5,22 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use DateTime;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 
 class CustomerUserRefreshTokenChainFacade
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainDataFactoryInterface
-     */
-    protected $customerUserRefreshTokenChainDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFactoryInterface
-     */
-    protected $customerUserRefreshTokenChainFactory;
-
-    /**
-     * @var \Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface
-     */
-    protected $encoderFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainRepository
-     */
-    protected $customerUserRefreshTokenChainRepository;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainDataFactoryInterface $customerUserRefreshTokenChainDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFactoryInterface $customerUserRefreshTokenChainFactory
-     * @param \Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface $encoderFactory
+     * @param \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository
      */
     public function __construct(
-        CustomerUserRefreshTokenChainDataFactoryInterface $customerUserRefreshTokenChainDataFactory,
-        CustomerUserRefreshTokenChainFactoryInterface $customerUserRefreshTokenChainFactory,
-        EncoderFactoryInterface $encoderFactory,
-        CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository
+        protected readonly CustomerUserRefreshTokenChainDataFactoryInterface $customerUserRefreshTokenChainDataFactory,
+        protected readonly CustomerUserRefreshTokenChainFactoryInterface $customerUserRefreshTokenChainFactory,
+        protected readonly PasswordHasherFactoryInterface $passwordHasherFactory,
+        protected readonly CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository
     ) {
-        $this->customerUserRefreshTokenChainDataFactory = $customerUserRefreshTokenChainDataFactory;
-        $this->customerUserRefreshTokenChainFactory = $customerUserRefreshTokenChainFactory;
-        $this->encoderFactory = $encoderFactory;
-        $this->customerUserRefreshTokenChainRepository = $customerUserRefreshTokenChainRepository;
     }
 
     /**
@@ -56,11 +32,11 @@ class CustomerUserRefreshTokenChainFacade
      */
     public function createCustomerUserRefreshTokenChain(CustomerUser $customerUser, string $tokenChain, string $deviceId, DateTime $tokenExpiration): CustomerUserRefreshTokenChain
     {
-        $encoder = $this->encoderFactory->getEncoder($customerUser);
+        $passwordHasher = $this->passwordHasherFactory->getPasswordHasher($customerUser);
 
         $customerUserRefreshTokenChainData = $this->customerUserRefreshTokenChainDataFactory->create();
         $customerUserRefreshTokenChainData->customerUser = $customerUser;
-        $customerUserRefreshTokenChainData->tokenChain = $encoder->encodePassword($tokenChain, null);
+        $customerUserRefreshTokenChainData->tokenChain = $passwordHasher->hash($tokenChain);
         $customerUserRefreshTokenChainData->deviceId = $deviceId;
         $customerUserRefreshTokenChainData->expiredAt = $tokenExpiration;
 
@@ -74,13 +50,13 @@ class CustomerUserRefreshTokenChainFacade
      */
     public function findCustomersTokenChainByCustomerUserAndSecretChain(CustomerUser $customerUser, string $secretChain): ?CustomerUserRefreshTokenChain
     {
-        $encoder = $this->encoderFactory->getEncoder($customerUser);
+        $passwordHasher = $this->passwordHasherFactory->getPasswordHasher($customerUser);
         $customersTokenChains = $this->customerUserRefreshTokenChainRepository->findCustomersTokenChains(
             $customerUser
         );
 
         foreach ($customersTokenChains as $customersTokenChain) {
-            if ($encoder->isPasswordValid($customersTokenChain->getTokenChain(), $secretChain, null)) {
+            if ($passwordHasher->verify($customersTokenChain->getTokenChain(), $secretChain)) {
                 return $customersTokenChain;
             }
         }

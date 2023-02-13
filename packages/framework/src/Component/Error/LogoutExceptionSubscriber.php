@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\RouterInterface;
@@ -19,41 +19,17 @@ use Symfony\Component\Security\Core\Exception\LogoutException;
 class LogoutExceptionSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface
-     */
-    protected $flashBag;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    protected $currentCustomerUser;
-
-    /**
-     * @var \Symfony\Component\Routing\RouterInterface
-     */
-    protected $router;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Symfony\Component\Routing\RouterInterface $router
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        FlashBagInterface $flashBag,
-        CurrentCustomerUser $currentCustomerUser,
-        RouterInterface $router,
-        Domain $domain
+        protected readonly RequestStack $requestStack,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly RouterInterface $router,
+        protected readonly Domain $domain,
     ) {
-        $this->flashBag = $flashBag;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->router = $router;
-        $this->domain = $domain;
     }
 
     /**
@@ -79,7 +55,10 @@ class LogoutExceptionSubscriber implements EventSubscriberInterface
                 $domainId = $this->currentCustomerUser->findCurrentCustomerUser()->getDomainId();
                 $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
-                $this->flashBag->add(
+                /** @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag */
+                $flashBag = $this->requestStack->getSession()->getBag('flashes');
+
+                $flashBag->add(
                     FlashMessage::KEY_ERROR,
                     t(
                         'There was an error during logout attempt. If you really want to sign out, please try it again.',

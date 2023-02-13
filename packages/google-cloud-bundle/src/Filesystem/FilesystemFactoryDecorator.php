@@ -4,9 +4,9 @@ namespace Shopsys\GoogleCloudBundle\Filesystem;
 
 use Google\Cloud\Storage\StorageClient;
 use League\Flysystem\Filesystem;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
+use League\Flysystem\GoogleCloudStorage\GoogleCloudStorageAdapter;
 use Shopsys\FrameworkBundle\Component\Filesystem\FilesystemFactoryInterface;
-use Superbalist\Flysystem\GoogleStorage\GoogleStorageAdapter;
 
 class FilesystemFactoryDecorator implements FilesystemFactoryInterface
 {
@@ -41,14 +41,14 @@ class FilesystemFactoryDecorator implements FilesystemFactoryInterface
     }
 
     /**
-     * @return \League\Flysystem\FilesystemInterface
+     * @return \League\Flysystem\FilesystemOperator
      */
-    public function create(): FilesystemInterface
+    public function create(): FilesystemOperator
     {
         if ($this->googleCloudStorageBucketName !== '') {
             $storageClient = new StorageClient(['projectId' => $this->googleCloudProjectId]);
             $bucket = $storageClient->bucket($this->googleCloudStorageBucketName);
-            $adapter = new GoogleStorageAdapter($storageClient, $bucket);
+            $adapter = new GoogleCloudStorageAdapter($bucket);
 
             return new Filesystem($adapter);
         }

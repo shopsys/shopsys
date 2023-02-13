@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 
@@ -16,17 +16,17 @@ class UploadedFileController
     private $uploadedFileFacade;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     private $filesystem;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
         UploadedFileFacade $uploadedFileFacade,
-        FilesystemInterface $filesystem
+        FilesystemOperator $filesystem
     ) {
         $this->uploadedFileFacade = $uploadedFileFacade;
         $this->filesystem = $filesystem;
@@ -52,7 +52,7 @@ class UploadedFileController
         return new DownloadFileResponse(
             $uploadedFile->getNameWithExtension(),
             $this->filesystem->read($filePath),
-            $this->filesystem->getMimetype($filePath)
+            $this->filesystem->mimeType($filePath)
         );
     }
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Front;
 
 use Exception;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageException;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageGeneratorFacade;
@@ -19,15 +19,15 @@ class ImageController extends FrontBaseController
     private $imageGeneratorFacade;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     private $filesystem;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageGeneratorFacade $imageGeneratorFacade
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      */
-    public function __construct(ImageGeneratorFacade $imageGeneratorFacade, FilesystemInterface $filesystem)
+    public function __construct(ImageGeneratorFacade $imageGeneratorFacade, FilesystemOperator $filesystem)
     {
         $this->imageGeneratorFacade = $imageGeneratorFacade;
         $this->filesystem = $filesystem;
@@ -111,8 +111,8 @@ class ImageController extends FrontBaseController
         try {
             $fileStream = $this->filesystem->readStream($imageFilepath);
             $headers = [
-                'content-type' => $this->filesystem->getMimetype($imageFilepath),
-                'content-size' => $this->filesystem->getSize($imageFilepath),
+                'content-type' => $this->filesystem->mimeType($imageFilepath),
+                'content-size' => $this->filesystem->fileSize($imageFilepath),
             ];
 
             $callback = function () use ($fileStream) {

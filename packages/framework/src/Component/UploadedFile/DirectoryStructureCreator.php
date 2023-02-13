@@ -2,7 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\Config;
+use League\Flysystem\FilesystemOperator;
+use League\Flysystem\Visibility;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 
 class DirectoryStructureCreator
@@ -18,19 +20,19 @@ class DirectoryStructureCreator
     protected $uploadedFileLocator;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     protected $filesysytem;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator $uploadedFileLocator
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
         UploadedFileConfig $uploadedFileConfig,
         UploadedFileLocator $uploadedFileLocator,
-        FilesystemInterface $filesystem
+        FilesystemOperator $filesystem
     ) {
         $this->uploadedFileConfig = $uploadedFileConfig;
         $this->uploadedFileLocator = $uploadedFileLocator;
@@ -48,7 +50,7 @@ class DirectoryStructureCreator
         }
 
         foreach ($directories as $directory) {
-            $this->filesysytem->createDir($directory);
+            $this->filesysytem->createDirectory($directory, [Config::OPTION_VISIBILITY => Visibility::PUBLIC]);
         }
     }
 }

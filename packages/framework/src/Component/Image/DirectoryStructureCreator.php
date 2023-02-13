@@ -2,7 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Component\Image;
 
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\Config;
+use League\Flysystem\FilesystemOperator;
+use League\Flysystem\Visibility;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 
 class DirectoryStructureCreator
@@ -18,7 +20,7 @@ class DirectoryStructureCreator
     protected $imageLocator;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     protected $filesystem;
 
@@ -37,14 +39,14 @@ class DirectoryStructureCreator
      * @param string $domainImageDir
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
         $imageDir,
         $domainImageDir,
         ImageConfig $imageConfig,
         ImageLocator $imageLocator,
-        FilesystemInterface $filesystem
+        FilesystemOperator $filesystem
     ) {
         $this->imageDir = $imageDir;
         $this->domainImageDir = $domainImageDir;
@@ -80,7 +82,7 @@ class DirectoryStructureCreator
         $directories[] = $this->domainImageDir;
 
         foreach ($directories as $directory) {
-            $this->filesystem->createDir($directory);
+            $this->filesystem->createDirectory($directory, [Config::OPTION_VISIBILITY => Visibility::PUBLIC]);
         }
     }
 

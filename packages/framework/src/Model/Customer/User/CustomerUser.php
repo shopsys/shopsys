@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -24,7 +25,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * )
  * @ORM\Entity
  */
-class CustomerUser implements UserInterface, TimelimitLoginInterface
+class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -271,7 +272,15 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @return string
      */
-    public function getPassword()
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -357,7 +366,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @inheritDoc
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         return [Roles::ROLE_LOGGED_CUSTOMER];
     }
@@ -365,7 +374,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface
     /**
      * @inheritDoc
      */
-    public function getSalt()
+    public function getSalt(): ?string
     {
         return null; // bcrypt include salt in password hash
     }
