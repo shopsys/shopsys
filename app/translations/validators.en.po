@@ -7,7 +7,13 @@ msgstr ""
 msgid "Catalog number cannot be longer than {{ limit }} characters"
 msgstr ""
 
+msgid "Please enter email content"
+msgstr ""
+
 msgid "Choose image"
+msgstr ""
+
+msgid "Variable {{ needle }} is required"
 msgstr ""
 
 msgid "Chybný formát RGB HEX : #336699 nebo #ABC"

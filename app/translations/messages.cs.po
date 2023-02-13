@@ -32,19 +32,19 @@ msgid "Add another flag"
 msgstr "Přidat další příznak"
 
 msgid "Add another parameter"
-msgstr ""
+msgstr "Přidat další parametr"
 
 msgid "Add some flag"
 msgstr "Přidejte nějaký příznak"
 
 msgid "Add some parameters"
-msgstr ""
+msgstr "Přidat parametr"
 
 msgid "Administration"
-msgstr ""
+msgstr "Administrace"
 
 msgid "Administrator"
-msgstr ""
+msgstr "Administrátor"
 
 msgid "Administrator role group"
 msgstr "Skupiny práv pro administrátora"
@@ -74,7 +74,7 @@ msgid "Advanced SEO categories"
 msgstr "Rozšířené SEO kategorií"
 
 msgid "Advanced search"
-msgstr ""
+msgstr "Pokročilé vyhledávání"
 
 msgid "Advertising <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> modified"
 msgstr ""
@@ -164,22 +164,22 @@ msgid "Articles - view"
 msgstr "Články - zobrazení"
 
 msgid "Articles in footer"
-msgstr ""
+msgstr "Články v patičce"
 
 msgid "Articles in upper menu"
-msgstr ""
+msgstr "Články v horním menu"
 
 msgid "Articles without positioning"
-msgstr ""
+msgstr "Články bez umístění"
 
 msgid "Assign to category"
-msgstr ""
+msgstr "Přiřazení do kategorie"
 
 msgid "Authentication code"
-msgstr ""
+msgstr "Autentikační kód"
 
 msgid "Authenticator key"
-msgstr ""
+msgstr "Autentikační klíč"
 
 msgid "Back to overview"
 msgstr "Zpět na přehled"
@@ -260,10 +260,13 @@ msgid "CMS"
 msgstr "CMS"
 
 msgid "Cancel"
-msgstr ""
+msgstr "Zrušit"
 
 msgid "Catalog number"
 msgstr "Katalogové číslo"
+
+msgid "Catalog numbers delimited by comma"
+msgstr "Katalogová čísla oddělená čárkou"
 
 msgid "Categories"
 msgstr "Kategorie"
@@ -281,7 +284,7 @@ msgid "Categories extended SEO - view"
 msgstr "Rozšířené SEO kategorií - zobrazení"
 
 msgid "Category"
-msgstr ""
+msgstr "Kategorie"
 
 msgid "Category with prefilled filters"
 msgstr "Kategorie s předvyplněnými filtry"
@@ -308,10 +311,10 @@ msgid "Clean Storefront Query Cache"
 msgstr "Vymazat cache s graphql dotazy na FE"
 
 msgid "Code"
-msgstr ""
+msgstr "Kód"
 
 msgid "Color"
-msgstr ""
+msgstr "Barva"
 
 msgid "Color parameter values - full"
 msgstr "Hodnota parametru typu barva - vše"
@@ -326,7 +329,7 @@ msgid "Company number"
 msgstr "IČO"
 
 msgid "Confirm authentication code"
-msgstr ""
+msgstr "Potvrzení autentikačního kódu"
 
 msgid "Contact form - full"
 msgstr "Kontaktní formulář - vše"
@@ -481,9 +484,6 @@ msgstr ""
 msgid "Dnů do doručení"
 msgstr ""
 
-msgid "Do popisu lze vložit proměnnou, která bude nahrazena za produkty. Název proměnné je {products=XXXXXX,XXXXXX} kde XXXXXX je katalogové číslo produktu. Zobrazeny jsou produkty, které nejsou skryté a současně nejsou vyřazené z prodeje."
-msgstr ""
-
 msgid "Do you really want to delete this category even with their SEO mixes?"
 msgstr "Opravdu chcete smazat tuto kategorii i s jejich SEO mixy?"
 
@@ -550,6 +550,9 @@ msgstr "Identifikace e-shopu - vše"
 msgid "E-shop identification - view"
 msgstr "Identifikace e-shopu - zobrazení"
 
+msgid "Edit"
+msgstr "Upravit"
+
 msgid "Edit store"
 msgstr "Upravit prodejnu"
 
@@ -610,6 +613,9 @@ msgstr ""
 msgid "Editing banner"
 msgstr "Upravit banner"
 
+msgid "Editing email template - %name%"
+msgstr "Editace šablony emailu - %name%"
+
 msgid "Editing flag"
 msgstr "Editace příznaku"
 
@@ -636,6 +642,12 @@ msgstr "E-mail"
 
 msgid "Email newsletter"
 msgstr "E-maily zpravodaje"
+
+msgid "Email settings modified."
+msgstr "Nastavení emailu bylo upraveno."
+
+msgid "Email template <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Byla upravena e-mailová šablona <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
 
 msgid "Emailová šablona <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla vytvořena."
 msgstr ""
@@ -679,6 +691,9 @@ msgstr "Externí status transakce"
 msgid "Externí ID můstku"
 msgstr ""
 
+msgid "Facebook URL"
+msgstr ""
+
 msgid "Feeds - view"
 msgstr "XML Feedy - zobrazení"
 
@@ -705,6 +720,12 @@ msgstr "Příznaky - vše"
 
 msgid "Flags - view"
 msgstr "Příznaky - zobrazení"
+
+msgid "Footer"
+msgstr "Patička"
+
+msgid "Footer Text"
+msgstr "Text v patičce"
 
 msgid "For registered customers only"
 msgstr "Pouze pro registrované zákazníky"
@@ -814,6 +835,9 @@ msgstr ""
 msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
 msgstr ""
 
+msgid "Instagram URL"
+msgstr ""
+
 msgid "Instalační manuál"
 msgstr ""
 
@@ -893,7 +917,7 @@ msgid "Last name"
 msgstr "Příjmení"
 
 msgid "Last order"
-msgstr ""
+msgstr "Poslední objednávka"
 
 msgid "Legal conditions"
 msgstr "Právní podmínky"
@@ -907,20 +931,23 @@ msgstr "Obchodní podmínky - zobrazení"
 msgid "Legal conditions settings modified."
 msgstr "Nastavení právních podmínek upraveno."
 
-msgid "Legenda:"
-msgstr ""
-
 msgid "Limits"
 msgstr "Limity"
+
+msgid "LinkedIn URL"
+msgstr "LinkedIn URL"
 
 msgid "List of language constants"
 msgstr "Přehled jazykových konstant"
 
+msgid "List of products"
+msgstr "Seznam produktů"
+
 msgid "List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)"
-msgstr ""
+msgstr "Seznam produktů v objednávce (název, množství, cena za jednotku včetně DPH, celková cena za položku včetně DPH)"
 
 msgid "Location"
-msgstr ""
+msgstr "Lokace"
 
 msgid "Log in"
 msgstr "Přihlásit se"
@@ -1074,6 +1101,9 @@ msgstr ""
 
 msgid "No page found."
 msgstr ""
+
+msgid "No products are set. Please add some in the component settings."
+msgstr "Nejsou nastavené žádné produkty. Přidejte prosím produkt v nastavení komponenty."
 
 msgid "No store is created. You have to create one first."
 msgstr "Žádná prodejna není vytvořena. Nejdříve musíte nějakou vytvořit."
@@ -1356,6 +1386,9 @@ msgstr ""
 
 msgid "Popis kategorie"
 msgstr ""
+
+msgid "Position of image"
+msgstr "Pozice obrázku"
 
 msgid "Postcode"
 msgstr "PSČ"
@@ -1819,6 +1852,9 @@ msgstr "Nastavení obchodních podmínek"
 msgid "Text"
 msgstr ""
 
+msgid "Text with image"
+msgstr "Text s obrázkem"
+
 msgid "Text zobrazený pod bannerem"
 msgstr ""
 
@@ -1842,6 +1878,9 @@ msgstr ""
 
 msgid "This status can't be deleted. This is automatically assigned status to all new orders."
 msgstr ""
+
+msgid "TikTok URL"
+msgstr "TikTok URL"
 
 msgid "Time format: \"hh:mm\", e.g.: \"07:45\", \"23:05\""
 msgstr "Formát času: \"hh:mm\", např.: \"07:45\", \"23:05\""
@@ -2163,6 +2202,9 @@ msgstr ""
 
 msgid "You have to set redirect code for redirect."
 msgstr "Pro nastavení přesměrování musíte zadat typ přesměrování."
+
+msgid "Youtube URL"
+msgstr ""
 
 msgid "Zadany kod neni spravny"
 msgstr ""

@@ -16,6 +16,7 @@ import './promocode/promoCodeFlags';
 
 import './category/categoryDeleteConfirm';
 
+import './grapesjs/initGrapesJs';
 import './roleGroup/roleGroups';
 import './roleGroup/administratorForm';
 

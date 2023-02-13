@@ -8,7 +8,6 @@ use App\Form\BlogCategoriesType;
 use App\Model\Blog\Article\BlogArticle;
 use App\Model\Blog\Article\BlogArticleData;
 use DateTime;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -112,7 +111,7 @@ class BlogArticleFormType extends AbstractType
      */
     private function createSeoGroup(FormBuilderInterface $builder, ?BlogArticle $blogArticle): FormBuilderInterface
     {
-        list($seoTitlesOptionsByDomainId, $seoMetaDescriptionsOptionsByDomainId, $seoH1OptionsByDomainId) = $this->prepareSeoData($blogArticle);
+        [$seoTitlesOptionsByDomainId, $seoMetaDescriptionsOptionsByDomainId, $seoH1OptionsByDomainId] = $this->prepareSeoData($blogArticle);
 
         $builderSeoGroup = $builder->create('seo', GroupType::class, [
             'label' => t('Seo'),
@@ -236,7 +235,10 @@ class BlogArticleFormType extends AbstractType
 
         $builderDescriptionGroup
             ->add('descriptions', LocalizedType::class, [
-                'entry_type' => CKEditorType::class,
+                'entry_type' => GrapesJsType::class,
+                'entry_options' => [
+                    'allow_products' => true,
+                ],
                 'label' => t('Description'),
                 'required' => false,
                 'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,

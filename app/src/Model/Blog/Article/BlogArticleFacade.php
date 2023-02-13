@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class BlogArticleFacade
 {
-    private const PRODUCT_CATNUMS_PLACEHOLDER = '/(\{products=(?<catnums>[a-zA-Z0-9]+(,[a-zA-Z0-9]+)*)\})/sU';
+    private const PRODUCT_CATNUMS_PLACEHOLDER = '/data-products="(?<catnums>.+)"/sU';
 
     /**
      * @var \Doctrine\ORM\EntityManagerInterface

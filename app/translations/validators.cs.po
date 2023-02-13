@@ -133,6 +133,9 @@ msgstr "Vyplňte prosím datum vytvoření"
 msgid "Please enter email"
 msgstr "Vyplňte prosím e-mail"
 
+msgid "Please enter email content"
+msgstr "Vyplňte prosím text e-mailu"
+
 msgid "Please enter first name"
 msgstr "Vyplňte prosím křestní jméno"
 
@@ -357,6 +360,9 @@ msgstr "Uploadovaný obrázek je příliš velký ({{ size }} {{ suffix }}). Max
 
 msgid "User with provided email address does not exist."
 msgstr "Uživatel s uvedenou e-mailovou adresou neexistuje."
+
+msgid "Variable {{ needle }} is required"
+msgstr "Proměnná {{ needle }} je povinná"
 
 msgid "Vyplňte prosím URL"
 msgstr ""

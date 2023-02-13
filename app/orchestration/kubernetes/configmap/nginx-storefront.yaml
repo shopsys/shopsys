@@ -1,0 +1,195 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: nginx-default-config
+data:
+    nginx.conf: |
+        user  nginx;
+        worker_processes auto;
+
+        error_log   /dev/stderr warn;
+        pid         /var/run/nginx.pid;
+
+        events {
+            # determines how much clients will be served per worker
+            # max clients = worker_connections * worker_processes
+            # max clients is also limited by the number of socket connections available on the system (~64k)
+            worker_connections 30000;
+        }
+
+        http {
+            include       /etc/nginx/mime.types;
+            default_type  application/octet-stream;
+
+            log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                '$status $body_bytes_sent "$http_referer" '
+                '"$http_user_agent" "$http_x_forwarded_for"';
+
+            access_log /dev/stdout;
+
+            sendfile        on;
+            #tcp_nopush     on;
+
+            keepalive_timeout  65;
+
+            include /etc/nginx/conf.d/*.conf;
+        }
+    project-nginx.conf: |
+        upstream php-upstream {
+            server php-fpm:9000;
+        }
+
+        upstream storefront-upstream {
+            server storefront:3000;
+        }
+
+        proxy_cache_path /var/www/cache levels=1:2 keys_zone=cache:10m max_size=2g inactive=60m use_temp_path=off;
+
+        server {
+            listen 80;
+            root /var/www/html/web;
+
+            location /health {
+                stub_status  on;
+                access_log   off;
+            }
+        }
+
+        server {
+            listen 8080;
+            root /var/www/html/web;
+            server_tokens off;
+            proxy_ignore_client_abort on;
+
+            proxy_buffer_size 16k;
+            proxy_buffers 32 16k;
+
+            client_body_buffer_size 32m;
+            client_max_body_size    32m;
+
+            fastcgi_buffer_size 16k;
+            fastcgi_buffers 32 16k;
+
+            set_real_ip_from  10.0.0.0/8;
+            real_ip_header    X-Forwarded-For;
+            real_ip_recursive on;
+
+            set $request_host $http_host;
+            if ($http_originalhost) {
+                set $request_host $http_originalhost;
+            }
+
+            set $frontend_upstream @storefront;
+            set $frontend_upstream_uri @storefront;
+
+            if ($http_cookie ~ "twigStorefront=true") {
+                set $frontend_upstream @app;
+                set $frontend_upstream_uri $uri;
+            }
+
+            location ~ /(admin|public|content|ckeditor|build|bundles|graphql|_profiler|_wdt|file|redirect|elfinder|efconnect|personal-overview-export) {
+
+                location ~ /\. {
+                    # hide dotfiles (send to @app)
+                    try_files @app @app;
+                }
+                location ~ ^/index.php$ {
+                    # hide index.php (send to @app)
+                    try_files @app @app;
+                }
+
+                location ~ / {
+                    add_header "Access-Control-Allow-Origin" "*";
+                    # try to serve existing files directly, fallback to @app
+                    try_files $uri @app;
+
+                    # Enable compression of JavaScripts and CSS
+                    location ~ (\.js|\.css)$ {
+                        gzip on;
+                        gzip_types application/javascript text/css;
+
+                        # Cache versioned static content for 1 year
+                        location ~ ((-v[0-9]+\.js)|(_[0-9]+\.css))$ {
+                            expires 1y;
+
+                            # (try_files directive is not inherited from the parent location so we have to repeat it)
+                            try_files $uri @app;
+                        }
+
+                        # (try_files directive is not inherited from the parent location so we have to repeat it)
+                        try_files $uri @app;
+                    }
+
+                    location ~ ^\/content\/images\/(?<entity_name>\w+)(?<image_type>\/\w+)?\/(?<image_size>\w+)\/(?<add_image_id>\d+--)?[\w\-]+_(?<image_id>\d+)\.(?<image_extension>jpg|jpeg|png|gif) {
+                        expires 1w;
+                        # VSHosting DNS
+                        resolver                78.24.12.150;
+                        proxy_intercept_errors  on;
+                        error_page              403 404 = @app;
+
+                        proxy_http_version      1.1;
+                        proxy_set_header        Authorization "";
+                        proxy_buffering         off;
+
+                        proxy_cache cache;
+                        proxy_cache_revalidate on;
+                        proxy_cache_min_uses 3;
+                        proxy_cache_use_stale error timeout updating http_500 http_502 http_503 http_504;
+                        proxy_cache_background_update on;
+                        proxy_cache_lock on;
+                        proxy_pass https://shopsys-nas-minio.vshosting.cz:9000/{{PROJECT_NAME}}/web/content/images/$entity_name$image_type/$image_size/$add_image_id$image_id.$image_extension;
+                    }
+
+                    location ~ ^/content/ {
+                        # VSHosting DNS
+                        resolver                78.24.12.150;
+                        proxy_intercept_errors  on;
+                        error_page              404 = @app;
+
+                        proxy_http_version      1.1;
+                        proxy_set_header        Authorization "";
+                        proxy_buffering         off;
+
+                        proxy_pass              https://shopsys-nas-minio.vshosting.cz:9000/{{PROJECT_NAME}}/web$request_uri;
+                    }
+
+                    location ~ ^/content(-test)?/images/ {
+                        # Newly uploaded images get new ID (different URL) so they could be cached forever.
+                        # But change of resolution in images.yaml does not induce a change of URL
+                        # so it is safer to cache generated images only for few days.
+                        expires 1w;
+
+                        # (try_files directive is not inherited from the parent location so we have to repeat it)
+                        try_files $uri @app;
+                    }
+                }
+            }
+
+            location ~ / {
+                try_files $frontend_upstream_uri $frontend_upstream;
+            }
+
+            location @storefront {
+                internal;
+                proxy_hide_header Access-Control-Allow-Origin;
+                proxy_set_header Host $http_host;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "Upgrade";
+                proxy_pass http://storefront-upstream;
+            }
+
+            location @app {
+                fastcgi_pass php-upstream;
+                include fastcgi_params;
+                fastcgi_param HTTP_HOST $request_host;
+                # use $realpath_root instead of $document_root
+                # because of symlink switching when deploying
+                fastcgi_send_timeout 120s;
+                fastcgi_read_timeout 120s;
+                fastcgi_param DOCUMENT_ROOT $realpath_root;
+                fastcgi_param SCRIPT_FILENAME $realpath_root/index.php;
+                fastcgi_param HTTPS $http_x_forwarded_proto;
+            }
+        }

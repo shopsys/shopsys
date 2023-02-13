@@ -37,9 +37,6 @@ msgstr ""
 msgid "Flag \"{{ flagName }}\" is selected multiple times."
 msgstr ""
 
-msgid "Flag color in must be in valid hexadecimal code e.g. #3333ff"
-msgstr ""
-
 msgid "Flag color must be in valid hexadecimal code e.g. #3333ff"
 msgstr ""
 
@@ -128,6 +125,9 @@ msgid "Please enter date of creation"
 msgstr ""
 
 msgid "Please enter email"
+msgstr ""
+
+msgid "Please enter email content"
 msgstr ""
 
 msgid "Please enter first name"
@@ -348,6 +348,9 @@ msgstr ""
 
 msgid "User with provided email address does not exist."
 msgstr "Používateľ s uvedenou e-mailovou adresou neexistuje."
+
+msgid "Variable {{ needle }} is required"
+msgstr ""
 
 msgid "Vyplňte prosím URL"
 msgstr ""

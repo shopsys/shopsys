@@ -6,3 +6,10 @@ services:
 
     App\Twig\:
         resource: '../../src/Twig/'
+
+    App\Twig\DomainExtension:
+        arguments:
+            $domainImagesUrlPrefix: '%shopsys.domain_images_url_prefix%'
+
+    Shopsys\FrameworkBundle\Twig\DomainExtension:
+        alias: App\Twig\DomainExtension

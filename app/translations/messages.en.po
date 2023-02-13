@@ -556,6 +556,9 @@ msgstr ""
 msgid "Editing banner"
 msgstr ""
 
+msgid "Editing email template - %name%"
+msgstr ""
+
 msgid "Editing flag"
 msgstr ""
 
@@ -583,6 +586,12 @@ msgstr ""
 msgid "Email newsletter"
 msgstr ""
 
+msgid "Email settings modified."
+msgstr ""
+
+msgid "Email template <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
 msgid "Emailová šablona <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla vytvořena."
 msgstr ""
 
@@ -590,6 +599,15 @@ msgid "Enable two factor authentication by Google Authenticator"
 msgstr ""
 
 msgid "Enable two factor authentication by email"
+msgstr ""
+
+msgid "Footer Text"
+msgstr ""
+
+msgid "LinkedIn URL"
+msgstr ""
+
+msgid "TikTok URL"
 msgstr ""
 
 msgid "Enter a 6 digit authentication from your email. You need to request it by button bellow first."

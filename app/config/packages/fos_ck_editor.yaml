@@ -42,5 +42,11 @@ fos_ck_editor:
 
     plugins:
         layoutmanager:
-            path: 'ckeditor/plugins/layoutmanager/'
+            path: '/bundles/fosckeditor/plugins/layoutmanager/'
+            filename: 'plugin.js'
+        sharedspace:
+            path: '/bundles/fosckeditor/plugins/sharedspace/'
+            filename: 'plugin.js'
+        strinsert:
+            path: '/bundles/fosckeditor/plugins/strinsert/'
             filename: 'plugin.js'

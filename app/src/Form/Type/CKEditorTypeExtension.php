@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Type;
 
+use App\Form\Admin\Transformer\CKEditorCdnDataTransformer;
 use FOS\CKEditorBundle\Config\CKEditorConfigurationInterface;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -12,16 +13,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 class CKEditorTypeExtension extends AbstractTypeExtension
 {
     /**
-     * @var \FOS\CKEditorBundle\Config\CKEditorConfigurationInterface
-     */
-    private $configuration;
-
-    /**
      * @param \FOS\CKEditorBundle\Config\CKEditorConfigurationInterface $configuration
+     * @param \App\Form\Admin\Transformer\CKEditorCdnDataTransformer $ckeditorCdnDataTransformer
      */
-    public function __construct(CKEditorConfigurationInterface $configuration)
-    {
-        $this->configuration = $configuration;
+    public function __construct(
+        private readonly CKEditorConfigurationInterface $configuration,
+        private readonly CKEditorCdnDataTransformer $ckeditorCdnDataTransformer,
+    ) {
     }
 
     /**
@@ -31,6 +29,7 @@ class CKEditorTypeExtension extends AbstractTypeExtension
     {
         $options['config']['allowedContent'] = true;
         $builder->setAttribute('config', $this->resolveConfig($options));
+        $builder->addViewTransformer($this->ckeditorCdnDataTransformer);
     }
 
     /**

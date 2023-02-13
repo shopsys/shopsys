@@ -1,0 +1,67 @@
+import grapesjs from 'grapesjs';
+import FormChangeInfo from 'framework/admin/components/FormChangeInfo';
+
+const BUTTON_CLOSE = 'close';
+const BUTTON_SAVE = 'save';
+
+const resetBody = (editor) => {
+    if ($('body').hasClass('grapes-js-editor-opened')) {
+        $('body').removeClass('grapes-js-editor-opened');
+    }
+    $('#grapesjs').removeAttr('style').removeAttr('class');
+    editor.destroy();
+};
+
+export default grapesjs.plugins.add('customButtons', (editor, options) => {
+
+    const panels = editor.Panels;
+    const textareaId = options.textareaId;
+    const isMail = options.isMail;
+
+    panels.removeButton('options', 'fullscreen');
+    panels.removeButton('options', 'export-template');
+    panels.removeButton('options', 'gjs-open-import-webpage');
+    panels.removeButton('options', 'canvas-clear');
+
+    panels.addButton('options', {
+        id: BUTTON_SAVE,
+        context: BUTTON_SAVE,
+        className: 'fa fa-save',
+        command (editor) {
+            if (isMail === true) {
+                var template = editor.runCommand('gjs-get-inlined-html');
+                $('#' + textareaId).html(template).val(template);
+            } else {
+                const html = editor.getHtml();
+                let styles = editor.getStyle();
+                const filteredStyles = JSON.parse(JSON.stringify(styles)).filter(function (node) {
+                    const containsCorrectSelector = node.selectors !== undefined
+                        && node.selectors.length !== 0
+                        && typeof node.selectors[0] !== 'object'
+                        && (node.selectors[0].startsWith('#') || node.selectors[0].startsWith('gcss'));
+
+                    const containsCorrectAddSelector = node.selectorsAdd !== undefined && node.selectorsAdd.startsWith('.gcss');
+
+                    return containsCorrectSelector || containsCorrectAddSelector;
+                });
+                editor.setStyle(filteredStyles);
+                const css = editor.getCss();
+
+                const exported = '<style>' + css + '</style>' + html;
+                $('#' + textareaId).html(exported).val(exported);
+            }
+
+            resetBody(editor);
+            FormChangeInfo.showInfo();
+        }
+    });
+
+    panels.addButton('options', {
+        id: BUTTON_CLOSE,
+        context: BUTTON_CLOSE,
+        className: 'fa fa-times',
+        command (editor) {
+            resetBody(editor);
+        }
+    });
+});

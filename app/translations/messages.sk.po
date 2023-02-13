@@ -109,9 +109,6 @@ msgstr ""
 msgid "All domains"
 msgstr ""
 
-msgid "All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically."
-msgstr ""
-
 msgid "Amount"
 msgstr "Počet"
 
@@ -257,6 +254,9 @@ msgid "Cancel"
 msgstr ""
 
 msgid "Catalog number"
+msgstr ""
+
+msgid "Catalog numbers delimited by comma"
 msgstr ""
 
 msgid "Categories"
@@ -475,9 +475,6 @@ msgstr ""
 msgid "Dnů do doručení"
 msgstr ""
 
-msgid "Do popisu lze vložit proměnnou, která bude nahrazena za produkty. Název proměnné je {products=XXXXXX,XXXXXX} kde XXXXXX je katalogové číslo produktu. Zobrazeny jsou produkty, které nejsou skryté a současně nejsou vyřazené z prodeje."
-msgstr ""
-
 msgid "Do you really want to delete this category even with their SEO mixes?"
 msgstr ""
 
@@ -544,6 +541,9 @@ msgstr ""
 msgid "E-shop identification - view"
 msgstr ""
 
+msgid "Edit"
+msgstr ""
+
 msgid "Edit store"
 msgstr ""
 
@@ -604,6 +604,9 @@ msgstr ""
 msgid "Editing banner"
 msgstr ""
 
+msgid "Editing email template - %name%"
+msgstr ""
+
 msgid "Editing flag"
 msgstr ""
 
@@ -629,6 +632,12 @@ msgid "Email"
 msgstr "Email"
 
 msgid "Email newsletter"
+msgstr ""
+
+msgid "Email settings modified."
+msgstr ""
+
+msgid "Email template <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr ""
 
 msgid "Emailová šablona <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla vytvořena."
@@ -673,6 +682,9 @@ msgstr ""
 msgid "Externí ID můstku"
 msgstr ""
 
+msgid "Facebook URL"
+msgstr ""
+
 msgid "Feeds - view"
 msgstr ""
 
@@ -698,6 +710,12 @@ msgid "Flags - full"
 msgstr ""
 
 msgid "Flags - view"
+msgstr ""
+
+msgid "Footer"
+msgstr ""
+
+msgid "Footer Text"
 msgstr ""
 
 msgid "For registered customers only"
@@ -808,6 +826,9 @@ msgstr ""
 msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
 msgstr ""
 
+msgid "Instagram URL"
+msgstr ""
+
 msgid "Instalační manuál"
 msgstr "Inštalačný manuál"
 
@@ -901,13 +922,16 @@ msgstr ""
 msgid "Legal conditions settings modified."
 msgstr ""
 
-msgid "Legenda:"
-msgstr ""
-
 msgid "Limits"
 msgstr ""
 
+msgid "LinkedIn URL"
+msgstr ""
+
 msgid "List of language constants"
+msgstr ""
+
+msgid "List of products"
 msgstr ""
 
 msgid "List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)"
@@ -1072,6 +1096,9 @@ msgstr ""
 msgid "No page found."
 msgstr ""
 
+msgid "No products are set. Please add some in the component settings."
+msgstr ""
+
 msgid "No store is created. You have to create one first."
 msgstr ""
 
@@ -1197,9 +1224,6 @@ msgstr "URL adresa detailu objednávky"
 
 msgid "Order has not been sent to GoPay"
 msgstr "Objednávka nebola odoslaná do GoPay"
-
-msgid "Order items"
-msgstr ""
 
 msgid "Order number"
 msgstr "Číslo objednávky"
@@ -1349,6 +1373,9 @@ msgid "Položka navigace <strong>{{ name }}</strong> byla smazána"
 msgstr ""
 
 msgid "Popis kategorie"
+msgstr ""
+
+msgid "Position of image"
 msgstr ""
 
 msgid "Postcode"
@@ -1660,9 +1687,6 @@ msgstr ""
 msgid "Set as default"
 msgstr ""
 
-msgid "Set prices manually"
-msgstr ""
-
 msgid "Settings"
 msgstr ""
 
@@ -1807,6 +1831,9 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
+msgid "Text with image"
+msgstr ""
+
 msgid "Text zobrazený pod bannerem"
 msgstr ""
 
@@ -1828,6 +1855,9 @@ msgstr ""
 msgid "This status can't be deleted. This is automatically assigned status to all new orders."
 msgstr ""
 
+msgid "TikTok URL"
+msgstr ""
+
 msgid "Time format: \"hh:mm\", e.g.: \"07:45\", \"23:05\""
 msgstr ""
 
@@ -1844,15 +1874,6 @@ msgid "Top products - full"
 msgstr ""
 
 msgid "Top products - view"
-msgstr ""
-
-msgid "Total"
-msgstr ""
-
-msgid "Total excluding VAT"
-msgstr ""
-
-msgid "Total including VAT"
 msgstr ""
 
 msgid "Total order price (including VAT)"
@@ -1963,12 +1984,6 @@ msgstr ""
 msgid "Unavailable"
 msgstr ""
 
-msgid "Unit"
-msgstr ""
-
-msgid "Unit price excluding VAT"
-msgstr ""
-
 msgid "Unit price including VAT"
 msgstr "Cena za jednotku s DPH"
 
@@ -2006,9 +2021,6 @@ msgid "Use stocks"
 msgstr ""
 
 msgid "User translation"
-msgstr ""
-
-msgid "VAT rate (%)"
 msgstr ""
 
 msgid "Valid from (date)"
@@ -2147,6 +2159,9 @@ msgid "You have successfully paid order."
 msgstr ""
 
 msgid "You have to set redirect code for redirect."
+msgstr ""
+
+msgid "Youtube URL"
 msgstr ""
 
 msgid "Z Vašeho košíku bylo z důvodu nedostupnosti odstraněno zbožéí: <strong>{{ name }}</strong>. Prosím zkontrolujte si svojí objednávku."

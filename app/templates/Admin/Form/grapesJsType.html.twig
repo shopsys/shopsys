@@ -1,0 +1,27 @@
+{% block grapes_js_widget %}
+    {% set domainByLocale = '' %}
+    {% if localized is defined %}
+        {% set domainByLocale = getDomainUrlByLocale(locale) %}
+    {% endif %}
+
+    <div class="display-none">{{ form_row(form) }}</div>
+    <div class="form-line__item">
+        <div class="input__wrap">
+            <button
+                    type="button"
+                    class="btn js-grapesjs-button"
+                    data-textarea-id="{{ form.vars.id }}"
+                    data-template-url="{{ domainByLocale ~ constant('App\\Form\\Admin\\GrapesJsType::GRAPESJS_TEMPLATE_PATH') }}"
+                    data-elfinder-url="{{ url('elfinder', {instance: 'grapesJs'}) }}"
+                    data-allow-products="{{ form.vars.allow_products ? 'true':'false' }}"
+                    style="margin-left: 70px; margin-top: 3px;">
+                {{ 'Edit'|trans }}
+            </button>
+            {% if localized is defined %}
+                <span class="input__flag">
+                    {{ localeFlag(form.vars.name) }}
+                </span>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

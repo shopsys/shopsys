@@ -24,6 +24,7 @@ const STATIC_REWRITE_PATHS = {
         '/order-detail/:urlHash': '/detail-objednavky/:urlHash',
         '/cookie-consent': '/souhlas-se-soubory-cookies',
         '/abandoned-cart/:cartUuid': '/opusteny-kosik/:cartUuid',
+        '/grapesjs-template': '/grapesjs-template',
     },
     [process.env.DOMAIN_HOSTNAME_2]: {
         '/search': '/hladanie',
@@ -50,6 +51,7 @@ const STATIC_REWRITE_PATHS = {
         '/order-detail/:urlHash': '/detail-objednavky/:urlHash',
         '/cookie-consent': '/souhlas-se-soubory-cookies',
         '/abandoned-cart/:cartUuid': '/opusteny-kosik/:cartUuid',
+        '/grapesjs-template': '/grapesjs-template',
     },
 };
 

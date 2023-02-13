@@ -81,4 +81,12 @@ class MailTemplate extends BaseMailTemplate
     {
         return $this->orderStatus;
     }
+
+    /**
+     * @param string $body
+     */
+    public function setBody(string $body): void
+    {
+        $this->body = $body;
+    }
 }

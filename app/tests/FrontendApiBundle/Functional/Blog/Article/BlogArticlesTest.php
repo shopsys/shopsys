@@ -30,28 +30,32 @@ class BlogArticlesTest extends GraphQlTestCase
         $expectedBlogArticlesData = $this->getExpectedBlogArticlesData($firstDomainLocale);
 
         return [
-            [
+            'case 1' => [
                 $this->getAllBlogArticlesQuery(),
                 $expectedBlogArticlesData,
-            ], [
+            ],
+            'case 2' => [
                 $this->getFirstBlogArticlesQuery(3),
                 array_slice($expectedBlogArticlesData, 0, 3),
-            ], [
+            ],
+            'case 3' => [
                 $this->getFirstBlogArticlesQuery(5),
                 array_slice($expectedBlogArticlesData, 0, 5),
-            ], [
+            ],
+            'case 4' => [
                 $this->getLastBlogArticleQuery(),
                 [['name' => t('Blog article for search testing', [], 'dataFixtures', $firstDomainLocale)]],
-            ], [
+            ],
+            'case 5' => [
                 $this->getHomepageBlogArticlesQuery(3),
-                array_slice($expectedBlogArticlesData, 1, 3),
+                array_merge(array_slice($expectedBlogArticlesData, 0, 2), array_slice($expectedBlogArticlesData, 3, 1)),
             ],
         ];
     }
 
     public function testGetBlogArticles(): void
     {
-        foreach ($this->getBlogArticlesDataProvider() as $dataSet) {
+        foreach ($this->getBlogArticlesDataProvider() as $case => $dataSet) {
             [$query, $expectedBlogArticlesData] = $dataSet;
 
             $graphQlType = 'blogArticles';
@@ -67,7 +71,7 @@ class BlogArticlesTest extends GraphQlTestCase
             foreach ($responseData['edges'] as $key => $edge) {
                 $this->assertArrayHasKey('node', $edge);
                 $this->assertArrayHasKey('name', $edge['node']);
-                $this->assertSame($expectedBlogArticlesData[$key]['name'], $edge['node']['name']);
+                $this->assertSame($expectedBlogArticlesData[$key]['name'], $edge['node']['name'], $case);
             }
         }
     }
@@ -157,6 +161,8 @@ class BlogArticlesTest extends GraphQlTestCase
     private function getExpectedBlogArticlesData(string $firstDomainLocale): array
     {
         return [
+            ['name' => t('Blog article for products testing', [], 'dataFixtures', $firstDomainLocale)],
+            ['name' => t('GrapesJS page', [], 'dataFixtures', $firstDomainLocale)],
             ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 45, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
             ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 44, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
             ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 43, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
@@ -165,8 +171,6 @@ class BlogArticlesTest extends GraphQlTestCase
             ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 40, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
             ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 39, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
             ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 38, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 37, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 36, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
         ];
     }
 }

@@ -880,6 +880,9 @@ msgstr ""
 msgid "GoPay - Platba kartou"
 msgstr ""
 
+msgid "GrapesJS page"
+msgstr ""
+
 msgid "HDMI"
 msgstr ""
 

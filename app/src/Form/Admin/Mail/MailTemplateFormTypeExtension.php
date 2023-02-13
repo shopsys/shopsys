@@ -4,16 +4,20 @@ declare(strict_types=1);
 
 namespace App\Form\Admin\Mail;
 
+use App\Form\Admin\GrapesJsMailType;
 use App\Model\Mail\MailTemplate;
 use App\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Mail\MailTemplateFormType;
+use Shopsys\FrameworkBundle\Form\Constraints\Contains;
 use Shopsys\FrameworkBundle\Form\DomainType;
+use Shopsys\FrameworkBundle\Form\Transformers\EmptyWysiwygTransformer;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class MailTemplateFormTypeExtension extends AbstractTypeExtension
@@ -57,6 +61,19 @@ class MailTemplateFormTypeExtension extends AbstractTypeExtension
         /** @var \App\Model\Mail\MailTemplate|null $mailTemplate */
         $mailTemplate = $options['entity'];
         $isOrderStatusTemplate = $mailTemplate === null || $mailTemplate->getName() === MailTemplate::ORDER_STATUS_NAME;
+
+        $builder->remove('body');
+
+        $builder->add(
+            $builder
+                ->create('body', GrapesJsMailType::class, [
+                    'label' => t('Content'),
+                    'required' => true,
+                    'constraints' => $this->getBodyConstraints($options),
+                    'body_variables' => $options['body_variables'],
+                ])
+                ->addModelTransformer(new EmptyWysiwygTransformer())
+        );
 
         if ($mailTemplate === null) {
             $builder->add('domainId', DomainType::class, [
@@ -114,12 +131,39 @@ class MailTemplateFormTypeExtension extends AbstractTypeExtension
     }
 
     /**
+     * @param array $options
+     * @return \Symfony\Component\Validator\Constraint[]
+     */
+    private function getBodyConstraints(array $options): array
+    {
+        $bodyConstraints = [];
+
+        $bodyConstraints[] = new Constraints\NotBlank([
+            'message' => 'Please enter email content',
+            'groups' => [MailTemplateFormType::VALIDATION_GROUP_SEND_MAIL],
+        ]);
+
+        foreach ($options['required_body_variables'] as $variableName) {
+            $bodyConstraints[] = new Contains([
+                'needle' => $variableName,
+                'message' => 'Variable {{ needle }} is required',
+                'groups' => [MailTemplateFormType::VALIDATION_GROUP_SEND_MAIL],
+            ]);
+        }
+
+        return $bodyConstraints;
+    }
+
+    /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setAllowedTypes('entity', [MailTemplate::class, 'null']);
+            ->setDefined(['body_variables'])
+            ->setAllowedTypes('entity', [MailTemplate::class, 'null'])
+            ->setAllowedTypes('body_variables', 'array')
+            ->setDefault('body_variables', []);
     }
 
     /**
