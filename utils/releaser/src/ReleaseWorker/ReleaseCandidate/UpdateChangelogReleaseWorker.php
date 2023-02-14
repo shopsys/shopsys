@@ -12,17 +12,19 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
 {
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
     {
         return 'Dump new features to CHANGELOG.md, clean from placeholders and [Manually] check everything is ok';
     }
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
     {
         $this->symfonyStyle->note('It is necessary to set Github token before the changelog content is generated');
         $githubToken = $this->symfonyStyle->ask(
@@ -36,7 +38,7 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
             sprintf(
                 'docker run -it --rm -v "$(pwd)":/usr/local/src/your-app githubchangeloggenerator/github-changelog-generator github_changelog_generator --token %s --release-branch %s --since-tag %s --future-release %s',
                 $githubToken,
-                $this->initialBranchName,
+                $this->currentBranchName,
                 trim($lastVersionOnCurrentBranch),
                 $version->getOriginalString(),
             )

@@ -28,17 +28,19 @@ final class SetFrameworkBundleVersionToDevReleaseWorker extends AbstractShopsysR
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
     {
         return 'Set ShopsysFrameworkBundle version to next dev version and commit it.';
     }
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
     {
         $developmentVersion = $this->askForNextDevelopmentVersion($version);
         $this->updateFrameworkBundleVersion($developmentVersion);
@@ -48,8 +50,8 @@ final class SetFrameworkBundleVersionToDevReleaseWorker extends AbstractShopsysR
             $developmentVersion->getVersionString()
         ));
 
-        $this->symfonyStyle->note(sprintf('You need to push the "%s" branch manually', $this->initialBranchName));
-        $this->confirm(sprintf('Confirm you have pushed the "%s "branch.', $this->initialBranchName));
+        $this->symfonyStyle->note(sprintf('You need to push the "%s" branch manually', $this->currentBranchName));
+        $this->confirm(sprintf('Confirm you have pushed the "%s "branch.', $this->currentBranchName));
     }
 
     /**

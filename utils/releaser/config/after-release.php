@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\BeHappyReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckDocsReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckHeimdallBuildReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckPackagesGithubActionsBuildsReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckPackagesOnPackagistReleaseWorker;
@@ -45,5 +46,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(PostInfoToSlackReleaseWorker::class);
     $services->set(MergeBranchToTheHigherBranchesReleaseWorker::class);
     $services->set(UpdateDemoProjectBaseReleaseWorker::class);
+    $services->set(CheckDocsReleaseWorker::class);
     $services->set(BeHappyReleaseWorker::class);
 };

@@ -31,9 +31,10 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
     {
         return sprintf(
             'Check the release date of "%s" version is "%s" in CHANGELOG.md. If necessary, the date is updated and the change is committed to "%s" branch',
@@ -45,8 +46,9 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
     {
         $changelogFilePath = getcwd() . '/CHANGELOG.md';
         $smartFileInfo = new SmartFileInfo($changelogFilePath);
@@ -57,7 +59,7 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
         /**
          * @see https://regex101.com/r/izBgtv/6
          */
-        $pattern = '#\#\# \[' . preg_quote($version->getVersionString()) . '\]\(.*\) - (\d+-\d+-\d+)#';
+        $pattern = '#\#\# \[' . preg_quote($version->getOriginalString()) . '\]\(.*\) \((\d+-\d+-\d+)\)#';
         $match = Strings::match($fileContent, $pattern);
         if ($match === null) {
             $this->symfonyStyle->error(

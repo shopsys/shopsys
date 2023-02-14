@@ -32,9 +32,10 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
     {
         return 'Check GitHub Actions build status for all packages';
     }
@@ -46,8 +47,9 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
     {
         $this->symfonyStyle->note('It is necessary to set Github token before checking Github Actions builds');
         $githubToken = $this->symfonyStyle->ask(

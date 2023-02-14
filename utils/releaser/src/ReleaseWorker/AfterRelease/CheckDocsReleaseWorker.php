@@ -8,7 +8,7 @@ use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
 
-final class EnableMergingReleaseWorker extends AbstractShopsysReleaseWorker
+final class CheckDocsReleaseWorker extends AbstractShopsysReleaseWorker
 {
     /**
      * @param \PharIo\Version\Version $version
@@ -17,7 +17,7 @@ final class EnableMergingReleaseWorker extends AbstractShopsysReleaseWorker
      */
     public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
     {
-        return sprintf('[Manually] Enable merging to "%s" branch', $this->currentBranchName);
+        return '[Manually] Check documentation is released, version is present and latest highest version is set as default';
     }
 
     /**
@@ -26,13 +26,12 @@ final class EnableMergingReleaseWorker extends AbstractShopsysReleaseWorker
      */
     public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
     {
-        $this->symfonyStyle->note(
-            sprintf(
-                'Enable merging to "%s" - let your colleagues know in "team_ssfw_devs" Slack channel, and erase the red cross from the "merge" column on the whiteboard in the office.',
-                $this->currentBranchName
-            )
-        );
-        $this->confirm(sprintf('Confirm merging to "%s" is enabled.', $this->currentBranchName));
+        $this->symfonyStyle->note('If you are releasing major or minor version, check that this version is present on https://docs.shopsys.com/');
+        $this->symfonyStyle->note('Also check that current highest major or minor version is set as default on https://readthedocs.org/dashboard/shopsys-knowledge-base/advanced/');
+        $this->symfonyStyle->note('For login to Read the Docs you can use Shopsys Bot Github account present in BitWarden Vault.');
+        $this->symfonyStyle->note('Authentication code is also present on page with password.');
+
+        $this->symfonyStyle->confirm('Confirm that documentation is set correctly.');
     }
 
     /**

@@ -42,6 +42,7 @@ services:
             - shopsys-framework-sync:/var/www/html
             - ./project-base/web:/var/www/html/project-base/web:cached
             - ./.git/:/var/www/html/.git:delegated
+            - ~/.gitconfig:/home/www-data/.gitconfig
         ports:
             - "35729:35729"
 

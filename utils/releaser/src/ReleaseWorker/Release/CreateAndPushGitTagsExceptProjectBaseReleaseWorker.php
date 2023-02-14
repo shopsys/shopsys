@@ -16,7 +16,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
      *
      * @var string[]
      */
-    public const EXCLUDED_PACKAGES = parent::EXCLUDED_PACKAGES + [
+    public const EXCLUDED_PACKAGES = [
         // excluded from the initial tagging as there needs to be another commit with composer.lock and package-lock.json
         // @see https://github.com/shopsys/shopsys/pull/1264
         'shopsys/shopsys',
@@ -38,19 +38,21 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version): string
+    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
     {
         return 'Create and push git tags for packages excluding monorepo and project-base';
     }
 
     /**
      * @param \PharIo\Version\Version $version
+     * @param string $initialBranchName
      */
-    public function work(Version $version): void
+    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
     {
-        $packages = $this->packageProvider->getPackagesByOrganization('shopsys', self::EXCLUDED_PACKAGES);
+        $packages = $this->packageProvider->getPackagesByOrganization('shopsys', array_merge(parent::EXCLUDED_PACKAGES, self::EXCLUDED_PACKAGES));
         $packageNames = str_replace('shopsys/', '', $packages);
 
         $versionString = $version->getOriginalString();
@@ -90,7 +92,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
                     'cd %s/%s && git checkout %s && git tag %s',
                     $tempDirectory,
                     $packageName,
-                    $this->initialBranchName,
+                    $this->currentBranchName,
                     $versionString
                 )
             );
