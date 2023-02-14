@@ -75,7 +75,7 @@ class ImageSitemapFacade
         $imageSitemapItems = [];
         $domainId = $domainConfig->getId();
         $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
-        /** @var \App\Model\Product\Product[] $products */
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product[] $products */
         $products = $this->productRepository->getAllOfferedProducts($domainId, $pricingGroup);
 
         foreach ($products as $product) {
