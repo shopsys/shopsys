@@ -547,6 +547,9 @@ msgstr "Vytvořeno administrátorem"
 msgid "Created on"
 msgstr "Vytvořeno dne"
 
+msgid "Creation date"
+msgstr "Datum vytvoření"
+
 msgid "Cron overview"
 msgstr "Přehled cronů"
 
