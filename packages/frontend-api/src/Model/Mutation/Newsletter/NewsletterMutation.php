@@ -5,32 +5,21 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Mutation\Newsletter;
 
 use Overblog\GraphQLBundle\Definition\Argument;
-use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
+use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 
-class NewsletterMutation implements MutationInterface, AliasedInterface
+class NewsletterMutation extends AbstractMutation
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade
-     */
-    protected NewsletterFacade $newsletterFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(NewsletterFacade $newsletterFacade, Domain $domain)
-    {
-        $this->newsletterFacade = $newsletterFacade;
-        $this->domain = $domain;
+    public function __construct(
+        protected readonly NewsletterFacade $newsletterFacade,
+        protected readonly Domain $domain
+    ) {
     }
 
     /**
@@ -38,7 +27,7 @@ class NewsletterMutation implements MutationInterface, AliasedInterface
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return bool[]
      */
-    public function newsletterSubscribe(Argument $argument, InputValidator $validator): array
+    public function newsletterSubscribeMutation(Argument $argument, InputValidator $validator): array
     {
         $validator->validate();
 
@@ -48,16 +37,6 @@ class NewsletterMutation implements MutationInterface, AliasedInterface
 
         return [
             true,
-        ];
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getAliases(): array
-    {
-        return [
-            'newsletterSubscribe' => 'newsletter_subscribe',
         ];
     }
 }

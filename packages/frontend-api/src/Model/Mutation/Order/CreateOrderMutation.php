@@ -5,33 +5,17 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Mutation\Order;
 
 use Overblog\GraphQLBundle\Definition\Argument;
-use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 use Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade;
 
-class CreateOrderMutation implements MutationInterface, AliasedInterface
+class CreateOrderMutation extends AbstractMutation
 {
     public const VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS = 'differentDeliveryAddress';
     public const VALIDATION_GROUP_ON_COMPANY_BEHALF = 'onCompanyBehalf';
-
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory
-     */
-    protected $orderDataFactory;
-
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade
-     */
-    protected $placeOrderFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade
-     */
-    protected $orderMailFacade;
 
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory $orderDataFactory
@@ -39,13 +23,10 @@ class CreateOrderMutation implements MutationInterface, AliasedInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
      */
     public function __construct(
-        OrderDataFactory $orderDataFactory,
-        PlaceOrderFacade $placeOrderFacade,
-        OrderMailFacade $orderMailFacade
+        protected readonly OrderDataFactory $orderDataFactory,
+        protected readonly PlaceOrderFacade $placeOrderFacade,
+        protected readonly OrderMailFacade $orderMailFacade
     ) {
-        $this->orderDataFactory = $orderDataFactory;
-        $this->placeOrderFacade = $placeOrderFacade;
-        $this->orderMailFacade = $orderMailFacade;
     }
 
     /**
@@ -53,7 +34,7 @@ class CreateOrderMutation implements MutationInterface, AliasedInterface
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function createOrder(Argument $argument, InputValidator $validator): Order
+    public function createOrderMutation(Argument $argument, InputValidator $validator): Order
     {
         $validationGroups = $this->computeValidationGroups($argument);
         $validator->validate($validationGroups);
@@ -66,16 +47,6 @@ class CreateOrderMutation implements MutationInterface, AliasedInterface
         $this->sendEmail($order);
 
         return $order;
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getAliases(): array
-    {
-        return [
-            'createOrder' => 'create_order',
-        ];
     }
 
     /**
