@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Image;
 
-use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageSizeNotFoundException;
@@ -15,41 +14,14 @@ use Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
-use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\Payment\Payment;
-use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrontendApiBundle\Component\Image\ImageFacade as FrontendApiImageFacade;
+use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
-class ImagesResolver implements QueryInterface
+class ImagesQuery extends AbstractQuery
 {
     protected const IMAGE_ENTITY_PRODUCT = 'product';
-    protected const IMAGE_ENTITY_CATEGORY = 'category';
-    protected const IMAGE_ENTITY_PAYMENT = 'payment';
-    protected const IMAGE_ENTITY_TRANSPORT = 'transport';
-    protected const IMAGE_ENTITY_BRAND = 'brand';
     protected const IMAGE_ENTITY_ADVERT = 'noticer';
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
-     */
-    protected $imageFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
-     */
-    protected $imageConfig;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
-
-    /**
-     * @var \Shopsys\FrontendApiBundle\Component\Image\ImageFacade
-     */
-    protected $frontendApiImageFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
@@ -58,15 +30,24 @@ class ImagesResolver implements QueryInterface
      * @param \Shopsys\FrontendApiBundle\Component\Image\ImageFacade $frontendApiImageFacade
      */
     public function __construct(
-        ImageFacade $imageFacade,
-        ImageConfig $imageConfig,
-        Domain $domain,
-        FrontendApiImageFacade $frontendApiImageFacade
+        protected readonly ImageFacade $imageFacade,
+        protected readonly ImageConfig $imageConfig,
+        protected readonly Domain $domain,
+        protected readonly FrontendApiImageFacade $frontendApiImageFacade
     ) {
-        $this->imageFacade = $imageFacade;
-        $this->imageConfig = $imageConfig;
-        $this->domain = $domain;
-        $this->frontendApiImageFacade = $frontendApiImageFacade;
+    }
+
+    /**
+     * @param object $entity
+     * @param string|null $type
+     * @param string|null $size
+     * @return array
+     */
+    public function imagesByEntityQuery(object $entity, ?string $type, ?string $size): array
+    {
+        $entityName = $this->imageConfig->getEntityName($entity);
+
+        return $this->resolveByEntityId($entity->getId(), $entityName, $type, $size);
     }
 
     /**
@@ -75,54 +56,11 @@ class ImagesResolver implements QueryInterface
      * @param string|null $size
      * @return array
      */
-    public function resolveByProduct($data, ?string $type, ?string $size): array
+    public function imagesByProductQuery($data, ?string $type, ?string $size): array
     {
         $productId = $data instanceof Product ? $data->getId() : $data['id'];
+
         return $this->resolveByEntityId($productId, static::IMAGE_ENTITY_PRODUCT, $type, $size);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
-     * @param string|null $type
-     * @param string|null $size
-     * @return array
-     */
-    public function resolveByCategory(Category $category, ?string $type, ?string $size): array
-    {
-        return $this->resolveByEntityId($category->getId(), static::IMAGE_ENTITY_CATEGORY, $type, $size);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @param string|null $type
-     * @param string|null $size
-     * @return array
-     */
-    public function resolveByPayment(Payment $payment, ?string $type, ?string $size): array
-    {
-        return $this->resolveByEntityId($payment->getId(), static::IMAGE_ENTITY_PAYMENT, $type, $size);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param string|null $type
-     * @param string|null $size
-     * @return array
-     */
-    public function resolveByTransport(Transport $transport, ?string $type, ?string $size): array
-    {
-        return $this->resolveByEntityId($transport->getId(), static::IMAGE_ENTITY_TRANSPORT, $type, $size);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
-     * @param string|null $type
-     * @param string|null $size
-     * @return array
-     */
-    public function resolveByBrand(Brand $brand, ?string $type, ?string $size): array
-    {
-        return $this->resolveByEntityId($brand->getId(), static::IMAGE_ENTITY_BRAND, $type, $size);
     }
 
     /**
@@ -131,12 +69,14 @@ class ImagesResolver implements QueryInterface
      * @param string|null $size
      * @return array
      */
-    public function resolveByAdvert(Advert $advert, ?string $type, ?string $size): array
+    public function imagesByAdvertQuery(Advert $advert, ?string $type, ?string $size): array
     {
+        $entityName = $this->imageConfig->getEntityName($advert);
+
         return $this->getResolvedImages(
             $this->frontendApiImageFacade->getImagesByEntityIdAndNameIndexedById(
                 $advert->getId(),
-                static::IMAGE_ENTITY_ADVERT,
+                $entityName,
                 $type
             ),
             $this->getSizeConfigsForAdvert($advert, $type, $size)

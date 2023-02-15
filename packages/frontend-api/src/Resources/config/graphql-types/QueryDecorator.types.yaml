@@ -5,12 +5,12 @@ QueryDecorator:
         fields:
             categories:
                 type: '[Category!]!'
-                resolve: "@=query('categories')"
+                resolve: "@=query('categoriesQuery')"
                 description: "Returns complete list of categories"
             categoriesSearch:
                 type: "CategoryConnection"
                 argsBuilder: "Relay::Connection"
-                resolve: "@=query('categoriesSearch', args)"
+                resolve: "@=query('categoriesSearchQuery', args)"
                 args:
                     search:
                         type: "String!"
@@ -21,11 +21,11 @@ QueryDecorator:
                     builder: "PaginatorArgumentsBuilder"
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
-                resolve: "@=query('products', args)"
+                resolve: "@=query('productsQuery', args)"
                 description: "Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"
             product:
                 type: 'Product'
-                resolve: "@=query('productDetail', args['uuid'], args['urlSlug'])"
+                resolve: "@=query('productDetailQuery', args['uuid'], args['urlSlug'])"
                 args:
                     uuid:
                         type: "Uuid"
@@ -40,7 +40,7 @@ QueryDecorator:
                 type: 'Variant'
             category:
                 type: 'Category'
-                resolve: "@=query('categoryByUuidOrUrlSlug', args['uuid'], args['urlSlug'])"
+                resolve: "@=query('categoryByUuidOrUrlSlugQuery', args['uuid'], args['urlSlug'])"
                 args:
                     uuid:
                         type: "Uuid"
@@ -49,38 +49,38 @@ QueryDecorator:
                 description: "Returns category filtered using UUID or URL slug"
             payments:
                 type: '[Payment!]!'
-                resolve: "@=query('payments')"
+                resolve: "@=query('paymentsQuery')"
                 description: "Returns complete list of payment methods"
             payment:
                 type: 'Payment'
-                resolve: "@=query('payment', args['uuid'])"
+                resolve: "@=query('paymentQuery', args['uuid'])"
                 args:
                     uuid:
                         type: "Uuid!"
                 description: "Returns payment filtered using UUID"
             transports:
                 type: '[Transport!]!'
-                resolve: "@=query('transports')"
+                resolve: "@=query('transportsQuery')"
                 description: "Returns complete list of transport methods"
             transport:
                 type: 'Transport'
-                resolve: "@=query('transport', args['uuid'])"
+                resolve: "@=query('transportByTransportUuidQuery', args['uuid'])"
                 args:
                     uuid:
                         type: "Uuid!"
                 description: "Returns complete list of transport methods"
             currentCustomerUser:
                 type: 'CurrentCustomerUser!'
-                resolve: "@=query('currentCustomerUser')"
+                resolve: "@=query('currentCustomerUserQuery')"
                 description: "Returns currently logged in customer user"
             orders:
                 type: "OrderConnection"
                 argsBuilder: "Relay::Connection"
-                resolve: "@=query('orders', args)"
+                resolve: "@=query('ordersQuery', args)"
                 description: "Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords"
             order:
                 type: 'Order'
-                resolve: "@=query('order', args['uuid'], args['urlHash'])"
+                resolve: "@=query('orderByUuidOrUrlHashQuery', args['uuid'], args['urlHash'])"
                 args:
                     uuid:
                         type: "Uuid"
@@ -90,14 +90,14 @@ QueryDecorator:
             articles:
                 type: "ArticleConnection"
                 argsBuilder: "Relay::Connection"
-                resolve: "@=query('articles', args, args['placement'])"
+                resolve: "@=query('articlesQuery', args, args['placement'])"
                 args:
                     placement:
                         type: "String"
                 description: "Returns list of articles that can be paginated using `first`, `last`, `before` and `after` keywords and filtered by `placement`"
             article:
                 type: 'Article'
-                resolve: "@=query('article', args['uuid'], args['urlSlug'])"
+                resolve: "@=query('articleByUuidOrUrlSlugQuery', args['uuid'], args['urlSlug'])"
                 args:
                     uuid:
                         type: "Uuid"
@@ -106,23 +106,23 @@ QueryDecorator:
                 description: "Returns article filtered using UUID or URL slug"
             termsAndConditionsArticle:
                 type: 'Article'
-                resolve: "@=query('termsAndConditionsArticle')"
+                resolve: "@=query('termsAndConditionsArticleQuery')"
                 description: "Returns Terms and Conditions article"
             privacyPolicyArticle:
                 type: 'Article'
-                resolve: "@=query('privacyPolicyArticle')"
+                resolve: "@=query('privacyPolicyArticleQuery')"
                 description: "Returns privacy policy article"
             cookiesArticle:
                 type: 'Article'
-                resolve: "@=query('cookiesArticle')"
+                resolve: "@=query('cookiesArticleQuery')"
                 description: "Returns information about cookies article"
             brands:
                 type: '[Brand!]!'
-                resolve: "@=query('brands')"
+                resolve: "@=query('brandsQuery')"
                 description: "Returns complete list of brands"
             brand:
                 type: 'Brand'
-                resolve: "@=query('brand', args['uuid'], args['urlSlug'])"
+                resolve: "@=query('brandByUuidOrUrlSlugQuery', args['uuid'], args['urlSlug'])"
                 args:
                     uuid:
                         type: "Uuid"
@@ -131,11 +131,11 @@ QueryDecorator:
                 description: "Returns brand filtered using UUID or URL slug"
             promotedProducts:
                 type: '[Product!]!'
-                resolve: "@=query('promotedProducts')"
+                resolve: "@=query('promotedProductsQuery')"
                 description: "Returns promoted products"
             adverts:
                 type: '[Advert!]!'
-                resolve: "@=query('adverts', args['positionName'])"
+                resolve: "@=query('advertsQuery', args['positionName'])"
                 args:
                     positionName:
                         type: "String"
@@ -146,5 +146,5 @@ QueryDecorator:
                 type: 'AdvertImage'
             advertPositions:
                 type: '[AdvertPosition!]!'
-                resolve: "@=query('advertPositions')"
+                resolve: "@=query('advertPositionsQuery')"
                 description: "Returns list of advert positions."

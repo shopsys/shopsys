@@ -5,41 +5,23 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Article;
 
 use Overblog\GraphQLBundle\Definition\Argument;
-use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
-use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrontendApiBundle\Model\Article\ArticleFacade;
+use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
-class ArticlesResolver implements QueryInterface, AliasedInterface
+class ArticlesQuery extends AbstractQuery
 {
     protected const DEFAULT_FIRST_LIMIT = 10;
-
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Article\ArticleFacade
-     */
-    protected $articleFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
-
-    /**
-     * @var \Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder
-     */
-    protected $connectionBuilder;
 
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Article\ArticleFacade $articleFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(ArticleFacade $articleFacade, Domain $domain)
-    {
-        $this->articleFacade = $articleFacade;
-        $this->domain = $domain;
-        $this->connectionBuilder = new ConnectionBuilder();
+    public function __construct(
+        protected readonly ArticleFacade $articleFacade,
+        protected readonly Domain $domain
+    ) {
     }
 
     /**
@@ -47,7 +29,7 @@ class ArticlesResolver implements QueryInterface, AliasedInterface
      * @param string|null $placement
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
      */
-    public function resolve(Argument $argument, ?string $placement)
+    public function articlesQuery(Argument $argument, ?string $placement)
     {
         $this->setDefaultFirstOffsetIfNecessary($argument);
         $domainId = $this->domain->getId();
@@ -69,16 +51,6 @@ class ArticlesResolver implements QueryInterface, AliasedInterface
         ) {
             $argument->offsetSet('first', static::DEFAULT_FIRST_LIMIT);
         }
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getAliases(): array
-    {
-        return [
-            'resolve' => 'articles',
-        ];
     }
 
     /**

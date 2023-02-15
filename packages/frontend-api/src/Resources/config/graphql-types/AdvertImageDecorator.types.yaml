@@ -8,10 +8,10 @@ AdvertImageDecorator:
             link:
                 type: "String"
                 description: "Advert link"
-            image:
-                type: "[Image]"
+            images:
+                type: "[Image!]!"
                 description: "Advert image"
-                resolve: '@=query("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Image\\ImagesResolver::resolveByAdvert", value, args["type"], args["size"])'
+                resolve: '@=query("imagesByAdvertQuery", value, args["type"], args["size"])'
                 args:
                     type:
                         type: "String"

@@ -180,7 +180,7 @@ class GetAdvertsTest extends GraphQlTestCase
                         code
                     }
                     ... on AdvertImage {
-                        image {
+                        images {
                             url
                             type
                             size
@@ -226,7 +226,7 @@ class GetAdvertsTest extends GraphQlTestCase
                 'name' => 'Test advert header 2',
                 'type' => Advert::TYPE_IMAGE,
                 'positionName' => 'header',
-                'image' => [
+                'images' => [
                     [
                         'url' => sprintf(
                             '%s/content-test/images/noticer/header/%s.png',
@@ -258,7 +258,7 @@ class GetAdvertsTest extends GraphQlTestCase
                 'name' => 'Test advert header 3',
                 'type' => Advert::TYPE_IMAGE,
                 'positionName' => 'header',
-                'image' => [],
+                'images' => [],
                 'link' => null,
             ],
         ];

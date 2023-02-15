@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Order;
 
-use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -14,29 +12,10 @@ use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderFacade as FrontendApiOrderFacade;
+use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
-class OrderResolver implements QueryInterface, AliasedInterface
+class OrderQuery extends AbstractQuery
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    protected $currentCustomerUser;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
-     */
-    protected $orderFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
-
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Order\OrderFacade
-     */
-    protected $frontendApiOrderFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
@@ -44,15 +23,11 @@ class OrderResolver implements QueryInterface, AliasedInterface
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFacade $frontendApiOrderFacade
      */
     public function __construct(
-        CurrentCustomerUser $currentCustomerUser,
-        OrderFacade $orderFacade,
-        Domain $domain,
-        FrontendApiOrderFacade $frontendApiOrderFacade
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly OrderFacade $orderFacade,
+        protected readonly Domain $domain,
+        protected readonly FrontendApiOrderFacade $frontendApiOrderFacade
     ) {
-        $this->orderFacade = $orderFacade;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->domain = $domain;
-        $this->frontendApiOrderFacade = $frontendApiOrderFacade;
     }
 
     /**
@@ -60,7 +35,7 @@ class OrderResolver implements QueryInterface, AliasedInterface
      * @param string|null $urlHash
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    public function resolver(?string $uuid = null, ?string $urlHash = null): Order
+    public function orderByUuidOrUrlHashQuery(?string $uuid = null, ?string $urlHash = null): Order
     {
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
@@ -77,16 +52,6 @@ class OrderResolver implements QueryInterface, AliasedInterface
         }
 
         throw new UserError('You need to be logged in or provide argument \'urlHash\'.');
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getAliases(): array
-    {
-        return [
-            'resolver' => 'order',
-        ];
     }
 
     /**

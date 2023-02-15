@@ -22,11 +22,11 @@ PaymentDecorator:
             price:
                 type: "Price!"
                 description: "Payment price"
-                resolve: '@=query("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Price\\PriceResolver::resolveByPayment", value)'
+                resolve: '@=query("priceByPaymentQuery", value)'
             images:
-                type: "[Image]!"
+                type: "[Image!]!"
                 description: "Payment images"
-                resolve: '@=query("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Image\\ImagesResolver::resolveByPayment", value, args["type"], args["size"])'
+                resolve: '@=query("imagesByEntityQuery", value, args["type"], args["size"])'
                 args:
                     type:
                         type: "String"

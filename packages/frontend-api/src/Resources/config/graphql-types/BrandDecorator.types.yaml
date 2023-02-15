@@ -26,9 +26,9 @@ BrandDecorator:
                 type: "String"
                 description: "Brand SEO H1"
             images:
-                type: "[Image]!"
+                type: "[Image!]!"
                 description: "Brand images"
-                resolve: '@=query("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Image\\ImagesResolver::resolveByBrand", value, args["type"], args["size"])'
+                resolve: '@=query("imagesByEntityQuery", value, args["type"], args["size"])'
                 args:
                     type:
                         type: "String"
@@ -42,4 +42,4 @@ BrandDecorator:
                     builder: "PaginatorArgumentsBuilder"
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
-                resolve: '@=query("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Products\\ProductsResolver::resolveByBrand", args, value)'
+                resolve: '@=query("productsByBrandQuery", args, value)'

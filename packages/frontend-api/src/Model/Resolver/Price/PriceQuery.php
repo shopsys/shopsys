@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Price;
 
-use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
@@ -18,44 +16,10 @@ use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Shopsys\FrontendApiBundle\Model\Price\PriceFacade;
+use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
-class PriceResolver implements QueryInterface, AliasedInterface
+class PriceQuery extends AbstractQuery
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade
-     */
-    protected $productCachedAttributesFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface
-     */
-    protected $productOnCurrentDomainFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation
-     */
-    protected $paymentPriceCalculation;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    protected $currencyFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation
-     */
-    protected $transportPriceCalculation;
-
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Price\PriceFacade
-     */
-    protected PriceFacade $priceFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
@@ -66,28 +30,21 @@ class PriceResolver implements QueryInterface, AliasedInterface
      * @param \Shopsys\FrontendApiBundle\Model\Price\PriceFacade $priceFacade
      */
     public function __construct(
-        ProductCachedAttributesFacade $productCachedAttributesFacade,
-        ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
-        PaymentPriceCalculation $paymentPriceCalculation,
-        Domain $domain,
-        CurrencyFacade $currencyFacade,
-        TransportPriceCalculation $transportPriceCalculation,
-        PriceFacade $priceFacade
+        protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
+        protected readonly ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
+        protected readonly PaymentPriceCalculation $paymentPriceCalculation,
+        protected readonly Domain $domain,
+        protected readonly CurrencyFacade $currencyFacade,
+        protected readonly TransportPriceCalculation $transportPriceCalculation,
+        protected readonly PriceFacade $priceFacade
     ) {
-        $this->productCachedAttributesFacade = $productCachedAttributesFacade;
-        $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
-        $this->paymentPriceCalculation = $paymentPriceCalculation;
-        $this->domain = $domain;
-        $this->currencyFacade = $currencyFacade;
-        $this->transportPriceCalculation = $transportPriceCalculation;
-        $this->priceFacade = $priceFacade;
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|array $data
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    public function resolveByProduct($data): ProductPrice
+    public function priceByProductQuery($data): ProductPrice
     {
         if ($data instanceof Product) {
             return $this->productCachedAttributesFacade->getProductSellingPrice($data);
@@ -100,7 +57,7 @@ class PriceResolver implements QueryInterface, AliasedInterface
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function resolveByPayment(Payment $payment): Price
+    public function priceByPaymentQuery(Payment $payment): Price
     {
         return $this->paymentPriceCalculation->calculateIndependentPrice(
             $payment,
@@ -113,22 +70,12 @@ class PriceResolver implements QueryInterface, AliasedInterface
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function resolveByTransport(Transport $transport): Price
+    public function priceByTransportQuery(Transport $transport): Price
     {
         return $this->transportPriceCalculation->calculateIndependentPrice(
             $transport,
             $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId()),
             $this->domain->getId()
         );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getAliases(): array
-    {
-        return [
-            'resolve' => 'Price',
-        ];
     }
 }

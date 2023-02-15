@@ -17,9 +17,9 @@ CategoryDecorator:
                 type: "Category"
                 description: "Ancestor category"
             images:
-                type: "[Image]!"
+                type: "[Image!]!"
                 description: "Category images"
-                resolve: '@=query("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Image\\ImagesResolver::resolveByCategory", value, args["type"], args["size"])'
+                resolve: '@=query("imagesByEntityQuery", value, args["type"], args["size"])'
                 args:
                     type:
                         type: "String"
@@ -33,7 +33,7 @@ CategoryDecorator:
                     builder: "PaginatorArgumentsBuilder"
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
-                resolve: '@=query("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Products\\ProductsResolver::resolveByCategory", args, value)'
+                resolve: '@=query("productsByCategoryQuery", args, value)'
             seoH1:
                 type: "String"
                 description: "Seo first level heading of category"
