@@ -24,7 +24,7 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
     return (
         <PaginationProvider key={flag.uuid} {...getNewPagination(currentPage)}>
             <Webline>
-                <Heading type={'h1'}>{flag.name}</Heading>
+                <Heading type="h1">{flag.name}</Heading>
             </Webline>
             <Webline>
                 <div ref={containerWrapRef}>

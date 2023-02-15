@@ -28,7 +28,7 @@ export const PromoCodeInfo: FC<PromoCodeInfoProps> = ({ onRemovePromoCodeCallbac
             </PromoCodeInfoTitleStyled>
             <PromoCodeInfoCouponStyled data-testid={TEST_IDENTIFIER + '-code'}>
                 {promoCode}
-                <PromoCodeInfoCouponIconStyled alt="" iconType="icon" icon="Cross" onClick={onRemovePromoCodeHandler} />
+                <PromoCodeInfoCouponIconStyled iconType="icon" icon="Cross" onClick={onRemovePromoCodeHandler} />
             </PromoCodeInfoCouponStyled>
             <p data-testid={TEST_IDENTIFIER + '-description'}>
                 {t(

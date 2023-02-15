@@ -5,7 +5,6 @@ import {
     ButtonBottomStyled,
     InfoItemOpeningHoursStyled,
     InfoItemStyled,
-    InfoItemSubtitleStyled,
     InfoStyled,
     MapStyled,
     StoreDetailContentStyled,
@@ -37,16 +36,16 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
         <Webline testIdentifier={TEST_IDENTIFIER}>
             <StoreDetailStyled>
                 <StoreDetailContentStyled>
-                    <Heading type={'h1'}>{store.storeName}</Heading>
+                    <Heading type="h1">{store.storeName}</Heading>
                     <InfoStyled>
                         {store.description !== null && (
                             <InfoItemStyled>
-                                <InfoItemSubtitleStyled type="h3">{t('Store description')}</InfoItemSubtitleStyled>
+                                <StoreHeading text={t('Store description')} />
                                 {store.description}
                             </InfoItemStyled>
                         )}
                         <InfoItemStyled>
-                            <InfoItemSubtitleStyled type="h3">{t('Store address')}</InfoItemSubtitleStyled>
+                            <StoreHeading text={t('Store address')} />
                             {store.city}
                             <br />
                             {store.street}
@@ -57,21 +56,19 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                         </InfoItemStyled>
                         {store.openingHours !== null && (
                             <InfoItemStyled>
-                                <InfoItemSubtitleStyled type="h3">{t('Opening hours')}</InfoItemSubtitleStyled>
+                                <StoreHeading text={t('Opening hours')} />
                                 <InfoItemOpeningHoursStyled>{store.openingHours}</InfoItemOpeningHoursStyled>
                             </InfoItemStyled>
                         )}
                         {store.contactInfo !== null && (
                             <InfoItemStyled>
-                                <InfoItemSubtitleStyled type="h3">
-                                    {t('Contact to the department store')}
-                                </InfoItemSubtitleStyled>
+                                <StoreHeading text={t('Contact to the department store')} />
                                 {store.contactInfo}
                             </InfoItemStyled>
                         )}
                         {store.specialMessage !== null && (
                             <InfoItemStyled>
-                                <InfoItemSubtitleStyled type="h3">{t('Special announcement')}</InfoItemSubtitleStyled>
+                                <StoreHeading text={t('Special announcement')} />
                                 {store.specialMessage}
                             </InfoItemStyled>
                         )}
@@ -87,14 +84,14 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                     </MapStyled>
                     <ButtonBottomStyled>
                         <ButtonBottomItemStyled>
-                            <ButtonBottomIconStyled alt="" iconType="icon" icon="Chat" />
+                            <ButtonBottomIconStyled iconType="icon" icon="Chat" />
                             <NextLink href={contactUrl} passHref>
                                 <ButtonBottomNameStyled>{t('Do you have any questions?')}</ButtonBottomNameStyled>
                             </NextLink>
                         </ButtonBottomItemStyled>
                         <ButtonBottomItemStyled>
                             <ButtonBottomNameStyled type="right">{t('Customer Centre')}</ButtonBottomNameStyled>
-                            <ButtonBottomIconStyled alt="" iconType="icon" icon="Arrow" type="right" />
+                            <ButtonBottomIconStyled iconType="icon" icon="Arrow" type="right" />
                         </ButtonBottomItemStyled>
                     </ButtonBottomStyled>
                 </StoreDetailContentStyled>
@@ -102,3 +99,9 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
         </Webline>
     );
 };
+
+const StoreHeading: FC<{ text: string }> = ({ text }) => (
+    <Heading type="h3" className="mb-1 block font-normal text-primary">
+        {text}
+    </Heading>
+);

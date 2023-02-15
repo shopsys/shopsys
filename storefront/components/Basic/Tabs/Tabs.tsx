@@ -42,7 +42,7 @@ export const TabsContent: TabFC<TabsContentProps> = ({ children, headingTextMobi
         <TabsContentStyled forceRender selectedClassName="active" data-testid={testIdentifier}>
             <TabsContentMobileHeadingStyled onClick={mobileTab}>
                 {headingTextMobile}
-                <TabsIconStyled iconType="icon" icon="Arrow" isActive={isActiveOnMobile} alt="" />
+                <TabsIconStyled iconType="icon" icon="Arrow" isActive={isActiveOnMobile} />
             </TabsContentMobileHeadingStyled>
             <TabsContentInStyled isActiveOnMobile={isActiveOnMobile}>{children}</TabsContentInStyled>
         </TabsContentStyled>

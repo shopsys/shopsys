@@ -1,10 +1,10 @@
 import {
-    FooterMenuHeadingStyled,
     FooterMenuItemStyled,
     FooterMenuListItemLinkStyled,
     FooterMenuListItemStyled,
     FooterMenuListStyled,
 } from './FooterMenuItem.style';
+import { Heading } from 'components/Basic/Heading/Heading';
 import { SimpleNotBlogArticleFragmentApi } from 'graphql/generated';
 import NextLink from 'next/link';
 import { FC } from 'react';
@@ -18,7 +18,12 @@ const TEST_IDENTIFIER = 'layout-footer-footermenuitem';
 
 export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => (
     <FooterMenuItemStyled data-testid={TEST_IDENTIFIER}>
-        <FooterMenuHeadingStyled type="h4">{title}</FooterMenuHeadingStyled>
+        <Heading
+            type="h4"
+            className="mb-0 flex items-center justify-between py-5 font-bold uppercase text-white lg:pointer-events-none lg:mb-6 lg:p-0"
+        >
+            {title}
+        </Heading>
         <FooterMenuListStyled>
             {items.map((item) => (
                 <FooterMenuListItemStyled key={item.uuid}>

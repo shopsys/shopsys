@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -14,26 +13,6 @@ export const FooterMenuItemStyled = styled.div(
         @media ${theme.mediaQueries.queryLg} {
             width: 25%;
             padding-left: ${localVariables.footerMenuItemGap};
-        }
-    `,
-);
-
-export const FooterMenuHeadingStyled = styled(Heading)(
-    ({ theme }) => css`
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 0;
-        padding: 20px 0;
-
-        color: ${theme.color.white};
-        font-weight: 700;
-        text-transform: uppercase;
-
-        @media ${theme.mediaQueries.queryLg} {
-            padding: 0;
-            margin-bottom: 24px;
-            pointer-events: none;
         }
     `,
 );

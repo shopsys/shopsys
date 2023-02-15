@@ -53,7 +53,7 @@ export const OrderAction: FC<OrderActionProps> = ({
             <OrderActionLeftStyled data-testid={TEST_IDENTIFIER + 'back'}>
                 <NextLink href={buttonBackLink} passHref>
                     <OrderActionLinkBackStyled>
-                        <OrderActionButtonBackIconStyled alt="" iconType="icon" icon="Arrow" />
+                        <OrderActionButtonBackIconStyled iconType="icon" icon="Arrow" />
                         {buttonBack}
                     </OrderActionLinkBackStyled>
                 </NextLink>
@@ -68,7 +68,7 @@ export const OrderAction: FC<OrderActionProps> = ({
                 >
                     {isLoading && <Loader iconSize={20} />}
                     <span>{buttonNext}</span>
-                    <OrderActionButtonNextIconStyled alt="" iconType="icon" icon="Arrow" />
+                    <OrderActionButtonNextIconStyled iconType="icon" icon="Arrow" />
                 </Button>
             </OrderActionRightStyled>
         </OrderActionStyled>

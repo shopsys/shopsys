@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
@@ -25,10 +24,6 @@ export const SelectedParametersStyled = styled.div(
         }
     `,
 );
-
-export const SelectedParametersTitleStyled = styled(Heading)`
-    text-transform: uppercase;
-`;
 
 export const SelectedParametersBlockStyled = styled.div`
     margin: 0 0 14px -${localVariables.SelectedParametersListItemGap};

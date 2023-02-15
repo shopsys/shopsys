@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';
@@ -37,23 +36,6 @@ export const AddToCartPopupWrapperStyled = styled(PopupStyled)(
 
         @media ${theme.mediaQueries.queryVl} {
             max-width: 600px;
-        }
-    `,
-);
-
-export const HeadingStyled = styled(Heading)(
-    ({ theme }) => css`
-        display: flex;
-        align-items: center;
-        width: 100%;
-        margin: 15px 0 24px 0;
-
-        color: ${theme.color.primary};
-        font-size: 20px;
-        text-transform: none;
-
-        @media ${theme.mediaQueries.queryMobile} {
-            margin-bottom: 16px;
         }
     `,
 );

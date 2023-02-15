@@ -34,7 +34,7 @@ tr,
 td,
 th,
 textarea {
-    @apply font-base text-small leading-default text-base lg:text-default;
+    @apply font-default leading-default text-dark;
 }
 
 img:not(.icon):not(.responsive-image) {

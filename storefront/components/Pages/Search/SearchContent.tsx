@@ -91,13 +91,13 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
         <>
             <Breadcrumbs breadcrumb={breadcrumbs} />
             <Webline>
-                <Heading type={'h1'}>{`${t('Search results for')} "${getStringFromUrlQuery(router.query.q)}"`}</Heading>
+                <Heading type="h1">{`${t('Search results for')} "${getStringFromUrlQuery(router.query.q)}"`}</Heading>
             </Webline>
             {currentPage === 1 && (
                 <>
                     {searchResults.articlesSearch.length > 0 && (
                         <SearchResultsWeblineStyled>
-                            <Heading type={'h3'}>{t('Found articles')}</Heading>
+                            <Heading type="h3">{t('Found articles')}</Heading>
                             <SearchResultsBlockStyled areAllResultsVisible={areArticlesResultsVisible}>
                                 <SimpleNavigation
                                     listedItems={searchResults.articlesSearch}
@@ -121,7 +121,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
                     )}
                     {searchResults.brandSearch.length > 0 && (
                         <SearchResultsWeblineStyled>
-                            <Heading type={'h3'}>{t('Found brands')}</Heading>
+                            <Heading type="h3">{t('Found brands')}</Heading>
                             <SearchResultsBlockStyled areAllResultsVisible={areBrandsResultsVisible}>
                                 <SimpleNavigation listedItems={searchResults.brandSearch} />
                             </SearchResultsBlockStyled>
@@ -142,7 +142,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
                     )}
                     {searchResults.categoriesSearch.totalCount > 0 && (
                         <SearchResultsWeblineStyled>
-                            <Heading type={'h3'}>{t('Found categories')}</Heading>
+                            <Heading type="h3">{t('Found categories')}</Heading>
                             <SearchResultsBlockStyled areAllResultsVisible={areCategoriesResultsVisible}>
                                 <SimpleNavigation listedItems={searchResults.categoriesSearch.categories} />
                             </SearchResultsBlockStyled>
@@ -164,7 +164,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
                 </>
             )}
             <SearchResultsWeblineStyled>
-                <Heading type={'h3'}>{t('Found products')}</Heading>
+                <Heading type="h3">{t('Found products')}</Heading>
                 <ProductsSearch productsSearch={searchResults.productsSearch} />
             </SearchResultsWeblineStyled>
         </>

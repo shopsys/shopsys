@@ -64,7 +64,6 @@ export const Parameters: FC = () => {
                                     </>
                                 )}
                                 <SelectedParametersListItemRemoveStyled
-                                    alt=""
                                     iconType="icon"
                                     icon="RemoveThin"
                                     onClick={() =>
@@ -91,7 +90,6 @@ export const Parameters: FC = () => {
                                         >
                                             {value.text}
                                             <SelectedParametersListItemRemoveStyled
-                                                alt=""
                                                 iconType="icon"
                                                 icon="RemoveThin"
                                                 onClick={() =>

@@ -51,7 +51,7 @@ export const BlogPreview: FC = () => {
                     <NextLink href={blogUrl} passHref>
                         <BlogPreviewHeadingLinkStyled>
                             <span>{t('View all')}</span>
-                            <BlogPreviewHeadingLinkIconStyled alt="" iconType="icon" icon="ArrowRight" />
+                            <BlogPreviewHeadingLinkIconStyled iconType="icon" icon="ArrowRight" />
                         </BlogPreviewHeadingLinkStyled>
                     </NextLink>
                 )}

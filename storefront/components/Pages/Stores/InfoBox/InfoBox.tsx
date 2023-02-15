@@ -1,10 +1,5 @@
-import {
-    ButtonCloseStyled,
-    HeadingOpeningHoursStyled,
-    HeadingStyled,
-    InfoBoxStyled,
-    LinkStyled,
-} from './InfoBox.style';
+import { ButtonCloseStyled, InfoBoxStyled, LinkStyled } from './InfoBox.style';
+import { Heading } from 'components/Basic/Heading/Heading';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { ListedStoreType } from 'types/store';
@@ -19,8 +14,10 @@ export const InfoBox: FC<InfoBoxProps> = ({ store, closeInfoBoxCallback }) => {
 
     return (
         <InfoBoxStyled>
-            <ButtonCloseStyled alt="" onClick={closeInfoBoxCallback} iconType="icon" icon="Remove" />
-            <HeadingStyled type="h2">{store.name}</HeadingStyled>
+            <ButtonCloseStyled onClick={closeInfoBoxCallback} iconType="icon" icon="Remove" />
+            <Heading type="h2" className="mb-3">
+                {store.name}
+            </Heading>
             <div>
                 {store.street}
                 <br />
@@ -28,7 +25,9 @@ export const InfoBox: FC<InfoBoxProps> = ({ store, closeInfoBoxCallback }) => {
             </div>
             {store.openingHoursHtml !== null && (
                 <>
-                    <HeadingOpeningHoursStyled type="h3">{t('Opening hours')}</HeadingOpeningHoursStyled>
+                    <Heading type="h3" className="m-0 mt-3">
+                        {t('Opening hours')}
+                    </Heading>
                     <div dangerouslySetInnerHTML={{ __html: store.openingHoursHtml }} />
                 </>
             )}

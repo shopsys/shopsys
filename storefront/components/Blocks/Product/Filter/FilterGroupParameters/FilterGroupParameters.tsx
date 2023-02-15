@@ -54,7 +54,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                 onClick={() => setIsGroupCollapsed((currentGroupVisibility) => !currentGroupVisibility)}
             >
                 {title}
-                <FilterGroupArrowStyled alt="" iconType="icon" icon="Arrow" isOpen={!isGroupCollapsed} />
+                <FilterGroupArrowStyled iconType="icon" icon="Arrow" isOpen={!isGroupCollapsed} />
             </FilterGroupTitleStyled>
             <FilterGroupContentStyled isOpen={!isGroupCollapsed}>
                 {parameters?.__typename === 'ParameterCheckboxFilterOption' && (
