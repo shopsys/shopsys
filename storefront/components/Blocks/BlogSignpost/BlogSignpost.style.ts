@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
@@ -20,12 +19,6 @@ export const BlogSignpostStyled = styled.div(
 
         background-color: ${theme.color.primary};
         border-radius: ${theme.radius.big};
-    `,
-);
-
-export const BlogSignpostHeadingStyled = styled(Heading)(
-    ({ theme }) => css`
-        color: ${theme.color.creamWhite};
     `,
 );
 

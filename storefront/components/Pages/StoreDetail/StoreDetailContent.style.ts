@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
@@ -90,16 +89,6 @@ export const InfoItemStyled = styled.div(
                 padding-left: 10px;
             }
         }
-    `,
-);
-
-export const InfoItemSubtitleStyled = styled(Heading)(
-    ({ theme }) => css`
-        display: block;
-        margin-bottom: 4px;
-
-        color: ${theme.color.primary};
-        font-weight: 400;
     `,
 );
 

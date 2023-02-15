@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
@@ -26,21 +25,6 @@ export const FooterContactStyled = styled.div(
             padding-left: ${localVariables.footerConstactStyledMenuItemgap};
             align-items: flex-start;
         }
-    `,
-);
-
-export const FooterContactHeadingStyled = styled(Heading)(
-    ({ theme }) => css`
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 24px;
-        padding: 0;
-        pointer-events: none;
-
-        cursor: pointer;
-        color: ${theme.color.white};
-        text-transform: uppercase;
     `,
 );
 

@@ -1,12 +1,3 @@
-import {
-    ListItemContentDateStyled,
-    ListItemContentStyled,
-    ListItemContentTextStyled,
-    ListItemImageStyled,
-    ListItemStyled,
-    ListItemTitleStyled,
-    ListStyled,
-} from './BlogArticlesList.style';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Image } from 'components/Basic/Image/Image';
@@ -25,17 +16,24 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles }) =>
     const currentDomainConfig = useShopsysSelector((state) => state.domain);
 
     return (
-        <ListStyled>
+        <ul className="flex w-full flex-col flex-wrap md:flex-row">
             {blogArticles.map((blogArticle, blogArticleIndex) => (
-                <ListItemStyled key={blogArticle.uuid} data-testid={TEST_IDENTIFIER + blogArticleIndex}>
-                    <ListItemImageStyled data-testid={TEST_IDENTIFIER + blogArticleIndex + '-image'}>
+                <li
+                    key={blogArticle.uuid}
+                    className="mb-14 flex w-full flex-col p-0 md:flex-row"
+                    data-testid={TEST_IDENTIFIER + blogArticleIndex}
+                >
+                    <div
+                        className="mb-3 w-full text-center md:mb-0 md:w-48"
+                        data-testid={TEST_IDENTIFIER + blogArticleIndex + '-image'}
+                    >
                         <NextLink href={blogArticle.link} passHref>
                             <a>
                                 <Image image={blogArticle.image} type="list" alt={blogArticle.name} />
                             </a>
                         </NextLink>
-                    </ListItemImageStyled>
-                    <ListItemContentStyled>
+                    </div>
+                    <div className="flex w-full flex-col md:pl-10">
                         <div>
                             {blogArticle.blogCategories.map((blogArticleCategory, blogArticleCategoryIndex) => (
                                 <Fragment key={blogArticleCategory.uuid}>
@@ -57,21 +55,26 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles }) =>
                             ))}
                         </div>
                         <NextLink href={blogArticle.link} passHref>
-                            <ListItemTitleStyled data-testid={TEST_IDENTIFIER + blogArticleIndex + '-title'}>
-                                <Heading type="h2">{blogArticle.name}</Heading>
-                            </ListItemTitleStyled>
+                            <a
+                                className="group hover:no-underline"
+                                data-testid={TEST_IDENTIFIER + blogArticleIndex + '-title'}
+                            >
+                                <Heading type="h2" className="group-hover:text-primary">
+                                    {blogArticle.name}
+                                </Heading>
+                            </a>
                         </NextLink>
                         {blogArticle.perex !== null && (
-                            <ListItemContentTextStyled data-testid={TEST_IDENTIFIER + blogArticleIndex + '-perex'}>
+                            <p className="mb-3 text-base" data-testid={TEST_IDENTIFIER + blogArticleIndex + '-perex'}>
                                 {blogArticle.perex}
-                            </ListItemContentTextStyled>
+                            </p>
                         )}
-                        <ListItemContentDateStyled data-testid={TEST_IDENTIFIER + blogArticleIndex + '-date'}>
+                        <p className="text-sm font-bold" data-testid={TEST_IDENTIFIER + blogArticleIndex + '-date'}>
                             {new Date(blogArticle.publishDate).toLocaleDateString(currentDomainConfig.defaultLocale)}
-                        </ListItemContentDateStyled>
-                    </ListItemContentStyled>
-                </ListItemStyled>
+                        </p>
+                    </div>
+                </li>
             ))}
-        </ListStyled>
+        </ul>
     );
 };

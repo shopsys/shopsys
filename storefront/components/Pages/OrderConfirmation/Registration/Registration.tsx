@@ -4,10 +4,10 @@ import {
     RegistrationFormColumnStyled,
     RegistrationFormItemStyled,
     RegistrationFormStyled,
-    RegistrationHeadingStyled,
     RegistrationMessageColumnStyled,
     RegistrationStyled,
 } from './Registration.style';
+import { Heading } from 'components/Basic/Heading/Heading';
 import { Button } from 'components/Forms/Button/Button';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
@@ -78,12 +78,12 @@ export const Registration: FC = () => {
             <Webline>
                 <RegistrationStyled>
                     <RegistrationMessageColumnStyled>
-                        <RegistrationHeadingStyled type="h2">
+                        <Heading type="h2" className="mb-5 text-4xl leading-10 [&>strong]:text-primary">
                             <Trans
                                 i18nKey="Finish registration to loyalty program."
                                 components={{ 0: <br />, 1: <strong /> }}
                             />
-                        </RegistrationHeadingStyled>
+                        </Heading>
                         <ul>
                             <RegistrationBenefitsListItem>
                                 {t('You will have an overview of your orders and complaints')}

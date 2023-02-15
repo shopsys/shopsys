@@ -1,10 +1,6 @@
-import {
-    BlogSignpostHeadingStyled,
-    BlogSignpostItemIconStyled,
-    BlogSignpostItemStyled,
-    BlogSignpostStyled,
-} from './BlogSignpost.style';
+import { BlogSignpostItemIconStyled, BlogSignpostItemStyled, BlogSignpostStyled } from './BlogSignpost.style';
 import { Children } from './Children/Children';
+import { Heading } from 'components/Basic/Heading/Heading';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC, Fragment } from 'react';
@@ -22,7 +18,7 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
 
     return (
         <BlogSignpostStyled>
-            <BlogSignpostHeadingStyled type="h2">{t('Article categories')}</BlogSignpostHeadingStyled>
+            <Heading type="h2">{t('Article categories')}</Heading>
             {blogCategoryItems !== undefined &&
                 blogCategoryItems.map((blogCategory, index) => (
                     <Fragment key={blogCategory.uuid}>
@@ -32,7 +28,6 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
                                 data-testid={TEST_IDENTIFIER + index}
                             >
                                 <BlogSignpostItemIconStyled
-                                    alt=""
                                     iconType="icon"
                                     icon="Arrow"
                                     isActive={activeItem === blogCategory.uuid}

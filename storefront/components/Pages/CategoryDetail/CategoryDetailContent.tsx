@@ -75,7 +75,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                         {isPanelOpen && <Overlay $isHiddenOnDesktop onClick={handlePanelOpenerClick} />}
                         <CategoryDetailContentStyled>
                             <CategoryDetailAdvertsStyled positionName="productList" />
-                            <Heading type={'h1'}>{category.seoH1 !== null ? category.seoH1 : category.name}</Heading>
+                            <Heading type="h1">{category.seoH1 !== null ? category.seoH1 : category.name}</Heading>
                             {category.description !== null &&
                                 category.description !== '' &&
                                 (query[PAGE_QUERY_PARAMETER_NAME] ?? 1) === 1 && (

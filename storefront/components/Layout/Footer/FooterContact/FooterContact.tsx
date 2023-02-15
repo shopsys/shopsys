@@ -1,5 +1,4 @@
 import {
-    FooterContactHeadingStyled,
     FooterContactInstagramIconStyled,
     FooterContactLangsItemStyled,
     FooterContactLangsItemTextStyled,
@@ -9,6 +8,7 @@ import {
     FooterContactStyled,
     FooterContactYoutubeIconStyled,
 } from './FooterContact.style';
+import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -34,7 +34,12 @@ export const FooterContact: FC = () => {
         <FooterContactStyled data-testid={TEST_IDENTIFIER}>
             {isDesktop && (
                 <>
-                    <FooterContactHeadingStyled type="h4">{t('Follow Us')}</FooterContactHeadingStyled>
+                    <Heading
+                        type="h4"
+                        className="pointer-events-none mb-6 flex cursor-pointer items-center justify-between uppercase text-white"
+                    >
+                        {t('Follow Us')}
+                    </Heading>
                     <FooterContactSocialsStyled>
                         <FooterContactSocialsItemStyled href="#">
                             <FooterContactInstagramIconStyled iconType="icon" icon="Instagram" />

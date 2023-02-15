@@ -143,7 +143,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, testIdentif
                         disabled={index === currentSlide % sliderItems.length}
                         key={sliderItem.uuid}
                     >
-                        <BannersSliderThumbnailControlsIconStyled alt="" iconType="icon" icon="Triangle" />
+                        <BannersSliderThumbnailControlsIconStyled iconType="icon" icon="Triangle" />
                         {sliderItem.name}
                     </button>
                 ))}

@@ -1,4 +1,3 @@
-const rem = (value) => value / 16 + 'rem';
 const em = (value) => value / 16 + 'em';
 
 /** @type {import('tailwindcss').Config} */
@@ -7,21 +6,15 @@ module.exports = {
     theme: {
         screens: {
             xs: em(320),
-            maxSm: { max: em(479) },
             sm: em(480),
-            maxMd: { max: em(599) },
             md: em(600),
-            maxLg: { max: em(768) },
             lg: em(769),
-            maxVl: { max: em(1023) },
             vl: em(1024),
-            maxXl: { max: em(1239) },
             xl: em(1240),
-            maxXxl: { max: em(1559) },
             xxl: em(1560),
         },
         colors: {
-            base: '#0d0d0d',
+            dark: '#0d0d0d',
             primary: '#4c5bfd',
             primaryLight: '#a3abff',
             white: '#fff',
@@ -47,16 +40,12 @@ module.exports = {
             inStock: '#01946f',
         },
         fontFamily: {
-            base: ['DM Sans', 'Arial', 'Helvetica', 'sans-serif'],
+            default: ['DM Sans', 'Arial', 'Helvetica', 'sans-serif'],
         },
-        fontSize: {
-            bigger: rem(18),
-            default: rem(16),
-            small: rem(14),
-            extraSmall: rem(12),
-        },
-        lineHeight: {
-            default: 1.3,
+        extend: {
+            lineHeight: {
+                default: 1.3,
+            },
         },
         plugins: [],
     },

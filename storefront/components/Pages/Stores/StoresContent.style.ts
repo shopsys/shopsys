@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
@@ -56,16 +55,6 @@ export const InfoStyled = styled.div(
 
             border-left: none;
             border-radius: 0 ${theme.radius.big} ${theme.radius.big} 0;
-        }
-    `,
-);
-
-export const InfoTitleStyled = styled(Heading)(
-    ({ theme }) => css`
-        margin: 0;
-
-        @media ${theme.mediaQueries.queryLg} {
-            margin-top: 25px;
         }
     `,
 );

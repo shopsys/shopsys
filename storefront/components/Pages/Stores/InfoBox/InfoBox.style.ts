@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Link } from 'components/Basic/Link/Link';
 import { styled } from 'components/Theme/main';
@@ -23,14 +22,6 @@ export const InfoBoxStyled = styled.div(
         }
     `,
 );
-
-export const HeadingStyled = styled(Heading)`
-    margin: 0 0 10px;
-`;
-
-export const HeadingOpeningHoursStyled = styled(Heading)`
-    margin: 10px 0 0;
-`;
 
 export const LinkStyled = styled(Link)`
     margin-top: 20px;

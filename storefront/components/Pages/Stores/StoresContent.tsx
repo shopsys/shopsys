@@ -7,12 +7,12 @@ import {
     ImageStyled,
     ImageTextStyled,
     InfoStyled,
-    InfoTitleStyled,
     MapStyled,
     StoresList,
     StoresStyled,
 } from './StoresContent.style';
 import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
+import { Heading } from 'components/Basic/Heading/Heading';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Image from 'next/image';
@@ -65,7 +65,9 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
                             />
                         </picture>
                     </ImageStyled>
-                    <InfoTitleStyled type={'h3'}>{t('Stores')}</InfoTitleStyled>
+                    <Heading type="h3" className="m-0 lg:mt-6">
+                        {t('Stores')}
+                    </Heading>
                     {activeInfoBox !== -1 && (
                         <InfoBox closeInfoBoxCallback={closeInfoBoxHandler} store={stores[activeInfoBox]} />
                     )}
@@ -77,12 +79,12 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
                         <NextLink key={store.slug} href={store.slug} passHref>
                             <ButtonBottomStyled>
                                 <ButtonBottomItemStyled>
-                                    <ButtonBottomIconStyled alt="" iconType="icon" icon="Marker" />
+                                    <ButtonBottomIconStyled iconType="icon" icon="Marker" />
                                     <ButtonBottomNameStyled>{store.name}</ButtonBottomNameStyled>
                                 </ButtonBottomItemStyled>
                                 <ButtonBottomItemStyled>
                                     <ButtonBottomNameStyled type="right">{t('Store detail')}</ButtonBottomNameStyled>
-                                    <ButtonBottomIconStyled alt="" iconType="icon" icon="Arrow" type="right" />
+                                    <ButtonBottomIconStyled iconType="icon" icon="Arrow" type="right" />
                                 </ButtonBottomItemStyled>
                             </ButtonBottomStyled>
                         </NextLink>

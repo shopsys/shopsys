@@ -1,6 +1,6 @@
 import { ContactTextStyled, ContactWrapper } from './ContactContent.style';
 import { useContactForm, useContactFormMeta } from './formMeta';
-import { Heading1Styled } from 'components/Basic/Heading/Heading.style';
+import { Heading } from 'components/Basic/Heading/Heading';
 import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
@@ -49,7 +49,7 @@ export const ContactContent: FC = () => {
         <>
             <ContactWrapper>
                 <Webline>
-                    <Heading1Styled>{t('Write to us')}</Heading1Styled>
+                    <Heading type="h1">{t('Write to us')}</Heading>
                     {data?.settings?.contactFormMainText !== undefined && (
                         <ContactTextStyled dangerouslySetInnerHTML={{ __html: data.settings.contactFormMainText }} />
                     )}

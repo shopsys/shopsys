@@ -93,7 +93,7 @@ export const Login: FC = () => {
                                 </Button>
                             </ButtonWrapperStyled>
                             <LoginLostPassStyled>
-                                <LoginLostPassIconStyled alt="" iconType="icon" icon="Warning" />
+                                <LoginLostPassIconStyled iconType="icon" icon="Warning" />
                                 <LoginLostPassTextStyled>{t('Lost your password?')}</LoginLostPassTextStyled>
                                 <NextLink href={resetPasswordUrl} passHref>
                                     <LoginLostPassLinkStyled>{t('Renew it')}</LoginLostPassLinkStyled>

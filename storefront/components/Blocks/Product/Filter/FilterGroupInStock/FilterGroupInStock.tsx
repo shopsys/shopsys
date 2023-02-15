@@ -28,7 +28,7 @@ export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ title, isOpen 
         <FilterGroupStyled data-testid={TEST_IDENTIFIER}>
             <FilterGroupTitleStyled onClick={() => setIsGroupOpen((currentGroupVisibility) => !currentGroupVisibility)}>
                 {title}
-                <FilterGroupArrowStyled alt="" iconType="icon" icon="Arrow" isOpen={isGroupOpen} />
+                <FilterGroupArrowStyled iconType="icon" icon="Arrow" isOpen={isGroupOpen} />
             </FilterGroupTitleStyled>
             <FilterGroupContentStyled isOpen={isGroupOpen}>
                 <Checkbox

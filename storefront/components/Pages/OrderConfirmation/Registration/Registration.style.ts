@@ -1,4 +1,3 @@
-import { Heading } from 'components/Basic/Heading/Heading';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -76,19 +75,6 @@ export const RegistrationFormStyled = styled.div(
 export const RegistrationFormItemStyled = styled.div`
     margin-bottom: 30px;
 `;
-
-export const RegistrationHeadingStyled = styled(Heading)(
-    ({ theme }) => css`
-        line-height: 43px;
-        margin-bottom: 21px;
-
-        font-size: 36px;
-
-        strong {
-            color: ${theme.color.primary};
-        }
-    `,
-);
 
 export const RegistrationBenefitsListItem = styled.li`
     line-height: 21px;

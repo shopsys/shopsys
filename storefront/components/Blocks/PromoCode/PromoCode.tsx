@@ -106,7 +106,7 @@ export const PromoCode: FC = () => {
                             onClick={() => setIsContentVisible(!isContentVisible)}
                             data-testid={TEST_IDENTIFIER + '-add-button'}
                         >
-                            <PromoCodeButtonIconStyled alt="" iconType="icon" icon="Plus" />
+                            <PromoCodeButtonIconStyled iconType="icon" icon="Plus" />
                             {t('I have a discount coupon')}
                         </PromoCodeButtonStyled>
                         <CSSTransition

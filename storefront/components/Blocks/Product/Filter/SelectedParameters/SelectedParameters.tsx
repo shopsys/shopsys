@@ -15,8 +15,8 @@ import {
     SelectedParametersResetStyled,
     SelectedParametersResetTextStyled,
     SelectedParametersStyled,
-    SelectedParametersTitleStyled,
 } from './SelectedParameters.style';
+import { Heading } from 'components/Basic/Heading/Heading';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useMemo } from 'react';
@@ -48,7 +48,9 @@ export const SelectedParameters: FC = () => {
 
     return (
         <SelectedParametersStyled data-testid={TEST_IDENTIFIER}>
-            <SelectedParametersTitleStyled type="h4">{t('Selected filters')}</SelectedParametersTitleStyled>
+            <Heading type="h4" className="uppercase">
+                {t('Selected filters')}
+            </Heading>
             <SelectedParametersBlockStyled>
                 {checkedBrands.length > 0 && (
                     <SelectedParametersListStyled>
@@ -57,7 +59,6 @@ export const SelectedParameters: FC = () => {
                             <SelectedParametersListItemStyled key={filterFormBrand.uuid}>
                                 {filterFormBrand.name}
                                 <SelectedParametersListItemRemoveStyled
-                                    alt=""
                                     iconType="icon"
                                     icon="RemoveThin"
                                     onClick={() => dispatch({ type: 'uncheckBrand', payload: filterFormBrand.uuid })}
@@ -74,7 +75,6 @@ export const SelectedParameters: FC = () => {
                             <SelectedParametersListItemStyled key={filterFormFlag.uuid}>
                                 {filterFormFlag.name}
                                 <SelectedParametersListItemRemoveStyled
-                                    alt=""
                                     iconType="icon"
                                     icon="RemoveThin"
                                     onClick={() => dispatch({ type: 'uncheckFlag', payload: filterFormFlag.uuid })}
@@ -90,7 +90,6 @@ export const SelectedParameters: FC = () => {
                         <SelectedParametersListItemStyled>
                             {t('Only goods in stock')}
                             <SelectedParametersListItemRemoveStyled
-                                alt=""
                                 iconType="icon"
                                 icon="RemoveThin"
                                 onClick={() => dispatch({ type: 'setOnlyInStock', payload: false })}
@@ -117,7 +116,6 @@ export const SelectedParameters: FC = () => {
                                 </>
                             )}
                             <SelectedParametersListItemRemoveStyled
-                                alt=""
                                 iconType="icon"
                                 icon="RemoveThin"
                                 onClick={() => dispatch({ type: 'resetPrices' })}
@@ -128,7 +126,7 @@ export const SelectedParameters: FC = () => {
             </SelectedParametersBlockStyled>
             <SelectedParametersResetStyled onClick={() => dispatch({ type: 'resetAllParameters' })}>
                 <SelectedParametersResetTextStyled>{t('Clear all')}</SelectedParametersResetTextStyled>
-                <SelectedParametersResetRemoveStyled alt="" iconType="icon" icon="Remove" />
+                <SelectedParametersResetRemoveStyled iconType="icon" icon="Remove" />
             </SelectedParametersResetStyled>
         </SelectedParametersStyled>
     );
