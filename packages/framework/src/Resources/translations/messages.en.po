@@ -547,6 +547,9 @@ msgstr ""
 msgid "Created on"
 msgstr ""
 
+msgid "Creation date"
+msgstr ""
+
 msgid "Cron overview"
 msgstr ""
 

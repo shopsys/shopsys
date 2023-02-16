@@ -226,6 +226,9 @@ msgstr "Vyplňte prosím kurz měny"
 msgid "Please enter currency minimum fraction digits"
 msgstr "Prosím zadejte minimální počet desetinných míst měny"
 
+msgid "Please enter date of creation"
+msgstr "Vyplňte prosím datum vytvoření"
+
 msgid "Please enter default VAT"
 msgstr "Prosím zadejte výchozí výši DPH"
 
