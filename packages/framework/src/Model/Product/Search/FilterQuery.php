@@ -70,67 +70,70 @@ class FilterQuery
     {
         $clone = clone $this;
 
+        $clone->sorting = [];
+
+        if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_RELEVANCE) {
+            $clone->sorting['_score'] = 'desc';
+
+            return $clone;
+        }
+
+        $clone->sorting['availability_dispatch_time'] = [
+            'order' => 'asc',
+            'missing' => '_last',
+        ];
+
         if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_PRIORITY) {
-            $clone->sorting = [
-                'ordering_priority' => 'desc',
-                'name.keyword' => 'asc',
-            ];
+            $clone->sorting['ordering_priority'] = 'desc';
+            $clone->sorting['name.keyword'] = 'asc';
 
             return $clone;
         }
 
         if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_NAME_ASC) {
-            $clone->sorting = [
-                'name.keyword' => 'asc',
-            ];
+            $clone->sorting['name.keyword'] = 'asc';
 
             return $clone;
         }
 
         if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_NAME_DESC) {
-            $clone->sorting = [
-                'name.keyword' => 'desc',
-            ];
+            $clone->sorting['name.keyword'] = 'desc';
 
             return $clone;
         }
 
         if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_PRICE_ASC) {
-            $clone->sorting = [
-                'prices.price_with_vat' => [
-                    'order' => 'asc',
-                    'nested' => [
-                        'path' => 'prices',
-                        'filter' => [
-                            'term' => [
-                                'prices.pricing_group_id' => $pricingGroup->getId(),
-                            ],
+            $clone->sorting['prices.price_with_vat'] = [
+                'order' => 'asc',
+                'nested' => [
+                    'path' => 'prices',
+                    'filter' => [
+                        'term' => [
+                            'prices.pricing_group_id' => $pricingGroup->getId(),
                         ],
                     ],
                 ],
-                'ordering_priority' => 'asc',
-                'name.keyword' => 'asc',
             ];
+            $clone->sorting['ordering_priority'] = 'desc';
+            $clone->sorting['name.keyword'] = 'asc';
 
             return $clone;
         }
 
         if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_PRICE_DESC) {
-            $clone->sorting = [
-                'prices.price_with_vat' => [
-                    'order' => 'desc',
-                    'nested' => [
-                        'path' => 'prices',
-                        'filter' => [
-                            'term' => [
-                                'prices.pricing_group_id' => $pricingGroup->getId(),
-                            ],
+            $clone->sorting['prices.price_with_vat'] = [
+                'order' => 'desc',
+                'nested' => [
+                    'path' => 'prices',
+                    'filter' => [
+                        'term' => [
+                            'prices.pricing_group_id' => $pricingGroup->getId(),
                         ],
                     ],
                 ],
-                'ordering_priority' => 'asc',
-                'name.keyword' => 'desc',
             ];
+            $clone->sorting['ordering_priority'] = 'desc';
+            $clone->sorting['name.keyword'] = 'asc';
 
             return $clone;
         }
