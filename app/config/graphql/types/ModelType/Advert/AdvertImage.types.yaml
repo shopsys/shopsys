@@ -7,11 +7,22 @@ AdvertImage:
             image:
                 type: "[Image!]!"
                 description: "Advert image"
-                resolve: '@=resolver("advertImageResolver", [value, args["type"], args["sizes"]])'
+                resolve: '@=resolver("resolveByAdvert", [value, args["type"], args["sizes"]])'
                 args:
                     type:
                         type: "String"
                         defaultValue: null
                     sizes:
                         type: "[String!]"
+                        defaultValue: null
+            mainImage:
+                type: "Image"
+                description: "Adverts first image by params"
+                resolve: '@=resolver("resolveMainImageByAdvert", [value, args["type"], args["size"]])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    size:
+                        type: "String"
                         defaultValue: null

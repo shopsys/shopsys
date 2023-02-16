@@ -34,7 +34,7 @@ class ContactFormMainTextResolver implements ResolverInterface, AliasedInterface
     /**
      * @return string
      */
-    public function resolve(): string
+    public function resolveContactFormMainText(): string
     {
         return $this->contactFormSettingsFacade->getMainText($this->domain->getId());
     }
@@ -44,6 +44,6 @@ class ContactFormMainTextResolver implements ResolverInterface, AliasedInterface
      */
     public static function getAliases(): array
     {
-        return ['resolve' => 'contactFormMainText'];
+        return ['resolveContactFormMainText' => 'resolveContactFormMainText'];
     }
 }

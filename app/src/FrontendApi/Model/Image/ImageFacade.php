@@ -36,4 +36,19 @@ class ImageFacade extends BaseImageFacade
     {
         return $this->frontendApiImageRepository->getAllImagesIndexedByEntityId($entityIds, $entityName, $type);
     }
+
+    /**
+     * @param int[] $entityIds
+     * @param string $entityName
+     * @param string|null $type
+     * @return \App\Component\Image\Image[]|null[]
+     */
+    public function getImagesByTypeAndPositionIndexedByEntityId(array $entityIds, string $entityName, ?string $type): array
+    {
+        return $this->frontendApiImageRepository->getImagesByTypeAndPositionIndexedByEntityId(
+            $entityIds,
+            $entityName,
+            $type
+        );
+    }
 }

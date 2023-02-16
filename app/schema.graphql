@@ -73,6 +73,8 @@ type AdvertImage implements Advert {
   image(size: String = null, sizes: [String!] = null, type: String = null): [Image!]!
   """Advert link"""
   link: String
+  """Adverts first image by params"""
+  mainImage(size: String = null, type: String = null): Image
   """Name of advert"""
   name: String!
   """Position of advert"""
@@ -188,7 +190,15 @@ type Availability {
   """Localized availability name (domain dependent)"""
   name: String!
   """Availability status in a format suitable for usage in the code"""
-  status: String!
+  status: AvailabilityStatusEnum!
+}
+
+"""Product Availability statuses"""
+enum AvailabilityStatusEnum {
+  """Product availability status in stock"""
+  InStock
+  """Product availability status out of stock"""
+  OutOfStock
 }
 
 type BlogArticle implements Breadcrumb & Slug & ArticleInterface {
@@ -202,6 +212,8 @@ type BlogArticle implements Breadcrumb & Slug & ArticleInterface {
   images(sizes: [String!] = null, type: String = null): [Image!]!
   """The blog article absolute URL"""
   link: String!
+  """Blog article image by params"""
+  mainImage(size: String = null, type: String = null): Image
   """The blog article title"""
   name: String!
   """The blog article perex"""
@@ -283,6 +295,8 @@ type Brand implements Breadcrumb & Slug & ProductListable {
   images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
   """Brand main URL"""
   link: String!
+  """Brand image by params"""
+  mainImage(size: String = null, type: String = null): Image
   """Brand name"""
   name: String!
   """Paginated and ordered products of brand"""
@@ -425,6 +439,8 @@ type Category implements Breadcrumb & Slug & ProductListable {
   images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
   """A list of categories linked to the given category"""
   linkedCategories: [Category!]!
+  """Category image by params"""
+  mainImage(size: String = null, type: String = null): Image
   """Localized category name (domain dependent)"""
   name: String!
   """
@@ -827,6 +843,8 @@ type MainVariant implements Product & Breadcrumb & Slug {
   isUsingStock: Boolean!
   """Product link"""
   link: String!
+  """Product image by params"""
+  mainImage(size: String = null, type: String = null): Image
   """Localized product name (domain dependent)"""
   name: String!
   """Name prefix"""
@@ -969,6 +987,8 @@ interface NotBlogArticleInterface {
 type NotificationBar {
   """Notification bar images"""
   images(sizes: [String!] = null, type: String = null): [Image!]!
+  """Notification bar image by params"""
+  mainImage(size: String = null, type: String = null): Image
   """Color of the notification"""
   rgbColor: String!
   """Message of the notification"""
@@ -1307,6 +1327,8 @@ type Payment {
   images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
   """Localized payment instruction (domain dependent)"""
   instruction: String
+  """Payment image by params"""
+  mainImage(size: String = null, type: String = null): Image
   """Payment name"""
   name: String!
   """Payment position"""
@@ -1444,6 +1466,8 @@ interface Product {
   isUsingStock: Boolean!
   """Product link"""
   link: String!
+  """Product image by params"""
+  mainImage(size: String = null, type: String = null): Image
   """Localized product name (domain dependent)"""
   name: String!
   """Name prefix"""
@@ -1806,6 +1830,8 @@ type RegularProduct implements Product & Breadcrumb & Slug {
   isUsingStock: Boolean!
   """Product link"""
   link: String!
+  """Product image by params"""
+  mainImage(size: String = null, type: String = null): Image
   """Localized product name (domain dependent)"""
   name: String!
   """Name prefix"""
@@ -1888,6 +1914,8 @@ type SliderItem {
   images(sizes: [String!] = null, type: String = null): [Image!]!
   """Target link"""
   link: String!
+  """Slider item image by params"""
+  mainImage(size: String = null, type: String = null): Image
   """Slider name"""
   name: String!
   """UUID"""
@@ -1940,7 +1968,7 @@ type StoreAvailability {
   """Detailed information about availability"""
   availabilityInformation: String!
   """Availability status in a format suitable for usage in the code"""
-  availabilityStatus: String!
+  availabilityStatus: AvailabilityStatusEnum!
   """Is product exposed on this store"""
   exposed: Boolean!
   """Store"""
@@ -1982,6 +2010,8 @@ type Transport {
   instruction: String
   """Pointer telling if the transport is of type personal pickup"""
   isPersonalPickup: Boolean!
+  """Transport image by params"""
+  mainImage(size: String = null, type: String = null): Image
   """Transport name"""
   name: String!
   """List of assigned payments"""
@@ -2058,6 +2088,8 @@ type Variant implements Product & Breadcrumb & Slug {
   isUsingStock: Boolean!
   """Product link"""
   link: String!
+  """Product image by params"""
+  mainImage(size: String = null, type: String = null): Image
   mainVariant: MainVariant
   """Localized product name (domain dependent)"""
   name: String!

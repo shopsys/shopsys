@@ -12,7 +12,7 @@ class SettingsResolver implements ResolverInterface, AliasedInterface
     /**
      * @return array
      */
-    public function resolve(): array
+    public function resolveSettings(): array
     {
         /*
          * the fields themselves are resolved with their own resolvers
@@ -26,6 +26,6 @@ class SettingsResolver implements ResolverInterface, AliasedInterface
      */
     public static function getAliases(): array
     {
-        return ['resolve' => 'settings'];
+        return ['resolveSettings' => 'resolveSettings'];
     }
 }

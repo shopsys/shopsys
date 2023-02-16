@@ -210,7 +210,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             'status' => $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId(
                 $product,
                 $this->domain->getId()
-            ),
+            )->value,
         ];
     }
 
@@ -344,7 +344,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
                 'store_id' => $storeAvailabilityInformation->getStoreId(),
                 'availability_information' => $storeAvailabilityInformation->getAvailabilityInformation(),
                 'exposed' => $storeAvailabilityInformation->isExposedProduct(),
-                'availability_status' => $storeAvailabilityInformation->getAvailabilityStatus(),
+                'availability_status' => $storeAvailabilityInformation->getAvailabilityStatus()->value,
             ];
         }
 

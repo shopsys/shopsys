@@ -49,7 +49,7 @@ class BlogCategoryResolver implements ResolverInterface, AliasedInterface
      * @param string|null $urlSlug
      * @return \App\Model\Blog\Category\BlogCategory
      */
-    public function resolveByUuidOrUrlSlug(?string $uuid = null, ?string $urlSlug = null): BlogCategory
+    public function resolveBlogCategoryByUuidOrUrlSlug(?string $uuid = null, ?string $urlSlug = null): BlogCategory
     {
         try {
             $domainId = $this->domain->getId();
@@ -93,7 +93,7 @@ class BlogCategoryResolver implements ResolverInterface, AliasedInterface
     public static function getAliases(): array
     {
         return [
-            'resolveByUuidOrUrlSlug' => 'blogCategoryByUuidOrUrlSlug',
+            'resolveBlogCategoryByUuidOrUrlSlug' => 'resolveBlogCategoryByUuidOrUrlSlug',
         ];
     }
 }

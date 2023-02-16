@@ -43,7 +43,7 @@ class StoresResolver implements ResolverInterface, AliasedInterface
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
      */
-    public function resolver(Argument $argument)
+    public function resolveStores(Argument $argument)
     {
         PageSizeValidator::checkMaxPageSize($argument);
         $domainId = $this->domain->getId();
@@ -61,10 +61,10 @@ class StoresResolver implements ResolverInterface, AliasedInterface
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object|null
      */
-    public function resolverByTransport(Transport $transport, Argument $argument)
+    public function resolveStoresByTransport(Transport $transport, Argument $argument)
     {
         if ($transport->isPersonalPickup()) {
-            return $this->resolver($argument);
+            return $this->resolveStores($argument);
         }
 
         return null;
@@ -88,8 +88,8 @@ class StoresResolver implements ResolverInterface, AliasedInterface
     public static function getAliases(): array
     {
         return [
-            'resolver' => 'stores',
-            'resolverByTransport' => 'storesByTransport',
+            'resolveStores' => 'resolveStores',
+            'resolveStoresByTransport' => 'resolveStoresByTransport',
         ];
     }
 }

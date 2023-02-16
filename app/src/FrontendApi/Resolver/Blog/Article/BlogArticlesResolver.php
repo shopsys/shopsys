@@ -33,7 +33,7 @@ class BlogArticlesResolver implements ResolverInterface, AliasedInterface
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return object|\Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface
      */
-    public function resolveAll(Argument $argument)
+    public function resolveBlogArticles(Argument $argument)
     {
         PageSizeValidator::checkMaxPageSize($argument);
         $onlyVisibleOnHomepage = $argument['onlyHomepageArticles'];
@@ -70,7 +70,7 @@ class BlogArticlesResolver implements ResolverInterface, AliasedInterface
     public static function getAliases(): array
     {
         return [
-            'resolveAll' => 'blogArticles',
+            'resolveBlogArticles' => 'resolveBlogArticles',
             'resolveByCategory' => 'blogArticlesByCategory',
         ];
     }

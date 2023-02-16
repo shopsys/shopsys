@@ -34,7 +34,7 @@ class LanguageConstantResolver implements ResolverInterface, AliasedInterface
     /**
      * @return array<int, array{key: string, translation: string}>
      */
-    public function resolve(): array
+    public function resolveLanguageConstants(): array
     {
         $translations = [];
         $userTranslations = $this->languageConstantFacade->getUserTranslationsByLocaleIndexedByKey($this->domain->getLocale());
@@ -54,6 +54,6 @@ class LanguageConstantResolver implements ResolverInterface, AliasedInterface
      */
     public static function getAliases(): array
     {
-        return ['resolve' => 'languageConstants'];
+        return ['resolveLanguageConstants' => 'resolveLanguageConstants'];
     }
 }

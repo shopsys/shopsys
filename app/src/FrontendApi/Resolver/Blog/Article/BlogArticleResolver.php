@@ -31,7 +31,7 @@ class BlogArticleResolver implements ResolverInterface, AliasedInterface
      * @param string|null $urlSlug
      * @return array
      */
-    public function resolveByUuidOrUrlSlug(?string $uuid = null, ?string $urlSlug = null): array
+    public function resolveBlogArticleByUuidOrUrlSlug(?string $uuid = null, ?string $urlSlug = null): array
     {
         try {
             if ($uuid !== null) {
@@ -55,7 +55,7 @@ class BlogArticleResolver implements ResolverInterface, AliasedInterface
     public static function getAliases(): array
     {
         return [
-            'resolveByUuidOrUrlSlug' => 'blogArticleByUuidOrUrlSlug',
+            'resolveBlogArticleByUuidOrUrlSlug' => 'resolveBlogArticleByUuidOrUrlSlug',
         ];
     }
 }

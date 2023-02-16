@@ -26,7 +26,7 @@ class SliderItemsResolver implements ResolverInterface, AliasedInterface
     /**
      * @return \App\Model\Slider\SliderItem[]
      */
-    public function resolve(): array
+    public function resolveSliderItems(): array
     {
         return $this->sliderItemFacade->getAllVisibleOnCurrentDomain();
     }
@@ -36,6 +36,6 @@ class SliderItemsResolver implements ResolverInterface, AliasedInterface
      */
     public static function getAliases(): array
     {
-        return ['resolve' => 'sliderItems'];
+        return ['resolveSliderItems' => 'resolveSliderItems'];
     }
 }

@@ -5,7 +5,7 @@ GoPayQuery:
             GoPaySwifts:
                 type: "[GoPayBankSwift!]!"
                 description: "List of available banks for GoPay bank transfer payment"
-                resolve: "@=resolver('getGoPaySwifts', [args['currencyCode']])"
+                resolve: "@=resolver('resolveGoPaySwifts', [args['currencyCode']])"
                 args:
                     currencyCode:
                         type: "String!"

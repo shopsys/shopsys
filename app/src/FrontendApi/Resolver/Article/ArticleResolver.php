@@ -52,7 +52,7 @@ class ArticleResolver implements ResolverInterface, AliasedInterface
      * @param string|null $urlSlug
      * @return array
      */
-    public function resolver(?string $uuid = null, ?string $urlSlug = null): array
+    public function resolveArticle(?string $uuid = null, ?string $urlSlug = null): array
     {
         try {
             if ($uuid !== null) {
@@ -72,7 +72,7 @@ class ArticleResolver implements ResolverInterface, AliasedInterface
     /**
      * @return array
      */
-    public function termsAndConditionsArticle(): array
+    public function resolveTermsAndConditionsArticle(): array
     {
         return $this->getSpecialArticle(BaseSetting::TERMS_AND_CONDITIONS_ARTICLE_ID);
     }
@@ -80,7 +80,7 @@ class ArticleResolver implements ResolverInterface, AliasedInterface
     /**
      * @return array
      */
-    public function privacyPolicyArticle(): array
+    public function resolvePrivacyPolicyArticle(): array
     {
         return $this->getSpecialArticle(BaseSetting::PRIVACY_POLICY_ARTICLE_ID);
     }
@@ -88,7 +88,7 @@ class ArticleResolver implements ResolverInterface, AliasedInterface
     /**
      * @return array
      */
-    public function cookiesArticle(): array
+    public function resolveCookiesArticle(): array
     {
         return $this->getSpecialArticle(BaseSetting::COOKIES_ARTICLE_ID);
     }
@@ -116,10 +116,10 @@ class ArticleResolver implements ResolverInterface, AliasedInterface
     public static function getAliases(): array
     {
         return [
-            'resolver' => 'article',
-            'termsAndConditionsArticle' => 'termsAndConditionsArticle',
-            'privacyPolicyArticle' => 'privacyPolicyArticle',
-            'cookiesArticle' => 'cookiesArticle',
+            'resolveArticle' => 'resolveArticle',
+            'resolveTermsAndConditionsArticle' => 'resolveTermsAndConditionsArticle',
+            'resolvePrivacyPolicyArticle' => 'resolvePrivacyPolicyArticle',
+            'resolveCookiesArticle' => 'resolveCookiesArticle',
         ];
     }
 }

@@ -28,7 +28,7 @@ class BrandSearchResolver implements ResolverInterface, AliasedInterface
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \App\Model\Product\Brand\Brand[]
      */
-    public function resolveSearch(Argument $argument): array
+    public function resolveBrandSearch(Argument $argument): array
     {
         $searchText = $argument['search'] ?? '';
 
@@ -41,7 +41,7 @@ class BrandSearchResolver implements ResolverInterface, AliasedInterface
     public static function getAliases(): array
     {
         return [
-            'resolveSearch' => 'brandSearch',
+            'resolveBrandSearch' => 'resolveBrandSearch',
         ];
     }
 }

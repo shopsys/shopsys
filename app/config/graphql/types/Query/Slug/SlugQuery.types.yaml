@@ -4,7 +4,7 @@ SlugQuery:
         fields:
             slug:
                 type: 'Slug'
-                resolve: "@=resolver('slugResolver', [args['slug'], info])"
+                resolve: "@=resolver('resolveSlug', [args['slug'], info])"
                 description: "Returns entity by slug"
                 args:
                     slug:

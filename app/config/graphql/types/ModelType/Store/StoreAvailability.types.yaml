@@ -10,7 +10,7 @@ StoreAvailability:
                 type: "String!"
                 description: "Detailed information about availability"
             availabilityStatus:
-                type: "String!"
+                type: "AvailabilityStatusEnum!"
                 description: "Availability status in a format suitable for usage in the code"
             store:
                 type: "Store"

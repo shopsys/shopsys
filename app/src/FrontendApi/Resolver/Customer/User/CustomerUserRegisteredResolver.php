@@ -35,7 +35,7 @@ final class CustomerUserRegisteredResolver implements ResolverInterface, Aliased
      * @param string $email
      * @return bool
      */
-    public function resolve(string $email): bool
+    public function resolveIsCustomerUserRegistered(string $email): bool
     {
         $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($email, $this->domain->getId());
 
@@ -47,6 +47,6 @@ final class CustomerUserRegisteredResolver implements ResolverInterface, Aliased
      */
     public static function getAliases(): array
     {
-        return ['resolve' => 'isCustomerUserRegistered'];
+        return ['resolveIsCustomerUserRegistered' => 'resolveIsCustomerUserRegistered'];
     }
 }

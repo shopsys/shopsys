@@ -4,11 +4,11 @@ FlagQuery:
         fields:
             flags:
                 type: '[Flag!]'
-                resolve: "@=resolver('flags')"
+                resolve: "@=resolver('resolveFlags')"
                 description: "Returns a complete list of the flags"
             flag:
                 type: 'Flag'
-                resolve: "@=resolver('flag', [args['uuid'], args['urlSlug']])"
+                resolve: "@=resolver('resolveFlagByUuidOrUrlSlug', [args['uuid'], args['urlSlug']])"
                 args:
                     uuid:
                         type: "Uuid"

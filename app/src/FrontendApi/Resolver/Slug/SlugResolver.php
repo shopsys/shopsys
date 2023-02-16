@@ -141,7 +141,7 @@ class SlugResolver implements ResolverInterface, AliasedInterface
      * @param \GraphQL\Type\Definition\ResolveInfo $info
      * @return \App\Model\Blog\Category\BlogCategory|\App\Model\Category\Category|\App\Model\Product\Brand\Brand|\App\Model\Store\Store|\App\Model\CategorySeo\ReadyCategorySeoMix|\App\Model\Product\Flag\Flag|array
      */
-    public function resolve(string $slug, ResolveInfo $info)
+    public function resolveSlug(string $slug, ResolveInfo $info)
     {
         $slugWithoutSlash = ltrim($slug, '/');
         $friendlyUrl = $this->friendlyUrlRepository->findByDomainIdAndSlug($this->domain->getId(), $slugWithoutSlash);
@@ -156,7 +156,7 @@ class SlugResolver implements ResolverInterface, AliasedInterface
         try {
             switch ($entity) {
                 case Article::class:
-                    $article = $this->articleResolver->resolver(null, $slugWithoutSlash);
+                    $article = $this->articleResolver->resolveArticle(null, $slugWithoutSlash);
                     $article[SlugResolverMap::SLUG_TYPE] = SlugResolverMap::SLUG_TYPE_ARTICLE;
 
                     return $article;
@@ -166,12 +166,12 @@ class SlugResolver implements ResolverInterface, AliasedInterface
 
                     return $brand;
                 case BlogArticle::class:
-                    $blogArticle = $this->blogArticleResolver->resolveByUuidOrUrlSlug(null, $slugWithoutSlash);
+                    $blogArticle = $this->blogArticleResolver->resolveBlogArticleByUuidOrUrlSlug(null, $slugWithoutSlash);
                     $blogArticle[SlugResolverMap::SLUG_TYPE] = SlugResolverMap::SLUG_TYPE_BLOG_ARTICLE;
 
                     return $blogArticle;
                 case BlogCategory::class:
-                    return $this->blogCategoryResolver->resolveByUuidOrUrlSlug(null, $slugWithoutSlash);
+                    return $this->blogCategoryResolver->resolveBlogCategoryByUuidOrUrlSlug(null, $slugWithoutSlash);
                 case Category::class:
                     /** @var \App\Model\Category\Category $category */
                     $category = $this->categoryResolver->resolveByUuidOrUrlSlug(null, $slugWithoutSlash);
@@ -179,14 +179,14 @@ class SlugResolver implements ResolverInterface, AliasedInterface
 
                     return $matchingReadyCategorySeoMix ?? $category;
                 case Flag::class:
-                    return $this->flagResolver->resolveByUuidOrUrlSlug(null, $slugWithoutSlash);
+                    return $this->flagResolver->resolveFlagByUuidOrUrlSlug(null, $slugWithoutSlash);
                 case Product::class:
                     $product = $this->productDetailResolver->resolver(null, $slugWithoutSlash);
                     $product[SlugResolverMap::SLUG_TYPE] = SlugResolverMap::SLUG_TYPE_PRODUCT;
 
                     return $product;
                 case Store::class:
-                    return $this->storeResolver->resolver(null, $slugWithoutSlash);
+                    return $this->storeResolver->resolveStore(null, $slugWithoutSlash);
                 case ReadyCategorySeoMix::class:
                     $readyCategorySeoMix = $this->readyCategorySeoMixResolver->resolver($slugWithoutSlash);
                     if ($this->isSortingDifferentFromReadyCategorySeoMix($info, $readyCategorySeoMix) || $this->isFilterSet($info)) {
@@ -207,7 +207,7 @@ class SlugResolver implements ResolverInterface, AliasedInterface
     public static function getAliases(): array
     {
         return [
-            'resolve' => 'slugResolver',
+            'resolveSlug' => 'resolveSlug',
         ];
     }
 

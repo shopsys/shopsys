@@ -27,7 +27,7 @@ class CountriesResolver implements ResolverInterface, AliasedInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Country\Country[]
      */
-    public function resolve(): array
+    public function resolveCountries(): array
     {
         return $this->countryFacade->getAllEnabledOnCurrentDomain();
     }
@@ -37,6 +37,6 @@ class CountriesResolver implements ResolverInterface, AliasedInterface
      */
     public static function getAliases(): array
     {
-        return ['resolve' => 'countries'];
+        return ['resolveCountries' => 'resolveCountries'];
     }
 }

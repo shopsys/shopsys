@@ -27,7 +27,7 @@ final class OrderSentPageContentResolver implements ResolverInterface, AliasedIn
      * @param string $orderUuid
      * @return string
      */
-    public function resolve(string $orderUuid): string
+    public function resolveOrderSentPageContent(string $orderUuid): string
     {
         return $this->orderFacade->getOrderSentPageContent($orderUuid);
     }
@@ -37,6 +37,6 @@ final class OrderSentPageContentResolver implements ResolverInterface, AliasedIn
      */
     public static function getAliases(): array
     {
-        return ['resolve' => 'orderSentPageContent'];
+        return ['resolveOrderSentPageContent' => 'resolveOrderSentPageContent'];
     }
 }

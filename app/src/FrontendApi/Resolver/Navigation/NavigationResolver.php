@@ -36,7 +36,7 @@ class NavigationResolver implements ResolverInterface, AliasedInterface
     /**
      * @return \App\Model\Navigation\NavigationItemDetail[]
      */
-    public function resolve(): array
+    public function resolveNavigation(): array
     {
         return $this->navigationItemFacade->getOrderedNavigationItemDetails($this->domain->getCurrentDomainConfig());
     }
@@ -46,6 +46,6 @@ class NavigationResolver implements ResolverInterface, AliasedInterface
      */
     public static function getAliases(): array
     {
-        return ['resolve' => 'navigationResolver'];
+        return ['resolveNavigation' => 'resolveNavigation'];
     }
 }

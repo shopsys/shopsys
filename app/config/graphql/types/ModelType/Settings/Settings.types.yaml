@@ -5,13 +5,13 @@ Settings:
         fields:
             pricing:
                 type: "PricingSetting!"
-                resolve: "@=resolver('pricingSettings')"
+                resolve: "@=resolver('resolvePricingSettings')"
                 description: "Settings related to pricing"
             seo:
                 type: "SeoSetting!"
-                resolve: "@=resolver('seoSettings')"
+                resolve: "@=resolver('resolveSeoSettings')"
                 description: "Settings related to SEO"
             contactFormMainText:
                 type: String!
-                resolve: "@=resolver('contactFormMainText')"
+                resolve: "@=resolver('resolveContactFormMainText')"
                 description: "Main text for contact form"

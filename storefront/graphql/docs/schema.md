@@ -117,6 +117,7 @@
     * [TransportInput](#transportinput)
   * [Enums](#enums)
     * [ArticlePlacementTypeEnum](#articleplacementtypeenum)
+    * [AvailabilityStatusEnum](#availabilitystatusenum)
     * [PersonalDataAccessRequestTypeEnum](#personaldataaccessrequesttypeenum)
     * [ProductOrderingModeEnum](#productorderingmodeenum)
   * [Scalars](#scalars)
@@ -1539,6 +1540,25 @@ Advert link
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Adverts first image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -1897,7 +1917,7 @@ Localized availability name (domain dependent)
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>status</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#availabilitystatusenum">AvailabilityStatusEnum</a>!</td>
 <td>
 
 Availability status in a format suitable for usage in the code
@@ -1973,6 +1993,25 @@ Blog article images
 The blog article absolute URL
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Blog article image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
@@ -2376,6 +2415,25 @@ Brand images
 Brand main URL
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Brand image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
@@ -2938,6 +2996,25 @@ Category images
 A list of categories linked to the given category
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Category image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
@@ -4248,6 +4325,25 @@ Product link
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Product image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -4543,6 +4639,25 @@ Notification bar images
 <tr>
 <td colspan="2" align="right" valign="top">sizes</td>
 <td valign="top">[<a href="#string">String</a>!]</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Notification bar image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
@@ -5609,6 +5724,25 @@ Localized payment instruction (domain dependent)
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Payment image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -6417,6 +6551,25 @@ Product link
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Product image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -6734,6 +6887,25 @@ Target link
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Slider item image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -6930,7 +7102,7 @@ Detailed information about availability
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>availabilityStatus</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#availabilitystatusenum">AvailabilityStatusEnum</a>!</td>
 <td>
 
 Availability status in a format suitable for usage in the code
@@ -7135,6 +7307,25 @@ Localized transport instruction (domain dependent)
 Pointer telling if the transport is of type personal pickup
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Transport image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
@@ -7447,6 +7638,25 @@ Product images
 Product link
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Product image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>mainVariant</strong></td>
@@ -9075,6 +9285,35 @@ Articles without specific placement
 </tbody>
 </table>
 
+### AvailabilityStatusEnum
+
+Product Availability statuses
+
+<table>
+<thead>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>InStock</strong></td>
+<td>
+
+Product availability status in stock
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>OutOfStock</strong></td>
+<td>
+
+Product availability status out of stock
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### PersonalDataAccessRequestTypeEnum
 
 One of two possible types for personal data access request
@@ -9901,6 +10140,25 @@ Product images
 Product link
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Product image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">size</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>name</strong></td>

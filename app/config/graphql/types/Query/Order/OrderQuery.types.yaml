@@ -21,11 +21,11 @@ OrderQuery:
                 description: "Returns order filtered using UUID, orderNumber, or urlHash"
             lastOrder:
                 type: 'Order'
-                resolve: "@=resolver('lastOrder')"
+                resolve: "@=resolver('resolveLastOrder')"
                 description: "Returns last order of the user or null if no order was placed yet"
             orderSentPageContent:
                 type: "String!"
-                resolve: "@=resolver('orderSentPageContent', [args['orderUuid']])"
+                resolve: "@=resolver('resolveOrderSentPageContent', [args['orderUuid']])"
                 args:
                     orderUuid:
                         type: "Uuid!"
