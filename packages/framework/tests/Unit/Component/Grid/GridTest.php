@@ -308,4 +308,39 @@ class GridTest extends TestCase
         $grid->enableDragAndDrop($entityClass);
         $this->assertTrue($grid->isDragAndDrop());
     }
+
+    public function testReorderColumns(): void
+    {
+        $request = new Request();
+        $requestStack = new RequestStack();
+        $requestStack->push($request);
+
+        $twigMock = $this->createMock(Environment::class);
+        $routerMock = $this->createMock(Router::class);
+        $routeCsrfProtectorMock = $this->createMock(RouteCsrfProtector::class);
+        $dataSourceMock = $this->createMock(DataSourceInterface::class);
+
+        $grid = new Grid(
+            'gridId',
+            $dataSourceMock,
+            $requestStack,
+            $routerMock,
+            $routeCsrfProtectorMock,
+            $twigMock
+        );
+
+        $column1 = $grid->addColumn('columnId1', 'sourceColumnName1', 'title1');
+        $column2 = $grid->addColumn('columnId2', 'sourceColumnName2', 'title2');
+        $column3 = $grid->addColumn('columnId3', 'sourceColumnName3', 'title3');
+
+        $grid->reorderColumns(['columnId2', 'columnId1']);
+
+        $expectedColumns = [
+            'columnId2' => $column2,
+            'columnId1' => $column1,
+            'columnId3' => $column3,
+        ];
+
+        $this->assertSame($expectedColumns, $grid->getColumnsById());
+    }
 }
