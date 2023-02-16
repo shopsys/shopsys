@@ -74,10 +74,11 @@ class FileProfilerStorage extends BaseFileProfilerStorage
                     $content = json_decode($collector->getContent(), true);
                     if (is_array($content) && array_key_exists('query', $content) && strpos($content['query'], '{')) {
                         $queryString = $content['query'];
-                        $re = '/(?<type>query|mutation){(\s*(?<name>[a-zA-Z0-9]+))/m';
+                        $re = '/(?<type>query|mutation)[^{]*{\s*(?<name>[a-zA-Z0-9]+)/m';
                         $matches = [];
-                        preg_match($re, $queryString, $matches);
-                        $profile->setUrl($profile->getUrl() . ' - ' . $matches['type'] . '{' . $matches['name'] . '}');
+                        if (preg_match($re, $queryString, $matches) !== false) {
+                            $profile->setUrl($profile->getUrl() . ' - ' . $matches['type'] . ' ' . $matches['name']);
+                        }
                     }
                 } catch (InvalidArgumentException) {
                     return;
