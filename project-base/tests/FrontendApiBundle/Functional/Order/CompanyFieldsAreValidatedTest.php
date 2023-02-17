@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 class CompanyFieldsAreValidatedTest extends AbstractOrderTestCase
 {
@@ -17,13 +18,13 @@ class CompanyFieldsAreValidatedTest extends AbstractOrderTestCase
         $expectedValidations = [
             'input.companyName' => [
                 0 => [
-                    'message' => t('Please enter company name', [], 'validators', $firstDomainLocale),
+                    'message' => t('Please enter company name', [], Translator::VALIDATOR_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'code' => 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 ],
             ],
             'input.companyNumber' => [
                 0 => [
-                    'message' => t('Please enter identification number', [], 'validators', $firstDomainLocale),
+                    'message' => t('Please enter identification number', [], Translator::VALIDATOR_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'code' => 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 ],
             ],

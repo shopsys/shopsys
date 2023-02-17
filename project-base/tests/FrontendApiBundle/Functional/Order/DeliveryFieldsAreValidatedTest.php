@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 class DeliveryFieldsAreValidatedTest extends AbstractOrderTestCase
 {
@@ -17,37 +18,37 @@ class DeliveryFieldsAreValidatedTest extends AbstractOrderTestCase
         $expectedValidations = [
             'input.deliveryFirstName' => [
                 0 => [
-                    'message' => t('Please enter first name of contact person', [], 'validators', $firstDomainLocale),
+                    'message' => t('Please enter first name of contact person', [], Translator::VALIDATOR_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'code' => 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 ],
             ],
             'input.deliveryLastName' => [
                 0 => [
-                    'message' => t('Please enter last name of contact person', [], 'validators', $firstDomainLocale),
+                    'message' => t('Please enter last name of contact person', [], Translator::VALIDATOR_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'code' => 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 ],
             ],
             'input.deliveryStreet' => [
                 0 => [
-                    'message' => t('Please enter street', [], 'validators', $firstDomainLocale),
+                    'message' => t('Please enter street', [], Translator::VALIDATOR_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'code' => 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 ],
             ],
             'input.deliveryCity' => [
                 0 => [
-                    'message' => t('Please enter city', [], 'validators', $firstDomainLocale),
+                    'message' => t('Please enter city', [], Translator::VALIDATOR_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'code' => 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 ],
             ],
             'input.deliveryPostcode' => [
                 0 => [
-                    'message' => t('Please enter zip code', [], 'validators', $firstDomainLocale),
+                    'message' => t('Please enter zip code', [], Translator::VALIDATOR_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'code' => 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 ],
             ],
             'input.deliveryCountry' => [
                 0 => [
-                    'message' => t('Please choose country', [], 'validators', $firstDomainLocale),
+                    'message' => t('Please choose country', [], Translator::VALIDATOR_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'code' => 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
                 ],
             ],

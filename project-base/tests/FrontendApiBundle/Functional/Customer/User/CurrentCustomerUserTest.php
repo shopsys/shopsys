@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Customer\User;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
@@ -88,19 +89,19 @@ mutation {
             0 => t(
                 'First name cannot be longer than {{ limit }} characters',
                 ['{{ limit }}' => 100],
-                'validators',
+                Translator::VALIDATOR_TRANSLATION_DOMAIN,
                 $firstDomainLocale
             ),
             1 => t(
                 'Last name cannot be longer than {{ limit }} characters',
                 ['{{ limit }}' => 100],
-                'validators',
+                Translator::VALIDATOR_TRANSLATION_DOMAIN,
                 $firstDomainLocale
             ),
             2 => t(
                 'Telephone number cannot be longer than {{ limit }} characters',
                 ['{{ limit }}' => 30],
-                'validators',
+                Translator::VALIDATOR_TRANSLATION_DOMAIN,
                 $firstDomainLocale
             ),
         ];

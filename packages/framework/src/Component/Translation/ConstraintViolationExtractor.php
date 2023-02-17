@@ -142,7 +142,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
 
         $messageId = $firstArgumentWithMessage->value->value; // value with translatable message
 
-        $message = new Message($messageId, ConstraintMessageExtractor::CONSTRAINT_MESSAGE_DOMAIN);
+        $message = new Message($messageId, Translator::VALIDATOR_TRANSLATION_DOMAIN);
         $message->addSource(new FileSource($this->file->getFilename(), $firstArgumentWithMessage->getLine()));
 
         $this->catalogue->add($message);

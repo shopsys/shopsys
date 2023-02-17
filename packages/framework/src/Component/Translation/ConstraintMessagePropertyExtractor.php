@@ -115,7 +115,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
             if ($this->isMessagePropertyProperty($propertyProperty)) {
                 $messageId = PhpParserNodeHelper::getConcatenatedStringValue($propertyProperty->default, $this->file);
 
-                $message = new Message($messageId, ConstraintMessageExtractor::CONSTRAINT_MESSAGE_DOMAIN);
+                $message = new Message($messageId, Translator::VALIDATOR_TRANSLATION_DOMAIN);
                 $message->addSource(new FileSource($this->file->getFilename(), $propertyProperty->getLine()));
 
                 $this->catalogue->add($message);

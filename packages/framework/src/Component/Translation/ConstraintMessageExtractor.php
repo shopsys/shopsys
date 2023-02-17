@@ -33,8 +33,6 @@ use Twig\Node\Node as TwigNode;
  */
 class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
 {
-    public const CONSTRAINT_MESSAGE_DOMAIN = 'validators';
-
     /**
      * @var \PhpParser\NodeTraverser
      */
@@ -100,7 +98,7 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
                 if ($this->isMessageOptionItem($optionItemNode)) {
                     $messageId = PhpParserNodeHelper::getConcatenatedStringValue($optionItemNode->value, $this->file);
 
-                    $message = new Message($messageId, self::CONSTRAINT_MESSAGE_DOMAIN);
+                    $message = new Message($messageId, Translator::VALIDATOR_TRANSLATION_DOMAIN);
                     $message->addSource(new FileSource($this->file->getFilename(), $optionItemNode->getLine()));
 
                     $this->catalogue->add($message);

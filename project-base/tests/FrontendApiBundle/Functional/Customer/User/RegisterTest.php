@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Customer\User;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class RegisterTest extends GraphQlTestCase
@@ -36,7 +37,7 @@ class RegisterTest extends GraphQlTestCase
         $expectedViolationMessage = t(
             'This email is already registered',
             [],
-            'validators',
+            Translator::VALIDATOR_TRANSLATION_DOMAIN,
             $firstDomainLocale
         );
 
@@ -70,25 +71,25 @@ class RegisterTest extends GraphQlTestCase
             0 => t(
                 'First name cannot be longer than {{ limit }} characters',
                 ['{{ limit }}' => 100],
-                'validators',
+                Translator::VALIDATOR_TRANSLATION_DOMAIN,
                 $firstDomainLocale
             ),
             1 => t(
                 'Last name cannot be longer than {{ limit }} characters',
                 ['{{ limit }}' => 100],
-                'validators',
+                Translator::VALIDATOR_TRANSLATION_DOMAIN,
                 $firstDomainLocale
             ),
             2 => t(
                 'Please enter valid email',
                 [],
-                'validators',
+                Translator::VALIDATOR_TRANSLATION_DOMAIN,
                 $firstDomainLocale
             ),
             3 => t(
                 'Password must be at least {{ limit }} characters long',
                 ['{{ limit }}' => 6],
-                'validators',
+                Translator::VALIDATOR_TRANSLATION_DOMAIN,
                 $firstDomainLocale
             ),
         ];
