@@ -8,6 +8,7 @@ export type BlogCategoryDetailType = {
     seoTitle: string | null;
     seoMetaDescription: string | null;
     blogCategoriesTree: ListedBlogCategoryType[];
+    articlesTotalCount: number;
 };
 
 export type ListedBlogCategoryType = SimpleBlogCategoryType & {

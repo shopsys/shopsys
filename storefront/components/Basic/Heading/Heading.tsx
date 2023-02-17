@@ -1,4 +1,4 @@
-import React, { FC, HTMLAttributes } from 'react';
+import { FC, HTMLAttributes } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { twMergeCustom } from 'utils/twMerge';
@@ -10,7 +10,7 @@ type NativeProps = ExtractNativePropsFromDefault<
 >;
 type HeadingType = 'h1' | 'h2' | 'h3' | 'h4';
 
-type HeadingProps = NativeProps & {
+export type HeadingProps = NativeProps & {
     //  A enumerator-like list of all available typeHeadings of the custom Heading element
     type: HeadingType;
     'data-testid'?: string;

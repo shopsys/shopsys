@@ -15,7 +15,7 @@ export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> =
     const [{ endCursor }] = usePaginationContext();
 
     const [{ data }] = useBlogCategoryArticlesApi({
-        variables: { uuid, endCursorForPagination: endCursor ?? '', pageSize: DEFAULT_PAGE_SIZE },
+        variables: { uuid, endCursor: endCursor ?? '', pageSize: DEFAULT_PAGE_SIZE },
     });
 
     const mappedArticles: ListedBlogArticleType[] = useMemo(

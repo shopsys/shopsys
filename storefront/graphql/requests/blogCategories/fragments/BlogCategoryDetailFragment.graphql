@@ -8,4 +8,5 @@ fragment BlogCategoryDetailFragment on BlogCategory {
     blogCategoriesTree {
         ...BlogCategoriesFragment
     }
+    articlesTotalCount
 }

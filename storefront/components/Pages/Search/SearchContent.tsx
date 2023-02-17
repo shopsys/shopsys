@@ -5,11 +5,14 @@ import {
     ShowResultsButtonWrapperStyled,
 } from './SearchContent.style';
 import { Heading } from 'components/Basic/Heading/Heading';
+import { HeadingPaginated } from 'components/Basic/Heading/HeadingPaginated';
+import { PaginationProvider } from 'components/Blocks/Pagination/PaginationProvider';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { Button } from 'components/Forms/Button/Button';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { desktopFirstSizes, mobileFirstSizes } from 'components/Theme/mediaQueries';
+import { getNewPagination } from 'helpers/pagination/getNewPagination';
 import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
 import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
@@ -164,8 +167,12 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
                 </>
             )}
             <SearchResultsWeblineStyled>
-                <Heading type="h3">{t('Found products')}</Heading>
-                <ProductsSearch productsSearch={searchResults.productsSearch} />
+                <PaginationProvider {...getNewPagination(currentPage)}>
+                    <HeadingPaginated type={'h3'} totalCount={searchResults.productsSearch.totalCount}>
+                        {t('Found products')}
+                    </HeadingPaginated>
+                    <ProductsSearch productsSearch={searchResults.productsSearch} />
+                </PaginationProvider>
             </SearchResultsWeblineStyled>
         </>
     );

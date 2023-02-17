@@ -46,10 +46,24 @@ const SearchPage: FC<ServerSidePropsType> = () => {
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('search', breadcrumbs);
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
+    let title = t('Search');
+    const currentPage = parsePageNumberFromQuery(router.query[PAGE_QUERY_PARAMETER_NAME]);
+    const searchedProductsTotalCount = searchResults?.productsSearch.totalCount ?? 0;
+
+    if (searchedProductsTotalCount > DEFAULT_PAGE_SIZE) {
+        const additionalPaginationText =
+            ' ' +
+            t('page {{ currentPage }} from {{ totalPages }}', {
+                totalPages: Math.ceil(searchedProductsTotalCount / DEFAULT_PAGE_SIZE),
+                currentPage: currentPage,
+            });
+        title = title + additionalPaginationText;
+    }
+
     return (
         <>
             <MetaRobots content="noindex, nofollow" />
-            <CommonLayout title={t('Search')}>
+            <CommonLayout title={title}>
                 <SearchContent searchResults={searchResults} breadcrumbs={breadcrumbs} />
             </CommonLayout>
         </>
