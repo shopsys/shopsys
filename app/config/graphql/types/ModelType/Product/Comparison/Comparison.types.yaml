@@ -1,0 +1,11 @@
+Comparison:
+    type: object
+    config:
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "Comparison identifier"
+            products:
+                type: "[Product!]!"
+                description: "List of compared products"
+                resolve: '@=query("productsByComparisonQuery", value)'

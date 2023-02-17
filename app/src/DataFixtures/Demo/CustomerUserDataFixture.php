@@ -22,6 +22,8 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
 {
     public const USER_WITH_RESET_PASSWORD_HASH = 'user_with_reset_password_hash';
 
+    public const CUSTOMER_PREFIX = 'customer_';
+
     private const KEY_CUSTOMER_USER_DATA = 'customerUserData';
     private const KEY_BILLING_ADDRESS = 'billingAddress';
     private const KEY_DELIVERY_ADDRESS = 'deliveryAddress';
@@ -129,6 +131,9 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
 
                 /** @var \App\Model\Customer\User\CustomerUser $customerUser */
                 $customerUser = $this->customerUserFacade->create($customerUserUpdateData);
+
+                $this->addReference(self::CUSTOMER_PREFIX . $customerUser->getId(), $customerUser);
+
                 if ($customerUser->getId() !== 1) {
                     continue;
                 }

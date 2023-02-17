@@ -724,6 +724,14 @@ export type CompanyCustomerUserApi = CustomerUserApi & {
   uuid: Scalars['Uuid'];
 };
 
+export type ComparisonApi = {
+  __typename?: 'Comparison';
+  /** List of compared products */
+  products: Array<ProductApi>;
+  /** Comparison identifier */
+  uuid: Scalars['Uuid'];
+};
+
 export type ContactInputApi = {
   /** Email address of the sender */
   email: Scalars['String'];
@@ -1121,6 +1129,12 @@ export type MutationApi = {
   RequestPersonalDataAccess: PersonalDataPageApi;
   /** Set default delivery address by Uuid */
   SetDefaultDeliveryAddress: CustomerUserApi;
+  /** Add product to Comparison and create if not exists. */
+  addProductToComparison: ComparisonApi;
+  /** Remove all products from Comparison and remove it. */
+  cleanComparison: Maybe<ComparisonApi>;
+  /** Remove product from Comparison and if is Comparison empty remove it. */
+  removeProductFromComparison: Maybe<ComparisonApi>;
 };
 
 
@@ -1231,6 +1245,23 @@ export type MutationRequestPersonalDataAccessArgsApi = {
 
 export type MutationSetDefaultDeliveryAddressArgsApi = {
   deliveryAddressUuid: Scalars['Uuid'];
+};
+
+
+export type MutationAddProductToComparisonArgsApi = {
+  comparisonUuid: Maybe<Scalars['Uuid']>;
+  productUuid: Scalars['Uuid'];
+};
+
+
+export type MutationCleanComparisonArgsApi = {
+  comparisonUuid: Maybe<Scalars['Uuid']>;
+};
+
+
+export type MutationRemoveProductFromComparisonArgsApi = {
+  comparisonUuid: Maybe<Scalars['Uuid']>;
+  productUuid: Scalars['Uuid'];
 };
 
 /** Represents a navigation structure item */
@@ -2028,6 +2059,8 @@ export type QueryApi = {
   categoriesSearch: CategoryConnectionApi;
   /** Returns category filtered using UUID or URL slug */
   category: Maybe<CategoryApi>;
+  /** Get comparison by uuid or if customer is logged, try find for logged customer. */
+  comparison: Maybe<ComparisonApi>;
   /** Returns information about cookies article */
   cookiesArticle: Maybe<ArticleSiteApi>;
   /** Returns available countries */
@@ -2172,6 +2205,11 @@ export type QueryCategoriesSearchArgsApi = {
 
 export type QueryCategoryArgsApi = {
   urlSlug: Maybe<Scalars['String']>;
+  uuid: Maybe<Scalars['Uuid']>;
+};
+
+
+export type QueryComparisonArgsApi = {
   uuid: Maybe<Scalars['Uuid']>;
 };
 

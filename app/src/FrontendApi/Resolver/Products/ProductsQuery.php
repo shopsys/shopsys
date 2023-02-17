@@ -10,6 +10,8 @@ use App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Brand\Brand;
+use App\Model\Product\Comparison\Comparison;
+use App\Model\Product\Comparison\ComparisonRepository;
 use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Filter\ProductFilterDataFactory;
 use App\Model\Product\Flag\Flag;
@@ -43,13 +45,17 @@ class ProductsQuery extends BaseProductsQuery
      * @param \App\FrontendApi\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory
      * @param \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
      * @param \Overblog\DataLoader\DataLoaderInterface $productsByEntitiesBatchLoader
+     * @param \App\Model\Product\Comparison\ComparisonRepository $comparisonRepository
+     * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader
      */
     public function __construct(
         ProductFacade $productFacade,
         ProductFilterFacade $productFilterFacade,
         ProductConnectionFactory $productConnectionFactory,
         private readonly ProductFilterDataFactory $productFilterDataFactory,
-        private readonly DataLoaderInterface $productsByEntitiesBatchLoader
+        private readonly DataLoaderInterface $productsByEntitiesBatchLoader,
+        private readonly ComparisonRepository $comparisonRepository,
+        private readonly DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader
     ) {
         parent::__construct($productFacade, $productFilterFacade, $productConnectionFactory);
     }
@@ -216,6 +222,17 @@ class ProductsQuery extends BaseProductsQuery
             $this->getDefaultOrderingMode($argument),
             $batchLoadDataId
         );
+    }
+
+    /**
+     * @param \App\Model\Product\Comparison\Comparison $comparison
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function productsByComparisonQuery(Comparison $comparison): Promise
+    {
+        $productIds = $this->comparisonRepository->getProductIdsByComparison($comparison);
+
+        return $this->productsVisibleAndSortedByIdsBatchLoader->load($productIds);
     }
 
     /**
