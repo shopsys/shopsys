@@ -3,7 +3,6 @@ import {
     CategoryDetailAdvertsStyled,
     CategoryDetailContentStyled,
     CategoryDetailDescriptionStyled,
-    CategoryDetailPanelIconStyled,
     CategoryDetailPanelOpenerStyled,
     CategoryDetailPanelStyled,
     CategoryDetailStyled,
@@ -12,6 +11,7 @@ import {
 import { CategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper';
 import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
 import { HeadingPaginated } from 'components/Basic/Heading/HeadingPaginated';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { FilterProvider } from 'components/Blocks/Product/Filter/FilterContext/FilterProvider';
 import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel/FilterPanel';
@@ -85,7 +85,13 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                         />
                         <AdvancedSeoCategories readyCategorySeoMixLinks={category.readyCategorySeoMixLinks} />
                         <CategoryDetailPanelOpenerStyled onClick={handlePanelOpenerClick}>
-                            <CategoryDetailPanelIconStyled iconType="icon" icon="Filter" />
+                            <Icon
+                                iconType="icon"
+                                icon="Filter"
+                                width={24}
+                                height={24}
+                                className="mr-3 font-bold text-white"
+                            />
                             {t('Filter')}
                         </CategoryDetailPanelOpenerStyled>
                         <SortingBar

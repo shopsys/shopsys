@@ -2,7 +2,6 @@ import {
     AddToCartPopupWrapperStyled,
     ButtonsStyled,
     ButtonStyled,
-    Checkmark,
     ContentStyled,
     ImageStyled,
     LinkStyled,
@@ -12,6 +11,7 @@ import {
     ProductStyled,
 } from './AddToCartPopup.style';
 import { Heading } from 'components/Basic/Heading/Heading';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { Image } from 'components/Basic/Image/Image';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
@@ -44,7 +44,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ isVisible, onCloseCall
             hideCloseButton
         >
             <Heading type="h2" className="mt-4 mb-4 flex w-full items-center text-xl normal-case text-primary md:mb-6">
-                <Checkmark iconType="icon" icon="Checkmark" />
+                <Icon iconType="icon" icon="Checkmark" width={30} height={30} className="mr-4 block" />
                 {t('Great choice! We have added your item to the cart')}
             </Heading>
             <ProductStyled data-testid={TEST_IDENTIFIER}>

@@ -1,9 +1,5 @@
-import {
-    PromoCodeInfoCouponIconStyled,
-    PromoCodeInfoCouponStyled,
-    PromoCodeInfoStyled,
-    PromoCodeInfoTitleStyled,
-} from './PromoCodeInfo.style';
+import { PromoCodeInfoCouponStyled, PromoCodeInfoStyled, PromoCodeInfoTitleStyled } from './PromoCodeInfo.style';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 
@@ -28,7 +24,14 @@ export const PromoCodeInfo: FC<PromoCodeInfoProps> = ({ onRemovePromoCodeCallbac
             </PromoCodeInfoTitleStyled>
             <PromoCodeInfoCouponStyled data-testid={TEST_IDENTIFIER + '-code'}>
                 {promoCode}
-                <PromoCodeInfoCouponIconStyled iconType="icon" icon="Cross" onClick={onRemovePromoCodeHandler} />
+                <Icon
+                    iconType="icon"
+                    icon="Cross"
+                    onClick={onRemovePromoCodeHandler}
+                    width={16}
+                    height={16}
+                    className="mr-1 cursor-pointer text-greyDark hover:text-primary"
+                />
             </PromoCodeInfoCouponStyled>
             <p data-testid={TEST_IDENTIFIER + '-description'}>
                 {t(

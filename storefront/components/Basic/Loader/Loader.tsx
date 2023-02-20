@@ -3,9 +3,9 @@ import { FC } from 'react';
 
 type LoaderProps = {
     iconSize?: number;
-    color?: string;
+    className?: string;
 };
 
-export const Loader: FC<LoaderProps> = ({ iconSize, color }) => {
-    return <Icon icon="Spinner" iconType="icon" width={iconSize} height={iconSize} color={color} />;
+export const Loader: FC<LoaderProps> = ({ iconSize, className }) => {
+    return <Icon icon="Spinner" iconType="icon" width={iconSize} height={iconSize} className={className} />;
 };

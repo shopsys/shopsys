@@ -1,10 +1,5 @@
-import {
-    PopupButtonCloseIconStyled,
-    PopupButtonCloseStyled,
-    PopupContentStyled,
-    PopupHeaderStyled,
-    PopupStyled,
-} from './Popup.style';
+import { PopupButtonCloseStyled, PopupContentStyled, PopupHeaderStyled, PopupStyled } from './Popup.style';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { Portal } from 'components/Basic/Portal/Portal';
 import { canUseDom } from 'helpers/misc/canUseDom';
@@ -58,7 +53,7 @@ export const Popup: FC<PopupProps> = ({ isVisible, onCloseCallback, children, hi
                 {hideCloseButton !== true && (
                     <PopupHeaderStyled>
                         <PopupButtonCloseStyled type="button" onClick={onClickCloseActionHandler}>
-                            <PopupButtonCloseIconStyled iconType="icon" icon="Remove" />
+                            <Icon iconType="icon" icon="Remove" width={24} height={24} className="text-primary" />
                         </PopupButtonCloseStyled>
                     </PopupHeaderStyled>
                 )}

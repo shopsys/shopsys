@@ -1,6 +1,6 @@
 import { useFilterState } from '../FilterContext/useFilterState';
+import { FilterGroupIcon } from '../FilterGroup/FilterGroupIcon';
 import {
-    FilterGroupArrowStyled,
     FilterGroupContentStyled,
     FilterGroupStyled,
     FilterGroupTitleStyled,
@@ -28,7 +28,7 @@ export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ title, isOpen 
         <FilterGroupStyled data-testid={TEST_IDENTIFIER}>
             <FilterGroupTitleStyled onClick={() => setIsGroupOpen((currentGroupVisibility) => !currentGroupVisibility)}>
                 {title}
-                <FilterGroupArrowStyled iconType="icon" icon="Arrow" isOpen={isGroupOpen} />
+                <FilterGroupIcon isOpen={isGroupOpen} />
             </FilterGroupTitleStyled>
             <FilterGroupContentStyled isOpen={isGroupOpen}>
                 <Checkbox

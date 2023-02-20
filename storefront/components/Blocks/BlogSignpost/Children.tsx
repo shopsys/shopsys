@@ -1,4 +1,5 @@
-import { BlogSignpostItemIconStyled, BlogSignpostItemStyled } from 'components/Blocks/BlogSignpost/BlogSignpost.style';
+import { BlogSignpostIcon } from './BlogSignpostIcon';
+import { BlogSignpostItemStyled } from 'components/Blocks/BlogSignpost/BlogSignpost.style';
 import NextLink from 'next/link';
 import { FC, Fragment } from 'react';
 import { ListedBlogCategoryType } from 'types/blogCategory';
@@ -11,22 +12,20 @@ type ChildrenProps = {
 
 const TEST_IDENTIFIER = 'blocks-blogsignpost-children-';
 
-export const Children: FC<ChildrenProps> = ({ blogCategory, activeItem, itemLevel }) => {
-    return (
-        <>
-            {blogCategory.children?.map((blogCategoryChild, index) => (
+export const Children: FC<ChildrenProps> = ({ blogCategory, activeItem, itemLevel }) => (
+    <>
+        {blogCategory.children?.map((blogCategoryChild, index) => {
+            const isActive = activeItem === blogCategoryChild.uuid;
+
+            return (
                 <Fragment key={blogCategoryChild.uuid}>
                     <NextLink href={blogCategoryChild.link} passHref>
                         <BlogSignpostItemStyled
-                            isActive={activeItem === blogCategoryChild.uuid}
+                            isActive={isActive}
                             itemLevel={itemLevel}
                             data-testid={TEST_IDENTIFIER + index}
                         >
-                            <BlogSignpostItemIconStyled
-                                iconType="icon"
-                                icon="Arrow"
-                                isActive={activeItem === blogCategoryChild.uuid}
-                            />
+                            <BlogSignpostIcon isActive={isActive} />
                             {blogCategoryChild.name}
                         </BlogSignpostItemStyled>
                     </NextLink>
@@ -34,7 +33,7 @@ export const Children: FC<ChildrenProps> = ({ blogCategory, activeItem, itemLeve
                         <Children blogCategory={blogCategoryChild} activeItem={activeItem} itemLevel={itemLevel + 1} />
                     )}
                 </Fragment>
-            ))}
-        </>
-    );
-};
+            );
+        })}
+    </>
+);

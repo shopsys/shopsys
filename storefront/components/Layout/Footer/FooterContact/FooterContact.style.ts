@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -41,22 +40,6 @@ export const FooterContactSocialsStyled = styled.div(
         border-radius: ${theme.radius.big};
     `,
 );
-
-export const FooterContactInstagramIconStyled = styled(Icon)(
-    ({ theme }) => css`
-        width: 32px;
-        height: 32px;
-
-        color: ${theme.color.white};
-    `,
-);
-
-export const FooterContactYoutubeIconStyled = styled(Icon)`
-    width: 45px;
-    height: 45px;
-
-    color: #d93738;
-`;
 
 export const FooterContactSocialsItemStyled = styled.a`
     display: flex;

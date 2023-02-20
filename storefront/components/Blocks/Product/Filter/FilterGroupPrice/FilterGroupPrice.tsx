@@ -1,7 +1,7 @@
 import { useFilterState } from '../FilterContext/useFilterState';
+import { FilterGroupIcon } from '../FilterGroup/FilterGroupIcon';
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
 import {
-    FilterGroupArrowStyled,
     FilterGroupContentStyled,
     FilterGroupStyled,
     FilterGroupTitleStyled,
@@ -45,7 +45,7 @@ export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, isOpen }) =
         <FilterGroupStyled data-testid={TEST_IDENTIFIER}>
             <FilterGroupTitleStyled onClick={() => setIsGroupOpen((currentGroupVisibility) => !currentGroupVisibility)}>
                 {title}
-                <FilterGroupArrowStyled iconType="icon" icon="Arrow" isOpen={isGroupOpen} />
+                <FilterGroupIcon isOpen={isGroupOpen} />
             </FilterGroupTitleStyled>
             <FilterGroupContentStyled isOpen={isGroupOpen}>
                 <RangeSlider

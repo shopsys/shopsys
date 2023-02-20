@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -11,10 +10,6 @@ const localVariables = {
 };
 
 type ButtonBottomNameStyledProps = {
-    type?: 'right';
-};
-
-type ButtonBottomIconStyledProps = {
     type?: 'right';
 };
 
@@ -179,20 +174,5 @@ export const ButtonBottomNameStyled = styled.div<ButtonBottomNameStyledProps>(
                 margin-left: 20px;
             }
         `}
-    `,
-);
-
-export const ButtonBottomIconStyled = styled(Icon)<ButtonBottomIconStyledProps>(
-    ({ theme, type }) => css`
-        width: 24px;
-        height: 24px;
-        ${type === 'right' ? 'margin-left' : 'margin-right'}: 12px;
-
-        font-size: 24px;
-        color: ${type === 'right' ? `${theme.color.primary}` : `${theme.color.orange}`};
-
-        @media ${theme.mediaQueries.queryXl} {
-            ${type === 'right' ? 'margin-left' : 'margin-right'}: 20px;
-        }
     `,
 );

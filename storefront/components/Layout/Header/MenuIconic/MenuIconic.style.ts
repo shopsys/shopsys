@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -80,16 +79,6 @@ export const MenuIconicItemLinkStyled = styled.a<HasSubmenuProps>(
                 }
             }
         `}
-    `,
-);
-
-export const MenuIconicItemIconStyled = styled(Icon)(
-    ({ theme }) => css`
-        width: 18px;
-        height: 18px;
-        margin-right: 10px;
-
-        color: ${theme.color.white};
     `,
 );
 

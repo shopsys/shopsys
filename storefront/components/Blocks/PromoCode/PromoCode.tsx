@@ -1,5 +1,4 @@
 import {
-    PromoCodeButtonIconStyled,
     PromoCodeButtonStyled,
     PromoCodeContentButtonStyled,
     PromoCodeContentInputStyled,
@@ -8,10 +7,10 @@ import {
     PromoCodeStyled,
 } from './PromoCode.style';
 import { PromoCodeInfo } from './PromoCodeInfo/PromoCodeInfo';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
-import { theme } from 'components/Theme/main';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
 import { useApplyPromoCodeToCart } from 'hooks/cart/useApplyPromoCodeToCart';
@@ -106,7 +105,7 @@ export const PromoCode: FC = () => {
                             onClick={() => setIsContentVisible(!isContentVisible)}
                             data-testid={TEST_IDENTIFIER + '-add-button'}
                         >
-                            <PromoCodeButtonIconStyled iconType="icon" icon="Plus" />
+                            <Icon iconType="icon" icon="Plus" width={12} height={12} className="mr-3" />
                             {t('I have a discount coupon')}
                         </PromoCodeButtonStyled>
                         <CSSTransition
@@ -133,7 +132,7 @@ export const PromoCode: FC = () => {
                                         data-testid={TEST_IDENTIFIER + '-apply-button'}
                                         onClick={onApplyPromoCodeHandler}
                                     >
-                                        {fetchingApplyPromoCode && <Loader iconSize={16} color={theme.color.white} />}
+                                        {fetchingApplyPromoCode && <Loader iconSize={16} className="text-white" />}
                                         {t('Apply')}
                                     </PromoCodeContentButtonStyled>
                                 </PromoCodeContentStyled>

@@ -1,4 +1,3 @@
-import { HamburgerIconOpenStyled } from './HamburgerIcon.style';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { FC } from 'react';
 
@@ -11,5 +10,5 @@ export const HamburgerIcon: FC<HamburgerIconProps> = ({ isMenuOpened }) => {
         return <Icon iconType="icon" icon="Close" />;
     }
 
-    return <HamburgerIconOpenStyled iconType="icon" icon="Menu" />;
+    return <Icon iconType="icon" icon="Menu" width={16} height={16} />;
 };

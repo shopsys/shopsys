@@ -1,7 +1,6 @@
 import {
     MenuIconicButtonMobileLinkStyled,
     MenuIconicButtonMobileStyled,
-    MenuIconicItemIconStyled,
     MenuIconicItemLinkStyled,
     MenuIconicItemStyled,
     MenuIconicListStyled,
@@ -10,6 +9,8 @@ import {
     MenuIconicSubStyled,
 } from './MenuIconic.style';
 import { Heading } from 'components/Basic/Heading/Heading';
+import { Icon } from 'components/Basic/Icon/Icon';
+import { IconName } from 'components/Basic/Icon/IconsSvgMap';
 import { Login } from 'components/Blocks/Popup/Login/Login';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
@@ -59,7 +60,7 @@ export const MenuIconic: FC = () => {
                 <MenuIconicItemStyled data-testid={TEST_IDENTIFIER + '-0'}>
                     <NextLink href="/" passHref>
                         <MenuIconicItemLinkStyled>
-                            <MenuIconicItemIconStyled iconType="icon" icon="Chat" />
+                            <MenuIconicItemIcon icon="Chat" />
                             {t('Customer service')}
                         </MenuIconicItemLinkStyled>
                     </NextLink>
@@ -67,7 +68,7 @@ export const MenuIconic: FC = () => {
                 <MenuIconicItemStyled data-testid={TEST_IDENTIFIER + '-1'}>
                     <NextLink href={storesUrl} passHref>
                         <MenuIconicItemLinkStyled>
-                            <MenuIconicItemIconStyled iconType="icon" icon="Marker" />
+                            <MenuIconicItemIcon icon="Marker" />
                             {t('Stores')}
                         </MenuIconicItemLinkStyled>
                     </NextLink>
@@ -75,7 +76,7 @@ export const MenuIconic: FC = () => {
                 <MenuIconicItemStyled data-testid={TEST_IDENTIFIER + '-2'}>
                     {isUserLoggedIn ? (
                         <MenuIconicItemLinkStyled hasSubmenu>
-                            <MenuIconicItemIconStyled iconType="icon" icon="User" />
+                            <MenuIconicItemIcon icon="User" />
                             {t('My account')}
                             <MenuIconicSubStyled>
                                 <MenuIconicSubItemStyled data-testid={TEST_IDENTIFIER + '-sub-0'}>
@@ -104,7 +105,7 @@ export const MenuIconic: FC = () => {
                         </MenuIconicItemLinkStyled>
                     ) : (
                         <MenuIconicItemLinkStyled onClick={loginHandler}>
-                            <MenuIconicItemIconStyled iconType="icon" icon="User" />
+                            <MenuIconicItemIcon icon="User" />
                             {t('Login')}
                         </MenuIconicItemLinkStyled>
                     )}
@@ -114,12 +115,12 @@ export const MenuIconic: FC = () => {
                 {isUserLoggedIn ? (
                     <NextLink href={customerUrl} passHref>
                         <MenuIconicButtonMobileLinkStyled>
-                            <MenuIconicItemIconStyled iconType="icon" icon="User" />
+                            <MenuIconicItemIcon icon="User" />
                         </MenuIconicButtonMobileLinkStyled>
                     </NextLink>
                 ) : (
                     <MenuIconicButtonMobileLinkStyled onClick={loginHandler}>
-                        <MenuIconicItemIconStyled iconType="icon" icon="User" />
+                        <MenuIconicItemIcon icon="User" />
                     </MenuIconicButtonMobileLinkStyled>
                 )}
             </MenuIconicButtonMobileStyled>
@@ -130,3 +131,7 @@ export const MenuIconic: FC = () => {
         </>
     );
 };
+
+const MenuIconicItemIcon: FC<{ icon: IconName }> = ({ icon }) => (
+    <Icon iconType="icon" icon={icon} width={18} height={18} className="mr-3 text-white" />
+);

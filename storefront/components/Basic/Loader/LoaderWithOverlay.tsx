@@ -4,13 +4,12 @@ import { FC } from 'react';
 
 type LoaderWithOverlayProps = {
     iconSize?: number;
-    color?: string;
 };
 
-export const LoaderWithOverlay: FC<LoaderWithOverlayProps> = ({ iconSize, color }) => {
+export const LoaderWithOverlay: FC<LoaderWithOverlayProps> = ({ iconSize }) => {
     return (
         <LoadingOverlayStyled>
-            <Loader iconSize={iconSize} color={color} />
+            <Loader iconSize={iconSize} />
         </LoadingOverlayStyled>
     );
 };

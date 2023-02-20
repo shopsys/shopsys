@@ -1,6 +1,8 @@
-import { ErrorIconStyled, ErrorMessageStyled, FormFieldErrorStyled } from './FormLineError.style';
+import { ErrorMessageStyled, FormFieldErrorStyled } from './FormLineError.style';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { FC } from 'react';
 import { FieldError } from 'react-hook-form';
+import { twJoin } from 'tailwind-merge';
 
 type FormLineErrorProps = {
     inputType: 'textarea' | 'text-input' | 'checkbox' | 'text-input-password' | 'select';
@@ -16,9 +18,28 @@ export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, testId
         return null;
     }
 
+    const isInputOrTextArea = inputType === 'text-input' || inputType === 'textarea';
+    const isInputPassword = inputType === 'text-input-password';
+    const isCheckbox = inputType === 'checkbox';
+    const isSelect = inputType === 'select';
+
+    const isTextInputSmall = textInputSize === 'small';
+
     return (
         <FormFieldErrorStyled data-testid={getTestIdentifier(testIdentifier)}>
-            <ErrorIconStyled inputType={inputType} textInputSize={textInputSize} iconType="icon" icon="Cross" />
+            <Icon
+                iconType="icon"
+                icon="Cross"
+                width={16}
+                height={16}
+                className={twJoin(
+                    'absolute flex text-red',
+                    isInputOrTextArea && `right-5 -translate-y-1/2 ${isTextInputSmall ? '-top-7' : '-top-8'}`,
+                    isInputPassword && `right-11 -translate-y-1/2 ${isTextInputSmall ? '-top-7' : '-top-8'}`,
+                    isCheckbox && '-right-5',
+                    isSelect && '-top-10 right-11 z-[2]',
+                )}
+            />
             {error.message !== undefined && <ErrorMessageStyled>{error.message}</ErrorMessageStyled>}
         </FormFieldErrorStyled>
     );

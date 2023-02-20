@@ -1,12 +1,12 @@
 import { useFilterState } from '../FilterContext/useFilterState';
 import {
-    FilterGroupArrowStyled,
     FilterGroupContentItemStyled,
     FilterGroupContentStyled,
     FilterGroupStyled,
     FilterGroupTitleStyled,
     ShowAllButtonStyled,
 } from './FilterGroup.style';
+import { FilterGroupIcon } from './FilterGroupIcon';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useMemo, useState } from 'react';
@@ -42,7 +42,7 @@ export const FilterGroup: FC<FilterGroupProps> = ({
         <FilterGroupStyled data-testid={getTestIdentifier(filterField)}>
             <FilterGroupTitleStyled onClick={() => setIsGroupOpen((currentGroupVisibility) => !currentGroupVisibility)}>
                 {title}
-                <FilterGroupArrowStyled iconType="icon" icon="Arrow" isOpen={isGroupOpen} />
+                <FilterGroupIcon isOpen={isGroupOpen} />
             </FilterGroupTitleStyled>
             <FilterGroupContentStyled isOpen={isGroupOpen}>
                 {selected

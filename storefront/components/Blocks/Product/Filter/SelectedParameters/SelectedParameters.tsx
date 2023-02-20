@@ -4,19 +4,19 @@ import {
     useFilterState,
     useIsProductFilterEmpty,
 } from '../FilterContext/useFilterState';
-import { Parameters } from './Parameters/Parameters';
+import { Parameters } from './Parameters';
 import {
     SelectedParametersBlockStyled,
-    SelectedParametersListItemRemoveStyled,
     SelectedParametersListItemStyled,
     SelectedParametersListStyled,
     SelectedParametersNameStyled,
-    SelectedParametersResetRemoveStyled,
     SelectedParametersResetStyled,
     SelectedParametersResetTextStyled,
     SelectedParametersStyled,
 } from './SelectedParameters.style';
+import { SelectedParametersIcon } from './SelectedParametersIcon';
 import { Heading } from 'components/Basic/Heading/Heading';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useMemo } from 'react';
@@ -58,9 +58,7 @@ export const SelectedParameters: FC = () => {
                         {checkedBrands.map((filterFormBrand) => (
                             <SelectedParametersListItemStyled key={filterFormBrand.uuid}>
                                 {filterFormBrand.name}
-                                <SelectedParametersListItemRemoveStyled
-                                    iconType="icon"
-                                    icon="RemoveThin"
+                                <SelectedParametersIcon
                                     onClick={() => dispatch({ type: 'uncheckBrand', payload: filterFormBrand.uuid })}
                                 />
                             </SelectedParametersListItemStyled>
@@ -74,9 +72,7 @@ export const SelectedParameters: FC = () => {
                         {checkedFlags.map((filterFormFlag) => (
                             <SelectedParametersListItemStyled key={filterFormFlag.uuid}>
                                 {filterFormFlag.name}
-                                <SelectedParametersListItemRemoveStyled
-                                    iconType="icon"
-                                    icon="RemoveThin"
+                                <SelectedParametersIcon
                                     onClick={() => dispatch({ type: 'uncheckFlag', payload: filterFormFlag.uuid })}
                                 />
                             </SelectedParametersListItemStyled>
@@ -89,9 +85,7 @@ export const SelectedParameters: FC = () => {
                         <SelectedParametersNameStyled>{t('Availability')}:</SelectedParametersNameStyled>
                         <SelectedParametersListItemStyled>
                             {t('Only goods in stock')}
-                            <SelectedParametersListItemRemoveStyled
-                                iconType="icon"
-                                icon="RemoveThin"
+                            <SelectedParametersIcon
                                 onClick={() => dispatch({ type: 'setOnlyInStock', payload: false })}
                             />
                         </SelectedParametersListItemStyled>
@@ -115,18 +109,14 @@ export const SelectedParameters: FC = () => {
                                     {formatPrice(maximalPrice)}
                                 </>
                             )}
-                            <SelectedParametersListItemRemoveStyled
-                                iconType="icon"
-                                icon="RemoveThin"
-                                onClick={() => dispatch({ type: 'resetPrices' })}
-                            />
+                            <SelectedParametersIcon onClick={() => dispatch({ type: 'resetPrices' })} />
                         </SelectedParametersListItemStyled>
                     </SelectedParametersListStyled>
                 )}
             </SelectedParametersBlockStyled>
             <SelectedParametersResetStyled onClick={() => dispatch({ type: 'resetAllParameters' })}>
                 <SelectedParametersResetTextStyled>{t('Clear all')}</SelectedParametersResetTextStyled>
-                <SelectedParametersResetRemoveStyled iconType="icon" icon="Remove" />
+                <Icon iconType="icon" icon="Remove" className="ml-2 cursor-pointer text-greenLight" />
             </SelectedParametersResetStyled>
         </SelectedParametersStyled>
     );

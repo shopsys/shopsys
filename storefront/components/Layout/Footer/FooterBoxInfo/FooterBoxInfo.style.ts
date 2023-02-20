@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { ButtonStyled } from 'components/Basic/Link/Link.style';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
@@ -112,16 +111,6 @@ export const FooterBoxInfoContactStyled = styled.div(
         @media ${theme.mediaQueries.queryVl} {
             justify-content: center;
         }
-    `,
-);
-
-export const FooterBoxInfoContactIconStyled = styled(Icon)(
-    ({ theme }) => css`
-        margin-right: 12px;
-        width: 20px;
-        height: 20px;
-
-        color: ${theme.color.orange};
     `,
 );
 

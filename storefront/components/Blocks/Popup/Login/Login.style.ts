@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -174,21 +173,6 @@ export const LoginLostPassStyled = styled.div(
 
         @media ${theme.mediaQueries.queryLg} {
             padding: 8px 12px;
-        }
-    `,
-);
-
-export const LoginLostPassIconStyled = styled(Icon)(
-    ({ theme }) => css`
-        display: none;
-
-        @media ${theme.mediaQueries.querySm} {
-            display: block;
-            width: 31px;
-            height: 27px;
-            margin: 0 3px 0 -5px;
-
-            color: ${theme.color.red};
         }
     `,
 );

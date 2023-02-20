@@ -1,7 +1,7 @@
 import { useFilterState } from '../FilterContext/useFilterState';
+import { FilterGroupIcon } from '../FilterGroup/FilterGroupIcon';
 import { SliderFilter } from './SliderFilter/SliderFilter';
 import {
-    FilterGroupArrowStyled,
     FilterGroupColorStyled,
     FilterGroupContentItemStyled,
     FilterGroupContentStyled,
@@ -54,7 +54,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                 onClick={() => setIsGroupCollapsed((currentGroupVisibility) => !currentGroupVisibility)}
             >
                 {title}
-                <FilterGroupArrowStyled iconType="icon" icon="Arrow" isOpen={!isGroupCollapsed} />
+                <FilterGroupIcon isOpen={!isGroupCollapsed} />
             </FilterGroupTitleStyled>
             <FilterGroupContentStyled isOpen={!isGroupCollapsed}>
                 {parameters?.__typename === 'ParameterCheckboxFilterOption' && (

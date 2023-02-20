@@ -1,14 +1,9 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
 type BlogSignpostItemStyledProps = {
     isActive: boolean;
     itemLevel?: number;
-};
-
-type BlogSignpostItemIconStyledProps = {
-    isActive: boolean;
 };
 
 export const BlogSignpostStyled = styled.div(
@@ -57,21 +52,5 @@ export const BlogSignpostItemStyled = styled.a<BlogSignpostItemStyledProps>(
                       ${theme.color.creamWhite}
                   `};
         }
-    `,
-);
-
-export const BlogSignpostItemIconStyled = styled(Icon)<BlogSignpostItemIconStyledProps>(
-    ({ theme, isActive }) => css`
-        position: absolute;
-        top: 50%;
-        left: 10px;
-        transform: rotate(-90deg) translate(50%);
-
-        color: ${theme.color.creamWhite};
-
-        ${isActive === true &&
-        css`
-            color: ${theme.color.base};
-        `}
     `,
 );

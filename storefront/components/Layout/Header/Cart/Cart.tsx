@@ -9,13 +9,12 @@ import {
     CartDetailList,
     CartDetailStyled,
     CartDetailTextStyled,
-    CartIconMobileStyled,
-    CartIconStyled,
     CartPiecesStyled,
     CartStyled,
     CartValueStyled,
 } from './Cart.style';
 import { ListItem } from './ListItem/ListItem';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Button } from 'components/Forms/Button/Button';
 import { useCurrentCart } from 'connectors/cart/Cart';
@@ -58,7 +57,7 @@ export const Cart: FC = () => {
             <NextLink href={cartUrl} passHref>
                 <CartBlockStyled isHovered={isCartHovered} data-testid={TEST_IDENTIFIER + 'block'}>
                     <CartPiecesStyled>
-                        <CartIconStyled iconType="icon" icon="Cart" />
+                        <Icon iconType="icon" icon="Cart" width={18} height={18} />
                         <CartCountStyled data-testid={TEST_IDENTIFIER + 'itemcount'}>
                             {cart?.items.length ?? 0}
                         </CartCountStyled>
@@ -108,7 +107,7 @@ export const Cart: FC = () => {
             <CartButtonMobileStyled>
                 <NextLink href={cartUrl} passHref>
                     <CartButtonMobileLinkStyled>
-                        <CartIconMobileStyled iconType="icon" icon="Cart" />
+                        <Icon iconType="icon" icon="Cart" className="text-white" width={18} height={18} />
                         <CartCountStyled>{cart?.items.length ?? 0}</CartCountStyled>
                     </CartButtonMobileLinkStyled>
                 </NextLink>

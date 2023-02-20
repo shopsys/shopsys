@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -46,17 +45,6 @@ export const BlogPreviewHeadingLinkStyled = styled.a(
             text-decoration: none;
             color: ${theme.color.creamWhite};
         }
-    `,
-);
-
-export const BlogPreviewHeadingLinkIconStyled = styled(Icon)(
-    ({ theme }) => css`
-        margin-left: 6px;
-        position: relative;
-        top: -1px;
-
-        color: ${theme.color.creamWhite};
-        font-size: ${theme.fontSize.extraSmall};
     `,
 );
 

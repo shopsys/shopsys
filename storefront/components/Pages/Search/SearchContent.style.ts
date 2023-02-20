@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
@@ -115,16 +114,5 @@ export const SearchResultsPanelOpenerStyled = styled.div(
         @media ${theme.mediaQueries.queryVl} {
             display: none;
         }
-    `,
-);
-
-export const SearchResultsPanelIconStyled = styled(Icon)(
-    ({ theme }) => css`
-        height: 24px;
-        width: 24px;
-        margin: 2px 10px 0 0;
-
-        color: ${theme.color.white};
-        font-weight: 700;
     `,
 );

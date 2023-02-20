@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -62,15 +61,5 @@ export const ContactHours = styled.p(
 
         font-size: ${theme.fontSize.small};
         color: ${theme.color.creamWhite};
-    `,
-);
-
-export const HeaderContactIconStyled = styled(Icon)(
-    ({ theme }) => css`
-        margin-right: 12px;
-        width: 20px;
-        height: 20px;
-
-        color: ${theme.color.orange};
     `,
 );

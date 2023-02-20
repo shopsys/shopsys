@@ -1,5 +1,4 @@
 import {
-    ButtonBottomIconStyled,
     ButtonBottomItemStyled,
     ButtonBottomNameStyled,
     ButtonBottomStyled,
@@ -12,6 +11,7 @@ import {
 } from './StoreDetailContent.style';
 import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
 import { Heading } from 'components/Basic/Heading/Heading';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -84,14 +84,26 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                     </MapStyled>
                     <ButtonBottomStyled>
                         <ButtonBottomItemStyled>
-                            <ButtonBottomIconStyled iconType="icon" icon="Chat" />
+                            <Icon
+                                iconType="icon"
+                                icon="Chat"
+                                width={24}
+                                height={24}
+                                className="mr-3 text-2xl text-orange xl:mr-5"
+                            />
                             <NextLink href={contactUrl} passHref>
                                 <ButtonBottomNameStyled>{t('Do you have any questions?')}</ButtonBottomNameStyled>
                             </NextLink>
                         </ButtonBottomItemStyled>
                         <ButtonBottomItemStyled>
                             <ButtonBottomNameStyled type="right">{t('Customer Centre')}</ButtonBottomNameStyled>
-                            <ButtonBottomIconStyled iconType="icon" icon="Arrow" type="right" />
+                            <Icon
+                                iconType="icon"
+                                icon="Arrow"
+                                width={24}
+                                height={24}
+                                className="ml-3 text-2xl text-primary xl:ml-5"
+                            />
                         </ButtonBottomItemStyled>
                     </ButtonBottomStyled>
                 </StoreDetailContentStyled>

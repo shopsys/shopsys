@@ -1,4 +1,5 @@
-import { DropdownSlideLeftIconStyled, DropdownSlideLeftStyled } from './DropdownSlideLeft.style';
+import { DropdownSlideLeftStyled } from './DropdownSlideLeft.style';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { DropdownListLevels } from 'types/dropdown';
@@ -15,7 +16,7 @@ export const DropdownSlideLeft: FC<DropdownSlideLeftProps> = ({ goToMenu, onClic
 
     return (
         <DropdownSlideLeftStyled onClick={() => onClickEvent({ goToMenu })} data-testid={TEST_IDENTIFIER}>
-            <DropdownSlideLeftIconStyled iconType="icon" icon="Arrow" />
+            <Icon iconType="icon" icon="Arrow" className="mr-2 rotate-90" />
             {t('Back')}
         </DropdownSlideLeftStyled>
     );

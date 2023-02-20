@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -46,21 +45,6 @@ export const BreadcrumbsSpanStyled = styled.span(
         font-size: 13px;
 
         @media ${theme.mediaQueries.queryTablet} {
-            display: none;
-        }
-    `,
-);
-
-export const LeftArrowIconStyled = styled(Icon)(
-    ({ theme }) => css`
-        height: 12px;
-        width: 12px;
-        transform: rotate(90deg);
-        margin-right: 10px;
-
-        color: ${theme.color.greyLight};
-
-        @media ${theme.mediaQueries.queryLg} {
             display: none;
         }
     `,

@@ -1,8 +1,10 @@
-import { GoogleMapMarkerStyled, GoogleMapWrapStyled } from './GoogleMap.style';
+import { Icon } from '../Icon/Icon';
+import { GoogleMapMarker } from './GoogleMapMarker';
 import GoogleMapReact from 'google-map-react';
 import getConfig from 'next/config';
 import { FC, useEffect, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
+import { twJoin } from 'tailwind-merge';
 
 type GoogleMapMarker = {
     locationLatitude: number | null;
@@ -56,7 +58,7 @@ export const GoogleMap: FC<GoogleMapProps> = ({
     }, [activeMarkerHandler, activeMarker]);
 
     return (
-        <GoogleMapWrapStyled data-testid={TEST_IDENTIFIER}>
+        <div className="h-full w-full" data-testid={TEST_IDENTIFIER}>
             <GoogleMapReact
                 bootstrapURLKeys={{ key: publicRuntimeConfig.googleMapApiKey }}
                 defaultCenter={{ lat: mapLat, lng: mapLng }}
@@ -71,18 +73,27 @@ export const GoogleMap: FC<GoogleMapProps> = ({
                     Array.isArray(markers) &&
                     markers.length !== 0 &&
                     markers.map((marker, index) => (
-                        <GoogleMapMarkerStyled
-                            iconType="icon"
-                            icon="MapMarker"
+                        <GoogleMapMarker
                             key={index}
                             lat={marker.locationLatitude}
                             lng={marker.locationLongitude}
-                            isDetail={isDetail}
                             isActive={index === activeMarker}
                             onClick={() => markerClickHandler(index)}
-                        ></GoogleMapMarkerStyled>
+                            isDetail={isDetail}
+                        >
+                            <Icon
+                                iconType="icon"
+                                icon="MapMarker"
+                                onClick={() => markerClickHandler(index)}
+                                className={twJoin(
+                                    'transf absolute',
+                                    index === activeMarker ? 'h-12 w-10 text-orange' : 'h-9 w-8 text-greyDark ',
+                                    isDetail && 'h-14 w-12 cursor-default',
+                                )}
+                            />
+                        </GoogleMapMarker>
                     ))}
             </GoogleMapReact>
-        </GoogleMapWrapStyled>
+        </div>
     );
 };

@@ -9,12 +9,12 @@ import { useRouter } from 'next/router';
 import { FC, useEffect, useMemo, useReducer } from 'react';
 import { FilterOptionsType } from 'types/productFilter';
 
-type Props = {
+type FilterProviderProps = {
     originalSlug: string | null;
     productFilterOptions: FilterOptionsType;
 };
 
-export const FilterProvider: FC<Props> = ({ children, originalSlug, productFilterOptions }) => {
+export const FilterProvider: FC<FilterProviderProps> = ({ children, originalSlug, productFilterOptions }) => {
     const { query } = useRouter();
 
     const value = useReducer(filterReducer, {

@@ -1,7 +1,6 @@
 import {
     FooterBoxInfoButtonStyled,
     FooterBoxInfoContactHoursStyled,
-    FooterBoxInfoContactIconStyled,
     FooterBoxInfoContactPhoneStyled,
     FooterBoxInfoContactStyled,
     FooterBoxInfoContentStyled,
@@ -9,6 +8,7 @@ import {
     FooterBoxInfoStyled,
     FooterBoxInfoTitleStyled,
 } from './FooterBoxInfo.style';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
@@ -37,7 +37,7 @@ export const FooterBoxInfo: FC = () => {
             <FooterBoxInfoContentStyled>
                 <FooterBoxInfoTitleStyled>{t('Need advice?')}</FooterBoxInfoTitleStyled>
                 <FooterBoxInfoContactStyled>
-                    <FooterBoxInfoContactIconStyled iconType="icon" icon="Phone" />
+                    <Icon iconType="icon" icon="Phone" width={20} height={20} className="mr-3 text-orange" />
                     <FooterBoxInfoContactPhoneStyled href={'tel:' + dummyData.phone}>
                         {dummyData.phone}
                     </FooterBoxInfoContactPhoneStyled>

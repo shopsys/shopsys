@@ -2,9 +2,9 @@ import {
     BannersSliderBoxStyled,
     BannersSliderDotControlsStyled,
     BannersSliderStyled,
-    BannersSliderThumbnailControlsIconStyled,
     BannersSliderThumbnailControlsStyled,
 } from './BannersSlider.style';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { BannersSliderItem } from 'components/Blocks/Banners/BannersSliderItem/BannersSliderItem';
 import { theme } from 'components/Theme/main';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
@@ -143,7 +143,13 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, testIdentif
                         disabled={index === currentSlide % sliderItems.length}
                         key={sliderItem.uuid}
                     >
-                        <BannersSliderThumbnailControlsIconStyled iconType="icon" icon="Triangle" />
+                        <Icon
+                            iconType="icon"
+                            icon="Triangle"
+                            width={6}
+                            height={6}
+                            className="absolute left-3 top-1/2 -translate-y-1/2 text-primary"
+                        />
                         {sliderItem.name}
                     </button>
                 ))}

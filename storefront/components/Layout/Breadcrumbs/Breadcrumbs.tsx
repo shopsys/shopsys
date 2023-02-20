@@ -1,10 +1,6 @@
-import {
-    BreadcrumbsLinkStyled,
-    BreadcrumbsSpanStyled,
-    BreadcrumbsStyled,
-    LeftArrowIconStyled,
-} from './Breadcrumbs.style';
+import { BreadcrumbsLinkStyled, BreadcrumbsSpanStyled, BreadcrumbsStyled } from './Breadcrumbs.style';
 import { BreadcrumbsMetadata } from 'components/Basic/Head/BreadcrumbsMetadata/BreadcrumbsMetadata';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
@@ -28,7 +24,13 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumb }) => {
         <Webline>
             <BreadcrumbsMetadata breadcrumbs={breadcrumb} />
             <BreadcrumbsStyled data-testid={TEST_IDENTIFIER}>
-                <LeftArrowIconStyled iconType="icon" icon="Arrow" />
+                <Icon
+                    iconType="icon"
+                    icon="Arrow"
+                    width={12}
+                    height={12}
+                    className="mr-3 rotate-90 text-greyLight lg:hidden"
+                />
                 <NextLink href="/" passHref>
                     <BreadcrumbsLinkStyled data-testid={TEST_IDENTIFIER + '-item-root'}>
                         {t('Home page')}
