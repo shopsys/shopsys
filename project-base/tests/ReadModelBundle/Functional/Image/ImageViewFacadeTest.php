@@ -34,7 +34,7 @@ class ImageViewFacadeTest extends FunctionalTestCase
         $imageViews = $this->imageViewFacade->getMainImagesByEntityIds(Product::class, [self::PRODUCT_ID_1]);
 
         $expected = [
-            self::PRODUCT_ID_1 => new ImageView(self::PRODUCT_IMAGE_PAIRS[self::PRODUCT_ID_1], 'jpg', 'product', null),
+            self::PRODUCT_ID_1 => new ImageView(self::PRODUCT_IMAGE_PAIRS[self::PRODUCT_ID_1], 'jpg', 'product', null, 'Product 1 image'),
         ];
 
         $this->assertEquals($expected, $imageViews);
@@ -59,9 +59,9 @@ class ImageViewFacadeTest extends FunctionalTestCase
         );
 
         $expected = [
-            self::PRODUCT_ID_1 => new ImageView(self::PRODUCT_IMAGE_PAIRS[self::PRODUCT_ID_1], 'jpg', 'product', null),
-            self::PRODUCT_ID_2 => new ImageView(self::PRODUCT_IMAGE_PAIRS[self::PRODUCT_ID_2], 'jpg', 'product', null),
-            self::PRODUCT_ID_3 => new ImageView(self::PRODUCT_IMAGE_PAIRS[self::PRODUCT_ID_3], 'jpg', 'product', null),
+            self::PRODUCT_ID_1 => new ImageView(self::PRODUCT_IMAGE_PAIRS[self::PRODUCT_ID_1], 'jpg', 'product', null, 'Product 1 image'),
+            self::PRODUCT_ID_2 => new ImageView(self::PRODUCT_IMAGE_PAIRS[self::PRODUCT_ID_2], 'jpg', 'product', null, 'Product 2 image'),
+            self::PRODUCT_ID_3 => new ImageView(self::PRODUCT_IMAGE_PAIRS[self::PRODUCT_ID_3], 'jpg', 'product', null, 'Product 3 image'),
         ];
 
         $this->assertEquals($expected, $imageViews);

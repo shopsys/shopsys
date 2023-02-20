@@ -79,7 +79,7 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      */
-    protected function fillFromPayment(PaymentData $paymentData, Payment $payment)
+    protected function fillFromPayment(PaymentData $paymentData, Payment $payment): void
     {
         $paymentData->hidden = $payment->isHidden();
         $paymentData->czkRounding = $payment->isCzkRounding();

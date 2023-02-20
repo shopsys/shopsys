@@ -78,7 +78,8 @@ export default class FileUpload {
     }
 
     createNewUploadedFile () {
-        const templateHtml = this.$uploadedFiles.data('prototype').replace(/__name__/g, '');
+        const countAddedNewUploadedFiles = this.$uploadedFiles.find('.js-file-upload-uploaded-file-template').length;
+        const templateHtml = this.$uploadedFiles.data('prototype').replace(/__name__/g, countAddedNewUploadedFiles);
         const $uploadedFileTemplate = $($.parseHTML(templateHtml));
         $uploadedFileTemplate.find('*[id]').removeAttr('id');
 

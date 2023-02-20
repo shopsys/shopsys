@@ -30,7 +30,7 @@ class ImageFactoryTest extends TestCase
         $imageFactory = new ImageFactory($imageProcessorMock, $this->getFileUpload(), new EntityNameResolver([]));
 
         $this->expectException(EntityMultipleImageException::class);
-        $imageFactory->createMultiple($imageEntityConfig, 1, 'type', []);
+        $imageFactory->createMultiple($imageEntityConfig, 1, [], [], 'type');
     }
 
     public function testCreateMultiple()
@@ -48,7 +48,7 @@ class ImageFactoryTest extends TestCase
             });
 
         $imageFactory = new ImageFactory($imageProcessorMock, $this->getFileUpload(), new EntityNameResolver([]));
-        $images = $imageFactory->createMultiple($imageEntityConfig, 1, 'type', $filenames);
+        $images = $imageFactory->createMultiple($imageEntityConfig, 1, [], $filenames, 'type');
 
         $this->assertCount(2, $images);
         foreach ($images as $image) {
@@ -73,7 +73,7 @@ class ImageFactoryTest extends TestCase
         );
 
         $imageFactory = new ImageFactory($imageProcessorMock, $this->getFileUpload(), new EntityNameResolver([]));
-        $image = $imageFactory->create($imageEntityConfig->getEntityName(), 1, 'type', $filename);
+        $image = $imageFactory->create($imageEntityConfig->getEntityName(), 1, [], $filename, 'type');
         $temporaryFiles = $image->getTemporaryFilesForUpload();
 
         $this->assertInstanceOf(Image::class, $image);

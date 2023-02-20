@@ -43,36 +43,40 @@ class ImageFactory implements ImageFactoryInterface
     /**
      * @param string $entityName
      * @param int $entityId
-     * @param string|null $type
+     * @param array $namesIndexedByLocale
      * @param string $temporaryFilename
+     * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image
      */
     public function create(
         string $entityName,
         int $entityId,
+        array $namesIndexedByLocale,
+        string $temporaryFilename,
         ?string $type,
-        string $temporaryFilename
     ): Image {
         $temporaryFilePath = $this->fileUpload->getTemporaryFilepath($temporaryFilename);
         $convertedFilePath = $this->imageProcessor->convertToShopFormatAndGetNewFilename($temporaryFilePath);
 
         $classData = $this->entityNameResolver->resolve(Image::class);
 
-        return new $classData($entityName, $entityId, $type, $convertedFilePath);
+        return new $classData($entityName, $entityId, $namesIndexedByLocale, $convertedFilePath, $type);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig $imageEntityConfig
      * @param int $entityId
-     * @param string|null $type
+     * @param array $names
      * @param array $temporaryFilenames
+     * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
     public function createMultiple(
         ImageEntityConfig $imageEntityConfig,
         int $entityId,
+        array $names,
+        array $temporaryFilenames,
         ?string $type,
-        array $temporaryFilenames
     ): array {
         if (!$imageEntityConfig->isMultiple($type)) {
             $message = 'Entity ' . $imageEntityConfig->getEntityClass()
@@ -81,8 +85,8 @@ class ImageFactory implements ImageFactoryInterface
         }
 
         $images = [];
-        foreach ($temporaryFilenames as $temporaryFilename) {
-            $images[] = $this->create($imageEntityConfig->getEntityName(), $entityId, $type, $temporaryFilename);
+        foreach ($temporaryFilenames as $key => $temporaryFilename) {
+            $images[] = $this->create($imageEntityConfig->getEntityName(), $entityId, $names[$key] ?? [], $temporaryFilename, $type);
         }
 
         return $images;

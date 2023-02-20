@@ -50,6 +50,11 @@ class ImageUploadDataFactory
      */
     protected function fillFromEntityAndType(ImageUploadData $imageUploadData, object $entity, ?string $type): void
     {
-        $imageUploadData->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($entity, $type);
+        $orderedImages = $this->imageFacade->getImagesByEntityIndexedById($entity, $type);
+        $imageUploadData->orderedImages = $orderedImages;
+
+        foreach ($orderedImages as $orderedImage) {
+            $imageUploadData->namesIndexedByImageIdAndLocale[$orderedImage->getId()] = $orderedImage->getNames();
+        }
     }
 }

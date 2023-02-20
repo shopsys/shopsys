@@ -1597,7 +1597,7 @@ There you can find links to upgrade notes for other versions too.
         - method `__construct` changed its interface:
         ```diff
         - __construct(string $entityName, int $entityId, ?string $type, ?string $temporaryFilename)
-        + __construct(string $entityName, int $entityId, string $namesIndexedByLocale, ?string $temporaryFilename, ?string $type)
+        + __construct(string $entityName, int $entityId, array $namesIndexedByLocale, ?string $temporaryFilename, ?string $type)
         ```
     - `Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface` interface and `Shopsys\FrameworkBundle\Component\Image\ImageFactory` class:
         - method `create` changed its interface:
@@ -1621,3 +1621,4 @@ There you can find links to upgrade notes for other versions too.
         - uploadImages($entity, $temporaryFilenames, $type)
         + uploadImages(object $entity, array $currentFilenamesIndexedByImageIdAndLocale, ?array $temporaryFilenamesIndexedByImageId, ?string $type)
         ```
+    - also see #project-base-diff for more information about changes needed to be done in your project

@@ -84,6 +84,12 @@ class GetAdvertsTest extends GraphQlTestCase
 
         $imageUploadData = new ImageUploadData();
         $imageUploadData->uploadedFiles = [$testImageName];
+        $imageUploadData->uploadedFilenames = [
+            0 => [
+                'cs' => 'Testovací obrázek',
+                'en' => 'Test image',
+            ],
+        ];
 
         $advert3 = $this->advertDataFactory->create();
         $advert3->name = 'Test advert header 2';

@@ -43,6 +43,8 @@ class ImageExtension extends BaseImageExtension
                 $attributes['size']
             );
 
+            $attributes['alt'] = $imageView->getName();
+
             return $this->getImageHtmlByEntityName($attributes, $entityName, $additionalImagesData);
         }
 

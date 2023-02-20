@@ -27,17 +27,24 @@ class ImageView
     protected $type;
 
     /**
+     * @var string|null
+     */
+    protected $name;
+
+    /**
      * @param int $id
      * @param string $extension
      * @param string $entityName
      * @param string|null $type
+     * @param string|null $name
      */
-    public function __construct(int $id, string $extension, string $entityName, ?string $type)
+    public function __construct(int $id, string $extension, string $entityName, ?string $type, ?string $name = null)
     {
         $this->id = $id;
         $this->extension = $extension;
         $this->entityName = $entityName;
         $this->type = $type;
+        $this->name = $name;
     }
 
     /**
@@ -70,5 +77,13 @@ class ImageView
     public function getType(): ?string
     {
         return $this->type;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
     }
 }

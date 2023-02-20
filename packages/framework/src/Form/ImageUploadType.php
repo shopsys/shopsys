@@ -7,6 +7,7 @@ use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Shopsys\FrameworkBundle\Form\Constraints\FileAllowedExtension;
+use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\Transformers\ImagesIdsToImagesTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -18,6 +19,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class ImageUploadType extends AbstractType
 {
@@ -124,6 +126,39 @@ class ImageUploadType extends AbstractType
                 'accept' => ImageProcessor::SUPPORTED_IMAGE_MIME_TYPES,
             ],
         ]);
+
+        $builder
+            ->add('uploadedFilenames', CollectionType::class, [
+                'entry_type' => LocalizedType::class,
+                'allow_add' => true,
+                'entry_options' => [
+                    'label' => '',
+                    'entry_options' => [
+                        'constraints' => [
+                            new Assert\Length([
+                                'max' => 245,
+                                'maxMessage' => 'File name cannot be longer than {{ limit }} characters',
+                            ]),
+                        ],
+                    ],
+                ],
+            ])->add(
+                $builder->create('namesIndexedByImageIdAndLocale', CollectionType::class, [
+                    'required' => false,
+                    'entry_type' => LocalizedType::class,
+                    'entry_options' => [
+                        'label' => '',
+                        'entry_options' => [
+                            'constraints' => [
+                                new Assert\Length([
+                                    'max' => 245,
+                                    'maxMessage' => 'File name cannot be longer than {{ limit }} characters',
+                                ]),
+                            ],
+                        ],
+                    ],
+                ])
+            );
     }
 
     /**

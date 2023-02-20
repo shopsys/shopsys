@@ -18,7 +18,8 @@ class ImageViewFactory
             $image->getId(),
             $image->getExtension(),
             $image->getEntityName(),
-            $image->getType()
+            $image->getType(),
+            $image->getName(),
         );
     }
 }
