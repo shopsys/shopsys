@@ -1,5 +1,6 @@
-import { ButtonCloseStyled, InfoBoxStyled, LinkStyled } from './InfoBox.style';
+import { InfoBoxStyled, LinkStyled } from './InfoBox.style';
 import { Heading } from 'components/Basic/Heading/Heading';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { ListedStoreType } from 'types/store';
@@ -14,7 +15,14 @@ export const InfoBox: FC<InfoBoxProps> = ({ store, closeInfoBoxCallback }) => {
 
     return (
         <InfoBoxStyled>
-            <ButtonCloseStyled onClick={closeInfoBoxCallback} iconType="icon" icon="Remove" />
+            <Icon
+                onClick={closeInfoBoxCallback}
+                iconType="icon"
+                icon="Remove"
+                width={22}
+                height={22}
+                className="absolute top-4 right-4 cursor-pointer text-primary transition-colors hover:text-orangeDarker "
+            />
             <Heading type="h2" className="mb-3">
                 {store.name}
             </Heading>

@@ -1,15 +1,15 @@
 import {
-    NavigationItemLinkIconStyled,
     NavigationItemLinkStyled,
     NavigationItemStyled,
     NavigationItemSubStyled,
     NavigationItemSubWrapStyled,
 } from './NavigationItem.style';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { NavigationLeaf } from 'components/Layout/Header/Navigation/NavigationLeaf/NavigationLeaf';
 import { useMouseHoverDebounce } from 'hooks/ui/useMouseHoverDebounce';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
 import { FC, useState } from 'react';
+import { twJoin } from 'tailwind-merge';
 import { NavigationItem as NavigationItemType } from 'types/navigation';
 
 type NavigationItemProps = {
@@ -34,55 +34,28 @@ export const NavigationItem: FC<NavigationItemProps> = (props) => {
         }
     };
     const hasChildren = props.navigationItem.categoriesByColumns.length > 0;
-    const router = useRouter();
 
     return (
-        <>
-            {props.navigationItem.link === router.asPath ? (
-                <NavigationItemStyled
-                    onMouseEnter={openSubmenu}
-                    onMouseLeave={hideSubmenu}
-                    data-testid={TEST_IDENTIFIER}
-                >
-                    <NextLink href={props.navigationItem.link} passHref>
-                        <NavigationItemLinkStyled isOpen={isHovered}>
-                            {props.navigationItem.name}
-                            {hasChildren && (
-                                <NavigationItemLinkIconStyled isOpen={isHovered} iconType="icon" icon="Arrow" />
-                            )}
-                        </NavigationItemLinkStyled>
-                    </NextLink>
+        <NavigationItemStyled onMouseEnter={openSubmenu} onMouseLeave={hideSubmenu} data-testid={TEST_IDENTIFIER}>
+            <NextLink href={props.navigationItem.link} passHref>
+                <NavigationItemLinkStyled isOpen={isHovered}>
+                    {props.navigationItem.name}
                     {hasChildren && (
-                        <NavigationItemSubStyled isOpen={isHovered}>
-                            <NavigationItemSubWrapStyled>
-                                <NavigationLeaf columnCategories={props.navigationItem.categoriesByColumns} />
-                            </NavigationItemSubWrapStyled>
-                        </NavigationItemSubStyled>
+                        <Icon
+                            iconType="icon"
+                            icon="Arrow"
+                            className={twJoin('ml-2 text-white ', isHovered && 'rotate-180 text-orangeLight')}
+                        />
                     )}
-                </NavigationItemStyled>
-            ) : (
-                <NavigationItemStyled
-                    onMouseEnter={openSubmenu}
-                    onMouseLeave={hideSubmenu}
-                    data-testid={TEST_IDENTIFIER}
-                >
-                    <NextLink href={props.navigationItem.link} passHref>
-                        <NavigationItemLinkStyled isOpen={isHovered}>
-                            {props.navigationItem.name}
-                            {hasChildren && (
-                                <NavigationItemLinkIconStyled isOpen={isHovered} iconType="icon" icon="Arrow" />
-                            )}
-                        </NavigationItemLinkStyled>
-                    </NextLink>
-                    {hasChildren && (
-                        <NavigationItemSubStyled isOpen={isHovered}>
-                            <NavigationItemSubWrapStyled>
-                                <NavigationLeaf columnCategories={props.navigationItem.categoriesByColumns} />
-                            </NavigationItemSubWrapStyled>
-                        </NavigationItemSubStyled>
-                    )}
-                </NavigationItemStyled>
+                </NavigationItemLinkStyled>
+            </NextLink>
+            {hasChildren && (
+                <NavigationItemSubStyled isOpen={isHovered}>
+                    <NavigationItemSubWrapStyled>
+                        <NavigationLeaf columnCategories={props.navigationItem.categoriesByColumns} />
+                    </NavigationItemSubWrapStyled>
+                </NavigationItemSubStyled>
             )}
-        </>
+        </NavigationItemStyled>
     );
 };

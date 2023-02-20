@@ -2,7 +2,6 @@ import {
     ButtonsStyled,
     ButtonWrapperStyled,
     LoginColumnStyled,
-    LoginLostPassIconStyled,
     LoginLostPassLinkMobileStyled,
     LoginLostPassLinkStyled,
     LoginLostPassStyled,
@@ -14,6 +13,7 @@ import {
     LoginStyled,
 } from './Login.style';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
@@ -93,7 +93,13 @@ export const Login: FC = () => {
                                 </Button>
                             </ButtonWrapperStyled>
                             <LoginLostPassStyled>
-                                <LoginLostPassIconStyled iconType="icon" icon="Warning" />
+                                <Icon
+                                    iconType="icon"
+                                    icon="Warning"
+                                    width={29}
+                                    height={29}
+                                    className="mr-1 ml-1 hidden text-red sm:block"
+                                />
                                 <LoginLostPassTextStyled>{t('Lost your password?')}</LoginLostPassTextStyled>
                                 <NextLink href={resetPasswordUrl} passHref>
                                     <LoginLostPassLinkStyled>{t('Renew it')}</LoginLostPassLinkStyled>

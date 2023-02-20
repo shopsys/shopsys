@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -110,17 +109,5 @@ export const BannersSliderDotControlsStyled = styled.div(
         @media ${theme.mediaQueries.queryVl} {
             display: none;
         }
-    `,
-);
-
-export const BannersSliderThumbnailControlsIconStyled = styled(Icon)(
-    ({ theme }) => css`
-        position: absolute;
-        left: 14px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 6px;
-
-        color: ${theme.color.primary};
     `,
 );

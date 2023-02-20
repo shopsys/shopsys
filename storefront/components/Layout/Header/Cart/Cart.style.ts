@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -215,17 +214,6 @@ export const CartButtonMobileLinkStyled = styled.a(
             text-decoration: none;
             color: ${theme.color.white};
         }
-    `,
-);
-
-export const CartIconStyled = styled(Icon)`
-    height: 18px;
-    width: 18px;
-`;
-
-export const CartIconMobileStyled = styled(CartIconStyled)(
-    ({ theme }) => css`
-        color: ${theme.color.white};
     `,
 );
 

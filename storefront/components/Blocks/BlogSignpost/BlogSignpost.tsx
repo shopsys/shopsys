@@ -1,5 +1,6 @@
-import { BlogSignpostItemIconStyled, BlogSignpostItemStyled, BlogSignpostStyled } from './BlogSignpost.style';
-import { Children } from './Children/Children';
+import { BlogSignpostItemStyled, BlogSignpostStyled } from './BlogSignpost.style';
+import { BlogSignpostIcon } from './BlogSignpostIcon';
+import { Children } from './Children';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
@@ -20,26 +21,23 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
         <BlogSignpostStyled>
             <Heading type="h2">{t('Article categories')}</Heading>
             {blogCategoryItems !== undefined &&
-                blogCategoryItems.map((blogCategory, index) => (
-                    <Fragment key={blogCategory.uuid}>
-                        <NextLink href={blogCategory.link} passHref>
-                            <BlogSignpostItemStyled
-                                isActive={activeItem === blogCategory.uuid}
-                                data-testid={TEST_IDENTIFIER + index}
-                            >
-                                <BlogSignpostItemIconStyled
-                                    iconType="icon"
-                                    icon="Arrow"
-                                    isActive={activeItem === blogCategory.uuid}
-                                />
-                                {blogCategory.name}
-                            </BlogSignpostItemStyled>
-                        </NextLink>
-                        {blogCategory.children !== undefined && blogCategory.children.length > 0 && (
-                            <Children blogCategory={blogCategory} activeItem={activeItem} itemLevel={1} />
-                        )}
-                    </Fragment>
-                ))}
+                blogCategoryItems.map((blogCategory, index) => {
+                    const isActive = activeItem === blogCategory.uuid;
+
+                    return (
+                        <Fragment key={blogCategory.uuid}>
+                            <NextLink href={blogCategory.link} passHref>
+                                <BlogSignpostItemStyled isActive={isActive} data-testid={TEST_IDENTIFIER + index}>
+                                    <BlogSignpostIcon isActive={isActive} />
+                                    {blogCategory.name}
+                                </BlogSignpostItemStyled>
+                            </NextLink>
+                            {blogCategory.children !== undefined && blogCategory.children.length > 0 && (
+                                <Children blogCategory={blogCategory} activeItem={activeItem} itemLevel={1} />
+                            )}
+                        </Fragment>
+                    );
+                })}
         </BlogSignpostStyled>
     );
 };

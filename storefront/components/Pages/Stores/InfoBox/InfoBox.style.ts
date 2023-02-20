@@ -1,8 +1,6 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { Link } from 'components/Basic/Link/Link';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
-import tinycolor from 'tinycolor2';
 
 export const InfoBoxStyled = styled.div(
     ({ theme }) => css`
@@ -26,21 +24,3 @@ export const InfoBoxStyled = styled.div(
 export const LinkStyled = styled(Link)`
     margin-top: 20px;
 `;
-
-export const ButtonCloseStyled = styled(Icon)(
-    ({ theme }) => css`
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        width: 22px;
-        height: 22px;
-        cursor: pointer;
-        transition: ${theme.transition} color;
-
-        color: ${theme.color.primary};
-
-        &:hover {
-            color: ${tinycolor(theme.color.orange).darken(10).toString()};
-        }
-    `,
-);

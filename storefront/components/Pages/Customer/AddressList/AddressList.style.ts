@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { PopupStyled } from 'components/Layout/Popup/Popup.style';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
@@ -46,29 +45,6 @@ export const ListItemStyled = styled.div<ListItemStyledProps>(
     `,
 );
 
-export const ListItemIconStyled = styled(Icon)`
-    position: relative;
-    top: 2px;
-    margin: 0 5px 0 0;
-`;
-
-export const ListItemDeleteStyled = styled(Icon)(
-    ({ theme }) => css`
-        position: absolute;
-        right: ${localVariables.addressListPadding};
-        top: ${localVariables.addressListPadding};
-        width: ${localVariables.addressListDeleteIconSize};
-        height: ${localVariables.addressListDeleteIconSize};
-
-        cursor: pointer;
-        color: ${theme.color.greyLight};
-
-        &:hover {
-            color: ${theme.color.red};
-        }
-    `,
-);
-
 export const ListPopupStyled = styled(PopupStyled)(
     ({ theme }) => css`
         @media ${theme.mediaQueries.queryNotLargeDesktop} {
@@ -93,26 +69,3 @@ export const ButtonWrapperStyled = styled.div`
     justify-content: space-between;
     margin-top: 15px;
 `;
-
-export const ButtonBackIconStyled = styled(Icon)(
-    ({ theme }) => css`
-        position: relative;
-        top: 1px;
-        transform: rotate(90deg);
-        margin-right: 15px;
-
-        color: ${theme.color.white};
-    `,
-);
-
-export const ButtonNextIconStyled = styled(Icon)(
-    ({ theme }) => css`
-        position: relative;
-        top: 1px;
-        transform: rotate(-90deg);
-        margin-left: 15px;
-        margin-right: 0;
-
-        color: ${theme.color.white};
-    `,
-);

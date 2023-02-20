@@ -1,12 +1,12 @@
 import {
     SearchResultsContentStyled,
-    SearchResultsPanelIconStyled,
     SearchResultsPanelOpenerStyled,
     SearchResultsPanelStyled,
     SearchResultsStyled,
 } from '../SearchContent.style';
 import { SearchProductsWrapper } from '../SearchProductsWrapper';
 import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { FilterProvider } from 'components/Blocks/Product/Filter/FilterContext/FilterProvider';
 import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel/FilterPanel';
@@ -67,7 +67,13 @@ export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
                             {isPanelOpen && <Overlay $isHiddenOnDesktop onClick={handlePanelOpenerClick} />}
                             <SearchResultsContentStyled>
                                 <SearchResultsPanelOpenerStyled onClick={handlePanelOpenerClick}>
-                                    <SearchResultsPanelIconStyled iconType="icon" icon="Filter" />
+                                    <Icon
+                                        iconType="icon"
+                                        icon="Filter"
+                                        width={24}
+                                        height={24}
+                                        className="mr-3 font-bold text-white"
+                                    />
                                     {t('Filter')}
                                 </SearchResultsPanelOpenerStyled>
                                 <SortingBar

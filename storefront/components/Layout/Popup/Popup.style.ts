@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -49,14 +48,6 @@ export const PopupButtonCloseStyled = styled.button(
         font-size: 10px;
         outline: 0;
         text-decoration: none;
-    `,
-);
-
-export const PopupButtonCloseIconStyled = styled(Icon)(
-    ({ theme }) => css`
-        width: 24px;
-        height: 24px;
-        color: ${theme.color.primary};
     `,
 );
 

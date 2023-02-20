@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -80,20 +79,6 @@ export const NavigationItemLinkStyled = styled.a<NavigationStyledProps>(
 
             background-color: ${theme.color.orange};
         }
-    `,
-);
-
-export const NavigationItemLinkIconStyled = styled(Icon)<NavigationStyledProps>(
-    ({ theme, isOpen }) => css`
-        margin-left: 8px;
-
-        color: ${theme.color.white};
-
-        ${isOpen &&
-        css`
-            transform: rotate(180deg);
-            color: ${theme.color.orangeLight};
-        `};
     `,
 );
 

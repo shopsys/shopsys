@@ -2,12 +2,12 @@ import { PaginationContext } from './context';
 import { paginationReducer } from './reducer';
 import { FC, useReducer } from 'react';
 
-type Props = {
+type PaginationProviderProps = {
     endCursor?: string;
     page: number;
 };
 
-export const PaginationProvider: FC<Props> = ({ children, endCursor, page }) => {
+export const PaginationProvider: FC<PaginationProviderProps> = ({ children, endCursor, page }) => {
     const value = useReducer(paginationReducer, {
         endCursor,
         page,

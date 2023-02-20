@@ -3,7 +3,6 @@ import { Loader } from 'components/Basic/Loader/Loader';
 import { AddToCartPopup } from 'components/Blocks/Product/AddToCartPopup/AddToCartPopup';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
-import { theme } from 'components/Theme/main';
 import { mapAddToCartPopupData } from 'connectors/cart/Cart';
 import { useAddToCart } from 'hooks/cart/useAddToCart';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -55,9 +54,9 @@ export const AddToCart: FC<AddToCartProps> = ({ productUuid, minQuantity, maxQua
                 testIdentifier={TEST_IDENTIFIER}
             >
                 {fetching ? (
-                    <Loader iconSize={16} color={theme.color.white} />
+                    <Loader iconSize={16} className="text-white" />
                 ) : (
-                    <Icon iconType="icon" icon="Cart" color={theme.color.white} />
+                    <Icon iconType="icon" icon="Cart" className="text-white" />
                 )}
                 <span>{t('Add to cart')}</span>
             </Button>

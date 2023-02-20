@@ -1,10 +1,5 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
-
-const localVariables = {
-    orderActionButtonBackIconColor: '#747474',
-} as const;
 
 type OrderActionStyledProps = {
     withGapBottom?: boolean;
@@ -67,25 +62,5 @@ export const OrderActionLinkBackStyled = styled.a(
         font-weight: 700;
         color: ${theme.color.base};
         text-decoration: none;
-    `,
-);
-
-export const OrderActionButtonBackIconStyled = styled(Icon)`
-    position: relative;
-    top: 2px;
-    transform: rotate(90deg);
-    margin-right: 5px;
-
-    color: ${localVariables.orderActionButtonBackIconColor};
-`;
-
-export const OrderActionButtonNextIconStyled = styled(Icon)(
-    ({ theme }) => css`
-        position: relative;
-        top: 1px;
-        transform: rotate(-90deg);
-        margin-left: 5px;
-
-        color: ${theme.color.white};
     `,
 );

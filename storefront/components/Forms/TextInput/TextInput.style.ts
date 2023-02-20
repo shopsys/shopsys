@@ -169,9 +169,4 @@ export const SearchButtonStyled = styled.button`
     cursor: pointer;
     background: transparent;
     border: none;
-
-    & i {
-        width: ${localVariables.inputSearchIconSize};
-        height: ${localVariables.inputSearchIconSize};
-    }
 `;

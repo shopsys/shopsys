@@ -1,12 +1,10 @@
 import {
-    FooterContactInstagramIconStyled,
     FooterContactLangsItemStyled,
     FooterContactLangsItemTextStyled,
     FooterContactLangsStyled,
     FooterContactSocialsItemStyled,
     FooterContactSocialsStyled,
     FooterContactStyled,
-    FooterContactYoutubeIconStyled,
 } from './FooterContact.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
@@ -42,13 +40,13 @@ export const FooterContact: FC = () => {
                     </Heading>
                     <FooterContactSocialsStyled>
                         <FooterContactSocialsItemStyled href="#">
-                            <FooterContactInstagramIconStyled iconType="icon" icon="Instagram" />
+                            <Icon iconType="icon" icon="Instagram" width={32} height={32} className="text-white" />
                         </FooterContactSocialsItemStyled>
                         <FooterContactSocialsItemStyled href="#">
                             <Icon iconType="image" icon="facebook" width={32} height={32} alt={t('Facebook')} />
                         </FooterContactSocialsItemStyled>
                         <FooterContactSocialsItemStyled href="#">
-                            <FooterContactYoutubeIconStyled iconType="icon" icon="Youtube" />
+                            <Icon iconType="icon" icon="Youtube" width={45} height={45} className="text-[#d93738]" />
                         </FooterContactSocialsItemStyled>
                     </FooterContactSocialsStyled>
                 </>

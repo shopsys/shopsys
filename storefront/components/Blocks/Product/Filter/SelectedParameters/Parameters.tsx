@@ -1,7 +1,7 @@
+import { SelectedParametersIcon } from './SelectedParametersIcon';
 import { useCheckedParameters, useFilterState } from 'components/Blocks/Product/Filter/FilterContext/useFilterState';
 import { getIndexOfParameter } from 'components/Blocks/Product/Filter/helpers/getIndexOfParameter';
 import {
-    SelectedParametersListItemRemoveStyled,
     SelectedParametersListItemStyled,
     SelectedParametersListStyled,
     SelectedParametersNameStyled,
@@ -63,9 +63,7 @@ export const Parameters: FC = () => {
                                             : ''}
                                     </>
                                 )}
-                                <SelectedParametersListItemRemoveStyled
-                                    iconType="icon"
-                                    icon="RemoveThin"
+                                <SelectedParametersIcon
                                     onClick={() =>
                                         dispatch({
                                             type: 'uncheckSliderParameter',
@@ -89,9 +87,7 @@ export const Parameters: FC = () => {
                                             data-testid={TEST_IDENTIFIER + index}
                                         >
                                             {value.text}
-                                            <SelectedParametersListItemRemoveStyled
-                                                iconType="icon"
-                                                icon="RemoveThin"
+                                            <SelectedParametersIcon
                                                 onClick={() =>
                                                     dispatch({
                                                         type: 'uncheckParameter',
@@ -101,7 +97,7 @@ export const Parameters: FC = () => {
                                                         },
                                                     })
                                                 }
-                                                data-testid={TEST_IDENTIFIER + 'remove-' + index}
+                                                dataTestId={TEST_IDENTIFIER + 'remove-' + index}
                                             />
                                         </SelectedParametersListItemStyled>
                                     ),

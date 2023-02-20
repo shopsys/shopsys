@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -48,15 +47,6 @@ export const SelectedParametersListItemStyled = styled.li(
     `,
 );
 
-export const SelectedParametersListItemRemoveStyled = styled(Icon)`
-    width: 13px;
-    height: 13px;
-    margin-left: 10px;
-    transform: translateY(2px);
-
-    cursor: pointer;
-`;
-
 export const SelectedParametersResetStyled = styled.div(
     ({ theme }) => css`
         display: flex;
@@ -73,15 +63,6 @@ export const SelectedParametersResetTextStyled = styled.div`
     font-weight: 700;
     text-transform: uppercase;
 `;
-
-export const SelectedParametersResetRemoveStyled = styled(Icon)(
-    ({ theme }) => css`
-        margin-left: 8px;
-
-        cursor: pointer;
-        color: ${theme.color.greyLight};
-    `,
-);
 
 export const SelectedParametersNameStyled = styled.p(
     ({ theme }) => css`

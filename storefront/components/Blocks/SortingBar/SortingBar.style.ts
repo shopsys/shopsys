@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -161,9 +160,3 @@ export const SortingBarSelectedValue = styled.div(
         font-size: ${theme.fontSize.small};
     `,
 );
-
-export const SortingBarSortIconStyled = styled(Icon)`
-    vertical-align: middle;
-    width: 21px;
-    height: 14px;
-`;

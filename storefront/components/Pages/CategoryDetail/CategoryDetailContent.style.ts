@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { styled } from 'components/Theme/main';
@@ -100,17 +99,6 @@ export const CategoryDetailPanelOpenerStyled = styled.div(
         @media ${theme.mediaQueries.queryVl} {
             display: none;
         }
-    `,
-);
-
-export const CategoryDetailPanelIconStyled = styled(Icon)(
-    ({ theme }) => css`
-        height: 24px;
-        width: 24px;
-        margin: 2px 10px 0 0;
-
-        color: ${theme.color.white};
-        font-weight: 700;
     `,
 );
 

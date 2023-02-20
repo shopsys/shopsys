@@ -1,11 +1,10 @@
 import {
-    OrderActionButtonBackIconStyled,
-    OrderActionButtonNextIconStyled,
     OrderActionLeftStyled,
     OrderActionLinkBackStyled,
     OrderActionRightStyled,
     OrderActionStyled,
 } from './OrderAction.style';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import NextLink from 'next/link';
@@ -53,7 +52,7 @@ export const OrderAction: FC<OrderActionProps> = ({
             <OrderActionLeftStyled data-testid={TEST_IDENTIFIER + 'back'}>
                 <NextLink href={buttonBackLink} passHref>
                     <OrderActionLinkBackStyled>
-                        <OrderActionButtonBackIconStyled iconType="icon" icon="Arrow" />
+                        <Icon iconType="icon" icon="Arrow" className="relative top-0 mr-1 rotate-90 text-greyLight" />
                         {buttonBack}
                     </OrderActionLinkBackStyled>
                 </NextLink>
@@ -68,7 +67,7 @@ export const OrderAction: FC<OrderActionProps> = ({
                 >
                     {isLoading && <Loader iconSize={20} />}
                     <span>{buttonNext}</span>
-                    <OrderActionButtonNextIconStyled iconType="icon" icon="Arrow" />
+                    <Icon iconType="icon" icon="Arrow" className="relative top-0 ml-1 -rotate-90 text-white" />
                 </Button>
             </OrderActionRightStyled>
         </OrderActionStyled>

@@ -2,10 +2,10 @@ import {
     ContactContentStyled,
     ContactHours,
     ContactWrapperStyled,
-    HeaderContactIconStyled,
     HeaderContactStyled,
     PhoneNumberStyled,
 } from './HeaderContact.style';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
@@ -35,7 +35,7 @@ export const HeaderContact: FC = () => {
         <HeaderContactStyled data-testid={TEST_IDENTIFIER}>
             <ContactWrapperStyled>
                 <ContactContentStyled>
-                    <HeaderContactIconStyled iconType="icon" icon="Phone" />
+                    <Icon iconType="icon" icon="Phone" width={20} height={20} className="mr-3 text-orange" />
                     <PhoneNumberStyled href={'tel:' + dummyData.phone}>{dummyData.phone}</PhoneNumberStyled>
                     {areContactHoursVisible ? <ContactHours> {dummyData.opening}</ContactHours> : null}
                 </ContactContentStyled>

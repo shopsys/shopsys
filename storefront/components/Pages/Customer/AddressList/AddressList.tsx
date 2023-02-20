@@ -1,14 +1,11 @@
 import {
-    ButtonBackIconStyled,
-    ButtonNextIconStyled,
     ButtonWrapperStyled,
-    ListItemDeleteStyled,
-    ListItemIconStyled,
     ListItemStyled,
     ListPopupInStyled,
     ListPopupStyled,
     ListStyled,
 } from './AddressList.style';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { Button } from 'components/Forms/Button/Button';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { Popup } from 'components/Layout/Popup/Popup';
@@ -79,16 +76,19 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                             <br />
                             {address.telephone && (
                                 <>
-                                    <ListItemIconStyled iconType="icon" icon="Phone" />
+                                    <Icon iconType="icon" icon="Phone" className="relative top-[2px] mr-1" />
                                     {address.telephone}
                                 </>
                             )}
                         </div>
 
-                        <ListItemDeleteStyled
+                        <Icon
                             icon="Remove"
                             iconType="icon"
                             onClick={() => setAddressToBeDeleted(address.uuid)}
+                            width={12}
+                            height={12}
+                            className="absolute right-5 top-5 cursor-pointer text-greyLight hover:text-red"
                         />
                     </ListItemStyled>
                 ))}
@@ -102,12 +102,12 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                     {t('Do you really want to delete this delivery address?')}
                     <ButtonWrapperStyled>
                         <Button type="button" onClick={() => setAddressToBeDeleted(undefined)}>
-                            <ButtonBackIconStyled iconType="icon" icon="Arrow" />
+                            <Icon iconType="icon" icon="Arrow" className="relative mr-4 rotate-90 text-white" />
                             {t('No')}
                         </Button>
                         <Button type="button" onClick={() => deleteItemHandler(addressToBeDeleted)}>
                             {t('Yes')}
-                            <ButtonNextIconStyled iconType="icon" icon="Arrow" />
+                            <Icon iconType="icon" icon="Arrow" className="relative ml-4 -rotate-90" />
                         </Button>
                     </ButtonWrapperStyled>
                 </ListPopupInStyled>

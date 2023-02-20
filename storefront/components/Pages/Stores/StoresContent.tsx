@@ -1,6 +1,5 @@
 import { InfoBox } from './InfoBox/InfoBox';
 import {
-    ButtonBottomIconStyled,
     ButtonBottomItemStyled,
     ButtonBottomNameStyled,
     ButtonBottomStyled,
@@ -13,6 +12,7 @@ import {
 } from './StoresContent.style';
 import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
 import { Heading } from 'components/Basic/Heading/Heading';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Image from 'next/image';
@@ -79,12 +79,24 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
                         <NextLink key={store.slug} href={store.slug} passHref>
                             <ButtonBottomStyled>
                                 <ButtonBottomItemStyled>
-                                    <ButtonBottomIconStyled iconType="icon" icon="Marker" />
+                                    <Icon
+                                        iconType="icon"
+                                        icon="Marker"
+                                        width={24}
+                                        height={24}
+                                        className="mr-3 text-2xl text-orange xl:mr-5"
+                                    />
                                     <ButtonBottomNameStyled>{store.name}</ButtonBottomNameStyled>
                                 </ButtonBottomItemStyled>
                                 <ButtonBottomItemStyled>
                                     <ButtonBottomNameStyled type="right">{t('Store detail')}</ButtonBottomNameStyled>
-                                    <ButtonBottomIconStyled iconType="icon" icon="Arrow" type="right" />
+                                    <Icon
+                                        iconType="icon"
+                                        icon="Arrow"
+                                        width={24}
+                                        height={24}
+                                        className="ml-3 text-2xl text-primary xl:ml-5"
+                                    />
                                 </ButtonBottomItemStyled>
                             </ButtonBottomStyled>
                         </NextLink>

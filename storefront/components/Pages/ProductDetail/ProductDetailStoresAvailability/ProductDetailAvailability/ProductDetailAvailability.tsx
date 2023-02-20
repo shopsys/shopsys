@@ -33,7 +33,7 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
         <AvailabilityStyled data-testid={TEST_IDENTIFIER}>
             <AvailabilityLinkStyled availabilityStatus={product.availability.status} onClick={scrollOnClickHandler}>
                 {product.availability.name}
-                <Icon iconType="icon" icon="Arrow" />
+                <Icon iconType="icon" icon="Arrow" className="text-dark" />
             </AvailabilityLinkStyled>
             {product.availableStoresCount > 0 && (
                 <AvailabilityInfoStyled data-testid={TEST_IDENTIFIER + '-availability'}>

@@ -2,7 +2,6 @@ import {
     BlogPreviewArticlesMainStyled,
     BlogPreviewArticlesSideStyled,
     BlogPreviewArticlesStyled,
-    BlogPreviewHeadingLinkIconStyled,
     BlogPreviewHeadingLinkStyled,
     BlogPreviewHeadingStyled,
     BlogPreviewHeadingTitleStyled,
@@ -11,6 +10,7 @@ import {
 import { Main } from './Main/Main';
 import { Side } from './Side/Side';
 import { SideSlider } from './SideSlider/SideSlider';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useBlogPreviewArticles } from 'connectors/articleInterface/blogArticle/BlogArticle';
@@ -51,7 +51,11 @@ export const BlogPreview: FC = () => {
                     <NextLink href={blogUrl} passHref>
                         <BlogPreviewHeadingLinkStyled>
                             <span>{t('View all')}</span>
-                            <BlogPreviewHeadingLinkIconStyled iconType="icon" icon="ArrowRight" />
+                            <Icon
+                                iconType="icon"
+                                icon="ArrowRight"
+                                className="relative top-0 ml-2 text-xs text-creamWhite"
+                            />
                         </BlogPreviewHeadingLinkStyled>
                     </NextLink>
                 )}

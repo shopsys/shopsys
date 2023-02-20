@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { Button } from 'components/Forms/Button/Button';
 import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { styled } from 'components/Theme/main';
@@ -66,12 +65,6 @@ export const PromoCodeButtonStyled = styled.div(
         }
     `,
 );
-
-export const PromoCodeButtonIconStyled = styled(Icon)`
-    width: 12px;
-    height: 12px;
-    margin-right: 10px;
-`;
 
 export const PromoCodeContentWrapperStyled = styled.div`
     overflow: hidden;

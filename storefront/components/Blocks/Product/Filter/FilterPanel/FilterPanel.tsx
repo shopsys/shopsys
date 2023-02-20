@@ -17,9 +17,9 @@ import {
     FilterPanelHeaderStyled,
     FilterPanelStyled,
 } from './FilterPanel.style';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { usePaginationContext } from 'components/Blocks/Pagination/usePaginationContext';
 import { Button } from 'components/Forms/Button/Button';
-import { PopupButtonCloseIconStyled } from 'components/Layout/Popup/Popup.style';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { getQueryWithoutAllParameter } from 'helpers/filterOptions/getQueryWithoutAllParameter';
 import { shallowReplaceIfDifferent } from 'helpers/filterOptions/shallowReplaceIfDifferent';
@@ -167,7 +167,7 @@ export const FilterPanel = memo<FilterPanelProps>(
                 <FilterPanelHeaderStyled>
                     {t('Product filter')}
                     <FilterCloseButtonStyled onClick={panelCloseHandler}>
-                        <PopupButtonCloseIconStyled iconType="icon" icon="Remove" />
+                        <Icon iconType="icon" icon="Remove" width={24} height={24} className="text-primary" />
                     </FilterCloseButtonStyled>
                 </FilterPanelHeaderStyled>
                 <SelectedParameters />

@@ -9,10 +9,10 @@ import {
     SortingBarSelectedSortStyled,
     SortingBarSelectedValue,
     SortingBarSeletedSortWrapStyled,
-    SortingBarSortIconStyled,
     SortingBarStyled,
     SortingBarTitleStyled,
 } from './SortingBar.style';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
@@ -128,7 +128,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount }) => {
                                     onClick={onSelectSortMenu(selectedSort, value.stateValue)}
                                     data-testid={TEST_IDENTIFIER + '-selected'}
                                 >
-                                    <SortingBarSortIconStyled iconType="icon" icon="Sort" />
+                                    <Icon iconType="icon" icon="Sort" width={21} height={14} className="align-middle" />
                                     <SortingBarSeletedSortWrapStyled>
                                         <SortingBarTitleStyled>{t('Sort')}</SortingBarTitleStyled>
                                         <SortingBarSelectedValue data-testid={TEST_IDENTIFIER + '-selected-value'}>

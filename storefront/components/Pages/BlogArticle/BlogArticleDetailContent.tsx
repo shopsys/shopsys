@@ -14,7 +14,7 @@ const TEST_IDENTIFIER = 'pages-blogarticle-';
 
 export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ blogArticle }) => (
     <Webline>
-        <ArticleTitle dataTestid={TEST_IDENTIFIER + 'title'}>{blogArticle.name}</ArticleTitle>
+        <ArticleTitle dataTestId={TEST_IDENTIFIER + 'title'}>{blogArticle.name}</ArticleTitle>
         <div className="px-5">
             <div className="mb-12 flex w-full flex-col">
                 {blogArticle.image !== null && (

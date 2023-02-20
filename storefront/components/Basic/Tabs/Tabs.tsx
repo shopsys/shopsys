@@ -1,13 +1,14 @@
+import { Icon } from '../Icon/Icon';
 import {
     TabsContentInStyled,
     TabsContentMobileHeadingStyled,
     TabsContentStyled,
-    TabsIconStyled,
     TabsListItemStyled,
     TabsListStyled,
     TabsStyled,
 } from './Tabs.style';
 import React, { FC, useState } from 'react';
+import { twJoin } from 'tailwind-merge';
 
 /**
  * In background of styled tab parts we are using - react-tabs components
@@ -42,7 +43,13 @@ export const TabsContent: TabFC<TabsContentProps> = ({ children, headingTextMobi
         <TabsContentStyled forceRender selectedClassName="active" data-testid={testIdentifier}>
             <TabsContentMobileHeadingStyled onClick={mobileTab}>
                 {headingTextMobile}
-                <TabsIconStyled iconType="icon" icon="Arrow" isActive={isActiveOnMobile} />
+                <Icon
+                    iconType="icon"
+                    icon="Arrow"
+                    width={18}
+                    height={18}
+                    className={twJoin('rotate-0 transition', isActiveOnMobile && '-rotate-180 ')}
+                />
             </TabsContentMobileHeadingStyled>
             <TabsContentInStyled isActiveOnMobile={isActiveOnMobile}>{children}</TabsContentInStyled>
         </TabsContentStyled>

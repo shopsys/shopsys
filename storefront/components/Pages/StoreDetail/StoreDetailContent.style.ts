@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -7,10 +6,6 @@ export const StoreDetailMapSize = {
     bigger: '500px',
     big: '650px',
 } as const;
-
-type ButtonBottomIconStyledProps = {
-    type?: 'right';
-};
 
 export const StoreDetailStyled = styled.div`
     margin-bottom: 40px;
@@ -140,21 +135,6 @@ export const ButtonBottomNameStyled = styled.a(
 
         @media ${theme.mediaQueries.queryMd} {
             font-size: ${theme.fontSize.bigger};
-        }
-    `,
-);
-
-export const ButtonBottomIconStyled = styled(Icon)<ButtonBottomIconStyledProps>(
-    ({ theme, type }) => css`
-        width: 24px;
-        height: 24px;
-        ${type === 'right' ? 'margin-left' : 'margin-right'}: 12px;
-
-        font-size: 24px;
-        color: ${type === 'right' ? `${theme.color.primary}` : `${theme.color.orange}`};
-
-        @media ${theme.mediaQueries.queryXl} {
-            ${type === 'right' ? 'margin-left' : 'margin-right'}: 20px;
         }
     `,
 );

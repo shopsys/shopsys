@@ -1,4 +1,3 @@
-import { Icon } from 'components/Basic/Icon/Icon';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -70,29 +69,6 @@ export const FilterGroupColorStyled = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
 `;
-
-export const FilterGroupArrowStyled = styled(Icon)<FilterGroupStyledProps>(
-    ({ theme, isOpen }) => css`
-        position: absolute;
-        right: 0;
-        top: 50%;
-
-        font-size: 12px;
-        user-select: none;
-        transform: translateY(-50%) rotate(0deg);
-        transition: ${theme.transition};
-
-        ${isOpen
-            ? css`
-                  transform: translateY(-50%) rotate(180deg);
-                  transition: ${theme.transition};
-              `
-            : css`
-                  transform: translateY(-50%) rotate(0deg);
-                  transition: ${theme.transition};
-              `};
-    `,
-);
 
 export const ShowAllButtonStyled = styled.button(
     ({ theme }) => css`
