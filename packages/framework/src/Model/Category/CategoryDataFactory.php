@@ -3,56 +3,26 @@
 namespace Shopsys\FrameworkBundle\Model\Category;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class CategoryDataFactory implements CategoryDataFactoryInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryRepository
-     */
-    protected $categoryRepository;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    protected $friendlyUrlFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade
-     */
-    protected $pluginCrudExtensionFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
-     */
-    protected $imageFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      */
     public function __construct(
-        CategoryRepository $categoryRepository,
-        FriendlyUrlFacade $friendlyUrlFacade,
-        PluginCrudExtensionFacade $pluginCrudExtensionFacade,
-        Domain $domain,
-        ImageFacade $imageFacade
+        protected readonly CategoryRepository $categoryRepository,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly PluginCrudExtensionFacade $pluginCrudExtensionFacade,
+        protected readonly Domain $domain,
+        protected readonly ImageUploadDataFactory $imageUploadDataFactory,
     ) {
-        $this->categoryRepository = $categoryRepository;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->pluginCrudExtensionFacade = $pluginCrudExtensionFacade;
-        $this->domain = $domain;
-        $this->imageFacade = $imageFacade;
     }
 
     /**
@@ -60,7 +30,10 @@ class CategoryDataFactory implements CategoryDataFactoryInterface
      */
     protected function createInstance(): CategoryData
     {
-        return new CategoryData();
+        $categoryData = new CategoryData();
+        $categoryData->image = $this->imageUploadDataFactory->create();
+
+        return $categoryData;
     }
 
     /**
@@ -89,7 +62,7 @@ class CategoryDataFactory implements CategoryDataFactoryInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
      */
-    protected function fillNew(CategoryData $categoryData)
+    protected function fillNew(CategoryData $categoryData): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $categoryData->seoMetaDescriptions[$domainId] = null;
@@ -108,7 +81,7 @@ class CategoryDataFactory implements CategoryDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      */
-    protected function fillFromCategory(CategoryData $categoryData, Category $category)
+    protected function fillFromCategory(CategoryData $categoryData, Category $category): void
     {
         $categoryData->name = $category->getNames();
         $categoryData->parent = $category->getParent();
@@ -129,6 +102,6 @@ class CategoryDataFactory implements CategoryDataFactoryInterface
         }
 
         $categoryData->pluginData = $this->pluginCrudExtensionFacade->getAllData('category', $category->getId());
-        $categoryData->image->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($category, null);
+        $categoryData->image = $this->imageUploadDataFactory->createFromEntityAndType($category);
     }
 }

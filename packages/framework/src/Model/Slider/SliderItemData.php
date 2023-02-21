@@ -2,8 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Model\Slider;
 
-use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
-
 class SliderItemData
 {
     /**
@@ -33,7 +31,6 @@ class SliderItemData
 
     public function __construct()
     {
-        $this->image = new ImageUploadData();
         $this->hidden = false;
     }
 }

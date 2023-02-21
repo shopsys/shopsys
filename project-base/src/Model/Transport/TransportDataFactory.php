@@ -18,6 +18,9 @@ class TransportDataFactory extends BaseTransportDataFactory
      */
     protected function createInstance(): BaseTransportData
     {
-        return new TransportData();
+        $transportData = new TransportData();
+        $transportData->image = $this->imageUploadDataFactory->create();
+
+        return $transportData;
     }
 }

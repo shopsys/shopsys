@@ -3,48 +3,24 @@
 namespace Shopsys\FrameworkBundle\Model\Payment;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 
 class PaymentDataFactory implements PaymentDataFactoryInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade
-     */
-    protected $paymentFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
-     */
-    protected $vatFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
-     */
-    protected $imageFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      */
     public function __construct(
-        PaymentFacade $paymentFacade,
-        VatFacade $vatFacade,
-        Domain $domain,
-        ImageFacade $imageFacade
+        protected readonly PaymentFacade $paymentFacade,
+        protected readonly VatFacade $vatFacade,
+        protected readonly Domain $domain,
+        protected readonly ImageUploadDataFactory $imageUploadDataFactory,
     ) {
-        $this->paymentFacade = $paymentFacade;
-        $this->vatFacade = $vatFacade;
-        $this->domain = $domain;
-        $this->imageFacade = $imageFacade;
     }
 
     /**
@@ -52,7 +28,10 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
      */
     protected function createInstance(): PaymentData
     {
-        return new PaymentData();
+        $paymentData = new PaymentData();
+        $paymentData->image = $this->imageUploadDataFactory->create();
+
+        return $paymentData;
     }
 
     /**
@@ -129,6 +108,6 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
             $paymentData->vatsIndexedByDomainId[$domainId] = $payment->getPaymentDomain($domainId)->getVat();
         }
 
-        $paymentData->image->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($payment, null);
+        $paymentData->image = $this->imageUploadDataFactory->createFromEntityAndType($payment);
     }
 }

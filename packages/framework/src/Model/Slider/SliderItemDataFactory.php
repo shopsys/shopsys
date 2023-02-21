@@ -2,21 +2,16 @@
 
 namespace Shopsys\FrameworkBundle\Model\Slider;
 
-use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 
 class SliderItemDataFactory implements SliderItemDataFactoryInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      */
-    protected $imageFacade;
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     */
-    public function __construct(ImageFacade $imageFacade)
-    {
-        $this->imageFacade = $imageFacade;
+    public function __construct(
+        protected readonly ImageUploadDataFactory $imageUploadDataFactory,
+    ) {
     }
 
     /**
@@ -24,7 +19,10 @@ class SliderItemDataFactory implements SliderItemDataFactoryInterface
      */
     protected function createInstance(): SliderItemData
     {
-        return new SliderItemData();
+        $sliderItemData = new SliderItemData();
+        $sliderItemData->image = $this->imageUploadDataFactory->create();
+
+        return $sliderItemData;
     }
 
     /**
@@ -51,12 +49,12 @@ class SliderItemDataFactory implements SliderItemDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItem $sliderItem
      */
-    protected function fillFromSliderItem(SliderItemData $sliderItemData, SliderItem $sliderItem)
+    protected function fillFromSliderItem(SliderItemData $sliderItemData, SliderItem $sliderItem): void
     {
         $sliderItemData->name = $sliderItem->getName();
         $sliderItemData->link = $sliderItem->getLink();
         $sliderItemData->hidden = $sliderItem->isHidden();
         $sliderItemData->domainId = $sliderItem->getDomainId();
-        $sliderItemData->image->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($sliderItem, null);
+        $sliderItemData->image = $this->imageUploadDataFactory->createFromEntityAndType($sliderItem);
     }
 }

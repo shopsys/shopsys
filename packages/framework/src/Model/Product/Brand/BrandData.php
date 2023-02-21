@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
-use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 
 class BrandData
@@ -50,7 +49,6 @@ class BrandData
     public function __construct()
     {
         $this->name = '';
-        $this->image = new ImageUploadData();
         $this->descriptions = [];
         $this->urls = new UrlListData();
         $this->seoTitles = [];
