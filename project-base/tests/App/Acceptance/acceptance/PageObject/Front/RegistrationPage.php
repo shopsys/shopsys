@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Acceptance\acceptance\PageObject\Front;
 
 use Shopsys\FrameworkBundle\Component\Form\TimedFormTypeExtension;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
 use Tests\App\Test\Codeception\AcceptanceTester;
 use Tests\App\Test\Codeception\Module\StrictWebDriver;
@@ -83,7 +84,7 @@ class RegistrationPage extends AbstractPage
         // Error message might be in fancy title - hover over field
         $this->tester->moveMouseOverByCss($fieldClass);
 
-        $this->tester->seeTranslationFrontend($text, 'validators');
+        $this->tester->seeTranslationFrontend($text, Translator::VALIDATOR_TRANSLATION_DOMAIN);
     }
 
     /**

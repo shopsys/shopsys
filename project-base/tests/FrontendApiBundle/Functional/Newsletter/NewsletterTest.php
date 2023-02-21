@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Newsletter;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class NewsletterTest extends GraphQlTestCase
@@ -33,7 +34,7 @@ class NewsletterTest extends GraphQlTestCase
         $emailError = $responseData['input.email'][0];
 
         $firstDomainLocale = $this->getLocaleForFirstDomain();
-        $expectedViolationMessage = t('Please enter valid email', [], 'validators', $firstDomainLocale);
+        $expectedViolationMessage = t('Please enter valid email', [], Translator::VALIDATOR_TRANSLATION_DOMAIN, $firstDomainLocale);
 
         $this->assertArrayHasKey('message', $emailError);
         $this->assertEquals($expectedViolationMessage, $emailError['message']);

@@ -1193,3 +1193,7 @@ There you can find links to upgrade notes for other versions too.
     - also see #project-base-diff for more information about changes needed to be done in your project
 - lock version of npm `jquery-ui` to version `1.12.1` in order to fix category sorting in admin ([#2558](https://github.com/shopsys/shopsys/pull/2558))
     - see #project-base-diff for more information about changes needed to be done in your project
+- use `Shopsys\FrameworkBundle\Component\Translation\Translator::VALIDATOR_TRANSLATION_DOMAIN` for validators translations ()
+    - `Shopsys\FrameworkBundle\Component\Translation\ConstraintMessageExtractor` class:
+        - constant `CONSTRAINT_MESSAGE_DOMAIN` has been removed, use `Shopsys\FrameworkBundle\Component\Translation\Translator::VALIDATOR_TRANSLATION_DOMAIN` instead
+    - also see #project-base-diff for more information about changes needed to be done in your project
