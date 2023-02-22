@@ -1,0 +1,5 @@
+mutation AddProductToComparisonMutation($productUuid: Uuid!, $comparisonUuid: Uuid){
+    addProductToComparison(productUuid: $productUuid,comparisonUuid: $comparisonUuid){
+        ...ProductComparisonFragment
+    }
+}

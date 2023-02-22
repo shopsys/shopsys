@@ -498,7 +498,7 @@ Returns category filtered using UUID or URL slug
 <td valign="top"><a href="#comparison">Comparison</a></td>
 <td>
 
-Get comparison by uuid or if customer is logged, try find for logged customer.
+Get comparison by UUID or comparison of logged customer user.
 
 </td>
 </tr>
@@ -1100,7 +1100,7 @@ check payment status of order after callback from payment service
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>cleanComparison</strong></td>
-<td valign="top"><a href="#comparison">Comparison</a></td>
+<td valign="top"><a href="#string">String</a>!</td>
 <td>
 
 Remove all products from Comparison and remove it.

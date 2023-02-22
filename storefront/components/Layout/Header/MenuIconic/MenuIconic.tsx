@@ -5,6 +5,7 @@ import { Login } from 'components/Blocks/Popup/Login/Login';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
+import { useHandleCompare } from 'hooks/product/useHandleCompare';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import NextLink from 'next/link';
@@ -20,11 +21,13 @@ export const MenuIconic: FC = () => {
     const { logout } = useAuth();
     const { isUserLoggedIn } = useCurrentUserData();
     const domainConfig = useShopsysSelector((state) => state.domain);
-    const [storesUrl, customerUrl, customerOrdersUrl, customerEditProfileUrl] = getInternationalizedStaticUrls(
-        ['/stores', '/customer', '/customer/orders', '/customer/edit-profile'],
-        domainConfig.url,
-    );
+    const [storesUrl, customerUrl, customerOrdersUrl, customerEditProfileUrl, productsComparisonUrl] =
+        getInternationalizedStaticUrls(
+            ['/stores', '/customer', '/customer/orders', '/customer/edit-profile', '/products-comparison'],
+            domainConfig.url,
+        );
     const [isLoginPopupOpened, setIsLoginPopupOpened] = useState(false);
+    const { getComparisonProducts } = useHandleCompare('');
 
     const loginHandler = () => {
         setIsLoginPopupOpened(true);
@@ -100,6 +103,15 @@ export const MenuIconic: FC = () => {
                             {t('Login')}
                         </MenuIconicItemLink>
                     )}
+                </MenuIconicItem>
+                <MenuIconicItem data-testid={TEST_IDENTIFIER + '-3'}>
+                    <NextLink href={productsComparisonUrl} passHref>
+                        <MenuIconicItemLink>
+                            <MenuIconicItemIcon icon="Compare" />
+                            {t('Comparison')}
+                            {getComparisonProducts().length > 0 && <span>({getComparisonProducts().length})</span>}
+                        </MenuIconicItemLink>
+                    </NextLink>
                 </MenuIconicItem>
             </ul>
             <div className="order-2 ml-1 flex h-10 w-10 cursor-pointer items-center justify-center text-lg outline-none lg:hidden ">

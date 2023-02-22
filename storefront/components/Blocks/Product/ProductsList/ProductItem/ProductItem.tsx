@@ -2,6 +2,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { ProductAction } from 'components/Blocks/Product/Action/ProductAction';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/Availability/ProductAvailableStoresCount';
 import { ProductExposedStoresCount } from 'components/Blocks/Product/Availability/ProductExposedStoresCount';
+import { ButtonsAction } from 'components/Blocks/Product/ButtonsAction/ButtonsAction';
 import { ProductFlags } from 'components/Blocks/Product/Flags/ProductFlags';
 import { ProductPrice } from 'components/Blocks/Product/Price/ProductPrice';
 import { ListedProductFragmentApi } from 'graphql/generated';
@@ -70,6 +71,7 @@ export const ProductItem: FC<ProductItemProps> = ({ product, listIndex, gtmListN
                         </div>
                     </a>
                 </NextLink>
+                <ButtonsAction productUuid={product.uuid} isMainVariant={product.isMainVariant}></ButtonsAction>
                 <ProductAction product={product} gtmListName={gtmListName} listIndex={listIndex} />
             </div>
         </div>

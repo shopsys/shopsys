@@ -1,0 +1,5 @@
+query ComparisonQuery($comparisonUuid: Uuid) {
+    comparison(uuid: $comparisonUuid){
+        ...ProductComparisonFragment
+    }
+}

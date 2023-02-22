@@ -18,6 +18,10 @@ export const ApplicationErrors = {
     'store-not-found': 'store-not-found',
     'invalid-token': 'invalid-token',
     'product-not-found': 'product-not-found',
+    'handling-with-logged-customer-comparison': 'handling-with-logged-customer-comparison',
+    'comparison-not-found': 'comparison-not-found',
+    'compared-item-not-found': 'compared-item-not-found',
+    'compared-item-already-exists': 'compared-item-already-exists',
 } as const;
 
 export type ApplicationErrorsType = keyof typeof ApplicationErrors;

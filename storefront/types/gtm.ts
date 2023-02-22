@@ -24,7 +24,8 @@ export type GtmPageType =
     | '404'
     | 'other'
     | 'cookie consent'
-    | 'contact';
+    | 'contact'
+    | 'compare';
 
 export type GtmListNameType =
     | 'blog article'
@@ -38,7 +39,8 @@ export type GtmListNameType =
     | 'homepage promo products'
     | 'cart'
     | 'detail'
-    | 'suggest';
+    | 'suggest'
+    | 'compare';
 
 export type GtmEventType =
     | 'page_ready'

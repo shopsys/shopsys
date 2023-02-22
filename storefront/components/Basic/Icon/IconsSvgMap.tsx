@@ -26,6 +26,9 @@ export const IconsSvgMap = {
     Warning: <Icons.Warning />,
     Checkmark: <Icons.Checkmark />,
     Spinner: <Icons.Spinner />,
+    Info: <Icons.Info />,
+    Compare: <Icons.Compare />,
+    ArrowSecondary: <Icons.ArrowSecondary />,
 };
 
 export type IconName = keyof typeof IconsSvgMap;
