@@ -1,6 +1,5 @@
 import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';
-import { PopupStyled } from 'components/Layout/Popup/Popup.style';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -14,17 +13,6 @@ const localVariables = {
     fillAnimationColor: '#7ac142',
     productBorderColor: '#d7dee2',
 };
-
-export const AddToCartPopupWrapperStyled = styled(PopupStyled)(
-    ({ theme }) => css`
-        width: 600px;
-        max-width: 96%;
-
-        @media ${theme.mediaQueries.queryVl} {
-            max-width: 600px;
-        }
-    `,
-);
 
 export const ProductStyled = styled.div(
     ({ theme }) => css`

@@ -1,9 +1,3 @@
-import {
-    CartSummaryLeftStyled,
-    CartSummaryMiddleStyled,
-    CartSummaryRightStyled,
-    CartSummaryStyled,
-} from './CartSummary.style';
 import { FreeTransport } from 'components/Blocks/FreeTransport/FreeTransport';
 import { PromoCode } from 'components/Blocks/PromoCode/PromoCode';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -12,16 +6,16 @@ import { FC } from 'react';
 
 export const CartSummary: FC = () => (
     <Webline>
-        <CartSummaryStyled>
-            <CartSummaryLeftStyled>
+        <div className="mb-8 flex flex-col vl:flex-row vl:items-baseline">
+            <div className="pr-8 vl:pr-4">
                 <PromoCode />
-            </CartSummaryLeftStyled>
-            <CartSummaryMiddleStyled>
+            </div>
+            <div className="ml-auto text-center vl:pr-8">
                 <FreeTransport />
-            </CartSummaryMiddleStyled>
-            <CartSummaryRightStyled>
+            </div>
+            <div className="vl:w-80">
                 <CartPreview />
-            </CartSummaryRightStyled>
-        </CartSummaryStyled>
+            </div>
+        </div>
     </Webline>
 );

@@ -1,4 +1,3 @@
-import { RemoveCartItemButtonStyled } from './RemoveCartItemButton.style';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { FC, MouseEventHandler } from 'react';
 
@@ -9,7 +8,11 @@ type RemoveCartItemButtonProps = {
 const TEST_IDENTIFIER = 'pages-cart-removecartitembutton';
 
 export const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = ({ onItemRemove }) => (
-    <RemoveCartItemButtonStyled onClick={onItemRemove} data-testid={TEST_IDENTIFIER}>
-        <Icon iconType="icon" icon="RemoveBold" />
-    </RemoveCartItemButtonStyled>
+    <button
+        className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border-none bg-whitesmoke p-0 outline-0 transition hover:bg-blueLight"
+        onClick={onItemRemove}
+        data-testid={TEST_IDENTIFIER}
+    >
+        <Icon iconType="icon" icon="RemoveBold" width={8} height={8} className="mx-auto basis-2" />
+    </button>
 );

@@ -1,12 +1,6 @@
+import { ErrorPage, ErrorPageButtonLink, ErrorPageTextHeading, ErrorPageTextMain } from '../ErrorPageElements';
 import { ErrorLayout } from 'components/Layout/ErrorLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
-import {
-    ErrorPageButtonLinkStyled,
-    ErrorPageStyled,
-    ErrorPageTextHeadingStyled,
-    ErrorPageTextMainStyled,
-    ErrorPageTextStyled,
-} from 'components/Pages/ErrorPage/ErrorPage.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -35,16 +29,14 @@ export const Error500Content: FC = () => {
     return (
         <ErrorLayout>
             <Webline>
-                <ErrorPageStyled>
-                    <ErrorPageTextStyled>
-                        <ErrorPageTextHeadingStyled>{t('Something went wrong.')}</ErrorPageTextHeadingStyled>
-                        <ErrorPageTextMainStyled>{t('Please try again later or contact us.')}</ErrorPageTextMainStyled>
+                <ErrorPage isWithoutImage>
+                    <ErrorPageTextHeading>{t('Something went wrong.')}</ErrorPageTextHeading>
+                    <ErrorPageTextMain>{t('Please try again later or contact us.')}</ErrorPageTextMain>
 
-                        <NextLink href="/" passHref>
-                            <ErrorPageButtonLinkStyled>{t('Back to shop')}</ErrorPageButtonLinkStyled>
-                        </NextLink>
-                    </ErrorPageTextStyled>
-                </ErrorPageStyled>
+                    <NextLink href="/" passHref>
+                        <ErrorPageButtonLink>{t('Back to shop')}</ErrorPageButtonLink>
+                    </NextLink>
+                </ErrorPage>
             </Webline>
         </ErrorLayout>
     );

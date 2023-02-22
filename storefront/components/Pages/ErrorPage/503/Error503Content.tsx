@@ -1,11 +1,6 @@
+import { ErrorPage, ErrorPageTextHeading, ErrorPageTextMain } from '../ErrorPageElements';
 import { ErrorLayout } from 'components/Layout/ErrorLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
-import {
-    ErrorPageStyled,
-    ErrorPageTextHeadingStyled,
-    ErrorPageTextMainStyled,
-    ErrorPageTextStyled,
-} from 'components/Pages/ErrorPage/ErrorPage.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import React, { FC } from 'react';
 
@@ -15,14 +10,10 @@ export const Error503Content: FC = () => {
     return (
         <ErrorLayout>
             <Webline>
-                <ErrorPageStyled>
-                    <ErrorPageTextStyled>
-                        <ErrorPageTextHeadingStyled>
-                            {t('The page is currently under maintenance.')}
-                        </ErrorPageTextHeadingStyled>
-                        <ErrorPageTextMainStyled>{t('Please try again later or contact us.')}</ErrorPageTextMainStyled>
-                    </ErrorPageTextStyled>
-                </ErrorPageStyled>
+                <ErrorPage>
+                    <ErrorPageTextHeading>{t('The page is currently under maintenance.')}</ErrorPageTextHeading>
+                    <ErrorPageTextMain>{t('Please try again later or contact us.')}</ErrorPageTextMain>
+                </ErrorPage>
             </Webline>
         </ErrorLayout>
     );

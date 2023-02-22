@@ -1,4 +1,3 @@
-import { ListStyled } from './CartList.style';
 import { CartListItem } from './CartListItem/CartListItem';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -26,7 +25,7 @@ export const CartList: FC<CartListProps> = ({ items }) => {
 
     return (
         <Webline>
-            <ListStyled>
+            <ul className="relative mb-6 border border-b-0 border-greyLighter lg:mb-8 lg:border-none">
                 {(isRemovingItem || isChangingCartsItem) && <LoaderWithOverlay iconSize={64} />}
                 {items.map((item, index) => (
                     <CartListItem
@@ -37,7 +36,7 @@ export const CartList: FC<CartListProps> = ({ items }) => {
                         onItemQuantityChange={changeCartItemQuantity}
                     />
                 ))}
-            </ListStyled>
+            </ul>
         </Webline>
     );
 };

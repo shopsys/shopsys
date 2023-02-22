@@ -1,5 +1,4 @@
 import { useRecoveryPasswordForm, useRecoveryPasswordFormMeta } from './formMeta';
-import { ButtonWrapperStyled } from './NewPasswordContent.style';
 import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
@@ -137,14 +136,14 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ breadcrumbs, e
                                 label: formMeta.fields.newPasswordAgain.label,
                             }}
                         />
-                        <ButtonWrapperStyled>
+                        <div className="mt-8 flex w-full justify-between">
                             <Button
                                 type="submit"
                                 hasDisabledLook={isNewPasswordInvalid || newPasswordValue.length === 0}
                             >
                                 {t('Set new password')}
                             </Button>
-                        </ButtonWrapperStyled>
+                        </div>
                     </Form>
                 </FormProvider>
             </SimpleLayout>

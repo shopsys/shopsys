@@ -11,11 +11,19 @@ type PopupProps = {
     onCloseCallback: () => void;
     wrapperComponent?: AnyStyledComponent;
     hideCloseButton?: boolean;
+    className?: string;
 };
 
 const TEST_IDENTIFIER = 'layout-popup';
 
-export const Popup: FC<PopupProps> = ({ isVisible, onCloseCallback, children, hideCloseButton, wrapperComponent }) => {
+export const Popup: FC<PopupProps> = ({
+    isVisible,
+    onCloseCallback,
+    children,
+    hideCloseButton,
+    wrapperComponent,
+    className,
+}) => {
     const onEscapeButtonPressHandler = useRef((event: KeyboardEvent): void => {
         if (event.key === 'Escape') {
             onCloseCallback();
@@ -49,7 +57,7 @@ export const Popup: FC<PopupProps> = ({ isVisible, onCloseCallback, children, hi
     return (
         <Portal>
             <Overlay $isActive={isVisible} onClick={onClickCloseActionHandler}></Overlay>
-            <PopupWrapper role="dialog" aria-modal data-testid={TEST_IDENTIFIER}>
+            <PopupWrapper role="dialog" aria-modal data-testid={TEST_IDENTIFIER} className={className}>
                 {hideCloseButton !== true && (
                     <PopupHeaderStyled>
                         <PopupButtonCloseStyled type="button" onClick={onClickCloseActionHandler}>

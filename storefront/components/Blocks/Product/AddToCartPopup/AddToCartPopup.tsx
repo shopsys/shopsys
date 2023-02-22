@@ -1,5 +1,4 @@
 import {
-    AddToCartPopupWrapperStyled,
     ButtonsStyled,
     ButtonStyled,
     ContentStyled,
@@ -14,6 +13,7 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Image } from 'components/Basic/Image/Image';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { PopupStyled } from 'components/Layout/Popup/Popup.style';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -40,7 +40,8 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ isVisible, onCloseCall
         <Popup
             isVisible={isVisible}
             onCloseCallback={onCloseCallback}
-            wrapperComponent={AddToCartPopupWrapperStyled}
+            wrapperComponent={PopupStyled}
+            className="w-11/12 max-w-2xl"
             hideCloseButton
         >
             <Heading type="h2" className="mt-4 mb-4 flex w-full items-center text-xl normal-case text-primary md:mb-6">

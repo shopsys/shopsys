@@ -1,7 +1,4 @@
-import {
-    CategoryDetailAdvancedSeoCategoriesItemStyled as AdvancedSeoCategoriesItemStyled,
-    CategoryDetailAdvancedSeoCategoriesWrapperStyled as AdvancedSeoCategoriesWrapperStyled,
-} from './AdvancedSeoCategories.style';
+import { AdvancedSeoCategoriesItem } from './AdvancedSeoCategoriesItem';
 import { AdvancedSeoCategoriesSlider } from './AdvancedSeoCategoriesSlider/AdvancedSeoCategoriesSlider';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
@@ -10,7 +7,6 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import 'keen-slider/keen-slider.min.css';
-import NextLink from 'next/link';
 import { FC, useState } from 'react';
 import { ReadyCategorySeoMixLink } from 'types/category';
 
@@ -40,13 +36,13 @@ export const AdvancedSeoCategories: FC<AdvancedSeoCategoriesProps> = ({ readyCat
             {isAdvancedSeoCategoriesSliderVisible ? (
                 <AdvancedSeoCategoriesSlider readyCategorySeoMixLinks={readyCategorySeoMixLinks} />
             ) : (
-                <AdvancedSeoCategoriesWrapperStyled>
+                <div className="-mr-6 flex flex-row flex-wrap">
                     {readyCategorySeoMixLinks.map((seoMixLink, index) => (
-                        <NextLink key={index} href={seoMixLink.slug} passHref>
-                            <AdvancedSeoCategoriesItemStyled>{seoMixLink.name}</AdvancedSeoCategoriesItemStyled>
-                        </NextLink>
+                        <AdvancedSeoCategoriesItem key={index} slug={seoMixLink.slug}>
+                            {seoMixLink.name}
+                        </AdvancedSeoCategoriesItem>
                     ))}
-                </AdvancedSeoCategoriesWrapperStyled>
+                </div>
             )}
         </>
     );

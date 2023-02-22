@@ -1,14 +1,8 @@
-import {
-    CartPreviewCellBasicPrice,
-    CartPreviewCellStyled,
-    CartPreviewCellTotalPrice,
-    CartPreviewRowStyled,
-    CartPreviewStyled,
-} from './CartPreview.style';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
+import { twJoin } from 'tailwind-merge';
 
 const TEST_IDENTIFIER = 'pages-cart-cartpreview';
 
@@ -22,27 +16,35 @@ export const CartPreview: FC = () => {
     }
 
     return (
-        <CartPreviewStyled data-testid={TEST_IDENTIFIER}>
+        <table className="w-full" data-testid={TEST_IDENTIFIER}>
             <tbody>
                 {cart.totalDiscountPrice.priceWithVat > 0 && (
-                    <CartPreviewRowStyled data-testid={TEST_IDENTIFIER + '-discount'}>
-                        <CartPreviewCellStyled>{t('The amount of discounts')}</CartPreviewCellStyled>
-                        <CartPreviewCellStyled textAlign="right">
-                            <CartPreviewCellBasicPrice>
-                                {'-' + formatPrice(cart.totalDiscountPrice.priceWithVat)}
-                            </CartPreviewCellBasicPrice>
-                        </CartPreviewCellStyled>
-                    </CartPreviewRowStyled>
+                    <CartPreviewRow dataTestid={TEST_IDENTIFIER + '-discount'}>
+                        <CartPreviewCell>{t('The amount of discounts')}</CartPreviewCell>
+                        <CartPreviewCell isAlignRight>
+                            <strong>{'-' + formatPrice(cart.totalDiscountPrice.priceWithVat)}</strong>
+                        </CartPreviewCell>
+                    </CartPreviewRow>
                 )}
-                <CartPreviewRowStyled data-testid={TEST_IDENTIFIER + '-total'}>
-                    <CartPreviewCellStyled>{t('You pay')}</CartPreviewCellStyled>
-                    <CartPreviewCellStyled textAlign="right">
-                        <CartPreviewCellTotalPrice>
+                <CartPreviewRow dataTestid={TEST_IDENTIFIER + '-total'}>
+                    <CartPreviewCell>{t('You pay')}</CartPreviewCell>
+                    <CartPreviewCell isAlignRight>
+                        <strong className="text-2xl text-primary">
                             {formatPrice(cart.totalItemsPrice.priceWithVat)}
-                        </CartPreviewCellTotalPrice>
-                    </CartPreviewCellStyled>
-                </CartPreviewRowStyled>
+                        </strong>
+                    </CartPreviewCell>
+                </CartPreviewRow>
             </tbody>
-        </CartPreviewStyled>
+        </table>
     );
 };
+
+const CartPreviewRow: FC<{ dataTestid: string }> = ({ children, dataTestid }) => (
+    <tr className="w-full" data-testid={dataTestid}>
+        {children}
+    </tr>
+);
+
+const CartPreviewCell: FC<{ isAlignRight?: boolean }> = ({ children, isAlignRight }) => (
+    <td className={twJoin('py-2 align-baseline text-sm leading-4', isAlignRight && 'text-right')}>{children}</td>
+);

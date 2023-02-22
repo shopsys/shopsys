@@ -1,13 +1,6 @@
+import { ErrorPage, ErrorPageButtonLink, ErrorPageTextHeading, ErrorPageTextMain } from '../ErrorPageElements';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
-import {
-    ErrorPageButtonLinkStyled,
-    ErrorPageImageStyled,
-    ErrorPageStyled,
-    ErrorPageTextHeadingStyled,
-    ErrorPageTextMainStyled,
-    ErrorPageTextStyled,
-} from 'components/Pages/ErrorPage/ErrorPage.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
 import React, { FC } from 'react';
@@ -18,27 +11,19 @@ export const Error404Content: FC = () => {
     return (
         <CommonLayout title={t('Something wrong happened... Page not found')}>
             <Webline>
-                <ErrorPageStyled>
-                    <ErrorPageTextStyled>
-                        <ErrorPageTextHeadingStyled>
-                            {t('We have nothing to show you at this url.')}
-                        </ErrorPageTextHeadingStyled>
-                        <ErrorPageTextMainStyled>
-                            {t('But at other addresses we have a lot for you...')}
-                        </ErrorPageTextMainStyled>
+                <ErrorPage>
+                    <div className="mb-8 max-w-sm">
+                        <img loading="lazy" src="/public/frontend/images/404_m.png" alt={t('404')} />
+                    </div>
+                    <div>
+                        <ErrorPageTextHeading>{t('We have nothing to show you at this url.')}</ErrorPageTextHeading>
+                        <ErrorPageTextMain>{t('But at other addresses we have a lot for you...')}</ErrorPageTextMain>
 
                         <NextLink href="/" passHref>
-                            <ErrorPageButtonLinkStyled>{t('Back to shop')}</ErrorPageButtonLinkStyled>
+                            <ErrorPageButtonLink>{t('Back to shop')}</ErrorPageButtonLink>
                         </NextLink>
-                    </ErrorPageTextStyled>
-                    <ErrorPageImageStyled>
-                        <picture>
-                            <source media="(max-width: 768px)" srcSet="/public/frontend/images/404_m.png" />
-                            <source srcSet="/public/frontend/images/404_desktop_2x.jpg 2x, /public/frontend/images/404_desktop.jpg 1x" />
-                            <img loading="lazy" data-src="/public/frontend/images/404_desktop.jpg 1x" alt={t('404')} />
-                        </picture>
-                    </ErrorPageImageStyled>
-                </ErrorPageStyled>
+                    </div>
+                </ErrorPage>
             </Webline>
         </CommonLayout>
     );

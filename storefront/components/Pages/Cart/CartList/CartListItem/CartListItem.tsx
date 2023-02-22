@@ -1,15 +1,3 @@
-import {
-    ImageCellStyled,
-    ImageWrapperStyled,
-    InfoCellStyled,
-    ItemPriceCellStyled,
-    ItemPriceStyled,
-    ItemStyled,
-    RemoveButtonCellStyled,
-    SpinboxCellStyled,
-    TotalPriceCellStyled,
-    TotalPriceStyled,
-} from './CartListItem.style';
 import { CartListItemInfo } from './CartListItemInfo/CartListItemInfo';
 import { Image } from 'components/Basic/Image/Image';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
@@ -54,18 +42,21 @@ export const CartListItem: FC<CartListItemProps> = ({ item, listIndex, onItemRem
     };
 
     return (
-        <ItemStyled data-testid={TEST_IDENTIFIER + itemCatnum}>
-            <ImageCellStyled data-testid={TEST_IDENTIFIER + 'image'}>
+        <div
+            className="relative flex flex-row flex-wrap border-b border-greyLighter p-3 lg:py-5 lg:px-0"
+            data-testid={TEST_IDENTIFIER + itemCatnum}
+        >
+            <div className="mb-6 flex w-[93px] pr-4 vl:mb-0" data-testid={TEST_IDENTIFIER + 'image'}>
                 <NextLink href={item.product.slug} passHref>
-                    <ImageWrapperStyled>
+                    <a className="h-fulll relative w-full">
                         <Image image={item.product.image} type="thumbnailExtraSmall" alt={item.product.fullName} />
-                    </ImageWrapperStyled>
+                    </a>
                 </NextLink>
-            </ImageCellStyled>
-            <InfoCellStyled>
+            </div>
+            <div className="mb-5 flex w-[calc(100%-93px)] flex-col items-start pr-7 text-sm font-bold vl:mb-0 vl:flex-1 vl:flex-row vl:items-center vl:pr-4">
                 <CartListItemInfo item={item} />
-            </InfoCellStyled>
-            <SpinboxCellStyled data-testid={TEST_IDENTIFIER + 'spinbox'}>
+            </div>
+            <div className="flex w-28 items-center vl:w-36 vl:pr-4 " data-testid={TEST_IDENTIFIER + 'spinbox'}>
                 <Spinbox
                     min={1}
                     max={item.product.stockQuantity}
@@ -74,18 +65,26 @@ export const CartListItem: FC<CartListItemProps> = ({ item, listIndex, onItemRem
                     ref={spinboxRef}
                     onChangeValueCallback={onChangeValueHandler}
                 />
-            </SpinboxCellStyled>
-            <ItemPriceCellStyled data-testid={TEST_IDENTIFIER + 'itemprice'}>
-                <ItemPriceStyled>
+            </div>
+            <div
+                className="vl:pr-15 ml-auto flex items-center vl:ml-0 vl:w-32"
+                data-testid={TEST_IDENTIFIER + 'itemprice'}
+            >
+                <span className="text-sm">
                     {formatPrice(item.product.price.priceWithVat) + '\u00A0/\u00A0' + t('pc')}
-                </ItemPriceStyled>
-            </ItemPriceCellStyled>
-            <TotalPriceCellStyled data-testid={TEST_IDENTIFIER + 'totalprice'}>
-                <TotalPriceStyled>{formatPrice(item.product.price.priceWithVat * item.quantity)}</TotalPriceStyled>
-            </TotalPriceCellStyled>
-            <RemoveButtonCellStyled>
+                </span>
+            </div>
+            <div
+                className="ml-auto flex w-32 items-center justify-end vl:ml-0 vl:pr-4"
+                data-testid={TEST_IDENTIFIER + 'totalprice'}
+            >
+                <span className="text-sm text-primary lg:text-base">
+                    {formatPrice(item.product.price.priceWithVat * item.quantity)}
+                </span>
+            </div>
+            <div className="absolute right-3 top-3 flex items-center lg:right-0 lg:top-4 vl:static">
                 <RemoveCartItemButton onItemRemove={onItemRemove} />
-            </RemoveButtonCellStyled>
-        </ItemStyled>
+            </div>
+        </div>
     );
 };

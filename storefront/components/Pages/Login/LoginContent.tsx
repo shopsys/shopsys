@@ -1,4 +1,3 @@
-import { ButtonWrapperStyled } from './LoginContent.style';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
@@ -74,11 +73,11 @@ export const LoginContent: FC<LoginContentProps> = ({ breadcrumbs }) => {
                             label: t('Password'),
                         }}
                     />
-                    <ButtonWrapperStyled>
+                    <div className="mt-8 flex w-full justify-center">
                         <Button type="submit" testIdentifier={TEST_IDENTIFIER}>
                             {t('Log in')}
                         </Button>
-                    </ButtonWrapperStyled>
+                    </div>
                 </Form>
             </FormProvider>
         </SimpleLayout>

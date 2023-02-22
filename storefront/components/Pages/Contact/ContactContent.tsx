@@ -1,4 +1,3 @@
-import { ContactTextStyled, ContactWrapper } from './ContactContent.style';
 import { useContactForm, useContactFormMeta } from './formMeta';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Link } from 'components/Basic/Link/Link';
@@ -47,11 +46,11 @@ export const ContactContent: FC = () => {
 
     return (
         <>
-            <ContactWrapper>
+            <div className="mb-8">
                 <Webline>
                     <Heading type="h1">{t('Write to us')}</Heading>
                     {data?.settings?.contactFormMainText !== undefined && (
-                        <ContactTextStyled dangerouslySetInnerHTML={{ __html: data.settings.contactFormMainText }} />
+                        <div className="mb-4" dangerouslySetInnerHTML={{ __html: data.settings.contactFormMainText }} />
                     )}
                     <FormProvider {...formProviderMethods}>
                         <Form onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}>
@@ -106,7 +105,7 @@ export const ContactContent: FC = () => {
                                     rows: 4,
                                 }}
                             />
-                            <ContactTextStyled>
+                            <div className="mb-4">
                                 <Trans
                                     i18nKey="ContactFormInfo"
                                     defaultTrans="By clicking on the Send message button, you agree with the <lnk1>processing of privacy policy</lnk1>."
@@ -114,7 +113,7 @@ export const ContactContent: FC = () => {
                                         lnk1: <Link href={gdprUrl} linkType="external" target="_blank" />,
                                     }}
                                 />
-                            </ContactTextStyled>
+                            </div>
                             <Button
                                 type="submit"
                                 borderRadius="big"
@@ -126,7 +125,7 @@ export const ContactContent: FC = () => {
                         </Form>
                     </FormProvider>
                 </Webline>
-            </ContactWrapper>
+            </div>
             <ErrorPopup
                 isVisible={isErrorPopupVisible}
                 onCloseCallback={() => setErrorPopupVisibility(false)}

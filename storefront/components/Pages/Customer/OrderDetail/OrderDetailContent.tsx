@@ -1,4 +1,3 @@
-import { TextCenteredStyled } from './OrderDetailContent.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { TableGrid } from 'components/Basic/TableGrid/TableGrid';
 import { TableGridColumnsStyled, TableGridColumnStyled } from 'components/Basic/TableGrid/TableGrid.style';
@@ -183,9 +182,9 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcr
                 </TableGrid>
                 {order.items.length > 0 && (
                     <>
-                        <TextCenteredStyled>
+                        <div className="text-center">
                             <Heading type="h2">{t('Your purchase')}</Heading>
-                        </TextCenteredStyled>
+                        </div>
                         <TableGrid>
                             <tr>
                                 <th>{t('Product name')}</th>

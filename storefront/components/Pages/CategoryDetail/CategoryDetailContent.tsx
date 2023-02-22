@@ -1,26 +1,20 @@
 import { AdvancedSeoCategories } from './AdvancedSeoCategories/AdvancedSeoCategories';
-import {
-    CategoryDetailAdvertsStyled,
-    CategoryDetailContentStyled,
-    CategoryDetailDescriptionStyled,
-    CategoryDetailPanelOpenerStyled,
-    CategoryDetailPanelStyled,
-    CategoryDetailStyled,
-    SubcategoriesSimpleNavigationStyled,
-} from './CategoryDetailContent.style';
 import { CategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper';
 import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
 import { HeadingPaginated } from 'components/Basic/Heading/HeadingPaginated';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
+import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { FilterProvider } from 'components/Blocks/Product/Filter/FilterContext/FilterProvider';
 import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel/FilterPanel';
+import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { FC, useCallback, useRef, useState } from 'react';
+import { twJoin } from 'tailwind-merge';
 import { CategoryDetailType } from 'types/category';
 
 type CategoryDetailContentProps = {
@@ -55,8 +49,13 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
         >
             <Webline>
                 {isFiltered && <MetaRobots content="noindex, follow" />}
-                <CategoryDetailStyled ref={containerWrapRef}>
-                    <CategoryDetailPanelStyled isOpen={isPanelOpen}>
+                <div className="mb-7 flex flex-col vl:mb-10 vl:flex-row vl:flex-wrap" ref={containerWrapRef}>
+                    <div
+                        className={twJoin(
+                            'fixed top-0 left-0 bottom-0 right-10 max-w-[400px] -translate-x-full vl:static vl:w-[304px] vl:translate-x-0 vl:transition-none ',
+                            isPanelOpen && 'z-aboveOverlay translate-x-0 transition',
+                        )}
+                    >
                         <FilterPanel
                             defaultOrderingMode={category.productConnection.defaultOrderingMode}
                             orderingMode={category.productConnection.orderingMode}
@@ -65,26 +64,28 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                             slug={category.slug}
                             totalCount={category.productConnection.totalCount}
                         />
-                    </CategoryDetailPanelStyled>
+                    </div>
                     {isPanelOpen && <Overlay $isHiddenOnDesktop onClick={handlePanelOpenerClick} />}
-                    <CategoryDetailContentStyled>
-                        <CategoryDetailAdvertsStyled positionName="productList" />
-                        <HeadingPaginated type={'h1'} totalCount={category.productConnection.totalCount}>
+                    <div className="flex flex-1 flex-col vl:pl-12">
+                        <Adverts positionName="productList" className="mb-4" />
+                        <HeadingPaginated type="h1" totalCount={category.productConnection.totalCount}>
                             {category.seoH1 !== null ? category.seoH1 : category.name}
                         </HeadingPaginated>
                         {category.description !== null &&
                             category.description !== '' &&
                             (query[PAGE_QUERY_PARAMETER_NAME] ?? 1) === 1 && (
-                                <CategoryDetailDescriptionStyled
-                                    dangerouslySetInnerHTML={{ __html: category.description }}
-                                ></CategoryDetailDescriptionStyled>
+                                <div dangerouslySetInnerHTML={{ __html: category.description }} className="mb-4" />
                             )}
-                        <CategoryDetailAdvertsStyled positionName="productListMiddle" currentCategory={category} />
-                        <SubcategoriesSimpleNavigationStyled
+                        <Adverts positionName="productListMiddle" currentCategory={category} className="mb-4" />
+                        <SimpleNavigation
                             listedItems={[...category.children, ...category.linkedCategories]}
+                            className="mb-6"
                         />
                         <AdvancedSeoCategories readyCategorySeoMixLinks={category.readyCategorySeoMixLinks} />
-                        <CategoryDetailPanelOpenerStyled onClick={handlePanelOpenerClick}>
+                        <div
+                            className="relative mb-3 flex min-h-[48px] w-full cursor-pointer flex-row items-center justify-center rounded-xl bg-primary py-2 px-8 font-bold uppercase text-white sm:w-44 vl:hidden"
+                            onClick={handlePanelOpenerClick}
+                        >
                             <Icon
                                 iconType="icon"
                                 icon="Filter"
@@ -93,14 +94,14 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                                 className="mr-3 font-bold text-white"
                             />
                             {t('Filter')}
-                        </CategoryDetailPanelOpenerStyled>
+                        </div>
                         <SortingBar
                             sorting={category.productConnection.orderingMode}
                             totalCount={category.productConnection.totalCount}
                         />
                         <CategoryDetailProductsWrapper category={category} containerWrapRef={containerWrapRef} />
-                    </CategoryDetailContentStyled>
-                </CategoryDetailStyled>
+                    </div>
+                </div>
             </Webline>
         </FilterProvider>
     );

@@ -45,6 +45,18 @@ module.exports = {
         fontFamily: {
             default: ['DM Sans', 'Arial', 'Helvetica', 'sans-serif'],
         },
+        zIndex: {
+            hidden: -1000,
+            above: 1,
+            menu: 1010,
+            aboveMenu: 1020,
+            overlay: 1030,
+            mobileMenu: 1040,
+            aboveMobileMenu: 1050,
+            cart: 6000,
+            aboveOverlay: 10001,
+            maximum: 10100,
+        },
         extend: {
             lineHeight: {
                 default: 1.3,
