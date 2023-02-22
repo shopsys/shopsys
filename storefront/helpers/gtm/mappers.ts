@@ -1,17 +1,18 @@
-import { LastOrderFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
-import { getFirstImageOrNull } from 'helpers/mappers/image';
-import { CartItemType } from 'types/cart';
-import { GtmCartItemType, GtmListedProductType, GtmProductInterface, GtmShippingInfoType } from 'types/gtm';
 import {
-    ListedProductType,
-    MainVariantDetailType,
-    ProductDetailType,
-    ProductInterfaceType,
-    SimpleProductType,
-} from 'types/product';
+    CartItemFragmentApi,
+    LastOrderFragmentApi,
+    ListedProductFragmentApi,
+    ListedStoreFragmentApi,
+    MainVariantDetailFragmentApi,
+    ProductDetailFragmentApi,
+    SimpleProductFragmentApi,
+} from 'graphql/generated';
+import { getFirstImageOrNull } from 'helpers/mappers/image';
+import { GtmCartItemType, GtmListedProductFragmentApi, GtmProductInterface, GtmShippingInfoType } from 'types/gtm';
+import { ProductInterfaceType } from 'types/product';
 
 export const mapGtmCartItemType = (
-    cartItem: CartItemType,
+    cartItem: CartItemFragmentApi,
     domainUrl: string,
     listIndex?: number,
     quantity?: number,
@@ -28,17 +29,17 @@ export const mapGtmCartItemType = (
     return gtmCartItem;
 };
 
-export const mapGtmListedProductType = (
-    product: ListedProductType | SimpleProductType,
+export const mapGtmListedProductFragmentApi = (
+    product: ListedProductFragmentApi | SimpleProductFragmentApi,
     listIndex: number,
     domainUrl: string,
-): GtmListedProductType => ({
+): GtmListedProductFragmentApi => ({
     ...mapGtmProductInterface(product, domainUrl),
     listIndex: listIndex + 1,
 });
 
 export const mapGtmProductDetailType = (
-    product: ProductDetailType | MainVariantDetailType,
+    product: ProductDetailFragmentApi | MainVariantDetailFragmentApi,
     domainUrl: string,
 ): GtmProductInterface => mapGtmProductInterface(product, domainUrl);
 
@@ -65,7 +66,7 @@ const mapGtmProductInterface = (productInterface: ProductInterfaceType, domainUr
         url: productUrl,
         sku: productInterface.catalogNumber,
         brand: productInterface.brand?.name ?? '',
-        categories: productInterface.categoryNames,
+        categories: productInterface.categories.map((category) => category.name),
     };
 };
 

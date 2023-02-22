@@ -1,12 +1,12 @@
 import { AddToCart } from 'components/Blocks/Product/AddToCart/AddToCart';
 import { Button } from 'components/Forms/Button/Button';
+import { ListedProductFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/dist/client/router';
 import { GtmListNameType } from 'types/gtm';
-import { SliderProductItemType } from 'types/product';
 
 type ProductActionProps = {
-    product: SliderProductItemType;
+    product: ListedProductFragmentApi;
     gtmListName: GtmListNameType;
     listIndex: number;
 };

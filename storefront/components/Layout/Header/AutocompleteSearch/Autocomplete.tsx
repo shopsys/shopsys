@@ -1,18 +1,23 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
+import {
+    AutocompleteSearchQueryApi,
+    ListedProductFragmentApi,
+    SimpleCategoryFragmentApi,
+    SimpleProductFragmentApi,
+} from 'graphql/generated';
 import { onClickProductDetailGtmEventHandler, onClickSuggestResultGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { twJoin } from 'tailwind-merge';
 import { GtmListNameType } from 'types/gtm';
-import { ListedProductType, SimpleProductType } from 'types/product';
-import { AutocompleteSearchType } from 'types/search';
 
 export const AUTOCOMPLETE_PRODUCT_LIMIT = 5 as const;
 export const AUTOCOMPLETE_BRAND_LIMIT = 3 as const;
@@ -20,7 +25,7 @@ export const AUTOCOMPLETE_CATEGORY_LIMIT = 3 as const;
 export const AUTOCOMPLETE_ARTICLE_LIMIT = 3 as const;
 
 type AutocompleteProps = {
-    autocompleteSearchResults: AutocompleteSearchType | undefined;
+    autocompleteSearchResults: AutocompleteSearchQueryApi | undefined;
     isAutocompleteActive: boolean;
     autocompleteSearchQueryValue: string;
 };
@@ -37,12 +42,21 @@ export const Autocomplete: FC<AutocompleteProps> = ({
     const formatPrice = useFormatPrice();
     const domainConfig = useShopsysSelector((state) => state.domain);
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], domainConfig.url);
+    const mappedProductSearchResults = useMemo(
+        () => mapConnectionEdges<ListedProductFragmentApi>(autocompleteSearchResults?.productsSearch.edges),
+        [autocompleteSearchResults?.productsSearch.edges],
+    );
+    const mappedCategoriesSearchResults = useMemo(
+        () => mapConnectionEdges<SimpleCategoryFragmentApi>(autocompleteSearchResults?.categoriesSearch.edges),
+        [autocompleteSearchResults?.categoriesSearch.edges],
+    );
 
     const onProductDetailRedirectHandler = useCallback(
-        (product: SimpleProductType | ListedProductType, listName: GtmListNameType, index: number) => {
-            onClickProductDetailGtmEventHandler(product, listName, index, domainConfig.url);
-            onClickSuggestResultGtmEventHandler(autocompleteSearchQueryValue, 'product', product.fullName);
-        },
+        (product: SimpleProductFragmentApi | ListedProductFragmentApi, listName: GtmListNameType, index: number) =>
+            () => {
+                onClickProductDetailGtmEventHandler(product, listName, index, domainConfig.url);
+                onClickSuggestResultGtmEventHandler(autocompleteSearchQueryValue, 'product', product.fullName);
+            },
         [autocompleteSearchQueryValue, domainConfig.url],
     );
 
@@ -83,7 +97,7 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                                     className="mb-3 -ml-4 flex list-none flex-wrap"
                                     data-testid={TEST_IDENTIFIER + '-products'}
                                 >
-                                    {autocompleteSearchResults.productsSearch.products.map(
+                                    {mappedProductSearchResults?.map(
                                         (product, index) =>
                                             index < AUTOCOMPLETE_PRODUCT_LIMIT && (
                                                 <li
@@ -94,13 +108,11 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                                                     <NextLink href={product.slug} passHref>
                                                         <a
                                                             className="flex cursor-pointer items-center text-dark no-underline outline-none lg:flex-col lg:items-start"
-                                                            onClick={() =>
-                                                                onProductDetailRedirectHandler(
-                                                                    product,
-                                                                    'suggest',
-                                                                    index,
-                                                                )
-                                                            }
+                                                            onClick={onProductDetailRedirectHandler(
+                                                                product,
+                                                                'suggest',
+                                                                index,
+                                                            )}
                                                         >
                                                             <div className="relative mr-2 h-16 w-20">
                                                                 <Image
@@ -111,6 +123,7 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                                                                 />
                                                             </div>
                                                             <span className="mb-1 flex-1">{product.fullName}</span>
+
                                                             <span className="font-bold text-primary">
                                                                 {formatPrice(product.price.priceWithVat)}
                                                             </span>
@@ -157,7 +170,7 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                                     {`${t('Categories')} (${autocompleteSearchResults.categoriesSearch.totalCount})`}
                                 </p>
                                 <SearchResultGroup dataTestId={TEST_IDENTIFIER + '-categories'}>
-                                    {autocompleteSearchResults.categoriesSearch.categories.map(
+                                    {mappedCategoriesSearchResults?.map(
                                         (category, index) =>
                                             index < AUTOCOMPLETE_CATEGORY_LIMIT && (
                                                 <li
@@ -237,7 +250,7 @@ export const Autocomplete: FC<AutocompleteProps> = ({
     );
 };
 
-const areAllResultsEmpty = (autocompleteSearchResults: AutocompleteSearchType | undefined) => {
+const areAllResultsEmpty = (autocompleteSearchResults: AutocompleteSearchQueryApi | undefined) => {
     if (autocompleteSearchResults === undefined) {
         return false;
     }

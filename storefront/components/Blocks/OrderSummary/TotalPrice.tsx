@@ -1,7 +1,7 @@
-import { PriceFragmentApi } from "graphql/generated";
-import { useFormatPrice } from "hooks/formatting/useFormatPrice";
-import { useTypedTranslationFunction } from "hooks/typescript/useTypedTranslationFunction";
-import { OrderSummaryContent } from "./OrderSummaryElements";
+import { OrderSummaryContent } from './OrderSummaryElements';
+import { PriceFragmentApi } from 'graphql/generated';
+import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 
 type TotalPriceProps = {
     totalPrice: PriceFragmentApi;

@@ -1,18 +1,22 @@
-import { BlogArticleDetailType } from './blogArticle';
-import { BlogCategoryDetailType } from './blogCategory';
-import { BrandDetailType } from './brand';
-import { CategoryDetailType } from './category';
-import { FlagDetailType } from './flag';
-import { MainVariantDetailType, ProductDetailType } from './product';
-import { ArticleDetailFragmentApi, StoreDetailFragmentApi } from 'graphql/generated';
+import {
+    ArticleDetailFragmentApi,
+    BlogArticleDetailFragmentApi,
+    BlogCategoryDetailFragmentApi,
+    BrandDetailFragmentApi,
+    CategoryDetailFragmentApi,
+    FlagDetailFragmentApi,
+    MainVariantDetailFragmentApi,
+    ProductDetailFragmentApi,
+    StoreDetailFragmentApi,
+} from 'graphql/generated';
 
 export type FriendlyUrlPageType =
-    | ProductDetailType
-    | MainVariantDetailType
-    | CategoryDetailType
+    | ProductDetailFragmentApi
+    | MainVariantDetailFragmentApi
+    | CategoryDetailFragmentApi
     | StoreDetailFragmentApi
     | ArticleDetailFragmentApi
-    | BlogArticleDetailType
-    | BlogCategoryDetailType
-    | BrandDetailType
-    | FlagDetailType;
+    | BlogArticleDetailFragmentApi
+    | BlogCategoryDetailFragmentApi
+    | BrandDetailFragmentApi
+    | FlagDetailFragmentApi;

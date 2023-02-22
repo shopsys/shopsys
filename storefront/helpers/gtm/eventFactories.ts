@@ -1,9 +1,19 @@
 import { getGtmConsentInfo, getGtmPageInfoType, getGtmUserInfo, useGtmCartEventInfo } from './gtm';
 import { getGtmDeviceType } from './helpers';
-import { mapGtmCartItemType, mapGtmListedProductType, mapGtmProductDetailType, mapGtmShippingInfo } from './mappers';
 import {
+    mapGtmCartItemType,
+    mapGtmListedProductFragmentApi,
+    mapGtmProductDetailType,
+    mapGtmShippingInfo,
+} from './mappers';
+import {
+    CartItemFragmentApi,
+    ListedProductFragmentApi,
     ListedStoreFragmentApi,
+    MainVariantDetailFragmentApi,
+    ProductDetailFragmentApi,
     SimplePaymentFragmentApi,
+    SimpleProductFragmentApi,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
 } from 'graphql/generated';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
@@ -11,7 +21,6 @@ import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { BreadcrumbItemType } from 'types/breadcrumb';
-import { CartItemType } from 'types/cart';
 import {
     GtmCartInfoType,
     GtmChangeCartItemEventType,
@@ -31,7 +40,6 @@ import {
     GtmSectionType,
     GtmShippingInfoEventType,
 } from 'types/gtm';
-import { ListedProductType, MainVariantDetailType, ProductDetailType, SimpleProductType } from 'types/product';
 import { AutocompleteSearchType } from 'types/search';
 
 export const useGtmStaticPageViewEvent = (
@@ -79,7 +87,7 @@ export const getNewGtmEcommerceEvent = (eventType: GtmEventType, clear = false):
 });
 
 export const getGtmChangeCartItemEvent = (
-    cartItem: CartItemType,
+    cartItem: CartItemFragmentApi,
     quantity: number,
     currencyCode: string,
     eventValue: number,
@@ -133,7 +141,7 @@ export const getGtmPaymentInfoEvent = (
 });
 
 export const getGtmProductsListEvent = (
-    products: ListedProductType[],
+    products: ListedProductFragmentApi[],
     listName: GtmListNameType,
     currentPage: number,
     pageSize: number,
@@ -141,26 +149,26 @@ export const getGtmProductsListEvent = (
 ): GtmProductsListEventType => {
     return {
         listName,
-        products: products.map((product: ListedProductType, index) => {
+        products: products.map((product: ListedProductFragmentApi, index) => {
             const listedProductIndex = (currentPage - 1) * pageSize + index;
 
-            return mapGtmListedProductType(product, listedProductIndex, domainUrl);
+            return mapGtmListedProductFragmentApi(product, listedProductIndex, domainUrl);
         }),
     };
 };
 
 export const getGtmProductDetailOnClickEvent = (
-    product: ListedProductType | SimpleProductType,
+    product: ListedProductFragmentApi | SimpleProductFragmentApi,
     listName: GtmListNameType,
     index: number,
     domainUrl: string,
 ): GtmProductsListEventType => ({
     listName,
-    products: [mapGtmListedProductType(product, index, domainUrl)],
+    products: [mapGtmListedProductFragmentApi(product, index, domainUrl)],
 });
 
 export const getGtmProductDetailEvent = (
-    product: ProductDetailType | MainVariantDetailType,
+    product: ProductDetailFragmentApi | MainVariantDetailFragmentApi,
     currencyCode: string,
     domainUrl: string,
 ): GtmProductDetailEventType => ({

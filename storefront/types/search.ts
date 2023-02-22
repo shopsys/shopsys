@@ -1,19 +1,22 @@
-import { SimpleArticleInterfaceType } from './articleInterface';
+import {
+    ListedProductConnectionFragmentApi,
+    ListedProductConnectionPreviewFragmentApi,
+    SimpleArticleInterfaceFragmentApi,
+} from 'graphql/generated';
 import { ListedBrandType, SimpleBrandType } from 'types/brand';
 import { ListedCategoryType, SimpleCategoryConnectionType } from 'types/category';
-import { ListedProductConnectionPreviewType, ListedProductConnectionType } from 'types/product';
 
 export type AutocompleteSearchType = {
-    articlesSearch: SimpleArticleInterfaceType[];
+    articlesSearch: SimpleArticleInterfaceFragmentApi[];
     brandSearch: SimpleBrandType[];
     categoriesSearch: SimpleCategoryConnectionType;
-    productsSearch: ListedProductConnectionType;
+    productsSearch: ListedProductConnectionFragmentApi;
 };
 
 export type SearchType = {
-    articlesSearch: SimpleArticleInterfaceType[];
+    articlesSearch: SimpleArticleInterfaceFragmentApi[];
     brandSearch: ListedBrandType[];
-    productsSearch: ListedProductConnectionPreviewType;
+    productsSearch: ListedProductConnectionPreviewFragmentApi;
     categoriesSearch: {
         totalCount: number;
         categories: ListedCategoryType[];

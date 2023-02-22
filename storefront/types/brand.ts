@@ -1,6 +1,5 @@
-import { ImageSizesFragmentApi } from 'graphql/generated';
+import { ImageSizesFragmentApi, ListedProductConnectionPreviewFragmentApi } from 'graphql/generated';
 import { BreadcrumbItemType } from 'types/breadcrumb';
-import { ListedProductConnectionPreviewType } from 'types/product';
 
 export type BrandDetailType = {
     __typename: 'Brand';
@@ -11,7 +10,7 @@ export type BrandDetailType = {
     seoH1: string | null;
     images: ImageSizesFragmentApi[];
     description: string | null;
-    productConnection: ListedProductConnectionPreviewType;
+    productConnection: ListedProductConnectionPreviewFragmentApi;
     seoTitle: string | null;
     seoMetaDescription: string | null;
 };

@@ -1,11 +1,10 @@
-import { AvailabilityStatusEnumApi } from 'graphql/generated';
+import { AvailabilityStatusEnumApi, MainVariantDetailFragmentApi, ProductDetailFragmentApi } from 'graphql/generated';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useShopsysSelector } from 'redux/main';
-import { MainVariantDetailType, ProductDetailType } from 'types/product';
 
 type ProductMetadataProps = {
-    product: ProductDetailType | MainVariantDetailType;
+    product: ProductDetailFragmentApi | MainVariantDetailFragmentApi;
 };
 
 export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {

@@ -1,5 +1,5 @@
 import { showErrorMessage } from 'components/Helpers/Toasts';
-import { mapCartItem, useCurrentCart } from 'connectors/cart/Cart';
+import { useCurrentCart } from 'connectors/cart/Cart';
 import { AddToCartMutationApi, useAddToCartMutationApi } from 'graphql/generated';
 import { onChangeCartItemGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
@@ -74,7 +74,7 @@ export const useAddToCart = (origin: GtmMessageOriginType): [AddToCartAction, bo
                 mapPriceForCalculations(addedCartItem.product.price.priceWithVat) * Math.abs(quantityDifference);
 
             onChangeCartItemGtmEventHandler(
-                mapCartItem(addedCartItem),
+                addedCartItem,
                 currencyCode,
                 absoluteEventValue,
                 absoluteEventValueWithTax,

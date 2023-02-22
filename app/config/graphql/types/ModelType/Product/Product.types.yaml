@@ -90,3 +90,5 @@ Product:
                     size:
                         type: "String"
                         defaultValue: null
+            isMainVariant:
+                type: "Boolean!"

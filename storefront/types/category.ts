@@ -1,6 +1,9 @@
-import { ImageSizesFragmentApi, SimpleCategoryFragmentApi } from 'graphql/generated';
+import {
+    ImageSizesFragmentApi,
+    ListedProductConnectionPreviewFragmentApi,
+    SimpleCategoryFragmentApi,
+} from 'graphql/generated';
 import { BreadcrumbItemType } from 'types/breadcrumb';
-import { ListedProductConnectionPreviewType } from 'types/product';
 
 export type SimpleCategoryConnectionType = {
     totalCount: number;
@@ -30,7 +33,7 @@ export type CategoryDetailType = {
     originalCategorySlug: string | null;
     seoH1: string | null;
     children: ListedCategoryType[];
-    productConnection: ListedProductConnectionPreviewType;
+    productConnection: ListedProductConnectionPreviewFragmentApi;
     readyCategorySeoMixLinks: ReadyCategorySeoMixLink[];
     linkedCategories: ListedCategoryType[];
     seoTitle: string | null;

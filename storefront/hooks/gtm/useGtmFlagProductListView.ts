@@ -1,17 +1,16 @@
 import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
 import { usePaginationContext } from 'components/Blocks/Pagination/usePaginationContext';
-import { Maybe } from 'graphql/generated';
+import { ListedProductFragmentApi, Maybe } from 'graphql/generated';
 import { getGtmProductsListEvent, getNewGtmEcommerceEvent } from 'helpers/gtm/eventFactories';
 import { gtmSafePushEvent } from 'helpers/gtm/gtm';
 import { useEffect, useRef } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { FriendlyUrlPageType } from 'types/friendlyUrl';
-import { ListedProductType } from 'types/product';
 
 export const useGtmFlagProductListView = (
     data: Maybe<FriendlyUrlPageType> | undefined,
     slug: string,
-    products: ListedProductType[],
+    products: ListedProductFragmentApi[],
     fetching: boolean,
 ): void => {
     const lastViewedFlagSlug = useRef<string | undefined>(undefined);

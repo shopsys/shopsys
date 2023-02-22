@@ -1,12 +1,12 @@
 import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
 import { usePaginationContext } from 'components/Blocks/Pagination/usePaginationContext';
+import { ListedProductFragmentApi } from 'graphql/generated';
 import { getGtmProductsListEvent, getNewGtmEcommerceEvent } from 'helpers/gtm/eventFactories';
 import { gtmSafePushEvent } from 'helpers/gtm/gtm';
 import { useEffect, useRef } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { ListedProductType } from 'types/product';
 
-export const useGtmSearchResultsListView = (products: ListedProductType[], searchQuery: string): void => {
+export const useGtmSearchResultsListView = (products: ListedProductFragmentApi[], searchQuery: string): void => {
     const lastSearchQuery = useRef<string | undefined>(undefined);
     const lastViewedSearchPage = useRef<number | undefined>(undefined);
     const [{ page }] = usePaginationContext();

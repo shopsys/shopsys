@@ -5,6 +5,7 @@ import { PaginationProvider } from 'components/Blocks/Pagination/PaginationProvi
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { UserText } from 'components/Helpers/UserText/UserText';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { BrandDetailFragmentApi } from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { getNewPagination } from 'helpers/pagination/getNewPagination';
 import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
@@ -12,10 +13,9 @@ import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { useRemoveSortFromUrlIfDefault } from 'hooks/filter/useRemoveSortFromUrlIfDefault';
 import { useRouter } from 'next/router';
 import { useRef } from 'react';
-import { BrandDetailType } from 'types/brand';
 
 type BrandDetailContentProps = {
-    brand: BrandDetailType;
+    brand: BrandDetailFragmentApi;
 };
 
 const TEST_IDENTIFIER = 'pages-branddetail-';
@@ -24,7 +24,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
     const containerWrapRef = useRef<null | HTMLDivElement>(null);
     const router = useRouter();
     const currentPage = parsePageNumberFromQuery(router.query[PAGE_QUERY_PARAMETER_NAME]);
-    useRemoveSortFromUrlIfDefault(brand.productConnection.orderingMode, brand.productConnection.defaultOrderingMode);
+    useRemoveSortFromUrlIfDefault(brand.products.orderingMode, brand.products.defaultOrderingMode);
 
     return (
         <PaginationProvider key={brand.uuid} {...getNewPagination(currentPage)}>
@@ -44,10 +44,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
             </Webline>
             <Webline>
                 <div ref={containerWrapRef}>
-                    <SortingBar
-                        sorting={brand.productConnection.orderingMode}
-                        totalCount={brand.productConnection.totalCount}
-                    />
+                    <SortingBar sorting={brand.products.orderingMode} totalCount={brand.products.totalCount} />
                     <BrandDetailProductsWrapper brand={brand} containerWrapRef={containerWrapRef} />
                 </div>
             </Webline>

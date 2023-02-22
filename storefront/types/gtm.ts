@@ -179,7 +179,7 @@ export type GtmProductInterface = {
     imageUrl?: string;
 };
 
-export type GtmListedProductType = GtmProductInterface & {
+export type GtmListedProductFragmentApi = GtmProductInterface & {
     listIndex?: number;
 };
 
@@ -243,7 +243,7 @@ export type GtmChangeCartItemEventType = {
 
 export type GtmProductsListEventType = {
     listName: GtmListNameType;
-    products: GtmListedProductType[];
+    products: GtmListedProductFragmentApi[];
 };
 
 export type GtmProductDetailEventType = {

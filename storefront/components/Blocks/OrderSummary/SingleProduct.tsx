@@ -1,10 +1,10 @@
 import { Image } from 'components/Basic/Image/Image';
+import { CartItemFragmentApi } from 'graphql/generated';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { CartItemType } from 'types/cart';
 
 type SingleProductProps = {
-    item: CartItemType;
+    item: CartItemFragmentApi;
 };
 
 const TEST_IDENTIFIER = 'blocks-ordersummary-singleproduct-';

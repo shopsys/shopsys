@@ -1,45 +1,45 @@
-import { ProductFilterApi } from 'graphql/generated';
+import { ProductFilterApi, ProductFilterOptionsFragmentApi } from 'graphql/generated';
+import { mapPriceForCalculations } from 'helpers/mappers/price';
 import {
     FilterFormBrandType,
     FilterFormFlagType,
     FilterFormParameterType,
     FilterFormParameterValuesType,
     FilterFormType,
-    FilterOptionsType,
     ParametersType,
 } from 'types/productFilter';
 
 const getDefaultBrandValues = (
     queryFromUrl: ProductFilterApi | null,
-    productFilterOptions: FilterOptionsType,
+    productFilterOptions: ProductFilterOptionsFragmentApi,
     originalSlug: string | null,
 ): FilterFormBrandType[] => {
-    return productFilterOptions.brands.map((value) => ({
-        ...value.brand,
-        checked: originalSlug === null ? !!queryFromUrl?.brands?.includes(value.brand.uuid) : false,
-    }));
+    return (
+        productFilterOptions.brands?.map((value) => ({
+            ...value.brand,
+            checked: originalSlug === null ? !!queryFromUrl?.brands?.includes(value.brand.uuid) : false,
+        })) ?? []
+    );
 };
 
 const getDefaultFlagValues = (
     queryFromUrl: ProductFilterApi | null,
-    productFilterOptions: FilterOptionsType,
+    productFilterOptions: ProductFilterOptionsFragmentApi,
     originalSlug: string | null,
 ): FilterFormFlagType[] => {
-    return productFilterOptions.flags.map((value) => ({
-        ...value.flag,
-        checked: originalSlug === null ? !!queryFromUrl?.flags?.includes(value.flag.uuid) : value.isSelected,
-    }));
+    return (
+        productFilterOptions.flags?.map((value) => ({
+            ...value.flag,
+            checked: originalSlug === null ? !!queryFromUrl?.flags?.includes(value.flag.uuid) : value.isSelected,
+        })) ?? []
+    );
 };
 
 const getDefaultParameterValues = (
     queryFromUrl: ProductFilterApi | null,
-    productFilterOptions: FilterOptionsType,
+    productFilterOptions: ProductFilterOptionsFragmentApi,
     originalSlug: string | null,
 ): FilterFormParameterType[] => {
-    if (productFilterOptions.parameters === undefined) {
-        return [];
-    }
-
     const getValues = (parameter: ParametersType): FilterFormParameterValuesType[] => {
         if (!('values' in parameter)) {
             return [];
@@ -61,18 +61,20 @@ const getDefaultParameterValues = (
         });
     };
 
-    return productFilterOptions.parameters.map((parameter) => {
-        return {
-            parameterName: parameter.name,
-            parameterUuid: parameter.uuid,
-            values: getValues(parameter),
-            isCollapsed: parameter.isCollapsed,
-            minimalValue: 'minimalValue' in parameter ? parameter.minimalValue : null,
-            maximalValue: 'maximalValue' in parameter ? parameter.maximalValue : null,
-            selectedValue: 'selectedValue' in parameter ? parameter.selectedValue : null,
-            unit: 'unit' in parameter ? parameter.unit : null,
-        };
-    });
+    return (
+        productFilterOptions.parameters?.map((parameter) => {
+            return {
+                parameterName: parameter.name,
+                parameterUuid: parameter.uuid,
+                values: getValues(parameter),
+                isCollapsed: parameter.isCollapsed,
+                minimalValue: 'minimalValue' in parameter ? parameter.minimalValue : null,
+                maximalValue: 'maximalValue' in parameter ? parameter.maximalValue : null,
+                selectedValue: 'selectedValue' in parameter ? parameter.selectedValue : null,
+                unit: 'unit' in parameter ? parameter.unit : null,
+            };
+        }) ?? []
+    );
 };
 
 const getDefaultStockAvailability = (queryFromUrl: ProductFilterApi | null, originalSlug: string | null): boolean =>
@@ -82,25 +84,25 @@ const getDefaultStockAvailability = (queryFromUrl: ProductFilterApi | null, orig
 
 const getDefaultMinimalPrice = (
     queryFromUrl: ProductFilterApi | null,
-    productFilterOptions: FilterOptionsType,
+    productFilterOptions: ProductFilterOptionsFragmentApi,
     originalSlug: string | null,
 ): number =>
     queryFromUrl?.minimalPrice !== undefined && queryFromUrl.minimalPrice !== null && originalSlug === null
         ? Number.parseFloat(queryFromUrl.minimalPrice)
-        : productFilterOptions.minimalPrice;
+        : mapPriceForCalculations(productFilterOptions.minimalPrice);
 
 const getDefaultMaximalPrice = (
     queryFromUrl: ProductFilterApi | null,
-    productFilterOptions: FilterOptionsType,
+    productFilterOptions: ProductFilterOptionsFragmentApi,
     originalSlug: string | null,
 ): number =>
     queryFromUrl?.maximalPrice !== undefined && queryFromUrl.maximalPrice !== null && originalSlug === null
         ? Number.parseFloat(queryFromUrl.maximalPrice)
-        : productFilterOptions.maximalPrice;
+        : mapPriceForCalculations(productFilterOptions.maximalPrice);
 
 export const getDefaultFormValues = (
     queryFromUrl: ProductFilterApi | null,
-    productFilterOptions: FilterOptionsType,
+    productFilterOptions: ProductFilterOptionsFragmentApi,
     originalSlug: string | null,
 ): FilterFormType => {
     return {

@@ -12,14 +12,15 @@ import { ProductDetailTabs } from './ProductDetailTabs';
 import { ProductVariantsTable } from './ProductVariantsTable/ProductVariantsTable';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata/ProductMetadata';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { ImageSizesFragmentApi, MainVariantDetailFragmentApi } from 'graphql/generated';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { useGtmProductDetailView } from 'hooks/gtm/useGtmProductDetailView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
-import { MainVariantDetailType } from 'types/product';
+import { useMemo } from 'react';
 
 type ProductDetailMainVariantContentProps = {
-    product: MainVariantDetailType;
+    product: MainVariantDetailFragmentApi;
     fetching: boolean;
 };
 
@@ -27,9 +28,20 @@ const TEST_IDENTIFIER = 'pages-productdetail-';
 
 export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContentProps> = ({ product, fetching }) => {
     const router = useRouter();
-    useGtmProductDetailView(product, getUrlWithoutGetParameters(router.asPath), fetching);
-
     const t = useTypedTranslationFunction();
+    const mainVariantImagesWithVariantImages = useMemo(() => {
+        const variantImages = product.variants.reduce((mappedVariantImages, variant) => {
+            if (variant.image) {
+                mappedVariantImages.push(variant.image);
+            }
+
+            return mappedVariantImages;
+        }, [] as ImageSizesFragmentApi[]);
+
+        return [...product.images, ...variantImages];
+    }, [product]);
+
+    useGtmProductDetailView(product, getUrlWithoutGetParameters(router.asPath), fetching);
 
     return (
         <>
@@ -38,7 +50,7 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
                 <ProductDetail>
                     <ProductDetailImage data-testid={TEST_IDENTIFIER + 'gallery'}>
                         <ProductDetailGallery
-                            images={product.images}
+                            images={mainVariantImagesWithVariantImages}
                             productName={product.name}
                             flags={product.flags}
                         />

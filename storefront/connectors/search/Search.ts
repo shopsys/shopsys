@@ -1,6 +1,5 @@
 import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
 import { mapConnectionEdges } from 'connectors/connection/Connection';
-import { mapListedProductConnectionPreviewType } from 'connectors/products/Products';
 import { ProductOrderingModeEnumApi, SearchQueryApi, useSearchQueryApi } from 'graphql/generated';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { isServer } from 'helpers/misc/isServer';
@@ -24,36 +23,32 @@ export const useSearch = (
         },
     });
     const { currencyCode } = useShopsysSelector((state) => state.domain);
-    const [mappedResult, setMappedResult] = useState<SearchType | undefined>(
-        mapSearchResult(result.data, currencyCode),
-    );
+    const [mappedResult, setMappedResult] = useState<SearchType | undefined>(mapSearchResult(result.data));
 
     useQueryError(result.error);
     useEffect(() => {
         if (!result.stale) {
-            setMappedResult(mapSearchResult(result.data, currencyCode));
+            setMappedResult(mapSearchResult(result.data));
         }
     }, [currencyCode, result.data, result.stale]);
 
     if (isServer() && result.data !== undefined) {
-        return mapSearchResult(result.data, currencyCode);
+        return mapSearchResult(result.data);
     }
 
     return mappedResult;
 };
 
-const mapSearchResult = (apiData: SearchQueryApi | undefined, currencyCode: string): SearchType | undefined => {
+const mapSearchResult = (apiData: SearchQueryApi | undefined): SearchType | undefined => {
     if (apiData === undefined) {
         return undefined;
     }
 
     return {
-        articlesSearch: apiData.articlesSearch,
-        brandSearch: apiData.brandSearch,
+        ...apiData,
         categoriesSearch: {
             totalCount: apiData.categoriesSearch.totalCount,
             categories: mapConnectionEdges(apiData.categoriesSearch.edges),
         },
-        productsSearch: mapListedProductConnectionPreviewType(apiData.productsSearch, currencyCode),
     };
 };

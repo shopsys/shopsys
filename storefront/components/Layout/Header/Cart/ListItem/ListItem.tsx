@@ -1,13 +1,13 @@
 import { Image } from 'components/Basic/Image/Image';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton/RemoveCartItemButton';
+import { CartItemFragmentApi } from 'graphql/generated';
 import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import NextLink from 'next/link';
 import { MouseEventHandler } from 'react';
-import { CartItemType } from 'types/cart';
 
 type ListItemProps = {
-    cartItem: CartItemType;
+    cartItem: CartItemFragmentApi;
     onItemRemove: MouseEventHandler<HTMLButtonElement>;
 };
 

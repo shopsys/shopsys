@@ -2,11 +2,11 @@ import { ProductItem } from './ProductItem/ProductItem';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
 import { usePaginationContext } from 'components/Blocks/Pagination/usePaginationContext';
+import { ListedProductFragmentApi } from 'graphql/generated';
 import { GtmListNameType } from 'types/gtm';
-import { ListedProductType } from 'types/product';
 
 type ProductsListProps = {
-    products: ListedProductType[];
+    products: ListedProductFragmentApi[];
     gtmListName: GtmListNameType;
     fetching?: boolean;
 };

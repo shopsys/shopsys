@@ -3,14 +3,13 @@ import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useAdverts } from 'connectors/adverts/Adverts';
-import { AdvertsFragmentApi } from 'graphql/generated';
+import { AdvertsFragmentApi, CategoryDetailFragmentApi } from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import NextLink from 'next/link';
 import { Fragment, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { CategoryDetailType } from 'types/category';
 
 type PositionNameType = 'productList' | 'footer' | 'header' | 'productListMiddle' | 'cartPreview';
 
@@ -19,7 +18,7 @@ type AdvertsProps = {
     withGapBottom?: boolean;
     withGapTop?: boolean;
     withWebline?: boolean;
-    currentCategory?: CategoryDetailType;
+    currentCategory?: CategoryDetailFragmentApi;
 };
 
 export const Adverts: FC<AdvertsProps> = ({
@@ -93,7 +92,7 @@ export const Adverts: FC<AdvertsProps> = ({
 const shouldBeShown = (
     advert: AdvertsFragmentApi,
     positionName: PositionNameType,
-    currentCategory?: CategoryDetailType,
+    currentCategory?: CategoryDetailFragmentApi,
 ): boolean => {
     if (advert.positionName !== positionName) {
         return false;

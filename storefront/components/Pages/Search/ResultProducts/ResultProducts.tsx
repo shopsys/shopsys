@@ -1,10 +1,10 @@
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
+import { ListedProductFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
-import { ListedProductType } from 'types/product';
 
 type ResultProductsProps = {
-    products: ListedProductType[];
+    products: ListedProductFragmentApi[];
     areProductsShowed: boolean;
     noProductsFound: boolean;
     fetching: boolean;

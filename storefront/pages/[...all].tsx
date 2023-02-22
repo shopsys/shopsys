@@ -17,7 +17,14 @@ import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDeta
 import { ProductDetailMainVariantContent } from 'components/Pages/ProductDetail/ProductDetailMainVariantContent';
 import { StoreDetailContent } from 'components/Pages/StoreDetail/StoreDetailContent';
 import { useFriendlyUrlResolvedData } from 'connectors/friendlyUrls/FriendlyUrls';
-import { Maybe, SlugQueryApi, SlugQueryDocumentApi, SlugQueryVariablesApi } from 'graphql/generated';
+import {
+    MainVariantDetailFragmentApi,
+    Maybe,
+    ProductDetailFragmentApi,
+    SlugQueryApi,
+    SlugQueryDocumentApi,
+    SlugQueryVariablesApi,
+} from 'graphql/generated';
 import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
@@ -40,7 +47,6 @@ import { Translate } from 'next-translate';
 import { NextRouter, useRouter } from 'next/router';
 import { nextReduxWrapper } from 'redux/main';
 import { FriendlyUrlPageType } from 'types/friendlyUrl';
-import { MainVariantDetailType, ProductDetailType } from 'types/product';
 import { ssrExchange } from 'urql';
 
 const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
@@ -58,13 +64,13 @@ const renderContent = (data: Maybe<FriendlyUrlPageType>, fetching: boolean, rout
     switch (data?.__typename) {
         case 'RegularProduct':
             return wrapContent(
-                <ProductDetailContent product={data as ProductDetailType} fetching={fetching} />,
+                <ProductDetailContent product={data as ProductDetailFragmentApi} fetching={fetching} />,
                 data,
                 t,
             );
         case 'MainVariant':
             return wrapContent(
-                <ProductDetailMainVariantContent product={data as MainVariantDetailType} fetching={fetching} />,
+                <ProductDetailMainVariantContent product={data as MainVariantDetailFragmentApi} fetching={fetching} />,
                 data,
                 t,
             );

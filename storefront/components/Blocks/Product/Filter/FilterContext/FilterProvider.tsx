@@ -1,17 +1,17 @@
 import { getDefaultFormValues } from '../formMeta';
 import { FilterContext } from './context';
 import { filterReducer } from './reducer';
+import { ProductFilterOptionsFragmentApi } from 'graphql/generated';
 import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
 import { FILTER_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useReducer } from 'react';
-import { FilterOptionsType } from 'types/productFilter';
 
 type FilterProviderProps = {
     originalSlug: string | null;
-    productFilterOptions: FilterOptionsType;
+    productFilterOptions: ProductFilterOptionsFragmentApi;
 };
 
 export const FilterProvider: FC<FilterProviderProps> = ({ children, originalSlug, productFilterOptions }) => {

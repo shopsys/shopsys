@@ -1,12 +1,12 @@
 import { Icon } from 'components/Basic/Icon/Icon';
+import { AvailabilityStatusEnumApi, ProductDetailFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { RefObject, useEffect } from 'react';
 import * as smoothscroll from 'smoothscroll-polyfill';
 import { twJoin } from 'tailwind-merge';
-import { ProductDetailType } from 'types/product';
 
 type ProductDetailAvailabilityProps = {
-    product: ProductDetailType;
+    product: ProductDetailFragmentApi;
     scrollTarget: RefObject<HTMLUListElement>;
 };
 
@@ -30,8 +30,10 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
             <a
                 className={twJoin(
                     'flex items-center font-bold no-underline hover:no-underline',
-                    product.availability.status === 'in-stock' && 'text-inStock hover:text-inStock',
-                    product.availability.status === 'out-of-stock' && 'text-red hover:text-red',
+                    product.availability.status === AvailabilityStatusEnumApi.InStockApi &&
+                        'text-inStock hover:text-inStock',
+                    product.availability.status === AvailabilityStatusEnumApi.OutOfStockApi &&
+                        'text-red hover:text-red',
                 )}
                 onClick={scrollOnClickHandler}
             >

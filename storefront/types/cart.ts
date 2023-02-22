@@ -1,16 +1,12 @@
-import { SimpleBrandType } from './brand';
 import {
-    AvailabilityFragmentApi,
+    CartItemFragmentApi,
     CartModificationsFragmentApi,
-    ImageSizesFragmentApi,
     ListedStoreFragmentApi,
     PriceFragmentApi,
-    ProductPriceFragmentApi,
     SimplePaymentFragmentApi,
+    SimpleProductFragmentApi,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
 } from 'graphql/generated';
-import { SimpleFlagType } from 'types/flag';
-import { SimpleProductType } from 'types/product';
 import { OperationContext } from 'urql';
 
 export type CurrentCartType = {
@@ -27,39 +23,14 @@ export type CurrentCartType = {
     refetchCart: (opts?: Partial<OperationContext> | undefined) => void;
 };
 
-export type ProductCartItemType = {
-    id: number;
-    uuid: string;
-    slug: string;
-    fullName: string;
-    flags: SimpleFlagType[];
-    image: ImageSizesFragmentApi | null;
-    price: ProductPriceFragmentApi;
-    availability: AvailabilityFragmentApi;
-    stockQuantity: number;
-    availableStoresCount: number;
-    catalogNumber: string;
-    unit: {
-        name: string;
-    };
-    brand: SimpleBrandType | null;
-    categoryNames: string[];
-};
-
-export type CartItemType = {
-    uuid: string;
-    product: ProductCartItemType;
-    quantity: number;
-};
-
 export type CartType = {
-    items: CartItemType[];
+    items: CartItemFragmentApi[];
     totalPrice: PriceFragmentApi;
     totalItemsPrice: PriceFragmentApi;
     totalDiscountPrice: PriceFragmentApi;
     remainingAmountWithVatForFreeTransport: number | null;
 };
 
-export type AddToCartPopupDataType = SimpleProductType & {
+export type AddToCartPopupDataType = SimpleProductFragmentApi & {
     quantity: number;
 };

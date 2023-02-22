@@ -8,17 +8,19 @@ import {
 } from './eventFactories';
 import { getGtmPurchaseData, gtmSafePushEvent } from './gtm';
 import {
+    CartItemFragmentApi,
+    ListedProductFragmentApi,
     ListedStoreFragmentApi,
     SimplePaymentFragmentApi,
+    SimpleProductFragmentApi,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
 } from 'graphql/generated';
 import { DomainConfigType } from 'helpers/domain/domain';
-import { CartItemType, CartType } from 'types/cart';
+import { CartType } from 'types/cart';
 import { GtmCartInfoType, GtmConsentInfoType, GtmConsentUpdateType, GtmListNameType, GtmSectionType } from 'types/gtm';
-import { ListedProductType, SimpleProductType } from 'types/product';
 
 export const onClickProductDetailGtmEventHandler = (
-    product: ListedProductType | SimpleProductType,
+    product: ListedProductFragmentApi | SimpleProductFragmentApi,
     listName: GtmListNameType,
     index: number,
     domainUrl: string,
@@ -29,7 +31,7 @@ export const onClickProductDetailGtmEventHandler = (
 };
 
 export const onRemoveCartItemGtmEventHandler = (
-    removedCartItem: CartItemType,
+    removedCartItem: CartItemFragmentApi,
     currencyCode: string,
     eventValue: number,
     eventValueWithTax: number,
@@ -52,7 +54,7 @@ export const onRemoveCartItemGtmEventHandler = (
 };
 
 export const onChangeCartItemGtmEventHandler = (
-    addedCartItem: CartItemType,
+    addedCartItem: CartItemFragmentApi,
     currencyCode: string,
     eventValue: number,
     eventValueWithTax: number,

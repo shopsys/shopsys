@@ -1,8 +1,6 @@
 import { SimpleBlogCategoryType } from './blogCategory';
-import { ImageSizesFragmentApi } from 'graphql/generated';
+import { ImageSizesFragmentApi, ListedProductFragmentApi, PageInfoFragmentApi } from 'graphql/generated';
 import { BreadcrumbItemType } from 'types/breadcrumb';
-import { PageInfoType } from 'types/pageInfo';
-import { SliderProductItemType } from 'types/product';
 
 export type BlogArticleDetailType = {
     __typename?: 'BlogArticle';
@@ -14,14 +12,14 @@ export type BlogArticleDetailType = {
     breadcrumb: BreadcrumbItemType[];
     text: string | null;
     publishDate: string;
-    blogArticleProducts: SliderProductItemType[];
+    blogArticleProducts: ListedProductFragmentApi[];
     seoTitle: string | null;
     seoMetaDescription: string | null;
 };
 
 export type BlogArticleConnectionType = {
     totalCount: number;
-    pageInfo: PageInfoType;
+    pageInfo: PageInfoFragmentApi;
     edges: ListedBlogArticleType[];
 };
 

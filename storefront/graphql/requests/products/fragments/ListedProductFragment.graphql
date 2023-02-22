@@ -4,6 +4,7 @@ fragment ListedProductFragment on Product {
     uuid
     slug
     fullName
+    name
     stockQuantity
     isSellingDenied
     flags {
@@ -28,4 +29,5 @@ fragment ListedProductFragment on Product {
         __typename
         name
     }
+    isMainVariant
 }

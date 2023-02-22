@@ -5,7 +5,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { ProductParameterType } from 'types/parameter';
 
 type ProductDetailTabsProps = {
-    description: string;
+    description: string | null;
     parameters: ProductParameterType[];
 };
 
@@ -27,7 +27,7 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                 )}
             </TabsList>
             <TabsContent headingTextMobile={t('Overview')} testIdentifier={TEST_IDENTIFIER + 'overview-content'}>
-                <UserText htmlContent={description} />
+                {description !== null && <UserText htmlContent={description} />}
             </TabsContent>
             {parameters.length > 0 && (
                 <TabsContent

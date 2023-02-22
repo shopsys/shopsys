@@ -4,15 +4,15 @@ import { ProductAvailableStoresCount } from 'components/Blocks/Product/Availabil
 import { ProductExposedStoresCount } from 'components/Blocks/Product/Availability/ProductExposedStoresCount';
 import { ProductFlags } from 'components/Blocks/Product/Flags/ProductFlags';
 import { ProductPrice } from 'components/Blocks/Product/Price/ProductPrice';
+import { ListedProductFragmentApi } from 'graphql/generated';
 import { onClickProductDetailGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import NextLink from 'next/link';
 import { useCallback } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { GtmListNameType } from 'types/gtm';
-import { ListedProductType } from 'types/product';
 
 type ProductItemProps = {
-    product: ListedProductType;
+    product: ListedProductFragmentApi;
     listIndex: number;
     gtmListName: GtmListNameType;
 };
@@ -23,7 +23,7 @@ export const ProductItem: FC<ProductItemProps> = ({ product, listIndex, gtmListN
     const { url } = useShopsysSelector((state) => state.domain);
 
     const onProductDetailRedirectHandler = useCallback(
-        async (product: ListedProductType, listName: GtmListNameType, index: number) => {
+        async (product: ListedProductFragmentApi, listName: GtmListNameType, index: number) => {
             await onClickProductDetailGtmEventHandler(product, listName, index, url);
         },
         [url],

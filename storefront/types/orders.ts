@@ -1,5 +1,4 @@
-import { ImageSizesFragmentApi, PriceFragmentApi } from 'graphql/generated';
-import { PageInfoType } from 'types/pageInfo';
+import { ImageSizesFragmentApi, PageInfoFragmentApi, PriceFragmentApi } from 'graphql/generated';
 
 export type ListedOrderType = {
     uuid: string;
@@ -19,7 +18,7 @@ export type ListedOrderType = {
 export type ListedOrderConnectionType = {
     orders: ListedOrderType[];
     totalCount: number;
-    pageInfo: PageInfoType;
+    pageInfo: PageInfoFragmentApi;
 };
 
 export type OrderDetailItemType = {

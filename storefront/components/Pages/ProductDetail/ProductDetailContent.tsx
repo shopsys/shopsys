@@ -14,15 +14,15 @@ import { ProductDetailAvailabilityList } from './ProductDetailStoresAvailability
 import { ProductDetailTabs } from './ProductDetailTabs';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata/ProductMetadata';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { ProductDetailFragmentApi } from 'graphql/generated';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { useGtmProductDetailView } from 'hooks/gtm/useGtmProductDetailView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { Fragment, useRef } from 'react';
-import { ProductDetailType } from 'types/product';
 
 type ProductDetailContentProps = {
-    product: ProductDetailType;
+    product: ProductDetailFragmentApi;
     fetching: boolean;
 };
 

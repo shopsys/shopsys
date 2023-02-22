@@ -1,9 +1,6 @@
-import {
-    FilterFormBrandType,
-    FilterFormFlagType,
-    FilterFormParameterType,
-    FilterOptionsType,
-} from 'types/productFilter';
+import { ProductFilterOptionsFragmentApi } from 'graphql/generated';
+import { mapPriceForCalculations } from 'helpers/mappers/price';
+import { FilterFormBrandType, FilterFormFlagType, FilterFormParameterType } from 'types/productFilter';
 
 export const getIsProductFilterSameAsDefault = (
     checkedBrands: FilterFormBrandType[],
@@ -12,7 +9,7 @@ export const getIsProductFilterSameAsDefault = (
     currentMaximalPrice: number | null,
     onlyInStock: boolean,
     checkedParameters: FilterFormParameterType[],
-    productFilterOptions: FilterOptionsType,
+    productFilterOptions: ProductFilterOptionsFragmentApi,
 ): boolean =>
     areBrandFiltersWithoutChanges(checkedBrands) &&
     areFlagFiltersWithoutChanges(checkedFlags, productFilterOptions) &&
@@ -27,16 +24,17 @@ export const areBrandFiltersWithoutChanges = (checkedBrands: FilterFormBrandType
 
 export const areFlagFiltersWithoutChanges = (
     checkedFlags: FilterFormFlagType[],
-    productFilterOptions: FilterOptionsType,
+    productFilterOptions: ProductFilterOptionsFragmentApi,
 ): boolean => {
     const checkedFlagsSet = checkedFlags.map((checkedFlag) => checkedFlag.uuid);
-    const defaultCheckedFlagsSet = productFilterOptions.flags.reduce((array: string[], flag) => {
-        if (flag.isSelected) {
-            array.push(flag.flag.uuid);
-        }
+    const defaultCheckedFlagsSet =
+        productFilterOptions.flags?.reduce((array: string[], flag) => {
+            if (flag.isSelected) {
+                array.push(flag.flag.uuid);
+            }
 
-        return array;
-    }, []);
+            return array;
+        }, []) ?? [];
 
     return (
         checkedFlagsSet.every((flag) => defaultCheckedFlagsSet.includes(flag)) &&
@@ -46,16 +44,16 @@ export const areFlagFiltersWithoutChanges = (
 
 export const isMinimalPriceFilterWithoutChanges = (
     currentMinimalPrice: number | null,
-    productFilterOptions: FilterOptionsType,
+    productFilterOptions: ProductFilterOptionsFragmentApi,
 ): boolean => {
-    return currentMinimalPrice === productFilterOptions.minimalPrice;
+    return currentMinimalPrice === mapPriceForCalculations(productFilterOptions.minimalPrice);
 };
 
 export const isMaximalPriceFilterWithoutChanges = (
     currentMaximalPrice: number | null,
-    productFilterOptions: FilterOptionsType,
+    productFilterOptions: ProductFilterOptionsFragmentApi,
 ): boolean => {
-    return currentMaximalPrice === productFilterOptions.maximalPrice;
+    return currentMaximalPrice === mapPriceForCalculations(productFilterOptions.maximalPrice);
 };
 
 export const isStockAvailabilityFilterWithoutChanges = (onlyInStock: boolean): boolean => {
@@ -64,7 +62,7 @@ export const isStockAvailabilityFilterWithoutChanges = (onlyInStock: boolean): b
 
 export const areParameterFiltersWithoutChanges = (
     checkedParameters: FilterFormParameterType[],
-    productFilterOptions: FilterOptionsType,
+    productFilterOptions: ProductFilterOptionsFragmentApi,
 ): boolean => {
     const defaultCheckedParameters =
         productFilterOptions.parameters?.filter((parameter) =>
@@ -96,15 +94,15 @@ export const areParameterFiltersWithoutChanges = (
         }
 
         for (const value of checkedParameter.values) {
-            const matchingDefaultParameterValue = defaultParameter.values.find(
+            const matchingDefaultParameterValueIndex = defaultParameter.values.findIndex(
                 (defaultValue) => defaultValue.uuid === value.uuid,
             );
 
-            if (matchingDefaultParameterValue === undefined) {
+            if (matchingDefaultParameterValueIndex === -1) {
                 return false;
             }
 
-            if (value.checked !== matchingDefaultParameterValue.isSelected) {
+            if (value.checked !== defaultParameter.values[matchingDefaultParameterValueIndex].isSelected) {
                 return false;
             }
         }

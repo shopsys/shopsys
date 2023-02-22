@@ -1,9 +1,9 @@
+import { CartItemFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
-import { CartItemType } from 'types/cart';
 
 type CartListItemInfoProps = {
-    item: CartItemType;
+    item: CartItemFragmentApi;
 };
 
 const TEST_IDENTIFIER = 'pages-cart-list-item-iteminfo-';

@@ -1,15 +1,11 @@
 import { FilterContext } from './context';
 import { FilterActions, FilterState } from './types';
+import { ProductFilterOptionsFragmentApi } from 'graphql/generated';
 import { getActualUrlQueryWithoutDefaultPriceFilter } from 'helpers/filterOptions/getActualUrlQueryWithoutDefaultPriceFilter';
 import { getIsProductFilterEmpty } from 'helpers/filterOptions/getIsProductFilterEmpty';
 import { getIsProductFilterSameAsDefault } from 'helpers/filterOptions/getIsProductFilterSameAsDefault';
 import { Dispatch, useContext, useMemo } from 'react';
-import {
-    FilterFormBrandType,
-    FilterFormFlagType,
-    FilterFormParameterType,
-    FilterOptionsType,
-} from 'types/productFilter';
+import { FilterFormBrandType, FilterFormFlagType, FilterFormParameterType } from 'types/productFilter';
 
 export const useFilterState = (): [FilterState, Dispatch<FilterActions>] => useContext(FilterContext)!;
 
@@ -116,7 +112,7 @@ export const useActualUrlQueryWithoutDefaultPriceFilter = (): string | undefined
     );
 };
 
-export const useProductFilterOptions = (): FilterOptionsType | null => {
+export const useProductFilterOptions = (): ProductFilterOptionsFragmentApi | null => {
     const state = useFilterState();
 
     return useMemo(() => {

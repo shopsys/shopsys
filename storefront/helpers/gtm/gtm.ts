@@ -15,8 +15,7 @@ import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { BreadcrumbItemType } from 'types/breadcrumb';
-import { CartItemType, CartType } from 'types/cart';
-import { CategoryDetailType } from 'types/category';
+import { CartType } from 'types/cart';
 import { CurrentCustomerType } from 'types/customer';
 import { FriendlyUrlPageType } from 'types/friendlyUrl';
 import {
@@ -106,7 +105,7 @@ export const getGtmPageInfoForFriendlyUrl = (
             break;
         case 'Category':
             defaultPageInfo.type = getCategoryOrSeoCategoryGtmListName(data.originalCategorySlug);
-            defaultPageInfo.category = getGtmCategoryInfo(data as CategoryDetailType);
+            defaultPageInfo.category = [data.name];
             break;
         case 'Store':
             defaultPageInfo.type = 'store';
@@ -145,10 +144,6 @@ export const getGtmPageInfoType = (
     breadcrumbs: breadcrumbs ?? [],
 });
 
-const getGtmCategoryInfo = (category: CategoryDetailType) => {
-    return [category.name];
-};
-
 export const gtmSafePushEvent = (event: GtmPageViewEventType | GtmEcommerceEventType | GtmSearchEventType): void => {
     if (canUseDom()) {
         window.dataLayer = window.dataLayer ?? [];
@@ -181,9 +176,7 @@ export const getGtmPurchaseData = (
         valueWithTax: Number.parseFloat(cart.totalPrice.priceWithVat),
         valueTax: Number.parseFloat(cart.totalPrice.vatAmount),
         currency: domainConfig.currencyCode,
-        products: cart.items.map((cartItem: CartItemType, index) =>
-            mapGtmCartItemType(cartItem, domainConfig.url, index),
-        ),
+        products: cart.items.map((cartItem, index) => mapGtmCartItemType(cartItem, domainConfig.url, index)),
         paymentType: payment.name,
         paymentPrice: payment.price.priceWithoutVat,
         paymentPriceWithTax: payment.price.priceWithVat,

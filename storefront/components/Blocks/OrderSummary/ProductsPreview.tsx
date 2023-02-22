@@ -1,8 +1,8 @@
 import { SingleProduct } from './SingleProduct';
-import { CartItemType } from 'types/cart';
+import { CartItemFragmentApi } from 'graphql/generated';
 
 type ProductsPreviewProps = {
-    cartItems: CartItemType[];
+    cartItems: CartItemFragmentApi[];
 };
 
 const TEST_IDENTIFIER = 'blocks-ordersummary-productspreview';

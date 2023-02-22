@@ -62,10 +62,9 @@ export type FilterOptionsType = {
     minimalPrice: number;
     maximalPrice: number;
     inStock: number;
-    brands: BrandsType[];
-    flags: FilterOptionFlagsType[];
-    parameters?: ParametersType[];
-    currencyCode: string;
+    brands: BrandsType[] | null;
+    flags: FilterOptionFlagsType[] | null;
+    parameters?: ParametersType[] | null;
 };
 
 export type FilterFormParameterValuesType = {

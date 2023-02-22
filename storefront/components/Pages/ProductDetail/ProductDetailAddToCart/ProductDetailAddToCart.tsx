@@ -3,16 +3,14 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { AddToCartPopup } from 'components/Blocks/Product/AddToCartPopup/AddToCartPopup';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
-import { mapAddToCartPopupData } from 'connectors/cart/Cart';
+import { CartItemFragmentApi, ProductDetailFragmentApi } from 'graphql/generated';
 import { useAddToCart } from 'hooks/cart/useAddToCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRef, useState } from 'react';
-import { AddToCartPopupDataType } from 'types/cart';
-import { ProductDetailType } from 'types/product';
 
 type ProductDetailAddToCartProps = {
-    product: ProductDetailType;
+    product: ProductDetailFragmentApi;
 };
 
 const TEST_IDENTIFIER = 'pages-productdetail-addtocart';
@@ -22,7 +20,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
     const [changeCartItemQuantity, fetching] = useAddToCart('product');
-    const [popupData, setPopupData] = useState<AddToCartPopupDataType | null>(null);
+    const [popupData, setPopupData] = useState<CartItemFragmentApi | undefined>();
 
     const onAddToCartHandler = async () => {
         if (spinboxRef.current === null) {
@@ -31,7 +29,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
 
         const addToCartResult = await changeCartItemQuantity(product.uuid, spinboxRef.current.valueAsNumber, 'detail');
         spinboxRef.current!.valueAsNumber = 1;
-        setPopupData(mapAddToCartPopupData(addToCartResult));
+        setPopupData(addToCartResult?.addProductResult.cartItem);
     };
 
     return (
@@ -61,8 +59,8 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                     </div>
                 )}
             </div>
-            {popupData !== null && (
-                <AddToCartPopup isVisible onCloseCallback={() => setPopupData(null)} product={popupData} />
+            {popupData !== undefined && (
+                <AddToCartPopup isVisible onCloseCallback={() => setPopupData(undefined)} addedCartItem={popupData} />
             )}
         </>
     );

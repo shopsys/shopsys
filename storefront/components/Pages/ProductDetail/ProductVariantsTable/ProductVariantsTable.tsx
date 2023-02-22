@@ -1,11 +1,11 @@
 import { ProductVariantsTableRow } from './ProductVariantsTableRow';
 import { Variant } from './Variant/Variant';
+import { MainVariantDetailFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { ListedVariantType } from 'types/product';
 import { twMergeCustom } from 'utils/twMerge';
 
 type ProductVariantsTableProps = {
-    variants: ListedVariantType[];
+    variants: MainVariantDetailFragmentApi['variants'];
     isSellingDenied: boolean;
 };
 

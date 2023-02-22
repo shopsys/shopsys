@@ -3,11 +3,9 @@ import {
     AUTOCOMPLETE_PRODUCT_LIMIT,
 } from 'components/Layout/Header/AutocompleteSearch/Autocomplete';
 import { mapConnectionEdges } from 'connectors/connection/Connection';
-import { mapListedProductConnectionType } from 'connectors/products/Products';
 import { AutocompleteSearchQueryApi, useAutocompleteSearchQueryApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useMemo } from 'react';
-import { useShopsysSelector } from 'redux/main';
 import { AutocompleteSearchType } from 'types/search';
 
 export const MINIMAL_SEARCH_QUERY_LENGTH = 3 as const;
@@ -22,7 +20,6 @@ export const useAutocompleteSearch = (autocompleteSearch: string): [Autocomplete
         pause: autocompleteSearch.length < MINIMAL_SEARCH_QUERY_LENGTH,
         requestPolicy: 'network-only',
     });
-    const { currencyCode } = useShopsysSelector((state) => state.domain);
 
     useQueryError(result.error);
 
@@ -30,20 +27,19 @@ export const useAutocompleteSearch = (autocompleteSearch: string): [Autocomplete
         () => [
             autocompleteSearch.length < MINIMAL_SEARCH_QUERY_LENGTH || !result.data
                 ? undefined
-                : mapSearchResult(result.data, currencyCode),
+                : mapSearchResult(result.data),
             result.fetching,
         ],
-        [autocompleteSearch.length, currencyCode, result.data, result.fetching],
+        [autocompleteSearch.length, result.data, result.fetching],
     );
 };
 
-const mapSearchResult = (apiData: AutocompleteSearchQueryApi, currencyCode: string): AutocompleteSearchType => {
+const mapSearchResult = (apiData: AutocompleteSearchQueryApi): AutocompleteSearchType => {
     return {
         ...apiData,
         categoriesSearch: {
             totalCount: apiData.categoriesSearch.totalCount,
             categories: mapConnectionEdges(apiData.categoriesSearch.edges),
         },
-        productsSearch: mapListedProductConnectionType(apiData.productsSearch, currencyCode),
     };
 };

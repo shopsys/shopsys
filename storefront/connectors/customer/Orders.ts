@@ -1,5 +1,4 @@
 import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
-import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
 import {
     ListedOrderFragmentApi,
     OrderDetailFragmentApi,
@@ -37,7 +36,6 @@ const mapOrdersApiData = (
 ): ListedOrderConnectionType => {
     return {
         ...apiData,
-        pageInfo: mapPageInfoApiData(apiData.pageInfo),
         orders: mapListedOrders(apiData.edges, currentDomainConfig),
     };
 };

@@ -2,12 +2,12 @@ import { Image } from 'components/Basic/Image/Image';
 import GrapeJsParser from 'components/Helpers/GrapeJsParser';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ArticleTitle } from 'components/Pages/Article/ArticleTitle';
+import { BlogArticleDetailFragmentApi } from 'graphql/generated';
 import { formatDate } from 'helpers/formaters/formatDate';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
-import { BlogArticleDetailType } from 'types/blogArticle';
 
 type BlogArticleDetailContentProps = {
-    blogArticle: BlogArticleDetailType;
+    blogArticle: BlogArticleDetailFragmentApi;
 };
 
 const TEST_IDENTIFIER = 'pages-blogarticle-';

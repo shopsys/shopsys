@@ -1,13 +1,13 @@
 import { SliderProductItem } from './SliderProductItem';
 import { theme } from 'components/Theme/main';
+import { ListedProductFragmentApi } from 'graphql/generated';
 import { useGtmSliderProductListView } from 'hooks/gtm/useGtmSliderProductListView';
 import { useKeenSlider } from 'keen-slider/react';
 import { useState } from 'react';
 import { GtmListNameType } from 'types/gtm';
-import { SliderProductItemType } from 'types/product';
 
 type ProductsSliderProps = {
-    products: SliderProductItemType[];
+    products: ListedProductFragmentApi[];
     gtmListName: GtmListNameType;
 };
 

@@ -22,7 +22,7 @@ fragment ProductDetailInterfaceFragment on Product {
     }
     stockQuantity
     accessories {
-        ...SliderProductFragment
+        ...ListedProductFragment
     }
     brand {
         ...SimpleBrandFragment
@@ -39,4 +39,5 @@ fragment ProductDetailInterfaceFragment on Product {
     }
     seoTitle
     seoMetaDescription
+    isMainVariant
 }

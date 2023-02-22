@@ -1,11 +1,8 @@
 import { showErrorMessage, showInfoMessage } from 'components/Helpers/Toasts';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
-import { mapSimpleProductApiData } from 'connectors/products/SimpleProduct';
 import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
 import {
-    AddToCartMutationApi,
     CartFragmentApi,
-    CartItemFragmentApi,
     CartItemModificationsFragmentApi,
     CartModificationsFragmentApi,
     CartPaymentModificationsFragmentApi,
@@ -20,7 +17,7 @@ import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { Translate } from 'next-translate';
 import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { AddToCartPopupDataType, CartItemType, CartType, CurrentCartType } from 'types/cart';
+import { CartType, CurrentCartType } from 'types/cart';
 import { CombinedError, OperationContext } from 'urql';
 
 export const useCurrentCart = (fromCache = true): CurrentCartType => {
@@ -108,39 +105,16 @@ const handleCartError = (error: CombinedError, t: Translate) => {
     }
 };
 
-export const mapAddToCartPopupData = (
-    addToCartResult: AddToCartMutationApi['AddToCart'] | null,
-): AddToCartPopupDataType | null => {
-    if (addToCartResult === null) {
-        return null;
-    }
-
-    return {
-        ...mapSimpleProductApiData(addToCartResult.addProductResult.cartItem.product),
-        quantity: addToCartResult.addProductResult.addedQuantity,
-    };
-};
-
 export const mapCart = (apiData: CartFragmentApi): CartType => {
     const remainingFreeTransport = apiData.remainingAmountWithVatForFreeTransport;
 
     return {
-        items: apiData.items.map((item) => mapCartItem(item)),
+        ...apiData,
         totalPrice: apiData.totalPrice,
         totalItemsPrice: apiData.totalItemsPrice,
         totalDiscountPrice: apiData.totalDiscountPrice,
         remainingAmountWithVatForFreeTransport:
             remainingFreeTransport !== null ? Number.parseFloat(remainingFreeTransport) : null,
-    };
-};
-
-export const mapCartItem = (apiData: CartItemFragmentApi): CartItemType => {
-    return {
-        ...apiData,
-        product: {
-            ...apiData.product,
-            categoryNames: apiData.product.categories.map((category) => category.name),
-        },
     };
 };
 
