@@ -8,7 +8,6 @@ type ProductDetailAvailabilityListItemStatusStyledProps = {
 export const ProductDetailAvailabilityListWrapperStyled = styled.div(
     ({ theme }) => css`
         display: block;
-        width: 588px;
 
         @media ${theme.mediaQueries.queryNotLargeDesktop} {
             width: 100%;

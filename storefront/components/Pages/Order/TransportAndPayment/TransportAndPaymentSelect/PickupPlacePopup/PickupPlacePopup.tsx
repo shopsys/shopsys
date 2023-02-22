@@ -1,8 +1,8 @@
-import { PickupPlacePopupWrapperStyled, PopupButtonWrapperStyled } from './PickupPlacePopup.style';
 import { StoreSelect } from './StoreSelect/StoreSelect';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { PopupStyled } from 'components/Layout/Popup/Popup.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useState } from 'react';
 import { PickupPlaceType } from 'types/pickupPlace';
@@ -39,7 +39,8 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = (props) => {
         <Popup
             isVisible={props.isVisible}
             onCloseCallback={onClosePickupPlacePopupHandler}
-            wrapperComponent={PickupPlacePopupWrapperStyled}
+            wrapperComponent={PopupStyled}
+            className="w-11/12 max-w-4xl"
         >
             <Heading type="h2">{t('Choose the store where you are going to pick up your order')}</Heading>
             <StoreSelect
@@ -47,7 +48,7 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = (props) => {
                 selectedStoreUuid={selectedStoreUuid}
                 onSelectStoreCallback={onSelectStoreHandler}
             />
-            <PopupButtonWrapperStyled>
+            <div className="mt-5 flex justify-between">
                 <Button
                     type="button"
                     onClick={onClosePickupPlacePopupHandler}
@@ -63,7 +64,7 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = (props) => {
                 >
                     {t('Confirm')}
                 </Button>
-            </PopupButtonWrapperStyled>
+            </div>
         </Popup>
     );
 };

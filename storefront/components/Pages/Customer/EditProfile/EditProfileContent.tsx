@@ -12,7 +12,6 @@ import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInpu
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { AddressList } from 'components/Pages/Customer/AddressList/AddressList';
-import { EditProfileTextStyled } from 'components/Pages/Customer/EditProfile/EditProfileContent.style';
 import {
     useCustomerChangeProfileForm,
     useCustomerChangeProfileFormMeta,
@@ -171,11 +170,11 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                         }}
                     />
                     <FormLine bottomGap>
-                        <EditProfileTextStyled>
+                        <div>
                             {t(
                                 'To prevent the possibility of account theft, it is necessary to deal with the change of e-mail individually. If your e-mail address has changed, please contact us.',
                             )}
-                        </EditProfileTextStyled>
+                        </div>
                     </FormLine>
                     <FormColumn>
                         <TextInputControlled

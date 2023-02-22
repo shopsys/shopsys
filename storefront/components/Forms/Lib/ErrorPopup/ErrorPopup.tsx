@@ -1,6 +1,7 @@
-import { ErrorListItemStyled, ErrorListStyled, ErrorMessageStyled, ErrorPopupStyled } from './ErrorPopup.style';
+import { ErrorListItemStyled, ErrorListStyled, ErrorMessageStyled } from './ErrorPopup.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { PopupStyled } from 'components/Layout/Popup/Popup.style';
 import { getGtmMessageEvent } from 'helpers/gtm/eventFactories';
 import { gtmSafePushEvent } from 'helpers/gtm/gtm';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -55,7 +56,12 @@ export const ErrorPopup: FC<ErrorPopupProps> = ({ isVisible, onCloseCallback, fi
     }, [fields]);
 
     return (
-        <Popup wrapperComponent={ErrorPopupStyled} isVisible={isVisible} onCloseCallback={onCloseCallback}>
+        <Popup
+            wrapperComponent={PopupStyled}
+            isVisible={isVisible}
+            onCloseCallback={onCloseCallback}
+            className="w-11/12 max-w-lg"
+        >
             <Heading type="h2">{t('Please check inserted details')}</Heading>
             <ErrorListStyled>{mappedErrors}</ErrorListStyled>
         </Popup>

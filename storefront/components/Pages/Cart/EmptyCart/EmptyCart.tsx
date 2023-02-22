@@ -1,4 +1,3 @@
-import { EmptyCartStyled } from './EmptyCart.style';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
@@ -10,7 +9,9 @@ export const EmptyCart: FC = () => {
 
     return (
         <Webline>
-            <EmptyCartStyled data-testid={TEST_IDENTIFIER}>{t('Your cart is currently empty.')}</EmptyCartStyled>
+            <p className="my-28 text-center text-2xl" data-testid={TEST_IDENTIFIER}>
+                {t('Your cart is currently empty.')}
+            </p>
         </Webline>
     );
 };

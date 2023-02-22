@@ -1,5 +1,4 @@
 import {
-    AvailabilityPopupStyled,
     VariantActionCellStyled,
     VariantActionStyled,
     VariantAvailabilityCellStyled,
@@ -13,6 +12,7 @@ import { AddToCart } from 'components/Blocks/Product/AddToCart/AddToCart';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/Availability/ProductAvailableStoresCount';
 import { ProductExposedStoresCount } from 'components/Blocks/Product/Availability/ProductExposedStoresCount';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { PopupStyled } from 'components/Layout/Popup/Popup.style';
 import { ProductDetailAvailabilityList } from 'components/Pages/ProductDetail/ProductDetailStoresAvailability/ProductDetailAvailabilityList/ProductDetailAvailabilityList';
 import { VariantsTableRowStyled } from 'components/Pages/ProductDetail/ProductVariantsTable/ProductVariantsTable.style';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
@@ -78,7 +78,8 @@ export const Variant: FC<VariantProps> = ({ gtmListName, isSellingDenied, listIn
                 <Popup
                     isVisible={isAvailabilityPopupVisible}
                     onCloseCallback={() => setAvailabilityPopupVisibility(false)}
-                    wrapperComponent={AvailabilityPopupStyled}
+                    wrapperComponent={PopupStyled}
+                    className="w-11/12 max-w-2xl"
                 >
                     <ProductDetailAvailabilityList storeAvailabilities={variant.storeAvailabilities} />
                 </Popup>

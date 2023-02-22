@@ -1,4 +1,4 @@
-import { CategoryDetailContentMessageStyled } from './CategoryDetailContent.style';
+import { CategoryDetailContentMessage } from './CategoryDetailContentMessage';
 import { DEFAULT_PAGE_SIZE, Pagination } from 'components/Blocks/Pagination/Pagination';
 import { usePaginationContext } from 'components/Blocks/Pagination/usePaginationContext';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
@@ -12,9 +12,7 @@ import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetPara
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
 import { useGtmCategoryProductListView } from 'hooks/gtm/useGtmCategoryProductListView';
-import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useListingForPagination } from 'hooks/ui/useListingForPagination';
-import Trans from 'next-translate/Trans';
 import { useRouter } from 'next/router';
 import React, { FC, RefObject, useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
@@ -27,7 +25,6 @@ type CategoryDetailProps = {
 };
 
 export const CategoryDetailProductsWrapper: FC<CategoryDetailProps> = ({ category, containerWrapRef }) => {
-    const t = useTypedTranslationFunction();
     const { asPath, query } = useRouter();
     const [{ endCursor }] = usePaginationContext();
     const orderingMode = getProductListSort(parseProductListSortFromQuery(query.sort));
@@ -64,14 +61,7 @@ export const CategoryDetailProductsWrapper: FC<CategoryDetailProps> = ({ categor
                     />
                 </>
             ) : (
-                <CategoryDetailContentMessageStyled>
-                    <div>
-                        <strong>{t('No results match the filter')}</strong>
-                    </div>
-                    <div>
-                        <Trans i18nKey="ProductsNoResults" components={{ 0: <br /> }} />
-                    </div>
-                </CategoryDetailContentMessageStyled>
+                <CategoryDetailContentMessage />
             )}
         </>
     );

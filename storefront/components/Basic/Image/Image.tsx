@@ -1,4 +1,3 @@
-import { Img } from './Image.style';
 import { FC, ImgHTMLAttributes } from 'react';
 import { CSSProperties } from 'styled-components';
 import { ImageSizeType, ImageType } from 'types/image';
@@ -33,13 +32,15 @@ export const Image: FC<ImageProps> = ({ image, alt, type, loading, testIdentifie
             {img.additionalSizes.map((size) => (
                 <source key={size.url} srcSet={size.url} media={size.media} />
             ))}
-            <Img
-                className="responsive-image"
+            <img
+                className="responsive-image block w-full object-contain"
+                style={{
+                    maxWidth: maxWidth ?? (img.width !== null ? `${img.width}px` : undefined),
+                    maxHeight: maxHeight ?? (img.height !== null ? `${img.height}px` : undefined),
+                }}
                 src={img.url}
                 alt={alt}
                 loading={loading}
-                maxWidth={maxWidth ?? (img.width !== null ? `${img.width}px` : undefined)}
-                maxHeight={maxHeight ?? (img.height !== null ? `${img.height}px` : undefined)}
             />
         </picture>
     );

@@ -1,4 +1,3 @@
-import { TransportImageWrapperStyled } from './OrdersContent.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Image } from 'components/Basic/Image/Image';
 import { TableGrid } from 'components/Basic/TableGrid/TableGrid';
@@ -80,13 +79,15 @@ export const OrdersContent: FC<OrdersContentProps> = ({ breadcrumbs, orders, tot
                                         {order.items.quantity}
                                     </td>
                                     <td data-testid={TEST_IDENTIFIER + 'transport'}>
-                                        <TransportImageWrapperStyled>
+                                        <div className="relative top-1 mr-1 inline-flex w-10 justify-center">
                                             <Image
                                                 image={order.transport.image}
                                                 type="default"
                                                 alt={order.transport.name}
+                                                maxWidth={36}
+                                                maxHeight={20}
                                             />
-                                        </TransportImageWrapperStyled>
+                                        </div>
                                         {order.transport.name}
                                     </td>
                                     <td data-testid={TEST_IDENTIFIER + 'payment'}>{order.payment}</td>

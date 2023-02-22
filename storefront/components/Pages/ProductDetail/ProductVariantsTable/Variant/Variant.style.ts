@@ -1,4 +1,3 @@
-import { PopupStyled } from 'components/Layout/Popup/Popup.style';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
@@ -76,18 +75,6 @@ export const VariantActionStyled = styled.div(
 
         @media ${theme.mediaQueries.queryTablet} {
             justify-content: space-between;
-        }
-    `,
-);
-
-export const AvailabilityPopupStyled = styled(PopupStyled)(
-    ({ theme }) => css`
-        @media ${theme.mediaQueries.queryNotLargeDesktop} {
-            width: 80%;
-        }
-
-        @media ${theme.mediaQueries.queryTablet} {
-            width: 96%;
         }
     `,
 );

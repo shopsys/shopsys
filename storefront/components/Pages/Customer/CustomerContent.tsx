@@ -1,4 +1,3 @@
-import { CustomerListItemStyled, CustomerListStyled } from './CustomerContent.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { HeadingWrapperStyled } from 'components/Layout/SimpleLayout/SimpleLayout.style';
@@ -33,18 +32,24 @@ export const CustomerContent: FC<CustomerContentProps> = ({ breadcrumbs }) => {
                 <Breadcrumbs key="breadcrumb" breadcrumb={breadcrumbs} />
             </Webline>
             <Webline>
-                <CustomerListStyled>
-                    <CustomerListItemStyled>
+                <ul className="mb-8 flex flex-col flex-wrap gap-4 md:flex-row">
+                    <CustomerListItem>
                         <NextLink href={customerOrdersUrl}>{t('My orders')}</NextLink>
-                    </CustomerListItemStyled>
-                    <CustomerListItemStyled>
+                    </CustomerListItem>
+                    <CustomerListItem>
                         <NextLink href={customerEditProfileUrl}>{t('Edit profile')}</NextLink>
-                    </CustomerListItemStyled>
-                    <CustomerListItemStyled>
+                    </CustomerListItem>
+                    <CustomerListItem>
                         <a onClick={logout}>{t('Logout')}</a>
-                    </CustomerListItemStyled>
-                </CustomerListStyled>
+                    </CustomerListItem>
+                </ul>
             </Webline>
         </>
     );
 };
+
+const CustomerListItem: FC = ({ children }) => (
+    <li className="block flex-1 cursor-pointer rounded-xl bg-greyVeryLight text-lg text-dark transition hover:bg-greyLighter [&_a]:block [&_a]:h-full [&_a]:w-full [&_a]:p-5 [&_a]:no-underline hover:[&_a]:text-dark hover:[&_a]:no-underline">
+        {children}
+    </li>
+);

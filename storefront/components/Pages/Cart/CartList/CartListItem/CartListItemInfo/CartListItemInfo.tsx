@@ -1,11 +1,3 @@
-import {
-    AvailabilityMessageStyled,
-    AvailabilityStyled,
-    CodeStyled,
-    NameStyled,
-    NameTitleStyled,
-    NameTitleTextStyled,
-} from './CartListItem.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
 import { FC } from 'react';
@@ -22,26 +14,26 @@ export const CartListItemInfo: FC<CartListItemInfoProps> = ({ item }) => {
 
     return (
         <>
-            <NameStyled data-testid={TEST_IDENTIFIER + 'name'}>
+            <div className="h-full pr-4 text-left vl:w-[16.875rem]" data-testid={TEST_IDENTIFIER + 'name'}>
                 <NextLink href={item.product.slug} passHref>
-                    <NameTitleStyled>
-                        <NameTitleTextStyled>{item.product.fullName}</NameTitleTextStyled>
-                    </NameTitleStyled>
+                    <a className="text-sm font-bold uppercase leading-4 text-dark no-underline hover:text-dark hover:no-underline">
+                        <span className="mr-5">{item.product.fullName}</span>
+                    </a>
                 </NextLink>
-                <CodeStyled>
+                <div className="text-sm text-greyLight">
                     {t('Code')}: {item.product.catalogNumber}
-                </CodeStyled>
-            </NameStyled>
-            <AvailabilityStyled data-testid={TEST_IDENTIFIER + 'availability'}>
+                </div>
+            </div>
+            <div className="block flex-1 vl:text-center" data-testid={TEST_IDENTIFIER + 'availability'}>
                 {item.product.availability.name}
                 {item.product.availableStoresCount > 0 && (
-                    <AvailabilityMessageStyled>
+                    <span className="ml-1 inline font-normal vl:ml-0 vl:block">
                         {t('or immediately in {{ count }} stores', {
                             count: item.product.availableStoresCount,
                         })}
-                    </AvailabilityMessageStyled>
+                    </span>
                 )}
-            </AvailabilityStyled>
+            </div>
         </>
     );
 };

@@ -1,8 +1,7 @@
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 
 type ArticleTitleProps = {
     dataTestId: string;
-    children: ReactNode;
 };
 
 export const ArticleTitle: FC<ArticleTitleProps> = ({ dataTestId, children }) => (

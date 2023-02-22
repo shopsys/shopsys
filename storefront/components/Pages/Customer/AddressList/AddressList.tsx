@@ -1,17 +1,12 @@
-import {
-    ButtonWrapperStyled,
-    ListItemStyled,
-    ListPopupInStyled,
-    ListPopupStyled,
-    ListStyled,
-} from './AddressList.style';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Button } from 'components/Forms/Button/Button';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { PopupStyled } from 'components/Layout/Popup/Popup.style';
 import { useDeleteDeliveryAddressMutationApi, useSetDefaultDeliveryAddressMutationApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useState } from 'react';
+import { twJoin } from 'tailwind-merge';
 import { DeliveryAddressType } from 'types/customer';
 
 type AddressListProps = {
@@ -56,16 +51,21 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
 
     return (
         <>
-            <ListStyled>
+            <div className="flex w-full flex-col">
                 {deliveryAddresses.map((address, index) => (
-                    <ListItemStyled
+                    <div
                         key={address.uuid}
-                        isActive={defaultDeliveryAddress?.uuid === address.uuid}
+                        className={twJoin(
+                            'relative mb-5 flex w-full flex-row flex-wrap rounded-xl border border-grey p-5',
+                            defaultDeliveryAddress?.uuid === address.uuid
+                                ? 'border-primary bg-greyVeryLight'
+                                : 'cursor-pointer',
+                        )}
                         data-testid={TEST_IDENTIFIER + '-item-' + index}
                         onClick={() => setDefaultItemHandler(address.uuid)}
                     >
                         <div>
-                            <strong>
+                            <strong className="mr-1">
                                 {address.firstName} {address.lastName}
                             </strong>
                             {address.companyName}
@@ -90,17 +90,18 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                             height={12}
                             className="absolute right-5 top-5 cursor-pointer text-greyLight hover:text-red"
                         />
-                    </ListItemStyled>
+                    </div>
                 ))}
-            </ListStyled>
+            </div>
             <Popup
                 isVisible={addressToBeDeleted !== undefined}
                 onCloseCallback={() => setAddressToBeDeleted(undefined)}
-                wrapperComponent={ListPopupStyled}
+                wrapperComponent={PopupStyled}
+                className="w-11/12 lg:w-4/5 vl:w-auto"
             >
-                <ListPopupInStyled>
+                <div className="flex flex-col">
                     {t('Do you really want to delete this delivery address?')}
-                    <ButtonWrapperStyled>
+                    <div className="mt-4 flex flex-row flex-nowrap justify-between">
                         <Button type="button" onClick={() => setAddressToBeDeleted(undefined)}>
                             <Icon iconType="icon" icon="Arrow" className="relative mr-4 rotate-90 text-white" />
                             {t('No')}
@@ -109,8 +110,8 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                             {t('Yes')}
                             <Icon iconType="icon" icon="Arrow" className="relative ml-4 -rotate-90" />
                         </Button>
-                    </ButtonWrapperStyled>
-                </ListPopupInStyled>
+                    </div>
+                </div>
             </Popup>
         </>
     );
