@@ -1547,3 +1547,5 @@ There you can find links to upgrade notes for other versions too.
         + resource: '../../**/*{Facade,Factory,Mapper,Mutation,Query,Repository,Validator}.php'
         ```
   - see #project-base-diff for more information about changes needed to be done in your project
+- update your Elasticsearch Docker Image to latest version ([#2569](https://github.com/shopsys/shopsys/pull/2569))
+    - see #project-base-diff for more information about changes needed to be done in your project
