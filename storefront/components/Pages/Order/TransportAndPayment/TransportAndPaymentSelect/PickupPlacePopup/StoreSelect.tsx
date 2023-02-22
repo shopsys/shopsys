@@ -1,7 +1,9 @@
 import { TransportAndPaymentListItem } from '../TransportAndPaymentListItem';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { TransportAndPaymentSelectItemLabel } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentSelectItemLabel/TransportAndPaymentSelectItemLabel';
-import { TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
+import { mapConnectionEdges } from 'connectors/connection/Connection';
+import { ListedStoreFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
+import { useMemo } from 'react';
 
 type StoreSelectProps = {
     selectedStoreUuid: string;
@@ -10,32 +12,33 @@ type StoreSelectProps = {
 };
 
 export const StoreSelect: FC<StoreSelectProps> = ({ selectedStoreUuid, transport, onSelectStoreCallback }) => {
+    const mappedStores = useMemo(
+        () => mapConnectionEdges<ListedStoreFragmentApi>(transport.stores?.edges),
+        [transport.stores?.edges],
+    );
+
     return (
         <ul>
-            {transport.stores?.edges?.map(
-                (pickupPlaceItemEdge) =>
-                    pickupPlaceItemEdge?.node !== null &&
-                    pickupPlaceItemEdge?.node !== undefined && (
-                        <TransportAndPaymentListItem
-                            key={pickupPlaceItemEdge.node.identifier}
-                            isActive={selectedStoreUuid === pickupPlaceItemEdge.node.identifier}
-                        >
-                            <Radiobutton
-                                name="selectedStore"
-                                id={pickupPlaceItemEdge.node.identifier}
-                                value={pickupPlaceItemEdge.node.identifier}
-                                checked={selectedStoreUuid === pickupPlaceItemEdge.node.identifier}
-                                onChangeCallback={onSelectStoreCallback}
-                                label={
-                                    <TransportAndPaymentSelectItemLabel
-                                        name={pickupPlaceItemEdge.node.name}
-                                        pickupPlaceDetail={pickupPlaceItemEdge.node}
-                                    />
-                                }
+            {mappedStores?.map((pickupPlace) => (
+                <TransportAndPaymentListItem
+                    key={pickupPlace.identifier}
+                    isActive={selectedStoreUuid === pickupPlace.identifier}
+                >
+                    <Radiobutton
+                        name="selectedStore"
+                        id={pickupPlace.identifier}
+                        value={pickupPlace.identifier}
+                        checked={selectedStoreUuid === pickupPlace.identifier}
+                        onChangeCallback={onSelectStoreCallback}
+                        label={
+                            <TransportAndPaymentSelectItemLabel
+                                name={pickupPlace.name}
+                                pickupPlaceDetail={pickupPlace}
                             />
-                        </TransportAndPaymentListItem>
-                    ),
-            )}
+                        }
+                    />
+                </TransportAndPaymentListItem>
+            ))}
         </ul>
     );
 };

@@ -1,6 +1,7 @@
 import { BlogArticlesList } from './BlogArticlesList/BlogArticlesList';
 import { DEFAULT_PAGE_SIZE, Pagination } from 'components/Blocks/Pagination/Pagination';
 import { usePaginationContext } from 'components/Blocks/Pagination/usePaginationContext';
+import { mapConnectionEdges } from 'connectors/connection/Connection';
 import { ListedBlogArticleFragmentApi, useBlogCategoryArticlesApi } from 'graphql/generated';
 import { useMemo, useRef } from 'react';
 
@@ -16,21 +17,10 @@ export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> =
         variables: { uuid, endCursor: endCursor ?? '', pageSize: DEFAULT_PAGE_SIZE },
     });
 
-    const mappedArticles = useMemo(() => {
-        const updatedMappedBlogArticles: ListedBlogArticleFragmentApi[] = [];
-
-        if (data?.blogCategory?.blogArticles.edges === undefined || data.blogCategory.blogArticles.edges === null) {
-            return undefined;
-        }
-
-        for (const unmappedBlogArticleEdge of data.blogCategory.blogArticles.edges) {
-            if (unmappedBlogArticleEdge?.node !== undefined && unmappedBlogArticleEdge.node !== null) {
-                updatedMappedBlogArticles.push(unmappedBlogArticleEdge.node);
-            }
-        }
-
-        return updatedMappedBlogArticles;
-    }, [data?.blogCategory?.blogArticles.edges]);
+    const mappedArticles = useMemo(
+        () => mapConnectionEdges<ListedBlogArticleFragmentApi>(data?.blogCategory?.blogArticles.edges),
+        [data?.blogCategory?.blogArticles.edges],
+    );
 
     return (
         <>

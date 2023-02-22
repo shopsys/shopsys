@@ -3,6 +3,7 @@ import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
+import { mapConnectionEdges } from 'connectors/connection/Connection';
 import { ListedStoreConnectionFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Image from 'next/image';
@@ -22,21 +23,7 @@ export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) =
     const { defaultLocale } = useShopsysSelector((state) => state.domain);
     const [activeInfoBox, setActiveInfoBox] = useState(-1);
     const [closeInfoBox, setCloseInfoBox] = useState(true);
-    const mappedStores = useMemo(() => {
-        const updatedMappedStores: ListedStoreFragmentApi[] = [];
-
-        if (stores.edges === null) {
-            return undefined;
-        }
-
-        for (const unmappedStoreEdge of stores.edges) {
-            if (unmappedStoreEdge?.node !== undefined && unmappedStoreEdge.node !== null) {
-                updatedMappedStores.push(unmappedStoreEdge.node);
-            }
-        }
-
-        return updatedMappedStores;
-    }, [stores.edges]);
+    const mappedStores = useMemo(() => mapConnectionEdges<ListedStoreFragmentApi>(stores.edges), [stores.edges]);
 
     const activeMarkerHandler = useCallback((index: number) => {
         setActiveInfoBox((prev) => (prev !== index ? index : -1));

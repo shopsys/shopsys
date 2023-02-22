@@ -7,6 +7,7 @@ import {
     mapGtmShippingInfo,
 } from './mappers';
 import {
+    AutocompleteSearchQueryApi,
     CartItemFragmentApi,
     ListedProductFragmentApi,
     ListedStoreFragmentApi,
@@ -40,7 +41,6 @@ import {
     GtmSectionType,
     GtmShippingInfoEventType,
 } from 'types/gtm';
-import { AutocompleteSearchType } from 'types/search';
 
 export const useGtmStaticPageViewEvent = (
     pageType: GtmPageType,
@@ -178,7 +178,10 @@ export const getGtmProductDetailEvent = (
     products: [mapGtmProductDetailType(product, domainUrl)],
 });
 
-export const getGtmSearchResultEvent = (searchResult: AutocompleteSearchType, keyword: string): GtmSearchEventType => {
+export const getGtmSearchResultEvent = (
+    searchResult: AutocompleteSearchQueryApi,
+    keyword: string,
+): GtmSearchEventType => {
     const resultsCount = searchResult.categoriesSearch.totalCount + searchResult.productsSearch.totalCount;
     const suggestResult = {
         results: resultsCount,
