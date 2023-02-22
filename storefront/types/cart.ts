@@ -4,7 +4,6 @@ import {
     ListedStoreFragmentApi,
     PriceFragmentApi,
     SimplePaymentFragmentApi,
-    SimpleProductFragmentApi,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
 } from 'graphql/generated';
 import { OperationContext } from 'urql';
@@ -29,8 +28,4 @@ export type CartType = {
     totalItemsPrice: PriceFragmentApi;
     totalDiscountPrice: PriceFragmentApi;
     remainingAmountWithVatForFreeTransport: number | null;
-};
-
-export type AddToCartPopupDataType = SimpleProductFragmentApi & {
-    quantity: number;
 };

@@ -1,5 +1,3 @@
-import { SimpleFlagType } from 'types/flag';
-
 export type ParametersCheckboxValuesType = {
     uuid: string;
     text: string;
@@ -43,29 +41,6 @@ export type ParametersSliderType = {
 };
 
 export type ParametersType = ParametersCheckboxType | ParametersColorType | ParametersSliderType;
-
-export type FilterOptionFlagsType = {
-    count: number;
-    flag: SimpleFlagType;
-    isSelected: boolean;
-};
-
-export type BrandsType = {
-    count: number;
-    brand: {
-        uuid: string;
-        name: string;
-    };
-};
-
-export type FilterOptionsType = {
-    minimalPrice: number;
-    maximalPrice: number;
-    inStock: number;
-    brands: BrandsType[] | null;
-    flags: FilterOptionFlagsType[] | null;
-    parameters?: ParametersType[] | null;
-};
 
 export type FilterFormParameterValuesType = {
     checked: boolean;

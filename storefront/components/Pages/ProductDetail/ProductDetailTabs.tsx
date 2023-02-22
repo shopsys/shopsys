@@ -1,12 +1,12 @@
 import { Table } from 'components/Basic/Table/Table';
 import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/Basic/Tabs/Tabs';
 import { UserText } from 'components/Helpers/UserText/UserText';
+import { ParameterFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { ProductParameterType } from 'types/parameter';
 
 type ProductDetailTabsProps = {
     description: string | null;
-    parameters: ProductParameterType[];
+    parameters: ParameterFragmentApi[];
 };
 
 const TEST_IDENTIFIER = 'pages-productdetail-';

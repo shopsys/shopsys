@@ -1,29 +1,8 @@
-import { ImageSizesFragmentApi, ListedProductConnectionPreviewFragmentApi } from 'graphql/generated';
-import { BreadcrumbItemType } from 'types/breadcrumb';
-
-export type BrandDetailType = {
-    __typename: 'Brand';
-    slug: string;
-    uuid: string;
-    breadcrumb: BreadcrumbItemType[];
-    name: string;
-    seoH1: string | null;
-    images: ImageSizesFragmentApi[];
-    description: string | null;
-    productConnection: ListedProductConnectionPreviewFragmentApi;
-    seoTitle: string | null;
-    seoMetaDescription: string | null;
-};
+import { ImageSizesFragmentApi } from 'graphql/generated';
 
 export type ListedBrandType = {
     uuid: string;
     name: string;
     slug: string;
     images: ImageSizesFragmentApi[];
-};
-
-export type SimpleBrandType = {
-    __typename?: 'Brand';
-    name: string;
-    slug: string;
 };
