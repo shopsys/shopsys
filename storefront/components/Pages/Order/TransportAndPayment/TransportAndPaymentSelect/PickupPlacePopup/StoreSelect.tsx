@@ -1,5 +1,5 @@
+import { TransportAndPaymentListItem } from '../TransportAndPaymentListItem';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
-import { ListItemStyled } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentSelect.style';
 import { TransportAndPaymentSelectItemLabel } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentSelectItemLabel/TransportAndPaymentSelectItemLabel';
 import { FC } from 'react';
 import { TransportType } from 'types/transport';
@@ -15,7 +15,7 @@ export const StoreSelect: FC<StoreSelectProps> = ({ selectedStoreUuid, transport
         <ul>
             {transport.stores.map((pickupPlaceItem) => {
                 return (
-                    <ListItemStyled
+                    <TransportAndPaymentListItem
                         key={pickupPlaceItem.identifier}
                         isActive={selectedStoreUuid === pickupPlaceItem.identifier}
                     >
@@ -32,7 +32,7 @@ export const StoreSelect: FC<StoreSelectProps> = ({ selectedStoreUuid, transport
                                 />
                             }
                         />
-                    </ListItemStyled>
+                    </TransportAndPaymentListItem>
                 );
             })}
         </ul>

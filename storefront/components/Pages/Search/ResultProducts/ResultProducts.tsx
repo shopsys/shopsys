@@ -1,4 +1,3 @@
-import { ResultProductsStyled } from './ResultProducts.style';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
@@ -18,24 +17,24 @@ export const ResultProducts: FC<ResultProductsProps> = ({ areProductsShowed, noP
     return (
         <>
             {areProductsShowed && <ProductsList products={products} gtmListName="search result" fetching={fetching} />}
-            {!areProductsShowed && !noProductsFound && (
-                <ResultProductsStyled>
-                    <div>
-                        <strong>{t('No results match the filter')}</strong>
-                    </div>
-                    <div>
-                        <Trans i18nKey="ProductsNoResults" components={{ 0: <br /> }} />
-                    </div>
-                </ResultProductsStyled>
-            )}
+            <div className="p-12 text-center">
+                {!areProductsShowed && !noProductsFound && (
+                    <>
+                        <div className="mb-5">
+                            <strong>{t('No results match the filter')}</strong>
+                        </div>
+                        <div>
+                            <Trans i18nKey="ProductsNoResults" components={{ 0: <br /> }} />
+                        </div>
+                    </>
+                )}
 
-            {noProductsFound && (
-                <ResultProductsStyled>
-                    <div>
+                {noProductsFound && (
+                    <div className="mb-5">
                         <strong>{t('No products matched your search')}</strong>
                     </div>
-                </ResultProductsStyled>
-            )}
+                )}
+            </div>
         </>
     );
 };

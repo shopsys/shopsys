@@ -1,5 +1,4 @@
 import { usePersonalDataExportForm, usePersonalDataExportFormMeta } from './formMeta';
-import { ButtonWrapperStyled, ContentTextStyled } from './PersonalDataExportContent.style';
 import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
@@ -53,9 +52,9 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
         <>
             <SimpleLayout heading={t('Personal Data Export')} breadcrumb={breadcrumbs}>
                 {contentSiteText !== undefined && (
-                    <ContentTextStyled>
+                    <div className="mb-5 block text-justify">
                         <UserText htmlContent={contentSiteText} />
-                    </ContentTextStyled>
+                    </div>
                 )}
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onPersonalDataExportHandler)}>
@@ -70,9 +69,9 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
                                 type: 'text',
                             }}
                         />
-                        <ButtonWrapperStyled>
+                        <div className="mt-8 flex w-full justify-center">
                             <Button type="submit">{t('Send')}</Button>
-                        </ButtonWrapperStyled>
+                        </div>
                     </Form>
                 </FormProvider>
             </SimpleLayout>

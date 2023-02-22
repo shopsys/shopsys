@@ -1,4 +1,4 @@
-import { StoreSelect } from './StoreSelect/StoreSelect';
+import { StoreSelect } from './StoreSelect';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';

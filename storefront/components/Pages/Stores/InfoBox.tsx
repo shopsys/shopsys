@@ -1,6 +1,6 @@
-import { InfoBoxStyled, LinkStyled } from './InfoBox.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
+import { Link } from 'components/Basic/Link/Link';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { ListedStoreType } from 'types/store';
@@ -14,7 +14,7 @@ export const InfoBox: FC<InfoBoxProps> = ({ store, closeInfoBoxCallback }) => {
     const t = useTypedTranslationFunction();
 
     return (
-        <InfoBoxStyled>
+        <div className="absolute top-0 left-0 z-above hidden h-full w-full bg-white py-4 px-10 text-center md:block">
             <Icon
                 onClick={closeInfoBoxCallback}
                 iconType="icon"
@@ -40,9 +40,9 @@ export const InfoBox: FC<InfoBoxProps> = ({ store, closeInfoBoxCallback }) => {
                 </>
             )}
             <br />
-            <LinkStyled href={store.slug} isButton>
+            <Link href={store.slug} isButton className="mt-5">
                 {t('Store detail')}
-            </LinkStyled>
-        </InfoBoxStyled>
+            </Link>
+        </div>
     );
 };

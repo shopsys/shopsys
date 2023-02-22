@@ -42,7 +42,7 @@ export const ListItemImageStyled = styled.div(
 
         img {
             mix-blend-mode: multiply;
-            max-height: 100%;
+            max-height: 100% !important;
         }
     `,
 );

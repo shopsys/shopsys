@@ -1,12 +1,4 @@
-import {
-    AddToCartButtonStyled,
-    AddToCartButtonsWrapperStyled,
-    AddToCartButtonWrapperStyled,
-    AddToCartFormStyled,
-    AddToCartPriceStyled,
-    AddToCartUnavailableTextStyled,
-    AddToCartWrapperStyled,
-} from './ProductDetailAddToCart.style';
+import { AddToCartButtonStyled } from './ProductDetailAddToCart.style';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { AddToCartPopup } from 'components/Blocks/Product/AddToCartPopup/AddToCartPopup';
@@ -46,19 +38,17 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
 
     return (
         <>
-            <AddToCartWrapperStyled data-testid={TEST_IDENTIFIER}>
-                <AddToCartPriceStyled data-testid={TEST_IDENTIFIER + '-price'}>
+            <div className="mb-4 block rounded-xl bg-blueLight p-3 lg:mb-3" data-testid={TEST_IDENTIFIER}>
+                <div className="mb-4 text-2xl font-bold text-primary" data-testid={TEST_IDENTIFIER + '-price'}>
                     {formatPrice(product.price.priceWithVat)}
-                </AddToCartPriceStyled>
+                </div>
                 {product.isSellingDenied ? (
-                    <AddToCartUnavailableTextStyled>
-                        {t('This item can no longer be purchased')}
-                    </AddToCartUnavailableTextStyled>
+                    <p>{t('This item can no longer be purchased')}</p>
                 ) : (
-                    <AddToCartFormStyled>
-                        <AddToCartButtonsWrapperStyled>
+                    <div className="text-sm vl:text-base">
+                        <div className="flex items-center justify-between">
                             <Spinbox min={1} step={1} defaultValue={1} max={product.stockQuantity} ref={spinboxRef} />
-                            <AddToCartButtonWrapperStyled>
+                            <div className="ml-2 flex-1">
                                 <AddToCartButtonStyled
                                     onClick={onAddToCartHandler}
                                     variant="primary"
@@ -68,11 +58,11 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
 
                                     {t('Add to cart')}
                                 </AddToCartButtonStyled>
-                            </AddToCartButtonWrapperStyled>
-                        </AddToCartButtonsWrapperStyled>
-                    </AddToCartFormStyled>
+                            </div>
+                        </div>
+                    </div>
                 )}
-            </AddToCartWrapperStyled>
+            </div>
             {popupData !== null && (
                 <AddToCartPopup isVisible onCloseCallback={() => setPopupData(null)} product={popupData} />
             )}

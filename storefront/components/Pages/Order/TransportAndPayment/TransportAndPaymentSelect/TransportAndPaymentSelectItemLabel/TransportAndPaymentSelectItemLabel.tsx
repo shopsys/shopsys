@@ -1,11 +1,3 @@
-import {
-    DescriptionStyled,
-    InfoStyled,
-    NameWrapperStyled,
-    PriceStyled,
-    SelectItemLabelStyled,
-    TransportDaysUntilDeliveryStyled,
-} from './TransportAndPaymentSelectItemLabel.style';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { Translate } from 'next-translate';
@@ -33,37 +25,50 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
     const formatPrice = useFormatPrice();
 
     return (
-        <SelectItemLabelStyled data-testid={TEST_IDENTIFIER}>
-            <NameWrapperStyled>
+        <div className="flex w-full flex-row flex-wrap items-center lg:w-auto lg:flex-1" data-testid={TEST_IDENTIFIER}>
+            <div className="mr-4 flex w-full flex-col flex-wrap text-sm lg:w-auto lg:flex-1">
                 <span data-testid={TEST_IDENTIFIER + '-name'}>{name}</span>
-                <DescriptionStyled data-testid={TEST_IDENTIFIER + '-description'}>{description}</DescriptionStyled>
+                <span
+                    className="inline text-sm text-greyLight lg:hidden"
+                    data-testid={TEST_IDENTIFIER + '-description'}
+                >
+                    {description}
+                </span>
                 {pickupPlaceDetail !== null && pickupPlaceDetail !== undefined && (
                     <>
-                        <InfoStyled data-testid={TEST_IDENTIFIER + '-place'}>{pickupPlaceDetail.name}</InfoStyled>
-                        <InfoStyled data-testid={TEST_IDENTIFIER + '-address'}>
+                        <span className="text-sm text-greyLight" data-testid={TEST_IDENTIFIER + '-place'}>
+                            {pickupPlaceDetail.name}
+                        </span>
+                        <span className="text-sm text-greyLight" data-testid={TEST_IDENTIFIER + '-address'}>
                             {pickupPlaceDetail.street +
                                 ', ' +
                                 pickupPlaceDetail.postcode +
                                 ', ' +
                                 pickupPlaceDetail.city}
-                        </InfoStyled>
-                        <InfoStyled>{t('Open') + ': '}</InfoStyled>
-                        <InfoStyled
+                        </span>
+                        <span className="text-sm text-greyLight">{t('Open') + ': '}</span>
+                        <span
+                            className="text-sm text-greyLight"
                             dangerouslySetInnerHTML={{ __html: pickupPlaceDetail.openingHoursHtml }}
                             data-testid={TEST_IDENTIFIER + '-openinghours'}
                         />
                     </>
                 )}
-            </NameWrapperStyled>
+            </div>
             {daysUntilDelivery !== undefined && (
-                <TransportDaysUntilDeliveryStyled data-testid={TEST_IDENTIFIER + '-delivery'}>
+                <span
+                    className="w-1/2 text-sm text-inStock lg:w-36 lg:self-center lg:text-right"
+                    data-testid={TEST_IDENTIFIER + '-delivery'}
+                >
                     {getDeliveryMessage(daysUntilDelivery, pickupPlaceDetail !== undefined, t)}
-                </TransportDaysUntilDeliveryStyled>
+                </span>
             )}
             {price !== undefined && (
-                <PriceStyled data-testid={TEST_IDENTIFIER + '-price'}>{formatPrice(price.priceWithVat)}</PriceStyled>
+                <strong className="w-1/2 text-right text-sm lg:w-24" data-testid={TEST_IDENTIFIER + '-price'}>
+                    {formatPrice(price.priceWithVat)}
+                </strong>
             )}
-        </SelectItemLabelStyled>
+        </div>
     );
 };
 

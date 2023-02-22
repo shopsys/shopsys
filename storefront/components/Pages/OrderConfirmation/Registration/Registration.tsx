@@ -1,12 +1,4 @@
 import { useRegistrationAfterOrderForm, useRegistrationAfterOrderFormMeta } from './formMeta';
-import {
-    RegistrationBenefitsListItem,
-    RegistrationFormColumnStyled,
-    RegistrationFormItemStyled,
-    RegistrationFormStyled,
-    RegistrationMessageColumnStyled,
-    RegistrationStyled,
-} from './Registration.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Button } from 'components/Forms/Button/Button';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
@@ -76,8 +68,8 @@ export const Registration: FC = () => {
     return (
         <>
             <Webline>
-                <RegistrationStyled>
-                    <RegistrationMessageColumnStyled>
+                <div className="relative mb-20 flex flex-col rounded-xl border-2 border-primary before:absolute before:bottom-0 before:left-1/2 before:top-0 before:hidden before:w-1 before:-translate-x-1/2 before:bg-primary before:content-none lg:flex-row before:lg:block">
+                    <div className="w-full p-5 lg:w-1/2 lg:py-8 lg:px-10">
                         <Heading type="h2" className="mb-5 text-4xl leading-10 [&>strong]:text-primary">
                             <Trans
                                 i18nKey="Finish registration to loyalty program."
@@ -85,31 +77,32 @@ export const Registration: FC = () => {
                             />
                         </Heading>
                         <ul>
-                            <RegistrationBenefitsListItem>
-                                {t('You will have an overview of your orders and complaints')}
-                            </RegistrationBenefitsListItem>
-                            <RegistrationBenefitsListItem>
-                                {t('Collecting points with every order')}
-                            </RegistrationBenefitsListItem>
-                            <RegistrationBenefitsListItem>
-                                {t('Possibility of purchases for better prices')}
-                            </RegistrationBenefitsListItem>
-                            <RegistrationBenefitsListItem>
-                                {t('Exclusive products as a part of the loyalty program')}
-                            </RegistrationBenefitsListItem>
+                            {[
+                                t('You will have an overview of your orders and complaints'),
+                                t('Collecting points with every order'),
+                                t('Possibility of purchases for better prices'),
+                                t('Exclusive products as a part of the loyalty program'),
+                            ].map((text) => (
+                                <li
+                                    key={text}
+                                    className="relative mb-3 pl-4 leading-5 before:absolute before:left-0 before:top-2 before:h-1 before:w-1 before:rounded-full before:bg-primary before:content-none"
+                                >
+                                    {text}
+                                </li>
+                            ))}
                         </ul>
-                    </RegistrationMessageColumnStyled>
-                    <RegistrationFormColumnStyled>
-                        <RegistrationFormStyled>
+                    </div>
+                    <div className="flex w-full flex-col items-center justify-center p-5 lg:w-1/2 lg:px-10 lg:py-8">
+                        <div className="w-full lg:max-w-sm">
                             <Form onSubmit={formProviderMethods.handleSubmit(onRegistrationSubmitHandler)}>
                                 <FormProvider {...formProviderMethods}>
                                     <PasswordInputControlled
                                         control={formProviderMethods.control}
                                         name={formMeta.fields.password.name}
                                         render={(passwordInput) => (
-                                            <RegistrationFormItemStyled>
+                                            <div className="mb-7">
                                                 <FormLine>{passwordInput}</FormLine>
-                                            </RegistrationFormItemStyled>
+                                            </div>
                                         )}
                                         formName={formMeta.formName}
                                         passwordInputProps={{
@@ -121,9 +114,9 @@ export const Registration: FC = () => {
                                         control={formProviderMethods.control}
                                         formName={formMeta.formName}
                                         render={(checkbox) => (
-                                            <RegistrationFormItemStyled>
+                                            <div className="mb-7">
                                                 <ChoiceFormLine>{checkbox}</ChoiceFormLine>
-                                            </RegistrationFormItemStyled>
+                                            </div>
                                         )}
                                         checkboxProps={{
                                             label: formMeta.fields.privacyPolicy.label,
@@ -141,9 +134,9 @@ export const Registration: FC = () => {
                                     </Button>
                                 </FormProvider>
                             </Form>
-                        </RegistrationFormStyled>
-                    </RegistrationFormColumnStyled>
-                </RegistrationStyled>
+                        </div>
+                    </div>
+                </div>
             </Webline>
             <ErrorPopup
                 isVisible={isErrorPopupVisible}

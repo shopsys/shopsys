@@ -1,5 +1,4 @@
 import { usePasswordResetForm, usePasswordResetFormMeta } from './formMeta';
-import { ButtonWrapperStyled } from './ResetPasswordContent.style';
 import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
@@ -66,11 +65,11 @@ export const ResetPasswordContent: FC<ResetPasswordContentProps> = ({ breadcrumb
                                 type: 'text',
                             }}
                         />
-                        <ButtonWrapperStyled>
+                        <div className="mt-8 flex w-full justify-center">
                             <Button type="submit" hasDisabledLook={invalid || value.length === 0}>
                                 {t('Reset password')}
                             </Button>
-                        </ButtonWrapperStyled>
+                        </div>
                     </Form>
                 </FormProvider>
             </SimpleLayout>

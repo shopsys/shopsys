@@ -1,12 +1,4 @@
-import {
-    VariantActionCellStyled,
-    VariantActionStyled,
-    VariantAvailabilityCellStyled,
-    VariantCellStyled,
-    VariantImageCellStyled,
-    VariantImageWrapperStyled,
-    VariantPriceCellStyled,
-} from './Variant.style';
+import { ProductVariantsTableRow } from '../ProductVariantsTableRow';
 import { Image } from 'components/Basic/Image/Image';
 import { AddToCart } from 'components/Blocks/Product/AddToCart/AddToCart';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/Availability/ProductAvailableStoresCount';
@@ -14,12 +6,12 @@ import { ProductExposedStoresCount } from 'components/Blocks/Product/Availabilit
 import { Popup } from 'components/Layout/Popup/Popup';
 import { PopupStyled } from 'components/Layout/Popup/Popup.style';
 import { ProductDetailAvailabilityList } from 'components/Pages/ProductDetail/ProductDetailStoresAvailability/ProductDetailAvailabilityList/ProductDetailAvailabilityList';
-import { VariantsTableRowStyled } from 'components/Pages/ProductDetail/ProductVariantsTable/ProductVariantsTable.style';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC, useState } from 'react';
 import { GtmListNameType } from 'types/gtm';
 import { ListedVariantType } from 'types/product';
+import { twMergeCustom } from 'utils/twMerge';
 
 type VariantProps = {
     variant: ListedVariantType;
@@ -37,16 +29,17 @@ export const Variant: FC<VariantProps> = ({ gtmListName, isSellingDenied, listIn
 
     return (
         <>
-            <VariantsTableRowStyled key={variant.uuid} data-testid={TEST_IDENTIFIER + variant.catalogNumber}>
-                <VariantImageCellStyled>
-                    <VariantImageWrapperStyled>
+            <ProductVariantsTableRow key={variant.uuid} data-testid={TEST_IDENTIFIER + variant.catalogNumber}>
+                <Cell className="max-lg:float-left max-lg:w-10 max-lg:pl-0 lg:w-24">
+                    <div className="h-16 w-16">
                         <Image alt={variant.fullName} type="default" image={variant.image} />
-                    </VariantImageWrapperStyled>
-                </VariantImageCellStyled>
-                <VariantCellStyled data-testid={TEST_IDENTIFIER + 'name'}>{variant.fullName}</VariantCellStyled>
-                <VariantAvailabilityCellStyled
+                    </div>
+                </Cell>
+                <Cell dataTestId={TEST_IDENTIFIER + 'name'}>{variant.fullName}</Cell>
+                <Cell
+                    className="cursor-pointer"
                     onClick={() => setAvailabilityPopupVisibility(true)}
-                    data-testid={TEST_IDENTIFIER + 'availability'}
+                    dataTestId={TEST_IDENTIFIER + 'availability'}
                 >
                     {variant.availability.name}
                     <ProductAvailableStoresCount
@@ -54,15 +47,15 @@ export const Variant: FC<VariantProps> = ({ gtmListName, isSellingDenied, listIn
                         availableStoresCount={variant.availableStoresCount}
                     />
                     <ProductExposedStoresCount isMainVariant={false} exposedStoresCount={variant.exposedStoresCount} />
-                </VariantAvailabilityCellStyled>
-                <VariantPriceCellStyled data-testid={TEST_IDENTIFIER + 'price'}>
+                </Cell>
+                <Cell className="lg:text-right" dataTestId={TEST_IDENTIFIER + 'price'}>
                     {formatPrice(variant.price.priceWithVat)}
-                </VariantPriceCellStyled>
-                <VariantActionCellStyled>
+                </Cell>
+                <Cell className="text-right max-lg:clear-both max-lg:pl-0 lg:w-60">
                     {isSellingDenied ? (
                         <>{t('This item can no longer be purchased')}</>
                     ) : (
-                        <VariantActionStyled>
+                        <div className="flex justify-between lg:justify-around ">
                             <AddToCart
                                 productUuid={variant.uuid}
                                 minQuantity={1}
@@ -70,10 +63,10 @@ export const Variant: FC<VariantProps> = ({ gtmListName, isSellingDenied, listIn
                                 gtmListName={gtmListName}
                                 listIndex={listIndex}
                             />
-                        </VariantActionStyled>
+                        </div>
                     )}
-                </VariantActionCellStyled>
-            </VariantsTableRowStyled>
+                </Cell>
+            </ProductVariantsTableRow>
             {isAvailabilityPopupVisible && (
                 <Popup
                     isVisible={isAvailabilityPopupVisible}
@@ -87,3 +80,18 @@ export const Variant: FC<VariantProps> = ({ gtmListName, isSellingDenied, listIn
         </>
     );
 };
+
+type CellProps = { className?: string; dataTestId?: string; onClick?: () => void };
+
+const Cell: FC<CellProps> = ({ className, children, dataTestId, onClick }) => (
+    <td
+        className={twMergeCustom(
+            'block pl-14 text-left align-middle text-xs lg:table-cell lg:border-b lg:border-greyLighter lg:p-1',
+            className,
+        )}
+        data-testid={dataTestId}
+        onClick={onClick}
+    >
+        {children}
+    </td>
+);

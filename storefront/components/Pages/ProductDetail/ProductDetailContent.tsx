@@ -1,14 +1,14 @@
+import {
+    ProductDetail,
+    ProductDetailCode,
+    ProductDetailHeading,
+    ProductDetailImage,
+    ProductDetailInfo,
+    ProductDetailPrefix,
+    ProductDetailShortDescription,
+} from './ProductDetaiElements';
 import { ProductDetailAccessories } from './ProductDetailAccessories/ProductDetailAccessories';
 import { ProductDetailAddToCart } from './ProductDetailAddToCart/ProductDetailAddToCart';
-import {
-    ProductDetailCodeStyled,
-    ProductDetailHeadingStyled,
-    ProductDetailImageStyled,
-    ProductDetailInfoStyled,
-    ProductDetailPrefixStyled,
-    ProductDetailShortDescriptionStyled,
-    ProductDetailStyled,
-} from './ProductDetailContent.style';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailAvailability } from './ProductDetailStoresAvailability/ProductDetailAvailability/ProductDetailAvailability';
 import { ProductDetailAvailabilityList } from './ProductDetailStoresAvailability/ProductDetailAvailabilityList/ProductDetailAvailabilityList';
@@ -40,31 +40,31 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
         <Fragment key={product.uuid}>
             <ProductMetadata product={product} />
             <Webline>
-                <ProductDetailStyled>
-                    <ProductDetailImageStyled data-testid={TEST_IDENTIFIER + 'gallery'}>
+                <ProductDetail>
+                    <ProductDetailImage>
                         <ProductDetailGallery
                             flags={product.flags}
                             images={product.images}
                             productName={product.name}
                         />
-                    </ProductDetailImageStyled>
-                    <ProductDetailInfoStyled>
-                        <ProductDetailPrefixStyled data-testid={TEST_IDENTIFIER + 'prefix'}>
+                    </ProductDetailImage>
+                    <ProductDetailInfo>
+                        <ProductDetailPrefix dataTestId={TEST_IDENTIFIER + 'prefix'}>
                             {product.namePrefix}
-                        </ProductDetailPrefixStyled>
-                        <ProductDetailHeadingStyled data-testid={TEST_IDENTIFIER + 'name'}>
+                        </ProductDetailPrefix>
+                        <ProductDetailHeading dataTestId={TEST_IDENTIFIER + 'name'}>
                             {product.name} {product.nameSuffix}
-                        </ProductDetailHeadingStyled>
-                        <ProductDetailCodeStyled data-testid={TEST_IDENTIFIER + 'code'}>
+                        </ProductDetailHeading>
+                        <ProductDetailCode dataTestId={TEST_IDENTIFIER + 'code'}>
                             {t('Code')}: {product.catalogNumber}
-                        </ProductDetailCodeStyled>
-                        <ProductDetailShortDescriptionStyled data-testid={TEST_IDENTIFIER + 'short-description'}>
+                        </ProductDetailCode>
+                        <ProductDetailShortDescription dataTestId={TEST_IDENTIFIER + 'short-description'}>
                             {product.shortDescription}
-                        </ProductDetailShortDescriptionStyled>
+                        </ProductDetailShortDescription>
                         <ProductDetailAddToCart product={product} />
                         <ProductDetailAvailability scrollTarget={scrollTarget} product={product} />
-                    </ProductDetailInfoStyled>
-                </ProductDetailStyled>
+                    </ProductDetailInfo>
+                </ProductDetail>
             </Webline>
             <Webline testIdentifier={TEST_IDENTIFIER + 'description'}>
                 <ProductDetailTabs description={product.description} parameters={product.parameters} />

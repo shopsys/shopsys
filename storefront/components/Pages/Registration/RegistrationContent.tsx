@@ -2,14 +2,6 @@ import { Address } from './Address/Address';
 import { Company } from './Company/Company';
 import { useRegistrationForm, useRegistrationFormMeta } from './formMeta';
 import { Password } from './Password/Password';
-import {
-    ButtonWrapperStyled,
-    ContentSectionStyled,
-    LoginProfileIconStyled,
-    LoginProfileStyled,
-    LoginProfileTextStrongStyled,
-    LoginProfileTextStyled,
-} from './RegistrationContent.style';
 import { User } from './User/User';
 import { Button } from 'components/Forms/Button/Button';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
@@ -82,42 +74,43 @@ export const RegistrationContent: FC<RegistrationContentProps> = ({ breadcrumbs 
             <SimpleLayout heading={t('Registration')} breadcrumb={breadcrumbs}>
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onRegistrationHandler)}>
-                        <ContentSectionStyled>
-                            <LoginProfileStyled>
-                                <LoginProfileTextStyled>
-                                    <LoginProfileTextStrongStyled>
+                        <div className="mb-10">
+                            <div className="relative my-6 -mr-4 w-full rounded-xl bg-blueLight p-4 lg:m-0">
+                                <div className="block text-lg text-primary md:pr-32 lg:text-xl">
+                                    <div className="block text-xl font-semibold">
                                         {t("Don't have an account yet? Register.")}
-                                    </LoginProfileTextStrongStyled>
+                                    </div>
                                     {t('You will shop with us as')}:
-                                </LoginProfileTextStyled>
-                                <LoginProfileIconStyled>
+                                </div>
+                                <div className="absolute right-5 bottom-0 hidden h-28 overflow-hidden md:right-10 md:block">
                                     <Image
                                         src="/images/qmark.png"
                                         height={120}
                                         width={75}
                                         alt={t("Don't have an account yet? Register.")}
+                                        className="max-w-none"
                                     />
-                                </LoginProfileIconStyled>
-                            </LoginProfileStyled>
-                        </ContentSectionStyled>
+                                </div>
+                            </div>
+                        </div>
 
-                        <ContentSectionStyled>
+                        <div className="mb-10">
                             <User />
-                        </ContentSectionStyled>
+                        </div>
 
                         {customerValue === 'companyCustomer' && (
-                            <ContentSectionStyled>
+                            <div className="mb-10">
                                 <Company />
-                            </ContentSectionStyled>
+                            </div>
                         )}
 
-                        <ContentSectionStyled>
+                        <div className="mb-10">
                             <Password />
-                        </ContentSectionStyled>
+                        </div>
 
-                        <ContentSectionStyled>
+                        <div className="mb-10">
                             <Address />
-                        </ContentSectionStyled>
+                        </div>
 
                         <CheckboxControlled
                             name={formMeta.fields.gdprAgreement.name}
@@ -137,9 +130,9 @@ export const RegistrationContent: FC<RegistrationContentProps> = ({ breadcrumbs 
                                 label: formMeta.fields.newsletterSubscription.label,
                             }}
                         />
-                        <ButtonWrapperStyled>
+                        <div className="mt-8 flex w-full justify-center">
                             <Button type="submit">{t('Sign up')}</Button>
-                        </ButtonWrapperStyled>
+                        </div>
                     </Form>
                 </FormProvider>
             </SimpleLayout>

@@ -1,4 +1,3 @@
-import { ContactInformationTextStyled, ContactInformationTextWrapperStyled } from './ContactInformationContent.style';
 import { ContactInformationFormWrapper } from './ContactInformationFormWrapper/ContactInformationFormWrapper';
 import { useContactInformationFormMeta } from './formMeta';
 import { Link } from 'components/Basic/Link/Link';
@@ -13,6 +12,7 @@ import { FC, useEffect, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useShopsysDispatch } from 'redux/main';
 import { contactInformationActions } from 'redux/slices/contactInformation';
+import { twJoin } from 'tailwind-merge';
 import { ContactInformationFormType } from 'types/form';
 
 export const ContactInformationContent: FC = () => {
@@ -57,8 +57,8 @@ export const ContactInformationContent: FC = () => {
                 }}
             />
             <ContactInformationFormWrapper isEmailEntered={isEmailFilledCorrectly} />
-            <ContactInformationTextWrapperStyled isEmailEntered={isEmailFilledCorrectly}>
-                <ContactInformationTextStyled>
+            <div className={twJoin(!isEmailFilledCorrectly && 'pointer-events-none opacity-50')}>
+                <p className="mb-4">
                     <Trans
                         i18nKey="ContactInformationInfo"
                         defaultTrans="By clicking on the Send order button, you agree with <lnk1>terms and conditions</lnk1> of the e-shop and with the <lnk2>processing of privacy policy</lnk2>."
@@ -67,7 +67,7 @@ export const ContactInformationContent: FC = () => {
                             lnk2: <Link href={gdprUrl} linkType="external" target="_blank" />,
                         }}
                     />
-                </ContactInformationTextStyled>
+                </p>
                 <CheckboxControlled
                     name={formMeta.fields.newsletterSubscription.name}
                     control={formProviderMethods.control}
@@ -77,7 +77,7 @@ export const ContactInformationContent: FC = () => {
                         label: formMeta.fields.newsletterSubscription.label,
                     }}
                 />
-            </ContactInformationTextWrapperStyled>
+            </div>
         </>
     );
 };

@@ -1,9 +1,5 @@
-import { ProductsSearch } from './ProductsSearch/ProductsSearch';
-import {
-    SearchResultsBlockStyled,
-    SearchResultsWeblineStyled,
-    ShowResultsButtonWrapperStyled,
-} from './SearchContent.style';
+import { ProductsSearch } from './ProductsSearch';
+import { SearchResultsBlock, SearchResultsWebline, ShowResultsButtonWrapper } from './SearchElements';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { HeadingPaginated } from 'components/Basic/Heading/HeadingPaginated';
 import { PaginationProvider } from 'components/Blocks/Pagination/PaginationProvider';
@@ -99,16 +95,16 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
             {currentPage === 1 && (
                 <>
                     {searchResults.articlesSearch.length > 0 && (
-                        <SearchResultsWeblineStyled>
+                        <SearchResultsWebline>
                             <Heading type="h3">{t('Found articles')}</Heading>
-                            <SearchResultsBlockStyled areAllResultsVisible={areArticlesResultsVisible}>
+                            <SearchResultsBlock areAllResultsVisible={areArticlesResultsVisible}>
                                 <SimpleNavigation
                                     listedItems={searchResults.articlesSearch}
                                     imageType="searchThumbnail"
                                 />
-                            </SearchResultsBlockStyled>
+                            </SearchResultsBlock>
                             {numberOfVisible < searchResults.articlesSearch.length && (
-                                <ShowResultsButtonWrapperStyled>
+                                <ShowResultsButtonWrapper>
                                     <Button
                                         type="button"
                                         size="small"
@@ -118,18 +114,18 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
                                     >
                                         {areArticlesResultsVisible ? t('Hide results') : t('Show all results')}
                                     </Button>
-                                </ShowResultsButtonWrapperStyled>
+                                </ShowResultsButtonWrapper>
                             )}
-                        </SearchResultsWeblineStyled>
+                        </SearchResultsWebline>
                     )}
                     {searchResults.brandSearch.length > 0 && (
-                        <SearchResultsWeblineStyled>
+                        <SearchResultsWebline>
                             <Heading type="h3">{t('Found brands')}</Heading>
-                            <SearchResultsBlockStyled areAllResultsVisible={areBrandsResultsVisible}>
+                            <SearchResultsBlock areAllResultsVisible={areBrandsResultsVisible}>
                                 <SimpleNavigation listedItems={searchResults.brandSearch} />
-                            </SearchResultsBlockStyled>
+                            </SearchResultsBlock>
                             {numberOfVisible < searchResults.brandSearch.length && (
-                                <ShowResultsButtonWrapperStyled>
+                                <ShowResultsButtonWrapper>
                                     <Button
                                         type="button"
                                         size="small"
@@ -139,18 +135,18 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
                                     >
                                         {areBrandsResultsVisible ? t('Hide results') : t('Show all results')}
                                     </Button>
-                                </ShowResultsButtonWrapperStyled>
+                                </ShowResultsButtonWrapper>
                             )}
-                        </SearchResultsWeblineStyled>
+                        </SearchResultsWebline>
                     )}
                     {searchResults.categoriesSearch.totalCount > 0 && (
-                        <SearchResultsWeblineStyled>
+                        <SearchResultsWebline>
                             <Heading type="h3">{t('Found categories')}</Heading>
-                            <SearchResultsBlockStyled areAllResultsVisible={areCategoriesResultsVisible}>
+                            <SearchResultsBlock areAllResultsVisible={areCategoriesResultsVisible}>
                                 <SimpleNavigation listedItems={searchResults.categoriesSearch.categories} />
-                            </SearchResultsBlockStyled>
+                            </SearchResultsBlock>
                             {numberOfVisible < searchResults.categoriesSearch.categories.length && (
-                                <ShowResultsButtonWrapperStyled>
+                                <ShowResultsButtonWrapper>
                                     <Button
                                         type="button"
                                         size="small"
@@ -160,20 +156,20 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
                                     >
                                         {areCategoriesResultsVisible ? t('Hide results') : t('Show all results')}
                                     </Button>
-                                </ShowResultsButtonWrapperStyled>
+                                </ShowResultsButtonWrapper>
                             )}
-                        </SearchResultsWeblineStyled>
+                        </SearchResultsWebline>
                     )}
                 </>
             )}
-            <SearchResultsWeblineStyled>
+            <SearchResultsWebline>
                 <PaginationProvider {...getNewPagination(currentPage)}>
                     <HeadingPaginated type={'h3'} totalCount={searchResults.productsSearch.totalCount}>
                         {t('Found products')}
                     </HeadingPaginated>
                     <ProductsSearch productsSearch={searchResults.productsSearch} />
                 </PaginationProvider>
-            </SearchResultsWeblineStyled>
+            </SearchResultsWebline>
         </>
     );
 };

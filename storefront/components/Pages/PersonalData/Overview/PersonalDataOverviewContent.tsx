@@ -1,5 +1,4 @@
 import { usePersonalDataOverviewForm, usePersonalDataOverviewFormMeta } from './formMeta';
-import { ButtonWrapperStyled, ContentTextStyled } from './PersonalDataOverviewContent.style';
 import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
@@ -59,9 +58,9 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
         <>
             <SimpleLayout heading={t('Personal Data Overview')} breadcrumb={breadcrumbs}>
                 {contentSiteText !== undefined && (
-                    <ContentTextStyled>
+                    <div className="[&_section]:mb-5 [&_section]:block [&_section]:text-justify ">
                         <UserText htmlContent={contentSiteText} />
-                    </ContentTextStyled>
+                    </div>
                 )}
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onPersonalDataOverviewHandler)}>
@@ -76,9 +75,9 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
                                 type: 'text',
                             }}
                         />
-                        <ButtonWrapperStyled>
+                        <div className="mt-8 flex w-full justify-center">
                             <Button type="submit">{t('Send')}</Button>
-                        </ButtonWrapperStyled>
+                        </div>
                     </Form>
                 </FormProvider>
             </SimpleLayout>
