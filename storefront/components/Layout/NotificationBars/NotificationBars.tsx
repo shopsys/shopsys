@@ -37,7 +37,7 @@ export const NotificationBars: FC = () => {
         }
     }, [isUserLoggedIn]);
 
-    if (notificationBarItems === undefined) {
+    if (notificationBarItems === undefined || notificationBarItems === null) {
         return null;
     }
 

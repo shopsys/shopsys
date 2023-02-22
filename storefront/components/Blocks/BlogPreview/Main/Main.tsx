@@ -2,15 +2,15 @@ import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
+import { ListedBlogArticleFragmentApi } from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import NextLink from 'next/link';
 import { Fragment, useState } from 'react';
-import { ListedBlogArticleType } from 'types/blogArticle';
 
 type MainProps = {
-    blogMainItems: ListedBlogArticleType[];
+    blogMainItems: ListedBlogArticleFragmentApi[];
 };
 
 const TEST_IDENTIFIER = 'blocks-blogpreview-main-';

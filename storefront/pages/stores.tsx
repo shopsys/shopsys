@@ -20,7 +20,7 @@ const StoresPage: FC<ServerSidePropsType> = () => {
     return (
         <>
             <CommonLayout title={t('Stores')}>
-                <StoresContent stores={stores} breadcrumbs={breadcrumbs} />
+                {stores !== undefined && <StoresContent stores={stores} breadcrumbs={breadcrumbs} />}
             </CommonLayout>
         </>
     );

@@ -1,14 +1,9 @@
-import { mapConnectionEdges } from 'connectors/connection/Connection';
-import { ListedStoreFragmentApi, useStoresQueryApi } from 'graphql/generated';
+import { ListedStoreConnectionFragmentApi, useStoresQueryApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
 
-export function useStores(): ListedStoreFragmentApi[] {
+export function useStores(): ListedStoreConnectionFragmentApi | undefined {
     const [{ data, error }] = useStoresQueryApi();
     useQueryError(error);
 
-    if (data?.stores === undefined) {
-        return [];
-    }
-
-    return mapConnectionEdges(data.stores.edges);
+    return data?.stores;
 }

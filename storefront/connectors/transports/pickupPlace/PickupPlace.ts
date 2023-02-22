@@ -1,5 +1,4 @@
 import {
-    ListedStoreConnectionFragmentApi,
     ListedStoreFragmentApi,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
 } from 'graphql/generated';
@@ -22,21 +21,4 @@ export const getSelectedPickupPlace = (
     );
 
     return pickupPlace?.node === undefined ? null : pickupPlace.node;
-};
-
-export const mapPickupPlacesApiData = (
-    storesConnectionApi: ListedStoreConnectionFragmentApi,
-): ListedStoreFragmentApi[] => {
-    if (storesConnectionApi.edges === null) {
-        return [];
-    }
-
-    const mappedStores = [];
-    for (const edge of storesConnectionApi.edges) {
-        if (edge?.node !== undefined && edge.node !== null) {
-            mappedStores.push(edge.node);
-        }
-    }
-
-    return mappedStores;
 };

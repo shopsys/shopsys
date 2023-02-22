@@ -2,12 +2,12 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { BannersSliderItem } from 'components/Blocks/Banners/BannersSliderItem/BannersSliderItem';
 import { theme } from 'components/Theme/main';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
+import { SliderItemFragmentApi } from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
 import { useEffect, useRef, useState } from 'react';
-import { SliderItemType } from 'types/sliderItem';
 
 const DEVICE_BREAKPOINT_SIZE = {
     size: 'tablet',
@@ -15,7 +15,7 @@ const DEVICE_BREAKPOINT_SIZE = {
 } as const;
 
 type BannersSliderProps = {
-    sliderItems: SliderItemType[];
+    sliderItems: SliderItemFragmentApi[];
     testIdentifier: string;
 };
 

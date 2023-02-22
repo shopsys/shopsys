@@ -1,14 +1,14 @@
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Image } from 'components/Basic/Image/Image';
+import { ListedBlogArticleFragmentApi } from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import NextLink from 'next/link';
 import { Fragment } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { ListedBlogArticleType } from 'types/blogArticle';
 
 type BlogArticlesListProps = {
-    blogArticles: ListedBlogArticleType[];
+    blogArticles: ListedBlogArticleFragmentApi[];
 };
 
 const TEST_IDENTIFIER = 'pages-blogcategory-blogarticleslist-';
