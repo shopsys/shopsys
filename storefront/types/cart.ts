@@ -1,4 +1,5 @@
 import {
+    CartFragmentApi,
     CartItemFragmentApi,
     CartModificationsFragmentApi,
     ListedStoreFragmentApi,
@@ -9,7 +10,7 @@ import {
 import { OperationContext } from 'urql';
 
 export type CurrentCartType = {
-    cart: CartType | null;
+    cart: CartFragmentApi | null;
     isCartEmpty: boolean;
     transport: TransportWithAvailablePaymentsAndStoresFragmentApi | null;
     pickupPlace: ListedStoreFragmentApi | null;
@@ -20,12 +21,4 @@ export type CurrentCartType = {
     isInitiallyLoaded: boolean;
     modifications: CartModificationsFragmentApi | null;
     refetchCart: (opts?: Partial<OperationContext> | undefined) => void;
-};
-
-export type CartType = {
-    items: CartItemFragmentApi[];
-    totalPrice: PriceFragmentApi;
-    totalItemsPrice: PriceFragmentApi;
-    totalDiscountPrice: PriceFragmentApi;
-    remainingAmountWithVatForFreeTransport: number | null;
 };

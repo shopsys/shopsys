@@ -2,7 +2,6 @@ import { showErrorMessage, showInfoMessage } from 'components/Helpers/Toasts';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
 import {
-    CartFragmentApi,
     CartItemModificationsFragmentApi,
     CartModificationsFragmentApi,
     CartPaymentModificationsFragmentApi,
@@ -17,7 +16,7 @@ import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { Translate } from 'next-translate';
 import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { CartType, CurrentCartType } from 'types/cart';
+import { CurrentCartType } from 'types/cart';
 import { CombinedError, OperationContext } from 'urql';
 
 export const useCurrentCart = (fromCache = true): CurrentCartType => {
@@ -48,11 +47,10 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
         }
 
         // EXTEND CART UPDATE HERE
-        const mappedCart = mapCart(result.data.cart);
 
         return {
-            cart: mappedCart,
-            isCartEmpty: mappedCart.items.length === 0,
+            cart: result.data.cart,
+            isCartEmpty: result.data.cart.items.length === 0,
             transport: result.data.cart.transport,
             pickupPlace: getSelectedPickupPlace(
                 result.data.cart.transport,
@@ -103,19 +101,6 @@ const handleCartError = (error: CombinedError, t: Translate) => {
             showErrorMessage(userError.validation[invalidFieldName].message, 'cart');
         }
     }
-};
-
-export const mapCart = (apiData: CartFragmentApi): CartType => {
-    const remainingFreeTransport = apiData.remainingAmountWithVatForFreeTransport;
-
-    return {
-        ...apiData,
-        totalPrice: apiData.totalPrice,
-        totalItemsPrice: apiData.totalItemsPrice,
-        totalDiscountPrice: apiData.totalDiscountPrice,
-        remainingAmountWithVatForFreeTransport:
-            remainingFreeTransport !== null ? Number.parseFloat(remainingFreeTransport) : null,
-    };
 };
 
 export const handleCartModifications = (

@@ -4,6 +4,7 @@ import { useCurrentCart } from 'connectors/cart/Cart';
 import { MD5 } from 'crypto-js';
 import {
     BreadcrumbFragmentApi,
+    CartFragmentApi,
     ListedStoreFragmentApi,
     SimplePaymentFragmentApi,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
@@ -15,7 +16,6 @@ import { canUseDom } from 'helpers/misc/canUseDom';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { CartType } from 'types/cart';
 import { CurrentCustomerType } from 'types/customer';
 import { FriendlyUrlPageType } from 'types/friendlyUrl';
 import {
@@ -152,7 +152,7 @@ export const gtmSafePushEvent = (event: GtmPageViewEventType | GtmEcommerceEvent
 };
 
 export const getGtmPurchaseData = (
-    cart: CartType,
+    cart: CartFragmentApi,
     transport: TransportWithAvailablePaymentsAndStoresFragmentApi,
     pickupPlace: ListedStoreFragmentApi | null,
     payment: SimplePaymentFragmentApi,

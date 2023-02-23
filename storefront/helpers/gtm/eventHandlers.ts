@@ -8,6 +8,7 @@ import {
 } from './eventFactories';
 import { getGtmPurchaseData, gtmSafePushEvent } from './gtm';
 import {
+    CartFragmentApi,
     CartItemFragmentApi,
     ListedProductFragmentApi,
     ListedStoreFragmentApi,
@@ -16,7 +17,6 @@ import {
     TransportWithAvailablePaymentsAndStoresFragmentApi,
 } from 'graphql/generated';
 import { DomainConfigType } from 'helpers/domain/domain';
-import { CartType } from 'types/cart';
 import { GtmCartInfoType, GtmConsentInfoType, GtmConsentUpdateType, GtmListNameType, GtmSectionType } from 'types/gtm';
 
 export const onClickProductDetailGtmEventHandler = (
@@ -111,7 +111,7 @@ export const onPaymentChangeGtmEventHandler = (
 };
 
 export const onPurchaseOrderGtmEventHandler = (
-    cart: CartType,
+    cart: CartFragmentApi,
     transport: TransportWithAvailablePaymentsAndStoresFragmentApi,
     pickupPlace: ListedStoreFragmentApi | null,
     payment: SimplePaymentFragmentApi,

@@ -17,7 +17,7 @@ export const FreeTransport: FC = () => {
 
     const amountFormatted = formatPrice(amount);
 
-    if (amount > 0) {
+    if (Number.parseInt(amount) > 0) {
         return (
             <Wrapper dataTestId={TEST_IDENTIFIER}>
                 <Trans
