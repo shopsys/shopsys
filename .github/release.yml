@@ -1,0 +1,32 @@
+changelog:
+    exclude:
+        labels:
+            - "Will not fix"
+    categories:
+        - title: ":sparkles: Enhancements and features"
+          labels:
+              - "Enhancement"
+        - title: ":bug: Bug Fixes"
+          labels:
+              - "Bug"
+        - title: ":hammer: Developer experience and refactoring"
+          labels:
+              - "DX & Refactoring"
+        - title: ":book: Documentation"
+          labels:
+              - "Documentation"
+        - title: ":art: Design & appearance"
+          labels:
+              - "Design & Appearance"
+        - title: ":rocket: Performance"
+          labels:
+              - "Performance"
+        - title: ":cloud: Infrastructure"
+          labels:
+              - "Infrastructure"
+        - title: ":warning: Security"
+          labels:
+              - "Security"
+        - title: "Other Changes"
+          labels:
+              - "*"

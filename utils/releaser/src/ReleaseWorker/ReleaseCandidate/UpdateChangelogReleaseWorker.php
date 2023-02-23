@@ -17,7 +17,7 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
      */
     public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
     {
-        return 'Dump new features to CHANGELOG.md, clean from placeholders and [Manually] check everything is ok';
+        return 'Dump new features to CHANGELOG.md, save new release as draft and [Manually] check everything is ok';
     }
 
     /**
@@ -26,32 +26,34 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
      */
     public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
     {
-        $this->symfonyStyle->note('It is necessary to set Github token before the changelog content is generated');
-        $githubToken = $this->symfonyStyle->ask(
-            'Please enter no-scope Github token (https://github.com/settings/tokens/new)'
-        );
-
         $lastVersionOnCurrentBranch = $this->processRunner->run('git describe --tags --abbrev=0');
 
-        $this->symfonyStyle->note('In order to generate new changelog entries you need to run this command outside of container:');
-        $this->symfonyStyle->write(
+        $this->symfonyStyle->note(
             sprintf(
-                'docker run -it --rm -v "$(pwd)":/usr/local/src/your-app githubchangeloggenerator/github-changelog-generator github_changelog_generator --token %s --release-branch %s --since-tag %s --future-release %s',
-                $githubToken,
-                $this->currentBranchName,
-                trim($lastVersionOnCurrentBranch),
+                'In order to generate new changelog entries you need to go to https://github.com/shopsys/shopsys/releases/new?tag=%s&target=%s&title=%s',
                 $version->getOriginalString(),
+                $this->currentBranchName,
+                $version->getOriginalString() . ' - ' . date('Y-m-d'),
             )
         );
 
         $this->symfonyStyle->note(
             sprintf(
-                'You need to review the file, resolve unclassified entries, remove uninteresting entries, and commit the changes manually with "changelog is now updated for %s release"',
-                $version->getVersionString()
+                'Choose %s as Previous tag and then click on Generate release notes.',
+                $lastVersionOnCurrentBranch
             )
         );
 
-        $this->confirm('Confirm you have checked CHANGELOG.md and the changes are committed.');
+        $this->symfonyStyle->note('Copy contents of release to CHANGELOG.md with appropriate title and correct formatting.');
+
+        $this->symfonyStyle->note(
+            sprintf(
+                'Save release as draft and commit new CHANGELOG.md with message "changelog is now updated for %s release"',
+                $version->getVersionString(),
+            )
+        );
+
+        $this->confirm('Confirm you have checked CHANGELOG.md and the changes are committed. Also confirm that release is saved as draft.');
     }
 
     /**
