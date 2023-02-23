@@ -750,6 +750,9 @@
     "shopsys/http-smoke-testing": {
         "version": "dev-mg-weird-flex-but-ok"
     },
+    "shopsys/jsformvalidator-bundle": {
+        "version": "v1.7.0"
+    },
     "shopsys/migrations": {
         "version": "dev-mg-weird-flex-but-ok"
     },
@@ -967,6 +970,18 @@
     },
     "symfony/intl": {
         "version": "v3.4.33"
+    },
+    "symfony/mailer": {
+        "version": "5.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "4.3",
+            "ref": "2bf89438209656b85b9a49238c4467bff1b1f939"
+        },
+        "files": [
+            "config/packages/mailer.yaml"
+        ]
     },
     "symfony/mime": {
         "version": "v4.3.6"
