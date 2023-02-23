@@ -5,7 +5,6 @@ import {
     ProductDetailImage,
     ProductDetailInfo,
     ProductDetailPrefix,
-    ProductDetailShortDescription,
 } from './ProductDetaiElements';
 import { ProductDetailAccessories } from './ProductDetailAccessories/ProductDetailAccessories';
 import { ProductDetailAddToCart } from './ProductDetailAddToCart/ProductDetailAddToCart';
@@ -58,9 +57,9 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
                         <ProductDetailCode dataTestId={TEST_IDENTIFIER + 'code'}>
                             {t('Code')}: {product.catalogNumber}
                         </ProductDetailCode>
-                        <ProductDetailShortDescription dataTestId={TEST_IDENTIFIER + 'short-description'}>
+                        <div className="mb-5" data-testid={TEST_IDENTIFIER + 'short-description'}>
                             {product.shortDescription}
-                        </ProductDetailShortDescription>
+                        </div>
                         <ProductDetailAddToCart product={product} />
                         <ProductDetailAvailability scrollTarget={scrollTarget} product={product} />
                     </ProductDetailInfo>

@@ -1,5 +1,4 @@
 import { ProductsSearch } from './ProductsSearch';
-import { SearchResultsBlock, SearchResultsWebline, ShowResultsButtonWrapper } from './SearchElements';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { HeadingPaginated } from 'components/Basic/Heading/HeadingPaginated';
 import { PaginationProvider } from 'components/Blocks/Pagination/PaginationProvider';
@@ -18,6 +17,7 @@ import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { useRouter } from 'next/router';
 import { FC, useState } from 'react';
+import { twJoin } from 'tailwind-merge';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { SearchType } from 'types/search';
 
@@ -173,3 +173,13 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
         </>
     );
 };
+
+const SearchResultsBlock: FC<{ areAllResultsVisible: boolean }> = ({ children, areAllResultsVisible }) => (
+    <div className={twJoin('lg:overflow-hidden', !areAllResultsVisible && 'lg:max-h-40')}>{children}</div>
+);
+
+const SearchResultsWebline: FC = ({ children }) => <Webline className="mt-6">{children}</Webline>;
+
+const ShowResultsButtonWrapper: FC = ({ children }) => (
+    <div className="my-5 hidden justify-center lg:flex">{children}</div>
+);

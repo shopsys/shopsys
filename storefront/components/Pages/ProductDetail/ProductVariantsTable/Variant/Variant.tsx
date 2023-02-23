@@ -29,7 +29,7 @@ export const Variant: FC<VariantProps> = ({ gtmListName, isSellingDenied, listIn
 
     return (
         <>
-            <ProductVariantsTableRow key={variant.uuid} data-testid={TEST_IDENTIFIER + variant.catalogNumber}>
+            <ProductVariantsTableRow key={variant.uuid} dataTestId={TEST_IDENTIFIER + variant.catalogNumber}>
                 <Cell className="max-lg:float-left max-lg:w-10 max-lg:pl-0 lg:w-24">
                     <div className="h-16 w-16">
                         <Image alt={variant.fullName} type="default" image={variant.image} />

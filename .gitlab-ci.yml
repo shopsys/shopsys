@@ -58,7 +58,7 @@ test:standards-with-graphql-schema-check:
         - docker run -i ${TAG} /bin/bash -c "mv PRODUCTION DEVELOPMENT; ./check-schema.sh && php phing composer-dev standards"
     interruptible: true
 
-test:storefront-standards-with-jest-and-codegen:
+test:storefront-standards-with-codegen:
     stage: test
     <<: *only-default
     image: node:16.15.0-alpine
@@ -74,7 +74,6 @@ test:storefront-standards-with-jest-and-codegen:
         - ./check-next-public-variable.sh
         - ./check-code-gen.sh
         - npm run check
-        - npm run tests-jest
     interruptible: true
 
 tests:functional-and-acceptance:

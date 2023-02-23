@@ -40,9 +40,3 @@ export const ProductDetailCode: FC<PropsWithDataTestId> = ({ children, dataTestI
         {children}
     </div>
 );
-
-export const ProductDetailShortDescription: FC<PropsWithDataTestId> = ({ children, dataTestId }) => (
-    <div className="mb-5" data-testid={dataTestId}>
-        {children}
-    </div>
-);
