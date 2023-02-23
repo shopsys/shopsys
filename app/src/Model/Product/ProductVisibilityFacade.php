@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade as BaseProductVisibilityFacade;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class ProductVisibilityFacade extends BaseProductVisibilityFacade
 {
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event): void
     {
         if (!$event->isMasterRequest()) {
             return;

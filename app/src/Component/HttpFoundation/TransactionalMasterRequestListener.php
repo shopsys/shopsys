@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Component\HttpFoundation;
 
 use Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestListener as BaseTransactionalMasterRequestListener;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class TransactionalMasterRequestListener extends BaseTransactionalMasterRequestListener
 {
@@ -20,9 +20,9 @@ class TransactionalMasterRequestListener extends BaseTransactionalMasterRequestL
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event): void
     {
         if (self::$transactionHasBeenRollbacked === true) {
             return;
