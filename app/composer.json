@@ -92,18 +92,18 @@
         "scheb/2fa-qr-code": "^5.7",
         "sensio/framework-extra-bundle": "^5.2",
         "sentry/sentry-symfony": "^4.2.8",
-        "shopsys/cdn": "2.0.0",
-        "shopsys/form-types-bundle": "10.0.3",
-        "shopsys/framework": "10.0.3",
-        "shopsys/frontend-api": "10.0.3",
-        "shopsys/google-cloud-bundle": "10.0.3",
-        "shopsys/migrations": "10.0.3",
-        "shopsys/plugin-interface": "10.0.3",
+        "shopsys/cdn": "dev-rk-upgrade-composer-dependencies",
+        "shopsys/form-types-bundle": "dev-rk-fw-uprage-from-10-to-11-part-1 as 11.0.x-dev",
+        "shopsys/framework": "dev-rk-fw-uprage-from-10-to-11-part-1 as 11.0.x-dev",
+        "shopsys/frontend-api": "dev-rk-fw-uprage-from-10-to-11-part-1 as 11.0.x-dev",
+        "shopsys/google-cloud-bundle": "dev-rk-fw-uprage-from-10-to-11-part-1 as 11.0.x-dev",
+        "shopsys/migrations": "dev-rk-fw-uprage-from-10-to-11-part-1 as 11.0.x-dev",
+        "shopsys/plugin-interface": "dev-rk-fw-uprage-from-10-to-11-part-1 as 11.0.x-dev",
         "shopsys/postgres-search-bundle": "^0.2",
-        "shopsys/product-feed-google": "10.0.3",
-        "shopsys/product-feed-heureka": "10.0.3",
-        "shopsys/product-feed-heureka-delivery": "10.0.3",
-        "shopsys/product-feed-zbozi": "10.0.3",
+        "shopsys/product-feed-google": "dev-rk-fw-uprage-from-10-to-11-part-1 as 11.0.x-dev",
+        "shopsys/product-feed-heureka": "dev-rk-fw-uprage-from-10-to-11-part-1 as 11.0.x-dev",
+        "shopsys/product-feed-heureka-delivery": "dev-rk-fw-uprage-from-10-to-11-part-1 as 11.0.x-dev",
+        "shopsys/product-feed-zbozi": "dev-rk-fw-uprage-from-10-to-11-part-1 as 11.0.x-dev",
         "snc/redis-bundle": "^3.2.2",
         "stof/doctrine-extensions-bundle": "^1.3.0",
         "symfony-cmf/routing": "^2.0.3",
@@ -119,8 +119,8 @@
         "symfony/property-info": "^4.4.0",
         "symfony/proxy-manager-bridge": "^4.4.25",
         "symfony/security-bundle": "^4.4.0",
+        "symfony/mailer": "^5.0",
         "symfony/stopwatch": "^4.4.0",
-        "symfony/swiftmailer-bundle": "^3.2.2",
         "symfony/translation": "^4.4.0",
         "symfony/twig-bundle": "^4.4.0",
         "symfony/validator": "^4.4.0",
@@ -148,8 +148,8 @@
         "phpstan/phpstan-symfony": "^1.1.8",
         "phpunit/phpunit": "^9.5.20",
         "psr/event-dispatcher": "^1.0.0",
-        "shopsys/coding-standards": "10.0.3",
-        "shopsys/http-smoke-testing": "10.0.3",
+        "shopsys/coding-standards": "dev-rk-fw-uprage-from-10-to-11-part-1 as 11.0.x-dev",
+        "shopsys/http-smoke-testing": "dev-rk-fw-uprage-from-10-to-11-part-1 as 11.0.x-dev",
         "sspooky13/yaml-standards": "^7.0.1",
         "symfony/browser-kit": "^4.4.0",
         "symfony/var-dumper": "^4.4.0",
@@ -192,7 +192,8 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "ocramius/package-versions": true,
             "symfony/flex": true,
-            "cweagans/composer-patches": true
+            "cweagans/composer-patches": true,
+            "php-http/discovery": true
         }
     },
     "extra": {
@@ -203,7 +204,8 @@
         "public-dir": "web",
         "symfony": {
             "allow-contrib": true,
-            "require": "^4.4"
+            "require": "^4.4",
+            "docker": false
         },
         "patches-file": "composer/composer.patches.json"
     }
