@@ -1,8 +1,7 @@
-import { useBrandsQueryApi } from 'graphql/generated';
+import { ListedBrandFragmentApi, useBrandsQueryApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
-import { ListedBrandType } from 'types/brand';
 
-export function useBrands(): ListedBrandType[] | undefined {
+export function useBrands(): ListedBrandFragmentApi[] | undefined {
     const [{ data, error }] = useBrandsQueryApi();
     useQueryError(error);
 

@@ -3,13 +3,13 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { EditProfileContent } from 'components/Pages/Customer/EditProfile/EditProfileContent';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
+import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 
 const EditProfilePage: FC = () => {
@@ -20,13 +20,10 @@ const EditProfilePage: FC = () => {
         domainUrl,
     );
     const currentCustomerUserData = useCurrentCustomerData();
-    const breadcrumbs = useMemo(
-        () => [
-            { name: t('Customer'), slug: customerUrl },
-            { name: t('Edit profile'), slug: customerEditProfileUrl },
-        ],
-        [customerEditProfileUrl, customerUrl, t],
-    );
+    const breadcrumbs: BreadcrumbFragmentApi[] = [
+        { __typename: 'Link', name: t('Customer'), slug: customerUrl },
+        { __typename: 'Link', name: t('Edit profile'), slug: customerEditProfileUrl },
+    ];
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other', breadcrumbs);
     useGtmStaticPageView(gtmStaticPageViewEvent);
 

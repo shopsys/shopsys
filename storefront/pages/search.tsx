@@ -3,7 +3,7 @@ import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { SearchContent } from 'components/Pages/Search/SearchContent';
 import { useSearch } from 'connectors/search/Search';
-import { SearchProductsQueryDocumentApi, SearchQueryDocumentApi } from 'graphql/generated';
+import { BreadcrumbFragmentApi, SearchProductsQueryDocumentApi, SearchQueryDocumentApi } from 'graphql/generated';
 import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
@@ -25,7 +25,6 @@ import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListS
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
-import { useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 
 const SearchPage: FC<ServerSidePropsType> = () => {
@@ -42,7 +41,7 @@ const SearchPage: FC<ServerSidePropsType> = () => {
     const searchResults = useSearch(searchQuery, searchProductsSort, searchParametersFilter);
 
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], domainUrl);
-    const breadcrumbs = useMemo(() => [{ name: t('Search'), slug: searchUrl }], [t, searchUrl]);
+    const breadcrumbs: BreadcrumbFragmentApi[] = [{ __typename: 'Link', name: t('Search'), slug: searchUrl }];
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('search', breadcrumbs);
     useGtmStaticPageView(gtmStaticPageViewEvent);
 

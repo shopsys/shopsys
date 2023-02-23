@@ -1,11 +1,11 @@
 import { AdvancedSeoCategoriesItem } from '../AdvancedSeoCategoriesItem';
 import { theme } from 'components/Theme/main';
+import { CategoryDetailFragmentApi } from 'graphql/generated';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
-import { ReadyCategorySeoMixLink } from 'types/category';
 
 type AdvancedSeoCategoriesSliderProps = {
-    readyCategorySeoMixLinks: ReadyCategorySeoMixLink[];
+    readyCategorySeoMixLinks: CategoryDetailFragmentApi['readyCategorySeoMixLinks'];
 };
 
 export const AdvancedSeoCategoriesSlider: FC<AdvancedSeoCategoriesSliderProps> = ({ readyCategorySeoMixLinks }) => {

@@ -1,14 +1,17 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PersonalDataOverviewContent } from 'components/Pages/PersonalData/Overview/PersonalDataOverviewContent';
-import { PersonalDataPageTextQueryDocumentApi, usePersonalDataPageTextQueryApi } from 'graphql/generated';
+import {
+    BreadcrumbFragmentApi,
+    PersonalDataPageTextQueryDocumentApi,
+    usePersonalDataPageTextQueryApi,
+} from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 
 const PersonalDataOverviewPage: FC = () => {
@@ -16,10 +19,9 @@ const PersonalDataOverviewPage: FC = () => {
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [personalDataOverviewUrl] = getInternationalizedStaticUrls(['/personal-data-overview'], domainUrl);
     const [personalDataPageTextResult] = usePersonalDataPageTextQueryApi();
-    const breadcrumbs = useMemo(
-        () => [{ name: t('Personal Data Overview'), slug: personalDataOverviewUrl }],
-        [personalDataOverviewUrl, t],
-    );
+    const breadcrumbs: BreadcrumbFragmentApi[] = [
+        { __typename: 'Link', name: t('Personal Data Overview'), slug: personalDataOverviewUrl },
+    ];
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other', breadcrumbs);
     useGtmStaticPageView(gtmStaticPageViewEvent);
 

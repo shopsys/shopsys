@@ -1,7 +1,4 @@
-import {
-    ListedStoreFragmentApi,
-    TransportWithAvailablePaymentsAndStoresFragmentApi,
-} from 'graphql/generated';
+import { ListedStoreFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
 import { getPacketeryCookie } from 'helpers/packetery';
 
 export const getSelectedPickupPlace = (

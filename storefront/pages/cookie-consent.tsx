@@ -1,19 +1,21 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CookieConsentContent } from 'components/Pages/CookieConsent/CookieConsentContent';
+import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 
 const CookieConsentPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [cookieConsentUrl] = getInternationalizedStaticUrls(['/cookie-consent'], domainUrl);
-    const breadcrumbs = useMemo(() => [{ name: t('Cookie consent'), slug: cookieConsentUrl }], [cookieConsentUrl, t]);
+    const breadcrumbs: BreadcrumbFragmentApi[] = [
+        { __typename: 'Link', name: t('Cookie consent'), slug: cookieConsentUrl },
+    ];
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('cookie consent', breadcrumbs);
     useGtmStaticPageView(gtmStaticPageViewEvent);
 

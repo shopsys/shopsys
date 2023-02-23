@@ -3,6 +3,7 @@ import { mapGtmCartItemType, mapGtmShippingInfo } from './mappers';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { MD5 } from 'crypto-js';
 import {
+    BreadcrumbFragmentApi,
     ListedStoreFragmentApi,
     SimplePaymentFragmentApi,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
@@ -14,7 +15,6 @@ import { canUseDom } from 'helpers/misc/canUseDom';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { BreadcrumbItemType } from 'types/breadcrumb';
 import { CartType } from 'types/cart';
 import { CurrentCustomerType } from 'types/customer';
 import { FriendlyUrlPageType } from 'types/friendlyUrl';
@@ -84,7 +84,7 @@ export const useGtmCartEventInfo = (): GtmCartInfoEventType => {
 export const getGtmPageInfoForFriendlyUrl = (
     data: FriendlyUrlPageType | null | undefined,
     slug: string,
-    breadcrumbs: BreadcrumbItemType[] | undefined,
+    breadcrumbs: BreadcrumbFragmentApi[] | undefined,
 ): GtmPageInfoType => {
     const defaultPageInfo: GtmPageInfoType = {
         type: '404',
@@ -136,7 +136,7 @@ export const getGtmPageInfoForFriendlyUrl = (
 export const getGtmPageInfoType = (
     pageType: GtmPageType,
     path: string,
-    breadcrumbs: BreadcrumbItemType[] | undefined,
+    breadcrumbs: BreadcrumbFragmentApi[] | undefined,
 ): GtmPageInfoType => ({
     type: pageType,
     path,

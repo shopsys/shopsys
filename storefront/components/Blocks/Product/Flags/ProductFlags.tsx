@@ -1,8 +1,8 @@
+import { SimpleFlagFragmentApi } from 'graphql/generated';
 import { twJoin } from 'tailwind-merge';
 import tinycolor from 'tinycolor2';
-import { SimpleFlagType } from 'types/flag';
 
-type ProductFlagsProps = { flags: SimpleFlagType[] };
+type ProductFlagsProps = { flags: SimpleFlagFragmentApi[] };
 
 const TEST_IDENTIFIER = 'blocks-product-flags-';
 

@@ -8,6 +8,7 @@ import {
 } from './mappers';
 import {
     AutocompleteSearchQueryApi,
+    BreadcrumbFragmentApi,
     CartItemFragmentApi,
     ListedProductFragmentApi,
     ListedStoreFragmentApi,
@@ -21,7 +22,6 @@ import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { BreadcrumbItemType } from 'types/breadcrumb';
 import {
     GtmCartInfoType,
     GtmChangeCartItemEventType,
@@ -44,7 +44,7 @@ import {
 
 export const useGtmStaticPageViewEvent = (
     pageType: GtmPageType,
-    breadcrumbs?: BreadcrumbItemType[],
+    breadcrumbs?: BreadcrumbFragmentApi[],
 ): GtmPageViewEventType => {
     const path = useRouter().asPath;
     const gtmPageInfo = useMemo(() => getGtmPageInfoType(pageType, path, breadcrumbs), [pageType, path, breadcrumbs]);

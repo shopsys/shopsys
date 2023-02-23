@@ -7,7 +7,7 @@ import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import { useRecoverPasswordMutationApi } from 'graphql/generated';
+import { BreadcrumbFragmentApi, useRecoverPasswordMutationApi } from 'graphql/generated';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
@@ -18,13 +18,12 @@ import Trans from 'next-translate/Trans';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
-import { BreadcrumbItemType } from 'types/breadcrumb';
 import { NewPasswordFormType } from 'types/form';
 
 type NewPasswordContentProps = {
     hash: string;
     email: string;
-    breadcrumbs: BreadcrumbItemType[];
+    breadcrumbs: BreadcrumbFragmentApi[];
 };
 
 export const NewPasswordContent: FC<NewPasswordContentProps> = ({ breadcrumbs, email, hash }) => {
@@ -114,7 +113,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ breadcrumbs, e
         <>
             <SimpleLayout
                 heading={t('Set new password')}
-                breadcrumb={[{ name: t('Set new password'), slug: newPasswordUrl }]}
+                breadcrumb={[{ __typename: 'Link', name: t('Set new password'), slug: newPasswordUrl }]}
             >
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onNewPasswordHandler)}>

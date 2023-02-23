@@ -4,10 +4,10 @@ import { Children } from './Children';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { Fragment } from 'react';
-import { ListedBlogCategoryType } from 'types/blogCategory';
+import { ListedBlogCategoryRecursiveType } from 'types/blogCategory';
 
 type BlogSingpostProps = {
-    blogCategoryItems?: ListedBlogCategoryType[];
+    blogCategoryItems?: ListedBlogCategoryRecursiveType[];
     activeItem: string;
 };
 

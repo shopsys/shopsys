@@ -3,7 +3,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { ProductFlags } from 'components/Blocks/Product/Flags/ProductFlags';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { ImageSizesFragmentApi } from 'graphql/generated';
+import { ImageSizesFragmentApi, SimpleFlagFragmentApi } from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
@@ -11,12 +11,11 @@ import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import LightGallery from 'lightgallery/react';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { SimpleFlagType } from 'types/flag';
 
 type ProductDetailGalleryProps = {
     images: ImageSizesFragmentApi[];
     productName: string;
-    flags: SimpleFlagType[];
+    flags: SimpleFlagFragmentApi[];
 };
 
 export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, images, productName }) => {

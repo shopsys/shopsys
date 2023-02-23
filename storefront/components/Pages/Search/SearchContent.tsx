@@ -8,7 +8,7 @@ import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { desktopFirstSizes, mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { mapConnectionEdges } from 'connectors/connection/Connection';
-import { SearchQueryApi, SimpleCategoryFragmentApi } from 'graphql/generated';
+import { BreadcrumbFragmentApi, SearchQueryApi, SimpleCategoryFragmentApi } from 'graphql/generated';
 import { getNewPagination } from 'helpers/pagination/getNewPagination';
 import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
 import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
@@ -20,7 +20,6 @@ import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { BreadcrumbItemType } from 'types/breadcrumb';
 
 enum NUMBER_OF_VISIBLE_ITEMS {
     XL = 8,
@@ -30,7 +29,7 @@ enum NUMBER_OF_VISIBLE_ITEMS {
 
 type SearchContentProps = {
     searchResults: SearchQueryApi | undefined;
-    breadcrumbs: BreadcrumbItemType[];
+    breadcrumbs: BreadcrumbFragmentApi[];
 };
 
 export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrumbs }) => {

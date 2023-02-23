@@ -1,4 +1,4 @@
-import { BreadcrumbItemType } from './breadcrumb';
+import { BreadcrumbFragmentApi } from 'graphql/generated';
 
 export type GtmPageType =
     | 'home'
@@ -113,7 +113,7 @@ export type GtmPageInfoType = {
     type: GtmPageType;
     path: string;
     pageId: string; // random string generated for every page load
-    breadcrumbs: BreadcrumbItemType[];
+    breadcrumbs: BreadcrumbFragmentApi[];
     category?: string[];
     categoryId?: number[];
     categoryLevel?: number;

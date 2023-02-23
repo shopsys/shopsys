@@ -3,15 +3,15 @@ import { AdvancedSeoCategoriesSlider } from './AdvancedSeoCategoriesSlider/Advan
 import { Heading } from 'components/Basic/Heading/Heading';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
+import { CategoryDetailFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import 'keen-slider/keen-slider.min.css';
 import { useState } from 'react';
-import { ReadyCategorySeoMixLink } from 'types/category';
 
 type AdvancedSeoCategoriesProps = {
-    readyCategorySeoMixLinks: ReadyCategorySeoMixLink[];
+    readyCategorySeoMixLinks: CategoryDetailFragmentApi['readyCategorySeoMixLinks'];
 };
 
 export const AdvancedSeoCategories: FC<AdvancedSeoCategoriesProps> = ({ readyCategorySeoMixLinks }) => {

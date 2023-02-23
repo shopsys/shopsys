@@ -7,7 +7,9 @@ fragment ProductDetailInterfaceFragment on Product {
     name
     namePrefix
     nameSuffix
-    ...BreadcrumbFragment
+    breadcrumb {
+        ...BreadcrumbFragment
+    }
     catalogNumber
     ean
     description

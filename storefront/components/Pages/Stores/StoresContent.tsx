@@ -4,18 +4,17 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { mapConnectionEdges } from 'connectors/connection/Connection';
-import { ListedStoreConnectionFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
+import { BreadcrumbFragmentApi, ListedStoreConnectionFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import { useCallback, useMemo, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { twJoin } from 'tailwind-merge';
-import { BreadcrumbItemType } from 'types/breadcrumb';
 
 type StoresContentProps = {
     stores: ListedStoreConnectionFragmentApi;
-    breadcrumbs: BreadcrumbItemType[];
+    breadcrumbs: BreadcrumbFragmentApi[];
 };
 
 export const StoresContent: FC<StoresContentProps> = ({ stores, breadcrumbs }) => {

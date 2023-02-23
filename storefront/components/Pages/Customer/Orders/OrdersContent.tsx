@@ -5,6 +5,7 @@ import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { PaginationProvider } from 'components/Blocks/Pagination/PaginationProvider';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { BreadcrumbFragmentApi, ListedOrderFragmentApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { getNewPagination } from 'helpers/pagination/getNewPagination';
@@ -15,13 +16,11 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useRef } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { BreadcrumbItemType } from 'types/breadcrumb';
-import { ListedOrderType } from 'types/orders';
 
 type OrdersContentProps = {
-    orders: ListedOrderType[] | undefined;
+    orders: ListedOrderFragmentApi[] | undefined;
     totalCount: number | undefined;
-    breadcrumbs: BreadcrumbItemType[];
+    breadcrumbs: BreadcrumbFragmentApi[];
 };
 
 const TEST_IDENTIFIER = 'pages-customer-orders-';
@@ -76,7 +75,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ breadcrumbs, orders, tot
                                         {order.creationDate}
                                     </td>
                                     <td className="text-right" data-testid={TEST_IDENTIFIER + 'quantity'}>
-                                        {order.items.quantity}
+                                        {order.productItems.length}
                                     </td>
                                     <td data-testid={TEST_IDENTIFIER + 'transport'}>
                                         <div className="relative top-1 mr-1 inline-flex w-10 justify-center">

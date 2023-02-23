@@ -2,8 +2,9 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
 import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrdersContent } from 'components/Pages/Customer/Orders/OrdersContent';
+import { mapConnectionEdges } from 'connectors/connection/Connection';
 import { useOrders } from 'connectors/customer/Orders';
-import { OrdersQueryDocumentApi } from 'graphql/generated';
+import { BreadcrumbFragmentApi, ListedOrderFragmentApi, OrdersQueryDocumentApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
@@ -20,21 +21,21 @@ import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 const OrdersPage: FC = () => {
     const t = useTypedTranslationFunction();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
-    const currentDomainConfig = useShopsysSelector((state) => state.domain);
     const { query } = useRouter();
     const currentPage = parsePageNumberFromQuery(query[PAGE_QUERY_PARAMETER_NAME]);
-    const ordersData = useOrders(currentDomainConfig, currentPage);
+    const ordersData = useOrders(currentPage);
+    const mappedOrders = useMemo(
+        () => mapConnectionEdges<ListedOrderFragmentApi>(ordersData?.edges),
+        [ordersData?.edges],
+    );
     const [customerUrl, customerOrdersUrl] = getInternationalizedStaticUrls(
         ['/customer', '/customer/orders'],
         domainUrl,
     );
-    const breadcrumbs = useMemo(
-        () => [
-            { name: t('Customer'), slug: customerUrl },
-            { name: t('My orders'), slug: customerOrdersUrl },
-        ],
-        [customerUrl, customerOrdersUrl, t],
-    );
+    const breadcrumbs: BreadcrumbFragmentApi[] = [
+        { __typename: 'Link', name: t('Customer'), slug: customerUrl },
+        { __typename: 'Link', name: t('My orders'), slug: customerOrdersUrl },
+    ];
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other', breadcrumbs);
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
@@ -42,11 +43,7 @@ const OrdersPage: FC = () => {
         <>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('My orders')}>
-                <OrdersContent
-                    orders={ordersData?.orders}
-                    totalCount={ordersData?.totalCount}
-                    breadcrumbs={breadcrumbs}
-                />
+                <OrdersContent orders={mappedOrders} totalCount={ordersData?.totalCount} breadcrumbs={breadcrumbs} />
             </CommonLayout>
         </>
     );

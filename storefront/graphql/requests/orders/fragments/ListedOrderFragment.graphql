@@ -3,7 +3,7 @@ fragment ListedOrderFragment on Order {
     uuid
     number
     creationDate
-    items {
+    productItems {
         __typename
         quantity
     }

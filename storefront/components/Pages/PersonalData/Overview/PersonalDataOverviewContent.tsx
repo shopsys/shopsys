@@ -7,7 +7,11 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { UserText } from 'components/Helpers/UserText/UserText';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import { PersonalDataAccessRequestTypeEnumApi, usePersonalDataRequestMutationApi } from 'graphql/generated';
+import {
+    BreadcrumbFragmentApi,
+    PersonalDataAccessRequestTypeEnumApi,
+    usePersonalDataRequestMutationApi,
+} from 'graphql/generated';
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
@@ -15,11 +19,10 @@ import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
-import { BreadcrumbItemType } from 'types/breadcrumb';
 import { PersonalDataOverviewFormType } from 'types/form';
 
 type PersonalDataOverviewContentProps = {
-    breadcrumbs: BreadcrumbItemType[];
+    breadcrumbs: BreadcrumbFragmentApi[];
     contentSiteText: string | undefined;
 };
 

@@ -1,9 +1,9 @@
+import { BreadcrumbFragmentApi } from 'graphql/generated';
 import Head from 'next/head';
 import { useShopsysSelector } from 'redux/main';
-import { BreadcrumbItemType } from 'types/breadcrumb';
 
 type BreadcrumbsMetadataProps = {
-    breadcrumbs: BreadcrumbItemType[];
+    breadcrumbs: BreadcrumbFragmentApi[];
 };
 
 export const BreadcrumbsMetadata: FC<BreadcrumbsMetadataProps> = ({ breadcrumbs }) => {

@@ -5,7 +5,9 @@ fragment ArticleDetailFragment on ArticleSite {
     placement
     articleName: name
     text
-    ...BreadcrumbFragment
+    breadcrumb {
+        ...BreadcrumbFragment
+    }
     seoTitle
     seoMetaDescription
     createdAt

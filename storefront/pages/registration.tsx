@@ -1,19 +1,21 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { RegistrationContent } from 'components/Pages/Registration/RegistrationContent';
+import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 
 const RegistrationPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [registrationUrl] = getInternationalizedStaticUrls(['/registration'], domainUrl);
-    const breadcrumbs = useMemo(() => [{ name: t('Registration'), slug: registrationUrl }], [registrationUrl, t]);
+    const breadcrumbs: BreadcrumbFragmentApi[] = [
+        { __typename: 'Link', name: t('Registration'), slug: registrationUrl },
+    ];
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other', breadcrumbs);
     useGtmStaticPageView(gtmStaticPageViewEvent);
 

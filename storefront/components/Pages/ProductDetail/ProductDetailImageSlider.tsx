@@ -1,17 +1,16 @@
 import { ProductFlags } from 'components/Blocks/Product/Flags/ProductFlags';
 import { theme } from 'components/Theme/main';
-import { ImageSizesFragmentApi } from 'graphql/generated';
+import { ImageSizesFragmentApi, SimpleFlagFragmentApi } from 'graphql/generated';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
 import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import LightGallery from 'lightgallery/react';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { SimpleFlagType } from 'types/flag';
 
 type ProductDetailImageSliderProps = {
     galleryItems: ImageSizesFragmentApi[];
-    flags: SimpleFlagType[];
+    flags: SimpleFlagFragmentApi[];
 };
 
 export const ProductDetailImageSlider: FC<ProductDetailImageSliderProps> = ({ galleryItems, flags }) => {

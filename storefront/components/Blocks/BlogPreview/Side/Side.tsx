@@ -1,12 +1,12 @@
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
+import { ListedBlogArticleFragmentApi } from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import NextLink from 'next/link';
 import { Fragment } from 'react';
-import { ListedBlogArticleType } from 'types/blogArticle';
 
 type SideProps = {
-    blogSideItems: ListedBlogArticleType[];
+    blogSideItems: ListedBlogArticleFragmentApi[];
 };
 
 const TEST_IDENTIFIER = 'blocks-blogpreview-side-';

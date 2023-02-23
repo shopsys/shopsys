@@ -5,6 +5,7 @@ import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
+import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
@@ -14,11 +15,10 @@ import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
-import { BreadcrumbItemType } from 'types/breadcrumb';
 import * as Yup from 'yup';
 
 type LoginContentProps = {
-    breadcrumbs: BreadcrumbItemType[];
+    breadcrumbs: BreadcrumbFragmentApi[];
 };
 
 const TEST_IDENTIFIER = 'pages-login-submit';

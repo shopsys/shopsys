@@ -1,11 +1,11 @@
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { BreadcrumbItemType } from 'types/breadcrumb';
+import { BreadcrumbFragmentApi } from 'graphql/generated';
 
 type SimpleLayoutProps = {
     heading: string;
-    breadcrumb: BreadcrumbItemType[];
+    breadcrumb: BreadcrumbFragmentApi[];
     standardWidth?: true;
 };
 
