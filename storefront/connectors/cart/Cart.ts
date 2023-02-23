@@ -1,6 +1,6 @@
 import { showErrorMessage, showInfoMessage } from 'components/Helpers/Toasts';
-import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
-import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
+import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
+import { getSelectedPickupPlace } from 'connectors/pickupPlace/PickupPlace';
 import {
     CartItemModificationsFragmentApi,
     CartModificationsFragmentApi,

@@ -1,5 +1,5 @@
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
-import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
+import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { CartFragmentApi, useRemovePromoCodeFromCartMutationApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCallback } from 'react';

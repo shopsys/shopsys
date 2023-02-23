@@ -1,7 +1,7 @@
 import { TransportAndPaymentListItem } from '../TransportAndPaymentListItem';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { TransportAndPaymentSelectItemLabel } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentSelectItemLabel/TransportAndPaymentSelectItemLabel';
-import { mapConnectionEdges } from 'connectors/connection/Connection';
+import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { ListedStoreFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
 import { useMemo } from 'react';
 

@@ -9,7 +9,7 @@ import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
+import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { useRegistrationMutationApi } from 'graphql/generated';
 import { setTokensToCookie } from 'helpers/auth/tokens';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';

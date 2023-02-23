@@ -3,7 +3,7 @@ import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import { mapConnectionEdges } from 'connectors/connection/Connection';
+import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { BreadcrumbFragmentApi, ListedStoreConnectionFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Image from 'next/image';

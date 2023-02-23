@@ -6,7 +6,7 @@ import { PromotedCategories } from 'components/Blocks/Categories/PromotedCategor
 import { PromotedProducts } from 'components/Blocks/Product/PromotedProducts/PromotedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { blogPreviewVariables } from 'connectors/articleInterface/blogArticle/BlogArticle';
+import { blogPreviewVariables } from 'connectors/blogArticle/BlogArticle';
 import {
     BlogArticlesQueryDocumentApi,
     PromotedCategoriesQueryDocumentApi,

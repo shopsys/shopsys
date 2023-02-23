@@ -1,5 +1,5 @@
 import { showErrorMessage } from 'components/Helpers/Toasts';
-import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
+import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { CartFragmentApi, useChangePaymentInCartMutationApi } from 'graphql/generated';
 import { onPaymentChangeGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import { useGtmCartEventInfo } from 'helpers/gtm/gtm';

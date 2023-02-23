@@ -1,7 +1,7 @@
 import { BlogArticlesList } from './BlogArticlesList/BlogArticlesList';
 import { DEFAULT_PAGE_SIZE, Pagination } from 'components/Blocks/Pagination/Pagination';
 import { usePaginationContext } from 'components/Blocks/Pagination/usePaginationContext';
-import { mapConnectionEdges } from 'connectors/connection/Connection';
+import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { ListedBlogArticleFragmentApi, useBlogCategoryArticlesApi } from 'graphql/generated';
 import { useMemo, useRef } from 'react';
 

@@ -17,7 +17,7 @@ import {
     useCustomerChangeProfileFormMeta,
 } from 'components/Pages/Customer/EditProfile/formMeta';
 import { useCountries } from 'connectors/country/Country';
-import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
+import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { useChangePasswordMutationApi, useChangePersonalDataMutationApi } from 'graphql/generated';
 import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
