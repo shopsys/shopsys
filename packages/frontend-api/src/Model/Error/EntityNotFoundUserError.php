@@ -6,7 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Error;
 
 use Overblog\GraphQLBundle\Error\UserError;
 
-abstract class UserEntityNotFoundError extends UserError
+abstract class EntityNotFoundUserError extends UserError
 {
     /**
      * @param string $message
