@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Transport;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
@@ -10,41 +11,19 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 class TransportDataFactory implements TransportDataFactoryInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
-     */
-    protected $transportFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
-     */
-    protected $vatFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
-     */
-    protected $imageFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      */
     public function __construct(
-        TransportFacade $transportFacade,
-        VatFacade $vatFacade,
-        Domain $domain,
-        ImageFacade $imageFacade
+        protected readonly TransportFacade $transportFacade,
+        protected readonly VatFacade $vatFacade,
+        protected readonly Domain $domain,
+        protected readonly ImageFacade $imageFacade,
+        protected readonly ImageUploadDataFactory $imageUploadDataFactory,
     ) {
-        $this->transportFacade = $transportFacade;
-        $this->vatFacade = $vatFacade;
-        $this->domain = $domain;
-        $this->imageFacade = $imageFacade;
     }
 
     /**
@@ -52,7 +31,10 @@ class TransportDataFactory implements TransportDataFactoryInterface
      */
     protected function createInstance(): TransportData
     {
-        return new TransportData();
+        $transportData = new TransportData();
+        $transportData->image = $this->imageUploadDataFactory->create();
+
+        return $transportData;
     }
 
     /**
@@ -69,7 +51,7 @@ class TransportDataFactory implements TransportDataFactoryInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
      */
-    protected function fillNew(TransportData $transportData)
+    protected function fillNew(TransportData $transportData): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $transportData->enabled[$domainId] = true;
@@ -100,7 +82,7 @@ class TransportDataFactory implements TransportDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      */
-    protected function fillFromTransport(TransportData $transportData, Transport $transport)
+    protected function fillFromTransport(TransportData $transportData, Transport $transport): void
     {
         $names = [];
         $descriptions = [];
@@ -127,6 +109,6 @@ class TransportDataFactory implements TransportDataFactoryInterface
         }
 
         $transportData->payments = $transport->getPayments();
-        $transportData->image->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($transport, null);
+        $transportData->image = $this->imageUploadDataFactory->createFromEntityAndType($transport);
     }
 }

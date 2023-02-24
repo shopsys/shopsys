@@ -2,8 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Model\Advert;
 
-use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
-
 class AdvertData
 {
     /**
@@ -54,6 +52,5 @@ class AdvertData
     public function __construct()
     {
         $this->hidden = false;
-        $this->image = new ImageUploadData();
     }
 }

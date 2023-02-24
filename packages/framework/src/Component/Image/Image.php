@@ -5,19 +5,23 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Image;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\InvalidFileKeyException;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
+use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
  * @ORM\Table(name="images", indexes={@ORM\Index(columns={"entity_name", "entity_id", "type"})})
  * @ORM\Entity
+ * @method \Shopsys\FrameworkBundle\Component\Image\ImageTranslation translation(?string $locale = null)
  */
-class Image implements EntityFileUploadInterface
+class Image extends AbstractTranslatableEntity implements EntityFileUploadInterface
 {
     protected const UPLOAD_KEY = 'image';
 
@@ -28,6 +32,12 @@ class Image implements EntityFileUploadInterface
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Image\ImageTranslation[]|\Doctrine\Common\Collections\Collection
+     * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Component\Image\ImageTranslation")
+     */
+    protected $translations;
 
     /**
      * @var string
@@ -73,15 +83,63 @@ class Image implements EntityFileUploadInterface
     /**
      * @param string $entityName
      * @param int $entityId
-     * @param string|null $type
+     * @param string[] $namesIndexedByLocale
      * @param string|null $temporaryFilename
+     * @param string|null $type
      */
-    public function __construct(string $entityName, int $entityId, ?string $type, ?string $temporaryFilename)
-    {
+    public function __construct(
+        string $entityName,
+        int $entityId,
+        array $namesIndexedByLocale,
+        ?string $temporaryFilename,
+        ?string $type,
+    ) {
         $this->entityName = $entityName;
         $this->entityId = $entityId;
+        $this->translations = new ArrayCollection();
+        $this->setNames($namesIndexedByLocale);
         $this->type = $type;
         $this->setTemporaryFilename($temporaryFilename);
+    }
+
+    /**
+     * @param string|null $locale
+     * @return string|null
+     */
+    public function getName(?string $locale = null): ?string
+    {
+        return $this->translation($locale)->getName();
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getNames(): array
+    {
+        $namesByLocale = [];
+        foreach ($this->translations as $translation) {
+            $namesByLocale[$translation->getLocale()] = $translation->getName();
+        }
+
+        return $namesByLocale;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Image\ImageTranslation
+     */
+    protected function createTranslation(): ImageTranslation
+    {
+        return new ImageTranslation();
+    }
+
+    /**
+     * @param string[] $names
+     */
+    public function setNames(array $names): void
+    {
+        foreach ($names as $locale => $name) {
+            $this->translation($locale)->setName($name);
+        }
     }
 
     /**

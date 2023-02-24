@@ -88,6 +88,7 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/src/Model/Category/CategoryFacade.php',
             __DIR__ . '/src/Model/Category/CategoryRepository.php',
             __DIR__ . '/src/Model/Product/ProductFacade.php',
+            __DIR__ . '/src/Component/Image/ImageFacade.php',
         ],
         EmptyStatementSniff::class . '.DetectedWhile' => [
             __DIR__ . '/src/Model/Product/Availability/ProductAvailabilityRecalculator.php',

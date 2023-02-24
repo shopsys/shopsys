@@ -99,6 +99,11 @@ class ProductTest extends GraphQlTestCase
                             text
                         }
                     }
+                    images(size: "original") {
+                        name
+                        position
+                        type
+                    }
                 }
             }
         ';
@@ -236,6 +241,18 @@ class ProductTest extends GraphQlTestCase
                                     'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                                 ],
                             ],
+                        ],
+                    ],
+                    'images' => [
+                        0 => [
+                            'name' => 'Product 1 image',
+                            'position' => null,
+                            'type' => null,
+                        ],
+                        1 => [
+                            'name' => 'Product 1 image',
+                            'position' => null,
+                            'type' => null,
                         ],
                     ],
                 ],

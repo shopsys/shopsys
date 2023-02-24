@@ -75,8 +75,9 @@ class ImageRepository
     public function getImagesByEntityIndexedById($entityName, $entityId, $type)
     {
         $queryBuilder = $this->em->createQueryBuilder()
-            ->select('i')
+            ->select('i, it')
             ->from(Image::class, 'i', 'i.id')
+            ->join('i.translations', 'it')
             ->andWhere('i.entityName = :entityName')->setParameter('entityName', $entityName)
             ->andWhere('i.entityId = :entityId')->setParameter('entityId', $entityId)
             ->addOrderBy('i.position', 'asc')

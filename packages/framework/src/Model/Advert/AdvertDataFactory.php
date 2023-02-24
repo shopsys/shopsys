@@ -2,21 +2,16 @@
 
 namespace Shopsys\FrameworkBundle\Model\Advert;
 
-use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 
 class AdvertDataFactory implements AdvertDataFactoryInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      */
-    protected $imageFacade;
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
-     */
-    public function __construct(ImageFacade $imageFacade)
-    {
-        $this->imageFacade = $imageFacade;
+    public function __construct(
+        protected readonly ImageUploadDataFactory $imageUploadDataFactory,
+    ) {
     }
 
     /**
@@ -24,7 +19,10 @@ class AdvertDataFactory implements AdvertDataFactoryInterface
      */
     protected function createInstance(): AdvertData
     {
-        return new AdvertData();
+        $advertData = new AdvertData();
+        $advertData->image = $this->imageUploadDataFactory->create();
+
+        return $advertData;
     }
 
     /**
@@ -50,7 +48,7 @@ class AdvertDataFactory implements AdvertDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advertData
      * @param \Shopsys\FrameworkBundle\Model\Advert\Advert $advert
      */
-    protected function fillFromAdvert(AdvertData $advertData, Advert $advert)
+    protected function fillFromAdvert(AdvertData $advertData, Advert $advert): void
     {
         $advertData->name = $advert->getName();
         $advertData->type = $advert->getType();
@@ -59,6 +57,6 @@ class AdvertDataFactory implements AdvertDataFactoryInterface
         $advertData->positionName = $advert->getPositionName();
         $advertData->hidden = $advert->isHidden();
         $advertData->domainId = $advert->getDomainId();
-        $advertData->image->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($advert, null);
+        $advertData->image = $this->imageUploadDataFactory->createFromEntityAndType($advert);
     }
 }

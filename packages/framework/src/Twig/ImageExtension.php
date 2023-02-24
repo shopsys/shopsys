@@ -161,6 +161,7 @@ class ImageExtension extends AbstractExtension
             $image = $this->imageFacade->getImageByObject($imageOrEntity, $attributes['type']);
             $entityName = $image->getEntityName();
             $attributes['src'] = $this->getImageUrl($image, $attributes['size'], $attributes['type']);
+            $attributes['alt'] = $image->getName();
             $additionalImagesData = $this->imageFacade->getAdditionalImagesData(
                 $this->domain->getCurrentDomainConfig(),
                 $image,

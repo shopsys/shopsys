@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product;
 
-use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 
 class ProductData
@@ -183,7 +182,6 @@ class ProductData
         $this->variantAlias = [];
         $this->orderingPriority = 0;
         $this->parameters = [];
-        $this->images = new ImageUploadData();
         $this->manualInputPricesByPricingGroupId = [];
         $this->seoTitles = [];
         $this->seoMetaDescriptions = [];

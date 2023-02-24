@@ -7,20 +7,25 @@ class ImageUploadData
     /**
      * @var string[]
      */
-    public $uploadedFiles = [];
+    public array $uploadedFiles = [];
 
     /**
-     * @var string[]
+     * @var string[][]
      */
-    public $uploadedFilenames = [];
+    public array $uploadedFilenames = [[]];
+
+    /**
+     * @var array<int, array<string,string>>
+     */
+    public array $namesIndexedByImageIdAndLocale = [];
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
-    public $imagesToDelete = [];
+    public array $imagesToDelete = [];
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
-    public $orderedImages = [];
+    public array $orderedImages = [];
 }

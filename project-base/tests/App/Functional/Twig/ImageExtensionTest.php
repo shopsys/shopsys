@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Twig;
 
 use Shopsys\FrameworkBundle\Component\Image\AdditionalImageData;
-use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
+use Shopsys\FrameworkBundle\Component\Image\ImageRepository;
 use Shopsys\FrameworkBundle\Twig\ImageExtension;
 use Tests\App\Test\FunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
@@ -28,7 +28,9 @@ class ImageExtensionTest extends FunctionalTestCase
 
         $imageFacade = $this->createMock(ImageFacade::class);
 
-        $image = new Image('product', 2, null, null);
+        /** @var \Shopsys\FrameworkBundle\Component\Image\ImageRepository $imageRepository */
+        $imageRepository = $this->getContainer()->get(ImageRepository::class);
+        $image = $imageRepository->getById(1);
 
         $imageFacade->method('getImageByObject')->willReturn($image);
         $imageFacade->method('getImageUrl')->willReturn('http://webserver:8080/2.jpg');

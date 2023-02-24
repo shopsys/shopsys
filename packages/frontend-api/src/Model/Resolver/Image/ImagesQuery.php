@@ -161,6 +161,7 @@ class ImagesQuery extends AbstractQuery
     protected function getResolvedImage(Image $image, ImageSizeConfig $sizeConfig): array
     {
         return [
+            'name' => $image->getName(),
             'type' => $image->getType(),
             'position' => $image->getPosition(),
             'width' => $sizeConfig->getWidth(),

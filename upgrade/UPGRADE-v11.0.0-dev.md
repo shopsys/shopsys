@@ -1549,3 +1549,76 @@ There you can find links to upgrade notes for other versions too.
   - see #project-base-diff for more information about changes needed to be done in your project
 - update your Elasticsearch Docker Image to latest version ([#2569](https://github.com/shopsys/shopsys/pull/2569))
     - see #project-base-diff for more information about changes needed to be done in your project
+- add images names ([#2566](https://github.com/shopsys/shopsys/pull/2566))
+    - update all `*DataFactory::createInstance()` methods that you have extended in your project and are related to entities with images to create instance of `ImageUploadData` same as it is done in their parent classes from Shopsys Framework
+        - also update your own application code to use `ImageUploadDataFactory` instead of creating `ImageUploadData` object directly
+    - `Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(ImageFacade $imageFacade)
+        + __construct(ImageUploadDataFactory $imageUploadDataFactory)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Category\CategoryDataFactory` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(CategoryRepository $categoryRepository, FriendlyUrlFacade $friendlyUrlFacade, PluginCrudExtensionFacade $pluginCrudExtensionFacade, Domain $domain, ImageFacade $imageFacade)
+        + __construct(CategoryRepository $categoryRepository, FriendlyUrlFacade $friendlyUrlFacade, PluginCrudExtensionFacade $pluginCrudExtensionFacade, Domain $domain, ImageUploadDataFactory $imageUploadDataFactory)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(PaymentFacade $paymentFacade, VatFacade $vatFacade, Domain $domain, ImageFacade $imageFacade)
+        + __construct(PaymentFacade $paymentFacade, VatFacade $vatFacade, Domain $domain, ImageUploadDataFactory $imageUploadDataFactory)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Product\ProductDataFactory` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(VatFacade $vatFacade, ProductInputPriceFacade $productInputPriceFacade, UnitFacade $unitFacade, Domain $domain, ProductRepository $productRepository, ParameterRepository $parameterRepository, FriendlyUrlFacade $friendlyUrlFacade, ProductAccessoryRepository $productAccessoryRepository, ImageFacade $imageFacade, PluginCrudExtensionFacade $pluginDataFormExtensionFacade, ProductParameterValueDataFactoryInterface $productParameterValueDataFactory, PricingGroupFacade $pricingGroupFacade, AvailabilityFacade $availabilityFacade)
+        + __construct(VatFacade $vatFacade, ProductInputPriceFacade $productInputPriceFacade, UnitFacade $unitFacade, Domain $domain, ProductRepository $productRepository, ParameterRepository $parameterRepository, FriendlyUrlFacade $friendlyUrlFacade, ProductAccessoryRepository $productAccessoryRepository, PluginCrudExtensionFacade $pluginDataFormExtensionFacade, ProductParameterValueDataFactoryInterface $productParameterValueDataFactory, PricingGroupFacade $pricingGroupFacade, AvailabilityFacade $availabilityFacade, ImageUploadDataFactory $imageUploadDataFactory)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactory` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(FriendlyUrlFacade $friendlyUrlFacade, BrandFacade $brandFacade, Domain $domain, ImageFacade $imageFacade)
+        + __construct(FriendlyUrlFacade $friendlyUrlFacade, BrandFacade $brandFacade, Domain $domain, ImageUploadDataFactory $imageUploadDataFactory)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(ImageFacade $imageFacade)
+        + __construct(ImageUploadDataFactory $imageUploadDataFactory)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(TransportFacade $transportFacade, VatFacade $vatFacade, Domain $domain, ImageFacade $imageFacade)
+        + __construct(TransportFacade $transportFacade, VatFacade $vatFacade, Domain $domain, ImageUploadDataFactory $imageUploadDataFactory)
+    - `Shopsys\FrameworkBundle\Component\Image\Image` class:
+        - method `__construct` changed its interface:
+        ```diff
+        - __construct(string $entityName, int $entityId, ?string $type, ?string $temporaryFilename)
+        + __construct(string $entityName, int $entityId, array $namesIndexedByLocale, ?string $temporaryFilename, ?string $type)
+        ```
+    - `Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface` interface and `Shopsys\FrameworkBundle\Component\Image\ImageFactory` class:
+        - method `create` changed its interface:
+        ```diff
+        - create(string $entityName, int $entityId, ?string $type, string $temporaryFilename)
+        + create(string $entityName, int $entityId, array $namesIndexedByLocale, string $temporaryFilename, ?string $type)
+        ```
+        - method `createMultiple` changed its interface:
+        ```diff
+        - createMultiple(ImageEntityConfig $imageEntityConfig, int $entityId, ?string $type, array $temporaryFilenames)
+        + createMultiple(ImageEntityConfig $imageEntityConfig, int $entityId, array $names, array $temporaryFilenames, ?string $type)
+        ```
+    - `Shopsys\FrameworkBundle\Component\Image\ImageFacade` class:
+        - method `uploadImage` changed its interface:
+        ```diff
+        - uploadImage($entity, $temporaryFilenames, $type)
+        + uploadImage(object $entity, array $currentFilenamesIndexedByImageIdAndLocale, array $temporaryFilenamesIndexedByImageId, ?string $type)
+        ```
+        - method `uploadImages` changed its interface:
+        ```diff
+        - uploadImages($entity, $temporaryFilenames, $type)
+        + uploadImages(object $entity, array $currentFilenamesIndexedByImageIdAndLocale, ?array $temporaryFilenamesIndexedByImageId, ?string $type)
+        ```
+    - also see #project-base-diff for more information about changes needed to be done in your project

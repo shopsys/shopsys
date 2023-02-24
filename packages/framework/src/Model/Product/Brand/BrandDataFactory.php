@@ -3,47 +3,23 @@
 namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class BrandDataFactory implements BrandDataFactoryInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    protected $friendlyUrlFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade
-     */
-    protected $brandFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
-     */
-    protected $imageFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain)
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      */
     public function __construct(
-        FriendlyUrlFacade $friendlyUrlFacade,
-        BrandFacade $brandFacade,
-        Domain $domain,
-        ImageFacade $imageFacade
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly BrandFacade $brandFacade,
+        protected readonly Domain $domain,
+        protected readonly ImageUploadDataFactory $imageUploadDataFactory,
     ) {
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->brandFacade = $brandFacade;
-        $this->domain = $domain;
-        $this->imageFacade = $imageFacade;
     }
 
     /**
@@ -51,7 +27,10 @@ class BrandDataFactory implements BrandDataFactoryInterface
      */
     protected function createInstance(): BrandData
     {
-        return new BrandData();
+        $brandData = new BrandData();
+        $brandData->image = $this->imageUploadDataFactory->create();
+
+        return $brandData;
     }
 
     /**
@@ -68,7 +47,7 @@ class BrandDataFactory implements BrandDataFactoryInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
      */
-    protected function fillNew(BrandData $brandData)
+    protected function fillNew(BrandData $brandData): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $brandData->seoMetaDescriptions[$domainId] = null;
@@ -97,7 +76,7 @@ class BrandDataFactory implements BrandDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
      */
-    protected function fillFromBrand(BrandData $brandData, Brand $brand)
+    protected function fillFromBrand(BrandData $brandData, Brand $brand): void
     {
         $brandData->name = $brand->getName();
 
@@ -122,6 +101,6 @@ class BrandDataFactory implements BrandDataFactoryInterface
                 );
         }
 
-        $brandData->image->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($brand, null);
+        $brandData->image = $this->imageUploadDataFactory->createFromEntityAndType($brand);
     }
 }

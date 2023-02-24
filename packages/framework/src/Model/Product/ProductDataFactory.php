@@ -3,7 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
@@ -19,71 +19,6 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 class ProductDataFactory implements ProductDataFactoryInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
-     */
-    protected $vatFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade
-     */
-    protected $productInputPriceFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade
-     */
-    protected $unitFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
-     */
-    protected $productRepository;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository
-     */
-    protected $parameterRepository;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    protected $friendlyUrlFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository
-     */
-    protected $productAccessoryRepository;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
-     */
-    protected $imageFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade
-     */
-    protected $pluginDataFormExtensionFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface
-     */
-    protected $productParameterValueDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
-     */
-    protected $pricingGroupFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade
-     */
-    protected $availabilityFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
@@ -92,40 +27,27 @@ class ProductDataFactory implements ProductDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      */
     public function __construct(
-        VatFacade $vatFacade,
-        ProductInputPriceFacade $productInputPriceFacade,
-        UnitFacade $unitFacade,
-        Domain $domain,
-        ProductRepository $productRepository,
-        ParameterRepository $parameterRepository,
-        FriendlyUrlFacade $friendlyUrlFacade,
-        ProductAccessoryRepository $productAccessoryRepository,
-        ImageFacade $imageFacade,
-        PluginCrudExtensionFacade $pluginDataFormExtensionFacade,
-        ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
-        PricingGroupFacade $pricingGroupFacade,
-        AvailabilityFacade $availabilityFacade
+        protected readonly VatFacade $vatFacade,
+        protected readonly ProductInputPriceFacade $productInputPriceFacade,
+        protected readonly UnitFacade $unitFacade,
+        protected readonly Domain $domain,
+        protected readonly ProductRepository $productRepository,
+        protected readonly ParameterRepository $parameterRepository,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly ProductAccessoryRepository $productAccessoryRepository,
+        protected readonly PluginCrudExtensionFacade $pluginDataFormExtensionFacade,
+        protected readonly ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
+        protected readonly PricingGroupFacade $pricingGroupFacade,
+        protected readonly AvailabilityFacade $availabilityFacade,
+        protected readonly ImageUploadDataFactory $imageUploadDataFactory,
     ) {
-        $this->vatFacade = $vatFacade;
-        $this->productInputPriceFacade = $productInputPriceFacade;
-        $this->unitFacade = $unitFacade;
-        $this->domain = $domain;
-        $this->productRepository = $productRepository;
-        $this->parameterRepository = $parameterRepository;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->productAccessoryRepository = $productAccessoryRepository;
-        $this->imageFacade = $imageFacade;
-        $this->pluginDataFormExtensionFacade = $pluginDataFormExtensionFacade;
-        $this->productParameterValueDataFactory = $productParameterValueDataFactory;
-        $this->pricingGroupFacade = $pricingGroupFacade;
-        $this->availabilityFacade = $availabilityFacade;
     }
 
     /**
@@ -133,7 +55,10 @@ class ProductDataFactory implements ProductDataFactoryInterface
      */
     protected function createInstance(): ProductData
     {
-        return new ProductData();
+        $productData = new ProductData();
+        $productData->images = $this->imageUploadDataFactory->create();
+
+        return $productData;
     }
 
     /**
@@ -150,7 +75,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      */
-    protected function fillNew(ProductData $productData)
+    protected function fillNew(ProductData $productData): void
     {
         $productVatsIndexedByDomain = [];
         foreach ($this->domain->getAllIds() as $domainId) {
@@ -196,7 +121,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      */
-    protected function fillFromProduct(ProductData $productData, Product $product)
+    protected function fillFromProduct(ProductData $productData, Product $product): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\ProductTranslation[] $translations */
         $translations = $product->getTranslations();
@@ -253,7 +178,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
             $productData->manualInputPricesByPricingGroupId = $this->getNullForAllPricingGroups();
         }
         $productData->accessories = $this->getAccessoriesData($product);
-        $productData->images->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($product, null);
+        $productData->images = $this->imageUploadDataFactory->createFromEntityAndType($product);
         $productData->variants = $product->getVariants();
         $productData->pluginData = $this->pluginDataFormExtensionFacade->getAllData('product', $product->getId());
     }

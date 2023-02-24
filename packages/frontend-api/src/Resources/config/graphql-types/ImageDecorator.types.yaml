@@ -4,6 +4,9 @@ ImageDecorator:
     config:
         description: "Represents an image"
         fields:
+            name:
+                type: "String"
+                description: "Name of image usable as alternative text"
             type:
                 type: "String"
                 description: "Image type"

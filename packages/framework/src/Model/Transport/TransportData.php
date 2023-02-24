@@ -2,8 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Model\Transport;
 
-use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
-
 class TransportData
 {
     /**
@@ -63,7 +61,6 @@ class TransportData
         $this->instructions = [];
         $this->hidden = false;
         $this->enabled = [];
-        $this->image = new ImageUploadData();
         $this->payments = [];
         $this->pricesIndexedByDomainId = [];
         $this->vatsIndexedByDomainId = [];

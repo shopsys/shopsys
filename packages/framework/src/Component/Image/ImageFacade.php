@@ -121,10 +121,14 @@ class ImageFacade
                 array_shift($orderedImages);
                 $this->deleteImages($entity, $orderedImages);
             }
-            $this->uploadImage($entity, $uploadedFiles, $type);
+            $this->uploadImage($entity, $imageUploadData->uploadedFilenames, $uploadedFiles, $type);
+            if (count($uploadedFiles) === 0) {
+                $this->saveImagesPathnames($imageUploadData);
+            }
         } else {
             $this->saveImageOrdering($orderedImages);
-            $this->uploadImages($entity, $uploadedFiles, $type);
+            $this->saveImagesPathnames($imageUploadData);
+            $this->uploadImages($entity, $imageUploadData->uploadedFilenames, $uploadedFiles, $type);
         }
 
         $this->deleteImages($entity, $imageUploadData->imagesToDelete);
@@ -132,13 +136,17 @@ class ImageFacade
 
     /**
      * @param object $entity
-     * @param array $temporaryFilenames
+     * @param array<int, array<string,string>> $namesIndexedByImageIdAndLocale
+     * @param array<int, string> $temporaryFilenamesIndexedByImageId
      * @param string|null $type
      */
-    protected function uploadImage($entity, $temporaryFilenames, $type): void
-    {
-        if (count($temporaryFilenames) > 0) {
-            $entitiesForFlush = [];
+    protected function uploadImage(
+        object $entity,
+        array $namesIndexedByImageIdAndLocale,
+        array $temporaryFilenamesIndexedByImageId,
+        ?string $type
+    ): void {
+        if (count($temporaryFilenamesIndexedByImageId) > 0) {
             $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
             $entityId = $this->getEntityId($entity);
             $oldImage = $this->imageRepository->findImageByEntity(
@@ -149,17 +157,16 @@ class ImageFacade
 
             if ($oldImage !== null) {
                 $this->em->remove($oldImage);
-                $entitiesForFlush[] = $oldImage;
             }
 
             $newImage = $this->imageFactory->create(
                 $imageEntityConfig->getEntityName(),
                 $entityId,
+                array_pop($namesIndexedByImageIdAndLocale),
+                array_pop($temporaryFilenamesIndexedByImageId),
                 $type,
-                array_pop($temporaryFilenames)
             );
             $this->em->persist($newImage);
-            $entitiesForFlush[] = $newImage;
 
             $this->em->flush();
         }
@@ -176,16 +183,21 @@ class ImageFacade
 
     /**
      * @param object $entity
-     * @param array|null $temporaryFilenames
+     * @param array<int, array<string,string>> $namesIndexedByImageIdAndLocale
+     * @param array<int, string> $temporaryFilenamesIndexedByImageId
      * @param string|null $type
      */
-    protected function uploadImages($entity, $temporaryFilenames, $type): void
-    {
-        if ($temporaryFilenames !== null && count($temporaryFilenames) > 0) {
+    protected function uploadImages(
+        object $entity,
+        array $namesIndexedByImageIdAndLocale,
+        ?array $temporaryFilenamesIndexedByImageId,
+        ?string $type
+    ): void {
+        if ($temporaryFilenamesIndexedByImageId !== null && count($temporaryFilenamesIndexedByImageId) > 0) {
             $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
             $entityId = $this->getEntityId($entity);
 
-            $images = $this->imageFactory->createMultiple($imageEntityConfig, $entityId, $type, $temporaryFilenames);
+            $images = $this->imageFactory->createMultiple($imageEntityConfig, $entityId, $namesIndexedByImageIdAndLocale, $temporaryFilenamesIndexedByImageId, $type);
             foreach ($images as $image) {
                 $this->em->persist($image);
             }
@@ -484,6 +496,7 @@ class ImageFacade
             $targetImage = $this->imageFactory->create(
                 $this->imageConfig->getImageEntityConfig($targetEntity)->getEntityName(),
                 $this->getEntityId($targetEntity),
+                $sourceImage->getNames(),
                 $sourceImage->getType(),
                 $sourceImage->getFilename()
             );
@@ -528,5 +541,18 @@ class ImageFacade
         $entityName = $this->imageConfig->getImageEntityConfigByClass($entityClass)->getEntityName();
 
         return $this->getImagesByEntityIdAndNameIndexedById($id, $entityName, null);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData $imageUploadData
+     */
+    protected function saveImagesPathnames(ImageUploadData $imageUploadData): void
+    {
+        foreach ($imageUploadData->namesIndexedByImageIdAndLocale as $imageId => $filenamesIndexedByLocale) {
+            $image = $this->getById($imageId);
+            $image->setNames($filenamesIndexedByLocale);
+        }
+
+        $this->em->flush();
     }
 }

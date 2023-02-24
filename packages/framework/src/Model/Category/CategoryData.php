@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Model\Category;
 
-use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 
 class CategoryData
@@ -71,7 +70,6 @@ class CategoryData
         $this->descriptions = [];
         $this->enabled = [];
         $this->urls = new UrlListData();
-        $this->image = new ImageUploadData();
         $this->pluginData = [];
     }
 }

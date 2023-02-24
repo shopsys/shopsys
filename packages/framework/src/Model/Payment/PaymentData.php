@@ -2,8 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Model\Payment;
 
-use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
-
 class PaymentData
 {
     /**
@@ -68,7 +66,6 @@ class PaymentData
         $this->instructions = [];
         $this->hidden = false;
         $this->enabled = [];
-        $this->image = new ImageUploadData();
         $this->transports = [];
         $this->czkRounding = false;
         $this->pricesIndexedByDomainId = [];

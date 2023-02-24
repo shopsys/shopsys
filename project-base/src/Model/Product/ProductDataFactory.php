@@ -18,6 +18,9 @@ class ProductDataFactory extends BaseProductDataFactory
      */
     protected function createInstance(): BaseProductData
     {
-        return new ProductData();
+        $productData = new ProductData();
+        $productData->images = $this->imageUploadDataFactory->create();
+
+        return $productData;
     }
 }

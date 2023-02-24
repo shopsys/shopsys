@@ -18,6 +18,9 @@ class CategoryDataFactory extends BaseCategoryDataFactory
      */
     protected function createInstance(): BaseCategoryData
     {
-        return new CategoryData();
+        $categoryData = new CategoryData();
+        $categoryData->image = $this->imageUploadDataFactory->create();
+
+        return $categoryData;
     }
 }
