@@ -10,6 +10,7 @@ import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
@@ -21,7 +22,7 @@ const PersonalDataExportPage: FC = () => {
     const breadcrumbs: BreadcrumbFragmentApi[] = [
         { __typename: 'Link', name: t('Personal Data Export'), slug: personalDataExportUrl },
     ];
-    const [personalDataPageTextResult] = usePersonalDataPageTextQueryApi();
+    const [personalDataPageTextResult] = useQueryError(usePersonalDataPageTextQueryApi());
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other', breadcrumbs);
     useGtmStaticPageView(gtmStaticPageViewEvent);
 

@@ -10,6 +10,7 @@ import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
@@ -18,7 +19,7 @@ const PersonalDataOverviewPage: FC = () => {
     const t = useTypedTranslationFunction();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [personalDataOverviewUrl] = getInternationalizedStaticUrls(['/personal-data-overview'], domainUrl);
-    const [personalDataPageTextResult] = usePersonalDataPageTextQueryApi();
+    const [personalDataPageTextResult] = useQueryError(usePersonalDataPageTextQueryApi());
     const breadcrumbs: BreadcrumbFragmentApi[] = [
         { __typename: 'Link', name: t('Personal Data Overview'), slug: personalDataOverviewUrl },
     ];

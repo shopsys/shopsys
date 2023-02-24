@@ -19,6 +19,7 @@ import { mapPacketeryExtendedPoint, packeteryPick, removePacketeryCookie, setPac
 import { PacketeryExtendedPoint } from 'helpers/packetery/types';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import getConfig from 'next/config';
@@ -56,7 +57,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
         lastOrderPickupPlace,
     );
     const { transport, pickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
-    const [getGoPaySwiftsResult] = useGoPaySwiftsQueryApi({ variables: { currencyCode } });
+    const [getGoPaySwiftsResult] = useQueryError(useGoPaySwiftsQueryApi({ variables: { currencyCode } }));
 
     const isPickupPlaceSelected = pickupPlace !== null;
 

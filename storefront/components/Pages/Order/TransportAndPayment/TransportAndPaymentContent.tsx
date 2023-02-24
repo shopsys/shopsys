@@ -14,6 +14,7 @@ import { getInternationalizedStaticUrls } from 'helpers/localization/getInternat
 import { getPacketeryCookie } from 'helpers/packetery';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
@@ -65,10 +66,12 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
         domainUrl,
     );
 
-    const [{ data: pickupPlaceData }] = useStoreQueryApi({
-        pause: lastOrder?.pickupPlaceIdentifier === undefined || lastOrder.pickupPlaceIdentifier === null,
-        variables: { uuid: lastOrder?.pickupPlaceIdentifier ?? null },
-    });
+    const [{ data: pickupPlaceData }] = useQueryError(
+        useStoreQueryApi({
+            pause: lastOrder?.pickupPlaceIdentifier === undefined || lastOrder.pickupPlaceIdentifier === null,
+            variables: { uuid: lastOrder?.pickupPlaceIdentifier ?? null },
+        }),
+    );
 
     const transportAndPaymentValidationMessages = useMemo(() => {
         const errors: Partial<TransportAndPaymentErrorsType> = {};

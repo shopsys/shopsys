@@ -13,6 +13,7 @@ import { ApplicationErrors } from 'helpers/errors/applicationErrors';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { getPacketeryCookie } from 'helpers/packetery';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { Translate } from 'next-translate';
@@ -26,11 +27,13 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const { cartUuid } = useShopsysSelector((state) => state.user);
     const t = useTypedTranslationFunction();
 
-    const [result, refetchCart] = useCartQueryApi({
-        variables: { cartUuid },
-        pause: cartUuid === null && !isUserLoggedIn,
-        requestPolicy: fromCache ? 'cache-first' : 'network-only',
-    });
+    const [result, refetchCart] = useQueryError(
+        useCartQueryApi({
+            variables: { cartUuid },
+            pause: cartUuid === null && !isUserLoggedIn,
+            requestPolicy: fromCache ? 'cache-first' : 'network-only',
+        }),
+    );
 
     return useMemo(() => {
         if (result.error !== undefined) {

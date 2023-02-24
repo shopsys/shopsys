@@ -1,7 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'components/Basic/Link/Link';
+import { useTermsAndConditionsArticleUrlQueryApi } from 'graphql/generated';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
-import { useGetTermsAndConditionsUrl } from 'hooks/routes/useGetTermsAndConditionsUrl';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { useMemo } from 'react';
@@ -52,7 +53,8 @@ export const useRegistrationAfterOrderFormMeta = (
     formProviderMethods: UseFormReturn<RegistrationAfterOrderFormType>,
 ): RegistrationAfterOrderFormMetaType => {
     const t = useTypedTranslationFunction();
-    const termsAndConditionUrl = useGetTermsAndConditionsUrl();
+    const [{ data: termsAndConditionsArticleUrlData }] = useQueryError(useTermsAndConditionsArticleUrlQueryApi());
+    const termsAndConditionUrl = termsAndConditionsArticleUrlData?.termsAndConditionsArticle?.slug;
 
     const formMeta = useMemo(
         () => ({
@@ -70,7 +72,12 @@ export const useRegistrationAfterOrderFormMeta = (
                             i18nKey="I agree with terms and conditions and privacy policy"
                             defaultTrans="I agree with <lnk1>terms and conditions</lnk1> and privacy policy"
                             components={{
-                                lnk1: <Link href={termsAndConditionUrl} linkType="external" target="_blank" />,
+                                lnk1:
+                                    termsAndConditionUrl !== undefined ? (
+                                        <Link href={termsAndConditionUrl} linkType="external" target="_blank" />
+                                    ) : (
+                                        <span></span>
+                                    ),
                             }}
                         />
                     ),

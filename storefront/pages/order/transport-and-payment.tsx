@@ -27,7 +27,7 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
     const [{ data: transportsData }] = useQueryError(
         useTransportsQueryApi({ variables: { cartUuid }, requestPolicy: 'cache-and-network' }),
     );
-    const [{ data }] = useLastOrderQueryApi({ requestPolicy: 'network-only', pause: !isUserLoggedIn });
+    const [{ data }] = useQueryError(useLastOrderQueryApi({ requestPolicy: 'network-only', pause: !isUserLoggedIn }));
     const currentCart = useCurrentCart();
     const [changeTransportInCart, isTransportSelectionLoading] = useChangeTransportInCart();
     const [changePaymentInCart, isPaymentSelectionLoading] = useChangePaymentInCart();

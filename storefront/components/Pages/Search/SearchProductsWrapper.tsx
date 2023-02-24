@@ -13,6 +13,7 @@ import {
 } from 'helpers/queryParams/queryParamNames';
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmSearchResultsListView } from 'hooks/gtm/useGtmSearchResultsListView';
 import { useListingForPagination } from 'hooks/ui/useListingForPagination';
 import { useRouter } from 'next/router';
@@ -29,15 +30,17 @@ export const SearchProductsWrapper: FC<SearchProductsWrapperProps> = ({ containe
     const orderingMode = getProductListSort(parseProductListSortFromQuery(query[SORT_QUERY_PARAMETER_NAME]));
     const parametersFilter = getFilterOptions(parseFilterOptionsFromQuery(query[FILTER_QUERY_PARAMETER_NAME]));
 
-    const [{ data, fetching }] = useSearchProductsQueryApi({
-        variables: {
-            endCursor: endCursor ?? '',
-            filter: mapParametersFilter(parametersFilter),
-            orderingMode,
-            search: queryString,
-            pageSize: DEFAULT_PAGE_SIZE,
-        },
-    });
+    const [{ data, fetching }] = useQueryError(
+        useSearchProductsQueryApi({
+            variables: {
+                endCursor: endCursor ?? '',
+                filter: mapParametersFilter(parametersFilter),
+                orderingMode,
+                search: queryString,
+                pageSize: DEFAULT_PAGE_SIZE,
+            },
+        }),
+    );
 
     const [dataItems] = useListingForPagination<ListedProductFragmentApi>(data?.products.edges);
 
