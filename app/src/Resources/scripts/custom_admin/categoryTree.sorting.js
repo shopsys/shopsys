@@ -67,6 +67,16 @@
         });
     };
 
+    Shopsys.categoryTree.getNestedSetData = function () {
+        return this.$rootTree.nestedSortable(
+            'toArray',
+            {
+                excludeRoot: true,
+                expression: /(js-category-tree-)(\d+)/
+            }
+        );
+    };
+
     Shopsys.categoryTree.getCategoriesOrderingData = function () {
         var dataFromAllTrees = [];
         $.each(Shopsys.categoryTree.rootTrees, function (key, rootTree) {

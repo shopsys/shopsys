@@ -21,25 +21,20 @@ use Symfony\Contracts\Cache\CacheInterface;
 class FriendlyUrlRouterFactory extends BaseFriendlyUrlRouterFactory
 {
     /**
-     * @var \App\Model\CategorySeo\ReadyCategorySeoMixRepository
-     */
-    private $readyCategorySeoMixRepository;
-
-    /**
      * @param mixed $friendlyUrlRouterResourceFilepath
      * @param \Symfony\Component\Config\Loader\LoaderInterface $configLoader
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
-     * @param \App\Model\CategorySeo\ReadyCategorySeoMixRepository $readyCategorySeoMixRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider
      * @param \Symfony\Contracts\Cache\CacheInterface $mainFriendlyUrlSlugCache
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMixRepository $readyCategorySeoMixRepository
      */
     public function __construct(
         $friendlyUrlRouterResourceFilepath,
         LoaderInterface $configLoader,
         FriendlyUrlRepository $friendlyUrlRepository,
-        ReadyCategorySeoMixRepository $readyCategorySeoMixRepository,
         FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider,
-        CacheInterface $mainFriendlyUrlSlugCache
+        CacheInterface $mainFriendlyUrlSlugCache,
+        private readonly ReadyCategorySeoMixRepository $readyCategorySeoMixRepository,
     ) {
         parent::__construct(
             $friendlyUrlRouterResourceFilepath,
@@ -48,8 +43,6 @@ class FriendlyUrlRouterFactory extends BaseFriendlyUrlRouterFactory
             $friendlyUrlCacheKeyProvider,
             $mainFriendlyUrlSlugCache
         );
-
-        $this->readyCategorySeoMixRepository = $readyCategorySeoMixRepository;
     }
 
     /**
@@ -57,7 +50,7 @@ class FriendlyUrlRouterFactory extends BaseFriendlyUrlRouterFactory
      * @param \Symfony\Component\Routing\RequestContext $context
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouter
      */
-    public function createRouter(DomainConfig $domainConfig, RequestContext $context)
+    public function createRouter(DomainConfig $domainConfig, RequestContext $context): FriendlyUrlRouter
     {
         return new FriendlyUrlRouter(
             $context,

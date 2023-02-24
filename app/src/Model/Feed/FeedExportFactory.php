@@ -20,7 +20,7 @@ class FeedExportFactory extends BaseFeedExportFactory
      * @param int|null $lastSeekId
      * @return \Shopsys\FrameworkBundle\Model\Feed\FeedExport
      */
-    public function create(FeedInterface $feed, DomainConfig $domainConfig, $lastSeekId = null): FeedExport
+    public function create(FeedInterface $feed, DomainConfig $domainConfig, ?int $lastSeekId = null): FeedExport
     {
         if ($lastSeekId !== null && !is_int($lastSeekId)) {
             @trigger_error(

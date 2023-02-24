@@ -30,21 +30,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Price\PriceResolver as BasePriceRes
 class PriceResolver extends BasePriceResolver
 {
     /**
-     * @var \App\FrontendApi\Model\Cart\CartFacade
-     */
-    private CartFacade $cartFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    private CurrentCustomerUser $currentCustomerUser;
-
-    /**
-     * @var \App\Model\Order\Preview\OrderPreviewFactory
-     */
-    private OrderPreviewFactory $orderPreviewFactory;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
@@ -64,15 +49,19 @@ class PriceResolver extends BasePriceResolver
         CurrencyFacade $currencyFacade,
         TransportPriceCalculation $transportPriceCalculation,
         PriceFacade $priceFacade,
-        CartFacade $cartFacade,
-        CurrentCustomerUser $currentCustomerUser,
-        OrderPreviewFactory $orderPreviewFactory
+        private readonly CartFacade $cartFacade,
+        private readonly CurrentCustomerUser $currentCustomerUser,
+        private readonly OrderPreviewFactory $orderPreviewFactory
     ) {
-        parent::__construct($productCachedAttributesFacade, $productOnCurrentDomainFacade, $paymentPriceCalculation, $domain, $currencyFacade, $transportPriceCalculation, $priceFacade);
-
-        $this->cartFacade = $cartFacade;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->orderPreviewFactory = $orderPreviewFactory;
+        parent::__construct(
+            $productCachedAttributesFacade,
+            $productOnCurrentDomainFacade,
+            $paymentPriceCalculation,
+            $domain,
+            $currencyFacade,
+            $transportPriceCalculation,
+            $priceFacade
+        );
     }
 
     /**

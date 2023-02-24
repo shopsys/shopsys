@@ -48,31 +48,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
 class ProductExportRepository extends BaseProductExportRepository
 {
     /**
-     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
-     */
-    private $productAvailabilityFacade;
-
-    /**
-     * @var \App\Model\Product\ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade
-     */
-    private $pricingGroupSettingFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation
-     */
-    private ProductPriceCalculation $productPriceCalculation;
-
-    /**
-     * @var \App\Component\Breadcrumb\BreadcrumbFacade
-     */
-    private BreadcrumbFacade $breadcrumbFacade;
-
-    /**
      * @var \App\Model\Product\Product[]|null
      */
     private ?array $variantCache = null;
@@ -85,12 +60,12 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\ProductVisibilityRepository $productVisibilityRepository
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     * @param \App\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade $brandCachedFacade
+     * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     * @param \App\Model\Product\ProductRepository $productRepository
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \App\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      */
@@ -102,14 +77,14 @@ class ProductExportRepository extends BaseProductExportRepository
         Domain $domain,
         ProductVisibilityRepository $productVisibilityRepository,
         FriendlyUrlFacade $friendlyUrlFacade,
-        ProductAvailabilityFacade $productAvailabilityFacade,
-        ProductRepository $productRepository,
-        PricingGroupSettingFacade $pricingGroupSettingFacade,
         CategoryFacade $categoryFacade,
         ProductAccessoryFacade $productAccessoryFacade,
         BrandCachedFacade $brandCachedFacade,
-        ProductPriceCalculation $productPriceCalculation,
-        BreadcrumbFacade $breadcrumbFacade
+        private readonly ProductAvailabilityFacade $productAvailabilityFacade,
+        private readonly ProductRepository $productRepository,
+        private readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
+        private readonly ProductPriceCalculation $productPriceCalculation,
+        private readonly BreadcrumbFacade $breadcrumbFacade
     ) {
         parent::__construct(
             $em,
@@ -123,12 +98,6 @@ class ProductExportRepository extends BaseProductExportRepository
             $productAccessoryFacade,
             $brandCachedFacade
         );
-
-        $this->productAvailabilityFacade = $productAvailabilityFacade;
-        $this->productRepository = $productRepository;
-        $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
-        $this->productPriceCalculation = $productPriceCalculation;
-        $this->breadcrumbFacade = $breadcrumbFacade;
     }
 
     /**
