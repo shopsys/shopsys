@@ -1,11 +1,11 @@
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { UserText } from 'components/Helpers/UserText/UserText';
+import { ListedProductFragmentApi } from 'graphql/generated';
 import { memo } from 'react';
-import { ListedProductType } from 'types/product';
 
 type GrapeJsParserProps = {
     text: string;
-    allProducts: ListedProductType[];
+    allProducts: ListedProductFragmentApi[];
 };
 
 const PRODUCT_STRING_PATTERN =
@@ -13,7 +13,7 @@ const PRODUCT_STRING_PATTERN =
 const PRODUCTS_STRING_PATTERN =
     /<div class="gjs-products" data-products=".+?"><\/div>|<div data-products=".+?" class="gjs-products"><\/div>/g;
 
-const GrapeJsParser: FC<GrapeJsParserProps> = ({ text, allProducts }) => {
+export const GrapeJsParser: FC<GrapeJsParserProps> = memo(({ text, allProducts }) => {
     const preparedText = text.replaceAll(PRODUCT_STRING_PATTERN, '').replaceAll(PRODUCTS_STRING_PATTERN, (data) => {
         const products = /data-products="(?<products>.+?)"/g.exec(data)?.groups?.products;
         return `|||[gjc-comp-ProductList=${products}]|||`;
@@ -27,7 +27,7 @@ const GrapeJsParser: FC<GrapeJsParserProps> = ({ text, allProducts }) => {
                 .map((product) =>
                     allProducts.find((blogArticleProduct) => blogArticleProduct.catalogNumber === product),
                 )
-                .filter(Boolean) as ListedProductType[];
+                .filter(Boolean) as ListedProductFragmentApi[];
             return <ProductsSlider products={products} gtmListName="blog article" key={index} />;
         }
 
@@ -47,6 +47,6 @@ const GrapeJsParser: FC<GrapeJsParserProps> = ({ text, allProducts }) => {
             )}
         </>
     );
-};
+});
 
-export default memo(GrapeJsParser);
+GrapeJsParser.displayName = 'GrapeJsParser';

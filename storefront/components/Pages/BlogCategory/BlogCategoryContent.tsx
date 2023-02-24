@@ -3,6 +3,7 @@ import { HeadingPaginated } from 'components/Basic/Heading/HeadingPaginated';
 import { BlogSignpost } from 'components/Blocks/BlogSignpost/BlogSignpost';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { BlogCategoryDetailFragmentApi } from 'graphql/generated';
+import { FC } from 'react';
 
 type BlogCategoryContentProps = {
     blogCategory: BlogCategoryDetailFragmentApi;
