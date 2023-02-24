@@ -1622,3 +1622,5 @@ There you can find links to upgrade notes for other versions too.
         + uploadImages(object $entity, array $currentFilenamesIndexedByImageIdAndLocale, ?array $temporaryFilenamesIndexedByImageId, ?string $type)
         ```
     - also see #project-base-diff for more information about changes needed to be done in your project
+- update abstract class of UserErrors in frontend API ([#])
+    - `UserEntityNotFoundError` has been renamed to `EntityNotFoundUserError` update all your usages accordingly
