@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Products;
 
-use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
+use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
+use Shopsys\FrontendApiBundle\Model\Resolver\Products\Exception\ProductNotFoundUserError;
 
 class ProductDetailQuery extends AbstractQuery
 {
@@ -41,7 +42,7 @@ class ProductDetailQuery extends AbstractQuery
             return $this->getVisibleProductArrayOnDomainBySlug($urlSlug);
         }
 
-        throw new UserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
+        throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
     }
 
     /**
@@ -53,7 +54,7 @@ class ProductDetailQuery extends AbstractQuery
         try {
             return $this->productElasticsearchProvider->getVisibleProductArrayByUuid($uuid);
         } catch (ProductNotFoundException $productNotFoundException) {
-            throw new UserError($productNotFoundException->getMessage());
+            throw new ProductNotFoundUserError($productNotFoundException->getMessage());
         }
     }
 
@@ -72,7 +73,7 @@ class ProductDetailQuery extends AbstractQuery
 
             return $this->productElasticsearchProvider->getVisibleProductArrayById($friendlyUrl->getEntityId());
         } catch (FriendlyUrlNotFoundException | ProductNotFoundException $productNotFoundException) {
-            throw new UserError('Product with URL slug `' . $urlSlug . '` does not exist.');
+            throw new ProductNotFoundUserError('Product with URL slug `' . $urlSlug . '` does not exist.');
         }
     }
 }

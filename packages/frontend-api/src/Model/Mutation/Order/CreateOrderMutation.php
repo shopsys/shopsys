@@ -6,9 +6,11 @@ namespace Shopsys\FrontendApiBundle\Model\Mutation\Order;
 
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Validator\InputValidator;
+use Shopsys\FrameworkBundle\Model\Mail\Exception\MailException;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
+use Shopsys\FrontendApiBundle\Model\Mutation\Order\Exception\MailUserError;
 use Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade;
 
@@ -44,7 +46,11 @@ class CreateOrderMutation extends AbstractMutation
 
         $order = $this->placeOrderFacade->placeOrder($orderData, $quantifiedProducts);
 
-        $this->sendEmail($order);
+        try {
+            $this->sendEmail($order);
+        } catch (MailException) {
+            throw new MailUserError('Unable to send some emails, please contact us for order verification.');
+        }
 
         return $order;
     }

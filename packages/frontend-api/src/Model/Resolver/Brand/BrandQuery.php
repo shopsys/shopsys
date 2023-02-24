@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Brand;
 
-use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException;
+use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
+use Shopsys\FrontendApiBundle\Model\Resolver\Brand\Exception\BrandNotFoundUserError;
 
 class BrandQuery extends AbstractQuery
 {
@@ -42,7 +43,7 @@ class BrandQuery extends AbstractQuery
             return $this->getByUrlSlug($urlSlug);
         }
 
-        throw new UserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
+        throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
     }
 
     /**
@@ -54,7 +55,7 @@ class BrandQuery extends AbstractQuery
         try {
             return $this->brandFacade->getByUuid($uuid);
         } catch (BrandNotFoundException $brandNotFoundException) {
-            throw new UserError($brandNotFoundException->getMessage());
+            throw new BrandNotFoundUserError($brandNotFoundException->getMessage());
         }
     }
 
@@ -73,7 +74,7 @@ class BrandQuery extends AbstractQuery
 
             return $this->brandFacade->getById($friendlyUrl->getEntityId());
         } catch (FriendlyUrlNotFoundException | BrandNotFoundException $brandNotFoundException) {
-            throw new UserError('Brand with URL slug `' . $urlSlug . '` does not exist.');
+            throw new BrandNotFoundUserError('Brand with URL slug `' . $urlSlug . '` does not exist.');
         }
     }
 }
