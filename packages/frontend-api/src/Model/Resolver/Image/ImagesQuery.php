@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Image;
 
-use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageSizeNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageTypeNotFoundException;
@@ -17,6 +16,8 @@ use Shopsys\FrameworkBundle\Model\Advert\Advert;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrontendApiBundle\Component\Image\ImageFacade as FrontendApiImageFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
+use Shopsys\FrontendApiBundle\Model\Resolver\Image\Exception\ImageSizeInvalidUserError;
+use Shopsys\FrontendApiBundle\Model\Resolver\Image\Exception\ImageTypeInvalidUserError;
 
 class ImagesQuery extends AbstractQuery
 {
@@ -127,9 +128,9 @@ class ImagesQuery extends AbstractQuery
                 }
             }
         } catch (ImageSizeNotFoundException $e) {
-            throw new UserError(sprintf('Image size %s not found for %s', $size, $entityName));
+            throw new ImageSizeInvalidUserError(sprintf('Image size %s not found for %s', $size, $entityName));
         } catch (ImageTypeNotFoundException $e) {
-            throw new UserError(sprintf('Image type %s not found for %s', $type, $entityName));
+            throw new ImageTypeInvalidUserError(sprintf('Image type %s not found for %s', $type, $entityName));
         }
 
         return $sizeConfigs;

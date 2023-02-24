@@ -142,7 +142,7 @@ class EntityExtensionSubscriber implements EventSubscriber
         foreach ($this->parentEntitiesByClass[$currentEntityClass] as $parentClass) {
             $parentMetadata = $this->getClassMetadataForEntity($parentClass);
             foreach ($parentMetadata->getAssociationMappings() as $associationName => $parentEntityAssociationMapping) {
-                if ($parentEntityAssociationMapping['sourceEntity'] === $parentClass) {
+                if (isset($parentEntityAssociationMapping['sourceEntity']) && $parentEntityAssociationMapping['sourceEntity'] === $parentClass) {
                     $parentEntityAssociationMapping['sourceEntity'] = $currentEntityClass;
                 }
 

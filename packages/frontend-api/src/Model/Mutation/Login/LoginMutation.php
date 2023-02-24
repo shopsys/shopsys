@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Mutation\Login;
 
-use GraphQL\Error\UserError;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
+use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\InvalidAccountOrPasswordUserError;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
@@ -37,12 +37,12 @@ class LoginMutation extends AbstractMutation
 
         try {
             $user = $this->frontendCustomerUserProvider->loadUserByUsername($input['email']);
-        } catch (UserNotFoundException) {
-            throw new UserError('Log in failed.');
+        } catch (UserNotFoundException $e) {
+            throw new InvalidAccountOrPasswordUserError($e->getMessage());
         }
 
         if (!$this->userPasswordHasher->isPasswordValid($user, $input['password'])) {
-            throw new UserError('Log in failed.');
+            throw new InvalidAccountOrPasswordUserError('Invalid password.');
         }
 
         $deviceId = Uuid::uuid4()->toString();
