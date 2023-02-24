@@ -6,10 +6,10 @@ namespace App\FrontendApi\Resolver\Products\Flag;
 
 use App\Model\Product\Flag\FlagFacade;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
-class FlagsResolver implements ResolverInterface, AliasedInterface
+class FlagsResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \App\Model\Product\Flag\FlagFacade

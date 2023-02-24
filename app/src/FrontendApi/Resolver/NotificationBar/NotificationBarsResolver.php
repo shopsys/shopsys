@@ -6,10 +6,10 @@ namespace App\FrontendApi\Resolver\NotificationBar;
 
 use App\Model\NotificationBar\NotificationBarFacade;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
-class NotificationBarsResolver implements ResolverInterface, AliasedInterface
+class NotificationBarsResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \App\Model\NotificationBar\NotificationBarFacade

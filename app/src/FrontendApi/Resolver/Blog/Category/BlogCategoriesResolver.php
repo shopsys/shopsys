@@ -6,10 +6,10 @@ namespace App\FrontendApi\Resolver\Blog\Category;
 
 use App\Model\Blog\Category\BlogCategoryFacade;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Shopsys\Cdn\Component\Domain\Domain;
 
-class BlogCategoriesResolver implements ResolverInterface, AliasedInterface
+class BlogCategoriesResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \App\Model\Blog\Category\BlogCategoryFacade

@@ -20,18 +20,18 @@ Category:
             bestsellers:
                 type: "[Product!]!"
                 description: "Best selling products"
-                resolve: '@=service("App\\FrontendApi\\Resolver\\Products\\BestsellingProductsResolver").resolveByCategoryOrReadyCategorySeoMix(value)'
+                resolve: '@=query("App\\FrontendApi\\Resolver\\Products\\BestsellingProductsResolver::resolveByCategoryOrReadyCategorySeoMix", value)'
             slug:
                 type: "String!"
                 description: "Category URL slug"
             breadcrumb:
                 type: "[Link!]!"
                 description: "Hierarchy of the current element in relation to the structure"
-                resolve: '@=resolver("resolveCategoryBreadcrumb", [value])'
+                resolve: '@=query("resolveCategoryBreadcrumb", value)'
             images:
                 type: "[Image!]!"
                 description: "Category images"
-                resolve: '@=resolver("resolveByCategoryOrReadyCategorySeoMix", [value, args["type"], args["sizes"]])'
+                resolve: '@=query("resolveByCategoryOrReadyCategorySeoMix", value, args["type"], args["sizes"])'
                 args:
                     type:
                         type: "String"
@@ -46,7 +46,7 @@ Category:
                     builder: "PaginatorArgumentsBuilder"
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
-                resolve: '@=service("App\\FrontendApi\\Resolver\\Products\\ProductsResolver").resolveByCategoryOrReadyCategorySeoMix(args, value)'
+                resolve: '@=query("App\\FrontendApi\\Resolver\\Products\\ProductsResolver::resolveByCategoryOrReadyCategorySeoMix", args, value)'
             originalCategorySlug:
                 type: "String"
                 description: "Original category URL slug (for CategorySeoMixes slug of assigned category is returned, null is returned for regular category)"
@@ -62,7 +62,7 @@ Category:
             mainImage:
                 type: "Image"
                 description: "Category image by params"
-                resolve: '@=resolver("resolveMainImageByCategoryOrReadyCategorySeoMix", [value, args["type"], args["size"]])'
+                resolve: '@=query("resolveMainImageByCategoryOrReadyCategorySeoMix", value, args["type"], args["size"])'
                 args:
                     type:
                         type: "String"

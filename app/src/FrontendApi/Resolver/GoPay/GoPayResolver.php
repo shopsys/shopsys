@@ -6,10 +6,10 @@ namespace App\FrontendApi\Resolver\GoPay;
 
 use App\Model\GoPay\BankSwift\GoPayBankSwiftFacade;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
-class GoPayResolver implements ResolverInterface, AliasedInterface
+class GoPayResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \App\Model\GoPay\BankSwift\GoPayBankSwiftFacade

@@ -21,7 +21,7 @@ Flag:
                     builder: "PaginatorArgumentsBuilder"
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
-                resolve: "@=resolver('resolveProductsByFlag', [args, value])"
+                resolve: "@=query('resolveProductsByFlag', args, value)"
             breadcrumb:
                 type: "[Link!]!"
                 description: "Hierarchy of the current element in relation to the structure"
@@ -29,7 +29,7 @@ Flag:
             categories:
                 type: "[Category!]!"
                 description: "Categories containing at least one product with flag"
-                resolve: '@=service("App\\FrontendApi\\Resolver\\Category\\CategoryResolver").categoriesFilteredByProductFilterForFlag(args, value)'
+                resolve: '@=query("App\\FrontendApi\\Resolver\\Category\\CategoryResolver::categoriesFilteredByProductFilterForFlag", args, value)'
                 args:
                     productFilter:
                         type: "ProductFilter"

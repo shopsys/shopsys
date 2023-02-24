@@ -9,9 +9,9 @@ use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use InvalidArgumentException;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 
-class BreadcrumbResolver implements ResolverInterface, AliasedInterface
+class BreadcrumbResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \App\Component\Breadcrumb\BreadcrumbFacade

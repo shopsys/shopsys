@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Settings;
 
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 
-class SettingsResolver implements ResolverInterface, AliasedInterface
+class SettingsResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @return array

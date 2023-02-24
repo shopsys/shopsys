@@ -6,9 +6,9 @@ namespace App\FrontendApi\Resolver\Order;
 
 use App\FrontendApi\Model\Order\OrderFacade;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 
-final class OrderSentPageContentResolver implements ResolverInterface, AliasedInterface
+final class OrderSentPageContentResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \App\FrontendApi\Model\Order\OrderFacade

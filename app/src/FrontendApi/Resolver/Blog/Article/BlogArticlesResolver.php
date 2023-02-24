@@ -9,10 +9,10 @@ use App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade;
 use App\Model\Blog\Category\BlogCategory;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 
-class BlogArticlesResolver implements ResolverInterface, AliasedInterface
+class BlogArticlesResolver implements QueryInterface, AliasedInterface
 {
     private const DEFAULT_FIRST_LIMIT = 10;
 

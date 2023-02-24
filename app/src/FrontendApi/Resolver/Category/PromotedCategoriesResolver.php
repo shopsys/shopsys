@@ -6,10 +6,10 @@ namespace App\FrontendApi\Resolver\Category;
 
 use App\FrontendApi\Resolver\Category\PromotedCategory\PromotedCategoryFacade;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
-class PromotedCategoriesResolver implements ResolverInterface, AliasedInterface
+class PromotedCategoriesResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \App\FrontendApi\Resolver\Category\PromotedCategory\PromotedCategoryFacade

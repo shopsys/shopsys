@@ -7,9 +7,9 @@ namespace App\FrontendApi\Resolver\Brand;
 use App\Model\Product\Brand\BrandFacade;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 
-class BrandSearchResolver implements ResolverInterface, AliasedInterface
+class BrandSearchResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \App\Model\Product\Brand\BrandFacade

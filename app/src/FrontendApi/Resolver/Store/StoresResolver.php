@@ -9,11 +9,11 @@ use App\Model\Store\StoreFacade;
 use App\Model\Transport\Transport;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
-class StoresResolver implements ResolverInterface, AliasedInterface
+class StoresResolver implements QueryInterface, AliasedInterface
 {
     private const DEFAULT_FIRST_LIMIT = 10;
 

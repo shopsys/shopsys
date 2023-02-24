@@ -226,6 +226,7 @@ class ProductsResolver extends BaseProductsResolver
         $aliases = parent::getAliases();
 
         $aliases['resolveProductsByFlag'] = 'resolveProductsByFlag';
+        $aliases['resolveByBrand'] = 'resolveByBrand';
 
         return $aliases;
     }

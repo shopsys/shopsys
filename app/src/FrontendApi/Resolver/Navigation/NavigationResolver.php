@@ -6,10 +6,10 @@ namespace App\FrontendApi\Resolver\Navigation;
 
 use App\Model\Navigation\NavigationItemFacade;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
-class NavigationResolver implements ResolverInterface, AliasedInterface
+class NavigationResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \App\Model\Navigation\NavigationItemFacade

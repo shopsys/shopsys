@@ -54,7 +54,7 @@ BlogArticle:
             images:
                 type: "[Image!]!"
                 description: "Blog article images"
-                resolve: '@=resolver("resolveByBlogArticle", [value, args["type"], args["sizes"]])'
+                resolve: '@=query("resolveByBlogArticle", value, args["type"], args["sizes"])'
                 args:
                     type:
                         type: "String"

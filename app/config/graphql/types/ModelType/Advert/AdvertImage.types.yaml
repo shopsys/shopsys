@@ -7,7 +7,7 @@ AdvertImage:
             image:
                 type: "[Image!]!"
                 description: "Advert image"
-                resolve: '@=resolver("resolveByAdvert", [value, args["type"], args["sizes"]])'
+                resolve: '@=query("resolveByAdvert", value, args["type"], args["sizes"])'
                 args:
                     type:
                         type: "String"

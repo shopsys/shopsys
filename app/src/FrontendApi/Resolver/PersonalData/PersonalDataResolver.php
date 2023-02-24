@@ -10,7 +10,7 @@ use App\Model\Customer\User\CustomerUserFacade;
 use App\Model\Order\OrderFacade;
 use App\Model\PersonalData\PersonalDataExportFacade;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
@@ -20,7 +20,7 @@ use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest;
 use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade;
 
-class PersonalDataResolver implements ResolverInterface, AliasedInterface
+class PersonalDataResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \App\Component\Setting\Setting

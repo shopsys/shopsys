@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Settings;
 
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsFacade;
 
-class ContactFormMainTextResolver implements ResolverInterface, AliasedInterface
+class ContactFormMainTextResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain

@@ -6,10 +6,10 @@ namespace App\FrontendApi\Resolver\Customer\User;
 
 use App\Model\Customer\User\CustomerUserFacade;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
-final class CustomerUserRegisteredResolver implements ResolverInterface, AliasedInterface
+final class CustomerUserRegisteredResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \App\Model\Customer\User\CustomerUserFacade

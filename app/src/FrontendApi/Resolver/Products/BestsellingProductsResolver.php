@@ -9,12 +9,12 @@ use App\Model\CategorySeo\ReadyCategorySeoMix;
 use GraphQL\Executor\Promise\Promise;
 use InvalidArgumentException;
 use Overblog\DataLoader\DataLoaderInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade;
 
-class BestsellingProductsResolver implements ResolverInterface
+class BestsellingProductsResolver implements QueryInterface
 {
     /**
      * @var \App\Model\Product\BestsellingProduct\CachedBestsellingProductFacade

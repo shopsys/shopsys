@@ -26,7 +26,7 @@ SliderItem:
             images:
                 type: "[Image!]!"
                 description: "Slider item images"
-                resolve: '@=resolver("resolveImagesByEntity", [value, args["type"], args["sizes"]])'
+                resolve: '@=query("resolveImagesByEntity", value, args["type"], args["sizes"])'
                 args:
                     type:
                         type: "String"
@@ -37,7 +37,7 @@ SliderItem:
             mainImage:
                 type: "Image"
                 description: "Slider item image by params"
-                resolve: '@=resolver("resolveMainImageByEntity", [value, args["type"], args["size"]])'
+                resolve: '@=query("resolveMainImageByEntity", value, args["type"], args["size"])'
                 args:
                     type:
                         type: "String"

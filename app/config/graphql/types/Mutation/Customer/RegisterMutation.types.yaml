@@ -9,4 +9,4 @@ RegisterMutation:
                     input:
                         type: RegistrationDataInput!
                         validation: cascade
-                resolve: "@=mutation('customer_user_register', [args, validator])"
+                resolve: "@=mutation('customer_user_register', args, validator)"

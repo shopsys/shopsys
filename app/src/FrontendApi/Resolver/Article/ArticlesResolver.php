@@ -8,13 +8,13 @@ use App\FrontendApi\Component\Validation\PageSizeValidator;
 use App\Model\Article\Elasticsearch\ArticleElasticsearchFacade;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 
 /**
  * @method \App\Model\Article\Article[] getArticlesList(int $domainId, int $limit, int $offset, string|null $placement)
  */
-class ArticlesResolver implements ResolverInterface, AliasedInterface
+class ArticlesResolver implements QueryInterface, AliasedInterface
 {
     private const DEFAULT_FIRST_LIMIT = 10;
 

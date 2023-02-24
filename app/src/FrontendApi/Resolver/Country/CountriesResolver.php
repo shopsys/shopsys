@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Country;
 
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 
-class CountriesResolver implements ResolverInterface, AliasedInterface
+class CountriesResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade

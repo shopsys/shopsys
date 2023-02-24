@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Settings;
 
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 
-class SeoSettingsResolver implements ResolverInterface, AliasedInterface
+class SeoSettingsResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade

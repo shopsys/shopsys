@@ -8,7 +8,7 @@ CustomerMutation:
                 args:
                     deliveryAddressUuid:
                         type: Uuid!
-                resolve: "@=mutation('deleteDeliveryAddress', [args])"
+                resolve: "@=mutation('deleteDeliveryAddress', args)"
             EditDeliveryAddress:
                 type: "[DeliveryAddress!]!"
                 description: "Edit delivery address by Uuid"
@@ -16,7 +16,7 @@ CustomerMutation:
                     input:
                         type: DeliveryAddressInput!
                         validation: cascade
-                resolve: "@=mutation('editDeliveryAddress', [args])"
+                resolve: "@=mutation('editDeliveryAddress', args)"
             SetDefaultDeliveryAddress:
                 type: "CustomerUser!"
                 description: "Set default delivery address by Uuid"
@@ -24,4 +24,4 @@ CustomerMutation:
                     deliveryAddressUuid:
                         type: Uuid!
                         description: "Set delivery address by Uuid"
-                resolve: "@=mutation('setDefaultDeliveryAddress', [args['deliveryAddressUuid']])"
+                resolve: "@=mutation('setDefaultDeliveryAddress', args['deliveryAddressUuid'])"

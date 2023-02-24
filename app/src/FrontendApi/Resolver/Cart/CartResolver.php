@@ -9,10 +9,10 @@ use App\FrontendApi\Model\Cart\CartWatcherFacade;
 use App\FrontendApi\Model\Cart\CartWithModificationsResult;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 
-class CartResolver implements ResolverInterface, AliasedInterface
+class CartResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \App\FrontendApi\Model\Cart\CartFacade

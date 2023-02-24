@@ -7,9 +7,9 @@ namespace App\FrontendApi\Resolver\Article;
 use App\Model\Article\CombinedArticleElasticsearchFacade;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 
-class ArticlesSearchResolver implements ResolverInterface, AliasedInterface
+class ArticlesSearchResolver implements QueryInterface, AliasedInterface
 {
     private const ARTICLE_SEARCH_LIMIT = 50;
 

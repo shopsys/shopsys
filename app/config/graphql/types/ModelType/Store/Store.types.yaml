@@ -53,4 +53,4 @@ Store:
             breadcrumb:
                 type: "[Link!]!"
                 description: "Hierarchy of the current element in relation to the structure"
-                resolve: '@=resolver("resolveBreadcrumb", [value.getId(), "front_stores_detail"])'
+                resolve: '@=query("resolveBreadcrumb", value.getId(), "front_stores_detail")'

@@ -6,10 +6,10 @@ namespace App\FrontendApi\Resolver\LanguageConstant;
 
 use App\Model\LanguageConstant\LanguageConstantFacade;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
-class LanguageConstantResolver implements ResolverInterface, AliasedInterface
+class LanguageConstantResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \App\Model\LanguageConstant\LanguageConstantFacade

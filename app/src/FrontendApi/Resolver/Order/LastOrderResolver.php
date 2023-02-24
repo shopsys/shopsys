@@ -8,10 +8,10 @@ use App\FrontendApi\Model\Order\OrderFacade;
 use App\FrontendApi\Mutation\Login\Exception\InvalidCredentialsUserError;
 use App\Model\Order\Order;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 
-class LastOrderResolver implements ResolverInterface, AliasedInterface
+class LastOrderResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser

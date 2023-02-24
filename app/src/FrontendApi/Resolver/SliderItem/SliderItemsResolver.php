@@ -6,9 +6,9 @@ namespace App\FrontendApi\Resolver\SliderItem;
 
 use App\Model\Slider\SliderItemFacade;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 
-class SliderItemsResolver implements ResolverInterface, AliasedInterface
+class SliderItemsResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \App\Model\Slider\SliderItemFacade

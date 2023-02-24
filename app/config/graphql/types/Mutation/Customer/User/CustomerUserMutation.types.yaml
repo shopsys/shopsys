@@ -17,7 +17,7 @@ CustomerUserMutation:
                                     max: 255
                                     maxMessage: "Email cannot be longer than {{ limit }} characters"
                             -   App\FrontendApi\Model\Component\Constraints\ExistingEmail: ~
-                resolve: "@=mutation('requestPasswordRecovery', [args, validator])"
+                resolve: "@=mutation('requestPasswordRecovery', args, validator)"
             RecoverPassword:
                 type: "LoginResult!"
                 description: "Recover password using hash required from RequestPasswordRecovery"
@@ -25,7 +25,7 @@ CustomerUserMutation:
                     input:
                         type: RecoverPasswordInput!
                         validation: cascade
-                resolve: "@=mutation('recoverPassword', [args, validator])"
+                resolve: "@=mutation('recoverPassword', args, validator)"
             ChangePassword:
                 type: 'CustomerUser!'
                 description: "Changes customer user password"
@@ -33,4 +33,4 @@ CustomerUserMutation:
                     input:
                         type: ChangePasswordInput!
                         validation: cascade
-                resolve: "@=mutation('customer_user_change_password', [args, validator])"
+                resolve: "@=mutation('customer_user_change_password', args, validator)"

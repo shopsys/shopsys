@@ -8,4 +8,4 @@ LoginMutation:
                 args:
                     input:
                         type: LoginInput!
-                resolve: "@=mutation('user_login', [args])"
+                resolve: "@=mutation('user_login', args)"
