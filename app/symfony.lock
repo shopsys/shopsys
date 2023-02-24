@@ -252,9 +252,6 @@
     "firebase/php-jwt": {
         "version": "v5.0.0"
     },
-    "fp/jsformvalidator-bundle": {
-        "version": "1.5-dev"
-    },
     "friendsofphp/php-cs-fixer": {
         "version": "2.2",
         "recipe": {

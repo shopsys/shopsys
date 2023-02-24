@@ -64,7 +64,7 @@
         "doctrine/persistence": "^2.4",
         "enlightn/security-checker": "^1.5",
         "fakerphp/faker": "^1.19.0",
-        "fp/jsformvalidator-bundle": "^1.6.1",
+        "shopsys/jsformvalidator-bundle": "^1.7.0",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
         "gopay/payments-sdk-php": "^1.4",
         "gordalina/cachetool": "~4.0",
