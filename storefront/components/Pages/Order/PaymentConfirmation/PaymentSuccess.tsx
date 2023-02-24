@@ -1,9 +1,4 @@
-import {
-    ImageWrapperStyled,
-    MessageStyled,
-    MessageWrapperStyled,
-    PaymentWrapperStyled,
-} from './PaymentConfirmation.style';
+import { ImageWrapper, Message, MessageWrapper, PaymentWrapper } from './PaymentConfirmationElements';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useOrderSentPageContentApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
@@ -24,16 +19,12 @@ export const PaymentSuccess: FC<PaymentSuccessProps> = ({ orderUuid }) => {
 
     return (
         <Webline>
-            <MessageWrapperStyled>
-                <ImageWrapperStyled>
+            <MessageWrapper>
+                <ImageWrapper>
                     <img alt={t('Order sent')} src="/public/frontend/images/sent-cart.svg" />
-                </ImageWrapperStyled>
-                <PaymentWrapperStyled>
-                    {data !== undefined && (
-                        <MessageStyled dangerouslySetInnerHTML={{ __html: data.orderSentPageContent }} />
-                    )}
-                </PaymentWrapperStyled>
-            </MessageWrapperStyled>
+                </ImageWrapper>
+                <PaymentWrapper>{data !== undefined && <Message message={data.orderSentPageContent} />}</PaymentWrapper>
+            </MessageWrapper>
         </Webline>
     );
 };

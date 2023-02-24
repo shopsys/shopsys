@@ -1,8 +1,9 @@
-
 This is documentation for Shopsys Framework StoreFront. Let's start with first two steps.
 
-## Install 
+## Install
+
 1 - Install all dependencies.
+
 ```plain
 npm ci
 ```
@@ -10,38 +11,47 @@ npm ci
 ## Start app
 
 2 - Start the development server.
+
 ```plain
 npm run dev
 ```
+
 After this command open http://localhost:3000/ in your browser.
 
 ### Optional
+
 Build the app for production.
+
 ```plain
 npm run build
 ```
 
 Run the built app in production mode.
+
 ```plain
 npm start
 ```
 
 Run eslint for code
+
 ```plain
 npm run lint
 ```
 
 Run eslint and fix code
+
 ```plain
 npm run lint--fix
 ```
 
 Run prettier format code
+
 ```plain
-npm run format 
+npm run format
 ```
 
 Run translation files generator. You can find generated files in /public/locales/ folder.
+
 ```plain
 npm run translate
 ```
@@ -56,33 +66,3 @@ After some changes to API you need to regenerate hooks and types, so it's in syn
 
 1. Run `php phing frontend-api-generate-graphql-schema` inside php-fpm container
 2. Run `npm run gql:codegen` in storefront container
-
-## Testing
-
-### Jest
-
-[Jest documentation](https://jestjs.io)
-
-Jest tests are used for unit testing of function or callback and to test static render of components.
-For the testing of components' functionality, it is better to use cypress tests in many scenarios.
-
-Best practice of storing tests is to keep it as close to tested component as possible.
-
-Run `npm run tests-jest` to run all jest tests.
-
-#### Types of tests
-
-##### Unit tests
-
-https://jestjs.io/docs/getting-started
-
-##### Snapshot tests
-
-https://jestjs.io/docs/snapshot-testing
-
-In case you need to update snapshot because of changing the components' code you can update it by running `npm run tests-jest -- -u`.
-
-_Known issue:_
-
-In case the component is not the same as snapshot is expecting, there are reported unrelated (false negatives) lines too. The issue is described [here](https://github.com/styled-components/jest-styled-components/issues/355).
-

@@ -1,9 +1,4 @@
-import {
-    ImageWrapperStyled,
-    MessageStyled,
-    MessageWrapperStyled,
-    PaymentWrapperStyled,
-} from './PaymentConfirmation.style';
+import { ImageWrapper, Message, MessageWrapper, PaymentWrapper } from './PaymentConfirmationElements';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
@@ -18,17 +13,17 @@ export const PaymentFail: FC = () => {
 
     return (
         <Webline>
-            <MessageWrapperStyled>
-                <ImageWrapperStyled>
+            <MessageWrapper>
+                <ImageWrapper>
                     <img alt={t('Order sent')} src="/public/frontend/images/sent-cart.svg" />
-                </ImageWrapperStyled>
-                <PaymentWrapperStyled>
-                    <MessageStyled>
+                </ImageWrapper>
+                <PaymentWrapper>
+                    <Message>
                         <Heading type="h1">{t('Your payment was unsuccessful')}</Heading>
                         <p>{t('We are sorry, but your payment was not successful. Please contact us.')}</p>
-                    </MessageStyled>
-                </PaymentWrapperStyled>
-            </MessageWrapperStyled>
+                    </Message>
+                </PaymentWrapper>
+            </MessageWrapper>
         </Webline>
     );
 };

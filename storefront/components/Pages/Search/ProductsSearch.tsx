@@ -1,10 +1,4 @@
-import {
-    SearchResultsContentStyled,
-    SearchResultsPanelOpenerStyled,
-    SearchResultsPanelStyled,
-    SearchResultsStyled,
-} from '../SearchContent.style';
-import { SearchProductsWrapper } from '../SearchProductsWrapper';
+import { SearchProductsWrapper } from './SearchProductsWrapper';
 import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
@@ -19,6 +13,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useRouter } from 'next/router';
 import { FC, useCallback, useRef, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
+import { twJoin } from 'tailwind-merge';
 import { ListedProductConnectionPreviewType } from 'types/product';
 
 type ProductsSearchProps = {
@@ -53,8 +48,13 @@ export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
                 >
                     <Webline>
                         {isFiltered && <MetaRobots content="noindex, follow" />}
-                        <SearchResultsStyled ref={containerWrapRef}>
-                            <SearchResultsPanelStyled isOpen={isPanelOpen}>
+                        <div className="relative mb-8 flex flex-col vl:mb-10 vl:flex-row vl:flex-wrap">
+                            <div
+                                className={twJoin(
+                                    'fixed top-0 left-0 bottom-0 right-10 max-w-md -translate-x-full vl:static vl:w-80 vl:translate-x-0 vl:transition-none',
+                                    isPanelOpen && 'z-aboveOverlay translate-x-0 transition',
+                                )}
+                            >
                                 <FilterPanel
                                     defaultOrderingMode={productsSearch.defaultOrderingMode}
                                     orderingMode={productsSearch.orderingMode}
@@ -63,10 +63,13 @@ export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
                                     slug={searchUrl}
                                     totalCount={productsSearch.totalCount}
                                 />
-                            </SearchResultsPanelStyled>
+                            </div>
                             {isPanelOpen && <Overlay $isHiddenOnDesktop onClick={handlePanelOpenerClick} />}
-                            <SearchResultsContentStyled>
-                                <SearchResultsPanelOpenerStyled onClick={handlePanelOpenerClick}>
+                            <div className="flex flex-1 flex-col">
+                                <div
+                                    className="relative mb-3 flex h-12 w-full cursor-pointer flex-row justify-center rounded-xl bg-primary py-3 px-8 font-bold uppercase leading-7 text-white sm:w-44 vl:hidden"
+                                    onClick={handlePanelOpenerClick}
+                                >
                                     <Icon
                                         iconType="icon"
                                         icon="Filter"
@@ -75,14 +78,14 @@ export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
                                         className="mr-3 font-bold text-white"
                                     />
                                     {t('Filter')}
-                                </SearchResultsPanelOpenerStyled>
+                                </div>
                                 <SortingBar
                                     sorting={productsSearch.orderingMode}
                                     totalCount={productsSearch.totalCount}
                                 />
                                 <SearchProductsWrapper containerWrapperRef={containerWrapRef} />
-                            </SearchResultsContentStyled>
-                        </SearchResultsStyled>
+                            </div>
+                        </div>
                     </Webline>
                 </FilterProvider>
             )}

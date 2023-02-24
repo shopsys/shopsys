@@ -1,14 +1,3 @@
-import {
-    ButtonBottomItemStyled,
-    ButtonBottomNameStyled,
-    ButtonBottomStyled,
-    InfoItemOpeningHoursStyled,
-    InfoItemStyled,
-    InfoStyled,
-    MapStyled,
-    StoreDetailContentStyled,
-    StoreDetailStyled,
-} from './StoreDetailContent.style';
 import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
@@ -34,17 +23,17 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
 
     return (
         <Webline testIdentifier={TEST_IDENTIFIER}>
-            <StoreDetailStyled>
-                <StoreDetailContentStyled>
+            <div className="mb-10">
+                <div className="relative lg:min-h-[350px] lg:pl-[380px] vl:min-h-[500px] vl:pl-[530px] xl:min-h-[650px] xl:pl-[720px]">
                     <Heading type="h1">{store.storeName}</Heading>
-                    <InfoStyled>
+                    <div className="md:flex md:flex-wrap">
                         {store.description !== null && (
-                            <InfoItemStyled>
+                            <InfoItem>
                                 <StoreHeading text={t('Store description')} />
                                 {store.description}
-                            </InfoItemStyled>
+                            </InfoItem>
                         )}
-                        <InfoItemStyled>
+                        <InfoItem>
                             <StoreHeading text={t('Store address')} />
                             {store.city}
                             <br />
@@ -53,27 +42,27 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                             {store.postcode}
                             <br />
                             {store.country.name}
-                        </InfoItemStyled>
+                        </InfoItem>
                         {store.openingHours !== null && (
-                            <InfoItemStyled>
+                            <InfoItem>
                                 <StoreHeading text={t('Opening hours')} />
-                                <InfoItemOpeningHoursStyled>{store.openingHours}</InfoItemOpeningHoursStyled>
-                            </InfoItemStyled>
+                                <div className="max-w-[160px]">{store.openingHours}</div>
+                            </InfoItem>
                         )}
                         {store.contactInfo !== null && (
-                            <InfoItemStyled>
+                            <InfoItem>
                                 <StoreHeading text={t('Contact to the department store')} />
                                 {store.contactInfo}
-                            </InfoItemStyled>
+                            </InfoItem>
                         )}
                         {store.specialMessage !== null && (
-                            <InfoItemStyled>
+                            <InfoItem>
                                 <StoreHeading text={t('Special announcement')} />
                                 {store.specialMessage}
-                            </InfoItemStyled>
+                            </InfoItem>
                         )}
-                    </InfoStyled>
-                    <MapStyled>
+                    </div>
+                    <div className="mb-4 h-60 w-full lg:absolute lg:left-0 lg:top-0 lg:mb-0 lg:h-[350px] lg:w-[350px] vl:h-[500px] vl:w-[500px] xl:h-[650px] xl:w-[650px] ">
                         <GoogleMap
                             lat={store.locationLatitude}
                             lng={store.locationLongitude}
@@ -81,9 +70,9 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                             markers={storeCoordinates}
                             isDetail
                         />
-                    </MapStyled>
-                    <ButtonBottomStyled>
-                        <ButtonBottomItemStyled>
+                    </div>
+                    <a className="flex items-center justify-between rounded-xl border border-greyLighter py-4 pr-4 pl-6 transition hover:no-underline vl:hover:-translate-x-1 vl:hover:shadow-lg">
+                        <div className="flex flex-row items-center text-lg text-primary">
                             <Icon
                                 iconType="icon"
                                 icon="Chat"
@@ -92,11 +81,13 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                                 className="mr-3 text-2xl text-orange xl:mr-5"
                             />
                             <NextLink href={contactUrl} passHref>
-                                <ButtonBottomNameStyled>{t('Do you have any questions?')}</ButtonBottomNameStyled>
+                                <a className="relative flex-grow text-primary md:text-lg">
+                                    {t('Do you have any questions?')}
+                                </a>
                             </NextLink>
-                        </ButtonBottomItemStyled>
-                        <ButtonBottomItemStyled>
-                            <ButtonBottomNameStyled type="right">{t('Customer Centre')}</ButtonBottomNameStyled>
+                        </div>
+                        <div className="flex flex-row items-center text-lg text-primary">
+                            <a className="relative flex-grow text-primary md:text-lg">{t('Customer Centre')}</a>
                             <Icon
                                 iconType="icon"
                                 icon="Arrow"
@@ -104,10 +95,10 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                                 height={24}
                                 className="ml-3 text-2xl text-primary xl:ml-5"
                             />
-                        </ButtonBottomItemStyled>
-                    </ButtonBottomStyled>
-                </StoreDetailContentStyled>
-            </StoreDetailStyled>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </Webline>
     );
 };
@@ -117,3 +108,5 @@ const StoreHeading: FC<{ text: string }> = ({ text }) => (
         {text}
     </Heading>
 );
+
+const InfoItem: FC = ({ children }) => <div className="mb-4 odd:pr-3 even:pl-3 md:mb-6 md:w-1/2">{children}</div>;

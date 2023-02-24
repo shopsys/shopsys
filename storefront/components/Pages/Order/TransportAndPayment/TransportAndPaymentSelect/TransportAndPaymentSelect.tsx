@@ -1,5 +1,5 @@
 import { PickupPlacePopup } from './PickupPlacePopup/PickupPlacePopup';
-import { ListItemStyled, PaymentListWrapper, ResetButtonStyled } from './TransportAndPaymentSelect.style';
+import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
 import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectItemLabel/TransportAndPaymentSelectItemLabel';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
@@ -203,10 +203,10 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
 
     const renderTransportListItem = (transportItem: TransportType, isActive: boolean) => {
         return (
-            <ListItemStyled
+            <TransportAndPaymentListItem
                 key={transportItem.uuid}
                 isActive={isActive}
-                data-testid={TEST_IDENTIFIER + 'transport-item' + (isActive ? '-active' : '')}
+                dataTestId={TEST_IDENTIFIER + 'transport-item' + (isActive ? '-active' : '')}
             >
                 <Radiobutton
                     name="transport"
@@ -226,16 +226,16 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         />
                     }
                 />
-            </ListItemStyled>
+            </TransportAndPaymentListItem>
         );
     };
 
     const renderPaymentListItem = (paymentItem: PaymentType, isActive: boolean) => {
         return (
-            <ListItemStyled
+            <TransportAndPaymentListItem
                 key={paymentItem.uuid}
                 isActive={isActive}
-                data-testid={TEST_IDENTIFIER + 'payment-item' + (isActive ? '-active' : '')}
+                dataTestId={TEST_IDENTIFIER + 'payment-item' + (isActive ? '-active' : '')}
             >
                 <Radiobutton
                     name="payment"
@@ -253,7 +253,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         />
                     }
                 />
-            </ListItemStyled>
+            </TransportAndPaymentListItem>
         );
     };
 
@@ -269,14 +269,11 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                             : transports.map((transportItem) => renderTransportListItem(transportItem, false))}
                     </ul>
                     {transport !== null && (
-                        <ResetButtonStyled
-                            type="button"
+                        <ResetButton
                             onClick={resetAll}
-                            data-testid={TEST_IDENTIFIER + 'reset-transport'}
-                        >
-                            {t('Change transport type')}
-                            <Icon iconType="icon" icon="Arrow" />
-                        </ResetButtonStyled>
+                            dataTestId={TEST_IDENTIFIER + 'reset-transport'}
+                            text={t('Change transport type')}
+                        />
                     )}
                     {preSelectedTransport !== null && (
                         <PickupPlacePopup
@@ -288,7 +285,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     )}
                 </div>
                 {transport !== null && preSelectedTransport === null && (
-                    <PaymentListWrapper data-testid={TEST_IDENTIFIER + 'payment'}>
+                    <div className="relative mt-12" data-testid={TEST_IDENTIFIER + 'payment'}>
                         {isTransportSelectionLoading && <LoaderWithOverlay iconSize={30} />}
                         <Heading type="h3">{t('Choose payment')}</Heading>
                         <ul>
@@ -313,18 +310,24 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                             </>
                         )}
                         {payment !== null && (
-                            <ResetButtonStyled
-                                type="button"
+                            <ResetButton
                                 onClick={resetPaymentAndGoPayBankSwift}
-                                data-testid={TEST_IDENTIFIER + 'reset-payment'}
-                            >
-                                {t('Change payment type')}
-                                <Icon iconType="icon" icon="Arrow" />
-                            </ResetButtonStyled>
+                                dataTestId={TEST_IDENTIFIER + 'reset-payment'}
+                                text={t('Change payment type')}
+                            />
                         )}
-                    </PaymentListWrapper>
+                    </div>
                 )}
             </div>
         </>
     );
 };
+
+type ResetButtonProps = { text: string; dataTestId: string; onClick: () => void };
+
+const ResetButton: FC<ResetButtonProps> = ({ text, dataTestId, onClick }) => (
+    <button type="button" onClick={onClick} data-testid={dataTestId}>
+        {text}
+        <Icon iconType="icon" icon="Arrow" />
+    </button>
+);

@@ -1,15 +1,9 @@
-import {
-    ProductDetailAvailabilityListItemStatusStyled as AvailabilityListItemStatusStyled,
-    ProductDetailAvailabilityListItemStoreLinkStyled as AvailabilityListItemStoreLinkStyled,
-    ProductDetailAvailabilityListItemStoreNameStyled as AvailabilityListItemStoreNameStyled,
-    ProductDetailAvailabilityListItemStyled as AvailabilityListItemStyled,
-    ProductDetailAvailabilityListWrapperStyled as AvailabilityListWrapperStyled,
-} from './ProductDetailAvailabilityList.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
 import { forwardRef } from 'react';
+import { twJoin } from 'tailwind-merge';
 import { StoreAvailabilityType } from 'types/availability';
 
 type ProductDetailAvailabilityListProps = {
@@ -23,30 +17,41 @@ export const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, Produc
         const t = useTypedTranslationFunction();
 
         return (
-            <AvailabilityListWrapperStyled>
+            <div className="block w-full vl:max-w-xl">
                 <Heading type="h3">{t('Availability in stores')}</Heading>
                 <ul ref={ref}>
                     {storeAvailabilities.map((storeAvailability, index) => (
-                        <AvailabilityListItemStyled key={index} data-testid={TEST_IDENTIFIER + index}>
-                            <AvailabilityListItemStoreNameStyled data-testid={TEST_IDENTIFIER + index + '-store'}>
+                        <li
+                            className="flex w-full items-center border-b border-greyLighter py-4"
+                            key={index}
+                            data-testid={TEST_IDENTIFIER + index}
+                        >
+                            <strong className="mr-2 w-36" data-testid={TEST_IDENTIFIER + index + '-store'}>
                                 {storeAvailability.store.storeName}
-                            </AvailabilityListItemStoreNameStyled>
-                            <AvailabilityListItemStatusStyled
-                                availabilityStatus={storeAvailability.availabilityStatus}
+                            </strong>
+                            <span
+                                className={twJoin(
+                                    'flex-1 pr-3 text-sm',
+                                    storeAvailability.availabilityStatus === 'in-stock' && 'text-inStock',
+                                    storeAvailability.availabilityStatus === 'out-of-stock' && 'text-red',
+                                )}
                                 data-testid={TEST_IDENTIFIER + index + '-availability'}
                             >
                                 {storeAvailability.availabilityInformation}
-                            </AvailabilityListItemStatusStyled>
+                            </span>
                             <NextLink href={storeAvailability.store.slug} passHref>
-                                <AvailabilityListItemStoreLinkStyled data-testid={TEST_IDENTIFIER + index + '-detail'}>
+                                <a
+                                    className="ml-auto flex items-center text-dark no-underline hover:text-dark hover:no-underline"
+                                    data-testid={TEST_IDENTIFIER + index + '-detail'}
+                                >
                                     {t('Store detail')}
                                     <Icon iconType="icon" icon="ArrowRight" />
-                                </AvailabilityListItemStoreLinkStyled>
+                                </a>
                             </NextLink>
-                        </AvailabilityListItemStyled>
+                        </li>
                     ))}
                 </ul>
-            </AvailabilityListWrapperStyled>
+            </div>
         );
     },
 );

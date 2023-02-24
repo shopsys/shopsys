@@ -1,17 +1,9 @@
-import {
-    TableHeaderActionCellStyled,
-    TableHeaderCellStyled,
-    TableHeaderImageCellStyled,
-    TableHeaderPriceCellStyled,
-    VariantsTableBodyStyled,
-    VariantsTableHeaderStyled,
-    VariantsTableRowStyled,
-    VariantsTableStyled,
-} from './ProductVariantsTable.style';
+import { ProductVariantsTableRow } from './ProductVariantsTableRow';
 import { Variant } from './Variant/Variant';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { FC } from 'react';
 import { ListedVariantType } from 'types/product';
+import { twMergeCustom } from 'utils/twMerge';
 
 type ProductVariantsTableProps = {
     variants: ListedVariantType[];
@@ -23,17 +15,17 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingD
 
     return (
         <>
-            <VariantsTableStyled>
-                <VariantsTableHeaderStyled>
-                    <VariantsTableRowStyled>
-                        <TableHeaderImageCellStyled></TableHeaderImageCellStyled>
-                        <TableHeaderCellStyled>{t('Name')}</TableHeaderCellStyled>
-                        <TableHeaderCellStyled>{t('Availability')}</TableHeaderCellStyled>
-                        <TableHeaderPriceCellStyled>{t('Price with VAT')}</TableHeaderPriceCellStyled>
-                        <TableHeaderActionCellStyled></TableHeaderActionCellStyled>
-                    </VariantsTableRowStyled>
-                </VariantsTableHeaderStyled>
-                <VariantsTableBodyStyled>
+            <table className="mb-5 w-full">
+                <thead className="max-lg:hidden">
+                    <ProductVariantsTableRow>
+                        <Cell className="max-lg:w-10 lg:w-24" />
+                        <Cell>{t('Name')}</Cell>
+                        <Cell>{t('Availability')}</Cell>
+                        <Cell className="lg:text-right">{t('Price with VAT')}</Cell>
+                        <Cell className="lg:w-60" />
+                    </ProductVariantsTableRow>
+                </thead>
+                <tbody className="max-lg:ml-0 max-lg:flex max-lg:flex-wrap md:-ml-1">
                     {variants.map((variant, index) => (
                         <Variant
                             key={variant.uuid}
@@ -43,8 +35,23 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingD
                             listIndex={index}
                         />
                     ))}
-                </VariantsTableBodyStyled>
-            </VariantsTableStyled>
+                </tbody>
+            </table>
         </>
     );
 };
+
+type CellProps = {
+    className?: string;
+};
+
+const Cell: FC<CellProps> = ({ className, children }) => (
+    <th
+        className={twMergeCustom(
+            'text-left align-middle max-lg:block max-lg:pl-14 lg:border-b lg:border-greyLighter lg:p-1 lg:text-xs',
+            className,
+        )}
+    >
+        {children}
+    </th>
+);
