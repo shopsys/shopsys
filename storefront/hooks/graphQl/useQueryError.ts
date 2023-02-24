@@ -1,25 +1,28 @@
-import { CombinedError } from '@urql/core';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { logException } from 'helpers/errors/logException';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffect } from 'react';
+import { UseQueryResponse } from 'urql';
 
-export const useQueryError = (error: CombinedError | undefined): void => {
+export const useQueryError = <T>([queryResponse, refetchFunction]: UseQueryResponse<T>): UseQueryResponse<T> => {
     const t = useTypedTranslationFunction();
+
     useEffect(() => {
-        if (error === undefined) {
+        if (queryResponse.error === undefined) {
             return;
         }
 
-        const parsedErrors = getUserFriendlyErrors(error, t);
+        const parsedErrors = getUserFriendlyErrors(queryResponse.error, t);
 
-        logException(error);
+        logException(queryResponse.error);
 
         if (parsedErrors.applicationError === undefined) {
             return;
         }
 
         showErrorMessage(parsedErrors.applicationError.message);
-    }, [error, t]);
+    }, [queryResponse.error, t]);
+
+    return [queryResponse, refetchFunction];
 };

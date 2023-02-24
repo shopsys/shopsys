@@ -2,10 +2,10 @@ import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { Theme } from 'components/Theme/main';
-import { useNotificationBars } from 'connectors/notificationBars/NotificationBars';
-import { NotificationBarsFragmentApi } from 'graphql/generated';
+import { NotificationBarsFragmentApi, useNotificationBarsApi } from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { LogoutHandler, useAuth } from 'hooks/auth/useAuth';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import decode from 'jwt-decode';
 import Trans from 'next-translate/Trans';
@@ -17,7 +17,7 @@ import tinycolor from 'tinycolor2';
 import { CurrentCustomerType } from 'types/customer';
 
 export const NotificationBars: FC = () => {
-    const notificationBarItems = useNotificationBars();
+    const [{ data: notificationBarsData }] = useQueryError(useNotificationBarsApi());
     const { isUserLoggedIn, user } = useCurrentUserData();
     const [isAdminLoggedInAsUser, setIsAdminLoggedAsUser] = useState(false);
     const theme = useTheme() as Theme;
@@ -37,14 +37,14 @@ export const NotificationBars: FC = () => {
         }
     }, [isUserLoggedIn]);
 
-    if (notificationBarItems === undefined || notificationBarItems === null) {
+    if (notificationBarsData?.notificationBars === undefined || notificationBarsData.notificationBars === null) {
         return null;
     }
 
     return (
         <>
             {extendByAdminLoggedInAsUserNotificationBar(
-                notificationBarItems,
+                notificationBarsData.notificationBars,
                 isAdminLoggedInAsUser,
                 user,
                 theme,

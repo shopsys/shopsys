@@ -1,12 +1,13 @@
-import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
-import { usePromotedCategories } from 'connectors/categories/PromotedCategories';
+import { SimpleNavigation } from '../SimpleNavigation/SimpleNavigation';
+import { usePromotedCategoriesQueryApi } from 'graphql/generated';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 
 export const PromotedCategories: FC = () => {
-    const promotedCategories = usePromotedCategories();
+    const [{ data: promotedCategoriesData }] = useQueryError(usePromotedCategoriesQueryApi());
 
-    if (promotedCategories === undefined) {
+    if (promotedCategoriesData === undefined) {
         return null;
     }
 
-    return <SimpleNavigation listedItems={promotedCategories} className="mb-6" />;
+    return <SimpleNavigation listedItems={promotedCategoriesData.promotedCategories} className="mb-6" />;
 };

@@ -132,7 +132,7 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcr
                             </tr>
                             <tr>
                                 <td>{t('Country')}:</td>
-                                <td data-testid={TEST_IDENTIFIER + 'country'}>{order.country}</td>
+                                <td data-testid={TEST_IDENTIFIER + 'country'}>{order.country.name}</td>
                             </tr>
                         </TableGridColumnStyled>
                         <TableGridColumnStyled>
@@ -173,7 +173,7 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcr
                             </tr>
                             <tr>
                                 <td>{t('Country')}:</td>
-                                <td data-testid={TEST_IDENTIFIER + 'deliveryCountry'}>{order.deliveryCountry}</td>
+                                <td data-testid={TEST_IDENTIFIER + 'deliveryCountry'}>{order.deliveryCountry?.name}</td>
                             </tr>
                         </TableGridColumnStyled>
                     </TableGridColumns>

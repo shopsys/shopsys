@@ -10,8 +10,9 @@ import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import { useCountries } from 'connectors/country/Country';
+import { useCountriesQueryApi } from 'graphql/generated';
 import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -41,8 +42,11 @@ export const ContactInformationDeliveryAddress: FC = () => {
     const isCustomAddressSelected = deliveryAddressUuidValue === '';
     const showAddressSelection = isUserLoggedIn && !pickupPlace && (!user || user.deliveryAddresses.length > 0);
 
-    const countries = useCountries();
-    const countriesAsSelectOptions = useMemo(() => mapCountriesToSelectOptions(countries), [countries]);
+    const [{ data: countriesData }] = useQueryError(useCountriesQueryApi());
+    const countriesAsSelectOptions = useMemo(
+        () => mapCountriesToSelectOptions(countriesData?.countries),
+        [countriesData?.countries],
+    );
 
     useEffect(() => {
         if (differentDeliveryAddressValue === true) {

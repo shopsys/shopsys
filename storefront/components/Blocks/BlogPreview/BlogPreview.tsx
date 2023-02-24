@@ -4,31 +4,32 @@ import { SideSlider } from './SideSlider/SideSlider';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { useBlogPreviewArticles } from 'connectors/blogArticle/BlogArticle';
-import { useBlogUrl } from 'connectors/blogCategory/BlogCategory';
+import { ListedBlogArticleFragmentApi, useBlogArticlesQueryApi, useBlogUrlQueryApi } from 'graphql/generated';
 import { mapConnectionEdges } from 'helpers/mappers/connection';
-import { ListedBlogArticleFragmentApi } from 'graphql/generated';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import NextLink from 'next/link';
 import { useMemo, useState } from 'react';
 
+export const BLOG_PREVIEW_VARIABLES = { first: 6, onlyHomepageArticles: true };
 const TEST_IDENTIFIER = 'blocks-blogpreview';
 
 export const BlogPreview: FC = () => {
     const t = useTypedTranslationFunction();
-    const blogPreviewItems = useBlogPreviewArticles();
-    const blogUrl = useBlogUrl();
+    const [{ data: blogPreviewData }] = useQueryError(useBlogArticlesQueryApi({ variables: BLOG_PREVIEW_VARIABLES }));
+    const [{ data: blogUrlData }] = useQueryError(useBlogUrlQueryApi());
+    const blogUrl = blogUrlData?.blogCategories[0].link;
     const { width } = useGetWindowSize();
     const [isBlogPreviewArticlesSideSliderVisible, setBlogPreviewArticlesSideSliderVisibility] = useState(false);
     const blogMainItems = useMemo(
-        () => mapConnectionEdges<ListedBlogArticleFragmentApi>(blogPreviewItems?.edges?.slice(0, 2)),
-        [blogPreviewItems?.edges],
+        () => mapConnectionEdges<ListedBlogArticleFragmentApi>(blogPreviewData?.blogArticles.edges?.slice(0, 2)),
+        [blogPreviewData?.blogArticles.edges],
     );
     const blogSideItems = useMemo(
-        () => mapConnectionEdges<ListedBlogArticleFragmentApi>(blogPreviewItems?.edges?.slice(2)),
-        [blogPreviewItems?.edges],
+        () => mapConnectionEdges<ListedBlogArticleFragmentApi>(blogPreviewData?.blogArticles.edges?.slice(2)),
+        [blogPreviewData?.blogArticles.edges],
     );
 
     useResizeWidthEffect(

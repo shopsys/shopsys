@@ -16,11 +16,15 @@ import {
     useCustomerChangeProfileForm,
     useCustomerChangeProfileFormMeta,
 } from 'components/Pages/Customer/EditProfile/formMeta';
-import { useCountries } from 'connectors/country/Country';
+import {
+    useChangePasswordMutationApi,
+    useChangePersonalDataMutationApi,
+    useCountriesQueryApi,
+} from 'graphql/generated';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
-import { useChangePasswordMutationApi, useChangePersonalDataMutationApi } from 'graphql/generated';
 import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useMemo } from 'react';
 import { Controller, FormProvider, Path, SubmitHandler, UseFormReturn } from 'react-hook-form';
@@ -47,8 +51,11 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
     });
     const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
-    const countries = useCountries();
-    const countriesAsSelectOptions = useMemo(() => mapCountriesToSelectOptions(countries), [countries]);
+    const [{ data: countriesData }] = useQueryError(useCountriesQueryApi());
+    const countriesAsSelectOptions = useMemo(
+        () => mapCountriesToSelectOptions(countriesData?.countries),
+        [countriesData?.countries],
+    );
     const [, changePassword] = useChangePasswordMutationApi();
 
     const onSubmitCustomerChangeProfileFormHandler: SubmitHandler<CustomerChangeProfileFormType> = async (

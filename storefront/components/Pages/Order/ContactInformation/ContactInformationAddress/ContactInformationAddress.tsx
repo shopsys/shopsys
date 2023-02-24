@@ -5,8 +5,9 @@ import { FormLineError } from 'components/Forms/Lib/FormLineError/FormLineError'
 import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
-import { useCountries } from 'connectors/country/Country';
+import { useCountriesQueryApi } from 'graphql/generated';
 import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffect, useMemo } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
@@ -20,8 +21,11 @@ export const ContactInformationAddress: FC = () => {
     const formProviderMethods = useFormContext<ContactInformationFormType>();
     const { setValue } = formProviderMethods;
     const formMeta = useContactInformationFormMeta(formProviderMethods);
-    const countries = useCountries();
-    const countriesAsSelectOptions = useMemo(() => mapCountriesToSelectOptions(countries), [countries]);
+    const [{ data: countriesData }] = useQueryError(useCountriesQueryApi());
+    const countriesAsSelectOptions = useMemo(
+        () => mapCountriesToSelectOptions(countriesData?.countries),
+        [countriesData?.countries],
+    );
     const [countryValue] = useWatch({
         name: [formMeta.fields.country.name],
         control: formProviderMethods.control,

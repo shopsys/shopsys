@@ -2859,6 +2859,11 @@ export type BlogCategoryArticlesVariablesApi = Exact<{
 
 export type BlogCategoryArticlesApi = { __typename?: 'Query', blogCategory: { __typename?: 'BlogCategory', blogArticles: { __typename: 'BlogArticleConnection', totalCount: number, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename?: 'BlogArticleEdge', node: { __typename: 'BlogArticle', uuid: string, name: string, link: string, publishDate: any, perex: string | null, slug: string, blogCategories: Array<{ __typename: 'BlogCategory', uuid: string, name: string, link: string, parent: { __typename?: 'BlogCategory', name: string } | null }>, images: Array<{ __typename: 'Image', sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }> } | null } | null> | null } } | null };
 
+export type BlogUrlQueryVariablesApi = Exact<{ [key: string]: never; }>;
+
+
+export type BlogUrlQueryApi = { __typename?: 'Query', blogCategories: Array<{ __typename?: 'BlogCategory', link: string }> };
+
 export type BrandDetailFragmentApi = { __typename: 'Brand', uuid: string, slug: string, name: string, seoH1: string | null, description: string | null, seoTitle: string | null, seoMetaDescription: string | null, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, images: Array<{ __typename: 'Image', sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }>, products: { __typename: 'ProductConnection', orderingMode: ProductOrderingModeEnumApi, defaultOrderingMode: ProductOrderingModeEnumApi | null, totalCount: number, productFilterOptions: { __typename: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename: 'BrandFilterOption', count: number, brand: { __typename: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename: 'FlagFilterOption', count: number, isSelected: boolean, flag: { __typename: 'Flag', uuid: string, name: string, rgbColor: string } }> | null, parameters: Array<{ __typename: 'ParameterCheckboxFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueFilterOption', uuid: string, text: string, count: number, isSelected: boolean }> } | { __typename: 'ParameterColorFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueColorFilterOption', uuid: string, text: string, count: number, rgbHex: string | null, isSelected: boolean }> } | { __typename: 'ParameterSliderFilterOption', name: string, uuid: string, minimalValue: number, maximalValue: number, isCollapsed: boolean, selectedValue: number | null, unit: { __typename: 'Unit', name: string } | null }> | null } } };
 
 export type ListedBrandFragmentApi = { __typename: 'Brand', uuid: string, name: string, slug: string, images: Array<{ __typename: 'Image', sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: number | null, height: number | null, additionalSizes: Array<{ __typename: 'AdditionalSize', height: number | null, media: string, url: string, width: number | null }> }> }> };
@@ -4883,6 +4888,17 @@ export const BlogCategoryArticlesDocumentApi = gql`
 
 export function useBlogCategoryArticlesApi(options: Omit<Urql.UseQueryArgs<BlogCategoryArticlesVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<BlogCategoryArticlesApi>({ query: BlogCategoryArticlesDocumentApi, ...options });
+};
+export const BlogUrlQueryDocumentApi = gql`
+    query BlogUrlQuery {
+  blogCategories {
+    link
+  }
+}
+    `;
+
+export function useBlogUrlQueryApi(options: Omit<Urql.UseQueryArgs<BlogUrlQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<BlogUrlQueryApi>({ query: BlogUrlQueryDocumentApi, ...options });
 };
 export const BrandsQueryDocumentApi = gql`
     query BrandsQuery {

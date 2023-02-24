@@ -1,12 +1,11 @@
 import { SearchMetadata } from 'components/Basic/Head/SearchMetadata/SearchMetadata';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Banners } from 'components/Blocks/Banners/Banners';
-import { BlogPreview } from 'components/Blocks/BlogPreview/BlogPreview';
+import { BLOG_PREVIEW_VARIABLES, BlogPreview } from 'components/Blocks/BlogPreview/BlogPreview';
 import { PromotedCategories } from 'components/Blocks/Categories/PromotedCategories';
 import { PromotedProducts } from 'components/Blocks/Product/PromotedProducts/PromotedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { blogPreviewVariables } from 'connectors/blogArticle/BlogArticle';
 import {
     BlogArticlesQueryDocumentApi,
     PromotedCategoriesQueryDocumentApi,
@@ -60,7 +59,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
                     { query: PromotedCategoriesQueryDocumentApi },
                     { query: SliderItemsQueryDocumentApi },
                     { query: PromotedProductsQueryDocumentApi },
-                    { query: BlogArticlesQueryDocumentApi, variables: blogPreviewVariables },
+                    { query: BlogArticlesQueryDocumentApi, variables: BLOG_PREVIEW_VARIABLES },
                 ],
             }),
         store,

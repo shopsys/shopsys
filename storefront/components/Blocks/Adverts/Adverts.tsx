@@ -2,9 +2,9 @@ import { Image } from 'components/Basic/Image/Image';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { useAdverts } from 'connectors/adverts/Adverts';
-import { AdvertsFragmentApi, CategoryDetailFragmentApi } from 'graphql/generated';
+import { AdvertsFragmentApi, CategoryDetailFragmentApi, useAdvertsQueryApi } from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import NextLink from 'next/link';
@@ -29,10 +29,10 @@ export const Adverts: FC<AdvertsProps> = ({
     currentCategory,
     className,
 }) => {
-    const adverts = useAdverts();
+    const [{ data: advertsData }] = useQueryError(useAdvertsQueryApi());
     const [isMobile, setIsMobile] = useState(false);
     const { width } = useGetWindowSize();
-    const isPositionNameSet = adverts?.some((item) => item.positionName === positionName);
+    const isPositionNameSet = advertsData?.adverts.some((item) => item.positionName === positionName);
 
     useResizeWidthEffect(
         width,
@@ -48,7 +48,7 @@ export const Adverts: FC<AdvertsProps> = ({
 
     const content = (
         <div className={twJoin(withGapTop && 'mb-8', withGapBottom && 'mt-8')}>
-            {adverts?.map(
+            {advertsData?.adverts.map(
                 (item, index) =>
                     shouldBeShown(item, positionName, currentCategory) &&
                     (item.__typename === 'AdvertImage' ? (
