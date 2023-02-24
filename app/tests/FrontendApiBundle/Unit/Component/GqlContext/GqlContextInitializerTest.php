@@ -18,6 +18,7 @@ class GqlContextInitializerTest extends TestCase
     public function testCartUuidArgumentInQuery(): void
     {
         $event = ExecutorArgumentsEvent::create(
+            'cc',
             new ExtensibleSchema(SchemaConfig::create([])),
             'requestString',
             new ArrayObject(),
@@ -42,6 +43,7 @@ class GqlContextInitializerTest extends TestCase
     public function testCartUuidInInput(): void
     {
         $event = ExecutorArgumentsEvent::create(
+            'cc',
             new ExtensibleSchema(SchemaConfig::create([])),
             'requestString',
             new ArrayObject(),

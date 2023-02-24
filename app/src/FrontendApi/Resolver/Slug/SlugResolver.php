@@ -25,14 +25,16 @@ use App\Model\Product\Product;
 use App\Model\Store\Store;
 use GraphQL\Type\Definition\ResolveInfo;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
+use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrontendApiBundle\Model\Error\UserEntityNotFoundError;
 use Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandResolver;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolver;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductDetailResolver;
 
-class SlugResolver implements ResolverInterface, AliasedInterface
+//use Shopsys\FrontendApiBundle\Model\Error\UserEntityNotFoundError;
+
+class SlugResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \App\Model\CategorySeo\ReadyCategorySeoMixFacade
@@ -195,7 +197,7 @@ class SlugResolver implements ResolverInterface, AliasedInterface
 
                     return $readyCategorySeoMix;
             }
-        } catch (UserEntityNotFoundError $error) {
+        } catch (UserError $error) { //TODO-RK UserEntityNotFoundError $error
         }
 
         throw new NoResultFoundForSlugUserError('No result found for request.');

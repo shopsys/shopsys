@@ -7,15 +7,17 @@ namespace App\FrontendApi\Resolver\Article;
 use App\Component\Setting\Setting;
 use App\Model\Article\Elasticsearch\ArticleElasticsearchFacade;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
+use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException;
 use Shopsys\FrameworkBundle\Component\Setting\Setting as BaseSetting;
 use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
-use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
-use Shopsys\FrontendApiBundle\Model\Resolver\Article\Exception\ArticleNotFoundUserError;
 
-class ArticleResolver implements ResolverInterface, AliasedInterface
+//use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
+//use Shopsys\FrontendApiBundle\Model\Resolver\Article\Exception\ArticleNotFoundUserError;
+
+class ArticleResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -60,10 +62,12 @@ class ArticleResolver implements ResolverInterface, AliasedInterface
             } elseif ($urlSlug !== null) {
                 $articleData = $this->articleElasticsearchFacade->getBySlug($urlSlug);
             } else {
-                throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
+                // TODO-RK                throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
+                throw new UserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
             }
         } catch (ArticleNotFoundException $articleNotFoundException) {
-            throw new ArticleNotFoundUserError($articleNotFoundException->getMessage());
+            //  TODO-RK           throw new ArticleNotFoundUserError($articleNotFoundException->getMessage());
+            throw new UserError($articleNotFoundException->getMessage());
         }
 
         return $articleData;
@@ -102,11 +106,13 @@ class ArticleResolver implements ResolverInterface, AliasedInterface
         try {
             $specialArticleId = $this->setting->getForDomain($settingName, $this->domain->getId());
             if ($specialArticleId === null) {
-                throw new ArticleNotFoundUserError(sprintf('Special article setting "%s" is not set', $settingName));
+                //TODO-RK                throw new ArticleNotFoundUserError(sprintf('Special article setting "%s" is not set', $settingName));
+                throw new UserError(sprintf('Special article setting "%s" is not set', $settingName));
             }
             return $this->articleElasticsearchFacade->getById($specialArticleId);
         } catch (ArticleNotFoundException|SettingValueNotFoundException $exception) {
-            throw new ArticleNotFoundUserError($exception->getMessage());
+            //TODO-RK            throw new ArticleNotFoundUserError($exception->getMessage());
+            throw new UserError($exception->getMessage());
         }
     }
 

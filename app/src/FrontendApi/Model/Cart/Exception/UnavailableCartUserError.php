@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Cart\Exception;
 
 use Overblog\GraphQLBundle\Error\UserError;
-use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
-class UnavailableCartUserError extends UserError implements UserErrorWithCodeInterface
+//use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
+
+class UnavailableCartUserError extends UserError // TODO-RK implements UserErrorWithCodeInterface
 {
     private const CODE = 'cart-unavailable';
 

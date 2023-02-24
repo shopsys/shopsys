@@ -49,7 +49,7 @@ class PaymentMutation implements MutationInterface, AliasedInterface
 
             return $this->paymentServiceFacade->payOrder($order);
         } catch (Throwable $exception) {
-            throw new Error($exception->getMessage(), null, null, null, null, $exception);
+            throw new Error($exception->getMessage(), null, null, [], null, $exception);
         }
     }
 
@@ -67,7 +67,7 @@ class PaymentMutation implements MutationInterface, AliasedInterface
 
             return $order->isPaid();
         } catch (Throwable $exception) {
-            throw new Error($exception->getMessage(), null, null, null, null, $exception);
+            throw new Error($exception->getMessage(), null, null, [], null, $exception);
         }
     }
 

@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Image\Exception;
 
 use Overblog\GraphQLBundle\Error\UserError;
-use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
-class ImageTypeInvalidUserError extends UserError implements UserErrorWithCodeInterface
+//use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
+
+class ImageTypeInvalidUserError extends UserError //TODO-RK implements UserErrorWithCodeInterface
 {
     private const CODE = 'image-type-invalid';
 

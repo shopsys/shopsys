@@ -21,7 +21,6 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand as BaseBrand;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
-use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
@@ -39,17 +38,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsResolver as BasePr
 class ProductsResolver extends BaseProductsResolver
 {
     /**
-     * @var \App\Model\Product\Filter\ProductFilterDataFactory
-     */
-    private ProductFilterDataFactory $productFilterDataFactory;
-
-    /**
-     * @var \Overblog\DataLoader\DataLoaderInterface
-     */
-    private DataLoaderInterface $productsByEntitiesBatchLoader;
-
-    /**
-     * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
      * @param \App\FrontendApi\Model\Product\ProductFacade $productFacade
      * @param \App\FrontendApi\Model\Product\Filter\ProductFilterFacade $productFilterFacade
      * @param \App\FrontendApi\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory
@@ -57,17 +45,13 @@ class ProductsResolver extends BaseProductsResolver
      * @param \Overblog\DataLoader\DataLoaderInterface $productsByEntitiesBatchLoader
      */
     public function __construct(
-        ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
         ProductFacade $productFacade,
         ProductFilterFacade $productFilterFacade,
         ProductConnectionFactory $productConnectionFactory,
-        ProductFilterDataFactory $productFilterDataFactory,
-        DataLoaderInterface $productsByEntitiesBatchLoader
+        private readonly ProductFilterDataFactory $productFilterDataFactory,
+        private readonly DataLoaderInterface $productsByEntitiesBatchLoader
     ) {
-        parent::__construct($productOnCurrentDomainFacade, $productFacade, $productFilterFacade, $productConnectionFactory);
-
-        $this->productFilterDataFactory = $productFilterDataFactory;
-        $this->productsByEntitiesBatchLoader = $productsByEntitiesBatchLoader;
+        parent::__construct($productFacade, $productFilterFacade, $productConnectionFactory);
     }
 
     /**

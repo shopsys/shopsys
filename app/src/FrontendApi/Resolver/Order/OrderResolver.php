@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Order;
 
 use GraphQL\Server\RequestError;
+use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
-use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
+//use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderResolver as BaseOrderResolver;
 
 /**
@@ -40,7 +41,8 @@ class OrderResolver extends BaseOrderResolver
                 return $this->orderFacade->getByUrlHashAndDomain($urlHash, $this->domain->getId());
             }
         } catch (OrderNotFoundException $orderNotFoundException) {
-            throw new OrderNotFoundUserError('Order not found');
+            //TODO-RK            throw new OrderNotFoundUserError('Order not found');
+            throw new UserError('Order not found');
         }
 
         throw new RequestError('You need to be logged in or provide argument \'urlHash\'.');

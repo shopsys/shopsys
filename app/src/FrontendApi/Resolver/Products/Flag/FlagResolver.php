@@ -8,14 +8,15 @@ use App\FrontendApi\Resolver\Products\Flag\Exception\FlagNotFoundUserError;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Flag\FlagFacade;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
+use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
-use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
+//use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 
-class FlagResolver implements ResolverInterface, AliasedInterface
+class FlagResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \App\Model\Product\Flag\FlagFacade
@@ -63,7 +64,8 @@ class FlagResolver implements ResolverInterface, AliasedInterface
             return $this->getVisibleOnDomainBySlug($urlSlug);
         }
 
-        throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
+        //TODO-RK throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
+        throw new UserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
     }
 
     /**

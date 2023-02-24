@@ -51,7 +51,7 @@ class CategoryRepository extends BaseCategoryRepository
             ->addSelect('cd')
             ->andWhere('c.parent IN(:categories)')
             ->setParameter('categories', $categories);
-        $this->categoryRepository->addTranslationPublic($queryBuilder, $domainConfig->getLocale());
+        $this->categoryRepository->addTranslation($queryBuilder, $domainConfig->getLocale());
 
         /** @var \App\Model\Category\Category $childCategory */
         foreach ($queryBuilder->getQuery()->execute() as $childCategory) {
@@ -106,7 +106,7 @@ class CategoryRepository extends BaseCategoryRepository
             ->andWhere('c.id IN(:categoryIds)')
             ->indexBy('c', 'c.id')
             ->setParameter('categoryIds', array_merge(...$categoriesIds));
-        $this->categoryRepository->addTranslationPublic($queryBuilder, $domainConfig->getLocale());
+        $this->categoryRepository->addTranslation($queryBuilder, $domainConfig->getLocale());
         $result = $queryBuilder->getQuery()->execute();
 
         $allCategories = [];

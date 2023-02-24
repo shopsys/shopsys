@@ -10,13 +10,15 @@ use App\Model\Store\Exception\StoreNotFoundException;
 use App\Model\Store\Store;
 use App\Model\Store\StoreFacade;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
+use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
-use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 
-class StoreResolver implements ResolverInterface, AliasedInterface
+//use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
+
+class StoreResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \App\Model\Store\StoreFacade
@@ -69,7 +71,8 @@ class StoreResolver implements ResolverInterface, AliasedInterface
             return $this->getVisibleByDomainIdAndSlug($urlSlug);
         }
 
-        throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
+        //TODO-RK        throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
+        throw new UserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
     }
 
     /**

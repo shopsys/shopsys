@@ -8,10 +8,12 @@ use App\FrontendApi\Resolver\Blog\Article\Exception\BlogArticleNotFoundUserError
 use App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade;
 use App\Model\Blog\Article\Exception\BlogArticleNotFoundException;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
-use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
+use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
+use Overblog\GraphQLBundle\Error\UserError;
 
-class BlogArticleResolver implements ResolverInterface, AliasedInterface
+//use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
+
+class BlogArticleResolver implements QueryInterface, AliasedInterface
 {
     /**
      * @var \App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade
@@ -40,7 +42,8 @@ class BlogArticleResolver implements ResolverInterface, AliasedInterface
                 $urlSlug = ltrim($urlSlug, '/');
                 $blogArticleData = $this->blogArticleElasticsearchFacade->getBySlug($urlSlug);
             } else {
-                throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
+                //TODO-RK                throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
+                throw new UserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
             }
         } catch (BlogArticleNotFoundException $blogArticleNotFoundException) {
             throw new BlogArticleNotFoundUserError($blogArticleNotFoundException->getMessage());

@@ -66,7 +66,7 @@ class FirstImageBatchLoader
 
         $images = [];
         foreach ($imagesBatchLoadData as $imageBatchLoadData) {
-            if (!isset($imagesIndexedByEntityId[$imageBatchLoadData->getEntityId()]) || $imagesIndexedByEntityId[$imageBatchLoadData->getEntityId()] === null) {
+            if (!isset($imagesIndexedByEntityId[$imageBatchLoadData->getEntityId()]) || $imagesIndexedByEntityId[$imageBatchLoadData->getEntityId()] === null) { // @phpstan-ignore-line
                 continue;
             }
 

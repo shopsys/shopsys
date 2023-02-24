@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Slug\Exception;
 
-use Shopsys\FrontendApiBundle\Model\Error\UserEntityNotFoundError;
-use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
+use Overblog\GraphQLBundle\Error\UserError;
 
-class NoResultFoundForSlugUserError extends UserEntityNotFoundError implements UserErrorWithCodeInterface
+//use Shopsys\FrontendApiBundle\Model\Error\UserEntityNotFoundError;
+//use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
+
+class NoResultFoundForSlugUserError extends UserError //TODO-RK UserEntityNotFoundError implements UserErrorWithCodeInterface
 {
     private const CODE = 'no-result-found-for-slug';
 
