@@ -20,7 +20,7 @@ import { useMemo, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 
 type TransportAndPaymentContentProps = {
-    transports: TransportWithAvailablePaymentsAndStoresFragmentApi[];
+    transports: TransportWithAvailablePaymentsAndStoresFragmentApi[] | undefined;
     lastOrder: LastOrderFragmentApi | null;
     changeTransportInCart: ChangeTransportHandler;
     changePaymentInCart: ChangePaymentHandler;
@@ -136,7 +136,7 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
 
     return (
         <>
-            {transports.length > 0 && (
+            {transports !== undefined && transports.length > 0 && (
                 <TransportAndPaymentSelect
                     transports={transports}
                     lastOrderPickupPlace={lastOrderPickupPlace}

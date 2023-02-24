@@ -16,15 +16,7 @@ import { FlagDetailContent } from 'components/Pages/FlagDetail/FlagDetailContent
 import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDetailContent';
 import { ProductDetailMainVariantContent } from 'components/Pages/ProductDetail/ProductDetailMainVariantContent';
 import { StoreDetailContent } from 'components/Pages/StoreDetail/StoreDetailContent';
-import {
-    MainVariantDetailFragmentApi,
-    Maybe,
-    ProductDetailFragmentApi,
-    SlugQueryApi,
-    SlugQueryDocumentApi,
-    SlugQueryVariablesApi,
-    useSlugQueryApi,
-} from 'graphql/generated';
+import { SlugQueryApi, SlugQueryDocumentApi, SlugQueryVariablesApi, useSlugQueryApi } from 'graphql/generated';
 import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
@@ -70,30 +62,22 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
         }),
     );
 
-    const gtmFriendlyUrlPageViewEvent = useGtmPageViewEvent(
-        getGtmPageInfoForFriendlyUrl(slugData, slug, slugData?.breadcrumb),
-    );
+    const gtmFriendlyUrlPageViewEvent = useGtmPageViewEvent(getGtmPageInfoForFriendlyUrl(slugData?.slug, slug));
     useGtmFriendlyPageView(gtmFriendlyUrlPageViewEvent, slug, fetching);
-    return renderContent(slugData, fetching, router, t);
+    return renderContent(slugData?.slug, fetching, router, t);
 };
 
-const renderContent = (slugData: Maybe<FriendlyUrlPageType>, fetching: boolean, router: NextRouter, t: Translate) => {
+const renderContent = (
+    slugData: SlugQueryApi['slug'] | undefined,
+    fetching: boolean,
+    router: NextRouter,
+    t: Translate,
+) => {
     switch (slugData?.__typename) {
         case 'RegularProduct':
-            return wrapContent(
-                <ProductDetailContent product={slugData as ProductDetailFragmentApi} fetching={fetching} />,
-                slugData,
-                t,
-            );
+            return wrapContent(<ProductDetailContent product={slugData} fetching={fetching} />, slugData, t);
         case 'MainVariant':
-            return wrapContent(
-                <ProductDetailMainVariantContent
-                    product={slugData as MainVariantDetailFragmentApi}
-                    fetching={fetching}
-                />,
-                slugData,
-                t,
-            );
+            return wrapContent(<ProductDetailMainVariantContent product={slugData} fetching={fetching} />, slugData, t);
         case 'Category':
             return wrapPaginatedContent(<CategoryDetailContent category={slugData} />, slugData, router, t);
         case 'Store':

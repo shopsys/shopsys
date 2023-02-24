@@ -1,6 +1,6 @@
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
-import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { CartFragmentApi, useRemovePromoCodeFromCartMutationApi } from 'graphql/generated';
+import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCallback } from 'react';
 import { useShopsysSelector } from 'redux/main';

@@ -1,14 +1,15 @@
 import { BannersSlider } from './BannersSlider/BannersSlider';
-import { useSliderItems } from 'connectors/sliderItems/SliderItems';
+import { useSliderItemsQueryApi } from 'graphql/generated';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 
 const TEST_IDENTIFIER = 'blocks-banners';
 
 export const Banners: FC = () => {
-    const sliderItems = useSliderItems();
+    const [{ data: sliderItemsData }] = useQueryError(useSliderItemsQueryApi());
 
-    if (sliderItems === undefined || (Array.isArray(sliderItems) && sliderItems.length === 0)) {
+    if (sliderItemsData === undefined || sliderItemsData.sliderItems.length === 0) {
         return null;
     }
 
-    return <BannersSlider sliderItems={sliderItems} testIdentifier={TEST_IDENTIFIER} />;
+    return <BannersSlider sliderItems={sliderItemsData.sliderItems} testIdentifier={TEST_IDENTIFIER} />;
 };

@@ -7,6 +7,7 @@ import {
     CartFragmentApi,
     ListedStoreFragmentApi,
     SimplePaymentFragmentApi,
+    SlugQueryApi,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
 } from 'graphql/generated';
 import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
@@ -17,7 +18,6 @@ import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { CurrentCustomerType } from 'types/customer';
-import { FriendlyUrlPageType } from 'types/friendlyUrl';
 import {
     GtmCartInfoEventType,
     GtmCartItemType,
@@ -81,16 +81,13 @@ export const useGtmCartEventInfo = (): GtmCartInfoEventType => {
     }, [cart, cartUuid, domain.currencyCode, domain.url, isInitiallyLoaded, isUserLoggedIn, promoCode]);
 };
 
-export const getGtmPageInfoForFriendlyUrl = (
-    data: FriendlyUrlPageType | null | undefined,
-    slug: string,
-    breadcrumbs: BreadcrumbFragmentApi[] | undefined,
-): GtmPageInfoType => {
+export const getGtmPageInfoForFriendlyUrl = (data: SlugQueryApi['slug'] | undefined, slug: string): GtmPageInfoType => {
+    const breadcrumbs = data !== undefined && data !== null && 'breadcrumb' in data ? data.breadcrumb : [];
     const defaultPageInfo: GtmPageInfoType = {
         type: '404',
         path: slug,
         pageId: getRandomPageId(),
-        breadcrumbs: breadcrumbs ?? [],
+        breadcrumbs,
     };
 
     if (data === null || data === undefined) {

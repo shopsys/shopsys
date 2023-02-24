@@ -1,6 +1,6 @@
 import { showErrorMessage } from 'components/Helpers/Toasts';
-import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { CartFragmentApi, useChangePaymentInCartMutationApi } from 'graphql/generated';
+import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { onPaymentChangeGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import { useGtmCartEventInfo } from 'helpers/gtm/gtm';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';

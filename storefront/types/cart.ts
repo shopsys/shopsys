@@ -1,9 +1,7 @@
 import {
     CartFragmentApi,
-    CartItemFragmentApi,
     CartModificationsFragmentApi,
     ListedStoreFragmentApi,
-    PriceFragmentApi,
     SimplePaymentFragmentApi,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
 } from 'graphql/generated';

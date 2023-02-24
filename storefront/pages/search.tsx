@@ -2,8 +2,12 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
 import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { SearchContent } from 'components/Pages/Search/SearchContent';
-import { useSearch } from 'connectors/search/Search';
-import { BreadcrumbFragmentApi, SearchProductsQueryDocumentApi, SearchQueryDocumentApi } from 'graphql/generated';
+import {
+    BreadcrumbFragmentApi,
+    SearchProductsQueryDocumentApi,
+    SearchQueryDocumentApi,
+    useSearchQueryApi,
+} from 'graphql/generated';
 import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
@@ -22,6 +26,7 @@ import {
 } from 'helpers/queryParams/queryParamNames';
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
@@ -38,7 +43,16 @@ const SearchPage: FC<ServerSidePropsType> = () => {
         parseFilterOptionsFromQuery(router.query[FILTER_QUERY_PARAMETER_NAME]),
     );
     const searchQuery = getStringFromUrlQuery(router.query[SEARCH_QUERY_PARAMETER_NAME]);
-    const searchResults = useSearch(searchQuery, searchProductsSort, searchParametersFilter);
+    const [{ data: searchData }] = useQueryError(
+        useSearchQueryApi({
+            variables: {
+                search: searchQuery,
+                orderingMode: searchProductsSort,
+                filter: mapParametersFilter(searchParametersFilter),
+                pageSize: DEFAULT_PAGE_SIZE,
+            },
+        }),
+    );
 
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], domainUrl);
     const breadcrumbs: BreadcrumbFragmentApi[] = [{ __typename: 'Link', name: t('Search'), slug: searchUrl }];
@@ -47,7 +61,7 @@ const SearchPage: FC<ServerSidePropsType> = () => {
 
     let title = t('Search');
     const currentPage = parsePageNumberFromQuery(router.query[PAGE_QUERY_PARAMETER_NAME]);
-    const searchedProductsTotalCount = searchResults?.productsSearch.totalCount ?? 0;
+    const searchedProductsTotalCount = searchData?.productsSearch.totalCount ?? 0;
 
     if (searchedProductsTotalCount > DEFAULT_PAGE_SIZE) {
         const additionalPaginationText =
@@ -63,7 +77,7 @@ const SearchPage: FC<ServerSidePropsType> = () => {
         <>
             <MetaRobots content="noindex, nofollow" />
             <CommonLayout title={title}>
-                <SearchContent searchResults={searchResults} breadcrumbs={breadcrumbs} />
+                <SearchContent searchResults={searchData} breadcrumbs={breadcrumbs} />
             </CommonLayout>
         </>
     );

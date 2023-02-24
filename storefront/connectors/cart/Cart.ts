@@ -1,15 +1,17 @@
 import { showErrorMessage, showInfoMessage } from 'components/Helpers/Toasts';
-import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
-import { getSelectedPickupPlace } from 'connectors/pickupPlace/PickupPlace';
 import {
     CartItemModificationsFragmentApi,
     CartModificationsFragmentApi,
     CartPaymentModificationsFragmentApi,
     CartPromoCodeModificationsFragmentApi,
     CartTransportModificationsFragmentApi,
+    ListedStoreFragmentApi,
+    TransportWithAvailablePaymentsAndStoresFragmentApi,
     useCartQueryApi,
 } from 'graphql/generated';
 import { ApplicationErrors } from 'helpers/errors/applicationErrors';
+import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
+import { getPacketeryCookie } from 'helpers/packetery';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
@@ -194,4 +196,23 @@ const handleCartPromoCodeModifications = (
             'cart',
         );
     }
+};
+
+const getSelectedPickupPlace = (
+    transport: TransportWithAvailablePaymentsAndStoresFragmentApi | null,
+    pickupPlaceIdentifier: string | null | undefined,
+): ListedStoreFragmentApi | null => {
+    if (transport === null || pickupPlaceIdentifier === null) {
+        return null;
+    }
+
+    if (transport.transportType.code === 'packetery') {
+        return getPacketeryCookie();
+    }
+
+    const pickupPlace = transport.stores?.edges?.find(
+        (pickupPlaceNode) => pickupPlaceNode?.node?.identifier === pickupPlaceIdentifier,
+    );
+
+    return pickupPlace?.node === undefined ? null : pickupPlace.node;
 };
