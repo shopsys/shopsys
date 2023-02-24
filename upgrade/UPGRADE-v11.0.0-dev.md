@@ -1197,3 +1197,353 @@ There you can find links to upgrade notes for other versions too.
     - `Shopsys\FrameworkBundle\Component\Translation\ConstraintMessageExtractor` class:
         - constant `CONSTRAINT_MESSAGE_DOMAIN` has been removed, use `Shopsys\FrameworkBundle\Component\Translation\Translator::VALIDATOR_TRANSLATION_DOMAIN` instead
     - also see #project-base-diff for more information about changes needed to be done in your project
+- GQL resolvers and mutations refactoring ([#2563](https://github.com/shopsys/shopsys/pull/2563))
+    - all frontend API `Resolver` classes were renamed to Query:
+        - `Shopsys\FrontendApiBundle\Model\Resolver\Advert\AdverPositionsResolver` class was renamed:
+        ```diff
+        - Shopsys\FrontendApiBundle\Model\Resolver\Advert\AdverPositionsResolver
+        + Shopsys\FrontendApiBundle\Model\Resolver\Advert\AdverPositionsQuery
+        ```
+        - `Shopsys\FrontendApiBundle\Model\Resolver\Advert\AdversResolver` class was renamed:
+        ```diff
+        - Shopsys\FrontendApiBundle\Model\Resolver\Advert\AdversResolver
+        + Shopsys\FrontendApiBundle\Model\Resolver\Advert\AdversQuery
+        ```
+        - `Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticleResolver` class was renamed:
+        ```diff
+        - Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticleResolver
+        + Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticleQuery
+        ```
+        - `Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticlesResolver` class was renamed:
+        ```diff
+        - Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticlesResolver
+        + Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticlesQuery
+        ```
+        - `Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandResolver` class was renamed:
+        ```diff
+        - Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandResolver
+        + Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery
+        ```
+        - `Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandsResolver` class was renamed:
+        ```diff
+        - Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandsResolver
+        + Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandsQuery
+        ```
+        - `Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolver` class was renamed:
+        ```diff
+        - Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolver
+        + Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryQuery
+        ```
+        - `Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesResolver` class was renamed:
+        ```diff
+        - Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesResolver
+        + Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesQuery
+        ```
+        - `Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesSearchResolver` class was renamed:
+        ```diff
+        - Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesSearchResolver
+        + Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesSearchQuery
+        ```
+        - `Shopsys\FrontendApiBundle\Model\Resolver\User\CurrentCustomerUserResolver` class was renamed:
+        ```diff
+        - Shopsys\FrontendApiBundle\Model\Resolver\User\CurrentCustomerUserResolver
+        + Shopsys\FrontendApiBundle\Model\Resolver\User\CurrentCustomerUserQuery
+        ```
+        - `Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesResolver` class was renamed:
+        ```diff
+        - Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesResolver
+        + Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesQuery
+        ```
+        - `Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderResolver` class was renamed:
+        ```diff
+        - Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderResolver
+        + Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderQuery
+        ```
+        - `Shopsys\FrontendApiBundle\Model\Resolver\Order\OrdersResolver` class was renamed:
+        ```diff
+        - Shopsys\FrontendApiBundle\Model\Resolver\Order\OrdersResolver
+        + Shopsys\FrontendApiBundle\Model\Resolver\Order\OrdersQuery
+        ```
+        - `Shopsys\FrontendApiBundle\Model\Resolver\Payment\PaymentResolver` class was renamed:
+        ```diff
+        - Shopsys\FrontendApiBundle\Model\Resolver\Payment\PaymentResolver
+        + Shopsys\FrontendApiBundle\Model\Resolver\Payment\PaymentQuery
+        ```
+        - `Shopsys\FrontendApiBundle\Model\Resolver\Payment\PaymentsResolver` class was renamed:
+        ```diff
+        - Shopsys\FrontendApiBundle\Model\Resolver\Payment\PaymentsResolver
+        + Shopsys\FrontendApiBundle\Model\Resolver\Payment\PaymentsQuery
+        ```
+        - `Shopsys\FrontendApiBundle\Model\Resolver\Price\PriceResolver` class was renamed:
+        ```diff
+        - Shopsys\FrontendApiBundle\Model\Resolver\Price\PriceResolver
+        + Shopsys\FrontendApiBundle\Model\Resolver\Price\PriceQuery
+        ```
+        - `Shopsys\FrontendApiBundle\Model\Resolver\Products\PromotedProductsResolver` class was renamed:
+        ```diff
+        - Shopsys\FrontendApiBundle\Model\Resolver\Products\PromotedProductsResolver
+        + Shopsys\FrontendApiBundle\Model\Resolver\Products\PromotedProductsQuery
+        ```
+        - `Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsResolver` class was renamed:
+        ```diff
+        - Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsResolver
+        + Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsQuery
+        ```
+        - `Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductDetailResolver` class was renamed:
+        ```diff
+        - Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductDetailResolver
+        + Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductDetailQuery
+        ```
+        - `Shopsys\FrontendApiBundle\Model\Resolver\Transport\TransportsResolver` class was renamed:
+        ```diff
+        - Shopsys\FrontendApiBundle\Model\Resolver\Transport\TransportsResolver
+        + Shopsys\FrontendApiBundle\Model\Resolver\Transport\TransportsQuery
+        ```
+        - `Shopsys\FrontendApiBundle\Model\Resolver\Transport\TransportResolver` class was renamed:
+        ```diff
+        - Shopsys\FrontendApiBundle\Model\Resolver\Transport\TransportResolver
+        + Shopsys\FrontendApiBundle\Model\Resolver\Transport\TransportQuery
+        ```
+    - All query method names in `Query` classes should end with suffix `Query` in order to be automatically aliased for use in GQL definitions
+        - in `Shopsys\FrontendApiBundle\Model\Resolver\Advert\AdverPositionsQuery` class method was renamed:
+        ```diff
+        - public function resolve(): array
+        + public function advertPositionsQuery(): array
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Resolver\Advert\AdversQuery` class method was renamed:
+        ```diff
+        - public function resolve(?string $positionName = null): array
+        + public function advertsQuery(?string $positionName = null): array
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticleQuery` class methods were renamed:
+        ```diff
+        - public function resolver(?string $uuid = null, ?string $urlSlug = null): Article
+        + public function articleByUuidOrUrlSlugQuery(?string $uuid = null, ?string $urlSlug = null): Article
+        ```
+        ```diff
+        - public function termsAndConditionsArticle(): Article
+        + public function termsAndConditionsArticleQuery(): Article
+        ```
+        ```diff
+        - public function privacyPolicyArticle(): Article
+        + public function privacyPolicyArticleQuery(): Article
+        ```
+        ```diff
+        - public function cookiesArticle(): Article
+        + public function cookiesArticleQuery(): Article
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticlesQuery` class method was renamed:
+        ```diff
+        - public function resolve(Argument $argument, ?string $placement)
+        + public function articlesQuery(Argument $argument, ?string $placement)
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery` class method was renamed:
+        ```diff
+        - public function resolver(?string $uuid = null, ?string $urlSlug = null): Brand
+        + public function brandByUuidOrUrlSlugQuery(?string $uuid = null, ?string $urlSlug = null): Brand
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandsQuery` class method was renamed:
+        ```diff
+        - public function resolve(): array
+        + public function brandsQuery(): array
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryQuery` class method was renamed:
+        ```diff
+        - public function resolveByUuidOrUrlSlug(?string $uuid = null, ?string $urlSlug = null): Category
+        + public function categoryByUuidOrUrlSlugQuery(?string $uuid = null, ?string $urlSlug = null): Category
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesQuery` class method was renamed:
+        ```diff
+        - public function resolve(): array
+        + public function categoriesQuery(): array
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesSearchQuery` class method was renamed:
+        ```diff
+        - public function resolveSearch(Argument $argument)
+        + public function categoriesSearchQuery(Argument $argument)
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Resolver\User\CurrentCustomerUserQuery` class method was renamed:
+        ```diff
+        - public function resolver(): CustomerUser
+        + public function currentCustomerUserQuery(): CustomerUser
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesQuery` class are:
+          - methods `resolveByCategory`, `resolveByPayment`, `resolveByTransport`, `resolveByBrand` were replaced by new universal method `imagesByEntityQuery`
+          - renamed methods:
+        ```diff
+        - public function resolveByProduct($data, ?string $type, ?string $size): array
+        + public function imagesByProductQuery($data, ?string $type, ?string $size): array
+        ```
+        ```diff
+        - public function resolveByAdvert(Advert $advert, ?string $type, ?string $size): array
+        + public function imagesByAdvertQuery(Advert $advert, ?string $type, ?string $size): array
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderQuery` class method was renamed:
+        ```diff
+        - public function resolver(?string $uuid = null, ?string $urlHash = null): Order
+        + public function orderByUuidOrUrlHashQuery(?string $uuid = null, ?string $urlHash = null): Order
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Resolver\Order\OrdersQuery` class method was renamed:
+        ```diff
+        - public function resolve(Argument $argument)
+        + public function ordersQuery(Argument $argument)
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Resolver\Payment\PaymentQuery` class method was renamed:
+        ```diff
+        - public function resolver(string $uuid): Payment
+        + public function paymentQuery(string $uuid): Payment
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Resolver\Payment\PaymentsQuery` class method was renamed:
+        ```diff
+        - public function resolve(): array
+        + public function paymentsQuery(): array
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Resolver\Price\PriceQuery` class methods were renamed:
+        ```diff
+        - public function resolveByProduct($data): ProductPrice
+        + public function priceByProductQuery($data): ProductPrice
+        ```
+        ```diff
+        - public function resolveByPayment(Payment $payment): Price
+        + public function priceByPaymentQuery(Payment $payment): Price
+        ```
+        ```diff
+        - public function resolveByTransport(Transport $transport): Price
+        + public function priceByTransportQuery(Transport $transport): Price
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Resolver\Products\PromotedProductsQuery` class method was renamed:
+        ```diff
+        - public function resolve(): array
+        + public function promotedProductsQuery(): array
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsQuery` class methods were renamed:
+        ```diff
+        - public function resolve(Argument $argument)
+        + public function productsQuery(Argument $argument)
+        ```
+        ```diff
+        - public function resolveByCategory(Argument $argument, Category $category)
+        + public function productsByCategoryQuery(Argument $argument, Category $category)
+        ```
+        ```diff
+        - public function resolveByBrand(Argument $argument, Brand $brand)
+        + public function productsByBrandQuery(Argument $argument, Brand $brand)
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductDetailQuery` class method was renamed:
+        ```diff
+        - public function resolver(?string $uuid = null, ?string $urlSlug = null): array
+        + public function productDetailQuery(?string $uuid = null, ?string $urlSlug = null): array
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Resolver\Transport\TransportsQuery` class method was renamed:
+        ```diff
+        - public function resolve(): array
+        + public function transportsQuery(): array
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Resolver\Transport\TransportQuery` class method was renamed:
+        ```diff
+        - public function resolver(string $uuid): Transport
+        + public function transportByTransportUuidQuery(string $uuid): Transport
+        ```
+    - in all GQL queries resolve definitions are all old aliases replaced by renamed Query functions, e.g.:
+        ```diff
+        - resolve: '@=query("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Image\\ImagesResolver::resolveByAdvert", value, args["type"], args["size"])'
+        + resolve: '@=query("imagesByAdvertQuery", value, args["type"], args["size"])'
+        ```
+    - type definition of `images` in `AdvertImageDecorator`, `BrandDecorator` and `CategoryDecorator` has changed:
+        ```diff
+        - type: "[Image]"
+        + type: "[Image!]!"
+        ```
+    - in GQL definition of `AdvertImageDecorator` is attribute `image` renamed to `images` and its type definition has changed:
+        ```diff
+        - image:
+        -     type: "[Image]"
+        + images:
+        +     type: "[Image!]!"
+        ```
+    - All mutation methods in `*Mutation` classes should end with suffix `Mutation` in order to be automatically aliased for use in GQL definitions
+        - in `Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\CustomerUserMutation` class methods were renamed:
+        ```diff
+        - public function changePassword(Argument $argument, InputValidator $validator): CustomerUser
+        + public function changePasswordMutation(Argument $argument, InputValidator $validator): CustomerUser
+        ```
+        ```diff
+        - public function changePersonalData(Argument $argument, InputValidator $validator): CustomerUser
+        + public function changePersonalDataMutation(Argument $argument, InputValidator $validator): CustomerUser
+        ```
+        ```diff
+        - public function register(Argument $argument, InputValidator $validator): array
+        + public function registerMutation(Argument $argument, InputValidator $validator): array
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation` class method was renamed:
+        ```diff
+        - public function login(Argument $argument): array
+        + public function loginMutation(Argument $argument): array
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Mutation\Login\RefreshTokensMutation` class method was renamed:
+        ```diff
+        - public function refreshTokens(Argument $argument): array
+        + public function refreshTokensMutation(Argument $argument): array
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Mutation\Logout\LogoutMutation` class method was renamed:
+        ```diff
+        - public function logout(): array
+        + public function logoutMutation(): array
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Mutation\Newsletter\NewsletterMutation` class method was renamed:
+        ```diff
+        - public function newsletterSubscribe(Argument $argument, InputValidator $validator): array
+        + public function newsletterSubscribeMutation(Argument $argument, InputValidator $validator): array
+        ```
+        - in `Shopsys\FrontendApiBundle\Model\Mutation\Order\CreateOrderMutation` class method was renamed:
+        ```diff
+        - public function createOrder(Argument $argument, InputValidator $validator): Order
+        + public function createOrderMutation(Argument $argument, InputValidator $validator): Order
+        ```
+    - in GQL mutation definitions are replaced all old aliases for renamed Mutation methods:
+        ```diff
+        - resolve: "@=mutation('create_order', args, validator)"
+        + resolve: "@=mutation('createOrderMutation', args, validator)"
+        ```
+        ```diff
+        - resolve: "@=mutation('user_login', args)"
+        + resolve: "@=mutation('loginMutation', args)"
+        ```
+        ```diff
+        - resolve: "@=mutation('user_logout')"
+        + resolve: "@=mutation('logoutMutation')"
+        ```
+        ```diff
+        - resolve: "@=mutation('refresh_tokens', args)"
+        + resolve: "@=mutation('refreshTokensMutation', args)"
+        ```
+        ```diff
+        - resolve: "@=mutation('customer_user_change_password', args, validator)"
+        + resolve: "@=mutation('changePasswordMutation', args, validator)"
+        ```
+        ```diff
+        - resolve: "@=mutation('customer_user_change_personal_data', args, validator)"
+        + resolve: "@=mutation('changePersonalDataMutation', args, validator)"
+        ```
+        ```diff
+        - resolve: "@=mutation('customer_user_register', args, validator)"
+        + resolve: "@=mutation('registerMutation', args, validator)"
+        ```
+        ```diff
+        - resolve: "@=mutation('newsletter_subscribe', args, validator)"
+        + resolve: "@=mutation('newsletterSubscribeMutation', args, validator)"
+        ```
+        ```diff
+        - resolve: "@=mutation('create_order', args, validator)"
+        + resolve: "@=mutation('createOrderMutation', args, validator)"
+        ```
+        ```diff
+        - resolve: "@=mutation('create_order', args, validator)"
+        + resolve: "@=mutation('createOrderMutation', args, validator)"
+        ```
+    - in `services.yaml` class suffix `Resolver` replaced by suffix `Query` for autowiring classes. You should rename your Resolver classes to Query classes as well and update your `services.yaml`.
+        ```diff
+        - resource: '../../**/*{Facade,Factory,Mapper,Mutation,Repository,Resolver,Validator}.php'
+        + resource: '../../**/*{Facade,Factory,Mapper,Mutation,Query,Repository,Validator}.php'
+        ```
+  - see #project-base-diff for more information about changes needed to be done in your project

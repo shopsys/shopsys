@@ -149,7 +149,7 @@ QueryDecorator:
         fields:
             categories:
                 type: '[Category!]!'                    # Array of the categories will be returned.
-                resolve: "@=query('categories')"   # Define the resolver responsible for returning the data. See the resolvers section below.
+                resolve: "@=query('categoriesQuery')"   # Define the query responsible for returning the data. See the 'Queries' section below, e.g. CategoriesQuery::categoriesQuery.
 ```
 
 And specific `Query` type is defined in `config/graphql/types/Query.types.yaml`
@@ -160,36 +160,53 @@ Query:
         - 'QueryDecorator'   # No project-specific queries are defined.
 ```
 
-### Resolvers
-Resolvers are normal Symfony services.
-They only have to implement the `Overblog\GraphQLBundle\Definition\Resolver\QueryInterface` to be recognized as an available resolver for the GraphQL.
-
-There are several ways how to define resolvers in definition YAML files.
-We use `Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface` to keep definitions simple and easy to read.
-
-`AliasedInterface` describe one method `getAliases` that should return array of `"method name" => "name used in definition"` pairs.
+### Queries
+Queries are normal Symfony services.
+They only have to extend `Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery` to be recognized as an available query for the GraphQL.
+This abstract class provides convenience for registering query functions by introducing a function naming convention for use in Query.types.yaml definitions. 
+The suffix `Query` in the name of the function is required for calling function as the alias in query decorator (`resolve: "@=query('categoriesQuery')"`). 
+For example, if you want to get all categories in the GQL query categories, the name of the function have to be `categoriesQuery`.
 
 ```php
-/**
- * @return array
- */
-public function resolve(): array
+class CategoriesQuery extends AbstractQuery
 {
-    // implementation
-}
-
-/**
- * @return string[]
- */
-public static function getAliases(): array
-{
-    return [
-        'resolve' => 'categories',  // field with resolver defined as "@=query('categories')" (see above) will use `resolve` method in this class
-    ];
+    /**
+     * @return array
+     */
+    public function categoriesQuery(): array
+    {
+        // implementation
+        
+        return [];
+    }
 }
 ```
 
-You can override resolvers like any other Symfony service.
+### Mutations
+Mutations are normal Symfony services.
+They only have to extend `Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation` to be recognized as an available mutation for the GraphQL.
+This abstract class provides convenience for registering mutation functions by introducing a function naming convention for use in Mutation.types.yaml definitions.
+The suffix `Mutation` in the name of the function is required for calling function as the alias in query decorator (`resolve: "@=mutation('createOrderMutation', args, validator)"`).
+For example, if you want to create order by the GQL mutation, the name of the function will be `createOrderMutation`.
+
+```php
+class CreateOrderMutation extends AbstractMutation
+{
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order
+     */
+    public function createOrderMutation(Argument $argument, InputValidator $validator): Order
+    {
+        // implementation
+
+        return $order;
+    }
+}
+```
+
+You can override both queries and mutations like any other Symfony service.
 
 ### Resolver Maps
 If we map GraphQl objects to entities, it may happen that automatic transformation is not possible.

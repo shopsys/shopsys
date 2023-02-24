@@ -4,45 +4,26 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Products;
 
-use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
-class ProductDetailResolver implements QueryInterface, AliasedInterface
+class ProductDetailQuery extends AbstractQuery
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider
-     */
-    protected ProductElasticsearchProvider $productElasticsearchProvider;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected Domain $domain;
-
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade
-     */
-    protected FriendlyUrlFacade $friendlyUrlFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
     public function __construct(
-        ProductElasticsearchProvider $productElasticsearchProvider,
-        Domain $domain,
-        FriendlyUrlFacade $friendlyUrlFacade
+        protected readonly ProductElasticsearchProvider $productElasticsearchProvider,
+        protected readonly Domain $domain,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade
     ) {
-        $this->productElasticsearchProvider = $productElasticsearchProvider;
-        $this->domain = $domain;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
     }
 
     /**
@@ -50,7 +31,7 @@ class ProductDetailResolver implements QueryInterface, AliasedInterface
      * @param string|null $urlSlug
      * @return array
      */
-    public function resolver(?string $uuid = null, ?string $urlSlug = null): array
+    public function productDetailQuery(?string $uuid = null, ?string $urlSlug = null): array
     {
         if ($uuid !== null) {
             return $this->getVisibleProductArrayByUuid($uuid);
@@ -61,16 +42,6 @@ class ProductDetailResolver implements QueryInterface, AliasedInterface
         }
 
         throw new UserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getAliases(): array
-    {
-        return [
-            'resolver' => 'productDetail',
-        ];
     }
 
     /**

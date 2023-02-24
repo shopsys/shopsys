@@ -8,7 +8,7 @@ use GraphQL\Error\UserError;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class BaseTokenMutation
+class BaseTokenMutation extends AbstractMutation
 {
     /**
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage

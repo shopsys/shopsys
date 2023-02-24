@@ -69,7 +69,6 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
         'GYD',
         'HKD',
         'HNL',
-        'HRK',
         'HTG',
         'HUF',
         'CHF',

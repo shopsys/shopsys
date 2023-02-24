@@ -5,41 +5,30 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Category;
 
 use Overblog\GraphQLBundle\Definition\Argument;
-use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrontendApiBundle\Model\Category\CategoryFacade;
+use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
-class CategoriesSearchResolver implements QueryInterface, AliasedInterface
+class CategoriesSearchQuery extends AbstractQuery
 {
     protected const DEFAULT_FIRST_LIMIT = 10;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected Domain $domain;
-
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Category\CategoryFacade
-     */
-    protected CategoryFacade $categoryFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrontendApiBundle\Model\Category\CategoryFacade $categoryFacade
      */
-    public function __construct(Domain $domain, CategoryFacade $categoryFacade)
-    {
-        $this->domain = $domain;
-        $this->categoryFacade = $categoryFacade;
+    public function __construct(
+        protected readonly Domain $domain,
+        protected readonly CategoryFacade $categoryFacade
+    ) {
     }
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
      */
-    public function resolveSearch(Argument $argument)
+    public function categoriesSearchQuery(Argument $argument)
     {
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
@@ -75,15 +64,5 @@ class CategoriesSearchResolver implements QueryInterface, AliasedInterface
         ) {
             $argument->offsetSet('first', static::DEFAULT_FIRST_LIMIT);
         }
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getAliases(): array
-    {
-        return [
-            'resolveSearch' => 'categoriesSearch',
-        ];
     }
 }

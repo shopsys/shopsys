@@ -10,25 +10,25 @@ MutationDecorator:
                     input:
                         type: OrderInput!
                         validation: cascade
-                resolve: "@=mutation('create_order', args, validator)"
+                resolve: "@=mutation('createOrderMutation', args, validator)"
             Login:
                 type: Token!
                 description: "Login user and return access and refresh tokens"
                 args:
                     input:
                         type: LoginInput!
-                resolve: "@=mutation('user_login', args)"
+                resolve: "@=mutation('loginMutation', args)"
             Logout:
                 type: Boolean!
                 description: "Logout user"
-                resolve: "@=mutation('user_logout')"
+                resolve: "@=mutation('logoutMutation')"
             RefreshTokens:
                 type: Token!
                 description: "Refreshes access and refresh tokens"
                 args:
                     input:
                         type: RefreshTokenInput!
-                resolve: "@=mutation('refresh_tokens', args)"
+                resolve: "@=mutation('refreshTokensMutation', args)"
             ChangePassword:
                 type: 'CurrentCustomerUser!'
                 description: "Changes customer user password"
@@ -36,7 +36,7 @@ MutationDecorator:
                     input:
                         type: ChangePasswordInput!
                         validation: cascade
-                resolve: "@=mutation('customer_user_change_password', args, validator)"
+                resolve: "@=mutation('changePasswordMutation', args, validator)"
             ChangePersonalData:
                 type: 'CurrentCustomerUser!'
                 description: "Changes customer user personal data"
@@ -44,7 +44,7 @@ MutationDecorator:
                     input:
                         type: ChangePersonalDataInput!
                         validation: cascade
-                resolve: "@=mutation('customer_user_change_personal_data', args, validator)"
+                resolve: "@=mutation('changePersonalDataMutation', args, validator)"
             Register:
                 type: Token!
                 description: "Register new customer user"
@@ -52,7 +52,7 @@ MutationDecorator:
                     input:
                         type: RegistrationDataInput!
                         validation: cascade
-                resolve: "@=mutation('customer_user_register', args, validator)"
+                resolve: "@=mutation('registerMutation', args, validator)"
             NewsletterSubscribe:
                 type: Boolean!
                 description: "Subscribe for e-mail newsletter"
@@ -60,4 +60,4 @@ MutationDecorator:
                     input:
                         type: NewsletterSubscriptionDataInput!
                         validation: cascade
-                resolve: "@=mutation('newsletter_subscribe', args, validator)"
+                resolve: "@=mutation('newsletterSubscribeMutation', args, validator)"

@@ -6,15 +6,14 @@ namespace Shopsys\FrontendApiBundle\Model\Mutation\Login;
 
 use GraphQL\Error\UserError;
 use Overblog\GraphQLBundle\Definition\Argument;
-use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
+use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 
-class LoginMutation implements MutationInterface, AliasedInterface
+class LoginMutation extends AbstractMutation
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider $frontendCustomerUserProvider
@@ -32,7 +31,7 @@ class LoginMutation implements MutationInterface, AliasedInterface
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return string[]
      */
-    public function login(Argument $argument): array
+    public function loginMutation(Argument $argument): array
     {
         $input = $argument['input'];
 
@@ -51,16 +50,6 @@ class LoginMutation implements MutationInterface, AliasedInterface
         return [
             'accessToken' => $this->tokenFacade->createAccessTokenAsString($user, $deviceId),
             'refreshToken' => $this->tokenFacade->createRefreshTokenAsString($user, $deviceId),
-        ];
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getAliases(): array
-    {
-        return [
-            'login' => 'user_login',
         ];
     }
 }

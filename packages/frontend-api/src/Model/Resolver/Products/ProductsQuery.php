@@ -5,39 +5,17 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Products;
 
 use Overblog\GraphQLBundle\Definition\Argument;
-use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
-use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
+use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
-class ProductsResolver implements QueryInterface, AliasedInterface
+class ProductsQuery extends AbstractQuery
 {
     protected const DEFAULT_FIRST_LIMIT = 10;
-
-    /**
-     * @var \Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder
-     */
-    protected $connectionBuilder;
-
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Product\ProductFacade
-     */
-    protected $productFacade;
-
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade
-     */
-    protected ProductFilterFacade $productFilterFacade;
-
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory
-     */
-    protected ProductConnectionFactory $productConnectionFactory;
 
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade $productFacade
@@ -45,21 +23,17 @@ class ProductsResolver implements QueryInterface, AliasedInterface
      * @param \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory
      */
     public function __construct(
-        ProductFacade $productFacade,
-        ProductFilterFacade $productFilterFacade,
-        ProductConnectionFactory $productConnectionFactory
+        protected readonly ProductFacade $productFacade,
+        protected readonly ProductFilterFacade $productFilterFacade,
+        protected readonly ProductConnectionFactory $productConnectionFactory
     ) {
-        $this->connectionBuilder = new ConnectionBuilder();
-        $this->productFacade = $productFacade;
-        $this->productFilterFacade = $productFilterFacade;
-        $this->productConnectionFactory = $productConnectionFactory;
     }
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
      */
-    public function resolve(Argument $argument)
+    public function productsQuery(Argument $argument)
     {
         $search = $argument['search'] ?? '';
 
@@ -90,7 +64,7 @@ class ProductsResolver implements QueryInterface, AliasedInterface
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
      */
-    public function resolveByCategory(Argument $argument, Category $category)
+    public function productsByCategoryQuery(Argument $argument, Category $category)
     {
         $search = $argument['search'] ?? '';
 
@@ -124,7 +98,7 @@ class ProductsResolver implements QueryInterface, AliasedInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
      */
-    public function resolveByBrand(Argument $argument, Brand $brand)
+    public function productsByBrandQuery(Argument $argument, Brand $brand)
     {
         $search = $argument['search'] ?? '';
 
@@ -161,16 +135,6 @@ class ProductsResolver implements QueryInterface, AliasedInterface
         if ($argument->offsetExists('first') === false && $argument->offsetExists('last') === false) {
             $argument->offsetSet('first', static::DEFAULT_FIRST_LIMIT);
         }
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getAliases(): array
-    {
-        return [
-            'resolve' => 'products',
-        ];
     }
 
     /**

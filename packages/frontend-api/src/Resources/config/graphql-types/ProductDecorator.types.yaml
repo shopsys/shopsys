@@ -34,11 +34,11 @@ ProductDecorator:
             price:
                 type: "ProductPrice"
                 description: "Product price"
-                resolve: '@=query("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Price\\PriceResolver::resolveByProduct", value)'
+                resolve: '@=query("priceByProductQuery", value)'
             images:
                 type: "[Image]!"
                 description: "Product images"
-                resolve: '@=query("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Image\\ImagesResolver::resolveByProduct", value, args["type"], args["size"])'
+                resolve: '@=query("imagesByProductQuery", value, args["type"], args["size"])'
                 args:
                     type:
                         type: "String"

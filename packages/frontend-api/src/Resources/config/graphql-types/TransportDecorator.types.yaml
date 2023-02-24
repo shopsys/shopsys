@@ -22,11 +22,11 @@ TransportDecorator:
             price:
                 type: "Price"
                 description: "Transport price"
-                resolve: '@=query("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Price\\PriceResolver::resolveByTransport", value)'
+                resolve: '@=query("priceByTransportQuery", value)'
             images:
                 type: "[Image]!"
                 description: "Transport images"
-                resolve: '@=query("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Image\\ImagesResolver::resolveByTransport", value, args["type"], args["size"])'
+                resolve: '@=query("imagesByEntityQuery", value, args["type"], args["size"])'
                 args:
                     type:
                         type: "String"

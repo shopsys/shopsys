@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Article;
 
-use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
@@ -15,34 +13,10 @@ use Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Shopsys\FrontendApiBundle\Model\Article\ArticleFacade;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
-class ArticleResolver implements QueryInterface, AliasedInterface
+class ArticleQuery extends AbstractQuery
 {
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Article\ArticleFacade
-     */
-    protected $articleFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade
-     */
-    protected $legalConditionsFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade
-     */
-    protected $cookiesFacade;
-
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade
-     */
-    protected FriendlyUrlFacade $friendlyUrlFacade;
-
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Article\ArticleFacade $articleFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -51,17 +25,12 @@ class ArticleResolver implements QueryInterface, AliasedInterface
      * @param \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
     public function __construct(
-        ArticleFacade $articleFacade,
-        Domain $domain,
-        LegalConditionsFacade $legalConditionsFacade,
-        CookiesFacade $cookiesFacade,
-        FriendlyUrlFacade $friendlyUrlFacade
+        protected readonly ArticleFacade $articleFacade,
+        protected readonly Domain $domain,
+        protected readonly LegalConditionsFacade $legalConditionsFacade,
+        protected readonly CookiesFacade $cookiesFacade,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade
     ) {
-        $this->articleFacade = $articleFacade;
-        $this->domain = $domain;
-        $this->legalConditionsFacade = $legalConditionsFacade;
-        $this->cookiesFacade = $cookiesFacade;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
     }
 
     /**
@@ -69,7 +38,7 @@ class ArticleResolver implements QueryInterface, AliasedInterface
      * @param string|null $urlSlug
      * @return \Shopsys\FrameworkBundle\Model\Article\Article
      */
-    public function resolver(?string $uuid = null, ?string $urlSlug = null): Article
+    public function articleByUuidOrUrlSlugQuery(?string $uuid = null, ?string $urlSlug = null): Article
     {
         if ($uuid !== null) {
             return $this->getVisibleByDomainIdAndUuid($uuid);
@@ -85,7 +54,7 @@ class ArticleResolver implements QueryInterface, AliasedInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Article\Article
      */
-    public function termsAndConditionsArticle(): Article
+    public function termsAndConditionsArticleQuery(): Article
     {
         $article = $this->legalConditionsFacade->findTermsAndConditions($this->domain->getId());
 
@@ -99,7 +68,7 @@ class ArticleResolver implements QueryInterface, AliasedInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Article\Article
      */
-    public function privacyPolicyArticle(): Article
+    public function privacyPolicyArticleQuery(): Article
     {
         $article = $this->legalConditionsFacade->findPrivacyPolicy($this->domain->getId());
 
@@ -113,7 +82,7 @@ class ArticleResolver implements QueryInterface, AliasedInterface
     /**
      * @return \Shopsys\FrameworkBundle\Model\Article\Article
      */
-    public function cookiesArticle(): Article
+    public function cookiesArticleQuery(): Article
     {
         $article = $this->cookiesFacade->findCookiesArticleByDomainId($this->domain->getId());
 
@@ -122,19 +91,6 @@ class ArticleResolver implements QueryInterface, AliasedInterface
         }
 
         return $article;
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getAliases(): array
-    {
-        return [
-            'resolver' => 'article',
-            'termsAndConditionsArticle' => 'termsAndConditionsArticle',
-            'privacyPolicyArticle' => 'privacyPolicyArticle',
-            'cookiesArticle' => 'cookiesArticle',
-        ];
     }
 
     /**

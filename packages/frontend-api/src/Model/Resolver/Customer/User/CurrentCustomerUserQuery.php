@@ -4,31 +4,25 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Customer\User;
 
-use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\QueryInterface;
 use Overblog\GraphQLBundle\Error\UserWarning;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
-class CurrentCustomerUserResolver implements QueryInterface, AliasedInterface
+class CurrentCustomerUserQuery extends AbstractQuery
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    protected $currentCustomerUser;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      */
-    public function __construct(CurrentCustomerUser $currentCustomerUser)
-    {
-        $this->currentCustomerUser = $currentCustomerUser;
+    public function __construct(
+        protected readonly CurrentCustomerUser $currentCustomerUser
+    ) {
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function resolver(): CustomerUser
+    public function currentCustomerUserQuery(): CustomerUser
     {
         $currentCustomerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         if ($currentCustomerUser === null) {
@@ -36,15 +30,5 @@ class CurrentCustomerUserResolver implements QueryInterface, AliasedInterface
         }
 
         return $currentCustomerUser;
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getAliases(): array
-    {
-        return [
-            'resolver' => 'currentCustomerUser',
-        ];
     }
 }

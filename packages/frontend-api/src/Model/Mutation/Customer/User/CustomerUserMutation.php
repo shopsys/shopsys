@@ -6,8 +6,6 @@ namespace Shopsys\FrontendApiBundle\Model\Mutation\Customer\User;
 
 use GraphQL\Error\UserError;
 use Overblog\GraphQLBundle\Definition\Argument;
-use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -23,7 +21,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 
-class CustomerUserMutation extends BaseTokenMutation implements MutationInterface, AliasedInterface
+class CustomerUserMutation extends BaseTokenMutation
 {
     /**
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
@@ -55,7 +53,7 @@ class CustomerUserMutation extends BaseTokenMutation implements MutationInterfac
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function changePassword(Argument $argument, InputValidator $validator): CustomerUser
+    public function changePasswordMutation(Argument $argument, InputValidator $validator): CustomerUser
     {
         $this->runCheckUserIsLogged();
 
@@ -82,7 +80,7 @@ class CustomerUserMutation extends BaseTokenMutation implements MutationInterfac
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function changePersonalData(Argument $argument, InputValidator $validator): CustomerUser
+    public function changePersonalDataMutation(Argument $argument, InputValidator $validator): CustomerUser
     {
         $user = $this->runCheckUserIsLogged();
 
@@ -103,7 +101,7 @@ class CustomerUserMutation extends BaseTokenMutation implements MutationInterfac
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return string[]
      */
-    public function register(Argument $argument, InputValidator $validator): array
+    public function registerMutation(Argument $argument, InputValidator $validator): array
     {
         $validator->validate();
 
@@ -115,18 +113,6 @@ class CustomerUserMutation extends BaseTokenMutation implements MutationInterfac
         return [
             'accessToken' => $this->tokenFacade->createAccessTokenAsString($customerUser, $deviceId),
             'refreshToken' => $this->tokenFacade->createRefreshTokenAsString($customerUser, $deviceId),
-        ];
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getAliases(): array
-    {
-        return [
-            'changePassword' => 'customer_user_change_password',
-            'changePersonalData' => 'customer_user_change_personal_data',
-            'register' => 'customer_user_register',
         ];
     }
 }
