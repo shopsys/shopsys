@@ -71,8 +71,8 @@ export const useGtmCartEventInfo = (): GtmCartInfoEventType => {
             cart: {
                 urlCart,
                 currency: domain.currencyCode,
-                value: Number.parseFloat(cart.totalItemsPrice.priceWithoutVat),
-                valueWithTax: Number.parseFloat(cart.totalItemsPrice.priceWithVat),
+                value: parseFloat(cart.totalItemsPrice.priceWithoutVat),
+                valueWithTax: parseFloat(cart.totalItemsPrice.priceWithVat),
                 products,
                 coupons,
             },
@@ -168,10 +168,10 @@ export const getGtmPurchaseData = (
         reviewConsents: getGtmReviewConsents(),
         id: orderNumber,
         coupons: coupons,
-        discountAmount: Number.parseFloat(cart.totalDiscountPrice.priceWithVat),
-        value: Number.parseFloat(cart.totalPrice.priceWithoutVat),
-        valueWithTax: Number.parseFloat(cart.totalPrice.priceWithVat),
-        valueTax: Number.parseFloat(cart.totalPrice.vatAmount),
+        discountAmount: parseFloat(cart.totalDiscountPrice.priceWithVat),
+        value: parseFloat(cart.totalPrice.priceWithoutVat),
+        valueWithTax: parseFloat(cart.totalPrice.priceWithVat),
+        valueTax: parseFloat(cart.totalPrice.vatAmount),
         currency: domainConfig.currencyCode,
         products: cart.items.map((cartItem, index) => mapGtmCartItemType(cartItem, domainConfig.url, index)),
         paymentType: payment.name,
@@ -180,8 +180,8 @@ export const getGtmPurchaseData = (
         shippingType: transport.name,
         shippingDetail: shippingDetail,
         shippingExtra: shippingExtra,
-        shippingPrice: Number.parseFloat(transport.price.priceWithoutVat),
-        shippingPriceWithTax: Number.parseFloat(transport.price.priceWithVat),
+        shippingPrice: parseFloat(transport.price.priceWithoutVat),
+        shippingPriceWithTax: parseFloat(transport.price.priceWithVat),
     };
 };
 

@@ -21,7 +21,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
 
         const setNewSpinboxValue = useCallback(
             (newValue: number) => {
-                if (Number.isNaN(newValue) || newValue < min) {
+                if (isNaN(newValue) || newValue < min) {
                     spinboxRef.current.valueAsNumber = min;
                 } else if (newValue > max) {
                     spinboxRef.current.valueAsNumber = max;

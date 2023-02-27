@@ -88,7 +88,7 @@ const getDefaultMinimalPrice = (
     originalSlug: string | null,
 ): number =>
     queryFromUrl?.minimalPrice !== undefined && queryFromUrl.minimalPrice !== null && originalSlug === null
-        ? Number.parseFloat(queryFromUrl.minimalPrice)
+        ? parseFloat(queryFromUrl.minimalPrice)
         : mapPriceForCalculations(productFilterOptions.minimalPrice);
 
 const getDefaultMaximalPrice = (
@@ -97,7 +97,7 @@ const getDefaultMaximalPrice = (
     originalSlug: string | null,
 ): number =>
     queryFromUrl?.maximalPrice !== undefined && queryFromUrl.maximalPrice !== null && originalSlug === null
-        ? Number.parseFloat(queryFromUrl.maximalPrice)
+        ? parseFloat(queryFromUrl.maximalPrice)
         : mapPriceForCalculations(productFilterOptions.maximalPrice);
 
 export const getDefaultFormValues = (

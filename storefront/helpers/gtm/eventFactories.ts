@@ -121,8 +121,8 @@ export const getGtmShippingInfoEvent = (
         shippingType: transport.name,
         shippingDetail: shippingDetail,
         shippingExtra: shippingExtra,
-        shippingPrice: Number.parseFloat(transport.price.priceWithoutVat),
-        shippingPriceWithTax: Number.parseFloat(transport.price.priceWithVat),
+        shippingPrice: parseFloat(transport.price.priceWithoutVat),
+        shippingPriceWithTax: parseFloat(transport.price.priceWithVat),
     };
 };
 
@@ -173,8 +173,8 @@ export const getGtmProductDetailEvent = (
     domainUrl: string,
 ): GtmProductDetailEventType => ({
     currency: currencyCode,
-    value: Number.parseFloat(product.price.priceWithoutVat),
-    valueWithTax: Number.parseFloat(product.price.priceWithVat),
+    value: parseFloat(product.price.priceWithoutVat),
+    valueWithTax: parseFloat(product.price.priceWithVat),
     products: [mapGtmProductDetailType(product, domainUrl)],
 });
 

@@ -11,7 +11,7 @@ export const useFormatPrice = (): FormatPriceFunctionType => {
     const [{ data }] = useQueryError(useSettingsQueryApi({ requestPolicy: 'cache-first' }));
     const { defaultLocale = 'en' } = useShopsysSelector((state) => state.domain);
     const { minimumFractionDigits = 0, defaultCurrencyCode = 'CZK' } = data?.settings?.pricing ?? {};
-    const getPriceAsFloat = (price: string | number) => (typeof price === 'number' ? price : Number.parseFloat(price));
+    const getPriceAsFloat = (price: string | number) => (typeof price === 'number' ? price : parseFloat(price));
 
     return (price, options) =>
         formatPrice(getPriceAsFloat(price), defaultCurrencyCode, t, defaultLocale, minimumFractionDigits, options);

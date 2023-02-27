@@ -34,8 +34,8 @@ export const GoogleMap: FC<GoogleMapProps> = ({
 }) => {
     const { publicRuntimeConfig } = getConfig();
     const { mapSetting } = useShopsysSelector((state) => state.domain);
-    const mapLat = lat === null || lat === undefined ? mapSetting.latitude : Number.parseFloat(lat);
-    const mapLng = lng === null || lng === undefined ? mapSetting.longitude : Number.parseFloat(lng);
+    const mapLat = lat === null || lat === undefined ? mapSetting.latitude : parseFloat(lat);
+    const mapLng = lng === null || lng === undefined ? mapSetting.longitude : parseFloat(lng);
     const mapZoom = zoom === null || zoom === undefined ? mapSetting.zoom : zoom;
     const [activeMarker, setActiveMarker] = useState(-1);
 
