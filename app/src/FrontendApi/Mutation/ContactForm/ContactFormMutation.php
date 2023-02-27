@@ -57,6 +57,7 @@ class ContactFormMutation implements MutationInterface, AliasedInterface
                     'error' => $ex->getMessage(),
                 ]
             );
+
             return false;
         }
 

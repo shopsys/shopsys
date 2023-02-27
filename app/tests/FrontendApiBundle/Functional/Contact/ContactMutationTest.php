@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\FrontendApiBundle\Functional\PersonalData;
+namespace Tests\FrontendApiBundle\Functional\Contact;
 
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -21,8 +21,7 @@ class ContactMutationTest extends GraphQlTestCase
         }';
 
         $response = $this->getResponseContentForQuery($mutation);
-
-        self::assertTrue($response['data']['Contact']);
+        self::assertTrue($response['data']['Contact'] ?? null);
     }
 
     public function testDisallowEmptyEmailMutation(): void
