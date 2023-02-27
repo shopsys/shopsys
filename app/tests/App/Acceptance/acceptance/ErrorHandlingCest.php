@@ -38,7 +38,7 @@ class ErrorHandlingCest
     {
         $me->wantTo('display 500 error and check error ID uniqueness');
         $me->amOnPage('/codeception-acceptance-test/error-handler/exception');
-        $me->seeTranslationFrontend('Oops! Error occurred');
+        $me->seeTranslationFrontend('Oops! Error occurred.');
 
         $cssIdentifier = ['css' => '#js-error-id'];
         $errorIdFirstAccess = $me->grabTextFrom($cssIdentifier);
