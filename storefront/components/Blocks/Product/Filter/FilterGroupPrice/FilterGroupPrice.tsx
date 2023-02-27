@@ -2,7 +2,7 @@ import { useFilterState } from '../FilterContext/useFilterState';
 import { FilterGroupContent, FilterGroupTitle, FilterGroupWrapper } from '../FilterElements';
 import { FilterGroupIcon } from '../FilterGroup/FilterGroupIcon';
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
-import { mapPriceForCalculations } from 'helpers/mappers/price';
+import { mapPriceForCalculations, roundPrice } from 'helpers/mappers/price';
 import { useCallback, useMemo, useState } from 'react';
 
 type FilterGroupPriceProps = {
@@ -46,8 +46,8 @@ export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, isOpen }) =
             </FilterGroupTitle>
             <FilterGroupContent isOpen={isGroupOpen}>
                 <RangeSlider
-                    min={mapPriceForCalculations(minimalPrice)}
-                    max={mapPriceForCalculations(maximalPrice)}
+                    min={roundPrice(mapPriceForCalculations(minimalPrice))}
+                    max={roundPrice(mapPriceForCalculations(maximalPrice))}
                     minValue={minimalPriceValue}
                     maxValue={maximalPriceValue}
                     setMinValueCallback={setMinimalPrice}

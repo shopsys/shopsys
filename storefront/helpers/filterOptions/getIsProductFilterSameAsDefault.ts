@@ -1,5 +1,5 @@
 import { ProductFilterOptionsFragmentApi } from 'graphql/generated';
-import { mapPriceForCalculations } from 'helpers/mappers/price';
+import { mapPriceForCalculations, roundPrice } from 'helpers/mappers/price';
 import { FilterFormBrandType, FilterFormFlagType, FilterFormParameterType } from 'types/productFilter';
 
 export const getIsProductFilterSameAsDefault = (
@@ -46,7 +46,7 @@ export const isMinimalPriceFilterWithoutChanges = (
     currentMinimalPrice: number | null,
     productFilterOptions: ProductFilterOptionsFragmentApi,
 ): boolean => {
-    return currentMinimalPrice === mapPriceForCalculations(productFilterOptions.minimalPrice);
+    return currentMinimalPrice === roundPrice(mapPriceForCalculations(productFilterOptions.minimalPrice));
 };
 
 export const isMaximalPriceFilterWithoutChanges = (

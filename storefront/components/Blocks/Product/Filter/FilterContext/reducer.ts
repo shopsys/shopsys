@@ -1,5 +1,5 @@
 import { FilterActions, FilterCallbacks, FilterState } from './types';
-import { mapPriceForCalculations } from 'helpers/mappers/price';
+import { mapPriceForCalculations, roundPrice } from 'helpers/mappers/price';
 import produce from 'immer';
 import { Reducer } from 'react';
 
@@ -101,15 +101,15 @@ const uncheckSliderParameter = (
 
 const resetPrices = (state: FilterState): FilterState => {
     return produce(state, (draft) => {
-        draft.selected.minimalPrice = mapPriceForCalculations(state.options.minimalPrice);
-        draft.selected.maximalPrice = mapPriceForCalculations(state.options.maximalPrice);
+        draft.selected.minimalPrice = roundPrice(mapPriceForCalculations(state.options.minimalPrice));
+        draft.selected.maximalPrice = roundPrice(mapPriceForCalculations(state.options.maximalPrice));
     });
 };
 
 const resetAllParameters = (state: FilterState): FilterState => {
     return produce(state, (draft) => {
-        draft.selected.minimalPrice = mapPriceForCalculations(state.options.minimalPrice);
-        draft.selected.maximalPrice = mapPriceForCalculations(state.options.maximalPrice);
+        draft.selected.minimalPrice = roundPrice(mapPriceForCalculations(state.options.minimalPrice));
+        draft.selected.maximalPrice = roundPrice(mapPriceForCalculations(state.options.maximalPrice));
         draft.selected.onlyInStock = false;
         draft.selected.brands =
             state.options.brands === null ? [] : state.options.brands.map((i) => ({ ...i.brand, checked: false }));

@@ -9,7 +9,7 @@ import { Parameters } from './Parameters';
 import { SelectedParametersIcon } from './SelectedParametersIcon';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
-import { mapPriceForCalculations } from 'helpers/mappers/price';
+import { mapPriceForCalculations, roundPrice } from 'helpers/mappers/price';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useMemo } from 'react';
@@ -27,11 +27,11 @@ export const SelectedParameters: FC = () => {
     const minimalPrice = useMemo(() => state.selected.minimalPrice, [state.selected.minimalPrice]);
     const maximalPrice = useMemo(() => state.selected.maximalPrice, [state.selected.maximalPrice]);
     const isMinimalPriceVisible = useMemo(
-        () => state.selected.minimalPrice !== mapPriceForCalculations(state.options.minimalPrice),
+        () => state.selected.minimalPrice !== roundPrice(mapPriceForCalculations(state.options.minimalPrice)),
         [state.options.minimalPrice, state.selected.minimalPrice],
     );
     const isMaximalPriceVisible = useMemo(
-        () => state.selected.maximalPrice !== mapPriceForCalculations(state.options.maximalPrice),
+        () => state.selected.maximalPrice !== roundPrice(mapPriceForCalculations(state.options.maximalPrice)),
         [state.options.maximalPrice, state.selected.maximalPrice],
     );
 

@@ -1,5 +1,5 @@
 import { ProductFilterApi, ProductFilterOptionsFragmentApi } from 'graphql/generated';
-import { mapPriceForCalculations } from 'helpers/mappers/price';
+import { mapPriceForCalculations, roundPrice } from 'helpers/mappers/price';
 import {
     FilterFormBrandType,
     FilterFormFlagType,
@@ -87,9 +87,11 @@ const getDefaultMinimalPrice = (
     productFilterOptions: ProductFilterOptionsFragmentApi,
     originalSlug: string | null,
 ): number =>
-    queryFromUrl?.minimalPrice !== undefined && queryFromUrl.minimalPrice !== null && originalSlug === null
-        ? parseFloat(queryFromUrl.minimalPrice)
-        : mapPriceForCalculations(productFilterOptions.minimalPrice);
+    roundPrice(
+        queryFromUrl?.minimalPrice !== undefined && queryFromUrl.minimalPrice !== null && originalSlug === null
+            ? parseFloat(queryFromUrl.minimalPrice)
+            : mapPriceForCalculations(productFilterOptions.minimalPrice),
+    );
 
 const getDefaultMaximalPrice = (
     queryFromUrl: ProductFilterApi | null,

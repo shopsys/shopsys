@@ -1,5 +1,5 @@
 import { ProductFilterOptionsFragmentApi } from 'graphql/generated';
-import { mapPriceForCalculations } from 'helpers/mappers/price';
+import { mapPriceForCalculations, roundPrice } from 'helpers/mappers/price';
 import { FilterFormBrandType, FilterFormFlagType, FilterFormParameterType } from 'types/productFilter';
 
 export const getIsProductFilterEmpty = (
@@ -16,7 +16,7 @@ export const getIsProductFilterEmpty = (
         checkedFlags.length === 0 &&
         checkedParameters.length === 0 &&
         onlyInStock === false &&
-        currentMinimalPrice === mapPriceForCalculations(productFilterOptions.minimalPrice) &&
-        currentMaximalPrice === mapPriceForCalculations(productFilterOptions.maximalPrice)
+        currentMinimalPrice === roundPrice(mapPriceForCalculations(productFilterOptions.minimalPrice)) &&
+        currentMaximalPrice === roundPrice(mapPriceForCalculations(productFilterOptions.maximalPrice))
     );
 };
