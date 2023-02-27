@@ -73,13 +73,29 @@ module.exports = {
         'unused-imports/no-unused-imports': 'error',
         'vars-on-top': 'error',
         yoda: 'error',
-        '@typescript-eslint/strict-boolean-expressions': ['error', { allowNullableBoolean: true, allowAny: true }],
+        '@typescript-eslint/strict-boolean-expressions': [
+            'error',
+            {
+                allowNullableBoolean: true,
+                allowAny: true,
+            },
+        ],
         '@typescript-eslint/no-non-null-assertion': 'off',
         '@typescript-eslint/no-unnecessary-condition': 'error',
-        'no-restricted-imports': ['error', { patterns: ['../.*'] }],
+        'no-restricted-imports': [
+            'error',
+            {
+                patterns: ['../.*'],
+            },
+        ],
         'react-hooks/rules-of-hooks': 'error',
         'react-hooks/exhaustive-deps': 'error',
-        'react/no-unknown-property': [2, { ignore: ['jsx', 'global'] }],
+        'react/no-unknown-property': [
+            'error',
+            {
+                ignore: ['jsx', 'global'],
+            },
+        ],
         'react/jsx-curly-brace-presence': [
             'warn',
             {
