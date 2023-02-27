@@ -44,7 +44,7 @@ class GoPayPaymentMethod
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency")
-     * @ORM\JoinColumn(name="currency_id", referencedColumnName="id")
+     * @ORM\JoinColumn(nullable=false, name="currency_id", referencedColumnName="id")
      */
     private $currency;
 
