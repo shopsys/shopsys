@@ -15,7 +15,6 @@ class Version20230224083344 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $this->sql('ALTER TABLE gopay_payment_methods DROP CONSTRAINT FK_B3CF6BD538248176');
-        $this->sql('ALTER TABLE gopay_payment_methods ALTER currency_id DROP NOT NULL');
         $this->sql('ALTER TABLE gopay_payment_methods
             ADD CONSTRAINT FK_B3CF6BD538248176 FOREIGN KEY (currency_id) REFERENCES currencies (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
