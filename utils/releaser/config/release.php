@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Shopsys\Releaser\ReleaseWorker\CheckCorrectReleaseVersionReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\Release\CheckChangelogForTodaysDateReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\Release\CheckoutToReleaseCandidateBranchReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\Release\CheckReleaseDraftAndReleaseItReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\Release\CheckUncommittedChangesReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\Release\CreateAndCommitLockFilesReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\Release\CreateAndPushGitTagReleaseWorker;
@@ -28,4 +29,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(CreateAndPushGitTagsExceptProjectBaseReleaseWorker::class);
     $services->set(CreateAndCommitLockFilesReleaseWorker::class);
     $services->set(CreateAndPushGitTagReleaseWorker::class);
+    $services->set(CheckReleaseDraftAndReleaseItReleaseWorker::class);
 };

@@ -57,7 +57,7 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
         );
         $statusForPackages = $this->githubActionsStatusReporter->getStatusForPackagesByOrganizationAndBranch(
             'shopsys',
-            $this->getBranchName(),
+            $initialBranchName,
             $githubToken
         );
 
