@@ -24,6 +24,7 @@ export const Company: FC = () => {
                     label: formMeta.fields.companyName.label,
                     required: true,
                     type: 'text',
+                    autoComplete: 'organization',
                 }}
             />
             <TextInputControlled

@@ -73,6 +73,7 @@ export const NewsletterForm: FC = () => {
                                         label: formMeta.fields.email.label,
                                         required: true,
                                         type: 'email',
+                                        autoComplete: 'email',
                                     }}
                                 />
                                 <NewsletterFormButtonWrapperStyled>

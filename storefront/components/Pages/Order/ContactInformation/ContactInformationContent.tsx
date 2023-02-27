@@ -53,6 +53,7 @@ export const ContactInformationContent: FC = () => {
                     label: formMeta.fields.email.label,
                     required: true,
                     type: 'email',
+                    autoComplete: 'email',
                     onBlur: () => dispatch(contactInformationActions.setEmail(emailValue)),
                 }}
             />

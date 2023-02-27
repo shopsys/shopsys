@@ -62,6 +62,7 @@ export const LoginContent: FC<LoginContentProps> = ({ breadcrumbs }) => {
                             label: t('Your email'),
                             required: true,
                             type: 'email',
+                            autoComplete: 'email',
                         }}
                     />
                     <PasswordInputControlled

@@ -17,6 +17,7 @@ type TextInputControlledProps = {
         | 'label'
         | 'testIdentifier'
         | 'inputSize'
+        | 'autoComplete'
     >;
     control: Control<any>;
     formName: string;

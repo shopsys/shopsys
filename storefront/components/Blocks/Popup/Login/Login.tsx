@@ -75,6 +75,7 @@ export const Login: FC = () => {
                                 label: t('Your email'),
                                 required: true,
                                 type: 'email',
+                                autoComplete: 'email',
                             }}
                         />
                         <PasswordInputControlled

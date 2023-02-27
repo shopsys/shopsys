@@ -69,6 +69,7 @@ export const ContactContent: FC = () => {
                                     label: formMeta.fields.name.label,
                                     required: true,
                                     type: 'text',
+                                    autoComplete: 'name',
                                 }}
                             />
                             <TextInputControlled
@@ -86,6 +87,7 @@ export const ContactContent: FC = () => {
                                     label: formMeta.fields.email.label,
                                     required: true,
                                     type: 'email',
+                                    autoComplete: 'email',
                                 }}
                             />
                             <TextareaControlled

@@ -32,6 +32,7 @@ export const ContactInformationUser: FC = () => {
                     label: formMeta.fields.telephone.label,
                     required: true,
                     type: 'tel',
+                    autoComplete: 'tel',
                     onBlur: (event) => dispatch(contactInformationActions.setTelephone(event.currentTarget.value)),
                 }}
             />
@@ -49,6 +50,7 @@ export const ContactInformationUser: FC = () => {
                         label: formMeta.fields.firstName.label,
                         required: true,
                         type: 'text',
+                        autoComplete: 'given-name',
                         onBlur: (event) => dispatch(contactInformationActions.setFirstName(event.currentTarget.value)),
                     }}
                 />
@@ -65,6 +67,7 @@ export const ContactInformationUser: FC = () => {
                         label: formMeta.fields.lastName.label,
                         required: true,
                         type: 'text',
+                        autoComplete: 'family-name',
                         onBlur: (event) => dispatch(contactInformationActions.setLastName(event.currentTarget.value)),
                     }}
                 />
