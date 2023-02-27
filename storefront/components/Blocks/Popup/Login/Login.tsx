@@ -74,7 +74,7 @@ export const Login: FC = () => {
                             textInputProps={{
                                 label: t('Your email'),
                                 required: true,
-                                type: 'text',
+                                type: 'email',
                             }}
                         />
                         <PasswordInputControlled

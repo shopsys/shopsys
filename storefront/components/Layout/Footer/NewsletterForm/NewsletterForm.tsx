@@ -72,7 +72,7 @@ export const NewsletterForm: FC = () => {
                                         inputSize: 'small',
                                         label: formMeta.fields.email.label,
                                         required: true,
-                                        type: 'text',
+                                        type: 'email',
                                     }}
                                 />
                                 <NewsletterFormButtonWrapperStyled>

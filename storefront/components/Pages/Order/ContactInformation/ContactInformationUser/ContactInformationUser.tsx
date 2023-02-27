@@ -31,7 +31,7 @@ export const ContactInformationUser: FC = () => {
                 textInputProps={{
                     label: formMeta.fields.telephone.label,
                     required: true,
-                    type: 'text',
+                    type: 'tel',
                     onBlur: (event) => dispatch(contactInformationActions.setTelephone(event.currentTarget.value)),
                 }}
             />

@@ -24,7 +24,7 @@ export const User: FC = () => {
                 textInputProps={{
                     label: formMeta.fields.email.label,
                     required: true,
-                    type: 'text',
+                    type: 'email',
                 }}
             />
             <TextInputControlled
@@ -57,7 +57,7 @@ export const User: FC = () => {
                 textInputProps={{
                     label: formMeta.fields.telephone.label,
                     required: true,
-                    type: 'text',
+                    type: 'tel',
                 }}
             />
             <FormColumn lg="65%">

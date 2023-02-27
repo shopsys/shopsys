@@ -61,7 +61,7 @@ export const LoginContent: FC<LoginContentProps> = ({ breadcrumbs }) => {
                         textInputProps={{
                             label: t('Your email'),
                             required: true,
-                            type: 'text',
+                            type: 'email',
                         }}
                     />
                     <PasswordInputControlled

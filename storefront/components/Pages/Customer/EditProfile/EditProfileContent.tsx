@@ -165,7 +165,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             label: formMeta.fields.email.label,
                             required: false,
                             disabled: true,
-                            type: 'text',
+                            type: 'email',
                             testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.email.name,
                         }}
                     />

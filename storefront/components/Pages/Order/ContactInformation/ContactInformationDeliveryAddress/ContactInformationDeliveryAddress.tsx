@@ -282,7 +282,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                         textInputProps={{
                                             label: formMeta.fields.deliveryTelephone.label,
                                             required: true,
-                                            type: 'text',
+                                            type: 'tel',
                                             onBlur: (event) =>
                                                 dispatch(
                                                     contactInformationActions.setDeliveryTelephone(
