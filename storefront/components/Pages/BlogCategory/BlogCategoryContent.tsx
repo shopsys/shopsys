@@ -13,7 +13,7 @@ export const BlogCategoryContent: FC<BlogCategoryContentProps> = ({ blogCategory
     return (
         <Webline>
             <div>
-                <HeadingPaginated type={'h1'} totalCount={blogCategory.articlesTotalCount}>
+                <HeadingPaginated type="h1" totalCount={blogCategory.articlesTotalCount}>
                     {blogCategory.name}
                 </HeadingPaginated>
                 <div className="mb-16 flex flex-col vl:flex-row">

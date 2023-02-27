@@ -194,7 +194,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
                         </Form>
                     </FormProvider>
                 </OrderLayout>
-                <Webline type={'dark'}>
+                <Webline type="dark">
                     <Footer simpleFooter />
                 </Webline>
                 <ErrorPopup

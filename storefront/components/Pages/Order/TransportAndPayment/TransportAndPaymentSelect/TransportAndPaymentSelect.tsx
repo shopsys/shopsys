@@ -277,7 +277,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     )}
                     {preSelectedTransport !== null && (
                         <PickupPlacePopup
-                            isVisible={true}
+                            isVisible
                             transport={preSelectedTransport}
                             onChangePickupPlaceCallback={onChangePickupPlaceHandler}
                             onClosePickupPlacePopupCallback={onClosePickupPlacePopupHandler}

@@ -28,7 +28,7 @@ const GrapeJsParser: FC<GrapeJsParserProps> = ({ text, allProducts }) => {
                     allProducts.find((blogArticleProduct) => blogArticleProduct.catalogNumber === product),
                 )
                 .filter(Boolean) as ListedProductType[];
-            return <ProductsSlider products={products} gtmListName={'blog article'} key={index} />;
+            return <ProductsSlider products={products} gtmListName="blog article" key={index} />;
         }
 
         return null;
@@ -42,7 +42,7 @@ const GrapeJsParser: FC<GrapeJsParserProps> = ({ text, allProducts }) => {
                 part.match(/\[gjc-comp-(.*?)\]/g) ? (
                     ComponentPreparation(part, index)
                 ) : (
-                    <UserText key={index} htmlContent={part} isGrapesJs={true} />
+                    <UserText key={index} htmlContent={part} isGrapesJs />
                 ),
             )}
         </>

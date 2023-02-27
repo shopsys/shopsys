@@ -31,7 +31,7 @@ export const Image: FC<ImageProps> = ({
     if (img === null) {
         return (
             <img
-                src={'/images/optimized-noimage.png'}
+                src="/images/optimized-noimage.png"
                 alt={alt}
                 data-testid={getTestIdentifier(testIdentifier) + '-empty'}
                 className={className}

@@ -155,8 +155,8 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
                 isLoading={
                     (isTransportSelectionLoading || isPaymentSelectionLoading) && transport !== null && payment !== null
                 }
-                withGapTop={true}
-                withGapBottom={true}
+                withGapTop
+                withGapBottom
                 buttonBackLink={cartUrl}
                 nextStepClickHandler={onSelectTransportAndPaymentHandler}
             />
