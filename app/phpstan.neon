@@ -2,7 +2,7 @@ parameters:
 
     treatPhpDocTypesAsCertain: false
     symfony:
-        containerXmlPath: '%currentWorkingDirectory%/var/cache/dev/srcApp_KernelDevDebugContainer.xml'
+        containerXmlPath: '%currentWorkingDirectory%/var/cache/dev/App_KernelDevDebugContainer.xml'
         constantHassers: false
 
     ignoreErrors:
@@ -22,9 +22,6 @@ parameters:
             # Ignore annotations in generated code
             message: '#^PHPDoc tag @throws with type .+ is not subtype of Throwable$#'
             path: %currentWorkingDirectory%/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
-        -
-            message: '#^Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required\.$#'
-            path: %currentWorkingDirectory%/src/*
         -
             # phpstan-symfony extension cannot work right with symfony test container at the moment https://github.com/phpstan/phpstan-symfony/issues/27
             message: '#^Service "[^"]+" is private.$#'

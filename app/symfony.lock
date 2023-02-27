@@ -1,7 +1,4 @@
 {
-    "adoy/fastcgi-client": {
-        "version": "1.0.2"
-    },
     "akeneo/api-php-client": {
         "version": "v5.0.0"
     },
@@ -871,9 +868,6 @@
     "symfony/css-selector": {
         "version": "v3.4.33"
     },
-    "symfony/debug": {
-        "version": "v3.4.33"
-    },
     "symfony/debug-bundle": {
         "version": "3.3",
         "recipe": {
@@ -960,12 +954,6 @@
         "version": "v3.4.33"
     },
     "symfony/http-kernel": {
-        "version": "v3.4.33"
-    },
-    "symfony/inflector": {
-        "version": "v3.4.33"
-    },
-    "symfony/intl": {
         "version": "v3.4.33"
     },
     "symfony/mailer": {
@@ -1063,9 +1051,6 @@
             "config/packages/prod/routing.yaml",
             "config/routes.yaml"
         ]
-    },
-    "symfony/security": {
-        "version": "v3.4.33"
     },
     "symfony/security-bundle": {
         "version": "3.3",
