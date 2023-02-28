@@ -65,7 +65,7 @@ class AkeneoImportProductGroupParameterFacade extends AbstractAkeneoImportTransf
 
     protected function doBeforeTransfer(): void
     {
-        $this->logger->addInfo('Transfer parameter groups data from Akeneo ...');
+        $this->logger->info('Transfer parameter groups data from Akeneo ...');
     }
 
     /**
@@ -83,17 +83,17 @@ class AkeneoImportProductGroupParameterFacade extends AbstractAkeneoImportTransf
         $parameterGroupData = $this->productParameterGroupTransferAkeneoMapper->mapAkeneoParameterGroupDataToParameterGroupData($akeneoParameterGroup, $parameterGroup);
 
         if ($parameterGroup === null) {
-            $this->logger->addInfo(sprintf('Creating parameter group with akeneo code : %s', $parameterGroupData->akeneoCode));
+            $this->logger->info(sprintf('Creating parameter group with akeneo code : %s', $parameterGroupData->akeneoCode));
             $this->parameterGroupFacade->create($parameterGroupData);
         } else {
-            $this->logger->addInfo(sprintf('Updating parameter group with akeneo code : %s', $parameterGroup->getAkeneoCode()));
+            $this->logger->info(sprintf('Updating parameter group with akeneo code : %s', $parameterGroup->getAkeneoCode()));
             $this->parameterGroupFacade->edit($parameterGroup->getId(), $parameterGroupData);
         }
     }
 
     protected function doAfterTransfer(): void
     {
-        $this->logger->addInfo('Done');
+        $this->logger->info('Done');
     }
 
     /**

@@ -76,7 +76,7 @@ class AkeneoImportAssemblyInstructionProductFilesFacade extends AbstractAkeneoIm
             /** @var \App\Model\Product\ProductDomain $productDomain */
             foreach ($this->product->getProductDomains() as $productDomain) {
                 if ($productDomain->getAssemblyInstructionCode() !== null) {
-                    $this->logger->addInfo(sprintf('Getting data from API for media file : %s', $productDomain->getAssemblyInstructionCode()));
+                    $this->logger->info(sprintf('Getting data from API for media file : %s', $productDomain->getAssemblyInstructionCode()));
 
                     $akeneoDataPerDomain[$productDomain->getDomainId()] = $this->mediaFilesTransferAkeneoFacade
                         ->getProductMediaFile($productDomain->getAssemblyInstructionCode())
@@ -116,7 +116,7 @@ class AkeneoImportAssemblyInstructionProductFilesFacade extends AbstractAkeneoIm
     {
         try {
             $this->filesystem->write($this->getFullPathWithName($fileName), $content);
-            $this->logger->addInfo('File was successfully stored.');
+            $this->logger->info('File was successfully stored.');
         } catch (FileExistsException $exception) {
             try {
                 $this->filesystem->delete($this->getFullPathWithName($fileName));
@@ -151,12 +151,12 @@ class AkeneoImportAssemblyInstructionProductFilesFacade extends AbstractAkeneoIm
 
     protected function doBeforeTransfer(): void
     {
-        $this->logger->addInfo('Transfer media file data from Akeneo ...');
+        $this->logger->info('Transfer media file data from Akeneo ...');
     }
 
     protected function doAfterTransfer(): void
     {
-        $this->logger->addInfo('Transfer is done.');
+        $this->logger->info('Transfer is done.');
     }
 
     /**

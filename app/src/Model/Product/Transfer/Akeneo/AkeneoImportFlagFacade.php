@@ -88,7 +88,7 @@ class AkeneoImportFlagFacade extends AbstractAkeneoImportTransfer
 
     protected function doBeforeTransfer(): void
     {
-        $this->logger->addInfo('Transfer flags data from Akeneo started');
+        $this->logger->info('Transfer flags data from Akeneo started');
         $this->loadImportedFlagAkeneoCodes();
     }
 
@@ -107,10 +107,10 @@ class AkeneoImportFlagFacade extends AbstractAkeneoImportTransfer
         $flagData = $this->flagTransferAkeneoMapper->mapAkeneoFlagDataToFlagData($akeneoFlagData, $flag);
 
         if ($flag === null) {
-            $this->logger->addInfo(sprintf('Creating flag code: %s', $flagData->akeneoCode));
+            $this->logger->info(sprintf('Creating flag code: %s', $flagData->akeneoCode));
             $this->flagFacade->create($flagData);
         } else {
-            $this->logger->addInfo(sprintf('Updating flag code: %s', $flagData->akeneoCode));
+            $this->logger->info(sprintf('Updating flag code: %s', $flagData->akeneoCode));
             $this->flagFacade->edit($flag->getId(), $flagData);
             $this->dropImportedFlagAkeneo($flag);
         }
@@ -118,7 +118,7 @@ class AkeneoImportFlagFacade extends AbstractAkeneoImportTransfer
 
     protected function doAfterTransfer(): void
     {
-        $this->logger->addInfo('Deleting non-imported flags');
+        $this->logger->info('Deleting non-imported flags');
         $this->removeNonTransferedFlags();
     }
 
@@ -142,7 +142,7 @@ class AkeneoImportFlagFacade extends AbstractAkeneoImportTransfer
     private function removeNonTransferedFlags()
     {
         if ($this->countBeforeImport === count($this->nonImportedFlagCodes)) {
-            $this->logger->addInfo(
+            $this->logger->info(
                 'Import flags from Akeneo probably faild, because all flags with akeneo code should be deleted. '
                 . 'Deletion was aborted.'
             );
@@ -151,7 +151,7 @@ class AkeneoImportFlagFacade extends AbstractAkeneoImportTransfer
 
         foreach ($this->nonImportedFlagCodes as $code) {
             if ($this->flagFacade->deleteByAkeneoCode($code)) {
-                $this->logger->addInfo(sprintf('Deleted flag with code: %s', $code));
+                $this->logger->info(sprintf('Deleted flag with code: %s', $code));
             }
         }
     }

@@ -11,58 +11,50 @@ interface TransferLoggerInterface
     /**
      * @param string $message
      * @param array $context
-     * @return bool
      */
-    public function addDebug(string $message, array $context = []): bool;
+    public function debug(string $message, array $context = []): void;
 
     /**
      * @param string $message
      * @param array $context
-     * @return bool
      */
-    public function addInfo(string $message, array $context = []): bool;
+    public function info(string $message, array $context = []): void;
 
     /**
      * @param string $message
      * @param array $context
-     * @return bool
      */
-    public function addNotice(string $message, array $context = []): bool;
+    public function notice(string $message, array $context = []): void;
 
     /**
      * @param string $message
      * @param array $context
-     * @return bool
      */
-    public function addWarning(string $message, array $context = []): bool;
+    public function warning(string $message, array $context = []): void;
 
     /**
      * @param string $message
      * @param array $context
-     * @return bool
      */
-    public function addError(string $message, array $context = []): bool;
+    public function error(string $message, array $context = []): void;
 
     /**
      * @param string $message
      * @param array $context
-     * @return bool
      */
-    public function addCritical(string $message, array $context = []): bool;
+    public function critical(string $message, array $context = []): void;
 
     /**
      * @param string $message
      * @param array $context
-     * @return bool
      */
-    public function addAlert(string $message, array $context = []): bool;
+    public function alert(string $message, array $context = []): void;
 
     /**
      * @param string $message
      * @param array $context
-     * @return bool
      */
-    public function addEmergency(string $message, array $context = []): bool;
+    public function emergency(string $message, array $context = []): void;
 
     public function close(): void;
 

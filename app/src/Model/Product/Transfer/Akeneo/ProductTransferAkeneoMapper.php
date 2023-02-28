@@ -230,7 +230,7 @@ class ProductTransferAkeneoMapper
                     $this->addLocalizedParameterValues($akeneoProductParameterData, $parameter, $productData);
                 }
             } catch (TransferException $e) {
-                $transferLogger->addWarning($e->getMessage());
+                $transferLogger->warning($e->getMessage());
             }
         }
     }

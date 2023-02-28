@@ -126,7 +126,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
 
         $this->lastProductUpdatedAtFromAkeneo = $lastProductsUpdatedAt;
 
-        $this->logger->addInfo(sprintf('Getting data from API for search greater than last updated : %s', $lastProductsUpdatedAt->format(DATE_ATOM)));
+        $this->logger->info(sprintf('Getting data from API for search greater than last updated : %s', $lastProductsUpdatedAt->format(DATE_ATOM)));
 
         foreach ($this->productTransferAkeneoFacade->getAllUpdatedProductsFromLastUpdate($lastProductsUpdatedAt) as $product) {
             yield $product;
@@ -135,7 +135,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
 
     protected function doBeforeTransfer(): void
     {
-        $this->logger->addInfo('Transfer products data from Akeneo ...');
+        $this->logger->info('Transfer products data from Akeneo ...');
 
         $akeneoProductsData = $this->getData();
 
@@ -150,7 +150,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
             return;
         }
 
-        $this->logger->addInfo('Transfer missing parameters from Akeneo');
+        $this->logger->info('Transfer missing parameters from Akeneo');
         $this->akeneoImportProductGroupParameterFacade->runTransfer();
         $this->akeneoImportProductParameterFacade->runTransfer();
     }
@@ -169,7 +169,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
     {
         $this->downloadProductDetails();
         $this->setting->set(Setting::AKENEO_TRANSFER_PRODUCTS_LAST_UPDATED_DATETIME, $this->lastProductUpdatedAtFromAkeneo);
-        $this->logger->addInfo('Transfer is done.');
+        $this->logger->info('Transfer is done.');
         $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
     }
 

@@ -147,7 +147,7 @@ class TransferredProductProcessor
         if ($product === null) {
             $product = $this->createProduct($productData, $logger);
         } else {
-            $logger->addInfo(sprintf('Updating product catnum: %s', $product->getCatnum()));
+            $logger->info(sprintf('Updating product catnum: %s', $product->getCatnum()));
             $product = $this->productFacade->edit($product->getId(), $productData);
         }
 
@@ -178,7 +178,7 @@ class TransferredProductProcessor
      */
     private function createProduct(ProductData $productData, TransferLoggerInterface $logger): Product
     {
-        $logger->addInfo(sprintf('Creating product catnum: %s', $productData->catnum));
+        $logger->info(sprintf('Creating product catnum: %s', $productData->catnum));
 
         return $this->productFacade->create($productData);
     }
@@ -203,7 +203,7 @@ class TransferredProductProcessor
         $accessories = $this->getAccessoriesByCatnums($accessoryCatnums);
         $this->productFacade->refreshProductAccessories($product, $accessories);
         $accessoriesCount = count($accessories);
-        $logger->addInfo(sprintf('Refresh %s accessories for product catnum: %s', $accessoriesCount, $product->getCatnum()));
+        $logger->info(sprintf('Refresh %s accessories for product catnum: %s', $accessoriesCount, $product->getCatnum()));
     }
 
     /**

@@ -60,14 +60,14 @@ class AkeneoImportProductDetailFacade extends AbstractAkeneoImportTransfer
             try {
                 yield $this->productTransferAkeneoFacade->getProductByIdentifier($productIdentifier);
             } catch (RuntimeException $exception) {
-                $this->logger->addError($exception->getMessage());
+                $this->logger->error($exception->getMessage());
             }
         }
     }
 
     protected function doBeforeTransfer(): void
     {
-        $this->logger->addInfo('Transfer product detail data from Akeneo ...');
+        $this->logger->info('Transfer product detail data from Akeneo ...');
     }
 
     /**
@@ -80,7 +80,7 @@ class AkeneoImportProductDetailFacade extends AbstractAkeneoImportTransfer
 
     protected function doAfterTransfer(): void
     {
-        $this->logger->addInfo('Transfer is done.');
+        $this->logger->info('Transfer is done.');
     }
 
     /**

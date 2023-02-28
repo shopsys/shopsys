@@ -96,7 +96,7 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
 
     protected function doBeforeTransfer(): void
     {
-        $this->logger->addInfo('Transfer parameters data from Akeneo ...');
+        $this->logger->info('Transfer parameters data from Akeneo ...');
         $this->loadAkeneoParameterIds();
     }
 
@@ -121,10 +121,10 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
         }
 
         if ($parameter === null) {
-            $this->logger->addInfo(sprintf('Creating parameter group with akeneo code : %s', $parameterData->akeneoCode));
+            $this->logger->info(sprintf('Creating parameter group with akeneo code : %s', $parameterData->akeneoCode));
             $this->parameterFacade->create($parameterData);
         } else {
-            $this->logger->addInfo(sprintf('Updating parameter group with akeneo code : %s', $parameter->getAkeneoCode()));
+            $this->logger->info(sprintf('Updating parameter group with akeneo code : %s', $parameter->getAkeneoCode()));
             $this->parameterFacade->edit($parameter->getId(), $parameterData);
             $this->dropParameterFromNotTransferredParameterIds($parameter->getId());
         }
@@ -134,7 +134,7 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
     {
         $this->deleteNonTransferredParameters();
 
-        $this->logger->addInfo('Done');
+        $this->logger->info('Done');
     }
 
     /**
@@ -162,7 +162,7 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
         $unit = $this->unitFacade->findByAkeneoCode($akeneoParameterDefaultMetricUnitCode);
 
         if ($unit === null) {
-            $this->logger->addInfo(sprintf('Creating unit : %s', $akeneoParameterDefaultMetricUnitCode));
+            $this->logger->info(sprintf('Creating unit : %s', $akeneoParameterDefaultMetricUnitCode));
 
             $unitData = $this->unitDataFactory->create();
             $unitData->akeneoCode = $akeneoParameterDefaultMetricUnitCode;
@@ -190,13 +190,13 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
     private function deleteNonTransferredParameters(): void
     {
         if ($this->parametersFromAkeneoCountBeforeTransfer === count($this->notTransferredParameterIds)) {
-            $this->logger->addError('Import parameters from Akeneo probably failed, all parameters with akeneo code should be deleted. Deletion was aborted.');
+            $this->logger->error('Import parameters from Akeneo probably failed, all parameters with akeneo code should be deleted. Deletion was aborted.');
             return;
         }
 
         foreach ($this->notTransferredParameterIds as $parameterId) {
             $this->parameterFacade->deleteById($parameterId);
-            $this->logger->addWarning(sprintf('Deleted parameter with ID: %s', $parameterId));
+            $this->logger->warning(sprintf('Deleted parameter with ID: %s', $parameterId));
         }
     }
 }
