@@ -216,7 +216,7 @@ class GetAdvertsTest extends GraphQlTestCase
      */
     private function getExpectedAdverts(): array
     {
-        $imageFacade = $this->getContainer()->get(ImageFacade::class);
+        $imageFacade = self::getContainer()->get(ImageFacade::class);
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $testImage = $imageFacade->getImageByEntity($this->advertWithImage, 'web');
         /** @var \App\Model\Category\Category $categoryElectronics */

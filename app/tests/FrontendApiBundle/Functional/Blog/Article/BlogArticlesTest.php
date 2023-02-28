@@ -16,7 +16,7 @@ class BlogArticlesTest extends GraphQlTestCase
         parent::setUp();
 
         /** @var \App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade $blogArticleFacade */
-        $blogArticleFacade = $this->getContainer()->get(BlogArticleElasticsearchFacade::class);
+        $blogArticleFacade = self::getContainer()->get(BlogArticleElasticsearchFacade::class);
         $this->totalBlogArticlesCount = $blogArticleFacade->getAllBlogArticlesTotalCount();
     }
 

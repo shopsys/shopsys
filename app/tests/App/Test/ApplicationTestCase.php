@@ -30,10 +30,14 @@ abstract class ApplicationTestCase extends CommonTestCase
         parent::setUp();
 
         static::$currentClient = $this->getCurrentClient();
+        $this->em->beginTransaction();
+        $this->em->getConnection()->setAutoCommit(false);
     }
 
     protected function tearDown(): void
     {
+        $this->em->rollback();
+
         parent::tearDown();
 
         if (static::$currentClient === null) {
@@ -48,11 +52,9 @@ abstract class ApplicationTestCase extends CommonTestCase
     /**
      * @return \Symfony\Component\DependencyInjection\ContainerInterface
      */
-    protected function getContainer(): ContainerInterface
+    protected static function getContainer(): ContainerInterface
     {
-        $kernelBrowser = $this->getCurrentClient()->getContainer();
-
-        return $kernelBrowser->get('test.service_container');
+        return self::getCurrentClient()->getContainer()->get('test.service_container');
     }
 
     /**
@@ -62,7 +64,7 @@ abstract class ApplicationTestCase extends CommonTestCase
      */
     final public function createContainer(): ContainerInterface
     {
-        return $this->getContainer();
+        return self::getContainer();
     }
 
     /**
@@ -167,7 +169,7 @@ abstract class ApplicationTestCase extends CommonTestCase
      */
     protected function getLocalizedPathOnFirstDomainByRouteName(string $routeName, array $parameters = [], int $absolute = UrlGeneratorInterface::ABSOLUTE_URL): string
     {
-        $domainRouterFactory = $this->getContainer()->get(DomainRouterFactory::class);
+        $domainRouterFactory = self::getContainer()->get(DomainRouterFactory::class);
         $router = $domainRouterFactory->getRouter(Domain::FIRST_DOMAIN_ID);
 
         return $router->generate($routeName, $parameters, $absolute);
@@ -183,7 +185,7 @@ abstract class ApplicationTestCase extends CommonTestCase
         $fakeKernelResponseEvent = new ResponseEvent(
             $this->getCurrentClient()->getKernel(),
             new Request(),
-            HttpKernelInterface::MASTER_REQUEST,
+            HttpKernelInterface::MAIN_REQUEST,
             new Response()
         );
 

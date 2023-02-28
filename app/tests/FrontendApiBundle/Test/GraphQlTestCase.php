@@ -65,7 +65,7 @@ abstract class GraphQlTestCase extends ApplicationTestCase
 
     protected function runCheckTestEnabledOnCurrentDomain(): void
     {
-        $enabledOnCurrentDomainChecker = $this->getContainer()->get(EnabledOnDomainChecker::class);
+        $enabledOnCurrentDomainChecker = self::getContainer()->get(EnabledOnDomainChecker::class);
 
         if (!$enabledOnCurrentDomainChecker->isEnabledOnCurrentDomain()) {
             $this->markTestSkipped('Frontend API disabled on domain');
