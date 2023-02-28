@@ -32,7 +32,7 @@ class DomainAwareSecurityHeadersSetter extends BaseDomainAwareSecurityHeadersSet
      */
     public function onKernelResponse(ResponseEvent $event): void
     {
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return;
         }
         if (!$this->domain->isHttps()) {

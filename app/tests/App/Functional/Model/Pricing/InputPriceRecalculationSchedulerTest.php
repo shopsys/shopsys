@@ -74,9 +74,9 @@ class InputPriceRecalculationSchedulerTest extends FunctionalTestCase
 
         $responseEventMock = $this->getMockBuilder(ResponseEvent::class)
             ->disableOriginalConstructor()
-            ->setMethods(['isMasterRequest'])
+            ->setMethods(['isMainRequest'])
             ->getMock();
-        $responseEventMock->expects($this->any())->method('isMasterRequest')
+        $responseEventMock->expects($this->any())->method('isMainRequest')
             ->willReturn(true);
 
         $inputPriceRecalculationScheduler = new InputPriceRecalculationScheduler($inputPriceRecalculatorMock, $this->setting);
@@ -174,9 +174,9 @@ class InputPriceRecalculationSchedulerTest extends FunctionalTestCase
 
         $responseEventMock = $this->getMockBuilder(ResponseEvent::class)
             ->disableOriginalConstructor()
-            ->setMethods(['isMasterRequest'])
+            ->setMethods(['isMainRequest'])
             ->getMock();
-        $responseEventMock->expects($this->any())->method('isMasterRequest')
+        $responseEventMock->expects($this->any())->method('isMainRequest')
             ->willReturn(true);
 
         if ($scheduleSetInputPricesMethod === self::METHOD_WITH_VAT) {
