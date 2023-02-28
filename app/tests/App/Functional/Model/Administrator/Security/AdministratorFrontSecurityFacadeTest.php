@@ -40,9 +40,8 @@ class AdministratorFrontSecurityFacadeTest extends FunctionalTestCase
     {
         /** @var \App\Model\Administrator\Administrator $administrator */
         $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
-        $password = '';
         $roles = $administrator->getRoles();
-        $token = new UsernamePasswordToken($administrator, $password, AdministratorFrontSecurityFacade::ADMINISTRATION_CONTEXT, $roles);
+        $token = new UsernamePasswordToken($administrator, AdministratorFrontSecurityFacade::ADMINISTRATION_CONTEXT, $roles);
 
         $this->session->set('_security_' . AdministratorFrontSecurityFacade::ADMINISTRATION_CONTEXT, serialize($token));
 
