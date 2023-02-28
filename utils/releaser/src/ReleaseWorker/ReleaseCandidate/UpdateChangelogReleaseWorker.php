@@ -26,8 +26,6 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
      */
     public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
     {
-        $lastVersionOnCurrentBranch = $this->processRunner->run('git describe --tags --abbrev=0');
-
         $this->symfonyStyle->note(
             sprintf(
                 'In order to generate new changelog entries you need to go to https://github.com/shopsys/shopsys/releases/new?tag=%s&target=%s&title=%s',
@@ -37,19 +35,14 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
             )
         );
 
-        $this->symfonyStyle->note(
-            sprintf(
-                'Choose %s as Previous tag and then click on Generate release notes.',
-                $lastVersionOnCurrentBranch
-            )
-        );
+        $this->symfonyStyle->note('Choose previous highest tag as Previous tag and then click on Generate release notes.');
 
         $this->symfonyStyle->note('Copy contents of release to CHANGELOG.md with appropriate title and correct formatting.');
 
         $this->symfonyStyle->note(
             sprintf(
                 'Save release as draft and commit new CHANGELOG.md with message "changelog is now updated for %s release"',
-                $version->getVersionString(),
+                $version->getOriginalString(),
             )
         );
 
