@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
 use Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation as BaseLoginMutation;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 
 /**
  * @property \App\FrontendApi\Model\Token\TokenFacade $tokenFacade
@@ -53,7 +53,7 @@ class LoginMutation extends BaseLoginMutation
         try {
             /** @var \App\Model\Customer\User\CustomerUser $user */
             $user = $this->frontendUserProvider->loadUserByUsername($input['email']);
-        } catch (UsernameNotFoundException $e) {
+        } catch (UserNotFoundException $e) {
             throw new InvalidCredentialsUserError('Log in failed.');
         }
 
