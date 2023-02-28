@@ -29,7 +29,7 @@ abstract class ApplicationTestCase extends CommonTestCase
     {
         parent::setUp();
 
-        static::$currentClient = $this->getCurrentClient();
+        static::$currentClient = self::getCurrentClient();
         $this->em->beginTransaction();
         $this->em->getConnection()->setAutoCommit(false);
     }
@@ -70,7 +70,7 @@ abstract class ApplicationTestCase extends CommonTestCase
     /**
      * @return \Symfony\Bundle\FrameworkBundle\KernelBrowser
      */
-    public function getCurrentClient(): KernelBrowser
+    public static function getCurrentClient(): KernelBrowser
     {
         if (static::$currentClient === null) {
             static::$currentClient = static::createClient();
@@ -97,6 +97,7 @@ abstract class ApplicationTestCase extends CommonTestCase
         array $kernelOptions = [],
         array $clientOptions = []
     ): KernelBrowser {
+        self::ensureKernelShutdown();
         $client = self::createClient($kernelOptions);
 
         /** @var \Symfony\Component\DependencyInjection\ContainerInterface $container */
@@ -124,7 +125,7 @@ abstract class ApplicationTestCase extends CommonTestCase
         ?string $password,
         array $clientOptions = []
     ): KernelBrowser {
-        $client = $this->getCurrentClient();
+        $client = self::getCurrentClient();
 
         $serverOptions = $this->getClientServerParameters($username, $password, $clientOptions);
         $client->setServerParameters($serverOptions);
@@ -183,13 +184,12 @@ abstract class ApplicationTestCase extends CommonTestCase
     protected function dispatchFakeKernelResponseEventToTriggerImmediateRecalculations(): void
     {
         $fakeKernelResponseEvent = new ResponseEvent(
-            $this->getCurrentClient()->getKernel(),
+            self::getCurrentClient()->getKernel(),
             new Request(),
             HttpKernelInterface::MAIN_REQUEST,
             new Response()
         );
 
-        /* @phpstan-ignore-next-line */
         $this->eventDispatcher->dispatch($fakeKernelResponseEvent, 'kernel.response');
     }
 }
