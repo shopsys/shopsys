@@ -1,7 +1,7 @@
 {% extends '@!ShopsysFramework/Admin/Content/Mail/list.html.twig' %}
 
 {% block main_content %}
-    {{ render(controller('ShopsysFrameworkBundle:Admin/Domain:domainTabs')) }}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
 
     <div class="wrap-bar">
         <a href="{{ url('admin_mail_createtemplate') }}" class="btn btn--plus wrap-bar__btn">

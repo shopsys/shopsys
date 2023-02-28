@@ -40,7 +40,7 @@
             {% endif %}
 
             <td>
-                {{ render(controller('App\\Controller\\Admin\\CategorySeoController:readyCombinationButtonAction', {
+                {{ render(controller('App\\Controller\\Admin\\CategorySeoController::readyCombinationButtonAction', {
                     categoryId: categoryId,
                     categorySeoFilterFormTypeAllQueries: categorySeoFilterFormTypeAllQueries,
                     choseCategorySeoMixCombination: categorySeoMix.choseCategorySeoMixCombination(categorySeoFiltersData.parameters)

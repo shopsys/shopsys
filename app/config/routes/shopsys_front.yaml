@@ -4,14 +4,14 @@ front_homepage:
 front_image:
     path: '/%shopsys.content_dir_name%/images/{entityName}/{type}/{sizeName}/{imageId}.{extension}'
     defaults:
-        _controller: App\Controller\Front\ImageController:getImageAction
+        _controller: App\Controller\Front\ImageController::getImageAction
     requirements:
         imageId: \d+
 
 front_additional_image_seo:
     path: "/%shopsys.content_dir_name%/images/{entityName}/{type}/{sizeName}/{additionalIndex}--{seoSlug}_{imageId}.{extension}"
     defaults:
-        _controller: App\Controller\Front\ImageController:getAdditionalImageAction
+        _controller: App\Controller\Front\ImageController::getAdditionalImageAction
     requirements:
         imageId: \d+
         additionalIndex: \d+
@@ -19,14 +19,14 @@ front_additional_image_seo:
 front_image_seo:
     path: '/%shopsys.content_dir_name%/images/{entityName}/{type}/{sizeName}/{seoSlug}_{imageId}.{extension}'
     defaults:
-        _controller: App\Controller\Front\ImageController:getImageAction
+        _controller: App\Controller\Front\ImageController::getImageAction
     requirements:
         imageId: \d+
 
 front_additional_image:
     path: "/%shopsys.content_dir_name%/images/{entityName}/{type}/{sizeName}/{additionalIndex}--{imageId}.{extension}"
     defaults:
-        _controller: App\Controller\Front\ImageController:getAdditionalImageAction
+        _controller: App\Controller\Front\ImageController::getAdditionalImageAction
     requirements:
         imageId: \d+
         additionalIndex: \d+
@@ -34,7 +34,7 @@ front_additional_image:
 front_image_without_type:
     path: "/%shopsys.content_dir_name%/images/{entityName}/{sizeName}/{imageId}.{extension}"
     defaults:
-        _controller: App\Controller\Front\ImageController:getImageAction
+        _controller: App\Controller\Front\ImageController::getImageAction
         type: ~
     requirements:
         imageId: \d+
@@ -42,7 +42,7 @@ front_image_without_type:
 front_additional_image_seo_without_type:
     path: "/%shopsys.content_dir_name%/images/{entityName}/{sizeName}/{additionalIndex}--{seoSlug}_{imageId}.{extension}"
     defaults:
-        _controller: App\Controller\Front\ImageController:getAdditionalImageAction
+        _controller: App\Controller\Front\ImageController::getAdditionalImageAction
         type: ~
     requirements:
         imageId: \d+
@@ -51,7 +51,7 @@ front_additional_image_seo_without_type:
 front_image_seo_without_type:
     path: "/%shopsys.content_dir_name%/images/{entityName}/{sizeName}/{seoSlug}_{imageId}.{extension}"
     defaults:
-        _controller: App\Controller\Front\ImageController:getImageAction
+        _controller: App\Controller\Front\ImageController::getImageAction
         type: ~
     requirements:
         imageId: \d+
@@ -59,7 +59,7 @@ front_image_seo_without_type:
 front_additional_image_without_type:
     path: "/%shopsys.content_dir_name%/images/{entityName}/{sizeName}/{additionalIndex}--{imageId}.{extension}"
     defaults:
-        _controller: App\Controller\Front\ImageController:getAdditionalImageAction
+        _controller: App\Controller\Front\ImageController::getAdditionalImageAction
         type: ~
     requirements:
         imageId: \d+
@@ -68,12 +68,12 @@ front_additional_image_without_type:
 front_export_personal_data:
     path: /personal-overview-export/xml/{hash}
     defaults:
-        _controller: App\Controller\Front\PersonalDataController:exportXmlAction
+        _controller: App\Controller\Front\PersonalDataController::exportXmlAction
         type: ~
 
 front_download_uploaded_file:
     path: /file/{uploadedFileId}/{uploadedFilename}
-    defaults: { _controller: App\Controller\Front\UploadedFileController:downloadAction }
+    defaults: { _controller: App\Controller\Front\UploadedFileController::downloadAction }
     methods: [GET]
     requirements:
         uploadedFileId: \d+
