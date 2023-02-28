@@ -296,7 +296,13 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     public function removeNotGrantedItemsFromMenu(ItemInterface $rootMenu): void
     {
         foreach (MenuItemsGrantedRolesSetting::getGrantedRolesByMenuItems() as $menuItemPath => $grantedRoles) {
-            if (!$this->security->isGranted($grantedRoles)) {
+            $isGranted = array_reduce(
+                $grantedRoles,
+                fn ($isGranted, $role) => $isGranted || $this->security->isGranted($role),
+                false
+            );
+
+            if (!$isGranted) {
                 $this->removeItemFromMenu($menuItemPath, $rootMenu);
             }
         }

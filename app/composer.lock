@@ -299,16 +299,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.260.3",
+            "version": "3.261.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "547b8047b2f9a551a7100b22e1abe1a3cc1b0ff0"
+                "reference": "9523e082488df5898d8e975c6554cc8b9a79f97a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/547b8047b2f9a551a7100b22e1abe1a3cc1b0ff0",
-                "reference": "547b8047b2f9a551a7100b22e1abe1a3cc1b0ff0",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/9523e082488df5898d8e975c6554cc8b9a79f97a",
+                "reference": "9523e082488df5898d8e975c6554cc8b9a79f97a",
                 "shasum": ""
             },
             "require": {
@@ -387,9 +387,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.260.3"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.261.0"
             },
-            "time": "2023-02-24T19:25:34+00:00"
+            "time": "2023-02-27T19:22:33+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -1644,7 +1644,7 @@
             "source": {
                 "type": "git",
                 "url": "https://gitlab+deploy-token-4:yqMfHR2F4qc6rbFequP4@gitlab.shopsys.cz/devops/kubernetes-deployment.git",
-                "reference": "2f478ec9fb3d72dbfe8e5cca9e7a151e4914bd86"
+                "reference": "486527274d7ae1d84bf19e82d9d4770c431a4070"
             },
             "require": {
                 "arvenil/ninja-mutex": "^0.4.1",
@@ -1698,7 +1698,7 @@
                 "shopsys",
                 "symfony"
             ],
-            "time": "2023-02-27T15:23:15+00:00"
+            "time": "2023-02-28T11:15:32+00:00"
         },
         {
             "name": "doctrine/annotations",
