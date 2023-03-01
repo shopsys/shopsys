@@ -61,7 +61,7 @@ class SitemapListener extends BaseSitemapListener
         $categorySeoMixSitemapItems = $this->sitemapRepository->getSitemapItemsForVisibleCategorySeoMix($domainConfig);
         $this->addUrlsForSitemapItems($categorySeoMixSitemapItems, $generator, $domainConfig, 'filtersCategories');
 
-        $productSitemapItems = $this->sitemapFacade->getSitemapItemsForVisibleProducts($domainConfig);
+        $productSitemapItems = $this->sitemapFacade->getSitemapItemsForListableProducts($domainConfig);
         $this->addUrlsForSitemapItems($productSitemapItems, $generator, $domainConfig, 'sellableProducts');
 
         $productSoldOutSitemapItems = $this->sitemapFacade->getSitemapItemsForSoldOutProducts($domainConfig);
