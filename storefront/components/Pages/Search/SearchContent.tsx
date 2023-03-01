@@ -164,7 +164,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
             )}
             <SearchResultsWebline>
                 <PaginationProvider {...getNewPagination(currentPage)}>
-                    <HeadingPaginated type={'h3'} totalCount={searchResults.productsSearch.totalCount}>
+                    <HeadingPaginated type="h3" totalCount={searchResults.productsSearch.totalCount}>
                         {t('Found products')}
                     </HeadingPaginated>
                     <ProductsSearch productsSearch={searchResults.productsSearch} />
