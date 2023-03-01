@@ -8,9 +8,6 @@
     "arvenil/ninja-mutex": {
         "version": "0.4.1"
     },
-    "asm89/twig-cache-extension": {
-        "version": "1.4.0"
-    },
     "aws/aws-crt-php": {
         "version": "v1.0.2"
     },
@@ -390,9 +387,6 @@
     "league/flysystem-aws-s3-v3": {
         "version": "1.0.23"
     },
-    "league/flysystem-cached-adapter": {
-        "version": "1.0.9"
-    },
     "league/iso3166": {
         "version": "2.1.5"
     },
@@ -482,17 +476,11 @@
     "phing/phing": {
         "version": "2.16.1"
     },
-    "php-cs-fixer/diff": {
-        "version": "v1.3.0"
-    },
     "php-http/client-common": {
         "version": "2.5.0"
     },
     "php-http/discovery": {
         "version": "1.7.4"
-    },
-    "php-http/guzzle6-adapter": {
-        "version": "v2.0.1"
     },
     "php-http/httplug": {
         "version": "2.1.0"
@@ -824,9 +812,6 @@
     },
     "studio-42/elfinder": {
         "version": "2.1.50"
-    },
-    "superbalist/flysystem-google-storage": {
-        "version": "7.2.2"
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.2.1"
@@ -1194,18 +1179,6 @@
     },
     "tuscanicz/enum": {
         "version": "v2.1"
-    },
-    "twig/extensions": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "a86723ee8d8b2f9437c8ce60a5546a1c267da5ed"
-        },
-        "files": [
-            "config/packages/twig_extensions.yaml"
-        ]
     },
     "twig/twig": {
         "version": "v2.12.1"
