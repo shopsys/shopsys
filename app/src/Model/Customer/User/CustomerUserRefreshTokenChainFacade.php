@@ -40,14 +40,14 @@ class CustomerUserRefreshTokenChainFacade extends BaseCustomerUserRefreshTokenCh
         string $secretChain,
         string $deviceId
     ): ?CustomerUserRefreshTokenChain {
-        $encoder = $this->encoderFactory->getEncoder($customerUser);
+        $encoder = $this->passwordHasherFactory->getPasswordHasher($customerUser);
         $customersTokenChains = $this->customerUserRefreshTokenChainRepository->findCustomersTokenChainsByDeviceId(
             $customerUser,
             $deviceId
         );
 
         foreach ($customersTokenChains as $customersTokenChain) {
-            if ($encoder->isPasswordValid($customersTokenChain->getTokenChain(), $secretChain, null)) {
+            if ($encoder->verify($customersTokenChain->getTokenChain(), $secretChain)) {
                 return $customersTokenChain;
             }
         }

@@ -122,7 +122,6 @@ class CategoryResolverMap extends BaseCategoryResolverMap
             case 'uuid':
                 return $category->getUuid();
             case 'name':
-                // @phpstan-ignore-next-line Category::getName() is wrongly annotated
                 return $category->getName($this->domain->getLocale()) ?? '';
             case 'description':
                 return $category->getDescription($this->domain->getId());
@@ -165,7 +164,6 @@ class CategoryResolverMap extends BaseCategoryResolverMap
             case 'uuid':
                 return $readyCategorySeoMix->getUuid();
             case 'name':
-                // @phpstan-ignore-next-line Category::getName() is wrongly annotated
                 return $category->getName($this->domain->getLocale()) ?? '';
             case 'description':
                 return $readyCategorySeoMix->getDescription() ?? '';

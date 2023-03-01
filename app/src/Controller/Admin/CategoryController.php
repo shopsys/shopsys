@@ -6,7 +6,6 @@ namespace App\Controller\Admin;
 
 use App\Component\Form\FormBuilderHelper;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
-use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
 use Shopsys\FrameworkBundle\Controller\Admin\CategoryController as BaseCategoryController;
@@ -14,8 +13,8 @@ use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -26,51 +25,30 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryController extends BaseCategoryController
 {
     /**
-     * @var \App\Component\Form\FormBuilderHelper
-     */
-    private $formBuilderHelper;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    protected $adminDomainTabsFacade;
-
-    /**
-     * @var \App\Model\CategorySeo\ReadyCategorySeoMixFacade
-     */
-    private ReadyCategorySeoMixFacade $categorySeoMixFacade;
-
-    /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Category\CategoryDataFactory $categoryDataFactory
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $categorySeoMixFacade
      */
     public function __construct(
         CategoryFacade $categoryFacade,
         CategoryDataFactoryInterface $categoryDataFactory,
-        SessionInterface $session,
+        RequestStack $requestStack,
         Domain $domain,
         BreadcrumbOverrider $breadcrumbOverrider,
-        FormBuilderHelper $formBuilderHelper,
-        AdminDomainTabsFacade $adminDomainTabsFacade,
-        ReadyCategorySeoMixFacade $categorySeoMixFacade
+        private readonly FormBuilderHelper $formBuilderHelper,
+        private readonly ReadyCategorySeoMixFacade $categorySeoMixFacade
     ) {
         parent::__construct(
             $categoryFacade,
             $categoryDataFactory,
-            $session,
             $domain,
-            $breadcrumbOverrider
+            $breadcrumbOverrider,
+            $requestStack
         );
-
-        $this->formBuilderHelper = $formBuilderHelper;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
-        $this->categorySeoMixFacade = $categorySeoMixFacade;
     }
 
     /**
@@ -84,7 +62,7 @@ class CategoryController extends BaseCategoryController
             if ($request->query->has('domain')) {
                 $domainId = (int)$request->query->get('domain');
             } else {
-                $domainId = (int)$this->session->get('categories_selected_domain_id', static::ALL_DOMAINS);
+                $domainId = (int)$this->requestStack->getSession()->get('categories_selected_domain_id', static::ALL_DOMAINS);
             }
         } else {
             $domainId = static::ALL_DOMAINS;
@@ -98,7 +76,7 @@ class CategoryController extends BaseCategoryController
             }
         }
 
-        $this->session->set('categories_selected_domain_id', $domainId);
+        $this->requestStack->getSession()->set('categories_selected_domain_id', $domainId);
 
         if ($domainId === static::ALL_DOMAINS) {
             $categoriesWithPreloadedChildren = $this->categoryFacade->getAllCategoriesWithPreloadedChildren($request->getLocale());
