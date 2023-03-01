@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 /**
  * @property \App\FrontendApi\Model\Token\TokenFacade $tokenFacade
- * @method __construct(\App\FrontendApi\Model\Token\TokenFacade $tokenFacade)
+ * @method __construct(\App\FrontendApi\Model\Token\TokenFacade $tokenFacade, \Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider $frontendApiUserProvider)
  */
 class TokenAuthenticator extends BaseTokenAuthenticator
 {

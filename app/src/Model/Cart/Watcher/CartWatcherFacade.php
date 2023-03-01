@@ -26,7 +26,7 @@ class CartWatcherFacade extends BaseCartWatcherFacade
      * @deprecated see the class description
      * @see \App\FrontendApi\Model\Cart\CartWatcherFacade
      */
-    public function checkCartModifications(Cart $cart)
+    public function checkCartModifications(Cart $cart): void
     {
         throw new DeprecatedMethodException();
     }
@@ -36,7 +36,7 @@ class CartWatcherFacade extends BaseCartWatcherFacade
      * @deprecated see the class description
      * @see \App\FrontendApi\Model\Cart\CartWatcherFacade
      */
-    protected function checkModifiedPrices(Cart $cart)
+    protected function checkModifiedPrices(Cart $cart): void
     {
         throw new DeprecatedMethodException();
     }
@@ -46,7 +46,7 @@ class CartWatcherFacade extends BaseCartWatcherFacade
      * @deprecated see the class description
      * @see \App\FrontendApi\Model\Cart\CartWatcherFacade
      */
-    protected function checkNotListableItems(Cart $cart)
+    protected function checkNotListableItems(Cart $cart): void
     {
         throw new DeprecatedMethodException();
     }
