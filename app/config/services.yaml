@@ -75,6 +75,23 @@ services:
         tags:
             - { name: doctrine.event_subscriber, priority: -100 }
 
+    Redis:
+        class: Redis
+        calls:
+            -   connect:
+                    - '%env(REDIS_HOST)%'
+
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+        arguments:
+            - '@Redis'
+            - { 'prefix': '%env(REDIS_PREFIX)%session:', ttl: 604800 }
+
+    Psr\Container\ContainerInterface:
+        alias: service_container
+
+    Symfony\Component\DependencyInjection\ContainerInterface:
+        alias: service_container
+
     App\Model\Cart\CartFacade:
         lazy: true
 
@@ -733,7 +750,6 @@ services:
             $allClients: !tagged snc_redis.client
             $persistentClients:
                 - '@snc_redis.global'
-                - '@snc_redis.session'
                 - '@snc_redis.blog_article_export_queue'
 
     App\Component\Redis\CleanStorefrontCacheFacade:

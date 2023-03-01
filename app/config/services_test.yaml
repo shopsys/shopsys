@@ -62,3 +62,9 @@ services:
 
     App\Model\GoPay\GoPayClientFactory:
         alias: Tests\FrontendApiBundle\Functional\Payment\GoPay\GoPayClientFactory
+
+    Symfony\Component\HttpFoundation\RequestStack:
+        class: Tests\App\Test\HttpFoundation\RequestStack
+        arguments:
+            $container: '@test.service_container'
+            $requestStack: '@request_stack'
