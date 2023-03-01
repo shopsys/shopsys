@@ -10,6 +10,7 @@ use DateTime;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 class NotificationBarDataFixture extends AbstractReferenceFixture
 {
@@ -34,7 +35,7 @@ class NotificationBarDataFixture extends AbstractReferenceFixture
             $notificationBarData = $this->notificationBarDataFactory->create();
 
             $notificationBarData->domainId = $domainConfig->getId();
-            $notificationBarData->text = t('Notification in the bar, notification of a new event.', [], 'dataFixtures', $domainConfig->getLocale());
+            $notificationBarData->text = t('Notification in the bar, notification of a new event.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale());
             $notificationBarData->validityFrom = new DateTime('today midnight');
             $notificationBarData->validityTo = new DateTime('+7 days midnight');
             $notificationBarData->rgbColor = '#000000';

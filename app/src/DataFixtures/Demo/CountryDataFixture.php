@@ -7,6 +7,7 @@ namespace App\DataFixtures\Demo;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Country\CountryData;
 use Shopsys\FrameworkBundle\Model\Country\CountryDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
@@ -51,7 +52,7 @@ class CountryDataFixture extends AbstractReferenceFixture
         $countryData = $this->countryDataFactory->create();
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $countryData->names[$locale] = t('Czech republic', [], 'dataFixtures', $locale);
+            $countryData->names[$locale] = t('Czech republic', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $countryData->code = 'CZ';
@@ -60,7 +61,7 @@ class CountryDataFixture extends AbstractReferenceFixture
         $countryData = $this->countryDataFactory->create();
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $countryData->names[$locale] = t('Slovakia', [], 'dataFixtures', $locale);
+            $countryData->names[$locale] = t('Slovakia', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $countryData->code = 'SK';

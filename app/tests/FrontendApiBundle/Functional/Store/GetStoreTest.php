@@ -9,6 +9,7 @@ use App\Model\Store\StoreFacade;
 use App\Model\Store\StoreFriendlyUrlProvider;
 use Nette\Utils\Json;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -237,7 +238,7 @@ class GetStoreTest extends GraphQlTestCase
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $data = [
             1 => [
-                'name' => t('Ostrava', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('Ostrava', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'slug' => '/ostrava',
                 'isDefault' => true,
                 'description' => t('Prodejna v Ostravě Přívoze', [], 'dataFixture', $firstDomainLocale),
@@ -248,7 +249,7 @@ class GetStoreTest extends GraphQlTestCase
                     'code' => 'CZ',
                 ],
                 'contactInfo' => null,
-                'openingHours' => t('Po-Pa: 8:00-16:00', [], 'dataFixtures', $firstDomainLocale),
+                'openingHours' => t('Po-Pa: 8:00-16:00', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'specialMessage' => null,
                 'locationLatitude' => '49.8574975000000',
                 'locationLongitude' => '18.2738861000000',
@@ -258,13 +259,13 @@ class GetStoreTest extends GraphQlTestCase
                         'slug' => $storesSlug,
                     ],
                     [
-                        'name' => t('Ostrava', [], 'dataFixtures', $firstDomainLocale),
+                        'name' => t('Ostrava', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         'slug' => $this->urlGenerator->generate('front_stores_detail', ['id' => 1]),
                     ],
                 ],
             ],
             2 => [
-                'name' => t('Pardubice', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('Pardubice', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'slug' => '/pardubice',
                 'isDefault' => false,
                 'description' => t('Prodejna v Pardubicích', [], 'dataFixture', $firstDomainLocale),
@@ -275,7 +276,7 @@ class GetStoreTest extends GraphQlTestCase
                     'code' => 'CZ',
                 ],
                 'contactInfo' => null,
-                'openingHours' => t('Po-Pa: 8:00-17:00', [], 'dataFixtures', $firstDomainLocale),
+                'openingHours' => t('Po-Pa: 8:00-17:00', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'specialMessage' => null,
                 'locationLatitude' => '50.0346875000000',
                 'locationLongitude' => '15.7707169000000',
@@ -285,7 +286,7 @@ class GetStoreTest extends GraphQlTestCase
                         'slug' => $storesSlug,
                     ],
                     [
-                        'name' => t('Pardubice', [], 'dataFixtures', $firstDomainLocale),
+                        'name' => t('Pardubice', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         'slug' => $this->urlGenerator->generate('front_stores_detail', ['id' => 2]),
                     ],
                 ],

@@ -8,6 +8,7 @@ use App\Model\Product\Flag\FlagDataFactory;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\Cdn\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 
 class FlagDataFixture extends AbstractReferenceFixture
@@ -81,7 +82,7 @@ class FlagDataFixture extends AbstractReferenceFixture
 
         $flagData = $this->flagDataFactory->createFromFlag($flag);
         foreach ($this->domain->getAllLocales() as $locale) {
-            $flagData->name[$locale] = t('Action', [], 'dataFixtures', $locale);
+            $flagData->name[$locale] = t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $this->flagFacade->edit($flagId, $flagData);
     }

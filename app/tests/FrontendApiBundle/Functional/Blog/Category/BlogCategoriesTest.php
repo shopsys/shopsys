@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Blog\Category;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class BlogCategoriesTest extends GraphQlTestCase
@@ -22,7 +23,7 @@ class BlogCategoriesTest extends GraphQlTestCase
         $arrayExpected = [
             'data' => [
                 'blogCategories' => [
-                    ['name' => t('Hlavní stránka blogu - %locale%', ['%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
+                    ['name' => t('Hlavní stránka blogu - %locale%', ['%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
                 ],
             ],
         ];
@@ -45,10 +46,10 @@ class BlogCategoriesTest extends GraphQlTestCase
 
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $expected = [
-            'name' => t('Hlavní stránka blogu - %locale%', ['%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale),
+            'name' => t('Hlavní stránka blogu - %locale%', ['%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             'children' => [
-                ['name' => t('První podsekce %locale%', ['%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
-                ['name' => t('Druhá podsekce %locale%', ['%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
+                ['name' => t('První podsekce %locale%', ['%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                ['name' => t('Druhá podsekce %locale%', ['%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             ],
         ];
 

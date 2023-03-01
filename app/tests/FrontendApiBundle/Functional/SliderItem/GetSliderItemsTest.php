@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\SliderItem;
 
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GetSliderItemsTest extends GraphQlTestCase
@@ -19,21 +20,21 @@ class GetSliderItemsTest extends GraphQlTestCase
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $expectedSliderItemsData = [
             [
-                'name' => t('40% SLEVA NA ÚLOŽNÉ PROSTORY', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('40% SLEVA NA ÚLOŽNÉ PROSTORY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'link' => 'https://www.shopsys.cz',
-                'extendedText' => t('Pravidla akce', [], 'dataFixtures', $firstDomainLocale),
+                'extendedText' => t('Pravidla akce', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'extendedTextLink' => 'https://www.shopsys.cz',
             ],
             [
-                'name' => t('40% SLEVA NA POSTELE, MATRACE A ROŠTY', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('40% SLEVA NA POSTELE, MATRACE A ROŠTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'link' => 'https://shopsys.cz',
-                'extendedText' => t('Pravidla akce', [], 'dataFixtures', $firstDomainLocale),
+                'extendedText' => t('Pravidla akce', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'extendedTextLink' => 'https://www.shopsys.cz',
             ],
             [
-                'name' => t('SLEVA 20% + 21% DPH NAVÍC', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('SLEVA 20% + 21% DPH NAVÍC', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'link' => 'https://shopsys.cz',
-                'extendedText' => t('Pravidla akce', [], 'dataFixtures', $firstDomainLocale),
+                'extendedText' => t('Pravidla akce', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'extendedTextLink' => 'https://www.shopsys.cz',
             ],
         ];
@@ -64,7 +65,7 @@ class GetSliderItemsTest extends GraphQlTestCase
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $expectedSliderItemsWebImagesData = [
             [
-                'name' => t('40% SLEVA NA ÚLOŽNÉ PROSTORY', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('40% SLEVA NA ÚLOŽNÉ PROSTORY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
                         'sizes' => [
@@ -76,7 +77,7 @@ class GetSliderItemsTest extends GraphQlTestCase
                 ],
             ],
             [
-                'name' => t('40% SLEVA NA POSTELE, MATRACE A ROŠTY', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('40% SLEVA NA POSTELE, MATRACE A ROŠTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
                         'sizes' => [
@@ -88,7 +89,7 @@ class GetSliderItemsTest extends GraphQlTestCase
                 ],
             ],
             [
-                'name' => t('SLEVA 20% + 21% DPH NAVÍC', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('SLEVA 20% + 21% DPH NAVÍC', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
                         'sizes' => [
@@ -126,7 +127,7 @@ class GetSliderItemsTest extends GraphQlTestCase
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $expectedSliderItemsWebImagesData = [
             [
-                'name' => t('40% SLEVA NA ÚLOŽNÉ PROSTORY', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('40% SLEVA NA ÚLOŽNÉ PROSTORY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
                         'sizes' => [
@@ -138,7 +139,7 @@ class GetSliderItemsTest extends GraphQlTestCase
                 ],
             ],
             [
-                'name' => t('40% SLEVA NA POSTELE, MATRACE A ROŠTY', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('40% SLEVA NA POSTELE, MATRACE A ROŠTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
                         'sizes' => [
@@ -150,7 +151,7 @@ class GetSliderItemsTest extends GraphQlTestCase
                 ],
             ],
             [
-                'name' => t('SLEVA 20% + 21% DPH NAVÍC', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('SLEVA 20% + 21% DPH NAVÍC', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'images' => [
                     [
                         'sizes' => [

@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Product;
 
 use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Product\Availability\AvailabilityStatusEnum;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 class ProductsTest extends ProductsGraphQlTestCase
 {
@@ -25,11 +26,11 @@ class ProductsTest extends ProductsGraphQlTestCase
         ';
 
         $productsExpected = [
-            ['name' => t('100 Czech crowns ticket', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('27” Hyundai T27D590EY', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('27” Hyundai T27D590EZ', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('30” Hyundai 22MT44D', [], 'dataFixtures', $firstDomainLocale)],
+            ['name' => t('100 Czech crowns ticket', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('27” Hyundai T27D590EY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('27” Hyundai T27D590EZ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('30” Hyundai 22MT44D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
         ];
 
         $this->assertProducts($query, 'products', $productsExpected);
@@ -135,11 +136,11 @@ class ProductsTest extends ProductsGraphQlTestCase
 
         return [
             [
-                'name' => t('30” Hyundai 22MT44D', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('30” Hyundai 22MT44D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'shortDescription' => t(
                     'Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768',
                     [],
-                    'dataFixtures',
+                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale
                 ),
                 'seoH1' => null,
@@ -147,19 +148,19 @@ class ProductsTest extends ProductsGraphQlTestCase
                 'seoMetaDescription' => null,
                 'link' => $this->getLocalizedPathOnFirstDomainByRouteName('front_product_detail', ['id' => 77]),
                 'unit' => [
-                    'name' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
+                    'name' => t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 ],
                 'availability' => [
-                    'name' => t('In stock', [], 'dataFixtures', $firstDomainLocale),
+                    'name' => t('In stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'status' => AvailabilityStatusEnum::InStock->name,
                 ],
                 'stockQuantity' => 900,
                 'categories' => [
                     [
-                        'name' => t('TV, audio', [], 'dataFixtures', $firstDomainLocale),
+                        'name' => t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     ],
                     [
-                        'name' => t('Personal Computers & accessories', [], 'dataFixtures', $firstDomainLocale),
+                        'name' => t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     ],
                 ],
                 'flags' => [],
@@ -172,60 +173,60 @@ class ProductsTest extends ProductsGraphQlTestCase
                 'description' => t(
                     'Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768, DVB-T/C, HDMI, SCART, D-Sub, USB, speakers, Energ. Class A',
                     [],
-                    'dataFixtures',
+                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale
                 ),
                 'orderingPriority' => 0,
                 'parameters' => [
                     [
-                        'name' => t('Screen size', [], 'dataFixtures', $firstDomainLocale),
-                        'group' => t('Hlavní údaje', [], 'dataFixtures', $firstDomainLocale),
+                        'name' => t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'group' => t('Hlavní údaje', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         'unit' => [
-                            'name' => t('in', [], 'dataFixtures', $firstDomainLocale),
+                            'name' => t('in', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         ],
                         'values' => [
                             [
-                                'text' => t('30"', [], 'dataFixtures', $firstDomainLocale),
+                                'text' => t('30"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             ],
                         ],
                     ],
                     [
-                        'name' => t('Technology', [], 'dataFixtures', $firstDomainLocale),
-                        'group' => t('Hlavní údaje', [], 'dataFixtures', $firstDomainLocale),
+                        'name' => t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'group' => t('Hlavní údaje', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         'unit' => null,
                         'values' => [
                             [
-                                'text' => t('LED', [], 'dataFixtures', $firstDomainLocale),
+                                'text' => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             ],
                         ],
                     ],
                     [
-                        'name' => t('Resolution', [], 'dataFixtures', $firstDomainLocale),
-                        'group' => t('Hlavní údaje', [], 'dataFixtures', $firstDomainLocale),
+                        'name' => t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'group' => t('Hlavní údaje', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         'unit' => null,
                         'values' => [
                             [
-                                'text' => t('1920×1080 (Full HD)', [], 'dataFixtures', $firstDomainLocale),
+                                'text' => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             ],
                         ],
                     ],
                     [
-                        'name' => t('USB', [], 'dataFixtures', $firstDomainLocale),
-                        'group' => t('Způsob připojení', [], 'dataFixtures', $firstDomainLocale),
+                        'name' => t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'group' => t('Způsob připojení', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         'unit' => null,
                         'values' => [
                             [
-                                'text' => t('Yes', [], 'dataFixtures', $firstDomainLocale),
+                                'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             ],
                         ],
                     ],
                     [
-                        'name' => t('HDMI', [], 'dataFixtures', $firstDomainLocale),
-                        'group' => t('Způsob připojení', [], 'dataFixtures', $firstDomainLocale),
+                        'name' => t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'group' => t('Způsob připojení', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         'unit' => null,
                         'values' => [
                             [
-                                'text' => t('Yes', [], 'dataFixtures', $firstDomainLocale),
+                                'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             ],
                         ],
                     ],
@@ -233,7 +234,7 @@ class ProductsTest extends ProductsGraphQlTestCase
                 'isUsingStock' => true,
                 'namePrefix' => null,
                 'nameSuffix' => null,
-                'fullName' => t('30” Hyundai 22MT44D', [], 'dataFixtures', $firstDomainLocale),
+                'fullName' => t('30” Hyundai 22MT44D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'catalogNumber' => '7700769',
                 'partNumber' => '22MT44D',
                 'ean' => '8845781245931',
@@ -272,7 +273,7 @@ class ProductsTest extends ProductsGraphQlTestCase
         $productName = t(
             'ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue',
             [],
-            'dataFixtures',
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $firstDomainLocale
         );
 

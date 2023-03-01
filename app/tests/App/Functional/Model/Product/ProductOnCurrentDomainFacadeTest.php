@@ -13,6 +13,7 @@ use App\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
@@ -107,8 +108,8 @@ abstract class ProductOnCurrentDomainFacadeTest extends FunctionalTestCase
 
         $firstDomainLocale = $this->getFirstDomainLocale();
         $parameterFilterData = $this->createParameterFilterData(
-            [$firstDomainLocale => t('Print resolution', [], 'dataFixtures', $firstDomainLocale)],
-            [[$firstDomainLocale => t('4800x1200', [], 'dataFixtures', $firstDomainLocale)]]
+            [$firstDomainLocale => t('Print resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            [[$firstDomainLocale => t('4800x1200', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]]
         );
 
         $productFilterData = new ProductFilterData();
@@ -125,10 +126,10 @@ abstract class ProductOnCurrentDomainFacadeTest extends FunctionalTestCase
 
         $firstDomainLocale = $this->getFirstDomainLocale();
         $parameterFilterData = $this->createParameterFilterData(
-            [$firstDomainLocale => t('Print resolution', [], 'dataFixtures', $firstDomainLocale)],
+            [$firstDomainLocale => t('Print resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             [
-                [$firstDomainLocale => t('4800x1200', [], 'dataFixtures', $firstDomainLocale)],
-                [$firstDomainLocale => t('2400x600', [], 'dataFixtures', $firstDomainLocale)],
+                [$firstDomainLocale => t('4800x1200', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                [$firstDomainLocale => t('2400x600', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             ]
         );
         $productFilterData = new ProductFilterData();
@@ -144,14 +145,14 @@ abstract class ProductOnCurrentDomainFacadeTest extends FunctionalTestCase
 
         $firstDomainLocale = $this->getFirstDomainLocale();
         $parameterFilterData1 = $this->createParameterFilterData(
-            [$firstDomainLocale => t('Print resolution', [], 'dataFixtures', $firstDomainLocale)],
+            [$firstDomainLocale => t('Print resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             [
-                [$firstDomainLocale => t('4800x1200', [], 'dataFixtures', $firstDomainLocale)],
-                [$firstDomainLocale => t('2400x600', [], 'dataFixtures', $firstDomainLocale)],
+                [$firstDomainLocale => t('4800x1200', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                [$firstDomainLocale => t('2400x600', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             ]
         );
         $parameterFilterData2 = $this->createParameterFilterData(
-            [$firstDomainLocale => t('LCD', [], 'dataFixtures', $firstDomainLocale)],
+            [$firstDomainLocale => t('LCD', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             []
         );
 
@@ -168,12 +169,12 @@ abstract class ProductOnCurrentDomainFacadeTest extends FunctionalTestCase
 
         $firstDomainLocale = $this->getFirstDomainLocale();
         $parameterFilterData1 = $this->createParameterFilterData(
-            [$firstDomainLocale => t('Print resolution', [], 'dataFixtures', $firstDomainLocale)],
-            [[$firstDomainLocale => t('2400x600', [], 'dataFixtures', $firstDomainLocale)]]
+            [$firstDomainLocale => t('Print resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            [[$firstDomainLocale => t('2400x600', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]]
         );
         $parameterFilterData2 = $this->createParameterFilterData(
-            [$firstDomainLocale => t('LCD', [], 'dataFixtures', $firstDomainLocale)],
-            [[$firstDomainLocale => t('Yes', [], 'dataFixtures', $firstDomainLocale)]]
+            [$firstDomainLocale => t('LCD', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            [[$firstDomainLocale => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]]
         );
         $productFilterData = new ProductFilterData();
         $productFilterData->parameters = [$parameterFilterData1, $parameterFilterData2];

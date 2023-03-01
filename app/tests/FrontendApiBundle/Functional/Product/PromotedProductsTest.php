@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Product;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class PromotedProductsTest extends GraphQlTestCase
@@ -20,17 +21,17 @@ class PromotedProductsTest extends GraphQlTestCase
         ';
 
         $productsExpected = [
-            ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('32" Philips 32PFL4308', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Philips 32PFL4308', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('47" LG 47LA790V (FHD)', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Apple iPhone 5S 64GB, gold', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Canon EH-22L', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Canon EOS 700D', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Canon MG3550', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Genius repro SP-M120 black', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('24" Philips 32PFL4308', [], 'dataFixtures', $firstDomainLocale)],
+            ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('32" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('47" LG 47LA790V (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Apple iPhone 5S 64GB, gold', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Canon EH-22L', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Canon EOS 700D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Canon MG3550', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Genius repro SP-M120 black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('24" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
         ];
 
         $graphQlType = 'promotedProducts';

@@ -10,6 +10,7 @@ use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
@@ -80,9 +81,9 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $paymentData->type = Payment::TYPE_BASIC;
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $paymentData->name[$locale] = t('Credit card', [], 'dataFixtures', $locale);
-            $paymentData->description[$locale] = t('Quick, cheap and reliable!', [], 'dataFixtures', $locale);
-            $paymentData->instructions[$locale] = t('<b>You have chosen payment by credit card. Please finish it in two business days.</b>', [], 'dataFixtures', $locale);
+            $paymentData->name[$locale] = t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $paymentData->description[$locale] = t('Quick, cheap and reliable!', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $paymentData->instructions[$locale] = t('<b>You have chosen payment by credit card. Please finish it in two business days.</b>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('99.95'));
@@ -96,7 +97,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $paymentData->type = Payment::TYPE_BASIC;
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $paymentData->name[$locale] = t('Cash on delivery', [], 'dataFixtures', $locale);
+            $paymentData->name[$locale] = t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('49.90'));
@@ -106,7 +107,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $paymentData->type = Payment::TYPE_BASIC;
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $paymentData->name[$locale] = t('Cash', [], 'dataFixtures', $locale);
+            $paymentData->name[$locale] = t('Cash', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $paymentData->czkRounding = true;
@@ -117,9 +118,9 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $paymentData = $this->paymentDataFactory->create();
         $paymentData->type = Payment::TYPE_GOPAY;
         foreach ($this->domain->getAllLocales() as $locale) {
-            $paymentData->name[$locale] = t('GoPay - Payment By Card', [], 'dataFixtures', $locale);
+            $paymentData->name[$locale] = t('GoPay - Payment By Card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $paymentData->description[$locale] = '';
-            $paymentData->instructions[$locale] = t('<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>', [], 'dataFixtures', $locale);
+            $paymentData->instructions[$locale] = t('<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $paymentData->czkRounding = false;
 
@@ -134,9 +135,9 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $paymentData = $this->paymentDataFactory->create();
         $paymentData->type = self::PAYMENT_GOPAY;
         foreach ($this->domain->getAllLocales() as $locale) {
-            $paymentData->name[$locale] = t('GoPay - Quick Bank Account Transfer', [], 'dataFixtures', $locale);
-            $paymentData->description[$locale] = t('Quick and Safe payment via bank account transfer.', [], 'dataFixtures', $locale);
-            $paymentData->instructions[$locale] = t('<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>', [], 'dataFixtures', $locale);
+            $paymentData->name[$locale] = t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $paymentData->description[$locale] = t('Quick and Safe payment via bank account transfer.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $paymentData->instructions[$locale] = t('<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $paymentData->czkRounding = false;
         $paymentData->goPayPaymentMethod = $this->getReference(GoPayDataFixture::BANK_ACCOUNT_METHOD);
@@ -152,7 +153,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $paymentData->type = Payment::TYPE_BASIC;
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $paymentData->name[$locale] = t('Pay later', [], 'dataFixtures', $locale);
+            $paymentData->name[$locale] = t('Pay later', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('199.90'));

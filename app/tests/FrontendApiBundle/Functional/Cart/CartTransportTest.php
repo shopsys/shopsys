@@ -9,6 +9,7 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\StoreDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CartTransportTest extends GraphQlTestCase
@@ -122,18 +123,18 @@ class CartTransportTest extends GraphQlTestCase
         $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $this->domain->getId());
 
         return [
-            'name' => t('Personal collection', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+            'name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
             'description' => t(
                 'You will be welcomed by friendly staff!',
                 [],
-                'dataFixtures',
+                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $this->getLocaleForFirstDomain()
             ),
             'instruction' => null,
             'position' => 2,
             'daysUntilDelivery' => 0,
             'transportType' => [
-                'name' => t('Standardní', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                'name' => t('Standardní', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'code' => 'common',
             ],
             'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
@@ -150,12 +151,12 @@ class CartTransportTest extends GraphQlTestCase
                 'edges' => [
                     [
                         'node' => [
-                            'name' => t('Ostrava', [], 'dataFixtures', $this->getFirstDomainLocale()),
+                            'name' => t('Ostrava', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
                         ],
                     ],
                     [
                         'node' => [
-                            'name' => t('Pardubice', [], 'dataFixtures', $this->getFirstDomainLocale()),
+                            'name' => t('Pardubice', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
                         ],
                     ],
                 ],

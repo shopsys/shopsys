@@ -17,6 +17,7 @@ use Doctrine\Persistence\ObjectManager;
 use Shopsys\Cdn\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory;
 
 class ParameterDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -162,8 +163,8 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         $parameterColorNamesByLocale = [];
         $parameterMaterialNamesByLocale = [];
         foreach ($this->domain->getAllLocales() as $locale) {
-            $parameterColorNamesByLocale[$locale] = t('Color', [], 'dataFixtures', $locale);
-            $parameterMaterialNamesByLocale[$locale] = t('Material', [], 'dataFixtures', $locale);
+            $parameterColorNamesByLocale[$locale] = t('Color', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $parameterMaterialNamesByLocale[$locale] = t('Material', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $parameterColor = $this->createParameter(
             $parameterColorNamesByLocale,
@@ -187,36 +188,36 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         /** @var \App\Model\Product\Product $product1 */
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
         foreach ($this->domain->getAllLocales() as $locale) {
-            $parameterValueRed = $this->getParameterValue($locale, t('red', [], 'dataFixtures', $locale), '#ff0000');
+            $parameterValueRed = $this->getParameterValue($locale, t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), '#ff0000');
             $this->addParameterValueToProduct($product1, $parameterColor, $parameterValueRed);
-            $parameterValueMetal = $this->getParameterValue($locale, t('metal', [], 'dataFixtures', $locale));
+            $parameterValueMetal = $this->getParameterValue($locale, t('metal', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
             $this->addParameterValueToProduct($product1, $parameterMaterial, $parameterValueMetal);
         }
 
         /** @var \App\Model\Product\Product $product2 */
         $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '2');
         foreach ($this->domain->getAllLocales() as $locale) {
-            $parameterValueRed = $this->getParameterValue($locale, t('black', [], 'dataFixtures', $locale), '#000000');
+            $parameterValueRed = $this->getParameterValue($locale, t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), '#000000');
             $this->addParameterValueToProduct($product2, $parameterColor, $parameterValueRed);
-            $parameterValueMetal = $this->getParameterValue($locale, t('metal', [], 'dataFixtures', $locale));
+            $parameterValueMetal = $this->getParameterValue($locale, t('metal', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
             $this->addParameterValueToProduct($product2, $parameterMaterial, $parameterValueMetal);
         }
 
         /** @var \App\Model\Product\Product $product3 */
         $product3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '3');
         foreach ($this->domain->getAllLocales() as $locale) {
-            $parameterValueRed = $this->getParameterValue($locale, t('red', [], 'dataFixtures', $locale), '#ff0000');
+            $parameterValueRed = $this->getParameterValue($locale, t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), '#ff0000');
             $this->addParameterValueToProduct($product3, $parameterColor, $parameterValueRed);
-            $parameterValueMetal = $this->getParameterValue($locale, t('plastic', [], 'dataFixtures', $locale));
+            $parameterValueMetal = $this->getParameterValue($locale, t('plastic', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
             $this->addParameterValueToProduct($product3, $parameterMaterial, $parameterValueMetal);
         }
 
         /** @var \App\Model\Product\Product $product4 */
         $product4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '4');
         foreach ($this->domain->getAllLocales() as $locale) {
-            $parameterValueRed = $this->getParameterValue($locale, t('red', [], 'dataFixtures', $locale), '#ff0000');
+            $parameterValueRed = $this->getParameterValue($locale, t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), '#ff0000');
             $this->addParameterValueToProduct($product4, $parameterColor, $parameterValueRed);
-            $parameterValueMetal = $this->getParameterValue($locale, t('wood', [], 'dataFixtures', $locale));
+            $parameterValueMetal = $this->getParameterValue($locale, t('wood', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale));
             $this->addParameterValueToProduct($product4, $parameterMaterial, $parameterValueMetal);
         }
 
@@ -298,7 +299,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
     {
         $parameterNamesByLocale = [];
         foreach ($this->domain->getAllLocales() as $locale) {
-            $parameterNamesByLocale[$locale] = t('Warranty (in years)', [], 'dataFixtures', $locale);
+            $parameterNamesByLocale[$locale] = t('Warranty (in years)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $parameter = $this->createParameter($parameterNamesByLocale, [$this->getReference(CategoryDataFixture::CATEGORY_PC)], Parameter::PARAMETER_TYPE_SLIDER, null);
         $this->addReference(self::PARAMETER_SLIDER_WARRANTY, $parameter);

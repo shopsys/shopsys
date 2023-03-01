@@ -9,6 +9,7 @@ use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
@@ -82,10 +83,10 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $transportData->trackingUrl = 'https://www.postaonline.cz/trackandtrace/-/zasilka/cislo?parcelNumbers={tracking_number}';
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $transportData->name[$locale] = t('Czech post', [], 'dataFixtures', $locale);
-            $transportData->trackingInstructions[$locale] = t('To track your package, click on this link: <a href="{tracking_url}">{tracking_number}</a>.', [], 'dataFixtures', $locale);
-            $transportData->description[$locale] = t('Czech state post service.', [], 'dataFixtures', $locale);
-            $transportData->instructions[$locale] = t('the Czech Post will try to deliver your parcel on time, but it will not succeed and despite the constant presence of your person at home, it will not catch you and you will have to pick up the parcel personally at the counter. Here, however, you have to endure an endlessly long line and an eternally grumpy lady postman.', [], 'dataFixtures', $locale);
+            $transportData->name[$locale] = t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->trackingInstructions[$locale] = t('To track your package, click on this link: <a href="{tracking_url}">{tracking_number}</a>.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->description[$locale] = t('Czech state post service.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->instructions[$locale] = t('the Czech Post will try to deliver your parcel on time, but it will not succeed and despite the constant presence of your person at home, it will not catch you and you will have to pick up the parcel personally at the counter. Here, however, you have to endure an endlessly long line and an eternally grumpy lady postman.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $this->setPriceForAllDomains($transportData, Money::create('99.95'));
@@ -98,8 +99,8 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $transportData->trackingUrl = 'https://www.ppl.cz/vyhledat-zasilku?shipmentId={tracking_number}';
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $transportData->name[$locale] = t('PPL', [], 'dataFixtures', $locale);
-            $transportData->trackingInstructions[$locale] = t('To track your package, click on this link: <a href="{tracking_url}">{tracking_url}</a>.', [], 'dataFixtures', $locale);
+            $transportData->name[$locale] = t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->trackingInstructions[$locale] = t('To track your package, click on this link: <a href="{tracking_url}">{tracking_url}</a>.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $this->setPriceForAllDomains($transportData, Money::create('199.95'));
@@ -111,9 +112,9 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $transportData->typeOfDeliveryKey = 3;
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $transportData->name[$locale] = t('Personal collection', [], 'dataFixtures', $locale);
-            $transportData->description[$locale] = t('You will be welcomed by friendly staff!', [], 'dataFixtures', $locale);
-            $transportData->instructions[$locale] = t('We are looking forward to your visit.', [], 'dataFixtures', $locale);
+            $transportData->name[$locale] = t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->description[$locale] = t('You will be welcomed by friendly staff!', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->instructions[$locale] = t('We are looking forward to your visit.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $transportData->personalPickup = true;
@@ -127,9 +128,9 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $transportData->typeOfDeliveryKey = 5;
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $transportData->name[$locale] = t('Drone delivery', [], 'dataFixtures', $locale);
-            $transportData->description[$locale] = t('Vhodné pro všechny druhy zboží', [], 'dataFixtures', $locale);
-            $transportData->instructions[$locale] = t('Očekávejte dodávku koncem příštího měsíce', [], 'dataFixtures', $locale);
+            $transportData->name[$locale] = t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->description[$locale] = t('Vhodné pro všechny druhy zboží', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->instructions[$locale] = t('Očekávejte dodávku koncem příštího měsíce', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $transportData->personalPickup = false;

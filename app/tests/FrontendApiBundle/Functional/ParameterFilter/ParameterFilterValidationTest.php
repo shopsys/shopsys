@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\ParameterFilter;
 use App\DataFixtures\Demo\ParameterDataFixture;
 use App\FrontendApi\Model\Component\Constraints\ParameterFilter;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ParameterFilterValidationTest extends GraphQlTestCase
@@ -40,7 +41,7 @@ class ParameterFilterValidationTest extends GraphQlTestCase
     public function testMinMaxNotSupportedForNonSliderType(): void
     {
         /** @var \App\Model\Product\Parameter\Parameter $parameterNonSlider */
-        $parameterNonSlider = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('HDMI', [], 'dataFixtures', $this->getFirstDomainLocale()));
+        $parameterNonSlider = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()));
 
         $mutation = 'query {
   category(urlSlug: "/pocitace-prislusenstvi") {    

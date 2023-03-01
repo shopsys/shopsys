@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\DataFixtures\Demo\ParameterDataFixture;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -42,7 +43,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     "flags": [
                         {
                             "flag": {
-                                "name": "' . t('Action', [], 'dataFixtures', $this->firstDomainLocale) . '"
+                                "name": "' . t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
                             },
                             "count": 2,
                             "isAbsolute": true
@@ -51,28 +52,28 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     "brands": [
                         {
                             "brand": {
-                                "name": "' . t('A4tech', [], 'dataFixtures', $this->firstDomainLocale) . '"
+                                "name": "' . t('A4tech', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
                             },
                             "count": 1,
                             "isAbsolute": true
                         },
                         {
                             "brand": {
-                                "name": "' . t('LG', [], 'dataFixtures', $this->firstDomainLocale) . '"
+                                "name": "' . t('LG', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
                             },
                             "count": 1,
                             "isAbsolute": true
                         },
                         {
                             "brand": {
-                                "name": "' . t('Philips', [], 'dataFixtures', $this->firstDomainLocale) . '"
+                                "name": "' . t('Philips', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
                             },
                             "count": 1,
                             "isAbsolute": true
                         },
                         {
                             "brand": {
-                                "name": "' . t('Sencor', [], 'dataFixtures', $this->firstDomainLocale) . '"
+                                "name": "' . t('Sencor', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
                             },
                             "count": 1,
                             "isAbsolute": true
@@ -84,7 +85,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     "parameters": [
                         {
                             "isCollapsed": false,
-                            "name": "' . t('Materiál', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "name": "' . t('Materiál', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                             "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
                             "values": [
@@ -92,7 +93,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                                     "text": "' . t(
             'dřevo',
             [],
-            'dataFixtures',
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $this->firstDomainLocale
         ) . '",
                                     "count": 1,
@@ -102,7 +103,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                                     "text": "' . t(
             'kov',
             [],
-            'dataFixtures',
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $this->firstDomainLocale
         ) . '",
                                     "count": 2,
@@ -112,7 +113,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                                     "text": "' . t(
             'plast',
             [],
-            'dataFixtures',
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $this->firstDomainLocale
         ) . '",
                                     "count": 1,
@@ -122,7 +123,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         },
                         {
                             "isCollapsed": false,
-                            "name": "' . t('Color', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "name": "' . t('Color', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                             "__typename": "ParameterColorFilterOption",
                             "unit": null,
                             "values": [
@@ -130,7 +131,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                                     "text": "' . t(
             'černá',
             [],
-            'dataFixtures',
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $this->firstDomainLocale
         ) . '",
                                     "count": 1,
@@ -141,7 +142,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                                     "text": "' . t(
             'červená',
             [],
-            'dataFixtures',
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $this->firstDomainLocale
         ) . '",
                                     "count": 3,
@@ -152,7 +153,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         },
                         {
                             "isCollapsed": false,
-                            "name": "' . t('Supported OS', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "name": "' . t('Supported OS', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                             "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
                             "values": [
@@ -160,7 +161,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                                     "text": "' . t(
             'Windows 2000/XP/Vista/7',
             [],
-            'dataFixtures',
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $this->firstDomainLocale
         ) . '",
                                     "count": 1,
@@ -170,12 +171,12 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         },
                         {
                             "isCollapsed": false,
-                            "name": "' . t('Number of buttons', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "name": "' . t('Number of buttons', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                             "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
                             "values": [
                                 {
-                                    "text": "' . t('5', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                                    "text": "' . t('5', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                                     "count": 1,
                                     "isAbsolute": true
                                 }
@@ -183,7 +184,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         },
                         {
                             "isCollapsed": false,
-                            "name": "' . t('Ergonomics', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "name": "' . t('Ergonomics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                             "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
                             "values": [
@@ -191,7 +192,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                                     "text": "' . t(
             'Right-handed',
             [],
-            'dataFixtures',
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $this->firstDomainLocale
         ) . '",
                                     "count": 1,
@@ -201,24 +202,24 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         },
                         {
                             "isCollapsed": true,
-                            "name": "' . t('Screen size', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "name": "' . t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                             "__typename": "ParameterCheckboxFilterOption",
                             "unit": {
                                 "name": "in"
                             },
                             "values": [
                                 {
-                                    "text": "' . t('27\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                                    "text": "' . t('27\"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                                     "count": 1,
                                     "isAbsolute": true
                                 },
                                 {
-                                    "text": "' . t('30\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                                    "text": "' . t('30\"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                                     "count": 1,
                                     "isAbsolute": true
                                 },
                                 {
-                                    "text": "' . t('47\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                                    "text": "' . t('47\"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                                     "count": 1,
                                     "isAbsolute": true
                                 }
@@ -226,17 +227,17 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         },
                         {
                             "isCollapsed": true,
-                            "name": "' . t('HDMI', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "name": "' . t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                             "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
                             "values": [
                                 {
-                                    "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                                    "text": "' . t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                                     "count": 1,
                                     "isAbsolute": true
                                 },
                                 {
-                                    "text": "' . t('No', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                                    "text": "' . t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                                     "count": 2,
                                     "isAbsolute": true
                                 }
@@ -244,12 +245,12 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         },
                         {
                             "isCollapsed": false,
-                            "name": "' . t('USB', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "name": "' . t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                             "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
                             "values": [
                                 {
-                                    "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                                    "text": "' . t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                                     "count": 3,
                                     "isAbsolute": true
                                 }
@@ -257,12 +258,12 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         },
                         {
                             "isCollapsed": false,                        
-                            "name": "' . t('Technology', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "name": "' . t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                             "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
                             "values": [
                                 {
-                                    "text": "' . t('LED', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                                    "text": "' . t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                                     "count": 3,
                                     "isAbsolute": true
                                 }
@@ -270,12 +271,12 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         },
                         {
                             "isCollapsed": false,
-                            "name": "' . t('Gaming mouse', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "name": "' . t('Gaming mouse', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                             "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
                             "values": [
                                 {
-                                    "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                                    "text": "' . t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                                     "count": 1,
                                     "isAbsolute": true
                                 }
@@ -283,7 +284,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         },
                         {
                             "isCollapsed": false,
-                            "name": "' . t('Resolution', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "name": "' . t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                             "__typename": "ParameterCheckboxFilterOption",
                             "unit": null,
                             "values": [
@@ -291,7 +292,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                                     "text": "' . t(
             '1920×1080 (Full HD)',
             [],
-            'dataFixtures',
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $this->firstDomainLocale
         ) . '",
                                     "count": 3,
@@ -318,28 +319,28 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         $expectedJson = '[
 {
     "brand": {
-        "name": "' . t('A4tech', [], 'dataFixtures', $this->firstDomainLocale) . '"
+        "name": "' . t('A4tech', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
     },
     "count": 0,
     "isAbsolute": false
 },
 {
     "brand": {
-        "name": "' . t('LG', [], 'dataFixtures', $this->firstDomainLocale) . '"
+        "name": "' . t('LG', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
     },
     "count": 1,
     "isAbsolute": false
 },
 {
     "brand": {
-        "name": "' . t('Philips', [], 'dataFixtures', $this->firstDomainLocale) . '"
+        "name": "' . t('Philips', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
     },
     "count": 1,
     "isAbsolute": false
 },
 {
     "brand": {
-        "name": "' . t('Sencor', [], 'dataFixtures', $this->firstDomainLocale) . '"
+        "name": "' . t('Sencor', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
     },
     "count": 1,
     "isAbsolute": false
@@ -360,7 +361,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         $expectedJson = '[
     {
         "flag": {
-            "name": "' . t('Action', [], 'dataFixtures', $this->firstDomainLocale) . '"
+            "name": "' . t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
         },
         "count": 0,
         "isAbsolute": false
@@ -379,7 +380,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         $parameter = $parameterFacade->getById(self::PARAMETER_HDMI);
 
         $parameterValue = $parameterFacade->getParameterValueByValueTextAndLocale(
-            t('No', [], 'dataFixtures', $this->firstDomainLocale),
+            t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
             $this->firstDomainLocale
         );
 
@@ -393,7 +394,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         $expectedJson = '[
     {
         "isCollapsed": false,
-        "name": "' . t('Materiál', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "name": "' . t('Materiál', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
         "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
         "values": [
@@ -401,7 +402,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 "text": "' . t(
             'dřevo',
             [],
-            'dataFixtures',
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $this->firstDomainLocale
         ) . '",
                 "count": 0,
@@ -411,7 +412,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 "text": "' . t(
             'kov',
             [],
-            'dataFixtures',
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $this->firstDomainLocale
         ) . '",
                 "count": 1,
@@ -421,7 +422,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 "text": "' . t(
             'plast',
             [],
-            'dataFixtures',
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $this->firstDomainLocale
         ) . '",
                 "count": 1,
@@ -431,7 +432,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     },
     {
         "isCollapsed": false,    
-        "name": "' . t('Color', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "name": "' . t('Color', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
         "__typename": "ParameterColorFilterOption",
         "unit": null,
         "values": [
@@ -439,7 +440,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 "text": "' . t(
             'černá',
             [],
-            'dataFixtures',
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $this->firstDomainLocale
         ) . '",
                 "count": 1,
@@ -450,7 +451,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 "text": "' . t(
             'červená',
             [],
-            'dataFixtures',
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $this->firstDomainLocale
         ) . '",
                 "count": 1,
@@ -461,7 +462,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     },
     {
         "isCollapsed": false,
-        "name": "' . t('Supported OS', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "name": "' . t('Supported OS', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
         "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
         "values": [
@@ -469,7 +470,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 "text": "' . t(
             'Windows 2000/XP/Vista/7',
             [],
-            'dataFixtures',
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $this->firstDomainLocale
         ) . '",
                 "count": 0,
@@ -479,12 +480,12 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     },
     {
         "isCollapsed": false,
-        "name": "' . t('Number of buttons', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "name": "' . t('Number of buttons', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
         "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
         "values": [
             {
-                "text": "' . t('5', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                "text": "' . t('5', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                 "count": 0,
                 "isAbsolute": true
             }
@@ -492,7 +493,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     },
     {
         "isCollapsed": false,
-        "name": "' . t('Ergonomics', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "name": "' . t('Ergonomics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
         "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
         "values": [
@@ -500,7 +501,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 "text": "' . t(
             'Right-handed',
             [],
-            'dataFixtures',
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $this->firstDomainLocale
         ) . '",
                 "count": 0,
@@ -510,24 +511,24 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     },
     {
         "isCollapsed": true,
-        "name": "' . t('Screen size', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "name": "' . t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
         "__typename": "ParameterCheckboxFilterOption",
         "unit": {
             "name": "in"
         },
         "values": [
             {
-                "text": "' . t('27\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                "text": "' . t('27\"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                 "count": 0,
                 "isAbsolute": true
             },
             {
-                "text": "' . t('30\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                "text": "' . t('30\"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                 "count": 1,
                 "isAbsolute": true
             },
             {
-                "text": "' . t('47\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                "text": "' . t('47\"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                 "count": 1,
                 "isAbsolute": true
             }
@@ -535,17 +536,17 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     },
     {
         "isCollapsed": true,
-        "name": "' . t('HDMI', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "name": "' . t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
         "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
         "values": [
             {
-                "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                "text": "' . t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                 "count": 1,
                 "isAbsolute": false
             },
             {
-                "text": "' . t('No', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                "text": "' . t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                 "count": 0,
                 "isAbsolute": false
             }
@@ -553,12 +554,12 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     },
     {
         "isCollapsed": false,
-        "name": "' . t('USB', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "name": "' . t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
         "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
         "values": [
             {
-                "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                "text": "' . t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                 "count": 2,
                 "isAbsolute": true
             }
@@ -566,12 +567,12 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     },
     {
         "isCollapsed": false,
-        "name": "' . t('Technology', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "name": "' . t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
         "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
         "values": [
             {
-                "text": "' . t('LED', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                "text": "' . t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                 "count": 2,
                 "isAbsolute": true
             }
@@ -579,12 +580,12 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     },
     {
         "isCollapsed": false,
-        "name": "' . t('Gaming mouse', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "name": "' . t('Gaming mouse', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
         "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
         "values": [
             {
-                "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                "text": "' . t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                 "count": 0,
                 "isAbsolute": true
             }
@@ -592,7 +593,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     },
     {
         "isCollapsed": false,
-        "name": "' . t('Resolution', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "name": "' . t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
         "__typename": "ParameterCheckboxFilterOption",
         "unit": null,
         "values": [
@@ -600,7 +601,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 "text": "' . t(
             '1920×1080 (Full HD)',
             [],
-            'dataFixtures',
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $this->firstDomainLocale
         ) . '",
                 "count": 2,
@@ -722,7 +723,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                   {
                     "count": 2,
                     "flag": {
-                      "name": "' . t('Akce', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                      "name": "' . t('Akce', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                     }
                   }
                 ],
@@ -795,85 +796,85 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     {
                       "count": 2,
                       "brand": {
-                        "name": "' . t('LG', [], 'dataFixtures', $this->firstDomainLocale) . '"
+                        "name": "' . t('LG', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
                       }
                     }
                   ],
                   "parameters": [
                     {
                       "isCollapsed": false,
-                      "name": "' . t('Material', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                      "name": "' . t('Material', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                       "values": [
                         {
-                          "text": "' . t('plastic', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                          "text": "' . t('plastic', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                           "count": 1
                         }
                       ]
                     },
                     {
                       "isCollapsed": false,
-                      "name": "' . t('Color', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                      "name": "' . t('Color', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                       "values": [
                         {
-                          "text": "' . t('red', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                          "text": "' . t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                           "count": 1
                         }
                       ]
                     },
                     {
                       "isCollapsed": false,
-                      "name": "' . t('USB', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                      "name": "' . t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                       "values": [
                         {
-                          "text": "' . t('Ano', [], 'messages', $this->firstDomainLocale) . '",
+                          "text": "' . t('Ano', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                           "count": 2
                         }
                       ]
                     },
                     {
                       "isCollapsed": false,
-                      "name": "' . t('Rozlišení', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                      "name": "' . t('Rozlišení', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                       "values": [
                         {
-                          "text": "' . t('1366×768 (HD Ready)', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                          "text": "' . t('1366×768 (HD Ready)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                           "count": 1
                         },
                         {
-                          "text": "' . t('1920×1080 (Full HD)', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                          "text": "' . t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                           "count": 1
                         }
                       ]
                     },
                     {
                       "isCollapsed": false,
-                      "name": "' . t('Úhlopříčka', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                      "name": "' . t('Úhlopříčka', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                       "values": [
                         {
-                          "text": "' . t('47\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                          "text": "' . t('47\"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                           "count": 1
                         },
                         {
-                          "text": "' . t('60\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                          "text": "' . t('60\"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                           "count": 1
                         }
                       ]
                     },
                     {
                       "isCollapsed": false,
-                      "name": "' . t('HDMI', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                      "name": "' . t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                       "values": [
                         {
-                          "text": "' . t('Ne', [], 'messages', $this->firstDomainLocale) . '",
+                          "text": "' . t('Ne', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                           "count": 2
                         }
                       ]
                     },
                     {
                       "isCollapsed": false,
-                      "name": "' . t('Technologie', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                      "name": "' . t('Technologie', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                       "values": [
                         {
-                          "text": "' . t('LED', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                          "text": "' . t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '",
                           "count": 2
                         }
                       ]
@@ -929,7 +930,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                       "count": 0,
                       "isAbsolute": false,
                       "flag": {
-                        "name": "' . t('Akce', [], 'dataFixtures', $this->firstDomainLocale) . '"
+                        "name": "' . t('Akce', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
                       }
                     }
                   ],
@@ -937,7 +938,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     {
                       "count": 1,
                       "brand": {
-                        "name": "' . t('Sencor', [], 'dataFixtures', $this->firstDomainLocale) . '"
+                        "name": "' . t('Sencor', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
                       }
                     }
                   ]
@@ -985,7 +986,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                       "count": 1,
                       "isAbsolute": true,
                       "flag": {
-                        "name": "' . t('Akce', [], 'dataFixtures', $this->firstDomainLocale) . '"
+                        "name": "' . t('Akce', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale) . '"
                       }
                     }
                   ]

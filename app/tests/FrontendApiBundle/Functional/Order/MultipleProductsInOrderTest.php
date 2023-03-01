@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 class MultipleProductsInOrderTest extends AbstractOrderTestCase
 {
@@ -18,12 +19,12 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
                 'CreateOrder' => [
                     'order' => [
                         'transport' => [
-                            'name' => t('Czech post', [], 'dataFixtures', $firstDomainLocale),
+                            'name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         ],
                         'payment' => [
-                            'name' => t('Cash on delivery', [], 'dataFixtures', $firstDomainLocale),
+                            'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         ],
-                        'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),
+                        'status' => t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         'totalPrice' => AbstractOrderTestCase::getSerializedOrderTotalPriceByExpectedOrderItems(
                             $expectedOrderItems
                         ),
@@ -76,28 +77,28 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
 
         return [
             [
-                'name' => t('100 Czech crowns ticket', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('100 Czech crowns ticket', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
                 'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh, 2),
                 'quantity' => 2,
                 'vatRate' => '21.0000',
-                'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
+                'unit' => t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             ], [
-                'name' => t('Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh),
                 'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh),
                 'quantity' => 1,
                 'vatRate' => '21.0000',
-                'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
+                'unit' => t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             ], [
-                'name' => t('Cash on delivery', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.59', $vatHigh),
                 'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.59', $vatHigh),
                 'quantity' => 1,
                 'vatRate' => '21.0000',
                 'unit' => null,
             ], [
-                'name' => t('Czech post', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
                 'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
                 'quantity' => 1,

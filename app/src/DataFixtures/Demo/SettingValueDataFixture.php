@@ -10,6 +10,7 @@ use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 
@@ -73,13 +74,13 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
 
             $personalDataDisplaySiteContent = t('By entering an email below, you can view your personal information that we register in our online store.
                 An email with a link will be sent to you after entering your email address, to verify your identity.
-                Clicking on the link will take you to a page listing all the personal details we have connected to your email address.', [], 'dataFixtures', $locale);
+                Clicking on the link will take you to a page listing all the personal details we have connected to your email address.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $this->setting->setForDomain(Setting::PERSONAL_DATA_DISPLAY_SITE_CONTENT, $personalDataDisplaySiteContent, $domainId);
 
             $personalDataExportSiteContent = t('By entering an email below, you can download your personal and other information (for example, order history)
                 from our online store. An email with a link will be sent to you after entering your email address, to verify your identity.
                 Clicking on the link will take you to a page where you’ll be able to download these informations in readable format - it will be the data
-                registered to given email address on this online store domain.', [], 'dataFixtures', $locale);
+                registered to given email address on this online store domain.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $this->setting->setForDomain(Setting::PERSONAL_DATA_EXPORT_SITE_CONTENT, $personalDataExportSiteContent, $domainId);
 
             $orderSentText = t('
@@ -90,7 +91,7 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
                     {transport_instructions} <br />
                     {payment_instructions} <br />
                 </p>
-            ', [], 'dataFixtures', $locale);
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $this->setting->setForDomain(Setting::ORDER_SENT_PAGE_CONTENT, $orderSentText, $domainId);
 
             /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
@@ -99,11 +100,11 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
 
             $this->setting->setForDomain(
                 SeoSettingFacade::SEO_META_DESCRIPTION_MAIN_PAGE,
-                t('Shopsys Framework - the best solution for your eshop.', [], 'dataFixtures', $locale),
+                t('Shopsys Framework - the best solution for your eshop.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 $domainId
             );
-            $this->setting->setForDomain(SeoSettingFacade::SEO_TITLE_MAIN_PAGE, t('Shopsys Framework - Title page', [], 'dataFixtures', $locale), $domainId);
-            $this->setting->setForDomain(SeoSettingFacade::SEO_TITLE_ADD_ON, t('| Commerce Cloud', [], 'dataFixtures', $locale), $domainId);
+            $this->setting->setForDomain(SeoSettingFacade::SEO_TITLE_MAIN_PAGE, t('Shopsys Framework - Title page', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $domainId);
+            $this->setting->setForDomain(SeoSettingFacade::SEO_TITLE_ADD_ON, t('| Commerce Cloud', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), $domainId);
 
             $this->setting->setForDomain(Setting::DELIVERY_DAYS_ON_STOCK, 70, $domainId);
             $this->setting->setForDomain(Setting::TRANSFER_DAYS_BETWEEN_STOCKS, 7, $domainId);

@@ -8,6 +8,7 @@ use Codeception\Module;
 use Codeception\TestInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Tests\App\Test\Codeception\Module\StrictWebDriver;
@@ -60,7 +61,7 @@ class LocalizationHelper extends Module
      * @param string $domain
      * @param array $parameters
      */
-    public function seeTranslationFrontend(string $id, string $domain = 'messages', array $parameters = [])
+    public function seeTranslationFrontend(string $id, string $domain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = [])
     {
         $translatedMessage = t($id, $parameters, $domain, $this->getFrontendLocale());
         $this->webDriver->see(strip_tags($translatedMessage));
@@ -72,7 +73,7 @@ class LocalizationHelper extends Module
      * @param string $domain
      * @param array $parameters
      */
-    public function seeTranslationFrontendInCss(string $id, string $css, string $domain = 'messages', array $parameters = [])
+    public function seeTranslationFrontendInCss(string $id, string $css, string $domain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = [])
     {
         $translatedMessage = t($id, $parameters, $domain, $this->getFrontendLocale());
         $this->webDriver->seeInCss(trim(strip_tags($translatedMessage)), $css);
@@ -83,7 +84,7 @@ class LocalizationHelper extends Module
      * @param string $domain
      * @param array $parameters
      */
-    public function dontSeeTranslationFrontend(string $id, string $domain = 'messages', array $parameters = [])
+    public function dontSeeTranslationFrontend(string $id, string $domain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = [])
     {
         $translatedMessage = t($id, $parameters, $domain, $this->getFrontendLocale());
         $this->webDriver->dontSee(strip_tags($translatedMessage));
@@ -94,7 +95,7 @@ class LocalizationHelper extends Module
      * @param string $domain
      * @param array $parameters
      */
-    public function seeTranslationAdmin(string $id, string $domain = 'messages', array $parameters = [])
+    public function seeTranslationAdmin(string $id, string $domain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = [])
     {
         $translatedMessage = t($id, $parameters, $domain, $this->getAdminLocale());
         $this->webDriver->see(strip_tags($translatedMessage));
@@ -106,7 +107,7 @@ class LocalizationHelper extends Module
      * @param string $domain
      * @param array $parameters
      */
-    public function seeTranslationAdminInCss(string $id, string $css, string $domain = 'messages', array $parameters = [])
+    public function seeTranslationAdminInCss(string $id, string $css, string $domain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = [])
     {
         $translatedMessage = t($id, $parameters, $domain, $this->getAdminLocale());
         $this->webDriver->seeInCss(strip_tags($translatedMessage), $css);
@@ -118,7 +119,7 @@ class LocalizationHelper extends Module
      * @param array $parameters
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      */
-    public function clickByTranslationAdmin(string $id, string $domain = 'messages', array $parameters = [], $contextSelector = null)
+    public function clickByTranslationAdmin(string $id, string $domain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = [], $contextSelector = null)
     {
         $translatedMessage = t($id, $parameters, $domain, $this->getAdminLocale());
         $this->webDriver->clickByText(strip_tags($translatedMessage), $contextSelector);
@@ -130,7 +131,7 @@ class LocalizationHelper extends Module
      * @param array $parameters
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      */
-    public function clickByTranslationFrontend(string $id, string $domain = 'messages', array $parameters = [], $contextSelector = null)
+    public function clickByTranslationFrontend(string $id, string $domain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = [], $contextSelector = null)
     {
         $translatedMessage = t($id, $parameters, $domain, $this->getFrontendLocale());
         $this->webDriver->clickByText(strip_tags($translatedMessage), $contextSelector);
@@ -141,7 +142,7 @@ class LocalizationHelper extends Module
      * @param string $domain
      * @param array $parameters
      */
-    public function checkOptionByLabelTranslationFrontend(string $id, string $domain = 'messages', array $parameters = [])
+    public function checkOptionByLabelTranslationFrontend(string $id, string $domain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = [])
     {
         $translatedMessage = t($id, $parameters, $domain, $this->getFrontendLocale());
         $this->webDriver->checkOptionByLabel($translatedMessage);

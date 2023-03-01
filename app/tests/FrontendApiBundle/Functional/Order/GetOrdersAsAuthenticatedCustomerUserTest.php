@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\VatDataFixture;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
@@ -146,7 +147,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
             ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatHigh)],
         ];
         $expectedOrder1 = [
-            'status' => t('In Progress', [], 'dataFixtures', $firstDomainLocale),
+            'status' => t('In Progress', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             'priceWithVat' => AbstractOrderTestCase::getOrderTotalPriceByExpectedOrderItems(
                 $expectedOrderItems1
             )->getPriceWithVat()->getAmount(),
@@ -160,7 +161,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
             ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatHigh)],
         ];
         $expectedOrder2 = [
-            'status' => t('Done', [], 'dataFixtures', $firstDomainLocale),
+            'status' => t('Done', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             'priceWithVat' => AbstractOrderTestCase::getOrderTotalPriceByExpectedOrderItems(
                 $expectedOrderItems2
             )->getPriceWithVat()->getAmount(),
@@ -173,7 +174,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
             ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh)],
         ];
         $expectedOrder3 = [
-            'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),
+            'status' => t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             'priceWithVat' => AbstractOrderTestCase::getOrderTotalPriceByExpectedOrderItems(
                 $expectedOrderItems3
             )->getPriceWithVat()->getAmount(),
@@ -186,7 +187,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
             ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatHigh)],
         ];
         $expectedOrder4 = [
-            'status' => t('Done', [], 'dataFixtures', $firstDomainLocale),
+            'status' => t('Done', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             'priceWithVat' => AbstractOrderTestCase::getOrderTotalPriceByExpectedOrderItems(
                 $expectedOrderItems4
             )->getPriceWithVat()->getAmount(),
@@ -201,7 +202,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
             ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatHigh)],
         ];
         $expectedOrder5 = [
-            'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),
+            'status' => t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             'priceWithVat' => AbstractOrderTestCase::getOrderTotalPriceByExpectedOrderItems(
                 $expectedOrderItems5
             )->getPriceWithVat()->getAmount(),
@@ -218,7 +219,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
             ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatHigh)],
         ];
         $expectedOrder6 = [
-            'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),
+            'status' => t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             'priceWithVat' => AbstractOrderTestCase::getOrderTotalPriceByExpectedOrderItems(
                 $expectedOrderItems6
             )->getPriceWithVat()->getAmount(),

@@ -18,6 +18,7 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
@@ -376,7 +377,7 @@ class OrderFacade extends BaseOrderFacade
     ): Item\OrderItem {
         $name = sprintf(
             '%s %s - %s',
-            t('Promo code', [], 'messages', $locale),
+            t('Promo code', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale),
             $this->numberFormatterExtension->formatPercent(-$discountPercent, $locale),
             $orderItem->getName()
         );
@@ -589,7 +590,7 @@ class OrderFacade extends BaseOrderFacade
         }
 
         $orderItemData = $this->orderItemDataFactory->create();
-        $orderItemData->name = t('Rounding', [], 'messages', $locale);
+        $orderItemData->name = t('Rounding', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale);
         $orderItemData->priceWithoutVat = $roundingPrice->getPriceWithoutVat();
         $orderItemData->priceWithVat = $roundingPrice->getPriceWithVat();
         $orderItemData->vatPercent = '0';

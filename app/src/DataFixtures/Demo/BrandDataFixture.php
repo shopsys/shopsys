@@ -7,6 +7,7 @@ namespace App\DataFixtures\Demo;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 
@@ -106,26 +107,26 @@ class BrandDataFixture extends AbstractReferenceFixture
             $brandData->uuid = array_pop($this->uuidPool);
 
             foreach ($this->domain->getAllLocales() as $locale) {
-                $brandData->descriptions[$locale] = t('This is description of brand %brandName%.', ['%brandName%' => $brandData->name], 'dataFixtures', $locale);
+                $brandData->descriptions[$locale] = t('This is description of brand %brandName%.', ['%brandName%' => $brandData->name], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             }
 
             foreach ($this->domain->getAll() as $domain) {
                 $brandData->seoH1s[$domain->getId()] = t(
                     '%brandName% SEO H1',
                     ['%brandName%' => $brandData->name],
-                    'dataFixtures',
+                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $domain->getLocale()
                 );
                 $brandData->seoTitles[$domain->getId()] = t(
                     '%brandName% SEO Title',
                     ['%brandName%' => $brandData->name],
-                    'dataFixtures',
+                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $domain->getLocale()
                 );
                 $brandData->seoMetaDescriptions[$domain->getId()] = t(
                     'This is SEO meta description of brand %brandName%.',
                     ['%brandName%' => $brandData->name],
-                    'dataFixtures',
+                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $domain->getLocale()
                 );
             }

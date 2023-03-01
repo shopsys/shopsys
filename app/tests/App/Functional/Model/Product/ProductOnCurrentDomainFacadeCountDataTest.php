@@ -12,6 +12,7 @@ use App\Model\Product\Filter\ParameterFilterData;
 use App\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
@@ -332,16 +333,16 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         $filterData = new ProductFilterData();
         $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
         $filterData->parameters[] = $this->createParameterFilterData(
-            [$firstDomainLocale => t('Dimensions', [], 'dataFixtures', $firstDomainLocale)],
-            [[$firstDomainLocale => t('449x304x152 mm', [], 'dataFixtures', $firstDomainLocale)]]
+            [$firstDomainLocale => t('Dimensions', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            [[$firstDomainLocale => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]]
         );
         $filterData->parameters[] = $this->createParameterFilterData(
-            [$firstDomainLocale => t('Print resolution', [], 'dataFixtures', $firstDomainLocale)],
-            [[$firstDomainLocale => t('2400x600', [], 'dataFixtures', $firstDomainLocale)], [$firstDomainLocale => t('4800x1200', [], 'dataFixtures', $firstDomainLocale)]]
+            [$firstDomainLocale => t('Print resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            [[$firstDomainLocale => t('2400x600', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)], [$firstDomainLocale => t('4800x1200', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]]
         );
         $filterData->parameters[] = $this->createParameterFilterData(
-            [$firstDomainLocale => t('Weight', [], 'dataFixtures', $firstDomainLocale)],
-            [[$firstDomainLocale => t('3.5 kg', [], 'dataFixtures', $firstDomainLocale)]]
+            [$firstDomainLocale => t('Weight', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            [[$firstDomainLocale => t('3.5 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]]
         );
 
         $countData = new ProductFilterCountData();
@@ -374,16 +375,16 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
         $filterData = new ProductFilterData();
         $filterData->parameters[] = $this->createParameterFilterData(
-            [$firstDomainLocale => t('Dimensions', [], 'dataFixtures', $firstDomainLocale)],
-            [[$firstDomainLocale => t('449x304x152 mm', [], 'dataFixtures', $firstDomainLocale)]]
+            [$firstDomainLocale => t('Dimensions', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            [[$firstDomainLocale => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]]
         );
         $filterData->parameters[] = $this->createParameterFilterData(
-            [$firstDomainLocale => t('Print resolution', [], 'dataFixtures', $firstDomainLocale)],
-            [[$firstDomainLocale => t('2400x600', [], 'dataFixtures', $firstDomainLocale)], [$firstDomainLocale => t('4800x1200', [], 'dataFixtures', $firstDomainLocale)]]
+            [$firstDomainLocale => t('Print resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            [[$firstDomainLocale => t('2400x600', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)], [$firstDomainLocale => t('4800x1200', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]]
         );
         $filterData->parameters[] = $this->createParameterFilterData(
-            [$firstDomainLocale => t('Weight', [], 'dataFixtures', $firstDomainLocale)],
-            [[$firstDomainLocale => t('3.5 kg', [], 'dataFixtures', $firstDomainLocale)]]
+            [$firstDomainLocale => t('Weight', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            [[$firstDomainLocale => t('3.5 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]]
         );
 
         $countData = new ProductFilterCountData();

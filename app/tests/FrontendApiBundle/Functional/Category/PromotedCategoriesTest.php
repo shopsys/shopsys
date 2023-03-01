@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Category;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class PromotedCategoriesTest extends GraphQlTestCase
@@ -20,9 +21,9 @@ class PromotedCategoriesTest extends GraphQlTestCase
         ';
 
         $expectedCategories = [
-            ['name' => t('Electronics', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Books', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Toys', [], 'dataFixtures', $firstDomainLocale)],
+            ['name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Books', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Toys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
         ];
 
         $graphQlType = 'promotedCategories';
