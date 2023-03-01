@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Component\Validator;
 
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Symfony\Component\Filesystem\Filesystem;
@@ -39,7 +39,7 @@ class FlysystemFileValidatorDecorator extends ConstraintValidator
     private $mountManager;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     private $filesystem;
 
@@ -48,14 +48,14 @@ class FlysystemFileValidatorDecorator extends ConstraintValidator
      * @param string $localTemporaryDir
      * @param \Symfony\Component\Filesystem\Filesystem $symfonyFilesystem
      * @param \League\Flysystem\MountManager $mountManager
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
         FileValidator $fileValidator,
         string $localTemporaryDir,
         Filesystem $symfonyFilesystem,
         MountManager $mountManager,
-        FilesystemInterface $filesystem
+        FilesystemOperator $filesystem
     ) {
         $this->fileValidator = $fileValidator;
         $this->symfonyFilesystem = $symfonyFilesystem;

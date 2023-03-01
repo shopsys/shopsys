@@ -11,9 +11,8 @@ use App\Model\Product\Product;
 use App\Model\Product\ProductRepository;
 use App\Model\Product\Transfer\Akeneo\Exception\FileSaveFailedException;
 use Generator;
-use League\Flysystem\FileExistsException;
-use League\Flysystem\FileNotFoundException;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemException;
+use League\Flysystem\FilesystemOperator;
 use Throwable;
 
 class AkeneoImportAssemblyInstructionProductFilesFacade extends AbstractAkeneoImportTransfer
@@ -29,7 +28,7 @@ class AkeneoImportAssemblyInstructionProductFilesFacade extends AbstractAkeneoIm
     private $product;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     private $filesystem;
 
@@ -48,14 +47,14 @@ class AkeneoImportAssemblyInstructionProductFilesFacade extends AbstractAkeneoIm
      * @param \App\Component\Akeneo\Transfer\AkeneoImportTransferDependency $akeneoImportTransferDependency
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \App\Component\Akeneo\Transfer\MediaFiles\MediaFilesTransferAkeneoFacade $mediaFilesTransferAkeneoFacade
-     * @param \League\Flysystem\FilesystemInterface $localFilesystem
+     * @param \League\Flysystem\FilesystemOperator $localFilesystem
      */
     public function __construct(
         string $productFilesDir,
         AkeneoImportTransferDependency $akeneoImportTransferDependency,
         ProductRepository $productRepository,
         MediaFilesTransferAkeneoFacade $mediaFilesTransferAkeneoFacade,
-        FilesystemInterface $localFilesystem
+        FilesystemOperator $localFilesystem
     ) {
         parent::__construct($akeneoImportTransferDependency);
 
@@ -117,10 +116,10 @@ class AkeneoImportAssemblyInstructionProductFilesFacade extends AbstractAkeneoIm
         try {
             $this->filesystem->write($this->getFullPathWithName($fileName), $content);
             $this->logger->info('File was successfully stored.');
-        } catch (FileExistsException $exception) {
+        } catch (FilesystemException $exception) {
             try {
                 $this->filesystem->delete($this->getFullPathWithName($fileName));
-            } catch (FileNotFoundException $exception) {
+            } catch (FilesystemException $exception) {
             }
 
             $this->storeFile($fileName, $content);
@@ -136,7 +135,7 @@ class AkeneoImportAssemblyInstructionProductFilesFacade extends AbstractAkeneoIm
     {
         try {
             $this->filesystem->delete($this->getFullPathWithName($fileName));
-        } catch (FileNotFoundException $exception) {
+        } catch (FilesystemException $exception) {
         }
     }
 

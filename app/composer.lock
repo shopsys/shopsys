@@ -1686,7 +1686,7 @@
             "source": {
                 "type": "git",
                 "url": "https://gitlab+deploy-token-4:yqMfHR2F4qc6rbFequP4@gitlab.shopsys.cz/devops/kubernetes-deployment.git",
-                "reference": "40ad4f565c9ce4574e68f24e96acacdd0553fa81"
+                "reference": "7f0a378b163599c68092c48fd9f6ea8a22bf12af"
             },
             "require": {
                 "arvenil/ninja-mutex": "^0.4.1",
@@ -1740,7 +1740,7 @@
                 "shopsys",
                 "symfony"
             ],
-            "time": "2023-03-01T06:42:16+00:00"
+            "time": "2023-03-01T08:35:13+00:00"
         },
         {
             "name": "doctrine/annotations",

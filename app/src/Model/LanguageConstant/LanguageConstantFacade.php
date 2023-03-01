@@ -6,7 +6,7 @@ namespace App\Model\LanguageConstant;
 
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use function GuzzleHttp\json_decode;
 
 class LanguageConstantFacade
@@ -39,9 +39,9 @@ class LanguageConstantFacade
     private string $domainLocalesDirectory;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
-    protected FilesystemInterface $filesystem;
+    protected FilesystemOperator $filesystem;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -49,7 +49,7 @@ class LanguageConstantFacade
      * @param \App\Model\LanguageConstant\LanguageConstantFactory $languageConstantFactory
      * @param string $languageConstantsUrlPattern
      * @param string $domainLocalesDirectory
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -57,7 +57,7 @@ class LanguageConstantFacade
         LanguageConstantFactory $languageConstantFactory,
         string $languageConstantsUrlPattern,
         string $domainLocalesDirectory,
-        FilesystemInterface $filesystem
+        FilesystemOperator $filesystem
     ) {
         $this->em = $em;
         $this->languageConstantRepository = $languageConstantRepository;
@@ -165,9 +165,9 @@ class LanguageConstantFacade
         $targetFilePath = $this->domainLocalesDirectory . $locale;
 
         if (!$this->filesystem->has($targetFilePath)) {
-            $this->filesystem->createDir($targetFilePath);
+            $this->filesystem->createDirectory($targetFilePath);
         }
 
-        $this->filesystem->put($targetFilePath . '/' . self::GENERATED_FILE_NAME, $translations);
+        $this->filesystem->write($targetFilePath . '/' . self::GENERATED_FILE_NAME, $translations);
     }
 }

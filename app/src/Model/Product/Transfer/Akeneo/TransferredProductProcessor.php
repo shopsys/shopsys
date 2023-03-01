@@ -13,7 +13,7 @@ use App\Model\Product\ProductFacade;
 use App\Model\Transfer\TransferLoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Generator;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 
@@ -84,7 +84,7 @@ class TransferredProductProcessor
     private $imageConfig;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     private $filesystem;
 
@@ -99,7 +99,7 @@ class TransferredProductProcessor
      * @param \App\Component\FileUpload\FileUpload $fileUpload
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -112,7 +112,7 @@ class TransferredProductProcessor
         FileUpload $fileUpload,
         ParameterFacade $parameterFacade,
         ImageConfig $imageConfig,
-        FilesystemInterface $filesystem
+        FilesystemOperator $filesystem
     ) {
         $this->productFacade = $productFacade;
         $this->productTransferAkeneoMapper = $productTransferAkeneoMapper;
@@ -304,7 +304,7 @@ class TransferredProductProcessor
 
         $tempFileName = $this->fileUpload->getTemporaryFilepath($akeneoMediaFileName);
 
-        $this->filesystem->put($tempFileName, $mediaFileResponse->getBody()->getContents());
+        $this->filesystem->write($tempFileName, $mediaFileResponse->getBody()->getContents());
         $createdImage = $this->imageFacade->uploadAndReturnImage($product, [$akeneoMediaFileName], null, false);
 
         $this->em->clear(Image::class);

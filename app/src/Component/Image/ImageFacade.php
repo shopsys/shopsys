@@ -8,7 +8,7 @@ use App\Model\Category\Category;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Psr\Log\LoggerInterface;
 use Shopsys\Cdn\Component\Image\ImageFacade as CdnImageFacade;
@@ -52,7 +52,7 @@ class ImageFacade extends CdnImageFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \App\Component\Image\ImageRepository $imageRepository
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \App\Component\FileUpload\FileUpload $fileUpload
      * @param \App\Component\Image\ImageLocator $imageLocator
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface $imageFactory
@@ -66,7 +66,7 @@ class ImageFacade extends CdnImageFacade
         EntityManagerInterface $em,
         ImageConfig $imageConfig,
         ImageRepository $imageRepository,
-        FilesystemInterface $filesystem,
+        FilesystemOperator $filesystem,
         FileUpload $fileUpload,
         ImageLocator $imageLocator,
         ImageFactoryInterface $imageFactory,

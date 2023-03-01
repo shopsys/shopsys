@@ -183,7 +183,7 @@ services:
 
     App\Model\Blog\Article\Elasticsearch\BlogArticleIndex: ~
 
-    League\Flysystem\FilesystemInterface:
+    League\Flysystem\FilesystemOperator:
         alias: main_filesystem
 
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade:

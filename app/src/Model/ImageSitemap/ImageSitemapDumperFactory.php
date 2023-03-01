@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\ImageSitemap;
 
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumper;
 use Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumperFactory;
@@ -23,7 +23,7 @@ class ImageSitemapDumperFactory extends SitemapDumperFactory
     /**
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Shopsys\FrameworkBundle\Model\Sitemap\SitemapFilePrefixer $sitemapFilePrefixer
      * @param \App\Model\ImageSitemap\ImageSitemapFilePrefixer $imageSitemapFilePrefixer
@@ -32,7 +32,7 @@ class ImageSitemapDumperFactory extends SitemapDumperFactory
     public function __construct(
         EventDispatcherInterface $eventDispatcher,
         Filesystem $localFilesystem,
-        FilesystemInterface $filesystem,
+        FilesystemOperator $filesystem,
         MountManager $mountManager,
         SitemapFilePrefixer $sitemapFilePrefixer,
         ImageSitemapFilePrefixer $imageSitemapFilePrefixer,
