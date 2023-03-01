@@ -6,14 +6,16 @@ namespace Tests\FrontendApiBundle\Functional\Product;
 
 use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
-class ProductsSearch extends ProductsGraphQlTestCase
+class ProductsSearchTest extends ProductsGraphQlTestCase
 {
     public function testSearchInAllProducts(): void
     {
+        $firstDomainLocale = $this->getFirstDomainLocale();
         $query = '
             query {
-                products (first: 5, search: "book") {
+                products (first: 5, search: "' . t('book', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . '") {
                     edges {
                         node {
                             name
@@ -23,18 +25,16 @@ class ProductsSearch extends ProductsGraphQlTestCase
             }
         ';
 
-        $firstDomainLocale = $this->getFirstDomainLocale();
-
         $productsExpected = [
-            ['name' => t('Book scoring system and traffic regulations', [], 'dataFixtures', $firstDomainLocale)],
             ['name' => t('Book of traditional Czech fairy tales', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Book Computer for Dummies Digital Photography II', [], 'dataFixtures', $firstDomainLocale)],
+            ['name' => t('Book scoring system and traffic regulations', [], 'dataFixtures', $firstDomainLocale)],
             ['name' => t(
                 'Book of procedures for dealing with traffic accidents',
                 [],
                 'dataFixtures',
                 $firstDomainLocale
             )],
+            ['name' => t('Book Computer for Dummies Digital Photography II', [], 'dataFixtures', $firstDomainLocale)],
             ['name' => t('Book 55 best programs for burning CDs and DVDs', [], 'dataFixtures', $firstDomainLocale)],
         ];
 
@@ -43,10 +43,8 @@ class ProductsSearch extends ProductsGraphQlTestCase
 
     public function testSearchInCategory(): void
     {
-        $categoryElectronics = $this->getReferenceForDomain(
-            CategoryDataFixture::CATEGORY_ELECTRONICS,
-            $this->domain->getId()
-        );
+        /** @var \App\Model\Category\Category $categoryElectronics */
+        $categoryElectronics = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
 
         $query = '
             {
@@ -74,10 +72,8 @@ class ProductsSearch extends ProductsGraphQlTestCase
 
     public function testSearchInBrand(): void
     {
-        $canonBrand = $this->getReferenceForDomain(
-            BrandDataFixture::BRAND_CANON,
-            $this->domain->getId()
-        );
+        /** @var \App\Model\Product\Brand\Brand $canonBrand */
+        $canonBrand = $this->getReference(BrandDataFixture::BRAND_CANON);
 
         $query = '
             {
@@ -97,7 +93,7 @@ class ProductsSearch extends ProductsGraphQlTestCase
             }';
 
         $productsExpected = [
-            ['name' => t('Canon PIXMA MG2450', [], 'dataFixtures', $this->getFirstDomainLocale())],
+            ['name' => t('Canon PIXMA iP7250', [], 'dataFixtures', $this->getFirstDomainLocale())],
         ];
 
         $this->assertProducts($query, 'brand', $productsExpected);
