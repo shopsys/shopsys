@@ -49,7 +49,7 @@
         "require-context": "^1.1.0",
         "stylelint": "^13.13.1",
         "stylelint-webpack-plugin": "^2.1.1",
-        "svgo": "1.2.2",
+        "svgo": "3.0.2",
         "webpack-livereload-plugin": "^3.0.1",
         "webpack-notifier": "^1.13.0"
     },
