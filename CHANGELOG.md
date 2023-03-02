@@ -26,7 +26,7 @@ Packages are formatted by release version. You can see all the changes done to p
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) as explained in the [Backward Compatibility Promise](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/).
 
-## [v11.0.0](https://github.com/shopsys/shopsys/compare/v10.0.5...v11.0.0) (2023-03-01)
+## [v11.0.0](https://github.com/shopsys/shopsys/compare/v10.0.5...v11.0.0) (2023-03-02)
 
 ### :construction: Changes that require additional implementation if you are using Frontend API
 * [shopsys] added name to images by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2566
