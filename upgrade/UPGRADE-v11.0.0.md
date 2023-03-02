@@ -1,6 +1,6 @@
-# [Upgrade from v10.0.0 to v11.0.0-dev](https://github.com/shopsys/shopsys/compare/v10.0.0...master)
+# [Upgrade from v10.0.5 to v11.0.0](https://github.com/shopsys/shopsys/compare/v10.0.5...v11.0.0)
 
-This guide contains instructions to upgrade from version v10.0.0 to v11.0.0-dev.
+This guide contains instructions to upgrade from version v10.0.5 to v11.0.0.
 
 **Before you start, don't forget to take a look at [general instructions](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md) about upgrading.**
 There you can find links to upgrade notes for other versions too.
@@ -571,7 +571,7 @@ There you can find links to upgrade notes for other versions too.
             +       LoggerInterface $logger
                 )
             ```
-          
+    - also see [project-base-diff](https://github.com/shopsys/project-base/commit/132d8ebd94f36f084d1fdde6cc57f37c86be4941) to update your project
 - Changes in error handling ([#2474](https://github.com/shopsys/shopsys/pull/2474))
     - `symfony/debug` component was replaced by `symfony/error-handler` component
         - reflect this change in your `composer.json`
@@ -620,401 +620,7 @@ There you can find links to upgrade notes for other versions too.
             -         code: \d+
             -         _format: css|html|js|json|txt|xml
             ```
-        - see #project-base-diff to update your project
-
-## Application
-
-- remove unnecessary extended ImageExtension from your project, if you don't have any custom changes in the extension
-    - see #project-base-diff to update your project
-- remove unnecessary `services_acc.yaml` config from your project
-    - create `config/packages/acc/framework.yaml` with configuration for acceptance testing
-    - see #project-base-diff to update your project
-- move `paths.yml` config file into packages subfolder to allow easy override them for different environments
-    - see #project-base-diff to update your project
-- set overwrite domain url to be taken exclusively from environment variable
-    - see #project-base-diff to update your project
-- set redis host to be taken exclusively from environment variable
-    - see #project-base-diff to update your project
-- set swift mailer configuration to be taken exclusively from environment variable
-    - see #project-base-diff to update your project
-- set application secret to be taken exclusively from environment variable
-    - see #project-base-diff to update your project
-- set doctrine configuration to be taken exclusively from environment variables
-    - see #project-base-diff to update your project
-- unused translations have been removed
-    - the following `msgid` entries are no longer available in framework, they should be already added into your project directly
-        - `Contact`
-        - `Edit data`
-        - `Forgotten password`
-        - `Oops! Error occurred`
-        - `Page not found`
-        - `Product <strong>{{ name }}</strong> you had in cart is no longer available. Please check your order.`
-        - `Product you had in cart is no longer in available. Please check your order.`
-        - `Registration`
-        - `Search [noun]`
-        - `TOP`
-        - `Terms-and-conditions.html`
-        - `The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order.`
-        - `alphabetically A -> Z`
-        - `alphabetically Z -> A`
-        - `from most expensive`
-        - `from the cheapest`
-        - `relevance`
-- `parameter(_test).yaml.dist` and auto-creation of `parameter(_test).yaml` files was removed
-    - see #project-base-diff to update your project
-    - you can create `parameters.yaml` manually to locally override some settings (for testing purposes for example)
-    - your custom parameters should be in environment variable (if the value is environment-specific), or in different config file (if the value is project-specific)
-- fix implementations of FileVisitorInterface::visitTwigFile ([#2465](https://github.com/shopsys/shopsys/pull/2465))
-    - in the following classes, an interface of `visitTwigFile` was fixed to comply with `FileVisitorInterface`
-        - `ConstraintMessageExtractor`
-        - `ConstraintMessagePropertyExtractor`
-        - `ConstraintViolationExtractor`
-        - `JsFileExtractor`
-        - `PhpFileExtractor`
-        - `TwigFileExtractor`
-- resolve Symfony 4.4 deprecations ([#2468](https://github.com/shopsys/shopsys/pull/2468))
-    - remove Twig deprecation - an "if" condition on a "for" tag
-        - see the last bullet point in https://twig.symfony.com/doc/2.x/deprecated.html#tags
-        - see #project-base-diff
-    - remove deprecated "bundle:controller:action" syntax from twig templates
-        - see https://github.com/symfony/symfony/blob/4.1/UPGRADE-4.1.md#frameworkbundle
-    - `Shopsys\FrameworkBundle\Component\Error\ExceptionListener` class:
-        - property `$lastException` is renamed to `$lastThrowable`, its type is changed to `\Throwable|null`, and is strictly typed now
-        - method `onKernelException` changed its interface:
-        ```diff
-        - onKernelException(GetResponseForExceptionEvent $event)
-        + onKernelException(ExceptionEvent $event): void
-        ```
-        - method `getLastException` changed its interface and was renamed to `getLastThrowable`:
-        ```diff
-        - public function getLastException()
-        + public function getLastThrowable(): ?Throwable
-        ```
-    - `Shopsys\FrontendApiBundle\Model\ErrorErrorHandlerListener` class:
-        - method `onKernelException` changed its interface:
-        ```diff
-        - onKernelException(GetResponseForExceptionEvent $event)
-        + onKernelException(ExceptionEvent $event): void
-        ```
-- replace usage of deprecated kernel events ([#2482](https://github.com/shopsys/shopsys/pull/2482))
-    - see #project-base-diff to update your project
-    - see https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.0.md#httpkernel for the full list of replacements for your code
-    - `Shopsys\FrameworkBundle\Component\Domain\DomainAwareSecurityHeadersSetter` class:
-        - method `onKernelResponse` changed its interface:
-        ```diff
-        - onKernelResponse(FilterResponseEvent $event)
-        + onKernelResponse(ResponseEvent $event): void
-        ```
-    - `Shopsys\FrameworkBundle\Component\Domain\DomainSubscriber` class:
-        - method `onKernelRequest` changed its interface:
-        ```diff
-        - onKernelRequest(GetResponseEvent $event)
-        + onKernelRequest(RequestEvent $event): void
-        ```
-    - `Shopsys\FrameworkBundle\Component\HttpFoundation\DenyScriptNameInRequestPathListener` class:
-        - method `onKernelRequest` changed its interface:
-        ```diff
-        - onKernelRequest(GetResponseEvent $event)
-        + onKernelRequest(RequestEvent $event): void
-        ```
-    - `Shopsys\FrameworkBundle\Component\HttpFoundation\ResponseListener` class:
-        - method `onKernelResponse` changed its interface:
-        ```diff
-        - onKernelResponse(FilterResponseEvent $event)
-        + onKernelResponse(ResponseEvent $event): void
-        ```
-    - `Shopsys\FrameworkBundle\Component\HttpFoundation\SubRequestListener` class:
-        - method `onKernelController` changed its interface:
-        ```diff
-        - onKernelController(FilterControllerEvent $event)
-        + onKernelController(ControllerEvent $event): void
-        ```
-        - method `onKernelResponse` changed its interface:
-        ```diff
-        - onKernelResponse(FilterResponseEvent $event)
-        + onKernelResponse(ResponseEvent $event): void
-        ```
-    - `Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestListener` class:
-        - method `onKernelRequest` changed its interface:
-        ```diff
-        - onKernelRequest(GetResponseEvent $event)
-        + onKernelRequest(RequestEvent $event): void
-        ```
-        - method `onKernelResponse` changed its interface:
-        ```diff
-        - onKernelResponse(FilterResponseEvent $event)
-        + onKernelResponse(ResponseEvent $event): void
-        ```
-        - method `onKernelException` changed its interface:
-        ```diff
-        - onKernelException(GetResponseForExceptionEvent $event)
-        + onKernelException(ExceptionEvent $event): void
-        ```
-    - `Shopsys\FrameworkBundle\Component\HttpFoundation\VaryResponseByXRequestedWithHeaderListener` class:
-        - method `onKernelResponse` changed its interface:
-        ```diff
-        - onKernelResponse(FilterResponseEvent $event)
-        + onKernelResponse(ResponseEvent $event): void
-        ```
-    - `Shopsys\FrameworkBundle\Component\Log\SlowLogSubscriber` class:
-        - method `initStartTime` changed its interface:
-        ```diff
-        - initStartTime(GetResponseEvent $event)
-        + initStartTime(RequestEvent $event): void
-        ```
-        - method `addNotice` changed its interface:
-        ```diff
-        - addNotice(PostResponseEvent $event)
-        + addNotice(TerminateEvent $event): void
-        ```
-    - `Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector` class:
-        - method `onKernelController` changed its interface:
-        ```diff
-        - onKernelController(FilterControllerEvent $event)
-        + onKernelController(ControllerEvent $event): void
-        ```
-        - method `isProtected` changed its interface:
-        ```diff
-        - isProtected(FilterControllerEvent $event)
-        + isProtected(ControllerEvent $event): bool
-        ```
-    - `Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedSubscriber` class:
-        - method `onKernelRequest` changed its interface:
-        ```diff
-        - onKernelRequest(GetResponseEvent $event)
-        + onKernelRequest(RequestEvent $event): void
-        ```
-    - `Shopsys\FrameworkBundle\Model\Cart\CartMigrationFacade` class:
-        - method `onKernelController` changed its interface:
-        ```diff
-        - onKernelController(FilterControllerEvent $filterControllerEvent)
-        + onKernelController(ControllerEvent $event): void
-        ```
-    - `Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository` class:
-        - method `onKernelResponse` changed its interface:
-        ```diff
-        - onKernelResponse(FilterResponseEvent $event)
-        + onKernelResponse(ResponseEvent $event): void
-        ```
-    - `Shopsys\FrameworkBundle\Model\Localization\LocalizationListener` class:
-        - method `onKernelRequest` changed its interface:
-        ```diff
-        - onKernelRequest(GetResponseEvent $event)
-        + onKernelRequest(RequestEvent $event): void
-        ```
-    - `Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculationScheduler` class:
-        - method `onKernelResponse` changed its interface:
-        ```diff
-        - onKernelResponse(FilterResponseEvent $event)
-        + onKernelResponse(ResponseEvent $event): void
-        ```
-    - `Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade` class:
-        - method `onKernelResponse` changed its interface:
-        ```diff
-        - onKernelResponse(FilterResponseEvent $event)
-        + onKernelResponse(ResponseEvent $event): void
-        ```
-    - `Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator` class:
-        - method `onKernelResponse` changed its interface:
-        ```diff
-        - onKernelResponse(FilterResponseEvent $event)
-        + onKernelResponse(ResponseEvent $event): void
-        ```
-    - `Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator` class:
-        - method `onKernelResponse` changed its interface:
-        ```diff
-        - onKernelResponse(FilterResponseEvent $event)
-        + onKernelResponse(ResponseEvent $event): void
-        ```
-- remove obsolete path parameters ([#2468](https://github.com/shopsys/shopsys/pull/2468))
-    - see #project-base-diff to update your project
-    - replace parameter `kernel.root_dir` with `%kernel.project_dir%/src` in your codebase
-    - parameter `shopsys.framework.javascript_sources_dir` was removed because it's not used anywhere
-- debug data collectors are now future compatible with Symfony 5 ([#2484](https://github.com/shopsys/shopsys/pull/2484))
-    - `Shopsys\FrameworkBundle\Component\Collector\ShopsysFrameworkDataCollector` class:
-        - method `collect` changed its interface:
-        ```diff
-        - collect(Request $request, Response $response, ?Exception $exception = null): void
-        + collect(Request $request, Response $response, ?Throwable $exception = null): void
-        ```
-    - `Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchCollector` class:
-        - method `collect` changed its interface:
-        ```diff
-        - collect(Request $request, Response $response, ?Exception $exception = null): void
-        + collect(Request $request, Response $response, ?Throwable $exception = null): void
-        ```
-- remove not used `twig/extensions` package ([#2486](https://github.com/shopsys/shopsys/pull/2486))
-    - see #project-base-diff to update your project
-    - see the list of filters and update your code if you use any – https://github.com/twigphp/Twig-extensions
-        - `trans` filter is already used from symfony/twig-bridge package
-- resolve `symfony/translations` deprecations ([#2487](https://github.com/shopsys/shopsys/pull/2487))
-    - see #project-base-diff
-    - replace usage of `Symfony\Component\Translation\TranslatorInterface` with `Symfony\Contracts\Translation\TranslatorInterface`
-    - remove usage of deprecated `Symfony\Component\Translation\MessageSelector`
-    - replace `transchoice` filter with `trans` filter and count parameter
-        - example:
-        ```diff
-        -    {% transchoice cart.itemsCount with { '%itemsCount%': cart.itemsCount, '%priceWithVat%': productsPrice.priceWithVat|price } %}
-        -        {1} <strong class="cart__state">%itemsCount%</strong> item for <strong class="cart__state">%priceWithVat%</strong>|[2,Inf] <strong class="cart__state">%itemsCount%</strong> items for <strong class="cart__state">%priceWithVat%</strong>
-        -    {% endtranschoice %}
-        +    {% trans with { '%count%': cart.itemsCount, '%itemsCount%': cart.itemsCount, '%priceWithVat%': productsPrice.priceWithVat|price } %}
-        +        {1} <strong class="cart__state">%itemsCount%</strong> item for <strong class="cart__state">%priceWithVat%</strong>|[2,Inf] <strong class="cart__state">%itemsCount%</strong> items for <strong class="cart__state">%priceWithVat%</strong>
-        +    {% endtrans %}
-        ```
-    - `transchoice()` method was removed from `\Shopsys\FrameworkBundle\Component\Translation\Translator`, use `trans()` with `count` parameter instead
-    - static `tc()` method was removed from `\Shopsys\FrameworkBundle\Component\Translation\Translator`, use `t()` with `count` parameter instead
-    - static `tc()` function was removed from global namespace, use `t()` with `count` parameter instead
-- update to latest version heureka/overeno-zakazniky package ([#2526](https://github.com/shopsys/shopsys/pull/2526))
-    - see #project-base-diff to update your project
-- update twig/twig to v2.15.4 in order to fix CVE-2022-39261 ([#2527](https://github.com/shopsys/shopsys/pull/2527))
-    - see #project-base-diff to update your project
-- fill missing customer demo data for smooth testing of application ([#2529](https://github.com/shopsys/shopsys/pull/2529))
-    - see #project-base-diff to update your project
-- remove product variant urls from sitemap ([#2530](https://github.com/shopsys/shopsys/pull/2530))
-    - replace usages of `SitemapFacade::getSitemapItemsForVisibleProducts()` with `SitemapFacade::getSitemapItemsForListableProducts()` in your project as old method no longer exists
-    - replace usages of `SitemapRepository::getSitemapItemsForVisibleProducts()` with `SitemapRepository::getSitemapItemsForListableProducts()` in your project as old method no longer exists
-- session is valid for a year and the cart is now only deleted after 130 days from the user's last activity ([#2537](https://github.com/shopsys/shopsys/pull/2537))
-    - see #project-base-diff to update your project
-- adding an index to the columns lft,rgt ([#2537](https://github.com/shopsys/shopsys/pull/2537))
-    - see #project-base-diff to update your project
-- Fix editing attribute created at of article, attribute created at has been moved from project base to framework ([#2546](https://github.com/shopsys/shopsys/pull/2546))
-    - see #project-base-diff to update your project
-- old phpRedisAdmin has been replaced with new Redis Commander ([#2550](https://github.com/shopsys/shopsys/pull/2550))
-    - see #project-base-diff to update your project
-- update sitemaps and add product image sitemap ([#2551](https://github.com/shopsys/shopsys/pull/2551))
-    - see #project-base-diff to update your project
-    - from SitemapLister was removed unused constants for page priorities:
-      - PRIORITY_HOMEPAGE
-      - PRIORITY_CATEGORIES
-      - PRIORITY_PRODUCTS
-      - PRIORITY_ARTICLES
-- product ordering in all product lists has been changed, now are products ordered primary by availability dispatch time. 
-    In stock as first and out of stock as last.  ([#2555](https://github.com/shopsys/shopsys/pull/2555))
-  - see #project-base-diff to update your project
-
-## Composer dependencies
-
-- replace swiftmailer with symfony/mailer ([#2470](https://github.com/shopsys/shopsys/pull/2470))
-    - see #project-base-diff
-    - from now on, the mail transport is configured using `MAILER_DSN` env variable
-        - `MAILER_TRANSPORT`, `MAILER_HOST`, `MAILER_USER`, and `MAILER_PASSWORD` env variables had been removed
-    - the mail spooling functionality has been removed without replacement
-        - if you need the asynchronous mails, you can implement it using [Symfony messenger](https://symfony.com/doc/current/mailer.html#sending-messages-async)
-    - `Shopsys\FrameworkBundle\Component\Cron\CronFacade` class:
-        - `$mailer` property has been removed
-        - constructor changed its interface:
-        ```diff
-            public function __construct(
-                 Logger $logger,
-                 CronConfig $cronConfig,
-                 CronModuleFacade $cronModuleFacade,
-        -        Mailer $mailer,
-                 CronModuleExecutor $cronModuleExecutor
-        ```
-    - `Shopsys\FrameworkBundle\Model\Mail\Exception\EmptyMailException` has been removed
-    - `Shopsys\FrameworkBundle\Model\Mail\Exception\SendMailFailedException` has been removed
-    - `Shopsys\FrameworkBundle\Model\Mail\Mailer` class:
-        - property `$swiftMailer` has been removed
-        - property `$realSwiftTransport` has been removed
-        - property `$mailTemplateFacade` is now strictly typed
-        - constructor changed its interface:
-        ```diff
-            public function __construct(
-        -        Swift_Mailer $swiftMailer,
-        -        Swift_Transport $realSwiftTransport,
-        +        MailerInterface $symfonyMailer,
-                 MailTemplateFacade $mailTemplateFacade,
-                 LoggerInterface $logger
-        ```
-        - method `flushSpoolQueue` has been removed
-        - method `send` is now strictly typed
-        - method `getMessageWithReplacedVariables` is now strictly typed and returns `\Symfony\Component\Mime\Email` instead of `\Swift_Message`
-        - method `replaceVariables` is now strictly typed
-    - `Shopsys\FrameworkBundle\Model\Mail\MessageData` class is now strictly typed
-    - `Shopsys\FrameworkBundle\Twig\MailerSettingExtension` class:
-        - property `$container` has been removed
-        - property `$isDeliveryDisabled` has been removed
-        - property `$mailerMasterEmailAddress` has been removed
-        - property `$twigEnvironment` is now strictly typed
-        - constructor changed its interface:
-        ```diff
-        - public function __construct(ContainerInterface $container, Environment $twigEnvironment)
-        + public function __construct(MailerSettingProvider $mailerSettingProvider, Environment $twigEnvironment)
-        ```
-    - translations - the `Unable to send updating email` msgid is no longer available
-- update `overblog/graphql-bundle` to `^0.14.3` ([#2479](https://github.com/shopsys/shopsys/pull/2479))
-    - switch implementation of deprecated `Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface` to `Overblog\GraphQLBundle\Definition\Resolver\QueryInterface` in your resolvers
-    - change `resolver` expression function to `query` in your types defined in yaml files
-        - Old signature (deprecated): `resolver(string $alias, array $args = []): mixed`
-        - New signature: `query(string $alias, ...$args): mixed`
-        - Example:
-        ```diff
-        - resolve: "@=resolver('categoriesSearch', [args])"
-        + resolve: "@=query('categoriesSearch', arg1, arg2, ...)"
-        ```
-    - change `service` expression function to `query` in your types defined in yaml files
-        - it is no longer supported to use private services in @=service function
-        - for more details check: https://github.com/overblog/GraphQLBundle/blob/master/docs/definitions/expression-language.md#private-services
-        - Example:
-        ```diff
-        - resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Image\\ImagesResolver").resolveByAdvert(value, args["type"], args["size"])'
-        + resolve: '@=query("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Image\\ImagesResolver::resolveByAdvert", value, args["type"], args["size"])'
-        ```
-    - `mutation` expression function signature was changed
-        - Old signature: `mutation(string $alias, array $args = []): mixed`
-        - New signature: `mutation(string $alias, ...$args): mixed`
-        - Example:
-        ```diff
-        - resolve: "@=mutation('create_order', [args, validator])"
-        + resolve: resolve: "@=mutation('create_order', args, validator)"
-        ```
-    - check other changes in [GraphQLBundle UPGRADE notes](https://github.com/overblog/GraphQLBundle/blob/master/UPGRADE.md#upgrade-from-013-to-014) and implement them in your codebase
-- remove mocked Events from your tests ([#2490](https://github.com/shopsys/shopsys/pull/2490))
-    - see #project-base-diff
-    - since Symfony 5.0 are all Events from `Symfony\Component\HttpKernel\Event` namespace final and cannot be mocked
-- use logger methods as they're specified in PSR-3 ([#2483](https://github.com/shopsys/shopsys/pull/2483))
-    - replace any usages of `Logger::add<Emergency|Alert|Critical|Notice|Debug|Error|Warning|Info>` with corresponding call of `emergency|alert|critical|notice|debug|error|warning|info` method
-- update to Symfony 5.4 ([#2496](https://github.com/shopsys/shopsys/pull/2496))
-    - see Symfony upgrade notes:
-        - ([Upgrade from 4.4 to 5.0](https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.0.md))
-        - ([Upgrade from 5.0 to 5.1](https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.1.md))
-        - ([Upgrade from 5.1 to 5.2](https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.2.md))
-        - ([Upgrade from 5.2 to 5.3](https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.3.md))
-        - ([Upgrade from 5.3 to 5.4](https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.4.md))
-    - here is quick summary you need to know, but we still encourage you to ready Symfony upgrade notes
-        - in Request and Request events `masterRequest` has been renamed to `mainRequest` so you have to update your usages accordingly
-        - you no longer need to use `Constraint/Date` in your date form types as validation is done by underlying type hinted code ([more described in Symfony Upgrade notes](https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.0.md#validator))
-        - use `Symfony\Component\Security\Core\Exception\UsernameNotFoundException` instead of `Symfony\Component\Security\Core\Exception\UserNotFoundException`
-        - `Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken` does no longer have second argument credentials so update your usages accordingly
-        - support for `bundle:controller:action` syntax has been removed, use `serviceOrFqcn::method` instead ([more info in Symfony Upgrade notes](https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.0.md#frameworkbundle))
-        - in functional and application tests requesting of container is changed from public method (`$this->getContainer()`) to static method (`self::getContainer()`) so you have to update your code accordingly
-        - we have moved code for requesting application from `FunctionalTestCase` tests to new `ApplicationTestCase` so functional tests and application tests are now separated
-    - many typehints were added so run `php phing phpstan` to find occurrences in your code that need to be updated accordingly
-    - also see #project-base-diff for more information about changes needed to be done in your project
-- fix tests for product searching ([#2524](https://github.com/shopsys/shopsys/pull/2524))
-    - see #project-base-diff for more information about changes needed to be done in your project
-- little translation tweaks for better developer experience ([2549](https://github.com/shopsys/shopsys/pull/2549))
-    - `Shopsys\FrameworkBundle\Component\Translation\Translator` class:
-        - constant `DEFAULT_DOMAIN` renamed to `DEFAULT_TRANSLATION_DOMAIN` and its visibility changed to `public`
-        - added public constant `DATA_FIXTURES_TRANSLATION_DOMAIN` to use for data fixtures translations
-    - global function `t` changed its interface:
-    ```diff
-    -  function t($id, array $parameters = [], $domain = null, $locale = null)
-    +  function t(string $id, array $parameters = [], ?string $translationDomain = null, ?string $locale = null): string
-    ```
-    - `Shopsys\FrameworkBundle\Twig\TranslationExtension` class:
-        - method `transHtml` changed its interface:
-        ```diff
-        -  transHtml(Environment $twig, $message, array $arguments = [], $domain = null, $locale = null)
-        +  transHtml(Environment $twig, string $message, array $arguments = [], ?string $translationDomain = null, ?string $locale = null): string
-        ```
-    - `Shopsys\FrameworkBundle\Component\Translation\JsFileExtractor` class:
-        - constant `DEFAULT_MESSAGE_DOMAIN` has been removed, use `Shopsys\FrameworkBundle\Component\Translation\Translator::DEFAULT_TRANSLATION_DOMAIN` instead
-    - `Shopsys\FrameworkBundle\Component\Translation\PhpFileExtractor` class:
-        - constant `DEFAULT_MESSAGE_DOMAIN` has been removed, use `Shopsys\FrameworkBundle\Component\Translation\Translator::DEFAULT_TRANSLATION_DOMAIN` instead
-    - also see #project-base-diff for more information about changes needed to be done in your project
-- added new `demo-data` phing target that does the same as `db-demo` plus exports data to Elasticsearch so we suggest you to use new phing target instead ([#2520](https://github.com/shopsys/shopsys/pull/2520))
-    - see #project-base-diff for more information about changes needed to be done in your project
+        - see [project-base-diff](https://github.com/shopsys/project-base/commit/755bd032bcf92e047555f59e9fbfdb3e7a2d709a) to update your project
 - resolve deprecations after update to Symfony 5.4 ([#2521](https://github.com/shopsys/shopsys/pull/2521))
     - `League\Flysystem\FilesystemOperator` is now used for autoload of abstract filesystem classes instead of `League\Flysystem\FilesystemInterface` update such occurrences in your project
     - some methods have been renamed in flysystem e.g. `getSize` to `fileSize` etc. run `php phing phpstan` to find such places and replace your usages accordingly
@@ -1173,7 +779,7 @@ There you can find links to upgrade notes for other versions too.
         + __construct(EntityManagerInterface $em, CustomerUserRepository $customerUserRepository, PasswordHasherFactoryInterface $passwordHasherFactory, ResetPasswordMailFacade $resetPasswordMailFacade, HashGenerator $hashGenerator, CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade)
         ```
     - `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade` class:
-      - method `__construct` changed its interface:
+        - method `__construct` changed its interface:
       ```diff
       - __construct(CustomerUserRefreshTokenChainDataFactoryInterface $customerUserRefreshTokenChainDataFactory, CustomerUserRefreshTokenChainFactoryInterface $customerUserRefreshTokenChainFactory, EncoderFactoryInterface $encoderFactory, CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository)
       + __construct(CustomerUserRefreshTokenChainDataFactoryInterface $customerUserRefreshTokenChainDataFactory, CustomerUserRefreshTokenChainFactoryInterface $customerUserRefreshTokenChainFactory, PasswordHasherFactoryInterface $passwordHasherFactory, CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository)
@@ -1190,13 +796,403 @@ There you can find links to upgrade notes for other versions too.
       - __construct(FlashBagInterface $flashBag, CurrentCustomerUser $currentCustomerUser, RouterInterface $router, Domain $domain)
       + __construct(RequestStack $requestStack, CurrentCustomerUser $currentCustomerUser, RouterInterface $router, Domain $domain)
       ```
-    - also see #project-base-diff for more information about changes needed to be done in your project
-- lock version of npm `jquery-ui` to version `1.12.1` in order to fix category sorting in admin ([#2558](https://github.com/shopsys/shopsys/pull/2558))
-    - see #project-base-diff for more information about changes needed to be done in your project
-- use `Shopsys\FrameworkBundle\Component\Translation\Translator::VALIDATOR_TRANSLATION_DOMAIN` for validators translations ()
+    - also see [project-base-diff](https://github.com/shopsys/project-base/commit/237b94db8d55423a5e61d969ab2357ad0dcda40b) for more information about changes needed to be done in your project
+
+## Application
+
+- remove unnecessary extended ImageExtension from your project, if you don't have any custom changes in the extension ([#2455](https://github.com/shopsys/shopsys/pull/2455))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/c3b0078de2cc077d8f49b8a30a87a22e3e2e61f3) to update your project
+- remove unnecessary `services_acc.yaml` config from your project ([#2455](https://github.com/shopsys/shopsys/pull/2455))
+    - create `config/packages/acc/framework.yaml` with configuration for acceptance testing
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/57ea0b5b4ac77d3c317bc261c1182a59edba6120) to update your project
+- move `paths.yml` config file into packages subfolder to allow easy override them for different environments ([#2455](https://github.com/shopsys/shopsys/pull/2455))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/12acff2fc784430516a06718338e635b9a99f73b) to update your project
+- set overwrite domain url to be taken exclusively from environment variable ([#2455](https://github.com/shopsys/shopsys/pull/2455))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/4eab33173ae475f71d7eb0ff16449e0d0f06ac1e) to update your project
+- set redis host to be taken exclusively from environment variable ([#2455](https://github.com/shopsys/shopsys/pull/2455))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/385ecaebd0de860a69e9601e4f52cdd4fdc1c059) to update your project
+- set swift mailer configuration to be taken exclusively from environment variable ([#2455](https://github.com/shopsys/shopsys/pull/2455))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/5603b3d32b16b78eb4517faa5cf318ec9b49e209) to update your project
+- set application secret to be taken exclusively from environment variable ([#2455](https://github.com/shopsys/shopsys/pull/2455))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/7216072ee02d9cf5ec19bfb11d9c5adec652b09d) to update your project
+- set doctrine configuration to be taken exclusively from environment variables ([#2455](https://github.com/shopsys/shopsys/pull/2455))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/26383037c8ab165d57e4b83a13d6b046e70aa558) to update your project
+- remove unused parameters ([#2455](https://github.com/shopsys/shopsys/pull/2455))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/442e80719f486b0d1b302bf1113e3ebddb701568) to update your project
+- unused translations have been removed
+    - the following `msgid` entries are no longer available in framework, they should be already added into your project directly
+        - `Contact`
+        - `Edit data`
+        - `Forgotten password`
+        - `Oops! Error occurred`
+        - `Page not found`
+        - `Product <strong>{{ name }}</strong> you had in cart is no longer available. Please check your order.`
+        - `Product you had in cart is no longer in available. Please check your order.`
+        - `Registration`
+        - `Search [noun]`
+        - `TOP`
+        - `Terms-and-conditions.html`
+        - `The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order.`
+        - `alphabetically A -> Z`
+        - `alphabetically Z -> A`
+        - `from most expensive`
+        - `from the cheapest`
+        - `relevance`
+- `parameter(_test).yaml.dist` and auto-creation of `parameter(_test).yaml` files was removed
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/442e80719f486b0d1b302bf1113e3ebddb701568) to update your project
+    - you can create `parameters.yaml` manually to locally override some settings (for testing purposes for example)
+    - your custom parameters should be in environment variable (if the value is environment-specific), or in different config file (if the value is project-specific)
+- fix implementations of FileVisitorInterface::visitTwigFile ([#2465](https://github.com/shopsys/shopsys/pull/2465))
+    - in the following classes, an interface of `visitTwigFile` was fixed to comply with `FileVisitorInterface`
+        - `ConstraintMessageExtractor`
+        - `ConstraintMessagePropertyExtractor`
+        - `ConstraintViolationExtractor`
+        - `JsFileExtractor`
+        - `PhpFileExtractor`
+        - `TwigFileExtractor`
+- resolve Symfony 4.4 deprecations ([#2468](https://github.com/shopsys/shopsys/pull/2468))
+    - remove Twig deprecation - an "if" condition on a "for" tag
+        - see the last bullet point in https://twig.symfony.com/doc/2.x/deprecated.html#tags
+        - see [project-base-diff](https://github.com/shopsys/project-base/commit/1fea0c761af40d8a47bd4bb35387b60557e455f7)
+    - remove deprecated "bundle:controller:action" syntax from twig templates
+        - see https://github.com/symfony/symfony/blob/4.1/UPGRADE-4.1.md#frameworkbundle
+    - `Shopsys\FrameworkBundle\Component\Error\ExceptionListener` class:
+        - property `$lastException` is renamed to `$lastThrowable`, its type is changed to `\Throwable|null`, and is strictly typed now
+        - method `onKernelException` changed its interface:
+        ```diff
+        - onKernelException(GetResponseForExceptionEvent $event)
+        + onKernelException(ExceptionEvent $event): void
+        ```
+        - method `getLastException` changed its interface and was renamed to `getLastThrowable`:
+        ```diff
+        - public function getLastException()
+        + public function getLastThrowable(): ?Throwable
+        ```
+    - `Shopsys\FrontendApiBundle\Model\ErrorErrorHandlerListener` class:
+        - method `onKernelException` changed its interface:
+        ```diff
+        - onKernelException(GetResponseForExceptionEvent $event)
+        + onKernelException(ExceptionEvent $event): void
+        ```
+- replace usage of deprecated kernel events ([#2482](https://github.com/shopsys/shopsys/pull/2482))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/2db41ebefe91b0450eda366b4674ab49afcca36c) to update your project
+    - see https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.0.md#httpkernel for the full list of replacements for your code
+    - `Shopsys\FrameworkBundle\Component\Domain\DomainAwareSecurityHeadersSetter` class:
+        - method `onKernelResponse` changed its interface:
+        ```diff
+        - onKernelResponse(FilterResponseEvent $event)
+        + onKernelResponse(ResponseEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Component\Domain\DomainSubscriber` class:
+        - method `onKernelRequest` changed its interface:
+        ```diff
+        - onKernelRequest(GetResponseEvent $event)
+        + onKernelRequest(RequestEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Component\HttpFoundation\DenyScriptNameInRequestPathListener` class:
+        - method `onKernelRequest` changed its interface:
+        ```diff
+        - onKernelRequest(GetResponseEvent $event)
+        + onKernelRequest(RequestEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Component\HttpFoundation\ResponseListener` class:
+        - method `onKernelResponse` changed its interface:
+        ```diff
+        - onKernelResponse(FilterResponseEvent $event)
+        + onKernelResponse(ResponseEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Component\HttpFoundation\SubRequestListener` class:
+        - method `onKernelController` changed its interface:
+        ```diff
+        - onKernelController(FilterControllerEvent $event)
+        + onKernelController(ControllerEvent $event): void
+        ```
+        - method `onKernelResponse` changed its interface:
+        ```diff
+        - onKernelResponse(FilterResponseEvent $event)
+        + onKernelResponse(ResponseEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestListener` class:
+        - method `onKernelRequest` changed its interface:
+        ```diff
+        - onKernelRequest(GetResponseEvent $event)
+        + onKernelRequest(RequestEvent $event): void
+        ```
+        - method `onKernelResponse` changed its interface:
+        ```diff
+        - onKernelResponse(FilterResponseEvent $event)
+        + onKernelResponse(ResponseEvent $event): void
+        ```
+        - method `onKernelException` changed its interface:
+        ```diff
+        - onKernelException(GetResponseForExceptionEvent $event)
+        + onKernelException(ExceptionEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Component\HttpFoundation\VaryResponseByXRequestedWithHeaderListener` class:
+        - method `onKernelResponse` changed its interface:
+        ```diff
+        - onKernelResponse(FilterResponseEvent $event)
+        + onKernelResponse(ResponseEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Component\Log\SlowLogSubscriber` class:
+        - method `initStartTime` changed its interface:
+        ```diff
+        - initStartTime(GetResponseEvent $event)
+        + initStartTime(RequestEvent $event): void
+        ```
+        - method `addNotice` changed its interface:
+        ```diff
+        - addNotice(PostResponseEvent $event)
+        + addNotice(TerminateEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector` class:
+        - method `onKernelController` changed its interface:
+        ```diff
+        - onKernelController(FilterControllerEvent $event)
+        + onKernelController(ControllerEvent $event): void
+        ```
+        - method `isProtected` changed its interface:
+        ```diff
+        - isProtected(FilterControllerEvent $event)
+        + isProtected(ControllerEvent $event): bool
+        ```
+    - `Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedSubscriber` class:
+        - method `onKernelRequest` changed its interface:
+        ```diff
+        - onKernelRequest(GetResponseEvent $event)
+        + onKernelRequest(RequestEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Model\Cart\CartMigrationFacade` class:
+        - method `onKernelController` changed its interface:
+        ```diff
+        - onKernelController(FilterControllerEvent $filterControllerEvent)
+        + onKernelController(ControllerEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository` class:
+        - method `onKernelResponse` changed its interface:
+        ```diff
+        - onKernelResponse(FilterResponseEvent $event)
+        + onKernelResponse(ResponseEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Model\Localization\LocalizationListener` class:
+        - method `onKernelRequest` changed its interface:
+        ```diff
+        - onKernelRequest(GetResponseEvent $event)
+        + onKernelRequest(RequestEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculationScheduler` class:
+        - method `onKernelResponse` changed its interface:
+        ```diff
+        - onKernelResponse(FilterResponseEvent $event)
+        + onKernelResponse(ResponseEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade` class:
+        - method `onKernelResponse` changed its interface:
+        ```diff
+        - onKernelResponse(FilterResponseEvent $event)
+        + onKernelResponse(ResponseEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator` class:
+        - method `onKernelResponse` changed its interface:
+        ```diff
+        - onKernelResponse(FilterResponseEvent $event)
+        + onKernelResponse(ResponseEvent $event): void
+        ```
+    - `Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator` class:
+        - method `onKernelResponse` changed its interface:
+        ```diff
+        - onKernelResponse(FilterResponseEvent $event)
+        + onKernelResponse(ResponseEvent $event): void
+        ```
+- remove obsolete path parameters ([#2478](https://github.com/shopsys/shopsys/pull/2478))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/647ac164c15208113a76a4aa79b3ce5cba4133b7) to update your project
+    - replace parameter `kernel.root_dir` with `%kernel.project_dir%/src` in your codebase
+    - parameter `shopsys.framework.javascript_sources_dir` was removed because it's not used anywhere
+- debug data collectors are now future compatible with Symfony 5 ([#2484](https://github.com/shopsys/shopsys/pull/2484))
+    - `Shopsys\FrameworkBundle\Component\Collector\ShopsysFrameworkDataCollector` class:
+        - method `collect` changed its interface:
+        ```diff
+        - collect(Request $request, Response $response, ?Exception $exception = null): void
+        + collect(Request $request, Response $response, ?Throwable $exception = null): void
+        ```
+    - `Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchCollector` class:
+        - method `collect` changed its interface:
+        ```diff
+        - collect(Request $request, Response $response, ?Exception $exception = null): void
+        + collect(Request $request, Response $response, ?Throwable $exception = null): void
+        ```
+- remove not used `twig/extensions` package ([#2486](https://github.com/shopsys/shopsys/pull/2486))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/6c8fd876242a762b459de68e966063042aed8bc6) to update your project
+    - see the list of filters and update your code if you use any – https://github.com/twigphp/Twig-extensions
+        - `trans` filter is already used from symfony/twig-bridge package
+- resolve `symfony/translations` deprecations ([#2487](https://github.com/shopsys/shopsys/pull/2487))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/4be3f434ea9e47317c5322e8b9c8434d627aca16)
+    - replace usage of `Symfony\Component\Translation\TranslatorInterface` with `Symfony\Contracts\Translation\TranslatorInterface`
+    - remove usage of deprecated `Symfony\Component\Translation\MessageSelector`
+    - replace `transchoice` filter with `trans` filter and count parameter
+        - example:
+        ```diff
+        -    {% transchoice cart.itemsCount with { '%itemsCount%': cart.itemsCount, '%priceWithVat%': productsPrice.priceWithVat|price } %}
+        -        {1} <strong class="cart__state">%itemsCount%</strong> item for <strong class="cart__state">%priceWithVat%</strong>|[2,Inf] <strong class="cart__state">%itemsCount%</strong> items for <strong class="cart__state">%priceWithVat%</strong>
+        -    {% endtranschoice %}
+        +    {% trans with { '%count%': cart.itemsCount, '%itemsCount%': cart.itemsCount, '%priceWithVat%': productsPrice.priceWithVat|price } %}
+        +        {1} <strong class="cart__state">%itemsCount%</strong> item for <strong class="cart__state">%priceWithVat%</strong>|[2,Inf] <strong class="cart__state">%itemsCount%</strong> items for <strong class="cart__state">%priceWithVat%</strong>
+        +    {% endtrans %}
+        ```
+    - `transchoice()` method was removed from `\Shopsys\FrameworkBundle\Component\Translation\Translator`, use `trans()` with `count` parameter instead
+    - static `tc()` method was removed from `\Shopsys\FrameworkBundle\Component\Translation\Translator`, use `t()` with `count` parameter instead
+    - static `tc()` function was removed from global namespace, use `t()` with `count` parameter instead
+- update to latest version heureka/overeno-zakazniky package ([#2526](https://github.com/shopsys/shopsys/pull/2526))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/20296317f07c6b6414fe012363a4474e2dcad67f) to update your project
+- fill missing customer demo data for smooth testing of application ([#2529](https://github.com/shopsys/shopsys/pull/2529))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/53094112318e5aa401b1fc2cb5aa736c472bebe4) to update your project
+- remove product variant urls from sitemap ([#2530](https://github.com/shopsys/shopsys/pull/2530))
+    - replace usages of `SitemapFacade::getSitemapItemsForVisibleProducts()` with `SitemapFacade::getSitemapItemsForListableProducts()` in your project as old method no longer exists
+    - replace usages of `SitemapRepository::getSitemapItemsForVisibleProducts()` with `SitemapRepository::getSitemapItemsForListableProducts()` in your project as old method no longer exists
+- session is valid for a year and the cart is now only deleted after 130 days from the user's last activity ([#2537](https://github.com/shopsys/shopsys/pull/2537))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/803281678b5bfbc4b1098ab95cae17478cdffec3) to update your project
+- adding an index to the columns lft,rgt ([#2537](https://github.com/shopsys/shopsys/pull/2537))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/af0159860c5b79094559d434580eddf7b3f53290) to update your project
+- Fix editing attribute created at of article, attribute created at has been moved from project base to framework ([#2546](https://github.com/shopsys/shopsys/pull/2546))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/b697ad146a53291eadfe7dade3b9bdb2f0ff0217) to update your project
+- old phpRedisAdmin has been replaced with new Redis Commander ([#2550](https://github.com/shopsys/shopsys/pull/2550))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/fe83ee13a12afd15f8f7252b6eb3dabcf6a6f1ae) to update your project
+- update sitemaps and add product image sitemap ([#2551](https://github.com/shopsys/shopsys/pull/2551))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/96c6b2c8d8ac5c18f52d6f67805c6944335ce301) to update your project
+    - from SitemapLister was removed unused constants for page priorities:
+      - PRIORITY_HOMEPAGE
+      - PRIORITY_CATEGORIES
+      - PRIORITY_PRODUCTS
+      - PRIORITY_ARTICLES
+- product ordering in all product lists has been changed, now are products ordered primary by availability dispatch time. 
+    In stock as first and out of stock as last.  ([#2555](https://github.com/shopsys/shopsys/pull/2555))
+  - see [project-base-diff](https://github.com/shopsys/project-base/commit/8f321e81ec34c837099a1bce26cecc1dc8aa4a74) to update your project
+- replace swiftmailer with symfony/mailer ([#2470](https://github.com/shopsys/shopsys/pull/2470))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/a2c865527e96401fdf946738ec9d0acc5a6340d8)
+    - from now on, the mail transport is configured using `MAILER_DSN` env variable
+        - `MAILER_TRANSPORT`, `MAILER_HOST`, `MAILER_USER`, and `MAILER_PASSWORD` env variables had been removed
+    - the mail spooling functionality has been removed without replacement
+        - if you need the asynchronous mails, you can implement it using [Symfony messenger](https://symfony.com/doc/current/mailer.html#sending-messages-async)
+    - `Shopsys\FrameworkBundle\Component\Cron\CronFacade` class:
+        - `$mailer` property has been removed
+        - constructor changed its interface:
+        ```diff
+            public function __construct(
+                 Logger $logger,
+                 CronConfig $cronConfig,
+                 CronModuleFacade $cronModuleFacade,
+        -        Mailer $mailer,
+                 CronModuleExecutor $cronModuleExecutor
+        ```
+    - `Shopsys\FrameworkBundle\Model\Mail\Exception\EmptyMailException` has been removed
+    - `Shopsys\FrameworkBundle\Model\Mail\Exception\SendMailFailedException` has been removed
+    - `Shopsys\FrameworkBundle\Model\Mail\Mailer` class:
+        - property `$swiftMailer` has been removed
+        - property `$realSwiftTransport` has been removed
+        - property `$mailTemplateFacade` is now strictly typed
+        - constructor changed its interface:
+        ```diff
+            public function __construct(
+        -        Swift_Mailer $swiftMailer,
+        -        Swift_Transport $realSwiftTransport,
+        +        MailerInterface $symfonyMailer,
+                 MailTemplateFacade $mailTemplateFacade,
+                 LoggerInterface $logger
+        ```
+        - method `flushSpoolQueue` has been removed
+        - method `send` is now strictly typed
+        - method `getMessageWithReplacedVariables` is now strictly typed and returns `\Symfony\Component\Mime\Email` instead of `\Swift_Message`
+        - method `replaceVariables` is now strictly typed
+    - `Shopsys\FrameworkBundle\Model\Mail\MessageData` class is now strictly typed
+    - `Shopsys\FrameworkBundle\Twig\MailerSettingExtension` class:
+        - property `$container` has been removed
+        - property `$isDeliveryDisabled` has been removed
+        - property `$mailerMasterEmailAddress` has been removed
+        - property `$twigEnvironment` is now strictly typed
+        - constructor changed its interface:
+        ```diff
+        - public function __construct(ContainerInterface $container, Environment $twigEnvironment)
+        + public function __construct(MailerSettingProvider $mailerSettingProvider, Environment $twigEnvironment)
+        ```
+    - translations - the `Unable to send updating email` msgid is no longer available
+- update `overblog/graphql-bundle` to `^0.14.3` ([#2479](https://github.com/shopsys/shopsys/pull/2479))
+    - switch implementation of deprecated `Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface` to `Overblog\GraphQLBundle\Definition\Resolver\QueryInterface` in your resolvers
+    - change `resolver` expression function to `query` in your types defined in yaml files
+        - Old signature (deprecated): `resolver(string $alias, array $args = []): mixed`
+        - New signature: `query(string $alias, ...$args): mixed`
+        - Example:
+        ```diff
+        - resolve: "@=resolver('categoriesSearch', [args])"
+        + resolve: "@=query('categoriesSearch', arg1, arg2, ...)"
+        ```
+    - change `service` expression function to `query` in your types defined in yaml files
+        - it is no longer supported to use private services in @=service function
+        - for more details check: https://github.com/overblog/GraphQLBundle/blob/master/docs/definitions/expression-language.md#private-services
+        - Example:
+        ```diff
+        - resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Image\\ImagesResolver").resolveByAdvert(value, args["type"], args["size"])'
+        + resolve: '@=query("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Image\\ImagesResolver::resolveByAdvert", value, args["type"], args["size"])'
+        ```
+    - `mutation` expression function signature was changed
+        - Old signature: `mutation(string $alias, array $args = []): mixed`
+        - New signature: `mutation(string $alias, ...$args): mixed`
+        - Example:
+        ```diff
+        - resolve: "@=mutation('create_order', [args, validator])"
+        + resolve: resolve: "@=mutation('create_order', args, validator)"
+        ```
+    - check other changes in [GraphQLBundle UPGRADE notes](https://github.com/overblog/GraphQLBundle/blob/master/UPGRADE.md#upgrade-from-013-to-014) and implement them in your codebase
+- remove mocked Events from your tests ([#2490](https://github.com/shopsys/shopsys/pull/2490))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/ad6f38e0846480e502069ea97f5e4bdab7247517)
+    - since Symfony 5.0 are all Events from `Symfony\Component\HttpKernel\Event` namespace final and cannot be mocked
+- use logger methods as they're specified in PSR-3 ([#2483](https://github.com/shopsys/shopsys/pull/2483))
+    - replace any usages of `Logger::add<Emergency|Alert|Critical|Notice|Debug|Error|Warning|Info>` with corresponding call of `emergency|alert|critical|notice|debug|error|warning|info` method
+- update to Symfony 5.4 ([#2496](https://github.com/shopsys/shopsys/pull/2496))
+    - see Symfony upgrade notes:
+        - ([Upgrade from 4.4 to 5.0](https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.0.md))
+        - ([Upgrade from 5.0 to 5.1](https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.1.md))
+        - ([Upgrade from 5.1 to 5.2](https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.2.md))
+        - ([Upgrade from 5.2 to 5.3](https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.3.md))
+        - ([Upgrade from 5.3 to 5.4](https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.4.md))
+    - here is quick summary you need to know, but we still encourage you to ready Symfony upgrade notes
+        - in Request and Request events `masterRequest` has been renamed to `mainRequest` so you have to update your usages accordingly
+        - you no longer need to use `Constraint/Date` in your date form types as validation is done by underlying type hinted code ([more described in Symfony Upgrade notes](https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.0.md#validator))
+        - use `Symfony\Component\Security\Core\Exception\UsernameNotFoundException` instead of `Symfony\Component\Security\Core\Exception\UserNotFoundException`
+        - `Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken` does no longer have second argument credentials so update your usages accordingly
+        - support for `bundle:controller:action` syntax has been removed, use `serviceOrFqcn::method` instead ([more info in Symfony Upgrade notes](https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.0.md#frameworkbundle))
+        - in functional and application tests requesting of container is changed from public method (`$this->getContainer()`) to static method (`self::getContainer()`) so you have to update your code accordingly
+        - we have moved code for requesting application from `FunctionalTestCase` tests to new `ApplicationTestCase` so functional tests and application tests are now separated
+    - many typehints were added so run `php phing phpstan` to find occurrences in your code that need to be updated accordingly
+    - also see [project-base-diff](https://github.com/shopsys/project-base/commit/bbf7049da4864f26c8a44ff5536a28a56250dfd8) for more information about changes needed to be done in your project
+- fix tests for product searching ([#2524](https://github.com/shopsys/shopsys/pull/2524))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/bc7427a16d6726e72429c289a356bcaa27b9d3ec) for more information about changes needed to be done in your project
+- little translation tweaks for better developer experience ([2549](https://github.com/shopsys/shopsys/pull/2549))
+    - `Shopsys\FrameworkBundle\Component\Translation\Translator` class:
+        - constant `DEFAULT_DOMAIN` renamed to `DEFAULT_TRANSLATION_DOMAIN` and its visibility changed to `public`
+        - added public constant `DATA_FIXTURES_TRANSLATION_DOMAIN` to use for data fixtures translations
+    - global function `t` changed its interface:
+    ```diff
+    -  function t($id, array $parameters = [], $domain = null, $locale = null)
+    +  function t(string $id, array $parameters = [], ?string $translationDomain = null, ?string $locale = null): string
+    ```
+    - `Shopsys\FrameworkBundle\Twig\TranslationExtension` class:
+        - method `transHtml` changed its interface:
+        ```diff
+        -  transHtml(Environment $twig, $message, array $arguments = [], $domain = null, $locale = null)
+        +  transHtml(Environment $twig, string $message, array $arguments = [], ?string $translationDomain = null, ?string $locale = null): string
+        ```
+    - `Shopsys\FrameworkBundle\Component\Translation\JsFileExtractor` class:
+        - constant `DEFAULT_MESSAGE_DOMAIN` has been removed, use `Shopsys\FrameworkBundle\Component\Translation\Translator::DEFAULT_TRANSLATION_DOMAIN` instead
+    - `Shopsys\FrameworkBundle\Component\Translation\PhpFileExtractor` class:
+        - constant `DEFAULT_MESSAGE_DOMAIN` has been removed, use `Shopsys\FrameworkBundle\Component\Translation\Translator::DEFAULT_TRANSLATION_DOMAIN` instead
+    - also see [project-base-diff](https://github.com/shopsys/project-base/commit/cc0f777f06b91971a6e3a9eb61784effd060b17f) and [project-base-diff](https://github.com/shopsys/project-base/commit/de95ac45584414533d6fdf6f6daa7914171fd8c1) for more information about changes needed to be done in your project
+- use `Shopsys\FrameworkBundle\Component\Translation\Translator::VALIDATOR_TRANSLATION_DOMAIN` for validators translations ([#2565](https://github.com/shopsys/shopsys/pull/2565))
     - `Shopsys\FrameworkBundle\Component\Translation\ConstraintMessageExtractor` class:
         - constant `CONSTRAINT_MESSAGE_DOMAIN` has been removed, use `Shopsys\FrameworkBundle\Component\Translation\Translator::VALIDATOR_TRANSLATION_DOMAIN` instead
-    - also see #project-base-diff for more information about changes needed to be done in your project
+    - also see [project-base-diff](https://github.com/shopsys/project-base/commit/25c694cd7c9754e228c12706edad66a3526b0ba3) for more information about changes needed to be done in your project
+- added new `demo-data` phing target that does the same as `db-demo` plus exports data to Elasticsearch, so we suggest you to use new phing target instead ([#2520](https://github.com/shopsys/shopsys/pull/2520))
+- lock version of npm `jquery-ui` to version `1.12.1` in order to fix category sorting in admin ([#2558](https://github.com/shopsys/shopsys/pull/2558))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/588cfeb4cf0184e0859f5e11c0d1dcbd37d826f2) for more information about changes needed to be done in your project
 - GQL resolvers and mutations refactoring ([#2563](https://github.com/shopsys/shopsys/pull/2563))
     - all frontend API `Resolver` classes were renamed to Query:
         - `Shopsys\FrontendApiBundle\Model\Resolver\Advert\AdverPositionsResolver` class was renamed:
@@ -1546,9 +1542,9 @@ There you can find links to upgrade notes for other versions too.
         - resource: '../../**/*{Facade,Factory,Mapper,Mutation,Repository,Resolver,Validator}.php'
         + resource: '../../**/*{Facade,Factory,Mapper,Mutation,Query,Repository,Validator}.php'
         ```
-  - see #project-base-diff for more information about changes needed to be done in your project
+  - see [project-base-diff](https://github.com/shopsys/project-base/commit/fd09b70411bc14d937b184aac53bad7fe2a37225) for more information about changes needed to be done in your project
 - update your Elasticsearch Docker Image to latest version ([#2569](https://github.com/shopsys/shopsys/pull/2569))
-    - see #project-base-diff for more information about changes needed to be done in your project
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/f693a6b42671457790572d2c1e053b620fc22841) for more information about changes needed to be done in your project
 - add images names ([#2566](https://github.com/shopsys/shopsys/pull/2566))
     - update all `*DataFactory::createInstance()` methods that you have extended in your project and are related to entities with images to create instance of `ImageUploadData` same as it is done in their parent classes from Shopsys Framework
         - also update your own application code to use `ImageUploadDataFactory` instead of creating `ImageUploadData` object directly
@@ -1621,6 +1617,6 @@ There you can find links to upgrade notes for other versions too.
         - uploadImages($entity, $temporaryFilenames, $type)
         + uploadImages(object $entity, array $currentFilenamesIndexedByImageIdAndLocale, ?array $temporaryFilenamesIndexedByImageId, ?string $type)
         ```
-    - also see #project-base-diff for more information about changes needed to be done in your project
-- update abstract class of UserErrors in frontend API ([#])
+    - also see [project-base-diff](https://github.com/shopsys/project-base/commit/9349607dd1ee8cccd6cc397095bd42aadf31bac1) for more information about changes needed to be done in your project
+- update abstract class of UserErrors in frontend API ([#2571](https://github.com/shopsys/shopsys/pull/2571))
     - `UserEntityNotFoundError` has been renamed to `EntityNotFoundUserError` update all your usages accordingly

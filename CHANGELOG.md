@@ -26,7 +26,68 @@ Packages are formatted by release version. You can see all the changes done to p
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) as explained in the [Backward Compatibility Promise](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/).
 
-The changelog is generated during the release process using [Github Changelog Generator](https://github.com/github-changelog-generator/github-changelog-generator) since `v9.1.1` release.
+## [v11.0.0](https://github.com/shopsys/shopsys/compare/v10.0.5...v11.0.0) (2023-03-02)
+
+### :construction: Changes that require additional implementation if you are using Frontend API
+* [shopsys] added name to images by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2566
+
+### :sparkles: Enhancements and features
+* [shopsys] Upgrade to Symfony 5.4 by @RobinDvorak in https://github.com/shopsys/shopsys/pull/2496
+* [framework] category tree in administration is now hideable by @RostislavKreisinger in https://github.com/shopsys/shopsys/pull/2522
+* [framework] remove product variant urls from sitemap by @RostislavKreisinger in https://github.com/shopsys/shopsys/pull/2530
+* [shopsys] update session and cart lifetime by @RostislavKreisinger in https://github.com/shopsys/shopsys/pull/2537
+* [framework] Cache current customer user by @RostislavKreisinger in https://github.com/shopsys/shopsys/pull/2547
+* [shopsys] Sitemap updates by @RostislavKreisinger in https://github.com/shopsys/shopsys/pull/2551
+* [shopsys] Product sorting by availability by @RostislavKreisinger in https://github.com/shopsys/shopsys/pull/2555
+* [shopsys] added name to images by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2566
+
+### :bug: Bug Fixes
+* migrations: fixed namespace selection when only one is available by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2469
+* Fix editing created at of article by @RostislavKreisinger in https://github.com/shopsys/shopsys/pull/2546
+* [shopsys] locked version of jquery-ui to 1.12.1 in order to fix category ordering in admin by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2558
+* [framework] Symfony profiler shows query or mutation name for API requests by @pk16011990 in https://github.com/shopsys/shopsys/pull/2556
+* [framework] fixed dumping translations by adding support for translation domain constants by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2561
+* [framework] fix implementations of FileVisitorInterface::visitTwigFile by @vitek-rostislav in https://github.com/shopsys/shopsys/pull/2465
+* [framework] fixed sitemap priority type by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2467
+* [framework] fix EntityExtensionSubscriber by @vitek-rostislav in https://github.com/shopsys/shopsys/pull/2473
+* [project-base] fix tests for product searching by @vitek-rostislav in https://github.com/shopsys/shopsys/pull/2524
+
+### :hammer: Developer experience and refactoring
+* [framework] Remove var dumps from API response by @RostislavKreisinger in https://github.com/shopsys/shopsys/pull/2536
+* [shopsys] little translation tweaks for better developer experience by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2549
+* [framework] introduced new phing target demo-data that wipes and completely installs demo data including export to Elasticsearch by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2520
+* [shopsys] resolve deprecations after update to Symfony 5.4 by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2521
+* [shopsys] added Translator constant for validators by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2565
+* [frontent-api] GQL resolvers refactoring by @RostislavKreisinger in https://github.com/shopsys/shopsys/pull/2563
+* [shopsys] updated Elasticsearch image to newest version in order to support arm processors by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2569
+* [frontend-api] UserEntityNotFoundError has been renamed to EntityNotFoundUserError by @TomasLudvik in https://github.com/shopsys/shopsys/pull/2571
+* [shopsys] removed previously deprecated features by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2455
+* [shopsys] resolve several Symfony deprecations by @vitek-rostislav in https://github.com/shopsys/shopsys/pull/2468
+* [shopsys] replace swiftmailer with symfony/mailer by @vitek-rostislav in https://github.com/shopsys/shopsys/pull/2470
+* [framework] Symfony profiler contains extended URLs for graphQL API requests by @RostislavKreisinger in https://github.com/shopsys/shopsys/pull/2531
+* [framework] fix annotations for CategoryTranslation::$name by @vitek-rostislav in https://github.com/shopsys/shopsys/pull/2525
+* [framework] shutdown kernel after generating error page by @vitek-rostislav in https://github.com/shopsys/shopsys/pull/2543
+* [framework] fix wrong annotation by @RostislavKreisinger in https://github.com/shopsys/shopsys/pull/2560
+* [shopsys] replace debug component with error handler component by @RobinDvorak in https://github.com/shopsys/shopsys/pull/2474
+* [framework] remove Redis deprecations by @RobinDvorak in https://github.com/shopsys/shopsys/pull/2481
+* [framework] remove usage of deprecated FrameworkBundle:Redirect:redirect by @RobinDvorak in https://github.com/shopsys/shopsys/pull/2480
+* [shopsys] replaced deprecated kernel events by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2482
+* [shopsys] cleanup path parameters by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2478
+* [shopsys] logger usage is now compliant with PSR-3 by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2483
+* [framework] debug collectors are now future compatible with Symfony 5 by @grossmannmartin in https://github.com/shopsys/shopsys/pull/2484
+* [shopsys] resolve symfony/translations deprecations by @RobinDvorak in https://github.com/shopsys/shopsys/pull/2487
+* [shopsys] do not mock Events in tests by @RobinDvorak in https://github.com/shopsys/shopsys/pull/2490
+* [framework] update heureka/overeno-zakazniky to latest version 4.0.1 by @RostislavKreisinger in https://github.com/shopsys/shopsys/pull/2526
+* [project-base] valid customer address demo data by @RostislavKreisinger in https://github.com/shopsys/shopsys/pull/2529
+
+### :rocket: Performance
+* [framework] remove LoggingMiddleware from connection in data fixtures for faster demodata generation by @RostislavKreisinger in https://github.com/shopsys/shopsys/pull/2523
+* Adding an index to the columns lft,rgt by @RostislavKreisinger in https://github.com/shopsys/shopsys/pull/2545
+
+### :cloud: Infrastructure
+* [framework] New Redis Commander by @RostislavKreisinger in https://github.com/shopsys/shopsys/pull/2550
+
+The changelog was generated during the release process using [Github Changelog Generator](https://github.com/github-changelog-generator/github-changelog-generator) since `v9.1.1` until `v10.0.5` release.
 
 ## [v10.0.5](https://github.com/shopsys/shopsys/compare/v10.0.4...v10.0.5) (2023-02-09)
 

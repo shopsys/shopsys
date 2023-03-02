@@ -3,6 +3,9 @@ changelog:
         labels:
             - "Will not fix"
     categories:
+        - title: ":construction: Changes that require additional implementation if you are using Frontend API"
+          labels:
+              - "Frontend API"
         - title: ":sparkles: Enhancements and features"
           labels:
               - "Enhancement"
@@ -27,6 +30,6 @@ changelog:
         - title: ":warning: Security"
           labels:
               - "Security"
-        - title: "Other Changes"
+        - title: ":placard: Other Changes"
           labels:
               - "*"
