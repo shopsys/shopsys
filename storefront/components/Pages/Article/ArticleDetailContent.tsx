@@ -2,7 +2,6 @@ import { ArticleTitle } from './ArticleTitle';
 import { UserText } from 'components/Helpers/UserText/UserText';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { formatDate } from 'helpers/formaters/formatDate';
-import { FC } from 'react';
 import { ArticleDetailType } from 'types/article';
 
 type ArticleDetailContentProps = {

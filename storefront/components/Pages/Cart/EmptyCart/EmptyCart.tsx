@@ -1,6 +1,5 @@
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC } from 'react';
 
 const TEST_IDENTIFIER = 'blocks-emptycart';
 

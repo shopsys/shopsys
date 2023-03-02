@@ -1,7 +1,6 @@
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { Translate } from 'next-translate';
-import { FC } from 'react';
 import { PickupPlaceType } from 'types/pickupPlace';
 
 type TransportAndPaymentSelectItemLabelProps = {

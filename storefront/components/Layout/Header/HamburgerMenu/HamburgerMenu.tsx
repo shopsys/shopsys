@@ -1,7 +1,7 @@
 import { HamburgerIcon } from './HamburgerIcon/HamburgerIcon';
-import { HamburgerMenuImageStyled, HamburgerMenuStyled, HamburgerMenuTextStyled } from './HamburgerMenu.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC, MouseEventHandler } from 'react';
+import { MouseEventHandler } from 'react';
+import { twJoin } from 'tailwind-merge';
 
 type HamburgerMenuProps = {
     isMenuOpened: boolean;
@@ -14,11 +14,18 @@ export const HamburgerMenu: FC<HamburgerMenuProps> = ({ isMenuOpened, onMenuTogg
     const t = useTypedTranslationFunction();
 
     return (
-        <HamburgerMenuStyled onClick={onMenuToggleHandler} isOpen={isMenuOpened} data-testid={TEST_IDENTIFIER}>
-            <HamburgerMenuImageStyled>
+        <div
+            className={twJoin(
+                'flex h-10 w-full cursor-pointer items-center rounded-xl bg-orangeLight p-3',
+                isMenuOpened && 'z-aboveMobileMenu',
+            )}
+            onClick={onMenuToggleHandler}
+            data-testid={TEST_IDENTIFIER}
+        >
+            <div className="flex w-4 items-center justify-center">
                 <HamburgerIcon isMenuOpened={isMenuOpened} />
-            </HamburgerMenuImageStyled>
-            <HamburgerMenuTextStyled>{isMenuOpened ? t('Close') : t('Menu')}</HamburgerMenuTextStyled>
-        </HamburgerMenuStyled>
+            </div>
+            <span className="ml-1 w-7 text-xs">{isMenuOpened ? t('Close') : t('Menu')}</span>
+        </div>
     );
 };

@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import { FC } from 'react';
 
 type MetaRobotsType = {
     content:

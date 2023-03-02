@@ -6,7 +6,6 @@ import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePro
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC } from 'react';
 import { nextReduxWrapper } from 'redux/main';
 
 const BrandsOverviewPage: FC<ServerSidePropsType> = () => {

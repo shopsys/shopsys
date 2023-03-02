@@ -1,5 +1,4 @@
 import { getDomainConfig } from 'helpers/domain/domain';
-import { FC } from 'react';
 
 export const GtmHeadScript: FC = () => {
     if (typeof window === 'undefined') {

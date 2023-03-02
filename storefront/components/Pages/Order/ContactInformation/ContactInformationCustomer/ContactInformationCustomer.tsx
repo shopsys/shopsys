@@ -4,7 +4,6 @@ import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { RadiobuttonGroup } from 'components/Forms/Radiobutton/RadiobuttonGroup';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { CustomerTypeEnum } from 'types/customer';
 import { ContactInformationFormType } from 'types/form';

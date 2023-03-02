@@ -1,4 +1,4 @@
-import { FC, useRef } from 'react';
+import { useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 export const Portal: FC = ({ children }) => {

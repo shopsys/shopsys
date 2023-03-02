@@ -1,13 +1,13 @@
 import { ButtonStyled, LinkStyled } from './Link.style';
 import { ButtonDefaultPropType } from 'components/Forms/Button/propTypes';
 import NextLink from 'next/link';
-import { AnchorHTMLAttributes, FC } from 'react';
+import { AnchorHTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
 type NativePropsAnchor = ExtractNativePropsFromDefault<
     AnchorHTMLAttributes<HTMLAnchorElement>,
     'href',
-    'rel' | 'target' | 'className'
+    'rel' | 'target'
 >;
 
 type LinkProps = NativePropsAnchor &

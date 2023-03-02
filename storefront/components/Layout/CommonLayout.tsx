@@ -6,7 +6,6 @@ import { NotificationBars } from './NotificationBars/NotificationBars';
 import { Webline } from './Webline/Webline';
 import { SeoMeta } from 'components/Basic/Head/SeoMeta/SeoMeta';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
-import { FC } from 'react';
 
 type CommonLayoutProps = {
     title?: string | null;

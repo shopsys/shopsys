@@ -1,7 +1,6 @@
 import { TransportAndPaymentListItem } from '../TransportAndPaymentListItem';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { TransportAndPaymentSelectItemLabel } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentSelect/TransportAndPaymentSelectItemLabel/TransportAndPaymentSelectItemLabel';
-import { FC } from 'react';
 import { TransportType } from 'types/transport';
 
 type StoreSelectProps = {

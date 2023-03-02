@@ -1,29 +1,19 @@
-import { PopupButtonCloseStyled, PopupContentStyled, PopupHeaderStyled, PopupStyled } from './Popup.style';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { Portal } from 'components/Basic/Portal/Portal';
 import { canUseDom } from 'helpers/misc/canUseDom';
-import { FC, MouseEventHandler, useEffect, useRef } from 'react';
-import { AnyStyledComponent } from 'styled-components';
+import { MouseEventHandler, useEffect, useRef } from 'react';
+import { twMergeCustom } from 'utils/twMerge';
 
 type PopupProps = {
     isVisible: boolean;
     onCloseCallback: () => void;
-    wrapperComponent?: AnyStyledComponent;
     hideCloseButton?: boolean;
-    className?: string;
 };
 
 const TEST_IDENTIFIER = 'layout-popup';
 
-export const Popup: FC<PopupProps> = ({
-    isVisible,
-    onCloseCallback,
-    children,
-    hideCloseButton,
-    wrapperComponent,
-    className,
-}) => {
+export const Popup: FC<PopupProps> = ({ isVisible, onCloseCallback, children, hideCloseButton, className }) => {
     const onEscapeButtonPressHandler = useRef((event: KeyboardEvent): void => {
         if (event.key === 'Escape') {
             onCloseCallback();
@@ -48,25 +38,35 @@ export const Popup: FC<PopupProps> = ({
         onCloseCallback();
     };
 
-    const PopupWrapper = wrapperComponent !== undefined ? wrapperComponent : PopupStyled;
-
     if (!isVisible) {
         return null;
     }
 
     return (
         <Portal>
-            <Overlay $isActive={isVisible} onClick={onClickCloseActionHandler}></Overlay>
-            <PopupWrapper role="dialog" aria-modal data-testid={TEST_IDENTIFIER} className={className}>
-                {hideCloseButton !== true && (
-                    <PopupHeaderStyled>
-                        <PopupButtonCloseStyled type="button" onClick={onClickCloseActionHandler}>
-                            <Icon iconType="icon" icon="Remove" width={24} height={24} className="text-primary" />
-                        </PopupButtonCloseStyled>
-                    </PopupHeaderStyled>
+            <Overlay $isActive={isVisible} onClick={onClickCloseActionHandler} />
+            <div
+                role="dialog"
+                aria-modal
+                data-testid={TEST_IDENTIFIER}
+                className={twMergeCustom(
+                    'fixed top-1/2 left-1/2 z-aboveOverlay flex max-h-full max-w-screen-lg -translate-x-1/2 -translate-y-1/2 cursor-auto flex-col rounded-xl bg-creamWhite p-1 shadow-2xl transition-opacity',
+                    className,
                 )}
-                <PopupContentStyled>{children}</PopupContentStyled>
-            </PopupWrapper>
+            >
+                {hideCloseButton !== true && (
+                    <div className="flex h-9 items-center justify-end ">
+                        <button
+                            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border-0 bg-creamWhite text-xs text-grey no-underline outline-none"
+                            type="button"
+                            onClick={onClickCloseActionHandler}
+                        >
+                            <Icon iconType="icon" icon="Remove" width={24} height={24} className="text-primary" />
+                        </button>
+                    </div>
+                )}
+                <div className="p-4 pt-0">{children}</div>
+            </div>
         </Portal>
     );
 };

@@ -1,15 +1,9 @@
-import {
-    OrderActionLeftStyled,
-    OrderActionLinkBackStyled,
-    OrderActionRightStyled,
-    OrderActionStyled,
-} from './OrderAction.style';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { FC } from 'react';
+import { twJoin } from 'tailwind-merge';
 
 type OrderActionProps = {
     buttonBack: string;
@@ -48,16 +42,22 @@ export const OrderAction: FC<OrderActionProps> = ({
     };
 
     return (
-        <OrderActionStyled withGapBottom={withGapBottom} withGapTop={withGapTop}>
-            <OrderActionLeftStyled data-testid={TEST_IDENTIFIER + 'back'}>
+        <div
+            className={twJoin(
+                'flex flex-col flex-wrap items-center lg:w-full lg:flex-row lg:justify-between ',
+                withGapBottom && 'mb-12 lg:mb-24',
+                withGapTop && 'mt-8',
+            )}
+        >
+            <div className="order-2 lg:order-1" data-testid={TEST_IDENTIFIER + 'back'}>
                 <NextLink href={buttonBackLink} passHref>
-                    <OrderActionLinkBackStyled>
+                    <a className="font-bold uppercase text-dark no-underline">
                         <Icon iconType="icon" icon="Arrow" className="relative top-0 mr-1 rotate-90 text-greyLight" />
                         {buttonBack}
-                    </OrderActionLinkBackStyled>
+                    </a>
                 </NextLink>
-            </OrderActionLeftStyled>
-            <OrderActionRightStyled data-testid={TEST_IDENTIFIER + 'next'}>
+            </div>
+            <div className="order-1 mb-8 w-auto lg:order-2 lg:mb-0" data-testid={TEST_IDENTIFIER + 'next'}>
                 <Button
                     type="submit"
                     borderRadius="big"
@@ -69,7 +69,7 @@ export const OrderAction: FC<OrderActionProps> = ({
                     <span>{buttonNext}</span>
                     <Icon iconType="icon" icon="Arrow" className="relative top-0 ml-1 -rotate-90 text-white" />
                 </Button>
-            </OrderActionRightStyled>
-        </OrderActionStyled>
+            </div>
+        </div>
     );
 };

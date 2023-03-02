@@ -1,4 +1,3 @@
-import { CookieConsentLinkStyled, FooterBlockStyled, FooterBottomStyled, FooterStyled } from './Footer.style';
 import { FooterBoxInfo } from './FooterBoxInfo/FooterBoxInfo';
 import { FooterContact } from './FooterContact/FooterContact';
 import { FooterCopyright } from './FooterCopyright/FooterCopyright';
@@ -6,7 +5,6 @@ import { FooterMenu } from './FooterMenu/FooterMenu';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
-import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
 
 type FooterProps = {
@@ -21,22 +19,24 @@ export const Footer: FC<FooterProps> = ({ simpleFooter }) => {
     const [cookieConsentUrl] = getInternationalizedStaticUrls(['/cookie-consent'], domainUrl);
 
     return (
-        <FooterStyled data-testid={FOOTER_TEST_IDENTIFIER}>
-            <FooterBottomStyled>
+        <div className="relative mt-auto" data-testid={FOOTER_TEST_IDENTIFIER}>
+            <div className="flex flex-col pt-5 pb-11 lg:py-11">
                 {!simpleFooter && (
                     <>
                         <FooterBoxInfo />
-                        <FooterBlockStyled>
+                        <div className="mb-12 vl:mb-24 vl:flex">
                             <FooterMenu />
                             <FooterContact />
-                        </FooterBlockStyled>
+                        </div>
                     </>
                 )}
                 <FooterCopyright />
                 <NextLink href={cookieConsentUrl}>
-                    <CookieConsentLinkStyled>{t('Cookie consent update')}</CookieConsentLinkStyled>
+                    <a className="self-center text-greyLight no-underline transition hover:text-whitesmoke hover:no-underline">
+                        {t('Cookie consent update')}
+                    </a>
                 </NextLink>
-            </FooterBottomStyled>
-        </FooterStyled>
+            </div>
+        </div>
     );
 };

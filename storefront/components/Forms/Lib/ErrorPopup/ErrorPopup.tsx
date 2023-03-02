@@ -1,11 +1,9 @@
-import { ErrorListItemStyled, ErrorListStyled, ErrorMessageStyled } from './ErrorPopup.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Popup } from 'components/Layout/Popup/Popup';
-import { PopupStyled } from 'components/Layout/Popup/Popup.style';
 import { getGtmMessageEvent } from 'helpers/gtm/eventFactories';
 import { gtmSafePushEvent } from 'helpers/gtm/gtm';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC, ReactElement, useEffect, useMemo } from 'react';
+import { ReactElement, useEffect, useMemo } from 'react';
 import { GtmMessageOriginType } from 'types/gtm';
 
 type ErrorPopupProps = {
@@ -44,11 +42,11 @@ export const ErrorPopup: FC<ErrorPopupProps> = ({ isVisible, onCloseCallback, fi
             }
 
             newMappedErrors.push(
-                <ErrorListItemStyled key={fields[field].name}>
+                <li className="mb-2 border-b border-greyLighter pb-2" key={fields[field].name}>
                     {fields[field].label}
                     <br />
-                    <ErrorMessageStyled>{fields[field].errorMessage}</ErrorMessageStyled>
-                </ErrorListItemStyled>,
+                    <span className="text-red">{fields[field].errorMessage}</span>
+                </li>,
             );
         }
 
@@ -56,14 +54,9 @@ export const ErrorPopup: FC<ErrorPopupProps> = ({ isVisible, onCloseCallback, fi
     }, [fields]);
 
     return (
-        <Popup
-            wrapperComponent={PopupStyled}
-            isVisible={isVisible}
-            onCloseCallback={onCloseCallback}
-            className="w-11/12 max-w-lg"
-        >
+        <Popup isVisible={isVisible} onCloseCallback={onCloseCallback} className="w-11/12 max-w-lg">
             <Heading type="h2">{t('Please check inserted details')}</Heading>
-            <ErrorListStyled>{mappedErrors}</ErrorListStyled>
+            <ul className="max-h-[50vh] overflow-y-auto">{mappedErrors}</ul>
         </Popup>
     );
 };

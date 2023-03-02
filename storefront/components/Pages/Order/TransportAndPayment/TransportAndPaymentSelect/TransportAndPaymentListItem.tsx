@@ -1,7 +1,6 @@
-import { FC } from 'react';
 import { twJoin } from 'tailwind-merge';
 
-type TransportAndPaymentListItemProps = { isActive: boolean; dataTestId?: string };
+type TransportAndPaymentListItemProps = { isActive: boolean };
 
 export const TransportAndPaymentListItem: FC<TransportAndPaymentListItemProps> = ({
     isActive,

@@ -1,16 +1,6 @@
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
 
-export const TableGridStyled = styled.div(
-    ({ theme }) => css`
-        margin-bottom: 24px;
-        overflow-x: auto;
-
-        border-radius: ${theme.radius.biggest};
-        border: 2px solid ${theme.color.border};
-    `,
-);
-
 export const TableGridRootStyled = styled.table(
     ({ theme }) => css`
         width: 100%;
@@ -61,14 +51,6 @@ export const TableGridRootStyled = styled.table(
         }
     `,
 );
-
-export const TableGridColumnsStyled = styled.tbody`
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    padding: 25px;
-`;
 
 export const TableGridColumnStyled = styled.table(
     ({ theme }) => css`

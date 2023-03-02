@@ -128,8 +128,3 @@ export const DropdownMenuStyled = styled.div<DropdownMenuStyledProps>(
         }
     `,
 );
-
-export const DropdownMenuListStyled = styled.div`
-    width: 100%;
-    padding-top: 48px;
-`;

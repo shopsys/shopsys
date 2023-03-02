@@ -1,9 +1,4 @@
-import {
-    ContactInformationDeliveryAddressPickupPlaceStyled,
-    ContactInformationDeliveryAddressStyled,
-    ListItemStyled,
-    ListStyled,
-} from './ContactInformationDeliveryAddress.style';
+import { ContactInformationDeliveryAddressStyled } from './ContactInformationDeliveryAddress.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLine';
@@ -18,7 +13,7 @@ import { useCurrentCart } from 'connectors/cart/Cart';
 import { useCountriesAsSelectOptions } from 'connectors/country/Country';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
 import { useShopsysDispatch } from 'redux/main';
@@ -166,7 +161,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                         <div ref={contentElement}>
                             {showAddressSelection && (
                                 <FormLine bottomGap lg="65%">
-                                    <ListStyled>
+                                    <div className="flex w-full flex-col">
                                         <RadiobuttonGroup
                                             name={formMeta.fields.deliveryAddressUuid.name}
                                             control={formProviderMethods.control}
@@ -175,7 +170,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                 ...(user?.deliveryAddresses.map((deliveryAddress) => ({
                                                     label: (
                                                         <p>
-                                                            <strong>
+                                                            <strong className="mr-1">
                                                                 {deliveryAddress.firstName} {deliveryAddress.lastName}
                                                             </strong>
                                                             {deliveryAddress.companyName}
@@ -196,10 +191,15 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                 },
                                             ]}
                                             render={(radiobutton, key) => (
-                                                <ListItemStyled key={key}>{radiobutton}</ListItemStyled>
+                                                <div
+                                                    className="relative mt-4 flex w-full flex-wrap rounded-xl border-2 border-border p-5"
+                                                    key={key}
+                                                >
+                                                    {radiobutton}
+                                                </div>
                                             )}
                                         />
-                                    </ListStyled>
+                                    </div>
                                 </FormLine>
                             )}
                             {(!showAddressSelection || isCustomAddressSelected) && (
@@ -405,10 +405,10 @@ export const ContactInformationDeliveryAddress: FC = () => {
                     </div>
                 </CSSTransition>
                 {!!pickupPlace && (
-                    <ContactInformationDeliveryAddressPickupPlaceStyled>
+                    <div>
                         <strong>{t('Pickup place')}:</strong> {pickupPlace.street}, {pickupPlace.postcode}{' '}
                         {pickupPlace.city}, {pickupPlace.country.name}
-                    </ContactInformationDeliveryAddressPickupPlaceStyled>
+                    </div>
                 )}
             </ContactInformationDeliveryAddressStyled>
         </>

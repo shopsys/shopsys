@@ -6,7 +6,7 @@ import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Image from 'next/image';
 import NextLink from 'next/link';
-import { FC, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { twJoin } from 'tailwind-merge';
 import { BreadcrumbItemType } from 'types/breadcrumb';

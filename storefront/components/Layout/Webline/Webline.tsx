@@ -1,22 +1,31 @@
-import { WeblinePropType, WeblineType } from './propTypes';
-import { ContainerStyled, WeblineStyled } from './Webline.style';
-import { FC, HTMLAttributes } from 'react';
+import { HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { twMergeCustom } from 'utils/twMerge';
 
-type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'style' | 'className'>;
+type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'style'>;
 
-type WeblineProps = NativeProps & WeblinePropType;
+type WeblineProps = NativeProps & {
+    type?: WeblineType;
+    testIdentifier?: string;
+};
+
+type WeblineType = 'colored' | 'dark' | 'light' | 'blog';
 
 const getTestIdentifier = (testIdentifier?: string, type?: WeblineType) =>
-    testIdentifier ?? 'layout-webline' + (type !== undefined ? '-' + type : '');
+    testIdentifier ?? 'layout-webline' + (type ? '-' + type : '');
 
 export const Webline: FC<WeblineProps> = ({ children, style, testIdentifier, type, className }) => (
-    <WeblineStyled
-        className={className}
+    <div
+        className={twMergeCustom(
+            type === 'colored' && 'bg-primary',
+            type === 'dark' && 'bg-greyDark',
+            type === 'light' && 'bg-orangeLight',
+            type === 'blog' && 'bg-[url("/images/blog-background.png")] bg-cover bg-center bg-no-repeat',
+            className,
+        )}
         style={style}
-        type={type}
-        testIdentifier={getTestIdentifier(testIdentifier, type)}
+        data-testid={getTestIdentifier(testIdentifier, type)}
     >
-        <ContainerStyled>{children}</ContainerStyled>
-    </WeblineStyled>
+        <div className="px-5 xl:mx-auto xl:w-full xl:max-w-7xl">{children}</div>
+    </div>
 );

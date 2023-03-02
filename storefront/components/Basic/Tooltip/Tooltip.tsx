@@ -1,4 +1,3 @@
-import { TooltipStyled, TooltipWrapperStyled } from './Tooltip.style';
 import {
     autoUpdate,
     flip,
@@ -12,7 +11,7 @@ import {
     useInteractions,
     useRole,
 } from '@floating-ui/react-dom-interactions';
-import { cloneElement, FC, useMemo, useState } from 'react';
+import { cloneElement, useMemo, useState } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
 type TooltipProps = {
@@ -45,11 +44,11 @@ export const Tooltip: FC<TooltipProps> = ({ children, label, placement = 'top' }
         <>
             {cloneElement(children, getReferenceProps({ ref, ...children.props }))}
             {open && label !== undefined && (
-                <TooltipWrapperStyled>
-                    <TooltipStyled
+                <div className="relative">
+                    <div
                         {...getFloatingProps({
                             ref: floating,
-                            className: 'tooltip',
+                            className: 'tooltip block rounded-md bg-black bg-opacity-75 p-2 text-white',
                             style: {
                                 position: strategy,
                                 top: y ?? 0,
@@ -58,8 +57,8 @@ export const Tooltip: FC<TooltipProps> = ({ children, label, placement = 'top' }
                         })}
                     >
                         {label}
-                    </TooltipStyled>
-                </TooltipWrapperStyled>
+                    </div>
+                </div>
             )}
         </>
     );

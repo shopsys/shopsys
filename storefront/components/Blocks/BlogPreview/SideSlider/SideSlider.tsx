@@ -1,17 +1,10 @@
-import {
-    SideSliderContentStyled,
-    SideSliderImageLinkStyled,
-    SideSliderImageStyled,
-    SideSliderItemStyled,
-    SideSliderNameStyled,
-} from './SideSlider.style';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
 import { theme } from 'components/Theme/main';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
 import NextLink from 'next/link';
-import { FC, Fragment } from 'react';
+import { Fragment } from 'react';
 import { ListedBlogArticleType } from 'types/blogArticle';
 
 type SideSliderProps = {
@@ -41,34 +34,35 @@ export const SideSlider: FC<SideSliderProps> = ({ blogSideItems }) => {
         <>
             <div ref={sliderRef} className="keen-slider">
                 {blogSideItems.map((blogSideItem, index) => (
-                    <SideSliderItemStyled
-                        key={index}
-                        className="keen-slider__slide"
-                        data-testid={TEST_IDENTIFIER + index}
-                    >
-                        <SideSliderImageStyled>
+                    <div key={index} className="keen-slider__slide flex flex-col" data-testid={TEST_IDENTIFIER + index}>
+                        <div className="flex w-full">
                             <NextLink href={blogSideItem.link} passHref>
-                                <SideSliderImageLinkStyled>
-                                    <Image image={blogSideItem.image} type="list" alt="alt" />
-                                </SideSliderImageLinkStyled>
+                                <a className="relative mb-2 flex w-full">
+                                    <Image
+                                        image={blogSideItem.image}
+                                        type="list"
+                                        alt="alt"
+                                        className="max-h-32 rounded"
+                                    />
+                                </a>
                             </NextLink>
-                        </SideSliderImageStyled>
-                        <SideSliderContentStyled>
+                        </div>
+                        <div className="flex-1">
                             {blogSideItem.blogCategories.map((blogPreviewCategorie, index) => (
                                 <Fragment key={index}>
                                     {blogPreviewCategorie.parent !== null && (
-                                        <Flag color="#cdb3ff" href={blogPreviewCategorie.link}>
-                                            {blogPreviewCategorie.name}
-                                        </Flag>
+                                        <Flag href={blogPreviewCategorie.link}>{blogPreviewCategorie.name}</Flag>
                                     )}
                                 </Fragment>
                             ))}
 
                             <NextLink href={blogSideItem.link} passHref>
-                                <SideSliderNameStyled>{blogSideItem.name}</SideSliderNameStyled>
+                                <a className="block text-lg font-bold leading-5 text-creamWhite no-underline hover:text-creamWhite">
+                                    {blogSideItem.name}
+                                </a>
                             </NextLink>
-                        </SideSliderContentStyled>
-                    </SideSliderItemStyled>
+                        </div>
+                    </div>
                 ))}
             </div>
         </>

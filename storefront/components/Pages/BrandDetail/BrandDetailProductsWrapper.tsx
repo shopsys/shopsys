@@ -13,7 +13,7 @@ import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListS
 import { useGtmBrandProductListView } from 'hooks/gtm/useGtmBrandProductListView';
 import { useListingForPagination } from 'hooks/ui/useListingForPagination';
 import { useRouter } from 'next/router';
-import React, { FC, RefObject } from 'react';
+import React, { RefObject } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { BrandDetailType } from 'types/brand';
 import { ListedProductType } from 'types/product';

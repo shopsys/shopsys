@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 export const MessageWrapper: FC = ({ children }) => (
     <div className="mt-16 mb-10 flex flex-col items-center justify-center lg:mt-16 lg:mb-24 lg:flex-row">
         {children}

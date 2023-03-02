@@ -1,6 +1,5 @@
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { usePromotedProducts } from 'connectors/products/Products';
-import { FC } from 'react';
 
 const GTM_LIST_NAME = 'homepage promo products' as const;
 

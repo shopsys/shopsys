@@ -1,13 +1,9 @@
 import { useFilterState } from '../FilterContext/useFilterState';
+import { FilterGroupContent, FilterGroupTitle, FilterGroupWrapper } from '../FilterElements';
 import { FilterGroupIcon } from '../FilterGroup/FilterGroupIcon';
-import {
-    FilterGroupContentStyled,
-    FilterGroupStyled,
-    FilterGroupTitleStyled,
-} from 'components/Blocks/Product/Filter/FilterGroup/FilterGroup.style';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 type FilterGroupInStockProps = {
     title: string;
@@ -25,12 +21,12 @@ export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ title, isOpen 
     const inStockCount = useMemo(() => state.options.inStock, [state.options.inStock]);
 
     return (
-        <FilterGroupStyled data-testid={TEST_IDENTIFIER}>
-            <FilterGroupTitleStyled onClick={() => setIsGroupOpen((currentGroupVisibility) => !currentGroupVisibility)}>
+        <FilterGroupWrapper dataTestId={TEST_IDENTIFIER}>
+            <FilterGroupTitle onClick={() => setIsGroupOpen((currentGroupVisibility) => !currentGroupVisibility)}>
                 {title}
                 <FilterGroupIcon isOpen={isGroupOpen} />
-            </FilterGroupTitleStyled>
-            <FilterGroupContentStyled isOpen={isGroupOpen}>
+            </FilterGroupTitle>
+            <FilterGroupContent isOpen={isGroupOpen}>
                 <Checkbox
                     name="onlyInStock"
                     id="onlyInStock"
@@ -39,7 +35,7 @@ export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ title, isOpen 
                     count={inStockCount}
                     value={isOnlyInStock}
                 />
-            </FilterGroupContentStyled>
-        </FilterGroupStyled>
+            </FilterGroupContent>
+        </FilterGroupWrapper>
     );
 };

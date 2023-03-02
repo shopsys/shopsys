@@ -1,13 +1,12 @@
 import { Heading } from 'components/Basic/Heading/Heading';
 import { TableGrid } from 'components/Basic/TableGrid/TableGrid';
-import { TableGridColumnsStyled, TableGridColumnStyled } from 'components/Basic/TableGrid/TableGrid.style';
+import { TableGridColumnStyled } from 'components/Basic/TableGrid/TableGrid.style';
+import { TableGridColumns } from 'components/Basic/TableGrid/TableGridElements';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
-import { HeadingWrapperStyled } from 'components/Layout/SimpleLayout/SimpleLayout.style';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
-import { FC } from 'react';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { OrderDetailType } from 'types/orders';
 
@@ -25,16 +24,16 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcr
     return (
         <>
             <Webline>
-                <HeadingWrapperStyled>
+                <div className="text-center">
                     <Heading type="h1">
                         {t('Order number')} {order.number}
                     </Heading>
-                </HeadingWrapperStyled>
+                </div>
                 <Breadcrumbs key="breadcrumb" breadcrumb={breadcrumbs} />
             </Webline>
             <Webline>
                 <TableGrid>
-                    <TableGridColumnsStyled>
+                    <TableGridColumns>
                         <TableGridColumnStyled>
                             <tr>
                                 <th colSpan={2}>{t('Basic information')}</th>
@@ -74,10 +73,10 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcr
                                 </tr>
                             </TableGridColumnStyled>
                         )}
-                    </TableGridColumnsStyled>
+                    </TableGridColumns>
                 </TableGrid>
                 <TableGrid>
-                    <TableGridColumnsStyled>
+                    <TableGridColumns>
                         <TableGridColumnStyled>
                             <tr>
                                 <th colSpan={2}>{t('Billing address')}</th>
@@ -178,7 +177,7 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcr
                                 <td data-testid={TEST_IDENTIFIER + 'deliveryCountry'}>{order.deliveryCountry}</td>
                             </tr>
                         </TableGridColumnStyled>
-                    </TableGridColumnsStyled>
+                    </TableGridColumns>
                 </TableGrid>
                 {order.items.length > 0 && (
                     <>

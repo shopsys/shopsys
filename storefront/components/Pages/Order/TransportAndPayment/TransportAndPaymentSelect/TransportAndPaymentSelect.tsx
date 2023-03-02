@@ -16,7 +16,7 @@ import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import getConfig from 'next/config';
-import { FC, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { PaymentType } from 'types/payment';
 import { PickupPlaceType } from 'types/pickupPlace';
@@ -323,11 +323,16 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     );
 };
 
-type ResetButtonProps = { text: string; dataTestId: string; onClick: () => void };
+type ResetButtonProps = { text: string; onClick: () => void };
 
 const ResetButton: FC<ResetButtonProps> = ({ text, dataTestId, onClick }) => (
-    <button type="button" onClick={onClick} data-testid={dataTestId}>
+    <button
+        type="button"
+        onClick={onClick}
+        data-testid={dataTestId}
+        className="flex w-full items-center bg-whitesmoke px-2 py-1 text-sm"
+    >
         {text}
-        <Icon iconType="icon" icon="Arrow" />
+        <Icon iconType="icon" icon="Arrow" className="ml-2" />
     </button>
 );

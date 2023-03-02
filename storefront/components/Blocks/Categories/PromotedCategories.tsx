@@ -1,6 +1,5 @@
-import { PromotedCategoriesSimpleNavigationStyled } from './PromotedCategories.style';
+import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { usePromotedCategories } from 'connectors/categories/PromotedCategories';
-import { FC } from 'react';
 
 export const PromotedCategories: FC = () => {
     const promotedCategories = usePromotedCategories();
@@ -9,5 +8,5 @@ export const PromotedCategories: FC = () => {
         return null;
     }
 
-    return <PromotedCategoriesSimpleNavigationStyled listedItems={promotedCategories} />;
+    return <SimpleNavigation listedItems={promotedCategories} className="mb-6" />;
 };

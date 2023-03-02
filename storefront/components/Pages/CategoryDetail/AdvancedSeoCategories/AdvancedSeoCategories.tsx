@@ -7,7 +7,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import 'keen-slider/keen-slider.min.css';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { ReadyCategorySeoMixLink } from 'types/category';
 
 type AdvancedSeoCategoriesProps = {

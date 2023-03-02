@@ -1,22 +1,11 @@
 import { ProductAction } from './Action/ProductAction';
-import { ProductAvailabilityStyled } from './Availability/ProductAvailability.style';
 import { ProductAvailableStoresCount } from './Availability/ProductAvailableStoresCount';
 import { ProductExposedStoresCount } from './Availability/ProductExposedStoresCount';
 import { ProductFlags } from './Flags/ProductFlags';
 import { ProductPrice } from './Price/ProductPrice';
-import {
-    SliderProductItemFlagsStyled,
-    SliderProductItemImageStyled,
-    SliderProductItemInfoStyled,
-    SliderProductItemInStyled,
-    SliderProductItemLinkStyled,
-    SliderProductItemStyled,
-    SliderProductItemTitleStyled,
-} from './SliderProductItem.style';
 import { Image } from 'components/Basic/Image/Image';
 import { onClickProductDetailGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import NextLink from 'next/link';
-import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { GtmListNameType } from 'types/gtm';
 import { SliderProductItemType } from 'types/product';
@@ -33,24 +22,39 @@ export const SliderProductItem: FC<SliderProductItemProps> = ({ product, gtmList
     const { url } = useShopsysSelector((state) => state.domain);
 
     return (
-        <SliderProductItemStyled className="keen-slider__slide" data-testid={TEST_IDENTIFIER + product.catalogNumber}>
-            <SliderProductItemInStyled>
+        <div
+            className="keen-slider__slide w-64 p-2 text-dark hover:text-primary"
+            data-testid={TEST_IDENTIFIER + product.catalogNumber}
+        >
+            <div className="group relative flex h-full flex-col rounded-xl text-left hover:shadow-lg">
                 <NextLink href={product.slug} passHref>
-                    <SliderProductItemLinkStyled
+                    <a
+                        className="relative flex h-full flex-col no-underline hover:no-underline"
                         onClick={() => onClickProductDetailGtmEventHandler(product, gtmListName, listIndex, url)}
                     >
-                        <SliderProductItemImageStyled data-testid={TEST_IDENTIFIER + 'image'}>
-                            <Image image={product.image} type="list" alt={product.fullName} />
-                            <SliderProductItemFlagsStyled>
+                        <div
+                            className="relative flex h-48 w-full items-center justify-center px-2 pt-4 pb-2"
+                            data-testid={TEST_IDENTIFIER + 'image'}
+                        >
+                            <Image
+                                image={product.image}
+                                type="list"
+                                alt={product.fullName}
+                                className="group-hover:mix-blend-multiply"
+                            />
+                            <div className="absolute top-2 left-3 flex flex-col">
                                 <ProductFlags flags={product.flags} />
-                            </SliderProductItemFlagsStyled>
-                        </SliderProductItemImageStyled>
-                        <SliderProductItemInfoStyled>
-                            <SliderProductItemTitleStyled data-testid={TEST_IDENTIFIER + 'name'}>
+                            </div>
+                        </div>
+                        <div className="mt-auto block flex-1 px-2 pb-5">
+                            <h3
+                                className="mb-1 block h-10 overflow-hidden break-words text-lg font-bold leading-5 text-black"
+                                data-testid={TEST_IDENTIFIER + 'name'}
+                            >
                                 {product.fullName}
-                            </SliderProductItemTitleStyled>
+                            </h3>
                             <ProductPrice productPrice={product.price} />
-                            <ProductAvailabilityStyled>
+                            <div className="mb-3 text-sm text-black">
                                 {product.availability.name}
                                 <ProductAvailableStoresCount
                                     isMainVariant={product.isMainVariant}
@@ -60,12 +64,12 @@ export const SliderProductItem: FC<SliderProductItemProps> = ({ product, gtmList
                                     isMainVariant={product.isMainVariant}
                                     exposedStoresCount={product.exposedStoresCount}
                                 />
-                            </ProductAvailabilityStyled>
-                        </SliderProductItemInfoStyled>
-                    </SliderProductItemLinkStyled>
+                            </div>
+                        </div>
+                    </a>
                 </NextLink>
                 <ProductAction product={product} gtmListName={gtmListName} listIndex={listIndex} />
-            </SliderProductItemInStyled>
-        </SliderProductItemStyled>
+            </div>
+        </div>
     );
 };

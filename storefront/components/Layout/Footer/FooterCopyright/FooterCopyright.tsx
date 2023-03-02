@@ -1,7 +1,5 @@
-import { FooterCopyrightLogoStyled, FooterCopyrightStyled, FooterCopyrightTextStyled } from './FooterCopyright.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Image from 'next/image';
-import { FC } from 'react';
 
 const TEST_IDENTIFIER = 'layout-footer-footercopyright';
 
@@ -9,16 +7,16 @@ export const FooterCopyright: FC = () => {
     const t = useTypedTranslationFunction();
 
     return (
-        <FooterCopyrightStyled data-testid={TEST_IDENTIFIER}>
-            <FooterCopyrightTextStyled>
+        <div className="flex flex-col items-center text-center" data-testid={TEST_IDENTIFIER}>
+            <div className="flex items-center text-sm text-greyLight">
                 {t('Copyright © 2021, Shopsys s.r.o. All rights reserved.')}
-            </FooterCopyrightTextStyled>
-            <FooterCopyrightTextStyled>
+            </div>
+            <div className="flex items-center text-sm text-greyLight">
                 {t('Customized E-shop by')}
-                <FooterCopyrightLogoStyled href="https://www.shopsys.com" target="_blank">
+                <a className="ml-2 flex w-20" href="https://www.shopsys.com" target="_blank" rel="noreferrer">
                     <Image src="/images/logo.svg" width={77} height={18} />
-                </FooterCopyrightLogoStyled>
-            </FooterCopyrightTextStyled>
-        </FooterCopyrightStyled>
+                </a>
+            </div>
+        </div>
     );
 };

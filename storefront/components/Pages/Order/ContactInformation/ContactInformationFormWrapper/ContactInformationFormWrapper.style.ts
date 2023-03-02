@@ -30,7 +30,3 @@ export const ContactInformationFormWrapperStyled = styled.div<ContactInformation
         }
     `,
 );
-
-export const ContactInformationFormWrapperSectionStyled = styled.div`
-    margin-bottom: 40px;
-`;

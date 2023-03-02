@@ -1,8 +1,7 @@
-import { SideContentStyled, SideImageLinkStyled, SideImageStyled, SideItemStyled, SideNameStyled } from './Side.style';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
 import NextLink from 'next/link';
-import { FC, Fragment } from 'react';
+import { Fragment } from 'react';
 import { ListedBlogArticleType } from 'types/blogArticle';
 
 type SideProps = {
@@ -15,29 +14,34 @@ export const Side: FC<SideProps> = ({ blogSideItems }) => {
     return (
         <>
             {blogSideItems.map((blogSideItem, index) => (
-                <SideItemStyled key={index} data-testid={TEST_IDENTIFIER + index}>
-                    <SideImageStyled>
+                <div className="mb-3 flex w-full flex-row" key={index} data-testid={TEST_IDENTIFIER + index}>
+                    <div className="flex w-36">
                         <NextLink href={blogSideItem.link} passHref>
-                            <SideImageLinkStyled>
-                                <Image image={blogSideItem.image} type="listAside" alt="alt" />
-                            </SideImageLinkStyled>
+                            <a className="relative flex w-full">
+                                <Image
+                                    image={blogSideItem.image}
+                                    type="listAside"
+                                    alt="alt"
+                                    className="max-h-20 rounded"
+                                />
+                            </a>
                         </NextLink>
-                    </SideImageStyled>
-                    <SideContentStyled>
+                    </div>
+                    <div className="ml-5 flex-1">
                         {blogSideItem.blogCategories.map((blogPreviewCategory, index) => (
                             <Fragment key={index}>
                                 {blogPreviewCategory.parent !== null && (
-                                    <Flag color="#cdb3ff" href={blogPreviewCategory.link}>
-                                        {blogPreviewCategory.name}
-                                    </Flag>
+                                    <Flag href={blogPreviewCategory.link}>{blogPreviewCategory.name}</Flag>
                                 )}
                             </Fragment>
                         ))}
                         <NextLink href={blogSideItem.link} passHref>
-                            <SideNameStyled>{blogSideItem.name}</SideNameStyled>
+                            <a className="mb-2 block font-bold leading-5 text-creamWhite no-underline hover:text-creamWhite">
+                                {blogSideItem.name}
+                            </a>
                         </NextLink>
-                    </SideContentStyled>
-                </SideItemStyled>
+                    </div>
+                </div>
             ))}
         </>
     );

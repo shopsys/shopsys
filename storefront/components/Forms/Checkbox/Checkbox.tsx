@@ -1,6 +1,5 @@
-import { CheckboxStyled } from './Checkbox.style';
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper/LabelWrapper';
-import { FC, forwardRef, InputHTMLAttributes, ReactNode } from 'react';
+import { forwardRef, InputHTMLAttributes, ReactNode } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<
@@ -17,31 +16,23 @@ export type CheckboxProps = NativeProps & {
 };
 
 export const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, CheckboxProps>(
-    ({ id, name, label, count, required, disabled, onChange, value, testIdentifier }, checkboxForwardedRef) => {
-        return (
-            <LabelWrapper
-                label={label}
-                count={count}
+    ({ id, name, label, count, required, disabled, onChange, value, testIdentifier }, checkboxForwardedRef) => (
+        <LabelWrapper label={label} count={count} required={required} htmlFor={id} checked={value} inputType="checkbox">
+            <input
+                className="sr-only"
+                id={id}
+                disabled={disabled}
                 required={required}
-                htmlFor={id}
+                name={name}
+                onChange={onChange}
+                type="checkbox"
                 checked={value}
-                inputType="checkbox"
-            >
-                <CheckboxStyled
-                    id={id}
-                    disabled={disabled}
-                    required={required}
-                    name={name}
-                    onChange={onChange}
-                    type="checkbox"
-                    checked={value}
-                    value={value as any}
-                    ref={checkboxForwardedRef}
-                    data-testid={testIdentifier}
-                />
-            </LabelWrapper>
-        );
-    },
+                value={value as any}
+                ref={checkboxForwardedRef}
+                data-testid={testIdentifier}
+            />
+        </LabelWrapper>
+    ),
 );
 
 Checkbox.displayName = 'Checkbox';

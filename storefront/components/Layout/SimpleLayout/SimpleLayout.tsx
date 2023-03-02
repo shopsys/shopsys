@@ -1,8 +1,6 @@
-import { HeadingWrapperStyled, SimpleLayoutContentStyled, SimpleLayoutStyled } from './SimpleLayout.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { FC } from 'react';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 
 type SimpleLayoutProps = {
@@ -14,16 +12,18 @@ type SimpleLayoutProps = {
 export const SimpleLayout: FC<SimpleLayoutProps> = ({ breadcrumb, heading, children, standardWidth }) => (
     <>
         <Webline>
-            <HeadingWrapperStyled>
+            <div className="text-center">
                 <Heading type="h1">{heading}</Heading>
-            </HeadingWrapperStyled>
+            </div>
             <Breadcrumbs key="breadcrumb" breadcrumb={breadcrumb} />
         </Webline>
         <Webline>
             {standardWidth !== true && (
-                <SimpleLayoutStyled>
-                    <SimpleLayoutContentStyled>{children}</SimpleLayoutContentStyled>
-                </SimpleLayoutStyled>
+                <div className="mr-24 flex w-full justify-center">
+                    <div className="mt-7 w-full rounded-2xl border-2 border-greyLighter px-2 pt-5 pb-4 lg:w-[690px] lg:px-14 lg:pt-10 lg:pb-8">
+                        {children}
+                    </div>
+                </div>
             )}
             {standardWidth === true && <>{children}</>}
         </Webline>

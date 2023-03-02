@@ -1,6 +1,5 @@
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
-import { FC } from 'react';
 
 export const CategoryDetailContentMessage: FC = () => {
     const t = useTypedTranslationFunction();

@@ -1,5 +1,4 @@
 import { ButtonStyled } from 'components/Forms/Button/Button.style';
-import { FC } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type ErrorPageProps = { isWithoutImage?: boolean };

@@ -2,9 +2,8 @@ import { StoreSelect } from './StoreSelect';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
-import { PopupStyled } from 'components/Layout/Popup/Popup.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { TransportType } from 'types/transport';
 
@@ -39,7 +38,6 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = (props) => {
         <Popup
             isVisible={props.isVisible}
             onCloseCallback={onClosePickupPlacePopupHandler}
-            wrapperComponent={PopupStyled}
             className="w-11/12 max-w-4xl"
         >
             <Heading type="h2">{t('Choose the store where you are going to pick up your order')}</Heading>

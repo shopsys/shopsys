@@ -16,7 +16,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { useRouter } from 'next/router';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { SearchType } from 'types/search';

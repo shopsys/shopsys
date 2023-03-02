@@ -1,13 +1,3 @@
-import {
-    MenuIconicButtonMobileLinkStyled,
-    MenuIconicButtonMobileStyled,
-    MenuIconicItemLinkStyled,
-    MenuIconicItemStyled,
-    MenuIconicListStyled,
-    MenuIconicSubItemLinkStyled,
-    MenuIconicSubItemStyled,
-    MenuIconicSubStyled,
-} from './MenuIconic.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { IconName } from 'components/Basic/Icon/IconsSvgMap';
@@ -19,8 +9,9 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import NextLink from 'next/link';
 import nookies from 'nookies';
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
+import { twMergeCustom } from 'utils/twMerge';
 
 const TEST_IDENTIFIER = 'layout-header-menuiconic';
 
@@ -56,74 +47,77 @@ export const MenuIconic: FC = () => {
 
     return (
         <>
-            <MenuIconicListStyled data-testid={TEST_IDENTIFIER}>
-                <MenuIconicItemStyled data-testid={TEST_IDENTIFIER + '-0'}>
+            <ul className="hidden lg:flex" data-testid={TEST_IDENTIFIER}>
+                <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-0'}>
                     <NextLink href="/" passHref>
-                        <MenuIconicItemLinkStyled>
+                        <MenuIconicItemLink>
                             <MenuIconicItemIcon icon="Chat" />
                             {t('Customer service')}
-                        </MenuIconicItemLinkStyled>
+                        </MenuIconicItemLink>
                     </NextLink>
-                </MenuIconicItemStyled>
-                <MenuIconicItemStyled data-testid={TEST_IDENTIFIER + '-1'}>
+                </MenuIconicItem>
+                <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-1'}>
                     <NextLink href={storesUrl} passHref>
-                        <MenuIconicItemLinkStyled>
+                        <MenuIconicItemLink>
                             <MenuIconicItemIcon icon="Marker" />
                             {t('Stores')}
-                        </MenuIconicItemLinkStyled>
+                        </MenuIconicItemLink>
                     </NextLink>
-                </MenuIconicItemStyled>
-                <MenuIconicItemStyled data-testid={TEST_IDENTIFIER + '-2'}>
+                </MenuIconicItem>
+                <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-2'}>
                     {isUserLoggedIn ? (
-                        <MenuIconicItemLinkStyled hasSubmenu>
-                            <MenuIconicItemIcon icon="User" />
+                        <MenuIconicItemLink className="group rounded-t-xl px-3 hover:bg-white hover:text-dark">
+                            <MenuIconicItemIcon icon="User" className="group-hover:text-dark" />
                             {t('My account')}
-                            <MenuIconicSubStyled>
-                                <MenuIconicSubItemStyled data-testid={TEST_IDENTIFIER + '-sub-0'}>
+                            <ul className="pointer-events-none absolute top-full right-0 z-cart block min-w-[150px] origin-top-right scale-50 rounded-xl rounded-tr-none bg-white opacity-0 shadow-lg transition-all group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100">
+                                <li className="block" data-testid={TEST_IDENTIFIER + '-sub-0'}>
                                     <NextLink href={customerOrdersUrl} passHref>
-                                        <MenuIconicSubItemLinkStyled>{t('My orders')}</MenuIconicSubItemLinkStyled>
+                                        <MenuIconicSubItemLink>{t('My orders')}</MenuIconicSubItemLink>
                                     </NextLink>
-                                </MenuIconicSubItemStyled>
-                                <MenuIconicSubItemStyled>
+                                </li>
+                                <li className="block border-t border-border">
                                     <NextLink
                                         href={customerEditProfileUrl}
                                         passHref
                                         data-testid={TEST_IDENTIFIER + '-sub-1'}
                                     >
-                                        <MenuIconicSubItemLinkStyled>{t('Edit profile')}</MenuIconicSubItemLinkStyled>
+                                        <MenuIconicSubItemLink>{t('Edit profile')}</MenuIconicSubItemLink>
                                     </NextLink>
-                                </MenuIconicSubItemStyled>
-                                <MenuIconicSubItemStyled>
-                                    <MenuIconicSubItemLinkStyled
+                                </li>
+                                <li className="block border-t border-border">
+                                    <MenuIconicSubItemLink
                                         onClick={logoutHandler}
-                                        data-testid={TEST_IDENTIFIER + '-sub-2'}
+                                        dataTestId={TEST_IDENTIFIER + '-sub-2'}
                                     >
                                         {t('Logout')}
-                                    </MenuIconicSubItemLinkStyled>
-                                </MenuIconicSubItemStyled>
-                            </MenuIconicSubStyled>
-                        </MenuIconicItemLinkStyled>
+                                    </MenuIconicSubItemLink>
+                                </li>
+                            </ul>
+                        </MenuIconicItemLink>
                     ) : (
-                        <MenuIconicItemLinkStyled onClick={loginHandler}>
+                        <MenuIconicItemLink onClick={loginHandler}>
                             <MenuIconicItemIcon icon="User" />
                             {t('Login')}
-                        </MenuIconicItemLinkStyled>
+                        </MenuIconicItemLink>
                     )}
-                </MenuIconicItemStyled>
-            </MenuIconicListStyled>
-            <MenuIconicButtonMobileStyled>
+                </MenuIconicItem>
+            </ul>
+            <div className="order-2 ml-1 flex h-10 w-10 cursor-pointer items-center justify-center text-lg outline-none lg:hidden ">
                 {isUserLoggedIn ? (
                     <NextLink href={customerUrl} passHref>
-                        <MenuIconicButtonMobileLinkStyled>
+                        <div className="relative flex h-full w-full items-center justify-center text-white transition-colors">
                             <MenuIconicItemIcon icon="User" />
-                        </MenuIconicButtonMobileLinkStyled>
+                        </div>
                     </NextLink>
                 ) : (
-                    <MenuIconicButtonMobileLinkStyled onClick={loginHandler}>
+                    <div
+                        className="relative flex h-full w-full items-center justify-center text-white transition-colors"
+                        onClick={loginHandler}
+                    >
                         <MenuIconicItemIcon icon="User" />
-                    </MenuIconicButtonMobileLinkStyled>
+                    </div>
                 )}
-            </MenuIconicButtonMobileStyled>
+            </div>
             <Popup isVisible={isLoginPopupOpened} onCloseCallback={onCloseLoginPopupHandler}>
                 <Heading type="h2">{t('Login')}</Heading>
                 <Login />
@@ -132,6 +126,30 @@ export const MenuIconic: FC = () => {
     );
 };
 
-const MenuIconicItemIcon: FC<{ icon: IconName }> = ({ icon }) => (
-    <Icon iconType="icon" icon={icon} width={18} height={18} className="mr-3 text-white" />
+const MenuIconicItemIcon: FC<{ icon: IconName }> = ({ icon, className }) => (
+    <Icon iconType="icon" icon={icon} width={18} height={18} className={twMergeCustom('mr-3 text-white', className)} />
+);
+
+const MenuIconicItem: FC = ({ children, dataTestId }) => (
+    <li className="relative mr-5 flex last:mr-0 xl:mr-8" data-testid={dataTestId}>
+        {children}
+    </li>
+);
+
+const MenuIconicSubItemLink: FC<{ onClick?: () => void }> = ({ children, onClick, dataTestId }) => (
+    <a className="block py-3 px-5 text-sm text-dark no-underline" data-testid={dataTestId} onClick={onClick}>
+        {children}
+    </a>
+);
+
+const MenuIconicItemLink: FC<{ onClick?: () => void }> = ({ children, className, onClick }) => (
+    <a
+        className={twMergeCustom(
+            'flex items-center justify-center rounded-tr-none text-sm text-white no-underline transition-colors hover:text-white hover:no-underline',
+            className,
+        )}
+        onClick={onClick}
+    >
+        {children}
+    </a>
 );

@@ -1,10 +1,9 @@
-import { BlogSignpostItemStyled, BlogSignpostStyled } from './BlogSignpost.style';
 import { BlogSignpostIcon } from './BlogSignpostIcon';
+import { BlogSignpostItem } from './BlogSignpostItem';
 import { Children } from './Children';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import NextLink from 'next/link';
-import { FC, Fragment } from 'react';
+import { Fragment } from 'react';
 import { ListedBlogCategoryType } from 'types/blogCategory';
 
 type BlogSingpostProps = {
@@ -18,7 +17,7 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
     const t = useTypedTranslationFunction();
 
     return (
-        <BlogSignpostStyled>
+        <div className="flex flex-col rounded-xl bg-primary p-7">
             <Heading type="h2">{t('Article categories')}</Heading>
             {blogCategoryItems !== undefined &&
                 blogCategoryItems.map((blogCategory, index) => {
@@ -26,18 +25,20 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
 
                     return (
                         <Fragment key={blogCategory.uuid}>
-                            <NextLink href={blogCategory.link} passHref>
-                                <BlogSignpostItemStyled isActive={isActive} data-testid={TEST_IDENTIFIER + index}>
-                                    <BlogSignpostIcon isActive={isActive} />
-                                    {blogCategory.name}
-                                </BlogSignpostItemStyled>
-                            </NextLink>
+                            <BlogSignpostItem
+                                isActive={isActive}
+                                dataTestId={TEST_IDENTIFIER + index}
+                                href={blogCategory.link}
+                            >
+                                <BlogSignpostIcon isActive={isActive} />
+                                {blogCategory.name}
+                            </BlogSignpostItem>
                             {blogCategory.children !== undefined && blogCategory.children.length > 0 && (
                                 <Children blogCategory={blogCategory} activeItem={activeItem} itemLevel={1} />
                             )}
                         </Fragment>
                     );
                 })}
-        </BlogSignpostStyled>
+        </div>
     );
 };

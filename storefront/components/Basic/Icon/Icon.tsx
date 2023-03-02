@@ -1,9 +1,9 @@
 import { IconName } from './IconsSvgMap';
 import { IconSvg } from './IconSvg';
-import { FC, HTMLAttributes } from 'react';
+import { HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
-type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLElement>, never, 'onClick' | 'className' | 'title'>;
+type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLElement>, never, 'onClick' | 'title'>;
 
 type IconBaseProps = {
     width?: number;

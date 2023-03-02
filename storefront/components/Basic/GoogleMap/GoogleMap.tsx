@@ -2,7 +2,7 @@ import { Icon } from '../Icon/Icon';
 import { GoogleMapMarker } from './GoogleMapMarker';
 import GoogleMapReact from 'google-map-react';
 import getConfig from 'next/config';
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { twJoin } from 'tailwind-merge';
 

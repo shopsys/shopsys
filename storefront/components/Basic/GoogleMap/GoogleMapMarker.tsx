@@ -1,5 +1,4 @@
 import { Icon } from '../Icon/Icon';
-import { FC } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 interface GoogleMapMarkerProps {

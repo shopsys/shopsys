@@ -1,5 +1,4 @@
 import { Icon } from 'components/Basic/Icon/Icon';
-import { FC } from 'react';
 
 type HamburgerIconProps = {
     isMenuOpened: boolean;

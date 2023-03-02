@@ -1,13 +1,13 @@
 import { ButtonAsLinkStyled, ButtonStyled } from './Button.style';
 import { ButtonDefaultPropType } from './propTypes';
-import { ButtonHTMLAttributes, FC } from 'react';
+import { ButtonHTMLAttributes } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<
     ButtonHTMLAttributes<HTMLButtonElement>,
     'type',
-    'onClick' | 'style' | 'name' | 'className'
+    'onClick' | 'style' | 'name'
 >;
 
 type ButtonProps = NativeProps &

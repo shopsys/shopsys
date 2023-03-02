@@ -8,7 +8,7 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServe
 import { createClient } from 'helpers/urql/createClient';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC, useMemo } from 'react';
+import { useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import { ssrExchange } from 'urql';
 

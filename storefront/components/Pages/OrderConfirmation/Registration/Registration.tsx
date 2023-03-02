@@ -17,7 +17,6 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import Trans from 'next-translate/Trans';
-import { FC } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysDispatch } from 'redux/main';
 import { userActions } from 'redux/slices/user';

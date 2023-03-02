@@ -1,8 +1,7 @@
 import NextLink from 'next/link';
-import { FC } from 'react';
 import { twJoin } from 'tailwind-merge';
 
-type AdvancedSeoCategoriesItemProps = { slug: string; className?: string };
+type AdvancedSeoCategoriesItemProps = { slug: string };
 
 export const AdvancedSeoCategoriesItem: FC<AdvancedSeoCategoriesItemProps> = ({ children, slug, className }) => (
     <NextLink href={slug} passHref>

@@ -1,12 +1,4 @@
-import { Autocomplete } from './Autocomplete/Autocomplete';
-import {
-    AutocompleteSearchInnerStyled,
-    AutocompleteSearchInStyled,
-    AutocompleteSearchRemoveButtonImageStyled,
-    AutocompleteSearchRemoveButtonStyled,
-    AutocompleteSearchRemoveButtonTextStyled,
-    AutocompleteSearchStyled,
-} from './AutocompleteSearch.style';
+import { Autocomplete } from './Autocomplete';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
@@ -19,8 +11,9 @@ import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { useRouter } from 'next/router';
-import { ChangeEventHandler, FC, useCallback, useMemo, useRef, useState } from 'react';
+import { ChangeEventHandler, useCallback, useMemo, useRef, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
+import { twJoin } from 'tailwind-merge';
 
 const TEST_IDENTIFIER = 'layout-header-search-autocomplete-input';
 
@@ -85,10 +78,27 @@ export const AutocompleteSearch: FC = () => {
 
     return (
         <>
-            <AutocompleteSearchStyled>
-                <AutocompleteSearchInStyled ref={autocompleteSearchInRef}>
-                    <AutocompleteSearchInnerStyled isActive={hasAutocompleteSearchFocus}>
+            <div className="h-12 lg:relative">
+                <div
+                    className={twJoin(
+                        'transition lg:absolute lg:left-0 lg:top-0 lg:z-[1] lg:max-h-[50px] lg:w-full',
+                        hasAutocompleteSearchFocus && 'lg:max-h-auto',
+                    )}
+                    ref={autocompleteSearchInRef}
+                >
+                    <div
+                        className={twJoin(
+                            'relative flex w-full transition-all lg:focus-within:w-[576px]',
+                            hasAutocompleteSearchFocus && 'z-[1021] lg:w-[576px]',
+                        )}
+                    >
                         <SearchInput
+                            className={twJoin(
+                                'border-2',
+                                hasAutocompleteSearchFocus
+                                    ? 'max-vl:w-full max-vl:!border-primaryLight'
+                                    : 'border-white',
+                            )}
                             label={t("Type what you're looking for")}
                             testIdentifier={TEST_IDENTIFIER}
                             onEnterPressCallback={onAutocompleteSearchHandler}
@@ -97,22 +107,23 @@ export const AutocompleteSearch: FC = () => {
                             isLoading={areSearchResultsLoading}
                         />
                         {hasAutocompleteSearchFocus && autocompleteSearchQueryValue.length > 0 && (
-                            <AutocompleteSearchRemoveButtonStyled onClick={() => setAutocompleteSearchQueryValue('')}>
+                            <div
+                                className="absolute -top-8 right-0 flex h-10 w-16 min-w-[72px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-xl bg-orangeLight px-2 transition lg:right-11 lg:top-1/2 lg:h-5 lg:w-5 lg:min-w-fit lg:rounded-full lg:bg-greyLighter lg:px-0"
+                                onClick={() => setAutocompleteSearchQueryValue('')}
+                            >
                                 {isDesktop ? (
                                     <Icon iconType="icon" icon="Close" />
                                 ) : (
                                     <>
-                                        <AutocompleteSearchRemoveButtonImageStyled>
+                                        <div className="flex w-4 items-center justify-center">
                                             <Icon iconType="icon" icon="Close" />
-                                        </AutocompleteSearchRemoveButtonImageStyled>
-                                        <AutocompleteSearchRemoveButtonTextStyled>
-                                            {t('Close')}
-                                        </AutocompleteSearchRemoveButtonTextStyled>
+                                        </div>
+                                        <span className="ml-1 w-7 text-xs">{t('Close')}</span>
                                     </>
                                 )}
-                            </AutocompleteSearchRemoveButtonStyled>
+                            </div>
                         )}
-                    </AutocompleteSearchInnerStyled>
+                    </div>
                     <Autocomplete
                         autocompleteSearchResults={autocompleteSearchResults}
                         isAutocompleteActive={
@@ -122,8 +133,8 @@ export const AutocompleteSearch: FC = () => {
                         }
                         autocompleteSearchQueryValue={autocompleteSearchQueryValue}
                     />
-                </AutocompleteSearchInStyled>
-            </AutocompleteSearchStyled>
+                </div>
+            </div>
         </>
     );
 };

@@ -1,7 +1,7 @@
 import {
     AUTOCOMPLETE_CATEGORY_LIMIT,
     AUTOCOMPLETE_PRODUCT_LIMIT,
-} from 'components/Layout/Header/AutocompleteSearch/Autocomplete/Autocomplete';
+} from 'components/Layout/Header/AutocompleteSearch/Autocomplete';
 import { mapSimpleArticlesInterface } from 'connectors/articleInterface/ArticleInterface';
 import { mapSimpleCategoryConnectionApiData } from 'connectors/categories/Categories';
 import { mapListedProductConnectionType } from 'connectors/products/Products';

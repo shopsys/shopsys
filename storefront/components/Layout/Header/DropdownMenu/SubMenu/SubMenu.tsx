@@ -1,10 +1,8 @@
-import { SubMenuItemStyled, SubMenuStyled } from './SubMenu.style';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import NextLink from 'next/link';
-import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
 
 const TEST_IDENTIFIER = 'layout-header-dropdownmenu-submenu';
@@ -17,21 +15,27 @@ export const SubMenu: FC = () => {
     const { logout } = useAuth();
 
     return (
-        <SubMenuStyled data-testid={TEST_IDENTIFIER}>
+        <div className="mt-5 flex flex-col" data-testid={TEST_IDENTIFIER}>
             <NextLink href="/" passHref>
-                <SubMenuItemStyled data-testid={TEST_IDENTIFIER + '-0'}>{t('Customer service')}</SubMenuItemStyled>
+                <SubMenuItem dataTestId={TEST_IDENTIFIER + '-0'}>{t('Customer service')}</SubMenuItem>
             </NextLink>
             <NextLink href={storesUrl} passHref>
-                <SubMenuItemStyled data-testid={TEST_IDENTIFIER + '-1'}>{t('Stores')}</SubMenuItemStyled>
+                <SubMenuItem dataTestId={TEST_IDENTIFIER + '-1'}>{t('Stores')}</SubMenuItem>
             </NextLink>
 
             {isUserLoggedIn ? (
-                <SubMenuItemStyled onClick={logout}>{t('Logout')}</SubMenuItemStyled>
+                <SubMenuItem onClick={logout}>{t('Logout')}</SubMenuItem>
             ) : (
                 <NextLink href={loginUrl} passHref>
-                    <SubMenuItemStyled data-testid={TEST_IDENTIFIER + '-2'}>{t('Sign in')}</SubMenuItemStyled>
+                    <SubMenuItem dataTestId={TEST_IDENTIFIER + '-2'}>{t('Sign in')}</SubMenuItem>
                 </NextLink>
             )}
-        </SubMenuStyled>
+        </div>
     );
 };
+
+const SubMenuItem: FC<{ onClick?: () => void }> = ({ children, dataTestId, onClick }) => (
+    <a className="mb-5 px-8 text-sm text-dark no-underline" onClick={onClick} data-testid={dataTestId}>
+        {children}
+    </a>
+);

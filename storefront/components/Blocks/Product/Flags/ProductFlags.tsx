@@ -1,5 +1,5 @@
-import { ProductFlagsItemStyled } from './ProductFlags.style';
-import { FC } from 'react';
+import { twJoin } from 'tailwind-merge';
+import tinycolor from 'tinycolor2';
 import { SimpleFlagType } from 'types/flag';
 
 type ProductFlagsProps = { flags: SimpleFlagType[] };
@@ -14,9 +14,17 @@ export const ProductFlags: FC<ProductFlagsProps> = ({ flags }) => {
     return (
         <>
             {flags.map(({ name, rgbColor }, key) => (
-                <ProductFlagsItemStyled key={key} color={rgbColor} data-testid={TEST_IDENTIFIER + key}>
+                <div
+                    className={twJoin(
+                        'mb-1 mr-auto inline-flex rounded-sm py-1 px-2 text-xs uppercase text-black',
+                        tinycolor(rgbColor).isDark() && 'text-whitesmoke',
+                    )}
+                    style={{ backgroundColor: rgbColor || '#cdb3ff' }}
+                    key={key}
+                    data-testid={TEST_IDENTIFIER + key}
+                >
                     {name}
-                </ProductFlagsItemStyled>
+                </div>
             ))}
         </>
     );

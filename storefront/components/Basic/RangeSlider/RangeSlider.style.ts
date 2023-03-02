@@ -16,46 +16,6 @@ type RangeSliderThumbStyledProps = HTMLAttributes<HTMLInputElement> & {
     active: boolean;
 };
 
-export const RangeSliderContainerStyled = styled.div`
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 50px;
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 40px;
-    margin-top: -20px;
-`;
-
-export const RangeSliderStyled = styled.div`
-    position: relative;
-    width: 100%;
-`;
-
-export const RangeSliderTrackStyled = styled.div(
-    ({ theme }) => css`
-        position: absolute;
-        height: 5px;
-        width: 100%;
-        z-index: ${theme.zIndex.above};
-
-        background-color: ${localVariables.RangeSliderTrackBackground};
-        border-radius: 3px;
-    `,
-);
-
-export const RangeSliderRangeStyled = styled.div(
-    ({ theme }) => css`
-        position: absolute;
-        height: 5px;
-        z-index: calc(${theme.zIndex.above} + 1);
-
-        border-radius: 3px;
-        background-color: ${localVariables.RangeSliderRangeBackground};
-    `,
-);
-
 export const RangeSliderThumbStyled = styled.input<RangeSliderThumbStyledProps>(
     ({ active, theme }) => css`
         -webkit-appearance: none;
@@ -120,29 +80,5 @@ export const RangeSliderThumbStyled = styled.input<RangeSliderThumbStyledProps>(
         &::-ms-fill-upper {
             pointer-events: none;
         }
-    `,
-);
-
-export const RangeSliderLeftValueStyled = styled.div(
-    ({ theme }) => css`
-        position: absolute;
-        margin-top: 20px;
-        left: -8px;
-        width: 80px;
-
-        color: ${theme.color.black};
-        font-size: 12px;
-    `,
-);
-
-export const RangeSliderRightValueStyled = styled.div(
-    ({ theme }) => css`
-        position: absolute;
-        margin-top: 20px;
-        right: -8px;
-        width: 80px;
-
-        color: ${theme.color.black};
-        font-size: 12px;
     `,
 );

@@ -1,7 +1,6 @@
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
-import { FC } from 'react';
 import { ListedProductType } from 'types/product';
 
 type ResultProductsProps = {

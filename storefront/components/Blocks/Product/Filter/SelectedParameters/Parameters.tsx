@@ -1,13 +1,9 @@
+import { SelectedParametersList, SelectedParametersListItem, SelectedParametersName } from '../FilterElements';
 import { SelectedParametersIcon } from './SelectedParametersIcon';
 import { useCheckedParameters, useFilterState } from 'components/Blocks/Product/Filter/FilterContext/useFilterState';
 import { getIndexOfParameter } from 'components/Blocks/Product/Filter/helpers/getIndexOfParameter';
-import {
-    SelectedParametersListItemStyled,
-    SelectedParametersListStyled,
-    SelectedParametersNameStyled,
-} from 'components/Blocks/Product/Filter/SelectedParameters/SelectedParameters.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC, Fragment, useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 import { FilterFormParameterType } from 'types/productFilter';
 
 const TEST_IDENTIFIER = 'blocks-product-filter-selectedparameters-parameters-';
@@ -39,11 +35,9 @@ export const Parameters: FC = () => {
                 <Fragment key={filteredParameter.parameterUuid}>
                     {(isMinMaxValueVisible(filteredParameter, 'minimalValue') ||
                         isMinMaxValueVisible(filteredParameter, 'maximalValue')) && (
-                        <SelectedParametersListStyled>
-                            <SelectedParametersNameStyled>
-                                {filteredParameter.parameterName}:
-                            </SelectedParametersNameStyled>
-                            <SelectedParametersListItemStyled>
+                        <SelectedParametersList>
+                            <SelectedParametersName>{filteredParameter.parameterName}:</SelectedParametersName>
+                            <SelectedParametersListItem>
                                 {isMinMaxValueVisible(filteredParameter, 'minimalValue') && (
                                     <>
                                         <span>{t('from')}&nbsp;</span>
@@ -71,20 +65,18 @@ export const Parameters: FC = () => {
                                         })
                                     }
                                 />
-                            </SelectedParametersListItemStyled>
-                        </SelectedParametersListStyled>
+                            </SelectedParametersListItem>
+                        </SelectedParametersList>
                     )}
                     {filteredParameter.values.length > 0 && (
-                        <SelectedParametersListStyled>
-                            <SelectedParametersNameStyled>
-                                {filteredParameter.parameterName}:
-                            </SelectedParametersNameStyled>
+                        <SelectedParametersList>
+                            <SelectedParametersName>{filteredParameter.parameterName}:</SelectedParametersName>
                             {filteredParameter.values.map(
                                 (value, index) =>
                                     value.checked && (
-                                        <SelectedParametersListItemStyled
+                                        <SelectedParametersListItem
                                             key={value.uuid}
-                                            data-testid={TEST_IDENTIFIER + index}
+                                            dataTestId={TEST_IDENTIFIER + index}
                                         >
                                             {value.text}
                                             <SelectedParametersIcon
@@ -99,10 +91,10 @@ export const Parameters: FC = () => {
                                                 }
                                                 dataTestId={TEST_IDENTIFIER + 'remove-' + index}
                                             />
-                                        </SelectedParametersListItemStyled>
+                                        </SelectedParametersListItem>
                                     ),
                             )}
-                        </SelectedParametersListStyled>
+                        </SelectedParametersList>
                     )}
                 </Fragment>
             ))}

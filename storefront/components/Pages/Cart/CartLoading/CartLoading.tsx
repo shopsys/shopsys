@@ -1,6 +1,5 @@
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { FC } from 'react';
 
 const TEST_IDENTIFIER = 'blocks-cartloading';
 

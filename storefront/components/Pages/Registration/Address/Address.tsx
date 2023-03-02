@@ -7,7 +7,7 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { useRegistrationFormMeta } from 'components/Pages/Registration/formMeta';
 import { useCountriesAsSelectOptions } from 'connectors/country/Country';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { RegistrationFormType } from 'types/form';
 

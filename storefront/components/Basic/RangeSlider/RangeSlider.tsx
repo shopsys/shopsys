@@ -1,12 +1,4 @@
-import {
-    RangeSliderContainerStyled,
-    RangeSliderLeftValueStyled,
-    RangeSliderRangeStyled,
-    RangeSliderRightValueStyled,
-    RangeSliderStyled,
-    RangeSliderThumbStyled,
-    RangeSliderTrackStyled,
-} from './RangeSlider.style';
+import { RangeSliderThumbStyled } from './RangeSlider.style';
 import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import {
@@ -198,7 +190,10 @@ export const RangeSlider: FC<RangeSliderProps> = ({
     }, [getPercent, maxValueThumb, minValueThumb]);
 
     return (
-        <RangeSliderContainerStyled data-testid={TEST_IDENTIFIER}>
+        <div
+            className="relative mb-10 -mt-5 flex h-12 w-full items-center justify-center p-2"
+            data-testid={TEST_IDENTIFIER}
+        >
             <RangeSliderThumbStyled
                 active={minValueThumb !== min}
                 type="range"
@@ -219,10 +214,13 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                 onChange={onChangeMaxHandler}
                 data-testid={TEST_IDENTIFIER + '-right-thumb'}
             />
-            <RangeSliderStyled>
-                <RangeSliderTrackStyled />
-                <RangeSliderRangeStyled ref={range} />
-                <RangeSliderLeftValueStyled data-testid={TEST_IDENTIFIER + '-left-value'}>
+            <div className="relative w-full">
+                <div className="absolute z-above h-1 w-full rounded bg-greyLighter" />
+                <div className="absolute z-[2] h-1 rounded bg-primary" ref={range} />
+                <div
+                    className="absolute -left-2 mt-5 w-20 text-xs text-black"
+                    data-testid={TEST_IDENTIFIER + '-left-value'}
+                >
                     <TextInput
                         id={TEST_IDENTIFIER + '-left-value'}
                         label={t('from')}
@@ -233,8 +231,11 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                         onBlur={onBlurMinHandler}
                         onKeyPress={onKeyPressHandler}
                     />
-                </RangeSliderLeftValueStyled>
-                <RangeSliderRightValueStyled data-testid={TEST_IDENTIFIER + '-right-value'}>
+                </div>
+                <div
+                    className="absolute -right-2 mt-5 w-20 text-xs text-dark"
+                    data-testid={TEST_IDENTIFIER + '-right-value'}
+                >
                     <TextInput
                         id={TEST_IDENTIFIER + '-right-value'}
                         label={t('to')}
@@ -245,8 +246,8 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                         onBlur={onBlurMaxHandler}
                         onKeyPress={onKeyPressHandler}
                     />
-                </RangeSliderRightValueStyled>
-            </RangeSliderStyled>
-        </RangeSliderContainerStyled>
+                </div>
+            </div>
+        </div>
     );
 };

@@ -1,22 +1,12 @@
-import {
-    ProductItemFlagsStyled,
-    ProductItemImageStyled,
-    ProductItemInfoStyled,
-    ProductItemInStyled,
-    ProductItemLinkStyled,
-    ProductItemStyled,
-    ProductItemTitleStyled,
-} from './ProductItem.style';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductAction } from 'components/Blocks/Product/Action/ProductAction';
-import { ProductAvailabilityStyled } from 'components/Blocks/Product/Availability/ProductAvailability.style';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/Availability/ProductAvailableStoresCount';
 import { ProductExposedStoresCount } from 'components/Blocks/Product/Availability/ProductExposedStoresCount';
 import { ProductFlags } from 'components/Blocks/Product/Flags/ProductFlags';
 import { ProductPrice } from 'components/Blocks/Product/Price/ProductPrice';
 import { onClickProductDetailGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import NextLink from 'next/link';
-import { FC, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { GtmListNameType } from 'types/gtm';
 import { ListedProductType } from 'types/product';
@@ -40,22 +30,33 @@ export const ProductItem: FC<ProductItemProps> = ({ product, listIndex, gtmListN
     );
 
     return (
-        <ProductItemStyled data-testid={getTestIdentifier(product.catalogNumber)}>
-            <ProductItemInStyled>
+        <div
+            className="border-greyLighter pl-2 pt-6 vl:border-t"
+            data-testid={getTestIdentifier(product.catalogNumber)}
+        >
+            <div className="relative flex h-full flex-col rounded-xl text-left lg:hover:z-above lg:hover:bg-white lg:hover:shadow-xl">
                 <NextLink href={product.slug} passHref>
-                    <ProductItemLinkStyled
+                    <a
+                        className="relative flex h-full flex-col no-underline hover:no-underline"
                         onClick={() => onProductDetailRedirectHandler(product, gtmListName, listIndex)}
                     >
-                        <ProductItemImageStyled>
-                            <Image image={product.image} type="list" alt={product.fullName} />
-                            <ProductItemFlagsStyled>
+                        <div className="relative flex h-[185px] w-full items-center justify-center px-3 pt-4 pb-3">
+                            <Image
+                                image={product.image}
+                                type="list"
+                                alt={product.fullName}
+                                className="max-h-full lg:hover:mix-blend-multiply"
+                            />
+                            <div className="absolute top-3 left-4 flex flex-col">
                                 <ProductFlags flags={product.flags} />
-                            </ProductItemFlagsStyled>
-                        </ProductItemImageStyled>
-                        <ProductItemInfoStyled>
-                            <ProductItemTitleStyled>{product.fullName}</ProductItemTitleStyled>
+                            </div>
+                        </div>
+                        <div className="mt-auto flex-1 px-3 pb-5">
+                            <h3 className="mb-1 block h-10 overflow-hidden break-words text-lg font-bold leading-5 text-black">
+                                {product.fullName}
+                            </h3>
                             <ProductPrice productPrice={product.price} />
-                            <ProductAvailabilityStyled>
+                            <div className="mb-3 text-sm text-black">
                                 {product.availability.name}
                                 <ProductAvailableStoresCount
                                     isMainVariant={product.isMainVariant}
@@ -65,12 +66,12 @@ export const ProductItem: FC<ProductItemProps> = ({ product, listIndex, gtmListN
                                     isMainVariant={product.isMainVariant}
                                     exposedStoresCount={product.exposedStoresCount}
                                 />
-                            </ProductAvailabilityStyled>
-                        </ProductItemInfoStyled>
-                    </ProductItemLinkStyled>
+                            </div>
+                        </div>
+                    </a>
                 </NextLink>
                 <ProductAction product={product} gtmListName={gtmListName} listIndex={listIndex} />
-            </ProductItemInStyled>
-        </ProductItemStyled>
+            </div>
+        </div>
     );
 };

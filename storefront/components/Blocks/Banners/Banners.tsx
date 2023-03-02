@@ -1,6 +1,5 @@
 import { BannersSlider } from './BannersSlider/BannersSlider';
 import { useSliderItems } from 'connectors/sliderItems/SliderItems';
-import { FC } from 'react';
 
 const TEST_IDENTIFIER = 'blocks-banners';
 

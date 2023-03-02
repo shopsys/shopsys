@@ -1,6 +1,5 @@
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
-import { FC } from 'react';
 import { CartItemType } from 'types/cart';
 
 type CartListItemInfoProps = {

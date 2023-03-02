@@ -1,4 +1,3 @@
-import { SpinboxButtonStyled, SpinboxInputStyled, SpinboxSmallStyled, SpinboxStyled } from './Spinbox.style';
 import { useForwardedRef } from 'hooks/typescript/useForwardedRef';
 import { FormEventHandler, forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 
@@ -84,15 +83,9 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
             }
         };
 
-        let Component = SpinboxStyled;
-
-        if (size === 'small') {
-            Component = SpinboxSmallStyled;
-        }
-
-        return (
-            <Component>
-                <SpinboxButtonStyled
+        const content = (
+            <>
+                <SpinboxButton
                     onClick={() => onChangeValueHandler(-step)}
                     onMouseDown={() => setIsHoldingDecrease(true)}
                     onMouseUp={() => setIsHoldingDecrease(false)}
@@ -100,8 +93,9 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     data-testid={TEST_IDENTIFIER + 'decrease'}
                 >
                     -
-                </SpinboxButtonStyled>
-                <SpinboxInputStyled
+                </SpinboxButton>
+                <input
+                    className="h-full min-w-0 flex-1 border-0 p-0 text-center text-lg font-bold text-dark outline-none"
                     ref={spinboxRef}
                     defaultValue={defaultValue}
                     onInput={onInputHandler}
@@ -110,7 +104,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     max={max}
                     data-testid={TEST_IDENTIFIER + 'input'}
                 />
-                <SpinboxButtonStyled
+                <SpinboxButton
                     onClick={() => onChangeValueHandler(step)}
                     onMouseDown={() => setIsHoldingIncrease(true)}
                     onMouseUp={() => setIsHoldingIncrease(false)}
@@ -118,10 +112,41 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     data-testid={TEST_IDENTIFIER + 'increase'}
                 >
                     +
-                </SpinboxButtonStyled>
-            </Component>
+                </SpinboxButton>
+            </>
+        );
+
+        if (size === 'small') {
+            return (
+                <div className="inline-flex h-8 w-20 overflow-hidden rounded border-2 border-border bg-white [&>button]:translate-y-0 [&>button]:text-xs">
+                    {content}
+                </div>
+            );
+        }
+
+        return (
+            <div className="inline-flex h-12 w-32 overflow-hidden rounded-xl border-2 border-border bg-white">
+                {content}
+            </div>
         );
     },
 );
 
 Spinbox.displayName = 'Spinbox';
+
+type SpinboxButtonProps = {
+    onClick: () => void;
+    onMouseDown: () => void;
+    onMouseUp: () => void;
+    onMouseLeave: () => void;
+};
+
+const SpinboxButton: FC<SpinboxButtonProps> = ({ children, dataTestId, ...props }) => (
+    <button
+        className="flex min-h-0 w-6 cursor-pointer items-center justify-center border-none bg-none p-0 text-2xl text-dark outline-none"
+        data-testid={dataTestId}
+        {...props}
+    >
+        {children}
+    </button>
+);

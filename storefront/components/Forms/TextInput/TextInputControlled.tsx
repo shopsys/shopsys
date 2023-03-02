@@ -1,6 +1,6 @@
 import { FormLineError } from '../Lib/FormLineError/FormLineError';
 import { TextInput, TextInputProps } from './TextInput';
-import { FC, FocusEventHandler, ReactElement, useCallback } from 'react';
+import { FocusEventHandler, ReactElement, useCallback } from 'react';
 import { Control, useController } from 'react-hook-form';
 
 type TextInputControlledProps = {
@@ -12,11 +12,10 @@ type TextInputControlledProps = {
         | 'required'
         | 'onBlur'
         | 'onKeyPress'
-        | 'className'
         | 'type'
         | 'label'
-        | 'testIdentifier'
         | 'inputSize'
+        | 'testIdentifier'
         | 'autoComplete'
     >;
     control: Control<any>;

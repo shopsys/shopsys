@@ -6,7 +6,7 @@ import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePro
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC, useMemo } from 'react';
+import { useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 
 const ResetPasswordPage: FC<ServerSidePropsType> = () => {

@@ -11,7 +11,7 @@ import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
 import { SEARCH_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
-import { FC, useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { twJoin } from 'tailwind-merge';
 import { ListedProductConnectionPreviewType } from 'types/product';

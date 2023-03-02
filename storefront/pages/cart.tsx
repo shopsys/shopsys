@@ -14,7 +14,6 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServe
 import { useGtmCartView } from 'hooks/gtm/useGtmCartView';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 
 const CartPage: FC<ServerSidePropsType> = () => {

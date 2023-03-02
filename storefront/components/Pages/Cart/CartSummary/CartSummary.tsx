@@ -2,7 +2,6 @@ import { FreeTransport } from 'components/Blocks/FreeTransport/FreeTransport';
 import { PromoCode } from 'components/Blocks/PromoCode/PromoCode';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { CartPreview } from 'components/Pages/Cart/CartPreview/CartPreview';
-import { FC } from 'react';
 
 export const CartSummary: FC = () => (
     <Webline>

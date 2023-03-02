@@ -1,6 +1,4 @@
-import { ProductExposedStoreCountStyled } from './ProductExposedStoresCount.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC } from 'react';
 
 type ProductExposedStoresCountProps = {
     isMainVariant: boolean;
@@ -20,8 +18,8 @@ export const ProductExposedStoresCount: FC<ProductExposedStoresCountProps> = ({
     }
 
     return (
-        <ProductExposedStoreCountStyled data-testid={TEST_IDENTIFIER}>
+        <div className="mb-3 text-sm text-black" data-testid={TEST_IDENTIFIER}>
             {t('You can check this item in {{ count }} stores', { count: exposedStoresCount })}
-        </ProductExposedStoreCountStyled>
+        </div>
     );
 };

@@ -10,13 +10,6 @@ import { FilterGroupParameters } from '../FilterGroupParameters/FilterGroupParam
 import { FilterGroupPrice } from '../FilterGroupPrice/FilterGroupPrice';
 import { getIndexOfParameter } from '../helpers/getIndexOfParameter';
 import { SelectedParameters } from '../SelectedParameters/SelectedParameters';
-import {
-    FilterCloseButtonStyled,
-    FilterPanelBodyScrollStyled,
-    FilterPanelFooterStyled,
-    FilterPanelHeaderStyled,
-    FilterPanelStyled,
-} from './FilterPanel.style';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { usePaginationContext } from 'components/Blocks/Pagination/usePaginationContext';
 import { Button } from 'components/Forms/Button/Button';
@@ -163,15 +156,21 @@ export const FilterPanel = memo<FilterPanelProps>(
             state.selected.brands.slice(DEFAULT_NUMBER_OF_SHOWN_BRANDS).some((brand) => brand.checked);
 
         return (
-            <FilterPanelStyled data-testid={TEST_IDENTIFIER}>
-                <FilterPanelHeaderStyled>
+            <div
+                className="z-aboveOverlay flex h-full flex-col bg-blueLight pb-1 vl:z-above vl:h-auto vl:rounded"
+                data-testid={TEST_IDENTIFIER}
+            >
+                <div className="flex items-center justify-between bg-blueLight py-5 text-2xl vl:hidden">
                     {t('Product filter')}
-                    <FilterCloseButtonStyled onClick={panelCloseHandler}>
+                    <span
+                        className="relative inline-flex h-7 w-7 cursor-pointer items-center justify-center rounded-full border border-primary text-primary hover:bg-black hover:text-white"
+                        onClick={panelCloseHandler}
+                    >
                         <Icon iconType="icon" icon="Remove" width={24} height={24} className="text-primary" />
-                    </FilterCloseButtonStyled>
-                </FilterPanelHeaderStyled>
+                    </span>
+                </div>
                 <SelectedParameters />
-                <FilterPanelBodyScrollStyled>
+                <div className="h-full overflow-y-scroll px-5 vl:static vl:overflow-visible">
                     <FilterGroupPrice title={t('Price')} isOpen />
                     <FilterGroupInStock title={t('Availability')} inStockCount={productFilterOptions.inStock} isOpen />
                     {productFilterOptions.flags.length > 0 && (
@@ -214,17 +213,22 @@ export const FilterPanel = memo<FilterPanelProps>(
                                 />
                             );
                         })}
-                </FilterPanelBodyScrollStyled>
-                <FilterPanelFooterStyled>
-                    <Button type="button" size="small" onClick={panelCloseHandler}>
+                </div>
+                <div className="flex items-center justify-end bg-white py-5 vl:hidden">
+                    <Button
+                        type="button"
+                        size="small"
+                        onClick={panelCloseHandler}
+                        className="inline-block lowercase first-letter:uppercase"
+                    >
                         {t('Show')}
                         {` ${totalCount} `}
                         {t('Products count', {
                             count: totalCount,
                         })}
                     </Button>
-                </FilterPanelFooterStyled>
-            </FilterPanelStyled>
+                </div>
+            </div>
         );
     },
 );

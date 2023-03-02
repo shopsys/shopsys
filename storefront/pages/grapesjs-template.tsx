@@ -4,7 +4,6 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { ArticleTitle } from 'components/Pages/Article/ArticleTitle';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
-import { FC } from 'react';
 import { nextReduxWrapper } from 'redux/main';
 
 const Index: FC = () => (

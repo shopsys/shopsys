@@ -13,7 +13,7 @@ import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListS
 import { useGtmFlagProductListView } from 'hooks/gtm/useGtmFlagProductListView';
 import { useListingForPagination } from 'hooks/ui/useListingForPagination';
 import { useRouter } from 'next/router';
-import React, { FC, RefObject } from 'react';
+import React, { RefObject } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { FlagDetailType } from 'types/flag';
 import { ListedProductType } from 'types/product';

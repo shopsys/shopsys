@@ -1,8 +1,8 @@
-import { SearchButtonStyled, SearchTextInputStyled, TextInputLoadingWrapper } from './TextInput.style';
+import { SearchTextInputStyled } from './TextInput.style';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper/LabelWrapper';
-import { FC, InputHTMLAttributes, KeyboardEventHandler } from 'react';
+import { InputHTMLAttributes, KeyboardEventHandler } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value', never>;
@@ -23,6 +23,7 @@ export const SearchInput: FC<SearchInputProps> = ({
     onEnterPressCallback,
     testIdentifier,
     isLoading,
+    className,
 }) => {
     const enterKeyPressHandler: KeyboardEventHandler<HTMLInputElement> = (event) => {
         if (event.key === 'Enter' && onEnterPressCallback !== undefined) {
@@ -40,14 +41,19 @@ export const SearchInput: FC<SearchInputProps> = ({
                 type="search"
                 onKeyUp={enterKeyPressHandler}
                 data-testid={testIdentifier}
+                className={className}
             />
-            <SearchButtonStyled type="submit" disabled={isSearchButtonDisabled}>
+            <button
+                className="absolute right-4 top-3 cursor-pointer border-none"
+                type="submit"
+                disabled={isSearchButtonDisabled}
+            >
                 <Icon iconType="icon" icon="Search" width={20} height={20} />
-            </SearchButtonStyled>
+            </button>
             {isLoading && (
-                <TextInputLoadingWrapper>
+                <div className="absolute top-[calc(50%-16px)] right-4 flex h-8 w-8 items-center justify-center">
                     <Loader iconSize={30} className="text-white" />
-                </TextInputLoadingWrapper>
+                </div>
             )}
         </LabelWrapper>
     );

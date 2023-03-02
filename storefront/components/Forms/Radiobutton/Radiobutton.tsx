@@ -1,5 +1,4 @@
 import { LabelWrapper } from '../Lib/LabelWrapper/LabelWrapper';
-import { LabelImageWrapper, RadiobuttonStyled } from './Radiobutton.style';
 import { Image } from 'components/Basic/Image/Image';
 import { forwardRef, InputHTMLAttributes, MouseEventHandler, ReactNode, useCallback } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
@@ -46,16 +45,17 @@ export const Radiobutton = forwardRef<HTMLInputElement, RadiobuttonProps>(
                 label={
                     <div>
                         {image !== undefined && (
-                            <LabelImageWrapper>
+                            <div className="mr-3 flex h-6 w-11 items-center justify-center">
                                 <Image alt="" type="default" image={image} />
-                            </LabelImageWrapper>
+                            </div>
                         )}
                         {label}
                     </div>
                 }
                 inputType="radio"
             >
-                <RadiobuttonStyled
+                <input
+                    className="sr-only"
                     value={value}
                     name={name}
                     disabled={disabled}

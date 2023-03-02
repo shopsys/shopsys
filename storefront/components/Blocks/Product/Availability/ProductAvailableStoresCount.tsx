@@ -1,6 +1,4 @@
-import { ProductAvailableStoreCountStyled } from './ProductAvailableStoresCount.style';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC } from 'react';
 
 type ProductAvailableStoresCountProps = {
     isMainVariant: boolean;
@@ -20,8 +18,8 @@ export const ProductAvailableStoresCount: FC<ProductAvailableStoresCountProps> =
     }
 
     return (
-        <ProductAvailableStoreCountStyled data-testid={TEST_IDENTIFIER}>
+        <div className="mb-3 text-sm text-inStock" data-testid={TEST_IDENTIFIER}>
             {t('This item is available immediately in {{ count }} stores', { count: availableStoresCount })}
-        </ProductAvailableStoreCountStyled>
+        </div>
     );
 };

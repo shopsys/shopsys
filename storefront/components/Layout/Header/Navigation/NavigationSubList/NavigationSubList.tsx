@@ -1,11 +1,4 @@
-import {
-    NavigationSubListItemLinkStyled,
-    NavigationSubListItemStyled,
-    NavigationSubListStyled,
-} from './NavigationSubList.style';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
-import { FC } from 'react';
 import { NavigationSubCategory } from 'types/navigation';
 
 type NavigationSubListProps = {
@@ -14,30 +7,14 @@ type NavigationSubListProps = {
 
 const TEST_IDENTIFIER = 'layout-header-navigation-navigationsublist';
 
-export const NavigationSubList: FC<NavigationSubListProps> = ({ columnCategoryChildren }) => {
-    const router = useRouter();
-
-    return (
-        <NavigationSubListStyled data-testid={TEST_IDENTIFIER}>
-            {columnCategoryChildren.map((columnCategoryChild, subListIndex) =>
-                columnCategoryChild.slug === router.asPath ? (
-                    <NavigationSubListItemStyled key={subListIndex} data-testid={TEST_IDENTIFIER + '-' + subListIndex}>
-                        <NextLink href={columnCategoryChild.slug} passHref>
-                            <NavigationSubListItemLinkStyled>
-                                {columnCategoryChild.name}
-                            </NavigationSubListItemLinkStyled>
-                        </NextLink>
-                    </NavigationSubListItemStyled>
-                ) : (
-                    <NavigationSubListItemStyled key={subListIndex} data-testid={TEST_IDENTIFIER + '-' + subListIndex}>
-                        <NextLink href={columnCategoryChild.slug} passHref>
-                            <NavigationSubListItemLinkStyled>
-                                {columnCategoryChild.name}
-                            </NavigationSubListItemLinkStyled>
-                        </NextLink>
-                    </NavigationSubListItemStyled>
-                ),
-            )}
-        </NavigationSubListStyled>
-    );
-};
+export const NavigationSubList: FC<NavigationSubListProps> = ({ columnCategoryChildren }) => (
+    <ul className="flex w-full flex-col pl-0" data-testid={TEST_IDENTIFIER}>
+        {columnCategoryChildren.map((columnCategoryChild, subListIndex) => (
+            <li className="w-full" key={subListIndex} data-testid={TEST_IDENTIFIER + '-' + subListIndex}>
+                <NextLink href={columnCategoryChild.slug} passHref>
+                    <a className="mb-1 block text-sm text-dark no-underline">{columnCategoryChild.name}</a>
+                </NextLink>
+            </li>
+        ))}
+    </ul>
+);

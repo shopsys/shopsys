@@ -7,7 +7,7 @@ import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import LightGallery from 'lightgallery/react';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { SimpleFlagType } from 'types/flag';
 import { ImageType } from 'types/image';
@@ -57,7 +57,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
                             <div
                                 key={index}
                                 className={twJoin(
-                                    'lightboxItem relative block w-20 cursor-pointer lg:mb-3 lg:h-16 lg:rounded-md lg:bg-greenVeryLight lg:p-2 lg:transition lg:hover:bg-greyLighter',
+                                    'lightboxItem relative block w-20 cursor-pointer lg:mb-3 lg:h-16 lg:rounded-md lg:bg-greyVeryLight lg:p-2 lg:transition lg:hover:bg-greyLighter',
                                     index > 6 && 'hidden',
                                 )}
                                 data-src={image.sizes?.find((size) => size.size === 'default')?.url}

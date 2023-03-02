@@ -4,7 +4,7 @@ import { GoPayCreatePaymentSetupApi, usePayOrderMutationApi } from 'graphql/gene
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import Script from 'next/script';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
 type GoPayGatewayProps = {
     orderUuid: string;

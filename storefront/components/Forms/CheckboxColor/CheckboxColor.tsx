@@ -1,6 +1,5 @@
-import { CheckboxColorStyled } from './CheckboxColor.style';
 import { ColorLabelWrapper } from 'components/Forms/Lib/ColorLabelWrapper/ColorLabelWrapper';
-import { FC, InputHTMLAttributes } from 'react';
+import { InputHTMLAttributes } from 'react';
 import tinycolor from 'tinycolor2';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
@@ -27,27 +26,26 @@ export const CheckboxColor: FC<CheckboxColorProps> = ({
     value,
     onChange,
     testIdentifier,
-}) => {
-    return (
-        <ColorLabelWrapper
-            label={label}
-            htmlFor={id}
-            bgColor={bgColor}
-            isLightColor={tinycolor(bgColor).isLight()}
-            isDisabled={disabled}
-            isActive={value}
-        >
-            <CheckboxColorStyled
-                disabled={disabled}
-                required={required}
-                id={id}
-                name={name}
-                checked={value}
-                value={value}
-                onChange={onChange}
-                type="checkbox"
-                data-testid={testIdentifier}
-            />
-        </ColorLabelWrapper>
-    );
-};
+}) => (
+    <ColorLabelWrapper
+        label={label}
+        htmlFor={id}
+        bgColor={bgColor}
+        isLightColor={tinycolor(bgColor).isLight()}
+        isDisabled={disabled}
+        isActive={value}
+    >
+        <input
+            className="peer sr-only"
+            disabled={disabled}
+            required={required}
+            id={id}
+            name={name}
+            checked={value}
+            value={value}
+            onChange={onChange}
+            type="checkbox"
+            data-testid={testIdentifier}
+        />
+    </ColorLabelWrapper>
+);

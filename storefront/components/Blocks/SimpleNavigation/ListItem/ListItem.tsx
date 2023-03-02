@@ -1,13 +1,5 @@
-import {
-    ListItemBlockStyled,
-    ListItemCountStyled,
-    ListItemImageStyled,
-    ListItemNameStyled,
-    ListItemNameWrapperStyled,
-} from './ListItem.style';
 import { Image } from 'components/Basic/Image/Image';
 import NextLink from 'next/link';
-import { FC } from 'react';
 import { ListedItemPropType } from 'types/simpleNavigation';
 
 type ListItemProps = {
@@ -20,19 +12,27 @@ const TEST_IDENTIFIER = 'blocks-simplenavigation-listitem';
 export const ListItem: FC<ListItemProps> = ({ listedItem, imageType }) => {
     return (
         <NextLink href={listedItem.slug} passHref>
-            <ListItemBlockStyled data-testid={TEST_IDENTIFIER}>
+            <a
+                className="flex h-full w-full cursor-pointer flex-col items-center rounded-xl bg-greyVeryLight px-2 py-4 no-underline transition hover:bg-whitesmoke hover:no-underline lg:flex-row lg:px-3 lg:py-2"
+                data-testid={TEST_IDENTIFIER}
+            >
                 {'image' in listedItem && (
-                    <ListItemImageStyled>
-                        <Image image={listedItem.image} type={imageType ?? 'default'} alt={listedItem.name} />
-                    </ListItemImageStyled>
+                    <div className="relative mb-1 h-12 w-16 flex-shrink-0 flex-grow-0 basis-auto lg:mb-0">
+                        <Image
+                            className="!max-h-full mix-blend-multiply"
+                            image={listedItem.image}
+                            type={imageType ?? 'default'}
+                            alt={listedItem.name}
+                        />
+                    </div>
                 )}
-                <ListItemNameWrapperStyled>
-                    <ListItemNameStyled>{listedItem.name}</ListItemNameStyled>
+                <div className="max-w-full">
+                    <span className="block max-w-full text-sm text-dark lg:pl-3">{listedItem.name}</span>
                     {'totalCount' in listedItem && listedItem.totalCount !== undefined && (
-                        <ListItemCountStyled>({listedItem.totalCount})</ListItemCountStyled>
+                        <span className="ml-2 whitespace-nowrap text-sm text-greyLight">({listedItem.totalCount})</span>
                     )}
-                </ListItemNameWrapperStyled>
-            </ListItemBlockStyled>
+                </div>
+            </a>
         </NextLink>
     );
 };

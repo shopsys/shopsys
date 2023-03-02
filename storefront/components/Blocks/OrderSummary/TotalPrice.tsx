@@ -1,13 +1,6 @@
-import {
-    OrderSummaryContentStyled,
-    OrderSummaryTotalPriceAmountStyled,
-    OrderSummaryTotalPriceTextStyled,
-    OrderSummaryTotalPriceWrapperStyled,
-    PriceWrapperStyled,
-} from './OrderSummary.style';
+import { OrderSummaryContent } from './OrderSummaryElements';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC } from 'react';
 import { PriceType } from 'types/price';
 
 type TotalPriceProps = {
@@ -21,15 +14,15 @@ export const TotalPrice: FC<TotalPriceProps> = ({ totalPrice }) => {
     const formatPrice = useFormatPrice();
 
     return (
-        <OrderSummaryTotalPriceWrapperStyled data-testid={TEST_IDENTIFIER}>
-            <OrderSummaryContentStyled>
-                <PriceWrapperStyled>
-                    <OrderSummaryTotalPriceTextStyled>{t('Total price')}</OrderSummaryTotalPriceTextStyled>
-                    <OrderSummaryTotalPriceAmountStyled data-testid={TEST_IDENTIFIER + '-amount'}>
+        <div className="mb-5" data-testid={TEST_IDENTIFIER}>
+            <OrderSummaryContent>
+                <div className="flex justify-end">
+                    <span className="mr-4 inline-flex items-end">{t('Total price')}</span>
+                    <strong className="text-2xl text-primary" data-testid={TEST_IDENTIFIER + '-amount'}>
                         {formatPrice(totalPrice.priceWithVat)}
-                    </OrderSummaryTotalPriceAmountStyled>
-                </PriceWrapperStyled>
-            </OrderSummaryContentStyled>
-        </OrderSummaryTotalPriceWrapperStyled>
+                    </strong>
+                </div>
+            </OrderSummaryContent>
+        </div>
     );
 };

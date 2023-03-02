@@ -18,7 +18,7 @@ import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetPara
 import { useGtmProductDetailView } from 'hooks/gtm/useGtmProductDetailView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
-import { FC, Fragment, useRef } from 'react';
+import { Fragment, useRef } from 'react';
 import { ProductDetailType } from 'types/product';
 
 type ProductDetailContentProps = {

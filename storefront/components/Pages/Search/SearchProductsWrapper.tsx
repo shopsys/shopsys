@@ -17,7 +17,7 @@ import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListS
 import { useGtmSearchResultsListView } from 'hooks/gtm/useGtmSearchResultsListView';
 import { useListingForPagination } from 'hooks/ui/useListingForPagination';
 import { useRouter } from 'next/router';
-import React, { FC, RefObject } from 'react';
+import React, { RefObject } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { ListedProductType } from 'types/product';
 

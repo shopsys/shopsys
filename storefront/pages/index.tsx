@@ -2,7 +2,7 @@ import { SearchMetadata } from 'components/Basic/Head/SearchMetadata/SearchMetad
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Banners } from 'components/Blocks/Banners/Banners';
 import { BlogPreview } from 'components/Blocks/BlogPreview/BlogPreview';
-import { PromotedCategories } from 'components/Blocks/Categories/PromotedCategories/PromotedCategories';
+import { PromotedCategories } from 'components/Blocks/Categories/PromotedCategories';
 import { PromotedProducts } from 'components/Blocks/Product/PromotedProducts/PromotedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -18,7 +18,6 @@ import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePro
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC } from 'react';
 import { nextReduxWrapper } from 'redux/main';
 
 const HomePage: FC<ServerSidePropsType> = () => {

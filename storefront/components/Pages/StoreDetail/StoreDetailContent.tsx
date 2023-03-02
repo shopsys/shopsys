@@ -5,7 +5,6 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
-import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { StoreDetailType } from 'types/store';
 

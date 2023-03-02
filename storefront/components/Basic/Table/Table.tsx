@@ -1,6 +1,7 @@
-import { TableStyled } from './Table.style';
-import { FC } from 'react';
-
 const TEST_IDENTIFIER = 'basic-table';
 
-export const Table: FC = ({ children }) => <TableStyled data-testid={TEST_IDENTIFIER}>{children}</TableStyled>;
+export const Table: FC = ({ children }) => (
+    <table className="w-full" data-testid={TEST_IDENTIFIER}>
+        {children}
+    </table>
+);

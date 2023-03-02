@@ -1,7 +1,6 @@
 import { getDomainConfig } from 'helpers/domain/domain';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { GetServerSidePropsContext } from 'next';
-import { FC } from 'react';
 
 // mandatory for Next although it's not used
 const Robots: FC = (): null => {

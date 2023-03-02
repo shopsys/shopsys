@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { FC } from 'react';
 import { MainVariantDetailType, ProductDetailType } from 'types/product';
 
 type ProductMetadataProps = {
