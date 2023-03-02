@@ -24,7 +24,7 @@
         "@babel/preset-env": "^7.14.4",
         "@babel/traverse": "^7.14.2",
         "@symfony/webpack-encore": "^1.4.0",
-        "@vusion/webfonts-generator": "^0.7.3",
+        "@vusion/webfonts-generator": "^0.8.0",
         "autoprefixer": "^10.2.6",
         "babel-jest": "^27.0.2",
         "copy-webpack-plugin": "^8.1.1",
