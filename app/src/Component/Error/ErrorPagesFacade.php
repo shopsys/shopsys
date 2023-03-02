@@ -63,6 +63,7 @@ class ErrorPagesFacade extends BaseErrorPagesFacade
 
         $errorPageResponse = $errorPageKernel->handle($errorPageFakeRequest);
         $errorPageKernel->terminate($errorPageFakeRequest, $errorPageResponse);
+        $errorPageKernel->shutdown();
 
         if ($expectedStatusCode !== $errorPageResponse->getStatusCode()) {
             throw new BadErrorPageStatusCodeException(

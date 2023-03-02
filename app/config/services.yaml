@@ -667,9 +667,6 @@ services:
         tags:
             - { name: shopsys.product_feed }
 
-    Shopsys\FrameworkBundle\Component\Error\LogoutExceptionSubscriber:
-        lazy: true
-
     FOS\CKEditorBundle\Config\CKEditorConfigurationInterface:
         alias: fos_ck_editor.configuration
 
