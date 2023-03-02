@@ -34,6 +34,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
  * @method \App\Model\Cart\Cart getCartOfCurrentCustomerUserCreateIfNotExists()
  * @method \App\Model\Cart\Cart getCartByCustomerUserIdentifierCreateIfNotExists(\Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier)
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+ * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  */
 class CartFacade extends BaseCartFacade
 {
@@ -53,7 +54,7 @@ class CartFacade extends BaseCartFacade
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \App\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface $cartItemFactory

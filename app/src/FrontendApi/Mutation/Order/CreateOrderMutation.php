@@ -37,7 +37,7 @@ class CreateOrderMutation extends BaseCreateOrderMutation
      * @param \App\FrontendApi\Model\Order\PlaceOrderFacade $placeOrderFacade
      * @param \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
      * @param \App\FrontendApi\Model\Cart\CartWatcherFacade $cartWatcherFacade
      * @param \App\FrontendApi\Model\Order\CreateOrderResultFactory $createOrderResultFactory

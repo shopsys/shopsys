@@ -21,7 +21,7 @@ class PaymentInCartMutation implements MutationInterface, AliasedInterface
     private CartPaymentFacade $cartPaymentFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
+     * @var \App\Model\Customer\User\CurrentCustomerUser
      */
     private CurrentCustomerUser $currentCustomerUser;
 
@@ -36,7 +36,7 @@ class PaymentInCartMutation implements MutationInterface, AliasedInterface
     private CartWatcherFacade $cartWatcherFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      * @param \App\FrontendApi\Model\Cart\CartWatcherFacade $cartWatcherFacade
      * @param \App\Model\Cart\Payment\CartPaymentFacade $cartPaymentFacade

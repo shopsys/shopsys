@@ -14,7 +14,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderResolver as BaseOrderRes
 /**
  * @property \App\FrontendApi\Model\Order\OrderFacade $frontendApiOrderFacade
  * @property \App\Model\Order\OrderFacade $orderFacade
- * @method __construct(\Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \App\Model\Order\OrderFacade $orderFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\FrontendApi\Model\Order\OrderFacade $frontendApiOrderFacade)
+ * @method __construct(\App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \App\Model\Order\OrderFacade $orderFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\FrontendApi\Model\Order\OrderFacade $frontendApiOrderFacade)
  * @method \App\Model\Order\Order getOrderForCustomerUserByUuid(\App\Model\Customer\User\CustomerUser $customerUser, string $uuid)
  */
 class OrderResolver extends BaseOrderResolver

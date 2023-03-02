@@ -9,6 +9,9 @@ use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory as BaseCustomerUserIdentifierFactory;
 
+/**
+ * @method __construct(\App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \Symfony\Component\HttpFoundation\RequestStack $requestStack)
+ */
 class CustomerUserIdentifierFactory extends BaseCustomerUserIdentifierFactory
 {
     /**

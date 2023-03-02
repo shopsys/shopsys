@@ -10,7 +10,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Order\OrdersResolver as BaseOrdersR
 
 /**
  * @property \App\FrontendApi\Model\Order\OrderFacade $orderFacade
- * @method __construct(\Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \App\FrontendApi\Model\Order\OrderFacade $orderFacade)
+ * @method __construct(\App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \App\FrontendApi\Model\Order\OrderFacade $orderFacade)
  */
 class OrdersResolver extends BaseOrdersResolver
 {

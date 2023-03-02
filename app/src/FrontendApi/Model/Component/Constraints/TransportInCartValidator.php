@@ -27,7 +27,7 @@ class TransportInCartValidator extends ConstraintValidator
     private TransportValidationFacade $transportValidationFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
+     * @var \App\Model\Customer\User\CurrentCustomerUser
      */
     private CurrentCustomerUser $currentCustomerUser;
 
@@ -49,7 +49,7 @@ class TransportInCartValidator extends ConstraintValidator
     /**
      * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\Cdn\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      * @param \App\FrontendApi\Model\Transport\TransportValidationFacade $transportValidationFacade
      */

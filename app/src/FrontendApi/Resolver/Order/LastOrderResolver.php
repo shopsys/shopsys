@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 class LastOrderResolver implements QueryInterface, AliasedInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
+     * @var \App\Model\Customer\User\CurrentCustomerUser
      */
     protected CurrentCustomerUser $currentCustomerUser;
 
@@ -24,7 +24,7 @@ class LastOrderResolver implements QueryInterface, AliasedInterface
     protected OrderFacade $orderFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\FrontendApi\Model\Order\OrderFacade $orderFacade
      */
     public function __construct(

@@ -884,3 +884,11 @@ services:
 
     Shopsys\FrameworkBundle\Model\Breadcrumb\SimpleBreadcrumbGenerator:
         alias: App\Model\Breadcrumb\SimpleBreadcrumbGenerator
+
+    App\Model\Customer\User\ClearCurrentCustomerUserCacheDoctrineSubscriber:
+        tags: [ 'doctrine.event_subscriber' ]
+
+    App\Model\Customer\User\CurrentCustomerUser: ~
+
+    Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser:
+        alias: App\Model\Customer\User\CurrentCustomerUser

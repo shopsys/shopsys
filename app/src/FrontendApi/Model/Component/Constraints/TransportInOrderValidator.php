@@ -18,7 +18,7 @@ class TransportInOrderValidator extends ConstraintValidator
 {
     /**
      * @param \App\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      * @param \App\FrontendApi\Model\Transport\TransportValidationFacade $transportValidationFacade
      */

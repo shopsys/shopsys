@@ -28,7 +28,7 @@ class PromoCodeMutation implements MutationInterface, AliasedInterface
     private CartFacade $cartFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
+     * @var \App\Model\Customer\User\CurrentCustomerUser
      */
     private CurrentCustomerUser $currentCustomerUser;
 
@@ -44,7 +44,7 @@ class PromoCodeMutation implements MutationInterface, AliasedInterface
 
     /**
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\FrontendApi\Model\Cart\CartWatcherFacade $cartWatcherFacade
      * @param \App\Model\Cart\CartPromoCodeFacade $cartPromoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade

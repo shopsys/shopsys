@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Cart\CartFacade;
 use App\Model\Cart\Watcher\CartWatcherFacade;
 use App\Model\Category\CategoryFacade;
+use App\Model\Customer\User\CurrentCustomerUser;
 use App\Model\Customer\User\CustomerUserIdentifierFactory;
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
@@ -17,7 +18,6 @@ use Shopsys\FrameworkBundle\Model\Cart\CartRepository;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
@@ -38,7 +38,7 @@ class CartFacadeTest extends FunctionalTestCase
     private ProductRepository $productRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
+     * @var \App\Model\Customer\User\CurrentCustomerUser
      * @inject
      */
     private CurrentCustomerUser $currentCustomerUser;

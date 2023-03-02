@@ -71,7 +71,7 @@ class TransportAndPaymentWatcherFacade
     private Domain $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
+     * @var \App\Model\Customer\User\CurrentCustomerUser
      */
     private CurrentCustomerUser $currentCustomerUser;
 
@@ -91,7 +91,7 @@ class TransportAndPaymentWatcherFacade
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\Cdn\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade
      * @param \App\Model\Cart\Transport\CartTransportFacade $cartTransportFacade
      * @param \App\FrontendApi\Model\Transport\TransportValidationFacade $transportValidationFacade

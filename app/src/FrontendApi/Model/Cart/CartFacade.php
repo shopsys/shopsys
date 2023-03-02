@@ -35,7 +35,7 @@ class CartFacade
     protected Domain $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
+     * @var \App\Model\Customer\User\CurrentCustomerUser
      */
     protected CurrentCustomerUser $currentCustomerUser;
 
@@ -48,7 +48,7 @@ class CartFacade
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\FrontendApi\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
      */
     public function __construct(
