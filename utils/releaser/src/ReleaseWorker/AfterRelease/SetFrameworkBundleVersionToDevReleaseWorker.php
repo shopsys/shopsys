@@ -42,7 +42,7 @@ final class SetFrameworkBundleVersionToDevReleaseWorker extends AbstractShopsysR
      */
     public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
     {
-        $developmentVersion = $this->askForNextDevelopmentVersion($version);
+        $developmentVersion = $this->askForNextDevelopmentVersion($version, true);
         $this->updateFrameworkBundleVersion($developmentVersion);
 
         $this->commit(sprintf(
