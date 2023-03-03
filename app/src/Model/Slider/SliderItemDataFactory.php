@@ -22,7 +22,11 @@ class SliderItemDataFactory extends BaseSliderItemDataFactory
      */
     protected function createInstance(): BaseSliderItemData
     {
-        return new SliderItemData();
+        $sliderItemData = new SliderItemData();
+        $sliderItemData->image = $this->imageUploadDataFactory->create();
+        $sliderItemData->mobileImage = $this->imageUploadDataFactory->create();
+
+        return $sliderItemData;
     }
 
     /**
@@ -33,12 +37,13 @@ class SliderItemDataFactory extends BaseSliderItemDataFactory
     {
         parent::fillFromSliderItem($sliderItemData, $sliderItem);
 
-        $sliderItemData->image->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($sliderItem, SliderItemFacade::IMAGE_TYPE_WEB);
+        $sliderItemData->image = $this->imageUploadDataFactory->createFromEntityAndType($sliderItem, SliderItemFacade::IMAGE_TYPE_WEB);
+        $sliderItemData->mobileImage = $this->imageUploadDataFactory->createFromEntityAndType($sliderItem, SliderItemFacade::IMAGE_TYPE_MOBILE);
+
         $sliderItemData->datetimeVisibleFrom = $sliderItem->getDatetimeVisibleFrom();
         $sliderItemData->datetimeVisibleTo = $sliderItem->getDatetimeVisibleTo();
         $sliderItemData->sliderExtendedText = $sliderItem->getSliderExtendedText();
         $sliderItemData->sliderExtendedTextLink = $sliderItem->getSliderExtendedTextLink();
-        $sliderItemData->mobileImage->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($sliderItem, SliderItemFacade::IMAGE_TYPE_MOBILE);
         $sliderItemData->gtmId = $sliderItem->getGtmId();
         $sliderItemData->gtmCreative = $sliderItem->getGtmCreative();
     }

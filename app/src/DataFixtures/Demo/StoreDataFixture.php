@@ -11,7 +11,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
+use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 class StoreDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -54,33 +54,17 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     ];
 
     /**
-     * @var \App\Model\Store\StoreFacade
-     */
-    private StoreFacade $storeFacade;
-
-    /**
-     * @var \App\Model\Store\StoreDataFactory
-     */
-    private StoreDataFactory $storeDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
      * @param \App\Model\Store\StoreFacade $storeFacade
      * @param \App\Model\Store\StoreDataFactory $storeDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      */
     public function __construct(
-        StoreFacade $storeFacade,
-        StoreDataFactory $storeDataFactory,
-        Domain $domain
+        private readonly StoreFacade $storeFacade,
+        private readonly StoreDataFactory $storeDataFactory,
+        private readonly Domain $domain,
+        private readonly ImageUploadDataFactory $imageUploadDataFactory
     ) {
-        $this->storeFacade = $storeFacade;
-        $this->storeDataFactory = $storeDataFactory;
-        $this->domain = $domain;
     }
 
     /**
@@ -119,7 +103,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_SPECIAL_MESSAGE => null,
                 self::ATTR_LOCATION_LATITUDE => '49.8574975',
                 self::ATTR_LOCATION_LONGITUDE => '18.2738861',
-                self::ATTR_IMAGE => new ImageUploadData(),
+                self::ATTR_IMAGE => $this->imageUploadDataFactory->create(),
             ], [
                 self::ATTR_NAME => 'Pardubice',
                 self::ATTR_IS_DEFAULT => false,
@@ -136,7 +120,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_SPECIAL_MESSAGE => null,
                 self::ATTR_LOCATION_LATITUDE => '50.0346875',
                 self::ATTR_LOCATION_LONGITUDE => '15.7707169',
-                self::ATTR_IMAGE => new ImageUploadData(),
+                self::ATTR_IMAGE => $this->imageUploadDataFactory->create(),
             ], [
                 self::ATTR_NAME => 'Žilina',
                 self::ATTR_IS_DEFAULT => false,
@@ -153,7 +137,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_SPECIAL_MESSAGE => null,
                 self::ATTR_LOCATION_LATITUDE => '49.2030444',
                 self::ATTR_LOCATION_LONGITUDE => '18.7499042',
-                self::ATTR_IMAGE => new ImageUploadData(),
+                self::ATTR_IMAGE => $this->imageUploadDataFactory->create(),
             ],
         ];
     }

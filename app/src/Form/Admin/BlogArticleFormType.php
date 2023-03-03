@@ -288,6 +288,8 @@ class BlogArticleFormType extends AbstractType
         $builderImageGroup
             ->add('image', ImageUploadType::class, [
                 'required' => false,
+                'image_entity_class' => BlogArticle::class,
+                'image_type' => null,
                 'file_constraints' => [
                     new Constraints\Image([
                         'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],

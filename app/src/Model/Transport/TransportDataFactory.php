@@ -7,6 +7,7 @@ namespace App\Model\Transport;
 use App\Model\Transport\Type\TransportTypeEnum;
 use App\Model\Transport\Type\TransportTypeFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport as BaseTransport;
@@ -17,15 +18,11 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 class TransportDataFactory extends BaseTransportDataFactory
 {
     /**
-     * @var \App\Model\Transport\Type\TransportTypeFacade
-     */
-    protected TransportTypeFacade $transportTypeFacade;
-
-    /**
-     * @param \App\Model\Transport\TransportFacade $transportFacade
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      * @param \App\Model\Transport\Type\TransportTypeFacade $transportTypeFacade
      */
     public function __construct(
@@ -33,11 +30,16 @@ class TransportDataFactory extends BaseTransportDataFactory
         VatFacade $vatFacade,
         Domain $domain,
         ImageFacade $imageFacade,
-        TransportTypeFacade $transportTypeFacade
+        ImageUploadDataFactory $imageUploadDataFactory,
+        private readonly TransportTypeFacade $transportTypeFacade
     ) {
-        parent::__construct($transportFacade, $vatFacade, $domain, $imageFacade);
-
-        $this->transportTypeFacade = $transportTypeFacade;
+        parent::__construct(
+            $transportFacade,
+            $vatFacade,
+            $domain,
+            $imageFacade,
+            $imageUploadDataFactory
+        );
     }
 
     /**
@@ -45,7 +47,10 @@ class TransportDataFactory extends BaseTransportDataFactory
      */
     protected function createInstance(): BaseTransportData
     {
-        return new TransportData();
+        $transportData = new TransportData();
+        $transportData->image = $this->imageUploadDataFactory->create();
+
+        return $transportData;
     }
 
     /**
@@ -62,7 +67,7 @@ class TransportDataFactory extends BaseTransportDataFactory
     /**
      * @param \App\Model\Transport\TransportData $transportData
      */
-    protected function fillNew(BaseTransportData $transportData)
+    protected function fillNew(BaseTransportData $transportData): void
     {
         parent::fillNew($transportData);
 

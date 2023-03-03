@@ -18,51 +18,6 @@ class BlogArticleFacade
     private const PRODUCT_CATNUMS_PLACEHOLDER = '/data-products="(?<catnums>.+)"/sU';
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var \App\Model\Blog\Article\BlogArticleRepository
-     */
-    private $blogArticleRepository;
-
-    /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private $friendlyUrlFacade;
-
-    /**
-     * @var \App\Model\Blog\Article\BlogArticleFactory
-     */
-    private $blogArticleFactory;
-
-    /**
-     * @var \App\Model\Blog\Article\BlogArticleBlogCategoryDomainFactory
-     */
-    private $blogArticleBlogCategoryDomainFactory;
-
-    /**
-     * @var \App\Component\Image\ImageFacade
-     */
-    private $imageFacade;
-
-    /**
-     * @var \App\Model\Blog\BlogVisibilityRecalculationScheduler
-     */
-    private $blogVisibilityRecalculationScheduler;
-
-    /**
-     * @var \App\Model\Product\ProductFacade
-     */
-    private ProductFacade $productFacade;
-
-    /**
-     * @var \App\Model\Blog\Article\Elasticsearch\BlogArticleExportScheduler
-     */
-    private BlogArticleExportScheduler $blogArticleExportScheduler;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Blog\Article\BlogArticleRepository $blogArticleRepository
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
@@ -74,25 +29,16 @@ class BlogArticleFacade
      * @param \App\Model\Blog\Article\Elasticsearch\BlogArticleExportScheduler $blogArticleExportScheduler
      */
     public function __construct(
-        EntityManagerInterface $em,
-        BlogArticleRepository $blogArticleRepository,
-        FriendlyUrlFacade $friendlyUrlFacade,
-        BlogArticleFactory $blogArticleFactory,
-        BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory,
-        ImageFacade $imageFacade,
-        BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler,
-        ProductFacade $productFacade,
-        BlogArticleExportScheduler $blogArticleExportScheduler
+        private readonly EntityManagerInterface $em,
+        private readonly BlogArticleRepository $blogArticleRepository,
+        private readonly FriendlyUrlFacade $friendlyUrlFacade,
+        private readonly BlogArticleFactory $blogArticleFactory,
+        private readonly BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory,
+        private readonly ImageFacade $imageFacade,
+        private readonly BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler,
+        private readonly ProductFacade $productFacade,
+        private readonly BlogArticleExportScheduler $blogArticleExportScheduler
     ) {
-        $this->em = $em;
-        $this->blogArticleRepository = $blogArticleRepository;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->blogArticleFactory = $blogArticleFactory;
-        $this->blogArticleBlogCategoryDomainFactory = $blogArticleBlogCategoryDomainFactory;
-        $this->imageFacade = $imageFacade;
-        $this->blogVisibilityRecalculationScheduler = $blogVisibilityRecalculationScheduler;
-        $this->productFacade = $productFacade;
-        $this->blogArticleExportScheduler = $blogArticleExportScheduler;
     }
 
     /**
@@ -130,7 +76,7 @@ class BlogArticleFacade
 
         $this->friendlyUrlFacade->createFriendlyUrls('front_blogarticle_detail', $blogArticle->getId(), $blogArticle->getNames());
 
-        $this->imageFacade->uploadImage($blogArticle, $blogArticleData->image->uploadedFiles, null);
+        $this->imageFacade->manageImages($blogArticle, $blogArticleData->image);
         $this->blogVisibilityRecalculationScheduler->scheduleRecalculation();
 
         $this->em->flush();
@@ -156,7 +102,7 @@ class BlogArticleFacade
         $this->friendlyUrlFacade->saveUrlListFormData('front_blogarticle_detail', $blogArticle->getId(), $blogArticleData->urls);
         $this->friendlyUrlFacade->createFriendlyUrls('front_blogarticle_detail', $blogArticleId, $blogArticle->getNames());
 
-        $this->imageFacade->uploadImage($blogArticle, $blogArticleData->image->uploadedFiles, null);
+        $this->imageFacade->manageImages($blogArticle, $blogArticleData->image);
         $this->blogVisibilityRecalculationScheduler->scheduleRecalculation();
 
         $this->em->flush();

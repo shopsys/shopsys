@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\NotificationBar;
 
-use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
-
 class NotificationBarData
 {
     /**
@@ -42,9 +40,4 @@ class NotificationBarData
      * @var \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData
      */
     public $image;
-
-    public function __construct()
-    {
-        $this->image = new ImageUploadData();
-    }
 }

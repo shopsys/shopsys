@@ -20,56 +20,6 @@ class BlogCategoryFacade
     protected const INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY = 1;
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var \App\Model\Blog\Category\BlogCategoryRepository
-     */
-    private $blogCategoryRepository;
-
-    /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private $friendlyUrlFacade;
-
-    /**
-     * @var \App\Component\Image\ImageFacade
-     */
-    private $imageFacade;
-
-    /**
-     * @var \App\Model\Blog\Category\BlogCategoryFactory
-     */
-    private $blogCategoryFactory;
-
-    /**
-     * @var \App\Model\Blog\Category\BlogCategoryWithPreloadedChildrenFactory
-     */
-    private $blogCategoryWithPreloadedChildrenFactory;
-
-    /**
-     * @var \App\Model\Blog\BlogVisibilityRecalculationScheduler
-     */
-    private $blogVisibilityRecalculationScheduler;
-
-    /**
-     * @var \App\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade
-     */
-    private BlogArticleExportQueueFacade $blogArticleExportQueueFacade;
-
-    /**
-     * @var \App\Model\Blog\Article\BlogArticleFacade
-     */
-    private BlogArticleFacade $blogArticleFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Blog\Category\BlogCategoryRepository $blogCategoryRepository
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
@@ -82,27 +32,17 @@ class BlogCategoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        EntityManagerInterface $em,
-        BlogCategoryRepository $blogCategoryRepository,
-        FriendlyUrlFacade $friendlyUrlFacade,
-        ImageFacade $imageFacade,
-        BlogCategoryFactory $blogCategoryFactory,
-        BlogCategoryWithPreloadedChildrenFactory $blogCategoryWithPreloadedChildrenFactory,
-        BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler,
-        BlogArticleExportQueueFacade $blogArticleExportQueueFacade,
-        BlogArticleFacade $blogArticleFacade,
-        Domain $domain
+        private readonly EntityManagerInterface $em,
+        private readonly BlogCategoryRepository $blogCategoryRepository,
+        private readonly FriendlyUrlFacade $friendlyUrlFacade,
+        private readonly ImageFacade $imageFacade,
+        private readonly BlogCategoryFactory $blogCategoryFactory,
+        private readonly BlogCategoryWithPreloadedChildrenFactory $blogCategoryWithPreloadedChildrenFactory,
+        private readonly BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler,
+        private readonly BlogArticleExportQueueFacade $blogArticleExportQueueFacade,
+        private readonly BlogArticleFacade $blogArticleFacade,
+        private readonly Domain $domain
     ) {
-        $this->em = $em;
-        $this->blogCategoryRepository = $blogCategoryRepository;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->imageFacade = $imageFacade;
-        $this->blogCategoryFactory = $blogCategoryFactory;
-        $this->blogCategoryWithPreloadedChildrenFactory = $blogCategoryWithPreloadedChildrenFactory;
-        $this->blogVisibilityRecalculationScheduler = $blogVisibilityRecalculationScheduler;
-        $this->blogArticleExportQueueFacade = $blogArticleExportQueueFacade;
-        $this->blogArticleFacade = $blogArticleFacade;
-        $this->domain = $domain;
     }
 
     /**
@@ -130,7 +70,7 @@ class BlogCategoryFacade
 
         $this->friendlyUrlFacade->createFriendlyUrls('front_blogcategory_detail', $blogCategory->getId(), $blogCategory->getNames());
 
-        $this->imageFacade->uploadImage($blogCategory, $blogCategoryData->image->uploadedFiles, null);
+        $this->imageFacade->manageImages($blogCategory, $blogCategoryData->image);
         $this->blogVisibilityRecalculationScheduler->scheduleRecalculation();
 
         $this->em->flush();
@@ -158,7 +98,7 @@ class BlogCategoryFacade
         $this->friendlyUrlFacade->saveUrlListFormData('front_blogcategory_detail', $blogCategory->getId(), $blogCategoryData->urls);
         $this->friendlyUrlFacade->createFriendlyUrls('front_blogcategory_detail', $blogCategory->getId(), $blogCategory->getNames());
 
-        $this->imageFacade->uploadImage($blogCategory, $blogCategoryData->image->uploadedFiles, null);
+        $this->imageFacade->manageImages($blogCategory, $blogCategoryData->image);
         $this->blogVisibilityRecalculationScheduler->scheduleRecalculation();
 
         $this->scheduleArticlesToExportByCategory($blogCategory);

@@ -5,30 +5,21 @@ declare(strict_types=1);
 namespace App\Model\Blog\Article;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class BlogArticleDataFactory
 {
     /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private $friendlyUrlFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      */
     public function __construct(
-        FriendlyUrlFacade $friendlyUrlFacade,
-        Domain $domain
+        private readonly FriendlyUrlFacade $friendlyUrlFacade,
+        private readonly Domain $domain,
+        private readonly ImageUploadDataFactory $imageUploadDataFactory
     ) {
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->domain = $domain;
     }
 
     /**
@@ -59,6 +50,7 @@ class BlogArticleDataFactory
      */
     private function fillNew(BlogArticleData $blogArticleData): void
     {
+        $blogArticleData->image = $this->imageUploadDataFactory->create();
         foreach ($this->domain->getAllIds() as $domainId) {
             $blogArticleData->seoMetaDescriptions[$domainId] = null;
             $blogArticleData->seoTitles[$domainId] = null;
@@ -88,6 +80,8 @@ class BlogArticleDataFactory
         $blogArticleData->blogCategoriesByDomainId = $blogArticle->getBlogCategoriesIndexedByDomainId();
         $blogArticleData->products = $blogArticle->getProducts();
         $blogArticleData->uuid = $blogArticle->getUuid();
+
+        $blogArticleData->image = $this->imageUploadDataFactory->createFromEntityAndType($blogArticle);
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $blogArticleData->seoMetaDescriptions[$domainId] = $blogArticle->getSeoMetaDescription($domainId);

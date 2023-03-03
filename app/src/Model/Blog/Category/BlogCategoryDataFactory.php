@@ -5,30 +5,21 @@ declare(strict_types=1);
 namespace App\Model\Blog\Category;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class BlogCategoryDataFactory
 {
     /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private $friendlyUrlFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      */
     public function __construct(
-        FriendlyUrlFacade $friendlyUrlFacade,
-        Domain $domain
+        private readonly FriendlyUrlFacade $friendlyUrlFacade,
+        private readonly Domain $domain,
+        private readonly ImageUploadDataFactory $imageUploadDataFactory
     ) {
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->domain = $domain;
     }
 
     /**
@@ -70,6 +61,8 @@ class BlogCategoryDataFactory
             $blogCategoryData->names[$locale] = null;
             $blogCategoryData->descriptions[$locale] = null;
         }
+
+        $blogCategoryData->image = $this->imageUploadDataFactory->create();
     }
 
     /**
@@ -82,6 +75,8 @@ class BlogCategoryDataFactory
         $blogCategoryData->descriptions = $blogCategory->getDescriptions();
         $blogCategoryData->parent = $blogCategory->getParent();
         $blogCategoryData->uuid = $blogCategory->getUuid();
+
+        $blogCategoryData->image = $this->imageUploadDataFactory->createFromEntityAndType($blogCategory);
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $blogCategoryData->seoMetaDescriptions[$domainId] = $blogCategory->getSeoMetaDescription($domainId);
