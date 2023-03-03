@@ -226,7 +226,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     id={transportItem.uuid}
                     value={transportItem.uuid}
                     checked={isActive}
-                    testIdentifier={TEST_IDENTIFIER + 'transport-item-input'}
+                    dataTestId={TEST_IDENTIFIER + 'transport-item-input'}
                     image={getFirstImageOrNull(transportItem.images)}
                     onChangeCallback={handleTransportChange}
                     label={
@@ -255,7 +255,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     id={paymentItem.uuid}
                     value={paymentItem.uuid}
                     checked={isActive}
-                    testIdentifier={TEST_IDENTIFIER + 'payment-item-input'}
+                    dataTestId={TEST_IDENTIFIER + 'payment-item-input'}
                     image={getFirstImageOrNull(paymentItem.images)}
                     onChangeCallback={handlePaymentChange}
                     label={
@@ -340,7 +340,6 @@ type ResetButtonProps = { text: string; onClick: () => void };
 
 const ResetButton: FC<ResetButtonProps> = ({ text, dataTestId, onClick }) => (
     <button
-        type="button"
         onClick={onClick}
         data-testid={dataTestId}
         className="flex w-full items-center bg-whitesmoke px-2 py-1 text-sm"

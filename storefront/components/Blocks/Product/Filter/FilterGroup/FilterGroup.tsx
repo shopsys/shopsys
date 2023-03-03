@@ -21,7 +21,7 @@ type FilterGroupProps = {
     areByDefaultAllFlagsOrBrandsShown?: boolean;
 };
 
-const getTestIdentifier = (filterField: FilterFieldType) => 'blocks-product-filter-filtergroup-' + filterField;
+const getDataTestId = (filterField: FilterFieldType) => 'blocks-product-filter-filtergroup-' + filterField;
 
 export const FilterGroup: FC<FilterGroupProps> = ({
     title,
@@ -39,7 +39,7 @@ export const FilterGroup: FC<FilterGroupProps> = ({
     const options = useMemo(() => state.options[filterField], [filterField, state.options]);
 
     return (
-        <FilterGroupWrapper dataTestId={getTestIdentifier(filterField)}>
+        <FilterGroupWrapper dataTestId={getDataTestId(filterField)}>
             <FilterGroupTitle onClick={() => setIsGroupOpen((currentGroupVisibility) => !currentGroupVisibility)}>
                 {title}
                 <FilterGroupIcon isOpen={isGroupOpen} />
@@ -55,7 +55,7 @@ export const FilterGroup: FC<FilterGroupProps> = ({
                             <FilterGroupContentItem
                                 key={dataItem.uuid}
                                 isDisabled={count === 0 && !dataItem.checked}
-                                dataTestId={getTestIdentifier(filterField) + '-' + index}
+                                dataTestId={getDataTestId(filterField) + '-' + index}
                             >
                                 <Checkbox
                                     id={`${filterField}.${index}.checked`}

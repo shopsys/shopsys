@@ -51,7 +51,7 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({ orderUuid }) => {
                 onLoad={initGoPayCheckout(goPayPaymentSetup.gatewayUrl)}
             ></Script>
             {isRedirectLinkVisible && (
-                <Link href={goPayPaymentSetup.gatewayUrl} isButton linkType="external">
+                <Link href={goPayPaymentSetup.gatewayUrl} isButton isExternal>
                     {t('Pay with GoPay')}
                 </Link>
             )}

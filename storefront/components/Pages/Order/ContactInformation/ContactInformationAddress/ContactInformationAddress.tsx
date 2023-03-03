@@ -106,7 +106,7 @@ export const ContactInformationAddress: FC = () => {
                             <FormLineError
                                 error={error}
                                 inputType="select"
-                                testIdentifier={formMeta.formName + '-' + formMeta.fields.country.name + '-error'}
+                                dataTestId={formMeta.formName + '-' + formMeta.fields.country.name + '-error'}
                             />
                         </>
                     )}

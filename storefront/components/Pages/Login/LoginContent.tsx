@@ -75,7 +75,7 @@ export const LoginContent: FC<LoginContentProps> = ({ breadcrumbs }) => {
                         }}
                     />
                     <div className="mt-8 flex w-full justify-center">
-                        <Button type="submit" testIdentifier={TEST_IDENTIFIER}>
+                        <Button type="submit" dataTestId={TEST_IDENTIFIER}>
                             {t('Log in')}
                         </Button>
                     </div>

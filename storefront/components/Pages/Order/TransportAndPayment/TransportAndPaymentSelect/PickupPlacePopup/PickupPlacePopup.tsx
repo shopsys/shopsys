@@ -48,18 +48,13 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = (props) => {
                 onSelectStoreCallback={onSelectStoreHandler}
             />
             <div className="mt-5 flex justify-between">
-                <Button
-                    type="button"
-                    onClick={onClosePickupPlacePopupHandler}
-                    testIdentifier={TEST_IDENTIFIER + 'close'}
-                >
+                <Button onClick={onClosePickupPlacePopupHandler} dataTestId={TEST_IDENTIFIER + 'close'}>
                     {t('Close')}
                 </Button>
                 <Button
-                    type="button"
                     isDisabled={selectedStoreUuid === ''}
                     onClick={onConfirmPickupPlaceHandler}
-                    testIdentifier={TEST_IDENTIFIER + 'confirm'}
+                    dataTestId={TEST_IDENTIFIER + 'confirm'}
                 >
                     {t('Confirm')}
                 </Button>

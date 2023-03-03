@@ -12,7 +12,7 @@ export type HeadingProps = NativeProps & {
     'data-testid'?: string;
 };
 
-const getTestIdentifier = (type: HeadingType) => 'basic-heading-' + type;
+const getDataTestId = (type: HeadingType) => 'basic-heading-' + type;
 
 // A global heading element, which takes a "type" prop, and based on that displays a heading of type h1 - h4
 export const Heading: FC<HeadingProps> = ({ type, type: HeadingTag, className, ...props }) => (
@@ -27,7 +27,7 @@ export const Heading: FC<HeadingProps> = ({ type, type: HeadingTag, className, .
             ),
             className,
         )}
-        data-testid={getTestIdentifier(type)}
+        data-testid={getDataTestId(type)}
         {...props}
     />
 );

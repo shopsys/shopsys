@@ -1,6 +1,5 @@
 import { ImageSizeFragmentApi, ImageSizesFragmentApi } from 'graphql/generated';
 import { ImgHTMLAttributes } from 'react';
-import { CSSProperties } from 'styled-components';
 import { twMergeCustom } from 'utils/twMerge';
 
 type ImageProps = {
@@ -8,23 +7,13 @@ type ImageProps = {
     alt: string;
     type: string;
     loading?: ImgHTMLAttributes<HTMLImageElement>['loading'];
-    testIdentifier?: string;
-    maxWidth?: CSSProperties['maxWidth'];
-    maxHeight?: CSSProperties['maxHeight'];
+    maxWidth?: string | number;
+    maxHeight?: string | number;
 };
 
-const getTestIdentifier = (testIdentifier?: string) => testIdentifier ?? 'basic-image';
+const getDataTestId = (dataTestId?: string) => dataTestId ?? 'basic-image';
 
-export const Image: FC<ImageProps> = ({
-    image,
-    alt,
-    type,
-    loading,
-    testIdentifier,
-    maxWidth,
-    maxHeight,
-    className,
-}) => {
+export const Image: FC<ImageProps> = ({ image, alt, type, loading, dataTestId, maxWidth, maxHeight, className }) => {
     const img: ImageSizeFragmentApi | null = image?.sizes.find((i) => i.size === type) ?? null;
 
     if (img === null) {
@@ -32,14 +21,14 @@ export const Image: FC<ImageProps> = ({
             <img
                 src="/images/optimized-noimage.png"
                 alt={alt}
-                data-testid={getTestIdentifier(testIdentifier) + '-empty'}
+                data-testid={getDataTestId(dataTestId) + '-empty'}
                 className={className}
             />
         );
     }
 
     return (
-        <picture data-testid={getTestIdentifier(testIdentifier)}>
+        <picture data-testid={getDataTestId(dataTestId)}>
             {img.additionalSizes.map((size) => (
                 <source key={size.url} srcSet={size.url} media={size.media} />
             ))}

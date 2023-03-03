@@ -122,12 +122,12 @@ export const Registration: FC = () => {
                                         }}
                                     />
                                     <Button
-                                        testIdentifier={TEST_IDENTIFIER}
+                                        dataTestId={TEST_IDENTIFIER}
                                         type="submit"
                                         variant="primary"
-                                        borderRadius="big"
+                                        isRounder
                                         style={{ width: '100%' }}
-                                        hasDisabledLook={!formProviderMethods.formState.isValid}
+                                        isDisabledLook={!formProviderMethods.formState.isValid}
                                     >
                                         {t('Create account')}
                                     </Button>

@@ -68,13 +68,13 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
                     </ProductDetailInfo>
                 </ProductDetail>
             </Webline>
-            <Webline testIdentifier={TEST_IDENTIFIER + 'variants'}>
+            <Webline dataTestId={TEST_IDENTIFIER + 'variants'}>
                 <ProductVariantsTable variants={product.variants} isSellingDenied={product.isSellingDenied} />
             </Webline>
-            <Webline testIdentifier={TEST_IDENTIFIER + 'description'}>
+            <Webline dataTestId={TEST_IDENTIFIER + 'description'}>
                 <ProductDetailTabs description={product.description} parameters={product.parameters} />
             </Webline>
-            <Webline testIdentifier={TEST_IDENTIFIER + 'accessories'}>
+            <Webline dataTestId={TEST_IDENTIFIER + 'accessories'}>
                 <ProductDetailAccessories accessories={product.accessories} />
             </Webline>
         </>

@@ -1,7 +1,7 @@
-import { AddToCartButtonStyled } from './ProductDetailAddToCart.style';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { AddToCartPopup } from 'components/Blocks/Product/AddToCartPopup/AddToCartPopup';
+import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import { CartItemFragmentApi, ProductDetailFragmentApi } from 'graphql/generated';
 import { useAddToCart } from 'hooks/cart/useAddToCart';
@@ -45,7 +45,8 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                         <div className="flex items-center justify-between">
                             <Spinbox min={1} step={1} defaultValue={1} max={product.stockQuantity} ref={spinboxRef} />
                             <div className="ml-2 flex-1">
-                                <AddToCartButtonStyled
+                                <Button
+                                    className="w-full"
                                     onClick={onAddToCartHandler}
                                     variant="primary"
                                     data-testid={TEST_IDENTIFIER + '-button'}
@@ -53,7 +54,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                                     {fetching ? <Loader iconSize={26} /> : <Icon iconType="icon" icon="Cart" />}
 
                                     {t('Add to cart')}
-                                </AddToCartButtonStyled>
+                                </Button>
                             </div>
                         </div>
                     </div>

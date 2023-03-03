@@ -11,7 +11,7 @@ type NativeProps = ExtractNativePropsFromDefault<InputHTMLAttributes<HTMLInputEl
 type PasswordInputProps = NativeProps & {
     label: string;
     inputSize?: 'small' | 'default';
-    testIdentifier?: string;
+    dataTestId?: string;
 };
 
 type PasswordInputControlledProps = {
@@ -56,7 +56,7 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
                     value={field.value}
                     inputSize={passwordInputProps.inputSize}
                     required
-                    data-testid={passwordInputProps.testIdentifier}
+                    data-testid={passwordInputProps.dataTestId}
                 />
                 <img
                     className={twJoin(

@@ -11,7 +11,6 @@ type SearchInputProps = NativeProps & {
     label: string;
     isSearchButtonDisabled?: boolean;
     onEnterPressCallback?: () => void;
-    testIdentifier: string;
     isLoading: boolean;
 };
 
@@ -21,7 +20,7 @@ export const SearchInput: FC<SearchInputProps> = ({
     onChange,
     value,
     onEnterPressCallback,
-    testIdentifier,
+    dataTestId,
     isLoading,
     className,
 }) => {
@@ -32,15 +31,15 @@ export const SearchInput: FC<SearchInputProps> = ({
     };
 
     return (
-        <LabelWrapper label={label} placeholderType="static" htmlFor={testIdentifier} inputType="text-input">
+        <LabelWrapper label={label} placeholderType="static" htmlFor={dataTestId} inputType="text-input">
             <SearchTextInputStyled
-                id={testIdentifier}
+                id={dataTestId}
                 onChange={onChange}
                 value={value}
                 placeholder={label}
                 type="search"
                 onKeyUp={enterKeyPressHandler}
-                data-testid={testIdentifier}
+                data-testid={dataTestId}
                 className={className}
             />
             <button

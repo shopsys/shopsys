@@ -82,8 +82,8 @@ export const NewsletterForm: FC = () => {
                                     <Button
                                         className="mt-3 lg:ml-3"
                                         type="submit"
-                                        borderRadius="big"
-                                        hasDisabledLook={!formProviderMethods.formState.isValid}
+                                        isRounder
+                                        isDisabledLook={!formProviderMethods.formState.isValid}
                                     >
                                         {t('Send')}
                                     </Button>

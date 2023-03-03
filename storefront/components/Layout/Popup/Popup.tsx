@@ -58,7 +58,6 @@ export const Popup: FC<PopupProps> = ({ isVisible, onCloseCallback, children, hi
                     <div className="flex h-9 items-center justify-end ">
                         <button
                             className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border-0 bg-creamWhite text-xs text-grey no-underline outline-none"
-                            type="button"
                             onClick={onClickCloseActionHandler}
                         >
                             <Icon iconType="icon" icon="Remove" width={24} height={24} className="text-primary" />

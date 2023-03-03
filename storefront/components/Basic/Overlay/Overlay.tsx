@@ -3,10 +3,10 @@ import { OverlayProps } from './propTypes';
 import { CSSTransition } from 'react-transition-group';
 
 export const Overlay: FC<OverlayProps> = (props) => {
-    const testIdentifier = 'basic-overlay';
+    const dataTestId = 'basic-overlay';
 
     return (
-        <OverlayWrapperStyled data-testid={testIdentifier}>
+        <OverlayWrapperStyled data-testid={dataTestId}>
             <CSSTransition in timeout={500} classNames="overlay" unmountOnExit>
                 <OverlayStyled {...props} onClick={props.onClick}>
                     {props.children}

@@ -13,7 +13,7 @@ export type TextInputProps = NativeProps & {
     value: any;
     label: ReactNode;
     hasError?: boolean;
-    testIdentifier?: string;
+    dataTestId?: string;
     inputSize?: 'small' | 'default';
 };
 
@@ -31,7 +31,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             onChange,
             onKeyPress,
             className,
-            testIdentifier,
+            dataTestId,
             value,
             type,
             autoComplete,
@@ -55,7 +55,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                     type={type}
                     autoComplete={autoComplete}
                     placeholder={typeof label === 'string' ? label : ' '}
-                    data-testid={testIdentifier}
+                    data-testid={dataTestId}
                     ref={textInputForwarderRef}
                 />
             </LabelWrapper>

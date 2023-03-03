@@ -176,7 +176,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             disabled: true,
                             type: 'email',
                             autoComplete: 'email',
-                            testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.email.name,
+                            dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.email.name,
                         }}
                     />
                     <FormLine bottomGap>
@@ -201,7 +201,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                 required: true,
                                 type: 'text',
                                 autoComplete: 'given-name',
-                                testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.firstName.name,
+                                dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.firstName.name,
                             }}
                         />
                         <TextInputControlled
@@ -218,7 +218,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                 required: true,
                                 type: 'text',
                                 autoComplete: 'family-name',
-                                testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.lastName.name,
+                                dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.lastName.name,
                             }}
                         />
                     </FormColumn>
@@ -232,7 +232,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             required: true,
                             type: 'tel',
                             autoComplete: 'tel-national',
-                            testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.telephone.name,
+                            dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.telephone.name,
                         }}
                     />
                     <CheckboxControlled
@@ -246,7 +246,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                         )}
                         checkboxProps={{
                             label: formMeta.fields.newsletterSubscription.label,
-                            testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.newsletterSubscription.name,
+                            dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.newsletterSubscription.name,
                         }}
                     />
                     <Heading type="h2">{t('Change password')}</Heading>
@@ -263,7 +263,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                         formName={formMeta.formName}
                         passwordInputProps={{
                             label: formMeta.fields.passwordOld.label,
-                            testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.passwordOld.name,
+                            dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.passwordOld.name,
                         }}
                     />
                     <FormColumn>
@@ -278,7 +278,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             formName={formMeta.formName}
                             passwordInputProps={{
                                 label: formMeta.fields.passwordFirst.label,
-                                testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.passwordFirst.name,
+                                dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.passwordFirst.name,
                             }}
                         />
                         <PasswordInputControlled
@@ -292,7 +292,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             formName={formMeta.formName}
                             passwordInputProps={{
                                 label: formMeta.fields.passwordSecond.label,
-                                testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.passwordSecond.name,
+                                dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.passwordSecond.name,
                             }}
                         />
                     </FormColumn>
@@ -309,7 +309,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                     required: false,
                                     type: 'text',
                                     autoComplete: 'organization',
-                                    testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.companyName.name,
+                                    dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.companyName.name,
                                 }}
                             />
                             <TextInputControlled
@@ -321,7 +321,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                     label: formMeta.fields.companyNumber.label,
                                     required: false,
                                     type: 'text',
-                                    testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.companyNumber.name,
+                                    dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.companyNumber.name,
                                 }}
                             />
                             <TextInputControlled
@@ -333,7 +333,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                     label: formMeta.fields.companyTaxNumber.label,
                                     required: false,
                                     type: 'text',
-                                    testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.companyTaxNumber.name,
+                                    dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.companyTaxNumber.name,
                                 }}
                             />
                         </>
@@ -349,7 +349,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             required: true,
                             type: 'text',
                             autoComplete: 'street-address',
-                            testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.street.name,
+                            dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.street.name,
                         }}
                     />
                     <FormColumn>
@@ -363,7 +363,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                 required: true,
                                 type: 'text',
                                 autoComplete: 'address-level2',
-                                testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.city.name,
+                                dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.city.name,
                             }}
                         />
                         <TextInputControlled
@@ -380,7 +380,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                 required: true,
                                 type: 'text',
                                 autoComplete: 'postal-code',
-                                testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.postcode.name,
+                                dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.postcode.name,
                             }}
                         />
                     </FormColumn>

@@ -126,8 +126,8 @@ export const PromoCode: FC = () => {
                                     <Button
                                         className="!rounded-r-xl !rounded-l-none !px-3"
                                         type="submit"
-                                        hasDisabledLook={hasValidationErrors(promoCodeValidationMessages)}
-                                        data-testid={TEST_IDENTIFIER + '-apply-button'}
+                                        isDisabledLook={hasValidationErrors(promoCodeValidationMessages)}
+                                        dataTestId={TEST_IDENTIFIER + '-apply-button'}
                                         onClick={onApplyPromoCodeHandler}
                                     >
                                         {fetchingApplyPromoCode && <Loader iconSize={16} className="text-white" />}

@@ -111,13 +111,13 @@ export const ContactInformationContent: FC = () => {
                         components={{
                             lnk1:
                                 termsAndConditionsArticleUrl !== undefined ? (
-                                    <Link href={termsAndConditionsArticleUrl} linkType="external" target="_blank" />
+                                    <Link href={termsAndConditionsArticleUrl} isExternal target="_blank" />
                                 ) : (
                                     <span></span>
                                 ),
                             lnk2:
                                 privacyPolicyArticleUrl !== undefined ? (
-                                    <Link href={privacyPolicyArticleUrl} linkType="external" target="_blank" />
+                                    <Link href={privacyPolicyArticleUrl} isExternal target="_blank" />
                                 ) : (
                                     <span></span>
                                 ),

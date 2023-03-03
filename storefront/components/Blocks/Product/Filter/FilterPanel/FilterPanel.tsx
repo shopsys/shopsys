@@ -216,8 +216,7 @@ export const FilterPanel = memo<FilterPanelProps>(
                 </div>
                 <div className="flex items-center justify-end bg-white py-5 vl:hidden">
                     <Button
-                        type="button"
-                        size="small"
+                        isSmall
                         onClick={panelCloseHandler}
                         className="inline-block lowercase first-letter:uppercase"
                     >

@@ -1,5 +1,5 @@
 import { Icon } from 'components/Basic/Icon/Icon';
-import { ButtonStyled } from 'components/Basic/Link/Link.style';
+import { Button } from 'components/Forms/Button/Button';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
@@ -43,9 +43,9 @@ export const FooterBoxInfo: FC = () => {
                     <p className="m-0 text-sm text-white">{dummyData.opening}</p>
                 </div>
                 <NextLink href={contactUrl} passHref>
-                    <ButtonStyled variant="secondary" className="z-above">
+                    <Button variant="secondary" className="z-above">
                         {t('Write to us')}
-                    </ButtonStyled>
+                    </Button>
                 </NextLink>
             </div>
         </div>

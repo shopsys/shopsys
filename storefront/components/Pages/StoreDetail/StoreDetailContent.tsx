@@ -21,7 +21,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
     const [contactUrl] = getInternationalizedStaticUrls(['/contact'], url);
 
     return (
-        <Webline testIdentifier={TEST_IDENTIFIER}>
+        <Webline dataTestId={TEST_IDENTIFIER}>
             <div className="mb-10">
                 <div className="relative lg:min-h-[350px] lg:pl-[380px] vl:min-h-[500px] vl:pl-[530px] xl:min-h-[650px] xl:pl-[720px]">
                     <Heading type="h1">{store.storeName}</Heading>

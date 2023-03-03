@@ -75,10 +75,9 @@ export const Cart: FC = () => {
                         </ul>
                         <div className="flex w-full justify-end pt-5">
                             <Button
-                                type="button"
-                                size="small"
+                                isSmall
                                 onClick={() => router.push(cartUrl)}
-                                testIdentifier={TEST_IDENTIFIER + 'button'}
+                                dataTestId={TEST_IDENTIFIER + 'button'}
                             >
                                 {t('Go to cart')}
                             </Button>

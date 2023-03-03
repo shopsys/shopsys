@@ -15,7 +15,7 @@ type TextInputControlledProps = {
         | 'type'
         | 'label'
         | 'inputSize'
-        | 'testIdentifier'
+        | 'dataTestId'
         | 'autoComplete'
     >;
     control: Control<any>;
@@ -59,7 +59,7 @@ export const TextInputControlled: FC<TextInputControlledProps> = ({
                 error={error}
                 textInputSize={textInputProps.inputSize}
                 inputType="text-input"
-                testIdentifier={`${textInputId}-error`}
+                dataTestId={`${textInputId}-error`}
             />
         </>,
     );

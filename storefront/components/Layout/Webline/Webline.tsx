@@ -6,15 +6,14 @@ type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>,
 
 type WeblineProps = NativeProps & {
     type?: WeblineType;
-    testIdentifier?: string;
 };
 
 type WeblineType = 'colored' | 'dark' | 'light' | 'blog';
 
-const getTestIdentifier = (testIdentifier?: string, type?: WeblineType) =>
-    testIdentifier ?? 'layout-webline' + (type ? '-' + type : '');
+const getDataTestId = (dataTestId?: string, type?: WeblineType) =>
+    dataTestId ?? 'layout-webline' + (type ? '-' + type : '');
 
-export const Webline: FC<WeblineProps> = ({ children, style, testIdentifier, type, className }) => (
+export const Webline: FC<WeblineProps> = ({ children, style, dataTestId, type, className }) => (
     <div
         className={twMergeCustom(
             type === 'colored' && 'bg-primary',
@@ -24,7 +23,7 @@ export const Webline: FC<WeblineProps> = ({ children, style, testIdentifier, typ
             className,
         )}
         style={style}
-        data-testid={getTestIdentifier(testIdentifier, type)}
+        data-testid={getDataTestId(dataTestId, type)}
     >
         <div className="px-5 xl:mx-auto xl:w-full xl:max-w-7xl">{children}</div>
     </div>

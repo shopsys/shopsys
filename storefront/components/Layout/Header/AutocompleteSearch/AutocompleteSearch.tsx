@@ -111,7 +111,7 @@ export const AutocompleteSearch: FC = () => {
                                     : 'border-white',
                             )}
                             label={t("Type what you're looking for")}
-                            testIdentifier={TEST_IDENTIFIER}
+                            dataTestId={TEST_IDENTIFIER}
                             onEnterPressCallback={onAutocompleteSearchHandler}
                             value={autocompleteSearchQueryValue}
                             onChange={onChangeAutocompleteSearchQueryValueHandler}

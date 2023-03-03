@@ -6,7 +6,7 @@ import { Control, useController } from 'react-hook-form';
 type CheckboxControlledProps = {
     name: string;
     render: (input: JSX.Element, currentValue: any) => ReactElement<any, any> | null;
-    checkboxProps: Pick<CheckboxProps, 'count' | 'disabled' | 'label' | 'required' | 'testIdentifier'>;
+    checkboxProps: Pick<CheckboxProps, 'count' | 'disabled' | 'label' | 'required' | 'dataTestId'>;
     control: Control<any>;
     formName: string;
 };
@@ -21,7 +21,7 @@ export const CheckboxControlled: FC<CheckboxControlledProps> = ({ name, render, 
     return render(
         <>
             <Checkbox {...checkboxProps} {...field} id={checkboxId} />
-            <FormLineError error={error} inputType="checkbox" testIdentifier={checkboxId + '-error'} />
+            <FormLineError error={error} inputType="checkbox" dataTestId={checkboxId + '-error'} />
         </>,
         field.value,
     );

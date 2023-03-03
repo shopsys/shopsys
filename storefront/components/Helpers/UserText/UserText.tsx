@@ -2,19 +2,13 @@ import { GrapesJsStyled, UserTextStyled } from './UserText.style';
 
 type UserTextProps = {
     htmlContent: string;
-    testIdentifier?: string;
     isGrapesJs?: boolean;
 };
 
-export const UserText: FC<UserTextProps> = ({ testIdentifier, htmlContent, isGrapesJs }) => {
+export const UserText: FC<UserTextProps> = ({ dataTestId, htmlContent, isGrapesJs }) => {
     if (isGrapesJs) {
-        return (
-            <GrapesJsStyled
-                dangerouslySetInnerHTML={{ __html: htmlContent }}
-                data-testid={testIdentifier}
-            ></GrapesJsStyled>
-        );
+        return <GrapesJsStyled dangerouslySetInnerHTML={{ __html: htmlContent }} data-testid={dataTestId} />;
     }
 
-    return <UserTextStyled dangerouslySetInnerHTML={{ __html: htmlContent }} data-testid={testIdentifier} />;
+    return <UserTextStyled dangerouslySetInnerHTML={{ __html: htmlContent }} data-testid={dataTestId} />;
 };

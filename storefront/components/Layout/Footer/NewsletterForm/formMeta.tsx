@@ -67,7 +67,7 @@ export const useNewsletterFormMeta = (
                             components={{
                                 lnk1:
                                     privacyPolicyArticleUrl !== undefined ? (
-                                        <Link href={privacyPolicyArticleUrl} linkType="external" target="_blank" />
+                                        <Link href={privacyPolicyArticleUrl} isExternal target="_blank" />
                                     ) : (
                                         <span></span>
                                     ),

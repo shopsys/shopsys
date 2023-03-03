@@ -23,7 +23,7 @@ type FilterGroupParametersProps = {
     areByDefaultAllParametersShown: boolean;
 };
 
-const getTestIdentifier = (parameterParentIndex: number) =>
+const getDataTestId = (parameterParentIndex: number) =>
     'blocks-product-filter-filtergroup-parameters-' + parameterParentIndex;
 
 export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
@@ -48,7 +48,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
     );
 
     return (
-        <FilterGroupWrapper dataTestId={getTestIdentifier(parameterParentIndex)}>
+        <FilterGroupWrapper dataTestId={getDataTestId(parameterParentIndex)}>
             <FilterGroupTitle onClick={() => setIsGroupCollapsed((currentGroupVisibility) => !currentGroupVisibility)}>
                 {title}
                 <FilterGroupIcon isOpen={!isGroupCollapsed} />
@@ -66,7 +66,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                     <FilterGroupContentItem
                                         key={dataItem.uuid}
                                         isDisabled={dataItem.count === 0 && !(item?.checked ?? false)}
-                                        dataTestId={getTestIdentifier(parameterParentIndex) + '-' + index}
+                                        dataTestId={getDataTestId(parameterParentIndex) + '-' + index}
                                     >
                                         <Checkbox
                                             id={id}
@@ -111,7 +111,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                 <CheckboxColor
                                     key={dataItem.uuid}
                                     bgColor={dataItem.rgbHex ?? undefined}
-                                    testIdentifier={getTestIdentifier(index)}
+                                    dataTestId={getDataTestId(index)}
                                     id={id}
                                     name={id}
                                     onChange={

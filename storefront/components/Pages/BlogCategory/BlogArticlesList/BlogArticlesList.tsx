@@ -45,7 +45,7 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles }) =>
                                     {blogArticleCategory.parent !== null && (
                                         <Flag
                                             href={blogArticleCategory.link}
-                                            testIdentifier={
+                                            dataTestId={
                                                 TEST_IDENTIFIER +
                                                 blogArticleIndex +
                                                 '-section-' +

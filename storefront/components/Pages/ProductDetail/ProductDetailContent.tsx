@@ -71,13 +71,13 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
                     </ProductDetailInfo>
                 </ProductDetail>
             </Webline>
-            <Webline testIdentifier={TEST_IDENTIFIER + 'description'}>
+            <Webline dataTestId={TEST_IDENTIFIER + 'description'}>
                 <ProductDetailTabs description={product.description} parameters={product.parameters} />
             </Webline>
-            <Webline testIdentifier={TEST_IDENTIFIER + 'availability'}>
+            <Webline dataTestId={TEST_IDENTIFIER + 'availability'}>
                 <ProductDetailAvailabilityList ref={scrollTarget} storeAvailabilities={product.storeAvailabilities} />
             </Webline>
-            <Webline testIdentifier={TEST_IDENTIFIER + 'accessories'}>
+            <Webline dataTestId={TEST_IDENTIFIER + 'accessories'}>
                 <ProductDetailAccessories accessories={product.accessories} />
             </Webline>
         </Fragment>

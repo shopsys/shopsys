@@ -100,11 +100,11 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                 <div className="flex flex-col">
                     {t('Do you really want to delete this delivery address?')}
                     <div className="mt-4 flex flex-row flex-nowrap justify-between">
-                        <Button type="button" onClick={() => setAddressToBeDeleted(undefined)}>
+                        <Button onClick={() => setAddressToBeDeleted(undefined)}>
                             <Icon iconType="icon" icon="Arrow" className="relative mr-4 rotate-90 text-white" />
                             {t('No')}
                         </Button>
-                        <Button type="button" onClick={() => deleteItemHandler(addressToBeDeleted)}>
+                        <Button onClick={() => deleteItemHandler(addressToBeDeleted)}>
                             {t('Yes')}
                             <Icon iconType="icon" icon="Arrow" className="relative ml-4 -rotate-90" />
                         </Button>

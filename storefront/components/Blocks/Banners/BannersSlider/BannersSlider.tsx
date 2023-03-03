@@ -16,10 +16,9 @@ const DEVICE_BREAKPOINT_SIZE = {
 
 type BannersSliderProps = {
     sliderItems: SliderItemFragmentApi[];
-    testIdentifier: string;
 };
 
-export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, testIdentifier }) => {
+export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, dataTestId }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [pause, setPause] = useState(false);
     const timer = useRef<NodeJS.Timer | null>(null);
@@ -86,7 +85,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, testIdentif
     };
 
     return (
-        <div className="mb-14 flex flex-col vl:flex-row" ref={sliderBoxRef} data-testid={testIdentifier}>
+        <div className="mb-14 flex flex-col vl:flex-row" ref={sliderBoxRef} data-testid={dataTestId}>
             <div
                 ref={sliderRef}
                 className="keen-slider lg h-[200px] w-full cursor-pointer lg:h-[250px] vl:h-[290px] vl:w-[calc(100%-307px)]"

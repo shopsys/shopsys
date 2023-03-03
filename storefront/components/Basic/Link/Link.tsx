@@ -1,7 +1,7 @@
-import { ButtonStyled, LinkStyled } from './Link.style';
-import { ButtonDefaultPropType } from 'components/Forms/Button/propTypes';
+import { Button } from 'components/Forms/Button/Button';
 import NextLink from 'next/link';
 import { AnchorHTMLAttributes } from 'react';
+import { twMerge } from 'tailwind-merge';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
 type NativePropsAnchor = ExtractNativePropsFromDefault<
@@ -10,84 +10,39 @@ type NativePropsAnchor = ExtractNativePropsFromDefault<
     'rel' | 'target'
 >;
 
-type LinkProps = NativePropsAnchor &
-    ButtonDefaultPropType & {
-        linkType?: 'external';
-        isButton?: boolean;
-    };
+type LinkProps = NativePropsAnchor & {
+    isExternal?: boolean;
+    isButton?: boolean;
+    size?: 'small';
+};
 
-const getTestIdentifier = (linkType?: 'external', isButton?: boolean) =>
-    'basic-link' + (linkType !== undefined ? '-' + linkType : '') + (isButton === true ? '-button' : '');
+const getDataTestId = (linkType?: boolean, isButton?: boolean) =>
+    'basic-link' + (linkType !== undefined ? '-external' : '') + (isButton ? '-button' : '');
 
-export const Link: FC<LinkProps> = ({
-    linkType,
-    isButton,
-    children,
-    size,
-    variant,
-    borderRadius,
-    href,
-    rel,
-    target,
-    className,
-}) => {
-    if (linkType === 'external') {
-        if (isButton === true) {
-            <ButtonStyled
-                className={className}
-                href={href}
-                rel={rel}
-                target={target}
-                size={size}
-                variant={variant}
-                borderRadius={borderRadius}
-                data-testid={getTestIdentifier(linkType, isButton)}
-            >
-                {children}
-            </ButtonStyled>;
-        }
+export const Link: FC<LinkProps> = ({ isExternal, isButton, children, href, rel, target, className }) => {
+    const content = (
+        <a
+            className={twMerge(
+                'inline-flex cursor-pointer items-center text-greyDark outline-none hover:text-primary',
+                isButton ? 'no-underline hover:no-underline' : 'underline hover:underline',
+                className,
+            )}
+            href={isExternal ? href : undefined}
+            rel={rel}
+            target={target}
+            data-testid={getDataTestId(isExternal, isButton)}
+        >
+            {isButton ? <Button>{children}</Button> : children}
+        </a>
+    );
 
-        return (
-            <LinkStyled
-                className={className}
-                href={href}
-                rel={rel}
-                target={target}
-                data-testid={getTestIdentifier(linkType, isButton)}
-            >
-                {children}
-            </LinkStyled>
-        );
-    }
-
-    if (isButton === true) {
-        return (
-            <NextLink href={href} passHref>
-                <ButtonStyled
-                    className={className}
-                    rel={rel}
-                    target={target}
-                    size={size}
-                    variant={variant}
-                    borderRadius={borderRadius}
-                    data-testid={getTestIdentifier(linkType, isButton)}
-                >
-                    {children}
-                </ButtonStyled>
-            </NextLink>
-        );
+    if (isExternal) {
+        return content;
     }
 
     return (
         <NextLink href={href} passHref>
-            <LinkStyled
-                className={className}
-                rel={rel}
-                target={target}
-                data-testid={getTestIdentifier(linkType, isButton)}
-            >
-                {children}
-            </LinkStyled>
+            {content}
         </NextLink>
     );
 };

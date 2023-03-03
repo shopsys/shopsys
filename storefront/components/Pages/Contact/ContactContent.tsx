@@ -115,11 +115,7 @@ export const ContactContent: FC = () => {
                                     components={{
                                         lnk1:
                                             privacyPolicyArticleUrl !== undefined ? (
-                                                <Link
-                                                    href={privacyPolicyArticleUrl}
-                                                    linkType="external"
-                                                    target="_blank"
-                                                />
+                                                <Link href={privacyPolicyArticleUrl} isExternal target="_blank" />
                                             ) : (
                                                 <span></span>
                                             ),
@@ -128,9 +124,9 @@ export const ContactContent: FC = () => {
                             </div>
                             <Button
                                 type="submit"
-                                borderRadius="big"
+                                isRounder
                                 variant="primary"
-                                hasDisabledLook={!formProviderMethods.formState.isValid}
+                                isDisabledLook={!formProviderMethods.formState.isValid}
                             >
                                 {t('Send message')}
                             </Button>

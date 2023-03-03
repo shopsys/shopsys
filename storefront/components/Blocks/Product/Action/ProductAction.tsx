@@ -21,10 +21,9 @@ export const ProductAction: FC<ProductActionProps> = ({ product, gtmListName, li
         return (
             <ProductActionWrapper>
                 <Button
-                    type="button"
                     onClick={() => router.push(product.slug)}
                     name="choose-variant"
-                    testIdentifier={TEST_IDENTIFIER + '-choose-variant'}
+                    dataTestId={TEST_IDENTIFIER + '-choose-variant'}
                     className="!w-full"
                 >
                     {t('Choose variant')}

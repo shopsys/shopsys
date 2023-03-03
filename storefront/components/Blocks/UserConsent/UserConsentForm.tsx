@@ -86,27 +86,15 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                 render={(toggleSwitch) => <ToggleContent name={t('Preferences')} toggleSwitch={toggleSwitch} />}
             />
             <div className="mt-10 mb-5 flex flex-wrap justify-end gap-3">
-                <Button
-                    testIdentifier="blocks-userconsent-save"
-                    type="button"
-                    size="small"
-                    variant="primary"
-                    onClick={saveCookieChoices}
-                >
+                <Button dataTestId="blocks-userconsent-save" isSmall variant="primary" onClick={saveCookieChoices}>
                     {t('Save choices')}
                 </Button>
-                <Button
-                    testIdentifier="blocks-userconsent-accept"
-                    type="button"
-                    size="small"
-                    onClick={acceptAllCookieChoices}
-                >
+                <Button dataTestId="blocks-userconsent-accept" isSmall onClick={acceptAllCookieChoices}>
                     {t('Accept all')}
                 </Button>
                 <Button
-                    testIdentifier="blocks-userconsent-reject"
-                    type="button"
-                    size="small"
+                    dataTestId="blocks-userconsent-reject"
+                    isSmall
                     variant="secondary"
                     onClick={rejectAllCookieChoices}
                 >

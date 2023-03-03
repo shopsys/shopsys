@@ -64,8 +64,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ isVisible, onCloseCall
             <div className="-mt-2 -mr-2 flex flex-col text-center md:flex-row md:items-center md:justify-between md:p-0">
                 <Button
                     onClick={onCloseCallback}
-                    type="button"
-                    testIdentifier={TEST_IDENTIFIER + '-button-back'}
+                    dataTestId={TEST_IDENTIFIER + '-button-back'}
                     className="mt-2 mr-2 lg:w-auto lg:justify-start"
                 >
                     {t('Back to shop')}

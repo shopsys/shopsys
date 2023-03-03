@@ -66,7 +66,7 @@ export const ResetPasswordContent: FC<ResetPasswordContentProps> = ({ breadcrumb
                             }}
                         />
                         <div className="mt-8 flex w-full justify-center">
-                            <Button type="submit" hasDisabledLook={invalid || value.length === 0}>
+                            <Button type="submit" isDisabledLook={invalid || value.length === 0}>
                                 {t('Reset password')}
                             </Button>
                         </div>

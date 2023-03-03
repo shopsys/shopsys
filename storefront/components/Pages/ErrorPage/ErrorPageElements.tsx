@@ -1,4 +1,4 @@
-import { ButtonStyled } from 'components/Forms/Button/Button.style';
+import { Button } from 'components/Forms/Button/Button';
 import { twJoin } from 'tailwind-merge';
 
 type ErrorPageProps = { isWithoutImage?: boolean };
@@ -18,4 +18,4 @@ export const ErrorPageTextHeading: FC = ({ children }) => <div className="text-2
 
 export const ErrorPageTextMain: FC = ({ children }) => <div className="mt-4 text-greyDark">{children}</div>;
 
-export const ErrorPageButtonLink: FC = ({ children }) => <ButtonStyled className="mt-5">{children}</ButtonStyled>;
+export const ErrorPageButtonLink: FC = ({ children }) => <Button className="mt-5">{children}</Button>;
