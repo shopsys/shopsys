@@ -4,5 +4,5 @@ NavigationQuery:
         fields:
             navigation:
                 type: '[NavigationItem!]!'
-                resolve: "@=resolver('resolveNavigation')"
+                resolve: "@=query('navigationQuery')"
                 description: "Returns complete navigation menu"

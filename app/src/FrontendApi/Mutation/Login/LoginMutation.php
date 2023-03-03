@@ -35,7 +35,6 @@ class LoginMutation extends BaseLoginMutation
     }
 
     /**
-     * @phpstan-ignore-next-line
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return array<string, array<string, string>|bool>
      */

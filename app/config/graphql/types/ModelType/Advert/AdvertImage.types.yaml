@@ -4,10 +4,10 @@ AdvertImage:
         - 'AdvertImageDecorator'
     config:
         fields:
-            image:
+            images:
                 type: "[Image!]!"
-                description: "Advert image"
-                resolve: '@=query("resolveByAdvert", value, args["type"], args["sizes"])'
+                description: "Advert images"
+                resolve: '@=query("imagesByAdvertPromiseQuery", value, args["type"], args["sizes"])'
                 args:
                     type:
                         type: "String"
@@ -18,7 +18,7 @@ AdvertImage:
             mainImage:
                 type: "Image"
                 description: "Adverts first image by params"
-                resolve: '@=resolver("resolveMainImageByAdvert", [value, args["type"], args["size"]])'
+                resolve: '@=query("mainImageByAdvertPromiseQuery", value, args["type"], args["size"])'
                 args:
                     type:
                         type: "String"

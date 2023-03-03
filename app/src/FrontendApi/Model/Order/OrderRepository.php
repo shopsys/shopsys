@@ -6,11 +6,9 @@ namespace App\FrontendApi\Model\Order;
 
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Order\Order;
-use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser as FrameworkCustomerUser;
 use Shopsys\FrontendApiBundle\Model\Order\OrderRepository as BaseOrderRepository;
-
-//use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
+use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
 
 /**
  * @method \App\Model\Order\Order|null findByUuidAndCustomerUser(string $uuid, \App\Model\Customer\User\CustomerUser $customerUser)
@@ -30,15 +28,10 @@ class OrderRepository extends BaseOrderRepository
         $order = $this->findByOrderNumberAndCustomerUser($orderNumber, $customerUser);
 
         if ($order === null) {
-            throw new UserError(sprintf(
+            throw new OrderNotFoundUserError(sprintf(
                 'Order with order number \'%s\' not found.',
                 $orderNumber
             ));
-            // TODO-RK
-//            throw new OrderNotFoundUserError(sprintf(
-//                'Order with order number \'%s\' not found.',
-//                $orderNumber
-//            ));
         }
 
         return $order;
@@ -68,15 +61,10 @@ class OrderRepository extends BaseOrderRepository
             ->getQuery()->getOneOrNullResult();
 
         if ($order === null) {
-            throw new UserError(sprintf(
+            throw new OrderNotFoundUserError(sprintf(
                 'Order with UUID \'%s\' not found.',
                 $uuid
             ));
-            // TODO-RK
-//            throw new OrderNotFoundUserError(sprintf(
-//                'Order with UUID \'%s\' not found.',
-//                $uuid
-//            ));
         }
 
         return $order;
@@ -92,15 +80,10 @@ class OrderRepository extends BaseOrderRepository
         $order = $this->findByUuidAndCustomerUser($uuid, $customerUser);
 
         if ($order === null) {
-            throw new UserError(sprintf(
+            throw new OrderNotFoundUserError(sprintf(
                 'Order with UUID \'%s\' not found.',
                 $uuid
             ));
-            //TODO-RK
-//            throw new OrderNotFoundUserError(sprintf(
-//                'Order with UUID \'%s\' not found.',
-//                $uuid
-//            ));
         }
 
         return $order;

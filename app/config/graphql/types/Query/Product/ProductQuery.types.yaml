@@ -8,7 +8,7 @@ ProductQuery:
                     builder: "PaginatorArgumentsBuilder"
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
-                resolve: "@=resolver('products', [args])"
+                resolve: "@=query('productsQuery', args)"
                 complexity: "@=dynamicPaginationComplexity(args)"
                 description: "Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"
             ParameterSliderFilterOption:

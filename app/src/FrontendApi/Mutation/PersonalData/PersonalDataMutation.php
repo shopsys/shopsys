@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\FrontendApi\Mutation\PersonalData;
 
 use App\FrontendApi\Mutation\PersonalData\Exception\InvalidPersonalDataRequestTypeUserError;
-use App\FrontendApi\Resolver\PersonalData\PersonalDataResolver;
+use App\FrontendApi\Resolver\PersonalData\PersonalDataQuery;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
@@ -39,23 +39,23 @@ class PersonalDataMutation implements MutationInterface, AliasedInterface
     private Domain $domain;
 
     /**
-     * @var \App\FrontendApi\Resolver\PersonalData\PersonalDataResolver
+     * @var \App\FrontendApi\Resolver\PersonalData\PersonalDataQuery
      */
-    private PersonalDataResolver $personalDataPageResolver;
+    private PersonalDataQuery $personalDataPageResolver;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade $personalDataAccessRequestFacade
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory $personalDataAccessRequestDataFactory
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMailFacade $personalDataAccessMailFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\FrontendApi\Resolver\PersonalData\PersonalDataResolver $personalDataPageResolver
+     * @param \App\FrontendApi\Resolver\PersonalData\PersonalDataQuery $personalDataPageResolver
      */
     public function __construct(
         PersonalDataAccessRequestFacade $personalDataAccessRequestFacade,
         PersonalDataAccessRequestDataFactoryInterface $personalDataAccessRequestDataFactory,
         PersonalDataAccessMailFacade $personalDataAccessMailFacade,
         Domain $domain,
-        PersonalDataResolver $personalDataPageResolver
+        PersonalDataQuery $personalDataPageResolver
     ) {
         $this->personalDataAccessRequestFacade = $personalDataAccessRequestFacade;
         $this->personalDataAccessRequestDataFactory = $personalDataAccessRequestDataFactory;
@@ -93,7 +93,7 @@ class PersonalDataMutation implements MutationInterface, AliasedInterface
 
         $this->personalDataAccessMailFacade->sendMail($personalData);
 
-        return $this->personalDataPageResolver->resolvePersonalDataPage();
+        return $this->personalDataPageResolver->personalDataPageQuery();
     }
 
     /**

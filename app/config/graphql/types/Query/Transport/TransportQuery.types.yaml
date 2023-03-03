@@ -4,7 +4,7 @@ TransportQuery:
         fields:
             transports:
                 type: '[Transport!]!'
-                resolve: "@=resolver('transports', [args['cartUuid']])"
+                resolve: "@=query('transportsQuery', args['cartUuid'])"
                 args:
                     cartUuid:
                         type: "Uuid"

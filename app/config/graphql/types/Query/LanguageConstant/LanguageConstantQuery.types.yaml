@@ -4,5 +4,5 @@ LanguageConstantQuery:
         fields:
             languageConstants:
                 type: '[LanguageConstant!]!'
-                resolve: "@=resolver('resolveLanguageConstants')"
+                resolve: "@=query('languageConstantsQuery')"
                 description: "Return user translated language constants for current domain locale"

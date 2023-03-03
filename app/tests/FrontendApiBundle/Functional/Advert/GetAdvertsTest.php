@@ -195,7 +195,7 @@ class GetAdvertsTest extends GraphQlTestCase
                         code
                     }
                     ... on AdvertImage {
-                        image(type: "web") {
+                        images(type: "web") {
                             position
                             type
                             sizes {

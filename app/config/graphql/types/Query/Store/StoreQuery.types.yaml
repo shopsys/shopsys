@@ -5,12 +5,12 @@ StoreQuery:
             stores:
                 type: "StoreConnection!"
                 argsBuilder: "Relay::Connection"
-                resolve: "@=resolver('resolveStores', [args])"
+                resolve: "@=query('storesQuery', args)"
                 complexity: "@=dynamicPaginationComplexity(args)"
                 description: "Returns list of stores that can be paginated using `first`, `last`, `before` and `after` keywords"
             store:
                 type: 'Store'
-                resolve: "@=resolver('resolveStore', [args['uuid'], args['urlSlug']])"
+                resolve: "@=query('storeQuery', args['uuid'], args['urlSlug'])"
                 args:
                     uuid:
                         type: "Uuid"

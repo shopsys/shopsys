@@ -33,17 +33,17 @@ class ProductDataFactory extends BaseProductDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
+     * @param \App\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
+     * @param \App\Model\Product\Unit\UnitFacade $unitFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \App\Model\Product\ProductRepository $productRepository
+     * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
+     * @param \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      * @param \App\Model\Stock\ProductStockFacade $stockProductFacade
      * @param \App\Model\Stock\StockFacade $stockFacade

@@ -18,8 +18,8 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 class CategoryDataFactory extends BaseCategoryDataFactory
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \App\Model\Category\CategoryRepository $categoryRepository
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory

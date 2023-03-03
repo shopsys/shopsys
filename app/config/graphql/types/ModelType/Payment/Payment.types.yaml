@@ -13,7 +13,7 @@ Payment:
             price:
                 type: "Price!"
                 description: "Payment price"
-                resolve: '@=query("App\\FrontendApi\\Resolver\\Price\\PriceResolver::resolveByPayment", value, args["cartUuid"], context)'
+                resolve: '@=query("priceByPaymentQuery", value, args["cartUuid"], context)'
                 args:
                     cartUuid:
                         type: "Uuid"
@@ -21,7 +21,7 @@ Payment:
             images:
                 type: "[Image!]!"
                 description: "Payment images"
-                resolve: '@=query("resolveImagesByEntity", value, args["type"], args["sizes"])'
+                resolve: '@=query("imagesByEntityPromiseQuery", value, args["type"], args["sizes"])'
                 args:
                     type:
                         type: "String"
@@ -32,7 +32,7 @@ Payment:
             mainImage:
                 type: "Image"
                 description: "Payment image by params"
-                resolve: '@=query("resolveMainImageByEntity", value, args["type"], args["size"])'
+                resolve: '@=query("mainImageByEntityPromiseQuery", value, args["type"], args["size"])'
                 args:
                     type:
                         type: "String"
