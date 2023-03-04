@@ -28,7 +28,7 @@ import {
     continueToThirdStep,
 } from '../../Functions/orderSecondStep';
 import {
-    checkFinishOrderPageAsUnregistredCustomer,
+    checkFinishOrderPageAsUnloggedCustomerWithEmailWithExistingRegistration,
     clickOnOrderDetailButtonOnThankYouPage,
 } from '../../Functions/orderThankYouPage';
 import {
@@ -39,7 +39,7 @@ import {
     fillInNoteInThirdStep,
 } from '../../Functions/orderThirdStep';
 
-it('Creating an order as unlogged user with one item, Czech post and cash on delivery', () => {
+it('Creating an order with one item, Czech post and cash on delivery as unlogged user but with an email which has an existing registration', () => {
     cy.visit('/');
     saveCookiesOptionsInCookiesBar();
     addProductToCartFromPromotedProductsOnHomepage(products.helloKitty.catnum);
@@ -67,7 +67,7 @@ it('Creating an order as unlogged user with one item, Czech post and cash on del
 
     // third step
     cy.url().should('contain', url.order.thirdStep);
-    fillEmailInThirdStep(customer1.email);
+    fillEmailInThirdStep(customer1.emailRegistered);
     fillCustomerInformationInThirdStep(customer1.phone, customer1.firstName, customer1.lastName);
     fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
     fillInNoteInThirdStep(orderNote);
@@ -84,7 +84,7 @@ it('Creating an order as unlogged user with one item, Czech post and cash on del
     clickOnSendOrderButton();
 
     // thank you page order
-    checkFinishOrderPageAsUnregistredCustomer();
+    checkFinishOrderPageAsUnloggedCustomerWithEmailWithExistingRegistration();
     clickOnOrderDetailButtonOnThankYouPage();
 
     // order detail
@@ -92,7 +92,7 @@ it('Creating an order as unlogged user with one item, Czech post and cash on del
     checkBillingAdressInOrderDetail(
         customer1.firstName,
         customer1.lastName,
-        customer1.email,
+        customer1.emailRegistered,
         customer1.phone,
         customer1.billingStreet,
         customer1.billingCity,

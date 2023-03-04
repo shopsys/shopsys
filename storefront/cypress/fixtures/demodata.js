@@ -10,7 +10,8 @@ export const categories = {
 };
 export const countryCZ = 'Česká republika';
 export const customer1 = {
-    email: 'no-reply@shopsys.com',
+    email: 'no-reply123@shopsys.com',
+    emailRegistered: 'no-reply@shopsys.com',
     firstName: 'jméno',
     lastName: 'příjmení',
     phone: '777666555',

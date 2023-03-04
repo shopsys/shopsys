@@ -4,7 +4,7 @@ import { fillInEmailAndPasswordOnLoginPage } from '../../Functions/login';
 
 it('Login from login page', () => {
     cy.visit(url.login);
-    fillInEmailAndPasswordOnLoginPage(customer1.email, customer1.password);
+    fillInEmailAndPasswordOnLoginPage(customer1.emailRegistered, customer1.password);
     cy.get('[data-testid="pages-login-submit"]').click();
     checkUserIsLoggedIn();
 });
