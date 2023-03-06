@@ -81,3 +81,38 @@ input::-webkit-inner-spin-button {
 input[type='number'] {
     -moz-appearance: textfield;
 }
+
+/* Stuff for react-select */
+
+.select__placeholder {
+    @apply hidden;
+}
+
+.select__control {
+    @apply !z-[2] !min-h-[56px] !cursor-pointer !items-end !self-end !rounded-xl !border-2 !border-border !shadow-none hover:!border-2 hover:!border-border;
+}
+
+.select__indicator {
+    @apply !flex h-12 w-12 !items-center !justify-center !p-0 transition-all [&_i]:!text-greyDark;
+}
+
+.select__menu {
+    @apply !m-0 !overflow-hidden !rounded-b-xl !border-2 !border-t-0 !border-border !shadow-none;
+}
+
+.select__menu-list {
+    @apply [&::-webkit-scrollbar]:h-[0px] [&::-webkit-scrollbar]:w-[5px] [&::-webkit-scrollbar-track]:bg-greyVeryLight [&::-webkit-scrollbar-thumb]:bg-greyLight [&::-webkit-scrollbar-thumb]:hover:bg-grey;
+}
+
+.select__option {
+    @apply !cursor-pointer !p-3 !text-dark active:!bg-blueLight;
+}
+
+.select__option--is-selected,
+.select__option--is-focused {
+    @apply !bg-blueLight;
+}
+
+.select__control--menu-is-open {
+    @apply !items-end !rounded-b-none [&.select__indicator]:!rotate-180 [&.select__indicator>svg]:!text-primary;
+}

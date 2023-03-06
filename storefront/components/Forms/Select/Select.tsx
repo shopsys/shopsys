@@ -1,7 +1,7 @@
-import { SelectStyled } from './Select.style';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper/LabelWrapper';
 import { ReactNode } from 'react';
+import SelectReact from 'react-select';
 import { components, Props } from 'react-select';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
@@ -14,10 +14,6 @@ type NativeProps = ExtractNativePropsFromDefault<
 type SelectProps = NativeProps & {
     hasError: boolean;
     label: ReactNode;
-};
-
-const customStyles = {
-    indicatorSeparator: () => ({}),
 };
 
 const DropdownIndicator = (props: any) => {
@@ -47,21 +43,26 @@ const Control = (props: any) => {
     );
 };
 
-export const Select: FC<SelectProps> = ({ hasError, label, onChange, options, defaultValue, isDisabled, value }) => {
+export const Select: FC<SelectProps> = ({ hasError, onChange, options, defaultValue, isDisabled, value, ...props }) => {
     return (
-        <SelectStyled
-            label={label}
+        <SelectReact
             onChange={onChange}
             options={options}
             defaultValue={defaultValue}
             isDisabled={isDisabled}
             value={value}
             classNamePrefix="select"
-            styles={customStyles}
-            inputStateError={hasError}
-            placeholder={label}
+            styles={{
+                indicatorSeparator: () => ({}),
+                control: (styles) =>
+                    hasError
+                        ? { ...styles, boxShadow: 'none', backgroundColor: 'white', borderColor: '#ec5353' }
+                        : styles,
+            }}
+            placeholder={props.label}
             components={{ Control, DropdownIndicator }}
             isSearchable={false}
+            {...props}
         />
     );
 };
