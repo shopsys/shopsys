@@ -1,17 +1,18 @@
-import { RangeSliderThumbStyled } from './RangeSlider.style';
 import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import {
     ChangeEvent,
     ChangeEventHandler,
-    FC,
+    DetailedHTMLProps,
     FocusEventHandler,
+    InputHTMLAttributes,
     KeyboardEventHandler,
     useCallback,
     useEffect,
     useRef,
     useState,
 } from 'react';
+import { twJoin } from 'tailwind-merge';
 
 /*
  * Inspired by
@@ -194,8 +195,8 @@ export const RangeSlider: FC<RangeSliderProps> = ({
             className="relative mb-10 -mt-5 flex h-12 w-full items-center justify-center p-2"
             data-testid={TEST_IDENTIFIER}
         >
-            <RangeSliderThumbStyled
-                active={minValueThumb !== min}
+            <RangeSliderThumb
+                isActive={minValueThumb !== min}
                 type="range"
                 min={min}
                 max={max}
@@ -204,8 +205,8 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                 onChange={onChangeMinHandler}
                 data-testid={TEST_IDENTIFIER + '-left-thumb'}
             />
-            <RangeSliderThumbStyled
-                active={maxValueThumb !== max}
+            <RangeSliderThumb
+                isActive={maxValueThumb !== max}
                 type="range"
                 min={min}
                 max={max}
@@ -251,3 +252,26 @@ export const RangeSlider: FC<RangeSliderProps> = ({
         </div>
     );
 };
+
+// type RangeSliderThumbProps = { min: number; max: number; value: number; step: number; onChange: () => void };
+type RangeSliderThumbProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & {
+    isActive: boolean;
+};
+
+const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ dataTestId, isActive, ...props }) => (
+    <input
+        className={twJoin(
+            '[&::-webkit-slider-runnable-track]:pointer-events-none [&::-moz-range-track]:pointer-events-none [&::-ms-track]:pointer-events-none [&::-ms-fill-lower]:pointer-events-none [&::-ms-fill-upper]:pointer-events-none',
+            'pointer-events-none absolute top-6 z-[3] h-0 w-full appearance-none outline-none [-webkit-tap-highlight-color:transparent]',
+            '[&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:relative [&::-webkit-slider-thumb]:z-[3] [&::-webkit-slider-thumb]:-my-2 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-none [&::-webkit-slider-thumb]:[-webkit-tap-highlight-color:transparent]',
+            '[&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:relative [&::-moz-range-thumb]:z-[3] [&::-moz-range-thumb]:-my-2 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none',
+            '[&::-ms-thumb]:z-[3] [&::-ms-thumb]:-my-2 [&::-ms-thumb]:h-4 [&::-ms-thumb]:w-4 [&::-ms-thumb]:cursor-pointer [&::-ms-thumb]:rounded-full [&::-ms-thumb]:border-none',
+            isActive
+                ? '[&::-webkit-slider-thumb]:bg-orange [&::-moz-range-thumb]:bg-orange [&::-ms-thumb]:bg-orange'
+                : '[&::-webkit-slider-thumb]:bg-greyLight [&::-moz-range-thumb]:bg-greyLight [&::-ms-thumb]:bg-greyLight',
+        )}
+        type="range"
+        data-testid={dataTestId}
+        {...props}
+    />
+);
