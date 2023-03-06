@@ -267,3 +267,38 @@ deploy:devel:
         url: https://${DOMAIN_HOSTNAME_1}
         kubernetes:
             namespace: ${PROJECT_NAME}
+
+test:gatling:
+    stage: test
+    image:
+        name: registry.shopsys.cz/devops/kubernetes-buildpack:1.1
+    tags:
+        - tests
+    variables:
+        GATLING_BASE_URL: 'https://shopsys:shopsys@ssfwcc.prod.shopsys.cloud/'
+        GATLING_PAGE_TEST_DURATION: '10'
+        GATLING_API_TEST_DURATION: '10'
+        GATLING_PAGE_USERS_COUNTS_LVL1: '2'
+        GATLING_PAGE_USERS_COUNTS_LVL2: '10'
+        GATLING_PAGE_USERS_COUNTS_LVL3: '15'
+        GATLING_RESULTS: ''
+        GATLING_STRESS_TEST_DURATION: '60'
+        GATLING_STRESS_TEST_USERS_COUNTS: '100'
+    needs: []
+    rules:
+        - if: '$CI_PIPELINE_SOURCE == "schedule"'
+          when: never
+        - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "devel"'
+          when: manual
+    allow_failure: true
+    before_script:
+        - chmod +x ./gatling/run.sh
+    script:
+        - cd ./gatling
+        - ./run.sh
+    artifacts:
+        paths:
+            - gatling/results
+        when: always
+        expire_in: 1 day
+

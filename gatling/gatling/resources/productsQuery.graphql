@@ -1,0 +1,10 @@
+query ProductsQuery{
+  products{
+    edges{
+      node{
+        uuid,
+        name
+      }
+    }
+  }
+}
