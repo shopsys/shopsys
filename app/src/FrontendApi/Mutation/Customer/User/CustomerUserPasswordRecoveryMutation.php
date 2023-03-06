@@ -8,33 +8,12 @@ use App\FrontendApi\Mutation\Login\LoginMutation;
 use App\Model\Customer\User\CustomerUserPasswordFacade;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\ArgumentFactory;
-use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 
-class CustomerUserPasswordRecoveryMutation implements MutationInterface, AliasedInterface
+class CustomerUserPasswordRecoveryMutation extends AbstractMutation
 {
-    /**
-     * @var \App\Model\Customer\User\CustomerUserPasswordFacade
-     */
-    private CustomerUserPasswordFacade $customerUserPasswordFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
-     * @var \App\FrontendApi\Mutation\Login\LoginMutation
-     */
-    private LoginMutation $loginMutation;
-
-    /**
-     * @var \Overblog\GraphQLBundle\Definition\ArgumentFactory
-     */
-    private ArgumentFactory $argumentFactory;
-
     /**
      * @param \App\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -42,15 +21,11 @@ class CustomerUserPasswordRecoveryMutation implements MutationInterface, Aliased
      * @param \Overblog\GraphQLBundle\Definition\ArgumentFactory $argumentFactory
      */
     public function __construct(
-        CustomerUserPasswordFacade $customerUserPasswordFacade,
-        Domain $domain,
-        LoginMutation $loginMutation,
-        ArgumentFactory $argumentFactory
+        private readonly CustomerUserPasswordFacade $customerUserPasswordFacade,
+        private readonly Domain $domain,
+        private readonly LoginMutation $loginMutation,
+        private readonly ArgumentFactory $argumentFactory
     ) {
-        $this->customerUserPasswordFacade = $customerUserPasswordFacade;
-        $this->domain = $domain;
-        $this->loginMutation = $loginMutation;
-        $this->argumentFactory = $argumentFactory;
     }
 
     /**
@@ -58,7 +33,7 @@ class CustomerUserPasswordRecoveryMutation implements MutationInterface, Aliased
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return string
      */
-    public function requestPasswordRecovery(Argument $argument, InputValidator $validator): string
+    public function requestPasswordRecoveryMutation(Argument $argument, InputValidator $validator): string
     {
         $validator->validate();
 
@@ -72,7 +47,7 @@ class CustomerUserPasswordRecoveryMutation implements MutationInterface, Aliased
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return array
      */
-    public function recoverPassword(Argument $argument, InputValidator $validator): array
+    public function recoverPasswordMutation(Argument $argument, InputValidator $validator): array
     {
         $validator->validate();
 
@@ -89,17 +64,6 @@ class CustomerUserPasswordRecoveryMutation implements MutationInterface, Aliased
         /** @var \Overblog\GraphQLBundle\Definition\Argument $newArgument */
         $newArgument = $this->argumentFactory->create($argumentData);
 
-        return $this->loginMutation->login($newArgument);
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getAliases(): array
-    {
-        return [
-            'requestPasswordRecovery' => 'requestPasswordRecovery',
-            'recoverPassword' => 'recoverPassword',
-        ];
+        return $this->loginMutation->loginWithResultMutation($newArgument);
     }
 }

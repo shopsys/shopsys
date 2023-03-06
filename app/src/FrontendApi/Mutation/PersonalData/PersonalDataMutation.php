@@ -7,42 +7,16 @@ namespace App\FrontendApi\Mutation\PersonalData;
 use App\FrontendApi\Mutation\PersonalData\Exception\InvalidPersonalDataRequestTypeUserError;
 use App\FrontendApi\Resolver\PersonalData\PersonalDataQuery;
 use Overblog\GraphQLBundle\Definition\Argument;
-use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMailFacade;
 use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest;
 use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade;
+use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 
-class PersonalDataMutation implements MutationInterface, AliasedInterface
+class PersonalDataMutation extends AbstractMutation
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade
-     */
-    private PersonalDataAccessRequestFacade $personalDataAccessRequestFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory
-     */
-    private PersonalDataAccessRequestDataFactoryInterface $personalDataAccessRequestDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMailFacade
-     */
-    private PersonalDataAccessMailFacade $personalDataAccessMailFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
-     * @var \App\FrontendApi\Resolver\PersonalData\PersonalDataQuery
-     */
-    private PersonalDataQuery $personalDataPageResolver;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade $personalDataAccessRequestFacade
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory $personalDataAccessRequestDataFactory
@@ -51,17 +25,12 @@ class PersonalDataMutation implements MutationInterface, AliasedInterface
      * @param \App\FrontendApi\Resolver\PersonalData\PersonalDataQuery $personalDataPageResolver
      */
     public function __construct(
-        PersonalDataAccessRequestFacade $personalDataAccessRequestFacade,
-        PersonalDataAccessRequestDataFactoryInterface $personalDataAccessRequestDataFactory,
-        PersonalDataAccessMailFacade $personalDataAccessMailFacade,
-        Domain $domain,
-        PersonalDataQuery $personalDataPageResolver
+        private readonly PersonalDataAccessRequestFacade $personalDataAccessRequestFacade,
+        private readonly PersonalDataAccessRequestDataFactoryInterface $personalDataAccessRequestDataFactory,
+        private readonly PersonalDataAccessMailFacade $personalDataAccessMailFacade,
+        private readonly Domain $domain,
+        private readonly PersonalDataQuery $personalDataPageResolver
     ) {
-        $this->personalDataAccessRequestFacade = $personalDataAccessRequestFacade;
-        $this->personalDataAccessRequestDataFactory = $personalDataAccessRequestDataFactory;
-        $this->personalDataAccessMailFacade = $personalDataAccessMailFacade;
-        $this->domain = $domain;
-        $this->personalDataPageResolver = $personalDataPageResolver;
     }
 
     /**
@@ -69,7 +38,7 @@ class PersonalDataMutation implements MutationInterface, AliasedInterface
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return array<string, string>
      */
-    public function requestPersonalDataAccess(Argument $argument, InputValidator $validator): array
+    public function requestPersonalDataAccessMutation(Argument $argument, InputValidator $validator): array
     {
         $validator->validate();
 
@@ -94,15 +63,5 @@ class PersonalDataMutation implements MutationInterface, AliasedInterface
         $this->personalDataAccessMailFacade->sendMail($personalData);
 
         return $this->personalDataPageResolver->personalDataPageQuery();
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getAliases(): array
-    {
-        return [
-            'requestPersonalDataAccess' => 'requestPersonalDataAccess',
-        ];
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Mutation\Login;
 
+use App\Component\Deprecation\DeprecatedMethodException;
 use App\FrontendApi\Model\Cart\MergeCartFacade;
 use App\FrontendApi\Mutation\Login\Exception\InvalidCredentialsUserError;
 use Overblog\GraphQLBundle\Definition\Argument;
@@ -35,10 +36,20 @@ class LoginMutation extends BaseLoginMutation
     }
 
     /**
+     * @deprecated Method is deprecated. Use "loginWithResultMutation()" instead.
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return array|string[]
+     */
+    public function loginMutation(Argument $argument): array
+    {
+        throw new DeprecatedMethodException();
+    }
+
+    /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return array<string, array<string, string>|bool>
      */
-    public function login(Argument $argument): array
+    public function loginWithResultMutation(Argument $argument): array
     {
         $input = $argument['input'];
 

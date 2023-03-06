@@ -80,7 +80,7 @@ class CustomerUserMutation extends BaseCustomerUserMutation
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return array
      */
-    public function register(Argument $argument, InputValidator $validator): array
+    public function registerMutation(Argument $argument, InputValidator $validator): array
     {
         $validationGroups = $this->computeValidationGroups($argument);
         $validator->validate($validationGroups);
@@ -108,7 +108,7 @@ class CustomerUserMutation extends BaseCustomerUserMutation
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return \App\Model\Customer\User\CustomerUser
      */
-    public function changePersonalData(Argument $argument, InputValidator $validator): CustomerUser
+    public function changePersonalDataMutation(Argument $argument, InputValidator $validator): CustomerUser
     {
         $user = $this->runCheckUserIsLogged();
 

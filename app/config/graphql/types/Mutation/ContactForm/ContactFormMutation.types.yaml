@@ -9,4 +9,4 @@ ContactFormMutation:
                     input:
                         type: ContactInput!
                         validation: cascade
-                resolve: "@=mutation('contact', args, validator)"
+                resolve: "@=mutation('contactMutation', args, validator)"

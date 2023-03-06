@@ -259,7 +259,7 @@ class GetAdvertsTest extends GraphQlTestCase
                 'type' => Advert::TYPE_IMAGE,
                 'categories' => [],
                 'positionName' => 'header',
-                'image' => [
+                'images' => [
                     [
                         'position' => 0,
                         'type' => 'web',
@@ -295,7 +295,7 @@ class GetAdvertsTest extends GraphQlTestCase
                 'type' => Advert::TYPE_IMAGE,
                 'categories' => [],
                 'positionName' => 'header',
-                'image' => [],
+                'images' => [],
                 'link' => null,
             ],
         ];

@@ -56,22 +56,12 @@ class CreateOrderMutation extends BaseCreateOrderMutation
     }
 
     /**
-     * @return string[]
-     */
-    public static function getAliases(): array
-    {
-        return [
-            'createOrderWithResult' => 'create_order',
-        ];
-    }
-
-    /**
-     * @deprecated Method is deprecated. Use "createOrderWithResult()" instead.
+     * @deprecated Method is deprecated. Use "createOrderWithResultMutation()" instead.
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return \App\Model\Order\Order
      */
-    public function createOrder(Argument $argument, InputValidator $validator): Order
+    public function createOrderMutation(Argument $argument, InputValidator $validator): Order
     {
         throw new DeprecatedMethodException();
     }
@@ -82,7 +72,7 @@ class CreateOrderMutation extends BaseCreateOrderMutation
      * @throws \Overblog\GraphQLBundle\Validator\Exception\ArgumentsValidationException
      * @return \App\FrontendApi\Model\Order\CreateOrderResult
      */
-    public function createOrderWithResult(Argument $argument, InputValidator $validator): CreateOrderResult
+    public function createOrderWithResultMutation(Argument $argument, InputValidator $validator): CreateOrderResult
     {
         $validationGroups = $this->computeValidationGroups($argument);
         $validator->validate($validationGroups);

@@ -9,12 +9,11 @@ use App\FrontendApi\Model\Cart\CartFacade;
 use App\FrontendApi\Model\Cart\CartWatcherFacade;
 use App\FrontendApi\Model\Cart\CartWithModificationsResult;
 use Overblog\GraphQLBundle\Definition\Argument;
-use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 
-class CartMutation implements MutationInterface, AliasedInterface
+class CartMutation extends AbstractMutation
 {
     /**
      * @var \App\FrontendApi\Model\Cart\CartFacade
@@ -51,7 +50,7 @@ class CartMutation implements MutationInterface, AliasedInterface
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return \App\FrontendApi\Model\Cart\AddToCartResult
      */
-    public function addToCart(Argument $argument, InputValidator $validator): AddToCartResult
+    public function addToCartMutation(Argument $argument, InputValidator $validator): AddToCartResult
     {
         $validator->validate();
 
@@ -84,7 +83,7 @@ class CartMutation implements MutationInterface, AliasedInterface
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return \App\FrontendApi\Model\Cart\CartWithModificationsResult|null
      */
-    public function removeFromCart(Argument $argument, InputValidator $validator): ?CartWithModificationsResult
+    public function removeFromCartMutation(Argument $argument, InputValidator $validator): ?CartWithModificationsResult
     {
         $validator->validate();
 
@@ -104,16 +103,5 @@ class CartMutation implements MutationInterface, AliasedInterface
         );
 
         return $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getAliases(): array
-    {
-        return [
-            'addToCart' => 'addToCart',
-            'removeFromCart' => 'removeFromCart',
-        ];
     }
 }
