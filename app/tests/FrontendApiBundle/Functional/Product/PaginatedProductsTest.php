@@ -86,10 +86,10 @@ class PaginatedProductsTest extends GraphQlTestCase
                 'orderingMode' => 'PRICE_DESC',
                 'expectedOrderedProducts' => [
                     ['name' => t('Samsung UE75HU7500 (UHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-                    ['name' => t('OKI MC861cdxn+ (01318206)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
                     ['name' => t('OKI MC861cdxm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                    ['name' => t('OKI MC861cdxn+ (01318206)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
                     ['name' => t('JURA Impressa J9 TFT Carbon', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-                    ['name' => t('Canon EOS 700E', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                    ['name' => t('Canon EOS 700D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
                 ],
             ],
         ];

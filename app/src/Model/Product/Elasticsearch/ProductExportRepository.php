@@ -203,6 +203,7 @@ class ProductExportRepository extends BaseProductExportRepository
             'selling_denied' => $product->isSellingDenied(),
             'availability' => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainId),
             'availability_status' => $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId($product, $domainId)->value,
+            'availability_dispatch_time' => $this->productAvailabilityFacade->getDeliveryDaysByDomainId($product, $domainId),
             'is_main_variant' => $product->isMainVariant(),
             'is_variant' => $product->isVariant(),
             'detail_url' => $detailUrl,

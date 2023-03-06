@@ -13,7 +13,10 @@ use Exception;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
+use Shopsys\FrameworkBundle\Model\Product\Exception\InvalidOrderingModeException;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductRepository;
@@ -277,5 +280,78 @@ class ProductRepository extends BaseProductRepository
             ->andWhere('pd.saleExclusion = false')
             ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
             ->setParameter('domainId', $domainId);
+    }
+
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     * @param string $orderingModeId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param string $locale
+     */
+    protected function applyOrdering(
+        QueryBuilder $queryBuilder,
+        $orderingModeId,
+        PricingGroup $pricingGroup,
+        $locale
+    ) {
+        if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_RELEVANCE) {
+            $queryBuilder->addOrderBy('relevance', 'asc');
+            $queryBuilder->addOrderBy('p.id', 'asc');
+
+            return;
+        }
+        $queryBuilder->resetDQLPart('orderBy');
+
+        //TODO product has no calculatedAvailability attribute (CC), is directed by stocks, BUT this is no god and stock manipulation has to be transformed to this calculatedAvailability
+//        $queryBuilder->join('p.calculatedAvailability', 'pca');
+//        $queryBuilder->addSelect('CASE WHEN pca.dispatchTime IS NULL THEN 1 ELSE 0 END as HIDDEN dispatchTimeIsNull');
+//        $queryBuilder->orderBy('dispatchTimeIsNull', 'ASC');
+//        $queryBuilder->addOrderBy('pca.dispatchTime', 'ASC');
+
+        switch ($orderingModeId) {
+            case ProductListOrderingConfig::ORDER_BY_NAME_ASC:
+                $collation = $this->localization->getCollationByLocale($locale);
+                $queryBuilder->addOrderBy("COLLATE(pt.name, '" . $collation . "')", 'asc');
+                break;
+
+            case ProductListOrderingConfig::ORDER_BY_NAME_DESC:
+                $collation = $this->localization->getCollationByLocale($locale);
+                $queryBuilder->addOrderBy("COLLATE(pt.name, '" . $collation . "')", 'desc');
+                break;
+
+            case ProductListOrderingConfig::ORDER_BY_PRICE_ASC:
+                $this->queryBuilderExtender->addOrExtendJoin(
+                    $queryBuilder,
+                    ProductCalculatedPrice::class,
+                    'pcp',
+                    'pcp.product = p AND pcp.pricingGroup = :pricingGroup'
+                );
+                $queryBuilder->addOrderBy('pcp.priceWithVat', 'asc');
+                $queryBuilder->setParameter('pricingGroup', $pricingGroup);
+                break;
+
+            case ProductListOrderingConfig::ORDER_BY_PRICE_DESC:
+                $this->queryBuilderExtender->addOrExtendJoin(
+                    $queryBuilder,
+                    ProductCalculatedPrice::class,
+                    'pcp',
+                    'pcp.product = p AND pcp.pricingGroup = :pricingGroup'
+                );
+                $queryBuilder->addOrderBy('pcp.priceWithVat', 'desc');
+                $queryBuilder->setParameter('pricingGroup', $pricingGroup);
+                break;
+
+            case ProductListOrderingConfig::ORDER_BY_PRIORITY:
+                $queryBuilder->addOrderBy('p.orderingPriority', 'desc');
+                $collation = $this->localization->getCollationByLocale($locale);
+                $queryBuilder->addOrderBy("COLLATE(pt.name, '" . $collation . "')", 'asc');
+                break;
+
+            default:
+                $message = 'Product list ordering mode "' . $orderingModeId . '" is not supported.';
+                throw new InvalidOrderingModeException($message);
+        }
+
+        $queryBuilder->addOrderBy('p.id', 'asc');
     }
 }

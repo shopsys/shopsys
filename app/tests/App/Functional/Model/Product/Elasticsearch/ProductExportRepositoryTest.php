@@ -60,6 +60,7 @@ class ProductExportRepositoryTest extends FunctionalTestCase
             'selling_denied',
             'availability',
             'availability_status',
+            'availability_dispatch_time',
             'is_main_variant',
             'is_variant',
             'detail_url',

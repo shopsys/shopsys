@@ -348,7 +348,7 @@ class ProductAvailabilityFacade
      * @param int $domainId
      * @return int
      */
-    private function getDeliveryDaysByDomainId(Product $product, int $domainId): int
+    public function getDeliveryDaysByDomainId(Product $product, int $domainId): int
     {
         $deliveryDays = $this->setting->getForDomain(Setting::DELIVERY_DAYS_ON_STOCK, $domainId);
         $deliveryDays += $product->getVendorDeliveryDate() ?? 0;
