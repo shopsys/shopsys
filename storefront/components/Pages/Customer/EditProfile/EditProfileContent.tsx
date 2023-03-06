@@ -191,7 +191,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             control={formProviderMethods.control}
                             name={formMeta.fields.firstName.name}
                             render={(textInput) => (
-                                <FormLine bottomGap width="100%" lg="50%">
+                                <FormLine bottomGap className="w-full flex-none lg:w-1/2">
                                     {textInput}
                                 </FormLine>
                             )}
@@ -208,7 +208,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             control={formProviderMethods.control}
                             name={formMeta.fields.lastName.name}
                             render={(textInput) => (
-                                <FormLine bottomGap width="100%" lg="50%">
+                                <FormLine bottomGap className="w-full flex-none lg:w-1/2">
                                     {textInput}
                                 </FormLine>
                             )}
@@ -255,7 +255,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                         name={formMeta.fields.passwordOld.name}
                         render={(passwordInput) => (
                             <FormColumn>
-                                <FormLine bottomGap width="100%" lg="50%">
+                                <FormLine bottomGap className="w-full flex-none lg:w-1/2">
                                     {passwordInput}
                                 </FormLine>
                             </FormColumn>
@@ -271,7 +271,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             control={formProviderMethods.control}
                             name={formMeta.fields.passwordFirst.name}
                             render={(passwordInput) => (
-                                <FormLine bottomGap width="100%" lg="50%">
+                                <FormLine bottomGap className="w-full flex-none lg:w-1/2">
                                     {passwordInput}
                                 </FormLine>
                             )}
@@ -285,7 +285,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             control={formProviderMethods.control}
                             name={formMeta.fields.passwordSecond.name}
                             render={(passwordInput) => (
-                                <FormLine bottomGap width="100%" lg="50%">
+                                <FormLine bottomGap className="w-full flex-none lg:w-1/2">
                                     {passwordInput}
                                 </FormLine>
                             )}
@@ -370,7 +370,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             control={formProviderMethods.control}
                             name={formMeta.fields.postcode.name}
                             render={(textInput) => (
-                                <FormLine bottomGap width="100%" lg="142px">
+                                <FormLine bottomGap className="w-full flex-none lg:w-[142px]">
                                     {textInput}
                                 </FormLine>
                             )}

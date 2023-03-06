@@ -84,7 +84,7 @@ export const ContactInformationContent: FC = () => {
                 control={formProviderMethods.control}
                 name={formMeta.fields.email.name}
                 render={(textInput) => (
-                    <FormLine bottomGap lg="65%">
+                    <FormLine bottomGap className="flex-none lg:w-4/6">
                         {textInput}
                     </FormLine>
                 )}

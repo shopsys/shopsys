@@ -16,7 +16,7 @@ export const ContactInformationCustomer: FC = () => {
     return (
         <>
             <Heading type="h3">{formMeta.fields.customer.label}</Heading>
-            <FormColumn lg="65%">
+            <FormColumn className="lg:w-[calc(65%+0.75rem)]">
                 <RadiobuttonGroup
                     name={formMeta.fields.customer.name}
                     control={formProviderMethods.control}
@@ -32,7 +32,7 @@ export const ContactInformationCustomer: FC = () => {
                         },
                     ]}
                     render={(radiobutton, key) => (
-                        <FormLine key={key} bottomGap width="100%" lg="50%">
+                        <FormLine key={key} bottomGap className="w-full flex-none lg:w-1/2">
                             {radiobutton}
                         </FormLine>
                     )}

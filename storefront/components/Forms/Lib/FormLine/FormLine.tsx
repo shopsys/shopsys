@@ -1,16 +1,17 @@
-import { FormLineStyled } from './FormLine.style';
-import { FormLinePropType } from './propTypes';
 import { HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { twMergeCustom } from 'utils/twMerge';
 
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'style'>;
 
-type FormLineProps = NativeProps & FormLinePropType;
-
-export const FormLine: FC<FormLineProps> = ({ bottomGap, children, style, ...columnProps }) => {
-    return (
-        <FormLineStyled style={style} {...columnProps} bottomGap={bottomGap}>
-            {children}
-        </FormLineStyled>
-    );
+type FormLineProps = NativeProps & {
+    bottomGap?: boolean;
 };
+
+const TEST_IDENTIFIER = 'form-line';
+
+export const FormLine: FC<FormLineProps> = ({ bottomGap, children, className, ...props }) => (
+    <div data-testid={TEST_IDENTIFIER} className={twMergeCustom('flex-1', bottomGap && 'pb-3', className)} {...props}>
+        {children}
+    </div>
+);

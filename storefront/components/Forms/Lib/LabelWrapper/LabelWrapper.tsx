@@ -48,7 +48,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                     ],
                     inputType === 'radio' && [
                         'cursor-pointer before:absolute before:top-1/2 before:left-0 before:inline-block before:h-[18px] before:w-[18px] before:-translate-y-1/2 before:bg-[url("/images/custom_radio.png")] before:bg-[length:54px_36px] before:bg-left-top before:bg-no-repeat before:content-[""] hover:before:bg-top [&>div]:relative [&>div]:flex [&>div]:min-h-[18px] [&>div]:items-center [&>div]:pl-[30px]',
-                        'peer-checked:before:bg-bottom peer-focus:before:bg-top peer-active:before:bg-top peer-disabled:cursor-no-drop peer-disabled:before:bg-right-top peer-checked:peer-disabled:before:bg-right-bottom peer-disabled:[&>div>span]:cursor-no-drop peer-disabled:[&>div>span]:text-greyLight peer-disabled:[&>div>img]:cursor-no-drop peer-disabled:[&>div>img]:grayscale peer-disabled:[&>div>img]:filter',
+                        'peer-checked:before:bg-bottom peer-focus:before:bg-top peer-checked:peer-focus:before:bg-bottom peer-disabled:cursor-no-drop peer-disabled:before:bg-right-top  peer-checked:peer-disabled:before:bg-right-bottom  peer-disabled:[&>div>span]:cursor-no-drop peer-disabled:[&>div>span]:text-greyLight peer-disabled:[&>div>img]:cursor-no-drop peer-disabled:[&>div>img]:grayscale peer-disabled:[&>div>img]:filter',
                     ],
                     inputType === 'selectbox' && [
                         'top-1/2 -translate-y-1/2',

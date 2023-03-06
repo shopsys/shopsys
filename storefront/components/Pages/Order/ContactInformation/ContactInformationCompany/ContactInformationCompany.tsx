@@ -29,7 +29,7 @@ export const ContactInformationCompany: FC = () => {
                 control={formProviderMethods.control}
                 name={formMeta.fields.companyName.name}
                 render={(textInput) => (
-                    <FormLine bottomGap lg="65%">
+                    <FormLine bottomGap className="flex-none lg:w-4/6">
                         {textInput}
                     </FormLine>
                 )}
@@ -46,7 +46,7 @@ export const ContactInformationCompany: FC = () => {
                 control={formProviderMethods.control}
                 name={formMeta.fields.companyNumber.name}
                 render={(textInput) => (
-                    <FormLine bottomGap lg="65%">
+                    <FormLine bottomGap className="flex-none lg:w-4/6">
                         {textInput}
                     </FormLine>
                 )}
@@ -62,7 +62,7 @@ export const ContactInformationCompany: FC = () => {
                 control={formProviderMethods.control}
                 name={formMeta.fields.companyTaxNumber.name}
                 render={(textInput) => (
-                    <FormLine bottomGap lg="65%">
+                    <FormLine bottomGap className="flex-none lg:w-4/6">
                         {textInput}
                     </FormLine>
                 )}

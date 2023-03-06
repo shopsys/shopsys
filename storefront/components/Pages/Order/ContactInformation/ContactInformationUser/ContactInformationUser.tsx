@@ -22,7 +22,7 @@ export const ContactInformationUser: FC = () => {
                 control={formProviderMethods.control}
                 name={formMeta.fields.telephone.name}
                 render={(textInput) => (
-                    <FormLine bottomGap lg="65%">
+                    <FormLine bottomGap className="flex-none lg:w-4/6">
                         {textInput}
                     </FormLine>
                 )}
@@ -35,12 +35,12 @@ export const ContactInformationUser: FC = () => {
                     onBlur: (event) => dispatch(contactInformationActions.setTelephone(event.currentTarget.value)),
                 }}
             />
-            <FormColumn lg="65%">
+            <FormColumn className="lg:w-[calc(65%+0.75rem)]">
                 <TextInputControlled
                     control={formProviderMethods.control}
                     name={formMeta.fields.firstName.name}
                     render={(textInput) => (
-                        <FormLine bottomGap width="100%" lg="50%">
+                        <FormLine bottomGap className="w-full flex-none lg:w-1/2">
                             {textInput}
                         </FormLine>
                     )}
@@ -57,7 +57,7 @@ export const ContactInformationUser: FC = () => {
                     control={formProviderMethods.control}
                     name={formMeta.fields.lastName.name}
                     render={(textInput) => (
-                        <FormLine bottomGap width="100%" lg="50%">
+                        <FormLine bottomGap className="w-full flex-none lg:w-1/2">
                             {textInput}
                         </FormLine>
                     )}

@@ -66,7 +66,7 @@ export const Address: FC = () => {
                     control={formProviderMethods.control}
                     name={formMeta.fields.postcode.name}
                     render={(textInput) => (
-                        <FormLine bottomGap width="100%" lg="142px">
+                        <FormLine bottomGap className="w-full flex-none lg:w-[142px]">
                             {textInput}
                         </FormLine>
                     )}

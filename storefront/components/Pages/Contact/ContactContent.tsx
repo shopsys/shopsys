@@ -59,8 +59,8 @@ export const ContactContent: FC = () => {
                                 control={formProviderMethods.control}
                                 name={formMeta.fields.name.name}
                                 render={(textInput) => (
-                                    <FormColumn lg="65%">
-                                        <FormLine bottomGap width="100%" lg="50%">
+                                    <FormColumn className="lg:w-[calc(65%+0.75rem)]">
+                                        <FormLine bottomGap className="w-full flex-none lg:w-1/2">
                                             {textInput}
                                         </FormLine>
                                     </FormColumn>
@@ -77,8 +77,8 @@ export const ContactContent: FC = () => {
                                 control={formProviderMethods.control}
                                 name={formMeta.fields.email.name}
                                 render={(textInput) => (
-                                    <FormColumn lg="65%">
-                                        <FormLine bottomGap width="100%" lg="50%">
+                                    <FormColumn className="lg:w-[calc(65%+0.75rem)]">
+                                        <FormLine bottomGap className="w-full flex-none lg:w-1/2">
                                             {textInput}
                                         </FormLine>
                                     </FormColumn>
@@ -96,8 +96,8 @@ export const ContactContent: FC = () => {
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
                                 render={(textarea) => (
-                                    <FormColumn lg="65%">
-                                        <FormLine bottomGap width="100%">
+                                    <FormColumn className="lg:w-[calc(65%+0.75rem)]">
+                                        <FormLine bottomGap className="w-full">
                                             {textarea}
                                         </FormLine>
                                     </FormColumn>

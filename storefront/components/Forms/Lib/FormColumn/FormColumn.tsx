@@ -1,8 +1,17 @@
-import { FormColumnStyled } from './FormColumn.style';
-import { FormColumnPropType } from './propTypes';
+import { twMergeCustom } from 'utils/twMerge';
 
-type FormColumnProps = FormColumnPropType;
+type FormColumnProps = {
+    width?: string;
+    className?: string;
+};
 
-export const FormColumn: FC<FormColumnProps> = ({ children, ...columnProps }) => (
-    <FormColumnStyled {...columnProps}>{children}</FormColumnStyled>
+export const FormColumn: FC<FormColumnProps> = ({ width, className, children }) => (
+    <div
+        style={{
+            ...(width !== undefined ? { width } : {}),
+        }}
+        className={twMergeCustom('-ml-3 flex flex-wrap [&>[data-testid="form-line"]]:pl-3', className)}
+    >
+        {children}
+    </div>
 );

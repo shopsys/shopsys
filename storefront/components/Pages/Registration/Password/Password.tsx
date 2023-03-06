@@ -20,7 +20,7 @@ export const Password: FC = () => {
                     control={formProviderMethods.control}
                     name={formMeta.fields.passwordFirst.name}
                     render={(passwordInput) => (
-                        <FormLine bottomGap width="100%" lg="50%">
+                        <FormLine bottomGap className="w-full flex-none lg:w-1/2">
                             {passwordInput}
                         </FormLine>
                     )}
@@ -33,7 +33,7 @@ export const Password: FC = () => {
                     control={formProviderMethods.control}
                     name={formMeta.fields.passwordSecond.name}
                     render={(passwordInput) => (
-                        <FormLine bottomGap width="100%" lg="50%">
+                        <FormLine bottomGap className="w-full flex-none lg:w-1/2">
                             {passwordInput}
                         </FormLine>
                     )}

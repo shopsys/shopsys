@@ -44,7 +44,7 @@ export const ContactInformationAddress: FC = () => {
     return (
         <>
             <Heading type="h3">{t('Billing address')}</Heading>
-            <FormLine bottomGap lg="65%">
+            <FormLine bottomGap className="flex-none lg:w-4/6">
                 <TextInputControlled
                     control={formProviderMethods.control}
                     name={formMeta.fields.street.name}
@@ -59,7 +59,7 @@ export const ContactInformationAddress: FC = () => {
                     }}
                 />
             </FormLine>
-            <FormColumn lg="65%">
+            <FormColumn className="lg:w-[calc(65%+0.75rem)]">
                 <TextInputControlled
                     control={formProviderMethods.control}
                     name={formMeta.fields.city.name}
@@ -77,7 +77,7 @@ export const ContactInformationAddress: FC = () => {
                     control={formProviderMethods.control}
                     name={formMeta.fields.postcode.name}
                     render={(textInput) => (
-                        <FormLine bottomGap width="100%" lg="142px">
+                        <FormLine bottomGap className="w-full flex-none lg:w-[142px]">
                             {textInput}
                         </FormLine>
                     )}
@@ -91,7 +91,7 @@ export const ContactInformationAddress: FC = () => {
                     }}
                 />
             </FormColumn>
-            <FormLine lg="65%">
+            <FormLine className="flex-none lg:w-4/6">
                 <Controller
                     name={formMeta.fields.country.name}
                     render={({ fieldState: { invalid, error }, field }) => (
