@@ -66,7 +66,8 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
                             textInputProps={{
                                 label: formMeta.fields.email.label,
                                 required: true,
-                                type: 'text',
+                                type: 'email',
+                                autoComplete: 'email',
                             }}
                         />
                         <div className="mt-8 flex w-full justify-center">

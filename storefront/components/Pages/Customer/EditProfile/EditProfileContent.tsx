@@ -165,7 +165,8 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             label: formMeta.fields.email.label,
                             required: false,
                             disabled: true,
-                            type: 'text',
+                            type: 'email',
+                            autoComplete: 'email',
                             testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.email.name,
                         }}
                     />
@@ -190,6 +191,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                 label: formMeta.fields.firstName.label,
                                 required: true,
                                 type: 'text',
+                                autoComplete: 'given-name',
                                 testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.firstName.name,
                             }}
                         />
@@ -206,6 +208,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                 label: formMeta.fields.lastName.label,
                                 required: true,
                                 type: 'text',
+                                autoComplete: 'family-name',
                                 testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.lastName.name,
                             }}
                         />
@@ -219,6 +222,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             label: formMeta.fields.telephone.label,
                             required: true,
                             type: 'tel',
+                            autoComplete: 'tel-national',
                             testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.telephone.name,
                         }}
                     />
@@ -295,6 +299,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                     label: formMeta.fields.companyName.label,
                                     required: false,
                                     type: 'text',
+                                    autoComplete: 'organization',
                                     testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.companyName.name,
                                 }}
                             />
@@ -334,6 +339,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             label: formMeta.fields.street.label,
                             required: true,
                             type: 'text',
+                            autoComplete: 'street-address',
                             testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.street.name,
                         }}
                     />
@@ -347,6 +353,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                 label: formMeta.fields.city.label,
                                 required: true,
                                 type: 'text',
+                                autoComplete: 'address-level2',
                                 testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.city.name,
                             }}
                         />
@@ -363,6 +370,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                 label: formMeta.fields.postcode.label,
                                 required: true,
                                 type: 'text',
+                                autoComplete: 'postal-code',
                                 testIdentifier: TEST_IDENTIFIER + '-' + formMeta.fields.postcode.name,
                             }}
                         />

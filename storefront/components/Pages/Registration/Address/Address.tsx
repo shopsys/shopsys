@@ -40,6 +40,7 @@ export const Address: FC = () => {
                     label: formMeta.fields.street.label,
                     required: true,
                     type: 'text',
+                    autoComplete: 'street-address',
                 }}
             />
             <FormColumn>
@@ -52,6 +53,7 @@ export const Address: FC = () => {
                         label: formMeta.fields.city.label,
                         required: true,
                         type: 'text',
+                        autoComplete: 'address-level2',
                     }}
                 />
                 <TextInputControlled
@@ -67,6 +69,7 @@ export const Address: FC = () => {
                         label: formMeta.fields.postcode.label,
                         required: true,
                         type: 'text',
+                        autoComplete: 'postal-code',
                     }}
                 />
             </FormColumn>

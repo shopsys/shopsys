@@ -48,6 +48,7 @@ export const ContactInformationAddress: FC = () => {
                         label: formMeta.fields.street.label,
                         required: true,
                         type: 'text',
+                        autoComplete: 'street-address',
                         onBlur: (event) => dispatch(contactInformationActions.setStreet(event.currentTarget.value)),
                     }}
                 />
@@ -62,6 +63,7 @@ export const ContactInformationAddress: FC = () => {
                         label: formMeta.fields.city.label,
                         required: true,
                         type: 'text',
+                        autoComplete: 'address-level2',
                         onBlur: (event) => dispatch(contactInformationActions.setCity(event.currentTarget.value)),
                     }}
                 />
@@ -78,6 +80,7 @@ export const ContactInformationAddress: FC = () => {
                         label: formMeta.fields.postcode.label,
                         required: true,
                         type: 'text',
+                        autoComplete: 'postal-code',
                         onBlur: (event) => dispatch(contactInformationActions.setPostcode(event.currentTarget.value)),
                     }}
                 />

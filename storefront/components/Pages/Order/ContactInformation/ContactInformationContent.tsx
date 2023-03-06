@@ -52,7 +52,8 @@ export const ContactInformationContent: FC = () => {
                 textInputProps={{
                     label: formMeta.fields.email.label,
                     required: true,
-                    type: 'text',
+                    type: 'email',
+                    autoComplete: 'email',
                     onBlur: () => dispatch(contactInformationActions.setEmail(emailValue)),
                 }}
             />

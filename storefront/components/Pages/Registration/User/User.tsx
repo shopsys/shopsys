@@ -24,7 +24,8 @@ export const User: FC = () => {
                 textInputProps={{
                     label: formMeta.fields.email.label,
                     required: true,
-                    type: 'text',
+                    type: 'email',
+                    autoComplete: 'email',
                 }}
             />
             <TextInputControlled
@@ -36,6 +37,7 @@ export const User: FC = () => {
                     label: formMeta.fields.firstName.label,
                     required: true,
                     type: 'text',
+                    autoComplete: 'given-name',
                 }}
             />
             <TextInputControlled
@@ -47,6 +49,7 @@ export const User: FC = () => {
                     label: formMeta.fields.lastName.label,
                     required: true,
                     type: 'text',
+                    autoComplete: 'family-name',
                 }}
             />
             <TextInputControlled
@@ -57,7 +60,8 @@ export const User: FC = () => {
                 textInputProps={{
                     label: formMeta.fields.telephone.label,
                     required: true,
-                    type: 'text',
+                    type: 'tel',
+                    autoComplete: 'tel',
                 }}
             />
             <FormColumn lg="65%">

@@ -39,6 +39,7 @@ export const ContactInformationCompany: FC = () => {
                     label: formMeta.fields.companyName.label,
                     required: true,
                     type: 'text',
+                    autoComplete: 'organization',
                     onBlur: () => dispatch(contactInformationActions.setCompanyName(companyNameValue)),
                 }}
             />

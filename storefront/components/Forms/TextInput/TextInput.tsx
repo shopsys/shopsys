@@ -6,7 +6,7 @@ import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFro
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
     'id' | 'onChange',
-    'name' | 'disabled' | 'required' | 'onBlur' | 'onKeyPress' | 'className' | 'type'
+    'name' | 'disabled' | 'required' | 'onBlur' | 'onKeyPress' | 'className' | 'type' | 'autoComplete'
 >;
 
 export type TextInputProps = NativeProps & {
@@ -34,6 +34,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             testIdentifier,
             value,
             type,
+            autoComplete,
         },
         textInputForwarderRef,
     ) => {
@@ -52,6 +53,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                     value={value}
                     hasError={hasError}
                     type={type}
+                    autoComplete={autoComplete}
                     placeholder={typeof label === 'string' ? label : ' '}
                     data-testid={testIdentifier}
                     ref={textInputForwarderRef}
