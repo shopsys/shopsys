@@ -1,6 +1,5 @@
 import { Heading } from 'components/Basic/Heading/Heading';
-import { TableGrid } from 'components/Basic/TableGrid/TableGrid';
-import { TableGridColumnStyled } from 'components/Basic/TableGrid/TableGrid.style';
+import { TableGrid, TableGridColumn } from 'components/Basic/TableGrid/TableGrid';
 import { TableGridColumns } from 'components/Basic/TableGrid/TableGridElements';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -33,7 +32,7 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcr
             <Webline>
                 <TableGrid>
                     <TableGridColumns>
-                        <TableGridColumnStyled>
+                        <TableGridColumn>
                             <tr>
                                 <th colSpan={2}>{t('Basic information')}</th>
                             </tr>
@@ -43,9 +42,9 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcr
                                     {order.creationDate}
                                 </td>
                             </tr>
-                        </TableGridColumnStyled>
+                        </TableGridColumn>
                         {order.trackingNumber !== null && (
-                            <TableGridColumnStyled>
+                            <TableGridColumn>
                                 <tr>
                                     <th colSpan={2}>{t('Tracking package')}</th>
                                 </tr>
@@ -60,23 +59,23 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcr
                                         {order.trackingUrl === null && order.trackingNumber}
                                     </td>
                                 </tr>
-                            </TableGridColumnStyled>
+                            </TableGridColumn>
                         )}
                         {order.note !== null && (
-                            <TableGridColumnStyled>
+                            <TableGridColumn>
                                 <tr>
                                     <th colSpan={2}>{t('Your note')}</th>
                                 </tr>
                                 <tr>
                                     <td data-testid={TEST_IDENTIFIER + 'note'}>{order.note}</td>
                                 </tr>
-                            </TableGridColumnStyled>
+                            </TableGridColumn>
                         )}
                     </TableGridColumns>
                 </TableGrid>
                 <TableGrid>
                     <TableGridColumns>
-                        <TableGridColumnStyled>
+                        <TableGridColumn>
                             <tr>
                                 <th colSpan={2}>{t('Billing address')}</th>
                             </tr>
@@ -134,8 +133,8 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcr
                                 <td>{t('Country')}:</td>
                                 <td data-testid={TEST_IDENTIFIER + 'country'}>{order.country.name}</td>
                             </tr>
-                        </TableGridColumnStyled>
-                        <TableGridColumnStyled>
+                        </TableGridColumn>
+                        <TableGridColumn>
                             <tr>
                                 <th colSpan={2}>{t('Delivery address')}</th>
                             </tr>
@@ -175,7 +174,7 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcr
                                 <td>{t('Country')}:</td>
                                 <td data-testid={TEST_IDENTIFIER + 'deliveryCountry'}>{order.deliveryCountry?.name}</td>
                             </tr>
-                        </TableGridColumnStyled>
+                        </TableGridColumn>
                     </TableGridColumns>
                 </TableGrid>
                 {order.items.length > 0 && (

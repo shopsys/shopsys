@@ -1,7 +1,6 @@
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Link } from 'components/Basic/Link/Link';
-import { TableGrid } from 'components/Basic/TableGrid/TableGrid';
-import { TableGridColumnStyled } from 'components/Basic/TableGrid/TableGrid.style';
+import { TableGrid, TableGridColumn } from 'components/Basic/TableGrid/TableGrid';
 import { TableGridColumns } from 'components/Basic/TableGrid/TableGridElements';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PersonalDataDetailQueryApi } from 'graphql/generated';
@@ -40,7 +39,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                         <Heading type="h2">{t('Billing address')}</Heading>
                         <TableGrid>
                             <TableGridColumns>
-                                <TableGridColumnStyled>
+                                <TableGridColumn>
                                     {userData.firstName !== '' && (
                                         <>
                                             <tr>
@@ -79,9 +78,9 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                                         <td>{t('Country')}:</td>
                                         <td data-testid={TEST_IDENTIFIER + 'country'}>{userData.country.name}</td>
                                     </tr>
-                                </TableGridColumnStyled>
+                                </TableGridColumn>
                                 {userData.__typename === 'CompanyCustomerUser' && (
-                                    <TableGridColumnStyled>
+                                    <TableGridColumn>
                                         <tr>
                                             <td>{t('Company name')}:</td>
                                             <td data-testid={TEST_IDENTIFIER + 'companyName'}>
@@ -100,7 +99,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                                                 {userData.companyTaxNumber}
                                             </td>
                                         </tr>
-                                    </TableGridColumnStyled>
+                                    </TableGridColumn>
                                 )}
                             </TableGridColumns>
                         </TableGrid>
@@ -131,7 +130,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                         {orders.map((order) => (
                             <TableGrid key={order.uuid}>
                                 <TableGridColumns>
-                                    <TableGridColumnStyled>
+                                    <TableGridColumn>
                                         <tr>
                                             <td>{t('Order number')}</td>
                                             <td data-testid={TEST_IDENTIFIER + 'number'}>{order.number}</td>
@@ -194,8 +193,8 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                                                 </td>
                                             </tr>
                                         )}
-                                    </TableGridColumnStyled>
-                                    <TableGridColumnStyled>
+                                    </TableGridColumn>
+                                    <TableGridColumn>
                                         <tr>
                                             <td>{t('Number of items')}</td>
                                             <td data-testid={TEST_IDENTIFIER + 'quantity'}>
@@ -216,7 +215,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                                                 {formatPrice(parseFloat(order.totalPrice.priceWithVat))}
                                             </td>
                                         </tr>
-                                    </TableGridColumnStyled>
+                                    </TableGridColumn>
                                 </TableGridColumns>
                             </TableGrid>
                         ))}
