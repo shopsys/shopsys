@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Mail;
 
-use App\Model\Payment\Payment;
-use App\Model\Transport\Transport;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
@@ -47,11 +45,7 @@ class MailTemplateRepository extends BaseMailTemplateRepository
     {
         $queryBuilder = $this->createQueryBuilder($domainId);
         $queryBuilder
-            ->addSelect('tt.name as transportName, pt.name as paymentName, ost.name as orderStatusName')
-            ->leftJoin('mt.transport', 't')
-            ->leftJoin('t.translations', 'tt', Join::WITH, 'tt.locale = :locale')
-            ->leftJoin('mt.payment', 'p')
-            ->leftJoin('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
+            ->addSelect('ost.name as orderStatusName')
             ->leftJoin('mt.orderStatus', 'os')
             ->leftJoin('os.translations', 'ost', Join::WITH, 'ost.locale = :locale')
             ->setParameter('locale', $this->localization->getAdminLocale());
@@ -61,23 +55,17 @@ class MailTemplateRepository extends BaseMailTemplateRepository
 
     /**
      * @param int $domainId
-     * @param \App\Model\Transport\Transport $transport
-     * @param \App\Model\Payment\Payment $payment
      * @param \App\Model\Order\Status\OrderStatus $orderStatus
      * @return \App\Model\Mail\MailTemplate|null
      */
     public function findOrderStatusMailTemplate(
         int $domainId,
-        Transport $transport,
-        Payment $payment,
         OrderStatus $orderStatus
     ): ?MailTemplate {
         /** @var \App\Model\Mail\MailTemplate $mailTemplate */
         $mailTemplate = $this->getMailTemplateRepository()->findOneBy([
             'name' => MailTemplate::ORDER_STATUS_NAME,
             'domainId' => $domainId,
-            'transport' => $transport,
-            'payment' => $payment,
             'orderStatus' => $orderStatus,
         ]);
 

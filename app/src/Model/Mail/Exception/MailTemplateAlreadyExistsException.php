@@ -23,11 +23,9 @@ class MailTemplateAlreadyExistsException extends Exception
     {
         $this->mailTemplate = $mailTemplate;
         $message = sprintf(
-            'Mail template already exists (name=`%s`, domainId=`%s`, transportId=`%s`, paymentId=`%s`, orderStatus=`%s`)',
+            'Mail template already exists (name=`%s`, domainId=`%s`, orderStatus=`%s`)',
             $mailTemplate->getName(),
             $mailTemplate->getDomainId(),
-            $mailTemplate->getTransport() === null ? 'null' : $mailTemplate->getTransport()->getId(),
-            $mailTemplate->getPayment() === null ? 'null' : $mailTemplate->getPayment()->getId(),
             $mailTemplate->getOrderStatus() === null ? 'null' : $mailTemplate->getOrderStatus()->getId()
         );
 

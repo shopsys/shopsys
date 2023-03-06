@@ -56,8 +56,6 @@ class MailTemplateFacade extends BaseMailTemplateFacade
     {
         $existingMailTemplate = $this->mailTemplateRepository->findOrderStatusMailTemplate(
             $mailTemplateData->domainId,
-            $mailTemplateData->transport,
-            $mailTemplateData->payment,
             $mailTemplateData->orderStatus,
         );
 
@@ -100,8 +98,6 @@ class MailTemplateFacade extends BaseMailTemplateFacade
         $mailTemplates = [];
         $mailTemplate = $this->mailTemplateRepository->findOrderStatusMailTemplate(
             $order->getDomainId(),
-            $order->getTransport(),
-            $order->getPayment(),
             $order->getStatus()
         );
 
