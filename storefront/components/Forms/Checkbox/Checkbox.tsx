@@ -19,7 +19,8 @@ export const Checkbox: FC<CheckboxProps> = forwardRef<HTMLInputElement, Checkbox
     ({ id, name, label, count, required, disabled, onChange, value, dataTestId }, checkboxForwardedRef) => (
         <LabelWrapper label={label} count={count} required={required} htmlFor={id} checked={value} inputType="checkbox">
             <input
-                className="sr-only"
+                // class "peer" is used for styling in LabelWrapper
+                className="peer sr-only"
                 id={id}
                 disabled={disabled}
                 required={required}

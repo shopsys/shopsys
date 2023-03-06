@@ -1,6 +1,5 @@
 import { FormLineError } from '../Lib/FormLineError/FormLineError';
-import { PasswordTextInputStyled } from './TextInput.style';
-import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper/LabelWrapper';
+import { TextInput } from './TextInput';
 import { InputHTMLAttributes, ReactElement, useCallback, useState } from 'react';
 import { Control, useController } from 'react-hook-form';
 import { twJoin } from 'tailwind-merge';
@@ -43,21 +42,20 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
 
     return render(
         <>
-            <LabelWrapper label={passwordInputProps.label} required htmlFor={passwordInputId} inputType="text-input">
-                <PasswordTextInputStyled
-                    id={passwordInputId}
-                    name={name}
-                    hasError={invalid}
-                    onBlur={field.onBlur}
-                    type={inputType}
-                    placeholder={passwordInputProps.label}
-                    onChange={field.onChange}
-                    ref={field.ref}
-                    value={field.value}
-                    inputSize={passwordInputProps.inputSize}
-                    required
-                    data-testid={passwordInputProps.dataTestId}
-                />
+            <TextInput
+                label={passwordInputProps.label}
+                id={passwordInputId}
+                name={name}
+                hasError={invalid}
+                onBlur={field.onBlur}
+                type={inputType}
+                onChange={field.onChange}
+                ref={field.ref}
+                value={field.value}
+                inputSize={passwordInputProps.inputSize}
+                required
+                data-testid={passwordInputProps.dataTestId}
+            >
                 <img
                     className={twJoin(
                         'absolute top-1/2 right-4 w-6 -translate-y-1/2 cursor-pointer',
@@ -66,7 +64,7 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
                     src="/svg/eye.svg"
                     onClick={togglePasswordVisibilityHandler}
                 />
-            </LabelWrapper>
+            </TextInput>
             <FormLineError error={error} inputType="text-input-password" textInputSize={passwordInputProps.inputSize} />
         </>,
     );

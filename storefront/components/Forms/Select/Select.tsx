@@ -38,7 +38,11 @@ const Control = (props: any) => {
             htmlFor={props.id}
             inputType="selectbox"
         >
-            <components.Control className="selectbox" {...props} />
+            <components.Control
+                // class "peer" is used for styling in LabelWrapper
+                className="selectbox peer"
+                {...props}
+            />
         </LabelWrapper>
     );
 };

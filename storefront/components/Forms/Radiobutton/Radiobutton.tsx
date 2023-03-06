@@ -55,7 +55,7 @@ export const Radiobutton = forwardRef<HTMLInputElement, RadiobuttonProps>(
                 inputType="radio"
             >
                 <input
-                    className="sr-only"
+                    className="peer sr-only"
                     value={value}
                     name={name}
                     disabled={disabled}
