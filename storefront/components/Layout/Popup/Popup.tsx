@@ -44,7 +44,7 @@ export const Popup: FC<PopupProps> = ({ isVisible, onCloseCallback, children, hi
 
     return (
         <Portal>
-            <Overlay $isActive={isVisible} onClick={onClickCloseActionHandler} />
+            <Overlay isActive={isVisible} onClick={onClickCloseActionHandler} />
             <div
                 role="dialog"
                 aria-modal

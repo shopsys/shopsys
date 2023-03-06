@@ -62,7 +62,7 @@ export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
                             totalCount={productsSearch.totalCount}
                         />
                     </div>
-                    {isPanelOpen && <Overlay $isHiddenOnDesktop onClick={handlePanelOpenerClick} />}
+                    {isPanelOpen && <Overlay isHiddenOnDesktop onClick={handlePanelOpenerClick} />}
                     <div className="flex flex-1 flex-col">
                         <div
                             className="relative mb-3 flex h-12 w-full cursor-pointer flex-row justify-center rounded-xl bg-primary py-3 px-8 font-bold uppercase leading-7 text-white sm:w-44 vl:hidden"

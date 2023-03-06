@@ -32,8 +32,8 @@ export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, dataTe
                 height={16}
                 className={twJoin(
                     'absolute flex text-red',
-                    isInputOrTextArea && `right-5 -translate-y-1/2 ${isTextInputSmall ? '-top-7' : '-top-8'}`,
-                    isInputPassword && `right-11 -translate-y-1/2 ${isTextInputSmall ? '-top-7' : '-top-8'}`,
+                    isInputOrTextArea && `right-5 -translate-y-1/2 ${isTextInputSmall ? '-top-8' : '-top-9'}`,
+                    isInputPassword && `right-11 -translate-y-1/2 ${isTextInputSmall ? '-top-8' : '-top-9'}`,
                     isCheckbox && '-right-5',
                     isSelect && '-top-10 right-11 z-[2]',
                 )}
