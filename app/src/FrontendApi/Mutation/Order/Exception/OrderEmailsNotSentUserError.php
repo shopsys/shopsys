@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Mutation\Order\Exception;
 
-use Overblog\GraphQLBundle\Error\UserError;
+use Shopsys\FrontendApiBundle\Model\Error\EntityNotFoundUserError;
+use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
-//use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
-
-class OrderEmailsNotSentUserError extends UserError //TODO-RK  implements UserErrorWithCodeInterface
+class OrderEmailsNotSentUserError extends EntityNotFoundUserError implements UserErrorWithCodeInterface
 {
     private const CODE = 'order-emails-not-sent';
 

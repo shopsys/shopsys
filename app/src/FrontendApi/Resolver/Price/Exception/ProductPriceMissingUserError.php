@@ -6,9 +6,9 @@ namespace App\FrontendApi\Resolver\Price\Exception;
 
 use Overblog\GraphQLBundle\Error\UserError;
 
-//use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
+use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
-class ProductPriceMissingUserError extends UserError //TODO-RK implements UserErrorWithCodeInterface
+class ProductPriceMissingUserError extends UserError implements UserErrorWithCodeInterface
 {
     private const CODE = 'product-price-missing';
 

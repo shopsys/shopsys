@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Order\Exception;
 
-use Overblog\GraphQLBundle\Error\UserError;
+use Shopsys\FrontendApiBundle\Model\Error\EntityNotFoundUserError;
+use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
-//use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
-
-class InvalidPacketeryAddressIdUserError extends UserError //TODO-RK implements UserErrorWithCodeInterface
+class InvalidPacketeryAddressIdUserError extends EntityNotFoundUserError implements UserErrorWithCodeInterface
 {
     private const CODE = 'packetery-address-id-invalid';
 

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Store\Exception;
 
-// TODO-RK vratit az to bude v masteru extends UserEntityNotFoundError implements UserErrorWithCodeInterface
-use Overblog\GraphQLBundle\Error\UserError;
+use Shopsys\FrontendApiBundle\Model\Error\EntityNotFoundUserError;
+use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
-class StoreNotFoundUserError extends UserError
+class StoreNotFoundUserError extends EntityNotFoundUserError implements UserErrorWithCodeInterface
 {
     private const CODE = 'store-not-found';
 

@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\PersonalData\Exception;
 
 use Overblog\GraphQLBundle\Error\UserError;
+use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
-//use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
-
-class PersonalDataHashInvalidUserError extends UserError //TODO-RK implements UserErrorWithCodeInterface
+class PersonalDataHashInvalidUserError extends UserError implements UserErrorWithCodeInterface
 {
     private const CODE = 'personal-data-hash-invalid';
 

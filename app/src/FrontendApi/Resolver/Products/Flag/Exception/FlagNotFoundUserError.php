@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Products\Flag\Exception;
 
-//use Shopsys\FrontendApiBundle\Model\Error\UserEntityNotFoundError;
-//use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
+use Shopsys\FrontendApiBundle\Model\Error\EntityNotFoundUserError;
+use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
-use Overblog\GraphQLBundle\Error\UserError;
-
-class FlagNotFoundUserError extends UserError //TODO-RK  UserEntityNotFoundError implements UserErrorWithCodeInterface
+class FlagNotFoundUserError extends EntityNotFoundUserError implements UserErrorWithCodeInterface
 {
     private const CODE = 'flag-not-found';
 

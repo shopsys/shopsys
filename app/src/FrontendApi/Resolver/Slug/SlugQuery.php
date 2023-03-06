@@ -24,8 +24,8 @@ use App\Model\Product\Flag\Flag;
 use App\Model\Product\Product;
 use App\Model\Store\Store;
 use GraphQL\Type\Definition\ResolveInfo;
-use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrontendApiBundle\Model\Error\EntityNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryQuery;
@@ -122,7 +122,7 @@ class SlugQuery extends AbstractQuery
 
                     return $readyCategorySeoMix;
             }
-        } catch (UserError $error) { //TODO-RK UserEntityNotFoundError $error
+        } catch (EntityNotFoundUserError $error) {
         }
 
         throw new NoResultFoundForSlugUserError('No result found for request.');
