@@ -1,5 +1,5 @@
 import { ListItem } from 'components/Blocks/SimpleNavigation/ListItem/ListItem';
-import { theme } from 'components/Theme/main';
+import { mediaQueries } from 'components/Theme/mediaQueries';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
 import { ListedItemPropType } from 'types/simpleNavigation';
@@ -13,15 +13,15 @@ const TEST_IDENTIFIER = 'blocks-simplenavigation-slider-';
 export const Slider: FC<SliderProps> = ({ listedItems }) => {
     const [sliderRef] = useKeenSlider<HTMLDivElement>({
         breakpoints: {
-            [theme.mediaQueries.queryTablet]: {
+            [mediaQueries.queryTablet]: {
                 slidesPerView: 5.3,
                 spacing: 10,
             },
-            [theme.mediaQueries.queryMobile]: {
+            [mediaQueries.queryMobile]: {
                 slidesPerView: 4.3,
                 spacing: 10,
             },
-            [theme.mediaQueries.queryMobileXs]: {
+            [mediaQueries.queryMobileXs]: {
                 slidesPerView: 2.5,
                 spacing: 10,
             },

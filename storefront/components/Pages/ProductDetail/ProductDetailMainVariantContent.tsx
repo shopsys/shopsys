@@ -48,7 +48,7 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
             <ProductMetadata product={product} />
             <Webline>
                 <ProductDetail>
-                    <ProductDetailImage data-testid={TEST_IDENTIFIER + 'gallery'}>
+                    <ProductDetailImage dataTestId={TEST_IDENTIFIER + 'gallery'}>
                         <ProductDetailGallery
                             images={mainVariantImagesWithVariantImages}
                             productName={product.name}

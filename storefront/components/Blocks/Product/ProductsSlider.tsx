@@ -1,5 +1,5 @@
 import { SliderProductItem } from './SliderProductItem';
-import { theme } from 'components/Theme/main';
+import { mediaQueries } from 'components/Theme/mediaQueries';
 import { ListedProductFragmentApi } from 'graphql/generated';
 import { useGtmSliderProductListView } from 'hooks/gtm/useGtmSliderProductListView';
 import { useKeenSlider } from 'keen-slider/react';
@@ -20,19 +20,19 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({ products, gtmListName 
         slidesPerView: 4,
         controls: products.length > 4,
         breakpoints: {
-            [theme.mediaQueries.queryNotLargeDesktop]: {
+            [mediaQueries.queryNotLargeDesktop]: {
                 loop: products.length > 3,
                 autoAdjustSlidesPerView: false,
                 slidesPerView: 3,
                 controls: products.length > 3,
             },
-            [theme.mediaQueries.queryTablet]: {
+            [mediaQueries.queryTablet]: {
                 loop: products.length > 2,
                 autoAdjustSlidesPerView: false,
                 slidesPerView: 2,
                 controls: products.length > 2,
             },
-            [theme.mediaQueries.queryMobile]: {
+            [mediaQueries.queryMobile]: {
                 loop: products.length > 1,
                 autoAdjustSlidesPerView: false,
                 slidesPerView: 1,

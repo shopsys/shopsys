@@ -1,7 +1,6 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { BannersSliderItem } from 'components/Blocks/Banners/BannersSliderItem/BannersSliderItem';
-import { theme } from 'components/Theme/main';
-import { desktopFirstSizes } from 'components/Theme/mediaQueries';
+import { desktopFirstSizes, mediaQueries } from 'components/Theme/mediaQueries';
 import { SliderItemFragmentApi } from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
@@ -28,7 +27,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, dataTestId 
         loop: true,
         duration: 1000,
         breakpoints: {
-            [theme.mediaQueries[DEVICE_BREAKPOINT_SIZE.query]]: {
+            [mediaQueries[DEVICE_BREAKPOINT_SIZE.query]]: {
                 slidesPerView: 2,
                 spacing: 15,
                 centered: true,

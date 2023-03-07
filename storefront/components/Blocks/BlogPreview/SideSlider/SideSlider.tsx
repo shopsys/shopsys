@@ -1,6 +1,6 @@
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
-import { theme } from 'components/Theme/main';
+import { mediaQueries } from 'components/Theme/mediaQueries';
 import { ListedBlogArticleFragmentApi } from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import 'keen-slider/keen-slider.min.css';
@@ -17,15 +17,15 @@ const TEST_IDENTIFIER = 'blocks-blogpreview-sideslider-';
 export const SideSlider: FC<SideSliderProps> = ({ blogSideItems }) => {
     const [sliderRef] = useKeenSlider<HTMLDivElement>({
         breakpoints: {
-            [theme.mediaQueries.queryNotLargeDesktop]: {
+            [mediaQueries.queryNotLargeDesktop]: {
                 slidesPerView: 3.2,
                 spacing: 24,
             },
-            [theme.mediaQueries.queryTablet]: {
+            [mediaQueries.queryTablet]: {
                 slidesPerView: 2.2,
                 spacing: 24,
             },
-            [theme.mediaQueries.queryMobileXs]: {
+            [mediaQueries.queryMobileXs]: {
                 slidesPerView: 1.2,
                 spacing: 24,
             },

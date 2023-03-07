@@ -397,7 +397,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                         )}
                                         hasError={invalid}
                                         label={formMeta.fields.country.label}
-                                        data-testid={TEST_IDENTIFIER + '-' + formMeta.fields.country.name}
+                                        dataTestId={TEST_IDENTIFIER + '-' + formMeta.fields.country.name}
                                     />
                                     <FormLineError error={error} inputType="select" />
                                 </>

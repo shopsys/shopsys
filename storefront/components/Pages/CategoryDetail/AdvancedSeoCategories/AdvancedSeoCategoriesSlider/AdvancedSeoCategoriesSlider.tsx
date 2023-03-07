@@ -1,5 +1,5 @@
 import { AdvancedSeoCategoriesItem } from '../AdvancedSeoCategoriesItem';
-import { theme } from 'components/Theme/main';
+import { mediaQueries } from 'components/Theme/mediaQueries';
 import { CategoryDetailFragmentApi } from 'graphql/generated';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
@@ -11,11 +11,11 @@ type AdvancedSeoCategoriesSliderProps = {
 export const AdvancedSeoCategoriesSlider: FC<AdvancedSeoCategoriesSliderProps> = ({ readyCategorySeoMixLinks }) => {
     const [sliderRef] = useKeenSlider<HTMLDivElement>({
         breakpoints: {
-            [theme.mediaQueries.queryTablet]: {
+            [mediaQueries.queryTablet]: {
                 slidesPerView: 2.2,
                 spacing: 15,
             },
-            [theme.mediaQueries.queryMobile]: {
+            [mediaQueries.queryMobile]: {
                 slidesPerView: 1.2,
                 spacing: 15,
             },

@@ -49,7 +49,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                                     className="w-full"
                                     onClick={onAddToCartHandler}
                                     variant="primary"
-                                    data-testid={TEST_IDENTIFIER + '-button'}
+                                    dataTestId={TEST_IDENTIFIER + '-button'}
                                 >
                                     {fetching ? <Loader iconSize={26} /> : <Icon iconType="icon" icon="Cart" />}
 

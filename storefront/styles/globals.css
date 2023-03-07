@@ -116,3 +116,63 @@ input[type='number'] {
 .select__control--menu-is-open {
     @apply !items-end !rounded-b-none [&.select__indicator]:!rotate-180 [&.select__indicator>svg]:!text-primary;
 }
+
+/* Toastify styling */
+
+:root {
+    --toastify-toast-min-height: 48px;
+    --toastify-toast-width: 700px;
+    --toastify-font-family: sans-serif;
+    --toastify-z-index: 10100;
+}
+
+.Toastify__toast {
+    @apply rounded-xl;
+}
+
+.Toastify__toast-body {
+    @apply text-dark;
+}
+
+.Toastify__close-button {
+    @apply self-center text-dark opacity-100;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--info {
+    @apply border border-primary bg-[#f2f2ff];
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--info .Toastify__toast-icon {
+    @apply text-primary;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--info
+    .Toastify__progress-bar-theme--colored.Toastify__progress-bar--info {
+    @apply bg-primaryLight;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--success {
+    @apply border border-green bg-[#ddf9f5];
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--success .Toastify__toast-icon {
+    @apply text-green;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--success
+    .Toastify__progress-bar-theme--colored.Toastify__progress-bar--success {
+    @apply bg-greenLight;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--error {
+    @apply border border-red bg-[#ffc4c4];
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--error .Toastify__toast-icon {
+    @apply text-red;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--error
+    .Toastify__progress-bar-theme--colored.Toastify__progress-bar--error {
+    @apply bg-redLight;
+}

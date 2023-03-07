@@ -54,7 +54,7 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
                 value={field.value}
                 inputSize={passwordInputProps.inputSize}
                 required
-                data-testid={passwordInputProps.dataTestId}
+                dataTestId={passwordInputProps.dataTestId}
             >
                 <img
                     className={twJoin(

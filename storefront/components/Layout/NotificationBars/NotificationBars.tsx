@@ -1,7 +1,6 @@
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { Theme } from 'components/Theme/main';
 import { NotificationBarsFragmentApi, useNotificationBarsApi } from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { LogoutHandler, useAuth } from 'hooks/auth/useAuth';
@@ -11,7 +10,6 @@ import decode from 'jwt-decode';
 import Trans from 'next-translate/Trans';
 import { parseCookies } from 'nookies';
 import { useEffect, useState } from 'react';
-import { useTheme } from 'styled-components';
 import { twJoin } from 'tailwind-merge';
 import tinycolor from 'tinycolor2';
 import { CurrentCustomerType } from 'types/customer';
@@ -20,7 +18,6 @@ export const NotificationBars: FC = () => {
     const [{ data: notificationBarsData }] = useQueryError(useNotificationBarsApi());
     const { isUserLoggedIn, user } = useCurrentUserData();
     const [isAdminLoggedInAsUser, setIsAdminLoggedAsUser] = useState(false);
-    const theme = useTheme() as Theme;
     const { logout } = useAuth();
 
     useEffect(() => {
@@ -47,7 +44,6 @@ export const NotificationBars: FC = () => {
                 notificationBarsData.notificationBars,
                 isAdminLoggedInAsUser,
                 user,
-                theme,
                 logout,
             ).map((item, index) => {
                 const firstImage = getFirstImageOrNull(item.images);
@@ -87,7 +83,6 @@ const extendByAdminLoggedInAsUserNotificationBar = (
     )[],
     shouldExtend: boolean,
     user: CurrentCustomerType | null | undefined,
-    theme: Theme,
     logout: LogoutHandler,
 ) => {
     if (shouldExtend) {
@@ -102,7 +97,7 @@ const extendByAdminLoggedInAsUserNotificationBar = (
                         button: (
                             <Button
                                 type="button"
-                                size="small"
+                                isSmall
                                 variant="secondary"
                                 style={{ marginLeft: '10px' }}
                                 onClick={logout}
@@ -111,7 +106,7 @@ const extendByAdminLoggedInAsUserNotificationBar = (
                     }}
                 />
             ),
-            rgbColor: theme.color.red,
+            rgbColor: '#ec5353',
             images: [],
         });
     }

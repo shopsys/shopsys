@@ -4,7 +4,7 @@ import { GtmHeadScript } from 'components/Helpers/GtmHeadScript';
 import { showInfoMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { Error500ContentWithBoundary } from 'components/Pages/ErrorPage/500/Error500Content';
 import { Error503Content } from 'components/Pages/ErrorPage/503/Error503Content';
-import { ShopsysGlobalProvider } from 'context/ShopsysGlobalProvider/ShopsysGlobalProvider';
+import { FontFaceStyle } from 'components/Theme/FontFaceStyle';
 import { extend, locale } from 'dayjs';
 import 'dayjs/locale/cs';
 import 'dayjs/locale/sk';
@@ -122,14 +122,16 @@ function MyApp({ Component, pageProps, err }: AppProps): ReactElement {
                 <GtmHeadScript />
             </Head>
             <Canonical />
-            <ShopsysGlobalProvider>
-                <div className="absolute left-0 top-0 z-overlay h-[1px] w-[1px]" id="portal" />
-                <ToastContainer autoClose={6000} position="top-center" theme="colored" />
-                <ErrorBoundary FallbackComponent={Error500ContentWithBoundary}>
-                    {userConsentCookie === null && !isConsentUpdatePage && <UserConsentContainer />}
-                    {pageProps.isMaintenance ? <Error503Content /> : <Component {...pageProps} err={err} />}
-                </ErrorBoundary>
-            </ShopsysGlobalProvider>
+
+            <FontFaceStyle />
+
+            <div className="absolute left-0 top-0 z-overlay h-[1px] w-[1px]" id="portal" />
+
+            <ToastContainer autoClose={6000} position="top-center" theme="colored" />
+            <ErrorBoundary FallbackComponent={Error500ContentWithBoundary}>
+                {userConsentCookie === null && !isConsentUpdatePage && <UserConsentContainer />}
+                {pageProps.isMaintenance ? <Error503Content /> : <Component {...pageProps} err={err} />}
+            </ErrorBoundary>
         </>
     );
 }
