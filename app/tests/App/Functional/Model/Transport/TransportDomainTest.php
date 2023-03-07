@@ -98,8 +98,6 @@ class TransportDomainTest extends FunctionalTestCase
     {
         /** @var \App\Model\Transport\TransportData $transportData */
         $transportData = $this->transportDataFactory->create();
-        $transportData->deliveryCode = 'A';
-        $transportData->typeOfDeliveryKey = 1;
 
         return $transportData;
     }

@@ -41,18 +41,6 @@ class Transport extends BaseTransport
     private int $daysUntilDelivery;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=10)
-     */
-    private string $deliveryCode;
-
-    /**
-     * @var int
-     * @ORM\Column(type="integer")
-     */
-    private int $typeOfDeliveryKey;
-
-    /**
      * @var \App\Model\Transport\Type\TransportType
      * @ORM\ManyToOne(targetEntity="App\Model\Transport\Type\TransportType")
      * @ORM\JoinColumn(nullable=false)
@@ -96,8 +84,6 @@ class Transport extends BaseTransport
 
         $this->personalPickup = $transportData->personalPickup;
         $this->daysUntilDelivery = $transportData->daysUntilDelivery;
-        $this->deliveryCode = $transportData->deliveryCode;
-        $this->typeOfDeliveryKey = $transportData->typeOfDeliveryKey;
         $this->trackingUrl = $transportData->trackingUrl;
         $this->transportType = $transportData->transportType;
         $this->maxWeight = $transportData->maxWeight > 0 ? $transportData->maxWeight : null;
@@ -129,22 +115,6 @@ class Transport extends BaseTransport
     public function getDaysUntilDelivery(): int
     {
         return $this->daysUntilDelivery;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDeliveryCode(): string
-    {
-        return $this->deliveryCode;
-    }
-
-    /**
-     * @return int
-     */
-    public function getTypeOfDeliveryKey(): int
-    {
-        return $this->typeOfDeliveryKey;
     }
 
     /**

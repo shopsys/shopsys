@@ -28,16 +28,6 @@ class TransportData extends BaseTransportData
     public ?int $daysUntilDelivery;
 
     /**
-     * @var string
-     */
-    public string $deliveryCode;
-
-    /**
-     * @var int
-     */
-    public int $typeOfDeliveryKey;
-
-    /**
      * @var string|null
      */
     public ?string $trackingUrl;

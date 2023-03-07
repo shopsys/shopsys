@@ -568,3 +568,5 @@ Shopsys\ProductFeed\GoogleBundle\Migrations\Version20230220115918:
     skip: false
 App\Migrations\Version20230217093923:
     skip: false
+App\Migrations\Version20230307140442:
+    skip: false

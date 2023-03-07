@@ -60,8 +60,6 @@ class IndependentTransportVisibilityCalculationTest extends FunctionalTestCase
             Domain::FIRST_DOMAIN_ID => true,
             Domain::SECOND_DOMAIN_ID => false,
         ]);
-        $transportData->deliveryCode = 'A';
-        $transportData->typeOfDeliveryKey = 1;
 
         $transport = new Transport($transportData);
 
@@ -118,8 +116,6 @@ class IndependentTransportVisibilityCalculationTest extends FunctionalTestCase
 
         $transportData->hidden = $hidden;
         $transportData->enabled = $this->getFilteredEnabledForDomains($enabledForDomains);
-        $transportData->deliveryCode = 'A';
-        $transportData->typeOfDeliveryKey = 1;
 
         return new Transport($transportData);
     }

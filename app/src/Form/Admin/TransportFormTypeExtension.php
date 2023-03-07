@@ -19,9 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints;
-use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class TransportFormTypeExtension extends AbstractTypeExtension
@@ -60,8 +58,9 @@ class TransportFormTypeExtension extends AbstractTypeExtension
                 'label' => t('Osobní odběr Commerce Cloud'),
             ])
             ->add('daysUntilDelivery', TextType::class, [
-                'required' => false,
+                'required' => true,
                 'constraints' => [
+                    new NotBlank(),
                     new Constraints\GreaterThanOrEqual([
                         'value' => 0,
                     ]),
@@ -70,25 +69,6 @@ class TransportFormTypeExtension extends AbstractTypeExtension
                     ]),
                 ],
                 'label' => t('Dnů do doručení'),
-            ])
-            ->add('deliveryCode', TextType::class, [
-                'label' => t('Moewe - DeliveryCode'),
-                'required' => true,
-                'constraints' => [
-                    new NotBlank(),
-                    new Length([
-                        'max' => 10,
-                    ]),
-                ],
-            ])
-            ->add('typeOfDeliveryKey', IntegerType::class, [
-                'label' => t('Moewe - TypeOfDeliveryKey'),
-                'required' => true,
-                'constraints' => [
-                    new NotBlank(),
-                    new GreaterThan(0),
-                    new LessThanOrEqual(99),
-                ],
             ])
             ->add('maxWeight', IntegerType::class, [
                 'label' => t('Maximum weight (g)'),

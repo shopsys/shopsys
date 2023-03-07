@@ -77,8 +77,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     {
         $transportData = $this->transportDataFactory->create();
         $transportData->daysUntilDelivery = 5;
-        $transportData->deliveryCode = 'A';
-        $transportData->typeOfDeliveryKey = 1;
         $transportData->maxWeight = 5000;
         $transportData->trackingUrl = 'https://www.postaonline.cz/trackandtrace/-/zasilka/cislo?parcelNumbers={tracking_number}';
 
@@ -94,8 +92,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
         $transportData = $this->transportDataFactory->create();
         $transportData->daysUntilDelivery = 4;
-        $transportData->deliveryCode = 'B';
-        $transportData->typeOfDeliveryKey = 2;
         $transportData->trackingUrl = 'https://www.ppl.cz/vyhledat-zasilku?shipmentId={tracking_number}';
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -108,8 +104,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
         $transportData = $this->transportDataFactory->create();
         $transportData->daysUntilDelivery = 0;
-        $transportData->deliveryCode = 'C';
-        $transportData->typeOfDeliveryKey = 3;
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $transportData->name[$locale] = t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -124,8 +118,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
         $transportData = $this->transportDataFactory->create();
         $transportData->daysUntilDelivery = 0;
-        $transportData->deliveryCode = 'E';
-        $transportData->typeOfDeliveryKey = 5;
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $transportData->name[$locale] = t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);

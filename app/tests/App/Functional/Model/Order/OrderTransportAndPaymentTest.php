@@ -339,8 +339,6 @@ class OrderTransportAndPaymentTest extends FunctionalTestCase
 
         $transportData->hidden = $hidden;
         $transportData->enabled = $this->getFilteredEnabledForDomains($enabledForDomains);
-        $transportData->deliveryCode = 'A';
-        $transportData->typeOfDeliveryKey = 1;
 
         return new Transport($transportData);
     }
