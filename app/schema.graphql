@@ -1772,6 +1772,8 @@ input RegistrationDataInput {
   firstName: String!
   """Customer user last name"""
   lastName: String!
+  """Uuid of the last order that should be paired with the newly registered user"""
+  lastOrderUuid: Uuid = null
   """Whether customer user should receive newsletters or not"""
   newsletterSubscription: Boolean!
   """Customer user password"""

@@ -2331,6 +2331,8 @@ export type RegistrationDataInputApi = {
   firstName: Scalars['String'];
   /** Customer user last name */
   lastName: Scalars['String'];
+  /** Uuid of the last order that should be paired with the newly registered user */
+  lastOrderUuid: Maybe<Scalars['Uuid']>;
   /** Whether customer user should receive newsletters or not */
   newsletterSubscription: Scalars['Boolean'];
   /** Customer user password */

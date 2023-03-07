@@ -9201,6 +9201,15 @@ Customer user last name
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>lastOrderUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Uuid of the last order that should be paired with the newly registered user
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
