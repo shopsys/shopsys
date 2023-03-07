@@ -1,4 +1,3 @@
-import { ContactInformationDeliveryAddressStyled } from './ContactInformationDeliveryAddress.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLine';
@@ -14,10 +13,11 @@ import { useCountriesQueryApi } from 'graphql/generated';
 import { mapCountriesToSelectOptions } from 'helpers/mappers/country';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import { useCalcElementHeight } from 'hooks/ui/useCalcElementHeight';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import { CSSTransition } from 'react-transition-group';
+import { Transition } from 'react-transition-group';
 import { useShopsysDispatch } from 'redux/main';
 import { contactInformationActions } from 'redux/slices/contactInformation';
 import { ContactInformationFormType } from 'types/form';
@@ -28,9 +28,9 @@ export const ContactInformationDeliveryAddress: FC = () => {
     const t = useTypedTranslationFunction();
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
+    const [elementHeight, calcHeight] = useCalcElementHeight(contentElement);
     const { pickupPlace } = useCurrentCart();
     const { isUserLoggedIn, user } = useCurrentUserData();
-    const [contentElementHeight, setContentElementHeight] = useState(0);
     const formProviderMethods = useFormContext<ContactInformationFormType>();
     const { setValue, getValues } = formProviderMethods;
     const formMeta = useContactInformationFormMeta(formProviderMethods);
@@ -47,6 +47,14 @@ export const ContactInformationDeliveryAddress: FC = () => {
         () => mapCountriesToSelectOptions(countriesData?.countries),
         [countriesData?.countries],
     );
+
+    const transitionStyles = {
+        entering: { height: elementHeight },
+        entered: { height: elementHeight },
+        exiting: { height: 0 },
+        exited: { height: 0 },
+        unmounted: {},
+    };
 
     useEffect(() => {
         if (differentDeliveryAddressValue === true) {
@@ -87,12 +95,6 @@ export const ContactInformationDeliveryAddress: FC = () => {
         formMeta.fields.deliveryCountry.name,
         dispatch,
     ]);
-
-    const calcHeight = () => {
-        if (contentElement.current) {
-            setContentElementHeight(contentElement.current.clientHeight);
-        }
-    };
 
     useEffect(() => {
         if (isUserLoggedIn) {
@@ -157,270 +159,279 @@ export const ContactInformationDeliveryAddress: FC = () => {
                     label: formMeta.fields.differentDeliveryAddress.label,
                 }}
             />
-            <ContactInformationDeliveryAddressStyled contentElementHeight={contentElementHeight}>
-                <CSSTransition
+            <div className="pb-10">
+                <Transition
                     in={differentDeliveryAddressValue}
-                    timeout={500}
-                    classNames="contactInformationDeliveryAddress"
-                    onEnter={calcHeight}
-                    onExit={calcHeight}
-                    unmountOnExit
                     nodeRef={cssTransitionRef}
+                    timeout={300}
+                    onEnter={() => calcHeight()}
+                    onExit={() => calcHeight()}
+                    unmountOnExit
                 >
-                    <div ref={cssTransitionRef}>
-                        <div ref={contentElement}>
-                            {showAddressSelection && (
-                                <FormLine bottomGap className="flex-none lg:w-4/6">
-                                    <div className="flex w-full flex-col">
-                                        <RadiobuttonGroup
-                                            name={formMeta.fields.deliveryAddressUuid.name}
-                                            control={formProviderMethods.control}
-                                            formName={formMeta.formName}
-                                            radiobuttons={[
-                                                ...(user?.deliveryAddresses.map((deliveryAddress) => ({
-                                                    label: (
-                                                        <p>
-                                                            <strong className="mr-1">
-                                                                {deliveryAddress.firstName} {deliveryAddress.lastName}
-                                                            </strong>
-                                                            {deliveryAddress.companyName}
-                                                            <br />
-                                                            {deliveryAddress.street}, {deliveryAddress.city},{' '}
-                                                            {deliveryAddress.postcode}, {deliveryAddress.country}
-                                                        </p>
-                                                    ),
-                                                    value: deliveryAddress.uuid,
-                                                })) ?? []),
-                                                {
-                                                    label: (
-                                                        <p>
-                                                            <strong>{t('Different delivery address')}</strong>
-                                                        </p>
-                                                    ),
-                                                    value: '',
-                                                },
-                                            ]}
-                                            render={(radiobutton, key) => (
-                                                <div
-                                                    className="relative mt-4 flex w-full flex-wrap rounded-xl border-2 border-border p-5"
-                                                    key={key}
-                                                >
-                                                    {radiobutton}
-                                                </div>
-                                            )}
-                                        />
-                                    </div>
-                                </FormLine>
-                            )}
-                            {(!showAddressSelection || isCustomAddressSelected) && (
-                                <>
-                                    <FormColumn className="lg:w-[calc(65%+0.75rem)]">
-                                        <TextInputControlled
-                                            control={formProviderMethods.control}
-                                            name={formMeta.fields.deliveryFirstName.name}
-                                            render={(textInput) => (
-                                                <FormLine bottomGap className="w-full flex-none lg:w-1/2">
-                                                    {textInput}
-                                                </FormLine>
-                                            )}
-                                            formName={formMeta.formName}
-                                            textInputProps={{
-                                                label: formMeta.fields.deliveryFirstName.label,
-                                                required: true,
-                                                type: 'text',
-                                                autoComplete: 'given-name',
-                                                onBlur: (event) => {
-                                                    dispatch(
-                                                        contactInformationActions.setDeliveryFirstName(
-                                                            event.currentTarget.value,
+                    {(state) => (
+                        <div
+                            className="overflow-hidden transition-all"
+                            ref={cssTransitionRef}
+                            style={{
+                                ...transitionStyles[state],
+                            }}
+                        >
+                            <div ref={contentElement}>
+                                {showAddressSelection && (
+                                    <FormLine bottomGap className="flex-none lg:w-4/6">
+                                        <div className="flex w-full flex-col">
+                                            <RadiobuttonGroup
+                                                name={formMeta.fields.deliveryAddressUuid.name}
+                                                control={formProviderMethods.control}
+                                                formName={formMeta.formName}
+                                                radiobuttons={[
+                                                    ...(user?.deliveryAddresses.map((deliveryAddress) => ({
+                                                        label: (
+                                                            <p>
+                                                                <strong className="mr-1">
+                                                                    {deliveryAddress.firstName}{' '}
+                                                                    {deliveryAddress.lastName}
+                                                                </strong>
+                                                                {deliveryAddress.companyName}
+                                                                <br />
+                                                                {deliveryAddress.street}, {deliveryAddress.city},{' '}
+                                                                {deliveryAddress.postcode}, {deliveryAddress.country}
+                                                            </p>
                                                         ),
-                                                    );
-                                                },
-                                            }}
-                                        />
-                                        <TextInputControlled
-                                            control={formProviderMethods.control}
-                                            name={formMeta.fields.deliveryLastName.name}
-                                            render={(textInput) => (
-                                                <FormLine bottomGap className="w-full flex-none lg:w-1/2">
-                                                    {textInput}
-                                                </FormLine>
-                                            )}
-                                            formName={formMeta.formName}
-                                            textInputProps={{
-                                                label: formMeta.fields.deliveryLastName.label,
-                                                required: true,
-                                                type: 'text',
-                                                autoComplete: 'family-name',
-                                                onBlur: (event) =>
-                                                    dispatch(
-                                                        contactInformationActions.setDeliveryLastName(
-                                                            event.currentTarget.value,
+                                                        value: deliveryAddress.uuid,
+                                                    })) ?? []),
+                                                    {
+                                                        label: (
+                                                            <p>
+                                                                <strong>{t('Different delivery address')}</strong>
+                                                            </p>
                                                         ),
-                                                    ),
-                                            }}
-                                        />
-                                    </FormColumn>
-                                    <TextInputControlled
-                                        control={formProviderMethods.control}
-                                        name={formMeta.fields.deliveryCompanyName.name}
-                                        render={(textInput) => (
-                                            <FormLine bottomGap className="flex-none lg:w-4/6">
-                                                {textInput}
-                                            </FormLine>
-                                        )}
-                                        formName={formMeta.formName}
-                                        textInputProps={{
-                                            label: formMeta.fields.deliveryCompanyName.label,
-                                            required: false,
-                                            type: 'text',
-                                            autoComplete: 'organization',
-                                            onBlur: (event) =>
-                                                dispatch(
-                                                    contactInformationActions.setDeliveryCompanyName(
-                                                        event.currentTarget.value,
-                                                    ),
-                                                ),
-                                        }}
-                                    />
-                                    <TextInputControlled
-                                        control={formProviderMethods.control}
-                                        name={formMeta.fields.deliveryTelephone.name}
-                                        render={(textInput) => (
-                                            <FormLine bottomGap className="flex-none lg:w-4/6">
-                                                {textInput}
-                                            </FormLine>
-                                        )}
-                                        formName={formMeta.formName}
-                                        textInputProps={{
-                                            label: formMeta.fields.deliveryTelephone.label,
-                                            required: true,
-                                            type: 'tel',
-                                            autoComplete: 'tel',
-                                            onBlur: (event) =>
-                                                dispatch(
-                                                    contactInformationActions.setDeliveryTelephone(
-                                                        event.currentTarget.value,
-                                                    ),
-                                                ),
-                                        }}
-                                    />
-                                    {!pickupPlace && (
-                                        <>
+                                                        value: '',
+                                                    },
+                                                ]}
+                                                render={(radiobutton, key) => (
+                                                    <div
+                                                        className="relative mt-4 flex w-full flex-wrap rounded-xl border-2 border-border p-5"
+                                                        key={key}
+                                                    >
+                                                        {radiobutton}
+                                                    </div>
+                                                )}
+                                            />
+                                        </div>
+                                    </FormLine>
+                                )}
+                                {(!showAddressSelection || isCustomAddressSelected) && (
+                                    <>
+                                        <FormColumn className="lg:w-[calc(65%+0.75rem)]">
                                             <TextInputControlled
                                                 control={formProviderMethods.control}
-                                                name={formMeta.fields.deliveryStreet.name}
+                                                name={formMeta.fields.deliveryFirstName.name}
                                                 render={(textInput) => (
-                                                    <FormLine bottomGap className="flex-none lg:w-4/6">
+                                                    <FormLine bottomGap className="w-full flex-none lg:w-1/2">
                                                         {textInput}
                                                     </FormLine>
                                                 )}
                                                 formName={formMeta.formName}
                                                 textInputProps={{
-                                                    label: formMeta.fields.deliveryStreet.label,
+                                                    label: formMeta.fields.deliveryFirstName.label,
                                                     required: true,
                                                     type: 'text',
-                                                    autoComplete: 'street-address',
+                                                    onBlur: (event) => {
+                                                        dispatch(
+                                                            contactInformationActions.setDeliveryFirstName(
+                                                                event.currentTarget.value,
+                                                            ),
+                                                        );
+                                                    },
+                                                }}
+                                            />
+                                            <TextInputControlled
+                                                control={formProviderMethods.control}
+                                                name={formMeta.fields.deliveryLastName.name}
+                                                render={(textInput) => (
+                                                    <FormLine bottomGap className="w-full flex-none lg:w-1/2">
+                                                        {textInput}
+                                                    </FormLine>
+                                                )}
+                                                formName={formMeta.formName}
+                                                textInputProps={{
+                                                    label: formMeta.fields.deliveryLastName.label,
+                                                    required: true,
+                                                    type: 'text',
                                                     onBlur: (event) =>
                                                         dispatch(
-                                                            contactInformationActions.setDeliveryStreet(
+                                                            contactInformationActions.setDeliveryLastName(
                                                                 event.currentTarget.value,
                                                             ),
                                                         ),
                                                 }}
                                             />
-                                            <FormColumn className="lg:w-[calc(65%+0.75rem)]">
+                                        </FormColumn>
+                                        <TextInputControlled
+                                            control={formProviderMethods.control}
+                                            name={formMeta.fields.deliveryCompanyName.name}
+                                            render={(textInput) => (
+                                                <FormLine bottomGap className="flex-none lg:w-4/6">
+                                                    {textInput}
+                                                </FormLine>
+                                            )}
+                                            formName={formMeta.formName}
+                                            textInputProps={{
+                                                label: formMeta.fields.deliveryCompanyName.label,
+                                                required: false,
+                                                type: 'text',
+                                                autoComplete: 'given-name',
+                                                onBlur: (event) =>
+                                                    dispatch(
+                                                        contactInformationActions.setDeliveryCompanyName(
+                                                            event.currentTarget.value,
+                                                        ),
+                                                    ),
+                                            }}
+                                        />
+                                        <TextInputControlled
+                                            control={formProviderMethods.control}
+                                            name={formMeta.fields.deliveryTelephone.name}
+                                            render={(textInput) => (
+                                                <FormLine bottomGap className="flex-none lg:w-4/6">
+                                                    {textInput}
+                                                </FormLine>
+                                            )}
+                                            formName={formMeta.formName}
+                                            textInputProps={{
+                                                label: formMeta.fields.deliveryTelephone.label,
+                                                required: true,
+                                                type: 'text',
+                                                autoComplete: 'family-name',
+                                                onBlur: (event) =>
+                                                    dispatch(
+                                                        contactInformationActions.setDeliveryTelephone(
+                                                            event.currentTarget.value,
+                                                        ),
+                                                    ),
+                                            }}
+                                        />
+                                        {!pickupPlace && (
+                                            <>
                                                 <TextInputControlled
                                                     control={formProviderMethods.control}
-                                                    name={formMeta.fields.deliveryCity.name}
-                                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                                                    formName={formMeta.formName}
-                                                    textInputProps={{
-                                                        label: formMeta.fields.deliveryCity.label,
-                                                        required: true,
-                                                        type: 'text',
-                                                        autoComplete: 'address-level2',
-                                                        onBlur: (event) =>
-                                                            dispatch(
-                                                                contactInformationActions.setDeliveryCity(
-                                                                    event.currentTarget.value,
-                                                                ),
-                                                            ),
-                                                    }}
-                                                />
-                                                <TextInputControlled
-                                                    control={formProviderMethods.control}
-                                                    name={formMeta.fields.deliveryPostcode.name}
+                                                    name={formMeta.fields.deliveryStreet.name}
                                                     render={(textInput) => (
-                                                        <FormLine bottomGap className="w-full flex-none lg:w-[142px]">
+                                                        <FormLine bottomGap className="flex-none lg:w-4/6">
                                                             {textInput}
                                                         </FormLine>
                                                     )}
                                                     formName={formMeta.formName}
                                                     textInputProps={{
-                                                        label: formMeta.fields.deliveryPostcode.label,
+                                                        label: formMeta.fields.deliveryStreet.label,
                                                         required: true,
                                                         type: 'text',
                                                         autoComplete: 'postal-code',
                                                         onBlur: (event) =>
                                                             dispatch(
-                                                                contactInformationActions.setDeliveryPostcode(
+                                                                contactInformationActions.setDeliveryStreet(
                                                                     event.currentTarget.value,
                                                                 ),
                                                             ),
                                                     }}
                                                 />
-                                            </FormColumn>
-                                            <FormLine className="flex-none lg:w-4/6">
-                                                <Controller
-                                                    name={formMeta.fields.deliveryCountry.name}
-                                                    render={({ fieldState: { invalid, error }, field }) => (
-                                                        <>
-                                                            <Select
-                                                                label={formMeta.fields.deliveryCountry.label}
-                                                                hasError={invalid}
-                                                                options={countriesAsSelectOptions}
-                                                                onChange={(...data) => {
-                                                                    field.onChange(...data);
-                                                                    dispatch(
-                                                                        contactInformationActions.setDeliveryCountry(
-                                                                            data[0] as SelectOptionType,
-                                                                        ),
-                                                                    );
-                                                                }}
-                                                                value={countriesAsSelectOptions.find(
-                                                                    (option) => option.value === field.value.value,
-                                                                )}
-                                                            />
+                                                <FormColumn className="lg:w-[calc(65%+0.75rem)]">
+                                                    <TextInputControlled
+                                                        control={formProviderMethods.control}
+                                                        name={formMeta.fields.deliveryCity.name}
+                                                        render={(textInput) => (
+                                                            <FormLine bottomGap>{textInput}</FormLine>
+                                                        )}
+                                                        formName={formMeta.formName}
+                                                        textInputProps={{
+                                                            label: formMeta.fields.deliveryCity.label,
+                                                            required: true,
+                                                            type: 'text',
+                                                            onBlur: (event) =>
+                                                                dispatch(
+                                                                    contactInformationActions.setDeliveryCity(
+                                                                        event.currentTarget.value,
+                                                                    ),
+                                                                ),
+                                                        }}
+                                                    />
+                                                    <TextInputControlled
+                                                        control={formProviderMethods.control}
+                                                        name={formMeta.fields.deliveryPostcode.name}
+                                                        render={(textInput) => (
+                                                            <FormLine
+                                                                bottomGap
+                                                                className="w-full flex-none lg:w-[142px]"
+                                                            >
+                                                                {textInput}
+                                                            </FormLine>
+                                                        )}
+                                                        formName={formMeta.formName}
+                                                        textInputProps={{
+                                                            label: formMeta.fields.deliveryPostcode.label,
+                                                            required: true,
+                                                            type: 'text',
+                                                            onBlur: (event) =>
+                                                                dispatch(
+                                                                    contactInformationActions.setDeliveryPostcode(
+                                                                        event.currentTarget.value,
+                                                                    ),
+                                                                ),
+                                                        }}
+                                                    />
+                                                </FormColumn>
+                                                <FormLine className="flex-none lg:w-4/6">
+                                                    <Controller
+                                                        name={formMeta.fields.deliveryCountry.name}
+                                                        render={({ fieldState: { invalid, error }, field }) => (
+                                                            <>
+                                                                <Select
+                                                                    label={formMeta.fields.deliveryCountry.label}
+                                                                    hasError={invalid}
+                                                                    options={countriesAsSelectOptions}
+                                                                    onChange={(...data) => {
+                                                                        field.onChange(...data);
+                                                                        dispatch(
+                                                                            contactInformationActions.setDeliveryCountry(
+                                                                                data[0] as SelectOptionType,
+                                                                            ),
+                                                                        );
+                                                                    }}
+                                                                    value={countriesAsSelectOptions.find(
+                                                                        (option) => option.value === field.value.value,
+                                                                    )}
+                                                                />
 
-                                                            <FormLineError
-                                                                error={error}
-                                                                inputType="select"
-                                                                dataTestId={
-                                                                    formMeta.formName +
-                                                                    '-' +
-                                                                    formMeta.fields.deliveryCountry.name +
-                                                                    '-error'
-                                                                }
-                                                            />
-                                                        </>
-                                                    )}
-                                                />
-                                            </FormLine>
-                                        </>
-                                    )}
-                                </>
-                            )}
+                                                                <FormLineError
+                                                                    error={error}
+                                                                    inputType="select"
+                                                                    dataTestId={
+                                                                        formMeta.formName +
+                                                                        '-' +
+                                                                        formMeta.fields.deliveryCountry.name +
+                                                                        '-error'
+                                                                    }
+                                                                />
+                                                            </>
+                                                        )}
+                                                    />
+                                                </FormLine>
+                                            </>
+                                        )}
+                                    </>
+                                )}
+                            </div>
                         </div>
-                    </div>
-                </CSSTransition>
+                    )}
+                </Transition>
                 {!!pickupPlace && (
                     <div>
                         <strong>{t('Pickup place')}:</strong> {pickupPlace.street}, {pickupPlace.postcode}{' '}
                         {pickupPlace.city}, {pickupPlace.country.name}
                     </div>
                 )}
-            </ContactInformationDeliveryAddressStyled>
+            </div>
         </>
     );
 };

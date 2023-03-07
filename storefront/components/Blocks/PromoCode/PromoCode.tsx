@@ -1,4 +1,3 @@
-import { PromoCodeStyled } from './PromoCode.style';
 import { PromoCodeInfo } from './PromoCodeInfo/PromoCodeInfo';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
@@ -11,8 +10,9 @@ import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
 import { useApplyPromoCodeToCart } from 'hooks/cart/useApplyPromoCodeToCart';
 import { useRemovePromoCodeFromCart } from 'hooks/cart/useRemovePromoCodeFromCart';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import { useCalcElementHeight } from 'hooks/ui/useCalcElementHeight';
 import { ChangeEventHandler, MouseEventHandler, useCallback, useMemo, useRef, useState } from 'react';
-import { CSSTransition } from 'react-transition-group';
+import { Transition } from 'react-transition-group';
 
 type TransportAndPaymentErrorsType = {
     promoCode: {
@@ -28,9 +28,9 @@ export const PromoCode: FC = () => {
     const { promoCode } = useCurrentCart();
     const t = useTypedTranslationFunction();
     const [isContentVisible, setIsContentVisible] = useState(false);
-    const [contentElementHeight, setContentElementHeight] = useState(0);
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
+    const [elementHeight, calcHeight] = useCalcElementHeight(contentElement);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useState(false);
     const [promoCodeValue, setPromoCodeValue] = useState<string>(promoCode === null ? '' : promoCode);
     const [applyPromoCode, fetchingApplyPromoCode] = useApplyPromoCodeToCart();
@@ -50,10 +50,12 @@ export const PromoCode: FC = () => {
         return errors;
     }, [promoCodeValue, t]);
 
-    const calcHeight = () => {
-        if (contentElement.current) {
-            setContentElementHeight(contentElement.current.clientHeight);
-        }
+    const transitionStyles = {
+        entering: { height: elementHeight },
+        entered: { height: elementHeight },
+        exiting: { height: 0 },
+        exited: { height: 0 },
+        unmounted: {},
     };
 
     const onApplyPromoCodeHandler: MouseEventHandler<HTMLButtonElement> = useCallback(async () => {
@@ -88,7 +90,7 @@ export const PromoCode: FC = () => {
 
     return (
         <>
-            <PromoCodeStyled contentElementHeight={contentElementHeight} data-testid={TEST_IDENTIFIER}>
+            <div className="relative w-80" data-testid={TEST_IDENTIFIER}>
                 {promoCode !== null ? (
                     <>
                         {fetchingRemovePromoCode && <LoaderWithOverlay iconSize={20} />}
@@ -104,41 +106,48 @@ export const PromoCode: FC = () => {
                             <Icon iconType="icon" icon="Plus" width={12} height={12} className="mr-3" />
                             {t('I have a discount coupon')}
                         </div>
-                        <CSSTransition
+                        <Transition
+                            nodeRef={cssTransitionRef}
                             in={isContentVisible}
                             timeout={300}
-                            classNames="promoCode"
-                            onEnter={calcHeight}
-                            onExit={calcHeight}
+                            onEnter={() => calcHeight()}
+                            onExit={() => calcHeight()}
                             unmountOnExit
-                            nodeRef={cssTransitionRef}
                         >
-                            <div className="overflow-hidden" ref={cssTransitionRef}>
-                                <div className="flex" ref={contentElement}>
-                                    <TextInput
-                                        className="!mb-0 !w-full max-w-sm !rounded-r-none !border-r-0"
-                                        id={TEST_IDENTIFIER + '-input'}
-                                        type="text"
-                                        label={t('Coupon')}
-                                        value={promoCodeValue}
-                                        onChange={onChangePromoCodeValueHandler}
-                                    />
-                                    <Button
-                                        className="!rounded-r-xl !rounded-l-none !px-3"
-                                        type="submit"
-                                        isDisabledLook={hasValidationErrors(promoCodeValidationMessages)}
-                                        dataTestId={TEST_IDENTIFIER + '-apply-button'}
-                                        onClick={onApplyPromoCodeHandler}
-                                    >
-                                        {fetchingApplyPromoCode && <Loader iconSize={16} className="text-white" />}
-                                        {t('Apply')}
-                                    </Button>
+                            {(state) => (
+                                <div
+                                    className="overflow-hidden transition-all"
+                                    ref={cssTransitionRef}
+                                    style={{
+                                        ...transitionStyles[state],
+                                    }}
+                                >
+                                    <div className="flex" ref={contentElement}>
+                                        <TextInput
+                                            className="!mb-0 !w-full max-w-sm !rounded-r-none !border-r-0"
+                                            id={TEST_IDENTIFIER + '-input'}
+                                            type="text"
+                                            label={t('Coupon')}
+                                            value={promoCodeValue}
+                                            onChange={onChangePromoCodeValueHandler}
+                                        />
+                                        <Button
+                                            className="!rounded-r-xl !rounded-l-none !px-3"
+                                            type="submit"
+                                            isDisabledLook={hasValidationErrors(promoCodeValidationMessages)}
+                                            dataTestId={TEST_IDENTIFIER + '-apply-button'}
+                                            onClick={onApplyPromoCodeHandler}
+                                        >
+                                            {fetchingApplyPromoCode && <Loader iconSize={16} className="text-white" />}
+                                            {t('Apply')}
+                                        </Button>
+                                    </div>
                                 </div>
-                            </div>
-                        </CSSTransition>
+                            )}
+                        </Transition>
                     </>
                 )}
-            </PromoCodeStyled>
+            </div>
             <ErrorPopup
                 isVisible={isErrorPopupVisible}
                 onCloseCallback={() => setErrorPopupVisibility(false)}

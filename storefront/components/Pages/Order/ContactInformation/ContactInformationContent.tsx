@@ -102,7 +102,7 @@ export const ContactInformationContent: FC = () => {
                     {t('User with this email is already registered. Do you want to sign in')}
                 </Button>
             )}
-            <ContactInformationFormWrapper isEmailEntered={isEmailFilledCorrectly} />
+            {isEmailFilledCorrectly && <ContactInformationFormWrapper />}
             <div className={twJoin(!isEmailFilledCorrectly && 'pointer-events-none opacity-50')}>
                 <p className="mb-4">
                     <Trans

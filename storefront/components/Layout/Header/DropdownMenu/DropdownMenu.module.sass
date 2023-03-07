@@ -1,0 +1,88 @@
+.dropdownMenuWrapperStyled
+    @apply transition-transform
+
+    .dropdown-enter
+        @apply -translate-y-full
+
+        &-active
+            @apply translate-y-0
+
+    .dropdown-exit
+        @apply translate-y-0
+
+        &-active
+            @apply -translate-y-full
+
+.dropdownMenuLeft
+    @apply absolute left-2 right-2 top-0 z-mobileMenu overflow-hidden cursor-auto bg-white shadow-md transition-transform
+
+    .menu-primary-enter
+        @apply absolute -translate-x-full
+
+        &-active
+            @apply translate-x-0
+
+    .menu-primary-exit
+        @apply absolute
+
+        &-active
+            @apply -translate-x-full
+
+    .menu-secondary-enter
+        @apply absolute -translate-x-full
+
+        &-active
+            @apply translate-x-0
+
+    .menu-secondary-exit
+        &-active
+            @apply translate-x-full
+
+    .menu-tertiary-enter
+        @apply translate-x-0
+
+        &-active
+            @apply translate-x-full
+
+    .menu-tertiary-exit
+        @apply translate-x-0
+
+        &-active
+            @apply translate-x-full
+
+.dropdownMenuRight
+    @apply absolute left-2 right-2 top-0 z-mobileMenu overflow-hidden cursor-auto bg-white shadow-md transition-transform
+
+    .menu-primary-enter
+        @apply absolute -translate-x-full
+
+        &-active
+            @apply translate-x-0
+
+    .menu-primary-exit
+        @apply absolute
+
+        &-active
+            @apply -translate-x-full
+
+    .menu-secondary-enter
+        @apply translate-x-full
+
+        &-active
+            @apply translate-x-0
+
+    .menu-secondary-exit
+        @apply absolute translate-x-0
+
+        &-active
+            @apply -translate-x-full
+
+    .menu-tertiary-enter
+        @apply absolute translate-x-full
+
+        &-active
+            @apply translate-x-0
+
+    .menu-tertiary-exit
+        &-active
+            @apply translate-x-full

@@ -1,4 +1,4 @@
-import { DropdownMenuStyled, DropdownMenuWrapperStyled } from './DropdownMenu.style';
+import styles from './DropdownMenu.module.sass';
 import { DropdownMenuContext } from './DropdownMenuContext';
 import { PrimaryList } from './PrimaryList/PrimaryList';
 import { SecondaryList } from './SecondaryList/SecondaryList';
@@ -22,7 +22,7 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggle
     const [{ data: navigationData }] = useQueryError(useNavigationQueryApi());
     const [menuLevel, setMenuLevel] = useState<DropdownListLevels | undefined>('primary');
     const [historyOfIndexes, setHistoryOfIndexes] = useState<(number | string | undefined)[]>([]);
-    const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
+    const [isRightSlide, setIsRightSlide] = useState(true);
     const [menuHeight, setMenuHeight] = useState<number>();
 
     if (navigationData?.navigation === undefined || navigationData.navigation.length === 0) {
@@ -35,28 +35,27 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggle
 
     const slideLeft = (props: { goToMenu: DropdownListLevels }) => {
         setMenuLevel(props.goToMenu);
-        setSlideDirection('left');
+        setIsRightSlide(false);
 
         historyOfIndexes.pop();
 
-        if (historyOfIndexes.length === 0) {
-            setHistoryOfIndexes([]);
-        } else {
-            setHistoryOfIndexes([...historyOfIndexes]);
-        }
+        setHistoryOfIndexes(historyOfIndexes.length === 0 ? [] : [...historyOfIndexes]);
     };
 
     const slideRight = (props: DropdownItemType) => {
         setMenuLevel(props.goToMenu);
-        setSlideDirection('right');
+        setIsRightSlide(true);
         setHistoryOfIndexes((oldArray: (number | string | undefined)[]) => [...oldArray, props.index]);
     };
 
     return (
-        <DropdownMenuWrapperStyled data-testid={TEST_IDENTIFIER}>
+        <div className={styles.dropdownMenuWrapperStyled} data-testid={TEST_IDENTIFIER}>
             <CSSTransition in={isMenuOpened} timeout={500} classNames="dropdown" onEntering={calcHeight} unmountOnExit>
                 <DropdownMenuContext.Provider value={{ slideRight, onMenuToggleHandler }}>
-                    <DropdownMenuStyled slideDirection={slideDirection} style={{ height: menuHeight }}>
+                    <div
+                        className={isRightSlide ? styles.dropdownMenuRight : styles.dropdownMenuLeft}
+                        style={{ height: menuHeight }}
+                    >
                         <CSSTransition
                             in={menuLevel === 'primary'}
                             timeout={500}
@@ -101,9 +100,9 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggle
                                 />
                             </div>
                         </CSSTransition>
-                    </DropdownMenuStyled>
+                    </div>
                 </DropdownMenuContext.Provider>
             </CSSTransition>
-        </DropdownMenuWrapperStyled>
+        </div>
     );
 };
