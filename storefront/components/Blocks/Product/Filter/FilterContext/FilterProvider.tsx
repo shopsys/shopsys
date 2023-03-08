@@ -6,7 +6,7 @@ import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
 import { FILTER_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { useRouter } from 'next/router';
-import { FC, useEffect, useMemo, useReducer } from 'react';
+import { useEffect, useMemo, useReducer } from 'react';
 import { FilterOptionsType } from 'types/productFilter';
 
 type FilterProviderProps = {

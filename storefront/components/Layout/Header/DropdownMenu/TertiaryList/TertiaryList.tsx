@@ -1,6 +1,5 @@
-import { TertiaryListTitleStyled } from './TertiaryList.style';
 import { DropdownItem } from 'components/Layout/Header/DropdownMenu/Item/DropdownItem';
-import { FC, Fragment } from 'react';
+import { Fragment } from 'react';
 import { DropdownListProps } from 'types/dropdown';
 
 const TEST_IDENTIFIER = 'layout-header-dropdownmenu-tertiarylist-';
@@ -15,11 +14,12 @@ export const TertiaryList: FC<DropdownListProps> = ({ navigationItems, historyOf
                             {columnCategories.categories
                                 .map((columnCategory, columnCategoryIndex) => (
                                     <Fragment key={columnCategoryIndex}>
-                                        <TertiaryListTitleStyled
+                                        <div
+                                            className="border-b border-greyLighter px-8 pb-4 font-bold uppercase"
                                             data-testid={TEST_IDENTIFIER + '-' + index + '-' + columnCategoryIndex}
                                         >
                                             {columnCategory.name}
-                                        </TertiaryListTitleStyled>
+                                        </div>
                                         {columnCategory.children.map((columnCategoryChild, subListIndex) => (
                                             <DropdownItem
                                                 key={subListIndex}

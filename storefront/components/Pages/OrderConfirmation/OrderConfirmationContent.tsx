@@ -2,7 +2,6 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { GoPayGateway } from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPayGateway';
 import { useOrderSentPageContentApi } from 'graphql/generated';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
-import { FC } from 'react';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { userActions } from 'redux/slices/user';
 import { PaymentTypeEnum } from 'types/payment';

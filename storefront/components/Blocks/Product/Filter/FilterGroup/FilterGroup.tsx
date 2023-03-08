@@ -1,15 +1,15 @@
 import { useFilterState } from '../FilterContext/useFilterState';
 import {
-    FilterGroupContentItemStyled,
-    FilterGroupContentStyled,
-    FilterGroupStyled,
-    FilterGroupTitleStyled,
-    ShowAllButtonStyled,
-} from './FilterGroup.style';
+    FilterGroupContent,
+    FilterGroupContentItem,
+    FilterGroupTitle,
+    FilterGroupWrapper,
+    ShowAllButton,
+} from '../FilterElements';
 import { FilterGroupIcon } from './FilterGroupIcon';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 type FilterFieldType = 'flags' | 'brands';
 
@@ -39,23 +39,22 @@ export const FilterGroup: FC<FilterGroupProps> = ({
     const options = useMemo(() => state.options[filterField], [filterField, state.options]);
 
     return (
-        <FilterGroupStyled data-testid={getTestIdentifier(filterField)}>
-            <FilterGroupTitleStyled onClick={() => setIsGroupOpen((currentGroupVisibility) => !currentGroupVisibility)}>
+        <FilterGroupWrapper dataTestId={getTestIdentifier(filterField)}>
+            <FilterGroupTitle onClick={() => setIsGroupOpen((currentGroupVisibility) => !currentGroupVisibility)}>
                 {title}
                 <FilterGroupIcon isOpen={isGroupOpen} />
-            </FilterGroupTitleStyled>
-            <FilterGroupContentStyled isOpen={isGroupOpen}>
+            </FilterGroupTitle>
+            <FilterGroupContent isOpen={isGroupOpen}>
                 {selected
                     .slice(0, areAllFlagsOrBrandsShown ? undefined : defaultNumberOfShownFlagsOrBrands)
                     .map((dataItem, index) => {
                         const count = typeof options[index] !== 'undefined' ? options[index].count : 0;
 
                         return (
-                            <FilterGroupContentItemStyled
+                            <FilterGroupContentItem
                                 key={dataItem.uuid}
-                                isDisabled={count === 0}
-                                isActive={dataItem.checked}
-                                data-testid={getTestIdentifier(filterField) + '-' + index}
+                                isDisabled={count === 0 && !dataItem.checked}
+                                dataTestId={getTestIdentifier(filterField) + '-' + index}
                             >
                                 <Checkbox
                                     id={`${filterField}.${index}.checked`}
@@ -73,15 +72,15 @@ export const FilterGroup: FC<FilterGroupProps> = ({
                                     value={dataItem.checked}
                                     count={count}
                                 />
-                            </FilterGroupContentItemStyled>
+                            </FilterGroupContentItem>
                         );
                     })}
                 {selected.length > defaultNumberOfShownFlagsOrBrands && (
-                    <ShowAllButtonStyled onClick={() => setAreAllFlagsOrBrandsShown((prev) => !prev)}>
+                    <ShowAllButton onClick={() => setAreAllFlagsOrBrandsShown((prev) => !prev)}>
                         {areAllFlagsOrBrandsShown ? t('show less') : t('show more')}
-                    </ShowAllButtonStyled>
+                    </ShowAllButton>
                 )}
-            </FilterGroupContentStyled>
-        </FilterGroupStyled>
+            </FilterGroupContent>
+        </FilterGroupWrapper>
     );
 };

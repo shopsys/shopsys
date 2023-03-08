@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 const TEST_IDENTIFIER = 'pages-order-transportandpayment-packeterycontainer';
 
 export const PacketeryContainer: FC = () => (

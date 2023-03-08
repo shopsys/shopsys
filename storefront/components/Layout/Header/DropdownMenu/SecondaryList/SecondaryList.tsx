@@ -1,6 +1,5 @@
-import { SecondaryListTitleStyled } from './SecondaryList.style';
 import { DropdownItem } from 'components/Layout/Header/DropdownMenu/Item/DropdownItem';
-import { FC, Fragment } from 'react';
+import { Fragment } from 'react';
 import { DropdownListProps } from 'types/dropdown';
 
 const TEST_IDENTIFIER = 'layout-header-dropdownmenu-secondarylist-';
@@ -10,9 +9,12 @@ export const SecondaryList: FC<DropdownListProps> = ({ navigationItems, historyO
         {navigationItems
             .map((navigationItem, index) => (
                 <Fragment key={index}>
-                    <SecondaryListTitleStyled data-testid={TEST_IDENTIFIER + index}>
+                    <div
+                        className="border-b border-greyLighter px-8 pb-4 font-bold uppercase"
+                        data-testid={TEST_IDENTIFIER + index}
+                    >
                         {navigationItem.name}
-                    </SecondaryListTitleStyled>
+                    </div>
                     {navigationItem.categoriesByColumns.map((columnCategories, columnIndex) => (
                         <Fragment key={`${index}-${columnIndex}`}>
                             {columnCategories.categories.map((columnCategory, columnCategoryIndex) => (

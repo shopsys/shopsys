@@ -1,12 +1,6 @@
-import {
-    NavigationColumnCategoryImageStyled,
-    NavigationColumnCategoryLinkStyled,
-    NavigationColumnCategoryStyled,
-} from './NavigationColumnCategory.style';
 import { Image } from 'components/Basic/Image/Image';
 import { NavigationSubList } from 'components/Layout/Header/Navigation/NavigationSubList/NavigationSubList';
 import NextLink from 'next/link';
-import { FC } from 'react';
 import { NavigationCategory } from 'types/navigation';
 
 type NavigationColumnCategoryProps = {
@@ -16,15 +10,20 @@ type NavigationColumnCategoryProps = {
 const TEST_IDENTIFIER = 'layout-header-navigation-navigationcolumncategory';
 
 export const NavigationColumnCategory: FC<NavigationColumnCategoryProps> = ({ columnCategory }) => (
-    <NavigationColumnCategoryStyled data-testid={TEST_IDENTIFIER}>
+    <li className="mb-9 w-full last:mb-0" data-testid={TEST_IDENTIFIER}>
         <NextLink href={columnCategory.slug} passHref>
-            <NavigationColumnCategoryImageStyled>
-                <Image image={columnCategory.image} type="default" alt={columnCategory.name} />
-            </NavigationColumnCategoryImageStyled>
+            <a className="mb-4 flex h-16 justify-center rounded-xl bg-dark bg-opacity-5 p-2">
+                <Image
+                    image={columnCategory.image}
+                    type="default"
+                    alt={columnCategory.name}
+                    className="mix-blend-multiply"
+                />
+            </a>
         </NextLink>
         <NextLink href={columnCategory.slug} passHref>
-            <NavigationColumnCategoryLinkStyled>{columnCategory.name}</NavigationColumnCategoryLinkStyled>
+            <a className="mb-1 block font-bold text-dark no-underline">{columnCategory.name}</a>
         </NextLink>
         {columnCategory.children.length > 0 && <NavigationSubList columnCategoryChildren={columnCategory.children} />}
-    </NavigationColumnCategoryStyled>
+    </li>
 );

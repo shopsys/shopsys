@@ -6,7 +6,7 @@ import { AddToCartAction } from 'hooks/cart/useAddToCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
-import { FC, MouseEventHandler, useRef } from 'react';
+import { MouseEventHandler, useRef } from 'react';
 import { CartItemType } from 'types/cart';
 
 type CartListItemProps = {

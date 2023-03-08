@@ -2,10 +2,9 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { Button } from 'components/Forms/Button/Button';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { Popup } from 'components/Layout/Popup/Popup';
-import { PopupStyled } from 'components/Layout/Popup/Popup.style';
 import { useDeleteDeliveryAddressMutationApi, useSetDefaultDeliveryAddressMutationApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { DeliveryAddressType } from 'types/customer';
 
@@ -96,7 +95,6 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
             <Popup
                 isVisible={addressToBeDeleted !== undefined}
                 onCloseCallback={() => setAddressToBeDeleted(undefined)}
-                wrapperComponent={PopupStyled}
                 className="w-11/12 lg:w-4/5 vl:w-auto"
             >
                 <div className="flex flex-col">

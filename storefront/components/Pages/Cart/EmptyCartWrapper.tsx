@@ -4,7 +4,7 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useRouter } from 'next/router';
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { CurrentCartType } from 'types/cart';
 

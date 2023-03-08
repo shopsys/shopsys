@@ -1,16 +1,9 @@
-import {
-    ContactContentStyled,
-    ContactHours,
-    ContactWrapperStyled,
-    HeaderContactStyled,
-    PhoneNumberStyled,
-} from './HeaderContact.style';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
 // TODO PRG
 const dummyData = {
@@ -32,14 +25,18 @@ export const HeaderContact: FC = () => {
     );
 
     return (
-        <HeaderContactStyled data-testid={TEST_IDENTIFIER}>
-            <ContactWrapperStyled>
-                <ContactContentStyled>
+        <div className="order-2 ml-auto flex" data-testid={TEST_IDENTIFIER}>
+            <div className="relative flex flex-1 flex-col items-start bg-primary py-4 pr-4 lg:flex-row lg:items-center lg:justify-between">
+                <div className="flex flex-wrap items-center lg:flex-1 xl:justify-center">
                     <Icon iconType="icon" icon="Phone" width={20} height={20} className="mr-3 text-orange" />
-                    <PhoneNumberStyled href={'tel:' + dummyData.phone}>{dummyData.phone}</PhoneNumberStyled>
-                    {areContactHoursVisible ? <ContactHours> {dummyData.opening}</ContactHours> : null}
-                </ContactContentStyled>
-            </ContactWrapperStyled>
-        </HeaderContactStyled>
+                    <a className="font-bold text-creamWhite no-underline lg:mr-4" href={'tel:' + dummyData.phone}>
+                        {dummyData.phone}
+                    </a>
+                    {areContactHoursVisible ? (
+                        <p className="m-0 text-sm text-creamWhite"> {dummyData.opening}</p>
+                    ) : null}
+                </div>
+            </div>
+        </div>
     );
 };

@@ -1,18 +1,17 @@
 import { useFilterState } from '../FilterContext/useFilterState';
+import {
+    FilterGroupContent,
+    FilterGroupContentItem,
+    FilterGroupTitle,
+    FilterGroupWrapper,
+    ShowAllButton,
+} from '../FilterElements';
 import { FilterGroupIcon } from '../FilterGroup/FilterGroupIcon';
 import { SliderFilter } from './SliderFilter/SliderFilter';
-import {
-    FilterGroupColorStyled,
-    FilterGroupContentItemStyled,
-    FilterGroupContentStyled,
-    FilterGroupStyled,
-    FilterGroupTitleStyled,
-    ShowAllButtonStyled,
-} from 'components/Blocks/Product/Filter/FilterGroup/FilterGroup.style';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { CheckboxColor } from 'components/Forms/CheckboxColor/CheckboxColor';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { ParametersType } from 'types/productFilter';
 
 type FilterGroupParametersProps = {
@@ -49,14 +48,12 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
     );
 
     return (
-        <FilterGroupStyled data-testid={getTestIdentifier(parameterParentIndex)}>
-            <FilterGroupTitleStyled
-                onClick={() => setIsGroupCollapsed((currentGroupVisibility) => !currentGroupVisibility)}
-            >
+        <FilterGroupWrapper dataTestId={getTestIdentifier(parameterParentIndex)}>
+            <FilterGroupTitle onClick={() => setIsGroupCollapsed((currentGroupVisibility) => !currentGroupVisibility)}>
                 {title}
                 <FilterGroupIcon isOpen={!isGroupCollapsed} />
-            </FilterGroupTitleStyled>
-            <FilterGroupContentStyled isOpen={!isGroupCollapsed}>
+            </FilterGroupTitle>
+            <FilterGroupContent isOpen={!isGroupCollapsed}>
                 {parameters?.__typename === 'ParameterCheckboxFilterOption' && (
                     <>
                         {parameters.values
@@ -66,11 +63,10 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                 const id = `parameters.${parameterParentIndex}.values.${index}.checked`;
 
                                 return (
-                                    <FilterGroupContentItemStyled
+                                    <FilterGroupContentItem
                                         key={dataItem.uuid}
-                                        isDisabled={dataItem.count === 0}
-                                        isActive={item?.checked ?? false}
-                                        data-testid={getTestIdentifier(parameterParentIndex) + '-' + index}
+                                        isDisabled={dataItem.count === 0 && !(item?.checked ?? false)}
+                                        dataTestId={getTestIdentifier(parameterParentIndex) + '-' + index}
                                     >
                                         <Checkbox
                                             id={id}
@@ -95,18 +91,18 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                             value={item?.checked ?? false}
                                             count={dataItem.count}
                                         />
-                                    </FilterGroupContentItemStyled>
+                                    </FilterGroupContentItem>
                                 );
                             })}
                         {parameters.values.length > defaultNumberOfShownParameters && (
-                            <ShowAllButtonStyled onClick={() => setAreAllParametersShown((prev) => !prev)}>
+                            <ShowAllButton onClick={() => setAreAllParametersShown((prev) => !prev)}>
                                 {areAllParametersShown ? t('show less') : t('show more')}
-                            </ShowAllButtonStyled>
+                            </ShowAllButton>
                         )}
                     </>
                 )}
                 {parameters?.__typename === 'ParameterColorFilterOption' && (
-                    <FilterGroupColorStyled>
+                    <div className="flex flex-wrap">
                         {parameters.values.map((dataItem, index) => {
                             const item = selectedParameters?.values[index] ?? undefined;
                             const id = `parameters.${parameterParentIndex}.values.${index}.checked`;
@@ -139,7 +135,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                 />
                             );
                         })}
-                    </FilterGroupColorStyled>
+                    </div>
                 )}
                 {data?.__typename === 'ParameterSliderFilterOption' && (
                     <SliderFilter
@@ -148,7 +144,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                         max={data.maximalValue}
                     />
                 )}
-            </FilterGroupContentStyled>
-        </FilterGroupStyled>
+            </FilterGroupContent>
+        </FilterGroupWrapper>
     );
 };

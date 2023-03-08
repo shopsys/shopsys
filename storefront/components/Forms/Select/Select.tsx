@@ -1,7 +1,7 @@
 import { SelectStyled } from './Select.style';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper/LabelWrapper';
-import { FC, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { components, Props } from 'react-select';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 

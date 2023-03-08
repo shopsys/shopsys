@@ -1,9 +1,7 @@
 import { ProductItem } from './ProductItem/ProductItem';
-import { ProductsListStyled } from './ProductsList.style';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
 import { usePaginationContext } from 'components/Blocks/Pagination/usePaginationContext';
-import { FC } from 'react';
 import { GtmListNameType } from 'types/gtm';
 import { ListedProductType } from 'types/product';
 
@@ -19,7 +17,10 @@ export const ProductsList: FC<ProductsListProps> = ({ gtmListName, products, fet
     const [{ page }] = usePaginationContext();
 
     return (
-        <ProductsListStyled data-testid={TEST_IDENTIFIER}>
+        <div
+            className="relative -ml-2 mb-5 grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))]"
+            data-testid={TEST_IDENTIFIER}
+        >
             {products.map((listedProductItem, index) => (
                 <ProductItem
                     key={listedProductItem.uuid}
@@ -29,6 +30,6 @@ export const ProductsList: FC<ProductsListProps> = ({ gtmListName, products, fet
                 />
             ))}
             {fetching && <LoaderWithOverlay iconSize={80} />}
-        </ProductsListStyled>
+        </div>
     );
 };

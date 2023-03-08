@@ -1,4 +1,4 @@
-import { FC, ImgHTMLAttributes } from 'react';
+import { ImgHTMLAttributes } from 'react';
 import { CSSProperties } from 'styled-components';
 import { ImageSizeType, ImageType } from 'types/image';
 import { twMergeCustom } from 'utils/twMerge';
@@ -11,7 +11,6 @@ type ImageProps = {
     testIdentifier?: string;
     maxWidth?: CSSProperties['maxWidth'];
     maxHeight?: CSSProperties['maxHeight'];
-    className?: string;
 };
 
 const getTestIdentifier = (testIdentifier?: string) => testIdentifier ?? 'basic-image';

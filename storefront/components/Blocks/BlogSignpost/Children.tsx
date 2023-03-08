@@ -1,7 +1,6 @@
 import { BlogSignpostIcon } from './BlogSignpostIcon';
-import { BlogSignpostItemStyled } from 'components/Blocks/BlogSignpost/BlogSignpost.style';
-import NextLink from 'next/link';
-import { FC, Fragment } from 'react';
+import { BlogSignpostItem } from './BlogSignpostItem';
+import { Fragment } from 'react';
 import { ListedBlogCategoryType } from 'types/blogCategory';
 
 type ChildrenProps = {
@@ -19,16 +18,15 @@ export const Children: FC<ChildrenProps> = ({ blogCategory, activeItem, itemLeve
 
             return (
                 <Fragment key={blogCategoryChild.uuid}>
-                    <NextLink href={blogCategoryChild.link} passHref>
-                        <BlogSignpostItemStyled
-                            isActive={isActive}
-                            itemLevel={itemLevel}
-                            data-testid={TEST_IDENTIFIER + index}
-                        >
-                            <BlogSignpostIcon isActive={isActive} />
-                            {blogCategoryChild.name}
-                        </BlogSignpostItemStyled>
-                    </NextLink>
+                    <BlogSignpostItem
+                        isActive={isActive}
+                        href={blogCategoryChild.link}
+                        itemLevel={itemLevel}
+                        dataTestId={TEST_IDENTIFIER + index}
+                    >
+                        <BlogSignpostIcon isActive={isActive} />
+                        {blogCategoryChild.name}
+                    </BlogSignpostItem>
                     {blogCategoryChild.children !== undefined && blogCategoryChild.children.length > 0 && (
                         <Children blogCategory={blogCategoryChild} activeItem={activeItem} itemLevel={itemLevel + 1} />
                     )}

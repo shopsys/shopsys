@@ -1,17 +1,13 @@
 import { ListItem } from './ListItem/ListItem';
-import { ListItemStyled, SimpleNavigationStyled } from './SimpleNavigation.style';
 import { Slider } from './Slider/Slider';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
-import { FC, HTMLAttributes, useState } from 'react';
-import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { useState } from 'react';
 import { ListedItemPropType } from 'types/simpleNavigation';
 
-type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLElement>, never, 'className'>;
-
-type SimpleNavigationProps = NativeProps & {
+type SimpleNavigationProps = {
     listedItems: ListedItemPropType[];
     imageType?: string;
 };
@@ -34,15 +30,19 @@ export const SimpleNavigation: FC<SimpleNavigationProps> = ({ listedItems, image
             {isSliderVisible ? (
                 <Slider listedItems={listedItems} />
             ) : (
-                <SimpleNavigationStyled data-testid={TEST_IDENTIFIER}>
+                <ul className="-mb-3 -ml-6 flex flex-wrap p-0" data-testid={TEST_IDENTIFIER}>
                     {listedItems.map((listedItem, key) => (
-                        <ListItemStyled key={key} data-testid={TEST_IDENTIFIER + '-' + key}>
+                        <li
+                            className="mb-4 ml-0 pl-0 text-center lg:w-1/2 lg:pl-6 lg:text-left vl:w-1/3 xl:w-1/4"
+                            key={key}
+                            data-testid={TEST_IDENTIFIER + '-' + key}
+                        >
                             <ListItem listedItem={listedItem} imageType={imageType}>
                                 {listedItem.name}
                             </ListItem>
-                        </ListItemStyled>
+                        </li>
                     ))}
-                </SimpleNavigationStyled>
+                </ul>
             )}
         </ul>
     );

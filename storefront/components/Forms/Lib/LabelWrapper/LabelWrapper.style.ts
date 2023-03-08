@@ -271,11 +271,3 @@ export const LabelWrapperStyled = styled.div<LabelWrapperStyledProps>(
         `}
     `,
 );
-
-export const RequiredSymbolStyled = styled.span(
-    ({ theme }) => css`
-        margin-left: 5px;
-
-        color: ${theme.color.red};
-    `,
-);

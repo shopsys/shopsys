@@ -1,10 +1,4 @@
 import { useNewsletterForm, useNewsletterFormMeta } from './formMeta';
-import {
-    NewsletterFormButtonWrapperStyled,
-    NewsletterFormColumnStyled,
-    NewsletterFormInputWrapperStyled,
-    NewsletterFormWrapperStyled,
-} from './NewsletterForm.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Button } from 'components/Forms/Button/Button';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
@@ -20,7 +14,7 @@ import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC, useCallback } from 'react';
+import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { NewsletterFormType } from 'types/form';
 
@@ -57,12 +51,20 @@ export const NewsletterForm: FC = () => {
 
     return (
         <>
-            <NewsletterFormWrapperStyled data-testid={TEST_IDENTIFIER}>
-                <Heading type="h2">{t('Sign up for our newsletter and get 35% discount on running apparel')}</Heading>
-                <NewsletterFormColumnStyled>
+            <div
+                className="relative flex flex-col pb-7 pt-8 before:absolute before:bottom-0 before:-left-5 before:h-32 before:w-28 before:-translate-x-full before:bg-[url('/images/lines.png')] before:content-[''] lg:flex-row lg:items-center"
+                data-testid={TEST_IDENTIFIER}
+            >
+                <Heading type="h2" className="flex-1 lg:pr-5">
+                    {t('Sign up for our newsletter and get 35% discount on running apparel')}
+                </Heading>
+                <div className="w-full lg:max-w-md vl:max-w-lg ">
                     <FormProvider {...formProviderMethods}>
-                        <Form onSubmit={formProviderMethods.handleSubmit(onSubscribeToNewsletterHandler)}>
-                            <NewsletterFormInputWrapperStyled>
+                        <Form
+                            className="mt-15 sm:mt-0"
+                            onSubmit={formProviderMethods.handleSubmit(onSubscribeToNewsletterHandler)}
+                        >
+                            <div className="mb-2 flex flex-col lg:mb-3 lg:flex-row">
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     name={formMeta.fields.email.name}
@@ -76,16 +78,17 @@ export const NewsletterForm: FC = () => {
                                         autoComplete: 'email',
                                     }}
                                 />
-                                <NewsletterFormButtonWrapperStyled>
+                                <div className="flex flex-col">
                                     <Button
+                                        className="mt-3 lg:ml-3"
                                         type="submit"
                                         borderRadius="big"
                                         hasDisabledLook={!formProviderMethods.formState.isValid}
                                     >
                                         {t('Send')}
                                     </Button>
-                                </NewsletterFormButtonWrapperStyled>
-                            </NewsletterFormInputWrapperStyled>
+                                </div>
+                            </div>
                             <CheckboxControlled
                                 name={formMeta.fields.privacyPolicy.name}
                                 control={formProviderMethods.control}
@@ -98,8 +101,8 @@ export const NewsletterForm: FC = () => {
                             />
                         </Form>
                     </FormProvider>
-                </NewsletterFormColumnStyled>
-            </NewsletterFormWrapperStyled>
+                </div>
+            </div>
             <ErrorPopup
                 isVisible={isErrorPopupVisible}
                 onCloseCallback={() => setErrorPopupVisibility(false)}

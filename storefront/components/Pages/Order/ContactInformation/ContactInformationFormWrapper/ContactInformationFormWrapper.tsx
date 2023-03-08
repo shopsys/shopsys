@@ -1,7 +1,4 @@
-import {
-    ContactInformationFormWrapperSectionStyled,
-    ContactInformationFormWrapperStyled,
-} from './ContactInformationFormWrapper.style';
+import { ContactInformationFormWrapperStyled } from './ContactInformationFormWrapper.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
@@ -12,7 +9,7 @@ import { ContactInformationDeliveryAddress } from 'components/Pages/Order/Contac
 import { ContactInformationUser } from 'components/Pages/Order/ContactInformation/ContactInformationUser/ContactInformationUser';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
 import { ContactInformationFormType } from 'types/form';
@@ -49,23 +46,23 @@ export const ContactInformationFormWrapper: FC<ContactInformationFormWrapperProp
             >
                 <div ref={cssTransitionRef}>
                     <div ref={contentElement}>
-                        <ContactInformationFormWrapperSectionStyled>
+                        <div className="mb-10">
                             <ContactInformationCustomer />
-                        </ContactInformationFormWrapperSectionStyled>
+                        </div>
 
-                        <ContactInformationFormWrapperSectionStyled>
+                        <div className="mb-10">
                             <ContactInformationUser />
-                        </ContactInformationFormWrapperSectionStyled>
+                        </div>
 
                         {customerValue === 'companyCustomer' && (
-                            <ContactInformationFormWrapperSectionStyled>
+                            <div className="mb-10">
                                 <ContactInformationCompany />
-                            </ContactInformationFormWrapperSectionStyled>
+                            </div>
                         )}
 
-                        <ContactInformationFormWrapperSectionStyled>
+                        <div className="mb-10">
                             <ContactInformationAddress />
-                        </ContactInformationFormWrapperSectionStyled>
+                        </div>
 
                         <ContactInformationDeliveryAddress />
 

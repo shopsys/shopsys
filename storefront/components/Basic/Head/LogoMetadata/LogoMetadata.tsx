@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
 
 export const LogoMetadata: FC = () => {

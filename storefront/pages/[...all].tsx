@@ -38,7 +38,6 @@ import { createClient } from 'helpers/urql/createClient';
 import { useGtmFriendlyPageView } from 'hooks/gtm/useGtmFriendlyPageView';
 import { Translate } from 'next-translate';
 import { NextRouter, useRouter } from 'next/router';
-import { FC } from 'react';
 import { nextReduxWrapper } from 'redux/main';
 import { FriendlyUrlPageType } from 'types/friendlyUrl';
 import { MainVariantDetailType, ProductDetailType } from 'types/product';

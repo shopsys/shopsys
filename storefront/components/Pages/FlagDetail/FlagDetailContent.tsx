@@ -8,7 +8,7 @@ import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFrom
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { useRemoveSortFromUrlIfDefault } from 'hooks/filter/useRemoveSortFromUrlIfDefault';
 import { useRouter } from 'next/router';
-import { FC, useRef } from 'react';
+import { useRef } from 'react';
 import { FlagDetailType } from 'types/flag';
 
 type FlagDetailContentProps = {

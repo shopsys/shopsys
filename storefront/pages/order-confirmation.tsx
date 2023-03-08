@@ -11,7 +11,6 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServe
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
-import { FC } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 
 const OrderConfirmationPage: FC<ServerSidePropsType> = () => {

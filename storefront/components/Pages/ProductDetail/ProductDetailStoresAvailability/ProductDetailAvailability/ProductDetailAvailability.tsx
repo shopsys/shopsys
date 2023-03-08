@@ -1,6 +1,6 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC, RefObject, useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 import * as smoothscroll from 'smoothscroll-polyfill';
 import { twJoin } from 'tailwind-merge';
 import { ProductDetailType } from 'types/product';

@@ -1,11 +1,5 @@
-import { Button } from 'components/Forms/Button/Button';
-import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { styled } from 'components/Theme/main';
 import { css } from 'styled-components';
-
-const localVariables = {
-    promoCodeButtonBackgroundHover: '#ffeaaa',
-} as const;
 
 type PromoCodeStyledProps = {
     contentElementHeight: number;
@@ -37,57 +31,3 @@ export const PromoCodeStyled = styled.div<PromoCodeStyledProps>(
         }
     `,
 );
-
-export const PromoCodeButtonStyled = styled.div(
-    ({ theme }) => css`
-        display: inline-flex;
-        align-items: center;
-        padding: 11px 16px;
-        margin-bottom: 10px;
-        width: 100%;
-
-        background-color: ${theme.color.orangeLight};
-        border-radius: ${theme.radius.medium};
-        color: ${theme.color.grey};
-        text-decoration: none;
-        text-transform: uppercase;
-        transition: ${theme.transition};
-        font-weight: 700;
-        font-size: ${theme.fontSize.small};
-        cursor: pointer;
-
-        @media ${theme.mediaQueries.queryLg} {
-            max-width: 250px;
-        }
-
-        &:hover {
-            background-color: ${localVariables.promoCodeButtonBackgroundHover};
-        }
-    `,
-);
-
-export const PromoCodeContentWrapperStyled = styled.div`
-    overflow: hidden;
-`;
-
-export const PromoCodeContentStyled = styled.div`
-    display: flex;
-`;
-
-export const PromoCodeContentButtonStyled = styled(Button)(
-    ({ theme }) => css`
-        padding-left: 10px;
-        padding-right: 10px;
-
-        border-radius: 0 ${theme.radius.big} ${theme.radius.big} 0;
-    `,
-);
-
-export const PromoCodeContentInputStyled = styled(TextInput)`
-    width: 100%;
-    margin-bottom: 0;
-
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    border-right: 0;
-`;

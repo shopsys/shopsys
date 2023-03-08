@@ -1,5 +1,4 @@
 import { useUserConsentForm, useUserConsentFormMeta } from './formMeta';
-import { ConsentButtonsRowStyled, ConsentNameStyled, ConsentRowStyled } from './UserConsentForm.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Button } from 'components/Forms/Button/Button';
 import { ToggleSwitchControlled } from 'components/Forms/ToggleSwitch/ToggleSwitchControlled';
@@ -9,7 +8,7 @@ import { getGtmConsentInfo } from 'helpers/gtm/gtm';
 import { useGetCookiesUrl } from 'hooks/routes/useGetCookiesUrl';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
-import { FC, useCallback } from 'react';
+import { useCallback } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { UserConsentFormType } from 'types/form';
 
@@ -65,36 +64,21 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
                 name={formMeta.fields.marketing.name}
-                render={(toggleSwitch) => (
-                    <ConsentRowStyled>
-                        <ConsentNameStyled>{t('Marketing')}</ConsentNameStyled>
-                        {toggleSwitch}
-                    </ConsentRowStyled>
-                )}
+                render={(toggleSwitch) => <ToggleContent name={t('Marketing')} toggleSwitch={toggleSwitch} />}
             />
             <ToggleSwitchControlled
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
                 name={formMeta.fields.statistics.name}
-                render={(toggleSwitch) => (
-                    <ConsentRowStyled>
-                        <ConsentNameStyled>{t('Statistics')}</ConsentNameStyled>
-                        {toggleSwitch}
-                    </ConsentRowStyled>
-                )}
+                render={(toggleSwitch) => <ToggleContent name={t('Statistics')} toggleSwitch={toggleSwitch} />}
             />
             <ToggleSwitchControlled
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
                 name={formMeta.fields.preferences.name}
-                render={(toggleSwitch) => (
-                    <ConsentRowStyled>
-                        <ConsentNameStyled>{t('Preferences')}</ConsentNameStyled>
-                        {toggleSwitch}
-                    </ConsentRowStyled>
-                )}
+                render={(toggleSwitch) => <ToggleContent name={t('Preferences')} toggleSwitch={toggleSwitch} />}
             />
-            <ConsentButtonsRowStyled>
+            <div className="mt-10 mb-5 flex flex-wrap justify-end gap-3">
                 <Button
                     testIdentifier="blocks-userconsent-save"
                     type="button"
@@ -121,7 +105,14 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                 >
                     {t('Reject all')}
                 </Button>
-            </ConsentButtonsRowStyled>
+            </div>
         </FormProvider>
     );
 };
+
+const ToggleContent: FC<{ name: string; toggleSwitch: JSX.Element }> = ({ toggleSwitch, name }) => (
+    <div className="my-2 flex justify-between border-b border-greyLight">
+        <span className="text-xl">{name}</span>
+        {toggleSwitch}
+    </div>
+);

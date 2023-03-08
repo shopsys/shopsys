@@ -1,5 +1,4 @@
 import { GrapesJsStyled, UserTextStyled } from './UserText.style';
-import { FC } from 'react';
 
 type UserTextProps = {
     htmlContent: string;

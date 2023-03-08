@@ -1,8 +1,3 @@
-import {
-    NotificationBarsBlockStyled,
-    NotificationBarsImageStyled,
-    NotificationBarsStyled,
-} from './NotificationBars.style';
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -13,8 +8,10 @@ import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import decode from 'jwt-decode';
 import Trans from 'next-translate/Trans';
 import { parseCookies } from 'nookies';
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTheme } from 'styled-components';
+import { twJoin } from 'tailwind-merge';
+import tinycolor from 'tinycolor2';
 import { NotificationBarsType } from 'types/notificationBars';
 
 export const NotificationBars: FC = () => {
@@ -73,26 +70,29 @@ export const NotificationBars: FC = () => {
     return (
         <>
             {extendByAdminLoggedInAsUserNotificationBar(notificationBarItems, isAdminLoggedInAsUser).map(
-                (item, index) => {
-                    return (
-                        <NotificationBarsStyled key={index} backgroundColor={item.rgbColor}>
-                            <Webline>
-                                <NotificationBarsBlockStyled backgroundColor={item.rgbColor}>
-                                    {item.image !== null && (
-                                        <NotificationBarsImageStyled>
-                                            <Image image={item.image} type="default" alt="" />
-                                        </NotificationBarsImageStyled>
-                                    )}
-                                    {typeof item.text === 'string' ? (
-                                        <div dangerouslySetInnerHTML={{ __html: item.text }} />
-                                    ) : (
-                                        item.text
-                                    )}
-                                </NotificationBarsBlockStyled>
-                            </Webline>
-                        </NotificationBarsStyled>
-                    );
-                },
+                (item, index) => (
+                    <div className="py-2" style={{ backgroundColor: item.rgbColor }} key={index}>
+                        <Webline>
+                            <div
+                                className={twJoin(
+                                    'flex items-center justify-center text-center text-sm font-bold',
+                                    tinycolor(item.rgbColor).isLight() ? 'text-dark' : 'text-white',
+                                )}
+                            >
+                                {!!item.image && (
+                                    <div className="mr-3 flex w-11">
+                                        <Image image={item.image} type="default" alt="" className="mr-3" />
+                                    </div>
+                                )}
+                                {typeof item.text === 'string' ? (
+                                    <div dangerouslySetInnerHTML={{ __html: item.text }} />
+                                ) : (
+                                    item.text
+                                )}
+                            </div>
+                        </Webline>
+                    </div>
+                ),
             )}
         </>
     );

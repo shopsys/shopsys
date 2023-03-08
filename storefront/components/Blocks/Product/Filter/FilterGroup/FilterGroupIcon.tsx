@@ -1,5 +1,4 @@
 import { Icon } from 'components/Basic/Icon/Icon';
-import { FC } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 export const FilterGroupIcon: FC<{ isOpen: boolean }> = ({ isOpen }) => (

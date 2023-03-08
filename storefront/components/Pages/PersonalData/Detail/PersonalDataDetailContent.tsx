@@ -1,14 +1,13 @@
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Link } from 'components/Basic/Link/Link';
 import { TableGrid } from 'components/Basic/TableGrid/TableGrid';
-import { TableGridColumnsStyled, TableGridColumnStyled } from 'components/Basic/TableGrid/TableGrid.style';
-import { HeadingWrapperStyled } from 'components/Layout/SimpleLayout/SimpleLayout.style';
+import { TableGridColumnStyled } from 'components/Basic/TableGrid/TableGrid.style';
+import { TableGridColumns } from 'components/Basic/TableGrid/TableGridElements';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PersonalDataDetailQueryApi } from 'graphql/generated';
 import { formatDate } from 'helpers/formaters/formatDate';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC } from 'react';
 
 type PersonalDataDetailContentProps = {
     data: PersonalDataDetailQueryApi;
@@ -28,19 +27,19 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
     return (
         <>
             <Webline style={{ marginBottom: '24px' }}>
-                <HeadingWrapperStyled>
+                <div className="text-center">
                     <Heading type="h1">{t('Personal data')}</Heading>
                     <Link isButton href={exportLink} size="small">
                         {t('Download as XML')}
                     </Link>
-                </HeadingWrapperStyled>
+                </div>
             </Webline>
             {userData !== null && (
                 <>
                     <Webline>
                         <Heading type="h2">{t('Billing address')}</Heading>
                         <TableGrid>
-                            <TableGridColumnsStyled>
+                            <TableGridColumns>
                                 <TableGridColumnStyled>
                                     {userData.firstName !== '' && (
                                         <>
@@ -103,7 +102,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                                         </tr>
                                     </TableGridColumnStyled>
                                 )}
-                            </TableGridColumnsStyled>
+                            </TableGridColumns>
                         </TableGrid>
                     </Webline>
                     {userData.deliveryAddresses.length > 0 && (
@@ -131,7 +130,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                     <>
                         {orders.map((order) => (
                             <TableGrid key={order.uuid}>
-                                <TableGridColumnsStyled>
+                                <TableGridColumns>
                                     <TableGridColumnStyled>
                                         <tr>
                                             <td>{t('Order number')}</td>
@@ -218,7 +217,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                                             </td>
                                         </tr>
                                     </TableGridColumnStyled>
-                                </TableGridColumnsStyled>
+                                </TableGridColumns>
                             </TableGrid>
                         ))}
                     </>

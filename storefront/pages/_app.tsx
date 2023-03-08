@@ -1,6 +1,5 @@
 import '../styles/globals.css';
 import { Canonical } from 'components/Basic/Head/Canonical/Canonical';
-import { PortalContainer } from 'components/Basic/Portal/Portal.style';
 import { GtmHeadScript } from 'components/Helpers/GtmHeadScript';
 import { showInfoMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { Error500ContentWithBoundary } from 'components/Pages/ErrorPage/500/Error500Content';
@@ -124,7 +123,7 @@ function MyApp({ Component, pageProps, err }: AppProps): ReactElement {
             </Head>
             <Canonical />
             <ShopsysGlobalProvider>
-                <PortalContainer id="portal" />
+                <div className="absolute left-0 top-0 z-overlay h-[1px] w-[1px]" id="portal" />
                 <ToastContainer autoClose={6000} position="top-center" theme="colored" />
                 <ErrorBoundary FallbackComponent={Error500ContentWithBoundary}>
                     {userConsentCookie === null && !isConsentUpdatePage && <UserConsentContainer />}

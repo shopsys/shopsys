@@ -1,7 +1,6 @@
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 const TEST_IDENTIFIER = 'pages-cart-cartpreview';
@@ -19,14 +18,14 @@ export const CartPreview: FC = () => {
         <table className="w-full" data-testid={TEST_IDENTIFIER}>
             <tbody>
                 {cart.totalDiscountPrice.priceWithVat > 0 && (
-                    <CartPreviewRow dataTestid={TEST_IDENTIFIER + '-discount'}>
+                    <CartPreviewRow dataTestId={TEST_IDENTIFIER + '-discount'}>
                         <CartPreviewCell>{t('The amount of discounts')}</CartPreviewCell>
                         <CartPreviewCell isAlignRight>
                             <strong>{'-' + formatPrice(cart.totalDiscountPrice.priceWithVat)}</strong>
                         </CartPreviewCell>
                     </CartPreviewRow>
                 )}
-                <CartPreviewRow dataTestid={TEST_IDENTIFIER + '-total'}>
+                <CartPreviewRow dataTestId={TEST_IDENTIFIER + '-total'}>
                     <CartPreviewCell>{t('You pay')}</CartPreviewCell>
                     <CartPreviewCell isAlignRight>
                         <strong className="text-2xl text-primary">
@@ -39,8 +38,8 @@ export const CartPreview: FC = () => {
     );
 };
 
-const CartPreviewRow: FC<{ dataTestid: string }> = ({ children, dataTestid }) => (
-    <tr className="w-full" data-testid={dataTestid}>
+const CartPreviewRow: FC = ({ children, dataTestId }) => (
+    <tr className="w-full" data-testid={dataTestId}>
         {children}
     </tr>
 );

@@ -1,9 +1,3 @@
-import {
-    BannersSliderBoxStyled,
-    BannersSliderDotControlsStyled,
-    BannersSliderStyled,
-    BannersSliderThumbnailControlsStyled,
-} from './BannersSlider.style';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { BannersSliderItem } from 'components/Blocks/Banners/BannersSliderItem/BannersSliderItem';
 import { theme } from 'components/Theme/main';
@@ -11,7 +5,7 @@ import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
-import { FC, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ImageSizeType } from 'types/image';
 import { SliderItemType } from 'types/sliderItem';
 
@@ -122,8 +116,11 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, testIdentif
     };
 
     return (
-        <BannersSliderBoxStyled ref={sliderBoxRef} data-testid={testIdentifier}>
-            <BannersSliderStyled ref={sliderRef} className="keen-slider">
+        <div className="mb-14 flex flex-col vl:flex-row" ref={sliderBoxRef} data-testid={testIdentifier}>
+            <div
+                ref={sliderRef}
+                className="keen-slider lg h-[200px] w-full cursor-pointer lg:h-[250px] vl:h-[290px] vl:w-[calc(100%-307px)]"
+            >
                 {sliderItems.map((sliderItem, index) => (
                     <BannersSliderItem
                         key={index}
@@ -135,10 +132,11 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, testIdentif
                         link={sliderItem.link}
                     />
                 ))}
-            </BannersSliderStyled>
-            <BannersSliderThumbnailControlsStyled>
+            </div>
+            <div className="hidden max-h-[307px] max-w-xs pl-6 vl:block">
                 {sliderItems.map((sliderItem, index) => (
                     <button
+                        className="group relative mb-4 block !w-full cursor-pointer rounded-xl border-2 border-blueLight bg-blueLight py-4 px-8 text-left font-bold transition hover:border-blue hover:bg-blue disabled:border-primary disabled:bg-creamWhite"
                         onClick={() => onMoveToSlideHandler(index)}
                         disabled={index === currentSlide % sliderItems.length}
                         key={sliderItem.uuid}
@@ -148,22 +146,23 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, testIdentif
                             icon="Triangle"
                             width={6}
                             height={6}
-                            className="absolute left-3 top-1/2 -translate-y-1/2 text-primary"
+                            className="absolute left-3 top-1/2 hidden -translate-y-1/2 text-primary group-disabled:block"
                         />
                         {sliderItem.name}
                     </button>
                 ))}
-            </BannersSliderThumbnailControlsStyled>
-            <BannersSliderDotControlsStyled>
+            </div>
+            <div className="mt-4 flex justify-center vl:hidden">
                 {sliderItems.map((sliderItem, index) => (
                     <button
                         onClick={() => onMoveToSlideHandler(index)}
                         disabled={index === currentSlide % sliderItems.length}
                         key={sliderItem.uuid}
+                        className="mx-1 h-2 w-3 cursor-pointer rounded-sm border-none bg-greyLight outline-none disabled:bg-primary"
                     />
                 ))}
-            </BannersSliderDotControlsStyled>
-        </BannersSliderBoxStyled>
+            </div>
+        </div>
     );
 };
 

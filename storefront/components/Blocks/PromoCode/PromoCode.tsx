@@ -1,22 +1,17 @@
-import {
-    PromoCodeButtonStyled,
-    PromoCodeContentButtonStyled,
-    PromoCodeContentInputStyled,
-    PromoCodeContentStyled,
-    PromoCodeContentWrapperStyled,
-    PromoCodeStyled,
-} from './PromoCode.style';
+import { PromoCodeStyled } from './PromoCode.style';
 import { PromoCodeInfo } from './PromoCodeInfo/PromoCodeInfo';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
+import { Button } from 'components/Forms/Button/Button';
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
+import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
 import { useApplyPromoCodeToCart } from 'hooks/cart/useApplyPromoCodeToCart';
 import { useRemovePromoCodeFromCart } from 'hooks/cart/useRemovePromoCodeFromCart';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { ChangeEventHandler, FC, MouseEventHandler, useCallback, useMemo, useRef, useState } from 'react';
+import { ChangeEventHandler, MouseEventHandler, useCallback, useMemo, useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 type TransportAndPaymentErrorsType = {
@@ -101,13 +96,14 @@ export const PromoCode: FC = () => {
                     </>
                 ) : (
                     <>
-                        <PromoCodeButtonStyled
+                        <div
+                            className="mb-3 inline-flex cursor-pointer items-center rounded bg-orangeLight py-3 px-4 text-sm font-bold uppercase text-grey transition hover:bg-orangeLight"
                             onClick={() => setIsContentVisible(!isContentVisible)}
                             data-testid={TEST_IDENTIFIER + '-add-button'}
                         >
                             <Icon iconType="icon" icon="Plus" width={12} height={12} className="mr-3" />
                             {t('I have a discount coupon')}
-                        </PromoCodeButtonStyled>
+                        </div>
                         <CSSTransition
                             in={isContentVisible}
                             timeout={300}
@@ -117,16 +113,18 @@ export const PromoCode: FC = () => {
                             unmountOnExit
                             nodeRef={cssTransitionRef}
                         >
-                            <PromoCodeContentWrapperStyled ref={cssTransitionRef}>
-                                <PromoCodeContentStyled ref={contentElement}>
-                                    <PromoCodeContentInputStyled
+                            <div className="overflow-hidden" ref={cssTransitionRef}>
+                                <div className="flex" ref={contentElement}>
+                                    <TextInput
+                                        className="!mb-0 !w-full max-w-sm !rounded-r-none !border-r-0"
                                         id={TEST_IDENTIFIER + '-input'}
                                         type="text"
                                         label={t('Coupon')}
                                         value={promoCodeValue}
                                         onChange={onChangePromoCodeValueHandler}
                                     />
-                                    <PromoCodeContentButtonStyled
+                                    <Button
+                                        className="!rounded-r-xl !rounded-l-none !px-3"
                                         type="submit"
                                         hasDisabledLook={hasValidationErrors(promoCodeValidationMessages)}
                                         data-testid={TEST_IDENTIFIER + '-apply-button'}
@@ -134,9 +132,9 @@ export const PromoCode: FC = () => {
                                     >
                                         {fetchingApplyPromoCode && <Loader iconSize={16} className="text-white" />}
                                         {t('Apply')}
-                                    </PromoCodeContentButtonStyled>
-                                </PromoCodeContentStyled>
-                            </PromoCodeContentWrapperStyled>
+                                    </Button>
+                                </div>
+                            </div>
                         </CSSTransition>
                     </>
                 )}

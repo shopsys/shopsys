@@ -1,8 +1,9 @@
 import { FormLineError } from '../Lib/FormLineError/FormLineError';
-import { PasswordTextInputStyled, PasswordVisibilityToggleStyled } from './TextInput.style';
+import { PasswordTextInputStyled } from './TextInput.style';
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper/LabelWrapper';
-import { FC, InputHTMLAttributes, ReactElement, useCallback, useState } from 'react';
+import { InputHTMLAttributes, ReactElement, useCallback, useState } from 'react';
 import { Control, useController } from 'react-hook-form';
+import { twJoin } from 'tailwind-merge';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<InputHTMLAttributes<HTMLInputElement>, never, 'name'>;
@@ -57,9 +58,12 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
                     required
                     data-testid={passwordInputProps.testIdentifier}
                 />
-                <PasswordVisibilityToggleStyled
+                <img
+                    className={twJoin(
+                        'absolute top-1/2 right-4 w-6 -translate-y-1/2 cursor-pointer',
+                        inputType === 'text' && 'opacity-50',
+                    )}
                     src="/svg/eye.svg"
-                    isVisible={inputType === 'text'}
                     onClick={togglePasswordVisibilityHandler}
                 />
             </LabelWrapper>

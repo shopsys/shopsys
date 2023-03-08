@@ -2,7 +2,7 @@ import { Flag } from 'components/Basic/Flag/Flag';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Image } from 'components/Basic/Image/Image';
 import NextLink from 'next/link';
-import { FC, Fragment } from 'react';
+import { Fragment } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { ListedBlogArticleType } from 'types/blogArticle';
 
@@ -40,7 +40,6 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles }) =>
                                     {blogArticleCategory.parent !== null && (
                                         <Flag
                                             href={blogArticleCategory.link}
-                                            color="#cdb3ff"
                                             testIdentifier={
                                                 TEST_IDENTIFIER +
                                                 blogArticleIndex +

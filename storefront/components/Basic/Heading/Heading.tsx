@@ -1,13 +1,9 @@
-import { FC, HTMLAttributes } from 'react';
+import { HTMLAttributes } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { twMergeCustom } from 'utils/twMerge';
 
-type NativeProps = ExtractNativePropsFromDefault<
-    HTMLAttributes<HTMLHeadingElement>,
-    never,
-    'className' | 'style' | 'onClick'
->;
+type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLHeadingElement>, never, 'style' | 'onClick'>;
 type HeadingType = 'h1' | 'h2' | 'h3' | 'h4';
 
 export type HeadingProps = NativeProps & {

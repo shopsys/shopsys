@@ -3,7 +3,6 @@ import GrapeJsParser from 'components/Helpers/GrapeJsParser';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ArticleTitle } from 'components/Pages/Article/ArticleTitle';
 import { formatDate } from 'helpers/formaters/formatDate';
-import { FC } from 'react';
 import { BlogArticleDetailType } from 'types/blogArticle';
 
 type BlogArticleDetailContentProps = {

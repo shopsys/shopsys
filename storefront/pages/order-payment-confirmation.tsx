@@ -7,7 +7,6 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServe
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useRouter } from 'next/router';
-import { FC } from 'react';
 import { nextReduxWrapper } from 'redux/main';
 
 const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {

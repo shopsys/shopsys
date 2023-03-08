@@ -1,12 +1,10 @@
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
-import { HeadingWrapperStyled } from 'components/Layout/SimpleLayout/SimpleLayout.style';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useAuth } from 'hooks/auth/useAuth';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
-import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 
@@ -26,9 +24,9 @@ export const CustomerContent: FC<CustomerContentProps> = ({ breadcrumbs }) => {
     return (
         <>
             <Webline>
-                <HeadingWrapperStyled>
+                <div className="text-center">
                     <Heading type="h1">{t('Customer')}</Heading>
-                </HeadingWrapperStyled>
+                </div>
                 <Breadcrumbs key="breadcrumb" breadcrumb={breadcrumbs} />
             </Webline>
             <Webline>

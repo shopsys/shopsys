@@ -1,9 +1,8 @@
-import { ProductSliderControlsStyled, ProductSliderStyled, ProductSliderWrapperStyled } from './ProductsSlider.style';
 import { SliderProductItem } from './SliderProductItem';
 import { theme } from 'components/Theme/main';
 import { useGtmSliderProductListView } from 'hooks/gtm/useGtmSliderProductListView';
 import { useKeenSlider } from 'keen-slider/react';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { GtmListNameType } from 'types/gtm';
 import { SliderProductItemType } from 'types/product';
 
@@ -58,8 +57,8 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({ products, gtmListName 
     };
 
     return (
-        <ProductSliderWrapperStyled>
-            <ProductSliderStyled ref={sliderRef} className="keen-slider">
+        <div className="relative">
+            <div ref={sliderRef} className="keen-slider relative -mx-2 flex overflow-hidden">
                 {products.map((productItemData, index) => (
                     <SliderProductItem
                         key={productItemData.uuid}
@@ -68,14 +67,23 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({ products, gtmListName 
                         listIndex={index}
                     />
                 ))}
-            </ProductSliderStyled>
+            </div>
             {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition */}
             {slider !== null && areControlsVisible ? (
-                <ProductSliderControlsStyled>
-                    <button onClick={onMoveToPreviousSlideHandler}>p</button>
-                    <button onClick={onMoveToNextSlideHandler}>n</button>
-                </ProductSliderControlsStyled>
+                <div className="absolute -top-11 right-0 hidden items-center justify-center lg:flex ">
+                    <SliderButton onClick={onMoveToPreviousSlideHandler}>p</SliderButton>
+                    <SliderButton onClick={onMoveToNextSlideHandler}>n</SliderButton>
+                </div>
             ) : null}
-        </ProductSliderWrapperStyled>
+        </div>
     );
 };
+
+const SliderButton: FC<{ onClick: () => void }> = ({ children, onClick }) => (
+    <button
+        className="ml-1 h-8 w-8 cursor-pointer rounded border-none bg-greyDark text-creamWhite outline-none transition hover:bg-greyDarker"
+        onClick={onClick}
+    >
+        {children}
+    </button>
+);

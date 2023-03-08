@@ -1,7 +1,6 @@
 import { ProductVariantsTableRow } from './ProductVariantsTableRow';
 import { Variant } from './Variant/Variant';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC } from 'react';
 import { ListedVariantType } from 'types/product';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -41,11 +40,7 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingD
     );
 };
 
-type CellProps = {
-    className?: string;
-};
-
-const Cell: FC<CellProps> = ({ className, children }) => (
+const Cell: FC = ({ className, children }) => (
     <th
         className={twMergeCustom(
             'text-left align-middle max-lg:block max-lg:pl-14 lg:border-b lg:border-greyLighter lg:p-1 lg:text-xs',

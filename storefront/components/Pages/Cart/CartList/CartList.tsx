@@ -3,7 +3,7 @@ import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useAddToCart } from 'hooks/cart/useAddToCart';
 import { RemoveFromCartHandler, useRemoveFromCart } from 'hooks/cart/useRemoveFromCart';
-import { FC, useCallback } from 'react';
+import { useCallback } from 'react';
 import { CartItemType } from 'types/cart';
 
 type CartListProps = {

@@ -1,4 +1,3 @@
-import { AdvertsStyled } from './Adverts.style';
 import { Image } from 'components/Basic/Image/Image';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -7,16 +6,14 @@ import { useAdverts } from 'connectors/adverts/Adverts';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import NextLink from 'next/link';
-import { FC, Fragment, HTMLAttributes, useState } from 'react';
-import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { Fragment, useState } from 'react';
+import { twJoin } from 'tailwind-merge';
 import { AdvertType } from 'types/advert';
 import { CategoryDetailType } from 'types/category';
 
-type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLElement>, never, 'className'>;
-
 type PositionNameType = 'productList' | 'footer' | 'header' | 'productListMiddle' | 'cartPreview';
 
-type AdvertsProps = NativeProps & {
+type AdvertsProps = {
     positionName: PositionNameType;
     withGapBottom?: boolean;
     withGapTop?: boolean;
@@ -50,7 +47,7 @@ export const Adverts: FC<AdvertsProps> = ({
     }
 
     const content = (
-        <AdvertsStyled withGapTop={withGapTop} withGapBottom={withGapBottom}>
+        <div className={twJoin(withGapTop && 'mb-8', withGapBottom && 'mt-8')}>
             {adverts?.map(
                 (item, index) =>
                     shouldBeShown(item, positionName, currentCategory) &&
@@ -78,7 +75,7 @@ export const Adverts: FC<AdvertsProps> = ({
                         <div dangerouslySetInnerHTML={{ __html: item.code }} key={index} />
                     )),
             )}
-        </AdvertsStyled>
+        </div>
     );
 
     return withWebline ? wrapWithWebline(content, className) : content;

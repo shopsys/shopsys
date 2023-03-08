@@ -1,9 +1,7 @@
-import { FreeTransportStyled } from './FreeTransport.style';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
-import { FC } from 'react';
 
 const TEST_IDENTIFIER = 'blocks-freetransport';
 
@@ -21,7 +19,7 @@ export const FreeTransport: FC = () => {
 
     if (amount > 0) {
         return (
-            <FreeTransportStyled data-testid={TEST_IDENTIFIER}>
+            <Wrapper dataTestId={TEST_IDENTIFIER}>
                 <Trans
                     i18nKey="FreeTransportAmountLeft"
                     components={{
@@ -29,13 +27,22 @@ export const FreeTransport: FC = () => {
                     }}
                     values={{ amountFormatted: amountFormatted }}
                 />
-            </FreeTransportStyled>
+            </Wrapper>
         );
     }
 
     return (
-        <FreeTransportStyled data-testid={TEST_IDENTIFIER}>
+        <Wrapper dataTestId={TEST_IDENTIFIER}>
             <strong>{t('Your delivery and payment is now free of charge!')}</strong>
-        </FreeTransportStyled>
+        </Wrapper>
     );
 };
+
+const Wrapper: FC = ({ children, dataTestId }) => (
+    <div
+        className="my-2 block rounded bg-greenVeryLight px-3 py-1 text-xs [&_strong]:font-bold [&_strong]:text-greenDark"
+        data-testid={dataTestId}
+    >
+        {children}
+    </div>
+);

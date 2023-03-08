@@ -3,7 +3,7 @@ import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
-import { FC, useCallback } from 'react';
+import { useCallback } from 'react';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 
 type CookieConsentContentProps = {

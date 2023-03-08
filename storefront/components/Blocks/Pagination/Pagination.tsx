@@ -1,4 +1,3 @@
-import { PaginationButtonStyled, PaginationWrapperStyled } from './Pagination.style';
 import { usePaginationContext } from './usePaginationContext';
 import { getNewPagination } from 'helpers/pagination/getNewPagination';
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
@@ -6,7 +5,8 @@ import { useMediaMin } from 'hooks/ui/useMediaMin';
 import { usePagination } from 'hooks/ui/usePagination';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { FC, Fragment, RefObject, useCallback } from 'react';
+import { Fragment, RefObject, useCallback } from 'react';
+import { twJoin } from 'tailwind-merge';
 
 type PaginationProps = {
     totalCount: number;
@@ -45,43 +45,85 @@ export const Pagination: FC<PaginationProps> = ({ totalCount, containerWrapRef }
     }
 
     return (
-        <PaginationWrapperStyled data-testid={TEST_IDENTIFIER}>
-            {paginationButtons.map((pageNumber, index, array) => (
-                <Fragment key={pageNumber}>
-                    {isDotKey(array[index - 1] ?? null, pageNumber) && (
-                        <PaginationButtonStyled dotButton>&#8230;</PaginationButtonStyled>
-                    )}
-                    {currentPage === pageNumber ? (
-                        <PaginationButtonStyled data-testid={TEST_IDENTIFIER + '-' + pageNumber} active>
-                            {pageNumber}
-                        </PaginationButtonStyled>
-                    ) : (
-                        <NextLink
-                            href={{
-                                pathname: asPathWithoutQueryParams,
-                                query: {
-                                    ...queryParamsWithoutPage,
-                                    ...(pageNumber !== 1 ? { page: pageNumber } : {}),
-                                },
-                            }}
-                            passHref
-                            shallow
-                            scroll={false}
-                        >
-                            <PaginationButtonStyled
-                                data-testid={TEST_IDENTIFIER + '-' + pageNumber}
-                                onClick={onChangePage(pageNumber)}
-                            >
+        <div className="flex w-full justify-center vl:justify-end ">
+            <div className="my-3 flex justify-center gap-1 vl:mr-5" data-testid={TEST_IDENTIFIER}>
+                {paginationButtons.map((pageNumber, index, array) => (
+                    <Fragment key={pageNumber}>
+                        {isDotKey(array[index - 1] ?? null, pageNumber) && (
+                            <PaginationButton isDotButton>&#8230;</PaginationButton>
+                        )}
+                        {currentPage === pageNumber ? (
+                            <PaginationButton dataTestId={TEST_IDENTIFIER + '-' + pageNumber} isActive>
                                 {pageNumber}
-                            </PaginationButtonStyled>
-                        </NextLink>
-                    )}
-                </Fragment>
-            ))}
-        </PaginationWrapperStyled>
+                            </PaginationButton>
+                        ) : (
+                            <NextLink
+                                href={{
+                                    pathname: asPathWithoutQueryParams,
+                                    query: {
+                                        ...queryParamsWithoutPage,
+                                        ...(pageNumber !== 1 ? { page: pageNumber } : {}),
+                                    },
+                                }}
+                                passHref
+                                shallow
+                                scroll={false}
+                            >
+                                <PaginationButton
+                                    dataTestId={TEST_IDENTIFIER + '-' + pageNumber}
+                                    onClick={onChangePage(pageNumber)}
+                                >
+                                    {pageNumber}
+                                </PaginationButton>
+                            </NextLink>
+                        )}
+                    </Fragment>
+                ))}
+            </div>
+        </div>
     );
 };
 
 const isDotKey = (prevPage: number | null, currentPage: number): boolean => {
     return prevPage !== null && prevPage !== currentPage - 1;
+};
+
+type PaginationButtonProps = {
+    isActive?: boolean;
+    isDotButton?: boolean;
+    href?: string;
+    onClick?: () => void;
+};
+
+const PaginationButton: FC<PaginationButtonProps> = ({
+    children,
+    dataTestId,
+    isActive,
+    isDotButton,
+    href,
+    onClick,
+}) => {
+    const button = (
+        <a
+            className={twJoin(
+                'flex h-11 w-11 items-center justify-center rounded border border-white bg-white font-bold no-underline hover:no-underline',
+                isActive && 'border-none bg-orange hover:cursor-default',
+                isDotButton && 'hover:cursor-default',
+            )}
+            onClick={onClick}
+            data-testid={dataTestId}
+        >
+            {children}
+        </a>
+    );
+
+    if (href !== undefined) {
+        return (
+            <NextLink href={href} passHref shallow scroll={false}>
+                {button}
+            </NextLink>
+        );
+    }
+
+    return button;
 };

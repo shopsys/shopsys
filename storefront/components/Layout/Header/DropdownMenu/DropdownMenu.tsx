@@ -1,4 +1,4 @@
-import { DropdownMenuListStyled, DropdownMenuStyled, DropdownMenuWrapperStyled } from './DropdownMenu.style';
+import { DropdownMenuStyled, DropdownMenuWrapperStyled } from './DropdownMenu.style';
 import { DropdownMenuContext } from './DropdownMenuContext';
 import { PrimaryList } from './PrimaryList/PrimaryList';
 import { SecondaryList } from './SecondaryList/SecondaryList';
@@ -6,7 +6,7 @@ import { DropdownSlideLeft } from './SlideLeft/DropdownSlideLeft';
 import { SubMenu } from './SubMenu/SubMenu';
 import { TertiaryList } from './TertiaryList/TertiaryList';
 import { useNavigationItems } from 'connectors/navigation/Navigation';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { DropdownItemType, DropdownListLevels } from 'types/dropdown';
 
@@ -63,10 +63,10 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggle
                             unmountOnExit
                             onEntering={calcHeight}
                         >
-                            <DropdownMenuListStyled>
+                            <div className="w-full pt-12">
                                 <PrimaryList navigationItems={navigationItems} />
                                 <SubMenu />
-                            </DropdownMenuListStyled>
+                            </div>
                         </CSSTransition>
 
                         <CSSTransition
@@ -76,10 +76,10 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggle
                             unmountOnExit
                             onEntering={calcHeight}
                         >
-                            <DropdownMenuListStyled>
+                            <div className="w-full pt-12">
                                 <DropdownSlideLeft onClickEvent={slideLeft} goToMenu="primary" />
                                 <SecondaryList navigationItems={navigationItems} historyOfIndexes={historyOfIndexes} />
-                            </DropdownMenuListStyled>
+                            </div>
                         </CSSTransition>
 
                         <CSSTransition
@@ -89,10 +89,10 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggle
                             unmountOnExit
                             onEntering={calcHeight}
                         >
-                            <DropdownMenuListStyled>
+                            <div className="w-full pt-12">
                                 <DropdownSlideLeft onClickEvent={slideLeft} goToMenu="secondary" />
                                 <TertiaryList navigationItems={navigationItems} historyOfIndexes={historyOfIndexes} />
-                            </DropdownMenuListStyled>
+                            </div>
                         </CSSTransition>
                     </DropdownMenuStyled>
                 </DropdownMenuContext.Provider>

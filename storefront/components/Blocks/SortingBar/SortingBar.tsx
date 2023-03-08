@@ -1,17 +1,5 @@
 import { usePaginationContext } from '../Pagination/usePaginationContext';
 import { useProductFilterOptions } from '../Product/Filter/FilterContext/useFilterState';
-import {
-    SortingBarItemLinkStyled,
-    SortingBarItemLinkWrapStyled,
-    SortingBarItemStyled,
-    SortingBarOptionsStyled,
-    SortingBarOptionsWrapStyled,
-    SortingBarSelectedSortStyled,
-    SortingBarSelectedValue,
-    SortingBarSeletedSortWrapStyled,
-    SortingBarStyled,
-    SortingBarTitleStyled,
-} from './SortingBar.style';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
@@ -26,7 +14,8 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { useRouter } from 'next/router';
-import { FC, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { twJoin } from 'tailwind-merge';
 
 type SortingBarProps = {
     totalCount: number;
@@ -57,6 +46,11 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount }) => {
         { stateValue: ProductOrderingModeEnumApi.PriceAscApi, displayValue: t('price ascending') },
         { stateValue: ProductOrderingModeEnumApi.PriceDescApi, displayValue: t('price descending') },
     ];
+
+    const isNewSortDifferentThanCurrent = (
+        currentSort: ProductOrderingModeEnumApi | null,
+        newSort: ProductOrderingModeEnumApi,
+    ) => currentSort !== newSort;
 
     useEffect(() => {
         setSelectedSort(sorting);
@@ -116,75 +110,102 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount }) => {
     );
 
     return (
-        <SortingBarStyled data-testid={TEST_IDENTIFIER}>
-            {isMobileSortBarVisible ? (
-                <SortingBarOptionsWrapStyled>
-                    <SortingBarItemStyled>
-                        {sortValues
-                            .filter((value) => value.stateValue === selectedSort)
-                            .map((value) => (
-                                <SortingBarSelectedSortStyled
-                                    key={value.stateValue}
-                                    onClick={onSelectSortMenu(selectedSort, value.stateValue)}
-                                    data-testid={TEST_IDENTIFIER + '-selected'}
-                                >
-                                    <Icon iconType="icon" icon="Sort" width={21} height={14} className="align-middle" />
-                                    <SortingBarSeletedSortWrapStyled>
-                                        <SortingBarTitleStyled>{t('Sort')}</SortingBarTitleStyled>
-                                        <SortingBarSelectedValue data-testid={TEST_IDENTIFIER + '-selected-value'}>
-                                            {value.displayValue}
-                                        </SortingBarSelectedValue>
-                                    </SortingBarSeletedSortWrapStyled>
-                                </SortingBarSelectedSortStyled>
-                            ))}
-                    </SortingBarItemStyled>
-                    {toggleSortMenu &&
-                        sortValues
-                            .filter((value) => value.stateValue !== selectedSort)
-                            .map((value, index) => {
-                                return (
-                                    <SortingBarItemStyled key={value.stateValue}>
-                                        <SortingBarItemLinkStyled
-                                            isActive={selectedSort === value.stateValue}
-                                            onClick={onMobileSort(selectedSort, value.stateValue)}
-                                            data-testid={TEST_IDENTIFIER + '-' + index}
-                                        >
-                                            {value.displayValue}
-                                        </SortingBarItemLinkStyled>
-                                    </SortingBarItemStyled>
-                                );
-                            })}
-                </SortingBarOptionsWrapStyled>
-            ) : (
-                <SortingBarOptionsWrapStyled>
-                    <SortingBarOptionsStyled>
-                        {sortValues.map((value, index) => {
-                            return (
-                                <SortingBarItemStyled
+        <div className="relative h-12 w-full sm:w-44 vl:inline-block vl:h-9 vl:w-full" data-testid={TEST_IDENTIFIER}>
+            <div className="absolute top-0 left-0 z-above flex w-full flex-col rounded-xl bg-border vl:top-1 vl:flex-row vl:items-center vl:justify-between vl:rounded-none vl:bg-opacity-0">
+                {isMobileSortBarVisible ? (
+                    <>
+                        <SortingBarItem>
+                            {sortValues
+                                .filter((value) => value.stateValue === selectedSort)
+                                .map((value) => (
+                                    <div
+                                        className="flex items-center justify-center py-1"
+                                        key={value.stateValue}
+                                        onClick={onSelectSortMenu(selectedSort, value.stateValue)}
+                                        data-testid={TEST_IDENTIFIER + '-selected'}
+                                    >
+                                        <Icon
+                                            iconType="icon"
+                                            icon="Sort"
+                                            width={21}
+                                            height={14}
+                                            className="align-middle"
+                                        />
+                                        <div className="pl-2 text-justify font-bold text-dark">
+                                            <div className="uppercase">{t('Sort')}</div>
+                                            <div
+                                                className="text-sm text-primary"
+                                                data-testid={TEST_IDENTIFIER + '-selected-value'}
+                                            >
+                                                {value.displayValue}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                        </SortingBarItem>
+                        {toggleSortMenu &&
+                            sortValues
+                                .filter((value) => value.stateValue !== selectedSort)
+                                .map((value, index) => {
+                                    return (
+                                        <SortingBarItem key={value.stateValue}>
+                                            <SortingBarItemLink
+                                                isActive={selectedSort === value.stateValue}
+                                                onClick={onMobileSort(selectedSort, value.stateValue)}
+                                                dataTestId={TEST_IDENTIFIER + '-' + index}
+                                            >
+                                                {value.displayValue}
+                                            </SortingBarItemLink>
+                                        </SortingBarItem>
+                                    );
+                                })}{' '}
+                    </>
+                ) : (
+                    <>
+                        <div className="-ml-8 flex">
+                            {sortValues.map((value, index) => (
+                                <SortingBarItem
                                     key={value.stateValue}
                                     onClick={onSort(selectedSort, value.stateValue)}
-                                    data-testid={TEST_IDENTIFIER + '-' + index}
+                                    dataTestId={TEST_IDENTIFIER + '-' + index}
                                 >
-                                    <SortingBarItemLinkStyled isActive={selectedSort === value.stateValue}>
-                                        <SortingBarItemLinkWrapStyled>
-                                            {value.displayValue}
-                                        </SortingBarItemLinkWrapStyled>
-                                    </SortingBarItemLinkStyled>
-                                </SortingBarItemStyled>
-                            );
-                        })}
-                    </SortingBarOptionsStyled>
-                    <SortingBarItemStyled>
-                        <strong>{totalCount} </strong>
-                        {t('Products count', { count: totalCount })}
-                    </SortingBarItemStyled>
-                </SortingBarOptionsWrapStyled>
-            )}
-        </SortingBarStyled>
+                                    <SortingBarItemLink isActive={selectedSort === value.stateValue}>
+                                        <span>{value.displayValue}</span>
+                                    </SortingBarItemLink>
+                                </SortingBarItem>
+                            ))}
+                        </div>
+                        <SortingBarItem>
+                            <strong>{totalCount} </strong>
+                            {t('Products count', { count: totalCount })}
+                        </SortingBarItem>
+                    </>
+                )}
+            </div>
+        </div>
     );
 };
 
-const isNewSortDifferentThanCurrent = (
-    currentSort: ProductOrderingModeEnumApi | null,
-    newSort: ProductOrderingModeEnumApi,
-) => currentSort !== newSort;
+const SortingBarItem: FC<{ onClick?: () => void }> = ({ dataTestId, children, onClick }) => (
+    <div className="relative vl:ml-7" data-testid={dataTestId} onClick={onClick}>
+        {children}
+    </div>
+);
+
+const SortingBarItemLink: FC<{ isActive: boolean; onClick?: () => void }> = ({
+    isActive,
+    children,
+    dataTestId,
+    onClick,
+}) => (
+    <a
+        className={twJoin(
+            'block py-4 px-2 text-center text-xs uppercase text-dark no-underline transition after:absolute after:left-0 after:bottom-0 after:hidden after:h-[2px] after:w-full after:cursor-auto after:bg-primary after:content-[""] hover:bg-primary hover:text-dark hover:no-underline vl:py-2 vl:px-0 vl:hover:bg-opacity-0',
+            !isActive ? 'vl:after:hidden' : 'after:hidden vl:after:block',
+        )}
+        data-testid={dataTestId}
+        onClick={onClick}
+    >
+        {children}
+    </a>
+);

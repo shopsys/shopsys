@@ -1,5 +1,4 @@
-import { ChoiceFormLineStyled } from './ChoiceFormLine.style';
-import { FC, HTMLAttributes } from 'react';
+import { HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'style'>;
@@ -7,5 +6,7 @@ type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>,
 type ChoiceFormLineProps = NativeProps;
 
 export const ChoiceFormLine: FC<ChoiceFormLineProps> = ({ children, style }) => (
-    <ChoiceFormLineStyled style={style}>{children}</ChoiceFormLineStyled>
+    <div className="mb-4 w-fit" style={style}>
+        {children}
+    </div>
 );

@@ -21,7 +21,6 @@ import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser
 import { useChangePasswordMutationApi, useChangePersonalDataMutationApi } from 'graphql/generated';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC } from 'react';
 import { Controller, FormProvider, Path, SubmitHandler, UseFormReturn } from 'react-hook-form';
 import { CurrentCustomerType } from 'types/customer';
 import { CustomerChangeProfileFormType } from 'types/form';

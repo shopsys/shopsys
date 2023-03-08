@@ -4,7 +4,6 @@ import { TableGrid } from 'components/Basic/TableGrid/TableGrid';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { PaginationProvider } from 'components/Blocks/Pagination/PaginationProvider';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
-import { HeadingWrapperStyled } from 'components/Layout/SimpleLayout/SimpleLayout.style';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getNewPagination } from 'helpers/pagination/getNewPagination';
@@ -13,7 +12,7 @@ import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { FC, useRef } from 'react';
+import { useRef } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { ListedOrderType } from 'types/orders';
@@ -38,9 +37,9 @@ export const OrdersContent: FC<OrdersContentProps> = ({ breadcrumbs, orders, tot
     return (
         <PaginationProvider {...getNewPagination(currentPage)}>
             <Webline>
-                <HeadingWrapperStyled>
+                <div className="text-center">
                     <Heading type="h1">{t('My orders')}</Heading>
-                </HeadingWrapperStyled>
+                </div>
                 <Breadcrumbs key="breadcrumb" breadcrumb={breadcrumbs} />
             </Webline>
             <div ref={containerWrapRef}>

@@ -15,10 +15,6 @@ type TextInputStyledProps = {
     inputSize?: 'small' | 'default';
 };
 
-type PasswordVisibilityToggleStyledProps = {
-    isVisible: boolean;
-};
-
 export const TextInputStyled = styled.input<TextInputStyledProps>(
     ({ theme, hasError, inputSize }) => css`
         box-sizing: border-box;
@@ -113,18 +109,6 @@ export const SearchTextInputStyled = styled.input(
     `,
 );
 
-export const TextInputLoadingWrapper = styled.div`
-    position: absolute;
-    top: calc(50% - 16px);
-    right: 15px;
-
-    width: 32px;
-    height: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`;
-
 export const PasswordTextInputStyled = styled(TextInputStyled)<TextInputStyledProps>(
     ({ theme }) => css`
         &[type='password'] {
@@ -134,39 +118,6 @@ export const PasswordTextInputStyled = styled(TextInputStyled)<TextInputStyledPr
             &:focus-visible {
                 color: ${theme.color.base};
             }
-
-            &::-webkit-outer-spin-button,
-            &::-webkit-inner-spin-button {
-                -webkit-appearance: none;
-                margin: 0;
-            }
         }
     `,
 );
-
-export const PasswordVisibilityToggleStyled = styled.img<PasswordVisibilityToggleStyledProps>(
-    ({ isVisible }) => css`
-        width: 25px;
-        position: absolute;
-        top: 50%;
-        right: 15px;
-        transform: translateY(-50%);
-
-        cursor: pointer;
-
-        ${!isVisible &&
-        css`
-            opacity: 50%;
-        `}
-    `,
-);
-
-export const SearchButtonStyled = styled.button`
-    position: absolute;
-    top: 12px;
-    right: 15px;
-
-    cursor: pointer;
-    background: transparent;
-    border: none;
-`;

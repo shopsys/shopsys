@@ -1,14 +1,11 @@
 import {
-    OrderSummaryPriceStyled,
-    OrderSummaryRowContentStyled,
-    OrderSummaryRowStyled,
-    OrderSummaryRowWrapperStyled,
-    OrderSummaryTextAndImageStyled,
-    TransportAndPaymentImageWrapperStyled,
-} from './OrderSummary.style';
+    OrderSummaryPrice,
+    OrderSummaryRow,
+    OrderSummaryRowWrapper,
+    OrderSummaryTextAndImage,
+} from './OrderSummaryElements';
 import { Image } from 'components/Basic/Image/Image';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
-import { FC } from 'react';
 import { PaymentType } from 'types/payment';
 import { TransportType } from 'types/transport';
 
@@ -23,35 +20,35 @@ export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ payment, tra
     const formatPrice = useFormatPrice();
 
     return (
-        <OrderSummaryRowWrapperStyled data-testid={TEST_IDENTIFIER}>
-            <OrderSummaryRowContentStyled>
+        <OrderSummaryRowWrapper dataTestId={TEST_IDENTIFIER}>
+            <div className="table w-full">
                 {transport !== null && (
-                    <OrderSummaryRowStyled>
-                        <OrderSummaryTextAndImageStyled data-testid={TEST_IDENTIFIER + '-transport-name'}>
+                    <OrderSummaryRow>
+                        <OrderSummaryTextAndImage dataTestId={TEST_IDENTIFIER + '-transport-name'}>
                             {transport.name}
-                            <TransportAndPaymentImageWrapperStyled>
-                                <Image image={transport.image} type="default" alt={transport.name} />
-                            </TransportAndPaymentImageWrapperStyled>
-                        </OrderSummaryTextAndImageStyled>
-                        <OrderSummaryPriceStyled data-testid={TEST_IDENTIFIER + '-transport-price'}>
+                            <span className="ml-2 inline-block h-5 align-bottom">
+                                <Image image={transport.image} type="default" alt={transport.name} className="w-9" />
+                            </span>
+                        </OrderSummaryTextAndImage>
+                        <OrderSummaryPrice dataTestId={TEST_IDENTIFIER + '-transport-price'}>
                             <strong>{formatPrice(transport.price.priceWithVat)}</strong>
-                        </OrderSummaryPriceStyled>
-                    </OrderSummaryRowStyled>
+                        </OrderSummaryPrice>
+                    </OrderSummaryRow>
                 )}
                 {payment !== null && (
-                    <OrderSummaryRowStyled>
-                        <OrderSummaryTextAndImageStyled data-testid={TEST_IDENTIFIER + '-payment-name'}>
+                    <OrderSummaryRow>
+                        <OrderSummaryTextAndImage dataTestId={TEST_IDENTIFIER + '-payment-name'}>
                             {payment.name}
-                            <TransportAndPaymentImageWrapperStyled>
-                                <Image image={payment.image} type="default" alt={payment.name} />
-                            </TransportAndPaymentImageWrapperStyled>
-                        </OrderSummaryTextAndImageStyled>
-                        <OrderSummaryPriceStyled data-testid={TEST_IDENTIFIER + '-payment-price'}>
+                            <span className="ml-2 inline-block h-5 align-bottom">
+                                <Image image={payment.image} type="default" alt={payment.name} className="w-9" />
+                            </span>
+                        </OrderSummaryTextAndImage>
+                        <OrderSummaryPrice dataTestId={TEST_IDENTIFIER + '-payment-price'}>
                             <strong>{formatPrice(payment.price.priceWithVat)}</strong>
-                        </OrderSummaryPriceStyled>
-                    </OrderSummaryRowStyled>
+                        </OrderSummaryPrice>
+                    </OrderSummaryRow>
                 )}
-            </OrderSummaryRowContentStyled>
-        </OrderSummaryRowWrapperStyled>
+            </div>
+        </OrderSummaryRowWrapper>
     );
 };

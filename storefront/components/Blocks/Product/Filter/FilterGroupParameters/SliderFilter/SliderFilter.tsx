@@ -1,6 +1,6 @@
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
 import { useFilterState } from 'components/Blocks/Product/Filter/FilterContext/useFilterState';
-import { FC, useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 type SliderFilterProps = {
     parameterParentIndex: number;

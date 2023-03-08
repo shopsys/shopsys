@@ -1,7 +1,6 @@
-import { LogoStyled } from './Logo.style';
 import { LogoMetadata } from 'components/Basic/Head/LogoMetadata/LogoMetadata';
 import { Link } from 'components/Basic/Link/Link';
-import { FC } from 'react';
+import NextImage from 'next/image';
 
 const TEST_IDENTIFIER = 'layout-header-logo';
 
@@ -9,7 +8,13 @@ export const Logo: FC = () => (
     <>
         <LogoMetadata />
         <Link href="/">
-            <LogoStyled src="/images/logo.svg" width={163} height={38} data-testid={TEST_IDENTIFIER} />
+            <NextImage
+                src="/images/logo.svg"
+                width={163}
+                height={38}
+                data-testid={TEST_IDENTIFIER}
+                className="flex w-32 max-w-full lg:w-40"
+            />
         </Link>
     </>
 );

@@ -1,13 +1,6 @@
-import {
-    FooterMenuItemStyled,
-    FooterMenuListItemLinkStyled,
-    FooterMenuListItemStyled,
-    FooterMenuListStyled,
-} from './FooterMenuItem.style';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { SimpleNotBlogArticleFragmentApi } from 'graphql/generated';
 import NextLink from 'next/link';
-import { FC } from 'react';
 
 type FooterMenuItemProps = {
     title: string;
@@ -17,26 +10,27 @@ type FooterMenuItemProps = {
 const TEST_IDENTIFIER = 'layout-footer-footermenuitem';
 
 export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => (
-    <FooterMenuItemStyled data-testid={TEST_IDENTIFIER}>
+    <div className="px-5 lg:w-1/4 lg:pl-5" data-testid={TEST_IDENTIFIER}>
         <Heading
             type="h4"
             className="mb-0 flex items-center justify-between py-5 font-bold uppercase text-white lg:pointer-events-none lg:mb-6 lg:p-0"
         >
             {title}
         </Heading>
-        <FooterMenuListStyled>
+        <ul className="pb-5 lg:pb-0">
             {items.map((item) => (
-                <FooterMenuListItemStyled key={item.uuid}>
+                <li className="mb-1 last:mb-0 lg:mb-4" key={item.uuid}>
                     <NextLink href={item.__typename === 'ArticleSite' ? item.slug : item.url} passHref>
-                        <FooterMenuListItemLinkStyled
+                        <a
+                            className="block text-sm text-greyLight no-underline hover:text-greyLight"
                             target={item.external ? '_blank' : undefined}
                             rel={item.external ? 'nofollow noreferrer noopener' : undefined}
                         >
                             {item.name}
-                        </FooterMenuListItemLinkStyled>
+                        </a>
                     </NextLink>
-                </FooterMenuListItemStyled>
+                </li>
             ))}
-        </FooterMenuListStyled>
-    </FooterMenuItemStyled>
+        </ul>
+    </div>
 );

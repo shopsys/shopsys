@@ -1,6 +1,6 @@
 import { PaginationContext } from './context';
 import { paginationReducer } from './reducer';
-import { FC, useReducer } from 'react';
+import { useReducer } from 'react';
 
 type PaginationProviderProps = {
     endCursor?: string;

@@ -1,6 +1,6 @@
 import { FormLineError } from '../Lib/FormLineError/FormLineError';
 import { Textarea, TextareaProps } from './Textarea';
-import { FC, ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { Control, useController } from 'react-hook-form';
 
 type TextareaControlledProps = {

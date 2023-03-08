@@ -1,6 +1,5 @@
 import { PaymentFail } from './PaymentFail';
 import { PaymentSuccess } from './PaymentSuccess';
-import { FC } from 'react';
 
 type PaymentConfirmationContentProps = {
     isSuccess: boolean;

@@ -1,21 +1,27 @@
-import { FlagStyled } from './Flag.style';
 import NextLink from 'next/link';
-import { AnchorHTMLAttributes, FC } from 'react';
+import { AnchorHTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { twMergeCustom } from 'utils/twMerge';
 
 type NativeProps = ExtractNativePropsFromDefault<AnchorHTMLAttributes<HTMLAnchorElement>, 'href', never>;
 
 type FlagProps = NativeProps & {
-    color?: string;
     testIdentifier?: string;
+    classNames?: string;
 };
 
 const getTestIdentifier = (testIdentifier?: string) => testIdentifier ?? 'basic-flag';
 
-export const Flag: FC<FlagProps> = ({ children, color, testIdentifier, href }) => (
+export const Flag: FC<FlagProps> = ({ children, testIdentifier, href, classNames }) => (
     <NextLink href={href} passHref>
-        <FlagStyled color={color} data-testid={getTestIdentifier(testIdentifier)}>
+        <a
+            className={twMergeCustom(
+                'mb-2 mr-3 inline-flex rounded-sm bg-primaryLight py-1 px-2 text-xs uppercase text-dark no-underline hover:text-dark hover:no-underline',
+                classNames,
+            )}
+            data-testid={getTestIdentifier(testIdentifier)}
+        >
             {children}
-        </FlagStyled>
+        </a>
     </NextLink>
 );

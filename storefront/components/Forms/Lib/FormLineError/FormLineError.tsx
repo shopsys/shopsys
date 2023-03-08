@@ -1,6 +1,4 @@
-import { ErrorMessageStyled, FormFieldErrorStyled } from './FormLineError.style';
 import { Icon } from 'components/Basic/Icon/Icon';
-import { FC } from 'react';
 import { FieldError } from 'react-hook-form';
 import { twJoin } from 'tailwind-merge';
 
@@ -26,7 +24,7 @@ export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, testId
     const isTextInputSmall = textInputSize === 'small';
 
     return (
-        <FormFieldErrorStyled data-testid={getTestIdentifier(testIdentifier)}>
+        <div className="relative mt-2" data-testid={getTestIdentifier(testIdentifier)}>
             <Icon
                 iconType="icon"
                 icon="Cross"
@@ -40,7 +38,7 @@ export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, testId
                     isSelect && '-top-10 right-11 z-[2]',
                 )}
             />
-            {error.message !== undefined && <ErrorMessageStyled>{error.message}</ErrorMessageStyled>}
-        </FormFieldErrorStyled>
+            {error.message !== undefined && <span className="text-sm text-red">{error.message}</span>}
+        </div>
     );
 };

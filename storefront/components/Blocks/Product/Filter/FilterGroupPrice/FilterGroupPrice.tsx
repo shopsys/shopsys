@@ -1,12 +1,8 @@
 import { useFilterState } from '../FilterContext/useFilterState';
+import { FilterGroupContent, FilterGroupTitle, FilterGroupWrapper } from '../FilterElements';
 import { FilterGroupIcon } from '../FilterGroup/FilterGroupIcon';
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
-import {
-    FilterGroupContentStyled,
-    FilterGroupStyled,
-    FilterGroupTitleStyled,
-} from 'components/Blocks/Product/Filter/FilterGroup/FilterGroup.style';
-import { FC, useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 type FilterGroupPriceProps = {
     title: string;
@@ -42,12 +38,12 @@ export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, isOpen }) =
     );
 
     return (
-        <FilterGroupStyled data-testid={TEST_IDENTIFIER}>
-            <FilterGroupTitleStyled onClick={() => setIsGroupOpen((currentGroupVisibility) => !currentGroupVisibility)}>
+        <FilterGroupWrapper dataTestId={TEST_IDENTIFIER}>
+            <FilterGroupTitle onClick={() => setIsGroupOpen((currentGroupVisibility) => !currentGroupVisibility)}>
                 {title}
                 <FilterGroupIcon isOpen={isGroupOpen} />
-            </FilterGroupTitleStyled>
-            <FilterGroupContentStyled isOpen={isGroupOpen}>
+            </FilterGroupTitle>
+            <FilterGroupContent isOpen={isGroupOpen}>
                 <RangeSlider
                     min={minimalPrice}
                     max={maximalPrice}
@@ -56,7 +52,7 @@ export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, isOpen }) =
                     setMinValueCallback={setMinimalPrice}
                     setMaxValueCallback={setMaximalPrice}
                 />
-            </FilterGroupContentStyled>
-        </FilterGroupStyled>
+            </FilterGroupContent>
+        </FilterGroupWrapper>
     );
 };

@@ -3,7 +3,7 @@ import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetPara
 import { INTERNAL_QUERY_PARAMETERS } from 'helpers/queryParams/queryParamNames';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { FC, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
 
 export const Canonical: FC = () => {

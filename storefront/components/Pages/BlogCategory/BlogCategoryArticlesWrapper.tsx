@@ -3,7 +3,7 @@ import { DEFAULT_PAGE_SIZE, Pagination } from 'components/Blocks/Pagination/Pagi
 import { usePaginationContext } from 'components/Blocks/Pagination/usePaginationContext';
 import { mapBlogArticleConnection } from 'connectors/articleInterface/blogArticle/BlogArticle';
 import { useBlogCategoryArticlesApi } from 'graphql/generated';
-import { FC, useMemo, useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { ListedBlogArticleType } from 'types/blogArticle';
 
 type BlogCategoryArticlesWrapperProps = {

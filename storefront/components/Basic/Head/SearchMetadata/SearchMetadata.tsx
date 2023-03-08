@@ -1,6 +1,5 @@
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import Head from 'next/head';
-import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
 
 export const SearchMetadata: FC = () => {

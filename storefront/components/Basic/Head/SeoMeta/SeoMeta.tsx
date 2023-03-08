@@ -1,6 +1,5 @@
 import { useSettingsQueryApi } from 'graphql/generated';
 import Head from 'next/head';
-import { FC } from 'react';
 
 type SeoMetaProps = {
     title?: string | null;

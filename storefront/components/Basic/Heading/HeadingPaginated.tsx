@@ -4,7 +4,6 @@ import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFrom
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
-import { FC } from 'react';
 
 type HeadingPaginatedProps = HeadingProps & {
     totalCount: number;

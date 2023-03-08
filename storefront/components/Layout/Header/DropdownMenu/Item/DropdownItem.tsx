@@ -1,9 +1,9 @@
-import { DropdownItemLinkStyled, DropdownItemStyled } from './DropdownItem.style';
 import { DropdownMenuContext } from 'components/Layout/Header/DropdownMenu/DropdownMenuContext';
 import { DropdownSlideRight } from 'components/Layout/Header/DropdownMenu/SlideRight/DropdownSlideRight';
 import NextLink from 'next/link';
-import { FC, useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import * as smoothscroll from 'smoothscroll-polyfill';
+import { twJoin } from 'tailwind-merge';
 import { DropdownItemType } from 'types/dropdown';
 import {
     NavigationCategory as NavigationCategoryType,
@@ -57,13 +57,23 @@ export const DropdownItem: FC<DropdownItemProps> = ({
     }, [hasChildren, itemLink, itemName, columnCategory, columnCategoryChild, navigationItem]);
 
     return (
-        <DropdownItemStyled variant={variant} onClick={scrollToTop} data-testid={TEST_IDENTIFIER}>
+        <div
+            className={twJoin('flex border-b border-greyLighter last:border-b-0', variant === 'small' && 'mx-8')}
+            onClick={scrollToTop}
+            data-testid={TEST_IDENTIFIER}
+        >
             <NextLink href={itemLink} passHref>
-                <DropdownItemLinkStyled onClick={context.onMenuToggleHandler} variant={variant}>
+                <a
+                    className={twJoin(
+                        'flex-1 font-bold text-dark no-underline',
+                        variant === 'small' ? 'py-4 text-sm' : 'py-5 pr-11 pl-8 text-base uppercase',
+                    )}
+                    onClick={context.onMenuToggleHandler}
+                >
                     {itemName}
-                </DropdownItemLinkStyled>
+                </a>
             </NextLink>
             {hasChildren && <DropdownSlideRight goToMenu={goToMenu} index={index} />}
-        </DropdownItemStyled>
+        </div>
     );
 };

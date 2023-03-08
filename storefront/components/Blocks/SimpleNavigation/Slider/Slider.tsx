@@ -1,9 +1,7 @@
 import { ListItem } from 'components/Blocks/SimpleNavigation/ListItem/ListItem';
-import { ListItemStyled } from 'components/Blocks/SimpleNavigation/SimpleNavigation.style';
 import { theme } from 'components/Theme/main';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
-import { FC } from 'react';
 import { ListedItemPropType } from 'types/simpleNavigation';
 
 type SliderProps = {
@@ -33,9 +31,13 @@ export const Slider: FC<SliderProps> = ({ listedItems }) => {
     return (
         <div ref={sliderRef} className="keen-slider">
             {listedItems.map((listedItem, key) => (
-                <ListItemStyled key={key} className="keen-slider__slide" data-testid={TEST_IDENTIFIER + key}>
+                <li
+                    key={key}
+                    className="keen-slider__slide mb-4 ml-0 pl-0 text-center lg:w-1/2 lg:pl-6 lg:text-left vl:w-1/3 xl:w-1/4"
+                    data-testid={TEST_IDENTIFIER + key}
+                >
                     <ListItem listedItem={listedItem}>{listedItem.name}</ListItem>
-                </ListItemStyled>
+                </li>
             ))}
         </div>
     );

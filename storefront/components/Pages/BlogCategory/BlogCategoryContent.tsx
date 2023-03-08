@@ -2,7 +2,6 @@ import { BlogCategoryArticlesWrapper } from './BlogCategoryArticlesWrapper';
 import { HeadingPaginated } from 'components/Basic/Heading/HeadingPaginated';
 import { BlogSignpost } from 'components/Blocks/BlogSignpost/BlogSignpost';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { FC } from 'react';
 import { BlogCategoryDetailType } from 'types/blogCategory';
 
 type BlogCategoryContentProps = {

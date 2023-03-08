@@ -1,6 +1,4 @@
-import { NavigationLeafColumnStyled } from './NavigationLeaf.style';
 import { NavigationColumnCategory } from 'components/Layout/Header/Navigation/NavigationColumnCategory/NavigationColumnCategory';
-import { FC } from 'react';
 import { NavigationCategoriesColumn } from 'types/navigation';
 
 type NavigationLeafProps = {
@@ -12,11 +10,11 @@ const TEST_IDENTIFIER = 'layout-header-navigation-navigationleaf-';
 export const NavigationLeaf: FC<NavigationLeafProps> = ({ columnCategories }) => (
     <>
         {columnCategories.map((columnCategories, columnIndex) => (
-            <NavigationLeafColumnStyled key={columnIndex} data-testid={TEST_IDENTIFIER + columnIndex}>
+            <ul className="flex w-1/4 flex-col pl-11" key={columnIndex} data-testid={TEST_IDENTIFIER + columnIndex}>
                 {columnCategories.categories.map((columnCategory, columnCategoryIndex) => (
                     <NavigationColumnCategory key={columnCategoryIndex} columnCategory={columnCategory} />
                 ))}
-            </NavigationLeafColumnStyled>
+            </ul>
         ))}
     </>
 );

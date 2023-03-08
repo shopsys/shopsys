@@ -1,7 +1,6 @@
 import { Icon } from 'components/Basic/Icon/Icon';
-import { FC } from 'react';
 
-export const SelectedParametersIcon: FC<{ onClick: () => void; dataTestId?: string }> = ({ onClick, dataTestId }) => (
+export const SelectedParametersIcon: FC<{ onClick: () => void }> = ({ onClick, dataTestId }) => (
     <Icon
         iconType="icon"
         icon="RemoveThin"

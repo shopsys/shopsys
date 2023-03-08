@@ -1,5 +1,4 @@
 import { DropdownItem } from 'components/Layout/Header/DropdownMenu/Item/DropdownItem';
-import { FC } from 'react';
 import { NavigationItem as NavigationItemType } from 'types/navigation';
 
 type PrimaryListProps = {

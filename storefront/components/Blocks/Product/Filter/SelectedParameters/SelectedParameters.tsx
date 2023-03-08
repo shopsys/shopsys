@@ -4,22 +4,14 @@ import {
     useFilterState,
     useIsProductFilterEmpty,
 } from '../FilterContext/useFilterState';
+import { SelectedParametersList, SelectedParametersListItem, SelectedParametersName } from '../FilterElements';
 import { Parameters } from './Parameters';
-import {
-    SelectedParametersBlockStyled,
-    SelectedParametersListItemStyled,
-    SelectedParametersListStyled,
-    SelectedParametersNameStyled,
-    SelectedParametersResetStyled,
-    SelectedParametersResetTextStyled,
-    SelectedParametersStyled,
-} from './SelectedParameters.style';
 import { SelectedParametersIcon } from './SelectedParametersIcon';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC, useMemo } from 'react';
+import { useMemo } from 'react';
 
 const TEST_IDENTIFIER = 'blocks-product-filter-selectedparameters';
 
@@ -47,55 +39,58 @@ export const SelectedParameters: FC = () => {
     }
 
     return (
-        <SelectedParametersStyled data-testid={TEST_IDENTIFIER}>
+        <div
+            className="z-aboveOverlay mb-5 rounded-xl border border-greyLight bg-blueLight px-4 pt-7 pb-4 vl:z-[0] vl:border-none"
+            data-testid={TEST_IDENTIFIER}
+        >
             <Heading type="h4" className="uppercase">
                 {t('Selected filters')}
             </Heading>
-            <SelectedParametersBlockStyled>
+            <div className="mb-4 -mr-2">
                 {checkedBrands.length > 0 && (
-                    <SelectedParametersListStyled>
-                        <SelectedParametersNameStyled>{t('Brands')}:</SelectedParametersNameStyled>
+                    <SelectedParametersList>
+                        <SelectedParametersName>{t('Brands')}:</SelectedParametersName>
                         {checkedBrands.map((filterFormBrand) => (
-                            <SelectedParametersListItemStyled key={filterFormBrand.uuid}>
+                            <SelectedParametersListItem key={filterFormBrand.uuid}>
                                 {filterFormBrand.name}
                                 <SelectedParametersIcon
                                     onClick={() => dispatch({ type: 'uncheckBrand', payload: filterFormBrand.uuid })}
                                 />
-                            </SelectedParametersListItemStyled>
+                            </SelectedParametersListItem>
                         ))}
-                    </SelectedParametersListStyled>
+                    </SelectedParametersList>
                 )}
 
                 {checkedFlags.length > 0 && (
-                    <SelectedParametersListStyled>
-                        <SelectedParametersNameStyled>{t('Flags')}:</SelectedParametersNameStyled>
+                    <SelectedParametersList>
+                        <SelectedParametersName>{t('Flags')}:</SelectedParametersName>
                         {checkedFlags.map((filterFormFlag) => (
-                            <SelectedParametersListItemStyled key={filterFormFlag.uuid}>
+                            <SelectedParametersListItem key={filterFormFlag.uuid}>
                                 {filterFormFlag.name}
                                 <SelectedParametersIcon
                                     onClick={() => dispatch({ type: 'uncheckFlag', payload: filterFormFlag.uuid })}
                                 />
-                            </SelectedParametersListItemStyled>
+                            </SelectedParametersListItem>
                         ))}
-                    </SelectedParametersListStyled>
+                    </SelectedParametersList>
                 )}
                 <Parameters />
                 {isOnlyInStock && (
-                    <SelectedParametersListStyled>
-                        <SelectedParametersNameStyled>{t('Availability')}:</SelectedParametersNameStyled>
-                        <SelectedParametersListItemStyled>
+                    <SelectedParametersList>
+                        <SelectedParametersName>{t('Availability')}:</SelectedParametersName>
+                        <SelectedParametersListItem>
                             {t('Only goods in stock')}
                             <SelectedParametersIcon
                                 onClick={() => dispatch({ type: 'setOnlyInStock', payload: false })}
                             />
-                        </SelectedParametersListItemStyled>
-                    </SelectedParametersListStyled>
+                        </SelectedParametersListItem>
+                    </SelectedParametersList>
                 )}
 
                 {(isMinimalPriceVisible || isMaximalPriceVisible) && (
-                    <SelectedParametersListStyled>
-                        <SelectedParametersNameStyled>{t('Price')}:</SelectedParametersNameStyled>
-                        <SelectedParametersListItemStyled>
+                    <SelectedParametersList>
+                        <SelectedParametersName>{t('Price')}:</SelectedParametersName>
+                        <SelectedParametersListItem>
                             {isMinimalPriceVisible && (
                                 <>
                                     <span>{t('from')}&nbsp;</span>
@@ -110,14 +105,17 @@ export const SelectedParameters: FC = () => {
                                 </>
                             )}
                             <SelectedParametersIcon onClick={() => dispatch({ type: 'resetPrices' })} />
-                        </SelectedParametersListItemStyled>
-                    </SelectedParametersListStyled>
+                        </SelectedParametersListItem>
+                    </SelectedParametersList>
                 )}
-            </SelectedParametersBlockStyled>
-            <SelectedParametersResetStyled onClick={() => dispatch({ type: 'resetAllParameters' })}>
-                <SelectedParametersResetTextStyled>{t('Clear all')}</SelectedParametersResetTextStyled>
+            </div>
+            <div
+                className="flex cursor-pointer items-center text-sm text-greyLight"
+                onClick={() => dispatch({ type: 'resetAllParameters' })}
+            >
+                <div className="font-bold uppercase">{t('Clear all')}</div>
                 <Icon iconType="icon" icon="Remove" className="ml-2 cursor-pointer text-greenLight" />
-            </SelectedParametersResetStyled>
-        </SelectedParametersStyled>
+            </div>
+        </div>
     );
 };

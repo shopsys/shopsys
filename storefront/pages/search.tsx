@@ -25,7 +25,7 @@ import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListS
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
-import { FC, useMemo } from 'react';
+import { useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 
 const SearchPage: FC<ServerSidePropsType> = () => {

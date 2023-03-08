@@ -2,7 +2,6 @@ import { AdvancedSeoCategoriesItem } from '../AdvancedSeoCategoriesItem';
 import { theme } from 'components/Theme/main';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
-import { FC } from 'react';
 import { ReadyCategorySeoMixLink } from 'types/category';
 
 type AdvancedSeoCategoriesSliderProps = {

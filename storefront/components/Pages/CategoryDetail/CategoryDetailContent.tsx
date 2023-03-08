@@ -13,7 +13,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
-import { FC, useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { CategoryDetailType } from 'types/category';
 

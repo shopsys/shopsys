@@ -1,17 +1,3 @@
-import {
-    ButtonsStyled,
-    ButtonWrapperStyled,
-    LoginColumnStyled,
-    LoginLostPassLinkMobileStyled,
-    LoginLostPassLinkStyled,
-    LoginLostPassStyled,
-    LoginLostPassTextStyled,
-    LoginMessageStyled,
-    LoginProfileIconStyled,
-    LoginProfileStyled,
-    LoginProfileTextStyled,
-    LoginStyled,
-} from './Login.style';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Link } from 'components/Basic/Link/Link';
@@ -29,7 +15,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { Translate } from 'next-translate';
 import Image from 'next/image';
 import NextLink from 'next/link';
-import { FC, useCallback } from 'react';
+import { useCallback } from 'react';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
 import * as Yup from 'yup';
@@ -62,8 +48,11 @@ export const Login: FC = () => {
     );
 
     return (
-        <LoginStyled data-testid={TEST_IDENTIFIER}>
-            <LoginColumnStyled>
+        <div
+            className='relative flex w-full max-w-xs flex-col items-start before:absolute  before:left-1/2 before:hidden before:h-full before:w-[1px] before:bg-primary before:content-[""] sm:max-w-md md:max-w-2xl lg:max-w-3xl lg:flex-row lg:before:block'
+            data-testid={TEST_IDENTIFIER}
+        >
+            <div className="w-full pr-5 lg:w-1/2">
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}>
                         <TextInputControlled
@@ -87,13 +76,13 @@ export const Login: FC = () => {
                                 label: t('Password'),
                             }}
                         />
-                        <ButtonsStyled>
-                            <ButtonWrapperStyled>
-                                <Button type="submit" data-testid="blocks-popup-login-submit">
+                        <div className="-mx-4 mb-10 flex items-center justify-between border-b border-primary px-4 pb-5 lg:m-0 lg:block lg:border-none lg:p-0">
+                            <div className="order-1 mt-5 flex w-full justify-end">
+                                <Button type="submit" data-testid="blocks-popup-login-submit" className="max-lg:!px-3">
                                     {t('Log-in')}
                                 </Button>
-                            </ButtonWrapperStyled>
-                            <LoginLostPassStyled>
+                            </div>
+                            <div className="mt-5 flex items-center whitespace-nowrap rounded-xl border-2 border-primary py-2 px-2 text-sm text-primary lg:px-3 lg:py-2">
                                 <Icon
                                     iconType="icon"
                                     icon="Warning"
@@ -101,40 +90,45 @@ export const Login: FC = () => {
                                     height={29}
                                     className="mr-1 ml-1 hidden text-red sm:block"
                                 />
-                                <LoginLostPassTextStyled>{t('Lost your password?')}</LoginLostPassTextStyled>
+                                <div className="hidden flex-grow lg:block">{t('Lost your password?')}</div>
                                 <NextLink href={resetPasswordUrl} passHref>
-                                    <LoginLostPassLinkStyled>{t('Renew it')}</LoginLostPassLinkStyled>
+                                    <div className="hidden cursor-pointer text-primary underline hover:no-underline lg:block">
+                                        {t('Renew it')}
+                                    </div>
                                 </NextLink>
                                 <NextLink href={resetPasswordUrl} passHref>
-                                    <LoginLostPassLinkMobileStyled>
+                                    <div className="block text-sm text-primary underline hover:no-underline lg:hidden">
                                         {t('Lost your password?')}
-                                    </LoginLostPassLinkMobileStyled>
+                                    </div>
                                 </NextLink>
-                            </LoginLostPassStyled>
-                        </ButtonsStyled>
+                            </div>
+                        </div>
                     </Form>
                 </FormProvider>
-            </LoginColumnStyled>
-            <LoginColumnStyled>
-                <LoginProfileStyled>
-                    <LoginProfileTextStyled>{t("Don't have an account yet? Register.")}</LoginProfileTextStyled>
-                    <LoginProfileIconStyled>
+            </div>
+            <div className="w-full pr-5 pl-5 lg:w-1/2">
+                <div className="relative my-6 -mr-4 w-full rounded-l-xl bg-blueLight p-4">
+                    <div className="block w-44 text-lg text-primary lg:w-72 lg:pr-24 lg:text-xl">
+                        {t("Don't have an account yet? Register.")}
+                    </div>
+                    <div className="absolute right-0 bottom-0 h-24 overflow-hidden md:right-3 lg:h-28">
                         <Image
                             src="/images/qmark.png"
                             height={120}
                             width={75}
                             alt={t("Don't have an account yet? Register.")}
+                            className="!max-w-none"
                         />
-                    </LoginProfileIconStyled>
-                </LoginProfileStyled>
-                <LoginMessageStyled>
+                    </div>
+                </div>
+                <p className="mb-8 hidden lg:block">
                     {t('Your addresses prefilled and you can check your order history.')}
-                </LoginMessageStyled>
+                </p>
                 <Link isButton href={registrationUrl}>
                     {t('Register')}
                 </Link>
-            </LoginColumnStyled>
-        </LoginStyled>
+            </div>
+        </div>
     );
 };
 

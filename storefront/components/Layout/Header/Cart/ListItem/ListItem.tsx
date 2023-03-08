@@ -1,16 +1,8 @@
-import {
-    ListItemDetailStyled,
-    ListItemImageWrapperStyled,
-    ListItemPriceStyled,
-    ListItemQuantityStyled,
-    ListItemStyled,
-    ListItemTitleStyled,
-} from './ListItem.style';
 import { Image } from 'components/Basic/Image/Image';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton/RemoveCartItemButton';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import NextLink from 'next/link';
-import { FC, MouseEventHandler } from 'react';
+import { MouseEventHandler } from 'react';
 import { CartItemType } from 'types/cart';
 
 type ListItemProps = {
@@ -24,20 +16,26 @@ export const ListItem: FC<ListItemProps> = ({ cartItem, onItemRemove }) => {
     const formatPrice = useFormatPrice();
 
     return (
-        <ListItemStyled key={cartItem.uuid} data-testid={TEST_IDENTIFIER}>
-            <ListItemImageWrapperStyled>
+        <li
+            className="flex w-full items-center border-b border-greyLighter py-3"
+            key={cartItem.uuid}
+            data-testid={TEST_IDENTIFIER}
+        >
+            <div className="relative w-11 items-center">
                 <Image alt={cartItem.product.fullName} type="thumbnail" image={cartItem.product.image} />
-            </ListItemImageWrapperStyled>
-            <ListItemDetailStyled>
+            </div>
+            <div className="flex flex-1 items-center justify-between">
                 <NextLink href={cartItem.product.slug} passHref>
-                    <ListItemTitleStyled>{cartItem.product.fullName}</ListItemTitleStyled>
+                    <a className="flex-1 cursor-pointer pl-3 text-sm font-bold text-greyDark no-underline outline-none">
+                        {cartItem.product.fullName}
+                    </a>
                 </NextLink>
-                <ListItemQuantityStyled>{cartItem.quantity + cartItem.product.unit.name}</ListItemQuantityStyled>
-                <ListItemPriceStyled>
+                <span className="pr-3 text-sm">{cartItem.quantity + cartItem.product.unit.name}</span>
+                <span className="w-28 break-words pr-4 text-right text-sm font-bold text-primary">
                     {formatPrice(cartItem.product.price.priceWithVat * cartItem.quantity)}
-                </ListItemPriceStyled>
-            </ListItemDetailStyled>
+                </span>
+            </div>
             <RemoveCartItemButton onItemRemove={onItemRemove} />
-        </ListItemStyled>
+        </li>
     );
 };

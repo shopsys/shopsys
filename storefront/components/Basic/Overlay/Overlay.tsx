@@ -1,6 +1,5 @@
 import { OverlayStyled, OverlayWrapperStyled } from './Overlay.style';
 import { OverlayProps } from './propTypes';
-import { FC } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 export const Overlay: FC<OverlayProps> = (props) => {
