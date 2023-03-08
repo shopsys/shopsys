@@ -1,25 +1,5 @@
-import { BreadcrumbItemType } from 'types/breadcrumb';
+import { SimpleBlogCategoryFragmentApi } from 'graphql/generated';
 
-export type BlogCategoryDetailType = {
-    __typename: 'BlogCategory';
-    uuid: string;
-    name: string;
-    breadcrumb: BreadcrumbItemType[];
-    seoTitle: string | null;
-    seoMetaDescription: string | null;
-    blogCategoriesTree: ListedBlogCategoryType[];
-    articlesTotalCount: number;
-};
-
-export type ListedBlogCategoryType = SimpleBlogCategoryType & {
-    children?: ListedBlogCategoryType[];
-};
-
-export type SimpleBlogCategoryType = {
-    uuid: string;
-    name: string;
-    link: string;
-    parent: {
-        name: string;
-    } | null;
+export type ListedBlogCategoryRecursiveType = SimpleBlogCategoryFragmentApi & {
+    children?: ListedBlogCategoryRecursiveType[];
 };

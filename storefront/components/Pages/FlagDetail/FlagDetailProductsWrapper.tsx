@@ -2,24 +2,21 @@ import { CategoryDetailContentMessage } from '../CategoryDetail/CategoryDetailCo
 import { DEFAULT_PAGE_SIZE, Pagination } from 'components/Blocks/Pagination/Pagination';
 import { usePaginationContext } from 'components/Blocks/Pagination/usePaginationContext';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
-import { mapListedProductConnectionType } from 'connectors/products/Products';
-import { useFlagProductsQueryApi } from 'graphql/generated';
+import { FlagDetailFragmentApi, ListedProductFragmentApi, useFlagProductsQueryApi } from 'graphql/generated';
 import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmFlagProductListView } from 'hooks/gtm/useGtmFlagProductListView';
 import { useListingForPagination } from 'hooks/ui/useListingForPagination';
 import { useRouter } from 'next/router';
-import React, { RefObject } from 'react';
-import { useShopsysSelector } from 'redux/main';
-import { FlagDetailType } from 'types/flag';
-import { ListedProductType } from 'types/product';
+import { RefObject } from 'react';
 
 type FlagDetailProductsWrapperProps = {
-    flag: FlagDetailType;
+    flag: FlagDetailFragmentApi;
     containerWrapRef: RefObject<HTMLDivElement>;
 };
 
@@ -28,23 +25,20 @@ export const FlagDetailProductsWrapper: FC<FlagDetailProductsWrapperProps> = ({ 
     const [{ endCursor }] = usePaginationContext();
     const orderingMode = getProductListSort(parseProductListSortFromQuery(query.sort));
     const parametersFilter = getFilterOptions(parseFilterOptionsFromQuery(query.filter));
-    const { currencyCode } = useShopsysSelector((state) => state.domain);
 
-    const [{ data, fetching }] = useFlagProductsQueryApi({
-        variables: {
-            endCursor: endCursor ?? '',
-            filter: mapParametersFilter(parametersFilter),
-            orderingMode,
-            uuid: flag.uuid,
-            pageSize: DEFAULT_PAGE_SIZE,
-        },
-    });
-
-    const [dataItems] = useListingForPagination<ListedProductType>(
-        data?.flag?.products !== undefined
-            ? mapListedProductConnectionType(data.flag.products, currencyCode).products
-            : [],
+    const [{ data, fetching }] = useQueryError(
+        useFlagProductsQueryApi({
+            variables: {
+                endCursor: endCursor ?? '',
+                filter: mapParametersFilter(parametersFilter),
+                orderingMode,
+                uuid: flag.uuid,
+                pageSize: DEFAULT_PAGE_SIZE,
+            },
+        }),
     );
+
+    const [dataItems] = useListingForPagination<ListedProductFragmentApi>(data?.flag?.products.edges);
 
     useGtmFlagProductListView(flag, getUrlWithoutGetParameters(asPath), dataItems, fetching);
 
@@ -53,7 +47,7 @@ export const FlagDetailProductsWrapper: FC<FlagDetailProductsWrapperProps> = ({ 
             {dataItems.length !== 0 ? (
                 <>
                     <ProductsList gtmListName="flag" fetching={fetching} products={dataItems} />
-                    <Pagination totalCount={flag.productConnection.totalCount} containerWrapRef={containerWrapRef} />
+                    <Pagination totalCount={flag.products.totalCount} containerWrapRef={containerWrapRef} />
                 </>
             ) : (
                 <CategoryDetailContentMessage />

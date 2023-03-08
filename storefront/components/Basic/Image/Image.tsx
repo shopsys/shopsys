@@ -1,10 +1,10 @@
+import { ImageSizeFragmentApi, ImageSizesFragmentApi } from 'graphql/generated';
 import { ImgHTMLAttributes } from 'react';
 import { CSSProperties } from 'styled-components';
-import { ImageSizeType, ImageType } from 'types/image';
 import { twMergeCustom } from 'utils/twMerge';
 
 type ImageProps = {
-    image: ImageType | null;
+    image: ImageSizesFragmentApi | null;
     alt: string;
     type: string;
     loading?: ImgHTMLAttributes<HTMLImageElement>['loading'];
@@ -25,7 +25,7 @@ export const Image: FC<ImageProps> = ({
     maxHeight,
     className,
 }) => {
-    const img: ImageSizeType | null = image?.sizes?.find((i) => i.size === type) ?? null;
+    const img: ImageSizeFragmentApi | null = image?.sizes.find((i) => i.size === type) ?? null;
 
     if (img === null) {
         return (

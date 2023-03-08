@@ -4,22 +4,23 @@ import { Image } from 'components/Basic/Image/Image';
 import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { CartItemFragmentApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
 import { useShopsysSelector } from 'redux/main';
-import { AddToCartPopupDataType } from 'types/cart';
 
 type AddToCartPopupProps = {
     isVisible: boolean;
     onCloseCallback: () => void;
-    product: AddToCartPopupDataType;
+    addedCartItem: CartItemFragmentApi;
 };
 
 const TEST_IDENTIFIER = 'blocks-product-addtocartpopup-product';
 
-export const AddToCartPopup: FC<AddToCartPopupProps> = ({ isVisible, onCloseCallback, product }) => {
+export const AddToCartPopup: FC<AddToCartPopupProps> = ({ isVisible, onCloseCallback, addedCartItem }) => {
     const t = useTypedTranslationFunction();
     const formatPrice = useFormatPrice();
     const domainConfig = useShopsysSelector((state) => state.domain);
@@ -35,19 +36,25 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ isVisible, onCloseCall
                 className="mb-4 flex flex-col items-center rounded border border-greyLighter p-3 md:flex-row md:p-4"
                 data-testid={TEST_IDENTIFIER}
             >
-                {product.image !== null && (
+                {' '}
+                {!!addedCartItem.product.image && (
                     <div className="mb-4 flex w-24 items-center justify-center md:mb-0">
-                        <Image image={product.image} type="thumbnailMedium" alt={product.fullName} />
+                        <Image
+                            image={addedCartItem.product.image}
+                            type="thumbnailMedium"
+                            alt={addedCartItem.product.fullName}
+                        />
                     </div>
                 )}
                 <div className="w-full md:pl-4 lg:flex lg:items-center lg:justify-between">
                     <div className="block break-words text-primary" data-testid={TEST_IDENTIFIER + '-name'}>
-                        <NextLink href={product.slug}>{product.fullName}</NextLink>
+                        <NextLink href={addedCartItem.product.slug}>{addedCartItem.product.fullName}</NextLink>
                     </div>
                     <div className="mt-2 lg:mt-0 lg:w-5/12 lg:pl-4 lg:text-right">
                         <div className="block text-primary" data-testid={TEST_IDENTIFIER + '-price'}>
-                            {`${product.quantity} ${product.unitName}, ${formatPrice(
-                                product.quantity * product.price.priceWithVat,
+                            {`${addedCartItem.quantity} ${addedCartItem.product.unit.name}, ${formatPrice(
+                                addedCartItem.quantity *
+                                    mapPriceForCalculations(addedCartItem.product.price.priceWithVat),
                             )}`}
                         </div>
                     </div>

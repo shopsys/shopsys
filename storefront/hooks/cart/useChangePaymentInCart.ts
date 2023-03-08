@@ -1,6 +1,6 @@
 import { showErrorMessage } from 'components/Helpers/Toasts';
-import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { CartFragmentApi, useChangePaymentInCartMutationApi } from 'graphql/generated';
+import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { onPaymentChangeGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import { useGtmCartEventInfo } from 'helpers/gtm/gtm';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -16,7 +16,6 @@ export type ChangePaymentHandler = (
 export const useChangePaymentInCart = (): [ChangePaymentHandler, boolean] => {
     const [{ fetching }, changePaymentInCart] = useChangePaymentInCartMutationApi();
     const { cartUuid } = useShopsysSelector((state) => state.user);
-    const { currencyCode } = useShopsysSelector((state) => state.domain);
     const t = useTypedTranslationFunction();
     const gtmCartEventInfo = useGtmCartEventInfo();
 
@@ -48,12 +47,11 @@ export const useChangePaymentInCart = (): [ChangePaymentHandler, boolean] => {
             onPaymentChangeGtmEventHandler(
                 gtmCart.current,
                 changePaymentResult.data?.ChangePaymentInCart.payment ?? null,
-                currencyCode,
             );
 
             return changePaymentResult.data?.ChangePaymentInCart;
         },
-        [cartUuid, changePaymentInCart, currencyCode, gtmCart, t],
+        [cartUuid, changePaymentInCart, gtmCart, t],
     );
 
     return [changePaymentHandler, fetching];

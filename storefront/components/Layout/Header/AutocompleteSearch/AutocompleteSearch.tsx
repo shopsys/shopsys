@@ -1,9 +1,10 @@
-import { Autocomplete } from './Autocomplete';
+import { Autocomplete, AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT } from './Autocomplete';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { MINIMAL_SEARCH_QUERY_LENGTH, useAutocompleteSearch } from 'connectors/search/AutocompleteSearch';
+import { useAutocompleteSearchQueryApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmSearchResultView } from 'hooks/gtm/useGtmSearchResultView';
 import { useDebounce } from 'hooks/helpers/useDebounce';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -15,6 +16,7 @@ import { ChangeEventHandler, useCallback, useMemo, useRef, useState } from 'reac
 import { useShopsysSelector } from 'redux/main';
 import { twJoin } from 'tailwind-merge';
 
+export const MINIMAL_SEARCH_QUERY_LENGTH = 3 as const;
 const TEST_IDENTIFIER = 'layout-header-search-autocomplete-input';
 
 export const AutocompleteSearch: FC = () => {
@@ -22,9 +24,18 @@ export const AutocompleteSearch: FC = () => {
     const [autocompleteSearchQueryValue, setAutocompleteSearchQueryValue] = useState('');
     const debouncedAutocompleteSearchQuery = useDebounce(autocompleteSearchQueryValue, 200);
     const [hasAutocompleteSearchFocus, setAutocompleteSearchFocus] = useState(false);
-    const [autocompleteSearchApiResults, areSearchResultsLoading] = useAutocompleteSearch(
-        debouncedAutocompleteSearchQuery,
+    const [{ data: unfilteredAutocompleteSearchData, fetching: areSearchResultsLoading }] = useQueryError(
+        useAutocompleteSearchQueryApi({
+            variables: {
+                search: debouncedAutocompleteSearchQuery,
+                maxCategoryCount: AUTOCOMPLETE_CATEGORY_LIMIT,
+                maxProductCount: AUTOCOMPLETE_PRODUCT_LIMIT,
+            },
+            pause: debouncedAutocompleteSearchQuery.length < MINIMAL_SEARCH_QUERY_LENGTH,
+            requestPolicy: 'network-only',
+        }),
     );
+
     const autocompleteSearchInRef = useRef<HTMLDivElement>(null);
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [searchUrl] = getInternationalizedStaticUrls(['/search'], domainUrl);
@@ -37,10 +48,10 @@ export const AutocompleteSearch: FC = () => {
             return undefined;
         }
 
-        return autocompleteSearchApiResults;
-    }, [autocompleteSearchApiResults, autocompleteSearchQueryValue]);
+        return unfilteredAutocompleteSearchData;
+    }, [unfilteredAutocompleteSearchData, autocompleteSearchQueryValue]);
 
-    useGtmSearchResultView(autocompleteSearchApiResults, autocompleteSearchQueryValue);
+    useGtmSearchResultView(autocompleteSearchResults, autocompleteSearchQueryValue);
 
     useEffectOnce(() => {
         const onDocumentClickHandler: EventListener = (event) => {

@@ -10,15 +10,15 @@ import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel/Filter
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { CategoryDetailFragmentApi } from 'graphql/generated';
 import { PAGE_QUERY_PARAMETER_NAME } from 'helpers/queryParams/queryParamNames';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { useCallback, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { CategoryDetailType } from 'types/category';
 
 type CategoryDetailContentProps = {
-    category: CategoryDetailType;
+    category: CategoryDetailFragmentApi;
 };
 
 export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category }) => {
@@ -37,15 +37,11 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
         });
     }, []);
 
-    if (category.productConnection.productFilterOptions === null) {
-        return null;
-    }
-
     return (
         <FilterProvider
             key={category.slug}
             originalSlug={category.originalCategorySlug}
-            productFilterOptions={category.productConnection.productFilterOptions}
+            productFilterOptions={category.products.productFilterOptions}
         >
             <Webline>
                 {isFiltered && <MetaRobots content="noindex, follow" />}
@@ -57,18 +53,18 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                         )}
                     >
                         <FilterPanel
-                            defaultOrderingMode={category.productConnection.defaultOrderingMode}
-                            orderingMode={category.productConnection.orderingMode}
+                            orderingMode={category.products.orderingMode}
+                            defaultOrderingMode={category.products.defaultOrderingMode}
                             originalSlug={category.originalCategorySlug}
                             panelCloseHandler={handlePanelOpenerClick}
                             slug={category.slug}
-                            totalCount={category.productConnection.totalCount}
+                            totalCount={category.products.totalCount}
                         />
                     </div>
                     {isPanelOpen && <Overlay $isHiddenOnDesktop onClick={handlePanelOpenerClick} />}
                     <div className="flex flex-1 flex-col vl:pl-12">
                         <Adverts positionName="productList" className="mb-4" />
-                        <HeadingPaginated type="h1" totalCount={category.productConnection.totalCount}>
+                        <HeadingPaginated type="h1" totalCount={category.products.totalCount}>
                             {category.seoH1 !== null ? category.seoH1 : category.name}
                         </HeadingPaginated>
                         {category.description !== null &&
@@ -96,8 +92,8 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                             {t('Filter')}
                         </div>
                         <SortingBar
-                            sorting={category.productConnection.orderingMode}
-                            totalCount={category.productConnection.totalCount}
+                            sorting={category.products.orderingMode}
+                            totalCount={category.products.totalCount}
                         />
                         <CategoryDetailProductsWrapper category={category} containerWrapRef={containerWrapRef} />
                     </div>

@@ -1,15 +1,15 @@
-import { ImageType } from 'types/image';
+import { ImageSizesFragmentApi } from 'graphql/generated';
 
 export type ListedItemPropType =
     | {
           slug: string;
-          image: ImageType | null;
+          images: ImageSizesFragmentApi[];
           name: string;
           totalCount?: number;
       }
     | {
           slug: string;
-          image: ImageType | null;
+          images: ImageSizesFragmentApi[];
           name: string;
       }
     | {

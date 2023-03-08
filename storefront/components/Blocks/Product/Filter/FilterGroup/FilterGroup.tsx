@@ -48,7 +48,8 @@ export const FilterGroup: FC<FilterGroupProps> = ({
                 {selected
                     .slice(0, areAllFlagsOrBrandsShown ? undefined : defaultNumberOfShownFlagsOrBrands)
                     .map((dataItem, index) => {
-                        const count = typeof options[index] !== 'undefined' ? options[index].count : 0;
+                        const count =
+                            options !== null && typeof options[index] !== 'undefined' ? options[index].count : 0;
 
                         return (
                             <FilterGroupContentItem

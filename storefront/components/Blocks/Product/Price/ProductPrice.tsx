@@ -1,9 +1,9 @@
+import { ProductPriceFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { ProductPriceType } from 'types/price';
 
 type ProductPriceProps = {
-    productPrice: ProductPriceType;
+    productPrice: ProductPriceFragmentApi;
 };
 
 const TEST_IDENTIFIER = 'blocks-product-price';

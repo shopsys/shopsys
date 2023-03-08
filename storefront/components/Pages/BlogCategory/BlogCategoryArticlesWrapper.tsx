@@ -1,10 +1,9 @@
 import { BlogArticlesList } from './BlogArticlesList/BlogArticlesList';
 import { DEFAULT_PAGE_SIZE, Pagination } from 'components/Blocks/Pagination/Pagination';
 import { usePaginationContext } from 'components/Blocks/Pagination/usePaginationContext';
-import { mapBlogArticleConnection } from 'connectors/articleInterface/blogArticle/BlogArticle';
-import { useBlogCategoryArticlesApi } from 'graphql/generated';
+import { ListedBlogArticleFragmentApi, useBlogCategoryArticlesApi } from 'graphql/generated';
+import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { useMemo, useRef } from 'react';
-import { ListedBlogArticleType } from 'types/blogArticle';
 
 type BlogCategoryArticlesWrapperProps = {
     uuid: string;
@@ -18,17 +17,14 @@ export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> =
         variables: { uuid, endCursor: endCursor ?? '', pageSize: DEFAULT_PAGE_SIZE },
     });
 
-    const mappedArticles: ListedBlogArticleType[] = useMemo(
-        () =>
-            data?.blogCategory?.blogArticles.edges !== undefined
-                ? mapBlogArticleConnection(data.blogCategory.blogArticles)?.edges ?? []
-                : [],
-        [data?.blogCategory?.blogArticles],
+    const mappedArticles = useMemo(
+        () => mapConnectionEdges<ListedBlogArticleFragmentApi>(data?.blogCategory?.blogArticles.edges),
+        [data?.blogCategory?.blogArticles.edges],
     );
 
     return (
         <>
-            <BlogArticlesList blogArticles={mappedArticles} />
+            {mappedArticles !== undefined && <BlogArticlesList blogArticles={mappedArticles} />}
             <Pagination
                 containerWrapRef={containerWrapRef}
                 totalCount={data?.blogCategory?.blogArticles.totalCount ?? 0}

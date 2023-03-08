@@ -13,12 +13,16 @@ fragment CartItemFragment on CartItem {
         flags {
             ...SimpleFlagFragment
         }
-        ...ProductImagesListFragment
+        image: mainImage {
+            ...ImageSizesFragment
+        }
         stockQuantity
         availability {
             ...AvailabilityFragment
         }
-        ...ProductPriceFragment
+        price {
+            ...ProductPriceFragment
+        }
         availableStoresCount
         unit {
             name

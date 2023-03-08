@@ -1,17 +1,18 @@
-import { LastOrderFragmentApi, ListedStoreFragmentApi } from 'graphql/generated';
-import { CartItemType } from 'types/cart';
-import { GtmCartItemType, GtmListedProductType, GtmProductInterface, GtmShippingInfoType } from 'types/gtm';
-import { PickupPlaceType } from 'types/pickupPlace';
 import {
-    ListedProductType,
-    MainVariantDetailType,
-    ProductDetailType,
-    ProductInterfaceType,
-    SimpleProductType,
-} from 'types/product';
+    CartItemFragmentApi,
+    LastOrderFragmentApi,
+    ListedProductFragmentApi,
+    ListedStoreFragmentApi,
+    MainVariantDetailFragmentApi,
+    ProductDetailFragmentApi,
+    SimpleProductFragmentApi,
+} from 'graphql/generated';
+import { getFirstImageOrNull } from 'helpers/mappers/image';
+import { GtmCartItemType, GtmListedProductFragmentApi, GtmProductInterface, GtmShippingInfoType } from 'types/gtm';
+import { ProductInterfaceType } from 'types/product';
 
 export const mapGtmCartItemType = (
-    cartItem: CartItemType,
+    cartItem: CartItemFragmentApi,
     domainUrl: string,
     listIndex?: number,
     quantity?: number,
@@ -28,17 +29,17 @@ export const mapGtmCartItemType = (
     return gtmCartItem;
 };
 
-export const mapGtmListedProductType = (
-    product: ListedProductType | SimpleProductType,
+export const mapGtmListedProductFragmentApi = (
+    product: ListedProductFragmentApi | SimpleProductFragmentApi,
     listIndex: number,
     domainUrl: string,
-): GtmListedProductType => ({
+): GtmListedProductFragmentApi => ({
     ...mapGtmProductInterface(product, domainUrl),
     listIndex: listIndex + 1,
 });
 
 export const mapGtmProductDetailType = (
-    product: ProductDetailType | MainVariantDetailType,
+    product: ProductDetailFragmentApi | MainVariantDetailFragmentApi,
     domainUrl: string,
 ): GtmProductInterface => mapGtmProductInterface(product, domainUrl);
 
@@ -59,33 +60,38 @@ const mapGtmProductInterface = (productInterface: ProductInterfaceType, domainUr
         imageUrl: mapGtmProductInterfaceImageUrl(productInterface),
         labels: productInterface.flags.map((simpleFlagType) => simpleFlagType.name),
         uuid: productInterface.uuid,
-        price: productInterface.price.priceWithoutVat,
-        priceWithTax: productInterface.price.priceWithVat,
-        tax: productInterface.price.vatAmount,
+        price: parseFloat(productInterface.price.priceWithoutVat),
+        priceWithTax: parseFloat(productInterface.price.priceWithVat),
+        tax: parseFloat(productInterface.price.vatAmount),
         url: productUrl,
         sku: productInterface.catalogNumber,
         brand: productInterface.brand?.name ?? '',
-        categories: productInterface.categoryNames,
+        categories: productInterface.categories.map((category) => category.name),
     };
 };
 
 const mapGtmProductInterfaceImageUrl = (productInterface: ProductInterfaceType): string | undefined => {
     if ('image' in productInterface) {
-        return productInterface.image?.sizes?.find((size) => size.size === 'default')?.url;
+        return productInterface.image?.sizes.find((size) => size.size === 'default')?.url;
     }
 
-    return productInterface.images.length > 0
-        ? productInterface.images[0].sizes?.find((size) => size.size === 'default')?.url
-        : undefined;
+    if ('images' in productInterface && Array.isArray(productInterface.images)) {
+        return getFirstImageOrNull(productInterface.images)?.sizes.find((size) => size.size === 'default')?.url;
+    }
+
+    return undefined;
 };
 
-export const mapGtmShippingInfo = (pickupPlace: PickupPlaceType | null): GtmShippingInfoType => {
+export const mapGtmShippingInfo = (pickupPlace: ListedStoreFragmentApi | null): GtmShippingInfoType => {
     let shippingDetail = '';
     const shippingExtra = [];
 
     if (pickupPlace !== null) {
         shippingDetail = `${pickupPlace.name}, ${pickupPlace.street}, ${pickupPlace.city}, ${pickupPlace.country.name}, ${pickupPlace.postcode}`;
-        shippingExtra.push(pickupPlace.openingHoursHtml);
+
+        if (pickupPlace.openingHoursHtml !== null) {
+            shippingExtra.push(pickupPlace.openingHoursHtml);
+        }
     }
 
     return {
@@ -97,11 +103,16 @@ export const mapGtmShippingInfo = (pickupPlace: PickupPlaceType | null): GtmShip
 export const getGtmPickupPlaceFromStore = (
     pickupPlaceIdentifier: string,
     store: ListedStoreFragmentApi,
-): PickupPlaceType => ({
+): ListedStoreFragmentApi => ({
+    __typename: 'Store',
+    locationLatitude: null,
+    locationLongitude: null,
+    slug: '',
     identifier: pickupPlaceIdentifier,
     name: store.name,
     city: store.city,
     country: {
+        __typename: 'Country',
         name: store.country.name,
         code: store.country.code,
     },
@@ -114,16 +125,21 @@ export const getGtmPickupPlaceFromStore = (
 export const getGtmPickupPlaceFromLastOrder = (
     pickupPlaceIdentifier: string,
     lastOrder: LastOrderFragmentApi,
-): PickupPlaceType => ({
+): ListedStoreFragmentApi => ({
+    __typename: 'Store',
+    locationLatitude: null,
+    locationLongitude: null,
+    slug: '',
     identifier: pickupPlaceIdentifier,
     name: '',
     city: lastOrder.deliveryCity ?? '',
     country: {
+        __typename: 'Country',
         name: lastOrder.deliveryCountry?.name ?? '',
         code: lastOrder.deliveryCountry?.code ?? '',
     },
-    description: '',
-    openingHoursHtml: '',
+    description: null,
+    openingHoursHtml: null,
     postcode: lastOrder.deliveryPostcode ?? '',
     street: lastOrder.deliveryStreet ?? '',
 });

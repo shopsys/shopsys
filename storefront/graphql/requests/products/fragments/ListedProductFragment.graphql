@@ -4,13 +4,18 @@ fragment ListedProductFragment on Product {
     uuid
     slug
     fullName
+    name
     stockQuantity
     isSellingDenied
     flags {
         ...SimpleFlagFragment
     }
-    ...ProductImagesListFragment
-    ...ProductPriceFragment
+    image: mainImage {
+        ...ImageSizesFragment
+    }
+    price {
+        ...ProductPriceFragment
+    }
     availability {
         ...AvailabilityFragment
     }
@@ -24,4 +29,5 @@ fragment ListedProductFragment on Product {
         __typename
         name
     }
+    isMainVariant
 }

@@ -16,8 +16,9 @@ import {
     validateStreet,
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
+import { usePrivacyPolicyArticleUrlQueryApi } from 'graphql/generated';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
-import { useGetPrivacyPolicyUrl } from 'hooks/routes/useGetPrivacyPolicyUrl';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { useMemo } from 'react';
@@ -113,7 +114,8 @@ export const useRegistrationFormMeta = (
 ): RegistrationFormMetaType => {
     const t = useTypedTranslationFunction();
     const isEmailValid = formProviderMethods.formState.errors.email === undefined;
-    const gdprUrl = useGetPrivacyPolicyUrl();
+    const [{ data: privacyPolicyArticleUrlData }] = useQueryError(usePrivacyPolicyArticleUrlQueryApi());
+    const privacyPolicyArticleUrl = privacyPolicyArticleUrlData?.privacyPolicyArticle?.slug;
 
     const customerFieldName = 'customer' as const;
 
@@ -214,7 +216,12 @@ export const useRegistrationFormMeta = (
                             i18nKey="GdprAgreementCheckbox"
                             defaultTrans="I agree with <lnk1>processing of privacy policy</lnk1>."
                             components={{
-                                lnk1: <Link href={gdprUrl} linkType="external" target="_blank" />,
+                                lnk1:
+                                    privacyPolicyArticleUrl !== undefined ? (
+                                        <Link href={privacyPolicyArticleUrl} linkType="external" target="_blank" />
+                                    ) : (
+                                        <span></span>
+                                    ),
                             }}
                         />
                     ),
@@ -228,9 +235,7 @@ export const useRegistrationFormMeta = (
             },
         }),
         [
-            errors.country,
-            errors.gdprAgreement?.message,
-            errors.newsletterSubscription?.message,
+            t,
             errors.email?.message,
             errors.passwordFirst?.message,
             errors.passwordSecond?.message,
@@ -244,10 +249,12 @@ export const useRegistrationFormMeta = (
             errors.street?.message,
             errors.city?.message,
             errors.postcode?.message,
-            isEmailValid,
+            errors.country,
+            errors.gdprAgreement?.message,
+            errors.newsletterSubscription?.message,
             customerValue,
-            gdprUrl,
-            t,
+            privacyPolicyArticleUrl,
+            isEmailValid,
         ],
     );
 

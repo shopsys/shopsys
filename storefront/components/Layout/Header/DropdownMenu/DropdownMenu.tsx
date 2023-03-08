@@ -5,7 +5,8 @@ import { SecondaryList } from './SecondaryList/SecondaryList';
 import { DropdownSlideLeft } from './SlideLeft/DropdownSlideLeft';
 import { SubMenu } from './SubMenu/SubMenu';
 import { TertiaryList } from './TertiaryList/TertiaryList';
-import { useNavigationItems } from 'connectors/navigation/Navigation';
+import { useNavigationQueryApi } from 'graphql/generated';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { DropdownItemType, DropdownListLevels } from 'types/dropdown';
@@ -18,13 +19,13 @@ type DropdownMenuProps = {
 const TEST_IDENTIFIER = 'layout-header-dropdownmenu';
 
 export const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggleHandler }) => {
-    const navigationItems = useNavigationItems();
+    const [{ data: navigationData }] = useQueryError(useNavigationQueryApi());
     const [menuLevel, setMenuLevel] = useState<DropdownListLevels | undefined>('primary');
     const [historyOfIndexes, setHistoryOfIndexes] = useState<(number | string | undefined)[]>([]);
     const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
     const [menuHeight, setMenuHeight] = useState<number>();
 
-    if (navigationItems.length === 0) {
+    if (navigationData?.navigation === undefined || navigationData.navigation.length === 0) {
         return null;
     }
 
@@ -64,7 +65,7 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggle
                             onEntering={calcHeight}
                         >
                             <div className="w-full pt-12">
-                                <PrimaryList navigationItems={navigationItems} />
+                                <PrimaryList navigationItems={navigationData.navigation} />
                                 <SubMenu />
                             </div>
                         </CSSTransition>
@@ -78,7 +79,10 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggle
                         >
                             <div className="w-full pt-12">
                                 <DropdownSlideLeft onClickEvent={slideLeft} goToMenu="primary" />
-                                <SecondaryList navigationItems={navigationItems} historyOfIndexes={historyOfIndexes} />
+                                <SecondaryList
+                                    navigationItems={navigationData.navigation}
+                                    historyOfIndexes={historyOfIndexes}
+                                />
                             </div>
                         </CSSTransition>
 
@@ -91,7 +95,10 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggle
                         >
                             <div className="w-full pt-12">
                                 <DropdownSlideLeft onClickEvent={slideLeft} goToMenu="secondary" />
-                                <TertiaryList navigationItems={navigationItems} historyOfIndexes={historyOfIndexes} />
+                                <TertiaryList
+                                    navigationItems={navigationData.navigation}
+                                    historyOfIndexes={historyOfIndexes}
+                                />
                             </div>
                         </CSSTransition>
                     </DropdownMenuStyled>

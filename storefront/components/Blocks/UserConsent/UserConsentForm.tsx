@@ -2,10 +2,11 @@ import { useUserConsentForm, useUserConsentFormMeta } from './formMeta';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Button } from 'components/Forms/Button/Button';
 import { ToggleSwitchControlled } from 'components/Forms/ToggleSwitch/ToggleSwitchControlled';
+import { useCookiesArticleUrlQueryApi } from 'graphql/generated';
 import { setUserConsentCookie } from 'helpers/cookies/setUserConsentCookie';
 import { onConsentUpdateGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import { getGtmConsentInfo } from 'helpers/gtm/gtm';
-import { useGetCookiesUrl } from 'hooks/routes/useGetCookiesUrl';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { useCallback } from 'react';
@@ -20,7 +21,8 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
     const t = useTypedTranslationFunction();
     const [formProviderMethods] = useUserConsentForm();
     const formMeta = useUserConsentFormMeta();
-    const cookiePolicyUrl = useGetCookiesUrl();
+    const [{ data: cookiesArticleUrlData }] = useQueryError(useCookiesArticleUrlQueryApi());
+    const cookiesArticleUrl = cookiesArticleUrlData?.cookiesArticle?.slug;
 
     const saveCookieChoices = useCallback(() => {
         const formValues = formProviderMethods.getValues();
@@ -56,7 +58,12 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                     i18nKey="cookiePolicyLink"
                     defaultTrans="To learn more, you can read our <link>cookie policy</link>"
                     components={{
-                        link: <a href={cookiePolicyUrl} target="_blank" rel="noreferrer"></a>,
+                        link:
+                            cookiesArticleUrl !== undefined ? (
+                                <a href={cookiesArticleUrl} target="_blank" rel="noreferrer"></a>
+                            ) : (
+                                <span></span>
+                            ),
                     }}
                 />
             </p>

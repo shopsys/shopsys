@@ -1,4 +1,4 @@
-import { CountryType } from './country';
+import { CountryFragmentApi } from 'graphql/generated';
 
 export enum CustomerTypeEnum {
     CommonCustomer = 'commonCustomer',
@@ -27,7 +27,7 @@ export type CurrentCustomerType = {
     street: string;
     city: string;
     postcode: string;
-    country: CountryType;
+    country: CountryFragmentApi;
     newsletterSubscription: boolean;
     companyName: string;
     companyNumber: string;

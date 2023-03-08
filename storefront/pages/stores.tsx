@@ -1,26 +1,27 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { StoresContent } from 'components/Pages/Stores/StoresContent';
-import { useStores } from 'connectors/stores/Stores';
-import { StoresQueryDocumentApi } from 'graphql/generated';
+import { BreadcrumbFragmentApi, StoresQueryDocumentApi, useStoresQueryApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { useMemo } from 'react';
 import { nextReduxWrapper } from 'redux/main';
 
 const StoresPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
-    const stores = useStores();
-    const breadcrumbs = useMemo(() => [{ name: t('Department stores'), slug: '' }], [t]);
+    const [{ data: storesData }] = useQueryError(useStoresQueryApi());
+    const breadcrumbs: BreadcrumbFragmentApi[] = [{ __typename: 'Link', name: t('Department stores'), slug: '' }];
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('stores', breadcrumbs);
     useGtmStaticPageView(gtmStaticPageViewEvent);
 
     return (
         <>
             <CommonLayout title={t('Stores')}>
-                <StoresContent stores={stores} breadcrumbs={breadcrumbs} />
+                {storesData?.stores !== undefined && (
+                    <StoresContent stores={storesData.stores} breadcrumbs={breadcrumbs} />
+                )}
             </CommonLayout>
         </>
     );

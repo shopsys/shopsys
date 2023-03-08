@@ -16,8 +16,7 @@ import { FlagDetailContent } from 'components/Pages/FlagDetail/FlagDetailContent
 import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDetailContent';
 import { ProductDetailMainVariantContent } from 'components/Pages/ProductDetail/ProductDetailMainVariantContent';
 import { StoreDetailContent } from 'components/Pages/StoreDetail/StoreDetailContent';
-import { useFriendlyUrlResolvedData } from 'connectors/friendlyUrls/FriendlyUrls';
-import { Maybe, SlugQueryApi, SlugQueryDocumentApi, SlugQueryVariablesApi } from 'graphql/generated';
+import { SlugQueryApi, SlugQueryDocumentApi, SlugQueryVariablesApi, useSlugQueryApi } from 'graphql/generated';
 import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
@@ -35,62 +34,73 @@ import { getSeoTitleAndDescriptionForFriendlyUrlPage } from 'helpers/seo/getSeoT
 import { getProductListSort } from 'helpers/sorting/getProductListSort';
 import { parseProductListSortFromQuery } from 'helpers/sorting/parseProductListSortFromQuery';
 import { createClient } from 'helpers/urql/createClient';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmFriendlyPageView } from 'hooks/gtm/useGtmFriendlyPageView';
 import { Translate } from 'next-translate';
 import { NextRouter, useRouter } from 'next/router';
 import { nextReduxWrapper } from 'redux/main';
 import { FriendlyUrlPageType } from 'types/friendlyUrl';
-import { MainVariantDetailType, ProductDetailType } from 'types/product';
 import { ssrExchange } from 'urql';
 
 const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
     const router = useRouter();
     const slug = getUrlWithoutGetParameters(router.asPath);
-    const { data, fetching } = useFriendlyUrlResolvedData(slug);
     const t = useTypedTranslationFunction();
+    const categoryDetailSort = getProductListSort(
+        parseProductListSortFromQuery(router.query[SORT_QUERY_PARAMETER_NAME]),
+    );
+    const categoryParametersFilter = getFilterOptions(
+        parseFilterOptionsFromQuery(router.query[FILTER_QUERY_PARAMETER_NAME]),
+    );
+    const [{ data: slugData, fetching }] = useQueryError(
+        useSlugQueryApi({
+            variables: {
+                slug,
+                orderingMode: categoryDetailSort,
+                filter: mapParametersFilter(categoryParametersFilter),
+            },
+        }),
+    );
 
-    const gtmFriendlyUrlPageViewEvent = useGtmPageViewEvent(getGtmPageInfoForFriendlyUrl(data, slug, data?.breadcrumb));
+    const gtmFriendlyUrlPageViewEvent = useGtmPageViewEvent(getGtmPageInfoForFriendlyUrl(slugData?.slug, slug));
     useGtmFriendlyPageView(gtmFriendlyUrlPageViewEvent, slug, fetching);
-    return renderContent(data, fetching, router, t);
+    return renderContent(slugData?.slug, fetching, router, t);
 };
 
-const renderContent = (data: Maybe<FriendlyUrlPageType>, fetching: boolean, router: NextRouter, t: Translate) => {
-    switch (data?.__typename) {
+const renderContent = (
+    slugData: SlugQueryApi['slug'] | undefined,
+    fetching: boolean,
+    router: NextRouter,
+    t: Translate,
+) => {
+    switch (slugData?.__typename) {
         case 'RegularProduct':
-            return wrapContent(
-                <ProductDetailContent product={data as ProductDetailType} fetching={fetching} />,
-                data,
-                t,
-            );
+            return wrapContent(<ProductDetailContent product={slugData} fetching={fetching} />, slugData, t);
         case 'MainVariant':
-            return wrapContent(
-                <ProductDetailMainVariantContent product={data as MainVariantDetailType} fetching={fetching} />,
-                data,
-                t,
-            );
+            return wrapContent(<ProductDetailMainVariantContent product={slugData} fetching={fetching} />, slugData, t);
         case 'Category':
-            return wrapPaginatedContent(<CategoryDetailContent category={data} />, data, router, t);
+            return wrapPaginatedContent(<CategoryDetailContent category={slugData} />, slugData, router, t);
         case 'Store':
-            return wrapContent(<StoreDetailContent store={data} />, data, t);
+            return wrapContent(<StoreDetailContent store={slugData} />, slugData, t);
         case 'ArticleSite':
-            return wrapContent(<ArticleDetailContent article={data} />, data, t);
+            return wrapContent(<ArticleDetailContent article={slugData} />, slugData, t);
         case 'BlogArticle':
-            return wrapContent(<BlogArticleDetailContent blogArticle={data} />, data, t);
+            return wrapContent(<BlogArticleDetailContent blogArticle={slugData} />, slugData, t);
         case 'Brand':
-            return wrapContent(<BrandDetailContent brand={data} />, data, t);
+            return wrapContent(<BrandDetailContent brand={slugData} />, slugData, t);
         case 'Flag':
-            return wrapContent(<FlagDetailContent flag={data} />, data, t);
+            return wrapContent(<FlagDetailContent flag={slugData} />, slugData, t);
         case 'BlogCategory':
-            return wrapPaginatedContent(<BlogCategoryContent blogCategory={data} />, data, router, t);
+            return wrapPaginatedContent(<BlogCategoryContent blogCategory={slugData} />, slugData, router, t);
         default:
             return <Error404Content />;
     }
 };
 
-const wrapContent = (content: JSX.Element, data: FriendlyUrlPageType, t: Translate) => (
-    <CommonLayout {...getSeoTitleAndDescriptionForFriendlyUrlPage(data, t)}>
+const wrapContent = (content: JSX.Element, slugData: FriendlyUrlPageType, t: Translate) => (
+    <CommonLayout {...getSeoTitleAndDescriptionForFriendlyUrlPage(slugData, t)}>
         <Webline>
-            <Breadcrumbs key="breadcrumb" breadcrumb={data.breadcrumb} />
+            <Breadcrumbs key="breadcrumb" breadcrumb={slugData.breadcrumb} />
         </Webline>
         {content}
     </CommonLayout>

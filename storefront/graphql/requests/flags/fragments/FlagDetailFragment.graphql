@@ -2,7 +2,9 @@ fragment FlagDetailFragment on Flag {
     __typename
     uuid
     slug
-    ...BreadcrumbFragment
+    breadcrumb {
+        ...BreadcrumbFragment
+    }
     name
     ...ListedProductsPreviewFragment
 }

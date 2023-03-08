@@ -1,4 +1,5 @@
 import { useCurrentCart } from 'connectors/cart/Cart';
+import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { twJoin } from 'tailwind-merge';
@@ -17,7 +18,7 @@ export const CartPreview: FC = () => {
     return (
         <table className="w-full" data-testid={TEST_IDENTIFIER}>
             <tbody>
-                {cart.totalDiscountPrice.priceWithVat > 0 && (
+                {mapPriceForCalculations(cart.totalDiscountPrice.priceWithVat) > 0 && (
                     <CartPreviewRow dataTestId={TEST_IDENTIFIER + '-discount'}>
                         <CartPreviewCell>{t('The amount of discounts')}</CartPreviewCell>
                         <CartPreviewCell isAlignRight>

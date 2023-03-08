@@ -6,13 +6,13 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { EmptyCartWrapper } from 'components/Pages/Cart/EmptyCartWrapper';
 import { TransportAndPaymentContent } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentContent';
 import { useCurrentCart } from 'connectors/cart/Cart';
-import { useTransports } from 'connectors/transports/Transports';
-import { useLastOrderQueryApi } from 'graphql/generated';
+import { useLastOrderQueryApi, useTransportsQueryApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServerSideProps';
 import { useChangePaymentInCart } from 'hooks/cart/useChangePaymentInCart';
 import { useChangeTransportInCart } from 'hooks/cart/useChangeTransportInCart';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmPaymentShippingView } from 'hooks/gtm/useGtmPaymentShippingView';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -24,8 +24,10 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
     const { cartUuid } = useShopsysSelector((state) => state.user);
     const { isUserLoggedIn } = useCurrentUserData();
-    const transports = useTransports(cartUuid);
-    const [{ data }] = useLastOrderQueryApi({ requestPolicy: 'network-only', pause: !isUserLoggedIn });
+    const [{ data: transportsData }] = useQueryError(
+        useTransportsQueryApi({ variables: { cartUuid }, requestPolicy: 'cache-and-network' }),
+    );
+    const [{ data }] = useQueryError(useLastOrderQueryApi({ requestPolicy: 'network-only', pause: !isUserLoggedIn }));
     const currentCart = useCurrentCart();
     const [changeTransportInCart, isTransportSelectionLoading] = useChangeTransportInCart();
     const [changePaymentInCart, isPaymentSelectionLoading] = useChangePaymentInCart();
@@ -42,11 +44,11 @@ const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
                     activeStep={2}
                     isTransportOrPaymentLoading={Boolean(isTransportSelectionLoading) || isPaymentSelectionLoading}
                 >
-                    {transports.length === 0 || (data === undefined && isUserLoggedIn) ? (
+                    {data === undefined && isUserLoggedIn ? (
                         <LoaderWithOverlay />
                     ) : (
                         <TransportAndPaymentContent
-                            transports={transports}
+                            transports={transportsData?.transports}
                             lastOrder={data?.lastOrder ?? null}
                             changeTransportInCart={changeTransportInCart}
                             isTransportSelectionLoading={isTransportSelectionLoading}

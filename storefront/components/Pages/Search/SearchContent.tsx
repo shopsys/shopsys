@@ -7,6 +7,8 @@ import { Button } from 'components/Forms/Button/Button';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { desktopFirstSizes, mobileFirstSizes } from 'components/Theme/mediaQueries';
+import { BreadcrumbFragmentApi, SearchQueryApi, SimpleCategoryFragmentApi } from 'graphql/generated';
+import { mapConnectionEdges } from 'helpers/mappers/connection';
 import { getNewPagination } from 'helpers/pagination/getNewPagination';
 import { parsePageNumberFromQuery } from 'helpers/pagination/parsePageNumberFromQuery';
 import { getStringFromUrlQuery } from 'helpers/parsing/getStringFromUrlQuery';
@@ -16,10 +18,8 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { BreadcrumbItemType } from 'types/breadcrumb';
-import { SearchType } from 'types/search';
 
 enum NUMBER_OF_VISIBLE_ITEMS {
     XL = 8,
@@ -28,8 +28,8 @@ enum NUMBER_OF_VISIBLE_ITEMS {
 }
 
 type SearchContentProps = {
-    searchResults: SearchType | undefined;
-    breadcrumbs: BreadcrumbItemType[];
+    searchResults: SearchQueryApi | undefined;
+    breadcrumbs: BreadcrumbFragmentApi[];
 };
 
 export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrumbs }) => {
@@ -44,6 +44,10 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
     const [oldRouterQuery, setOldRouterQuery] = useState(router.query.q);
     const [queryPathWasChanged, setQueryPathWasChanged] = useState(false);
     const [routerQueryChanged, setRouterQueryChanged] = useState(false);
+    const mappedCategoriesSearchResults = useMemo(
+        () => mapConnectionEdges<SimpleCategoryFragmentApi>(searchResults?.categoriesSearch.edges),
+        [searchResults?.categoriesSearch.edges],
+    );
 
     useResizeWidthEffect(
         width,
@@ -139,13 +143,13 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
                             )}
                         </SearchResultsWebline>
                     )}
-                    {searchResults.categoriesSearch.totalCount > 0 && (
+                    {searchResults.categoriesSearch.totalCount > 0 && mappedCategoriesSearchResults !== undefined && (
                         <SearchResultsWebline>
                             <Heading type="h3">{t('Found categories')}</Heading>
                             <SearchResultsBlock areAllResultsVisible={areCategoriesResultsVisible}>
-                                <SimpleNavigation listedItems={searchResults.categoriesSearch.categories} />
+                                <SimpleNavigation listedItems={mappedCategoriesSearchResults} />
                             </SearchResultsBlock>
-                            {numberOfVisible < searchResults.categoriesSearch.categories.length && (
+                            {numberOfVisible < mappedCategoriesSearchResults.length && (
                                 <ShowResultsButtonWrapper>
                                     <Button
                                         type="button"

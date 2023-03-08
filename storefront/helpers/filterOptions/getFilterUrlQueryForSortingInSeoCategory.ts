@@ -1,22 +1,37 @@
 import { getActualUrlQueryWithoutDefaultPriceFilter } from './getActualUrlQueryWithoutDefaultPriceFilter';
-import { FilterFormFlagType, FilterFormParameterType, FilterOptionsType } from 'types/productFilter';
+import { ProductFilterOptionsFragmentApi } from 'graphql/generated';
+import { FilterFormFlagType, FilterFormParameterType } from 'types/productFilter';
 
-export const getFilterUrlQueryForSortingInSeoCategory = (productFilterOptions: FilterOptionsType): string | null => {
-    const checkedFlags: FilterFormFlagType[] = productFilterOptions.flags.reduce(
-        (array: FilterFormFlagType[], flag) => {
+export const getFilterUrlQueryForSortingInSeoCategory = (
+    productFilterOptions: ProductFilterOptionsFragmentApi,
+): string | null => {
+    const checkedFlags: FilterFormFlagType[] =
+        productFilterOptions.flags?.reduce((array: FilterFormFlagType[], flag) => {
             if (flag.isSelected) {
                 array.push({ name: flag.flag.name, uuid: flag.flag.uuid, checked: true });
             }
             return array;
-        },
-        [],
-    );
+        }, []) ?? [];
+
     const checkedParameters: FilterFormParameterType[] =
         productFilterOptions.parameters?.reduce((array: FilterFormParameterType[], parameter) => {
-            if (
-                ('values' in parameter && parameter.values.filter((value) => value.isSelected).length > 0) ||
-                ('selectedValue' in parameter && parameter.selectedValue !== null)
-            ) {
+            const isSomeParameterValueSelected =
+                'values' in parameter && parameter.values.some((value) => value.isSelected);
+            const hasParameterSelectedValue = 'selectedValue' in parameter && parameter.selectedValue !== null;
+
+            if (isSomeParameterValueSelected || hasParameterSelectedValue) {
+                const unmappedParameterValues = 'values' in parameter ? parameter.values : [];
+                const mappedParameterValues = [];
+                for (const unmappedParameterValue of unmappedParameterValues) {
+                    if (unmappedParameterValue.isSelected) {
+                        mappedParameterValues.push({
+                            checked: unmappedParameterValue.isSelected,
+                            uuid: unmappedParameterValue.uuid,
+                            text: unmappedParameterValue.text,
+                            rgbHex: null,
+                        });
+                    }
+                }
                 array.push({
                     unit: null,
                     isCollapsed: false,
@@ -25,19 +40,10 @@ export const getFilterUrlQueryForSortingInSeoCategory = (productFilterOptions: F
                     maximalValue: null,
                     minimalValue: null,
                     selectedValue: 'selectedValue' in parameter ? parameter.selectedValue : null,
-                    values:
-                        'values' in parameter
-                            ? parameter.values
-                                  .filter((value) => value.isSelected)
-                                  .map((value) => ({
-                                      checked: value.isSelected,
-                                      uuid: value.uuid,
-                                      text: value.text,
-                                      rgbHex: null,
-                                  }))
-                            : [],
+                    values: mappedParameterValues,
                 });
             }
+
             return array;
         }, []) ?? [];
 

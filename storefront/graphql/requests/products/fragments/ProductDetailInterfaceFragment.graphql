@@ -7,18 +7,24 @@ fragment ProductDetailInterfaceFragment on Product {
     name
     namePrefix
     nameSuffix
-    ...BreadcrumbFragment
+    breadcrumb {
+        ...BreadcrumbFragment
+    }
     catalogNumber
     ean
     description
-    ...ProductDetailImagesFragment
-    ...ProductPriceFragment
+    images {
+        ...ImageSizesFragment
+    }
+    price {
+        ...ProductPriceFragment
+    }
     parameters {
         ...ParameterFragment
     }
     stockQuantity
     accessories {
-        ...SliderProductFragment
+        ...ListedProductFragment
     }
     brand {
         ...SimpleBrandFragment
@@ -35,4 +41,5 @@ fragment ProductDetailInterfaceFragment on Product {
     }
     seoTitle
     seoMetaDescription
+    isMainVariant
 }

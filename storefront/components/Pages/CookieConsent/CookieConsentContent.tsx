@@ -1,13 +1,13 @@
 import { UserConsentForm } from 'components/Blocks/UserConsent/UserConsentForm';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
+import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
-import { BreadcrumbItemType } from 'types/breadcrumb';
 
 type CookieConsentContentProps = {
-    breadcrumbs: BreadcrumbItemType[];
+    breadcrumbs: BreadcrumbFragmentApi[];
 };
 
 export const CookieConsentContent: FC<CookieConsentContentProps> = ({ breadcrumbs }) => {

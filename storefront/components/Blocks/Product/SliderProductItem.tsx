@@ -4,14 +4,14 @@ import { ProductExposedStoresCount } from './Availability/ProductExposedStoresCo
 import { ProductFlags } from './Flags/ProductFlags';
 import { ProductPrice } from './Price/ProductPrice';
 import { Image } from 'components/Basic/Image/Image';
+import { ListedProductFragmentApi } from 'graphql/generated';
 import { onClickProductDetailGtmEventHandler } from 'helpers/gtm/eventHandlers';
 import NextLink from 'next/link';
 import { useShopsysSelector } from 'redux/main';
 import { GtmListNameType } from 'types/gtm';
-import { SliderProductItemType } from 'types/product';
 
 type SliderProductItemProps = {
-    product: SliderProductItemType;
+    product: ListedProductFragmentApi;
     gtmListName: GtmListNameType;
     listIndex: number;
 };

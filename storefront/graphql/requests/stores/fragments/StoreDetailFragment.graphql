@@ -15,5 +15,7 @@ fragment StoreDetailFragment on Store {
     specialMessage
     locationLatitude
     locationLongitude
-    ...BreadcrumbFragment
+    breadcrumb {
+        ...BreadcrumbFragment
+    }
 }

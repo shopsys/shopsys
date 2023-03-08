@@ -1,7 +1,5 @@
-fragment BreadcrumbFragment on Breadcrumb {
-    breadcrumb {
-        __typename
-        name
-        slug
-    }
+fragment BreadcrumbFragment on Link {
+    __typename
+    name
+    slug
 }

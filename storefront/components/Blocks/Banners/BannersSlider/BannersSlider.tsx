@@ -2,12 +2,12 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { BannersSliderItem } from 'components/Blocks/Banners/BannersSliderItem/BannersSliderItem';
 import { theme } from 'components/Theme/main';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
+import { SliderItemFragmentApi } from 'graphql/generated';
+import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
 import { useEffect, useRef, useState } from 'react';
-import { ImageSizeType } from 'types/image';
-import { SliderItemType } from 'types/sliderItem';
 
 const DEVICE_BREAKPOINT_SIZE = {
     size: 'tablet',
@@ -15,12 +15,11 @@ const DEVICE_BREAKPOINT_SIZE = {
 } as const;
 
 type BannersSliderProps = {
-    sliderItems: SliderItemType[];
+    sliderItems: SliderItemFragmentApi[];
     testIdentifier: string;
 };
 
 export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, testIdentifier }) => {
-    const [loadedImageUrls, setLoadedImageUrls] = useState<{ [key: string]: boolean }>({});
     const [currentSlide, setCurrentSlide] = useState(0);
     const [pause, setPause] = useState(false);
     const timer = useRef<NodeJS.Timer | null>(null);
@@ -45,36 +44,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, testIdentif
         dragEnd: () => {
             setPause(false);
         },
-        created(slider) {
-            setLoadedImageUrls((currentLoadedImageUrls) => {
-                const newLoadedImageUrls = { ...currentLoadedImageUrls };
-                const slidesPerView = slider.options().slidesPerView;
-                if (slidesPerView !== undefined) {
-                    for (let i = 0; i < slidesPerView; i++) {
-                        newLoadedImageUrls[i] = true;
-                    }
-
-                    if (slider.options().centered) {
-                        newLoadedImageUrls[sliderItems.length - 1] = true;
-                    }
-                }
-                return newLoadedImageUrls;
-            });
-        },
     });
-
-    useEffect(() => {
-        setLoadedImageUrls((currentLoadedImageUrls) => {
-            const newLoadedImageUrls = { ...currentLoadedImageUrls };
-            newLoadedImageUrls[currentSlide] = true;
-
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-            if (slider !== null && slider.options().centered) {
-                newLoadedImageUrls[Math.min(currentSlide + 1, sliderItems.length - 1)] = true;
-            }
-            return newLoadedImageUrls;
-        });
-    }, [currentSlide, sliderItems.length, slider]);
 
     useEffect(() => {
         const setPauseTrue = () => {
@@ -124,10 +94,10 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, testIdentif
                 {sliderItems.map((sliderItem, index) => (
                     <BannersSliderItem
                         key={index}
-                        image={getBannersSliderItemImage(
-                            sliderItem,
-                            loadedImageUrls[index],
-                            width > desktopFirstSizes[DEVICE_BREAKPOINT_SIZE.size],
+                        image={getFirstImageOrNull(
+                            width > desktopFirstSizes[DEVICE_BREAKPOINT_SIZE.size]
+                                ? sliderItem.webImages
+                                : sliderItem.mobileImages,
                         )}
                         link={sliderItem.link}
                     />
@@ -164,18 +134,4 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems, testIdentif
             </div>
         </div>
     );
-};
-
-export const getBannersSliderItemImage = (
-    sliderItem: SliderItemType,
-    isImageLoaded: boolean,
-    desktopVariant: boolean,
-): ImageSizeType | null => {
-    const image = desktopVariant ? sliderItem.webImages : sliderItem.mobileImages;
-
-    if (!isImageLoaded || image === null || image.sizes === null) {
-        return null;
-    }
-
-    return image.sizes.find((i) => i.size === 'default') ?? null;
 };

@@ -1,5 +1,0 @@
-fragment ListedProductsFragment on ProductListable {
-    products(orderingMode: $orderingMode, after: $endCursorForPagination, filter: $filter) {
-        ...ListedProductConnectionFragment
-    }
-}

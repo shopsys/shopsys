@@ -1,5 +1,6 @@
 import { FooterMenuItem } from 'components/Layout/Footer/FooterMenuItem/FooterMenuItem';
 import { ArticlePlacementTypeEnumApi, SimpleNotBlogArticleFragmentApi, useArticlesQueryApi } from 'graphql/generated';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useMemo } from 'react';
 
@@ -7,17 +8,19 @@ const TEST_IDENTIFIER = 'layout-footer-footermenu';
 
 export const FooterMenu: FC = () => {
     const t = useTypedTranslationFunction();
-    const [{ data }] = useArticlesQueryApi({
-        variables: {
-            placement: [
-                ArticlePlacementTypeEnumApi.Footer1Api,
-                ArticlePlacementTypeEnumApi.Footer2Api,
-                ArticlePlacementTypeEnumApi.Footer3Api,
-                ArticlePlacementTypeEnumApi.Footer4Api,
-            ],
-            first: 100,
-        },
-    });
+    const [{ data }] = useQueryError(
+        useArticlesQueryApi({
+            variables: {
+                placement: [
+                    ArticlePlacementTypeEnumApi.Footer1Api,
+                    ArticlePlacementTypeEnumApi.Footer2Api,
+                    ArticlePlacementTypeEnumApi.Footer3Api,
+                    ArticlePlacementTypeEnumApi.Footer4Api,
+                ],
+                first: 100,
+            },
+        }),
+    );
 
     const items = useMemo(
         () => [

@@ -1,12 +1,27 @@
 import { getGtmConsentInfo, getGtmPageInfoType, getGtmUserInfo, useGtmCartEventInfo } from './gtm';
 import { getGtmDeviceType } from './helpers';
-import { mapGtmCartItemType, mapGtmListedProductType, mapGtmProductDetailType, mapGtmShippingInfo } from './mappers';
+import {
+    mapGtmCartItemType,
+    mapGtmListedProductFragmentApi,
+    mapGtmProductDetailType,
+    mapGtmShippingInfo,
+} from './mappers';
+import {
+    AutocompleteSearchQueryApi,
+    BreadcrumbFragmentApi,
+    CartItemFragmentApi,
+    ListedProductFragmentApi,
+    ListedStoreFragmentApi,
+    MainVariantDetailFragmentApi,
+    ProductDetailFragmentApi,
+    SimplePaymentFragmentApi,
+    SimpleProductFragmentApi,
+    TransportWithAvailablePaymentsAndStoresFragmentApi,
+} from 'graphql/generated';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { BreadcrumbItemType } from 'types/breadcrumb';
-import { CartItemType } from 'types/cart';
 import {
     GtmCartInfoType,
     GtmChangeCartItemEventType,
@@ -26,15 +41,10 @@ import {
     GtmSectionType,
     GtmShippingInfoEventType,
 } from 'types/gtm';
-import { PaymentType } from 'types/payment';
-import { PickupPlaceType } from 'types/pickupPlace';
-import { ListedProductType, MainVariantDetailType, ProductDetailType, SimpleProductType } from 'types/product';
-import { AutocompleteSearchType } from 'types/search';
-import { TransportType } from 'types/transport';
 
 export const useGtmStaticPageViewEvent = (
     pageType: GtmPageType,
-    breadcrumbs?: BreadcrumbItemType[],
+    breadcrumbs?: BreadcrumbFragmentApi[],
 ): GtmPageViewEventType => {
     const path = useRouter().asPath;
     const gtmPageInfo = useMemo(() => getGtmPageInfoType(pageType, path, breadcrumbs), [pageType, path, breadcrumbs]);
@@ -77,7 +87,7 @@ export const getNewGtmEcommerceEvent = (eventType: GtmEventType, clear = false):
 });
 
 export const getGtmChangeCartItemEvent = (
-    cartItem: CartItemType,
+    cartItem: CartItemFragmentApi,
     quantity: number,
     currencyCode: string,
     eventValue: number,
@@ -95,8 +105,8 @@ export const getGtmChangeCartItemEvent = (
 
 export const getGtmShippingInfoEvent = (
     cartInfoType: GtmCartInfoType,
-    transport: TransportType,
-    pickupPlace: PickupPlaceType | null,
+    transport: TransportWithAvailablePaymentsAndStoresFragmentApi,
+    pickupPlace: ListedStoreFragmentApi | null,
     paymentName: string | undefined,
 ): GtmShippingInfoEventType => {
     const { shippingDetail, shippingExtra } = mapGtmShippingInfo(pickupPlace);
@@ -111,14 +121,14 @@ export const getGtmShippingInfoEvent = (
         shippingType: transport.name,
         shippingDetail: shippingDetail,
         shippingExtra: shippingExtra,
-        shippingPrice: transport.price.priceWithoutVat,
-        shippingPriceWithTax: transport.price.priceWithVat,
+        shippingPrice: parseFloat(transport.price.priceWithoutVat),
+        shippingPriceWithTax: parseFloat(transport.price.priceWithVat),
     };
 };
 
 export const getGtmPaymentInfoEvent = (
     cartInfoType: GtmCartInfoType,
-    payment: PaymentType,
+    payment: SimplePaymentFragmentApi,
 ): GtmPaymentInfoEventType => ({
     value: cartInfoType.value,
     valueWithTax: cartInfoType.valueWithTax,
@@ -131,7 +141,7 @@ export const getGtmPaymentInfoEvent = (
 });
 
 export const getGtmProductsListEvent = (
-    products: ListedProductType[],
+    products: ListedProductFragmentApi[],
     listName: GtmListNameType,
     currentPage: number,
     pageSize: number,
@@ -139,36 +149,39 @@ export const getGtmProductsListEvent = (
 ): GtmProductsListEventType => {
     return {
         listName,
-        products: products.map((product: ListedProductType, index) => {
+        products: products.map((product: ListedProductFragmentApi, index) => {
             const listedProductIndex = (currentPage - 1) * pageSize + index;
 
-            return mapGtmListedProductType(product, listedProductIndex, domainUrl);
+            return mapGtmListedProductFragmentApi(product, listedProductIndex, domainUrl);
         }),
     };
 };
 
 export const getGtmProductDetailOnClickEvent = (
-    product: ListedProductType | SimpleProductType,
+    product: ListedProductFragmentApi | SimpleProductFragmentApi,
     listName: GtmListNameType,
     index: number,
     domainUrl: string,
 ): GtmProductsListEventType => ({
     listName,
-    products: [mapGtmListedProductType(product, index, domainUrl)],
+    products: [mapGtmListedProductFragmentApi(product, index, domainUrl)],
 });
 
 export const getGtmProductDetailEvent = (
-    product: ProductDetailType | MainVariantDetailType,
+    product: ProductDetailFragmentApi | MainVariantDetailFragmentApi,
     currencyCode: string,
     domainUrl: string,
 ): GtmProductDetailEventType => ({
     currency: currencyCode,
-    value: product.price.priceWithoutVat,
-    valueWithTax: product.price.priceWithVat,
+    value: parseFloat(product.price.priceWithoutVat),
+    valueWithTax: parseFloat(product.price.priceWithVat),
     products: [mapGtmProductDetailType(product, domainUrl)],
 });
 
-export const getGtmSearchResultEvent = (searchResult: AutocompleteSearchType, keyword: string): GtmSearchEventType => {
+export const getGtmSearchResultEvent = (
+    searchResult: AutocompleteSearchQueryApi,
+    keyword: string,
+): GtmSearchEventType => {
     const resultsCount = searchResult.categoriesSearch.totalCount + searchResult.productsSearch.totalCount;
     const suggestResult = {
         results: resultsCount,

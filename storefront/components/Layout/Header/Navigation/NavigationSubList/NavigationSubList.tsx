@@ -1,8 +1,8 @@
+import { NavigationSubCategoriesLinkFragmentApi } from 'graphql/generated';
 import NextLink from 'next/link';
-import { NavigationSubCategory } from 'types/navigation';
 
 type NavigationSubListProps = {
-    columnCategoryChildren: NavigationSubCategory[];
+    columnCategoryChildren: NavigationSubCategoriesLinkFragmentApi['children'];
 };
 
 const TEST_IDENTIFIER = 'layout-header-navigation-navigationsublist';

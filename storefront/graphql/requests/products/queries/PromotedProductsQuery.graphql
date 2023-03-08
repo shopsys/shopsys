@@ -1,5 +1,5 @@
 query PromotedProductsQuery {
     promotedProducts {
-        ...SliderProductFragment
+        ...ListedProductFragment
     }
 }

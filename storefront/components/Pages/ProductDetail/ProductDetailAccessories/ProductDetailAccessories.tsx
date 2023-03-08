@@ -1,10 +1,10 @@
 import { Heading } from 'components/Basic/Heading/Heading';
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
+import { ListedProductFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { SliderProductItemType } from 'types/product';
 
 type ProductDetailAccessoriesProps = {
-    accessories: SliderProductItemType[];
+    accessories: ListedProductFragmentApi[];
 };
 
 export const ProductDetailAccessories: FC<ProductDetailAccessoriesProps> = ({ accessories }) => {

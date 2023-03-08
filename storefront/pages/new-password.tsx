@@ -1,6 +1,7 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { NewPasswordContent } from 'components/Pages/NewPassword/NewPasswordContent';
+import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
@@ -8,14 +9,15 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServe
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
-import { useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 
 const NewPasswordPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [newPasswordUrl] = getInternationalizedStaticUrls(['/new-password'], domainUrl);
-    const breadcrumbs = useMemo(() => [{ name: t('Set new password'), slug: newPasswordUrl }], [newPasswordUrl, t]);
+    const breadcrumbs: BreadcrumbFragmentApi[] = [
+        { __typename: 'Link', name: t('Set new password'), slug: newPasswordUrl },
+    ];
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other', breadcrumbs);
     useGtmStaticPageView(gtmStaticPageViewEvent);
 

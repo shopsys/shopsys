@@ -1,4 +1,5 @@
 import { FilterActions, FilterCallbacks, FilterState } from './types';
+import { mapPriceForCalculations, roundPrice } from 'helpers/mappers/price';
 import produce from 'immer';
 import { Reducer } from 'react';
 
@@ -50,7 +51,8 @@ const setSliderParameter = (state: FilterState, payload: FilterCallbacks['setSli
 
 const uncheckBrand = (state: FilterState, payload: FilterCallbacks['uncheckBrand']): FilterState => {
     return produce(state, (draft) => {
-        const index = state.options.brands.findIndex((i) => i.brand.uuid === payload);
+        const index =
+            state.options.brands === null ? -1 : state.options.brands.findIndex((i) => i.brand.uuid === payload);
         if (index !== -1) {
             draft.selected.brands[index].checked = false;
         }
@@ -59,7 +61,7 @@ const uncheckBrand = (state: FilterState, payload: FilterCallbacks['uncheckBrand
 
 const uncheckFlag = (state: FilterState, payload: FilterCallbacks['uncheckFlag']): FilterState => {
     return produce(state, (draft) => {
-        const index = state.options.flags.findIndex((i) => i.flag.uuid === payload);
+        const index = state.options.flags === null ? -1 : state.options.flags.findIndex((i) => i.flag.uuid === payload);
         if (index !== -1) {
             draft.selected.flags[index].checked = false;
         }
@@ -99,18 +101,20 @@ const uncheckSliderParameter = (
 
 const resetPrices = (state: FilterState): FilterState => {
     return produce(state, (draft) => {
-        draft.selected.minimalPrice = state.options.minimalPrice;
-        draft.selected.maximalPrice = state.options.maximalPrice;
+        draft.selected.minimalPrice = roundPrice(mapPriceForCalculations(state.options.minimalPrice));
+        draft.selected.maximalPrice = roundPrice(mapPriceForCalculations(state.options.maximalPrice));
     });
 };
 
 const resetAllParameters = (state: FilterState): FilterState => {
     return produce(state, (draft) => {
-        draft.selected.minimalPrice = state.options.minimalPrice;
-        draft.selected.maximalPrice = state.options.maximalPrice;
+        draft.selected.minimalPrice = roundPrice(mapPriceForCalculations(state.options.minimalPrice));
+        draft.selected.maximalPrice = roundPrice(mapPriceForCalculations(state.options.maximalPrice));
         draft.selected.onlyInStock = false;
-        draft.selected.brands = state.options.brands.map((i) => ({ ...i.brand, checked: false }));
-        draft.selected.flags = state.options.flags.map((i) => ({ ...i.flag, checked: false }));
+        draft.selected.brands =
+            state.options.brands === null ? [] : state.options.brands.map((i) => ({ ...i.brand, checked: false }));
+        draft.selected.flags =
+            state.options.flags === null ? [] : state.options.flags.map((i) => ({ ...i.flag, checked: false }));
         draft.selected.parameters =
             state.options.parameters?.map((item) => ({
                 parameterName: item.name,

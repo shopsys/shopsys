@@ -1,7 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'components/Basic/Link/Link';
+import { usePrivacyPolicyArticleUrlQueryApi } from 'graphql/generated';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
-import { useGetPrivacyPolicyUrl } from 'hooks/routes/useGetPrivacyPolicyUrl';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import { useMemo } from 'react';
@@ -41,7 +42,8 @@ export const useNewsletterFormMeta = (
     formProviderMethods: UseFormReturn<NewsletterFormType>,
 ): NewsletterFormMetaType => {
     const t = useTypedTranslationFunction();
-    const gdprUrl = useGetPrivacyPolicyUrl();
+    const [{ data: privacyPolicyArticleUrlData }] = useQueryError(usePrivacyPolicyArticleUrlQueryApi());
+    const privacyPolicyArticleUrl = privacyPolicyArticleUrlData?.privacyPolicyArticle?.slug;
 
     const formMeta = useMemo(
         () => ({
@@ -63,7 +65,12 @@ export const useNewsletterFormMeta = (
                             i18nKey="PrivacyPolicyCheckbox"
                             defaultTrans="I take note of the <lnk1>processing of personal data</lnk1>."
                             components={{
-                                lnk1: <Link href={gdprUrl} linkType="external" target="_blank" />,
+                                lnk1:
+                                    privacyPolicyArticleUrl !== undefined ? (
+                                        <Link href={privacyPolicyArticleUrl} linkType="external" target="_blank" />
+                                    ) : (
+                                        <span></span>
+                                    ),
                             }}
                         />
                     ),
@@ -72,10 +79,10 @@ export const useNewsletterFormMeta = (
             },
         }),
         [
-            formProviderMethods.formState.errors.privacyPolicy?.message,
-            formProviderMethods.formState.errors.email?.message,
-            gdprUrl,
             t,
+            formProviderMethods.formState.errors.email?.message,
+            formProviderMethods.formState.errors.privacyPolicy?.message,
+            privacyPolicyArticleUrl,
         ],
     );
 

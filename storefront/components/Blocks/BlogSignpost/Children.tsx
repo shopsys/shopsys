@@ -1,10 +1,10 @@
 import { BlogSignpostIcon } from './BlogSignpostIcon';
 import { BlogSignpostItem } from './BlogSignpostItem';
 import { Fragment } from 'react';
-import { ListedBlogCategoryType } from 'types/blogCategory';
+import { ListedBlogCategoryRecursiveType } from 'types/blogCategory';
 
 type ChildrenProps = {
-    blogCategory: ListedBlogCategoryType;
+    blogCategory: ListedBlogCategoryRecursiveType;
     activeItem: string;
     itemLevel: number;
 };

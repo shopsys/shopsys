@@ -2,10 +2,11 @@ import { BlogCategoryArticlesWrapper } from './BlogCategoryArticlesWrapper';
 import { HeadingPaginated } from 'components/Basic/Heading/HeadingPaginated';
 import { BlogSignpost } from 'components/Blocks/BlogSignpost/BlogSignpost';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { BlogCategoryDetailType } from 'types/blogCategory';
+import { BlogCategoryDetailFragmentApi } from 'graphql/generated';
+import { FC } from 'react';
 
 type BlogCategoryContentProps = {
-    blogCategory: BlogCategoryDetailType;
+    blogCategory: BlogCategoryDetailFragmentApi;
 };
 
 export const BlogCategoryContent: FC<BlogCategoryContentProps> = ({ blogCategory }) => {

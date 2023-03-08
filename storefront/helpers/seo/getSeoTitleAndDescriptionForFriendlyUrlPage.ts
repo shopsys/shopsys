@@ -21,7 +21,7 @@ export const getSeoTitleAndDescriptionForFriendlyUrlPage = (
             title = data.articleName;
             break;
         case 'Category':
-            totalCount = data.productConnection.totalCount;
+            totalCount = data.products.totalCount;
             title = data.name;
 
             break;

@@ -1,12 +1,12 @@
+import { ListedProductFragmentApi } from 'graphql/generated';
 import { getGtmProductsListEvent, getNewGtmEcommerceEvent } from 'helpers/gtm/eventFactories';
 import { gtmSafePushEvent } from 'helpers/gtm/gtm';
 import { useEffect, useRef } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { GtmListNameType } from 'types/gtm';
-import { ListedProductType } from 'types/product';
 
 export const useGtmSliderProductListView = (
-    products: ListedProductType[] | undefined,
+    products: ListedProductFragmentApi[] | undefined,
     listName: GtmListNameType,
 ): void => {
     const wasViewedRef = useRef(false);

@@ -1,9 +1,10 @@
 import { CurrentCustomerUserQueryApi, useCurrentCustomerUserQueryApi } from 'graphql/generated';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { CustomerTypeEnum } from 'types/customer';
 import { ContactInformationFormType } from 'types/form';
 
 export function useCurrentCustomerContactInformationQuery(): ContactInformationFormType | null | undefined {
-    const [{ data }] = useCurrentCustomerUserQueryApi();
+    const [{ data }] = useQueryError(useCurrentCustomerUserQueryApi());
 
     if (data?.currentCustomerUser === undefined) {
         return undefined;

@@ -173,7 +173,7 @@ export const FilterPanel = memo<FilterPanelProps>(
                 <div className="h-full overflow-y-scroll px-5 vl:static vl:overflow-visible">
                     <FilterGroupPrice title={t('Price')} isOpen />
                     <FilterGroupInStock title={t('Availability')} inStockCount={productFilterOptions.inStock} isOpen />
-                    {productFilterOptions.flags.length > 0 && (
+                    {productFilterOptions.flags !== null && productFilterOptions.flags.length > 0 && (
                         <FilterGroup
                             title={t('Flags')}
                             filterField="flags"
@@ -182,7 +182,7 @@ export const FilterPanel = memo<FilterPanelProps>(
                             areByDefaultAllFlagsOrBrandsShown={getAreByDefaultAllFlagsShown()}
                         />
                     )}
-                    {productFilterOptions.brands.length > 0 && (
+                    {productFilterOptions.brands !== null && productFilterOptions.brands.length > 0 && (
                         <FilterGroup
                             title={t('Brands')}
                             filterField="brands"
@@ -191,7 +191,7 @@ export const FilterPanel = memo<FilterPanelProps>(
                             areByDefaultAllFlagsOrBrandsShown={getAreByDefaultAllBrandsShown()}
                         />
                     )}
-                    {productFilterOptions.parameters !== undefined &&
+                    {productFilterOptions.parameters !== null &&
                         productFilterOptions.parameters.map((parametersItem, index) => {
                             const isNotFilteredByParameter = getIsNotFilteredByParameter(
                                 parametersItem.uuid,

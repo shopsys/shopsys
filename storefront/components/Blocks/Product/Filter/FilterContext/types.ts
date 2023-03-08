@@ -1,14 +1,14 @@
+import { ProductFilterOptionsFragmentApi } from 'graphql/generated';
 import {
     FilterFormBrandType,
     FilterFormFlagType,
     FilterFormParameterType,
     FilterFormParameterValuesType,
     FilterFormType,
-    FilterOptionsType,
 } from 'types/productFilter';
 
 export type FilterState = {
-    options: FilterOptionsType;
+    options: ProductFilterOptionsFragmentApi;
     selected: FilterFormType;
 };
 
@@ -30,7 +30,7 @@ export type FilterCallbacks = {
     uncheckSliderParameter: string;
     resetPrices: never;
     resetAllParameters: never;
-    setFilterOptions: FilterOptionsType;
+    setFilterOptions: ProductFilterOptionsFragmentApi;
 };
 
 export type FilterActions<Actions = FilterCallbacks> = {

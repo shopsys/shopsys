@@ -5,15 +5,15 @@ import { ProductAvailableStoresCount } from 'components/Blocks/Product/Availabil
 import { ProductExposedStoresCount } from 'components/Blocks/Product/Availability/ProductExposedStoresCount';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { ProductDetailAvailabilityList } from 'components/Pages/ProductDetail/ProductDetailStoresAvailability/ProductDetailAvailabilityList/ProductDetailAvailabilityList';
+import { MainVariantDetailFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useState } from 'react';
 import { GtmListNameType } from 'types/gtm';
-import { ListedVariantType } from 'types/product';
 import { twMergeCustom } from 'utils/twMerge';
 
 type VariantProps = {
-    variant: ListedVariantType;
+    variant: MainVariantDetailFragmentApi['variants'][number];
     isSellingDenied: boolean;
     gtmListName: GtmListNameType;
     listIndex: number;

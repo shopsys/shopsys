@@ -2,14 +2,14 @@ import { Image } from 'components/Basic/Image/Image';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { useAdverts } from 'connectors/adverts/Adverts';
+import { AdvertsFragmentApi, CategoryDetailFragmentApi, useAdvertsQueryApi } from 'graphql/generated';
+import { getFirstImageOrNull } from 'helpers/mappers/image';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import NextLink from 'next/link';
 import { Fragment, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { AdvertType } from 'types/advert';
-import { CategoryDetailType } from 'types/category';
 
 type PositionNameType = 'productList' | 'footer' | 'header' | 'productListMiddle' | 'cartPreview';
 
@@ -18,7 +18,7 @@ type AdvertsProps = {
     withGapBottom?: boolean;
     withGapTop?: boolean;
     withWebline?: boolean;
-    currentCategory?: CategoryDetailType;
+    currentCategory?: CategoryDetailFragmentApi;
 };
 
 export const Adverts: FC<AdvertsProps> = ({
@@ -29,10 +29,10 @@ export const Adverts: FC<AdvertsProps> = ({
     currentCategory,
     className,
 }) => {
-    const adverts = useAdverts();
+    const [{ data: advertsData }] = useQueryError(useAdvertsQueryApi());
     const [isMobile, setIsMobile] = useState(false);
     const { width } = useGetWindowSize();
-    const isPositionNameSet = adverts?.some((item) => item.positionName === positionName);
+    const isPositionNameSet = advertsData?.adverts.some((item) => item.positionName === positionName);
 
     useResizeWidthEffect(
         width,
@@ -48,16 +48,20 @@ export const Adverts: FC<AdvertsProps> = ({
 
     const content = (
         <div className={twJoin(withGapTop && 'mb-8', withGapBottom && 'mt-8')}>
-            {adverts?.map(
+            {advertsData?.adverts.map(
                 (item, index) =>
                     shouldBeShown(item, positionName, currentCategory) &&
                     (item.__typename === 'AdvertImage' ? (
                         <Fragment key={index}>
-                            {item.link !== undefined ? (
+                            {item.link !== null ? (
                                 <NextLink href={item.link} passHref>
                                     <a target="_blank">
                                         <Image
-                                            image={isMobile ? item.imageMobile : item.image}
+                                            image={
+                                                isMobile
+                                                    ? getFirstImageOrNull(item.imageMobile)
+                                                    : getFirstImageOrNull(item.image)
+                                            }
                                             type={item.positionName}
                                             alt={item.name}
                                         />
@@ -65,7 +69,11 @@ export const Adverts: FC<AdvertsProps> = ({
                                 </NextLink>
                             ) : (
                                 <Image
-                                    image={isMobile ? item.imageMobile : item.image}
+                                    image={
+                                        isMobile
+                                            ? getFirstImageOrNull(item.imageMobile)
+                                            : getFirstImageOrNull(item.image)
+                                    }
                                     type={item.positionName}
                                     alt={item.name}
                                 />
@@ -82,9 +90,9 @@ export const Adverts: FC<AdvertsProps> = ({
 };
 
 const shouldBeShown = (
-    advert: AdvertType,
+    advert: AdvertsFragmentApi,
     positionName: PositionNameType,
-    currentCategory?: CategoryDetailType,
+    currentCategory?: CategoryDetailFragmentApi,
 ): boolean => {
     if (advert.positionName !== positionName) {
         return false;

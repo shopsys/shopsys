@@ -1,7 +1,8 @@
 import { showErrorMessage } from 'components/Helpers/Toasts';
-import { mapCartItem, useCurrentCart } from 'connectors/cart/Cart';
+import { useCurrentCart } from 'connectors/cart/Cart';
 import { AddToCartMutationApi, useAddToCartMutationApi } from 'graphql/generated';
 import { onChangeCartItemGtmEventHandler } from 'helpers/gtm/eventHandlers';
+import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCallback } from 'react';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
@@ -68,12 +69,12 @@ export const useAddToCart = (origin: GtmMessageOriginType): [AddToCartAction, bo
                 ? addToCartResult.addProductResult.addedQuantity - initialQuantity
                 : addToCartResult.addProductResult.addedQuantity;
             const absoluteEventValue =
-                Number.parseFloat(addedCartItem.product.price.priceWithoutVat) * Math.abs(quantityDifference);
+                mapPriceForCalculations(addedCartItem.product.price.priceWithoutVat) * Math.abs(quantityDifference);
             const absoluteEventValueWithTax =
-                Number.parseFloat(addedCartItem.product.price.priceWithVat) * Math.abs(quantityDifference);
+                mapPriceForCalculations(addedCartItem.product.price.priceWithVat) * Math.abs(quantityDifference);
 
             onChangeCartItemGtmEventHandler(
-                mapCartItem(addedCartItem, currencyCode),
+                addedCartItem,
                 currencyCode,
                 absoluteEventValue,
                 absoluteEventValueWithTax,

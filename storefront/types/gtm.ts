@@ -1,4 +1,4 @@
-import { BreadcrumbItemType } from './breadcrumb';
+import { BreadcrumbFragmentApi } from 'graphql/generated';
 
 export type GtmPageType =
     | 'home'
@@ -113,7 +113,7 @@ export type GtmPageInfoType = {
     type: GtmPageType;
     path: string;
     pageId: string; // random string generated for every page load
-    breadcrumbs: BreadcrumbItemType[];
+    breadcrumbs: BreadcrumbFragmentApi[];
     category?: string[];
     categoryId?: number[];
     categoryLevel?: number;
@@ -179,7 +179,7 @@ export type GtmProductInterface = {
     imageUrl?: string;
 };
 
-export type GtmListedProductType = GtmProductInterface & {
+export type GtmListedProductFragmentApi = GtmProductInterface & {
     listIndex?: number;
 };
 
@@ -196,8 +196,8 @@ export type GtmPurchaseType = {
     coupons: string[];
     discountAmount: number;
     paymentType: string;
-    paymentPrice: number;
-    paymentPriceWithTax: number;
+    paymentPrice: string;
+    paymentPriceWithTax: string;
     shippingPrice: number;
     shippingPriceWithTax: number;
     shippingType: string;
@@ -243,7 +243,7 @@ export type GtmChangeCartItemEventType = {
 
 export type GtmProductsListEventType = {
     listName: GtmListNameType;
-    products: GtmListedProductType[];
+    products: GtmListedProductFragmentApi[];
 };
 
 export type GtmProductDetailEventType = {
@@ -273,8 +273,8 @@ export type GtmPaymentInfoEventType = {
     coupons: string[];
     currency: string;
     paymentType: string;
-    paymentPrice: number;
-    paymentPriceWithTax: number;
+    paymentPrice: string;
+    paymentPriceWithTax: string;
     products: GtmCartItemType[];
 };
 

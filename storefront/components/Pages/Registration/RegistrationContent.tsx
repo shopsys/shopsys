@@ -10,7 +10,7 @@ import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLi
 import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
 import { showInfoMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import { useRegistrationMutationApi } from 'graphql/generated';
+import { BreadcrumbFragmentApi, useRegistrationMutationApi } from 'graphql/generated';
 import { setTokensToCookie } from 'helpers/auth/tokens';
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
@@ -21,11 +21,10 @@ import Image from 'next/image';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
-import { BreadcrumbItemType } from 'types/breadcrumb';
 import { RegistrationFormType } from 'types/form';
 
 type RegistrationContentProps = {
-    breadcrumbs: BreadcrumbItemType[];
+    breadcrumbs: BreadcrumbFragmentApi[];
 };
 
 export const RegistrationContent: FC<RegistrationContentProps> = ({ breadcrumbs }) => {

@@ -1,25 +1,28 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PersonalDataExportContent } from 'components/Pages/PersonalData/Export/PersonalDataExportContent';
-import { PersonalDataPageTextQueryDocumentApi, usePersonalDataPageTextQueryApi } from 'graphql/generated';
+import {
+    BreadcrumbFragmentApi,
+    PersonalDataPageTextQueryDocumentApi,
+    usePersonalDataPageTextQueryApi,
+} from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 
 const PersonalDataExportPage: FC = () => {
     const t = useTypedTranslationFunction();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [personalDataExportUrl] = getInternationalizedStaticUrls(['/personal-data-export'], domainUrl);
-    const breadcrumbs = useMemo(
-        () => [{ name: t('Personal Data Export'), slug: personalDataExportUrl }],
-        [personalDataExportUrl, t],
-    );
-    const [personalDataPageTextResult] = usePersonalDataPageTextQueryApi();
+    const breadcrumbs: BreadcrumbFragmentApi[] = [
+        { __typename: 'Link', name: t('Personal Data Export'), slug: personalDataExportUrl },
+    ];
+    const [personalDataPageTextResult] = useQueryError(usePersonalDataPageTextQueryApi());
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other', breadcrumbs);
     useGtmStaticPageView(gtmStaticPageViewEvent);
 

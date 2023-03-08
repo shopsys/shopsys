@@ -1,12 +1,12 @@
 import { Table } from 'components/Basic/Table/Table';
 import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/Basic/Tabs/Tabs';
 import { UserText } from 'components/Helpers/UserText/UserText';
+import { ParameterFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { ProductParameterType } from 'types/parameter';
 
 type ProductDetailTabsProps = {
-    description: string;
-    parameters: ProductParameterType[];
+    description: string | null;
+    parameters: ParameterFragmentApi[];
 };
 
 const TEST_IDENTIFIER = 'pages-productdetail-';
@@ -27,7 +27,7 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                 )}
             </TabsList>
             <TabsContent headingTextMobile={t('Overview')} testIdentifier={TEST_IDENTIFIER + 'overview-content'}>
-                <UserText htmlContent={description} />
+                {description !== null && <UserText htmlContent={description} />}
             </TabsContent>
             {parameters.length > 0 && (
                 <TabsContent

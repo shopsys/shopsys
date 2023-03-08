@@ -2,18 +2,18 @@ import { Icon } from '../Icon/Icon';
 import { GoogleMapMarker } from './GoogleMapMarker';
 import GoogleMapReact from 'google-map-react';
 import getConfig from 'next/config';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useShopsysSelector } from 'redux/main';
 import { twJoin } from 'tailwind-merge';
 
 type GoogleMapMarker = {
-    locationLatitude: number | null;
-    locationLongitude: number | null;
+    locationLatitude: string | null;
+    locationLongitude: string | null;
 };
 
 type GoogleMapProps = {
-    lat?: number | null;
-    lng?: number | null;
+    lat?: string | null;
+    lng?: string | null;
     zoom?: number | null;
     markers?: GoogleMapMarker[];
     activeMarkerHandler?: (index: number) => void;
@@ -34,10 +34,19 @@ export const GoogleMap: FC<GoogleMapProps> = ({
 }) => {
     const { publicRuntimeConfig } = getConfig();
     const { mapSetting } = useShopsysSelector((state) => state.domain);
-    const mapLat = lat === null || lat === undefined ? mapSetting.latitude : lat;
-    const mapLng = lng === null || lng === undefined ? mapSetting.longitude : lng;
+    const mapLat = lat === null || lat === undefined ? mapSetting.latitude : parseFloat(lat);
+    const mapLng = lng === null || lng === undefined ? mapSetting.longitude : parseFloat(lng);
     const mapZoom = zoom === null || zoom === undefined ? mapSetting.zoom : zoom;
     const [activeMarker, setActiveMarker] = useState(-1);
+
+    const mappedMarkers = useMemo(
+        () =>
+            markers?.map((marker) => ({
+                locationLatitude: marker.locationLatitude !== null ? parseFloat(marker.locationLatitude) : null,
+                locationLongitude: marker.locationLongitude !== null ? parseFloat(marker.locationLongitude) : null,
+            })),
+        [markers],
+    );
 
     const markerClickHandler = (index: number) => {
         if (!isDetail) {
@@ -69,14 +78,13 @@ export const GoogleMap: FC<GoogleMapProps> = ({
                     zoomControlOptions: { position: 1 },
                 }}
             >
-                {markers !== undefined &&
-                    Array.isArray(markers) &&
-                    markers.length !== 0 &&
-                    markers.map((marker, index) => (
+                {mappedMarkers !== undefined &&
+                    mappedMarkers.length !== 0 &&
+                    mappedMarkers.map((mappedMarker, index) => (
                         <GoogleMapMarker
                             key={index}
-                            lat={marker.locationLatitude}
-                            lng={marker.locationLongitude}
+                            lat={mappedMarker.locationLatitude}
+                            lng={mappedMarker.locationLongitude}
                             isActive={index === activeMarker}
                             onClick={() => markerClickHandler(index)}
                             isDetail={isDetail}

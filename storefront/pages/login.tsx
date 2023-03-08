@@ -1,6 +1,10 @@
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { LoginContent } from 'components/Pages/Login/LoginContent';
-import { CurrentCustomerUserQueryApi, CurrentCustomerUserQueryDocumentApi } from 'graphql/generated';
+import {
+    BreadcrumbFragmentApi,
+    CurrentCustomerUserQueryApi,
+    CurrentCustomerUserQueryDocumentApi,
+} from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
@@ -8,7 +12,6 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/misc/initServe
 import { createClient } from 'helpers/urql/createClient';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { useMemo } from 'react';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import { ssrExchange } from 'urql';
 
@@ -16,7 +19,7 @@ const LoginPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [loginUrl] = getInternationalizedStaticUrls(['/login'], domainUrl);
-    const breadcrumbs = useMemo(() => [{ name: t('Login'), slug: loginUrl }], [loginUrl, t]);
+    const breadcrumbs: BreadcrumbFragmentApi[] = [{ __typename: 'Link', name: t('Login'), slug: loginUrl }];
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('other', breadcrumbs);
     useGtmStaticPageView(gtmStaticPageViewEvent);
 

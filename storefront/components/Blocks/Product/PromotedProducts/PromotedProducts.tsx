@@ -1,14 +1,15 @@
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
-import { usePromotedProducts } from 'connectors/products/Products';
+import { usePromotedProductsQueryApi } from 'graphql/generated';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 
 const GTM_LIST_NAME = 'homepage promo products' as const;
 
 export const PromotedProducts: FC = () => {
-    const promotedProducts = usePromotedProducts();
+    const [{ data: promotedProductsData }] = useQueryError(usePromotedProductsQueryApi());
 
-    if (promotedProducts === undefined) {
+    if (promotedProductsData?.promotedProducts === undefined) {
         return null;
     }
 
-    return <ProductsSlider products={promotedProducts} gtmListName={GTM_LIST_NAME} />;
+    return <ProductsSlider products={promotedProductsData.promotedProducts} gtmListName={GTM_LIST_NAME} />;
 };

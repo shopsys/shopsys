@@ -118,7 +118,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
     const onBlurMinHandler = useCallback<FocusEventHandler<HTMLInputElement>>(
         (event) => {
             const value = parseFloat(event.currentTarget.value);
-            if (value < min || Number.isNaN(value)) {
+            if (value < min || isNaN(value)) {
                 setMinValueThumb(min);
                 setMinValueInput(min);
             } else {
@@ -131,7 +131,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
     const onBlurMaxHandler = useCallback<FocusEventHandler<HTMLInputElement>>(
         (event) => {
             const value = parseFloat(event.currentTarget.value);
-            if (value > max || Number.isNaN(value)) {
+            if (value > max || isNaN(value)) {
                 setMaxValueThumb(max);
                 setMaxValueInput(max);
             } else {

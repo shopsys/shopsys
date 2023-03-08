@@ -1,14 +1,15 @@
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
 import { theme } from 'components/Theme/main';
+import { ListedBlogArticleFragmentApi } from 'graphql/generated';
+import { getFirstImageOrNull } from 'helpers/mappers/image';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
 import NextLink from 'next/link';
 import { Fragment } from 'react';
-import { ListedBlogArticleType } from 'types/blogArticle';
 
 type SideSliderProps = {
-    blogSideItems: ListedBlogArticleType[];
+    blogSideItems: ListedBlogArticleFragmentApi[];
 };
 
 const TEST_IDENTIFIER = 'blocks-blogpreview-sideslider-';
@@ -39,7 +40,7 @@ export const SideSlider: FC<SideSliderProps> = ({ blogSideItems }) => {
                             <NextLink href={blogSideItem.link} passHref>
                                 <a className="relative mb-2 flex w-full">
                                     <Image
-                                        image={blogSideItem.image}
+                                        image={getFirstImageOrNull(blogSideItem.images)}
                                         type="list"
                                         alt="alt"
                                         className="max-h-32 rounded"

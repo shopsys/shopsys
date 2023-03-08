@@ -841,6 +841,7 @@ type MainVariant implements Product & Breadcrumb & Slug {
   id: Int!
   """Product images"""
   images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
+  isMainVariant: Boolean!
   isSellingDenied: Boolean!
   isUsingStock: Boolean!
   """Product link"""
@@ -1464,6 +1465,7 @@ interface Product {
   id: Int!
   """Product images"""
   images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
+  isMainVariant: Boolean!
   isSellingDenied: Boolean!
   isUsingStock: Boolean!
   """Product link"""
@@ -1828,6 +1830,7 @@ type RegularProduct implements Product & Breadcrumb & Slug {
   id: Int!
   """Product images"""
   images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
+  isMainVariant: Boolean!
   isSellingDenied: Boolean!
   isUsingStock: Boolean!
   """Product link"""
@@ -2086,6 +2089,7 @@ type Variant implements Product & Breadcrumb & Slug {
   id: Int!
   """Product images"""
   images(size: String, sizes: [String!] = null, type: String = null): [Image!]!
+  isMainVariant: Boolean!
   isSellingDenied: Boolean!
   isUsingStock: Boolean!
   """Product link"""

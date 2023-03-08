@@ -7,18 +7,20 @@ import {
     getNewGtmEcommerceEvent,
 } from './eventFactories';
 import { getGtmPurchaseData, gtmSafePushEvent } from './gtm';
-import { mapPayment } from 'connectors/payments/Payment';
-import { mapTransport } from 'connectors/transports/Transports';
-import { SimplePaymentFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
-import { CartItemType, CartType } from 'types/cart';
+import {
+    CartFragmentApi,
+    CartItemFragmentApi,
+    ListedProductFragmentApi,
+    ListedStoreFragmentApi,
+    SimplePaymentFragmentApi,
+    SimpleProductFragmentApi,
+    TransportWithAvailablePaymentsAndStoresFragmentApi,
+} from 'graphql/generated';
+import { DomainConfigType } from 'helpers/domain/domain';
 import { GtmCartInfoType, GtmConsentInfoType, GtmConsentUpdateType, GtmListNameType, GtmSectionType } from 'types/gtm';
-import { PaymentType } from 'types/payment';
-import { PickupPlaceType } from 'types/pickupPlace';
-import { ListedProductType, SimpleProductType } from 'types/product';
-import { TransportType } from 'types/transport';
 
 export const onClickProductDetailGtmEventHandler = (
-    product: ListedProductType | SimpleProductType,
+    product: ListedProductFragmentApi | SimpleProductFragmentApi,
     listName: GtmListNameType,
     index: number,
     domainUrl: string,
@@ -29,7 +31,7 @@ export const onClickProductDetailGtmEventHandler = (
 };
 
 export const onRemoveCartItemGtmEventHandler = (
-    removedCartItem: CartItemType,
+    removedCartItem: CartItemFragmentApi,
     currencyCode: string,
     eventValue: number,
     eventValueWithTax: number,
@@ -52,7 +54,7 @@ export const onRemoveCartItemGtmEventHandler = (
 };
 
 export const onChangeCartItemGtmEventHandler = (
-    addedCartItem: CartItemType,
+    addedCartItem: CartItemFragmentApi,
     currencyCode: string,
     eventValue: number,
     eventValueWithTax: number,
@@ -82,14 +84,17 @@ export const onChangeCartItemGtmEventHandler = (
 export const onTransportChangeGtmEventHandler = (
     gtmCartInfo: GtmCartInfoType | undefined | null,
     updatedTransport: TransportWithAvailablePaymentsAndStoresFragmentApi | null,
-    updatedPickupPlace: PickupPlaceType | null,
+    updatedPickupPlace: ListedStoreFragmentApi | null,
     updatedPaymentName: string | undefined,
-    currencyCode: string,
 ): void => {
     if (gtmCartInfo && updatedTransport !== null) {
         const event = getNewGtmEcommerceEvent('ec.shipping_info', true);
-        const mappedTransport = mapTransport(updatedTransport, currencyCode);
-        event.ecommerce = getGtmShippingInfoEvent(gtmCartInfo, mappedTransport, updatedPickupPlace, updatedPaymentName);
+        event.ecommerce = getGtmShippingInfoEvent(
+            gtmCartInfo,
+            updatedTransport,
+            updatedPickupPlace,
+            updatedPaymentName,
+        );
         gtmSafePushEvent(event);
     }
 };
@@ -97,27 +102,25 @@ export const onTransportChangeGtmEventHandler = (
 export const onPaymentChangeGtmEventHandler = (
     gtmCartInfo: GtmCartInfoType | undefined | null,
     updatedPayment: SimplePaymentFragmentApi | null,
-    currencyCode: string,
 ): void => {
     if (gtmCartInfo && updatedPayment !== null) {
         const event = getNewGtmEcommerceEvent('ec.payment_info', true);
-        const mappedPayment = mapPayment(updatedPayment, currencyCode);
-        event.ecommerce = getGtmPaymentInfoEvent(gtmCartInfo, mappedPayment);
+        event.ecommerce = getGtmPaymentInfoEvent(gtmCartInfo, updatedPayment);
         gtmSafePushEvent(event);
     }
 };
 
 export const onPurchaseOrderGtmEventHandler = (
-    cart: CartType,
-    transport: TransportType,
-    pickupPlace: PickupPlaceType | null,
-    payment: PaymentType,
+    cart: CartFragmentApi,
+    transport: TransportWithAvailablePaymentsAndStoresFragmentApi,
+    pickupPlace: ListedStoreFragmentApi | null,
+    payment: SimplePaymentFragmentApi,
     promoCode: string | null,
     orderNumber: string,
-    domainUrl: string,
+    domainConfig: DomainConfigType,
 ): void => {
     const event = getNewGtmEcommerceEvent('ec.purchase', true);
-    event.ecommerce = getGtmPurchaseData(cart, transport, pickupPlace, payment, promoCode, orderNumber, domainUrl);
+    event.ecommerce = getGtmPurchaseData(cart, transport, pickupPlace, payment, promoCode, orderNumber, domainConfig);
     gtmSafePushEvent(event);
 };
 

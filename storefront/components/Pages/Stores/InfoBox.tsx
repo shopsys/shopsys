@@ -1,11 +1,11 @@
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Link } from 'components/Basic/Link/Link';
+import { ListedStoreFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { ListedStoreType } from 'types/store';
 
 type InfoBoxProps = {
-    store: ListedStoreType;
+    store: ListedStoreFragmentApi;
     closeInfoBoxCallback: () => void;
 };
 

@@ -1,14 +1,14 @@
+import { ListedStoreFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { Translate } from 'next-translate';
-import { PickupPlaceType } from 'types/pickupPlace';
 
 type TransportAndPaymentSelectItemLabelProps = {
     name: string;
-    price?: { priceWithVat: number; priceWithoutVat: number; vatAmount: number };
+    price?: { priceWithVat: string; priceWithoutVat: string; vatAmount: string };
     daysUntilDelivery?: number;
-    description?: string;
-    pickupPlaceDetail?: PickupPlaceType | null;
+    description?: string | null;
+    pickupPlaceDetail?: ListedStoreFragmentApi | null;
 };
 
 const TEST_IDENTIFIER = 'pages-order-selectitem-label';
@@ -46,11 +46,13 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                                 pickupPlaceDetail.city}
                         </span>
                         <span className="text-sm text-greyLight">{t('Open') + ': '}</span>
-                        <span
-                            className="text-sm text-greyLight"
-                            dangerouslySetInnerHTML={{ __html: pickupPlaceDetail.openingHoursHtml }}
-                            data-testid={TEST_IDENTIFIER + '-openinghours'}
-                        />
+                        {pickupPlaceDetail.openingHoursHtml !== null && (
+                            <span
+                                className="text-sm text-greyLight"
+                                dangerouslySetInnerHTML={{ __html: pickupPlaceDetail.openingHoursHtml }}
+                                data-testid={TEST_IDENTIFIER + '-openinghours'}
+                            />
+                        )}
                     </>
                 )}
             </div>

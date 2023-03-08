@@ -4315,6 +4315,11 @@ Product images
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>isMainVariant</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>isSellingDenied</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
@@ -6541,6 +6546,11 @@ Product images
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>isMainVariant</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>isSellingDenied</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
@@ -7627,6 +7637,11 @@ Product images
 <tr>
 <td colspan="2" align="right" valign="top">type</td>
 <td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isMainVariant</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -10129,6 +10144,11 @@ Product images
 <tr>
 <td colspan="2" align="right" valign="top">type</td>
 <td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isMainVariant</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>

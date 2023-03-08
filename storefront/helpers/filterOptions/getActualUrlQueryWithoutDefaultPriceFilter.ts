@@ -2,11 +2,11 @@ import {
     isMaximalPriceFilterWithoutChanges,
     isMinimalPriceFilterWithoutChanges,
 } from './getIsProductFilterSameAsDefault';
+import { ProductFilterOptionsFragmentApi } from 'graphql/generated';
 import {
     FilterFormBrandType,
     FilterFormFlagType,
     FilterFormParameterType,
-    FilterOptionsType,
     FilterOptionsUrlQueryType,
 } from 'types/productFilter';
 
@@ -17,7 +17,7 @@ export const getActualUrlQueryWithoutDefaultPriceFilter = (
     currentMaximalPrice: number | null,
     onlyInStock: boolean,
     checkedParameters: FilterFormParameterType[],
-    productFilterOptions: FilterOptionsType,
+    productFilterOptions: ProductFilterOptionsFragmentApi,
 ): string => {
     const filterQueryObject: FilterOptionsUrlQueryType = {
         brands: checkedBrands.map((brand) => brand.uuid),

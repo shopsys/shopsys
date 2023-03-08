@@ -4,24 +4,33 @@ import { SideSlider } from './SideSlider/SideSlider';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { useBlogPreviewArticles } from 'connectors/articleInterface/blogArticle/BlogArticle';
-import { useBlogUrl } from 'connectors/blogCategory/BlogCategory';
+import { ListedBlogArticleFragmentApi, useBlogArticlesQueryApi, useBlogUrlQueryApi } from 'graphql/generated';
+import { mapConnectionEdges } from 'helpers/mappers/connection';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import NextLink from 'next/link';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
+export const BLOG_PREVIEW_VARIABLES = { first: 6, onlyHomepageArticles: true };
 const TEST_IDENTIFIER = 'blocks-blogpreview';
 
 export const BlogPreview: FC = () => {
     const t = useTypedTranslationFunction();
-    const blogPreviewItems = useBlogPreviewArticles();
-    const blogUrl = useBlogUrl();
+    const [{ data: blogPreviewData }] = useQueryError(useBlogArticlesQueryApi({ variables: BLOG_PREVIEW_VARIABLES }));
+    const [{ data: blogUrlData }] = useQueryError(useBlogUrlQueryApi());
+    const blogUrl = blogUrlData?.blogCategories[0].link;
     const { width } = useGetWindowSize();
     const [isBlogPreviewArticlesSideSliderVisible, setBlogPreviewArticlesSideSliderVisibility] = useState(false);
-    const blogMainItems = blogPreviewItems.slice(0, 2);
-    const blogSideItems = blogPreviewItems.slice(2);
+    const blogMainItems = useMemo(
+        () => mapConnectionEdges<ListedBlogArticleFragmentApi>(blogPreviewData?.blogArticles.edges?.slice(0, 2)),
+        [blogPreviewData?.blogArticles.edges],
+    );
+    const blogSideItems = useMemo(
+        () => mapConnectionEdges<ListedBlogArticleFragmentApi>(blogPreviewData?.blogArticles.edges?.slice(2)),
+        [blogPreviewData?.blogArticles.edges],
+    );
 
     useResizeWidthEffect(
         width,
@@ -56,15 +65,17 @@ export const BlogPreview: FC = () => {
 
             <div className="flex flex-wrap">
                 <div className="mb-8 flex flex-col lg:-ml-11 lg:flex-row vl:mb-0 vl:flex-1 xl:-ml-20">
-                    <Main blogMainItems={blogMainItems} />
+                    {!!blogMainItems && <Main blogMainItems={blogMainItems} />}
                 </div>
-                <div className="flex-col overflow-hidden vl:ml-12 vl:flex xl:ml-24">
-                    {isBlogPreviewArticlesSideSliderVisible ? (
-                        <SideSlider blogSideItems={blogSideItems} />
-                    ) : (
-                        <Side blogSideItems={blogSideItems} />
-                    )}
-                </div>
+                {!!blogSideItems && (
+                    <div className="flex-col overflow-hidden vl:ml-12 vl:flex xl:ml-24">
+                        {isBlogPreviewArticlesSideSliderVisible ? (
+                            <SideSlider blogSideItems={blogSideItems} />
+                        ) : (
+                            <Side blogSideItems={blogSideItems} />
+                        )}
+                    </div>
+                )}
             </div>
         </div>
     );

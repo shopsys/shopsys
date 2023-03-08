@@ -1,10 +1,7 @@
 fragment ColumnCategoriesFragment on NavigationItemCategoriesByColumns {
     __typename
+    columnNumber
     categories {
-        __typename
-        name
-        slug
-        ...CategoryImagesDefaultFragment
-        ...NavigationSubCategoriesLinkFragment
+        ...ColumnCategoryFragment
     }
 }

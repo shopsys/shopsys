@@ -8,8 +8,7 @@ import { useMemo } from 'react';
 import { CurrentCustomerType, DeliveryAddressType } from 'types/customer';
 
 export function useCurrentCustomerData(): CurrentCustomerType | null | undefined {
-    const [{ data, error }] = useCurrentCustomerUserQueryApi();
-    useQueryError(error);
+    const [{ data }] = useQueryError(useCurrentCustomerUserQueryApi());
 
     return useMemo(() => {
         if (data?.currentCustomerUser === undefined) {

@@ -1,5 +1,0 @@
-fragment ProductImagesThumbnailFragment on Product {
-    images {
-        ...ImageSizesFragment
-    }
-}

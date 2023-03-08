@@ -1,6 +1,9 @@
 fragment MainVariantDetailFragment on MainVariant {
     ...ProductDetailInterfaceFragment
     variants {
-        ...ListedVariantFragment
+        ...ListedProductFragment
+        storeAvailabilities {
+            ...StoreAvailabilityFragment
+        }
     }
 }

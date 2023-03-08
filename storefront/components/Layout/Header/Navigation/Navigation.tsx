@@ -1,18 +1,19 @@
 import { NavigationItem } from './NavigationItem/NavigationItem';
-import { useNavigationItems } from 'connectors/navigation/Navigation';
+import { useNavigationQueryApi } from 'graphql/generated';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 
 const TEST_IDENTIFIER = 'layout-header-navigation';
 
 export const Navigation: FC = () => {
-    const navigationItems = useNavigationItems();
+    const [{ data: navigationData }] = useQueryError(useNavigationQueryApi());
 
-    if (navigationItems.length === 0) {
+    if (navigationData?.navigation === undefined || navigationData.navigation.length === 0) {
         return null;
     }
 
     return (
         <ul className="relative hidden w-full lg:block" data-testid={TEST_IDENTIFIER}>
-            {navigationItems.map((navigationItem, index) => (
+            {navigationData.navigation.map((navigationItem, index) => (
                 <NavigationItem navigationItem={navigationItem} key={index} />
             ))}
         </ul>

@@ -2,7 +2,9 @@ fragment BlogCategoryDetailFragment on BlogCategory {
     __typename
     uuid
     name
-    ...BreadcrumbFragment
+    breadcrumb {
+        ...BreadcrumbFragment
+    }
     seoTitle
     seoMetaDescription
     blogCategoriesTree {

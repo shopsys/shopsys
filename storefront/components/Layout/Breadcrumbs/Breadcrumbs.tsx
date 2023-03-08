@@ -1,13 +1,13 @@
 import { BreadcrumbsMetadata } from 'components/Basic/Head/BreadcrumbsMetadata/BreadcrumbsMetadata';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
 import { Fragment } from 'react';
-import { BreadcrumbItemType } from 'types/breadcrumb';
 
 type BreadcrumbsProps = {
-    breadcrumb: BreadcrumbItemType[];
+    breadcrumb: BreadcrumbFragmentApi[];
 };
 
 const TEST_IDENTIFIER = 'layout-breadcrumbs';

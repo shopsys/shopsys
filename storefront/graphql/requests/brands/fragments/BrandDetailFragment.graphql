@@ -2,11 +2,13 @@ fragment BrandDetailFragment on Brand {
     __typename
     uuid
     slug
-    ...BreadcrumbFragment
+    breadcrumb {
+        ...BreadcrumbFragment
+    }
     name
     seoH1
     description
-    brandImages: images {
+    images {
         ...ImageSizesFragment
     }
     ...ListedProductsPreviewFragment

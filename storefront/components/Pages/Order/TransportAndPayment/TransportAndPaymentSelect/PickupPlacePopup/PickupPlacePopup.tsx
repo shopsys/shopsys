@@ -2,15 +2,14 @@ import { StoreSelect } from './StoreSelect';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { ListedStoreFragmentApi, TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useState } from 'react';
-import { PickupPlaceType } from 'types/pickupPlace';
-import { TransportType } from 'types/transport';
 
 type PickupPlacePopupProps = {
     isVisible: boolean;
-    transport: TransportType;
-    onChangePickupPlaceCallback: (selectedPickupPlace: PickupPlaceType | null) => void;
+    transport: TransportWithAvailablePaymentsAndStoresFragmentApi;
+    onChangePickupPlaceCallback: (selectedPickupPlace: ListedStoreFragmentApi | null) => void;
     onClosePickupPlacePopupCallback: () => void;
 };
 
@@ -21,7 +20,9 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = (props) => {
     const [selectedStoreUuid, setSelectedStoreUuid] = useState('');
 
     const onConfirmPickupPlaceHandler = () => {
-        const selectedPickupPlace = props.transport.stores.find((store) => store.identifier === selectedStoreUuid);
+        const selectedPickupPlace = props.transport.stores?.edges?.find(
+            (storeEdge) => storeEdge?.node?.identifier === selectedStoreUuid,
+        )?.node;
 
         props.onChangePickupPlaceCallback(selectedPickupPlace === undefined ? null : selectedPickupPlace);
     };

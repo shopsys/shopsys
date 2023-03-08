@@ -1,12 +1,12 @@
-import { CartFragmentApi, useRemoveFromCartMutationApi } from 'graphql/generated';
+import { CartFragmentApi, CartItemFragmentApi, useRemoveFromCartMutationApi } from 'graphql/generated';
 import { onRemoveCartItemGtmEventHandler } from 'helpers/gtm/eventHandlers';
+import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { userActions } from 'redux/slices/user';
-import { CartItemType } from 'types/cart';
 import { GtmListNameType } from 'types/gtm';
 
 export type RemoveFromCartHandler = (
-    cartItem: CartItemType,
+    cartItem: CartItemFragmentApi,
     listIndex: number,
     gtmListName: GtmListNameType,
 ) => Promise<CartFragmentApi | undefined | null>;
@@ -18,7 +18,7 @@ export const useRemoveFromCart = (): [RemoveFromCartHandler, boolean] => {
     const dispatch = useShopsysDispatch();
 
     const removeItemFromCartAction = async (
-        cartItem: CartItemType,
+        cartItem: CartItemFragmentApi,
         listIndex: number,
         gtmListName: GtmListNameType,
     ) => {
@@ -29,8 +29,10 @@ export const useRemoveFromCart = (): [RemoveFromCartHandler, boolean] => {
         if (removeItemFromCartActionResult.data?.RemoveFromCart.uuid !== undefined) {
             dispatch(userActions.setCartUuid(removeItemFromCartActionResult.data.RemoveFromCart.uuid));
 
-            const absoluteEventValue = cartItem.product.price.priceWithoutVat * cartItem.quantity;
-            const absoluteEventValueWithTax = cartItem.product.price.priceWithVat * cartItem.quantity;
+            const absoluteEventValue =
+                mapPriceForCalculations(cartItem.product.price.priceWithoutVat) * cartItem.quantity;
+            const absoluteEventValueWithTax =
+                mapPriceForCalculations(cartItem.product.price.priceWithVat) * cartItem.quantity;
 
             onRemoveCartItemGtmEventHandler(
                 cartItem,

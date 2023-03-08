@@ -1,7 +1,7 @@
 import { PacketeryExtendedPoint, PacketeryPickFunction } from './types';
+import { ListedStoreFragmentApi } from 'graphql/generated';
 import { canUseDom } from 'helpers/misc/canUseDom';
 import nookies from 'nookies';
-import { PickupPlaceType } from 'types/pickupPlace';
 
 /**
  * @see https://docs.packetery.com/01-pickup-point-selection/02-widget-v6.html
@@ -31,13 +31,21 @@ export const packeteryPick: PacketeryPickFunction = (apiKey, callback, opts, inE
     window.Packeta.Widget.pick(apiKey, callback, opts, inElement);
 };
 
-export const mapPacketeryExtendedPoint = (packeteryExtendedPoint: PacketeryExtendedPoint): PickupPlaceType => ({
+export const mapPacketeryExtendedPoint = (packeteryExtendedPoint: PacketeryExtendedPoint): ListedStoreFragmentApi => ({
+    __typename: 'Store',
+    slug: '',
+    locationLatitude: null,
+    locationLongitude: null,
     identifier: packeteryExtendedPoint.id.toString(),
     description: packeteryExtendedPoint.directions,
     name: packeteryExtendedPoint.name,
     city: packeteryExtendedPoint.city,
     street: packeteryExtendedPoint.street,
-    country: { code: packeteryExtendedPoint.country.toUpperCase(), name: packeteryExtendedPoint.country.toUpperCase() },
+    country: {
+        __typename: 'Country',
+        code: packeteryExtendedPoint.country.toUpperCase(),
+        name: packeteryExtendedPoint.country.toUpperCase(),
+    },
     postcode: packeteryExtendedPoint.zip.replaceAll(' ', ''),
     openingHoursHtml: parsePacketeryOpeningHours(packeteryExtendedPoint.openingHours.compactShort),
 });
@@ -50,7 +58,7 @@ const parsePacketeryOpeningHours = (openingHours: string) => {
     return openingHours.replaceAll(/<(\/?strong\s?(style='color: red;')?)>/g, '');
 };
 
-export const getPacketeryCookie = (): PickupPlaceType | null => {
+export const getPacketeryCookie = (): ListedStoreFragmentApi | null => {
     const cookies = nookies.get();
     if ('packeteryPickupPoint' in cookies) {
         return JSON.parse(cookies.packeteryPickupPoint);
@@ -59,7 +67,7 @@ export const getPacketeryCookie = (): PickupPlaceType | null => {
     return null;
 };
 
-export const setPacketeryCookie = (mappedPacketeryPoint: PickupPlaceType): void => {
+export const setPacketeryCookie = (mappedPacketeryPoint: ListedStoreFragmentApi): void => {
     nookies.set(undefined, 'packeteryPickupPoint', JSON.stringify(mappedPacketeryPoint), {
         path: '/',
         maxAge: 60 * 60 * 24 * 30,

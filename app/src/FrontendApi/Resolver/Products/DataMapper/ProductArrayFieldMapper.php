@@ -102,10 +102,10 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     {
         return trim(
             $data['name_prefix']
-            . ' '
-            . $data['name']
-            . ' '
-            . $data['name_sufix']
+                . ' '
+                . $data['name']
+                . ' '
+                . $data['name_sufix']
         );
     }
 
@@ -215,9 +215,9 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     public function getStoreAvailabilities(array $data): array
     {
         // after update graphql bundle (to v1 - support php8.1) we can expose availability status as enum
-//        foreach ($data['store_availabilities_information'] as $storeIndex => $storeAvailabilitiesInformation) {
-//            $data['store_availabilities_information'][$storeIndex]['availability_status'] = AvailabilityStatusEnum::from($storeAvailabilitiesInformation['availability_status']);
-//        }
+        //        foreach ($data['store_availabilities_information'] as $storeIndex => $storeAvailabilitiesInformation) {
+        //            $data['store_availabilities_information'][$storeIndex]['availability_status'] = AvailabilityStatusEnum::from($storeAvailabilitiesInformation['availability_status']);
+        //        }
 
         return $data['store_availabilities_information'];
     }
@@ -303,5 +303,14 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         $brandId = $data['brand'];
 
         return $brandId !== '' ? $this->brandsBatchLoader->load($brandId) : null;
+    }
+
+    /**
+     * @param array $data
+     * @return bool
+     */
+    public function isMainVariant(array $data): bool
+    {
+        return $data['is_main_variant'];
     }
 }

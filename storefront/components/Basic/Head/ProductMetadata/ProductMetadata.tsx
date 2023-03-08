@@ -1,14 +1,16 @@
+import { AvailabilityStatusEnumApi, MainVariantDetailFragmentApi, ProductDetailFragmentApi } from 'graphql/generated';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { MainVariantDetailType, ProductDetailType } from 'types/product';
+import { useShopsysSelector } from 'redux/main';
 
 type ProductMetadataProps = {
-    product: ProductDetailType | MainVariantDetailType;
+    product: ProductDetailFragmentApi | MainVariantDetailFragmentApi;
 };
 
 export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
+    const { currencyCode } = useShopsysSelector((state) => state.domain);
     const router = useRouter();
-    const imageUrls = product.images.map((image) => image.sizes?.find((size) => size.size === 'default')?.url);
+    const imageUrls = product.images.map((image) => image.sizes.find((size) => size.size === 'default')?.url);
 
     return (
         <Head>
@@ -32,11 +34,11 @@ export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
                             offers: {
                                 '@type': 'Offer',
                                 url: router.asPath,
-                                priceCurrency: product.price.currencyCode,
+                                priceCurrency: currencyCode,
                                 price: product.price.priceWithVat,
                                 itemCondition: 'https://schema.org/NewCondition',
                                 availability:
-                                    product.availability.status === 'in-stock'
+                                    product.availability.status === AvailabilityStatusEnumApi.InStockApi
                                         ? 'https://schema.org/InStock'
                                         : 'https://schema.org/OutOfStock',
                             },

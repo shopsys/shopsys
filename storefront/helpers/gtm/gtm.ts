@@ -2,17 +2,22 @@ import { getRandomPageId } from './helpers';
 import { mapGtmCartItemType, mapGtmShippingInfo } from './mappers';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { MD5 } from 'crypto-js';
+import {
+    BreadcrumbFragmentApi,
+    CartFragmentApi,
+    ListedStoreFragmentApi,
+    SimplePaymentFragmentApi,
+    SlugQueryApi,
+    TransportWithAvailablePaymentsAndStoresFragmentApi,
+} from 'graphql/generated';
 import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
+import { DomainConfigType } from 'helpers/domain/domain';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { canUseDom } from 'helpers/misc/canUseDom';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useMemo } from 'react';
 import { useShopsysSelector } from 'redux/main';
-import { BreadcrumbItemType } from 'types/breadcrumb';
-import { CartItemType, CartType } from 'types/cart';
-import { CategoryDetailType } from 'types/category';
 import { CurrentCustomerType } from 'types/customer';
-import { FriendlyUrlPageType } from 'types/friendlyUrl';
 import {
     GtmCartInfoEventType,
     GtmCartItemType,
@@ -26,9 +31,6 @@ import {
     GtmSearchEventType,
     GtmUserInfoType,
 } from 'types/gtm';
-import { PaymentType } from 'types/payment';
-import { PickupPlaceType } from 'types/pickupPlace';
-import { TransportType } from 'types/transport';
 
 export const useGtmCartEventInfo = (): GtmCartInfoEventType => {
     const { cart, promoCode, isInitiallyLoaded } = useCurrentCart();
@@ -69,8 +71,8 @@ export const useGtmCartEventInfo = (): GtmCartInfoEventType => {
             cart: {
                 urlCart,
                 currency: domain.currencyCode,
-                value: cart.totalItemsPrice.priceWithoutVat,
-                valueWithTax: cart.totalItemsPrice.priceWithVat,
+                value: parseFloat(cart.totalItemsPrice.priceWithoutVat),
+                valueWithTax: parseFloat(cart.totalItemsPrice.priceWithVat),
                 products,
                 coupons,
             },
@@ -79,16 +81,13 @@ export const useGtmCartEventInfo = (): GtmCartInfoEventType => {
     }, [cart, cartUuid, domain.currencyCode, domain.url, isInitiallyLoaded, isUserLoggedIn, promoCode]);
 };
 
-export const getGtmPageInfoForFriendlyUrl = (
-    data: FriendlyUrlPageType | null | undefined,
-    slug: string,
-    breadcrumbs: BreadcrumbItemType[] | undefined,
-): GtmPageInfoType => {
+export const getGtmPageInfoForFriendlyUrl = (data: SlugQueryApi['slug'] | undefined, slug: string): GtmPageInfoType => {
+    const breadcrumbs = data !== undefined && data !== null && 'breadcrumb' in data ? data.breadcrumb : [];
     const defaultPageInfo: GtmPageInfoType = {
         type: '404',
         path: slug,
         pageId: getRandomPageId(),
-        breadcrumbs: breadcrumbs ?? [],
+        breadcrumbs,
     };
 
     if (data === null || data === undefined) {
@@ -103,7 +102,7 @@ export const getGtmPageInfoForFriendlyUrl = (
             break;
         case 'Category':
             defaultPageInfo.type = getCategoryOrSeoCategoryGtmListName(data.originalCategorySlug);
-            defaultPageInfo.category = getGtmCategoryInfo(data as CategoryDetailType);
+            defaultPageInfo.category = [data.name];
             break;
         case 'Store':
             defaultPageInfo.type = 'store';
@@ -134,17 +133,13 @@ export const getGtmPageInfoForFriendlyUrl = (
 export const getGtmPageInfoType = (
     pageType: GtmPageType,
     path: string,
-    breadcrumbs: BreadcrumbItemType[] | undefined,
+    breadcrumbs: BreadcrumbFragmentApi[] | undefined,
 ): GtmPageInfoType => ({
     type: pageType,
     path,
     pageId: getRandomPageId(),
     breadcrumbs: breadcrumbs ?? [],
 });
-
-const getGtmCategoryInfo = (category: CategoryDetailType) => {
-    return [category.name];
-};
 
 export const gtmSafePushEvent = (event: GtmPageViewEventType | GtmEcommerceEventType | GtmSearchEventType): void => {
     if (canUseDom()) {
@@ -154,13 +149,13 @@ export const gtmSafePushEvent = (event: GtmPageViewEventType | GtmEcommerceEvent
 };
 
 export const getGtmPurchaseData = (
-    cart: CartType,
-    transport: TransportType,
-    pickupPlace: PickupPlaceType | null,
-    payment: PaymentType,
+    cart: CartFragmentApi,
+    transport: TransportWithAvailablePaymentsAndStoresFragmentApi,
+    pickupPlace: ListedStoreFragmentApi | null,
+    payment: SimplePaymentFragmentApi,
     promoCode: string | null,
     orderNumber: string,
-    domainUrl: string,
+    domainConfig: DomainConfigType,
 ): GtmPurchaseType => {
     const coupons: string[] = [];
     if (promoCode !== null) {
@@ -173,20 +168,20 @@ export const getGtmPurchaseData = (
         reviewConsents: getGtmReviewConsents(),
         id: orderNumber,
         coupons: coupons,
-        discountAmount: cart.totalDiscountPrice.priceWithVat,
-        value: cart.totalPrice.priceWithoutVat,
-        valueWithTax: cart.totalPrice.priceWithVat,
-        valueTax: cart.totalPrice.vatAmount,
-        currency: cart.totalPrice.currencyCode,
-        products: cart.items.map((cartItem: CartItemType, index) => mapGtmCartItemType(cartItem, domainUrl, index)),
+        discountAmount: parseFloat(cart.totalDiscountPrice.priceWithVat),
+        value: parseFloat(cart.totalPrice.priceWithoutVat),
+        valueWithTax: parseFloat(cart.totalPrice.priceWithVat),
+        valueTax: parseFloat(cart.totalPrice.vatAmount),
+        currency: domainConfig.currencyCode,
+        products: cart.items.map((cartItem, index) => mapGtmCartItemType(cartItem, domainConfig.url, index)),
         paymentType: payment.name,
         paymentPrice: payment.price.priceWithoutVat,
         paymentPriceWithTax: payment.price.priceWithVat,
         shippingType: transport.name,
         shippingDetail: shippingDetail,
         shippingExtra: shippingExtra,
-        shippingPrice: transport.price.priceWithoutVat,
-        shippingPriceWithTax: transport.price.priceWithVat,
+        shippingPrice: parseFloat(transport.price.priceWithoutVat),
+        shippingPriceWithTax: parseFloat(transport.price.priceWithVat),
     };
 };
 

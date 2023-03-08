@@ -6,7 +6,7 @@ import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import { usePasswordRecoveryMutationApi } from 'graphql/generated';
+import { BreadcrumbFragmentApi, usePasswordRecoveryMutationApi } from 'graphql/generated';
 import 'helpers//localization/getInternationalizedStaticUrls';
 import { blurInput } from 'helpers/forms/blurInput';
 import { clearForm } from 'helpers/forms/clearForm';
@@ -15,11 +15,10 @@ import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCallback } from 'react';
 import { FormProvider, SubmitHandler, useController } from 'react-hook-form';
-import { BreadcrumbItemType } from 'types/breadcrumb';
 import { PasswordResetFormType } from 'types/form';
 
 type ResetPasswordContentProps = {
-    breadcrumbs: BreadcrumbItemType[];
+    breadcrumbs: BreadcrumbFragmentApi[];
 };
 
 export const ResetPasswordContent: FC<ResetPasswordContentProps> = ({ breadcrumbs }) => {

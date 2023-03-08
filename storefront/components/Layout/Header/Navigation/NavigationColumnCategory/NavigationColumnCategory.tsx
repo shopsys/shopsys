@@ -1,10 +1,11 @@
 import { Image } from 'components/Basic/Image/Image';
 import { NavigationSubList } from 'components/Layout/Header/Navigation/NavigationSubList/NavigationSubList';
+import { ColumnCategoryFragmentApi } from 'graphql/generated';
+import { getFirstImageOrNull } from 'helpers/mappers/image';
 import NextLink from 'next/link';
-import { NavigationCategory } from 'types/navigation';
 
 type NavigationColumnCategoryProps = {
-    columnCategory: NavigationCategory;
+    columnCategory: ColumnCategoryFragmentApi;
 };
 
 const TEST_IDENTIFIER = 'layout-header-navigation-navigationcolumncategory';
@@ -14,7 +15,7 @@ export const NavigationColumnCategory: FC<NavigationColumnCategoryProps> = ({ co
         <NextLink href={columnCategory.slug} passHref>
             <a className="mb-4 flex h-16 justify-center rounded-xl bg-dark bg-opacity-5 p-2">
                 <Image
-                    image={columnCategory.image}
+                    image={getFirstImageOrNull(columnCategory.images)}
                     type="default"
                     alt={columnCategory.name}
                     className="mix-blend-multiply"

@@ -10,11 +10,11 @@ import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useContactMutationApi, useSettingsQueryApi } from 'graphql/generated';
+import { useContactMutationApi, usePrivacyPolicyArticleUrlQueryApi, useSettingsQueryApi } from 'graphql/generated';
 import { clearForm } from 'helpers/forms/clearForm';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';
 import { useErrorPopupVisibility } from 'hooks/forms/useErrorPopupVisibility';
-import { useGetPrivacyPolicyUrl } from 'hooks/routes/useGetPrivacyPolicyUrl';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import Trans from 'next-translate/Trans';
 import React, { useCallback } from 'react';
@@ -25,8 +25,9 @@ export const ContactContent: FC = () => {
     const t = useTypedTranslationFunction();
     const [formProviderMethods, defaultValues] = useContactForm();
     const formMeta = useContactFormMeta(formProviderMethods);
-    const [{ data }] = useSettingsQueryApi({ requestPolicy: 'cache-only' });
-    const gdprUrl = useGetPrivacyPolicyUrl();
+    const [{ data }] = useQueryError(useSettingsQueryApi({ requestPolicy: 'cache-only' }));
+    const [{ data: privacyPolicyArticleUrlData }] = useQueryError(usePrivacyPolicyArticleUrlQueryApi());
+    const privacyPolicyArticleUrl = privacyPolicyArticleUrlData?.privacyPolicyArticle?.slug;
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
     const [, contact] = useContactMutationApi();
 
@@ -112,7 +113,16 @@ export const ContactContent: FC = () => {
                                     i18nKey="ContactFormInfo"
                                     defaultTrans="By clicking on the Send message button, you agree with the <lnk1>processing of privacy policy</lnk1>."
                                     components={{
-                                        lnk1: <Link href={gdprUrl} linkType="external" target="_blank" />,
+                                        lnk1:
+                                            privacyPolicyArticleUrl !== undefined ? (
+                                                <Link
+                                                    href={privacyPolicyArticleUrl}
+                                                    linkType="external"
+                                                    target="_blank"
+                                                />
+                                            ) : (
+                                                <span></span>
+                                            ),
                                     }}
                                 />
                             </div>

@@ -4,15 +4,14 @@ import { TableGridColumnStyled } from 'components/Basic/TableGrid/TableGrid.styl
 import { TableGridColumns } from 'components/Basic/TableGrid/TableGridElements';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { BreadcrumbFragmentApi, OrderDetailFragmentApi } from 'graphql/generated';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
-import { BreadcrumbItemType } from 'types/breadcrumb';
-import { OrderDetailType } from 'types/orders';
 
 type OrderDetailContentProps = {
-    order: OrderDetailType;
-    breadcrumbs: BreadcrumbItemType[];
+    order: OrderDetailFragmentApi;
+    breadcrumbs: BreadcrumbFragmentApi[];
 };
 
 const TEST_IDENTIFIER = 'pages-customer-orderdetail-';
@@ -63,7 +62,7 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcr
                                 </tr>
                             </TableGridColumnStyled>
                         )}
-                        {!!order.note && (
+                        {order.note !== null && (
                             <TableGridColumnStyled>
                                 <tr>
                                     <th colSpan={2}>{t('Your note')}</th>
@@ -133,7 +132,7 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcr
                             </tr>
                             <tr>
                                 <td>{t('Country')}:</td>
-                                <td data-testid={TEST_IDENTIFIER + 'country'}>{order.country}</td>
+                                <td data-testid={TEST_IDENTIFIER + 'country'}>{order.country.name}</td>
                             </tr>
                         </TableGridColumnStyled>
                         <TableGridColumnStyled>
@@ -174,7 +173,7 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcr
                             </tr>
                             <tr>
                                 <td>{t('Country')}:</td>
-                                <td data-testid={TEST_IDENTIFIER + 'deliveryCountry'}>{order.deliveryCountry}</td>
+                                <td data-testid={TEST_IDENTIFIER + 'deliveryCountry'}>{order.deliveryCountry?.name}</td>
                             </tr>
                         </TableGridColumnStyled>
                     </TableGridColumns>

@@ -1,7 +1,7 @@
 fragment ListedStoreFragment on Store {
     __typename
     slug
-    uuid
+    identifier: uuid
     name
     description
     openingHoursHtml

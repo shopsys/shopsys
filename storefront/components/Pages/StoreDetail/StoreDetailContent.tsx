@@ -2,14 +2,14 @@ import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Webline } from 'components/Layout/Webline/Webline';
+import { StoreDetailFragmentApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';
 import { useShopsysSelector } from 'redux/main';
-import { StoreDetailType } from 'types/store';
 
 type StoreDetailContentProps = {
-    store: StoreDetailType;
+    store: StoreDetailFragmentApi;
 };
 
 const TEST_IDENTIFIER = 'pages-storedetail';

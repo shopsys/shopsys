@@ -5,8 +5,8 @@ import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLine';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { useGetPrivacyPolicyUrl } from 'hooks/routes/useGetPrivacyPolicyUrl';
-import { useGetTermsAndConditionsUrl } from 'hooks/routes/useGetTermsAndConditionsUrl';
+import { usePrivacyPolicyArticleUrlQueryApi, useTermsAndConditionsArticleUrlQueryApi } from 'graphql/generated';
+import { useQueryError } from 'hooks/graphQl/useQueryError';
 import Trans from 'next-translate/Trans';
 import { useEffect, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
@@ -22,8 +22,10 @@ export const ContactInformationContent: FC = () => {
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });
     const [isEmailFilledCorrectly, setIsEmailFilledCorrectly] = useState(false);
-    const termsAndConditionUrl = useGetTermsAndConditionsUrl();
-    const gdprUrl = useGetPrivacyPolicyUrl();
+    const [{ data: termsAndConditionsArticleUrlData }] = useQueryError(useTermsAndConditionsArticleUrlQueryApi());
+    const termsAndConditionsArticleUrl = termsAndConditionsArticleUrlData?.termsAndConditionsArticle?.slug;
+    const [{ data: privacyPolicyArticleUrlData }] = useQueryError(usePrivacyPolicyArticleUrlQueryApi());
+    const privacyPolicyArticleUrl = privacyPolicyArticleUrlData?.privacyPolicyArticle?.slug;
 
     useEffect(() => {
         if (formState.touchedFields.email !== undefined) {
@@ -64,8 +66,18 @@ export const ContactInformationContent: FC = () => {
                         i18nKey="ContactInformationInfo"
                         defaultTrans="By clicking on the Send order button, you agree with <lnk1>terms and conditions</lnk1> of the e-shop and with the <lnk2>processing of privacy policy</lnk2>."
                         components={{
-                            lnk1: <Link href={termsAndConditionUrl} linkType="external" target="_blank" />,
-                            lnk2: <Link href={gdprUrl} linkType="external" target="_blank" />,
+                            lnk1:
+                                termsAndConditionsArticleUrl !== undefined ? (
+                                    <Link href={termsAndConditionsArticleUrl} linkType="external" target="_blank" />
+                                ) : (
+                                    <span></span>
+                                ),
+                            lnk2:
+                                privacyPolicyArticleUrl !== undefined ? (
+                                    <Link href={privacyPolicyArticleUrl} linkType="external" target="_blank" />
+                                ) : (
+                                    <span></span>
+                                ),
                         }}
                     />
                 </p>
