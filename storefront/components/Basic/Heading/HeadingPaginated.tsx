@@ -9,13 +9,13 @@ type HeadingPaginatedProps = HeadingProps & {
     totalCount: number;
 };
 
-export const HeadingPaginated: FC<HeadingPaginatedProps> = (props) => {
+export const HeadingPaginated: FC<HeadingPaginatedProps> = ({ totalCount, children, ...headingProps }) => {
     const t = useTypedTranslationFunction();
 
     const router = useRouter();
     const currentPage = parsePageNumberFromQuery(router.query[PAGE_QUERY_PARAMETER_NAME]);
 
-    const totalPages = Math.ceil(props.totalCount / DEFAULT_PAGE_SIZE);
+    const totalPages = Math.ceil(totalCount / DEFAULT_PAGE_SIZE);
     const additionalPaginationText =
         ' ' +
         t('page {{ currentPage }} from {{ totalPages }}', {
@@ -24,8 +24,8 @@ export const HeadingPaginated: FC<HeadingPaginatedProps> = (props) => {
         });
 
     return (
-        <Heading {...props}>
-            {props.children}
+        <Heading {...headingProps}>
+            {children}
             {totalPages > 1 ? additionalPaginationText : ''}
         </Heading>
     );
