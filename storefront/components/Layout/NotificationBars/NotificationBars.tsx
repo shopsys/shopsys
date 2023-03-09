@@ -97,7 +97,7 @@ const extendByAdminLoggedInAsUserNotificationBar = (
                         button: (
                             <Button
                                 type="button"
-                                isSmall
+                                size="small"
                                 variant="secondary"
                                 style={{ marginLeft: '10px' }}
                                 onClick={logout}

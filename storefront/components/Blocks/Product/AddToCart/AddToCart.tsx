@@ -43,7 +43,7 @@ export const AddToCart: FC<AddToCartProps> = ({ productUuid, minQuantity, maxQua
     return (
         <>
             <Spinbox size="small" step={1} min={minQuantity} max={maxQuantity} defaultValue={1} ref={spinboxRef} />
-            <Button isSmall name="add-to-cart" onClick={onAddToCartHandler} dataTestId={TEST_IDENTIFIER}>
+            <Button size="small" name="add-to-cart" onClick={onAddToCartHandler} dataTestId={TEST_IDENTIFIER}>
                 {fetching ? (
                     <Loader iconSize={16} className="text-white" />
                 ) : (

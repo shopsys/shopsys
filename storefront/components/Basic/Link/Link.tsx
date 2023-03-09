@@ -16,8 +16,8 @@ type LinkProps = NativePropsAnchor & {
     size?: 'small';
 };
 
-const getDataTestId = (linkType?: boolean, isButton?: boolean) =>
-    'basic-link' + (linkType !== undefined ? '-external' : '') + (isButton ? '-button' : '');
+const getDataTestId = (isExternal?: boolean, isButton?: boolean) =>
+    'basic-link' + (isExternal ? '-external' : '') + (isButton ? '-button' : '');
 
 export const Link: FC<LinkProps> = ({ isExternal, isButton, children, href, rel, target, className }) => {
     const content = (

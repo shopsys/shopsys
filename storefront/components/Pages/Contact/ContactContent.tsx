@@ -126,7 +126,7 @@ export const ContactContent: FC = () => {
                                 type="submit"
                                 isRounder
                                 variant="primary"
-                                isDisabledLook={!formProviderMethods.formState.isValid}
+                                isWithDisabledLook={!formProviderMethods.formState.isValid}
                             >
                                 {t('Send message')}
                             </Button>

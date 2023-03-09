@@ -7,12 +7,12 @@ type OverlayProps = {
     onClick?: MouseEventHandler;
 };
 
-export const Overlay: FC<OverlayProps> = ({ onClick, isActive, isHiddenOnDesktop, children }) => {
-    const dataTestId = 'basic-overlay';
+const TEST_IDENTIFIER = 'basic-overlay';
 
+export const Overlay: FC<OverlayProps> = ({ onClick, isActive, isHiddenOnDesktop, children }) => {
     return (
         <div
-            data-testid={dataTestId}
+            data-testid={TEST_IDENTIFIER}
             className={twJoin(
                 'pointer-events-none fixed inset-0 bottom-0 z-overlay flex cursor-pointer items-center justify-center bg-black bg-opacity-60 opacity-0 transition-opacity',
                 isActive && 'opacity-100',

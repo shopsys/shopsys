@@ -110,7 +110,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
                             {numberOfVisible < searchResults.articlesSearch.length && (
                                 <ShowResultsButtonWrapper>
                                     <Button
-                                        isSmall
+                                        size="small"
                                         onClick={() => {
                                             setArticlesResultsVisibility((currentState) => !currentState);
                                         }}
@@ -130,7 +130,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
                             {numberOfVisible < searchResults.brandSearch.length && (
                                 <ShowResultsButtonWrapper>
                                     <Button
-                                        isSmall
+                                        size="small"
                                         onClick={() => {
                                             setBrandsResultsVisibility((currentState) => !currentState);
                                         }}
@@ -150,7 +150,7 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults, breadcrum
                             {numberOfVisible < mappedCategoriesSearchResults.length && (
                                 <ShowResultsButtonWrapper>
                                     <Button
-                                        isSmall
+                                        size="small"
                                         onClick={() => {
                                             setCategoriesResultsVisibility((currentState) => !currentState);
                                         }}

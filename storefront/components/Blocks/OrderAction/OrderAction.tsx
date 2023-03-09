@@ -62,7 +62,7 @@ export const OrderAction: FC<OrderActionProps> = ({
                     type="submit"
                     isRounder
                     variant="primary"
-                    isDisabledLook={hasDisabledLook}
+                    isWithDisabledLook={hasDisabledLook}
                     onClick={onNextStepHandler}
                 >
                     {isLoading && <Loader iconSize={20} />}

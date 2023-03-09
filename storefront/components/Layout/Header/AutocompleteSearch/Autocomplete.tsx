@@ -230,7 +230,7 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                         )}
                         <div className="flex justify-center">
                             <Button
-                                isSmall
+                                size="small"
                                 onClick={() =>
                                     router.push({
                                         pathname: searchUrl,

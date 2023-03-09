@@ -127,7 +127,7 @@ export const Registration: FC = () => {
                                         variant="primary"
                                         isRounder
                                         style={{ width: '100%' }}
-                                        isDisabledLook={!formProviderMethods.formState.isValid}
+                                        isWithDisabledLook={!formProviderMethods.formState.isValid}
                                     >
                                         {t('Create account')}
                                     </Button>

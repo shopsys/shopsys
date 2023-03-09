@@ -110,8 +110,8 @@ export const PromoCode: FC = () => {
                             nodeRef={cssTransitionRef}
                             in={isContentVisible}
                             timeout={300}
-                            onEnter={() => calcHeight()}
-                            onExit={() => calcHeight()}
+                            onEnter={calcHeight}
+                            onExit={calcHeight}
                             unmountOnExit
                         >
                             {(state) => (
@@ -134,7 +134,7 @@ export const PromoCode: FC = () => {
                                         <Button
                                             className="!rounded-r-xl !rounded-l-none !px-3"
                                             type="submit"
-                                            isDisabledLook={hasValidationErrors(promoCodeValidationMessages)}
+                                            isWithDisabledLook={hasValidationErrors(promoCodeValidationMessages)}
                                             dataTestId={TEST_IDENTIFIER + '-apply-button'}
                                             onClick={onApplyPromoCodeHandler}
                                         >

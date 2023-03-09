@@ -2,7 +2,6 @@ import styles from './UserText.module.sass';
 import { twMergeCustom } from 'utils/twMerge';
 
 type GrapesJsProps = {
-    dataGjsType?: string;
     content?: string;
 };
 

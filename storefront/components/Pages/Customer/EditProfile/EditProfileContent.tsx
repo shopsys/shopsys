@@ -231,7 +231,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                             label: formMeta.fields.telephone.label,
                             required: true,
                             type: 'tel',
-                            autoComplete: 'tel-national',
+                            autoComplete: 'tel',
                             dataTestId: TEST_IDENTIFIER + '-' + formMeta.fields.telephone.name,
                         }}
                     />

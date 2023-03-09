@@ -1,4 +1,3 @@
-import styles from './DropdownMenu.module.sass';
 import { DropdownMenuContext } from './DropdownMenuContext';
 import { PrimaryList } from './PrimaryList/PrimaryList';
 import { SecondaryList } from './SecondaryList/SecondaryList';
@@ -9,6 +8,7 @@ import { useNavigationQueryApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
+import { twJoin } from 'tailwind-merge';
 import { DropdownItemType, DropdownListLevels } from 'types/dropdown';
 
 type DropdownMenuProps = {
@@ -22,7 +22,7 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggle
     const [{ data: navigationData }] = useQueryError(useNavigationQueryApi());
     const [menuLevel, setMenuLevel] = useState<DropdownListLevels | undefined>('primary');
     const [historyOfIndexes, setHistoryOfIndexes] = useState<(number | string | undefined)[]>([]);
-    const [isRightSlide, setIsRightSlide] = useState(true);
+    const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
     const [menuHeight, setMenuHeight] = useState<number>();
 
     if (navigationData?.navigation === undefined || navigationData.navigation.length === 0) {
@@ -35,7 +35,7 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggle
 
     const slideLeft = (props: { goToMenu: DropdownListLevels }) => {
         setMenuLevel(props.goToMenu);
-        setIsRightSlide(false);
+        setSlideDirection('left');
 
         historyOfIndexes.pop();
 
@@ -44,22 +44,25 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggle
 
     const slideRight = (props: DropdownItemType) => {
         setMenuLevel(props.goToMenu);
-        setIsRightSlide(true);
+        setSlideDirection('right');
         setHistoryOfIndexes((oldArray: (number | string | undefined)[]) => [...oldArray, props.index]);
     };
 
     return (
-        <div className={styles.dropdownMenuWrapperStyled} data-testid={TEST_IDENTIFIER}>
-            <CSSTransition in={isMenuOpened} timeout={500} classNames="dropdown" onEntering={calcHeight} unmountOnExit>
+        <div className="transition-all" data-testid={TEST_IDENTIFIER}>
+            <CSSTransition in={isMenuOpened} timeout={300} classNames="dropdown" onEntering={calcHeight} unmountOnExit>
                 <DropdownMenuContext.Provider value={{ slideRight, onMenuToggleHandler }}>
                     <div
-                        className={isRightSlide ? styles.dropdownMenuRight : styles.dropdownMenuLeft}
+                        className="absolute left-2 right-2 top-0 z-mobileMenu cursor-auto overflow-hidden bg-white shadow-md transition-all"
                         style={{ height: menuHeight }}
                     >
                         <CSSTransition
                             in={menuLevel === 'primary'}
-                            timeout={500}
-                            classNames="menu-primary"
+                            timeout={300}
+                            classNames={twJoin(
+                                'transition-transform',
+                                slideDirection === 'right' ? 'menu-primary-right' : 'menu-primary-left',
+                            )}
                             unmountOnExit
                             onEntering={calcHeight}
                         >
@@ -71,8 +74,11 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggle
 
                         <CSSTransition
                             in={menuLevel === 'secondary'}
-                            timeout={500}
-                            classNames="menu-secondary"
+                            timeout={300}
+                            classNames={twJoin(
+                                'transition-transform',
+                                slideDirection === 'right' ? 'menu-secondary-right' : 'menu-secondary-left',
+                            )}
                             unmountOnExit
                             onEntering={calcHeight}
                         >
@@ -87,8 +93,11 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({ isMenuOpened, onMenuToggle
 
                         <CSSTransition
                             in={menuLevel === 'tertiary'}
-                            timeout={500}
-                            classNames="menu-tertiary"
+                            timeout={300}
+                            classNames={twJoin(
+                                'transition-transform',
+                                slideDirection === 'right' ? 'menu-tertiary-right' : 'menu-tertiary-left',
+                            )}
                             unmountOnExit
                             onEntering={calcHeight}
                         >

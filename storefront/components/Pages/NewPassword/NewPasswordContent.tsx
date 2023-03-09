@@ -138,7 +138,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ breadcrumbs, e
                         <div className="mt-8 flex w-full justify-between">
                             <Button
                                 type="submit"
-                                isDisabledLook={isNewPasswordInvalid || newPasswordValue.length === 0}
+                                isWithDisabledLook={isNewPasswordInvalid || newPasswordValue.length === 0}
                             >
                                 {t('Set new password')}
                             </Button>

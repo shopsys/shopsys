@@ -164,8 +164,8 @@ export const ContactInformationDeliveryAddress: FC = () => {
                     in={differentDeliveryAddressValue}
                     nodeRef={cssTransitionRef}
                     timeout={300}
-                    onEnter={() => calcHeight()}
-                    onExit={() => calcHeight()}
+                    onEnter={calcHeight}
+                    onExit={calcHeight}
                     unmountOnExit
                 >
                     {(state) => (
@@ -237,6 +237,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                     label: formMeta.fields.deliveryFirstName.label,
                                                     required: true,
                                                     type: 'text',
+                                                    autoComplete: 'given-name',
                                                     onBlur: (event) => {
                                                         dispatch(
                                                             contactInformationActions.setDeliveryFirstName(
@@ -259,6 +260,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                     label: formMeta.fields.deliveryLastName.label,
                                                     required: true,
                                                     type: 'text',
+                                                    autoComplete: 'family-name',
                                                     onBlur: (event) =>
                                                         dispatch(
                                                             contactInformationActions.setDeliveryLastName(
@@ -279,9 +281,8 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                             formName={formMeta.formName}
                                             textInputProps={{
                                                 label: formMeta.fields.deliveryCompanyName.label,
-                                                required: false,
                                                 type: 'text',
-                                                autoComplete: 'given-name',
+                                                autoComplete: 'organization',
                                                 onBlur: (event) =>
                                                     dispatch(
                                                         contactInformationActions.setDeliveryCompanyName(
@@ -302,8 +303,8 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                             textInputProps={{
                                                 label: formMeta.fields.deliveryTelephone.label,
                                                 required: true,
-                                                type: 'text',
-                                                autoComplete: 'family-name',
+                                                type: 'tel',
+                                                autoComplete: 'tel',
                                                 onBlur: (event) =>
                                                     dispatch(
                                                         contactInformationActions.setDeliveryTelephone(
@@ -327,7 +328,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                         label: formMeta.fields.deliveryStreet.label,
                                                         required: true,
                                                         type: 'text',
-                                                        autoComplete: 'postal-code',
+                                                        autoComplete: 'street-address',
                                                         onBlur: (event) =>
                                                             dispatch(
                                                                 contactInformationActions.setDeliveryStreet(
@@ -348,6 +349,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                             label: formMeta.fields.deliveryCity.label,
                                                             required: true,
                                                             type: 'text',
+                                                            autoComplete: 'address-level2',
                                                             onBlur: (event) =>
                                                                 dispatch(
                                                                     contactInformationActions.setDeliveryCity(
@@ -372,6 +374,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                             label: formMeta.fields.deliveryPostcode.label,
                                                             required: true,
                                                             type: 'text',
+                                                            autoComplete: 'postal-code',
                                                             onBlur: (event) =>
                                                                 dispatch(
                                                                     contactInformationActions.setDeliveryPostcode(

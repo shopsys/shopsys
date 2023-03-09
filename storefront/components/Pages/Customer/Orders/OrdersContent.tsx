@@ -89,7 +89,7 @@ export const OrdersContent: FC<OrdersContentProps> = ({ breadcrumbs, orders, tot
                                         </div>
                                         {order.transport.name}
                                     </td>
-                                    <td data-testid={TEST_IDENTIFIER + 'payment'}>{order.payment}</td>
+                                    <td data-testid={TEST_IDENTIFIER + 'payment'}>{order.payment.name}</td>
                                     <td className="text-right" data-testid={TEST_IDENTIFIER + 'total-price'}>
                                         {formatPrice(order.totalPrice.priceWithVat)}
                                     </td>

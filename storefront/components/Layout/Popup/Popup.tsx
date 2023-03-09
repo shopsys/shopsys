@@ -64,7 +64,7 @@ export const Popup: FC<PopupProps> = ({ isVisible, onCloseCallback, children, hi
                         </button>
                     </div>
                 )}
-                <div className="p-4 pt-0">{children}</div>
+                <div className="p-4">{children}</div>
             </div>
         </Portal>
     );

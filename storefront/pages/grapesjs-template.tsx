@@ -15,7 +15,7 @@ const Index: FC = () => (
                     <div className="mb-2 text-left text-xs font-semibold text-grey">
                         {new Date().toLocaleDateString() + ''}
                     </div>
-                    <GrapesJs className="gjs-editable pt-4 pb-4" dataGjsType="editable" />
+                    <GrapesJs className="gjs-editable pt-4 pb-4" />
                 </div>
             </div>
         </Webline>
