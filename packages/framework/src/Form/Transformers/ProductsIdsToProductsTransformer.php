@@ -26,7 +26,7 @@ class ProductsIdsToProductsTransformer implements DataTransformerInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[]|null $products
      * @return int[]
      */
-    public function transform($products): array
+    public function transform($products)
     {
         $productsIds = [];
 
@@ -41,9 +41,9 @@ class ProductsIdsToProductsTransformer implements DataTransformerInterface
 
     /**
      * @param int[] $productsIds
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]|null
      */
-    public function reverseTransform($productsIds): array
+    public function reverseTransform($productsIds)
     {
         $products = [];
 

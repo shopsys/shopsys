@@ -10,7 +10,7 @@ class InverseTransformer implements DataTransformerInterface
      * @param bool $value
      * @return bool
      */
-    public function transform($value): bool
+    public function transform($value)
     {
         return !$value;
     }
@@ -19,7 +19,7 @@ class InverseTransformer implements DataTransformerInterface
      * @param bool $value
      * @return bool
      */
-    public function reverseTransform($value): bool
+    public function reverseTransform($value)
     {
         return !$value;
     }

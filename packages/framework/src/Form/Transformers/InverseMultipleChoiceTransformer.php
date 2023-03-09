@@ -22,7 +22,7 @@ class InverseMultipleChoiceTransformer implements DataTransformerInterface
     /**
      * {@inheritDoc}
      */
-    public function transform($value): ?array
+    public function transform($value)
     {
         if (!is_array($value)) {
             return null;
@@ -34,7 +34,7 @@ class InverseMultipleChoiceTransformer implements DataTransformerInterface
     /**
      * {@inheritDoc}
      */
-    public function reverseTransform($value): ?array
+    public function reverseTransform($value)
     {
         if (!is_array($value)) {
             return null;

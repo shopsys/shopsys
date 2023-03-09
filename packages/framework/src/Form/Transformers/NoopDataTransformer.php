@@ -9,7 +9,7 @@ class NoopDataTransformer implements DataTransformerInterface
     /**
      * {@inheritDoc}
      */
-    public function reverseTransform($value): mixed
+    public function reverseTransform($value)
     {
         return $value;
     }
@@ -17,7 +17,7 @@ class NoopDataTransformer implements DataTransformerInterface
     /**
      * {@inheritDoc}
      */
-    public function transform($value): mixed
+    public function transform($value)
     {
         return $value;
     }

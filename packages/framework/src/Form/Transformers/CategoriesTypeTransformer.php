@@ -24,7 +24,7 @@ class CategoriesTypeTransformer implements DataTransformerInterface
      * @param \Shopsys\FrameworkBundle\Model\Category\Category[]|null $categories
      * @return bool[]
      */
-    public function transform($categories): array
+    public function transform($categories)
     {
         $categories = $categories ?? [];
         $allCategories = $this->categoryFacade->getAllCategoriesOfCollapsedTree($categories);
@@ -42,7 +42,7 @@ class CategoriesTypeTransformer implements DataTransformerInterface
      * @param bool[]|null $isCheckedIndexedByCategoryId
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
-    public function reverseTransform($isCheckedIndexedByCategoryId): array
+    public function reverseTransform($isCheckedIndexedByCategoryId)
     {
         $categories = [];
         foreach ($isCheckedIndexedByCategoryId ?? [] as $categoryId => $isChecked) {
