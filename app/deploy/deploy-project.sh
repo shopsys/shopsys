@@ -103,7 +103,6 @@ function deploy() {
     )
 
     source "${DEPLOY_TARGET_PATH}/functions.sh"
-    source "${DEPLOY_TARGET_PATH}/parts/parameters.sh"
     source "${DEPLOY_TARGET_PATH}/parts/domains.sh"
     source "${BASE_PATH}/deploy/parts/whitelist-ip.sh"
     source "${DEPLOY_TARGET_PATH}/parts/environment-variables.sh"
