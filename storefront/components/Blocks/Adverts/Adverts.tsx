@@ -60,7 +60,7 @@ export const Adverts: FC<AdvertsProps> = ({
                                             image={
                                                 isMobile
                                                     ? getFirstImageOrNull(item.imageMobile)
-                                                    : getFirstImageOrNull(item.image)
+                                                    : getFirstImageOrNull(item.images)
                                             }
                                             type={item.positionName}
                                             alt={item.name}
@@ -72,7 +72,7 @@ export const Adverts: FC<AdvertsProps> = ({
                                     image={
                                         isMobile
                                             ? getFirstImageOrNull(item.imageMobile)
-                                            : getFirstImageOrNull(item.image)
+                                            : getFirstImageOrNull(item.images)
                                     }
                                     type={item.positionName}
                                     alt={item.name}
