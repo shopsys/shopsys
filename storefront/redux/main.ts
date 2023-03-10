@@ -20,6 +20,8 @@ const makeStore = wrapMakeStore(() =>
                     compress: process.env.NODE_ENV === 'production',
                     subtrees: ['cart.isCartEmpty', 'user', 'domain', 'contactInformation'],
                     expires: getCartExpireDate(),
+                    path: '/',
+                    sameSite: 'strict',
                 }),
             ),
     }),

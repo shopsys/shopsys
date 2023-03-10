@@ -11,5 +11,5 @@ export const getCartExpireDate = (): Date => {
 
 export const extendCartExpireDate = (): void => {
     const cookies = parseCookies();
-    setCookie(undefined, 'user', cookies.user, { expires: getCartExpireDate() });
+    setCookie(undefined, 'user', cookies.user, { expires: getCartExpireDate(), path: '/', sameSite: 'strict' });
 };

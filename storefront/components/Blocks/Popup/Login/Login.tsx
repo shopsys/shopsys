@@ -20,9 +20,13 @@ import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
 import * as Yup from 'yup';
 
+type LoginProps = {
+    defaultEmail?: string;
+};
+
 const TEST_IDENTIFIER = 'blocks-popup-login';
 
-export const Login: FC = () => {
+export const Login: FC<LoginProps> = ({ defaultEmail }) => {
     const t = useTypedTranslationFunction();
     const cartUuid = useShopsysSelector((state) => state.user.cartUuid);
     const { url } = useShopsysSelector((state) => state.domain);
@@ -30,7 +34,7 @@ export const Login: FC = () => {
         ['/reset-password', '/registration'],
         url,
     );
-    const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: '', password: '' });
+    const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: defaultEmail ?? '', password: '' });
     const { login } = useAuth();
 
     const onLoginHandler = useCallback<SubmitHandler<{ email: string; password: string }>>(

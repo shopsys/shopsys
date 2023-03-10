@@ -3,7 +3,7 @@ import { PageGuard } from 'components/Helpers/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrderConfirmationContent } from 'components/Pages/OrderConfirmation/OrderConfirmationContent';
 import { Registration } from 'components/Pages/OrderConfirmation/Registration/Registration';
-import { OrderSentPageContentDocumentApi } from 'graphql/generated';
+import { OrderSentPageContentDocumentApi, useIsCustomerUserRegisteredQueryApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
@@ -16,18 +16,28 @@ import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
     const { canAccessOrderConfirmation } = useShopsysSelector((state) => state.user);
+    const { email } = useShopsysSelector((state) => state.contactInformation);
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], domainUrl);
     const { isUserLoggedIn } = useCurrentUserData();
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent('purchase');
     useGtmStaticPageView(gtmStaticPageViewEvent);
+    const [{ data: isCustomerUserRegisteredData, fetching: isInformationAboutUserRegistrationFetching }] =
+        useIsCustomerUserRegisteredQueryApi({
+            variables: {
+                email,
+            },
+            pause: email.length === 0,
+        });
 
     return (
         <PageGuard accessCondition={canAccessOrderConfirmation} errorRedirectUrl={cartUrl}>
             <MetaRobots content="noindex" />
             <CommonLayout title={t('Thank you for your order')}>
                 <OrderConfirmationContent />
-                {!isUserLoggedIn && <Registration />}
+                {!isUserLoggedIn &&
+                    !isInformationAboutUserRegistrationFetching &&
+                    !isCustomerUserRegisteredData?.isCustomerUserRegistered && <Registration />}
             </CommonLayout>
         </PageGuard>
     );

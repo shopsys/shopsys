@@ -3,5 +3,5 @@ import { loginFromHeader } from '../../Functions/login';
 
 it('Login from header', () => {
     cy.visit('/');
-    loginFromHeader(customer1.email, customer1.password);
+    loginFromHeader(customer1.emailRegistered, customer1.password);
 });

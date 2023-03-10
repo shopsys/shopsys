@@ -1,12 +1,22 @@
 import { ContactInformationFormWrapper } from './ContactInformationFormWrapper/ContactInformationFormWrapper';
 import { useContactInformationFormMeta } from './formMeta';
+import { Heading } from 'components/Basic/Heading/Heading';
 import { Link } from 'components/Basic/Link/Link';
+import { Login } from 'components/Blocks/Popup/Login/Login';
+import { Button } from 'components/Forms/Button/Button';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLine';
 import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { usePrivacyPolicyArticleUrlQueryApi, useTermsAndConditionsArticleUrlQueryApi } from 'graphql/generated';
+import { Popup } from 'components/Layout/Popup/Popup';
+import {
+    useIsCustomerUserRegisteredQueryApi,
+    usePrivacyPolicyArticleUrlQueryApi,
+    useTermsAndConditionsArticleUrlQueryApi,
+} from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
+import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
+import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import Trans from 'next-translate/Trans';
 import { useEffect, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
@@ -16,16 +26,40 @@ import { twJoin } from 'tailwind-merge';
 import { ContactInformationFormType } from 'types/form';
 
 export const ContactInformationContent: FC = () => {
+    const t = useTypedTranslationFunction();
     const dispatch = useShopsysDispatch();
     const formProviderMethods = useFormContext<ContactInformationFormType>();
     const { trigger, formState } = formProviderMethods;
     const formMeta = useContactInformationFormMeta(formProviderMethods);
+    const { isUserLoggedIn } = useCurrentUserData();
     const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });
     const [isEmailFilledCorrectly, setIsEmailFilledCorrectly] = useState(false);
+    const [isEmailAlreadyRegistered, setIsEmailAlreadyRegistered] = useState(false);
+    const [isLoginPopupOpened, setIsLoginPopupOpened] = useState(false);
     const [{ data: termsAndConditionsArticleUrlData }] = useQueryError(useTermsAndConditionsArticleUrlQueryApi());
     const termsAndConditionsArticleUrl = termsAndConditionsArticleUrlData?.termsAndConditionsArticle?.slug;
     const [{ data: privacyPolicyArticleUrlData }] = useQueryError(usePrivacyPolicyArticleUrlQueryApi());
     const privacyPolicyArticleUrl = privacyPolicyArticleUrlData?.privacyPolicyArticle?.slug;
+    const [{ data: isCustomerUserRegisteredData }] = useIsCustomerUserRegisteredQueryApi({
+        variables: {
+            email: emailValue,
+        },
+        pause: !isEmailFilledCorrectly,
+    });
+
+    const loginHandler = () => {
+        setIsLoginPopupOpened(true);
+    };
+
+    useEffect(() => {
+        if (isUserLoggedIn === true) {
+            setIsLoginPopupOpened(false);
+        }
+    }, [isUserLoggedIn]);
+
+    const onCloseLoginPopupHandler = () => {
+        setIsLoginPopupOpened(false);
+    };
 
     useEffect(() => {
         if (formState.touchedFields.email !== undefined) {
@@ -39,6 +73,10 @@ export const ContactInformationContent: FC = () => {
             });
         }
     }, [emailValue, trigger, formState.touchedFields, formState.errors]);
+
+    useEffect(() => {
+        setIsEmailAlreadyRegistered(!!isCustomerUserRegisteredData?.isCustomerUserRegistered);
+    }, [isCustomerUserRegisteredData?.isCustomerUserRegistered]);
 
     return (
         <>
@@ -59,6 +97,11 @@ export const ContactInformationContent: FC = () => {
                     onBlur: () => dispatch(contactInformationActions.setEmail(emailValue)),
                 }}
             />
+            {isEmailAlreadyRegistered && !isUserLoggedIn && (
+                <Button size="small" type="button" onClick={loginHandler} className="mb-5">
+                    {t('User with this email is already registered. Do you want to sign in')}
+                </Button>
+            )}
             <ContactInformationFormWrapper isEmailEntered={isEmailFilledCorrectly} />
             <div className={twJoin(!isEmailFilledCorrectly && 'pointer-events-none opacity-50')}>
                 <p className="mb-4">
@@ -91,6 +134,10 @@ export const ContactInformationContent: FC = () => {
                     }}
                 />
             </div>
+            <Popup isVisible={isLoginPopupOpened} onCloseCallback={onCloseLoginPopupHandler}>
+                <Heading type="h2">{t('Login')}</Heading>
+                <Login defaultEmail={emailValue} />
+            </Popup>
         </>
     );
 };

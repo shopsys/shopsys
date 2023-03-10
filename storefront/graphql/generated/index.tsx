@@ -3027,6 +3027,13 @@ export type CurrentCustomerUserQueryVariablesApi = Exact<{ [key: string]: never;
 
 export type CurrentCustomerUserQueryApi = { __typename?: 'Query', currentCustomerUser: { __typename: 'CompanyCustomerUser', companyName: string | null, companyNumber: string | null, companyTaxNumber: string | null, uuid: string, firstName: string, lastName: string, email: string, telephone: string | null, street: string, city: string, postcode: string, newsletterSubscription: boolean, pricingGroup: string, country: { __typename: 'Country', name: string, code: string }, defaultDeliveryAddress: { __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, country: { __typename: 'Country', name: string, code: string } | null } | null, deliveryAddresses: Array<{ __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, country: { __typename: 'Country', name: string, code: string } | null }> } | { __typename: 'RegularCustomerUser', uuid: string, firstName: string, lastName: string, email: string, telephone: string | null, street: string, city: string, postcode: string, newsletterSubscription: boolean, pricingGroup: string, country: { __typename: 'Country', name: string, code: string }, defaultDeliveryAddress: { __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, country: { __typename: 'Country', name: string, code: string } | null } | null, deliveryAddresses: Array<{ __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, country: { __typename: 'Country', name: string, code: string } | null }> } | null };
 
+export type IsCustomerUserRegisteredQueryVariablesApi = Exact<{
+  email: Scalars['String'];
+}>;
+
+
+export type IsCustomerUserRegisteredQueryApi = { __typename?: 'Query', isCustomerUserRegistered: boolean };
+
 export type FlagDetailFragmentApi = { __typename: 'Flag', uuid: string, slug: string, name: string, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, products: { __typename: 'ProductConnection', orderingMode: ProductOrderingModeEnumApi, defaultOrderingMode: ProductOrderingModeEnumApi | null, totalCount: number, productFilterOptions: { __typename: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Array<{ __typename: 'BrandFilterOption', count: number, brand: { __typename: 'Brand', uuid: string, name: string } }> | null, flags: Array<{ __typename: 'FlagFilterOption', count: number, isSelected: boolean, flag: { __typename: 'Flag', uuid: string, name: string, rgbColor: string } }> | null, parameters: Array<{ __typename: 'ParameterCheckboxFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueFilterOption', uuid: string, text: string, count: number, isSelected: boolean }> } | { __typename: 'ParameterColorFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueColorFilterOption', uuid: string, text: string, count: number, rgbHex: string | null, isSelected: boolean }> } | { __typename: 'ParameterSliderFilterOption', name: string, uuid: string, minimalValue: number, maximalValue: number, isCollapsed: boolean, selectedValue: number | null, unit: { __typename: 'Unit', name: string } | null }> | null } } };
 
 export type SimpleFlagFragmentApi = { __typename: 'Flag', uuid: string, name: string, rgbColor: string };
@@ -5110,6 +5117,15 @@ export const CurrentCustomerUserQueryDocumentApi = gql`
 
 export function useCurrentCustomerUserQueryApi(options: Omit<Urql.UseQueryArgs<CurrentCustomerUserQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<CurrentCustomerUserQueryApi>({ query: CurrentCustomerUserQueryDocumentApi, ...options });
+};
+export const IsCustomerUserRegisteredQueryDocumentApi = gql`
+    query IsCustomerUserRegisteredQuery($email: String!) {
+  isCustomerUserRegistered(email: $email)
+}
+    `;
+
+export function useIsCustomerUserRegisteredQueryApi(options: Omit<Urql.UseQueryArgs<IsCustomerUserRegisteredQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<IsCustomerUserRegisteredQueryApi>({ query: IsCustomerUserRegisteredQueryDocumentApi, ...options });
 };
 export const NavigationQueryDocumentApi = gql`
     query NavigationQuery @redisCache(ttl: 3600) {
