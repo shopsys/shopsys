@@ -10,14 +10,12 @@ use App\FrontendApi\Model\Cart\CartWatcherFacade;
 use App\FrontendApi\Model\Order\CreateOrderResult;
 use App\FrontendApi\Model\Order\CreateOrderResultFactory;
 use App\FrontendApi\Mutation\Order\Exception\DeprecatedFieldUserError;
-use App\FrontendApi\Mutation\Order\Exception\OrderEmailsNotSentUserError;
 use App\Model\Customer\DeliveryAddress;
 use App\Model\Customer\DeliveryAddressFacade;
 use App\Model\Customer\User\CustomerUser;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
-use Shopsys\FrameworkBundle\Model\Mail\Exception\MailException;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrontendApiBundle\Model\Mutation\Order\CreateOrderMutation as BaseCreateOrderMutation;
@@ -39,7 +37,7 @@ class CreateOrderMutation extends BaseCreateOrderMutation
      * @param \App\FrontendApi\Model\Order\PlaceOrderFacade $placeOrderFacade
      * @param \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
      * @param \App\FrontendApi\Model\Cart\CartWatcherFacade $cartWatcherFacade
      * @param \App\FrontendApi\Model\Order\CreateOrderResultFactory $createOrderResultFactory
@@ -58,22 +56,12 @@ class CreateOrderMutation extends BaseCreateOrderMutation
     }
 
     /**
-     * @return string[]
-     */
-    public static function getAliases(): array
-    {
-        return [
-            'createOrderWithResult' => 'create_order',
-        ];
-    }
-
-    /**
-     * @deprecated Method is deprecated. Use "createOrderWithResult()" instead.
+     * @deprecated Method is deprecated. Use "createOrderWithResultMutation()" instead.
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return \App\Model\Order\Order
      */
-    public function createOrder(Argument $argument, InputValidator $validator): Order
+    public function createOrderMutation(Argument $argument, InputValidator $validator): Order
     {
         throw new DeprecatedMethodException();
     }
@@ -84,7 +72,7 @@ class CreateOrderMutation extends BaseCreateOrderMutation
      * @throws \Overblog\GraphQLBundle\Validator\Exception\ArgumentsValidationException
      * @return \App\FrontendApi\Model\Order\CreateOrderResult
      */
-    public function createOrderWithResult(Argument $argument, InputValidator $validator): CreateOrderResult
+    public function createOrderWithResultMutation(Argument $argument, InputValidator $validator): CreateOrderResult
     {
         $validationGroups = $this->computeValidationGroups($argument);
         $validator->validate($validationGroups);
@@ -119,11 +107,7 @@ class CreateOrderMutation extends BaseCreateOrderMutation
         );
         $this->cartFacade->deleteCart($cart);
 
-        try {
-            $this->sendEmail($order);
-        } catch (MailException $e) {
-            throw new OrderEmailsNotSentUserError('Unable to send some emails, please contact us for order verification.');
-        }
+        $this->sendEmail($order);
 
         return $this->createOrderResultFactory->getCreateOrderResultByOrder($order);
     }

@@ -19,6 +19,7 @@ use App\Model\Product\ProductFilesData;
 use App\Model\Product\ProductFilesDataFactory;
 use App\Model\Transfer\TransferLoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface;
@@ -230,7 +231,7 @@ class ProductTransferAkeneoMapper
                     $this->addLocalizedParameterValues($akeneoProductParameterData, $parameter, $productData);
                 }
             } catch (TransferException $e) {
-                $transferLogger->addWarning($e->getMessage());
+                $transferLogger->warning($e->getMessage());
             }
         }
     }
@@ -421,9 +422,9 @@ class ProductTransferAkeneoMapper
         if ($parameter->getAkeneoType() === Parameter::AKENEO_ATTRIBUTES_TYPE_BOOLEAN) {
             switch ($akeneoParameterValueCode) {
                 case '':
-                    return t('No', [], 'messages', $locale);
+                    return t('No', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale);
                 case '1':
-                    return t('Yes', [], 'messages', $locale);
+                    return t('Yes', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale);
                 default:
                     return $akeneoParameterValueCode;
             }

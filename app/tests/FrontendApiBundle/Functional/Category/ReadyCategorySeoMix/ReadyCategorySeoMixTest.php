@@ -9,6 +9,7 @@ use App\DataFixtures\Demo\FlagDataFixture;
 use App\DataFixtures\Demo\ParameterDataFixture;
 use App\DataFixtures\Demo\ReadyCategorySeoDataFixture;
 use App\Model\Product\Parameter\ParameterFacade;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -61,57 +62,57 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         $arrayExpected = [
             'data' => [
                 'slug' => [
-                    'name' => t('Electronics', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                    'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                     'slug' => '/elektro-bez-hdmi-akce',
                     'seoH1' => 'Elektro bez HDMI v akci',
                     'seoTitle' => 'Elektro bez HDMI v akci',
                     'seoMetaDescription' => t(
                         'All kind of electronic devices.',
                         [],
-                        'dataFixtures',
+                        Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                         $this->getLocaleForFirstDomain()
                     ),
                     'bestsellers' => [
-                        ['name' => t('47" LG 47LA790V (FHD)', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
-                        ['name' => t('32" Philips 32PFL4308', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
-                        ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
-                        ['name' => t('A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                        ['name' => t('47" LG 47LA790V (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                        ['name' => t('32" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                        ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                        ['name' => t('A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ],
                     'breadcrumb' => [
                         [
-                            'name' => t('Electronics', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                             'slug' => $this->urlGenerator->generate('front_product_list', ['id' => $readyCategorySeoMix->getCategory()->getId()]),
                         ],
                     ],
                     'readyCategorySeoMixLinks' => [
                         [
-                            'name' => t('Electronics without HDMI in sale', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'name' => t('Electronics without HDMI in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                             'slug' => 'elektro-bez-hdmi-akce',
                         ],
                         [
-                            'name' => t('Electronics from most expensive', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'name' => t('Electronics from most expensive', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                             'slug' => 'elektro-od-nejdrazsiho',
                         ],
                         [
-                            'name' => t('Electronics with LED technology and size 30 inch in sale', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'name' => t('Electronics with LED technology and size 30 inch in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                             'slug' => 'elektro-led-uhlopricka-30-akce',
                         ],
                         [
-                            'name' => t('Electronics in black', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'name' => t('Electronics in black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                             'slug' => 'elektro-barva-cerna',
                         ],
                         [
-                            'name' => t('Electronics in red', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'name' => t('Electronics in red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                             'slug' => 'elektro-barva-cervena',
                         ],
                         [
-                            'name' => t('Full HD Electronics with LED technology and USB', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'name' => t('Full HD Electronics with LED technology and USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                             'slug' => 'elektro-full-hd-led-usb',
                         ],
                     ],
                     'linkedCategories' => [
-                        ['name' => t('Food', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
-                        ['name' => t('Garden tools', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                        ['name' => t('Food', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                        ['name' => t('Garden tools', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                     ],
                 ],
             ],
@@ -150,7 +151,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
                         'orderingMode' => 'PRICE_ASC',
                         'defaultOrderingMode' => 'PRICE_ASC',
                         'edges' => [
-                            ['node' => ['name' => t('Defender 2.0 SPK-480', [], 'dataFixtures', $this->getLocaleForFirstDomain())]],
+                            ['node' => ['name' => t('Defender 2.0 SPK-480', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())]],
                         ],
                     ],
                 ],
@@ -174,7 +175,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
                         'orderingMode' => 'PRIORITY',
                         'defaultOrderingMode' => 'PRIORITY',
                         'edges' => [
-                            ['node' => ['name' => t('Philips 32PFL4308', [], 'dataFixtures', $this->getLocaleForFirstDomain())]],
+                            ['node' => ['name' => t('Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())]],
                         ],
                     ],
                 ],
@@ -198,7 +199,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
                         'orderingMode' => 'PRIORITY',
                         'defaultOrderingMode' => 'PRIORITY',
                         'edges' => [
-                            ['node' => ['name' => t('Hyundai 32PFL4400', [], 'dataFixtures', $this->getLocaleForFirstDomain())]],
+                            ['node' => ['name' => t('Hyundai 32PFL4400', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())]],
                         ],
                     ],
                 ],
@@ -332,8 +333,8 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
     {
         $firstDomainLocale = $this->getFirstDomainLocale();
         /** @var \App\Model\Product\Parameter\Parameter $usbParameter */
-        $usbParameter = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('USB', [], 'dataFixtures', $firstDomainLocale));
-        $yesValue = t('Yes', [], 'dataFixtures', $firstDomainLocale);
+        $usbParameter = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale));
+        $yesValue = t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale);
 
         foreach ($parameters as $parameterData) {
             if ($parameterData['uuid'] === $usbParameter->getUuid()) {
@@ -379,10 +380,10 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         /** @var \App\Model\Product\Flag\Flag $flagNew */
         $flagNew = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
         /** @var \App\Model\Product\Parameter\Parameter $parameterUsb */
-        $parameterUsb = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('USB', [], 'dataFixtures', $firstDomainLocale));
+        $parameterUsb = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale));
         $categorySlug = $this->urlGenerator->generate('front_product_list', ['id' => $categoryPc->getId()]);
         $parameterValueYes = $this->parameterFacade->getParameterValueByValueTextAndLocale(
-            t('Yes', [], 'dataFixtures', $firstDomainLocale),
+            t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             $firstDomainLocale
         );
         $responseForCategory = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/query/SlugQueryCategoryMatchingSeoMix.graphql', [

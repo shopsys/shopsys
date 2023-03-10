@@ -12,8 +12,9 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
+use Shopsys\Cdn\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Symfony\Component\Filesystem\Filesystem;
@@ -22,84 +23,33 @@ use Symfony\Component\Finder\Finder;
 class ImageDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const IMAGES_TABLE_NAME = 'images';
+    public const IMAGES_TRANSLATIONS_TABLE_NAME = 'images_translations';
     public const IMAGE_TYPE = 'jpg';
 
     /**
-     * @var string
-     */
-    private $dataFixturesImagesDirectory;
-
-    /**
-     * @var string
-     */
-    private $targetDomainImagesDirectory;
-
-    /**
-     * @var \League\Flysystem\FilesystemInterface
-     */
-    private $filesystem;
-
-    /**
-     * @var string
-     */
-    private $targetImagesDirectory;
-
-    /**
-     * @var \Symfony\Component\Filesystem\Filesystem
-     */
-    private $localFilesystem;
-
-    /**
-     * @var \League\Flysystem\MountManager
-     */
-    private $mountManager;
-
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var \App\Model\Product\ProductDataFactory
-     */
-    private ProductDataFactory $productDataFactory;
-
-    /**
-     * @var \App\Model\Product\ProductFacade
-     */
-    private ProductFacade $productFacade;
-
-    /**
-     * @param mixed $dataFixturesImagesDirectory
-     * @param mixed $targetImagesDirectory
-     * @param mixed $targetDomainImagesDirectory
-     * @param \League\Flysystem\FilesystemInterface $filesystem
-     * @param \Symfony\Component\Filesystem\Filesystem $symfonyFilesystem
+     * @param string $dataFixturesImagesDirectory
+     * @param string $targetImagesDirectory
+     * @param string $targetDomainImagesDirectory
+     * @param \League\Flysystem\FilesystemOperator $filesystem
+     * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\Cdn\Component\Domain\Domain $domain
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
      * @param \App\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
-        $dataFixturesImagesDirectory,
-        $targetImagesDirectory,
-        $targetDomainImagesDirectory,
-        FilesystemInterface $filesystem,
-        Filesystem $symfonyFilesystem,
-        MountManager $mountManager,
-        EntityManagerInterface $em,
-        ProductDataFactory $productDataFactory,
-        ProductFacade $productFacade
+        private readonly string $dataFixturesImagesDirectory,
+        private readonly string $targetImagesDirectory,
+        private readonly string $targetDomainImagesDirectory,
+        private readonly FilesystemOperator $filesystem,
+        private readonly Filesystem $localFilesystem,
+        private readonly MountManager $mountManager,
+        private readonly EntityManagerInterface $em,
+        private readonly Domain $domain,
+        private readonly ProductDataFactory $productDataFactory,
+        private readonly ProductFacade $productFacade
     ) {
-        $this->dataFixturesImagesDirectory = $dataFixturesImagesDirectory;
-        $this->targetDomainImagesDirectory = $targetDomainImagesDirectory;
-        $this->targetImagesDirectory = $targetImagesDirectory;
-        $this->filesystem = $filesystem;
-        $this->localFilesystem = $symfonyFilesystem;
-        $this->mountManager = $mountManager;
-        $this->em = $em;
-        $this->productDataFactory = $productDataFactory;
-        $this->productFacade = $productFacade;
     }
 
     /**
@@ -162,7 +112,12 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
             /** @var \App\Model\Product\Brand\Brand $brand */
             $brand = $this->getReference($brandName);
 
-            $this->saveImageIntoDb($brand->getId(), 'brand', $imageId);
+            $names = [];
+            foreach ($this->domain->getAllLocales() as $locale) {
+                $names[$locale] = $brandName;
+            }
+
+            $this->saveImageIntoDb($brand->getId(), 'brand', $imageId, $names);
         }
     }
 
@@ -186,7 +141,12 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
             /** @var \App\Model\Category\Category $category */
             $category = $this->getReference($categoryName);
 
-            $this->saveImageIntoDb($category->getId(), 'category', $imageId);
+            $names = [];
+            foreach ($this->domain->getAllLocales() as $locale) {
+                $names[$locale] = $categoryName;
+            }
+
+            $this->saveImageIntoDb($category->getId(), 'category', $imageId, $names);
         }
     }
 
@@ -202,7 +162,12 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
             /** @var \App\Model\Payment\Payment $payment */
             $payment = $this->getReference($paymentName);
 
-            $this->saveImageIntoDb($payment->getId(), 'payment', $imageId);
+            $names = [];
+            foreach ($this->domain->getAllLocales() as $locale) {
+                $names[$locale] = $paymentName;
+            }
+
+            $this->saveImageIntoDb($payment->getId(), 'payment', $imageId, $names);
         }
     }
 
@@ -218,7 +183,12 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
             /** @var \App\Model\Transport\Transport $transport */
             $transport = $this->getReference($transportName);
 
-            $this->saveImageIntoDb($transport->getId(), 'transport', $imageId);
+            $names = [];
+            foreach ($this->domain->getAllLocales() as $locale) {
+                $names[$locale] = $transportName;
+            }
+
+            $this->saveImageIntoDb($transport->getId(), 'transport', $imageId, $names);
         }
     }
 
@@ -241,7 +211,13 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         ];
 
         foreach ($productsIdsWithImageIdSameAsProductId as $productId) {
-            $this->saveImageIntoDb($productId, 'product', $productId, null, 'image_main');
+            $names = [];
+            foreach ($this->domain->getAllLocales() as $locale) {
+                $names[$locale] = 'Product ' . $productId . ' image';
+            }
+
+            $this->saveImageIntoDb($productId, 'product', $productId, $names, null, 'image_main');
+
             /** @var \App\Model\Product\Product $product */
             $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productId);
             $productData = $this->productDataFactory->createFromProduct($product);
@@ -249,7 +225,13 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         }
 
         foreach ($specificProductsIdsIndexedByImagesIds as $maxImageId => $productId) {
-            $this->saveImageIntoDb($productId, 'product', $maxImageId, null, 'image_main');
+            $names = [];
+            foreach ($this->domain->getAllLocales() as $locale) {
+                $names[$locale] = 'Product ' . $productId . ' image';
+            }
+
+            $this->saveImageIntoDb($productId, 'product', $maxImageId, $names, null, 'image_main');
+
             /** @var \App\Model\Product\Product $product */
             $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productId);
             $productData = $this->productDataFactory->createFromProduct($product);
@@ -269,7 +251,12 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         ];
 
         foreach ($imagesIdsIndexedBySliderItemsIds as $sliderItemId => $imageId) {
-            $this->saveImageIntoDb($sliderItemId, 'sliderItem', $imageId, SliderItemFacade::IMAGE_TYPE_WEB);
+            $names = [];
+            foreach ($this->domain->getAllLocales() as $locale) {
+                $names[$locale] = 'Product ' . $sliderItemId . ' image';
+            }
+
+            $this->saveImageIntoDb($sliderItemId, 'sliderItem', $imageId, $names, SliderItemFacade::IMAGE_TYPE_WEB);
         }
 
         //mobile version
@@ -283,7 +270,12 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         ];
 
         foreach ($imagesIdsIndexedBySliderItemsIds as $sliderItemId => $imageId) {
-            $this->saveImageIntoDb($sliderItemId, 'sliderItem', $imageId, SliderItemFacade::IMAGE_TYPE_MOBILE);
+            $names = [];
+            foreach ($this->domain->getAllLocales() as $locale) {
+                $names[$locale] = 'Product ' . $sliderItemId . ' image';
+            }
+
+            $this->saveImageIntoDb($sliderItemId, 'sliderItem', $imageId, $names, SliderItemFacade::IMAGE_TYPE_MOBILE);
         }
     }
 
@@ -291,10 +283,12 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
      * @param int $entityId
      * @param string $entityName
      * @param int $imageId
+     * @param array $names
      * @param string|null $type
      * @param string|null $akeneoImageType
+     * @throws \Doctrine\DBAL\Exception
      */
-    private function saveImageIntoDb(int $entityId, string $entityName, int $imageId, ?string $type = null, ?string $akeneoImageType = null)
+    private function saveImageIntoDb(int $entityId, string $entityName, int $imageId, array $names = [], ?string $type = null, ?string $akeneoImageType = null)
     {
         $this->em->getConnection()->executeStatement(
             'INSERT INTO images ( id, entity_name, entity_id, type, extension, position, modified_at, akeneo_image_type)
@@ -320,6 +314,23 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
                 'akeneo_image_type' => Types::STRING,
             ]
         );
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $this->em->getConnection()->executeStatement(
+                'INSERT INTO images_translations ( translatable_id, name, locale)
+                VALUES (:translatable_id, :name, :locale)',
+                [
+                    'translatable_id' => $imageId,
+                    'name' => $names[$locale] ?? null,
+                    'locale' => $locale,
+                ],
+                [
+                    'translatable_id' => Types::INTEGER,
+                    'name' => Types::STRING,
+                    'locale' => Types::STRING,
+                ]
+            );
+        }
     }
 
     /**
@@ -348,7 +359,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
 
     private function truncateImagesFromDb()
     {
-        $this->em->getConnection()->executeStatement('TRUNCATE TABLE ' . self::IMAGES_TABLE_NAME);
+        $this->em->getConnection()->executeStatement('TRUNCATE TABLE ' . self::IMAGES_TABLE_NAME . ', ' . self::IMAGES_TRANSLATIONS_TABLE_NAME);
     }
 
     private function restartImagesIdsDbSequence()

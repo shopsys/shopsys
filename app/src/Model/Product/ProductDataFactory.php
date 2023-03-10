@@ -12,7 +12,7 @@ use App\Model\Store\ProductStoreDataFactory;
 use App\Model\Store\ProductStoreFacade;
 use App\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
@@ -32,59 +32,6 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 class ProductDataFactory extends BaseProductDataFactory
 {
     /**
-     * @return \App\Model\Product\ProductData
-     */
-    protected function createInstance(): BaseProductData
-    {
-        return new ProductData();
-    }
-
-    /**
-     * @var \App\Model\Stock\ProductStockFacade
-     */
-    private $stockProductFacade;
-
-    /**
-     * @var \App\Model\Stock\StockFacade
-     */
-    private $stockFacade;
-
-    /**
-     * @var \App\Model\Stock\ProductStockDataFactory
-     */
-    private $stockProductDataFactory;
-
-    /**
-     * @var \App\Model\Product\ProductFacade
-     */
-    private $productFacade;
-
-    /**
-     * @var \App\Component\Setting\Setting
-     */
-    private $setting;
-
-    /**
-     * @var \App\Model\Product\Availability\AvailabilityFacade
-     */
-    protected $availabilityFacade;
-
-    /**
-     * @var \App\Model\Store\StoreFacade
-     */
-    private StoreFacade $storeFacade;
-
-    /**
-     * @var \App\Model\Store\ProductStoreDataFactory
-     */
-    private ProductStoreDataFactory $productStoreDataFactory;
-
-    /**
-     * @var \App\Model\Store\ProductStoreFacade
-     */
-    private ProductStoreFacade $productStoreFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \App\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
      * @param \App\Model\Product\Unit\UnitFacade $unitFacade
@@ -93,16 +40,16 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
-     * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
+     * @param \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      * @param \App\Model\Stock\ProductStockFacade $stockProductFacade
      * @param \App\Model\Stock\StockFacade $stockFacade
      * @param \App\Model\Stock\ProductStockDataFactory $stockProductDataFactory
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Component\Setting\Setting $setting
-     * @param \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \App\Model\Store\StoreFacade $storeFacade
      * @param \App\Model\Store\ProductStoreDataFactory $productStoreDataFactory
      * @param \App\Model\Store\ProductStoreFacade $productStoreFacade
@@ -116,19 +63,19 @@ class ProductDataFactory extends BaseProductDataFactory
         ParameterRepository $parameterRepository,
         FriendlyUrlFacade $friendlyUrlFacade,
         ProductAccessoryRepository $productAccessoryRepository,
-        ImageFacade $imageFacade,
         PluginCrudExtensionFacade $pluginDataFormExtensionFacade,
         ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
         PricingGroupFacade $pricingGroupFacade,
-        ProductStockFacade $stockProductFacade,
-        StockFacade $stockFacade,
-        ProductStockDataFactory $stockProductDataFactory,
-        ProductFacade $productFacade,
-        Setting $setting,
         AvailabilityFacade $availabilityFacade,
-        StoreFacade $storeFacade,
-        ProductStoreDataFactory $productStoreDataFactory,
-        ProductStoreFacade $productStoreFacade
+        ImageUploadDataFactory $imageUploadDataFactory,
+        private readonly ProductStockFacade $stockProductFacade,
+        private readonly StockFacade $stockFacade,
+        private readonly ProductStockDataFactory $stockProductDataFactory,
+        private readonly ProductFacade $productFacade,
+        private readonly Setting $setting,
+        private readonly StoreFacade $storeFacade,
+        private readonly ProductStoreDataFactory $productStoreDataFactory,
+        private readonly ProductStoreFacade $productStoreFacade
     ) {
         parent::__construct(
             $vatFacade,
@@ -139,21 +86,23 @@ class ProductDataFactory extends BaseProductDataFactory
             $parameterRepository,
             $friendlyUrlFacade,
             $productAccessoryRepository,
-            $imageFacade,
             $pluginDataFormExtensionFacade,
             $productParameterValueDataFactory,
-            $pricingGroupFacade
+            $pricingGroupFacade,
+            $availabilityFacade,
+            $imageUploadDataFactory
         );
+    }
 
-        $this->stockProductFacade = $stockProductFacade;
-        $this->stockFacade = $stockFacade;
-        $this->stockProductDataFactory = $stockProductDataFactory;
-        $this->productFacade = $productFacade;
-        $this->setting = $setting;
-        $this->availabilityFacade = $availabilityFacade;
-        $this->storeFacade = $storeFacade;
-        $this->productStoreDataFactory = $productStoreDataFactory;
-        $this->productStoreFacade = $productStoreFacade;
+    /**
+     * @return \App\Model\Product\ProductData
+     */
+    protected function createInstance(): BaseProductData
+    {
+        $productData = new ProductData();
+        $productData->images = $this->imageUploadDataFactory->create();
+
+        return $productData;
     }
 
     /**
@@ -283,7 +232,7 @@ class ProductDataFactory extends BaseProductDataFactory
         $productAccessories = $this->getAccessoriesData($product);
 
         $productData->accessories = $productAccessories;
-        $productData->images->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($product, null);
+        $productData->images = $this->imageUploadDataFactory->createFromEntityAndType($product, null);
         $productData->variants = $product->getVariants();
         $productData->pluginData = $this->pluginDataFormExtensionFacade->getAllData('product', $product->getId());
 

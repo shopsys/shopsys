@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Smoke;
 
 use App\DataFixtures\Demo\UnitDataFixture;
-use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessage;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Symfony\Component\DomCrawler\Form;
 use Symfony\Component\Security\Csrf\CsrfToken;
@@ -24,8 +24,16 @@ class NewProductTest extends ApplicationTestCase
      */
     public function testCreateOrEditProduct($relativeUrl)
     {
+        $domainUrl = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getUrl();
+        $isDomainSecured = parse_url($domainUrl, PHP_URL_SCHEME) === 'https';
+
+        $server = [
+            'HTTP_HOST' => preg_replace('#^https?://#', '', $domainUrl),
+            'HTTPS' => $isDomainSecured,
+        ];
+
         $client1 = $this->configureCurrentClient('admin', 'admin123');
-        $crawler = $client1->request('GET', $relativeUrl);
+        $crawler = $client1->request('GET', $relativeUrl, [], [], $server);
 
         $form = $crawler->filter('form[name=product_form]')->form();
         $this->fillForm($form);
@@ -38,19 +46,17 @@ class NewProductTest extends ApplicationTestCase
 
         /** @var \Symfony\Component\Security\Csrf\CsrfTokenManager $tokenManager */
         $tokenManager = $client2->getContainer()->get('security.csrf.token_manager');
-        $token = $tokenManager->getToken(ProductFormType::CSRF_TOKEN_ID);
+        // if domain is on HTTPS, previously created token is prefixed with https-
+        $tokenId = ($isDomainSecured ? 'https-' : '') . ProductFormType::CSRF_TOKEN_ID;
+        $token = $tokenManager->getToken($tokenId);
         $this->setFormCsrfToken($form, $token);
 
         $client2->submit($form);
 
         $em2->rollback();
 
-        /** @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag */
-        $flashBag = $client2->getContainer()->get('session')->getFlashBag();
-
         $this->assertSame(302, $client2->getResponse()->getStatusCode());
-        $this->assertNotEmpty($flashBag->get(FlashMessage::KEY_SUCCESS));
-        $this->assertEmpty($flashBag->get(FlashMessage::KEY_ERROR));
+        $this->assertStringStartsWith($domainUrl . '/admin/product/list', $client2->followRedirect()->getUri());
     }
 
     /**

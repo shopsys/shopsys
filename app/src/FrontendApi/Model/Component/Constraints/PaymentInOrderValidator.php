@@ -15,7 +15,7 @@ class PaymentInOrderValidator extends ConstraintValidator
 {
     /**
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(

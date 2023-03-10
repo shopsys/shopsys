@@ -7,8 +7,8 @@ namespace App\Component\FileUpload;
 use App\Component\Image\Image;
 use App\Component\Image\ImageRepository;
 use App\Component\UploadedFile\UploadedFileRepository;
-use League\Flysystem\FileNotFoundException;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemException;
+use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException;
 use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
@@ -45,7 +45,7 @@ class FileUpload extends BaseFileUpload
      * @param string $imageDir
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention $fileNamingConvention
      * @param \League\Flysystem\MountManager $mountManager
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
      * @param \App\Component\Image\ImageRepository $imageRepository
      * @param \App\Component\UploadedFile\UploadedFileRepository $uploadedFileRepository
@@ -56,7 +56,7 @@ class FileUpload extends BaseFileUpload
         $imageDir,
         FileNamingConvention $fileNamingConvention,
         MountManager $mountManager,
-        FilesystemInterface $filesystem,
+        FilesystemOperator $filesystem,
         ParameterBagInterface $parameterBag,
         ImageRepository $imageRepository,
         UploadedFileRepository $uploadedFileRepository
@@ -135,7 +135,7 @@ class FileUpload extends BaseFileUpload
             $filepath = $this->getTemporaryFilepath($filename);
             try {
                 $this->filesystem->delete($filepath);
-            } catch (FileNotFoundException $ex) {
+            } catch (FilesystemException $ex) {
                 return false;
             }
         }

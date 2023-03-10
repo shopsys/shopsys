@@ -13,7 +13,7 @@ use App\Model\Product\ProductFacade;
 use App\Model\Transfer\TransferLoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Generator;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 
@@ -84,7 +84,7 @@ class TransferredProductProcessor
     private $imageConfig;
 
     /**
-     * @var \League\Flysystem\FilesystemInterface
+     * @var \League\Flysystem\FilesystemOperator
      */
     private $filesystem;
 
@@ -99,7 +99,7 @@ class TransferredProductProcessor
      * @param \App\Component\FileUpload\FileUpload $fileUpload
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -112,7 +112,7 @@ class TransferredProductProcessor
         FileUpload $fileUpload,
         ParameterFacade $parameterFacade,
         ImageConfig $imageConfig,
-        FilesystemInterface $filesystem
+        FilesystemOperator $filesystem
     ) {
         $this->productFacade = $productFacade;
         $this->productTransferAkeneoMapper = $productTransferAkeneoMapper;
@@ -147,7 +147,7 @@ class TransferredProductProcessor
         if ($product === null) {
             $product = $this->createProduct($productData, $logger);
         } else {
-            $logger->addInfo(sprintf('Updating product catnum: %s', $product->getCatnum()));
+            $logger->info(sprintf('Updating product catnum: %s', $product->getCatnum()));
             $product = $this->productFacade->edit($product->getId(), $productData);
         }
 
@@ -178,7 +178,7 @@ class TransferredProductProcessor
      */
     private function createProduct(ProductData $productData, TransferLoggerInterface $logger): Product
     {
-        $logger->addInfo(sprintf('Creating product catnum: %s', $productData->catnum));
+        $logger->info(sprintf('Creating product catnum: %s', $productData->catnum));
 
         return $this->productFacade->create($productData);
     }
@@ -203,7 +203,7 @@ class TransferredProductProcessor
         $accessories = $this->getAccessoriesByCatnums($accessoryCatnums);
         $this->productFacade->refreshProductAccessories($product, $accessories);
         $accessoriesCount = count($accessories);
-        $logger->addInfo(sprintf('Refresh %s accessories for product catnum: %s', $accessoriesCount, $product->getCatnum()));
+        $logger->info(sprintf('Refresh %s accessories for product catnum: %s', $accessoriesCount, $product->getCatnum()));
     }
 
     /**
@@ -304,7 +304,7 @@ class TransferredProductProcessor
 
         $tempFileName = $this->fileUpload->getTemporaryFilepath($akeneoMediaFileName);
 
-        $this->filesystem->put($tempFileName, $mediaFileResponse->getBody()->getContents());
+        $this->filesystem->write($tempFileName, $mediaFileResponse->getBody()->getContents());
         $createdImage = $this->imageFacade->uploadAndReturnImage($product, [$akeneoMediaFileName], null, false);
 
         $this->em->clear(Image::class);

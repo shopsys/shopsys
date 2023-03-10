@@ -4,7 +4,7 @@ PersonalDataQuery:
         fields:
             personalDataPage:
                 type: 'PersonalDataPage'
-                resolve: "@=resolver('resolvePersonalDataPage')"
+                resolve: "@=query('personalDataPageQuery')"
                 description: "Return personal data page content and URL"
             accessPersonalData:
                 type: PersonalData!
@@ -17,4 +17,4 @@ PersonalDataQuery:
                             -   Length:
                                     min: 20
                                     max: 20
-                resolve: "@=resolver('resolvePersonalDataAccess', [args['hash'], validator])"
+                resolve: "@=query('personalDataAccessQuery', args['hash'], validator)"

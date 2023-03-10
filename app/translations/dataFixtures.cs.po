@@ -532,6 +532,9 @@ msgstr "Kniha Křemílek a Vochomůrka"
 msgid "Book scoring system and traffic regulations"
 msgstr "Kniha Bodový systém a pravidla silničního provozu"
 
+msgid "book"
+msgstr "kniha"
+
 msgid "Books"
 msgstr "Knihy"
 

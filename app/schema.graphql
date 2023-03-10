@@ -69,8 +69,8 @@ type AdvertCode implements Advert {
 type AdvertImage implements Advert {
   """Restricted categories of the advert (the advert is shown in these categories only)"""
   categories: [Category!]!
-  """Advert image"""
-  image(size: String = null, sizes: [String!] = null, type: String = null): [Image!]!
+  """Advert images"""
+  images(size: String = null, sizes: [String!] = null, type: String = null): [Image!]!
   """Advert link"""
   link: String
   """Adverts first image by params"""

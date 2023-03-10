@@ -75,6 +75,23 @@ services:
         tags:
             - { name: doctrine.event_subscriber, priority: -100 }
 
+    Redis:
+        class: Redis
+        calls:
+            -   connect:
+                    - '%env(REDIS_HOST)%'
+
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+        arguments:
+            - '@Redis'
+            - { 'prefix': '%env(REDIS_PREFIX)%session:', ttl: 604800 }
+
+    Psr\Container\ContainerInterface:
+        alias: service_container
+
+    Symfony\Component\DependencyInjection\ContainerInterface:
+        alias: service_container
+
     App\Model\Cart\CartFacade:
         lazy: true
 
@@ -166,7 +183,7 @@ services:
 
     App\Model\Blog\Article\Elasticsearch\BlogArticleIndex: ~
 
-    League\Flysystem\FilesystemInterface:
+    League\Flysystem\FilesystemOperator:
         alias: main_filesystem
 
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade:
@@ -350,7 +367,9 @@ services:
 
     App\Controller\Admin\ErrorController:
         arguments:
+            $debug: '%kernel.debug%'
             $environment: '%kernel.environment%'
+            $overwriteDomainUrl: '%env(default::OVERWRITE_DOMAIN_URL)%'
 
     App\Component\Akeneo\AkeneoConfig:
         arguments:
@@ -648,9 +667,6 @@ services:
         tags:
             - { name: shopsys.product_feed }
 
-    Shopsys\FrameworkBundle\Component\Error\LogoutExceptionSubscriber:
-        lazy: true
-
     FOS\CKEditorBundle\Config\CKEditorConfigurationInterface:
         alias: fos_ck_editor.configuration
 
@@ -731,7 +747,6 @@ services:
             $allClients: !tagged snc_redis.client
             $persistentClients:
                 - '@snc_redis.global'
-                - '@snc_redis.session'
                 - '@snc_redis.blog_article_export_queue'
 
     App\Component\Redis\CleanStorefrontCacheFacade:
@@ -860,3 +875,20 @@ services:
         alias: App\Model\Mail\Setting\MailSettingFacade
 
     App\Model\Mail\MailTemplateBuilder: ~
+
+    Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade:
+        alias: App\Model\LegalConditions\LegalConditionsFacade
+
+    Shopsys\FrameworkBundle\Model\Breadcrumb\ErrorPageBreadcrumbGenerator:
+        alias: App\Model\Breadcrumb\ErrorPageBreadcrumbGenerator
+
+    Shopsys\FrameworkBundle\Model\Breadcrumb\SimpleBreadcrumbGenerator:
+        alias: App\Model\Breadcrumb\SimpleBreadcrumbGenerator
+
+    App\Model\Customer\User\ClearCurrentCustomerUserCacheDoctrineSubscriber:
+        tags: [ 'doctrine.event_subscriber' ]
+
+    App\Model\Customer\User\CurrentCustomerUser: ~
+
+    Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser:
+        alias: App\Model\Customer\User\CurrentCustomerUser

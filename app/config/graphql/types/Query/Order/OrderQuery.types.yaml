@@ -5,12 +5,12 @@ OrderQuery:
             orders:
                 type: "OrderConnection"
                 argsBuilder: "Relay::Connection"
-                resolve: "@=resolver('orders', [args])"
+                resolve: "@=query('ordersQuery', args)"
                 complexity: "@=dynamicPaginationComplexity(args)"
                 description: "Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords"
             order:
                 type: 'Order'
-                resolve: "@=resolver('order', [args['uuid'], args['urlHash'], args['orderNumber']])"
+                resolve: "@=query('orderByUuidOrUrlHashQuery', args['uuid'], args['urlHash'], args['orderNumber'])"
                 args:
                     uuid:
                         type: "Uuid"
@@ -21,11 +21,11 @@ OrderQuery:
                 description: "Returns order filtered using UUID, orderNumber, or urlHash"
             lastOrder:
                 type: 'Order'
-                resolve: "@=resolver('resolveLastOrder')"
+                resolve: "@=query('lastOrderQuery')"
                 description: "Returns last order of the user or null if no order was placed yet"
             orderSentPageContent:
                 type: "String!"
-                resolve: "@=resolver('resolveOrderSentPageContent', [args['orderUuid']])"
+                resolve: "@=query('orderSentPageContentQuery', args['orderUuid'])"
                 args:
                     orderUuid:
                         type: "Uuid!"

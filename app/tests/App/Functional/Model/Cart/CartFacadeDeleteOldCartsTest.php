@@ -8,6 +8,7 @@ use App\Model\Cart\CartFacade;
 use App\Model\Cart\Item\CartItem;
 use App\Model\Cart\Watcher\CartWatcherFacade;
 use App\Model\Category\CategoryFacade;
+use App\Model\Customer\User\CurrentCustomerUser;
 use App\Model\Customer\User\CustomerUserIdentifierFactory;
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
@@ -17,7 +18,6 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\CartFactory;
 use Shopsys\FrameworkBundle\Model\Cart\CartRepository;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
@@ -39,7 +39,7 @@ class CartFacadeDeleteOldCartsTest extends FunctionalTestCase
     private ProductRepository $productRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
+     * @var \App\Model\Customer\User\CurrentCustomerUser
      * @inject
      */
     private CurrentCustomerUser $currentCustomerUser;
@@ -104,7 +104,7 @@ class CartFacadeDeleteOldCartsTest extends FunctionalTestCase
         $cartFacade = $this->getCartFacadeForUnregisteredCustomer();
         $cart = $this->createCartWithProduct($customerUserIdentifier, $cartFacade);
 
-        $cart->setModifiedAt(new DateTime('- 61 days'));
+        $cart->setModifiedAt(new DateTime('- 131 days'));
 
         $this->em->flush();
 
@@ -119,7 +119,7 @@ class CartFacadeDeleteOldCartsTest extends FunctionalTestCase
         $cartFacade = $this->getCartFacadeForUnregisteredCustomer();
         $cart = $this->createCartWithProduct($customerUserIdentifier, $cartFacade);
 
-        $cart->setModifiedAt(new DateTime('- 59 days'));
+        $cart->setModifiedAt(new DateTime('- 129 days'));
 
         $this->em->flush();
 
@@ -134,7 +134,7 @@ class CartFacadeDeleteOldCartsTest extends FunctionalTestCase
         $cartFacade = $this->getCartFacadeForRegisteredCustomer();
         $cart = $this->createCartWithProduct($customerUserIdentifier, $cartFacade);
 
-        $cart->setModifiedAt(new DateTime('- 121 days'));
+        $cart->setModifiedAt(new DateTime('- 131 days'));
 
         $this->em->flush();
 
@@ -149,7 +149,7 @@ class CartFacadeDeleteOldCartsTest extends FunctionalTestCase
         $cartFacade = $this->getCartFacadeForRegisteredCustomer();
         $cart = $this->createCartWithProduct($customerUserIdentifier, $cartFacade);
 
-        $cart->setModifiedAt(new DateTime('- 119 days'));
+        $cart->setModifiedAt(new DateTime('- 129 days'));
 
         $this->em->flush();
 

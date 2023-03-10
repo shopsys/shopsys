@@ -5,16 +5,18 @@ framework:
     secret: "%secret%"
     router:
         strict_requirements: true
-    form: ~
+    form:
+        legacy_error_messages: false
     csrf_protection: ~
     validation: { enable_annotations: true }
     trusted_hosts: ~
     session:
-        handler_id: snc_redis.session.handler
+        handler_id: Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler
         cookie_httponly: true
         # Disable the default PHP session garbage collection.
         # Session garbage collection is responsibility of hosting.
         gc_probability: 0
+        cookie_lifetime: 31536000 # 365 days * 24 hours * 3600 seconds
     fragments: ~
     http_method_override: true
     profiler:

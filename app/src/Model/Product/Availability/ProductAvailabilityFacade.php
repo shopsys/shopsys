@@ -145,9 +145,8 @@ class ProductAvailabilityFacade
     {
         $count = $this->getAvailableStoresCount($product, $domainId);
 
-        return tc(
+        return t(
             '{0}|{1}Můžete mít ihned na <span class="box-detail__avail__text__strong">%count%</span> prodejně|[2,Inf]Můžete mít ihned na <span class="box-detail__avail__text__strong">%count%</span> prodejnách',
-            $count,
             ['%count%' => $count]
         );
     }
@@ -180,9 +179,8 @@ class ProductAvailabilityFacade
     {
         $count = $this->getExposedStoresCount($product, $domainId);
 
-        return tc(
+        return t(
             '{0}|{1}Můžete si prohlédnout na <span class="box-detail__avail__text__strong">%count%</span> prodejně|[2,Inf]Můžete si prohlédnout na <span class="box-detail__avail__text__strong">%count%</span> prodejnách',
-            $count,
             ['%count%' => $count]
         );
     }
@@ -320,10 +318,9 @@ class ProductAvailabilityFacade
      */
     private function getWeeksAvailabilityMessageByWeeks(int $weeks): string
     {
-        return tc(
-            '{0,1} K dispozici za týden|[2,4] K dispozici za %weeks% týdny|[5,Inf] K dispozici za %weeks% týdnů',
-            $weeks,
-            ['%weeks%' => $weeks]
+        return t(
+            '{0,1} K dispozici za týden|[2,4] K dispozici za %count% týdny|[5,Inf] K dispozici za %count% týdnů',
+            ['%count%' => $weeks]
         );
     }
 
@@ -351,7 +348,7 @@ class ProductAvailabilityFacade
      * @param int $domainId
      * @return int
      */
-    private function getDeliveryDaysByDomainId(Product $product, int $domainId): int
+    public function getDeliveryDaysByDomainId(Product $product, int $domainId): int
     {
         $deliveryDays = $this->setting->getForDomain(Setting::DELIVERY_DAYS_ON_STOCK, $domainId);
         $deliveryDays += $product->getVendorDeliveryDate() ?? 0;

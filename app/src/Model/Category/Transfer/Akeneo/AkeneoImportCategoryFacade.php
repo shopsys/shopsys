@@ -113,7 +113,7 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
 
     protected function doBeforeTransfer(): void
     {
-        $this->logger->addInfo('Transfer categories data from Akeneo ...');
+        $this->logger->info('Transfer categories data from Akeneo ...');
         $this->loadAkeneoCategoryIds();
     }
 
@@ -136,10 +136,10 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
         $categoryData = $this->categoryTransferAkeneoMapper->mapAkeneoCategoryDataToCategoryData($akeneoCategoryData, $category);
 
         if ($category === null) {
-            $this->logger->addInfo(sprintf('Creating category code: %s', $categoryData->akeneoCode));
+            $this->logger->info(sprintf('Creating category code: %s', $categoryData->akeneoCode));
             $this->categoryFacade->create($categoryData);
         } else {
-            $this->logger->addInfo(sprintf('Updating category code: %s', $category->getAkeneoCode()));
+            $this->logger->info(sprintf('Updating category code: %s', $category->getAkeneoCode()));
             $this->categoryFacade->edit($category->getId(), $categoryData);
             $this->dropTransferredAkeneoCategory($category);
         }
@@ -149,15 +149,15 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
 
     protected function doAfterTransfer(): void
     {
-        $this->logger->addInfo('Save ordering for categories...');
+        $this->logger->info('Save ordering for categories...');
         $this->deleteRestNotTransferredCategories();
         $this->saveOrderingCategories();
 
-        $this->logger->addInfo('Refreshing categories and products visibility...');
+        $this->logger->info('Refreshing categories and products visibility...');
         $this->categoryVisibilityRepository->refreshCategoriesVisibility();
         $this->productVisibilityFacade->refreshProductsVisibility();
 
-        $this->logger->addInfo('Transfer is done.');
+        $this->logger->info('Transfer is done.');
     }
 
     private function saveOrderingCategories(): void
@@ -171,8 +171,8 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
             } else {
                 $parentCategory = $this->categoryFacade->findByAkeneoCode($akeneoCategoryData['parent']);
                 if ($parentCategory === null) {
-                    $this->logger->addWarning(sprintf('Parent category with akeneo code %s not found in eshop', $akeneoCategoryData['parent']));
-                    $this->logger->addWarning(sprintf('Hiding category with akeneo code %s', $akeneoCategoryData['code']));
+                    $this->logger->warning(sprintf('Parent category with akeneo code %s not found in eshop', $akeneoCategoryData['parent']));
+                    $this->logger->warning(sprintf('Hiding category with akeneo code %s', $akeneoCategoryData['code']));
 
                     $categoryData = $this->categoryDataFactory->createFromCategory($category);
 
@@ -220,13 +220,13 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
             return;
         }
         if ($this->categoriesFromAkeneoCountBeforeTransfer === count($this->notTransferredCategoriesIds)) {
-            $this->logger->addError(sprintf('Import categories from Akeneo probably failed, because all categories with akeneo code should be deleted. Deletion was aborted.'));
+            $this->logger->error(sprintf('Import categories from Akeneo probably failed, because all categories with akeneo code should be deleted. Deletion was aborted.'));
             return;
         }
 
         foreach ($this->notTransferredCategoriesIds as $categoryId) {
             $this->categoryFacade->deleteById($categoryId);
-            $this->logger->addWarning(sprintf('Deleted category with ID: %s', $categoryId));
+            $this->logger->warning(sprintf('Deleted category with ID: %s', $categoryId));
         }
     }
 

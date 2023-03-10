@@ -1,7 +1,4 @@
 {
-    "adoy/fastcgi-client": {
-        "version": "1.0.2"
-    },
     "akeneo/api-php-client": {
         "version": "v5.0.0"
     },
@@ -10,9 +7,6 @@
     },
     "arvenil/ninja-mutex": {
         "version": "0.4.1"
-    },
-    "asm89/twig-cache-extension": {
-        "version": "1.4.0"
     },
     "aws/aws-crt-php": {
         "version": "v1.0.2"
@@ -252,9 +246,6 @@
     "firebase/php-jwt": {
         "version": "v5.0.0"
     },
-    "fp/jsformvalidator-bundle": {
-        "version": "1.5-dev"
-    },
     "friendsofphp/php-cs-fixer": {
         "version": "2.2",
         "recipe": {
@@ -396,9 +387,6 @@
     "league/flysystem-aws-s3-v3": {
         "version": "1.0.23"
     },
-    "league/flysystem-cached-adapter": {
-        "version": "1.0.9"
-    },
     "league/iso3166": {
         "version": "2.1.5"
     },
@@ -488,17 +476,11 @@
     "phing/phing": {
         "version": "2.16.1"
     },
-    "php-cs-fixer/diff": {
-        "version": "v1.3.0"
-    },
     "php-http/client-common": {
         "version": "2.5.0"
     },
     "php-http/discovery": {
         "version": "1.7.4"
-    },
-    "php-http/guzzle6-adapter": {
-        "version": "v2.0.1"
     },
     "php-http/httplug": {
         "version": "2.1.0"
@@ -750,6 +732,9 @@
     "shopsys/http-smoke-testing": {
         "version": "dev-mg-weird-flex-but-ok"
     },
+    "shopsys/jsformvalidator-bundle": {
+        "version": "v1.7.0"
+    },
     "shopsys/migrations": {
         "version": "dev-mg-weird-flex-but-ok"
     },
@@ -828,9 +813,6 @@
     "studio-42/elfinder": {
         "version": "2.1.50"
     },
-    "superbalist/flysystem-google-storage": {
-        "version": "7.2.2"
-    },
     "swiftmailer/swiftmailer": {
         "version": "v6.2.1"
     },
@@ -869,9 +851,6 @@
         ]
     },
     "symfony/css-selector": {
-        "version": "v3.4.33"
-    },
-    "symfony/debug": {
         "version": "v3.4.33"
     },
     "symfony/debug-bundle": {
@@ -962,11 +941,17 @@
     "symfony/http-kernel": {
         "version": "v3.4.33"
     },
-    "symfony/inflector": {
-        "version": "v3.4.33"
-    },
-    "symfony/intl": {
-        "version": "v3.4.33"
+    "symfony/mailer": {
+        "version": "5.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "4.3",
+            "ref": "2bf89438209656b85b9a49238c4467bff1b1f939"
+        },
+        "files": [
+            "config/packages/mailer.yaml"
+        ]
     },
     "symfony/mime": {
         "version": "v4.3.6"
@@ -1051,9 +1036,6 @@
             "config/packages/prod/routing.yaml",
             "config/routes.yaml"
         ]
-    },
-    "symfony/security": {
-        "version": "v3.4.33"
     },
     "symfony/security-bundle": {
         "version": "3.3",
@@ -1197,18 +1179,6 @@
     },
     "tuscanicz/enum": {
         "version": "v2.1"
-    },
-    "twig/extensions": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "a86723ee8d8b2f9437c8ce60a5546a1c267da5ed"
-        },
-        "files": [
-            "config/packages/twig_extensions.yaml"
-        ]
     },
     "twig/twig": {
         "version": "v2.12.1"

@@ -1507,11 +1507,11 @@ Restricted categories of the advert (the advert is shown in these categories onl
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>image</strong></td>
+<td colspan="2" valign="top"><strong>images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
-Advert image
+Advert images
 
 </td>
 </tr>

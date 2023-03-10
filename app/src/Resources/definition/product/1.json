@@ -312,6 +312,9 @@
       "availability_status": {
         "type": "text"
       },
+      "availability_dispatch_time": {
+        "type": "integer"
+      },
       "is_variant": {
         "type": "boolean"
       },

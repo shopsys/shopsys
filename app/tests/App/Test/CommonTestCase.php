@@ -60,11 +60,6 @@ abstract class CommonTestCase extends WebTestCase implements ServiceContainerTes
     abstract public function createContainer(): ContainerInterface;
 
     /**
-     * @return \Symfony\Component\DependencyInjection\ContainerInterface
-     */
-    abstract protected function getContainer(): ContainerInterface;
-
-    /**
      * @param string $referenceName
      * @return object
      */
@@ -99,7 +94,7 @@ abstract class CommonTestCase extends WebTestCase implements ServiceContainerTes
      */
     protected function getLocalizedPathOnFirstDomainByRouteName(string $routeName, array $parameters = [], int $absolute = UrlGeneratorInterface::ABSOLUTE_URL): string
     {
-        $domainRouterFactory = $this->getContainer()->get(DomainRouterFactory::class);
+        $domainRouterFactory = self::getContainer()->get(DomainRouterFactory::class);
         $router = $domainRouterFactory->getRouter(Domain::FIRST_DOMAIN_ID);
 
         return $router->generate($routeName, $parameters, $absolute);

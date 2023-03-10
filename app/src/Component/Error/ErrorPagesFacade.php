@@ -6,7 +6,7 @@ namespace App\Component\Error;
 
 use App\Kernel;
 use DevOps\KubernetesDeployment\Component\Error\ErrorPagesFacade as BaseErrorPagesFacade;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Error\Exception\BadErrorPageStatusCodeException;
@@ -24,7 +24,7 @@ class ErrorPagesFacade extends BaseErrorPagesFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem
-     * @param \League\Flysystem\FilesystemInterface $abstractFilesystem
+     * @param \League\Flysystem\FilesystemOperator $abstractFilesystem
      * @param string $environment
      */
     public function __construct(
@@ -32,7 +32,7 @@ class ErrorPagesFacade extends BaseErrorPagesFacade
         Domain $domain,
         DomainRouterFactory $domainRouterFactory,
         Filesystem $filesystem,
-        FilesystemInterface $abstractFilesystem,
+        FilesystemOperator $abstractFilesystem,
         string $environment = EnvironmentType::PRODUCTION
     ) {
         parent::__construct($errorPagesDir, $domain, $domainRouterFactory, $filesystem, $abstractFilesystem);
@@ -63,6 +63,7 @@ class ErrorPagesFacade extends BaseErrorPagesFacade
 
         $errorPageResponse = $errorPageKernel->handle($errorPageFakeRequest);
         $errorPageKernel->terminate($errorPageFakeRequest, $errorPageResponse);
+        $errorPageKernel->shutdown();
 
         if ($expectedStatusCode !== $errorPageResponse->getStatusCode()) {
             throw new BadErrorPageStatusCodeException(

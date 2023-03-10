@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory as BaseFilte
 
 /**
  * @property \App\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer
- * @method __construct(\App\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer, \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain)
+ * @method __construct(\App\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer, \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain)
  * @method \App\Model\Product\Search\FilterQuery createListableProductsByCategoryId(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $categoryId)
  * @method \App\Model\Product\Search\FilterQuery createWithProductFilterData(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit)
  * @method \App\Model\Product\Search\FilterQuery createListableProductsByBrandId(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $brandId)
@@ -26,6 +26,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory as BaseFilte
  * @method \App\Model\Product\Search\FilterQuery createVisibleProductsByProductUuidsFilter(string[] $productUuids)
  * @method \App\Model\Product\Search\FilterQuery createSellableProductsByProductUuidsFilter(string[] $productUuids)
  * @method \App\Model\Product\Search\FilterQuery createListableWithProductFilter(\App\Model\Product\Filter\ProductFilterData $productFilterData)
+ * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  */
 class FilterQueryFactory extends BaseFilterQueryFactory
 {

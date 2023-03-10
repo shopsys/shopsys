@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Navigation;
 
 use App\DataFixtures\Demo\CategoryDataFixture;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -31,20 +32,20 @@ class NavigationTest extends GraphQlTestCase
             "data": {
                 "navigation": [
                     {
-                        "name": "' . t('Catalog', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
+                        "name": "' . t('Catalog', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
                         "link": "/#",
                         "categoriesByColumns": [
                             {
                                 "columnNumber": 1,
                                 "categories": [
                                     {
-                                        "name": "' . t('Electronics', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                                        "name": "' . t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                                     },
                                     {
-                                        "name": "' . t('Books', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                                        "name": "' . t('Books', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                                     },
                                     {
-                                        "name": "' . t('Toys', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                                        "name": "' . t('Toys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                                     }
                                 ]
                             },
@@ -52,7 +53,7 @@ class NavigationTest extends GraphQlTestCase
                                 "columnNumber": 2,
                                 "categories": [
                                     {
-                                        "name": "' . t('Garden tools', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                                        "name": "' . t('Garden tools', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                                     }
                                 ]
                             },
@@ -60,29 +61,29 @@ class NavigationTest extends GraphQlTestCase
                                 "columnNumber": 3,
                                 "categories": [
                                     {
-                                        "name": "' . t('Food', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                                        "name": "' . t('Food', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                                     }
                                 ]
                             }
                         ]
                     },
                     {
-                        "name": "' . t('Gadgets', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
+                        "name": "' . t('Gadgets', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
                         "link": "' . $this->getLink(CategoryDataFixture::CATEGORY_ELECTRONICS) . '",
                         "categoriesByColumns": []
                     },
                     {
-                        "name": "' . t('Bookworm', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
+                        "name": "' . t('Bookworm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
                         "link": "' . $this->getLink(CategoryDataFixture::CATEGORY_BOOKS) . '",
                         "categoriesByColumns": []
                     },
                     {
-                        "name": "' . t('Growing', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
+                        "name": "' . t('Growing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
                         "link": "' . $this->getLink(CategoryDataFixture::CATEGORY_GARDEN_TOOLS) . '",
                         "categoriesByColumns": []
                     },
                     {
-                        "name": "' . t('Snack', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
+                        "name": "' . t('Snack', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
                         "link": "' . $this->getLink(CategoryDataFixture::CATEGORY_FOOD) . '",
                         "categoriesByColumns": []
                     }

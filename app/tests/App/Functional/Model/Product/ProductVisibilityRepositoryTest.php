@@ -281,7 +281,12 @@ class ProductVisibilityRepositoryTest extends FunctionalTestCase
      */
     private function createImage(string $entityName, int $entityId): void
     {
-        $image = new Image($entityName, $entityId, null, null);
+        $namesIndexedByLocale = [];
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $namesIndexedByLocale[$locale] = $entityName . '-' . $entityId . ' (' . $locale . ')';
+        }
+
+        $image = new Image($entityName, $entityId, $namesIndexedByLocale, null, null);
         $image->setAkeneoImageType('image_main');
         $image->setFileAsUploaded('image', '/web/public/frontend/images/noimage.png');
         $this->em->persist($image);

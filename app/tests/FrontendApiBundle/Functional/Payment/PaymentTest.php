@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Payment\Payment;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class PaymentTest extends GraphQlTestCase
@@ -37,7 +38,7 @@ class PaymentTest extends GraphQlTestCase
         $arrayExpected = [
             'data' => [
                 'payment' => [
-                    'name' => t('Cash on delivery', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                    'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 ],
             ],
         ];

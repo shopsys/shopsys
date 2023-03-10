@@ -9,4 +9,4 @@ PaymentInCartMutation:
                     input:
                         type: ChangePaymentInCartInput!
                         validation: cascade
-                resolve: "@=mutation('changePaymentInCart', [args])"
+                resolve: "@=mutation('changePaymentInCartMutation', args)"

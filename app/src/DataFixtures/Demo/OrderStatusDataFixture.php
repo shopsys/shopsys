@@ -8,6 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\DataFixture\Exception\UnknownNameTranslationForOrderStatusReferenceNameException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 
@@ -75,16 +76,16 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
         foreach ($this->domain->getAllLocales() as $locale) {
             switch ($referenceName) {
                 case self::ORDER_STATUS_NEW:
-                    $orderStatusData->name[$locale] = t('New [adjective]', [], 'dataFixtures', $locale);
+                    $orderStatusData->name[$locale] = t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
                     break;
                 case self::ORDER_STATUS_IN_PROGRESS:
-                    $orderStatusData->name[$locale] = t('In Progress', [], 'dataFixtures', $locale);
+                    $orderStatusData->name[$locale] = t('In Progress', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
                     break;
                 case self::ORDER_STATUS_DONE:
-                    $orderStatusData->name[$locale] = t('Done', [], 'dataFixtures', $locale);
+                    $orderStatusData->name[$locale] = t('Done', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
                     break;
                 case self::ORDER_STATUS_CANCELED:
-                    $orderStatusData->name[$locale] = t('Canceled', [], 'dataFixtures', $locale);
+                    $orderStatusData->name[$locale] = t('Canceled', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
                     break;
                 default:
                     throw new UnknownNameTranslationForOrderStatusReferenceNameException($referenceName);

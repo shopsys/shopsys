@@ -86,7 +86,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
             "email": "no-reply@shopsys.com",
             "telephone": "605000123",
             "newsletterSubscription": true,
-            "street": "Hlubinská 5",
+            "street": "Hlubinská 10",
             "city": "Ostrava",
             "postcode": "70200",
             "country": {

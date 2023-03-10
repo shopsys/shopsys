@@ -16,7 +16,8 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade as BaseCurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @property \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
@@ -24,73 +25,36 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
 {
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeProductRepository
-     */
-    private $promoCodeProductRepository;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
-     * @var \App\Model\Order\PromoCode\ProductPromoCodeFiller
-     */
-    private ProductPromoCodeFiller $productPromoCodeFiller;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeLimitResolver
-     */
-    private PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    private CurrentCustomerUser $currentCustomerUser;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodePricingGroupRepository
-     */
-    private PromoCodePricingGroupRepository $promoCodePricingGroupRepository;
-
-    /**
      * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Order\PromoCode\ProductPromoCodeFiller $productPromoCodeFiller
      * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Order\PromoCode\PromoCodePricingGroupRepository $promoCodePricingGroupRepository
      */
     public function __construct(
         PromoCodeFacade $promoCodeFacade,
-        SessionInterface $session,
-        PromoCodeProductRepository $promoCodeProductRepository,
-        Domain $domain,
-        ProductPromoCodeFiller $productPromoCodeFiller,
-        PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver,
-        CurrentCustomerUser $currentCustomerUser,
-        PromoCodePricingGroupRepository $promoCodePricingGroupRepository
+        RequestStack $requestStack,
+        private readonly PromoCodeProductRepository $promoCodeProductRepository,
+        private readonly Domain $domain,
+        private readonly ProductPromoCodeFiller $productPromoCodeFiller,
+        private readonly PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver,
+        private readonly CurrentCustomerUser $currentCustomerUser,
+        private readonly PromoCodePricingGroupRepository $promoCodePricingGroupRepository
     ) {
         parent::__construct(
             $promoCodeFacade,
-            $session
+            $requestStack
         );
-
-        $this->promoCodeProductRepository = $promoCodeProductRepository;
-        $this->domain = $domain;
-        $this->productPromoCodeFiller = $productPromoCodeFiller;
-        $this->promoCodeLimitByCartTotalResolver = $promoCodeLimitByCartTotalResolver;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->promoCodePricingGroupRepository = $promoCodePricingGroupRepository;
     }
 
     /**
      * @param string $enteredCode
      * @deprecated use App\Model\Cart\CartPromoCodeFacade::applyPromoCodeByCode() instead
      */
-    public function setEnteredPromoCode($enteredCode)
+    public function setEnteredPromoCode($enteredCode): void
     {
         throw new DeprecatedMethodException();
     }
@@ -99,7 +63,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
      * @deprecated use App\Model\Cart\Cart::getFirstAppliedPromoCode
      * @return \App\Model\Order\PromoCode\PromoCode|null
      */
-    public function getValidEnteredPromoCodeOrNull()
+    public function getValidEnteredPromoCodeOrNull(): ?PromoCode
     {
         throw new DeprecatedMethodException();
     }
@@ -107,7 +71,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     /**
      * @deprecated use App\Model\Cart\CartPromoCodeFacade::removePromoCode() instead
      */
-    public function removeEnteredPromoCode()
+    public function removeEnteredPromoCode(): void
     {
         throw new DeprecatedMethodException();
     }

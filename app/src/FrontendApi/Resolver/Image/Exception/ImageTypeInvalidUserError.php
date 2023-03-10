@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Image\Exception;
 
-use Overblog\GraphQLBundle\Error\UserError;
+use Shopsys\FrontendApiBundle\Model\Error\EntityNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
-class ImageTypeInvalidUserError extends UserError implements UserErrorWithCodeInterface
+class ImageTypeInvalidUserError extends EntityNotFoundUserError implements UserErrorWithCodeInterface
 {
     private const CODE = 'image-type-invalid';
 

@@ -13,6 +13,7 @@ use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
@@ -68,14 +69,14 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
             $locale = $domainConfig->getLocale();
 
             $navigationItemData = $this->navigationItemDataFactory->createNew();
-            $navigationItemData->name = t('Catalog', [], 'dataFixtures', $locale);
+            $navigationItemData->name = t('Catalog', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $navigationItemData->url = '#';
             $navigationItemData->domainId = $domainId;
             $this->addCategoriesToNavigationItem($navigationItemData);
             $this->createItem($navigationItemData);
 
             $navigationItemData = $this->navigationItemDataFactory->createNew();
-            $navigationItemData->name = t('Gadgets', [], 'dataFixtures', $locale);
+            $navigationItemData->name = t('Gadgets', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $navigationItemData->url = $this->generateUrlForCategoryOnDomain(
                 CategoryDataFixture::CATEGORY_ELECTRONICS,
                 $domainId
@@ -84,7 +85,7 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
             $this->createItem($navigationItemData);
 
             $navigationItemData = $this->navigationItemDataFactory->createNew();
-            $navigationItemData->name = t('Bookworm', [], 'dataFixtures', $locale);
+            $navigationItemData->name = t('Bookworm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $navigationItemData->url = $this->generateUrlForCategoryOnDomain(
                 CategoryDataFixture::CATEGORY_BOOKS,
                 $domainId
@@ -93,7 +94,7 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
             $this->createItem($navigationItemData);
 
             $navigationItemData = $this->navigationItemDataFactory->createNew();
-            $navigationItemData->name = t('Growing', [], 'dataFixtures', $locale);
+            $navigationItemData->name = t('Growing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $navigationItemData->url = $this->generateUrlForCategoryOnDomain(
                 CategoryDataFixture::CATEGORY_GARDEN_TOOLS,
                 $domainId
@@ -102,7 +103,7 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
             $this->createItem($navigationItemData);
 
             $navigationItemData = $this->navigationItemDataFactory->createNew();
-            $navigationItemData->name = t('Snack', [], 'dataFixtures', $locale);
+            $navigationItemData->name = t('Snack', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $navigationItemData->url = $this->generateUrlForCategoryOnDomain(
                 CategoryDataFixture::CATEGORY_FOOD,
                 $domainId

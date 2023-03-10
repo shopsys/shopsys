@@ -8,7 +8,6 @@ use App\Model\Article\Article;
 use App\Model\Article\ArticleData;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Article\ArticleFormType;
-use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -29,18 +28,13 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builderArticleDataGroup = $builder->get('articleData');
-        $builderArticleDataGroup->add('createdAt', DatePickerType::class, [
-            'required' => true,
-            'constraints' => [
-                new Constraints\NotBlank(['message' => 'Please enter date of creation']),
-            ],
-            'label' => t('Creation date'),
-        ]);
 
         $builderArticleDataGroup->add('external', YesNoType::class, [
             'required' => true,
             'label' => t('Otevírat v novém okně'),
-            'position' => ['after' => 'hidden'],
+            'position' => [
+                'after' => 'hidden',
+            ],
         ]);
 
         $builderArticleDataGroup->add('type', ChoiceType::class, [
@@ -52,7 +46,9 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
             'expanded' => true,
             'multiple' => false,
             'label' => t('Typ'),
-            'position' => ['after' => 'external'],
+            'position' => [
+                'after' => 'external',
+            ],
         ]);
 
         $builderArticleDataGroup->add('url', UrlType::class, [

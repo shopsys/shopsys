@@ -4,21 +4,27 @@ declare(strict_types=1);
 
 namespace App\Model\NotificationBar;
 
-use App\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 
 class NotificationBarDataFactory
 {
     /**
-     * @var \App\Component\Image\ImageFacade
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      */
-    private $imageFacade;
+    public function __construct(
+        private readonly ImageUploadDataFactory $imageUploadDataFactory
+    ) {
+    }
 
     /**
-     * @param \App\Component\Image\ImageFacade $imageFacade
+     * @return \App\Model\NotificationBar\NotificationBarData
      */
-    public function __construct(ImageFacade $imageFacade)
+    private function createInstance(): NotificationBarData
     {
-        $this->imageFacade = $imageFacade;
+        $notificationBarData = new NotificationBarData();
+        $notificationBarData->image = $this->imageUploadDataFactory->create();
+
+        return $notificationBarData;
     }
 
     /**
@@ -26,7 +32,7 @@ class NotificationBarDataFactory
      */
     public function create(): NotificationBarData
     {
-        $notificationBarData = new NotificationBarData();
+        $notificationBarData = $this->createInstance();
         $this->fillNew($notificationBarData);
 
         return $notificationBarData;
@@ -38,7 +44,7 @@ class NotificationBarDataFactory
      */
     public function createFromNotificationBar(NotificationBar $notificationBar): NotificationBarData
     {
-        $notificationBarData = new NotificationBarData();
+        $notificationBarData = $this->createInstance();
 
         $notificationBarData->domainId = $notificationBar->getDomainId();
         $notificationBarData->text = $notificationBar->getText();
@@ -47,7 +53,7 @@ class NotificationBarDataFactory
         $notificationBarData->rgbColor = $notificationBar->getRgbColor();
         $notificationBarData->hidden = $notificationBar->isHidden();
 
-        $notificationBarData->image->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($notificationBar, null);
+        $notificationBarData->image = $this->imageUploadDataFactory->createFromEntityAndType($notificationBar, null);
 
         return $notificationBarData;
     }

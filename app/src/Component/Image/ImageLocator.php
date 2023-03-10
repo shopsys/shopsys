@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Component\Image;
 
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator as BaseImageLocator;
@@ -23,9 +23,9 @@ class ImageLocator extends BaseImageLocator
     /**
      * @param string $imageDir
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      */
-    public function __construct($imageDir, ImageConfig $imageConfig, FilesystemInterface $filesystem)
+    public function __construct($imageDir, ImageConfig $imageConfig, FilesystemOperator $filesystem)
     {
         parent::__construct($imageDir, $imageConfig, $filesystem);
     }

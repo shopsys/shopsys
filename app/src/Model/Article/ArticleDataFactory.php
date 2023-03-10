@@ -49,7 +49,6 @@ class ArticleDataFactory extends BaseArticleDataFactory
     {
         parent::fillFromArticle($articleData, $article);
 
-        $articleData->createdAt = $article->getCreatedAt();
         $articleData->external = $article->isExternal();
         $articleData->type = $article->getType();
         $articleData->url = $article->getUrl();

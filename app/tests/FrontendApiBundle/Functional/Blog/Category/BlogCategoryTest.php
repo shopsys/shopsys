@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Blog\Category;
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\DataFixtures\Demo\BlogArticleDataFixture;
 use App\Model\Blog\Category\BlogCategory;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -136,9 +137,9 @@ class BlogCategoryTest extends GraphQlTestCase
                 'blogCategory' => [
                     'blogArticles' => [
                         'edges' => [
-                            ['node' => ['name' => t('Blog article for products testing', [], 'dataFixtures', $locale)]],
-                            ['node' => ['name' => t('GrapesJS page', [], 'dataFixtures', $locale)]],
-                            ['node' => ['name' => t('Blog article example %counter% %locale%', ['%counter%' => 30, '%locale%' => $locale], 'dataFixtures', $locale)]],
+                            ['node' => ['name' => t('Blog article for products testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
+                            ['node' => ['name' => t('GrapesJS page', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
+                            ['node' => ['name' => t('Blog article example %counter% %locale%', ['%counter%' => 30, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
                         ],
                     ],
                 ],
@@ -171,9 +172,9 @@ class BlogCategoryTest extends GraphQlTestCase
                 'blogCategory' => [
                     'blogArticles' => [
                         'edges' => [
-                            ['node' => ['name' => t('Blog article for products testing', [], 'dataFixtures', $locale)]],
-                            ['node' => ['name' => t('GrapesJS page', [], 'dataFixtures', $locale)]],
-                            ['node' => ['name' => t('Blog article example %counter% %locale%', ['%counter%' => 29, '%locale%' => $locale], 'dataFixtures', $locale)]],
+                            ['node' => ['name' => t('Blog article for products testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
+                            ['node' => ['name' => t('GrapesJS page', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
+                            ['node' => ['name' => t('Blog article example %counter% %locale%', ['%counter%' => 29, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)]],
                         ],
                     ],
                 ],
@@ -241,15 +242,15 @@ class BlogCategoryTest extends GraphQlTestCase
             'data' => [
                 'blogCategory' => [
                     'uuid' => $this->blogCategory->getUuid(),
-                    'name' => t('First subsection %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
-                    'description' => t('description - First subsection %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
+                    'name' => t('First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                    'description' => t('description - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                     'parent' => [
-                        'name' => t('Main blog page - %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
+                        'name' => t('Main blog page - %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                     ],
                     'children' => [],
-                    'seoTitle' => t('title - First subsection %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
-                    'seoH1' => t('First subsection %locale% - h1', ['%locale%' => $locale], 'dataFixtures', $locale),
-                    'seoMetaDescription' => t('description - First subsection %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
+                    'seoTitle' => t('title - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                    'seoH1' => t('First subsection %locale% - h1', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                    'seoMetaDescription' => t('description - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                     'link' => $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl),
                     'slug' => '/' . $friendlyUrl->getSlug(),
                     'breadcrumb' => [
@@ -258,18 +259,18 @@ class BlogCategoryTest extends GraphQlTestCase
                             'slug' => $firstBlogCategorySlug,
                         ],
                         [
-                            'name' => t('First subsection %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
+                            'name' => t('First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                             'slug' => $this->urlGenerator->generate('front_blogcategory_detail', ['id' => $this->blogCategory->getId()]),
                         ],
                     ],
                     'blogCategoriesTree' => [
                         [
-                            'name' => t('Main blog page - %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
+                            'name' => t('Main blog page - %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                             'children' => [
                                 [
-                                    'name' => t('First subsection %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
+                                    'name' => t('First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                                 ], [
-                                    'name' => t('Second subsection %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
+                                    'name' => t('Second subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                                 ],
                             ],
                         ],

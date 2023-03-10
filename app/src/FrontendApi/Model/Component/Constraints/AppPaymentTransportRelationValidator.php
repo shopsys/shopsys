@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class AppPaymentTransportRelationValidator extends PaymentTransportRelationValidator
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
+     * @var \App\Model\Customer\User\CurrentCustomerUser
      */
     private CurrentCustomerUser $currentCustomerUser;
 
@@ -39,7 +39,7 @@ class AppPaymentTransportRelationValidator extends PaymentTransportRelationValid
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(

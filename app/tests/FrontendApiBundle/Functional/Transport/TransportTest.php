@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\Model\Transport\Transport;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class TransportTest extends GraphQlTestCase
@@ -37,7 +38,7 @@ class TransportTest extends GraphQlTestCase
         $arrayExpected = [
             'data' => [
                 'transport' => [
-                    'name' => t('PPL', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                    'name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 ],
             ],
         ];

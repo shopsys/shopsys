@@ -8,6 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitData;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
@@ -72,65 +73,65 @@ class UnitDataFixture extends AbstractReferenceFixture
         $unitData = $this->unitDataFactory->create();
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $unitData->name[$locale] = t('m³', [], 'dataFixtures', $locale);
+            $unitData->name[$locale] = t('m³', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $this->createUnit($unitData, self::UNIT_CUBIC_METERS);
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $unitData->name[$locale] = t('pcs', [], 'dataFixtures', $locale);
+            $unitData->name[$locale] = t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $this->createUnit($unitData, self::UNIT_PIECES);
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $unitData->name[$locale] = t('g', [], 'dataFixtures', $locale);
+            $unitData->name[$locale] = t('g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $unitData->akeneoCode = 'GRAM';
         $this->createUnit($unitData, self::UNIT_GRAM);
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $unitData->name[$locale] = t('cm', [], 'dataFixtures', $locale);
+            $unitData->name[$locale] = t('cm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $unitData->akeneoCode = 'CENTIMETER';
         $this->createUnit($unitData, self::UNIT_CENTIMETER);
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $unitData->name[$locale] = t('in', [], 'dataFixtures', $locale);
+            $unitData->name[$locale] = t('in', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $unitData->akeneoCode = 'INCH';
         $this->createUnit($unitData, self::UNIT_INCH);
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $unitData->name[$locale] = t('t', [], 'dataFixtures', $locale);
+            $unitData->name[$locale] = t('t', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $unitData->akeneoCode = 'TON';
         $this->createUnit($unitData, self::UNIT_TON);
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $unitData->name[$locale] = t('kW', [], 'dataFixtures', $locale);
+            $unitData->name[$locale] = t('kW', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $unitData->akeneoCode = 'KILOWATT';
         $this->createUnit($unitData, self::UNIT_KILOWATT);
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $unitData->name[$locale] = t('kg', [], 'dataFixtures', $locale);
+            $unitData->name[$locale] = t('kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $unitData->akeneoCode = 'KILOGRAM';
         $this->createUnit($unitData, self::UNIT_KILOGRAM);
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $unitData->name[$locale] = t('W', [], 'dataFixtures', $locale);
+            $unitData->name[$locale] = t('W', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $unitData->akeneoCode = 'WATT';
         $this->createUnit($unitData, self::UNIT_WATT);
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $unitData->name[$locale] = t('V', [], 'dataFixtures', $locale);
+            $unitData->name[$locale] = t('V', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $unitData->akeneoCode = 'VOLT';
         $this->createUnit($unitData, self::UNIT_VOLT);
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $unitData->name[$locale] = t('m', [], 'dataFixtures', $locale);
+            $unitData->name[$locale] = t('m', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $unitData->akeneoCode = 'METER';
         $this->createUnit($unitData, self::UNIT_METER);

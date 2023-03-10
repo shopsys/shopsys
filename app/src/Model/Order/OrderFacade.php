@@ -18,6 +18,7 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
@@ -81,6 +82,7 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @method updateOrderDataWithDeliveryAddress(\App\Model\Order\OrderData $orderData, \App\Model\Customer\DeliveryAddress|null $deliveryAddress)
  * @method updateTransportAndPaymentNamesInOrderData(\App\Model\Order\OrderData $orderData, \App\Model\Order\Order $order)
  * @method fillOrderItems(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview)
+ * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  */
 class OrderFacade extends BaseOrderFacade
 {
@@ -128,7 +130,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade $orderProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
@@ -376,7 +378,7 @@ class OrderFacade extends BaseOrderFacade
     ): Item\OrderItem {
         $name = sprintf(
             '%s %s - %s',
-            t('Promo code', [], 'messages', $locale),
+            t('Promo code', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale),
             $this->numberFormatterExtension->formatPercent(-$discountPercent, $locale),
             $orderItem->getName()
         );
@@ -589,7 +591,7 @@ class OrderFacade extends BaseOrderFacade
         }
 
         $orderItemData = $this->orderItemDataFactory->create();
-        $orderItemData->name = t('Rounding', [], 'messages', $locale);
+        $orderItemData->name = t('Rounding', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale);
         $orderItemData->priceWithoutVat = $roundingPrice->getPriceWithoutVat();
         $orderItemData->priceWithVat = $roundingPrice->getPriceWithVat();
         $orderItemData->vatPercent = '0';

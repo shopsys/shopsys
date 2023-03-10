@@ -24,11 +24,11 @@ class AdvertDataFactory extends BaseAdvertDataFactory
     {
         parent::fillFromAdvert($advertData, $advert);
 
-        $advertData->image->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($advert, AdvertFacade::IMAGE_TYPE_WEB);
+        $advertData->image = $this->imageUploadDataFactory->createFromEntityAndType($advert, AdvertFacade::IMAGE_TYPE_WEB);
+        $advertData->mobileImage = $this->imageUploadDataFactory->createFromEntityAndType($advert, AdvertFacade::IMAGE_TYPE_MOBILE);
 
         $advertData->datetimeVisibleFrom = $advert->getDatetimeVisibleFrom();
         $advertData->datetimeVisibleTo = $advert->getDatetimeVisibleTo();
-        $advertData->mobileImage->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($advert, AdvertFacade::IMAGE_TYPE_MOBILE);
         $advertData->categories = $advert->getCategories();
     }
 
@@ -37,6 +37,10 @@ class AdvertDataFactory extends BaseAdvertDataFactory
      */
     public function createInstance(): BaseAdvertData
     {
-        return new AdvertData();
+        $advertData = new AdvertData();
+        $advertData->image = $this->imageUploadDataFactory->create();
+        $advertData->mobileImage = $this->imageUploadDataFactory->create();
+
+        return $advertData;
     }
 }

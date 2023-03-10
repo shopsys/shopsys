@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFac
 
 /**
  * @property \App\Model\Customer\User\CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository
- * @method __construct(\Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainDataFactoryInterface $customerUserRefreshTokenChainDataFactory, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFactoryInterface $customerUserRefreshTokenChainFactory, \Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface $encoderFactory, \App\Model\Customer\User\CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository)
+ * @method __construct(\Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainDataFactoryInterface $customerUserRefreshTokenChainDataFactory, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFactoryInterface $customerUserRefreshTokenChainFactory, \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory, \App\Model\Customer\User\CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository)
  * @method removeAllCustomerUserRefreshTokenChains(\App\Model\Customer\User\CustomerUser $customerUser)
  */
 class CustomerUserRefreshTokenChainFacade extends BaseCustomerUserRefreshTokenChainFacade
@@ -40,14 +40,14 @@ class CustomerUserRefreshTokenChainFacade extends BaseCustomerUserRefreshTokenCh
         string $secretChain,
         string $deviceId
     ): ?CustomerUserRefreshTokenChain {
-        $encoder = $this->encoderFactory->getEncoder($customerUser);
+        $encoder = $this->passwordHasherFactory->getPasswordHasher($customerUser);
         $customersTokenChains = $this->customerUserRefreshTokenChainRepository->findCustomersTokenChainsByDeviceId(
             $customerUser,
             $deviceId
         );
 
         foreach ($customersTokenChains as $customersTokenChain) {
-            if ($encoder->isPasswordValid($customersTokenChain->getTokenChain(), $secretChain, null)) {
+            if ($encoder->verify($customersTokenChain->getTokenChain(), $secretChain)) {
                 return $customersTokenChain;
             }
         }

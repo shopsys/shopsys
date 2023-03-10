@@ -9,6 +9,7 @@ use App\DataFixtures\Demo\PromoCodeDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Order\PromoCode\PromoCodeDataFactory;
 use App\Model\Order\PromoCode\PromoCodeFacade;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 
 class OrderWithPromoCodeTest extends AbstractOrderTestCase
@@ -105,12 +106,12 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
 
         return [
             0 => [
-                'name' => t('Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.74', $vatHigh),
                 'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.74', $vatHigh),
                 'quantity' => 1,
                 'vatRate' => '21.0000',
-                'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
+                'unit' => t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             ],
             1 => [
                 'name' => $this->getExpectedPromoCodeItemName($firstDomainLocale),
@@ -121,7 +122,7 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
                 'unit' => null,
             ],
             2 => [
-                'name' => t('Cash on delivery', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.59', $vatHigh),
                 'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.59', $vatHigh),
                 'quantity' => 1,
@@ -129,7 +130,7 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
                 'unit' => null,
             ],
             3 => [
-                'name' => t('Czech post', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
                 'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
                 'quantity' => 1,
@@ -225,9 +226,9 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
     {
         return sprintf(
             '%s %s - %s',
-            t('Promo code', [], 'messages', $firstDomainLocale),
+            t('Promo code', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
             $this->numberFormatterExtension->formatPercent(-10, $firstDomainLocale),
-            t('Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová', [], 'dataFixtures', $firstDomainLocale)
+            t('Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)
         );
     }
 

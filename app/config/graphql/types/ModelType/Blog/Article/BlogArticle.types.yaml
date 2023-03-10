@@ -54,7 +54,7 @@ BlogArticle:
             images:
                 type: "[Image!]!"
                 description: "Blog article images"
-                resolve: '@=resolver("resolveByBlogArticle", [value, args["type"], args["sizes"]])'
+                resolve: '@=query("imagesByBlogArticlePromiseQuery", value, args["type"], args["sizes"])'
                 args:
                     type:
                         type: "String"
@@ -65,7 +65,7 @@ BlogArticle:
             mainImage:
                 type: "Image"
                 description: "Blog article image by params"
-                resolve: '@=resolver("resolveMainImageByBlogArticle", [value, args["type"], args["size"]])'
+                resolve: '@=query("mainImageByBlogArticlePromiseQuery", value, args["type"], args["size"])'
                 args:
                     type:
                         type: "String"

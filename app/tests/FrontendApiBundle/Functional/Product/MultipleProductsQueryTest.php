@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Product;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class MultipleProductsQueryTest extends GraphQlTestCase
@@ -40,12 +41,12 @@ class MultipleProductsQueryTest extends GraphQlTestCase
         "edges": [
           {
             "node": {
-              "name": "' . t('Samsung UE75HU7500 (UHD)', [], 'dataFixtures', $firstDomainLocale) . '"
+              "name": "' . t('Samsung UE75HU7500 (UHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . '"
             }
           },
           {
             "node": {
-              "name": "' . t('LG 47LA790W (FHD)', [], 'dataFixtures', $firstDomainLocale) . '"
+              "name": "' . t('LG 47LA790W (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . '"
             }
           }
         ]
@@ -54,12 +55,12 @@ class MultipleProductsQueryTest extends GraphQlTestCase
         "edges": [
           {
             "node": {
-              "name": "' . t('Samsung T27D590EW', [], 'dataFixtures', $firstDomainLocale) . '"
+              "name": "' . t('Samsung T27D590EW', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . '"
             }
           },
           {
             "node": {
-              "name": "' . t('Samsung T27D590EX', [], 'dataFixtures', $firstDomainLocale) . '"
+              "name": "' . t('Samsung T27D590EX', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . '"
             }
           }
         ]

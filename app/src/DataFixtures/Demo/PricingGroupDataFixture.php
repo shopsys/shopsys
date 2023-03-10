@@ -8,6 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
@@ -79,7 +80,7 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
     {
         $defaultPricingGroupOnDomain = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainConfig->getId());
         $pricingGroupData = $this->pricingGroupDataFactory->createFromPricingGroup($defaultPricingGroupOnDomain);
-        $pricingGroupData->name = t('Ordinary customer', [], 'dataFixtures', $domainConfig->getLocale());
+        $pricingGroupData->name = t('Ordinary customer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale());
         $this->pricingGroupFacade->edit($defaultPricingGroupOnDomain->getId(), $pricingGroupData);
         $this->addReferenceForDomain(self::PRICING_GROUP_ORDINARY, $defaultPricingGroupOnDomain, $domainConfig->getId());
     }
@@ -90,7 +91,7 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
     private function createVipPricingGroup(DomainConfig $domainConfig): void
     {
         $pricingGroupData = $this->pricingGroupDataFactory->create();
-        $pricingGroupData->name = t('VIP', [], 'dataFixtures', $domainConfig->getLocale());
+        $pricingGroupData->name = t('VIP', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale());
         $domainId = $domainConfig->getId();
         $pricingGroup = $this->pricingGroupFacade->create($pricingGroupData, $domainId);
         $this->addReferenceForDomain(self::PRICING_GROUP_VIP, $pricingGroup, $domainId);

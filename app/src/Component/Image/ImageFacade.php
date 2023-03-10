@@ -8,7 +8,7 @@ use App\Model\Category\Category;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Psr\Log\LoggerInterface;
 use Shopsys\Cdn\Component\Image\ImageFacade as CdnImageFacade;
@@ -52,7 +52,7 @@ class ImageFacade extends CdnImageFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \App\Component\Image\ImageRepository $imageRepository
-     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \App\Component\FileUpload\FileUpload $fileUpload
      * @param \App\Component\Image\ImageLocator $imageLocator
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface $imageFactory
@@ -66,7 +66,7 @@ class ImageFacade extends CdnImageFacade
         EntityManagerInterface $em,
         ImageConfig $imageConfig,
         ImageRepository $imageRepository,
-        FilesystemInterface $filesystem,
+        FilesystemOperator $filesystem,
         FileUpload $fileUpload,
         ImageLocator $imageLocator,
         ImageFactoryInterface $imageFactory,
@@ -282,68 +282,9 @@ class ImageFacade extends CdnImageFacade
      * @param array $temporaryFilenames
      * @param string|null $type
      * @param bool $deleteOldImage
-     */
-    public function uploadImage($entity, $temporaryFilenames, $type, bool $deleteOldImage = true): void
-    {
-        $newImage = null;
-
-        if (count($temporaryFilenames) === 0) {
-            return;
-        }
-
-        $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
-        $entityName = $imageEntityConfig->getEntityName();
-        $entityId = $this->getEntityId($entity);
-        $oldImage = $this->imageRepository->findImageByEntity($entityName, $entityId, $type);
-
-        if ($oldImage !== null && $deleteOldImage === true) {
-            $this->em->remove($oldImage);
-        }
-
-        $this->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, $type);
-
-        $newImage = $this->imageFactory->create(
-            $imageEntityConfig->getEntityName(),
-            $entityId,
-            $type,
-            array_pop($temporaryFilenames)
-        );
-        $this->em->persist($newImage);
-
-        $this->em->flush();
-    }
-
-    /**
-     * @param object $entity
-     * @param array|null $temporaryFilenames
-     * @param string|null $type
-     */
-    protected function uploadImages($entity, $temporaryFilenames, $type): void
-    {
-        if ($temporaryFilenames !== null && count($temporaryFilenames) > 0) {
-            $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
-            $entityName = $imageEntityConfig->getEntityName();
-            $entityId = $this->getEntityId($entity);
-
-            $images = $this->imageFactory->createMultiple($imageEntityConfig, $entityId, $type, $temporaryFilenames);
-            foreach ($images as $image) {
-                $this->em->persist($image);
-            }
-
-            $this->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, $type);
-
-            $this->em->flush();
-        }
-    }
-
-    /**
-     * @param object $entity
-     * @param array $temporaryFilenames
-     * @param string|null $type
-     * @param bool $deleteOldImage
      * @return \App\Component\Image\Image|null
      */
-    public function uploadAndReturnImage($entity, $temporaryFilenames, $type, bool $deleteOldImage = true): ?Image
+    public function uploadAndReturnImage($entity, array $temporaryFilenames, ?string $type, bool $deleteOldImage = true): ?Image
     {
         $newImage = null;
 
@@ -352,6 +293,10 @@ class ImageFacade extends CdnImageFacade
             $entityName = $imageEntityConfig->getEntityName();
             $entityId = $this->getEntityId($entity);
             $oldImage = $this->imageRepository->findImageByEntity($imageEntityConfig->getEntityName(), $entityId, $type);
+            $generatedNamesIndexedByLocale = [];
+            foreach ($this->domain->getAllLocales() as $locale) {
+                $generatedNamesIndexedByLocale[$locale] = sprintf('%s - %d (%s)', $entityName, $entityId, $locale);
+            }
 
             if ($oldImage !== null && $deleteOldImage === true) {
                 $this->em->remove($oldImage);
@@ -363,8 +308,9 @@ class ImageFacade extends CdnImageFacade
             $newImage = $this->imageFactory->create(
                 $imageEntityConfig->getEntityName(),
                 $entityId,
-                $type,
-                array_pop($temporaryFilenames)
+                $generatedNamesIndexedByLocale,
+                array_pop($temporaryFilenames),
+                $type
             );
             $this->em->persist($newImage);
 

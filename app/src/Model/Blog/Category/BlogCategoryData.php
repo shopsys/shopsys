@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Blog\Category;
 
-use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 
 class BlogCategoryData
@@ -69,6 +68,5 @@ class BlogCategoryData
         $this->descriptions = [];
         $this->enabled = [];
         $this->urls = new UrlListData();
-        $this->image = new ImageUploadData();
     }
 }

@@ -6,24 +6,20 @@ namespace App\Model\Store;
 
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 
 class StoreDataFactory
 {
-    private Domain $domain;
-
-    /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private FriendlyUrlFacade $friendlyUrlFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      */
-    public function __construct(Domain $domain, FriendlyUrlFacade $friendlyUrlFacade)
-    {
-        $this->domain = $domain;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
+    public function __construct(
+        private readonly Domain $domain,
+        private readonly FriendlyUrlFacade $friendlyUrlFacade,
+        private readonly ImageUploadDataFactory $imageUploadDataFactory
+    ) {
     }
 
     /**
@@ -55,6 +51,7 @@ class StoreDataFactory
         $storeData->specialMessage = $store->getSpecialMessage();
         $storeData->locationLatitude = $store->getLocationLatitude();
         $storeData->locationLongitude = $store->getLocationLongitude();
+        $storeData->image = $this->imageUploadDataFactory->createFromEntityAndType($store);
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $storeData->isEnabledOnDomains[$domainId] = $store->isEnabled($domainId);
@@ -75,6 +72,9 @@ class StoreDataFactory
      */
     private function createInstance(): StoreData
     {
-        return new StoreData();
+        $storeData = new StoreData();
+        $storeData->image = $this->imageUploadDataFactory->create();
+
+        return $storeData;
     }
 }

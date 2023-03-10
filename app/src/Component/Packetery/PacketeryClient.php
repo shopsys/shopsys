@@ -109,12 +109,12 @@ class PacketeryClient implements TransferIdentificationInterface
     {
         $logger = $this->getTransferLogger();
         if (count($orders) === 0) {
-            $logger->addInfo('No orders to send to Packetery.');
+            $logger->info('No orders to send to Packetery.');
             $logger->persistAllLoggedTransferIssues();
             return;
         }
         if (!$this->packeteryConfig->isApiAllowed()) {
-            $logger->addError('Packetery API is not enabled or not set credentials.');
+            $logger->error('Packetery API is not enabled or not set credentials.');
             $logger->persistAllLoggedTransferIssues();
             return;
         }
@@ -125,21 +125,21 @@ class PacketeryClient implements TransferIdentificationInterface
                 $responseXml = $this->restApiPostRequest($xml);
                 $this->saveTrackingNumberFromResponse($responseXml, $order);
             } catch (TransportExceptionInterface $transportException) {
-                $logger->addError(
+                $logger->error(
                     'Transport error - packetery API.',
                     [
                         'msg' => $transportException->getMessage(),
                     ]
                 );
             } catch (Error $twigError) {
-                $logger->addError(
+                $logger->error(
                     'Render error - packetery xml: ',
                     [
                         'msg' => $twigError->getMessage(),
                     ]
                 );
             } catch (HttpExceptionInterface $httpException) {
-                $logger->addError(
+                $logger->error(
                     'Packetery http error: ',
                     [
                         'msg' => $httpException->getMessage(),
@@ -158,7 +158,7 @@ class PacketeryClient implements TransferIdentificationInterface
     {
         $logger = $this->getTransferLogger();
         if ($responseXml->getStatusCode() !== 200 || $responseXml->getContent(false) === '') {
-            $logger->addError(
+            $logger->error(
                 'Bad response from http client.',
                 [
                     'statusCode' => $responseXml->getStatusCode(),
@@ -169,7 +169,7 @@ class PacketeryClient implements TransferIdentificationInterface
         }
         $parsedResponse = new SimpleXMLElement($responseXml->getContent(false));
         if ((string)$parsedResponse->status === 'fault') {
-            $logger->addError(
+            $logger->error(
                 'Response from Packetery fault.',
                 [
                     'fault' => (string)$parsedResponse->fault,
@@ -181,7 +181,7 @@ class PacketeryClient implements TransferIdentificationInterface
         }
         $barcode = (string)$parsedResponse->result->barcode;
         $this->orderFacade->updateTrackingNumber($order, $barcode);
-        $logger->addInfo(
+        $logger->info(
             'Send packet data to packetery.',
             [
                 'orderNumber' => $order->getNumber(),

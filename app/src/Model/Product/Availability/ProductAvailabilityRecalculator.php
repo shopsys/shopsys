@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product\Availability;
 
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator as BaseProductAvailabilityRecalculator;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 /**
  * @property \App\Model\Product\Availability\ProductAvailabilityCalculation $productAvailabilityCalculation
@@ -17,9 +17,9 @@ class ProductAvailabilityRecalculator extends BaseProductAvailabilityRecalculato
 {
     /**
      * @deprecated Recalculator is disabled
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event): void
     {
     }
 

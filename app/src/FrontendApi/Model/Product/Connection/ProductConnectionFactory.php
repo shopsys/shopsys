@@ -210,7 +210,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         return new Paginator(
             $retrieveProductClosure,
             Paginator::MODE_PROMISE,
-            new ConnectionBuilder(function ($edges, $pageInfo) use ($productFilterOptionsClosure, $orderingMode, $defaultOrderingMode) {
+            new ConnectionBuilder(null, function ($edges, $pageInfo) use ($productFilterOptionsClosure, $orderingMode, $defaultOrderingMode) {
                 return new ProductConnection(
                     $edges,
                     $pageInfo,

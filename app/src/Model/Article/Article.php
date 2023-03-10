@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Article;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Article\Article as BaseArticle;
 use Shopsys\FrameworkBundle\Model\Article\ArticleData as BaseArticleData;
@@ -22,12 +21,6 @@ class Article extends BaseArticle
 
     public const TYPE_SITE = 'site';
     public const TYPE_LINK = 'link';
-
-    /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
-     */
-    private $createdAt;
 
     /**
      * @var bool
@@ -70,18 +63,9 @@ class Article extends BaseArticle
     {
         parent::setData($articleData);
 
-        $this->createdAt = $articleData->createdAt ?? new DateTime();
         $this->external = $articleData->external;
         $this->type = $articleData->type;
         $this->url = $articleData->url;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt(): DateTime
-    {
-        return $this->createdAt;
     }
 
     /**

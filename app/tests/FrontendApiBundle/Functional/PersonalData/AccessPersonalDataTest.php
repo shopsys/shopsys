@@ -21,9 +21,9 @@ class AccessPersonalDataTest extends GraphQlTestCase
         parent::setUp();
 
         /** @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory $personalDataAccessRequestDataFactory */
-        $personalDataAccessRequestDataFactory = $this->getContainer()->get(PersonalDataAccessRequestDataFactory::class);
+        $personalDataAccessRequestDataFactory = self::getContainer()->get(PersonalDataAccessRequestDataFactory::class);
         /** @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade $personalDataAccessRequestFacade */
-        $personalDataAccessRequestFacade = $this->getContainer()->get(PersonalDataAccessRequestFacade::class);
+        $personalDataAccessRequestFacade = self::getContainer()->get(PersonalDataAccessRequestFacade::class);
 
         $personalDataAccessRequest = $personalDataAccessRequestDataFactory->createForDisplay();
         $personalDataAccessRequest->email = 'no-reply@shopsys.com';

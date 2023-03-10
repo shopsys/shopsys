@@ -7,6 +7,7 @@ namespace App\DataFixtures\Demo;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade;
 
@@ -74,22 +75,22 @@ class SliderItemDataFixture extends AbstractReferenceFixture
             $sliderItemData->domainId = $domainId;
             $sliderItemData->hidden = false;
             $sliderItemData->gtmId = 'sliderItemTest';
-            $sliderItemData->sliderExtendedText = t('Pravidla akce', [], 'dataFixtures', $locale);
+            $sliderItemData->sliderExtendedText = t('Pravidla akce', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $sliderItemData->sliderExtendedTextLink = 'https://www.shopsys.cz';
 
-            $sliderItemData->name = t('40% SLEVA NA ÚLOŽNÉ PROSTORY', [], 'dataFixtures', $locale);
+            $sliderItemData->name = t('40% SLEVA NA ÚLOŽNÉ PROSTORY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $sliderItemData->link = 'https://www.shopsys.cz';
 
             $this->sliderItemFacade->create($sliderItemData);
 
             $sliderItemData->uuid = array_pop($this->uuidPool);
-            $sliderItemData->name = t('40% SLEVA NA POSTELE, MATRACE A ROŠTY', [], 'dataFixtures', $locale);
+            $sliderItemData->name = t('40% SLEVA NA POSTELE, MATRACE A ROŠTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $sliderItemData->link = 'https://shopsys.cz';
 
             $this->sliderItemFacade->create($sliderItemData);
 
             $sliderItemData->uuid = array_pop($this->uuidPool);
-            $sliderItemData->name = t('SLEVA 20% + 21% DPH NAVÍC', [], 'dataFixtures', $locale);
+            $sliderItemData->name = t('SLEVA 20% + 21% DPH NAVÍC', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $sliderItemData->link = 'https://shopsys.cz';
 
             $this->sliderItemFacade->create($sliderItemData);

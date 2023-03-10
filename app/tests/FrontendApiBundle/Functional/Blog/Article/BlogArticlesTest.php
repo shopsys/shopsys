@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Blog\Article;
 
 use App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class BlogArticlesTest extends GraphQlTestCase
@@ -16,7 +17,7 @@ class BlogArticlesTest extends GraphQlTestCase
         parent::setUp();
 
         /** @var \App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade $blogArticleFacade */
-        $blogArticleFacade = $this->getContainer()->get(BlogArticleElasticsearchFacade::class);
+        $blogArticleFacade = self::getContainer()->get(BlogArticleElasticsearchFacade::class);
         $this->totalBlogArticlesCount = $blogArticleFacade->getAllBlogArticlesTotalCount();
     }
 
@@ -44,7 +45,7 @@ class BlogArticlesTest extends GraphQlTestCase
             ],
             'case 4' => [
                 $this->getLastBlogArticleQuery(),
-                [['name' => t('Blog article for search testing', [], 'dataFixtures', $firstDomainLocale)]],
+                [['name' => t('Blog article for search testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]],
             ],
             'case 5' => [
                 $this->getHomepageBlogArticlesQuery(3),
@@ -161,16 +162,16 @@ class BlogArticlesTest extends GraphQlTestCase
     private function getExpectedBlogArticlesData(string $firstDomainLocale): array
     {
         return [
-            ['name' => t('Blog article for products testing', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('GrapesJS page', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 45, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 44, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 43, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 42, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 41, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 40, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 39, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 38, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
+            ['name' => t('Blog article for products testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('GrapesJS page', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 45, '%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 44, '%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 43, '%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 42, '%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 41, '%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 40, '%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 39, '%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 38, '%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
         ];
     }
 }

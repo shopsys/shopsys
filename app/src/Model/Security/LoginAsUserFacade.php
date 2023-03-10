@@ -16,7 +16,6 @@ use Shopsys\FrameworkBundle\Model\Security\Exception\LoginAsRememberedUserExcept
 use Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade as BaseLoginAsUserFacade;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
@@ -25,59 +24,32 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class LoginAsUserFacade extends BaseLoginAsUserFacade
 {
     /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
-     */
-    private RequestStack $requestStack;
-
-    /**
-     * @var \App\FrontendApi\Model\Token\TokenAuthenticator
-     */
-    private TokenAuthenticator $tokenAuthenticator;
-
-    /**
-     * @var \App\Model\Administrator\AdministratorFacade
-     */
-    private AdministratorFacade $administratorFacade;
-
-    /**
-     * @var \App\FrontendApi\Model\Token\TokenFacade
-     */
-    private TokenFacade $tokenFacade;
-
-    /**
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
-     * @param \App\FrontendApi\Model\Token\TokenFacade $tokenFacade
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \App\FrontendApi\Model\Token\TokenAuthenticator $tokenAuthenticator
      * @param \App\Model\Administrator\AdministratorFacade $administratorFacade
+     * @param \App\FrontendApi\Model\Token\TokenFacade $tokenFacade
      */
     public function __construct(
         TokenStorageInterface $tokenStorage,
         EventDispatcherInterface $eventDispatcher,
-        SessionInterface $session,
         CustomerUserRepository $customerUserRepository,
         AdministratorFrontSecurityFacade $administratorFrontSecurityFacade,
-        TokenFacade $tokenFacade,
         RequestStack $requestStack,
-        TokenAuthenticator $tokenAuthenticator,
-        AdministratorFacade $administratorFacade
+        private readonly TokenAuthenticator $tokenAuthenticator,
+        private readonly AdministratorFacade $administratorFacade,
+        private readonly TokenFacade $tokenFacade
     ) {
         parent::__construct(
             $tokenStorage,
             $eventDispatcher,
-            $session,
             $customerUserRepository,
-            $administratorFrontSecurityFacade
+            $administratorFrontSecurityFacade,
+            $requestStack
         );
-
-        $this->tokenFacade = $tokenFacade;
-        $this->requestStack = $requestStack;
-        $this->tokenAuthenticator = $tokenAuthenticator;
-        $this->administratorFacade = $administratorFacade;
     }
 
     /**

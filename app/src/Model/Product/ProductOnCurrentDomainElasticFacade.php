@@ -7,11 +7,8 @@ namespace App\Model\Product;
 use App\Model\Product\Filter\ProductFilterDataFactory;
 use App\Model\Product\Search\FilterQueryFactory;
 use App\Model\Product\Search\ProductElasticsearchRepository;
-use App\Model\Product\Search\ProductFilterDataToQueryTransformer;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
-use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
@@ -19,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade as BaseProductOnCurrentDomainElasticFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticsearchRepository;
 
 /**
@@ -33,30 +31,20 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticse
  * @property \App\Model\Product\Search\ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository
  * @property \App\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer
  * @property \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory
- * @method \App\Model\Product\Search\FilterQuery createListableProductsForBrandFilterQuery(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $brandId)
- * @method \App\Model\Product\Search\FilterQuery createFilterQueryWithProductFilterData(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit)
  * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData getProductFilterCountDataForAll(\App\Model\Product\Filter\ProductFilterData $productFilterData)
- * @method \App\Model\Product\Search\FilterQuery createListableProductsInCategoryFilterQuery(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $categoryId)
- * @method \App\Model\Product\Search\FilterQuery createListableProductsForSearchTextFilterQuery(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, string|null $searchText)
  * @method \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult getPaginatedProductsInCategory(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $categoryId)
+ * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  */
 class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElasticFacade
 {
     /**
-     * @var \App\Model\Product\Filter\ProductFilterDataFactory
-     */
-    private ProductFilterDataFactory $productFilterDataFactory;
-
-    /**
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
      * @param \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
      * @param \App\Model\Product\Search\ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository
-     * @param \App\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer
      * @param \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory
-     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
      * @param \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
      */
     public function __construct(
@@ -66,10 +54,8 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
         ProductAccessoryRepository $productAccessoryRepository,
         ProductElasticsearchRepository $productElasticsearchRepository,
         ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository,
-        ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer,
         FilterQueryFactory $filterQueryFactory,
-        IndexDefinitionLoader $indexDefinitionLoader,
-        ProductFilterDataFactory $productFilterDataFactory
+        private readonly ProductFilterDataFactory $productFilterDataFactory
     ) {
         parent::__construct(
             $productRepository,
@@ -78,12 +64,8 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
             $productAccessoryRepository,
             $productElasticsearchRepository,
             $productFilterCountDataElasticsearchRepository,
-            $productFilterDataToQueryTransformer,
-            $filterQueryFactory,
-            $indexDefinitionLoader
+            $filterQueryFactory
         );
-
-        $this->productFilterDataFactory = $productFilterDataFactory;
     }
 
     /**
@@ -198,54 +180,6 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
         );
 
         return new PaginationResult($page, $limit, $productIds->getTotal(), $listableProductsByIds);
-    }
-
-    /**
-     * Method is extended because of https://github.com/shopsys/shopsys/pull/2380
-     *
-     * @param int $limit
-     * @param int $offset
-     * @param string $orderingModeId
-     * @return array
-     * @deprecated This method will be removed in next major version. It was used only in FE API, so it has been replaced by \App\FrontendApi\Model\Product\ProductFacade::getProductsOnCurrentDomain()
-     */
-    public function getProductsOnCurrentDomain(int $limit, int $offset, string $orderingModeId): array
-    {
-        $emptyProductFilterData = $this->productFilterDataFactory->create();
-        $filterQuery = $this->filterQueryFactory->createWithProductFilterData(
-            $emptyProductFilterData,
-            $orderingModeId,
-            1,
-            $limit
-        )->setFrom($offset);
-
-        $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
-        return $productsResult->getHits();
-    }
-
-    /**
-     * Method is extended because of https://github.com/shopsys/shopsys/pull/2380
-     *
-     * @param \App\Model\Category\Category $category
-     * @param int $limit
-     * @param int $offset
-     * @param string $orderingModeId
-     * @return array
-     * @deprecated This method will be removed in next major version. It was used only in FE API, so it has been replaced by \App\FrontendApi\Model\Product\ProductFacade::getProductsByCategory()
-     */
-    public function getProductsByCategory(Category $category, int $limit, int $offset, string $orderingModeId): array
-    {
-        $emptyProductFilterData = $this->productFilterDataFactory->create();
-        $filterQuery = $this->filterQueryFactory->createListableProductsByCategoryId(
-            $emptyProductFilterData,
-            $orderingModeId,
-            1,
-            $limit,
-            $category->getId()
-        )->setFrom($offset);
-
-        $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
-        return $productsResult->getHits();
     }
 
     /**

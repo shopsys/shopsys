@@ -25,7 +25,7 @@ class TransportValidationFacade
     private CartFacade $cartFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
+     * @var \App\Model\Customer\User\CurrentCustomerUser
      */
     private CurrentCustomerUser $currentCustomerUser;
 
@@ -54,7 +54,7 @@ class TransportValidationFacade
      * @param \Shopsys\Cdn\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(

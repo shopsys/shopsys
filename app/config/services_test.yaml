@@ -29,7 +29,7 @@ services:
 
     Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository: ~
 
-    League\Flysystem\FilesystemInterface:
+    League\Flysystem\FilesystemOperator:
         alias: main_filesystem
 
     Shopsys\Cdn\Component\Domain\Domain:
@@ -62,3 +62,9 @@ services:
 
     App\Model\GoPay\GoPayClientFactory:
         alias: Tests\FrontendApiBundle\Functional\Payment\GoPay\GoPayClientFactory
+
+    Symfony\Component\HttpFoundation\RequestStack:
+        class: Tests\App\Test\HttpFoundation\RequestStack
+        arguments:
+            $container: '@test.service_container'
+            $requestStack: '@request_stack'

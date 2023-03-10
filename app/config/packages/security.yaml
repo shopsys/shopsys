@@ -1,5 +1,6 @@
 security:
-    encoders:
+    enable_authenticator_manager: true
+    password_hashers:
         Symfony\Component\Security\Core\User\UserInterface:
             algorithm: bcrypt
             cost: 12
@@ -171,9 +172,9 @@ security:
         administration:
             pattern: ^/(%admin_url%/|efconnect|elfinder)
             user_checker: Shopsys\FrameworkBundle\Model\Security\AdministratorChecker
-            anonymous: ~
             provider: administrators
             access_denied_url: "/%admin_url%/access-denied/"
+            entry_point: form_login
             form_login:
                 check_path: admin_login_check
                 login_path: admin_login
@@ -196,15 +197,13 @@ security:
             pattern: ^/graphql
             provider: frontend_api_user_identities
             stateless: true
-            anonymous: true
-            guard:
-                authenticators:
-                    - App\FrontendApi\Model\Token\TokenAuthenticator
+            custom_authenticators:
+                - App\FrontendApi\Model\Token\TokenAuthenticator
 
     access_control:
         # This makes the logout route accessible during two-factor authentication. Allows the user to
         # cancel two-factor authentication, if they need to.
-        - { path: ^/%admin_url%/logout, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/%admin_url%/logout, role: PUBLIC_ACCESS }
         # This ensures that the form can only be accessed when two-factor authentication is in progress.
         - { path: ^/%admin_url%/2fa, role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
         # same pattern must be in routing_front.yaml
@@ -212,8 +211,8 @@ security:
         - { path: ^/%admin_url%/cron/*, roles: ROLE_SUPER_ADMIN }
         - { path: ^/%admin_url%/currency/, roles: ROLE_SUPER_ADMIN }
         - { path: ^/%admin_url%/translation/list/$, roles: ROLE_SUPER_ADMIN }
-        - { path: ^/%admin_url%/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/%admin_url%/authorization/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/%admin_url%/$, roles: PUBLIC_ACCESS }
+        - { path: ^/%admin_url%/authorization/$, roles: PUBLIC_ACCESS }
         # orders
         - { path: ^/%admin_url%/order/edit, roles: ROLE_ORDER_FULL, methods: [POST] }
         - { path: ^/%admin_url%/order/delete, roles: ROLE_ORDER_FULL }
@@ -435,8 +434,8 @@ security:
         - { path: ^/efconnect, roles: ROLE_ADMIN }
         - { path: ^/elfinder, roles: ROLE_ADMIN }
         # error pages preview
-        - { path: ^/%admin_url%/_error/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/%admin_url%/_error/, roles: PUBLIC_ACCESS }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }
-        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: PUBLIC_ACCESS }

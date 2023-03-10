@@ -242,7 +242,7 @@ class Administrator extends BaseAdministrator implements EmailTwoFactorInterface
     /**
      * @inheritDoc
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         if ($this->roleGroup !== null) {
             $roles = $this->roleGroup->getRoles();

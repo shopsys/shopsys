@@ -58,7 +58,7 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
     public function runTransfer(): void
     {
         if (!$this->akeneoConfig->isEnabled()) {
-            $this->logger->addWarning('Skipping transfer, akeneo is disabled from parameters.yml');
+            $this->logger->warning('Skipping transfer, akeneo is disabled from parameters.yml');
             return;
         }
 
@@ -73,7 +73,7 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
 
             $this->sqlLoggerFacade->reenableLogging();
         } catch (RuntimeException $exception) {
-            $this->logger->addError('RuntimeException: ' . $exception->getMessage());
+            $this->logger->error('RuntimeException: ' . $exception->getMessage());
             $this->logger->persistAllLoggedTransferIssues();
             $this->sqlLoggerFacade->reenableLogging();
             return;
@@ -93,7 +93,7 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
             $this->processItem($item);
             $this->em->commit();
         } catch (TransferInvalidDataAdministratorNonCriticalException $invalidDataSilentException) {
-            $this->logger->addDebug(
+            $this->logger->debug(
                 sprintf(
                     'Transfer of item with code `%s` was aborted because : %s',
                     $item['identifier'] ?? $item['code'],
@@ -102,7 +102,7 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
             );
             $this->em->rollback();
         } catch (TransferInvalidDataAdministratorCriticalException $invalidDataSilentException) {
-            $this->logger->addWarning(
+            $this->logger->warning(
                 sprintf(
                     'Transfer of item with code `%s` was aborted because : %s',
                     $item['identifier'] ?? $item['code'],
@@ -111,7 +111,7 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
             );
             $this->em->rollback();
         } catch (TransferException $transferException) {
-            $this->logger->addWarning(
+            $this->logger->warning(
                 sprintf(
                     'Transfer of item with code `%s` was aborted because : %s',
                     $item['identifier'] ?? $item['code'],
@@ -120,10 +120,10 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
             );
             $this->em->rollback();
         } catch (FileSaveFailedException $transferException) {
-            $this->logger->addWarning($transferException->getMessage());
+            $this->logger->warning($transferException->getMessage());
             $this->em->rollback();
         } catch (Exception $exception) {
-            $this->logger->addError(
+            $this->logger->error(
                 sprintf(
                     'Transfer of item with code key `%s` was aborted. '
                     . 'This error will be reported to Shopsys. Reason of this error: %s',

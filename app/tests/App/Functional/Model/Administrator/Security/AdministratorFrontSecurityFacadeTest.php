@@ -7,7 +7,7 @@ namespace Tests\App\Functional\Model\Administrator\Security;
 use App\DataFixtures\Demo\AdministratorDataFixture;
 use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Tests\App\Test\FunctionalTestCase;
 
@@ -26,10 +26,10 @@ class AdministratorFrontSecurityFacadeTest extends FunctionalTestCase
     private AdministratorActivityFacade $administratorActivityFacade;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
+     * @var \Symfony\Component\HttpFoundation\RequestStack
      * @inject
      */
-    protected SessionInterface $session;
+    protected RequestStack $requestStack;
 
     public function testIsAdministratorLoggedNot()
     {
@@ -40,11 +40,10 @@ class AdministratorFrontSecurityFacadeTest extends FunctionalTestCase
     {
         /** @var \App\Model\Administrator\Administrator $administrator */
         $administrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
-        $password = '';
         $roles = $administrator->getRoles();
-        $token = new UsernamePasswordToken($administrator, $password, AdministratorFrontSecurityFacade::ADMINISTRATION_CONTEXT, $roles);
+        $token = new UsernamePasswordToken($administrator, AdministratorFrontSecurityFacade::ADMINISTRATION_CONTEXT, $roles);
 
-        $this->session->set('_security_' . AdministratorFrontSecurityFacade::ADMINISTRATION_CONTEXT, serialize($token));
+        $this->requestStack->getSession()->set('_security_' . AdministratorFrontSecurityFacade::ADMINISTRATION_CONTEXT, serialize($token));
 
         $this->administratorActivityFacade->create($administrator, '127.0.0.1');
 

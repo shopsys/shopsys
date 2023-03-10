@@ -11,6 +11,7 @@ use Doctrine\Persistence\ObjectManager;
 use ReflectionClass;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 class CategoryParameterDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -64,8 +65,8 @@ class CategoryParameterDataFixture extends AbstractReferenceFixture implements D
             $parametersCollapsed = [];
             if ($category === $categoryElectronics) {
                 $parametersCollapsed = [
-                    $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('HDMI', [], 'dataFixtures', $firstDomainLocale)),
-                    $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('Screen size', [], 'dataFixtures', $firstDomainLocale)),
+                    $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
+                    $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
                 ];
             }
             $this->categoryParameterFacade->saveRelation($category, $parametersId, $parametersCollapsed);

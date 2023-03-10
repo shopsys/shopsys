@@ -12,6 +12,7 @@ use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Payment\Payment;
 use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -29,15 +30,15 @@ class AbstractOrderTestCase extends GraphQlTestCase
 
         return [
             0 => [
-                'name' => t('Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh),
                 'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh),
                 'quantity' => 1,
                 'vatRate' => '21.0000',
-                'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
+                'unit' => t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             ],
             1 => [
-                'name' => t('Cash on delivery', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.59', $vatHigh),
                 'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.59', $vatHigh),
                 'quantity' => 1,
@@ -45,7 +46,7 @@ class AbstractOrderTestCase extends GraphQlTestCase
                 'unit' => null,
             ],
             2 => [
-                'name' => t('Czech post', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
                 'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
                 'quantity' => 1,

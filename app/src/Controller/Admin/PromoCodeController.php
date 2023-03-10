@@ -160,7 +160,7 @@ class PromoCodeController extends BasePromoCodeController
         if ($fillFromPromoCodeId === null) {
             $promoCodeData = $this->promoCodeDataFactory->create();
         } else {
-            $promoCode = $this->promoCodeFacade->getById($fillFromPromoCodeId);
+            $promoCode = $this->promoCodeFacade->getById((int)$fillFromPromoCodeId);
             $promoCodeData = $this->promoCodeDataFactory->createFromPromoCode($promoCode);
             $promoCodeData->code = null;
         }

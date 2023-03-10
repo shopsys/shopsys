@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Store;
 
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GetStoresTest extends GraphQlTestCase
@@ -149,7 +150,7 @@ class GetStoresTest extends GraphQlTestCase
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         return [
             [
-                'name' => t('Ostrava', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('Ostrava', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'isDefault' => true,
                 'description' => t('Prodejna v Ostravě Přívoze', [], 'dataFixture', $firstDomainLocale),
                 'street' => 'Koksární 10',
@@ -159,12 +160,12 @@ class GetStoresTest extends GraphQlTestCase
                     'code' => 'CZ',
                 ],
                 'contactInfo' => null,
-                'openingHours' => t('Po-Pa: 8:00-16:00', [], 'dataFixtures', $firstDomainLocale),
+                'openingHours' => t('Po-Pa: 8:00-16:00', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'specialMessage' => null,
                 'locationLatitude' => '49.8574975000000',
                 'locationLongitude' => '18.2738861000000',
             ], [
-                'name' => t('Pardubice', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('Pardubice', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'isDefault' => false,
                 'description' => t('Prodejna v Pardubicích', [], 'dataFixture', $firstDomainLocale),
                 'street' => 'Bratranců Veverkových 2722',
@@ -174,7 +175,7 @@ class GetStoresTest extends GraphQlTestCase
                     'code' => 'CZ',
                 ],
                 'contactInfo' => null,
-                'openingHours' => t('Po-Pa: 8:00-17:00', [], 'dataFixtures', $firstDomainLocale),
+                'openingHours' => t('Po-Pa: 8:00-17:00', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'specialMessage' => null,
                 'locationLatitude' => '50.0346875000000',
                 'locationLongitude' => '15.7707169000000',

@@ -97,7 +97,7 @@ class AdministratorController extends BaseAdministratorController
         $loggedUser = $this->getUser();
         $this->securitySafeCheck($loggedUser);
 
-        if ($administrator->getId() !== $loggedUser->getId()) {
+        if ($administrator->getUsername() !== $loggedUser->getUsername()) {
             $this->addErrorFlash(t('You are allowed to set up two factor authentication only to yourself.'));
             return $this->redirectToRoute('admin_administrator_edit', ['id' => $id]);
         }
@@ -210,7 +210,7 @@ class AdministratorController extends BaseAdministratorController
         $loggedUser = $this->getUser();
         $this->securitySafeCheck($loggedUser);
 
-        if ($administrator->getId() !== $loggedUser->getId()) {
+        if ($administrator->getUsername() !== $loggedUser->getUsername()) {
             $this->addErrorFlash(t('You are allowed to disable two factor authentication only to yourself.'));
             return $this->redirectToRoute('admin_administrator_edit', ['id' => $id]);
         }

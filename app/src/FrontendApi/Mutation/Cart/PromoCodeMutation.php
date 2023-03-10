@@ -10,57 +10,26 @@ use App\FrontendApi\Model\Cart\CartWithModificationsResult;
 use App\Model\Cart\CartPromoCodeFacade;
 use App\Model\Order\PromoCode\PromoCodeFacade;
 use Overblog\GraphQLBundle\Definition\Argument;
-use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 
-class PromoCodeMutation implements MutationInterface, AliasedInterface
+class PromoCodeMutation extends AbstractMutation
 {
     /**
-     * @var \App\Model\Cart\CartPromoCodeFacade
-     */
-    private CartPromoCodeFacade $cartPromoCodeFacade;
-
-    /**
-     * @var \App\FrontendApi\Model\Cart\CartFacade
-     */
-    private CartFacade $cartFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    private CurrentCustomerUser $currentCustomerUser;
-
-    /**
-     * @var \App\FrontendApi\Model\Cart\CartWatcherFacade
-     */
-    private CartWatcherFacade $cartWatcherFacade;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeFacade
-     */
-    private PromoCodeFacade $promoCodeFacade;
-
-    /**
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\FrontendApi\Model\Cart\CartWatcherFacade $cartWatcherFacade
      * @param \App\Model\Cart\CartPromoCodeFacade $cartPromoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      */
     public function __construct(
-        CartFacade $cartFacade,
-        CurrentCustomerUser $currentCustomerUser,
-        CartWatcherFacade $cartWatcherFacade,
-        CartPromoCodeFacade $cartPromoCodeFacade,
-        PromoCodeFacade $promoCodeFacade
+        private readonly CartFacade $cartFacade,
+        private readonly CurrentCustomerUser $currentCustomerUser,
+        private readonly CartWatcherFacade $cartWatcherFacade,
+        private readonly CartPromoCodeFacade $cartPromoCodeFacade,
+        private readonly PromoCodeFacade $promoCodeFacade
     ) {
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->cartFacade = $cartFacade;
-        $this->cartWatcherFacade = $cartWatcherFacade;
-        $this->cartPromoCodeFacade = $cartPromoCodeFacade;
-        $this->promoCodeFacade = $promoCodeFacade;
     }
 
     /**
@@ -68,7 +37,7 @@ class PromoCodeMutation implements MutationInterface, AliasedInterface
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return \App\FrontendApi\Model\Cart\CartWithModificationsResult
      */
-    public function applyPromoCodeToCart(Argument $argument, InputValidator $validator): CartWithModificationsResult
+    public function applyPromoCodeToCartMutation(Argument $argument, InputValidator $validator): CartWithModificationsResult
     {
         $validator->validate();
 
@@ -92,7 +61,7 @@ class PromoCodeMutation implements MutationInterface, AliasedInterface
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return \App\FrontendApi\Model\Cart\CartWithModificationsResult
      */
-    public function removePromoCodeFromCart(Argument $argument, InputValidator $validator): CartWithModificationsResult
+    public function removePromoCodeFromCartMutation(Argument $argument, InputValidator $validator): CartWithModificationsResult
     {
         $validator->validate();
 
@@ -112,16 +81,5 @@ class PromoCodeMutation implements MutationInterface, AliasedInterface
         }
 
         return $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getAliases(): array
-    {
-        return [
-            'applyPromoCodeToCart' => 'applyPromoCodeToCart',
-            'removePromoCodeFromCart' => 'removePromoCodeFromCart',
-        ];
     }
 }

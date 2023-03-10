@@ -52,7 +52,6 @@ class StoreData
 
     public function __construct()
     {
-        $this->image = new ImageUploadData();
         $this->urls = new UrlListData();
     }
 }

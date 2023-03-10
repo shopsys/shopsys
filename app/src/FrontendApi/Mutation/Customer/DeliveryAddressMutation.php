@@ -12,64 +12,33 @@ use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\CustomerUserFacade;
 use App\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Overblog\GraphQLBundle\Definition\Argument;
-use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DeliveryAddressNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 
-class DeliveryAddressMutation implements MutationInterface, AliasedInterface
+class DeliveryAddressMutation extends AbstractMutation
 {
     /**
-     * @var \App\Model\Customer\DeliveryAddressFacade
-     */
-    private DeliveryAddressFacade $deliveryAddressFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    private CurrentCustomerUser $currentCustomerUser;
-
-    /**
-     * @var \App\Model\Customer\DeliveryAddressDataFactory
-     */
-    private DeliveryAddressDataFactory $deliveryAddressDataFactory;
-
-    /**
-     * @var \App\Model\Customer\User\CustomerUserUpdateDataFactory
-     */
-    private CustomerUserUpdateDataFactory $customerUserUpdateDataFactory;
-
-    /**
-     * @var \App\Model\Customer\User\CustomerUserFacade
-     */
-    private CustomerUserFacade $customerUserFacade;
-
-    /**
      * @param \App\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
      * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      */
     public function __construct(
-        DeliveryAddressFacade $deliveryAddressFacade,
-        CurrentCustomerUser $currentCustomerUser,
-        DeliveryAddressDataFactory $deliveryAddressDataFactory,
-        CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
-        CustomerUserFacade $customerUserFacade
+        private readonly DeliveryAddressFacade $deliveryAddressFacade,
+        private readonly CurrentCustomerUser $currentCustomerUser,
+        private readonly DeliveryAddressDataFactory $deliveryAddressDataFactory,
+        private readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
+        private readonly CustomerUserFacade $customerUserFacade
     ) {
-        $this->deliveryAddressFacade = $deliveryAddressFacade;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->deliveryAddressDataFactory = $deliveryAddressDataFactory;
-        $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
-        $this->customerUserFacade = $customerUserFacade;
     }
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \App\Model\Customer\DeliveryAddress[]
      */
-    public function deleteDeliveryAddress(Argument $argument): array
+    public function deleteDeliveryAddressMutation(Argument $argument): array
     {
         $deliveryAddressUuid = $argument['deliveryAddressUuid'];
 
@@ -91,7 +60,7 @@ class DeliveryAddressMutation implements MutationInterface, AliasedInterface
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \App\Model\Customer\DeliveryAddress[]
      */
-    public function editDeliveryAddress(Argument $argument): array
+    public function editDeliveryAddressMutation(Argument $argument): array
     {
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
@@ -115,7 +84,7 @@ class DeliveryAddressMutation implements MutationInterface, AliasedInterface
      * @param string $deliveryAddressUuid
      * @return \App\Model\Customer\User\CustomerUser
      */
-    public function setDefaultDeliveryAddress(string $deliveryAddressUuid): CustomerUser
+    public function setDefaultDeliveryAddressMutation(string $deliveryAddressUuid): CustomerUser
     {
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
@@ -138,17 +107,5 @@ class DeliveryAddressMutation implements MutationInterface, AliasedInterface
         $this->customerUserFacade->edit($customerUser->getId(), $customerData, $deliveryAddress);
 
         return $customerUser;
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getAliases(): array
-    {
-        return [
-            'deleteDeliveryAddress' => 'deleteDeliveryAddress',
-            'editDeliveryAddress' => 'editDeliveryAddress',
-            'setDefaultDeliveryAddress' => 'setDefaultDeliveryAddress',
-        ];
     }
 }

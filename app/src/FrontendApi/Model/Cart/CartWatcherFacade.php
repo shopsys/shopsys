@@ -28,7 +28,7 @@ class CartWatcherFacade
     private EntityManagerInterface $em;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
+     * @var \App\Model\Customer\User\CurrentCustomerUser
      */
     private CurrentCustomerUser $currentCustomerUser;
 
@@ -65,7 +65,7 @@ class CartWatcherFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher $cartWatcher
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\FrontendApi\Model\Cart\TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade

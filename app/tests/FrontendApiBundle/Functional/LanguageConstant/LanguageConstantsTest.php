@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\LanguageConstant;
 
 use App\Model\LanguageConstant\LanguageConstantDataFactory;
 use App\Model\LanguageConstant\LanguageConstantFacade;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class LanguageConstantsTest extends GraphQlTestCase
@@ -40,8 +41,8 @@ class LanguageConstantsTest extends GraphQlTestCase
                 "data": {
                     "languageConstants": [
                         {
-                            "key": "' . t('Add to cart', [], 'dataFixtures', 'en') . '",
-                            "translation": "' . t('Add to cart', [], 'dataFixtures', 'cs') . '"
+                            "key": "' . t('Add to cart', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, 'en') . '",
+                            "translation": "' . t('Add to cart', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, 'cs') . '"
                         }
                     ]
                 }
@@ -54,10 +55,10 @@ class LanguageConstantsTest extends GraphQlTestCase
     private function createLanguageConstant(): void
     {
         $languageConstantData = $this->languageConstantDataFactory->create();
-        $languageConstantData->key = t('Add to cart', [], 'dataFixtures', 'en');
+        $languageConstantData->key = t('Add to cart', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, 'en');
         $languageConstantData->locale = 'cs';
-        $languageConstantData->originalTranslation = t('Add to cart', [], 'dataFixtures', 'en');
-        $languageConstantData->userTranslation = t('Add to cart', [], 'dataFixtures', 'cs');
+        $languageConstantData->originalTranslation = t('Add to cart', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, 'en');
+        $languageConstantData->userTranslation = t('Add to cart', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, 'cs');
 
         $this->languageConstantFacade->createOrEdit($languageConstantData, null);
     }

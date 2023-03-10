@@ -7,7 +7,7 @@ namespace App\Component\Domain;
 use App\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\DomainAwareSecurityHeadersSetter as BaseDomainAwareSecurityHeadersSetter;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class DomainAwareSecurityHeadersSetter extends BaseDomainAwareSecurityHeadersSetter
 {
@@ -28,11 +28,11 @@ class DomainAwareSecurityHeadersSetter extends BaseDomainAwareSecurityHeadersSet
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event): void
     {
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return;
         }
         if (!$this->domain->isHttps()) {

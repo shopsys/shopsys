@@ -55,95 +55,87 @@ class TransferLogger implements TransferLoggerInterface
 
         $this->transferIssueFacade->saveTransferIssues($this->transferIssueDataList, $this->serviceTransferIdentifier);
         $this->transferIssueDataList = [];
-        $this->addInfo('Transfer logger saves ' . $transferIssuesCount . ' to database');
+        $this->info('Transfer logger saves ' . $transferIssuesCount . ' to database');
     }
 
     /**
      * @param string $message
      * @param array $context
-     * @return bool
      */
-    public function addDebug(string $message, array $context = []): bool
+    public function debug(string $message, array $context = []): void
     {
         $this->transferIssueDataList[] = new TransferIssueData($message, TransferIssue::SEVERITY_ERROR);
 
-        return $this->logger->debug($message, $context);
+        $this->logger->debug($message, $context);
     }
 
     /**
      * @param string $message
      * @param array $context
-     * @return bool
      */
-    public function addInfo(string $message, array $context = []): bool
+    public function info(string $message, array $context = []): void
     {
-        return $this->logger->info($message, $context);
+        $this->logger->info($message, $context);
     }
 
     /**
      * @param string $message
      * @param array $context
-     * @return bool
      */
-    public function addNotice(string $message, array $context = []): bool
+    public function notice(string $message, array $context = []): void
     {
-        return $this->logger->notice($message, $context);
+        $this->logger->notice($message, $context);
     }
 
     /**
      * @param string $message
      * @param array $context
-     * @return bool
      */
-    public function addWarning(string $message, array $context = []): bool
+    public function warning(string $message, array $context = []): void
     {
         $this->transferIssueDataList[] = new TransferIssueData($message, TransferIssue::SEVERITY_WARNING);
 
-        return $this->logger->warning($message, $context);
+        $this->logger->warning($message, $context);
     }
 
     /**
      * @param string $message
      * @param array $context
-     * @return bool
      */
-    public function addError(string $message, array $context = []): bool
+    public function error(string $message, array $context = []): void
     {
         $this->transferIssueDataList[] = new TransferIssueData($message, TransferIssue::SEVERITY_ERROR);
 
-        return $this->logger->error($message, $context);
+        $this->logger->error($message, $context);
     }
 
     /**
      * @param string $message
      * @param array $context
-     * @return bool
      */
-    public function addCritical(string $message, array $context = []): bool
+    public function critical(string $message, array $context = []): void
     {
         $this->transferIssueDataList[] = new TransferIssueData($message, TransferIssue::SEVERITY_CRITICAL);
 
-        return $this->logger->critical($message, $context);
+        $this->logger->critical($message, $context);
     }
 
     /**
      * @param string $message
      * @param array $context
-     * @return bool
      */
-    public function addAlert(string $message, array $context = []): bool
+    public function alert(string $message, array $context = []): void
     {
-        return $this->logger->alert($message, $context);
+        $this->logger->alert($message, $context);
     }
 
     /**
      * @param string $message
      * @param array $context
-     * @return bool
      */
-    public function addEmergency(string $message, array $context = []): bool
+    public function emergency(string $message, array $context = []): void
     {
-        return $this->logger->emergency($message, $context);
+        $this->logger->emergency($message, $context);
     }
 
     public function close(): void

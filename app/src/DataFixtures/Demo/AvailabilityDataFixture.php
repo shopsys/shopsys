@@ -8,6 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
@@ -62,7 +63,7 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
         $availabilityData = $this->availabilityDataFactory->create();
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $availabilityData->name[$locale] = t('In stock', [], 'dataFixtures', $locale);
+            $availabilityData->name[$locale] = t('In stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $availabilityData->dispatchTime = 0;

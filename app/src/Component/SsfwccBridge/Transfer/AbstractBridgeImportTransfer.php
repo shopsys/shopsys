@@ -62,7 +62,7 @@ abstract class AbstractBridgeImportTransfer implements TransferIdentificationInt
     public function runTransfer(): bool
     {
         if (!$this->bridgeConfig->isEnabled()) {
-            $this->logger->addWarning('Skipping transfer, SSFWCC bridge is disabled from parameters.yml');
+            $this->logger->warning('Skipping transfer, SSFWCC bridge is disabled from parameters.yml');
             return false;
         }
 
@@ -92,7 +92,7 @@ abstract class AbstractBridgeImportTransfer implements TransferIdentificationInt
                 $this->processItem($item);
                 $this->em->commit();
             } catch (TransferInvalidDataAdministratorNonCriticalException $invalidDataSilentException) {
-                $this->logger->addDebug(
+                $this->logger->debug(
                     sprintf(
                         'Transfer of item with code `%s` was aborted because : %s',
                         json_encode($item),
@@ -101,7 +101,7 @@ abstract class AbstractBridgeImportTransfer implements TransferIdentificationInt
                 );
                 $this->em->rollback();
             } catch (TransferInvalidDataAdministratorCriticalException $invalidDataSilentException) {
-                $this->logger->addWarning(
+                $this->logger->warning(
                     sprintf(
                         'Transfer of item with code `%s` was aborted because : %s',
                         json_encode($item),
@@ -110,7 +110,7 @@ abstract class AbstractBridgeImportTransfer implements TransferIdentificationInt
                 );
                 $this->em->rollback();
             } catch (TransferException $transferException) {
-                $this->logger->addWarning(
+                $this->logger->warning(
                     sprintf(
                         'Transfer of item with code `%s` was aborted because : %s',
                         json_encode($item),
@@ -119,7 +119,7 @@ abstract class AbstractBridgeImportTransfer implements TransferIdentificationInt
                 );
                 $this->em->rollback();
             } catch (Exception $exception) {
-                $this->logger->addError(
+                $this->logger->error(
                     sprintf(
                         'Transfer of item with code key `%s` was aborted. '
                         . 'This error will be reported to Shopsys. Reason of this error: %s',

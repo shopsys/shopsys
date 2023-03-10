@@ -15,19 +15,7 @@ class FunctionalTestCase extends CommonTestCase
      */
     final public function createContainer(): ContainerInterface
     {
-        if (self::$kernel === null) {
-            static::bootKernel();
-        }
-
-        return self::$container;
-    }
-
-    /**
-     * @return \Symfony\Component\DependencyInjection\ContainerInterface
-     */
-    protected function getContainer(): ContainerInterface
-    {
-        return self::$container;
+        return self::getContainer()->get('test.service_container');
     }
 
     protected function skipTestIfFirstDomainIsNotInEnglish(): void

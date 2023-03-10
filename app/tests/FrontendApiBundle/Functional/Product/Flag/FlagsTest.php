@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Product\Flag;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class FlagsTest extends GraphQlTestCase
@@ -22,25 +23,25 @@ class FlagsTest extends GraphQlTestCase
     "data": {
         "flags": [
             {
-                "name": "' . t('Akce', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                "name": "' . t('Akce', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
             },
             {
-                "name": "' . t('Cenový hit', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                "name": "' . t('Cenový hit', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
             },
             {
-                "name": "' . t('Novinka', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                "name": "' . t('Novinka', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
             },
             {
-                "name": "' . t('Výprodej', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                "name": "' . t('Výprodej', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
             },
             {
-                "name": "' . t('Vyrobeno v ČR', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                "name": "' . t('Vyrobeno v ČR', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
             },
             {
-                "name": "' . t('Vyrobeno v DE', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                "name": "' . t('Vyrobeno v DE', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
             },
             {
-                "name": "' . t('Vyrobeno v SK', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                "name": "' . t('Vyrobeno v SK', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
             }
         ]
     }

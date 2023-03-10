@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Settings;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class SeoSettingTest extends GraphQlTestCase
@@ -27,9 +28,9 @@ class SeoSettingTest extends GraphQlTestCase
 
         $firstDomainLocale = $this->getLocaleForFirstDomain();
 
-        $expectedTitle = t('Shopsys Framework - Title page', [], 'dataFixtures', $firstDomainLocale);
-        $expectedTitleAddOn = t('| Commerce Cloud', [], 'dataFixtures', $firstDomainLocale);
-        $expectedDescription = t('Shopsys Framework - the best solution for your eshop.', [], 'dataFixtures', $firstDomainLocale);
+        $expectedTitle = t('Shopsys Framework - Title page', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale);
+        $expectedTitleAddOn = t('| Commerce Cloud', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale);
+        $expectedDescription = t('Shopsys Framework - the best solution for your eshop.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale);
 
         self::assertEquals($expectedTitle, $data['seo']['title']);
         self::assertEquals($expectedTitleAddOn, $data['seo']['titleAddOn']);

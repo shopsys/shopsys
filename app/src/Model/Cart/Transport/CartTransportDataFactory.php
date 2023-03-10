@@ -27,7 +27,7 @@ class CartTransportDataFactory
     private TransportFacade $transportFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
+     * @var \App\Model\Customer\User\CurrentCustomerUser
      */
     private CurrentCustomerUser $currentCustomerUser;
 
@@ -49,7 +49,7 @@ class CartTransportDataFactory
     /**
      * @param \Shopsys\Cdn\Component\Domain\Domain $domain
      * @param \App\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation

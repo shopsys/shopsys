@@ -28,6 +28,7 @@ use Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade as BasePlaceOrderFaca
  * @property \App\Model\Order\OrderFacade $orderFacade
  * @property \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
  * @method \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview createOrderPreview(\Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts, \App\Model\Transport\Transport|null $transport, \App\Model\Payment\Payment|null $payment, \App\Model\Customer\User\CustomerUser|null $customerUser)
+ * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  */
 class PlaceOrderFacade extends BasePlaceOrderFacade
 {
@@ -63,7 +64,7 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitResolver
      * @param \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory

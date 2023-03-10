@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Product\Flag;
 
 use App\Model\Product\Flag\FlagFacade;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -54,12 +55,12 @@ class FlagTest extends GraphQlTestCase
         $jsonExpected = '{
     "data": {
         "flag": {
-            "name": "' . t('Vyrobeno v DE', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
+            "name": "' . t('Vyrobeno v DE', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
             "rgbColor": "#ffffff",
             "slug": "' . $this->urlGenerator->generate('front_flag_detail', ['id' => $flag->getId()]) . '",
             "breadcrumb": [
                 {
-                    "name": "' . t('Vyrobeno v DE', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
+                    "name": "' . t('Vyrobeno v DE', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
                     "slug": "' . $this->urlGenerator->generate('front_flag_detail', ['id' => $flag->getId()]) . '"
                 }
             ],
@@ -68,17 +69,17 @@ class FlagTest extends GraphQlTestCase
                 "edges": [
                     {
                         "node": {
-                            "name": "' . t('OLYMPUS VH-620', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                            "name": "' . t('OLYMPUS VH-620', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                         }
                     }
                 ]
             },
             "categories": [
                 {
-                    "name": "' . t('Cameras & Photo', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                    "name": "' . t('Cameras & Photo', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                 },
                 {
-                    "name": "' . t('Personal Computers & accessories', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                    "name": "' . t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                 }
             ]
         }
@@ -117,77 +118,77 @@ class FlagTest extends GraphQlTestCase
                         "edges": [
                             {
                                 "node": {
-                                    "name": "' . t('22\" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                                    "name": "' . t('22\" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                                 }
                             },
                             {
                                 "node": {
-                                    "name": "' . t('32\" Philips 32PFL4308', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                                    "name": "' . t('32\" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                                 }
                             },
                             {
                                 "node": {
-                                    "name": "' . t('Apple iPhone 5S 64GB, gold', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                                    "name": "' . t('Apple iPhone 5S 64GB, gold', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                                 }
                             },
                             {
                                 "node": {
-                                    "name": "' . t('Canon MG3550', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                                    "name": "' . t('Canon MG3550', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                                 }
                             },
                             {
                                 "node": {
-                                    "name": "' . t('Defender 2.0 SPK-480', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                                    "name": "' . t('Defender 2.0 SPK-480', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                                 }
                             },
                             {
                                 "node": {
-                                    "name": "' . t('DeLonghi ECAM 44.660 B Eletta Plus', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                                    "name": "' . t('DeLonghi ECAM 44.660 B Eletta Plus', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                                 }
                             },
                             {
                                 "node": {
-                                    "name": "' . t('Genius SP-U150X black-green', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                                    "name": "' . t('Genius SP-U150X black-green', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                                 }
                             },
                             {
                                 "node": {
-                                    "name": "' . t('Hyundai 32PFL4400', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                                    "name": "' . t('Hyundai 32PFL4400', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                                 }
                             },
                             {
                                 "node": {
-                                    "name": "' . t('Book 55 best programs for burning CDs and DVDs', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                                    "name": "' . t('Book 55 best programs for burning CDs and DVDs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                                 }
                             },
                             {
                                 "node": {
-                                    "name": "' . t('Book Computer for Dummies Digital Photography II', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                                    "name": "' . t('Book Computer for Dummies Digital Photography II', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                                 }
                             }
                         ]
                     },
                     "categories": [
                         {
-                            "name": "' . t('Personal Computers & accessories', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                            "name": "' . t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                         },
                         {
-                            "name": "' . t('TV, audio', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                            "name": "' . t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                         },
                         {
-                            "name": "' . t('Electronics', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                            "name": "' . t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                         },
                         {
-                            "name": "' . t('Printers', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                            "name": "' . t('Printers', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                         },
                         {
-                            "name": "' . t('Books', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                            "name": "' . t('Books', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                         },
                         {
-                            "name": "' . t('Mobile Phones', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                            "name": "' . t('Mobile Phones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                         },
                         {
-                            "name": "' . t('Food', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                            "name": "' . t('Food', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                         }
                     ]
                 }

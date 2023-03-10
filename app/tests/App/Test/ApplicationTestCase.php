@@ -29,11 +29,15 @@ abstract class ApplicationTestCase extends CommonTestCase
     {
         parent::setUp();
 
-        static::$currentClient = $this->getCurrentClient();
+        static::$currentClient = self::getCurrentClient();
+        $this->em->beginTransaction();
+        $this->em->getConnection()->setAutoCommit(false);
     }
 
     protected function tearDown(): void
     {
+        $this->em->rollback();
+
         parent::tearDown();
 
         if (static::$currentClient === null) {
@@ -48,11 +52,9 @@ abstract class ApplicationTestCase extends CommonTestCase
     /**
      * @return \Symfony\Component\DependencyInjection\ContainerInterface
      */
-    protected function getContainer(): ContainerInterface
+    protected static function getContainer(): ContainerInterface
     {
-        $kernelBrowser = $this->getCurrentClient()->getContainer();
-
-        return $kernelBrowser->get('test.service_container');
+        return self::getCurrentClient()->getContainer()->get('test.service_container');
     }
 
     /**
@@ -62,13 +64,13 @@ abstract class ApplicationTestCase extends CommonTestCase
      */
     final public function createContainer(): ContainerInterface
     {
-        return $this->getContainer();
+        return self::getContainer();
     }
 
     /**
      * @return \Symfony\Bundle\FrameworkBundle\KernelBrowser
      */
-    public function getCurrentClient(): KernelBrowser
+    public static function getCurrentClient(): KernelBrowser
     {
         if (static::$currentClient === null) {
             static::$currentClient = static::createClient();
@@ -95,6 +97,7 @@ abstract class ApplicationTestCase extends CommonTestCase
         array $kernelOptions = [],
         array $clientOptions = []
     ): KernelBrowser {
+        self::ensureKernelShutdown();
         $client = self::createClient($kernelOptions);
 
         /** @var \Symfony\Component\DependencyInjection\ContainerInterface $container */
@@ -122,7 +125,7 @@ abstract class ApplicationTestCase extends CommonTestCase
         ?string $password,
         array $clientOptions = []
     ): KernelBrowser {
-        $client = $this->getCurrentClient();
+        $client = self::getCurrentClient();
 
         $serverOptions = $this->getClientServerParameters($username, $password, $clientOptions);
         $client->setServerParameters($serverOptions);
@@ -167,7 +170,7 @@ abstract class ApplicationTestCase extends CommonTestCase
      */
     protected function getLocalizedPathOnFirstDomainByRouteName(string $routeName, array $parameters = [], int $absolute = UrlGeneratorInterface::ABSOLUTE_URL): string
     {
-        $domainRouterFactory = $this->getContainer()->get(DomainRouterFactory::class);
+        $domainRouterFactory = self::getContainer()->get(DomainRouterFactory::class);
         $router = $domainRouterFactory->getRouter(Domain::FIRST_DOMAIN_ID);
 
         return $router->generate($routeName, $parameters, $absolute);
@@ -181,13 +184,12 @@ abstract class ApplicationTestCase extends CommonTestCase
     protected function dispatchFakeKernelResponseEventToTriggerImmediateRecalculations(): void
     {
         $fakeKernelResponseEvent = new ResponseEvent(
-            $this->getCurrentClient()->getKernel(),
+            self::getCurrentClient()->getKernel(),
             new Request(),
-            HttpKernelInterface::MASTER_REQUEST,
+            HttpKernelInterface::MAIN_REQUEST,
             new Response()
         );
 
-        /* @phpstan-ignore-next-line */
         $this->eventDispatcher->dispatch($fakeKernelResponseEvent, 'kernel.response');
     }
 }

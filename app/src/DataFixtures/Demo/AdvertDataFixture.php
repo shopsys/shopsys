@@ -9,6 +9,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
@@ -46,7 +47,7 @@ class AdvertDataFixture extends AbstractReferenceFixture implements DependentFix
             $advertData = $this->advertDataFactory->create();
             $advertData->uuid = array_pop($this->uuidPool);
             $advertData->domainId = $domainId;
-            $advertData->name = t('Demo advert', [], 'dataFixtures');
+            $advertData->name = t('Demo advert', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN);
             $advertData->type = Advert::TYPE_CODE;
             $advertData->hidden = false;
             $advertData->positionName = 'footer';
@@ -57,7 +58,7 @@ class AdvertDataFixture extends AbstractReferenceFixture implements DependentFix
             $advertData = $this->advertDataFactory->create();
             $advertData->uuid = array_pop($this->uuidPool);
             $advertData->domainId = $domainId;
-            $advertData->name = t('Demo advert in category', [], 'dataFixtures');
+            $advertData->name = t('Demo advert in category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN);
             $advertData->type = Advert::TYPE_CODE;
             $advertData->hidden = false;
             $advertData->positionName = AdvertPositionRegistry::CATEGORIES_ABOVE_PRODUCT_LIST;

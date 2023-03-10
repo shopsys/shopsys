@@ -19,7 +19,6 @@ use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
-use Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -42,54 +41,22 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
     public const VALIDATION_GROUP_TYPE_NOMINAL = 'type_nominal';
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeFacade
-     */
-    private PromoCodeFacade $promoCodeFacade;
-
-    /**
      * @var \App\Model\Order\PromoCode\PromoCode|null
      */
     private ?PromoCode $promoCode;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer
-     */
-    private RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer;
-
-    /**
-     * @var \App\Model\Product\Brand\BrandFacade
-     */
-    private BrandFacade $brandFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
-     */
-    private PricingGroupFacade $pricingGroupFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    private AdminDomainTabsFacade $adminDomainTabsFacade;
-
-    /**
      * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer
      * @param \App\Model\Product\Brand\BrandFacade $brandFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
-        PromoCodeFacade $promoCodeFacade,
-        RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer,
-        BrandFacade $brandFacade,
-        PricingGroupFacade $pricingGroupFacade,
-        AdminDomainTabsFacade $adminDomainTabsFacade
+        private readonly PromoCodeFacade $promoCodeFacade,
+        private readonly BrandFacade $brandFacade,
+        private readonly PricingGroupFacade $pricingGroupFacade,
+        private readonly AdminDomainTabsFacade $adminDomainTabsFacade
     ) {
-        $this->promoCodeFacade = $promoCodeFacade;
-        $this->removeDuplicatesTransformer = $removeDuplicatesTransformer;
-        $this->brandFacade = $brandFacade;
-        $this->pricingGroupFacade = $pricingGroupFacade;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**
@@ -302,8 +269,7 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
                 'required' => false,
                 'sortable' => true,
                 'label' => t('Apply to selected products'),
-            ])
-            ->addViewTransformer($this->removeDuplicatesTransformer);
+            ]);
     }
 
     /**

@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Transport;
 
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class TransportsTest extends GraphQlTestCase
@@ -27,13 +28,13 @@ class TransportsTest extends GraphQlTestCase
           "data": {
             "transports": [
               {
-                "name": "' . t('PPL', [], 'dataFixtures', $locale) . '"
+                "name": "' . t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale) . '"
               },
               {
-                "name": "' . t('Personal collection', [], 'dataFixtures', $locale) . '"
+                "name": "' . t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale) . '"
               },
               {
-                "name": "' . t('Drone delivery', [], 'dataFixtures', $locale) . '"
+                "name": "' . t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale) . '"
               }
             ]
           }
@@ -91,13 +92,13 @@ class TransportsTest extends GraphQlTestCase
             'data' => [
                 'transports' => [
                     [
-                        'name' => t('Czech post', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
-                        'description' => t('Czech state post service.', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                        'name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                        'description' => t('Czech state post service.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                         'instruction' => null,
                         'position' => 0,
                         'daysUntilDelivery' => 5,
                         'transportType' => [
-                            'name' => t('Standardní', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'name' => t('Standardní', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                             'code' => 'common',
                         ],
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
@@ -111,19 +112,19 @@ class TransportsTest extends GraphQlTestCase
                             ],
                         ],
                         'payments' => [
-                            ['name' => t('Cash on delivery', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
-                            ['name' => t('GoPay - Quick Bank Account Transfer', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                            ['name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                            ['name' => t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                         ],
                         'stores' => null,
                     ],
                     [
-                        'name' => t('PPL', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                        'name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                         'description' => null,
                         'instruction' => null,
                         'position' => 1,
                         'daysUntilDelivery' => 4,
                         'transportType' => [
-                            'name' => t('Standardní', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'name' => t('Standardní', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                             'code' => 'common',
                         ],
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatHigh),
@@ -137,25 +138,25 @@ class TransportsTest extends GraphQlTestCase
                             ],
                         ],
                         'payments' => [
-                            ['name' => t('Credit card', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
-                            ['name' => t('GoPay - Payment By Card', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
-                            ['name' => t('GoPay - Quick Bank Account Transfer', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                            ['name' => t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                            ['name' => t('GoPay - Payment By Card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                            ['name' => t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                         ],
                         'stores' => null,
                     ],
                     [
-                        'name' => t('Personal collection', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                        'name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                         'description' => t(
                             'You will be welcomed by friendly staff!',
                             [],
-                            'dataFixtures',
+                            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                             $this->getLocaleForFirstDomain()
                         ),
                         'instruction' => null,
                         'position' => 2,
                         'daysUntilDelivery' => 0,
                         'transportType' => [
-                            'name' => t('Standardní', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'name' => t('Standardní', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                             'code' => 'common',
                         ],
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
@@ -169,46 +170,46 @@ class TransportsTest extends GraphQlTestCase
                             ],
                         ],
                         'payments' => [
-                            ['name' => t('Credit card', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
-                            ['name' => t('Cash', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
-                            ['name' => t('GoPay - Payment By Card', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
-                            ['name' => t('GoPay - Quick Bank Account Transfer', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                            ['name' => t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                            ['name' => t('Cash', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                            ['name' => t('GoPay - Payment By Card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                            ['name' => t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                         ],
                         'stores' => [
                             'edges' => [
                                 [
                                     'node' => [
-                                        'name' => t('Ostrava', [], 'dataFixtures', $this->getFirstDomainLocale()),
+                                        'name' => t('Ostrava', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
                                     ],
                                 ],
                                 [
                                     'node' => [
-                                        'name' => t('Pardubice', [], 'dataFixtures', $this->getFirstDomainLocale()),
+                                        'name' => t('Pardubice', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
                                     ],
                                 ],
                             ],
                         ],
                     ],
                     [
-                        'name' => t('Drone delivery', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                        'name' => t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                         'description' => t(
                             'Vhodné pro všechny druhy zboží',
                             [],
-                            'dataFixtures',
+                            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                             $this->getLocaleForFirstDomain()
                         ),
                         'instruction' => null,
                         'position' => 3,
                         'daysUntilDelivery' => 0,
                         'transportType' => [
-                            'name' => t('Standardní', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'name' => t('Standardní', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                             'code' => 'common',
                         ],
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
                         'images' => [],
                         'payments' => [
-                            ['name' => t('GoPay - Quick Bank Account Transfer', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
-                            ['name' => t('Pay later', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                            ['name' => t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+                            ['name' => t('Pay later', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
                         ],
                         'stores' => null,
                     ],

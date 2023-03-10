@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Acceptance\acceptance;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\App\Acceptance\acceptance\PageObject\Admin\EntityEditPage;
 use Tests\App\Acceptance\acceptance\PageObject\Admin\LoginPage;
 use Tests\App\Test\Codeception\AcceptanceTester;
@@ -29,13 +30,13 @@ class ProductImageUploadCest
         $me->clickByName(self::SAVE_BUTTON_NAME);
         $me->seeTranslationAdmin(
             'Product <strong><a href="{{ url }}">{{ product|productDisplayName }}</a></strong> modified',
-            'messages',
+            Translator::DEFAULT_TRANSLATION_DOMAIN,
             [
                 '{{ url }}' => '',
                 '{{ product|productDisplayName }}' => t(
                     '22" Sencor SLE 22F46DM4 HELLO KITTY',
                     [],
-                    'dataFixtures',
+                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $me->getAdminLocale()
                 ),
             ]

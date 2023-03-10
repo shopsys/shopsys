@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Brand;
 
 use App\DataFixtures\Demo\BrandDataFixture;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -70,49 +71,49 @@ class BrandTest extends GraphQlTestCase
         $jsonExpected = '{
     "data": {
         "brand": {
-            "name": "' . t('Canon', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
+            "name": "' . t('Canon', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
             "slug": "/canon",
             "description": "' . t(
             'This is description of brand %brandName%.',
             ['%brandName%' => 'Canon'],
-            'dataFixtures',
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $this->getFirstDomainLocale()
         ) . '",
             "link": "' . $this->getFullUrlPath('/canon') . '",
-            "seoTitle": "' . t('%brandName% SEO Title', ['%brandName%' => 'Canon'], 'dataFixtures', $this->getFirstDomainLocale()) . '",
+            "seoTitle": "' . t('%brandName% SEO Title', ['%brandName%' => 'Canon'], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
             "seoMetaDescription": "' . t(
             'This is SEO meta description of brand %brandName%.',
             ['%brandName%' => 'Canon'],
-            'dataFixtures',
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $this->getFirstDomainLocale()
         ) . '",
-            "seoH1": "' . t('%brandName% SEO H1', ['%brandName%' => 'Canon'], 'dataFixtures', $this->getFirstDomainLocale()) . '",
+            "seoH1": "' . t('%brandName% SEO H1', ['%brandName%' => 'Canon'], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
             "products": {
                 "orderingMode": "PRIORITY",
                 "edges": [
                     {
                         "node": {
-                            "name": "' . t('Canon EH-22L', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                            "name": "' . t('Canon EH-22L', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                         }
                     },
                     {
                         "node": {
-                            "name": "' . t('Canon EH-22M', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                            "name": "' . t('Canon EH-22M', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                         }
                     },
                     {
                         "node": {
-                            "name": "' . t('Canon EOS 700D', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                            "name": "' . t('Canon EOS 700D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                         }
                     },
                     {
                         "node": {
-                            "name": "' . t('Canon EOS 700E', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                            "name": "' . t('Canon EOS 700E', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                         }
                     },
                     {
                         "node": {
-                            "name": "' . t('Canon MG3550', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                            "name": "' . t('Canon MG3550', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                         }
                     }
                 ]

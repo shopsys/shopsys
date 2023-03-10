@@ -11,7 +11,7 @@ Brand:
             images:
                 type: "[Image!]!"
                 description: "Brand images"
-                resolve: '@=resolver("resolveImagesByEntity", [value, args["type"], args["sizes"]])'
+                resolve: '@=query("imagesByEntityPromiseQuery", value, args["type"], args["sizes"])'
                 args:
                     type:
                         type: "String"
@@ -22,7 +22,7 @@ Brand:
             mainImage:
                 type: "Image"
                 description: "Brand image by params"
-                resolve: '@=resolver("resolveMainImageByEntity", [value, args["type"], args["size"]])'
+                resolve: '@=query("mainImageByEntityIdPromiseQuery", value, args["type"], args["size"])'
                 args:
                     type:
                         type: "String"
@@ -36,7 +36,7 @@ Brand:
             breadcrumb:
                 type: "[Link!]!"
                 description: "Hierarchy of the current element in relation to the structure"
-                resolve: '@=resolver("resolveBreadcrumb", [value.getId(), "front_brand_detail"])'
+                resolve: '@=query("breadcrumbQuery", value.getId(), "front_brand_detail")'
             products:
                 type: "ProductConnection!"
                 description: "Paginated and ordered products of brand"
@@ -44,4 +44,4 @@ Brand:
                     builder: "PaginatorArgumentsBuilder"
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
-                resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Products\\ProductsResolver").resolveByBrand(args, value)'
+                resolve: '@=query("productsByBrandQuery", args, value)'

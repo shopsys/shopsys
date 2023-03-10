@@ -1,27 +1,10 @@
 monolog:
     handlers:
-        # display cron.DEBUG messages in console for -v, -vv and -vvv verbosities
-        console_output:
-            type: console
-            verbosity_levels:
-                VERBOSITY_NORMAL: INFO
-                VERBOSITY_VERBOSE: DEBUG
-                VERBOSITY_VERY_VERBOSE: DEBUG
-                VERBOSITY_DEBUG: DEBUG
-            channels: cron
-        cron_output:
-            type: stream
-            path: "%shopsys.log_stream%"
-            channels: cron
-            level: debug
-            formatter: "monolog.formatter.line"
-            # log all console output to stream and stop propagation
-            bubble: false
         main:
             type: "null"
             level: emergency
-            excluded_404s: false
-        log_stream:
+            excluded_http_codes: []
+        log_stream: # difference between common setup and DEV env log_stream handler is only in level: for DEV env is logging enabled from NOTICE
             type: stream
             path: "%shopsys.log_stream%"
             level: notice

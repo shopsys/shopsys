@@ -5,36 +5,23 @@ declare(strict_types=1);
 namespace App\FrontendApi\Mutation\ContactForm;
 
 use Overblog\GraphQLBundle\Definition\Argument;
-use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
-use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormData;
 use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormFacade;
 use Shopsys\FrameworkBundle\Model\Mail\Exception\MailException;
+use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 
-class ContactFormMutation implements MutationInterface, AliasedInterface
+class ContactFormMutation extends AbstractMutation
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormFacade
-     */
-    private ContactFormFacade $contactFormFacade;
-
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    private LoggerInterface $logger;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormFacade $contactFormFacade
      * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
-        ContactFormFacade $contactFormFacade,
-        LoggerInterface $logger
+        private readonly ContactFormFacade $contactFormFacade,
+        private readonly LoggerInterface $logger
     ) {
-        $this->contactFormFacade = $contactFormFacade;
-        $this->logger = $logger;
     }
 
     /**
@@ -42,7 +29,7 @@ class ContactFormMutation implements MutationInterface, AliasedInterface
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return bool
      */
-    public function contact(Argument $argument, InputValidator $validator): bool
+    public function contactMutation(Argument $argument, InputValidator $validator): bool
     {
         $validator->validate();
 
@@ -57,6 +44,7 @@ class ContactFormMutation implements MutationInterface, AliasedInterface
                     'error' => $ex->getMessage(),
                 ]
             );
+
             return false;
         }
 
@@ -76,15 +64,5 @@ class ContactFormMutation implements MutationInterface, AliasedInterface
         $contactFormData->message = $argument['input']['message'];
 
         return $contactFormData;
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getAliases(): array
-    {
-        return [
-            'contact' => 'contact',
-        ];
     }
 }

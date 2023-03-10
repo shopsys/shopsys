@@ -19,8 +19,8 @@ use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\CustomerUserMutation as BaseCustomerUserMutation;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @property \App\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
@@ -35,28 +35,13 @@ class CustomerUserMutation extends BaseCustomerUserMutation
     public const VALIDATION_GROUP_COMPANY_CUSTOMER = 'companyCustomer';
 
     /**
-     * @var \App\Model\Customer\User\RegistrationFacadeInterface
-     */
-    protected RegistrationFacadeInterface $registrationFacade;
-
-    /**
-     * @var \App\Model\Customer\User\RegistrationDataFactoryInterface
-     */
-    protected RegistrationDataFactoryInterface $registrationDataFactory;
-
-    /**
-     * @var \App\FrontendApi\Model\Cart\MergeCartFacade
-     */
-    private MergeCartFacade $mergeCartFacade;
-
-    /**
+     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider $frontendCustomerUserProvider
-     * @param \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface $userPasswordEncoder
+     * @param \Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface $userPasswordHasher
      * @param \App\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
      * @param \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
-     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      * @param \App\FrontendApi\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
-     * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
      * @param \App\FrontendApi\Model\Token\TokenFacade $tokenFacade
      * @param \App\Model\Customer\User\RegistrationFacadeInterface $registrationFacade
@@ -64,34 +49,30 @@ class CustomerUserMutation extends BaseCustomerUserMutation
      * @param \App\FrontendApi\Model\Cart\MergeCartFacade $mergeCartFacade
      */
     public function __construct(
+        TokenStorageInterface $tokenStorage,
         FrontendCustomerUserProvider $frontendCustomerUserProvider,
-        UserPasswordEncoderInterface $userPasswordEncoder,
+        UserPasswordHasherInterface $userPasswordHasher,
         CustomerUserPasswordFacade $customerUserPasswordFacade,
         CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
-        TokenStorageInterface $tokenStorage,
         CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         CustomerUserFacade $customerUserFacade,
         CustomerUserDataFactory $customerUserDataFactory,
         TokenFacade $tokenFacade,
-        RegistrationFacadeInterface $registrationFacade,
-        RegistrationDataFactoryInterface $registrationDataFactory,
-        MergeCartFacade $mergeCartFacade
+        private readonly RegistrationFacadeInterface $registrationFacade,
+        private readonly RegistrationDataFactoryInterface $registrationDataFactory,
+        private readonly MergeCartFacade $mergeCartFacade
     ) {
         parent::__construct(
+            $tokenStorage,
             $frontendCustomerUserProvider,
-            $userPasswordEncoder,
+            $userPasswordHasher,
             $customerUserPasswordFacade,
             $customerUserRefreshTokenChainFacade,
-            $tokenStorage,
             $customerUserUpdateDataFactory,
             $customerUserFacade,
             $customerUserDataFactory,
             $tokenFacade
         );
-
-        $this->registrationFacade = $registrationFacade;
-        $this->registrationDataFactory = $registrationDataFactory;
-        $this->mergeCartFacade = $mergeCartFacade;
     }
 
     /**
@@ -99,7 +80,7 @@ class CustomerUserMutation extends BaseCustomerUserMutation
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return array
      */
-    public function register(Argument $argument, InputValidator $validator): array
+    public function registerMutation(Argument $argument, InputValidator $validator): array
     {
         $validationGroups = $this->computeValidationGroups($argument);
         $validator->validate($validationGroups);
@@ -127,7 +108,7 @@ class CustomerUserMutation extends BaseCustomerUserMutation
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return \App\Model\Customer\User\CustomerUser
      */
-    public function changePersonalData(Argument $argument, InputValidator $validator): CustomerUser
+    public function changePersonalDataMutation(Argument $argument, InputValidator $validator): CustomerUser
     {
         $user = $this->runCheckUserIsLogged();
 

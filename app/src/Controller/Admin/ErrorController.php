@@ -4,127 +4,185 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
-use Exception;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainException;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade;
-use Shopsys\FrameworkBundle\Component\Error\Exception\FakeHttpException;
-use Shopsys\FrameworkBundle\Component\Error\ExceptionController;
 use Shopsys\FrameworkBundle\Component\Error\ExceptionListener;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Debug\Exception\FlattenException;
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Throwable;
 use Tracy\BlueScreen;
 use Tracy\Debugger;
 
 class ErrorController extends AbstractController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Error\ExceptionController
+     * @var bool
      */
-    private $exceptionController;
+    protected bool $debug;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Error\ExceptionListener
      */
-    private $exceptionListener;
+    protected ExceptionListener $exceptionListener;
 
     /**
      * @var \App\Component\Error\ErrorPagesFacade
      */
-    private $errorPagesFacade;
+    protected ErrorPagesFacade $errorPagesFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    private $domain;
+    protected Domain $domain;
 
     /**
      * @var string
      */
-    private $environment;
+    protected string $environment;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Error\ExceptionController $exceptionController
+     * @var string|null
+     */
+    protected ?string $overwriteDomainUrl;
+
+    /**
+     * @param bool $debug
      * @param \Shopsys\FrameworkBundle\Component\Error\ExceptionListener $exceptionListener
      * @param \App\Component\Error\ErrorPagesFacade $errorPagesFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param string $environment
+     * @param string|null $overwriteDomainUrl
      */
     public function __construct(
-        ExceptionController $exceptionController,
+        bool $debug,
         ExceptionListener $exceptionListener,
         ErrorPagesFacade $errorPagesFacade,
         Domain $domain,
-        string $environment
+        string $environment,
+        ?string $overwriteDomainUrl = null
     ) {
-        $this->exceptionController = $exceptionController;
+        $this->debug = $debug;
         $this->exceptionListener = $exceptionListener;
         $this->errorPagesFacade = $errorPagesFacade;
         $this->domain = $domain;
         $this->environment = $environment;
+        $this->overwriteDomainUrl = $overwriteDomainUrl;
     }
 
     /**
      * @Route("/_error/{code}", requirements={"code" = "\d+"}, name="admin_error_page")
      * @Route("/_error/{code}/{_format}", requirements={"code" = "\d+", "_format" = "css|html|js|json|txt|xml"}, name="admin_error_page_format")
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $code
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function errorPageAction($code)
+    public function errorPagePreviewAction(Request $request, int $code): Response
     {
-        $this->exceptionController->setDebug(false);
-        $this->exceptionController->setShowErrorPagePrototype();
-
-        throw new FakeHttpException((int)$code);
+        return $this->renderTemplate($code, $request->getRequestFormat());
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
-     * @param \Symfony\Component\HttpKernel\Log\DebugLoggerInterface $logger
+     * @param \Symfony\Component\ErrorHandler\Exception\FlattenException $exception
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction(
         Request $request,
-        FlattenException $exception,
-        ?DebugLoggerInterface $logger = null
-    ) {
+        FlattenException $exception
+    ): Response {
         if ($this->isUnableToResolveDomainInNotDebug($exception)) {
             return $this->createUnableToResolveDomainResponse($request);
         }
 
-        if ($this->exceptionController->isShownErrorPagePrototype()) {
-            return $this->createErrorPagePrototypeResponse($request, $exception);
+        if ($this->debug) {
+            return $this->createDevelopmentResponse($request, $exception);
         }
 
-        if ($this->exceptionController->getDebug()) {
-            return $this->createExceptionResponse($request, $exception, $logger);
-        }
+        return $this->createProductionResponse($exception->getStatusCode());
+    }
 
-        return $this->createErrorPageResponse($exception->getStatusCode());
+    /**
+     * @param int $statusCode
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function createProductionResponse(int $statusCode): Response
+    {
+        $errorPageStatusCode = $this->errorPagesFacade->getErrorPageStatusCodeByStatusCode($statusCode);
+        $errorPageContent = $this->errorPagesFacade->getErrorPageContentByDomainIdAndStatusCode(
+            $this->domain->getId(),
+            $errorPageStatusCode
+        );
+
+        return new Response($errorPageContent, $errorPageStatusCode);
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
+     * @param \Symfony\Component\ErrorHandler\Exception\FlattenException $exception
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function createErrorPagePrototypeResponse(
-        Request $request,
-        FlattenException $exception
-    ) {
-        // Same as in \Symfony\Bundle\TwigBundle\Controller\PreviewErrorController
-        $format = $request->getRequestFormat();
+    protected function createDevelopmentResponse(Request $request, FlattenException $exception): Response
+    {
+        $lastThrowable = $this->exceptionListener->getLastThrowable();
 
-        $code = $exception->getStatusCode();
+        if ($lastThrowable !== null) {
+            return $this->createTracyResponse($lastThrowable);
+        }
 
-        return $this->render($this->getTemplatePath($code, $format), [
-            'status_code' => $code,
-            'status_text' => Response::$statusTexts[$code] ?? '',
-        ]);
+        return $this->renderTemplate($exception->getStatusCode(), $request->getRequestFormat());
+    }
+
+    /**
+     * @param \Throwable $throwable
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function createTracyResponse(Throwable $throwable): Response
+    {
+        Debugger::$time = time();
+        $blueScreen = new BlueScreen();
+        $blueScreen->info = [
+            'PHP ' . PHP_VERSION,
+        ];
+
+        ob_start();
+        $blueScreen->render($throwable);
+        $blueScreenHtml = ob_get_clean();
+
+        return new Response($blueScreenHtml);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function createUnableToResolveDomainResponse(Request $request): Response
+    {
+        $url = $request->getSchemeAndHttpHost() . $request->getBasePath();
+        $content = sprintf("You are trying to access an unknown domain '%s'.", $url);
+
+        if ($this->environment === EnvironmentType::ACCEPTANCE) {
+            $content .= sprintf(" TEST environment is active, current domain url is '%s'.", $this->overwriteDomainUrl);
+        }
+
+        return new Response($content, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * @param \Symfony\Component\ErrorHandler\Exception\FlattenException $exception
+     * @return bool
+     */
+    protected function isUnableToResolveDomainInNotDebug(FlattenException $exception): bool
+    {
+        if ($this->debug) {
+            return false;
+        }
+
+        return $exception->getClass() === UnableToResolveDomainException::class;
     }
 
     /**
@@ -146,83 +204,20 @@ class ErrorController extends AbstractController
     }
 
     /**
-     * @param int $statusCode
+     * @param int $code
+     * @param string|null $format
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function createErrorPageResponse($statusCode)
+    protected function renderTemplate(int $code, ?string $format): Response
     {
-        $errorPageStatusCode = $this->errorPagesFacade->getErrorPageStatusCodeByStatusCode($statusCode);
-        $errorPageContent = $this->errorPagesFacade->getErrorPageContentByDomainIdAndStatusCode(
-            $this->domain->getId(),
-            $errorPageStatusCode
+        $content = $this->renderView(
+            $this->getTemplatePath($code, $format),
+            [
+                'status_code' => $code,
+                'status_text' => Response::$statusTexts[$code] ?? '',
+            ]
         );
 
-        return new Response($errorPageContent, $errorPageStatusCode);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
-     * @param \Symfony\Component\HttpKernel\Log\DebugLoggerInterface $logger
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    private function createExceptionResponse(Request $request, FlattenException $exception, DebugLoggerInterface $logger)
-    {
-        $lastException = $this->exceptionListener->getLastException();
-        if ($lastException !== null) {
-            return $this->getPrettyExceptionResponse($lastException);
-        }
-
-        return $this->exceptionController->showAction($request, $exception, $logger);
-    }
-
-    /**
-     * @param \Exception $exception
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    private function getPrettyExceptionResponse(Exception $exception)
-    {
-        Debugger::$time = time();
-        $blueScreen = new BlueScreen();
-        $blueScreen->info = [
-            'PHP ' . PHP_VERSION,
-        ];
-
-        ob_start();
-        $blueScreen->render($exception);
-        $blueScreenHtml = ob_get_contents();
-        ob_end_clean();
-
-        return new Response($blueScreenHtml);
-    }
-
-    /**
-     * @param \Symfony\Component\Debug\Exception\FlattenException $exception
-     * @return bool
-     */
-    private function isUnableToResolveDomainInNotDebug(FlattenException $exception): bool
-    {
-        if ($this->exceptionController->getDebug()) {
-            return false;
-        }
-
-        return $exception->getClass() === UnableToResolveDomainException::class;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    private function createUnableToResolveDomainResponse(Request $request): Response
-    {
-        $url = $request->getSchemeAndHttpHost() . $request->getBasePath();
-        $content = sprintf("You are trying to access an unknown domain '%s'.", $url);
-
-        if ($this->environment === EnvironmentType::ACCEPTANCE) {
-            $overwriteDomainUrl = $this->getParameter('overwrite_domain_url');
-            $content .= sprintf(" TEST environment is active, current domain url is '%s'.", $overwriteDomainUrl);
-        }
-
-        return new Response($content, Response::HTTP_INTERNAL_SERVER_ERROR);
+        return new Response($content, $code);
     }
 }

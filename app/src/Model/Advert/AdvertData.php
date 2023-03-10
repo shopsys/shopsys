@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Advert;
 
-use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertData as BaseAdvertData;
 
 class AdvertData extends BaseAdvertData
@@ -33,7 +32,6 @@ class AdvertData extends BaseAdvertData
     {
         parent::__construct();
 
-        $this->mobileImage = new ImageUploadData();
         $this->categories = [];
     }
 }

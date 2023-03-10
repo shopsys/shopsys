@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Settings;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ContactFormMainTextTest extends GraphQlTestCase
@@ -23,7 +24,7 @@ class ContactFormMainTextTest extends GraphQlTestCase
 
         $firstDomainLocale = $this->getLocaleForFirstDomain();
 
-        $expectedText = t('Hi there, our team is happy and ready to answer your question. Please fill out the form below and we will get in touch as soon as possible.', [], 'dataFixtures', $firstDomainLocale);
+        $expectedText = t('Hi there, our team is happy and ready to answer your question. Please fill out the form below and we will get in touch as soon as possible.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale);
 
         self::assertEquals($expectedText, $data['contactFormMainText']);
     }

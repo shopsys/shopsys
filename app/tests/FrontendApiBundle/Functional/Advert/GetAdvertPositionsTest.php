@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Advert;
 
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GetAdvertPositionsTest extends GraphQlTestCase
@@ -46,23 +47,23 @@ class GetAdvertPositionsTest extends GraphQlTestCase
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         return [
             [
-                'description' => t('under heading', [], 'messages', $firstDomainLocale),
+                'description' => t('under heading', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'positionName' => 'header',
             ],
             [
-                'description' => t('above footer', [], 'messages', $firstDomainLocale),
+                'description' => t('above footer', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'positionName' => 'footer',
             ],
             [
-                'description' => t('in category (above the category name)', [], 'messages', $firstDomainLocale),
+                'description' => t('in category (above the category name)', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'positionName' => 'productList',
             ],
             [
-                'description' => t('nad souhrnem objednávky v košíku', [], 'messages', $firstDomainLocale),
+                'description' => t('nad souhrnem objednávky v košíku', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'positionName' => 'cartPreview',
             ],
             [
-                'description' => t('v kategorii (nad výpisem produktů)', [], 'messages', $firstDomainLocale),
+                'description' => t('v kategorii (nad výpisem produktů)', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'positionName' => 'productListMiddle',
             ],
         ];

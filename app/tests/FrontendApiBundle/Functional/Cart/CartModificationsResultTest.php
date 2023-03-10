@@ -559,7 +559,7 @@ class CartModificationsResultTest extends GraphQlTestCase
 
     private function modifyPriceOfTestingProduct(): void
     {
-        $pricingGroupFacade = $this->getContainer()->get(PricingGroupFacade::class);
+        $pricingGroupFacade = self::getContainer()->get(PricingGroupFacade::class);
 
         $productData = $this->productDataFactory->createFromProduct($this->testingProduct);
 

@@ -9,4 +9,4 @@ OrderMutation:
                     input:
                         type: OrderInput!
                         validation: cascade
-                resolve: "@=mutation('create_order', [args, validator])"
+                resolve: "@=mutation('createOrderWithResultMutation', args, validator)"

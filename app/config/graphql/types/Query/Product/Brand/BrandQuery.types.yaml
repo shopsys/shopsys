@@ -4,7 +4,7 @@ BrandQuery:
         fields:
             brandSearch:
                 type: "[Brand!]!"
-                resolve: "@=resolver('resolveBrandSearch', [args])"
+                resolve: "@=query('brandSearchQuery', args)"
                 args:
                     search:
                         type: "String!"

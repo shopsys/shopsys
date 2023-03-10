@@ -21,7 +21,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
  * @method \App\Model\Category\Category[] getAllCategoriesOfCollapsedTree(\App\Model\Category\Category[] $selectedCategories)
  * @method \App\Model\Category\Category[] getFullPathsIndexedByIdsForDomain(int $domainId, string $locale)
  * @method \App\Model\Category\Category getRootCategory()
- * @method \App\Model\Category\Category[] getTranslatedAllWithoutBranch(\App\Model\Category\Category $categoryBranch, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
  * @method \App\Model\Category\Category|null findById(int $categoryId)
  * @method \App\Model\Category\Category getById(int $categoryId)
  * @method \App\Model\Category\Category getOneByUuid(string $uuid)
@@ -36,7 +35,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
  * @method string[] getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
  * @method \App\Model\Category\Category[] getCategoriesByIds(int[] $categoryIds)
  * @method \App\Model\Category\Category[] getCategoriesWithVisibleChildren(\App\Model\Category\Category[] $categories, int $domainId)
- * @method \App\Model\Category\Category[] getTranslatedAll(\Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
  * @property \App\Model\Product\ProductRepository $productRepository
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\ProductRepository $productRepository, \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver)
  * @method \App\Model\Category\Category[] getAllTranslatedWithoutBranch(\App\Model\Category\Category $categoryBranch, string $locale)

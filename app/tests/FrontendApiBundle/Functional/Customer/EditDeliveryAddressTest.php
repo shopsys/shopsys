@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Customer;
 
 use App\DataFixtures\Demo\CustomerUserDataFixture;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Form\Constraints\Country;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
@@ -45,7 +46,7 @@ class EditDeliveryAddressTest extends GraphQlWithLoginTestCase
         $expectedValues = array_merge($editedValues, [
             'country' => [
                 'code' => 'CZ',
-                'name' => t('Czech republic', [], 'dataFixtures', $this->getFirstDomainLocale()),
+                'name' => t('Czech republic', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
             ],
         ]);
 

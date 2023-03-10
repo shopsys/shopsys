@@ -24,6 +24,7 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory as B
  * @property \App\Model\Product\Filter\FlagFilterChoiceRepository $flagFilterChoiceRepository
  * @property \App\Model\Product\Filter\PriceRangeRepository $priceRangeRepository
  * @property \App\Model\Product\Filter\BrandFilterChoiceRepository $brandFilterChoiceRepository
+ * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  */
 class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
 {
@@ -50,7 +51,7 @@ class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
     /**
      * @param \App\Model\Product\Filter\ParameterFilterChoiceRepository $parameterFilterChoiceRepository
      * @param \App\Model\Product\Filter\FlagFilterChoiceRepository $flagFilterChoiceRepository
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Product\Filter\BrandFilterChoiceRepository $brandFilterChoiceRepository
      * @param \App\Model\Product\Filter\PriceRangeRepository $priceRangeRepository
      * @param \App\Model\Product\Filter\Elasticsearch\ProductFilterElasticFacade $productFilterElasticFacade

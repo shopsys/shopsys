@@ -17,7 +17,7 @@ class RedisFacadeTest extends FunctionalTestCase
 
     protected function setUp(): void
     {
-        $this->redisClient = $this->getContainer()->get('snc_redis.test');
+        $this->redisClient = self::getContainer()->get('snc_redis.test');
     }
 
     public function testCleanCache(): void
