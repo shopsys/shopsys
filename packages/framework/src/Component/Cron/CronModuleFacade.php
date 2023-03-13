@@ -247,4 +247,12 @@ class CronModuleFacade
     {
         return $this->cronModuleRepository->getCronCalculatedDurationsIndexedByServiceId();
     }
+
+    /**
+     * @param int $numberOfDays
+     */
+    public function deleteOldCronModuleRuns(int $numberOfDays): void
+    {
+        $this->cronModuleRepository->deleteOldCronModuleRuns($numberOfDays);
+    }
 }

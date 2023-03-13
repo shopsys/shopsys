@@ -2,6 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Component\Cron;
 
+use DateTime;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CronModuleRepository
@@ -109,5 +111,21 @@ class CronModuleRepository
             ->setParameter('cronModule', $cronModule)
             ->orderBy('cmr.startedAt', 'DESC')
             ->getQuery()->getResult();
+    }
+
+    /**
+     * @param int $numberOfDays
+     */
+    public function deleteOldCronModuleRuns(int $numberOfDays): void
+    {
+        $this->em->getConnection()->executeStatement(
+            'DELETE FROM cron_module_runs WHERE finished_at <= :timeLimit',
+            [
+                'timeLimit' => new DateTime('-' . $numberOfDays . ' days'),
+            ],
+            [
+                'timeLimit' => Types::DATETIME_MUTABLE,
+            ]
+        );
     }
 }

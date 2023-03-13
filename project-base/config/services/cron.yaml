@@ -8,6 +8,10 @@ services:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*', readableName: 'Delete vats' }
 
+    Shopsys\FrameworkBundle\Component\Cron\DeleteOldCronModuleRunsCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*', minutes: '*', readableName: 'Delete old cron module runs' }
+
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCronModule:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*', readableName: 'Recalculate product prices' }
