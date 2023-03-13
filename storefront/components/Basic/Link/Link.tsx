@@ -25,14 +25,13 @@ export const Link: FC<LinkProps> = ({ isExternal, isButton, children, href, rel,
             className={twMerge(
                 'inline-flex cursor-pointer items-center text-greyDark outline-none hover:text-primary',
                 isButton ? 'no-underline hover:no-underline' : 'underline hover:underline',
-                className,
             )}
             href={isExternal ? href : undefined}
             rel={rel}
             target={target}
             data-testid={getDataTestId(isExternal, isButton)}
         >
-            {isButton ? <Button>{children}</Button> : children}
+            {isButton ? <Button className={className}>{children}</Button> : children}
         </a>
     );
 

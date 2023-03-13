@@ -52,40 +52,35 @@ export const MenuIconic: FC = () => {
         <>
             <ul className="hidden lg:flex" data-testid={TEST_IDENTIFIER}>
                 <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-0'}>
-                    <NextLink href="/" passHref>
-                        <MenuIconicItemLink>
-                            <MenuIconicItemIcon icon="Chat" />
-                            {t('Customer service')}
-                        </MenuIconicItemLink>
-                    </NextLink>
+                    <MenuIconicItemLink href="/">
+                        <MenuIconicItemIcon icon="Chat" />
+                        {t('Customer service')}
+                    </MenuIconicItemLink>
                 </MenuIconicItem>
                 <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-1'}>
-                    <NextLink href={storesUrl} passHref>
-                        <MenuIconicItemLink>
-                            <MenuIconicItemIcon icon="Marker" />
-                            {t('Stores')}
-                        </MenuIconicItemLink>
-                    </NextLink>
+                    <MenuIconicItemLink href={storesUrl}>
+                        <MenuIconicItemIcon icon="Marker" />
+                        {t('Stores')}
+                    </MenuIconicItemLink>
                 </MenuIconicItem>
                 <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-2'}>
                     {isUserLoggedIn ? (
-                        <MenuIconicItemLink className="group rounded-t-xl px-3 hover:bg-white hover:text-dark">
+                        <MenuIconicItemLink className="group rounded-t-xl p-3 hover:bg-white hover:text-dark">
                             <MenuIconicItemIcon icon="User" className="group-hover:text-dark" />
                             {t('My account')}
                             <ul className="pointer-events-none absolute top-full right-0 z-cart block min-w-[150px] origin-top-right scale-50 rounded-xl rounded-tr-none bg-white opacity-0 shadow-lg transition-all group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100">
                                 <li className="block" data-testid={TEST_IDENTIFIER + '-sub-0'}>
-                                    <NextLink href={customerOrdersUrl} passHref>
-                                        <MenuIconicSubItemLink>{t('My orders')}</MenuIconicSubItemLink>
-                                    </NextLink>
+                                    <MenuIconicSubItemLink href={customerOrdersUrl}>
+                                        {t('My orders')}
+                                    </MenuIconicSubItemLink>
                                 </li>
                                 <li className="block border-t border-border">
-                                    <NextLink
+                                    <MenuIconicSubItemLink
                                         href={customerEditProfileUrl}
-                                        passHref
-                                        data-testid={TEST_IDENTIFIER + '-sub-1'}
+                                        dataTestId={TEST_IDENTIFIER + '-sub-1'}
                                     >
-                                        <MenuIconicSubItemLink>{t('Edit profile')}</MenuIconicSubItemLink>
-                                    </NextLink>
+                                        {t('Edit profile')}
+                                    </MenuIconicSubItemLink>
                                 </li>
                                 <li className="block border-t border-border">
                                     <MenuIconicSubItemLink
@@ -148,20 +143,49 @@ const MenuIconicItem: FC = ({ children, dataTestId }) => (
     </li>
 );
 
-const MenuIconicSubItemLink: FC<{ onClick?: () => void }> = ({ children, onClick, dataTestId }) => (
-    <a className="block py-3 px-5 text-sm text-dark no-underline" data-testid={dataTestId} onClick={onClick}>
-        {children}
-    </a>
-);
+const MenuIconicSubItemLink: FC<{ onClick?: () => void; href?: string }> = ({
+    children,
+    href,
+    onClick,
+    dataTestId,
+}) => {
+    const content = (
+        <a className="block py-3 px-5 text-sm text-dark no-underline" data-testid={dataTestId} onClick={onClick}>
+            {children}
+        </a>
+    );
 
-const MenuIconicItemLink: FC<{ onClick?: () => void }> = ({ children, className, onClick }) => (
-    <a
-        className={twMergeCustom(
-            'flex items-center justify-center rounded-tr-none text-sm text-white no-underline transition-colors hover:text-white hover:no-underline',
-            className,
-        )}
-        onClick={onClick}
-    >
-        {children}
-    </a>
-);
+    if (href !== undefined) {
+        return (
+            <NextLink href={href} passHref>
+                {content}
+            </NextLink>
+        );
+    }
+
+    return content;
+};
+
+const MenuIconicItemLink: FC<{ onClick?: () => void; href?: string }> = ({ children, className, href, onClick }) => {
+    const content = (
+        <a
+            className={twMergeCustom(
+                'flex items-center justify-center rounded-tr-none text-sm text-white no-underline transition-colors hover:text-white hover:no-underline',
+                className,
+            )}
+            onClick={onClick}
+        >
+            {children}
+        </a>
+    );
+
+    if (href !== undefined) {
+        return (
+            <NextLink href={href} passHref>
+                {content}
+            </NextLink>
+        );
+    }
+
+    return content;
+};

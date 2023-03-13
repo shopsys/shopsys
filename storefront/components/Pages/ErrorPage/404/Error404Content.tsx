@@ -2,7 +2,6 @@ import { ErrorPage, ErrorPageButtonLink, ErrorPageTextHeading, ErrorPageTextMain
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import NextLink from 'next/link';
 import React, { FC } from 'react';
 
 export const Error404Content: FC = () => {
@@ -19,9 +18,7 @@ export const Error404Content: FC = () => {
                         <ErrorPageTextHeading>{t('We have nothing to show you at this url.')}</ErrorPageTextHeading>
                         <ErrorPageTextMain>{t('But at other addresses we have a lot for you...')}</ErrorPageTextMain>
 
-                        <NextLink href="/" passHref>
-                            <ErrorPageButtonLink>{t('Back to shop')}</ErrorPageButtonLink>
-                        </NextLink>
+                        <ErrorPageButtonLink href="/">{t('Back to shop')}</ErrorPageButtonLink>
                     </div>
                 </ErrorPage>
             </Webline>

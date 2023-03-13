@@ -2,7 +2,6 @@ import { ErrorPage, ErrorPageButtonLink, ErrorPageTextHeading, ErrorPageTextMain
 import { ErrorLayout } from 'components/Layout/ErrorLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { FallbackProps } from 'react-error-boundary';
@@ -33,9 +32,7 @@ export const Error500Content: FC = () => {
                     <ErrorPageTextHeading>{t('Something went wrong.')}</ErrorPageTextHeading>
                     <ErrorPageTextMain>{t('Please try again later or contact us.')}</ErrorPageTextMain>
 
-                    <NextLink href="/" passHref>
-                        <ErrorPageButtonLink>{t('Back to shop')}</ErrorPageButtonLink>
-                    </NextLink>
+                    <ErrorPageButtonLink href="/">{t('Back to shop')}</ErrorPageButtonLink>
                 </ErrorPage>
             </Webline>
         </ErrorLayout>
