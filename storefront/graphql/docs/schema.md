@@ -35,6 +35,7 @@
     * [CategoryEdge](#categoryedge)
     * [CategoryHierarchyItem](#categoryhierarchyitem)
     * [CompanyCustomerUser](#companycustomeruser)
+    * [Comparison](#comparison)
     * [Country](#country)
     * [CreateOrderResult](#createorderresult)
     * [DeliveryAddress](#deliveryaddress)
@@ -490,6 +491,20 @@ Returns category filtered using UUID or URL slug
 <tr>
 <td colspan="2" valign="top"><strong>CompanyCustomerUser</strong></td>
 <td valign="top"><a href="#companycustomeruser">CompanyCustomerUser</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>comparison</strong></td>
+<td valign="top"><a href="#comparison">Comparison</a></td>
+<td>
+
+Get comparison by UUID or comparison of logged customer user.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">uuid</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
 <td></td>
 </tr>
 <tr>
@@ -967,6 +982,25 @@ Returns available transport methods based on the current cart state
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>addProductToComparison</strong></td>
+<td valign="top"><a href="#comparison">Comparison</a>!</td>
+<td>
+
+Add product to Comparison and create if not exists.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">comparisonUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">productUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>AddToCart</strong></td>
 <td valign="top"><a href="#addtocartresult">AddToCartResult</a>!</td>
 <td>
@@ -1062,6 +1096,20 @@ check payment status of order after callback from payment service
 <tr>
 <td colspan="2" align="right" valign="top">orderUuid</td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>cleanComparison</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Remove all products from Comparison and remove it.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">comparisonUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
 <td></td>
 </tr>
 <tr>
@@ -1226,6 +1274,25 @@ Remove product from cart
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
 <td valign="top"><a href="#removefromcartinput">RemoveFromCartInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>removeProductFromComparison</strong></td>
+<td valign="top"><a href="#comparison">Comparison</a></td>
+<td>
+
+Remove product from Comparison and if is Comparison empty remove it.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">comparisonUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">productUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -3421,6 +3488,39 @@ Phone number
 <td>
 
 UUID
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### Comparison
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>products</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
+<td>
+
+List of compared products
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+Comparison identifier
 
 </td>
 </tr>

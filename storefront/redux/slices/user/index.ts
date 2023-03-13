@@ -16,6 +16,7 @@ type InitialState = {
     urlHash: string | undefined;
     cartUuid: string | null;
     loginLoading: LoginLoadingStatus;
+    productsComparisonUuid: string | null;
 };
 
 export const initialState = {
@@ -23,6 +24,7 @@ export const initialState = {
     urlHash: undefined,
     cartUuid: null,
     loginLoading: 'not-loading',
+    productsComparisonUuid: null,
 } as InitialState;
 
 export const userSlice = createSlice({
@@ -46,6 +48,9 @@ export const userSlice = createSlice({
         },
         setLoginLoading(state, action: PayloadAction<LoginLoadingStatus>) {
             state.loginLoading = action.payload;
+        },
+        setProductsComparisonUuid(state, action: PayloadAction<string | null>) {
+            state.productsComparisonUuid = action.payload;
         },
     },
     extraReducers: {

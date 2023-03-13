@@ -25,6 +25,7 @@ const STATIC_REWRITE_PATHS = {
         '/cookie-consent': '/souhlas-se-soubory-cookies',
         '/abandoned-cart/:cartUuid': '/opusteny-kosik/:cartUuid',
         '/grapesjs-template': '/grapesjs-template',
+        '/products-comparison': '/porovnani-produktu',
     },
     [process.env.DOMAIN_HOSTNAME_2]: {
         '/search': '/hladanie',
@@ -52,6 +53,7 @@ const STATIC_REWRITE_PATHS = {
         '/cookie-consent': '/souhlas-se-soubory-cookies',
         '/abandoned-cart/:cartUuid': '/opusteny-kosik/:cartUuid',
         '/grapesjs-template': '/grapesjs-template',
+        '/products-comparison': '/porovnavanie-produktov',
     },
 };
 

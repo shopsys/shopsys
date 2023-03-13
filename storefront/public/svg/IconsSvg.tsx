@@ -257,3 +257,73 @@ export const Spinner = () => (
         </path>
     </svg>
 );
+
+export const Info = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+        <path
+            d="M494.29 256c0 131.604-106.686 238.29-238.29 238.29-131.604 0-238.29-106.686-238.29-238.29C17.71 124.397 124.396 17.71 256 17.71c131.604 0 238.29 106.686 238.29 238.29z"
+            fill="transparent"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="30.42"
+        />
+        <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M293.913 349.123H275.5V220.239c0-1.43-.161-2.822-.472-4.158-1.883-8.166-9.202-14.254-17.938-14.254h-36.825c-10.169 0-18.412 8.243-18.412 18.412 0 10.168 8.243 18.412 18.412 18.412h18.412v110.472h-18.412c-10.169 0-18.412 8.243-18.412 18.413 0 10.166 8.243 18.41 18.412 18.41h73.648c10.17 0 18.41-8.244 18.41-18.41 0-10.17-8.24-18.413-18.41-18.413z"
+            fill="currentColor"
+        />
+        <path
+            d="M256 134.318h.369"
+            stroke="currentColor"
+            strokeWidth="45.63"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+    </svg>
+);
+
+export const Compare = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 21">
+        <path
+            d="m10.117 14.488.083-.053-.083.053Zm.083.132 3.552 5.63h-7.16l3.608-5.63Z"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinejoin="round"
+            fill="transparent"
+        />
+        <path
+            d="M4.7 9.624c0 1.134-.897 2.028-1.975 2.028-1.077 0-1.975-.894-1.975-2.028 0-1.133.898-2.027 1.975-2.027 1.078 0 1.976.894 1.976 2.027Z"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            fill="transparent"
+        />
+        <path d="M10.233 1v14.056" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <path
+            d="M2.792 6.878V3.646h14.855v2.883"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            fill="transparent"
+        />
+        <path
+            d="M19.25 8.671c0 .95-.751 1.695-1.648 1.695-.897 0-1.648-.745-1.648-1.694 0-.95.751-1.695 1.648-1.695.897 0 1.648.745 1.648 1.694Z"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            fill="transparent"
+        />
+    </svg>
+);
+
+export const ArrowSecondary = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 17">
+        <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M8.994 16.8H7.006V4.668L1.42 10.213 0 8.79 8 .783l8 8.008-1.42 1.422-5.586-5.544v12.13Z"
+            fill="currentColor"
+        />
+    </svg>
+);

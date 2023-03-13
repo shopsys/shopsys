@@ -13,6 +13,7 @@ import { ProductDetailAvailability } from './ProductDetailStoresAvailability/Pro
 import { ProductDetailAvailabilityList } from './ProductDetailStoresAvailability/ProductDetailAvailabilityList/ProductDetailAvailabilityList';
 import { ProductDetailTabs } from './ProductDetailTabs';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata/ProductMetadata';
+import { ButtonsAction } from 'components/Blocks/Product/ButtonsAction/ButtonsAction';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ProductDetailFragmentApi } from 'graphql/generated';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
@@ -62,6 +63,11 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
                         </div>
                         <ProductDetailAddToCart product={product} />
                         <ProductDetailAvailability scrollTarget={scrollTarget} product={product} />
+                        <ButtonsAction
+                            productUuid={product.uuid}
+                            isMainVariant={product.__typename === 'MainVariant'}
+                            iconsOnly={false}
+                        ></ButtonsAction>
                     </ProductDetailInfo>
                 </ProductDetail>
             </Webline>

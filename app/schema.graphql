@@ -583,6 +583,13 @@ type CompanyCustomerUser implements CustomerUser {
   uuid: Uuid!
 }
 
+type Comparison {
+  """List of compared products"""
+  products: [Product!]!
+  """Comparison identifier"""
+  uuid: Uuid!
+}
+
 input ContactInput {
   """Email address of the sender"""
   email: String!
@@ -888,6 +895,8 @@ type MainVariant implements Product & Breadcrumb & Slug {
 scalar Money
 
 type Mutation {
+  """Add product to Comparison and create if not exists."""
+  addProductToComparison(comparisonUuid: Uuid, productUuid: Uuid!): Comparison!
   """Add product to cart for future checkout"""
   AddToCart(input: AddToCartInput!): AddToCartResult!
   """Apply new promo code for the future checkout"""
@@ -902,6 +911,8 @@ type Mutation {
   ChangeTransportInCart(input: ChangeTransportInCartInput!): Cart!
   """check payment status of order after callback from payment service"""
   CheckPaymentStatus(orderUuid: Uuid!): Boolean!
+  """Remove all products from Comparison and remove it."""
+  cleanComparison(comparisonUuid: Uuid): String!
   """Send message to the site owner"""
   Contact(input: ContactInput!): Boolean!
   """Creates complete order with products and addresses"""
@@ -929,6 +940,8 @@ type Mutation {
   Register(input: RegistrationDataInput!): LoginResult!
   """Remove product from cart"""
   RemoveFromCart(input: RemoveFromCartInput!): Cart!
+  """Remove product from Comparison and if is Comparison empty remove it."""
+  removeProductFromComparison(comparisonUuid: Uuid, productUuid: Uuid!): Comparison
   """Remove already used promo code from cart"""
   RemovePromoCodeFromCart(input: RemovePromoCodeFromCartInput!): Cart!
   """Request password recovery - email with hash will be sent"""
@@ -1652,6 +1665,8 @@ type Query {
   """Returns category filtered using UUID or URL slug"""
   category(urlSlug: String, uuid: Uuid): Category
   CompanyCustomerUser: CompanyCustomerUser
+  """Get comparison by UUID or comparison of logged customer user."""
+  comparison(uuid: Uuid): Comparison
   """Returns information about cookies article"""
   cookiesArticle: ArticleSite
   """Returns available countries"""

@@ -22,6 +22,10 @@ const getErrorMessageTranslationString = (errorCode: ApplicationErrorsType, t: T
         [ApplicationErrors['store-not-found']]: t('Store not found.'),
         [ApplicationErrors['invalid-token']]: t('Invalid token.'),
         [ApplicationErrors['product-not-found']]: t('Product not found.'),
+        [ApplicationErrors['handling-with-logged-customer-comparison']]: t('Product not found.'),
+        [ApplicationErrors['comparison-not-found']]: t('Comparison not found.'),
+        [ApplicationErrors['compared-item-not-found']]: t('Compared product not found.'),
+        [ApplicationErrors['compared-item-already-exists']]: t('Compared product is already compared.'),
     };
 
     return ERROR_MESSAGES[errorCode];

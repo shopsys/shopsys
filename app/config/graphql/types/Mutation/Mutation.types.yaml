@@ -14,3 +14,4 @@ Mutation:
         - 'RegisterMutation'
         - 'LoginMutation'
         - 'OrderMutation'
+        - 'ComparisonMutation'

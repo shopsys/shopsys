@@ -22,6 +22,7 @@ const keyUuid = (data: Data) => data.uuid as string | null;
 const keyName = (data: Data) => data.name as string | null;
 const keyCode = (data: Data) => data.code as string | null;
 const keyUrl = (data: Data) => data.url as string | null;
+const keyComparison = () => 'comparison';
 
 export const cache = cacheExchange({
     schema: schema as unknown as IntrospectionQuery,
@@ -62,7 +63,7 @@ export const cache = cacheExchange({
         NotificationBar: keyNull,
         Order: keyUuid,
         OrderItem: keyNull,
-        Parameter: keyUuid,
+        Parameter: keyNull,
         ParameterCheckboxFilterOption: keyNull,
         ParameterSliderFilterOption: keyNull,
         ParameterColorFilterOption: keyNull,
@@ -77,6 +78,7 @@ export const cache = cacheExchange({
         Product: keyUuid,
         ProductFilterOptions: keyNull,
         ProductPrice: keyNull,
+        Comparison: keyComparison,
         RegularCustomerUser: keyUuid,
         RegularProduct: keyUuid,
         SeoSetting: keyNull,
@@ -140,6 +142,15 @@ export const cache = cacheExchange({
                         ? (result.RemovePromoCodeFromCart as CartApi)
                         : undefined;
                 manuallyUpdateCartFragment(cache, newCart);
+            },
+            addProductToComparison(result, _args, cache) {
+                invalidateFields(cache, ['comparison']);
+            },
+            removeProductFromComparison(result, _args, cache) {
+                invalidateFields(cache, ['comparison']);
+            },
+            cleanComparison(result, _args, cache) {
+                invalidateFields(cache, ['comparison']);
             },
         },
     },

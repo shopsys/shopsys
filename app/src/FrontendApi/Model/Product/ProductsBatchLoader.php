@@ -49,6 +49,40 @@ class ProductsBatchLoader
      * @param int[][] $productsIds
      * @return \GraphQL\Executor\Promise\Promise
      */
+    public function loadVisibleAndSortedByIds(array $productsIds): Promise
+    {
+        $products = $this->productElasticsearchProvider->getBatchedVisibleByProductIds($productsIds)[ProductElasticsearchRepository::PRODUCTS_KEY];
+        $sortedProducts = [];
+        foreach ($products as $index => $result) {
+            $sortedProducts[] = $this->sortByOriginalArray($result, $productsIds[$index]);
+        }
+
+        return $this->promiseAdapter->all($sortedProducts);
+    }
+
+    /**
+     * @param array $arrayForSorting
+     * @param array $originalArray
+     * @return array
+     */
+    private function sortByOriginalArray(array $arrayForSorting, array $originalArray): array
+    {
+        $sortedItems = [];
+        foreach ($arrayForSorting as $item) {
+            $originalIndex = array_search($item['id'], $originalArray, true);
+            if ($originalIndex !== false) {
+                $sortedItems[$originalIndex] = $item;
+            }
+        }
+        ksort($sortedItems);
+
+        return $sortedItems;
+    }
+
+    /**
+     * @param int[][] $productsIds
+     * @return \GraphQL\Executor\Promise\Promise
+     */
     public function loadSellableByIds(array $productsIds): Promise
     {
         return $this->promiseAdapter->all($this->productElasticsearchProvider->getBatchedSellableByProductIds($productsIds)[ProductElasticsearchRepository::PRODUCTS_KEY]);
