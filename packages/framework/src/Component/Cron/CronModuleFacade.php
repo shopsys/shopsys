@@ -4,39 +4,37 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Cron;
 
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 
 class CronModuleFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Cron\CronModuleRepository
-     */
-    protected $cronModuleRepository;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Cron\CronFilter
-     */
-    protected $cronFilter;
+    use SetterInjectionTrait;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleRepository $cronModuleRepository
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFilter $cronFilter
+     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleRunFactory|null $cronModuleRunFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        CronModuleRepository $cronModuleRepository,
-        CronFilter $cronFilter
+        protected readonly EntityManagerInterface $em,
+        protected readonly CronModuleRepository $cronModuleRepository,
+        protected readonly CronFilter $cronFilter,
+        protected ?CronModuleRunFactory $cronModuleRunFactory = null,
     ) {
-        $this->em = $em;
-        $this->cronModuleRepository = $cronModuleRepository;
-        $this->cronFilter = $cronFilter;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleRunFactory $cronModuleRunFactory
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setCronModuleRunFactory(CronModuleRunFactory $cronModuleRunFactory): void
+    {
+        $this->setDependency($cronModuleRunFactory, 'cronModuleRunFactory');
     }
 
     /**
@@ -130,6 +128,9 @@ class CronModuleFacade
             $cronModule->setLastDuration($lastCronDuration);
         }
 
+        $cronModuleRun = $this->cronModuleRunFactory->createFromFinishedCronModule($cronModule);
+        $this->em->persist($cronModuleRun);
+
         $this->em->flush();
     }
 
@@ -138,6 +139,9 @@ class CronModuleFacade
      */
     public function markCronAsFailed(CronModuleConfig $cronModuleConfig): void
     {
+        $cronModule = $this->cronModuleRepository->getCronModuleByServiceId($cronModuleConfig->getServiceId());
+        $lastCronDuration = time() - $cronModule->getLastStartedAt()->getTimestamp();
+
         /**
          * We want to avoid flushing the whole identity map (using EntityManager::flush())
          * because CRON is marked as failed when an unexpected exception occurs
@@ -145,12 +149,36 @@ class CronModuleFacade
          * therefore the native query for setting CRON error status is used here.
          */
         $connection = $this->em->getConnection();
-        if ($connection->isConnected()) {
-            $connection->executeStatement('UPDATE cron_modules SET status = :errorStatus WHERE service_id = :serviceId', [
+        if (!$connection->isConnected()) {
+            return;
+        }
+
+        $connection->executeStatement(
+            'UPDATE cron_modules 
+            SET 
+                status = :errorStatus,
+                last_finished_at = :now,
+                last_duration = :lastDuration
+            WHERE service_id = :serviceId',
+            [
                 'errorStatus' => CronModule::CRON_STATUS_ERROR,
                 'serviceId' => $cronModuleConfig->getServiceId(),
-            ]);
-        }
+                'now' => (new DateTime())->format('Y-m-d H:i:s'),
+                'lastDuration' => $lastCronDuration,
+            ]
+        );
+
+        $connection->executeStatement(
+            'INSERT INTO cron_module_runs (cron_module_id, status, started_at, finished_at, duration) 
+                VALUES (:cronModuleId, :status, :startedAt, :finishedAt, :duration)',
+            [
+                'cronModuleId' => $cronModule->getServiceId(),
+                'status' => CronModule::CRON_STATUS_ERROR,
+                'startedAt' => $cronModule->getLastStartedAt()->format('Y-m-d H:i:s'),
+                'finishedAt' => (new DateTime())->format('Y-m-d H:i:s'),
+                'duration' => $lastCronDuration,
+            ]
+        );
     }
 
     /**
