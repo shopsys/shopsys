@@ -28,10 +28,12 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ isVisible, onCloseCall
 
     return (
         <Popup isVisible={isVisible} onCloseCallback={onCloseCallback} className="w-11/12 max-w-2xl" hideCloseButton>
-            <Heading type="h2" className="mt-4 mb-4 flex w-full items-center text-xl normal-case text-primary md:mb-6">
-                <Icon iconType="icon" icon="Checkmark" width={30} height={30} className="mr-4" />
-                {t('Great choice! We have added your item to the cart')}
-            </Heading>
+            <div className="mb-4 flex w-full items-center md:mb-6">
+                <Icon iconType="icon" icon="Checkmark" width={30} height={30} className="mr-4 min-w-[30px]" />
+                <Heading type="h2" className="mb-0 text-xl normal-case text-primary">
+                    {t('Great choice! We have added your item to the cart')}
+                </Heading>
+            </div>
             <div
                 className="mb-4 flex flex-col items-center rounded border border-greyLighter p-3 md:flex-row md:p-4"
                 data-testid={TEST_IDENTIFIER}
@@ -61,15 +63,15 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ isVisible, onCloseCall
                 </div>
             </div>
 
-            <div className="-mt-2 -mr-2 flex flex-col text-center md:flex-row md:items-center md:justify-between md:p-0">
+            <div className="flex flex-col text-center md:flex-row md:items-center md:justify-between md:p-0">
                 <Button
                     onClick={onCloseCallback}
                     dataTestId={TEST_IDENTIFIER + '-button-back'}
-                    className="mt-2 mr-2 lg:w-auto lg:justify-start"
+                    className="mt-2 lg:w-auto lg:justify-start"
                 >
                     {t('Back to shop')}
                 </Button>
-                <Link className="mt-2 mr-2 lg:w-auto lg:justify-start" href={cartUrl} isButton>
+                <Link className="mt-2 w-full lg:w-auto lg:justify-start" href={cartUrl} isButton>
                     {t('To cart')}
                 </Link>
             </div>
