@@ -6,11 +6,11 @@ import {
     ProductDetailInfo,
     ProductDetailPrefix,
 } from './ProductDetaiElements';
-import { ProductDetailAccessories } from './ProductDetailAccessories/ProductDetailAccessories';
+import { ProductDetailAccessories } from './ProductDetailAccessories';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailTabs } from './ProductDetailTabs';
 import { ProductVariantsTable } from './ProductVariantsTable/ProductVariantsTable';
-import { ProductMetadata } from 'components/Basic/Head/ProductMetadata/ProductMetadata';
+import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ImageSizesFragmentApi, MainVariantDetailFragmentApi } from 'graphql/generated';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';

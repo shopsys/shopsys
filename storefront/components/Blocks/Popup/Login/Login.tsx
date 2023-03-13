@@ -3,7 +3,7 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
-import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
+import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { blurInput } from 'helpers/forms/blurInput';

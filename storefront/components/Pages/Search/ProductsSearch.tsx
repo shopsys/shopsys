@@ -1,5 +1,5 @@
 import { SearchProductsWrapper } from './SearchProductsWrapper';
-import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { FilterProvider } from 'components/Blocks/Product/Filter/FilterContext/FilterProvider';

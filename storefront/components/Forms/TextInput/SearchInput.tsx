@@ -1,6 +1,6 @@
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
-import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper/LabelWrapper';
+import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
 import { InputHTMLAttributes, KeyboardEventHandler } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';

@@ -1,7 +1,7 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { PageGuard } from 'components/Helpers/PageGuard';
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { OrderDetailContent } from 'components/Pages/Customer/OrderDetail/OrderDetailContent';
+import { OrderDetailContent } from 'components/Pages/Customer/OrderDetailContent';
 import { BreadcrumbFragmentApi, OrderDetailQueryDocumentApi, useOrderDetailQueryApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';

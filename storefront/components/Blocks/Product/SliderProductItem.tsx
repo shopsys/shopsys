@@ -1,8 +1,8 @@
-import { ProductAction } from './Action/ProductAction';
-import { ProductAvailableStoresCount } from './Availability/ProductAvailableStoresCount';
-import { ProductExposedStoresCount } from './Availability/ProductExposedStoresCount';
-import { ProductFlags } from './Flags/ProductFlags';
-import { ProductPrice } from './Price/ProductPrice';
+import { ProductAction } from './ProductAction';
+import { ProductAvailableStoresCount } from './ProductAvailableStoresCount';
+import { ProductExposedStoresCount } from './ProductExposedStoresCount';
+import { ProductFlags } from './ProductFlags';
+import { ProductPrice } from './ProductPrice';
 import { Image } from 'components/Basic/Image/Image';
 import { ListedProductFragmentApi } from 'graphql/generated';
 import { onClickProductDetailGtmEventHandler } from 'helpers/gtm/eventHandlers';

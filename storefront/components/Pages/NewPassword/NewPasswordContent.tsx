@@ -2,10 +2,10 @@ import { useRecoveryPasswordForm, useRecoveryPasswordFormMeta } from './formMeta
 import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
-import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
-import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
+import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup';
+import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
-import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
+import { showErrorMessage, showSuccessMessage } from 'components/Helpers/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { BreadcrumbFragmentApi, useRecoverPasswordMutationApi } from 'graphql/generated';
 import { handleFormErrors } from 'helpers/forms/handleFormErrors';

@@ -1,10 +1,10 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { OrderSteps } from 'components/Blocks/OrderSteps/OrderSteps';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { CartList } from 'components/Pages/Cart/CartList/CartList';
-import { CartSummary } from 'components/Pages/Cart/CartSummary/CartSummary';
+import { CartSummary } from 'components/Pages/Cart/CartSummary';
 import { EmptyCartWrapper } from 'components/Pages/Cart/EmptyCartWrapper';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';

@@ -1,9 +1,9 @@
-import { SearchMetadata } from 'components/Basic/Head/SearchMetadata/SearchMetadata';
+import { SearchMetadata } from 'components/Basic/Head/SearchMetadata';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Banners } from 'components/Blocks/Banners/Banners';
 import { BLOG_PREVIEW_VARIABLES, BlogPreview } from 'components/Blocks/BlogPreview/BlogPreview';
 import { PromotedCategories } from 'components/Blocks/Categories/PromotedCategories';
-import { PromotedProducts } from 'components/Blocks/Product/PromotedProducts/PromotedProducts';
+import { PromotedProducts } from 'components/Blocks/Product/PromotedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import {

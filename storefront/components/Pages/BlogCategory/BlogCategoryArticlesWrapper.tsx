@@ -1,4 +1,4 @@
-import { BlogArticlesList } from './BlogArticlesList/BlogArticlesList';
+import { BlogArticlesList } from './BlogArticlesList';
 import { DEFAULT_PAGE_SIZE, Pagination } from 'components/Blocks/Pagination/Pagination';
 import { usePaginationContext } from 'components/Blocks/Pagination/usePaginationContext';
 import { ListedBlogArticleFragmentApi, useBlogCategoryArticlesApi } from 'graphql/generated';

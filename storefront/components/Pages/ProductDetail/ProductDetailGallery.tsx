@@ -1,6 +1,6 @@
 import { ProductDetailImageSlider } from './ProductDetailImageSlider';
 import { Image } from 'components/Basic/Image/Image';
-import { ProductFlags } from 'components/Blocks/Product/Flags/ProductFlags';
+import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { ImageSizesFragmentApi, SimpleFlagFragmentApi } from 'graphql/generated';

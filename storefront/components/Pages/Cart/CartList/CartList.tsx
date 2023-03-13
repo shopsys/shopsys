@@ -1,4 +1,4 @@
-import { CartListItem } from './CartListItem/CartListItem';
+import { CartListItem } from './CartListItem';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { CartItemFragmentApi } from 'graphql/generated';

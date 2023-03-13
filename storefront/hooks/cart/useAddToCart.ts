@@ -1,4 +1,4 @@
-import { showErrorMessage } from 'components/Helpers/Toasts';
+import { showErrorMessage } from 'components/Helpers/toasts';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { AddToCartMutationApi, useAddToCartMutationApi } from 'graphql/generated';
 import { onChangeCartItemGtmEventHandler } from 'helpers/gtm/eventHandlers';

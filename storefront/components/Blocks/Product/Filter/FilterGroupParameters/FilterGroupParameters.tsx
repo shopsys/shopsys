@@ -7,7 +7,7 @@ import {
     ShowAllButton,
 } from '../FilterElements';
 import { FilterGroupIcon } from '../FilterGroup/FilterGroupIcon';
-import { SliderFilter } from './SliderFilter/SliderFilter';
+import { SliderFilter } from './SliderFilter';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { CheckboxColor } from 'components/Forms/CheckboxColor/CheckboxColor';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';

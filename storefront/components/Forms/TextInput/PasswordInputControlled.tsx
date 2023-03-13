@@ -1,4 +1,4 @@
-import { FormLineError } from '../Lib/FormLineError/FormLineError';
+import { FormLineError } from '../Lib/FormLineError';
 import { TextInput } from './TextInput';
 import { InputHTMLAttributes, ReactElement, useCallback, useState } from 'react';
 import { Control, useController } from 'react-hook-form';

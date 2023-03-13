@@ -1,4 +1,4 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PersonalDataExportContent } from 'components/Pages/PersonalData/Export/PersonalDataExportContent';
 import {

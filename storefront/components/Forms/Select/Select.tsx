@@ -1,5 +1,5 @@
 import { Icon } from 'components/Basic/Icon/Icon';
-import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper/LabelWrapper';
+import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
 import { ReactNode } from 'react';
 import SelectReact from 'react-select';
 import { components, Props } from 'react-select';

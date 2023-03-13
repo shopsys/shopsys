@@ -1,6 +1,6 @@
 import { AdvancedSeoCategories } from './AdvancedSeoCategories/AdvancedSeoCategories';
 import { CategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper';
-import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { HeadingPaginated } from 'components/Basic/Heading/HeadingPaginated';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';

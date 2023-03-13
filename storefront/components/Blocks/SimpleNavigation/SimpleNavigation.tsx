@@ -1,5 +1,5 @@
-import { ListItem } from './ListItem/ListItem';
-import { Slider } from './Slider/Slider';
+import { ListItem } from './ListItem';
+import { Slider } from './Slider';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';

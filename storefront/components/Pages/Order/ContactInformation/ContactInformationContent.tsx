@@ -1,12 +1,12 @@
-import { ContactInformationFormWrapper } from './ContactInformationFormWrapper/ContactInformationFormWrapper';
+import { ContactInformationFormWrapper } from './ContactInformationFormWrapper';
 import { useContactInformationFormMeta } from './formMeta';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Link } from 'components/Basic/Link/Link';
 import { Login } from 'components/Blocks/Popup/Login/Login';
 import { Button } from 'components/Forms/Button/Button';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
-import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine/ChoiceFormLine';
-import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
+import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
+import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { Popup } from 'components/Layout/Popup/Popup';
 import {

@@ -1,4 +1,4 @@
-import { ProductFlags } from 'components/Blocks/Product/Flags/ProductFlags';
+import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { mediaQueries } from 'components/Theme/mediaQueries';
 import { ImageSizesFragmentApi, SimpleFlagFragmentApi } from 'graphql/generated';
 import 'keen-slider/keen-slider.min.css';

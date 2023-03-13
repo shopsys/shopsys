@@ -1,11 +1,11 @@
-import { PickupPlacePopup } from './PickupPlacePopup/PickupPlacePopup';
+import { PickupPlacePopup } from './PickupPlacePopup';
 import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
-import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectItemLabel/TransportAndPaymentSelectItemLabel';
+import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectItemLabel';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
-import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer/PacketeryContainer';
+import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import {
     ListedStoreFragmentApi,

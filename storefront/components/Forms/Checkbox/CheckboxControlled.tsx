@@ -1,4 +1,4 @@
-import { FormLineError } from '../Lib/FormLineError/FormLineError';
+import { FormLineError } from '../Lib/FormLineError';
 import { Checkbox, CheckboxProps } from './Checkbox';
 import { ReactElement } from 'react';
 import { Control, useController } from 'react-hook-form';

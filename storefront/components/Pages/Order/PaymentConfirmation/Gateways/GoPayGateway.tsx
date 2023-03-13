@@ -1,5 +1,5 @@
 import { Link } from 'components/Basic/Link/Link';
-import { showErrorMessage } from 'components/Helpers/Toasts';
+import { showErrorMessage } from 'components/Helpers/toasts';
 import { GoPayCreatePaymentSetupApi, usePayOrderMutationApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffectOnce } from 'hooks/ui/useEffectOnce';

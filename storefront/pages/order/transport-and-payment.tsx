@@ -1,4 +1,4 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Footer } from 'components/Layout/Footer/Footer';
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';

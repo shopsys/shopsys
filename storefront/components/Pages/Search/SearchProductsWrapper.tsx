@@ -1,4 +1,4 @@
-import { ResultProducts } from './ResultProducts/ResultProducts';
+import { ResultProducts } from './ResultProducts';
 import { DEFAULT_PAGE_SIZE, Pagination } from 'components/Blocks/Pagination/Pagination';
 import { usePaginationContext } from 'components/Blocks/Pagination/usePaginationContext';
 import { ListedProductFragmentApi, useSearchProductsQueryApi } from 'graphql/generated';

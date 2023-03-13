@@ -1,9 +1,9 @@
-import { PromoCodeInfo } from './PromoCodeInfo/PromoCodeInfo';
+import { PromoCodeInfo } from './PromoCodeInfo';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Button } from 'components/Forms/Button/Button';
-import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
+import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup';
 import { TextInput } from 'components/Forms/TextInput/TextInput';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';

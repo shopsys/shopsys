@@ -11,7 +11,7 @@ import { BlogArticleDetailContent } from 'components/Pages/BlogArticle/BlogArtic
 import { BlogCategoryContent } from 'components/Pages/BlogCategory/BlogCategoryContent';
 import { BrandDetailContent } from 'components/Pages/BrandDetail/BrandDetailContent';
 import { CategoryDetailContent } from 'components/Pages/CategoryDetail/CategoryDetailContent';
-import { Error404Content } from 'components/Pages/ErrorPage/404/Error404Content';
+import { Error404Content } from 'components/Pages/ErrorPage/Error404Content';
 import { FlagDetailContent } from 'components/Pages/FlagDetail/FlagDetailContent';
 import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDetailContent';
 import { ProductDetailMainVariantContent } from 'components/Pages/ProductDetail/ProductDetailMainVariantContent';

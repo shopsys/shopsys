@@ -1,4 +1,4 @@
-import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
+import { showErrorMessage, showSuccessMessage } from 'components/Helpers/toasts';
 import { CartFragmentApi, useRemovePromoCodeFromCartMutationApi } from 'graphql/generated';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';

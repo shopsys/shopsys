@@ -1,4 +1,4 @@
-import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper/LabelWrapper';
+import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
 import { forwardRef, TextareaHTMLAttributes } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';

@@ -1,4 +1,4 @@
-import { BannersSlider } from './BannersSlider/BannersSlider';
+import { BannersSlider } from './BannersSlider';
 import { useSliderItemsQueryApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
 

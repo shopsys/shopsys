@@ -1,9 +1,9 @@
 import '../styles/globals.css';
-import { Canonical } from 'components/Basic/Head/Canonical/Canonical';
+import { Canonical } from 'components/Basic/Head/Canonical';
 import { GtmHeadScript } from 'components/Helpers/GtmHeadScript';
-import { showInfoMessage, showSuccessMessage } from 'components/Helpers/Toasts';
-import { Error500ContentWithBoundary } from 'components/Pages/ErrorPage/500/Error500Content';
-import { Error503Content } from 'components/Pages/ErrorPage/503/Error503Content';
+import { showInfoMessage, showSuccessMessage } from 'components/Helpers/toasts';
+import { Error500ContentWithBoundary } from 'components/Pages/ErrorPage/Error500Content';
+import { Error503Content } from 'components/Pages/ErrorPage/Error503Content';
 import { FontFaceStyle } from 'components/Theme/FontFaceStyle';
 import { extend, locale } from 'dayjs';
 import 'dayjs/locale/cs';
@@ -99,7 +99,7 @@ function MyApp({ Component, pageProps, err }: AppProps): ReactElement {
 
     const UserConsentContainer = dynamic<PropsWithChildren<Record<string, unknown>>>(
         () =>
-            import('components/Blocks/UserConsent/UserConsentContainer/UserConsentContainer').then(
+            import('components/Blocks/UserConsent/UserConsentContainer').then(
                 (component) => component.UserConsentContainer,
             ),
         {

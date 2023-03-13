@@ -1,4 +1,4 @@
-import { LogoMetadata } from 'components/Basic/Head/LogoMetadata/LogoMetadata';
+import { LogoMetadata } from 'components/Basic/Head/LogoMetadata';
 import { Link } from 'components/Basic/Link/Link';
 import NextImage from 'next/image';
 

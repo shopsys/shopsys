@@ -1,4 +1,4 @@
-import { LabelWrapper } from '../Lib/LabelWrapper/LabelWrapper';
+import { LabelWrapper } from '../Lib/LabelWrapper';
 import { Image } from 'components/Basic/Image/Image';
 import { ImageSizesFragmentApi } from 'graphql/generated';
 import { forwardRef, InputHTMLAttributes, MouseEventHandler, ReactNode, useCallback } from 'react';

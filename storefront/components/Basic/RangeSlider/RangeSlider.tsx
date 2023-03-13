@@ -258,20 +258,20 @@ type RangeSliderThumbProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElem
 };
 
 const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ dataTestId, isActive, ...props }) => {
-    const webkit_TwClass =
+    const webkitTwClass =
         '[&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:relative [&::-webkit-slider-thumb]:z-[3] [&::-webkit-slider-thumb]:-my-2 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-none [&::-webkit-slider-thumb]:[-webkit-tap-highlight-color:transparent] [&::-webkit-slider-runnable-track]:pointer-events-none';
-    const moz_TwClass =
+    const mozTwClass =
         '[&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:relative [&::-moz-range-thumb]:z-[3] [&::-moz-range-thumb]:-my-2 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none [&::-moz-range-track]:pointer-events-none';
-    const ms_TwClass =
+    const msTwClass =
         '[&::-ms-track]:pointer-events-none [&::-ms-fill-lower] [&::-ms-thumb]:z-[3] [&::-ms-thumb]:-my-2 [&::-ms-thumb]:h-4 [&::-ms-thumb]:w-4 [&::-ms-thumb]:cursor-pointer [&::-ms-thumb]:rounded-full [&::-ms-thumb]:border-none [&::-ms-fill-upper]:pointer-events-none';
 
     return (
         <input
             className={twJoin(
                 'pointer-events-none absolute top-6 z-[3] h-0 w-full appearance-none outline-none',
-                webkit_TwClass,
-                moz_TwClass,
-                ms_TwClass,
+                webkitTwClass,
+                mozTwClass,
+                msTwClass,
                 isActive
                     ? '[&::-webkit-slider-thumb]:bg-orange [&::-moz-range-thumb]:bg-orange [&::-ms-thumb]:bg-orange'
                     : '[&::-webkit-slider-thumb]:bg-greyLight [&::-moz-range-thumb]:bg-greyLight [&::-ms-thumb]:bg-greyLight',

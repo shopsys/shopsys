@@ -1,10 +1,10 @@
 import { Footer } from './Footer/Footer';
-import { NewsletterForm } from './Footer/NewsletterForm/NewsletterForm';
+import { NewsletterForm } from './Footer/NewsletterForm';
 import { Header } from './Header/Header';
 import { Navigation } from './Header/Navigation/Navigation';
 import { NotificationBars } from './NotificationBars/NotificationBars';
 import { Webline } from './Webline/Webline';
-import { SeoMeta } from 'components/Basic/Head/SeoMeta/SeoMeta';
+import { SeoMeta } from 'components/Basic/Head/SeoMeta';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 
 type CommonLayoutProps = {

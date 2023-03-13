@@ -1,4 +1,4 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { SearchContent } from 'components/Pages/Search/SearchContent';

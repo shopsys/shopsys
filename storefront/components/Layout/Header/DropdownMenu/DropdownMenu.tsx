@@ -1,9 +1,9 @@
 import { DropdownMenuContext } from './DropdownMenuContext';
-import { PrimaryList } from './PrimaryList/PrimaryList';
-import { SecondaryList } from './SecondaryList/SecondaryList';
-import { DropdownSlideLeft } from './SlideLeft/DropdownSlideLeft';
-import { SubMenu } from './SubMenu/SubMenu';
-import { TertiaryList } from './TertiaryList/TertiaryList';
+import { DropdownSlideLeft } from './DropdownSlideLeft';
+import { PrimaryList } from './PrimaryList';
+import { SecondaryList } from './SecondaryList';
+import { SubMenu } from './SubMenu';
+import { TertiaryList } from './TertiaryList';
 import { useNavigationQueryApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useState } from 'react';

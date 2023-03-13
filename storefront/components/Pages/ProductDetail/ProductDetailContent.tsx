@@ -6,13 +6,13 @@ import {
     ProductDetailInfo,
     ProductDetailPrefix,
 } from './ProductDetaiElements';
-import { ProductDetailAccessories } from './ProductDetailAccessories/ProductDetailAccessories';
-import { ProductDetailAddToCart } from './ProductDetailAddToCart/ProductDetailAddToCart';
+import { ProductDetailAccessories } from './ProductDetailAccessories';
+import { ProductDetailAddToCart } from './ProductDetailAddToCart';
+import { ProductDetailAvailability } from './ProductDetailAvailability';
+import { ProductDetailAvailabilityList } from './ProductDetailAvailabilityList';
 import { ProductDetailGallery } from './ProductDetailGallery';
-import { ProductDetailAvailability } from './ProductDetailStoresAvailability/ProductDetailAvailability/ProductDetailAvailability';
-import { ProductDetailAvailabilityList } from './ProductDetailStoresAvailability/ProductDetailAvailabilityList/ProductDetailAvailabilityList';
 import { ProductDetailTabs } from './ProductDetailTabs';
-import { ProductMetadata } from 'components/Basic/Head/ProductMetadata/ProductMetadata';
+import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { ButtonsAction } from 'components/Blocks/Product/ButtonsAction/ButtonsAction';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ProductDetailFragmentApi } from 'graphql/generated';
