@@ -36,8 +36,6 @@ class PaymentTest extends FunctionalTestCase
         /** @var \App\Model\Transport\TransportData $transportData */
         $transportData = $this->transportDataFactory->create();
         $transportData->name['cs'] = 'name';
-        $transportData->deliveryCode = 'A';
-        $transportData->typeOfDeliveryKey = 1;
         $transport = new Transport($transportData);
 
         /** @var \App\Model\Payment\PaymentData $paymentData */

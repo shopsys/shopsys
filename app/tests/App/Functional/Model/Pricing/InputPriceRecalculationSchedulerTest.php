@@ -171,8 +171,6 @@ class InputPriceRecalculationSchedulerTest extends FunctionalTestCase
 
         $transportData->name = ['cs' => 'name'];
         $transportData->description = ['cs' => 'desc'];
-        $transportData->deliveryCode = 'A';
-        $transportData->typeOfDeliveryKey = 1;
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->transportFacade->create($transportData);
 
