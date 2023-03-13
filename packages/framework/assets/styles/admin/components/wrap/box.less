@@ -37,4 +37,19 @@
             }
         }
     }
+
+    &__full {
+        flex-direction: column;
+        width: 100%;
+        padding: @wrap-box-padding;
+        margin-bottom: @wrap-box-item-gap;
+
+        border-radius: @radius;
+        background-color: @color-f;
+
+        @media @query-lg {
+            flex-direction: row;
+            width: 100%;
+        }
+    }
 }

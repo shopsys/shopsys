@@ -294,6 +294,9 @@ class RouteConfigCustomization
                 $config->addExtraRequestDataSet('Should be OK when logged in as "superadmin".')
                     ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
                     ->setExpectedStatusCode(200);
+            })->customizeByRouteName('admin_default_crondetail', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Use correct ID of cron module.')
+                    ->setExpectedStatusCode(302);
             });
     }
 

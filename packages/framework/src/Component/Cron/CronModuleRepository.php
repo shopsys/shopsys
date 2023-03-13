@@ -35,6 +35,14 @@ class CronModuleRepository
     }
 
     /**
+     * @return \Doctrine\ORM\EntityRepository
+     */
+    protected function getCronModuleRunRepository()
+    {
+        return $this->em->getRepository(CronModuleRun::class);
+    }
+
+    /**
      * @param string $serviceId
      * @return \Shopsys\FrameworkBundle\Component\Cron\CronModule
      */
@@ -69,6 +77,37 @@ class CronModuleRepository
     {
         return $this->getCronModuleRepository()->createQueryBuilder('cm')
             ->indexBy('cm', 'cm.serviceId')
+            ->getQuery()->getResult();
+    }
+
+    /**
+     * @return array<string, array{cronModuleId: string, minimalDuration: string, maximalDuration: string, averageDuration: string}>
+     */
+    public function getCronCalculatedDurationsIndexedByServiceId(): array
+    {
+        $cronModuleRunTimes = $this->getCronModuleRunRepository()->createQueryBuilder('cmr')
+            ->select('IDENTITY(cmr.cronModule) as cronModuleId, MIN(cmr.duration) AS minimalDuration, MAX(cmr.duration) AS maximalDuration, AVG(cmr.duration) AS averageDuration')
+            ->groupBy('cmr.cronModule')
+            ->getQuery()->getResult();
+
+        $cronModuleRunTimesIndexedByCronModuleId = [];
+        foreach ($cronModuleRunTimes as $cronModuleRunTime) {
+            $cronModuleRunTimesIndexedByCronModuleId[$cronModuleRunTime['cronModuleId']] = $cronModuleRunTime;
+        }
+
+        return $cronModuleRunTimesIndexedByCronModuleId;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModule $cronModule
+     * @return \Shopsys\FrameworkBundle\Component\Cron\CronModuleRun[]
+     */
+    public function getAllRunsByCronModule(CronModule $cronModule): array
+    {
+        return $this->getCronModuleRunRepository()->createQueryBuilder('cmr')
+            ->where('cmr.cronModule = :cronModule')
+            ->setParameter('cronModule', $cronModule)
+            ->orderBy('cmr.startedAt', 'DESC')
             ->getQuery()->getResult();
     }
 }

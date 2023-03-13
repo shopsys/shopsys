@@ -84,6 +84,12 @@ class SideMenuBuilder
         );
         $menu->setExtra('icon', 'house');
 
+        $menu->addChild('detail', [
+            'route' => 'admin_default_crondetail',
+            'label' => t('Cron detail'),
+            'display' => false,
+        ]);
+
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_DASHBOARD, $menu);
 
         return $menu;

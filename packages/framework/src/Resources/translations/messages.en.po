@@ -253,6 +253,12 @@ msgstr ""
 msgid "Available shipping methods"
 msgstr ""
 
+msgid "Average duration from all runs in last seven days"
+msgstr ""
+
+msgid "Avg duration (mm:ss)"
+msgstr ""
+
 msgid "Back to overview"
 msgstr ""
 
@@ -553,7 +559,16 @@ msgstr ""
 msgid "Creation date"
 msgstr ""
 
+msgid "Cron detail"
+msgstr ""
+
+msgid "Cron detail - %name%"
+msgstr ""
+
 msgid "Cron overview"
+msgstr ""
+
+msgid "Cron runs"
 msgstr ""
 
 msgid "Cron with serviceID `%serviceId%` was disabled"
@@ -808,6 +823,12 @@ msgstr ""
 msgid "Drag your files here"
 msgstr ""
 
+msgid "Duration (mm:ss)"
+msgstr ""
+
+msgid "Duration (seconds)"
+msgstr ""
+
 msgid "E-shop URL address"
 msgstr ""
 
@@ -1015,6 +1036,9 @@ msgstr ""
 msgid "Existing icon"
 msgstr ""
 
+msgid "Expected maximum duration"
+msgstr ""
+
 msgid "Export email list in CSV format"
 msgstr ""
 
@@ -1055,6 +1079,9 @@ msgid "Filter by"
 msgstr ""
 
 msgid "Finish the assigning"
+msgstr ""
+
+msgid "Finished at"
 msgstr ""
 
 msgid "First name"
@@ -1354,6 +1381,12 @@ msgstr ""
 msgid "Master email %masterMail% set"
 msgstr ""
 
+msgid "Max duration (mm:ss)"
+msgstr ""
+
+msgid "Maximal duration from all runs in last seven days"
+msgstr ""
+
 msgid "Menu"
 msgstr ""
 
@@ -1363,7 +1396,13 @@ msgstr ""
 msgid "Meta description"
 msgstr ""
 
+msgid "Min duration (mm:ss)"
+msgstr ""
+
 msgid "Min fraction digits"
+msgstr ""
+
+msgid "Minimal duration from all runs in last seven days"
 msgstr ""
 
 msgid "Modifications"
@@ -1472,6 +1511,9 @@ msgid "No brands found. You have to create some first."
 msgstr ""
 
 msgid "No countries found. You have to create some first."
+msgstr ""
+
+msgid "No cron runs found."
 msgstr ""
 
 msgid "No crons found."
@@ -2108,6 +2150,9 @@ msgid "Slider pages"
 msgstr ""
 
 msgid "Sorting priority"
+msgstr ""
+
+msgid "Started at"
 msgstr ""
 
 msgid "Status"

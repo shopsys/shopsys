@@ -230,4 +230,21 @@ class CronModuleFacade
 
         $this->em->flush();
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModule $cronModule
+     * @return \Shopsys\FrameworkBundle\Component\Cron\CronModuleRun[]
+     */
+    public function getAllRunsByCronModule(CronModule $cronModule): array
+    {
+        return $this->cronModuleRepository->getAllRunsByCronModule($cronModule);
+    }
+
+    /**
+     * @return array<string, array{cronModuleId: string, minimalDuration: string, maximalDuration: string, averageDuration: string}>
+     */
+    public function getCronCalculatedDurationsIndexedByServiceId(): array
+    {
+        return $this->cronModuleRepository->getCronCalculatedDurationsIndexedByServiceId();
+    }
 }

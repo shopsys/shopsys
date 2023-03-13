@@ -253,6 +253,12 @@ msgstr "Dostupné platby"
 msgid "Available shipping methods"
 msgstr "Dostupné dopravy"
 
+msgid "Average duration from all runs in last seven days"
+msgstr "Průměrné trvání všech cronů za posledních sedm dní"
+
+msgid "Avg duration (mm:ss)"
+msgstr "Prům. trvání (mm:ss)"
+
 msgid "Back to overview"
 msgstr "Zpět na přehled"
 
@@ -553,8 +559,17 @@ msgstr "Vytvořeno dne"
 msgid "Creation date"
 msgstr "Datum vytvoření"
 
+msgid "Cron detail"
+msgstr "Detail cronu"
+
+msgid "Cron detail - %name%"
+msgstr "Detail cronu - %name%"
+
 msgid "Cron overview"
 msgstr "Přehled cronů"
+
+msgid "Cron runs"
+msgstr "Běhy cronů"
 
 msgid "Cron with serviceID `%serviceId%` was disabled"
 msgstr "Cron s serviceID `%serviceId%` byl vypnut"
@@ -808,6 +823,12 @@ msgstr "Zde přetáhněte svůj soubor"
 msgid "Drag your files here"
 msgstr "Zde přetáhněte své soubory"
 
+msgid "Duration (mm:ss)"
+msgstr "Trvání (mm:ss)"
+
+msgid "Duration (seconds)"
+msgstr "Trvání (sekundy)"
+
 msgid "E-shop URL address"
 msgstr "URL adresa e-shopu"
 
@@ -1015,6 +1036,9 @@ msgstr "Bez DPH"
 msgid "Existing icon"
 msgstr "Současná ikona"
 
+msgid "Expected maximum duration"
+msgstr "Očekávané maximální trvání"
+
 msgid "Export email list in CSV format"
 msgstr "Exportovat seznam e-mailů jako CSV"
 
@@ -1056,6 +1080,9 @@ msgstr "Filtrovat podle"
 
 msgid "Finish the assigning"
 msgstr "Dokončit přiřazování"
+
+msgid "Finished at"
+msgstr "Konec"
 
 msgid "First name"
 msgstr "Jméno"
@@ -1238,7 +1265,7 @@ msgid "Last action time"
 msgstr "Čas poslední akce"
 
 msgid "Last duration (mm:ss)"
-msgstr "Poslední doba trvání (mm:ss)"
+msgstr "Poslední trvání (mm:ss)"
 
 msgid "Last finished at"
 msgstr "Poslední dokončení"
@@ -1354,6 +1381,12 @@ msgstr "Marketing"
 msgid "Master email %masterMail% set"
 msgstr "Je nastaven master e-mail %masterMail%."
 
+msgid "Max duration (mm:ss)"
+msgstr "Max. trvání (mm:ss)"
+
+msgid "Maximal duration from all runs in last seven days"
+msgstr "Maximální trvání všech cronů za posledních sedm dní"
+
 msgid "Menu"
 msgstr "Menu"
 
@@ -1363,8 +1396,14 @@ msgstr "Vzkaz"
 msgid "Meta description"
 msgstr "Meta description"
 
+msgid "Min duration (mm:ss)"
+msgstr "Min. trvání (mm:ss)"
+
 msgid "Min fraction digits"
 msgstr "Minimální počet desetinných míst"
+
+msgid "Minimal duration from all runs in last seven days"
+msgstr "Minimální trvání všech cronů za posledních sedm dní"
 
 msgid "Modifications"
 msgstr "Úpravy"
@@ -1473,6 +1512,9 @@ msgstr "Nebyly nalezeny žádné značky. Nejprve musíte nějaké vytvořit."
 
 msgid "No countries found. You have to create some first."
 msgstr "Nebyly nalezeny žádné státy. Nejprve musíte nějaké vytvořit."
+
+msgid "No cron runs found."
+msgstr "Nebyly nalezeny žádné běhy cronu."
 
 msgid "No crons found."
 msgstr "Žádné crony nenalezeny"
@@ -2109,6 +2151,9 @@ msgstr "Stránky slideru"
 
 msgid "Sorting priority"
 msgstr "Priorita řazení"
+
+msgid "Started at"
+msgstr "Začátek"
 
 msgid "Status"
 msgstr "Stav"
