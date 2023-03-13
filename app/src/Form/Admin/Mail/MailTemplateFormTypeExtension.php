@@ -6,13 +6,11 @@ namespace App\Form\Admin\Mail;
 
 use App\Form\Admin\GrapesJsMailType;
 use App\Model\Mail\MailTemplate;
-use App\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Mail\MailTemplateFormType;
 use Shopsys\FrameworkBundle\Form\Constraints\Contains;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\Transformers\EmptyWysiwygTransformer;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
-use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,32 +21,16 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class MailTemplateFormTypeExtension extends AbstractTypeExtension
 {
     /**
-     * @var \App\Model\Transport\TransportFacade
-     */
-    private TransportFacade $transportFacade;
-
-    /**
-     * @var \App\Model\Payment\PaymentFacade
-     */
-    private PaymentFacade $paymentFacade;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade
      */
     private OrderStatusFacade $orderStatusFacade;
 
     /**
-     * @param \App\Model\Transport\TransportFacade $transportFacade
-     * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
      */
     public function __construct(
-        TransportFacade $transportFacade,
-        PaymentFacade $paymentFacade,
         OrderStatusFacade $orderStatusFacade
     ) {
-        $this->transportFacade = $transportFacade;
-        $this->paymentFacade = $paymentFacade;
         $this->orderStatusFacade = $orderStatusFacade;
     }
 
@@ -100,32 +82,6 @@ class MailTemplateFormTypeExtension extends AbstractTypeExtension
                         new NotBlank(),
                     ],
                     'position' => ['after' => 'bccEmail'],
-                ])
-                ->add('transport', ChoiceType::class, [
-                    'required' => true,
-                    'label' => t('Doprava'),
-                    'multiple' => false,
-                    'expanded' => false,
-                    'choices' => $this->transportFacade->getAll(),
-                    'choice_label' => 'name',
-                    'choice_value' => 'id',
-                    'constraints' => [
-                        new NotBlank(),
-                    ],
-                    'position' => ['after' => 'orderStatus'],
-                ])
-                ->add('payment', ChoiceType::class, [
-                    'required' => true,
-                    'label' => t('Platba'),
-                    'multiple' => false,
-                    'expanded' => false,
-                    'choices' => $this->paymentFacade->getAll(),
-                    'choice_label' => 'name',
-                    'choice_value' => 'id',
-                    'constraints' => [
-                        new NotBlank(),
-                    ],
-                    'position' => ['after' => 'transport'],
                 ]);
         }
     }

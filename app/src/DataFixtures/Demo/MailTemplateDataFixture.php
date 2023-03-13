@@ -149,8 +149,6 @@ team of {domain}
             }
             $this->createMailTemplate($manager, CustomerActivationMail::CUSTOMER_ACTIVATION_NAME, $mailTemplateData, $domainId);
 
-            $mailTemplateData->transport = null;
-            $mailTemplateData->payment = null;
             $mailTemplateData->orderStatus = null;
 
             $mailTemplateData->subject = t('Authentication code', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -176,8 +174,6 @@ team of {domain}
         $mailTemplate = $repository->findOneBy([
             'name' => $name,
             'domainId' => $domainId,
-            'transport' => $mailTemplateData->transport,
-            'payment' => $mailTemplateData->payment,
             'orderStatus' => $mailTemplateData->orderStatus,
         ]);
 
