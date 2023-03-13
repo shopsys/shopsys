@@ -287,4 +287,17 @@
     </target>
 
     <target name="tests" depends="test-db-demo,test-elasticsearch-index-recreate,test-elasticsearch-export,test-error-pages-generate,tests-unit,tests-functional,tests-smoke" description="Runs unit, functional and smoke tests. Builds new test database in the process."/>
+
+    <target name="cluster-first-deploy" hidden="true" description="Run commands for first deploy to cluster.">
+        <property name="production.confirm.action" value="y" override="true"/>
+        <phingcall target='dirs-create'/>
+        <phingcall target='db-import-basic-structure'/>
+        <phingcall target='db-migrations'/>
+        <phingcall target='domains-data-create'/>
+        <phingcall target='frontend-api-generate-new-keys'/>
+        <phingcall target='elasticsearch-index-migrate'/>
+        <phingcall target='elasticsearch-export'/>
+        <phingcall target='error-pages-generate'/>
+        <phingcall target='warmup'/>
+    </target>
 </project>
