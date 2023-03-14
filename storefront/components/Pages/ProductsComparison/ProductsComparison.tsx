@@ -1,4 +1,4 @@
-import { Content } from './Content/Content';
+import { Content } from './Content';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
@@ -6,7 +6,6 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { BreadcrumbFragmentApi, useComparisonQueryApi } from 'graphql/generated';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC } from 'react';
 import { useShopsysSelector } from 'redux/main';
 
 export const ProductsComparison: FC = () => {

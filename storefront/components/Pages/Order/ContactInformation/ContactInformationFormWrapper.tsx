@@ -49,7 +49,7 @@ export const ContactInformationFormWrapper: FC = () => {
                     control={formProviderMethods.control}
                     formName={formMeta.formName}
                     render={(textarea) => (
-                        <FormLine bottomGap className="flex-none lg:w-4/6">
+                        <FormLine bottomGap className="flex-none lg:w-[65%]">
                             {textarea}
                         </FormLine>
                     )}

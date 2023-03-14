@@ -1,22 +1,16 @@
-import {
-    ContentArrowIconStyled,
-    ContentArrowsStyled,
-    ContentArrowStyled,
-    ContentProductsTableStyled,
-    ContentProductsTableWrapperStyled,
-    ContentTopHeadingStyled,
-    ContentTopStyled,
-} from './Content.style';
-import clsx from 'clsx';
-import Body from 'components/Pages/ProductsComparison/Body/Body';
-import { ButtonRemoveAll } from 'components/Pages/ProductsComparison/ButtonRemoveAll/ButtonRemoveAll';
-import Head from 'components/Pages/ProductsComparison/Head/Head';
-import { HeadSticky } from 'components/Pages/ProductsComparison/HeadSticky/HeadSticky';
+import { Body } from './Body';
+import { ButtonRemoveAll } from './ButtonRemoveAll';
+import { Head } from './Head';
+import { HeadSticky } from './HeadSticky';
+import { Heading } from 'components/Basic/Heading/Heading';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { ComparedProductFragmentApi } from 'graphql/generated';
 import { canUseDom } from 'helpers/misc/canUseDom';
 import { useHandleCompareTable } from 'hooks/product/useHandleCompareTable';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import { FC, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import { twJoin } from 'tailwind-merge';
+import { twMergeCustom } from 'utils/twMerge';
 
 type ContentProps = {
     productsCompare: ComparedProductFragmentApi[];
@@ -75,35 +69,60 @@ export const Content: FC<ContentProps> = (props) => {
 
     return (
         <>
-            <ContentTopStyled>
-                <ContentTopHeadingStyled type="h1">
+            <div className="mb-8 flex items-end">
+                <Heading type="h1" className="mb-0 w-full lg:w-auto lg:flex-1">
                     {t('Product comparison')}&nbsp;({props.productsCompare.length})
-                </ContentTopHeadingStyled>
-            </ContentTopStyled>
+                </Heading>
+            </div>
             <ButtonRemoveAll displayMobile />
-            <ContentProductsTableWrapperStyled id="js-table-compare-wrap">
-                <ContentArrowsStyled>
-                    <ContentArrowStyled
-                        className={clsx(!isArrowLeftActive && 'isInactive', isArrowLeftShowed && 'isShowed')}
+            <div className="relative mb-24 overflow-hidden" id="js-table-compare-wrap">
+                <div className="mb-1 flex justify-end">
+                    <ContentArrow
+                        isInactive={!isArrowLeftActive}
+                        isShowed={isArrowLeftShowed}
                         onClick={() => handleSlideLeft()}
-                    >
-                        <ContentArrowIconStyled iconType="icon" icon="ArrowThin" />
-                    </ContentArrowStyled>
-                    <ContentArrowStyled
-                        className={clsx(!isArrowRightActive && 'isInactive', isArrowRightShowed && 'isShowed')}
+                    />
+                    <ContentArrow
+                        isInactive={!isArrowRightActive}
+                        isShowed={isArrowRightShowed}
                         onClick={() => handleSlideRight()}
-                    >
-                        <ContentArrowIconStyled className="isRightArrow" iconType="icon" icon="ArrowThin" />
-                    </ContentArrowStyled>
-                </ContentArrowsStyled>
+                        isRight
+                    />
+                </div>
                 <HeadSticky productsCompare={props.productsCompare} tableMarginLeft={tableMarginLeft} />
                 <div>
-                    <ContentProductsTableStyled style={{ marginLeft: -tableMarginLeft }} id="js-table-compare">
+                    <table
+                        className="table-fixed border-collapse transition-all"
+                        style={{ marginLeft: -tableMarginLeft }}
+                        id="js-table-compare"
+                    >
                         <Head productsCompare={props.productsCompare} />
                         <Body productsCompare={props.productsCompare} parametersDataState={getParametersDataState} />
-                    </ContentProductsTableStyled>
+                    </table>
                 </div>
-            </ContentProductsTableWrapperStyled>
+            </div>
         </>
     );
 };
+
+type ContentArrowProps = { onClick: () => void; isInactive: boolean; isRight?: boolean; isShowed?: boolean };
+
+const ContentArrow: FC<ContentArrowProps> = ({ isInactive, isRight, isShowed, onClick }) => (
+    <div
+        className={twMergeCustom(
+            'absolute right-0 top-40 z-[2] ml-3 h-10 w-10 cursor-pointer items-center justify-center rounded border border-greenVeryLight bg-greyVeryLight transition-colors hover:bg-greyLight vl:static',
+            isInactive && 'pointer-events-none border border-greyLight bg-white',
+            !isRight && 'right-auto left-0 ml-0',
+            isShowed ? 'flex' : 'hidden',
+        )}
+        onClick={onClick}
+    >
+        <Icon
+            className={twJoin('text-dark', isRight ? '-rotate-90' : 'rotate-90', isInactive && 'text-greyLight')}
+            width={19}
+            height={19}
+            iconType="icon"
+            icon="Arrow"
+        />
+    </div>
+);

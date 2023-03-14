@@ -151,7 +151,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                 control={formProviderMethods.control}
                 formName={formMeta.formName}
                 render={(checkbox) => (
-                    <FormLine className="flex-none lg:w-4/6">
+                    <FormLine className="flex-none lg:w-[65%]">
                         <ChoiceFormLine>{checkbox}</ChoiceFormLine>
                     </FormLine>
                 )}
@@ -178,7 +178,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                         >
                             <div ref={contentElement}>
                                 {showAddressSelection && (
-                                    <FormLine bottomGap className="flex-none lg:w-4/6">
+                                    <FormLine bottomGap className="flex-none lg:w-[65%]">
                                         <div className="flex w-full flex-col">
                                             <RadiobuttonGroup
                                                 name={formMeta.fields.deliveryAddressUuid.name}
@@ -274,7 +274,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                             control={formProviderMethods.control}
                                             name={formMeta.fields.deliveryCompanyName.name}
                                             render={(textInput) => (
-                                                <FormLine bottomGap className="flex-none lg:w-4/6">
+                                                <FormLine bottomGap className="flex-none lg:w-[65%]">
                                                     {textInput}
                                                 </FormLine>
                                             )}
@@ -295,7 +295,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                             control={formProviderMethods.control}
                                             name={formMeta.fields.deliveryTelephone.name}
                                             render={(textInput) => (
-                                                <FormLine bottomGap className="flex-none lg:w-4/6">
+                                                <FormLine bottomGap className="flex-none lg:w-[65%]">
                                                     {textInput}
                                                 </FormLine>
                                             )}
@@ -319,7 +319,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                     control={formProviderMethods.control}
                                                     name={formMeta.fields.deliveryStreet.name}
                                                     render={(textInput) => (
-                                                        <FormLine bottomGap className="flex-none lg:w-4/6">
+                                                        <FormLine bottomGap className="flex-none lg:w-[65%]">
                                                             {textInput}
                                                         </FormLine>
                                                     )}
@@ -384,7 +384,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                         }}
                                                     />
                                                 </FormColumn>
-                                                <FormLine className="flex-none lg:w-4/6">
+                                                <FormLine className="flex-none lg:w-[65%]">
                                                     <Controller
                                                         name={formMeta.fields.deliveryCountry.name}
                                                         render={({ fieldState: { invalid, error }, field }) => (

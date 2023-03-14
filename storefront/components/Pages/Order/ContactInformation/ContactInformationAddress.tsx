@@ -44,7 +44,7 @@ export const ContactInformationAddress: FC = () => {
     return (
         <>
             <Heading type="h3">{t('Billing address')}</Heading>
-            <FormLine bottomGap className="flex-none lg:w-4/6">
+            <FormLine className="flex-none lg:w-[65%]">
                 <TextInputControlled
                     control={formProviderMethods.control}
                     name={formMeta.fields.street.name}
@@ -91,7 +91,7 @@ export const ContactInformationAddress: FC = () => {
                     }}
                 />
             </FormColumn>
-            <FormLine className="flex-none lg:w-4/6">
+            <FormLine className="flex-none lg:w-[65%]">
                 <Controller
                     name={formMeta.fields.country.name}
                     render={({ fieldState: { invalid, error }, field }) => (
