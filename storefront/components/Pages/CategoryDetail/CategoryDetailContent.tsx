@@ -1,6 +1,6 @@
 import { AdvancedSeoCategories } from './AdvancedSeoCategories/AdvancedSeoCategories';
 import { CategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper';
-import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { HeadingPaginated } from 'components/Basic/Heading/HeadingPaginated';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
@@ -61,7 +61,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                             totalCount={category.products.totalCount}
                         />
                     </div>
-                    {isPanelOpen && <Overlay $isHiddenOnDesktop onClick={handlePanelOpenerClick} />}
+                    {isPanelOpen && <Overlay isHiddenOnDesktop onClick={handlePanelOpenerClick} />}
                     <div className="flex flex-1 flex-col vl:pl-12">
                         <Adverts positionName="productList" className="mb-4" />
                         <HeadingPaginated type="h1" totalCount={category.products.totalCount}>

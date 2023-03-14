@@ -1,0 +1,76 @@
+
+.userTextBasic
+    @apply antialiased text-greyLight
+
+    p,
+    ul,
+    ol,
+    li
+        @apply text-[inherit]
+
+    h2,
+    h3,
+    h4,
+    h5
+        @apply mb-2 text-lg
+
+    p
+        @apply mb-7 last:mb-0
+
+    strong,
+    b
+        @apply text-primary font-normal
+
+    a
+        @apply text-primary underline hover:no-underline
+
+    ul
+        @apply p-0 mb-7 list-none
+
+        li
+            @apply relative pl-4 mb-5 after:absolute after:content-[""] after:top-2 after:left-0 after:w-1 after:h-1 after:rounded-full after:bg-primary
+
+        ul
+            @apply mt-1 ml-4
+
+    img
+        @apply block h-auto rounded-xl
+
+    iframe
+        @apply max-w-full
+
+.grapesJs
+    div, p
+        py-1 px-0
+
+    ul,
+    ol
+        @apply grid
+
+    .row
+        @apply block w-full lg:flex lg:flex-wrap
+
+        & .column
+            @apply flex flex-col flex-1 p-3 first:pl-0 last:pr-0
+
+    .video
+        @apply overflow-hidden pb-[56.25%] relative h-0
+
+        iframe
+            @apply left-0 top-0 h-full w-full absolute
+
+    .gjs-text-with-image
+        @apply w-full
+
+        & .clear
+            @apply clear-both p-0
+
+        & .inner
+            & .image
+                @apply w-full mb-4 lg:w-52 lg:mb-4 xl:w-[350px] xl:mb-4
+
+            &.left .image
+                @apply lg:float-left lg:mr-8 lg:ml-0 xl:float-left xl:mr-8
+
+            &.right .image
+                @apply lg:float-right lg:ml-8 lg:mr-0 xl:float-right xl:ml-8

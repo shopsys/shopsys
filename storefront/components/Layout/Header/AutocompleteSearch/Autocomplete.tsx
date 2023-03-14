@@ -230,7 +230,6 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                         )}
                         <div className="flex justify-center">
                             <Button
-                                type="button"
                                 size="small"
                                 onClick={() =>
                                     router.push({
@@ -238,7 +237,7 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                                         query: { q: autocompleteSearchQueryValue },
                                     })
                                 }
-                                testIdentifier={TEST_IDENTIFIER + '-all-button'}
+                                dataTestId={TEST_IDENTIFIER + '-all-button'}
                             >
                                 {t('View all results')}
                             </Button>

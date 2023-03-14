@@ -21,19 +21,16 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
     return (
         <Tabs>
             <TabsList>
-                <TabsListItem testIdentifier={TEST_IDENTIFIER + 'overview-link'}>{t('Overview')}</TabsListItem>
+                <TabsListItem dataTestId={TEST_IDENTIFIER + 'overview-link'}>{t('Overview')}</TabsListItem>
                 {parameters.length > 0 && (
-                    <TabsListItem testIdentifier={TEST_IDENTIFIER + 'parameters-link'}>{t('Parameters')}</TabsListItem>
+                    <TabsListItem dataTestId={TEST_IDENTIFIER + 'parameters-link'}>{t('Parameters')}</TabsListItem>
                 )}
             </TabsList>
-            <TabsContent headingTextMobile={t('Overview')} testIdentifier={TEST_IDENTIFIER + 'overview-content'}>
+            <TabsContent headingTextMobile={t('Overview')} dataTestId={TEST_IDENTIFIER + 'overview-content'}>
                 {description !== null && <UserText htmlContent={description} />}
             </TabsContent>
             {parameters.length > 0 && (
-                <TabsContent
-                    headingTextMobile={t('Parameters')}
-                    testIdentifier={TEST_IDENTIFIER + 'parameters-content'}
-                >
+                <TabsContent headingTextMobile={t('Parameters')} dataTestId={TEST_IDENTIFIER + 'parameters-content'}>
                     <Table>
                         <tbody>
                             {parameters.map((parameter) => (

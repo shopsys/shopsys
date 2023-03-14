@@ -3,7 +3,7 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
-import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
+import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { blurInput } from 'helpers/forms/blurInput';
@@ -56,7 +56,7 @@ export const Login: FC<LoginProps> = ({ defaultEmail }) => {
             className='relative flex w-full max-w-xs flex-col items-start before:absolute  before:left-1/2 before:hidden before:h-full before:w-[1px] before:bg-primary before:content-[""] sm:max-w-md md:max-w-2xl lg:max-w-3xl lg:flex-row lg:before:block'
             data-testid={TEST_IDENTIFIER}
         >
-            <div className="w-full pr-5 lg:w-1/2">
+            <div className="w-full lg:w-1/2 lg:pr-5">
                 <FormProvider {...formProviderMethods}>
                     <Form onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}>
                         <TextInputControlled
@@ -80,19 +80,19 @@ export const Login: FC<LoginProps> = ({ defaultEmail }) => {
                                 label: t('Password'),
                             }}
                         />
-                        <div className="-mx-4 mb-10 flex items-center justify-between border-b border-primary px-4 pb-5 lg:m-0 lg:block lg:border-none lg:p-0">
-                            <div className="order-1 mt-5 flex w-full justify-end">
-                                <Button type="submit" data-testid="blocks-popup-login-submit" className="max-lg:!px-3">
+                        <div className="mt-5 mb-10 flex items-center justify-between gap-2 border-b border-primary pb-5 lg:mb-0 lg:block lg:border-none lg:p-0">
+                            <div className="order-1 flex w-full justify-end">
+                                <Button type="submit" dataTestId="blocks-popup-login-submit" className="max-lg:!px-3">
                                     {t('Log-in')}
                                 </Button>
                             </div>
-                            <div className="mt-5 flex items-center whitespace-nowrap rounded-xl border-2 border-primary py-2 px-2 text-sm text-primary lg:px-3 lg:py-2">
+                            <div className="flex items-center gap-1 whitespace-nowrap rounded-xl border-2 border-primary py-2 px-2 text-sm text-primary lg:mt-5 lg:px-3 lg:py-3">
                                 <Icon
                                     iconType="icon"
                                     icon="Warning"
-                                    width={29}
-                                    height={29}
-                                    className="mr-1 ml-1 hidden text-red sm:block"
+                                    width={36}
+                                    height={22}
+                                    className="hidden text-red sm:block"
                                 />
                                 <div className="hidden flex-grow lg:block">{t('Lost your password?')}</div>
                                 <NextLink href={resetPasswordUrl} passHref>
@@ -110,7 +110,7 @@ export const Login: FC<LoginProps> = ({ defaultEmail }) => {
                     </Form>
                 </FormProvider>
             </div>
-            <div className="w-full pr-5 pl-5 lg:w-1/2">
+            <div className="w-full lg:w-1/2 lg:pl-5">
                 <div className="relative my-6 -mr-4 w-full rounded-l-xl bg-blueLight p-4">
                     <div className="block w-44 text-lg text-primary lg:w-72 lg:pr-24 lg:text-xl">
                         {t("Don't have an account yet? Register.")}

@@ -1,5 +1,5 @@
 import { flush } from '@sentry/nextjs';
-import { Error500Content } from 'components/Pages/ErrorPage/500/Error500Content';
+import { Error500Content } from 'components/Pages/ErrorPage/Error500Content';
 import { logException } from 'helpers/errors/logException';
 import { ServerResponse } from 'http';
 import NextErrorComponent from 'next/error';

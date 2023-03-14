@@ -1,4 +1,4 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CustomerContent } from 'components/Pages/Customer/CustomerContent';
 import { BreadcrumbFragmentApi } from 'graphql/generated';

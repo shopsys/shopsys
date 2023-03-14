@@ -60,9 +60,9 @@ export const OrderAction: FC<OrderActionProps> = ({
             <div className="order-1 mb-8 w-auto lg:order-2 lg:mb-0" data-testid={TEST_IDENTIFIER + 'next'}>
                 <Button
                     type="submit"
-                    borderRadius="big"
+                    isRounder
                     variant="primary"
-                    hasDisabledLook={hasDisabledLook}
+                    isWithDisabledLook={hasDisabledLook}
                     onClick={onNextStepHandler}
                 >
                     {isLoading && <Loader iconSize={20} />}

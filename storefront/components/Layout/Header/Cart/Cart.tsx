@@ -1,4 +1,4 @@
-import { ListItem } from './ListItem/ListItem';
+import { ListItem } from './ListItem';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Button } from 'components/Forms/Button/Button';
@@ -75,10 +75,9 @@ export const Cart: FC = () => {
                         </ul>
                         <div className="flex w-full justify-end pt-5">
                             <Button
-                                type="button"
                                 size="small"
                                 onClick={() => router.push(cartUrl)}
-                                testIdentifier={TEST_IDENTIFIER + 'button'}
+                                dataTestId={TEST_IDENTIFIER + 'button'}
                             >
                                 {t('Go to cart')}
                             </Button>

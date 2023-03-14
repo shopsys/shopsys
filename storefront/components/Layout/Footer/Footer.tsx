@@ -1,7 +1,7 @@
-import { FooterBoxInfo } from './FooterBoxInfo/FooterBoxInfo';
-import { FooterContact } from './FooterContact/FooterContact';
-import { FooterCopyright } from './FooterCopyright/FooterCopyright';
-import { FooterMenu } from './FooterMenu/FooterMenu';
+import { FooterBoxInfo } from './FooterBoxInfo';
+import { FooterContact } from './FooterContact';
+import { FooterCopyright } from './FooterCopyright';
+import { FooterMenu } from './FooterMenu';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import NextLink from 'next/link';

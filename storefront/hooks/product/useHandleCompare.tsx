@@ -1,4 +1,4 @@
-import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
+import { showErrorMessage, showSuccessMessage } from 'components/Helpers/toasts';
 import {
     ComparedProductFragmentApi,
     useAddProductToComparisonMutationApi,

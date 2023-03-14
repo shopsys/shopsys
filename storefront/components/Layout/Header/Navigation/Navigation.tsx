@@ -1,4 +1,4 @@
-import { NavigationItem } from './NavigationItem/NavigationItem';
+import { NavigationItem } from './NavigationItem';
 import { useNavigationQueryApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
 

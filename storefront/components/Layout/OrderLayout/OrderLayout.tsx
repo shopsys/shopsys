@@ -1,4 +1,4 @@
-import { SeoMeta } from 'components/Basic/Head/SeoMeta/SeoMeta';
+import { SeoMeta } from 'components/Basic/Head/SeoMeta';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { OrderSteps } from 'components/Blocks/OrderSteps/OrderSteps';
 import { OrderSummary } from 'components/Blocks/OrderSummary/OrderSummary';

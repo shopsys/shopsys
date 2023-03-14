@@ -1,4 +1,4 @@
-import { FormLineError } from '../Lib/FormLineError/FormLineError';
+import { FormLineError } from '../Lib/FormLineError';
 import { Textarea, TextareaProps } from './Textarea';
 import { ReactElement } from 'react';
 import { Control, useController } from 'react-hook-form';
@@ -21,7 +21,7 @@ export const TextareaControlled: FC<TextareaControlledProps> = ({ name, render, 
     return render(
         <>
             <Textarea {...textareaProps} {...field} id={textareaId} hasError={invalid} />
-            <FormLineError error={error} inputType="textarea" testIdentifier={`${textareaId}-error`} />
+            <FormLineError error={error} inputType="textarea" dataTestId={`${textareaId}-error`} />
         </>,
     );
 };

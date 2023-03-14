@@ -6,13 +6,13 @@ import {
     ProductDetailInfo,
     ProductDetailPrefix,
 } from './ProductDetaiElements';
-import { ProductDetailAccessories } from './ProductDetailAccessories/ProductDetailAccessories';
-import { ProductDetailAddToCart } from './ProductDetailAddToCart/ProductDetailAddToCart';
+import { ProductDetailAccessories } from './ProductDetailAccessories';
+import { ProductDetailAddToCart } from './ProductDetailAddToCart';
+import { ProductDetailAvailability } from './ProductDetailAvailability';
+import { ProductDetailAvailabilityList } from './ProductDetailAvailabilityList';
 import { ProductDetailGallery } from './ProductDetailGallery';
-import { ProductDetailAvailability } from './ProductDetailStoresAvailability/ProductDetailAvailability/ProductDetailAvailability';
-import { ProductDetailAvailabilityList } from './ProductDetailStoresAvailability/ProductDetailAvailabilityList/ProductDetailAvailabilityList';
 import { ProductDetailTabs } from './ProductDetailTabs';
-import { ProductMetadata } from 'components/Basic/Head/ProductMetadata/ProductMetadata';
+import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { ButtonsAction } from 'components/Blocks/Product/ButtonsAction/ButtonsAction';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ProductDetailFragmentApi } from 'graphql/generated';
@@ -71,13 +71,13 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
                     </ProductDetailInfo>
                 </ProductDetail>
             </Webline>
-            <Webline testIdentifier={TEST_IDENTIFIER + 'description'}>
+            <Webline dataTestId={TEST_IDENTIFIER + 'description'}>
                 <ProductDetailTabs description={product.description} parameters={product.parameters} />
             </Webline>
-            <Webline testIdentifier={TEST_IDENTIFIER + 'availability'}>
+            <Webline dataTestId={TEST_IDENTIFIER + 'availability'}>
                 <ProductDetailAvailabilityList ref={scrollTarget} storeAvailabilities={product.storeAvailabilities} />
             </Webline>
-            <Webline testIdentifier={TEST_IDENTIFIER + 'accessories'}>
+            <Webline dataTestId={TEST_IDENTIFIER + 'accessories'}>
                 <ProductDetailAccessories accessories={product.accessories} />
             </Webline>
         </Fragment>

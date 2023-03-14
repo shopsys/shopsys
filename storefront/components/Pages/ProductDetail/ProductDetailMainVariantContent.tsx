@@ -6,11 +6,11 @@ import {
     ProductDetailInfo,
     ProductDetailPrefix,
 } from './ProductDetaiElements';
-import { ProductDetailAccessories } from './ProductDetailAccessories/ProductDetailAccessories';
+import { ProductDetailAccessories } from './ProductDetailAccessories';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailTabs } from './ProductDetailTabs';
 import { ProductVariantsTable } from './ProductVariantsTable/ProductVariantsTable';
-import { ProductMetadata } from 'components/Basic/Head/ProductMetadata/ProductMetadata';
+import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ImageSizesFragmentApi, MainVariantDetailFragmentApi } from 'graphql/generated';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
@@ -48,7 +48,7 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
             <ProductMetadata product={product} />
             <Webline>
                 <ProductDetail>
-                    <ProductDetailImage data-testid={TEST_IDENTIFIER + 'gallery'}>
+                    <ProductDetailImage dataTestId={TEST_IDENTIFIER + 'gallery'}>
                         <ProductDetailGallery
                             images={mainVariantImagesWithVariantImages}
                             productName={product.name}
@@ -68,13 +68,13 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
                     </ProductDetailInfo>
                 </ProductDetail>
             </Webline>
-            <Webline testIdentifier={TEST_IDENTIFIER + 'variants'}>
+            <Webline dataTestId={TEST_IDENTIFIER + 'variants'}>
                 <ProductVariantsTable variants={product.variants} isSellingDenied={product.isSellingDenied} />
             </Webline>
-            <Webline testIdentifier={TEST_IDENTIFIER + 'description'}>
+            <Webline dataTestId={TEST_IDENTIFIER + 'description'}>
                 <ProductDetailTabs description={product.description} parameters={product.parameters} />
             </Webline>
-            <Webline testIdentifier={TEST_IDENTIFIER + 'accessories'}>
+            <Webline dataTestId={TEST_IDENTIFIER + 'accessories'}>
                 <ProductDetailAccessories accessories={product.accessories} />
             </Webline>
         </>

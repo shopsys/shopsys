@@ -1,4 +1,4 @@
-import { HamburgerIcon } from './HamburgerIcon/HamburgerIcon';
+import { HamburgerIcon } from './HamburgerIcon';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { MouseEventHandler } from 'react';
 import { twJoin } from 'tailwind-merge';

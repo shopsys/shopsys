@@ -1,4 +1,4 @@
-import { BreadcrumbsMetadata } from 'components/Basic/Head/BreadcrumbsMetadata/BreadcrumbsMetadata';
+import { BreadcrumbsMetadata } from 'components/Basic/Head/BreadcrumbsMetadata';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { BreadcrumbFragmentApi } from 'graphql/generated';

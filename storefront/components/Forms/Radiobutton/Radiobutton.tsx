@@ -1,4 +1,4 @@
-import { LabelWrapper } from '../Lib/LabelWrapper/LabelWrapper';
+import { LabelWrapper } from '../Lib/LabelWrapper';
 import { Image } from 'components/Basic/Image/Image';
 import { ImageSizesFragmentApi } from 'graphql/generated';
 import { forwardRef, InputHTMLAttributes, MouseEventHandler, ReactNode, useCallback } from 'react';
@@ -13,7 +13,7 @@ type NativeProps = ExtractNativePropsFromDefault<
 export type RadiobuttonProps = NativeProps & {
     value: any;
     checked: InputHTMLAttributes<HTMLInputElement>['checked'];
-    testIdentifier?: string;
+    dataTestId?: string;
     label: ReactNode;
     image?: ImageSizesFragmentApi | null;
     onChangeCallback?: (newValue: string | null) => void;
@@ -21,7 +21,7 @@ export type RadiobuttonProps = NativeProps & {
 
 export const Radiobutton = forwardRef<HTMLInputElement, RadiobuttonProps>(
     (
-        { label, image, onChangeCallback, onChange, id, name, checked, value, disabled, testIdentifier, onBlur },
+        { label, image, onChangeCallback, onChange, id, name, checked, value, disabled, dataTestId, onBlur },
         radiobuttonForwardedRef,
     ) => {
         const onClickHandler: MouseEventHandler<HTMLInputElement> = useCallback(
@@ -55,7 +55,7 @@ export const Radiobutton = forwardRef<HTMLInputElement, RadiobuttonProps>(
                 inputType="radio"
             >
                 <input
-                    className="sr-only"
+                    className="peer sr-only"
                     value={value}
                     name={name}
                     disabled={disabled}
@@ -67,7 +67,7 @@ export const Radiobutton = forwardRef<HTMLInputElement, RadiobuttonProps>(
                     onChange={onChange}
                     ref={radiobuttonForwardedRef}
                     readOnly={onChange === undefined}
-                    data-testid={testIdentifier}
+                    data-testid={dataTestId}
                 />
             </LabelWrapper>
         );

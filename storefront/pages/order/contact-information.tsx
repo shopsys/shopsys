@@ -1,7 +1,7 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { Form } from 'components/Forms/Form/Form';
-import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
+import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup';
 import { Footer } from 'components/Layout/Footer/Footer';
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
 import { Webline } from 'components/Layout/Webline/Webline';

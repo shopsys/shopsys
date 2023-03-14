@@ -1,5 +1,5 @@
 import { AdvancedSeoCategoriesItem } from './AdvancedSeoCategoriesItem';
-import { AdvancedSeoCategoriesSlider } from './AdvancedSeoCategoriesSlider/AdvancedSeoCategoriesSlider';
+import { AdvancedSeoCategoriesSlider } from './AdvancedSeoCategoriesSlider';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';

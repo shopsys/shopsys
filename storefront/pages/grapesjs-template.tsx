@@ -1,5 +1,5 @@
 import { CommonLayout } from '../components/Layout/CommonLayout';
-import { GrapesJsStyled } from 'components/Helpers/UserText/UserText.style';
+import { GrapesJs } from 'components/Helpers/UserText/GrapesJs';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { ArticleTitle } from 'components/Pages/Article/ArticleTitle';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
@@ -15,11 +15,7 @@ const Index: FC = () => (
                     <div className="mb-2 text-left text-xs font-semibold text-grey">
                         {new Date().toLocaleDateString() + ''}
                     </div>
-                    <GrapesJsStyled
-                        className="gjs-editable"
-                        data-gjs-type="editable"
-                        style={{ paddingTop: 15, paddingBottom: 15 }}
-                    ></GrapesJsStyled>
+                    <GrapesJs className="gjs-editable pt-4 pb-4" />
                 </div>
             </div>
         </Webline>

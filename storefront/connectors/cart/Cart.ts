@@ -1,4 +1,4 @@
-import { showErrorMessage, showInfoMessage } from 'components/Helpers/Toasts';
+import { showErrorMessage, showInfoMessage } from 'components/Helpers/toasts';
 import {
     CartItemModificationsFragmentApi,
     CartModificationsFragmentApi,

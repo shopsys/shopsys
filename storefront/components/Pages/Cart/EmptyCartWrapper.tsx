@@ -1,5 +1,5 @@
-import { CartLoading } from './CartLoading/CartLoading';
-import { EmptyCart } from './EmptyCart/EmptyCart';
+import { CartLoading } from './CartLoading';
+import { EmptyCart } from './EmptyCart';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { OrderLayout } from 'components/Layout/OrderLayout/OrderLayout';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';

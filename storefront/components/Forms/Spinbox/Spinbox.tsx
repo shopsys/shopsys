@@ -90,7 +90,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     onMouseDown={() => setIsHoldingDecrease(true)}
                     onMouseUp={() => setIsHoldingDecrease(false)}
                     onMouseLeave={() => setIsHoldingDecrease(false)}
-                    data-testid={TEST_IDENTIFIER + 'decrease'}
+                    dataTestId={TEST_IDENTIFIER + 'decrease'}
                 >
                     -
                 </SpinboxButton>
@@ -109,7 +109,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     onMouseDown={() => setIsHoldingIncrease(true)}
                     onMouseUp={() => setIsHoldingIncrease(false)}
                     onMouseLeave={() => setIsHoldingIncrease(false)}
-                    data-testid={TEST_IDENTIFIER + 'increase'}
+                    dataTestId={TEST_IDENTIFIER + 'increase'}
                 >
                     +
                 </SpinboxButton>

@@ -1,5 +1,5 @@
 import { CombinedError } from '@urql/core';
-import { showErrorMessage } from 'components/Helpers/Toasts';
+import { showErrorMessage } from 'components/Helpers/toasts';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { Translate } from 'next-translate';
 import { FieldValues, Path, UseFormReturn } from 'react-hook-form';

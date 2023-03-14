@@ -1,4 +1,4 @@
-import { ProductItem } from './ProductItem/ProductItem';
+import { ProductItem } from './ProductItem';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
 import { usePaginationContext } from 'components/Blocks/Pagination/usePaginationContext';

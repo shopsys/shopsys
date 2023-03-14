@@ -3,12 +3,12 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { Link } from 'components/Basic/Link/Link';
 import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
-import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
-import { FormColumn } from 'components/Forms/Lib/FormColumn/FormColumn';
-import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
+import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup';
+import { FormColumn } from 'components/Forms/Lib/FormColumn';
+import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { showSuccessMessage } from 'components/Helpers/Toasts';
+import { showSuccessMessage } from 'components/Helpers/toasts';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useContactMutationApi, usePrivacyPolicyArticleUrlQueryApi, useSettingsQueryApi } from 'graphql/generated';
 import { clearForm } from 'helpers/forms/clearForm';
@@ -59,8 +59,8 @@ export const ContactContent: FC = () => {
                                 control={formProviderMethods.control}
                                 name={formMeta.fields.name.name}
                                 render={(textInput) => (
-                                    <FormColumn lg="65%">
-                                        <FormLine bottomGap width="100%" lg="50%">
+                                    <FormColumn className="lg:w-[calc(65%+0.75rem)]">
+                                        <FormLine bottomGap className="w-full flex-none lg:w-1/2">
                                             {textInput}
                                         </FormLine>
                                     </FormColumn>
@@ -77,8 +77,8 @@ export const ContactContent: FC = () => {
                                 control={formProviderMethods.control}
                                 name={formMeta.fields.email.name}
                                 render={(textInput) => (
-                                    <FormColumn lg="65%">
-                                        <FormLine bottomGap width="100%" lg="50%">
+                                    <FormColumn className="lg:w-[calc(65%+0.75rem)]">
+                                        <FormLine bottomGap className="w-full flex-none lg:w-1/2">
                                             {textInput}
                                         </FormLine>
                                     </FormColumn>
@@ -96,8 +96,8 @@ export const ContactContent: FC = () => {
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
                                 render={(textarea) => (
-                                    <FormColumn lg="65%">
-                                        <FormLine bottomGap width="100%">
+                                    <FormColumn className="lg:w-[calc(65%+0.75rem)]">
+                                        <FormLine bottomGap className="w-full">
                                             {textarea}
                                         </FormLine>
                                     </FormColumn>
@@ -115,11 +115,7 @@ export const ContactContent: FC = () => {
                                     components={{
                                         lnk1:
                                             privacyPolicyArticleUrl !== undefined ? (
-                                                <Link
-                                                    href={privacyPolicyArticleUrl}
-                                                    linkType="external"
-                                                    target="_blank"
-                                                />
+                                                <Link href={privacyPolicyArticleUrl} isExternal target="_blank" />
                                             ) : (
                                                 <span></span>
                                             ),
@@ -128,9 +124,9 @@ export const ContactContent: FC = () => {
                             </div>
                             <Button
                                 type="submit"
-                                borderRadius="big"
+                                isRounder
                                 variant="primary"
-                                hasDisabledLook={!formProviderMethods.formState.isValid}
+                                isWithDisabledLook={!formProviderMethods.formState.isValid}
                             >
                                 {t('Send message')}
                             </Button>

@@ -1,5 +1,5 @@
-import { ProductFlags } from 'components/Blocks/Product/Flags/ProductFlags';
-import { theme } from 'components/Theme/main';
+import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
+import { mediaQueries } from 'components/Theme/mediaQueries';
 import { ImageSizesFragmentApi, SimpleFlagFragmentApi } from 'graphql/generated';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
@@ -20,7 +20,7 @@ export const ProductDetailImageSlider: FC<ProductDetailImageSliderProps> = ({ ga
         loop: false,
         duration: 1000,
         breakpoints: {
-            [theme.mediaQueries.queryTablet]: {
+            [mediaQueries.queryTablet]: {
                 slidesPerView: 1,
                 spacing: 0,
             },

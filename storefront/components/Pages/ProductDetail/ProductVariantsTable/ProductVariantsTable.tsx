@@ -1,5 +1,5 @@
 import { ProductVariantsTableRow } from './ProductVariantsTableRow';
-import { Variant } from './Variant/Variant';
+import { Variant } from './Variant';
 import { MainVariantDetailFragmentApi } from 'graphql/generated';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { twMergeCustom } from 'utils/twMerge';

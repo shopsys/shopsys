@@ -74,7 +74,7 @@ export const useRegistrationAfterOrderFormMeta = (
                             components={{
                                 lnk1:
                                     termsAndConditionUrl !== undefined ? (
-                                        <Link href={termsAndConditionUrl} linkType="external" target="_blank" />
+                                        <Link href={termsAndConditionUrl} isExternal target="_blank" />
                                     ) : (
                                         <span></span>
                                     ),

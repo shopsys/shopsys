@@ -1,4 +1,4 @@
-import { FormLineError } from '../Lib/FormLineError/FormLineError';
+import { FormLineError } from '../Lib/FormLineError';
 import { TextInput, TextInputProps } from './TextInput';
 import { FocusEventHandler, ReactElement, useCallback } from 'react';
 import { Control, useController } from 'react-hook-form';
@@ -15,7 +15,7 @@ type TextInputControlledProps = {
         | 'type'
         | 'label'
         | 'inputSize'
-        | 'testIdentifier'
+        | 'dataTestId'
         | 'autoComplete'
     >;
     control: Control<any>;
@@ -59,7 +59,7 @@ export const TextInputControlled: FC<TextInputControlledProps> = ({
                 error={error}
                 textInputSize={textInputProps.inputSize}
                 inputType="text-input"
-                testIdentifier={`${textInputId}-error`}
+                dataTestId={`${textInputId}-error`}
             />
         </>,
     );

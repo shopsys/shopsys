@@ -1,4 +1,4 @@
-import { showErrorMessage } from 'components/Helpers/Toasts';
+import { showErrorMessage } from 'components/Helpers/toasts';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { logException } from 'helpers/errors/logException';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';

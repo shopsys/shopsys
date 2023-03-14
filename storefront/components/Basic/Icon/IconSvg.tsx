@@ -10,7 +10,10 @@ type IconSvgProps = HTMLAttributes<HTMLElement> & {
 
 export const IconSvg: FC<IconSvgProps> = ({ icon, height = '14px', width = '14px', className, ...props }) => (
     <i
-        className={twMergeCustom('inline-flex text-center font-normal normal-case leading-none', className)}
+        className={twMergeCustom(
+            'inline-flex text-center font-normal normal-case leading-none [&>svg]:h-full [&>svg]:w-full',
+            className,
+        )}
         style={{
             width,
             height,

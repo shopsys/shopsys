@@ -1,10 +1,10 @@
 import { usePasswordResetForm, usePasswordResetFormMeta } from './formMeta';
 import { Button } from 'components/Forms/Button/Button';
 import { Form } from 'components/Forms/Form/Form';
-import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
-import { FormLine } from 'components/Forms/Lib/FormLine/FormLine';
+import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup';
+import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { showSuccessMessage } from 'components/Helpers/Toasts';
+import { showSuccessMessage } from 'components/Helpers/toasts';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { BreadcrumbFragmentApi, usePasswordRecoveryMutationApi } from 'graphql/generated';
 import 'helpers//localization/getInternationalizedStaticUrls';
@@ -66,7 +66,7 @@ export const ResetPasswordContent: FC<ResetPasswordContentProps> = ({ breadcrumb
                             }}
                         />
                         <div className="mt-8 flex w-full justify-center">
-                            <Button type="submit" hasDisabledLook={invalid || value.length === 0}>
+                            <Button type="submit" isWithDisabledLook={invalid || value.length === 0}>
                                 {t('Reset password')}
                             </Button>
                         </div>

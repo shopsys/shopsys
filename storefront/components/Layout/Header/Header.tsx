@@ -43,7 +43,7 @@ export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
                     <div className="relative order-3 flex vl:order-4">
                         <Cart />
                     </div>
-                    <Overlay $isActive={isMenuOpened} onClick={onMenuToggleHandler} $isHiddenOnDesktop />
+                    <Overlay isActive={isMenuOpened} onClick={onMenuToggleHandler} isHiddenOnDesktop />
                 </>
             )}
         </div>

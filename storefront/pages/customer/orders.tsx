@@ -1,7 +1,7 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { OrdersContent } from 'components/Pages/Customer/Orders/OrdersContent';
+import { OrdersContent } from 'components/Pages/Customer/OrdersContent';
 import {
     BreadcrumbFragmentApi,
     ListedOrderFragmentApi,

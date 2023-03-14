@@ -1,7 +1,7 @@
-import { MetaRobots } from 'components/Basic/Head/MetaRobots/MetaRobots';
+import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
-import { EditProfileContent } from 'components/Pages/Customer/EditProfile/EditProfileContent';
+import { EditProfileContent } from 'components/Pages/Customer/EditProfileContent';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { BreadcrumbFragmentApi } from 'graphql/generated';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';

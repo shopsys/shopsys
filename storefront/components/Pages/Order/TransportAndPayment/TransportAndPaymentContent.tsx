@@ -1,6 +1,6 @@
 import { TransportAndPaymentSelect } from './TransportAndPaymentSelect/TransportAndPaymentSelect';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
-import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup/ErrorPopup';
+import { ErrorPopup } from 'components/Forms/Lib/ErrorPopup';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import {
     LastOrderFragmentApi,

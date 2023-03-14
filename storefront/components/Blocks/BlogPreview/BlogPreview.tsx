@@ -1,6 +1,6 @@
-import { Main } from './Main/Main';
-import { Side } from './Side/Side';
-import { SideSlider } from './SideSlider/SideSlider';
+import { Main } from './Main';
+import { Side } from './Side';
+import { SideSlider } from './SideSlider';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';

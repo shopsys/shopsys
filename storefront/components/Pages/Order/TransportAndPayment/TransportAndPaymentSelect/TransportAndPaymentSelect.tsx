@@ -1,11 +1,11 @@
-import { PickupPlacePopup } from './PickupPlacePopup/PickupPlacePopup';
+import { PickupPlacePopup } from './PickupPlacePopup';
 import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
-import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectItemLabel/TransportAndPaymentSelectItemLabel';
+import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectItemLabel';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
-import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer/PacketeryContainer';
+import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
 import { useCurrentCart } from 'connectors/cart/Cart';
 import {
     ListedStoreFragmentApi,
@@ -226,7 +226,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     id={transportItem.uuid}
                     value={transportItem.uuid}
                     checked={isActive}
-                    testIdentifier={TEST_IDENTIFIER + 'transport-item-input'}
+                    dataTestId={TEST_IDENTIFIER + 'transport-item-input'}
                     image={getFirstImageOrNull(transportItem.images)}
                     onChangeCallback={handleTransportChange}
                     label={
@@ -255,7 +255,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                     id={paymentItem.uuid}
                     value={paymentItem.uuid}
                     checked={isActive}
-                    testIdentifier={TEST_IDENTIFIER + 'payment-item-input'}
+                    dataTestId={TEST_IDENTIFIER + 'payment-item-input'}
                     image={getFirstImageOrNull(paymentItem.images)}
                     onChangeCallback={handlePaymentChange}
                     label={
@@ -340,7 +340,6 @@ type ResetButtonProps = { text: string; onClick: () => void };
 
 const ResetButton: FC<ResetButtonProps> = ({ text, dataTestId, onClick }) => (
     <button
-        type="button"
         onClick={onClick}
         data-testid={dataTestId}
         className="flex w-full items-center bg-whitesmoke px-2 py-1 text-sm"

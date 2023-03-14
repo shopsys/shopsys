@@ -1,4 +1,4 @@
-import { BannersSlider } from './BannersSlider/BannersSlider';
+import { BannersSlider } from './BannersSlider';
 import { useSliderItemsQueryApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
 
@@ -11,5 +11,5 @@ export const Banners: FC = () => {
         return null;
     }
 
-    return <BannersSlider sliderItems={sliderItemsData.sliderItems} testIdentifier={TEST_IDENTIFIER} />;
+    return <BannersSlider sliderItems={sliderItemsData.sliderItems} dataTestId={TEST_IDENTIFIER} />;
 };

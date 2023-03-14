@@ -1,4 +1,4 @@
-import { Error404Content } from 'components/Pages/ErrorPage/404/Error404Content';
+import { Error404Content } from 'components/Pages/ErrorPage/Error404Content';
 import { useGtmStaticPageViewEvent } from 'helpers/gtm/eventFactories';
 import { useGtmStaticPageView } from 'hooks/gtm/useGtmStaticPageView';
 
