@@ -9,7 +9,6 @@ use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckPackagesGithubActionsBuilds
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckPackagesOnPackagistReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckShopsysInstallReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\CheckUncommittedChangesReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\AfterRelease\CreateReleaseNotesReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\EnableMergingReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\EnsureReleaseHighlightsPostIsReleasedReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AfterRelease\MeasurePerformanceReleaseWorker;
@@ -39,7 +38,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(SetFrameworkBundleVersionToDevReleaseWorker::class);
     $services->set(SetMutualDependenciesToDevelopmentVersionReleaseWorker::class);
     $services->set(EnableMergingReleaseWorker::class);
-    $services->set(CreateReleaseNotesReleaseWorker::class);
     $services->set(CheckShopsysInstallReleaseWorker::class);
     $services->set(MeasurePerformanceReleaseWorker::class);
     $services->set(EnsureReleaseHighlightsPostIsReleasedReleaseWorker::class);
