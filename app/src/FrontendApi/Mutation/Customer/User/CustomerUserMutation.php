@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\FrontendApi\Mutation\Customer\User;
 
 use App\FrontendApi\Model\Cart\MergeCartFacade;
+use App\FrontendApi\Model\Order\OrderFacade;
 use App\Model\Customer\User\RegistrationDataFactoryInterface;
 use App\Model\Customer\User\RegistrationFacadeInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
@@ -47,6 +48,7 @@ class CustomerUserMutation extends BaseCustomerUserMutation
      * @param \App\Model\Customer\User\RegistrationFacadeInterface $registrationFacade
      * @param \App\Model\Customer\User\RegistrationDataFactoryInterface $registrationDataFactory
      * @param \App\FrontendApi\Model\Cart\MergeCartFacade $mergeCartFacade
+     * @param \App\FrontendApi\Model\Order\OrderFacade $orderFacade
      */
     public function __construct(
         TokenStorageInterface $tokenStorage,
@@ -60,7 +62,8 @@ class CustomerUserMutation extends BaseCustomerUserMutation
         TokenFacade $tokenFacade,
         private readonly RegistrationFacadeInterface $registrationFacade,
         private readonly RegistrationDataFactoryInterface $registrationDataFactory,
-        private readonly MergeCartFacade $mergeCartFacade
+        private readonly MergeCartFacade $mergeCartFacade,
+        private readonly OrderFacade $orderFacade
     ) {
         parent::__construct(
             $tokenStorage,
@@ -90,6 +93,10 @@ class CustomerUserMutation extends BaseCustomerUserMutation
 
         if ($argument['input']['cartUuid'] !== null) {
             $this->mergeCartFacade->mergeCartByUuidToCustomerCart($argument['input']['cartUuid'], $customerUser);
+        }
+
+        if ($argument['input']['lastOrderUuid'] !== null) {
+            $this->orderFacade->pairCustomerUserWithOrderByOrderUuid($customerUser, $argument['input']['lastOrderUuid']);
         }
 
         $deviceId = Uuid::uuid4()->toString();

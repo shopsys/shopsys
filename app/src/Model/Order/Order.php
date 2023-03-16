@@ -262,4 +262,12 @@ class Order extends BaseOrder
     {
         return $this->goPayBankSwift;
     }
+
+    /**
+     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
+     */
+    public function setCustomerUser(?CustomerUser $customerUser): void
+    {
+        $this->customerUser = $customerUser;
+    }
 }

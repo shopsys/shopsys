@@ -18,7 +18,7 @@ import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserContactInformation';
 import Trans from 'next-translate/Trans';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
-import { useShopsysDispatch } from 'redux/main';
+import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { userActions } from 'redux/slices/user';
 import { RegistrationAfterOrderFormType } from 'types/form';
 
@@ -32,6 +32,7 @@ export const Registration: FC = () => {
     const [formProviderMethods] = useRegistrationAfterOrderForm();
     const formMeta = useRegistrationAfterOrderFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
+    const { lastOrderUuid } = useShopsysSelector((state) => state.user);
 
     useEffectOnce(() => {
         return () => {
@@ -46,6 +47,7 @@ export const Registration: FC = () => {
             country: contactInformation.country.value,
             companyCustomer: contactInformation.customer === 'companyCustomer',
             previousCartUuid: null,
+            lastOrderUuid,
         });
 
         if (registerResult.data !== undefined && registerResult.error === undefined) {

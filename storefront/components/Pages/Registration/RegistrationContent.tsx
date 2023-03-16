@@ -44,6 +44,7 @@ export const RegistrationContent: FC<RegistrationContentProps> = ({ breadcrumbs 
                 previousCartUuid: cartUuid,
                 country: data.country.value,
                 companyCustomer: data.customer === 'companyCustomer',
+                lastOrderUuid: null,
             });
 
             if (registerResult.data?.Register !== undefined) {

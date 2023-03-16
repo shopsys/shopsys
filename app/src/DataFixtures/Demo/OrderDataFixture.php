@@ -665,6 +665,45 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             ],
             $customerUser
         );
+
+        $orderData = $this->orderDataFactory->create();
+        $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_DRONE);
+        $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW);
+        $orderData->firstName = 'NotRegistered';
+        $orderData->lastName = 'User';
+        $orderData->email = 'not-registered-user@shopsys.com';
+        $orderData->telephone = '+421733598748';
+        $orderData->street = 'Křivá 12';
+        $orderData->city = 'Jablonec';
+        $orderData->postcode = '78952';
+        $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
+        $orderData->deliveryAddressSameAsBillingAddress = false;
+        $orderData->deliveryCity = 'Ostrava 1';
+        $orderData->deliveryCompanyName = 'BestCompanyEver, s.r.o.';
+        $orderData->deliveryCountry = $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA);
+        $orderData->deliveryStreet = 'Křivá 11';
+        $orderData->deliveryTelephone = '+421555444';
+        $orderData->deliveryPostcode = '01305';
+        $orderData->deliveryFirstName = 'NotRegistered';
+        $orderData->deliveryLastName = 'User';
+        $orderData->companyName = 'BestCompanyEver, s.r.o.';
+        $orderData->companyNumber = '555555';
+        $orderData->note = 'Doufám, že vše dorazí v pořádku a co nejdříve :)';
+        $orderData->domainId = $domainId;
+        $orderData->currency = $domainDefaultCurrency;
+        $orderData->createdAt = new DateTime('now');
+        $orderData->createdAsAdministrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
+        $this->createOrder(
+            $orderData,
+            [
+                ProductDataFixture::PRODUCT_PREFIX . '7' => 1,
+                ProductDataFixture::PRODUCT_PREFIX . '17' => 6,
+                ProductDataFixture::PRODUCT_PREFIX . '9' => 1,
+                ProductDataFixture::PRODUCT_PREFIX . '14' => 1,
+                ProductDataFixture::PRODUCT_PREFIX . '10' => 2,
+            ]
+        );
     }
 
     /**
