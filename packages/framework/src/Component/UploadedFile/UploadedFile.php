@@ -283,4 +283,20 @@ class UploadedFile implements EntityFileUploadInterface
         $this->setName($filenameWithoutExtension);
         $this->setSlug(TransformString::stringToFriendlyUrlSlug($filenameWithoutExtension));
     }
+
+    /**
+     * @return \DateTime
+     */
+    public function getModifiedAt(): DateTime
+    {
+        return $this->modifiedAt;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
 }
