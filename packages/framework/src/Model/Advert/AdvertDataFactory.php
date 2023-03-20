@@ -58,5 +58,6 @@ class AdvertDataFactory implements AdvertDataFactoryInterface
         $advertData->hidden = $advert->isHidden();
         $advertData->domainId = $advert->getDomainId();
         $advertData->image = $this->imageUploadDataFactory->createFromEntityAndType($advert);
+        $advertData->categories = $advert->getCategories();
     }
 }

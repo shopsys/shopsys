@@ -593,7 +593,7 @@
 {% endblock products_widget %}
 
 {% block categories_widget %}
-    <div class="form-line__line">
+    <div class="form-line__{% if display_as_row == true %}side{% else %}line{% endif %}">
         <div
             class="form-tree form-tree--open js-category-tree-form"
             data-prototype="{{
