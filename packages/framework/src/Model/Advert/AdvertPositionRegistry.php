@@ -6,6 +6,8 @@ use Shopsys\FrameworkBundle\Model\Advert\Exception\AdvertPositionNotKnownExcepti
 
 class AdvertPositionRegistry
 {
+    public const POSITION_PRODUCT_LIST = 'productList';
+
     /**
      * @return string[]
      */
@@ -14,7 +16,7 @@ class AdvertPositionRegistry
         return [
             'header' => t('under heading'),
             'footer' => t('above footer'),
-            'productList' => t('in category (above the category name)'),
+            self::POSITION_PRODUCT_LIST => t('in category (above the category name)'),
         ];
     }
 

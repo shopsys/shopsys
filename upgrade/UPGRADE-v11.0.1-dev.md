@@ -38,3 +38,24 @@ There you can find links to upgrade notes for other versions too.
           ) {
           ```
     - see #project-base-diff to update your project
+
+- retrieving adverts on product list now requires to define category ([#2583](https://github.com/shopsys/shopsys/pull/2583))
+    - `Shopsys\FrameworkBundle\Model\Advert\AdvertRepository` class:
+        - method `getAdvertByPositionQueryBuilder` changed its interface:
+        ```diff
+        - function getAdvertByPositionQueryBuilder($positionName, $domainId)
+        + function getAdvertByPositionQueryBuilder($positionName, $domainId, $category = null)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Advert\AdvertRepository` class:
+        - method `getAdvertByPositionQueryBuilder` changed its interface:
+        ```diff
+        - function findRandomAdvertByPosition($positionName, $domainId)
+        + function findRandomAdvertByPosition($positionName, $domainId, $category = null)
+        ```
+    - `Shopsys\FrameworkBundle\Model\Advert\AdvertFacade` class:
+        - method `findRandomAdvertByPositionOnCurrentDomain` changed its interface:
+        ```diff
+        - function findRandomAdvertByPositionOnCurrentDomain($positionName)
+        + function findRandomAdvertByPositionOnCurrentDomain($positionName, $category = null)
+        ```
+    - see #project-base-diff to update your project

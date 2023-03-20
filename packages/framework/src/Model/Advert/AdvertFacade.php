@@ -73,13 +73,14 @@ class AdvertFacade
 
     /**
      * @param string $positionName
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $category
      * @return \Shopsys\FrameworkBundle\Model\Advert\Advert|null
      */
-    public function findRandomAdvertByPositionOnCurrentDomain($positionName)
+    public function findRandomAdvertByPositionOnCurrentDomain($positionName, $category = null)
     {
         $this->advertPositionRegistry->assertPositionNameIsKnown($positionName);
 
-        return $this->advertRepository->findRandomAdvertByPosition($positionName, $this->domain->getId());
+        return $this->advertRepository->findRandomAdvertByPosition($positionName, $this->domain->getId(), $category);
     }
 
     /**

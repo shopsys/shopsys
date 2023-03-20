@@ -19,7 +19,7 @@
 {% block main_content %}
     <div class="web__line">
         <div class="web__container">
-            {{ render(controller('App\\Controller\\Front\\AdvertController::boxAction',{'positionName' : 'productList'})) }}
+            {{ render(controller('App\\Controller\\Front\\AdvertController::boxAction', { 'positionName': 'productList', 'categoryId': category.id })) }}
             <h1>
                 {{ category.getSeoH1(domain.id)|default(category.name) }}
             </h1>
