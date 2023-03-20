@@ -58,4 +58,22 @@ There you can find links to upgrade notes for other versions too.
         - function findRandomAdvertByPositionOnCurrentDomain($positionName)
         + function findRandomAdvertByPositionOnCurrentDomain($positionName, $category = null)
         ```
+    - `Shopsys\FrontendApiBundle\Model\Advert\AdvertFacade` class:
+        - method `getVisibleAdvertsByDomainIdAndPositionName` changed its interface:
+        ```diff
+        - function getVisibleAdvertsByDomainIdAndPositionName(int $domainId, string $positionName): array
+        + function getVisibleAdvertsByDomainIdAndPositionName(int $domainId, string $positionName, ?Category $category = null): array
+        ```
+    - `Shopsys\FrontendApiBundle\Model\Advert\AdvertRepository` class:
+        - method `getVisibleAdvertsByPositionNameAndDomainId` changed its interface:
+        ```diff
+        - function getVisibleAdvertsByPositionNameAndDomainId(int $domainId, string $positionName): array
+        + function getVisibleAdvertsByPositionNameAndDomainId(int $domainId, string $positionName, ?Category $category = null): array
+        ```
+    - `Shopsys\FrontendApiBundle\Model\Advert\AdvertRepository` class:
+        - method `getVisibleAdvertsByPositionNameQueryBuilder` changed its interface:
+        ```diff
+        - function getVisibleAdvertsByPositionNameQueryBuilder(int $domainId, string $positionName)
+        + function getVisibleAdvertsByPositionNameQueryBuilder(int $domainId, string $positionName, ?Category $category = null)
+        ```
     - see #project-base-diff to update your project

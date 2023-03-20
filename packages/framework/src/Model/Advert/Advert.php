@@ -111,10 +111,12 @@ class Advert
 
         $this->categories = new ArrayCollection();
 
-        if ($this->positionName === AdvertPositionRegistry::POSITION_PRODUCT_LIST) {
-            foreach ($advert->categories as $category) {
-                $this->categories->add($category);
-            }
+        if ($this->positionName !== AdvertPositionRegistry::POSITION_PRODUCT_LIST) {
+            return;
+        }
+
+        foreach ($advert->categories as $category) {
+            $this->categories->add($category);
         }
     }
 
