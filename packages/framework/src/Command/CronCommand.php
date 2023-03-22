@@ -161,8 +161,15 @@ class CronCommand extends Command
     {
         $requestedModuleServiceId = $input->getOption(self::OPTION_MODULE);
         $runAllModules = $requestedModuleServiceId === null;
+        $cronInstances = $this->parameterBag->get('cron_instances');
+        $instanceRunEveryMin = $cronInstances[$instanceName]['run_every_min'] ?? CronModuleConfig::RUN_EVERY_MIN_DEFAULT;
+
+        if ($instanceRunEveryMin < 0 || $instanceRunEveryMin > 30) {
+            $instanceRunEveryMin = CronModuleConfig::RUN_EVERY_MIN_DEFAULT;
+        }
+
         if ($runAllModules) {
-            $cronFacade->scheduleModulesByTime($this->getCurrentRoundedTime());
+            $cronFacade->scheduleModulesByTime($this->getCurrentRoundedTime($instanceRunEveryMin));
         }
 
         $mutex = $mutexFactory->getPrefixedCronMutex($instanceName);
@@ -181,13 +188,14 @@ class CronCommand extends Command
     }
 
     /**
+     * @param int $runEveryMin
      * @return \DateTimeImmutable
      */
-    private function getCurrentRoundedTime()
+    private function getCurrentRoundedTime(int $runEveryMin = CronModuleConfig::RUN_EVERY_MIN_DEFAULT)
     {
         $time = new DateTime('now', $this->getCronTimeZone());
         $time->modify('-' . $time->format('s') . ' sec');
-        $time->modify('-' . ($time->format('i') % 5) . ' min');
+        $time->modify('-' . ($time->format('i') % $runEveryMin) . ' min');
 
         return DateTimeImmutable::createFromMutable($time);
     }

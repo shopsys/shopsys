@@ -31,7 +31,6 @@ class DefaultController extends AdminBaseController
 
     protected const PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR = 7;
     protected const HOUR_IN_SECONDS = 60 * 60;
-    public const EXPECTED_MAXIMUM_CRON_RUNTIME_IN_SECONDS = 4 * 60;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Statistics\StatisticsFacade $statisticsFacade
@@ -263,6 +262,10 @@ class DefaultController extends AdminBaseController
 
             $cronDurations = $cronModuleDurationsIndexedByCronModuleId[$cronConfig->getServiceId()] ?? null;
 
+            $minimalDuration = $cronDurations === null || $cronDurations['minimalDuration'] === null ? null : (int)$cronDurations['minimalDuration'];
+            $maximalDuration = $cronDurations === null || $cronDurations['maximalDuration'] === null ? null : (int)$cronDurations['maximalDuration'];
+            $averageDuration = $cronDurations === null || $cronDurations['averageDuration'] === null ? null : (int)$cronDurations['averageDuration'];
+
             $data[] = [
                 'id' => $cronModule->getServiceId(),
                 'name' => $cronConfig->getReadableName() ?? $cronModule->getServiceId(),
@@ -274,15 +277,14 @@ class DefaultController extends AdminBaseController
                 'readableFrequency' => $cronConfig->getReadableFrequency(),
                 'scheduled' => $cronModule->isScheduled(),
                 'actions' => null,
-                'minimalDuration' => $this->getFormattedDuration(
-                    $cronDurations === null || $cronDurations['minimalDuration'] === null ? null : (int)$cronDurations['minimalDuration']
-                ),
-                'maximalDuration' => $this->getFormattedDuration(
-                    $cronDurations === null || $cronDurations['maximalDuration'] === null ? null : (int)$cronDurations['maximalDuration']
-                ),
-                'averageDuration' => $this->getFormattedDuration(
-                    $cronDurations === null || $cronDurations['averageDuration'] === null ? null : (int)$cronDurations['averageDuration']
-                ),
+                'minimalDuration' => $this->getFormattedDuration($minimalDuration),
+                'maximalDuration' => $this->getFormattedDuration($maximalDuration),
+                'averageDuration' => $this->getFormattedDuration($averageDuration),
+                'cronTimeoutSecs' => $cronConfig->getTimeoutIteratedCronSec(),
+                'rawMinimalDuration' => $minimalDuration,
+                'rawMaximalDuration' => $maximalDuration,
+                'rawAverageDuration' => $averageDuration,
+                'rawLastDuration' => $cronModule->getLastDuration(),
             ];
         }
 
@@ -422,7 +424,12 @@ class DefaultController extends AdminBaseController
             'table-col table-col-10'
         );
         $cronRunsListGrid->addColumn('status', 'status', t('Status'), false)->setClassAttribute('table-col table-col-10');
-        $cronRunsListGrid->setTheme('@ShopsysFramework/Admin/Content/Default/cronModuleRunsListGrid.html.twig');
+        $cronRunsListGrid->setTheme(
+            '@ShopsysFramework/Admin/Content/Default/cronModuleRunsListGrid.html.twig',
+            [
+                'cronTimeoutSecs' => $cronConfig->getTimeoutIteratedCronSec(),
+            ],
+        );
 
         $this->breadcrumbOverrider->overrideLastItem(
             t('Cron detail - %name%', ['%name%' => $cronConfig->getReadableName() ?? $cronModule->getServiceId()])
@@ -440,6 +447,7 @@ class DefaultController extends AdminBaseController
                     $data
                 ),
                 'cronName' => $cronConfig->getReadableName() ?? $cronModule->getServiceId(),
+                'cronTimeoutSecs' => $cronConfig->getTimeoutIteratedCronSec(),
             ]
         );
     }

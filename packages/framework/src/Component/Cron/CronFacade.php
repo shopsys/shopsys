@@ -78,7 +78,7 @@ class CronFacade
 
         foreach ($cronModuleConfigs as $cronModuleConfig) {
             $this->runSingleModule($cronModuleConfig);
-            if ($this->cronModuleExecutor->canRun() === false) {
+            if ($this->cronModuleExecutor->canRun($cronModuleConfig) === false) {
                 break;
             }
         }

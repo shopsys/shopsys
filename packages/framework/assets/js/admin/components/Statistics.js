@@ -1,7 +1,6 @@
 import Chart from 'chart.js';
 import Register from '../../common/utils/Register';
 import Translator from 'bazinga-translator';
-import constant from '../utils/constant';
 
 export default class Statistics {
 
@@ -51,10 +50,8 @@ export default class Statistics {
 
                 let limits = [];
 
-                console.log(constant('\\Shopsys\\FrameworkBundle\\Controller\\Admin\\DefaultController::EXPECTED_MAXIMUM_CRON_RUNTIME_IN_SECONDS'));
-
                 let max = [];
-                max['value'] = constant('\\Shopsys\\FrameworkBundle\\Controller\\Admin\\DefaultController::EXPECTED_MAXIMUM_CRON_RUNTIME_IN_SECONDS');
+                max['value'] = $chartCanvas.data('chart-timeout-secs');
                 max['label'] = Translator.trans('Expected maximum duration');
                 max['color'] = 'rgb(220, 61, 61)';
                 limits.push(max);

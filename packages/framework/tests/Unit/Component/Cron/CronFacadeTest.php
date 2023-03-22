@@ -19,11 +19,12 @@ class CronFacadeTest extends TestCase
 {
     public function testRunModuleByServiceId()
     {
-        $serviceId = 'cronModuleServiceId';
         $cronModuleFacadeMock = $this->mockCronModuleFacade();
         $cronModuleServiceMock = $this->getMockForAbstractClass(SimpleCronModuleInterface::class);
 
         $cronModuleServiceMock->expects($this->once())->method('run');
+
+        $serviceId = get_class($cronModuleServiceMock);
 
         $cronConfig = $this->createCronConfigWithRegisteredServices([
             $serviceId => $cronModuleServiceMock,
@@ -33,7 +34,6 @@ class CronFacadeTest extends TestCase
 
     public function testRunIteratedModuleByServiceId()
     {
-        $serviceId = 'cronModuleServiceId';
         $cronModuleFacadeMock = $this->mockCronModuleFacade();
         $cronModuleServiceMock = $this->getMockForAbstractClass(IteratedCronModuleInterface::class);
 
@@ -45,6 +45,8 @@ class CronFacadeTest extends TestCase
             }
         );
 
+        $serviceId = get_class($cronModuleServiceMock);
+
         $cronConfig = $this->createCronConfigWithRegisteredServices([
             $serviceId => $cronModuleServiceMock,
         ]);
@@ -53,10 +55,10 @@ class CronFacadeTest extends TestCase
 
     public function testScheduleModulesByTime()
     {
-        $validServiceId = 'validCronModuleServiceId';
         $validCronModuleServiceMock = $this->getMockForAbstractClass(SimpleCronModuleInterface::class);
-        $invalidServiceId = 'invalidCronModuleServiceId';
+        $validServiceId = get_class($validCronModuleServiceMock);
         $invalidCronModuleServiceMock = $this->getMockForAbstractClass(SimpleCronModuleInterface::class);
+        $invalidServiceId = get_class($invalidCronModuleServiceMock);
         $cronModuleFacadeMock = $this->mockCronModuleFacade();
 
         $cronTimeResolverMock = $this->createMock(CronTimeResolver::class);
@@ -81,10 +83,10 @@ class CronFacadeTest extends TestCase
 
     public function testRunScheduledModules()
     {
-        $scheduledServiceId = 'scheduledCronModuleServiceId';
         $scheduledCronModuleServiceMock = $this->getMockForAbstractClass(SimpleCronModuleInterface::class);
-        $unscheduledServiceId = 'unscheduledCronModuleServiceId';
+        $scheduledServiceId = get_class($scheduledCronModuleServiceMock);
         $unscheduledCronModuleServiceMock = $this->getMockForAbstractClass(SimpleCronModuleInterface::class);
+        $unscheduledServiceId = get_class($unscheduledCronModuleServiceMock);
         $cronModuleFacadeMock = $this->mockCronModuleFacade();
 
         $scheduledCronModuleServiceMock->expects($this->once())->method('run');
@@ -115,7 +117,7 @@ class CronFacadeTest extends TestCase
         /** @var \Symfony\Bridge\Monolog\Logger $loggerMock */
         $loggerMock = $this->createMock(Logger::class);
 
-        $cronModuleExecutor = new CronModuleExecutor(240);
+        $cronModuleExecutor = new CronModuleExecutor(240, $cronConfig);
 
         return new CronFacade($loggerMock, $cronConfig, $cronModuleFacade, $cronModuleExecutor);
     }
@@ -143,7 +145,10 @@ class CronFacadeTest extends TestCase
                 $serviceId,
                 '*',
                 '*',
-                CronModuleConfig::DEFAULT_INSTANCE_NAME
+                CronModuleConfig::DEFAULT_INSTANCE_NAME,
+                'testing cron',
+                CronModuleConfig::RUN_EVERY_MIN_DEFAULT,
+                CronModuleConfig::TIMEOUT_ITERATED_CRON_SEC_DEFAULT,
             );
         }
 

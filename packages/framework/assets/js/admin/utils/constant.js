@@ -30,7 +30,6 @@ const constant = {
     '\\Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType::class': 'Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType',
     '\\Symfony\\Component\\Validator\\Constraint::DEFAULT_GROUP': 'Default',
     '\\Shopsys\\FrameworkBundle\\Form\\ValidationGroup::VALIDATION_GROUP_DEFAULT': 'Default',
-    '\\Shopsys\\FrameworkBundle\\Controller\\Admin\\DefaultController::EXPECTED_MAXIMUM_CRON_RUNTIME_IN_SECONDS': '240',
 };
 
 export default (key) => constant[key];

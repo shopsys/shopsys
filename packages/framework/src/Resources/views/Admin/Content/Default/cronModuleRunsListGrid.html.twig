@@ -5,44 +5,38 @@
 {% endblock %}
 
 {% block grid_value_cell_id_startedAt %}
-    {% set expectedMaximumRunTime = constant('Shopsys\\FrameworkBundle\\Controller\\Admin\\DefaultController::EXPECTED_MAXIMUM_CRON_RUNTIME_IN_SECONDS') %}
-
-    {% if row.duration > expectedMaximumRunTime %}
+    {% if row.duration > cronTimeoutSecs %}
         <span style="color: rgb(220, 61, 61)">
     {% endif %}
 
-    {{ value|formatDateTime}}
+    {{ value|formatDateTime }}
 
-    {% if row.duration > expectedMaximumRunTime %}
+    {% if row.duration > cronTimeoutSecs %}
         </span>
     {% endif %}
 {% endblock %}
 
 {% block grid_value_cell_id_finishedAt %}
-    {% set expectedMaximumRunTime = constant('Shopsys\\FrameworkBundle\\Controller\\Admin\\DefaultController::EXPECTED_MAXIMUM_CRON_RUNTIME_IN_SECONDS') %}
-
-    {% if row.duration > expectedMaximumRunTime %}
+    {% if row.duration > cronTimeoutSecs %}
         <span style="color: red;">
     {% endif %}
 
-    {{ value|formatDateTime}}
+    {{ value|formatDateTime }}
 
-    {% if row.duration > expectedMaximumRunTime %}
+    {% if row.duration > cronTimeoutSecs %}
         </span>
     {% endif %}
 
 {% endblock %}
 
 {% block grid_value_cell_id_duration %}
-    {% set expectedMaximumRunTime = constant('Shopsys\\FrameworkBundle\\Controller\\Admin\\DefaultController::EXPECTED_MAXIMUM_CRON_RUNTIME_IN_SECONDS') %}
-
-    {% if row.duration > expectedMaximumRunTime %}
+    {% if row.duration > cronTimeoutSecs %}
         <span style="color: red;">
     {% endif %}
 
-    {{ value}}
+    {{ value }}
 
-    {% if row.duration > expectedMaximumRunTime %}
+    {% if row.duration > cronTimeoutSecs %}
         </span>
     {% endif %}
 

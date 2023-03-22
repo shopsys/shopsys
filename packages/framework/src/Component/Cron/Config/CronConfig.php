@@ -37,16 +37,26 @@ class CronConfig
      * @param string $timeMinutes
      * @param string $instanceName
      * @param string|null $readableName
+     * @param int $runEveryMin
+     * @param int $timeoutIteratedCronSec
      */
-    public function registerCronModuleInstance($service, string $serviceId, string $timeHours, string $timeMinutes, string $instanceName, ?string $readableName = null): void
-    {
+    public function registerCronModuleInstance(
+        $service,
+        string $serviceId,
+        string $timeHours,
+        string $timeMinutes,
+        string $instanceName,
+        ?string $readableName = null,
+        int $runEveryMin = CronModuleConfig::RUN_EVERY_MIN_DEFAULT,
+        int $timeoutIteratedCronSec = CronModuleConfig::TIMEOUT_ITERATED_CRON_SEC_DEFAULT
+    ): void {
         if (!$service instanceof SimpleCronModuleInterface && !$service instanceof IteratedCronModuleInterface) {
             throw new InvalidCronModuleException($serviceId);
         }
         $this->cronTimeResolver->validateTimeString($timeHours, 23, 1);
         $this->cronTimeResolver->validateTimeString($timeMinutes, 55, 5);
 
-        $cronModuleConfig = new CronModuleConfig($service, $serviceId, $timeHours, $timeMinutes, $readableName);
+        $cronModuleConfig = new CronModuleConfig($service, $serviceId, $timeHours, $timeMinutes, $readableName, $runEveryMin, $timeoutIteratedCronSec);
         $cronModuleConfig->assignToInstance($instanceName);
 
         $this->cronModuleConfigs[] = $cronModuleConfig;
@@ -94,7 +104,7 @@ class CronConfig
 
     /**
      * @param string $instanceName
-     * @return array
+     * @return \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[]
      */
     public function getCronModuleConfigsForInstance(string $instanceName): array
     {
