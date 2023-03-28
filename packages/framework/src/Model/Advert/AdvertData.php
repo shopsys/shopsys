@@ -49,8 +49,14 @@ class AdvertData
      */
     public $uuid;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Category\Category[]
+     */
+    public array $categories;
+
     public function __construct()
     {
         $this->hidden = false;
+        $this->categories = [];
     }
 }

@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Advert;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
+use Shopsys\FrameworkBundle\Model\Category\Category;
 
 class AdvertRepository
 {
@@ -26,11 +27,12 @@ class AdvertRepository
     /**
      * @param int $domainId
      * @param string $positionName
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $category
      * @return \Shopsys\FrameworkBundle\Model\Advert\Advert[]
      */
-    public function getVisibleAdvertsByPositionNameAndDomainId(int $domainId, string $positionName): array
+    public function getVisibleAdvertsByPositionNameAndDomainId(int $domainId, string $positionName, ?Category $category = null): array
     {
-        return $this->getVisibleAdvertsByPositionNameQueryBuilder($domainId, $positionName)->getQuery()->execute();
+        return $this->getVisibleAdvertsByPositionNameQueryBuilder($domainId, $positionName, $category)->getQuery()->execute();
     }
 
     /**
@@ -53,13 +55,23 @@ class AdvertRepository
     /**
      * @param int $domainId
      * @param string $positionName
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $category
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getVisibleAdvertsByPositionNameQueryBuilder(int $domainId, string $positionName)
+    protected function getVisibleAdvertsByPositionNameQueryBuilder(int $domainId, string $positionName, ?Category $category = null)
     {
-        return $this->getVisibleAdvertsQueryBuilder($domainId)
+        $queryBuilder = $this->getVisibleAdvertsQueryBuilder($domainId)
             ->andWhere('a.positionName = :positionName')
             ->setParameter('positionName', $positionName);
+
+        if ($category !== null) {
+            $queryBuilder
+                ->leftJoin('a.categories', 'c')
+                ->andWhere('c IS NULL OR c = :category')
+                ->setParameter('category', $category);
+        }
+
+        return $queryBuilder;
     }
 
     /**

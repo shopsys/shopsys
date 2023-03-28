@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Advert;
 
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Form\CategoriesType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
@@ -122,6 +123,12 @@ class AdvertFormType extends AbstractType
                     new Constraints\NotBlank(['message' => 'Please choose advertisement area']),
                 ],
                 'label' => t('Area'),
+            ])
+            ->add('categories', CategoriesType::class, [
+                'required' => false,
+                'domain_id' => $options['data']->domainId,
+                'label' => t('Assign to category'),
+                'display_as_row' => true,
             ])
             ->add('hidden', YesNoType::class, [
                 'required' => false,

@@ -34,6 +34,7 @@ class CategoriesType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['domain_id'] = $options['domain_id'];
+        $view->vars['display_as_row'] = $options['display_as_row'];
     }
 
     /**
@@ -57,14 +58,16 @@ class CategoriesType extends AbstractType
         };
 
         $resolver
-            ->setRequired('domain_id')
+            ->setRequired(['domain_id', 'display_as_row'])
             ->setAllowedTypes('domain_id', 'int')
+            ->setAllowedTypes('display_as_row', 'bool')
             ->setDefaults([
                 'required' => false,
                 'entry_type' => CategoryCheckboxType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
+                'display_as_row' => false,
             ]);
 
         $resolver->setNormalizer('entry_options', $entryOptionsNormalizer);

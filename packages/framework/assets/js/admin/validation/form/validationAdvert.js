@@ -19,6 +19,21 @@ export default function validationAdvert () {
     $advertForm.find('input[name="advert_form[settings][type]"]').change(initAdvertForm);
     initAdvertForm();
 
+    const getPositionName = function () {
+        return $('select[name="advert_form[settings][positionName]"]').val();
+    };
+
+    const initAdvertProductList = function () {
+        if (getPositionName() === 'productList') {
+            $advertForm.find('.js-category-tree-form-children-container').closest('.form-line').show();
+        } else {
+            $advertForm.find('.js-category-tree-form-children-container').closest('.form-line').hide();
+        }
+    };
+
+    $advertForm.find('select[name="advert_form[settings][positionName]"]').change(initAdvertProductList);
+    initAdvertProductList();
+
     $advertForm.jsFormValidator({
         'groups': function () {
             const groups = [constant('\\Shopsys\\FrameworkBundle\\Form\\ValidationGroup::VALIDATION_GROUP_DEFAULT')];

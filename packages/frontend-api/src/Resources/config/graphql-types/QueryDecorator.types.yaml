@@ -135,10 +135,12 @@ QueryDecorator:
                 description: "Returns promoted products"
             adverts:
                 type: '[Advert!]!'
-                resolve: "@=query('advertsQuery', args['positionName'])"
+                resolve: "@=query('advertsQuery', args['positionName'], args['categoryUuid'])"
                 args:
                     positionName:
                         type: "String"
+                    categoryUuid:
+                        type: "Uuid"
                 description: "Returns list of adverts, optionally filtered by `positionName`"
             AdvertCode:
                 type: 'AdvertCode'

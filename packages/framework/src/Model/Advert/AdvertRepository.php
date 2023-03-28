@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Advert;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Model\Advert\Exception\AdvertNotFoundException;
 
 class AdvertRepository
@@ -40,26 +41,41 @@ class AdvertRepository
     /**
      * @param string $positionName
      * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $category
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getAdvertByPositionQueryBuilder($positionName, $domainId)
+    protected function getAdvertByPositionQueryBuilder($positionName, $domainId, $category = null)
     {
-        return $this->em->createQueryBuilder()
+        if ($positionName === AdvertPositionRegistry::POSITION_PRODUCT_LIST && $category === null) {
+            DeprecationHelper::trigger('Retrieving advert on product list page without setting category is deprecated and will be disabled in next major.');
+        }
+
+        $queryBuilder = $this->em->createQueryBuilder()
             ->select('a')
             ->from(Advert::class, 'a')
             ->where('a.positionName = :positionName')->setParameter('positionName', $positionName)
             ->andWhere('a.hidden = FALSE')
             ->andWhere('a.domainId = :domainId')->setParameter('domainId', $domainId);
+
+        if ($category !== null) {
+            $queryBuilder
+                ->leftJoin('a.categories', 'c')
+                ->andWhere('c IS NULL OR c = :category')
+                ->setParameter('category', $category);
+        }
+
+        return $queryBuilder;
     }
 
     /**
      * @param string $positionName
      * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $category
      * @return \Shopsys\FrameworkBundle\Model\Advert\Advert|null
      */
-    public function findRandomAdvertByPosition($positionName, $domainId)
+    public function findRandomAdvertByPosition($positionName, $domainId, $category = null)
     {
-        $count = $this->getAdvertByPositionQueryBuilder($positionName, $domainId)
+        $count = $this->getAdvertByPositionQueryBuilder($positionName, $domainId, $category)
             ->select('COUNT(a)')
             ->getQuery()->getSingleScalarResult();
 
@@ -68,7 +84,7 @@ class AdvertRepository
             return null;
         }
 
-        return $this->getAdvertByPositionQueryBuilder($positionName, $domainId)
+        return $this->getAdvertByPositionQueryBuilder($positionName, $domainId, $category)
             ->setFirstResult(random_int(0, $count - 1))
             ->setMaxResults(1)
             ->getQuery()->getSingleResult();

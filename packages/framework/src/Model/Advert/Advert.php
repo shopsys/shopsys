@@ -2,6 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Model\Advert;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 
@@ -71,6 +73,13 @@ class Advert
     protected $hidden;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Category\Category>
+     * @ORM\ManyToMany(targetEntity="Shopsys\FrameworkBundle\Model\Category\Category")
+     * @ORM\JoinTable(name="advert_categories")
+     */
+    protected Collection $categories;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advert
      */
     public function __construct(AdvertData $advert)
@@ -99,6 +108,16 @@ class Advert
         $this->positionName = $advert->positionName;
         $this->hidden = $advert->hidden;
         $this->uuid = $advert->uuid ?: Uuid::uuid4()->toString();
+
+        $this->categories = new ArrayCollection();
+
+        if ($this->positionName !== AdvertPositionRegistry::POSITION_PRODUCT_LIST) {
+            return;
+        }
+
+        foreach ($advert->categories as $category) {
+            $this->categories->add($category);
+        }
     }
 
     /**
@@ -171,5 +190,13 @@ class Advert
     public function getPositionName()
     {
         return $this->positionName;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     */
+    public function getCategories(): array
+    {
+        return $this->categories->getValues();
     }
 }

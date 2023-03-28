@@ -15,3 +15,6 @@ AdvertDecorator:
             positionName:
                 type: "String!"
                 description: "Position of advert"
+            categories:
+                type: "[Category!]"
+                description: "Categories of advert for productList position"
