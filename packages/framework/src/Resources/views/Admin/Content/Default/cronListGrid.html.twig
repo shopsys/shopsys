@@ -49,3 +49,32 @@
         ) }}" class="in-icon in-icon--edit svg svg-power" style="color: green;" title="{{ 'Disable'|trans }}"></a>
     {% endif %}
 {% endblock %}
+
+{% block grid_value_cell_id_name %}
+    <a href="{{ url(
+        'admin_default_crondetail', {
+            serviceId: row.id
+        }
+    ) }}">{{ value }}</a>
+{% endblock %}
+
+{% block grid_title_cell_id_minimalDuration %}
+    {{ gridView.renderBlock('grid_title_cell', { column:column }) }}
+    <span title="" class="js-tooltip cursor-help" data-toggle="tooltip" data-placement="top" data-original-title="{{ 'Minimal duration from all runs in last seven days'|trans }}">
+        <i class="svg svg-question"></i>
+    </span>
+{% endblock %}
+
+{% block grid_title_cell_id_maximalDuration %}
+    {{ gridView.renderBlock('grid_title_cell', { column:column }) }}
+    <span title="" class="js-tooltip cursor-help" data-toggle="tooltip" data-placement="top" data-original-title="{{ 'Maximal duration from all runs in last seven days'|trans }}">
+        <i class="svg svg-question"></i>
+    </span>
+{% endblock %}
+
+{% block grid_title_cell_id_averageDuration %}
+    {{ gridView.renderBlock('grid_title_cell', { column:column }) }}
+    <span title="" class="js-tooltip cursor-help" data-toggle="tooltip" data-placement="top" data-original-title="{{ 'Average duration from all runs in last seven days'|trans }}">
+        <i class="svg svg-question"></i>
+    </span>
+{% endblock %}

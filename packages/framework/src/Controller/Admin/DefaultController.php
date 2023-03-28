@@ -11,71 +11,27 @@ use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
+use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Statistics\StatisticsFacade;
 use Shopsys\FrameworkBundle\Model\Statistics\StatisticsProcessingFacade;
+use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AdminBaseController
 {
+    use SetterInjectionTrait;
+
     protected const PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR = 7;
     protected const HOUR_IN_SECONDS = 60 * 60;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Statistics\StatisticsFacade
-     */
-    protected $statisticsFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Statistics\StatisticsProcessingFacade
-     */
-    protected $statisticsProcessingFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade
-     */
-    protected $mailTemplateFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade
-     */
-    protected $unitFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    protected $setting;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade
-     */
-    protected $availabilityFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade
-     */
-    protected $cronModuleFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    protected $gridFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig
-     */
-    protected $cronConfig;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Cron\CronFacade
-     */
-    protected $cronFacade;
+    public const EXPECTED_MAXIMUM_CRON_RUNTIME_IN_SECONDS = 4 * 60;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Statistics\StatisticsFacade $statisticsFacade
@@ -88,29 +44,43 @@ class DefaultController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider|null $breadcrumbOverrider
+     * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension|null $dateTimeFormatterExtension
      */
     public function __construct(
-        StatisticsFacade $statisticsFacade,
-        StatisticsProcessingFacade $statisticsProcessingFacade,
-        MailTemplateFacade $mailTemplateFacade,
-        UnitFacade $unitFacade,
-        Setting $setting,
-        AvailabilityFacade $availabilityFacade,
-        CronModuleFacade $cronModuleFacade,
-        GridFactory $gridFactory,
-        CronConfig $cronConfig,
-        CronFacade $cronFacade
+        protected readonly StatisticsFacade $statisticsFacade,
+        protected readonly StatisticsProcessingFacade $statisticsProcessingFacade,
+        protected readonly MailTemplateFacade $mailTemplateFacade,
+        protected readonly UnitFacade $unitFacade,
+        protected readonly Setting $setting,
+        protected readonly AvailabilityFacade $availabilityFacade,
+        protected readonly CronModuleFacade $cronModuleFacade,
+        protected readonly GridFactory $gridFactory,
+        protected readonly CronConfig $cronConfig,
+        protected readonly CronFacade $cronFacade,
+        protected ?BreadcrumbOverrider $breadcrumbOverrider = null,
+        protected ?DateTimeFormatterExtension $dateTimeFormatterExtension = null,
     ) {
-        $this->statisticsFacade = $statisticsFacade;
-        $this->statisticsProcessingFacade = $statisticsProcessingFacade;
-        $this->mailTemplateFacade = $mailTemplateFacade;
-        $this->unitFacade = $unitFacade;
-        $this->setting = $setting;
-        $this->availabilityFacade = $availabilityFacade;
-        $this->cronModuleFacade = $cronModuleFacade;
-        $this->gridFactory = $gridFactory;
-        $this->cronConfig = $cronConfig;
-        $this->cronFacade = $cronFacade;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setBreadcrumbOverrider(BreadcrumbOverrider $breadcrumbOverrider): void
+    {
+        $this->setDependency($breadcrumbOverrider, 'breadcrumbOverrider');
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setDateTimeFormatterExtension(DateTimeFormatterExtension $dateTimeFormatterExtension): void
+    {
+        $this->setDependency($dateTimeFormatterExtension, 'dateTimeFormatterExtension');
     }
 
     /**
@@ -282,12 +252,16 @@ class DefaultController extends AdminBaseController
 
         $data = [];
 
+        $cronModuleDurationsIndexedByCronModuleId = $this->cronModuleFacade->getCronCalculatedDurationsIndexedByServiceId();
+
         foreach ($cronConfigs as $cronConfig) {
             if (array_key_exists($cronConfig->getServiceId(), $cronModules) === false) {
                 $cronModule = $this->cronModuleFacade->getCronModuleByServiceId($cronConfig->getServiceId());
             } else {
                 $cronModule = $cronModules[$cronConfig->getServiceId()];
             }
+
+            $cronDurations = $cronModuleDurationsIndexedByCronModuleId[$cronConfig->getServiceId()] ?? null;
 
             $data[] = [
                 'id' => $cronModule->getServiceId(),
@@ -300,6 +274,15 @@ class DefaultController extends AdminBaseController
                 'readableFrequency' => $cronConfig->getReadableFrequency(),
                 'scheduled' => $cronModule->isScheduled(),
                 'actions' => null,
+                'minimalDuration' => $this->getFormattedDuration(
+                    $cronDurations === null || $cronDurations['minimalDuration'] === null ? null : (int)$cronDurations['minimalDuration']
+                ),
+                'maximalDuration' => $this->getFormattedDuration(
+                    $cronDurations === null || $cronDurations['maximalDuration'] === null ? null : (int)$cronDurations['maximalDuration']
+                ),
+                'averageDuration' => $this->getFormattedDuration(
+                    $cronDurations === null || $cronDurations['averageDuration'] === null ? null : (int)$cronDurations['averageDuration']
+                ),
             ];
         }
 
@@ -312,9 +295,19 @@ class DefaultController extends AdminBaseController
         $cronListGrid->addColumn('lastStartedAt', 'lastStartedAt', t('Last started at'), false);
         $cronListGrid->addColumn('lastFinishedAt', 'lastFinishedAt', t('Last finished at'), false);
         $cronListGrid->addColumn('lastDuration', 'lastDuration', t('Last duration (mm:ss)'), false)->setClassAttribute(
-            'table-col table-col-10'
+            'table-col'
         );
-        $cronListGrid->addColumn('status', 'status', t('Status'), false)->setClassAttribute('table-col table-col-10');
+        $cronListGrid->addColumn('minimalDuration', 'minimalDuration', t('Min duration (mm:ss)'), false)->setClassAttribute(
+            'table-col'
+        );
+        $cronListGrid->addColumn('averageDuration', 'averageDuration', t('Avg duration (mm:ss)'), false)->setClassAttribute(
+            'table-col'
+        );
+
+        $cronListGrid->addColumn('maximalDuration', 'maximalDuration', t('Max duration (mm:ss)'), false)->setClassAttribute(
+            'table-col'
+        );
+        $cronListGrid->addColumn('status', 'status', t('Status'), false)->setClassAttribute('table-col');
 
         if ($this->isGranted(Roles::ROLE_SUPER_ADMIN)) {
             $cronListGrid->addColumn('actions', 'actions', t('Modifications'))->setClassAttribute(
@@ -392,5 +385,62 @@ class DefaultController extends AdminBaseController
         }
 
         return $formattedHours . date('i:s', $durationInSeconds);
+    }
+
+    /**
+     * @Route("/cron/detail/{serviceId}")
+     * @param string $serviceId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function cronDetailAction(string $serviceId): Response
+    {
+        $cronModule = $this->cronModuleFacade->getCronModuleByServiceId($serviceId);
+        $cronModuleRuns = $this->cronModuleFacade->getAllRunsByCronModule($cronModule);
+        $cronConfig = $this->cronConfig->getCronModuleConfigByServiceId($serviceId);
+
+        $data = [];
+
+        foreach ($cronModuleRuns as $cronModuleRun) {
+            $data[] = [
+                'id' => $cronModuleRun->getId(),
+                'startedAt' => $cronModuleRun->getStartedAt(),
+                'finishedAt' => $cronModuleRun->getFinishedAt(),
+                'duration' => $cronModuleRun->getDuration(),
+                'durationFormatted' => $this->getFormattedDuration($cronModuleRun->getDuration()),
+                'status' => $cronModuleRun->getStatus(),
+                'actions' => null,
+            ];
+        }
+
+        $dataSource = new ArrayDataSource($data);
+
+        $cronRunsListGrid = $this->gridFactory->create('cronRunsList', $dataSource);
+
+        $cronRunsListGrid->addColumn('startedAt', 'startedAt', t('Started at'), false);
+        $cronRunsListGrid->addColumn('finishedAt', 'finishedAt', t('Finished at'), false);
+        $cronRunsListGrid->addColumn('duration', 'durationFormatted', t('Duration (mm:ss)'), false)->setClassAttribute(
+            'table-col table-col-10'
+        );
+        $cronRunsListGrid->addColumn('status', 'status', t('Status'), false)->setClassAttribute('table-col table-col-10');
+        $cronRunsListGrid->setTheme('@ShopsysFramework/Admin/Content/Default/cronModuleRunsListGrid.html.twig');
+
+        $this->breadcrumbOverrider->overrideLastItem(
+            t('Cron detail - %name%', ['%name%' => $cronConfig->getReadableName() ?? $cronModule->getServiceId()])
+        );
+
+        return $this->render(
+            '@ShopsysFramework/Admin/Content/Default/cronDetail.html.twig',
+            [
+                'cronRunsGridView' => $cronRunsListGrid->createView(),
+                'cronGraphValues' => array_column($data, 'duration'),
+                'cronGraphLabels' => array_map(
+                    function ($data) {
+                        return $this->dateTimeFormatterExtension->formatDate($data['startedAt']);
+                    },
+                    $data
+                ),
+                'cronName' => $cronConfig->getReadableName() ?? $cronModule->getServiceId(),
+            ]
+        );
     }
 }
