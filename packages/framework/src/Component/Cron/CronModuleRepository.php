@@ -110,7 +110,7 @@ class CronModuleRepository
         return $this->getCronModuleRunRepository()->createQueryBuilder('cmr')
             ->where('cmr.cronModule = :cronModule')
             ->setParameter('cronModule', $cronModule)
-            ->orderBy('cmr.startedAt', 'DESC')
+            ->orderBy('cmr.startedAt', 'ASC')
             ->getQuery()->getResult();
     }
 
