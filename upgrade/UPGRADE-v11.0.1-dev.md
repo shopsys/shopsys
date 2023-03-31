@@ -126,4 +126,6 @@ There you can find links to upgrade notes for other versions too.
         +       int $timeoutIteratedCronSec = self::TIMEOUT_ITERATED_CRON_SEC_DEFAULT,
             ) {
         ```
+    - constant `Shopsys\FrameworkBundle\Controller\Admin\DefaultController::HOUR_IN_SECONDS` is now deprecated and will be removed in next major
+    - method `Shopsys\FrameworkBundle\Controller\Admin\DefaultController::getFormattedDuration()` is now deprecated and will be removed in next major, use `Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension::formatDurationInSeconds()` instead
     - see #project-base-diff to update your project

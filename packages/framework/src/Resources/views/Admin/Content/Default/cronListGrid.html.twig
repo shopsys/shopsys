@@ -80,52 +80,52 @@
 {% endblock %}
 
 {% block grid_value_cell_id_lastDuration %}
-    {% if row.rawLastDuration > row.cronTimeoutSecs %}
+    {% if value > row.cronTimeoutSecs %}
         <span style="color: red;">
     {% endif %}
 
-    {{ value }}
+    {{ value|formatDurationInSeconds }}
 
-    {% if row.rawLastDuration > row.cronTimeoutSecs %}
+    {% if value > row.cronTimeoutSecs %}
         </span>
     {% endif %}
 
 {% endblock %}
 
 {% block grid_value_cell_id_minimalDuration %}
-    {% if row.rawMinimalDuration > row.cronTimeoutSecs %}
+    {% if value > row.cronTimeoutSecs %}
         <span style="color: red;">
     {% endif %}
 
-    {{ value }}
+    {{ value|formatDurationInSeconds }}
 
-    {% if row.rawMinimalDuration > row.cronTimeoutSecs %}
+    {% if value > row.cronTimeoutSecs %}
         </span>
     {% endif %}
 
 {% endblock %}
 
 {% block grid_value_cell_id_maximalDuration %}
-    {% if row.rawMaximalDuration > row.cronTimeoutSecs %}
+    {% if value > row.cronTimeoutSecs %}
         <span style="color: red;">
     {% endif %}
 
-    {{ value }}
+    {{ value|formatDurationInSeconds }}
 
-    {% if row.rawMaximalDuration > row.cronTimeoutSecs %}
+    {% if value > row.cronTimeoutSecs %}
         </span>
     {% endif %}
 
 {% endblock %}
 
 {% block grid_value_cell_id_averageDuration %}
-    {% if row.rawAverageDuration > row.cronTimeoutSecs %}
+    {% if value > row.cronTimeoutSecs %}
         <span style="color: red;">
     {% endif %}
 
-    {{ value }}
+    {{ value|formatDurationInSeconds }}
 
-    {% if row.rawAverageDuration > row.cronTimeoutSecs %}
+    {% if value > row.cronTimeoutSecs %}
         </span>
     {% endif %}
 

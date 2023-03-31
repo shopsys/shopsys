@@ -34,7 +34,7 @@
         <span style="color: red;">
     {% endif %}
 
-    {{ value }}
+    {{ value|formatDurationInSeconds }}
 
     {% if row.duration > cronTimeoutSecs %}
         </span>

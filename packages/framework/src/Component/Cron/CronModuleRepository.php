@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Component\Cron;
 use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 
 class CronModuleRepository
 {
@@ -111,6 +112,19 @@ class CronModuleRepository
             ->setParameter('cronModule', $cronModule)
             ->orderBy('cmr.startedAt', 'DESC')
             ->getQuery()->getResult();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModule $cronModule
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getRunsByCronModuleQueryBuilder(CronModule $cronModule): QueryBuilder
+    {
+        return $this->getCronModuleRunRepository()->createQueryBuilder('cmr')
+            ->addSelect('cmr.duration, cmr.status')
+            ->where('cmr.cronModule = :cronModule')
+            ->setParameter('cronModule', $cronModule)
+            ->orderBy('cmr.startedAt', 'DESC');
     }
 
     /**
