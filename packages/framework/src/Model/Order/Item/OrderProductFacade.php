@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator;
+use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
@@ -21,6 +22,7 @@ class OrderProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -29,6 +31,7 @@ class OrderProductFacade
         protected readonly ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly ModuleFacade $moduleFacade,
+        protected readonly ProductRepository $productRepository,
     ) {
     }
 
@@ -89,6 +92,7 @@ class OrderProductFacade
         $this->em->flush();
 
         $this->productVisibilityFacade->refreshProductsVisibilityForMarked();
+        $this->productRepository->markProductsForExport($relevantProducts);
     }
 
     /**
