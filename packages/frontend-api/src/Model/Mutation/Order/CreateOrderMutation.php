@@ -60,13 +60,7 @@ class CreateOrderMutation extends AbstractMutation
      */
     protected function sendEmail(Order $order)
     {
-        $mailTemplate = $this->orderMailFacade->getMailTemplateByStatusAndDomainId(
-            $order->getStatus(),
-            $order->getDomainId()
-        );
-        if ($mailTemplate->isSendMail()) {
-            $this->orderMailFacade->sendEmail($order);
-        }
+        $this->orderMailFacade->sendEmail($order);
     }
 
     /**
