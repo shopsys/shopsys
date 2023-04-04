@@ -326,7 +326,7 @@
         </exec>
     </target>
 
-    <target name="demo-data" depends="production-protection,db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,domains-urls-replace,elasticsearch-export" description="Wipes Postgres DB, recreates structure, fills with demo data and then exports data to Elasticsearch"/>
+    <target name="demo-data" depends="production-protection,db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,domains-urls-replace,elasticsearch-index-recreate,elasticsearch-export" description="Wipes Postgres DB, recreates structure, fills with demo data and then exports data to Elasticsearch"/>
 
     <target name="diff-files" description="Finds changed files (against origin/master) and saves them into properties." hidden="true">
         <exec executable="${path.git.executable}" outputProperty="git.status.output" returnProperty="git.status.returnCode">
