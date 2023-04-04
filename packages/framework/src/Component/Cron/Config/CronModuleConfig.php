@@ -9,6 +9,8 @@ use Shopsys\FrameworkBundle\Component\Cron\CronTimeInterface;
 class CronModuleConfig implements CronTimeInterface
 {
     public const DEFAULT_INSTANCE_NAME = 'default';
+    public const RUN_EVERY_MIN_DEFAULT = 5;
+    public const TIMEOUT_ITERATED_CRON_SEC_DEFAULT = 240;
 
     /**
      * @var \Shopsys\Plugin\Cron\SimpleCronModuleInterface
@@ -41,19 +43,40 @@ class CronModuleConfig implements CronTimeInterface
     protected $readableName;
 
     /**
+     * @var int
+     */
+    protected int $runEveryMin;
+
+    /**
+     * @var int
+     */
+    protected int $timeoutIteratedCronSec;
+
+    /**
      * @param \Shopsys\Plugin\Cron\SimpleCronModuleInterface|\Shopsys\Plugin\Cron\IteratedCronModuleInterface $service
      * @param string $serviceId
      * @param string $timeHours
      * @param string $timeMinutes
      * @param string|null $readableName
+     * @param int $runEveryMin
+     * @param int $timeoutIteratedCronSec
      */
-    public function __construct(object $service, string $serviceId, string $timeHours, string $timeMinutes, ?string $readableName = null)
-    {
+    public function __construct(
+        object $service,
+        string $serviceId,
+        string $timeHours,
+        string $timeMinutes,
+        ?string $readableName = null,
+        int $runEveryMin = self::RUN_EVERY_MIN_DEFAULT,
+        int $timeoutIteratedCronSec = self::TIMEOUT_ITERATED_CRON_SEC_DEFAULT,
+    ) {
         $this->service = $service;
         $this->serviceId = $serviceId;
         $this->timeHours = $timeHours;
         $this->timeMinutes = $timeMinutes;
         $this->readableName = $readableName;
+        $this->runEveryMin = $runEveryMin;
+        $this->timeoutIteratedCronSec = $timeoutIteratedCronSec;
         $this->assignToInstance(self::DEFAULT_INSTANCE_NAME);
     }
 
@@ -144,5 +167,21 @@ class CronModuleConfig implements CronTimeInterface
             '%hours%' => $this->timeHours,
             '%minutes%' => $this->timeMinutes,
         ]);
+    }
+
+    /**
+     * @return int
+     */
+    public function getRunEveryMin(): int
+    {
+        return $this->runEveryMin;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTimeoutIteratedCronSec(): int
+    {
+        return $this->timeoutIteratedCronSec;
     }
 }

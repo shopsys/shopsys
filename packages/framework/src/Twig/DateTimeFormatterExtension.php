@@ -13,6 +13,8 @@ use Twig\TwigFunction;
 
 class DateTimeFormatterExtension extends AbstractExtension
 {
+    protected const HOUR_IN_SECONDS = 60 * 60;
+
     /**
      * @var \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface
      */
@@ -52,6 +54,10 @@ class DateTimeFormatterExtension extends AbstractExtension
             new TwigFilter(
                 'formatDateTime',
                 [$this, 'formatDateTime']
+            ),
+            new TwigFilter(
+                'formatDurationInSeconds',
+                [$this, 'formatDurationInSeconds']
             ),
         ];
     }
@@ -178,6 +184,28 @@ class DateTimeFormatterExtension extends AbstractExtension
         }
 
         return $startDate . ' - ' . $endDate;
+    }
+
+    /**
+     * @param int|null $durationInSeconds
+     * @return string
+     */
+    public function formatDurationInSeconds(?int $durationInSeconds): string
+    {
+        if ($durationInSeconds === null) {
+            return '';
+        }
+
+        $formattedHours = '';
+
+        if ($durationInSeconds >= static::HOUR_IN_SECONDS) {
+            $hours = (int)floor($durationInSeconds / static::HOUR_IN_SECONDS);
+            $formattedHours .= $hours . ':';
+
+            $durationInSeconds -= $hours * static::HOUR_IN_SECONDS;
+        }
+
+        return $formattedHours . date('i:s', $durationInSeconds);
     }
 
     /**

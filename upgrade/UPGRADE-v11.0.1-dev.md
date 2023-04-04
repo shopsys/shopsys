@@ -77,3 +77,55 @@ There you can find links to upgrade notes for other versions too.
         + function getVisibleAdvertsByPositionNameQueryBuilder(int $domainId, string $positionName, ?Category $category = null)
         ```
     - see #project-base-diff to update your project
+- enable custom period for running crons ([#2581](https://github.com/shopsys/shopsys/pull/2581))
+    - `Shopsys\FrameworkBundle\Command\CronCommand` class:
+        - method `getCurrentRoundedTime` changed its interface:
+        ```diff
+            function getCurrentRoundedTime(
+        +       int $runEveryMin = CronModuleConfig::RUN_EVERY_MIN_DEFAULT
+            )
+        ```
+    - `Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor` class:
+        - method `__construct` changed its interface:
+        ```diff
+            function __construct(
+                int $secondsTimeout,
+        +       protected ?CronConfig $cronConfig = null,
+            )
+        ```
+        - method `canRun` changed its interface:
+        ```diff
+            function canRun(
+        +       CronModuleConfig|null $cronConfig = null
+            ): bool
+        ```
+    - `Shopsys\FrameworkBundle\Command\CronCommand` class:
+        - method `registerCronModuleInstance` changed its interface:
+        ```diff
+            public function registerCronModuleInstance(
+                $service,
+                string $serviceId,
+                string $timeHours,
+                string $timeMinutes,
+                string $instanceName,
+                ?string $readableName = null,
+        +       int $runEveryMin = CronModuleConfig::RUN_EVERY_MIN_DEFAULT,
+        +       int $timeoutIteratedCronSec = CronModuleConfig::TIMEOUT_ITERATED_CRON_SEC_DEFAULT
+            ): void {
+        ```
+    - `Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig` class:
+        - method `__construct` changed its interface:
+        ```diff
+            public function __construct(
+                object $service,
+                string $serviceId,
+                string $timeHours,
+                string $timeMinutes,
+                ?string $readableName = null,
+        +       int $runEveryMin = self::RUN_EVERY_MIN_DEFAULT,
+        +       int $timeoutIteratedCronSec = self::TIMEOUT_ITERATED_CRON_SEC_DEFAULT,
+            ) {
+        ```
+    - constant `Shopsys\FrameworkBundle\Controller\Admin\DefaultController::HOUR_IN_SECONDS` is now deprecated and will be removed in next major
+    - method `Shopsys\FrameworkBundle\Controller\Admin\DefaultController::getFormattedDuration()` is now deprecated and will be removed in next major, use `Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension::formatDurationInSeconds()` instead
+    - see #project-base-diff to update your project

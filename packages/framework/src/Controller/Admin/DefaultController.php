@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade;
 use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
+use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
@@ -30,8 +31,10 @@ class DefaultController extends AdminBaseController
     use SetterInjectionTrait;
 
     protected const PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR = 7;
+    /**
+     * @deprecated This will be removed in next major
+     */
     protected const HOUR_IN_SECONDS = 60 * 60;
-    public const EXPECTED_MAXIMUM_CRON_RUNTIME_IN_SECONDS = 4 * 60;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Statistics\StatisticsFacade $statisticsFacade
@@ -263,26 +266,25 @@ class DefaultController extends AdminBaseController
 
             $cronDurations = $cronModuleDurationsIndexedByCronModuleId[$cronConfig->getServiceId()] ?? null;
 
+            $minimalDuration = $cronDurations === null || $cronDurations['minimalDuration'] === null ? null : (int)$cronDurations['minimalDuration'];
+            $maximalDuration = $cronDurations === null || $cronDurations['maximalDuration'] === null ? null : (int)$cronDurations['maximalDuration'];
+            $averageDuration = $cronDurations === null || $cronDurations['averageDuration'] === null ? null : (int)$cronDurations['averageDuration'];
+
             $data[] = [
                 'id' => $cronModule->getServiceId(),
                 'name' => $cronConfig->getReadableName() ?? $cronModule->getServiceId(),
                 'lastStartedAt' => $cronModule->getLastStartedAt(),
                 'lastFinishedAt' => $cronModule->getLastFinishedAt(),
-                'lastDuration' => $this->getFormattedDuration($cronModule->getLastDuration()),
+                'lastDuration' => $cronModule->getLastDuration(),
                 'status' => $cronModule->getStatus(),
                 'enabled' => $cronModule->isEnabled(),
                 'readableFrequency' => $cronConfig->getReadableFrequency(),
                 'scheduled' => $cronModule->isScheduled(),
                 'actions' => null,
-                'minimalDuration' => $this->getFormattedDuration(
-                    $cronDurations === null || $cronDurations['minimalDuration'] === null ? null : (int)$cronDurations['minimalDuration']
-                ),
-                'maximalDuration' => $this->getFormattedDuration(
-                    $cronDurations === null || $cronDurations['maximalDuration'] === null ? null : (int)$cronDurations['maximalDuration']
-                ),
-                'averageDuration' => $this->getFormattedDuration(
-                    $cronDurations === null || $cronDurations['averageDuration'] === null ? null : (int)$cronDurations['averageDuration']
-                ),
+                'minimalDuration' => $minimalDuration,
+                'maximalDuration' => $maximalDuration,
+                'averageDuration' => $averageDuration,
+                'cronTimeoutSecs' => $cronConfig->getTimeoutIteratedCronSec(),
             ];
         }
 
@@ -366,25 +368,13 @@ class DefaultController extends AdminBaseController
     }
 
     /**
+     * @deprecated This method will be removed in the next major release. Use DateTimeFormatterExtension::formatDurationInSeconds() instead.
      * @param int|null $durationInSeconds
      * @return string
      */
     protected function getFormattedDuration(?int $durationInSeconds): string
     {
-        if ($durationInSeconds === null) {
-            return '';
-        }
-
-        $formattedHours = '';
-
-        if ($durationInSeconds >= static::HOUR_IN_SECONDS) {
-            $hours = (int)floor($durationInSeconds / static::HOUR_IN_SECONDS);
-            $formattedHours .= $hours . ':';
-
-            $durationInSeconds -= $hours * static::HOUR_IN_SECONDS;
-        }
-
-        return $formattedHours . date('i:s', $durationInSeconds);
+        return $this->dateTimeFormatterExtension->formatDurationInSeconds($durationInSeconds);
     }
 
     /**
@@ -406,23 +396,30 @@ class DefaultController extends AdminBaseController
                 'startedAt' => $cronModuleRun->getStartedAt(),
                 'finishedAt' => $cronModuleRun->getFinishedAt(),
                 'duration' => $cronModuleRun->getDuration(),
-                'durationFormatted' => $this->getFormattedDuration($cronModuleRun->getDuration()),
                 'status' => $cronModuleRun->getStatus(),
                 'actions' => null,
             ];
         }
 
-        $dataSource = new ArrayDataSource($data);
+        $queryBuilder = $this->cronModuleFacade->getRunsByCronModuleQueryBuilder($cronModule);
+        $dataSource = new QueryBuilderDataSource($queryBuilder, 'cmr.id');
 
         $cronRunsListGrid = $this->gridFactory->create('cronRunsList', $dataSource);
 
-        $cronRunsListGrid->addColumn('startedAt', 'startedAt', t('Started at'), false);
-        $cronRunsListGrid->addColumn('finishedAt', 'finishedAt', t('Finished at'), false);
-        $cronRunsListGrid->addColumn('duration', 'durationFormatted', t('Duration (mm:ss)'), false)->setClassAttribute(
+        $cronRunsListGrid->addColumn('startedAt', 'cmr.startedAt', t('Started at'), false);
+        $cronRunsListGrid->addColumn('finishedAt', 'cmr.finishedAt', t('Finished at'), false);
+        $cronRunsListGrid->addColumn('duration', 'cmr.duration', t('Duration (mm:ss)'), false)->setClassAttribute(
             'table-col table-col-10'
         );
-        $cronRunsListGrid->addColumn('status', 'status', t('Status'), false)->setClassAttribute('table-col table-col-10');
-        $cronRunsListGrid->setTheme('@ShopsysFramework/Admin/Content/Default/cronModuleRunsListGrid.html.twig');
+        $cronRunsListGrid->addColumn('status', 'cmr.status', t('Status'), false)->setClassAttribute('table-col table-col-10');
+        $cronRunsListGrid->setTheme(
+            '@ShopsysFramework/Admin/Content/Default/cronModuleRunsListGrid.html.twig',
+            [
+                'cronTimeoutSecs' => $cronConfig->getTimeoutIteratedCronSec(),
+            ],
+        );
+        $cronRunsListGrid->enablePaging();
+        $cronRunsListGrid->setDefaultLimit(100);
 
         $this->breadcrumbOverrider->overrideLastItem(
             t('Cron detail - %name%', ['%name%' => $cronConfig->getReadableName() ?? $cronModule->getServiceId()])
@@ -440,6 +437,7 @@ class DefaultController extends AdminBaseController
                     $data
                 ),
                 'cronName' => $cronConfig->getReadableName() ?? $cronModule->getServiceId(),
+                'cronTimeoutSecs' => $cronConfig->getTimeoutIteratedCronSec(),
             ]
         );
     }

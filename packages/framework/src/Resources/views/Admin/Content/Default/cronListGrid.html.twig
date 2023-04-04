@@ -78,3 +78,55 @@
         <i class="svg svg-question"></i>
     </span>
 {% endblock %}
+
+{% block grid_value_cell_id_lastDuration %}
+    {% if value > row.cronTimeoutSecs %}
+        <span style="color: red;">
+    {% endif %}
+
+    {{ value|formatDurationInSeconds }}
+
+    {% if value > row.cronTimeoutSecs %}
+        </span>
+    {% endif %}
+
+{% endblock %}
+
+{% block grid_value_cell_id_minimalDuration %}
+    {% if value > row.cronTimeoutSecs %}
+        <span style="color: red;">
+    {% endif %}
+
+    {{ value|formatDurationInSeconds }}
+
+    {% if value > row.cronTimeoutSecs %}
+        </span>
+    {% endif %}
+
+{% endblock %}
+
+{% block grid_value_cell_id_maximalDuration %}
+    {% if value > row.cronTimeoutSecs %}
+        <span style="color: red;">
+    {% endif %}
+
+    {{ value|formatDurationInSeconds }}
+
+    {% if value > row.cronTimeoutSecs %}
+        </span>
+    {% endif %}
+
+{% endblock %}
+
+{% block grid_value_cell_id_averageDuration %}
+    {% if value > row.cronTimeoutSecs %}
+        <span style="color: red;">
+    {% endif %}
+
+    {{ value|formatDurationInSeconds }}
+
+    {% if value > row.cronTimeoutSecs %}
+        </span>
+    {% endif %}
+
+{% endblock %}

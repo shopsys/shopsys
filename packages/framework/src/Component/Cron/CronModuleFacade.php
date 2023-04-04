@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Cron;
 
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 
@@ -254,5 +255,14 @@ class CronModuleFacade
     public function deleteOldCronModuleRuns(int $numberOfDays): void
     {
         $this->cronModuleRepository->deleteOldCronModuleRuns($numberOfDays);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Cron\CronModule $cronModule
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getRunsByCronModuleQueryBuilder(CronModule $cronModule): QueryBuilder
+    {
+        return $this->cronModuleRepository->getRunsByCronModuleQueryBuilder($cronModule);
     }
 }

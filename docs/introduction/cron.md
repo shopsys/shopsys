@@ -30,17 +30,19 @@ You can learn how to set up multiple cron instances in [Working with Multiple Cr
 
 ## Cron Limitations
 One cron run can only be run for a limited time by default to prevent high memory usage of long-running jobs in PHP.
-In `shopsys/framework/src/Resources/config/services.yaml` is set the default timeout to 240 seconds:
+In `shopsys/framework/src/Resources/config/cron.yaml` is set the default timeout to `240 seconds`:
 
 ```yaml
-Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor:
-    arguments:
-        $secondsTimeout: 240
+parameters:
+    cron_instances:
+        default:
+            run_every_min: 5
+            timeout_iterated_cron_sec: 240
 ```
 
-That means, if the time needed to run all planned cron modules is higher than 240s, not all cron modules will be run in a current iteration.
-That's usually not a problem as long-running cron modules are not executed every iteration (eg. every 5 minutes),
+That means, if the time needed to run all planned cron modules is higher than `240 seconds`, not all cron modules will be run in a current iteration.
+That's usually not a problem as long-running cron modules are not executed every iteration set in `run_every_min` with default to `5 minutes`,
 but in some cases, the overall time of the "every 5 minutes" cron modules can be higher (for example considerable amount of products to export to Elasticsearch).
 Then it's possible, some cron modules will never be run.
 
-It's crucial to monitor your crons and, if necessary, split them into [multiple Cron Instances](#multiple-cron-instances).
+It's crucial to monitor your crons and, if necessary update their periodicity and timeout or split them into [multiple Cron Instances](#multiple-cron-instances).
