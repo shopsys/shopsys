@@ -9,23 +9,18 @@ class SeoSettingFacade
     public const SEO_TITLE_MAIN_PAGE = 'seoTitleMainPage';
     public const SEO_TITLE_ADD_ON = 'seoTitleAddOn';
     public const SEO_META_DESCRIPTION_MAIN_PAGE = 'seoMetaDescriptionMainPage';
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    protected $setting;
+    public const SEO_ROBOTS_TXT_CONTENT = 'seoRobotsTxtContent';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
-    public function __construct(Setting $setting)
+    public function __construct(protected readonly Setting $setting)
     {
-        $this->setting = $setting;
     }
 
     /**
      * @param int $domainId
-     * @return string
+     * @return string|null
      */
     public function getTitleMainPage($domainId)
     {
@@ -34,7 +29,7 @@ class SeoSettingFacade
 
     /**
      * @param int $domainId
-     * @return string
+     * @return string|null
      */
     public function getDescriptionMainPage($domainId)
     {
@@ -59,7 +54,7 @@ class SeoSettingFacade
 
     /**
      * @param int $domainId
-     * @return string
+     * @return string|null
      */
     public function getTitleAddOn($domainId)
     {
@@ -67,7 +62,16 @@ class SeoSettingFacade
     }
 
     /**
-     * @param string $value
+     * @param int $domainId
+     * @return string|null
+     */
+    public function getRobotsTxtContent(int $domainId): ?string
+    {
+        return $this->setting->getForDomain(self::SEO_ROBOTS_TXT_CONTENT, $domainId);
+    }
+
+    /**
+     * @param string|null $value
      * @param int $domainId
      */
     public function setTitleMainPage($value, $domainId)
@@ -76,7 +80,7 @@ class SeoSettingFacade
     }
 
     /**
-     * @param string $value
+     * @param string|null $value
      * @param int $domainId
      */
     public function setDescriptionMainPage($value, $domainId)
@@ -85,11 +89,20 @@ class SeoSettingFacade
     }
 
     /**
-     * @param string $value
+     * @param string|null $value
      * @param int $domainId
      */
     public function setTitleAddOn($value, $domainId)
     {
         $this->setting->setForDomain(self::SEO_TITLE_ADD_ON, $value, $domainId);
+    }
+
+    /**
+     * @param string|null $value
+     * @param int $domainId
+     */
+    public function setRobotsTxtContent(?string $value, int $domainId): void
+    {
+        $this->setting->setForDomain(self::SEO_ROBOTS_TXT_CONTENT, $value, $domainId);
     }
 }

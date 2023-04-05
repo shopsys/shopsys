@@ -1,0 +1,20 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Robots.txt settings'|trans }}{% endblock %}
+{% block h1 %}{{ 'Robots.txt settings'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    <div class="in-message in-message--danger margin-bottom-30">
+        {{ 'Incorrect settings may have a negative impact on the correct functionality of the e-shop.'|trans }}
+    </div>
+
+    {{ form_start(form) }}
+        {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+            {% block fixed_bar_content %}
+                {{ form_widget(form.save, { label: 'Save changes'|trans}) }}
+            {% endblock %}
+        {% endembed %}
+    {{ form_end(form) }}
+{% endblock %}

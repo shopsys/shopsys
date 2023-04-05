@@ -1054,6 +1054,9 @@ msgstr ""
 msgid "Feed \"{{ feedName }}\" successfully generated."
 msgstr ""
 
+msgid "File content"
+msgstr ""
+
 msgid "File is in unsupported format"
 msgstr ""
 
@@ -1238,6 +1241,9 @@ msgid "Incl. VAT"
 msgstr ""
 
 msgid "Including VAT"
+msgstr ""
+
+msgid "Incorrect settings may have a negative impact on the correct functionality of the e-shop."
 msgstr ""
 
 msgid "Input price with VAT"
@@ -1910,6 +1916,15 @@ msgid "Reset filter"
 msgstr ""
 
 msgid "Return back"
+msgstr ""
+
+msgid "Robots.txt"
+msgstr ""
+
+msgid "Robots.txt settings"
+msgstr ""
+
+msgid "Robots.txt settings modified"
 msgstr ""
 
 msgid "Rounding"
