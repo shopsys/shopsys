@@ -60,13 +60,13 @@
 {% block panel %}
     <style type="text/css">
         .status--ok {
-            background-color: #DDFFDD;
+            background-color: var(--color-success);
         }
         .status--404 {
-            background-color: #FFFFDD;
+            background-color: var(--color-warning);
         }
         .status--error {
-            background-color: #FFDDDD;
+            background-color: var(--background-error);
         }
     </style>
 
@@ -85,19 +85,19 @@
                 <th class="{{ statusClass }}" style="width: 28px;">{{ request.statusCode }}</th>
                 <th class="{{ statusClass }}" style="width: 70px;">{{ request.method }}</th>
                 <th class="{{ statusClass }}">{{ request.uri }}</th>
-                <td class="{{ statusClass }}" style="width: 200px;">
+                <td class="{{ statusClass }}" style="width: 250px">
                     {% if request.requestJson is not null %}
-                        <button type="button" style="float: right;" onclick="document.getElementById('js-elasticsearch-response-data-{{ index }}').classList.toggle('hidden'); return false;">
+                        <button type="button" class="btn" onclick="document.getElementById('js-elasticsearch-response-data-{{ index }}').classList.toggle('hidden'); return false;">
                             Response
                         </button>
                     {% endif %}
                     {% if request.requestData is not null %}
-                    <button type="button" style="float: right;" onclick="document.getElementById('js-elasticsearch-request-data-{{ index }}').classList.toggle('hidden'); return false;">
+                    <button type="button" class="btn" onclick="document.getElementById('js-elasticsearch-request-data-{{ index }}').classList.toggle('hidden'); return false;">
                         Request
                     </button>
                     {% endif %}
                     {% if request.response is not null %}
-                        <button type="button" style="float: right;" onclick="document.getElementById('js-elasticsearch-request-json-{{ index }}').classList.toggle('hidden'); return false;">
+                        <button type="button" class="btn" onclick="document.getElementById('js-elasticsearch-request-json-{{ index }}').classList.toggle('hidden'); return false;">
                             Json
                         </button>
                     {% endif %}
