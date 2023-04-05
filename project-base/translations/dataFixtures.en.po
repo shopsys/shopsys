@@ -649,6 +649,9 @@ msgstr ""
 msgid "Demo advert"
 msgstr ""
 
+msgid "Demo category advert"
+msgstr ""
+
 msgid "Determination"
 msgstr ""
 

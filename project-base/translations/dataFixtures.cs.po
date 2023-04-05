@@ -649,6 +649,9 @@ msgstr "reproduktory 2.0, jednopásmové, výkon 2x2W RMS, 90Hz až 20kHz, USB n
 msgid "Demo advert"
 msgstr "Demo reklama"
 
+msgid "Demo category advert"
+msgstr "Demo reklama v kategorii"
+
 msgid "Determination"
 msgstr "Určení"
 

@@ -129,3 +129,15 @@ There you can find links to upgrade notes for other versions too.
     - constant `Shopsys\FrameworkBundle\Controller\Admin\DefaultController::HOUR_IN_SECONDS` is now deprecated and will be removed in next major
     - method `Shopsys\FrameworkBundle\Controller\Admin\DefaultController::getFormattedDuration()` is now deprecated and will be removed in next major, use `Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension::formatDurationInSeconds()` instead
     - see #project-base-diff to update your project
+- update your extended phing targets in `build.xml` to have their outputs more verbose when an error occurs ([#2581](https://github.com/shopsys/shopsys/pull/2581))
+    - add `<arg value="--verbose"/>` to your extended phing targets in build.xml that are based on `bin/console` commands
+    - example on `bin/console` based command update:
+    ```diff
+        <target name="error-pages-generate" depends="prod-warmup,redis-check" description="Generates error pages displayed in production environment.">
+            <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+                <arg value="${path.bin-console}"/>
+                <arg value="shopsys:error-page:generate-all"/>
+    +           <arg value="--verbose"/>
+            </exec>
+        </target>
+    ```
