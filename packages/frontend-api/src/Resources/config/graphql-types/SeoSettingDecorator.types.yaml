@@ -1,0 +1,9 @@
+SeoSettingDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represents settings of SEO"
+        fields:
+            robots:
+                type: "[String!]!"
+                description: "Robots.txt's file content"

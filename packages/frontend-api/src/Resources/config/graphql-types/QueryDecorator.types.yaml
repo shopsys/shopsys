@@ -150,3 +150,7 @@ QueryDecorator:
                 type: '[AdvertPosition!]!'
                 resolve: "@=query('advertPositionsQuery')"
                 description: "Returns list of advert positions."
+            settings:
+                type: 'Settings'
+                resolve: "@=query('settingsQuery')"
+                description: "Returns current settings"

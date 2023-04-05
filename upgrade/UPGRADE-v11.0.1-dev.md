@@ -143,3 +143,16 @@ There you can find links to upgrade notes for other versions too.
     ```
 - remove no longer necessary encapsulation of sending OrderMail by checking if it is enabled as it is now done directly in OrderMailFacade ([#2588](https://github.com/shopsys/shopsys/pull/2588))
     - see #project-base-diff to update your project
+- added ability to change content of robots.txt file through administration ([#2591](https://github.com/shopsys/shopsys/pull/2591))
+  - `App\Controller\Front\RobotsController` class:
+    - method `__construct` changed its interface:
+    ```diff
+        public function __construct(
+            string $sitemapsUrlPrefix,
+            Domain $domain,
+            SitemapFilePrefixer $sitemapFilePrefixer,
+    +       SeoSettingFacade $seoSettingFacade,
+        ) {
+    ```
+  - if custom storefront is used through FE API then change must be implemented by your own
+  - see #project-base-diff to update your project
