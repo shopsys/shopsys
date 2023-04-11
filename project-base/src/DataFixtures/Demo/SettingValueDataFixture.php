@@ -123,7 +123,7 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
                 $domainId
             );
             $this->setting->setForDomain(
-                SeoSettingFacade::SEO_ROBOTS_CONTENT,
+                SeoSettingFacade::SEO_ROBOTS_TXT_CONTENT,
                 'Disallow: /admin',
                 $domainId
             );

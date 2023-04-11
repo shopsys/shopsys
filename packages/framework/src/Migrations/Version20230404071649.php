@@ -9,19 +9,25 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20230404071649 extends AbstractMigration
 {
+    use MultidomainMigrationTrait;
+
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
     public function up(Schema $schema): void
     {
-        $seoRobotsContentSettingCount = $this->sql(
-            'SELECT COUNT(*) FROM setting_values WHERE name = \'seoRobotsContent\' AND domain_id = 1;'
-        )->fetchOne();
+        foreach ($this->getAllDomainIds() as $domainId) {
+            $seoRobotsTxtContentSettingCount = $this->sql(
+                'SELECT COUNT(*) FROM setting_values WHERE name = \'seoRobotsTxtContent\' AND domain_id = :domainId;',
+                ['domainId' => $domainId],
+            )->fetchOne();
 
-        if ($seoRobotsContentSettingCount <= 0) {
-            $this->sql(
-                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'seoRobotsContent\', 1, NULL, \'string\')',
-            );
+            if ($seoRobotsTxtContentSettingCount <= 0) {
+                $this->sql(
+                    'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'seoRobotsTxtContent\', :domainId, NULL, \'string\')',
+                    ['domainId' => $domainId],
+                );
+            }
         }
     }
 

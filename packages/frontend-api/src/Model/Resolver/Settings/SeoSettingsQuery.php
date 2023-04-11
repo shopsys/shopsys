@@ -21,14 +21,12 @@ class SeoSettingsQuery extends AbstractQuery
     }
 
     /**
-     * @return array{robots: string[]}
+     * @return array{robotsTxtContent: string}
      */
     public function seoSettingsQuery(): array
     {
-        $robotsContent = $this->seoSettingFacade->getRobotsContent($this->domain->getId());
-
         return [
-            'robots' => $robotsContent !== null ? preg_split('/\r\n|[\r\n]/', $robotsContent) : [],
+            'robotsTxtContent' => $this->seoSettingFacade->getRobotsTxtContent($this->domain->getId()),
         ];
     }
 }

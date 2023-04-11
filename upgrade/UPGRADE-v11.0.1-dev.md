@@ -151,8 +151,8 @@ There you can find links to upgrade notes for other versions too.
             string $sitemapsUrlPrefix,
             Domain $domain,
             SitemapFilePrefixer $sitemapFilePrefixer,
-    +       SeoSettingFacade $seoSettingFacade,
+    +       ?SeoSettingFacade $seoSettingFacade = null,
         ) {
     ```
-  - if custom storefront is used through FE API then change must be implemented by your own
+  - if you have implemented a custom storefront using frontend API then you should consider implementing this functionality into your storefront
   - see #project-base-diff to update your project

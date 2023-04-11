@@ -68,13 +68,13 @@ class SeoController extends AdminBaseController
     public function robotsAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
-        $seoRobotsSettingData = ['content' => $this->seoSettingFacade->getRobotsContent($domainId)];
+        $seoRobotsSettingData = ['content' => $this->seoSettingFacade->getRobotsTxtContent($domainId)];
         $form = $this->createForm(SeoRobotsSettingFormType::class, $seoRobotsSettingData)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $seoRobotsSettingData = $form->getData();
 
-            $this->seoSettingFacade->setRobotsContent($seoRobotsSettingData['content'], $domainId);
+            $this->seoSettingFacade->setRobotsTxtContent($seoRobotsSettingData['content'], $domainId);
 
             $this->addSuccessFlash(t('Robots.txt settings modified'));
 

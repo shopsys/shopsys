@@ -17,13 +17,13 @@ final class GetSettingsTest extends GraphQlTestCase
 
     /**
      * @dataProvider dataProvider
-     * @param string|null $robotsContent
-     * @param array $robotsData
+     * @param string|null $robotsTxtContent
+     * @param string|null $robotsTxtData
      */
-    public function testGetSettings(?string $robotsContent, array $robotsData): void
+    public function testGetSettings(?string $robotsTxtContent, ?string $robotsTxtData): void
     {
-        $this->seoSettingFacade->setRobotsContent($robotsContent, $this->domain->getId());
-        $expectedSettingsData = $this->getExpectedSettings($robotsData);
+        $this->seoSettingFacade->setRobotsTxtContent($robotsTxtContent, $this->domain->getId());
+        $expectedSettingsData = $this->getExpectedSettings($robotsTxtData);
 
         $graphQlType = 'settings';
         $response = $this->getResponseContentForQuery($this->getSettingsQuery());
@@ -41,15 +41,18 @@ final class GetSettingsTest extends GraphQlTestCase
         return [
             [
                 null,
-                [],
+                null,
             ],
             [
                 'Disallow: /private',
-                ['Disallow: /private'],
+                'Disallow: /private',
             ],
             [
                 sprintf('Disallow: /private-one%sDisallow: /private-two', PHP_EOL),
-                ['Disallow: /private-one', 'Disallow: /private-two'],
+                <<<CONTENT
+Disallow: /private-one
+Disallow: /private-two
+CONTENT,
             ],
         ];
     }
@@ -63,7 +66,7 @@ final class GetSettingsTest extends GraphQlTestCase
             {
                 settings {
                     seo {
-                        robots
+                        robotsTxtContent
                     }
                 }
             }
@@ -71,14 +74,14 @@ final class GetSettingsTest extends GraphQlTestCase
     }
 
     /**
-     * @param array $data
+     * @param string|null $data
      * @return array
      */
-    private function getExpectedSettings(array $data): array
+    private function getExpectedSettings(?string $data): array
     {
         return [
             'seo' => [
-                'robots' => $data,
+                'robotsTxtContent' => $data,
             ],
         ];
     }

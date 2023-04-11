@@ -9,7 +9,7 @@ class SeoSettingFacade
     public const SEO_TITLE_MAIN_PAGE = 'seoTitleMainPage';
     public const SEO_TITLE_ADD_ON = 'seoTitleAddOn';
     public const SEO_META_DESCRIPTION_MAIN_PAGE = 'seoMetaDescriptionMainPage';
-    public const SEO_ROBOTS_CONTENT = 'seoRobotsContent';
+    public const SEO_ROBOTS_TXT_CONTENT = 'seoRobotsTxtContent';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
@@ -65,9 +65,9 @@ class SeoSettingFacade
      * @param int $domainId
      * @return string|null
      */
-    public function getRobotsContent(int $domainId): ?string
+    public function getRobotsTxtContent(int $domainId): ?string
     {
-        return $this->setting->getForDomain(self::SEO_ROBOTS_CONTENT, $domainId);
+        return $this->setting->getForDomain(self::SEO_ROBOTS_TXT_CONTENT, $domainId);
     }
 
     /**
@@ -101,8 +101,8 @@ class SeoSettingFacade
      * @param string|null $value
      * @param int $domainId
      */
-    public function setRobotsContent(?string $value, int $domainId): void
+    public function setRobotsTxtContent(?string $value, int $domainId): void
     {
-        $this->setting->setForDomain(self::SEO_ROBOTS_CONTENT, $value, $domainId);
+        $this->setting->setForDomain(self::SEO_ROBOTS_TXT_CONTENT, $value, $domainId);
     }
 }
