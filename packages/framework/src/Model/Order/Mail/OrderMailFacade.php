@@ -54,6 +54,11 @@ class OrderMailFacade
     public function sendEmail(Order $order)
     {
         $mailTemplate = $this->getMailTemplateByStatusAndDomainId($order->getStatus(), $order->getDomainId());
+
+        if (!$mailTemplate->isSendMail()) {
+            return;
+        }
+
         $messageData = $this->orderMail->createMessage($mailTemplate, $order);
         $messageData->attachments = $this->uploadedFileFacade->getUploadedFilesByEntity($mailTemplate);
         $this->mailer->send($messageData);

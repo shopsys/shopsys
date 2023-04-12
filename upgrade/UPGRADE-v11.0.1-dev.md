@@ -141,3 +141,5 @@ There you can find links to upgrade notes for other versions too.
             </exec>
         </target>
     ```
+- remove no longer necessary encapsulation of sending OrderMail by checking if it is enabled as it is now done directly in OrderMailFacade ([#2588](https://github.com/shopsys/shopsys/pull/2588))
+    - see #project-base-diff to update your project

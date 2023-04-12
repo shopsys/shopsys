@@ -356,11 +356,8 @@ class OrderFacade
 
         $this->em->flush();
         if ($orderEditResult->isStatusChanged()) {
-            $mailTemplate = $this->orderMailFacade
-                ->getMailTemplateByStatusAndDomainId($order->getStatus(), $order->getDomainId());
-            if ($mailTemplate->isSendMail()) {
-                $this->orderMailFacade->sendEmail($order);
-            }
+            $this->orderMailFacade->sendEmail($order);
+
             if ($originalOrderStatus->getType() === OrderStatus::TYPE_CANCELED) {
                 $this->orderProductFacade->subtractOrderProductsFromStock($order->getProductItems());
             }

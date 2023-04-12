@@ -6,7 +6,6 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Order\DomainAwareOrderFlowFactory;
 use App\Model\Order\FrontOrderData;
-use App\Model\Order\Order;
 use App\Model\Order\OrderData;
 use App\Model\Order\OrderDataMapper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -227,7 +226,7 @@ class OrderController extends FrontBaseController
 
                 $orderFlow->reset();
 
-                $this->sendMail($order);
+                $this->orderMailFacade->sendEmail($order);
 
                 $requestStack->getSession()->set(self::SESSION_CREATED_ORDER, $order->getId());
 
@@ -414,19 +413,5 @@ class OrderController extends FrontBaseController
                 $this->domain->getId()
             ),
         ]);
-    }
-
-    /**
-     * @param \App\Model\Order\Order $order
-     */
-    private function sendMail(Order $order): void
-    {
-        $mailTemplate = $this->orderMailFacade->getMailTemplateByStatusAndDomainId(
-            $order->getStatus(),
-            $order->getDomainId()
-        );
-        if ($mailTemplate->isSendMail()) {
-            $this->orderMailFacade->sendEmail($order);
-        }
     }
 }
