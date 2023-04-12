@@ -16,7 +16,7 @@ set -e
 echo "Start with specifying your operating system: \
 
     1) Linux or Windows with WSL 2
-    2) Mac
+    2) macOS with Mutagen
     "
 
 while [[ 1 -eq 1 ]]
@@ -37,34 +37,33 @@ if [[ -d "project-base" ]]; then
     echo "You are in monorepo, prefixing paths app paths with ${projectPathPrefix}"
 fi
 
-echo "Creating domains_urls.yaml file.."
+echo "Creating domains_urls.yaml file"
 cp -f "${projectPathPrefix}config/domains_urls.yaml.dist" "${projectPathPrefix}config/domains_urls.yaml"
 
-echo "Creating docker configuration.."
+echo "Creating docker configuration"
 case "$operatingSystem" in
     "1")
         cp -f docker/conf/docker-compose.yml.dist docker-compose.yml
 
         sed -i -r "s#www_data_uid: [0-9]+#www_data_uid: $(id -u)#" ./docker-compose.yml
         sed -i -r "s#www_data_gid: [0-9]+#www_data_gid: $(id -g)#" ./docker-compose.yml
+
+        echo "Starting docker-compose"
+        docker-compose up -d --build --force-recreate
         ;;
     "2")
         cp -f docker/conf/docker-compose-mac.yml.dist docker-compose.yml
-        cp -f docker/conf/docker-sync.yml.dist docker-sync.yml
 
         sed -i '' -E "s#www_data_uid: [0-9]+#www_data_uid: $(id -u)#" ./docker-compose.yml
         sed -i '' -E "s#www_data_gid: [0-9]+#www_data_gid: $(id -g)#" ./docker-compose.yml
+        sed -i '' -E "s#defaultOwner: \"id:501\"+#defaultOwner: \"id:$(id -u)\"#" ./docker-compose.yml
 
         if [[ $1 != --skip-aliasing ]]; then
-            echo "You will be asked to enter sudo password in case to allow second domain alias in your system config.."
+            echo "You will be asked to enter sudo password in case to allow second domain alias in your system config"
             sudo ifconfig lo0 alias 127.0.0.2 up
         fi
 
-        mkdir -p ${projectPathPrefix}var/postgres-data ${projectPathPrefix}var/elasticsearch-data vendor
-        docker-sync start
+        echo "Starting mutagen-compose"
+        mutagen-compose up -d --build --force-recreate
         ;;
 esac
-
-echo "Starting docker-compose.."
-
-docker-compose up -d --build

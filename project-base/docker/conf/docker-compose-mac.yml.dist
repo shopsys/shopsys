@@ -6,7 +6,7 @@ services:
         container_name: shopsys-framework-postgres
         volumes:
             - ./docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf:delegated
-            - ./var/postgres-data:/var/lib/postgresql/data:cached
+            - postgres-data:/var/lib/postgresql/data
         environment:
             - PGDATA=/var/lib/postgresql/data/pgdata
             - POSTGRES_USER=root
@@ -38,8 +38,7 @@ services:
                 www_data_gid: 20
         container_name: shopsys-framework-php-fpm
         volumes:
-            - shopsys-framework-sync:/var/www/html
-            - ./web:/var/www/html/web:cached
+            - source-code:/var/www/html
             - ./.git/:/var/www/html/.git:delegated
         ports:
             - "35729:35729"
@@ -88,7 +87,7 @@ services:
         ports:
             - "9200:9200"
         volumes:
-            - ./var/elasticsearch-data:/usr/share/elasticsearch/data:cached
+            - elasticsearch-data:/usr/share/elasticsearch/data
         environment:
             - discovery.type=single-node
 
@@ -101,5 +100,30 @@ services:
             - "5601:5601"
 
 volumes:
-    shopsys-framework-sync:
-        external: true
+    source-code:
+    elasticsearch-data:
+        driver: local
+    postgres-data:
+        driver: local
+
+x-mutagen:
+    sync:
+        defaults:
+            ignore:
+                vcs: true
+            permissions:
+                defaultOwner: "id:501"
+        source-code:
+            alpha: "."
+            beta: "volume://source-code"
+            mode: "two-way-resolved"
+            configurationBeta:
+                permissions:
+                    defaultOwner: "id:501"
+                    defaultDirectoryMode: 0777
+            ignore:
+                paths:
+                    - ./.DS_Store
+                    - ./.idea
+                    - ./.npm-global
+                    - ./nbproject

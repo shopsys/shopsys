@@ -1,14 +1,14 @@
 # Installation Using Docker - application setup
 
 This guide expects that you have already set up your Docker environment.
-If you haven't already done that check the [Installation using Docker](./installation-guide.md#installation-using-docker).
+If you have not already done that check the [Installation using Docker](./installation-guide.md#installation-using-docker).
 
-## 1. Setup the Shopsys Framework application
+## 1. Set up the Shopsys Framework application
 Now that the Docker environment is prepared we can setup the application itself.
 
 ### 1.1. Connect into terminal of the Docker container
 ```sh
-docker exec -it shopsys-framework-php-fpm bash
+docker-compose exec php-fpm bash
 ```
 
 ### 1.2. Install dependencies and configure parameters
@@ -16,25 +16,12 @@ docker exec -it shopsys-framework-php-fpm bash
 composer install
 ```
 
-If you are installing the application in production environment, you should install composer optimized.
-The optimized composer speed up your application.
-```sh
-composer install -o
-```
-
 !!! note
     During composer installation there will be installed 3-rd party software as dependencies of Shopsys Framework with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
-Composer will prompt you to set parameters ([description of parameters](application-configuration.md)).
-The default parameters suggested by composer are currently set for application running in Docker so you can just use these.
-
-Only exception is the `secret` parameter - you should input a random string to be used for security purposes.
-It is not necessary for development though.
-
 ### 1.3. Create databases
 ```sh
-php phing db-create
-php phing test-db-create
+php phing db-create test-db-create
 ```
 
 !!! hint
@@ -53,7 +40,7 @@ php phing build-demo-dev-quick error-pages-generate
 
 Open [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to see running application.
 
-You can also login into the administration section on [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) with default credentials:
+You can also log in into the administration section on [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) with default credentials:
 
 * Username: `admin` or `superadmin` (the latter has access to advanced options)
 * Password: `admin123`
@@ -62,7 +49,7 @@ You can also manage the application database using [Adminer](https://www.adminer
 and Redis storage using [Redis commander](https://github.com/joeferner/redis-commander) by going to [http://127.0.0.1:1600](http://127.0.0.1:1600).
 
 Elasticsearch API is available on the address [http://127.0.0.1:9200](http://127.0.0.1:9200).
-You can use e.g. [Postman](https://www.getpostman.com/apps) or [Kibana](https://www.elastic.co/downloads/kibana) for Elasticseacrh management.
+You can use [Kibana](https://www.elastic.co/downloads/kibana) for Elasticseacrh management, it is available on [http://127.0.0.1:5601](http://127.0.0.1:5601).
 
 If you need to inspect your application logs, use `docker-compose logs` command.
 For more information about logging see [the separate article](../introduction/logging.md).

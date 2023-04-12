@@ -1,4 +1,4 @@
-version: "3.4"
+version: "3.7"
 
 services:
     postgres:
@@ -6,7 +6,7 @@ services:
         container_name: shopsys-framework-postgres
         volumes:
             - ./project-base/docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf:delegated
-            - ./project-base/var/postgres-data:/var/lib/postgresql/data:cached
+            - postgres-data:/var/lib/postgresql/data
         environment:
             - PGDATA=/var/lib/postgresql/data/pgdata
             - POSTGRES_USER=root
@@ -39,8 +39,7 @@ services:
                 project_root: project-base
         container_name: shopsys-framework-php-fpm
         volumes:
-            - shopsys-framework-sync:/var/www/html
-            - ./project-base/web:/var/www/html/project-base/web:cached
+            - source-code:/var/www/html
             - ./.git/:/var/www/html/.git:delegated
             - ~/.gitconfig:/home/www-data/.gitconfig
         ports:
@@ -90,7 +89,7 @@ services:
         ports:
             - "9200:9200"
         volumes:
-            - ./project-base/var/elasticsearch-data:/usr/share/elasticsearch/data:cached
+            - elasticsearch-data:/usr/share/elasticsearch/data
         environment:
             - discovery.type=single-node
 
@@ -109,8 +108,33 @@ services:
         ports:
             - "1300:8000"
         volumes:
-            - shopsys-framework-sync:/var/www/html
+            - source-code:/var/www/html
 
 volumes:
-    shopsys-framework-sync:
-        external: true
+    source-code:
+    elasticsearch-data:
+        driver: local
+    postgres-data:
+        driver: local
+
+x-mutagen:
+    sync:
+        defaults:
+            ignore:
+                vcs: true
+            permissions:
+                defaultOwner: "id:501"
+        source-code:
+            alpha: "."
+            beta: "volume://source-code"
+            mode: "two-way-resolved"
+            configurationBeta:
+                permissions:
+                    defaultOwner: "id:501"
+                    defaultDirectoryMode: 0777
+            ignore:
+                paths:
+                    - ./.DS_Store
+                    - ./.idea
+                    - ./.npm-global
+                    - ./nbproject

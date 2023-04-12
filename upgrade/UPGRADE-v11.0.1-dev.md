@@ -156,3 +156,5 @@ There you can find links to upgrade notes for other versions too.
     ```
   - if you have implemented a custom storefront using frontend API then you should consider implementing this functionality into your storefront
   - see #project-base-diff to update your project
+- improve your installation on macOS by replacing `Docker-sync` with `Mutagen` ([#2593](https://github.com/shopsys/shopsys/pull/2593))
+    - see #project-base-diff to update your project
