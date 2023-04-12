@@ -89,13 +89,40 @@ class Price
     }
 
     /**
+     * @param int|string $multiplier
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function multiply(int|string $multiplier): self
+    {
+        return new self(
+            $this->priceWithoutVat->multiply($multiplier),
+            $this->priceWithVat->multiply($multiplier)
+        );
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
     public function inverse(): self
     {
-        return new self(
-            $this->priceWithoutVat->multiply(-1),
-            $this->priceWithVat->multiply(-1)
-        );
+        return $this->multiply(-1);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
+     * @return bool
+     */
+    public function equals(self $price): bool
+    {
+        return $this->priceWithoutVat->equals($price->priceWithoutVat)
+            && $this->priceWithVat->equals($price->priceWithVat);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isZero(): bool
+    {
+        return $this->priceWithoutVat->isZero() && $this->priceWithVat->isZero();
     }
 }
