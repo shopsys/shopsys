@@ -6,6 +6,7 @@ use DateInterval;
 use DateTimeImmutable;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\Plugin\Cron\IteratedCronModuleInterface;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
@@ -75,7 +76,7 @@ class CronModuleExecutor
                 $cronModuleService->wakeUp();
             }
             $inProgress = true;
-            while ($this->canRun($cronConfig) && $inProgress === true) {
+            while ($inProgress === true && $this->canRun($cronConfig)) {
                 $inProgress = $cronModuleService->iterate();
             }
             if ($inProgress === true) {
@@ -90,11 +91,23 @@ class CronModuleExecutor
 
     /**
      * @phpstan-impure
-     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig|null $cronConfig
+     * @phpstan-ignore-next-line
+     * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig $cronConfig
      * @return bool
      */
-    public function canRun(?CronModuleConfig $cronConfig = null): bool
+    public function canRun(/* CronModuleConfig $cronConfig */): bool
     {
+        $triggerNewArgumentInMethod = DeprecationHelper::triggerNewArgumentInMethod(
+            __METHOD__,
+            '$cronConfig',
+            'CronModuleConfig',
+            func_get_args(),
+            0,
+            null,
+            true
+        );
+        $cronConfig = $triggerNewArgumentInMethod;
+
         if ($cronConfig !== null) {
             $canRunUntil = $this->startedAt->add(
                 DateInterval::createFromDateString($cronConfig->getTimeoutIteratedCronSec() . ' seconds')

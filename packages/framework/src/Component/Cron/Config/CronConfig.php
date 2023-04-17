@@ -6,6 +6,7 @@ use DateTimeInterface;
 use Shopsys\FrameworkBundle\Component\Cron\Config\Exception\CronModuleConfigNotFoundException;
 use Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver;
 use Shopsys\FrameworkBundle\Component\Cron\Exception\InvalidCronModuleException;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\Plugin\Cron\IteratedCronModuleInterface;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
@@ -37,7 +38,9 @@ class CronConfig
      * @param string $timeMinutes
      * @param string $instanceName
      * @param string|null $readableName
+     * @phpstan-ignore-next-line
      * @param int $runEveryMin
+     * @phpstan-ignore-next-line
      * @param int $timeoutIteratedCronSec
      */
     public function registerCronModuleInstance(
@@ -47,12 +50,35 @@ class CronConfig
         string $timeMinutes,
         string $instanceName,
         ?string $readableName = null,
-        int $runEveryMin = CronModuleConfig::RUN_EVERY_MIN_DEFAULT,
-        int $timeoutIteratedCronSec = CronModuleConfig::TIMEOUT_ITERATED_CRON_SEC_DEFAULT
+        /*
+        int $runEveryMin,
+        int $timeoutIteratedCronSec,
+        */
     ): void {
         if (!$service instanceof SimpleCronModuleInterface && !$service instanceof IteratedCronModuleInterface) {
             throw new InvalidCronModuleException($serviceId);
         }
+
+        $runEveryMin = DeprecationHelper::triggerNewArgumentInMethod(
+            __METHOD__,
+            '$runEveryMin',
+            'int',
+            func_get_args(),
+            6,
+            CronModuleConfig::RUN_EVERY_MIN_DEFAULT,
+            true
+        );
+
+        $timeoutIteratedCronSec = DeprecationHelper::triggerNewArgumentInMethod(
+            __METHOD__,
+            '$timeoutIteratedCronSec',
+            'int',
+            func_get_args(),
+            7,
+            CronModuleConfig::TIMEOUT_ITERATED_CRON_SEC_DEFAULT,
+            true
+        );
+
         $this->cronTimeResolver->validateTimeString($timeHours, 23, 1);
         $this->cronTimeResolver->validateTimeString($timeMinutes, 55, 5);
 

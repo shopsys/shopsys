@@ -82,7 +82,7 @@ There you can find links to upgrade notes for other versions too.
         - method `getCurrentRoundedTime` changed its interface:
         ```diff
             function getCurrentRoundedTime(
-        +       int $runEveryMin = CronModuleConfig::RUN_EVERY_MIN_DEFAULT
+        +       int $runEveryMin,
             )
         ```
     - `Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor` class:
@@ -96,7 +96,7 @@ There you can find links to upgrade notes for other versions too.
         - method `canRun` changed its interface:
         ```diff
             function canRun(
-        +       CronModuleConfig|null $cronConfig = null
+        +       CronModuleConfig $cronConfig,
             ): bool
         ```
     - `Shopsys\FrameworkBundle\Command\CronCommand` class:
@@ -109,8 +109,8 @@ There you can find links to upgrade notes for other versions too.
                 string $timeMinutes,
                 string $instanceName,
                 ?string $readableName = null,
-        +       int $runEveryMin = CronModuleConfig::RUN_EVERY_MIN_DEFAULT,
-        +       int $timeoutIteratedCronSec = CronModuleConfig::TIMEOUT_ITERATED_CRON_SEC_DEFAULT
+        +       int $runEveryMin,
+        +       int $timeoutIteratedCronSec,
             ): void {
         ```
     - `Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig` class:
