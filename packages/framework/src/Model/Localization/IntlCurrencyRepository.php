@@ -238,6 +238,12 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
                 'locale' => 'en',
                 'numeric_code' => '974',
             ]),
+            'HRK' => new Currency([
+                'currency_code' => 'HRK',
+                'name' => 'Croatian Kuna',
+                'locale' => 'en',
+                'numeric_code' => '191',
+            ]),
             'MRO' => new Currency([
                 'currency_code' => 'MRO',
                 'name' => 'Mauritanian Ouguiya',
