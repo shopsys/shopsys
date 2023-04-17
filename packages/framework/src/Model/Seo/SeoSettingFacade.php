@@ -22,7 +22,7 @@ class SeoSettingFacade
      * @param int $domainId
      * @return string|null
      */
-    public function getTitleMainPage(int $domainId): ?string
+    public function getTitleMainPage($domainId)
     {
         return $this->setting->getForDomain(self::SEO_TITLE_MAIN_PAGE, $domainId);
     }
@@ -31,7 +31,7 @@ class SeoSettingFacade
      * @param int $domainId
      * @return string|null
      */
-    public function getDescriptionMainPage(int $domainId): ?string
+    public function getDescriptionMainPage($domainId)
     {
         return $this->setting->getForDomain(self::SEO_META_DESCRIPTION_MAIN_PAGE, $domainId);
     }
@@ -40,7 +40,7 @@ class SeoSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[] $domainConfigs
      * @return string[]
      */
-    public function getDescriptionsMainPageIndexedByDomainIds(array $domainConfigs): array
+    public function getDescriptionsMainPageIndexedByDomainIds(array $domainConfigs)
     {
         $descriptionsMainPageByDomainIds = [];
         foreach ($domainConfigs as $domainConfig) {
@@ -56,7 +56,7 @@ class SeoSettingFacade
      * @param int $domainId
      * @return string|null
      */
-    public function getTitleAddOn(int $domainId): ?string
+    public function getTitleAddOn($domainId)
     {
         return $this->setting->getForDomain(self::SEO_TITLE_ADD_ON, $domainId);
     }
@@ -74,7 +74,7 @@ class SeoSettingFacade
      * @param string|null $value
      * @param int $domainId
      */
-    public function setTitleMainPage(?string $value, int $domainId): void
+    public function setTitleMainPage($value, $domainId)
     {
         $this->setting->setForDomain(self::SEO_TITLE_MAIN_PAGE, $value, $domainId);
     }
@@ -83,7 +83,7 @@ class SeoSettingFacade
      * @param string|null $value
      * @param int $domainId
      */
-    public function setDescriptionMainPage(?string $value, int $domainId): void
+    public function setDescriptionMainPage($value, $domainId)
     {
         $this->setting->setForDomain(self::SEO_META_DESCRIPTION_MAIN_PAGE, $value, $domainId);
     }
@@ -92,7 +92,7 @@ class SeoSettingFacade
      * @param string|null $value
      * @param int $domainId
      */
-    public function setTitleAddOn(?string $value, int $domainId): void
+    public function setTitleAddOn($value, $domainId)
     {
         $this->setting->setForDomain(self::SEO_TITLE_ADD_ON, $value, $domainId);
     }
