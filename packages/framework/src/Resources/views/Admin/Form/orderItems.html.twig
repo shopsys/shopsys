@@ -7,16 +7,16 @@
             <div class="table-touch-always">
                 {{ form_errors(form.itemsWithoutTransportAndPayment) }}
                 <div class="table-touch-always__in">
-                    <table class="table-main table-main--with-inline-form">
+                    <table class="table-main table-main--with-inline-form table-fixed">
                         <thead>
                             <tr>
-                                <th><span class="padding-left-10">{{ 'Name'|trans }}</span></th>
-                                <th class="text-right">{{ 'Catalog number'|trans }}</th>
-                                <th class="text-right"><span class="table-main__column-with-info">{{ 'Unit price including VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</span></th>
-                                <th class="text-right">{{ 'Amount'|trans }}</th>
-                                <th class="text-right">{{ 'Unit'|trans }}</th>
-                                <th class="text-right">{{ 'VAT rate (%)'|trans }}</th>
-                                <th class="text-center">
+                                <th class="table-col-375px"><span class="padding-left-10">{{ 'Name'|trans }}</span></th>
+                                <th class="table-col-155px">{{ 'Catalog number'|trans }}</th>
+                                <th class="table-col-145px text-right"><span class="table-main__column-with-info">{{ 'Unit price including VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</span></th>
+                                <th class="table-col-125px text-right">{{ 'Amount'|trans }}</th>
+                                <th class="table-col-125px text-right">{{ 'Unit'|trans }}</th>
+                                <th class="table-col-125px text-right">{{ 'VAT rate (%)'|trans }}</th>
+                                <th class="table-col-135px text-center">
                                     <span class="display-inline-block min-width-80">
                                         {{ 'Set prices manually'|trans }}
                                         <i class="svg svg-info cursor-help js-tooltip"
@@ -25,9 +25,9 @@
                                         ></i>
                                     </span>
                                 </th>
-                                <th class="text-right">{{ 'Unit price excluding VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
-                                <th class="text-right">{{ 'Total including VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
-                                <th class="text-right">{{ 'Total excluding VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
+                                <th class="table-col-130px text-right">{{ 'Unit price excluding VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
+                                <th class="table-col-145px text-right">{{ 'Total including VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
+                                <th class="table-col-145px text-right">{{ 'Total excluding VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>
                                 <th></th>
                             </tr>
                         </thead>

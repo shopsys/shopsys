@@ -19,22 +19,22 @@
                 {% endif %}
             </div>
         </td>
-        <td>
+        <td class="text-right">
             {{ form_widget(orderItemForm.catnum, {attr: { class: 'input--medium text-right'}}) }}
             {{ form_errors(orderItemForm.catnum, {errors_attr: { inline: false }}) }}
         </td>
-        <td>
+        <td class="text-right">
             {{ self.priceWithVatWidget(orderItemForm.priceWithVat) }}
         </td>
-        <td>
+        <td class="text-right">
             {{ form_widget(orderItemForm.quantity, {attr: { class: 'input--small text-right'}, error_attr: { inline: false }}) }}
             {{ form_errors(orderItemForm.quantity, {errors_attr: { inline: false }}) }}
         </td>
-        <td>
+        <td class="text-right">
             {{ form_widget(orderItemForm.unitName, {attr: { class: 'input--small text-right'}}) }}
             {{ form_errors(orderItemForm.unitName, {errors_attr: { inline: false }}) }}
         </td>
-        <td>
+        <td class="text-right">
             {{ form_widget(orderItemForm.vatPercent, {attr: { class: 'input--small text-right'}}) }}
             {{ form_errors(orderItemForm.vatPercent, {errors_attr: { inline: false }}) }}
         </td>
@@ -43,7 +43,7 @@
         <td class="text-right">{{ self.calculablePriceWidget(orderItemForm.priceWithoutVat) }}</td>
         <td class="text-right">{{ self.calculablePriceWidget(orderItemForm.totalPriceWithVat) }}</td>
         <td class="text-right">{{ self.calculablePriceWidget(orderItemForm.totalPriceWithoutVat) }}</td>
-        <td class="table-col-5 table-grid__cell--actions text-center">
+        <td class="table-col-5 table-grid__cell--actions text-left">
             <a href="#" class="js-order-item-remove table-action in-icon in-icon--delete"><i class="svg svg-trash"></i></a>
         </td>
     </tr>
@@ -63,10 +63,10 @@
             </div>
         </td>
         <td class="text-right">-</td>
-        <td>{{ self.priceWithVatWidget(orderTransportForm.priceWithVat) }}</td>
+        <td class="text-right">{{ self.priceWithVatWidget(orderTransportForm.priceWithVat) }}</td>
         <td class="text-right">1</td>
         <td></td>
-        <td>
+        <td class="text-right">
             {{ form_widget(orderTransportForm.vatPercent, {attr: { class: 'input--small text-right'}}) }}
             {{ form_errors(orderTransportForm.vatPercent, {errors_attr: { inline: false }}) }}
         </td>
@@ -92,10 +92,10 @@
             </div>
         </td>
         <td class="text-right">-</td>
-        <td>{{ self.priceWithVatWidget(orderPaymentForm.priceWithVat) }}</td>
+        <td class="text-right">{{ self.priceWithVatWidget(orderPaymentForm.priceWithVat) }}</td>
         <td class="text-right">1</td>
         <td></td>
-        <td>
+        <td class="text-right">
             {{ form_widget(orderPaymentForm.vatPercent, {attr: { class: 'input--small text-right'}}) }}
             {{ form_errors(orderPaymentForm.vatPercent, {errors_attr: { inline: false }}) }}
         </td>
