@@ -1054,6 +1054,9 @@ msgstr "Feed s názvem \"{{ feedName }}\" nebyl nalezen."
 msgid "Feed \"{{ feedName }}\" successfully generated."
 msgstr "Feed \"{{ feedName }}\" byl úspěšně vygenerován."
 
+msgid "File content"
+msgstr "Obsah souboru"
+
 msgid "File is in unsupported format"
 msgstr "Soubor je v nepodporovaném formátu"
 
@@ -1239,6 +1242,9 @@ msgstr "Včetně DPH"
 
 msgid "Including VAT"
 msgstr "S DPH"
+
+msgid "Incorrect settings may have a negative impact on the correct functionality of the e-shop."
+msgstr "Nesprávné nastavení může mít negativní vliv na správnou funkčnost e-shopu."
 
 msgid "Input price with VAT"
 msgstr "Vstupní cena s DPH"
@@ -1911,6 +1917,15 @@ msgstr "Zrušit filtr"
 
 msgid "Return back"
 msgstr "Vrátit zpět"
+
+msgid "Robots.txt"
+msgstr "Robots.txt"
+
+msgid "Robots.txt settings"
+msgstr "Nastavení Robots.txt"
+
+msgid "Robots.txt settings modified"
+msgstr "Nastavení Robots.txt bylo upraveno"
 
 msgid "Rounding"
 msgstr "Zaokrouhlení"

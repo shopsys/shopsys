@@ -122,6 +122,11 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
                 t('| Demo eshop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 $domainId
             );
+            $this->setting->setForDomain(
+                SeoSettingFacade::SEO_ROBOTS_TXT_CONTENT,
+                'Disallow: /admin',
+                $domainId
+            );
 
             $this->setDomainDefaultCurrency($domainId);
         }
