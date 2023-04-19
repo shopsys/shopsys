@@ -777,4 +777,18 @@ class Grid
     {
         return $this->multipleDragAndDrop;
     }
+
+    /**
+     * @param string[] $orderedColumnIds
+     */
+    public function reorderColumns(array $orderedColumnIds): void
+    {
+        $orderedColumns = [];
+
+        foreach ($orderedColumnIds as $columnId) {
+            $orderedColumns[$columnId] = $this->columnsById[$columnId];
+        }
+
+        $this->columnsById = [...$orderedColumns, ...$this->columnsById];
+    }
 }

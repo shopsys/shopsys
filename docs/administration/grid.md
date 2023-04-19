@@ -74,6 +74,33 @@ However, not all grids have their own factories, sometimes they are created in p
 In such a case, you need to fork the corresponding method and rewrite it to suit your needs.
 We are planning some refactorings to enable you easier and unified way of grid customizations.
 
+### Reordering columns
+If you need to reorder columns in the existing grid, you may use the `reorderColumns()` method.
+
+```php
+namespace App\Grid\Payment;
+
+use Shopsys\FrameworkBundle\Model\Payment\Grid\PaymentGridFactory as BasePaymentGridFactory;
+
+class PaymentGridFactory extends BasePaymentGridFactory
+{
+    public function create()
+    {
+        $grid = parent::create();
+ 
+        $grid->reorderColumns([
+            'enabled',
+            'name',
+        ]);
+ 
+        return $grid;
+    }
+}
+```
+
+Grid columns will be rendered in the order they are defined in the `reorderColumns()` method.
+If any column is missing in the `reorderColumns` method call, it will be rendered after mentioned columns in the original order. 
+
 ## Further reading - cookbooks
 If you want to implement a new grid, you can follow the cookbooks:
 
