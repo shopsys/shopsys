@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Exception\TooManyLoginAttemptsAuthenticationException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
@@ -57,6 +58,10 @@ class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, Aut
             $responseData = [
                 'success' => false,
             ];
+
+            if ($exception instanceof TooManyLoginAttemptsAuthenticationException) {
+                $responseData['message'] = t('Too many login attempts. Please try again later.');
+            }
 
             return new JsonResponse($responseData);
         }

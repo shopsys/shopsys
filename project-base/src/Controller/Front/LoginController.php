@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Security\Exception\LoginFailedException;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\TooManyLoginAttemptsAuthenticationException;
 
 class LoginController extends FrontBaseController
 {
@@ -40,7 +41,11 @@ class LoginController extends FrontBaseController
         try {
             $this->authenticator->checkLoginProcess($request);
         } catch (LoginFailedException $e) {
-            $form->addError(new FormError(t('This account doesn\'t exist or password is incorrect')));
+            if ($e->getPrevious() instanceof TooManyLoginAttemptsAuthenticationException) {
+                $form->addError(new FormError(t('Too many login attempts. Please try again later.')));
+            } else {
+                $form->addError(new FormError(t('This account doesn\'t exist or password is incorrect')));
+            }
         }
 
         return $this->render('Front/Content/Login/loginForm.html.twig', [

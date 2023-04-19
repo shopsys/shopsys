@@ -26,6 +26,9 @@ security:
             provider: administrators
             access_denied_url: "/admin/access-denied/"
             entry_point: form_login
+            login_throttling:
+                max_attempts: 5
+                interval: '1 minute'
             form_login:
                 check_path: admin_login_check
                 login_path: admin_login
@@ -44,12 +47,18 @@ security:
             pattern: ^/graphql
             provider: frontend_api_user_identities
             stateless: true
+            login_throttling:
+                max_attempts: 5
+                interval: '1 minute'
             custom_authenticators:
                 - Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator
         frontend:
             pattern: ^/
             provider: user_identities
             entry_point: form_login
+            login_throttling:
+                max_attempts: 5
+                interval: '1 minute'
             form_login:
                 check_path: front_login_check
                 login_path: front_login
