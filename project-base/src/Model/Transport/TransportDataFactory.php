@@ -10,6 +10,8 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory as BaseTranspor
 /**
  * @method \App\Model\Transport\TransportData create()
  * @method \App\Model\Transport\TransportData createFromTransport(\App\Model\Transport\Transport $transport)
+ * @method fillNew(\App\Model\Transport\TransportData $transportData)
+ * @method fillFromTransport(\App\Model\Transport\TransportData $transportData, \App\Model\Transport\Transport $transport)
  */
 class TransportDataFactory extends BaseTransportDataFactory
 {

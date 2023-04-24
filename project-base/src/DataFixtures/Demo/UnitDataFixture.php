@@ -24,7 +24,7 @@ class UnitDataFixture extends AbstractReferenceFixture
     private $unitFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactory
      */
     private $unitDataFactory;
 
@@ -40,7 +40,7 @@ class UnitDataFixture extends AbstractReferenceFixture
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactoryInterface $unitDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactory $unitDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */

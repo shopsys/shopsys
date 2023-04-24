@@ -18,13 +18,13 @@ class SliderItemDataFixture extends AbstractReferenceFixture
     private $sliderItemFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory
      */
     private $sliderItemDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade $sliderItemFacade
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactoryInterface $sliderItemDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory $sliderItemDataFactory
      */
     public function __construct(
         SliderItemFacade $sliderItemFacade,

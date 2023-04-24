@@ -14,6 +14,8 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 /**
  * @method \App\Model\Payment\PaymentData create()
  * @method \App\Model\Payment\PaymentData createFromPayment(\App\Model\Payment\Payment $payment)
+ * @method fillNew(\App\Model\Payment\PaymentData $paymentData)
+ * @method fillFromPayment(\App\Model\Payment\PaymentData $paymentData, \App\Model\Payment\Payment $payment)
  */
 class PaymentDataFactory extends BasePaymentDataFactory
 {

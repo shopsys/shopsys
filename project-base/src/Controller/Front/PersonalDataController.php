@@ -56,7 +56,7 @@ class PersonalDataController extends FrontBaseController
     private $personalDataAccessMailFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory
      */
     private $personalDataAccessRequestDataFactory;
 
@@ -73,7 +73,7 @@ class PersonalDataController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMailFacade $personalDataAccessMailFacade
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade $personalDataAccessRequestFacade
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactoryInterface $personalDataAccessRequestDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory $personalDataAccessRequestDataFactory
      * @param \Shopsys\FrameworkBundle\Component\HttpFoundation\XmlResponse $xmlResponse
      */
     public function __construct(

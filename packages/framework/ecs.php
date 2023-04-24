@@ -120,6 +120,7 @@ return static function (ECSConfig $ecsConfig): void {
         ],
         EmptyStatementSniff::class . '.DetectedCatch' => [
             __DIR__ . '/src/Component/Elasticsearch/Debug/ElasticsearchTracer.php',
+            __DIR__ . '/src/DependencyInjection/Compiler/RegisterProjectFrameworkClassExtensionsCompilerPass.php',
         ],
         ParentCallSpacingSniff::class . '.IncorrectLinesCountBeforeControlStructure' => [
             __DIR__ . '/src/Component/Filesystem/Flysystem/VolumeDriver.php',

@@ -23,7 +23,7 @@ class CountryDataFixture extends AbstractReferenceFixture
     private $countryFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\CountryDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Country\CountryDataFactory
      */
     private $countryDataFactory;
 
@@ -34,7 +34,7 @@ class CountryDataFixture extends AbstractReferenceFixture
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryDataFactoryInterface $countryDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Country\CountryDataFactory $countryDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(CountryFacade $countryFacade, CountryDataFactoryInterface $countryDataFactory, Domain $domain)
