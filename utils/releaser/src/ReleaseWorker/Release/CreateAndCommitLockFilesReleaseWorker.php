@@ -17,7 +17,7 @@ final class CreateAndCommitLockFilesReleaseWorker extends AbstractShopsysRelease
      */
     public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
     {
-        return 'Create and commit composer.lock, symfony.lock, package-lock.json, and migrations-lock.yml and [Manually] push it';
+        return 'Create or update and commit composer.lock, symfony.lock, package-lock.json, and migrations-lock.yml and [Manually] push it';
     }
 
     /**
