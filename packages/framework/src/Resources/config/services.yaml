@@ -9,6 +9,12 @@ parameters:
     # Use Shopsys Translatable listener for prezent/doctrine-translatable to allow set fallback language on postPersist event
     prezent_doctrine_translatable.listener.class: Shopsys\FrameworkBundle\Model\Localization\TranslatableListener
 
+    # @deprecated This parameter is added here to prevent BC-break and will be removed in the next major release
+    cron_instances:
+        default:
+            run_every_min: 5
+            timeout_iterated_cron_sec: 240
+
 services:
     _defaults:
         autowire: true
