@@ -92,4 +92,32 @@ final class DeprecationHelper
             $methodName
         );
     }
+
+    /**
+     * @param string $methodName
+     * @param string $argumentName
+     * @param string $argumentType
+     * @param array $functionArguments
+     * @param int $positionOfArgument
+     * @param mixed $defaultValue
+     * @param bool $required
+     * @return mixed
+     */
+    public static function triggerNewArgumentInMethod(string $methodName, string $argumentName, string $argumentType, array $functionArguments, int $positionOfArgument, mixed $defaultValue, bool $required): mixed
+    {
+        if (count($functionArguments) < $positionOfArgument + 1) {
+            if ($required) {
+                self::trigger(
+                    'Method "%s()" will have a new "%s()" argument of type "%s()" in next major version, not defining it is deprecated.',
+                    $methodName,
+                    $argumentName,
+                    $argumentType,
+                );
+            }
+
+            return $defaultValue;
+        }
+
+        return $functionArguments[$positionOfArgument];
+    }
 }
