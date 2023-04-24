@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\ScalarType;
 
 use GraphQL\Language\AST\Node;
 use GraphQL\Type\Definition\StringType as BaseStringType;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 
 class StringType extends BaseStringType
 {
@@ -16,19 +17,23 @@ class StringType extends BaseStringType
      * @phpstan-param \GraphQL\Language\AST\IntValueNode|\GraphQL\Language\AST\FloatValueNode|\GraphQL\Language\AST\StringValueNode|\GraphQL\Language\AST\BooleanValueNode|\GraphQL\Language\AST\NullValueNode $valueNode
      * @param \GraphQL\Language\AST\Node $valueNode
      * @param array|null $variables
-     * @return string
+     * @return string|null
      */
     public function parseLiteral(Node $valueNode, ?array $variables = null)
     {
-        return trim(parent::parseLiteral($valueNode, $variables));
+        $value = parent::parseLiteral($valueNode, $variables);
+
+        return TransformString::getTrimmedStringOrNullOnEmpty($value);
     }
 
     /**
      * @param mixed $value
-     * @return string
+     * @return string|null
      */
     public function parseValue($value)
     {
-        return trim(parent::parseValue($value));
+        $value = parent::parseValue($value);
+
+        return TransformString::getTrimmedStringOrNullOnEmpty($value);
     }
 }
