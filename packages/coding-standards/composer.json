@@ -39,11 +39,6 @@
     "suggest": {
         "zalas/phpunit-injector": "Needed if you want to use PhpStan extension to understand injected dependencies in tests"
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "11.0.x-dev"
-        }
-    },
     "config": {
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
