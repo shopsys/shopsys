@@ -384,6 +384,10 @@ class DefaultController extends AdminBaseController
      */
     public function cronDetailAction(string $serviceId): Response
     {
+        if ($this->getParameter('shopsys.display_cron_overview_for_superadmin_only') === true) {
+            $this->denyAccessUnlessGranted(Roles::ROLE_SUPER_ADMIN);
+        }
+
         $cronModule = $this->cronModuleFacade->getCronModuleByServiceId($serviceId);
         $cronModuleRuns = $this->cronModuleFacade->getAllRunsByCronModule($cronModule);
         $cronConfig = $this->cronConfig->getCronModuleConfigByServiceId($serviceId);
