@@ -1,26 +1,22 @@
-# Installation Using Docker for MacOS
+# Installation Using Docker Desktop on macOS
 
 This guide covers building new projects based on Shopsys Framework.
 If you want to contribute to the framework itself,
 you need to install the whole [shopsys/shopsys](https://github.com/shopsys/shopsys) monorepo.
 Take a look at the article about [Monorepo](../introduction/monorepo.md) for more information.
 
-This solution uses [*docker-sync*](http://docker-sync.io/) (for relatively fast two-way synchronization of the application files between the host machine and Docker volume).
-
-!!! warning
-    Docker-sync might be a burden for intensive project development, especially when there is a huge amount of files in shared volumes of virtualized docker and when switching between branches or even between projects often. In such a case, you should consider using [native installation](./native-installation.md).
+This solution uses [*Mutagen*](https://mutagen.io) (for relatively fast two-way synchronization of the application files between the host machine and Docker volume).
 
 ## Requirements
 * [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 * [PHP](http://php.net/manual/en/install.macosx.php)
     * At least version **8.1 or higher**
 * [Composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
-* [Docker for Mac](https://docs.docker.com/engine/installation/)
-    * Docker-sync suggests ([in known issue](https://github.com/EugenMayer/docker-sync/issues/517)) to use Docker for Mac in version 17.09.1-ce-mac42 (21090)
-    * Docker for Mac requires at least 6.5 GB of memory, but this is only required to run `composer install` and `composer update` which would result in `Killed` status if not enough memory would be available (we recommend to set at least 2.5 GB RAM, 1 CPU and 4 GB Swap in `Docker -> Preferences… -> Resources -> ADVANCED`)
-    * Version of Docker Engine should be at least **17.05 or higher** so it supports [multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/).
-    * Version of Docker Compose should be at least **1.17.0 or higher** because we use compose file version `3.4`
-* [Docker-sync](http://docker-sync.io/) (install via `sudo gem install docker-sync`)
+* [Docker Desktop](https://docs.docker.com/engine/install/)
+     * Enable Docker Compose V2 in General settings 
+     * We recommend to set at least 8 GB RAM, 4 CPUs and 512 MB Swap in `Docker -> Preferences… -> Resources -> ADVANCED`
+* [Mutagen](https://mutagen.io/) (install using [Mutagen installation guide](https://mutagen.io/documentation/introduction/installation))
+* [Mutagen Compose](https://mutagen.io/documentation/orchestration/compose/) (install using [Mutagen Compose installation guide](https://github.com/mutagen-io/mutagen-compose#installation))
 
 ## Steps
 ### 1. Create new project from Shopsys Framework sources
@@ -43,7 +39,7 @@ In the case you want to start demo of the application as fast as possible, you c
 ./scripts/install.sh
 ```
 !!! note
-    `--skip-aliasing` may be used in case you have already enabled second domain or you do not want to enable it for some reason. When using this option you will not be asked for sudo password.
+    `--skip-aliasing` may be used in case you have already enabled second domain, or you do not want to enable it for some reason. When using this option you will not be asked for sudo password.
 
 After the script is finished with installing the application, you can skip all the other steps and see [the last chapter of Application Setup Guide](./installation-using-docker-application-setup.md#2-see-it-in-your-browser) to get all the important information you might need right after the installation.
 
@@ -57,46 +53,32 @@ There are two domains each for different language in default installation. First
 sudo ifconfig lo0 alias 127.0.0.2 up
 ```
 
-#### 2.2. Create docker-compose.yml and docker-sync.yml
+#### 2.2. Create docker-compose.yml
 Create `docker-compose.yml` from template [`docker-compose-mac.yml.dist`](https://github.com/shopsys/shopsys/blob/master/project-base/docker/conf/docker-compose-mac.yml.dist).
 ```sh
 cp docker/conf/docker-compose-mac.yml.dist docker-compose.yml
 ```
 
-Create `docker-sync.yml` from template [`docker-sync.yml.dist`](https://github.com/shopsys/shopsys/blob/master/project-base/docker/conf/docker-sync.yml.dist).
-
-```sh
-cp docker/conf/docker-sync.yml.dist docker-sync.yml
-```
-
 #### 2.3 Set the UID and GID to allow file access in mounted volumes
 Because we want both the user in host machine (you) and the user running php-fpm in the container to access shared files, we need to make sure that they both have the same UID and GID.
 This can be achieved by build arguments `www_data_uid` and `www_data_gid` that should be set to the same UID and GID as your own user in your `docker-compose.yml`.
-Also, you need to change `sync_userid` in `docker-sync.yml` file.
-
 You can find out your UID by running `id -u` and your GID by running `id -g`.
-
 Once you get these values, set these values into your `docker-compose.yml` into `php-fpm` container definition by replacing values in `args` section.
+Update also `defaultOwner` to your UID in `x-mutagen` section in `docker-compose.yml`.
 
-Also you need to insert your UID into `docker-sync.yml` into value `sync_userid`.
-
-#### 2.4 Compose Docker container
-On MacOS you need to synchronize folders using docker-sync.
-Before starting synchronization you need to create a directory for persisting Postgres and Elasticsearch data so you won't lose it when the container is shut down.
+#### 2.4 Build and start containers using Mutagen
+On macOS, you want to synchronize folders using Mutagen as it enables faster performance then current implementation in Docker Desktop.
 
 ```sh
-mkdir -p var/postgres-data var/elasticsearch-data vendor
-docker-sync start
-```
-
-Then rebuild and start containers
-
-```sh
-docker-compose up -d --build
+mutagen-compose up -d --build
 ```
 
 !!! note
-    During the build of the docker containers there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
+    With Mutagen Compose you will use `mutagen-compose` instead of `docker-compose` for all your Docker Compose commands.
+    `mutagen-compose` is a wrapper around `docker-compose` that adds Mutagen synchronization to the `docker-compose up` command.
 
-#### 2.5 Setup the application
+!!! note
+    During the build of the Docker containers there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
+
+#### 2.5 Set up the application
 [Application setup guide](installation-using-docker-application-setup.md)
