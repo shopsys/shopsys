@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Exception\TooManyLoginAttemptsAuthenticationException;
 
 class LoginController extends AdminBaseController
 {
@@ -100,6 +101,8 @@ class LoginController extends AdminBaseController
                         . ' environment. If you are random hacker, please go somewhere else. If you are authorized user,'
                         . ' please use another account or contact developers and change password during deployment.'
                 );
+            } elseif ($e->getPrevious() instanceof TooManyLoginAttemptsAuthenticationException) {
+                $error = t('Too many login attempts. Please try again later.');
             } else {
                 $error = t('Log in failed.');
             }

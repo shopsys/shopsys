@@ -144,17 +144,19 @@ There you can find links to upgrade notes for other versions too.
 - remove no longer necessary encapsulation of sending OrderMail by checking if it is enabled as it is now done directly in OrderMailFacade ([#2588](https://github.com/shopsys/shopsys/pull/2588))
     - see #project-base-diff to update your project
 - added ability to change content of robots.txt file through administration ([#2591](https://github.com/shopsys/shopsys/pull/2591))
-  - `App\Controller\Front\RobotsController` class:
-    - method `__construct` changed its interface:
-    ```diff
-        public function __construct(
-            string $sitemapsUrlPrefix,
-            Domain $domain,
-            SitemapFilePrefixer $sitemapFilePrefixer,
-    +       ?SeoSettingFacade $seoSettingFacade = null,
-        ) {
-    ```
-  - if you have implemented a custom storefront using frontend API then you should consider implementing this functionality into your storefront
-  - see #project-base-diff to update your project
+    - `App\Controller\Front\RobotsController` class:
+        - method `__construct` changed its interface:
+        ```diff
+            public function __construct(
+                string $sitemapsUrlPrefix,
+                Domain $domain,
+                SitemapFilePrefixer $sitemapFilePrefixer,
+        +       ?SeoSettingFacade $seoSettingFacade = null,
+            ) {
+        ```
+    - if you have implemented a custom storefront using frontend API then you should consider implementing this functionality into your storefront
+    - see #project-base-diff to update your project
+- enable login rate limits to prevent brute force attacks ([#2599](https://github.com/shopsys/shopsys/pull/2599))
+    - see #project-base-diff to update your project
 - improve your installation on macOS by replacing `Docker-sync` with `Mutagen` ([#2593](https://github.com/shopsys/shopsys/pull/2593))
     - see #project-base-diff to update your project
