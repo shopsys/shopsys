@@ -76,6 +76,8 @@
             <div class="wrap-bar"></div>
             <h2>{{ 'Cron overview'|trans }} {% if cronGridViews|length > 1 %}({{ instanceName }}){% endif %}</h2>
             {{ cronGridView.render() }}
+            <div class="wrap-bar"></div>
+            <div>{{ 'Some data may not be localized or serve the technical administrators of the e-shop.'|trans }}</div>
         {% endfor %}
     {% endif %}
 {% endblock %}

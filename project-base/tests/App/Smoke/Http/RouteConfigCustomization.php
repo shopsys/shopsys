@@ -14,6 +14,7 @@ use App\DataFixtures\Demo\VatDataFixture;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDeletionCronModule;
 use Shopsys\HttpSmokeTesting\Auth\BasicHttpAuth;
 use Shopsys\HttpSmokeTesting\Auth\NoAuth;
 use Shopsys\HttpSmokeTesting\RequestDataSet;
@@ -296,7 +297,7 @@ class RouteConfigCustomization
                     ->setExpectedStatusCode(200);
             })->customizeByRouteName('admin_default_crondetail', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Use correct ID of cron module.')
-                    ->setExpectedStatusCode(302);
+                    ->setParameter('serviceId', VatDeletionCronModule::class);
             });
     }
 

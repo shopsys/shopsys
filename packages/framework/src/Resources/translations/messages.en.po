@@ -2164,6 +2164,9 @@ msgstr ""
 msgid "Slider pages"
 msgstr ""
 
+msgid "Some data may not be localized or serve the technical administrators of the e-shop."
+msgstr ""
+
 msgid "Sorting priority"
 msgstr ""
 

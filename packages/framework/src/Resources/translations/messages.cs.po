@@ -2164,6 +2164,9 @@ msgstr "Byla upravena stránka slideru <strong><a href=\"{{ url }}\">{{ name }}<
 msgid "Slider pages"
 msgstr "Stránky slideru"
 
+msgid "Some data may not be localized or serve the technical administrators of the e-shop."
+msgstr "Některé údaje nemusí být lokalizovány nebo slouží technickým správcům e-shopu."
+
 msgid "Sorting priority"
 msgstr "Priorita řazení"
 
