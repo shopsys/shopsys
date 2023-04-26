@@ -77,9 +77,9 @@ When using docker containers without kubernetes, add the environment variable to
 ```
 
 
-### Native instalation
+### Native installation
 
-Without containers you must set environment variable on the host machine, typically in unix like OS by executing
+Without containers, you must set environment variable on the host machine, typically in unix like OS by executing
 
 ```
 export REDIS_PREFIX='my_awesome_app'

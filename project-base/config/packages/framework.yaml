@@ -24,5 +24,8 @@ framework:
     profiler:
         enabled: false
         collect: false
-    assets: ~
+    assets:
+        base_urls:
+            - '%env(CDN_DOMAIN)%'
+
     error_controller: 'Shopsys\FrameworkBundle\Component\Error\ErrorController::showAction'

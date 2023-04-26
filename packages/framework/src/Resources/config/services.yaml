@@ -150,7 +150,9 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
-    Shopsys\FrameworkBundle\Component\Csv\CsvReader: ~
+    Shopsys\FrameworkBundle\Component\Cdn\CdnFacade:
+        arguments:
+            $cdnDomain: '%env(CDN_DOMAIN)%'
 
     Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig: ~
 
