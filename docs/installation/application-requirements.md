@@ -1,7 +1,7 @@
 # Application Requirements
 To be able to install, develop and run Shopsys Framework, the system should have preinstalled some tools and services.
 
-## Linux / MacOS / WSL
+## Linux / macOS / WSL
 * [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 * [PostgreSQL 12.1](https://wiki.postgresql.org/wiki/Detailed_installation_guides)
 * [PHP 8.1 or higher](http://php.net/manual/en/install.php) (configure your `php.ini` by [Required PHP Configuration](../introduction/required-php-configuration.md))
@@ -39,4 +39,4 @@ To be able to install, develop and run Shopsys Framework, the system should have
     Required tools can be easily installed on Windows via [choco](https://chocolatey.org/) package manager
 
 !!! tip
-    Windows installation can be skipped in favor of [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/install-win10) where the tools will be installed like on [Linux / MacOS / WSL](#linux--macos--wsl) so all the tools and services can be up-to-date.
+    Windows installation can be skipped in favor of [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/install-win10) where the tools will be installed like on [Linux / macOS / WSL](#linux--macos--wsl) so all the tools and services can be up-to-date.

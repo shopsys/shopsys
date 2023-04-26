@@ -77,7 +77,7 @@ There you can find links to upgrade notes for other versions too.
         + function getVisibleAdvertsByPositionNameQueryBuilder(int $domainId, string $positionName, ?Category $category = null)
         ```
     - see #project-base-diff to update your project
-- enable custom period for running crons ([#2581](https://github.com/shopsys/shopsys/pull/2581))
+- enable custom period for running crons ([#2584](https://github.com/shopsys/shopsys/pull/2584))
     - `Shopsys\FrameworkBundle\Command\CronCommand` class:
         - method `getCurrentRoundedTime` changed its interface:
         ```diff
@@ -129,7 +129,7 @@ There you can find links to upgrade notes for other versions too.
     - constant `Shopsys\FrameworkBundle\Controller\Admin\DefaultController::HOUR_IN_SECONDS` is now deprecated and will be removed in next major
     - method `Shopsys\FrameworkBundle\Controller\Admin\DefaultController::getFormattedDuration()` is now deprecated and will be removed in next major, use `Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension::formatDurationInSeconds()` instead
     - see #project-base-diff to update your project
-- update your extended phing targets in `build.xml` to have their outputs more verbose when an error occurs ([#2581](https://github.com/shopsys/shopsys/pull/2581))
+- update your extended phing targets in `build.xml` to have their outputs more verbose when an error occurs ([#2507](https://github.com/shopsys/shopsys/pull/2507))
     - add `<arg value="--verbose"/>` to your extended phing targets in build.xml that are based on `bin/console` commands
     - example on `bin/console` based command update:
     ```diff
@@ -157,4 +157,6 @@ There you can find links to upgrade notes for other versions too.
     - if you have implemented a custom storefront using frontend API then you should consider implementing this functionality into your storefront
     - see #project-base-diff to update your project
 - enable login rate limits to prevent brute force attacks ([#2599](https://github.com/shopsys/shopsys/pull/2599))
+    - see #project-base-diff to update your project
+- improve your installation on macOS by replacing `Docker-sync` with `Mutagen` ([#2593](https://github.com/shopsys/shopsys/pull/2593))
     - see #project-base-diff to update your project

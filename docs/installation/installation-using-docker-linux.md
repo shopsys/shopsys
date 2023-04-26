@@ -1,8 +1,7 @@
 # Installation Using Docker for Linux
 
 This guide covers building new projects based on Shopsys Framework.
-If you want to contribute to the framework itself,
-you need to install the whole [shopsys/shopsys](https://github.com/shopsys/shopsys) monorepo.
+If you want to contribute to the framework itself, you need to install the whole [shopsys/shopsys](https://github.com/shopsys/shopsys) monorepo.
 Take a look at the article about [Monorepo](../introduction/monorepo.md) for more information.
 
 ## Requirements
@@ -61,5 +60,5 @@ docker-compose up -d --build
 !!! note
     During the build of the docker containers there will be installed 3-rd party software as dependencies of Shopsys Framework by [Dockerfile](https://docs.docker.com/engine/reference/builder/) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
-#### 2.4 Setup the application
+#### 2.4 Set up the application
 [Application setup guide](installation-using-docker-application-setup.md)
