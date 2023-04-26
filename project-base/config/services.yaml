@@ -1,8 +1,8 @@
 imports:
     - { resource: forms.yaml }
-    - { resource: services/*.yaml }
     - { resource: parameters_common.yaml }
     - { resource: directories.yaml }
+    - { resource: cron.yaml }
 
 services:
     _defaults:
@@ -10,10 +10,20 @@ services:
         autoconfigure: true
         public: false
 
+    App\Command\:
+        resource: '../src/Command'
+
     App\Controller\:
         resource: '../src/Controller/'
         public: true
         tags: ['controller.service_arguments']
+
+    App\DataFixtures\:
+        resource: '../src/DataFixtures/**/*DataFixture.php'
+        tags: [ 'doctrine.fixture.orm' ]
+
+    App\Twig\:
+        resource: '../src/Twig/'
 
     App\:
         resource: '../src/**/*{Calculation,Facade,Factory,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Parser,Provider,Recalculator,Registry,Repository,Resolver,Service,Scheduler,Subscriber,Transformer}.php'
