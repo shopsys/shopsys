@@ -7,22 +7,12 @@ namespace Shopsys\FrameworkBundle\Component\Image;
 class AdditionalImageData
 {
     /**
-     * @var string
-     */
-    public $media;
-
-    /**
-     * @var string
-     */
-    public $url;
-
-    /**
      * @param string $media
      * @param string $url
      */
-    public function __construct(string $media, string $url)
-    {
-        $this->media = $media;
-        $this->url = $url;
+    public function __construct(
+        public readonly string $media,
+        public readonly string $url,
+    ) {
     }
 }
