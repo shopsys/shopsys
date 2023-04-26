@@ -86,13 +86,11 @@ class TopCategoryFacade
         }
         $this->em->flush();
 
-        $topCategories = [];
         $position = 1;
 
         foreach ($categories as $category) {
             $topCategory = $this->topCategoryFactory->create($category, $domainId, $position++);
             $this->em->persist($topCategory);
-            $topCategories[] = $topCategory;
         }
         $this->em->flush();
     }

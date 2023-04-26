@@ -53,7 +53,7 @@ class FriendlyUrlGeneratorFacade
     public function generateUrlsForSupportedEntities(OutputInterface $output)
     {
         foreach ($this->domain->getAll() as $domainConfig) {
-            $output->writeln(' Start of generating friendly urls for domain ' . $domainConfig->getUrl() . '');
+            $output->writeln(' Start of generating friendly urls for domain ' . $domainConfig->getUrl());
 
             $countOfCreatedUrls = $this->generateUrlsByDomainConfig($output, $domainConfig);
 
