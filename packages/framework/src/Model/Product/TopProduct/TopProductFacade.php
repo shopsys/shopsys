@@ -67,12 +67,10 @@ class TopProductFacade
         }
         $this->em->flush();
 
-        $topProducts = [];
         $position = 1;
         foreach ($products as $product) {
             $topProduct = $this->topProductFactory->create($product, $domainId, $position++);
             $this->em->persist($topProduct);
-            $topProducts[] = $topProduct;
         }
         $this->em->flush();
     }
