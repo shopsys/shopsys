@@ -1,6 +1,5 @@
 # Shopsys Google Cloud Bundle
 
-[![Build Status](https://travis-ci.org/shopsys/google-cloud-bundle.svg?branch=master)](https://travis-ci.org/shopsys/google-cloud-bundle)
 [![Downloads](https://img.shields.io/packagist/dt/shopsys/google-cloud-bundle.svg)](https://packagist.org/packages/shopsys/google-cloud-bundle)
 
 This bundle is used to allow [Shopsys Framework](https://www.shopsys-framework.com) integration with Google Cloud.

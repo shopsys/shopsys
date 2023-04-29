@@ -1,6 +1,5 @@
 # Shopsys Coding Standards
 
-[![Build Status](https://travis-ci.org/shopsys/coding-standards.svg?branch=master)](https://travis-ci.org/shopsys/coding-standards)
 [![Downloads](https://img.shields.io/packagist/dt/shopsys/coding-standards.svg)](https://packagist.org/packages/shopsys/coding-standards)
 
 Shopsys Coding Standards are based on [PSR-2](http://www.php-fig.org/psr/psr-2/).
