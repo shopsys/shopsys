@@ -1,6 +1,5 @@
 # Shopsys Read Model
 
-[![Build Status](https://travis-ci.org/shopsys/read-model.svg?branch=master)](https://travis-ci.org/shopsys/read-model)
 [![Downloads](https://img.shields.io/packagist/dt/shopsys/read-model.svg)](https://packagist.org/packages/shopsys/read-model)
 
 This bundle for [Shopsys Framework](https://www.shopsys.com) separates templates from model using [read model concept](https://docs.shopsys.com/en/latest/model/introduction-to-read-model/).

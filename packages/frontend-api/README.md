@@ -1,6 +1,5 @@
 # Shopsys Frontend API
 
-[![Build Status](https://travis-ci.org/shopsys/frontend-api.svg)](https://travis-ci.org/shopsys/backend-api)
 [![Downloads](https://img.shields.io/packagist/dt/shopsys/frontend-api.svg)](https://packagist.org/packages/shopsys/frontend-api)
 
 This bundle for [Shopsys Framework](https://www.shopsys.com) adds frontend API using [overblog/GraphQLBundle](https://github.com/overblog/GraphQLBundle).

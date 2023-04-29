@@ -1,6 +1,5 @@
 # Shopsys Form Types Bundle
 
-[![Build Status](https://travis-ci.org/shopsys/form-types-bundle.svg?branch=master)](https://travis-ci.org/shopsys/form-types-bundle)
 [![Downloads](https://img.shields.io/packagist/dt/shopsys/form-types-bundle.svg)](https://packagist.org/packages/shopsys/form-types-bundle)
 
 Symfony bundle adding form types for usage in [Shopsys Framework](https://www.shopsys-framework.com), its components and plugins.

@@ -1,6 +1,5 @@
 # Shopsys Framework Package
 
-[![Build Status](https://travis-ci.org/shopsys/framework.svg?branch=master)](https://travis-ci.org/shopsys/framework)
 [![Downloads](https://img.shields.io/packagist/dt/shopsys/framework.svg)](https://packagist.org/packages/shopsys/framework)
 
 This repository is part of Shopsys Framework - a **scalable ecommerce framework** for fast-growing ecommerce sites created and maintained by in-house developers or outsourcing agencies.
