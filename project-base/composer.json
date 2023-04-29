@@ -63,7 +63,6 @@
         "shopsys/jsformvalidator-bundle": "^1.7.0",
         "shopsys/framework": "12.0.x-dev",
         "shopsys/frontend-api": "12.0.x-dev",
-        "shopsys/google-cloud-bundle": "12.0.x-dev",
         "shopsys/migrations": "12.0.x-dev",
         "shopsys/plugin-interface": "12.0.x-dev",
         "shopsys/postgres-search-bundle": "^0.4",
