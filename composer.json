@@ -18,6 +18,7 @@
             "Shopsys\\ProductFeed\\HeurekaBundle\\": "packages/product-feed-heureka/src/",
             "Shopsys\\ProductFeed\\HeurekaDeliveryBundle\\": "packages/product-feed-heureka-delivery/src/",
             "Shopsys\\ReadModelBundle\\": "packages/read-model/src/",
+            "Shopsys\\S3Bridge\\": "packages/s3-bridge/src/",
             "Shopsys\\FrameworkBundle\\": "packages/framework/src/"
         },
         "classmap": [
@@ -68,6 +69,7 @@
         "ext-tokenizer": "*",
         "ext-xml": "*",
         "arvenil/ninja-mutex": "^0.4.1",
+        "aws/aws-sdk-php": "^3.220.0",
         "barryvdh/elfinder-flysystem-driver": "^0.4.3",
         "commerceguys/intl": "^1.0.0",
         "composer/composer": "^2.2.12",
@@ -102,6 +104,7 @@
         "knplabs/knp-menu-bundle": "^3.2",
         "lcobucci/jwt": "^4.1.5",
         "league/flysystem": "^3.11",
+        "league/flysystem-aws-s3-v3": "^3.12.2",
         "league/flysystem-google-cloud-storage": "^3.0",
         "litipk/php-bignumbers": "^0.8.6",
         "nette/utils": "^3.0",
@@ -234,6 +237,7 @@
         "shopsys/product-feed-heureka-delivery": "self.version",
         "shopsys/read-model": "self.version",
         "shopsys/framework": "self.version",
-        "shopsys/coding-standards": "self.version"
+        "shopsys/coding-standards": "self.version",
+        "shopsys/s3-bridge": "self.version"
     }
 }

@@ -41,6 +41,7 @@ If you are interested, you can read more about the monorepo approach here - http
 * [shopsys/google-cloud-bundle](https://github.com/shopsys/google-cloud-bundle)
 * [shopsys/read-model](https://github.com/shopsys/read-model)
 * [shopsys/frontend-api](https://github.com/shopsys/frontend-api)
+* [shopsys/s3-bridge](https://github.com/shopsys/s3-bridge)
 
 !!! note
     The list of these packages is maintained in the function `get_all_packages` in [`.ci/monorepo_functions.sh`](https://github.com/shopsys/shopsys/blob/master/.ci/monorepo_functions.sh).  
