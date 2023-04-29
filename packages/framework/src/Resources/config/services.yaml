@@ -999,6 +999,7 @@ services:
             - '%env(MAILER_DELIVERY_WHITELIST)%'
             - '%env(MAILER_MASTER_EMAIL_ADDRESS)%'
             - '%env(MAILER_DSN)%'
+            - '%env(bool:MAILER_FORCE_WHITELIST)%'
 
     Shopsys\FrameworkBundle\Component\Error\ErrorController:
         arguments:

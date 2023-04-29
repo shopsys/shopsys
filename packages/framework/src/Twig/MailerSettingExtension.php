@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
@@ -11,26 +13,28 @@ use Twig\TwigFunction;
 
 class MailerSettingExtension extends AbstractExtension
 {
-    /**
-     * @var \Twig\Environment
-     */
-    protected Environment $twigEnvironment;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider
-     */
-    protected MailerSettingProvider $mailerSettingProvider;
+    use SetterInjectionTrait;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider $mailerSettingProvider
      * @param \Twig\Environment $twigEnvironment
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain|null $domain
      */
     public function __construct(
-        MailerSettingProvider $mailerSettingProvider,
-        Environment $twigEnvironment
+        protected /* readonly */ MailerSettingProvider $mailerSettingProvider,
+        protected /* readonly */ Environment $twigEnvironment,
+        protected /* readonly */ ?Domain $domain = null,
     ) {
-        $this->mailerSettingProvider = $mailerSettingProvider;
-        $this->twigEnvironment = $twigEnvironment;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setDomain(Domain $domain): void
+    {
+        $this->setDependency($domain, 'domain');
     }
 
     /**
@@ -49,7 +53,9 @@ class MailerSettingExtension extends AbstractExtension
      */
     public function isMailerSettingUnusual()
     {
-        return $this->mailerSettingProvider->isDeliveryDisabled() || $this->mailerSettingProvider->isMailerMasterEmailSet();
+        return $this->mailerSettingProvider->isDeliveryDisabled()
+            || $this->mailerSettingProvider->isMailerMasterEmailSet()
+            || $this->mailerSettingProvider->isWhitelistEnabled($this->domain->getId());
     }
 
     /**
@@ -60,7 +66,8 @@ class MailerSettingExtension extends AbstractExtension
         return $this->twigEnvironment->render('@ShopsysFramework/Common/Mailer/settingInfo.html.twig', [
             'isDeliveryDisabled' => $this->mailerSettingProvider->isDeliveryDisabled(),
             'mailerMasterEmailAddress' => $this->mailerSettingProvider->isMailerMasterEmailSet() ? $this->mailerSettingProvider->getMailerMasterEmailAddress() : null,
-            'mailerWhitelistExpressions' => $this->mailerSettingProvider->getMailerWhitelistExpressions(),
+            'isWhitelistEnabled' => $this->mailerSettingProvider->isWhitelistEnabled($this->domain->getId()),
+            'mailerWhitelistExpressions' => $this->mailerSettingProvider->getWhitelistPatternsAsArray($this->domain->getId()),
         ]);
     }
 

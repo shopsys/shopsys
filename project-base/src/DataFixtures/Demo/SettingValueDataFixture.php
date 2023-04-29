@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Mail\Setting\MailSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 
@@ -125,6 +126,11 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
             $this->setting->setForDomain(
                 SeoSettingFacade::SEO_ROBOTS_TXT_CONTENT,
                 'Disallow: /admin',
+                $domainId
+            );
+            $this->setting->setForDomain(
+                MailSetting::MAIL_WHITELIST,
+                '["/@shopsys\\\\.com$/"]',
                 $domainId
             );
 

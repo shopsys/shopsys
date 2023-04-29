@@ -79,6 +79,9 @@ msgstr "Přidat"
 msgid "Add URL"
 msgstr "Přidat URL"
 
+msgid "Add another mail whitelist pattern"
+msgstr "Přidat další předpis e-mailový whitelist"
+
 msgid "Add another parameter"
 msgstr "Přidat další parametr"
 
@@ -93,6 +96,9 @@ msgstr "Přidat zboží"
 
 msgid "Add requirement"
 msgstr "Přidat podmínku"
+
+msgid "Add some mail whitelist patterns"
+msgstr "Přidejte nějaké předpisy pro e-mailový whitelist"
 
 msgid "Add some parameters"
 msgstr "Přidejte nějaké parametry"
@@ -592,6 +598,9 @@ msgstr "Měna <strong>{{ name }}</strong> byla smazána"
 msgid "Currency settings modified"
 msgstr "Nastavení měn bylo upraveno"
 
+msgid "Currently the ENV variable MAILER_DELIVERY_WHITELIST is set and overrides this setting."
+msgstr "Nyní je nastavena environment proměnná MAILER_DELIVERY_WHITELIST, která přepisuje toto nastavení."
+
 msgid "Customer"
 msgstr "Zákazník"
 
@@ -829,6 +838,21 @@ msgstr "Trvání (mm:ss)"
 msgid "Duration (seconds)"
 msgstr "Trvání (sekundy)"
 
+msgid "E-mail addresses whitelist"
+msgstr "Whitelist e-mailových adres"
+
+msgid "E-mail whitelist is currently forced by MAILER_FORCE_WHITELIST environment variable. Whitelist is always active."
+msgstr "Whitelist e-mailových adres je vynucen environment proměnnou MAILER_FORCE_WHITELIST. Whitelist je vždy aktivní."
+
+msgid "E-mail whitelist settings"
+msgstr "Nastavení whitelistu e-mailových adres"
+
+msgid "E-mail whitelist settings modified"
+msgstr "Nastavení whitelistu e-mailových adres bylo upraveno"
+
+msgid "E-mails are sent to addresses which comply with at least one regular expression. You can use <a href=\"https://regex101.com\">https://regex101.com</a> for validating regular expressions."
+msgstr "E-maily jsou odesílány na adresy, které vyhovují alespoň jednomu regulárnímu výrazu. Pro ověření platnosti regulárních výrazů můžete použít <a href=\"https://regex101.com\">https://regex101.com</a>."
+
 msgid "E-shop URL address"
 msgstr "URL adresa e-shopu"
 
@@ -981,6 +1005,9 @@ msgstr "Nastavení šablon e-mailů"
 
 msgid "Enable"
 msgstr "Zapnout"
+
+msgid "Enable whitelist"
+msgstr "Whitelist aktivní"
 
 msgid "Enter 32-digit code which will be sent to server"
 msgstr "Zadejte 32-číselný kod, který bude odeslán na server"
@@ -2445,6 +2472,9 @@ msgstr "Při změně výchozí měny nedochází k žádnému přepočtu cen"
 
 msgid "While creating a new pricing group, please be patient. The application needs to recalculate price for every product on e-shop. Products without recalculated price will not be displayed on e-shop. For instance, it takes about an hour to recalculate 2000 products."
 msgstr "Mějte na paměti, že při vytváření cenové skupiny je nutné, aby aplikace přepočítala nové ceny pro všechny produkty. Produkty bez přepočtené ceny nebudou na e-shopu zobrazeny. Pro 2000 položek přepočet trvá asi hodinu."
+
+msgid "Whitelist is active, but empty. No email will be sent from the app."
+msgstr "Whitelist je aktivní, ale prázdný. Z aplikace nebude odeslán žádný e-mail."
 
 msgid "Width [px]"
 msgstr "Šířka [px]"

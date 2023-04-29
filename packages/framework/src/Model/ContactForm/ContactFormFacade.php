@@ -61,7 +61,7 @@ class ContactFormFacade
             $contactFormData->email,
             $contactFormData->name
         );
-        $this->mailer->send($messageData);
+        $this->mailer->sendForDomain($messageData, $this->domain->getId());
     }
 
     /**

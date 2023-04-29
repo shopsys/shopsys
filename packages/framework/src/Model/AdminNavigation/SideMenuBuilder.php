@@ -457,6 +457,10 @@ class SideMenuBuilder
                 ['route' => 'admin_superadmin_cssdocumentation', 'label' => t('CSS documentation')]
             );
             $superadminMenu->addChild('urls', ['route' => 'admin_superadmin_urls', 'label' => t('URL addresses')]);
+            $superadminMenu->addChild(
+                'mail_whitelist',
+                ['route' => 'admin_superadmin_mailwhitelist', 'label' => t('E-mail whitelist settings')],
+            );
         }
 
         $externalScriptsMenu = $menu->addChild('external_scripts', ['label' => t('External scripts')]);

@@ -275,8 +275,6 @@ echo $'domains_urls:
 ' >  config/domains_urls.yaml
 ```
 
-Then we check whether ENV variable `MAILER_MASTER_EMAIL_ADDRESS` in [`.env` or `.env.local`](https://github.com/shopsys/shopsys/blob/master/project-base/.env) is set correctly.
-
 After the project is setup correctly, we launch the build of php-fpm container by docker build command that will build image with composer, npm packages and created assets.
 
 ```sh
@@ -315,6 +313,9 @@ We have setup server and also built image from project git repository in the ser
 
 We log into the server using ssh.  
 Now we need to copy [`docker-compose-prod-deploy.yml.dist`](https://github.com/shopsys/shopsys/blob/master/project-base/docker/conf/docker-compose.prod.yml.dist) into folder on the production server as `docker-compose.yml`.  
+
+If the application is ready for the real world customers, we should set `MAILER_FORCE_WHITELIST` environment variable to `0` by standard way of setting environment variables in `docker-compose.yml` file.
+
 After the image is in the registry of the production server we create docker containers and build application for production with clean DB and base data.  
 We use parameter `-p` to specify the name of the project and prefix for the volumes so these will be easily accessible.
 There are named volumes created under path `/var/lib/docker/volumes/` and one persisted folder `production-content` for all uploaded images and generated files that should not be removed.  

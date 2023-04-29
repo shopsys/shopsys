@@ -27,6 +27,7 @@ import './GridMassAction';
 import './GridDragAndDrop';
 import './GridMultipleDragAndDrop';
 import './MailTemplate';
+import './MailWhitelist';
 import './MassAction';
 import './MassActionConfirm';
 import './MeasuringScript';
