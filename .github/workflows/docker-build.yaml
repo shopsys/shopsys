@@ -25,7 +25,7 @@ jobs:
         runs-on: ubuntu-20.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     ref: ${{ github.ref }}
             -   name: Login to Docker Hub
@@ -94,7 +94,7 @@ jobs:
         runs-on: ubuntu-20.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.yml from artifacts
@@ -117,7 +117,7 @@ jobs:
         runs-on: ubuntu-20.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.yml from artifacts
@@ -150,7 +150,7 @@ jobs:
         runs-on: ubuntu-20.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     ref: ${{ github.ref }}
             -   name: Check if PHP-FPM image exists
@@ -234,7 +234,7 @@ jobs:
             TESTS_ACCEPTANCE_RESULT: ${{ needs.tests-acceptance.result }}
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     ref: ${{ github.ref }}
             -   name: Build successful
