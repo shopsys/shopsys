@@ -11,6 +11,7 @@ get_all_packages() {
         frontend-api \
         read-model \
         google-cloud-bundle \
+        s3-bridge \
         product-feed-zbozi \
         product-feed-google \
         product-feed-heureka \

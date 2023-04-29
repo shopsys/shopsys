@@ -53,3 +53,17 @@ These variables are specific for [shopsys/google-cloud-bundle](https://github.co
 |------------------------------------|---------|---------------------------------------------|
 | `GOOGLE_CLOUD_PROJECT_ID`          | `''`    | defines Google Cloud Project ID             |
 | `GOOGLE_CLOUD_STORAGE_BUCKET_NAME` | `''`    | defines Bucket Name in Google CLoud Storage |
+
+
+### S3 Bridge Bundle
+
+These variables are exclusively usable with the [shopsys/s3-bridge](https://github.com/shopsys/s3-bridge) and are required only when using this package.
+
+| Name             | Default        | Description                                                                      |
+|------------------|----------------|----------------------------------------------------------------------------------|
+| `S3_ENDPOINT`    | `''`           | URL of the S3 service endpoint                                                   |
+| `S3_REGION`      | `''`           | AWS region where the S3 bucket is located (usually empty for custom S3 services) |
+| `S3_ACCESS_KEY`  | `''`           | access key ID for the S3 service                                                 |
+| `S3_SECRET`      | `''`           | secret access key for the S3 service                                             |
+| `S3_BUCKET_NAME` | `''`           | name of the S3 bucket to access or manipulate                                    |
+| `S3_VERSION`     | `'2006-03-01'` | version of the webservice to utilize                                             |
