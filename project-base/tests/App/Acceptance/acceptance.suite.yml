@@ -35,7 +35,7 @@ modules:
             host: '%SELENIUM_SERVER_HOST%'
             port: 4444
             url: ~
-            browser: chrome
+            browser: firefox
             capabilities:
                 # accept untrusted (eg. self-signed) HTTPS certificates
                 acceptSslCerts: true

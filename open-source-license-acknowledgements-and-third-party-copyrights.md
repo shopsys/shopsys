@@ -92,9 +92,9 @@ License: Creative Commons Attribution 3.0 BY
 https://github.com/erikdubbelboer/phpRedisAdmin/blob/master/README.markdown
 
 ### Selenium Docker
-Image: `Selenium/standalone-chrome:3.11`  
+Image: `seleniarm/standalone-firefox:4.9.0`  
 License: Apache License 2.0  
-https://github.com/SeleniumHQ/docker-selenium/blob/master/LICENSE.md  
+https://github.com/seleniumhq-community/docker-seleniarm/blob/trunk/LICENSE.md  
 Copyright 2018 Software Freedom Conservancy (SFC)
 
 ### Adminer
