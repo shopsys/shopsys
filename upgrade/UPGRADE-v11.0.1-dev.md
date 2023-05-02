@@ -160,3 +160,5 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
 - improve your installation on macOS by replacing `Docker-sync` with `Mutagen` ([#2593](https://github.com/shopsys/shopsys/pull/2593))
     - see #project-base-diff to update your project
+- improve config folder structure ([#2607](https://github.com/shopsys/shopsys/pull/2607))
+    - see #project-base-diff to update your project
