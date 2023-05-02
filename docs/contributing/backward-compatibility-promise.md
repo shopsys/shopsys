@@ -23,7 +23,7 @@ Once created, a git tag marking a release will never be removed or edited.
     Pre-release version format is `MAJOR.MINOR.PATCH-<alpha|beta|rc><n>`, eg. `7.0.0-beta5`.
 
 ## The BC Promise in Detail
-Shopsys Framework is built on the shoulders of giants so we've based our BC promise on the [**Symfony Backward Compatibility Promise**](https://symfony.com/doc/3.4/contributing/code/bc.html).
+Shopsys Framework is built on the shoulders of giants so we've based our BC promise on the [**Symfony Backward Compatibility Promise**](https://symfony.com/doc/5.4/contributing/code/bc.html).
 Exceptions from adhering to Symfony's promise and clarifications for non-PHP source codes can be found below.
 
 ### Project-base Repository
