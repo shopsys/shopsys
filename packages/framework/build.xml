@@ -174,8 +174,8 @@
 
     <target name="clean-opcache" description="Cleans up PHP Opcache.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-            <arg value="${path.bin-console}" />
-            <arg value="shopsys:clean-opcache" />
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:clean-opcache"/>
         </exec>
     </target>
 
@@ -746,11 +746,21 @@
     </target>
 
     <target name="maintenance-off" description="Turns the maintenance page off.">
-        <delete file="${path.root}/MAINTENANCE"/>
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="deploy:maintenance"/>
+            <arg value="disable"/>
+            <arg value="--verbose"/>
+        </exec>
     </target>
 
     <target name="maintenance-on" description="Turns the maintenance page on.">
-        <touch file="${path.root}/MAINTENANCE"/>
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="deploy:maintenance"/>
+            <arg value="enable"/>
+            <arg value="--verbose"/>
+        </exec>
     </target>
 
     <target name="npm" description="Build node modules.">

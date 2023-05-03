@@ -1031,3 +1031,7 @@ services:
             - { name: 'kernel.event_subscriber', priority: 100 }
 
     Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapFilePrefixer: ~
+
+    Shopsys\FrameworkBundle\Component\Redis\RedisClientFacade:
+        arguments:
+            - '@snc_redis.global'
