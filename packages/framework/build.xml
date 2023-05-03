@@ -162,7 +162,7 @@
 
     <target name="clean" depends="clean-cache-dir" description="Cleans up directories with cache and scripts which are generated on demand."/>
 
-    <target name="clean-cache" depends="clean-cache-dir,clean-redis" description="Cleans up all application cache."/>
+    <target name="clean-cache" depends="clean-cache-dir,clean-redis,clean-opcache" description="Cleans up all application cache."/>
 
     <target name="clean-cache-dir" description="Cleans up directory with Symfony cache." hidden="true">
         <delete failonerror="false" includeemptydirs="true">
@@ -170,6 +170,13 @@
                 <exclude name="/"/>
             </fileset>
         </delete>
+    </target>
+
+    <target name="clean-opcache" description="Cleans up PHP Opcache.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}" />
+            <arg value="shopsys:clean-opcache" />
+        </exec>
     </target>
 
     <target name="clean-redis" depends="redis-check" description="Cleans up redis cache">
