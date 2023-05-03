@@ -6,12 +6,6 @@ use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\HttpFoundation\Request;
 
-if (file_exists(__DIR__ . '/../MAINTENANCE')) {
-    require __DIR__ . '/../app/maintenance.php';
-
-    exit;
-}
-
 require dirname(__DIR__) . '/app/autoload.php';
 
 $_SERVER['APP_ENV'] = Environment::getEnvironment(false);

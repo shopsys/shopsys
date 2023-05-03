@@ -405,4 +405,6 @@ There you can find links to upgrade notes for other versions too.
     - return type of `getUrlContent()` changed from no type to `string`
     - parameter `$errorPageUrl` of `getUrlContent()` changed from no type to `string`
     - parameter `$expectedStatusCode` of `getUrlContent()` changed from no type to `int`
+    - maintenance mode is now detected by checking presence of `maintenance` key in Redis instead of `MAINTENANCE` file in root directory
+    - maintenance page template is now standard twig template (`@ShopsysFramework/Common/maintenance.html.twig`) instead of php file
     - see #project-base-diff for more details
