@@ -21,10 +21,6 @@ parameters:
         -
             message: '#^Unsafe usage of new static\(\).#'
             path: %currentWorkingDirectory%/packages/framework/*
-        -
-            # Annotations in Codeception are not well describing
-            message: '#^Parameter \#(\d+) \$cssOrXPath of method Tests\\(.*)\\Codeception\\(.*) expects (.*)#'
-            path: %currentWorkingDirectory%/packages/framework/tests/Test/Codeception/*
         # shopsys/project-base - don't forget to add these rules to phpstan.neon in project-base
         -
             # We need to have undefined variable for testing purposes
@@ -70,6 +66,8 @@ parameters:
         - %currentWorkingDirectory%/packages/framework/tests/Unit/Component/ClassExtension/Source/*
         # Exclude backend api package as the integration is currently removed
         - %currentWorkingDirectory%/packages/backend-api/*
+        # Exclude coding standards for generated files
+        - %currentWorkingDirectory%/project-base/tests/App/Test/Codeception/_generated/*
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon

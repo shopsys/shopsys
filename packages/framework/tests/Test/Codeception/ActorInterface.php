@@ -631,13 +631,6 @@ interface ActorInterface
      */
     public function moveMouseOver($cssOrXPath = null, $offsetX = null, $offsetY = null);
 
-    /**
-     * @param string $css
-     * @param int|null $offsetX
-     * @param int|null $offsetY
-     */
-    public function moveMouseOverByCss(string $css, ?int $offsetX = null, ?int $offsetY = null): void;
-
     public function openNewTab();
 
     public function pauseExecution();

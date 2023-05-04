@@ -64,7 +64,7 @@ abstract class AbstractCheckbox
     {
         $imageElementClass = '.' . $this->getImageElementClass();
 
-        $this->tester->clickWithLeftButton(['css' => $imageElementClass], 0, 0);
+        $this->tester->clickByCss($imageElementClass);
     }
 
     public function assertChecked(): void

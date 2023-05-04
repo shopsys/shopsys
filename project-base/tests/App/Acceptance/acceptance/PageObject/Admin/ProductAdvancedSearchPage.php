@@ -22,7 +22,7 @@ class ProductAdvancedSearchPage extends AbstractPage
         $this->tester->amOnPage('/admin/product/list/');
 
         $this->tester->clickByTranslationAdmin('Advanced search');
-        $this->tester->selectOptionByCssAndValue('.test-advanced-search-rule-subject', $searchSubject);
+        $this->tester->selectOptionInSelect2ByCssAndValue('.test-advanced-search-rule-subject', $searchSubject);
         $this->tester->waitForAjax();
         $this->tester->fillFieldByCss('.test-advanced-search-rule-value input', $value);
 

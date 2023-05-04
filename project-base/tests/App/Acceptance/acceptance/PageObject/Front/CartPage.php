@@ -180,20 +180,14 @@ class CartPage extends AbstractPage
         $this->tester->waitForAjax();
     }
 
-    /**
-     * @return \Facebook\WebDriver\WebDriverElement
-     */
     public function canSeePromoCodeSubmitButtonElement()
     {
-        return $this->tester->seeElement(WebDriverBy::cssSelector('#js-promo-code-submit-button'));
+        $this->tester->seeElement(WebDriverBy::cssSelector('#js-promo-code-submit-button'));
     }
 
-    /**
-     * @return \Facebook\WebDriver\WebDriverElement
-     */
     public function canSeePromoCodeRemoveButtonElement()
     {
-        return $this->tester->canSeeElement(WebDriverBy::cssSelector('#js-promo-code-remove-button'));
+        $this->tester->canSeeElement(WebDriverBy::cssSelector('#js-promo-code-remove-button'));
     }
 
     /**

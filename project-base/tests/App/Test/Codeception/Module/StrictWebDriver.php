@@ -6,7 +6,6 @@ namespace Tests\App\Test\Codeception\Module;
 
 use Codeception\Module\WebDriver;
 use Codeception\Util\Locator;
-use Facebook\WebDriver\Interactions\WebDriverActions;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverElement;
 use Facebook\WebDriver\WebDriverKeys;
@@ -90,10 +89,7 @@ class StrictWebDriver extends WebDriver
     public function clickByText(string $text, $contextSelector = null): void
     {
         $locateBy = $this->getWebDriverByText($text);
-
         $clickable = $this->getElementBySelectorAndContext($locateBy, $contextSelector);
-        $this->moveMouseOverByElement($clickable);
-
         $clickable->click();
 
         // workaround for race conditions when WebDriver tries to interact with page before click was processed
@@ -163,8 +159,6 @@ class StrictWebDriver extends WebDriver
      */
     public function clickByElement(WebDriverElement $element): WebDriverElement
     {
-        $this->moveMouseOverByElement($element);
-
         return $element->click();
     }
 
@@ -188,10 +182,7 @@ class StrictWebDriver extends WebDriver
      */
     public function fillFieldByElement(WebDriverElement $element, string $value): void
     {
-        $this->moveMouseOverByElement($element);
-
         $this->clearElement($element);
-
         $element->sendKeys($value);
     }
 
@@ -285,8 +276,6 @@ class StrictWebDriver extends WebDriver
         $xpath = $this->getCheckboxIdXpathSelector($checkboxId);
         $element = $this->webDriver->findElement(WebDriverBy::xpath($xpath));
 
-        $this->moveMouseOverByElement($element);
-
         $this->assertTrue($element->isSelected());
     }
 
@@ -312,8 +301,6 @@ class StrictWebDriver extends WebDriver
 
         $element = $this->webDriver->findElement(WebDriverBy::xpath($xpath));
 
-        $this->moveMouseOverByElement($element);
-
         $this->assertTrue($element->isSelected());
     }
 
@@ -337,8 +324,6 @@ class StrictWebDriver extends WebDriver
     {
         $xpath = $this->getCheckboxIdXpathSelector($checkboxId);
         $element = $this->webDriver->findElement(WebDriverBy::xpath($xpath));
-
-        $this->moveMouseOverByElement($element);
 
         $this->assertFalse($element->isSelected());
     }
@@ -365,8 +350,6 @@ class StrictWebDriver extends WebDriver
 
         $element = $this->webDriver->findElement(WebDriverBy::xpath($xpath));
 
-        $this->moveMouseOverByElement($element);
-
         $this->assertFalse($element->isSelected());
     }
 
@@ -388,8 +371,6 @@ class StrictWebDriver extends WebDriver
      */
     public function checkElement(WebDriverElement $element): void
     {
-        $this->moveMouseOverByElement($element);
-
         if ($element->isSelected()) {
             return;
         }
@@ -441,9 +422,17 @@ class StrictWebDriver extends WebDriver
     public function selectOptionByCssAndValue(string $selectCss, string $optionValue): void
     {
         $select = $this->webDriver->findElement(WebDriverBy::cssSelector($selectCss));
-        $this->moveMouseOverByElement($select);
 
         parent::selectOption(['css' => $selectCss], $optionValue);
+    }
+
+    /**
+     * @param string $selectCss
+     * @param string $optionValue
+     */
+    public function selectOptionInSelect2ByCssAndValue(string $selectCss, string $optionValue): void
+    {
+        $this->executeJS("$('" . $selectCss . "').val('" . $optionValue . "');$('" . $selectCss . "').trigger('change');");
     }
 
     /**
@@ -488,39 +477,15 @@ class StrictWebDriver extends WebDriver
      */
     public function seeInFieldByElement(string $value, WebDriverElement $element): void
     {
-        $this->moveMouseOverByElement($element);
-
         parent::seeInField($element, $value);
-    }
-
-    /**
-     * @param string $css
-     * @param int|null $offsetX
-     * @param int|null $offsetY
-     */
-    public function moveMouseOverByCss(string $css, ?int $offsetX = null, ?int $offsetY = null): void
-    {
-        $element = $this->webDriver->findElement(WebDriverBy::cssSelector($css));
-        $this->moveMouseOverByElement($element, $offsetX, $offsetY);
-    }
-
-    /**
-     * @param \Facebook\WebDriver\WebDriverElement $webDriverElement
-     * @param int|null $offsetX
-     * @param int|null $offsetY
-     */
-    public function moveMouseOverByElement(WebDriverElement $webDriverElement, ?int $offsetX = null, ?int $offsetY = null): void
-    {
-        $actions = new WebDriverActions($this->webDriver);
-        $actions->moveToElement($webDriverElement, $offsetX, $offsetY)->perform();
     }
 
     /**
      * @internal This method prevents developers from using parent method
      * @param mixed $element
-     * @param mixed $char
+     * @param mixed $chars
      */
-    public function pressKey($element, $char): void
+    public function pressKey($element, ...$chars): void
     {
         $strictAlternatives = [
             'pressKeysBy*',
@@ -543,8 +508,6 @@ class StrictWebDriver extends WebDriver
      */
     public function pressKeysByElement(WebDriverElement $element, $keys): void
     {
-        $this->moveMouseOverByElement($element);
-
         $element->sendKeys($keys);
     }
 
