@@ -164,3 +164,7 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
 - FE-API: fix return value for authentication failure ([#2387](https://github.com/shopsys/shopsys/pull/2387))
     - see #project-base-diff to update your project
+- fix running acceptance tests on local machines ([#2610](https://github.com/shopsys/shopsys/pull/2610))
+    - `Tests\FrameworkBundle\Test\Codeception\ActorInterface` interface:
+        - method `moveMouseOverByCss` has been removed
+    - see #project-base-diff to update your project
