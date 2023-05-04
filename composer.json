@@ -155,9 +155,9 @@
     },
     "require-dev": {
         "ext-pgsql": "*",
-        "codeception/codeception": "^4.1.22",
-        "codeception/module-db": "^1.0",
-        "codeception/module-webdriver": "^1.0",
+        "codeception/codeception": "^5.0.10",
+        "codeception/module-db": "^3.1.0",
+        "codeception/module-webdriver": "^3.2.1",
         "codeception/phpunit-wrapper": "^9.0.7",
         "friendsofphp/php-cs-fixer": "^3.3.1",
         "php-parallel-lint/php-parallel-lint": "^1.3.1",

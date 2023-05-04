@@ -50,9 +50,6 @@
     "codeception/module-webdriver": {
         "version": "1.0.3"
     },
-    "codeception/phpunit-wrapper": {
-        "version": "7.7.1"
-    },
     "codeception/stub": {
         "version": "2.1.0"
     },
@@ -403,9 +400,6 @@
     },
     "phing/phing": {
         "version": "2.16.1"
-    },
-    "php-http/message-factory": {
-        "version": "v1.0.2"
     },
     "php-parallel-lint/php-parallel-lint": {
         "version": "v1.3.1"
