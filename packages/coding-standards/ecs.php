@@ -101,6 +101,7 @@ use PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer;
 use Shopsys\CodingStandards\CsFixer\ForbiddenDumpFixer;
 use Shopsys\CodingStandards\CsFixer\MissingButtonTypeFixer;
 use Shopsys\CodingStandards\CsFixer\OrmJoinColumnRequireNullableFixer;
+use Shopsys\CodingStandards\CsFixer\Phpdoc\InheritDocFormatFixer;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\MissingParamAnnotationsFixer;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\MissingReturnAnnotationFixer;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\OrderedParamAnnotationsFixer;
@@ -175,6 +176,7 @@ return static function (ECSConfig $ecsConfig): void {
     ]);
 
     // Shopsys Checkers
+    $ecsConfig->rule(InheritDocFormatFixer::class);
     $ecsConfig->rule(ForbiddenDumpFixer::class);
     $ecsConfig->rule(MissingButtonTypeFixer::class);
     $ecsConfig->rule(OrmJoinColumnRequireNullableFixer::class);
