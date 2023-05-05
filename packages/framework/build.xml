@@ -245,6 +245,22 @@
         </exec>
     </target>
 
+    <target name="cron-lock" description="This target will prevent any crons from running on this machine until it is terminated.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="deploy:cron:lock"/>
+            <arg value="--verbose"/>
+        </exec>
+    </target>
+
+    <target name="cron-watch" description="Cron watch target is running until cron instance ends, then is terminated.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="deploy:cron:watch"/>
+            <arg value="--verbose"/>
+        </exec>
+    </target>
+
     <target name="db-check-mapping" depends="clean-cache" description="Checks if ORM mapping is valid." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
