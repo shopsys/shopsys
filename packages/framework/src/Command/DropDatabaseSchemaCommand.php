@@ -44,6 +44,6 @@ class DropDatabaseSchemaCommand extends Command
         $this->databaseSchemaFacade->dropSchemaIfExists('public');
         $output->writeln('Database schema dropped successfully!');
 
-        return CommandResultCodes::RESULT_OK;
+        return Command::SUCCESS;
     }
 }

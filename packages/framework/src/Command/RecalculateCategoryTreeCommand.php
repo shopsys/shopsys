@@ -55,6 +55,6 @@ class RecalculateCategoryTreeCommand extends Command
             $style->success('Categories are already fine');
         }
 
-        return CommandResultCodes::RESULT_OK;
+        return Command::SUCCESS;
     }
 }

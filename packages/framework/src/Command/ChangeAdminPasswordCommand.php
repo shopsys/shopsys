@@ -59,7 +59,7 @@ class ChangeAdminPasswordCommand extends Command
 
         $output->writeln(sprintf('Password for administrator "%s" was successfully changed', $adminUsername));
 
-        return CommandResultCodes::RESULT_OK;
+        return Command::SUCCESS;
     }
 
     /**

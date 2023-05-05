@@ -48,6 +48,6 @@ class GenerateFriendlyUrlCommand extends Command
 
         $output->writeln('<fg=green>Generating complete.</fg=green>');
 
-        return CommandResultCodes::RESULT_OK;
+        return Command::SUCCESS;
     }
 }

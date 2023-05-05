@@ -58,6 +58,6 @@ class ConfigureDomainsUrlsCommand extends Command
             );
         }
 
-        return CommandResultCodes::RESULT_OK;
+        return Command::SUCCESS;
     }
 }

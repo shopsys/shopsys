@@ -44,6 +44,6 @@ class RedisCleanCacheCommand extends Command
     {
         $this->redisFacade->cleanCache();
 
-        return CommandResultCodes::RESULT_OK;
+        return Command::SUCCESS;
     }
 }

@@ -42,6 +42,6 @@ class GenerateErrorPagesCommand extends Command
     {
         $this->errorPagesFacade->generateAllErrorPagesForProduction();
 
-        return CommandResultCodes::RESULT_OK;
+        return Command::SUCCESS;
     }
 }
