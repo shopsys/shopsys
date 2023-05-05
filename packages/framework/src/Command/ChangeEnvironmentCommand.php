@@ -73,6 +73,6 @@ class ChangeEnvironmentCommand extends Command
 
         $output->writeln(sprintf('Application environment successfully changed to "%s".', $targetEnvironment));
 
-        return CommandResultCodes::RESULT_OK;
+        return Command::SUCCESS;
     }
 }

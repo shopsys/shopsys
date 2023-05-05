@@ -52,7 +52,7 @@ class CreateDomainsDbFunctionsCommand extends Command
             $this->doExecute($output);
         });
 
-        return CommandResultCodes::RESULT_OK;
+        return Command::SUCCESS;
     }
 
     /**

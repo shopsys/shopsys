@@ -24,9 +24,6 @@ class DomainInfoCommand extends Command
     protected const OPTION_DEDUPLICATE = 'deduplicate';
     protected const OPTION_ONELINE = 'oneline';
 
-    protected const RETURN_CODE_OK = 0;
-    protected const RETURN_CODE_ERROR = 1;
-
     /**
      * @var string
      */
@@ -86,7 +83,7 @@ class DomainInfoCommand extends Command
         } catch (InvalidArgumentException $e) {
             $io->error($e->getMessage());
 
-            return static::RETURN_CODE_ERROR;
+            return Command::FAILURE;
         }
 
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
@@ -97,7 +94,7 @@ class DomainInfoCommand extends Command
             if (!$propertyAccessor->isReadable($domainConfig, $propertyName)) {
                 $this->outputPropertyNotAccessible($io, $domainConfig, $propertyName);
 
-                return static::RETURN_CODE_ERROR;
+                return Command::FAILURE;
             }
 
             $propertyValues[] = $propertyAccessor->getValue($domainConfig, $propertyName);
@@ -105,7 +102,7 @@ class DomainInfoCommand extends Command
 
         $this->outputPropertyValues($input, $io, $propertyValues);
 
-        return static::RETURN_CODE_OK;
+        return Command::SUCCESS;
     }
 
     /**

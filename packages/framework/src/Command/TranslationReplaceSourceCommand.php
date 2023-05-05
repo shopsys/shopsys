@@ -79,7 +79,7 @@ class TranslationReplaceSourceCommand extends Command
         $this->replaceAllInFiles($replacements, $allPathNames, $output);
         $this->replaceSourcesInPoFiles($replacements, $translationsDirectory);
 
-        return CommandResultCodes::RESULT_OK;
+        return Command::SUCCESS;
     }
 
     /**

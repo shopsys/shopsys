@@ -11,9 +11,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class CheckRedisCommand extends Command
 {
-    protected const RETURN_CODE_OK = 0;
-    protected const RETURN_CODE_ERROR = 1;
-
     /**
      * @var string
      */
@@ -54,9 +51,9 @@ class CheckRedisCommand extends Command
         } catch (RedisException $e) {
             $io->error('Redis is not available.');
 
-            return static::RETURN_CODE_ERROR;
+            return Command::FAILURE;
         }
 
-        return static::RETURN_CODE_OK;
+        return Command::SUCCESS;
     }
 }

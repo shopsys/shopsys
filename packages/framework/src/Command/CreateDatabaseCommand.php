@@ -56,7 +56,7 @@ class CreateDatabaseCommand extends Command
         $this->createDatabaseIfNotExists($symfonyStyleIo);
         $this->createExtensionsIfNotExist($symfonyStyleIo);
 
-        return CommandResultCodes::RESULT_OK;
+        return Command::SUCCESS;
     }
 
     /**

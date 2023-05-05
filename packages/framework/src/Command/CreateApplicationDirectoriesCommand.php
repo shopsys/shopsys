@@ -106,7 +106,7 @@ class CreateApplicationDirectoriesCommand extends Command
         $this->createImageDirectories($output);
         $this->createUploadedFileDirectories($output);
 
-        return CommandResultCodes::RESULT_OK;
+        return Command::SUCCESS;
     }
 
     /**

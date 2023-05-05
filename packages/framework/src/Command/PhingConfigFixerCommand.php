@@ -15,8 +15,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class PhingConfigFixerCommand extends Command
 {
-    protected const RETURN_CODE_OK = 0;
-    protected const RETURN_CODE_ERROR = 1;
     protected const ARG_XML_PATH = 'xml';
     protected const OPTION_ONLY_CHECK = 'check';
 
@@ -49,7 +47,7 @@ class PhingConfigFixerCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $returnCode = static::RETURN_CODE_OK;
+        $returnCode = Command::SUCCESS;
         $io = new SymfonyStyle($input, $output);
 
         $checkOnly = $input->getOption(static::OPTION_ONLY_CHECK);
@@ -63,7 +61,7 @@ class PhingConfigFixerCommand extends Command
             $isContentChanged = $content !== $sortedContent;
 
             if ($checkOnly && $isContentChanged) {
-                $returnCode = static::RETURN_CODE_ERROR;
+                $returnCode = Command::FAILURE;
 
                 $io->error(sprintf('The Phing configuration in "%s" in not OK.', $path));
             } elseif ($isContentChanged) {
@@ -73,9 +71,9 @@ class PhingConfigFixerCommand extends Command
             }
         }
 
-        if ($returnCode === static::RETURN_CODE_OK) {
+        if ($returnCode === Command::SUCCESS) {
             $io->success('All Phing configuration files are OK.');
-        } elseif ($returnCode === static::RETURN_CODE_ERROR) {
+        } elseif ($returnCode === Command::FAILURE) {
             $io->error('Some Phing configuration files are not OK.');
 
             $io->comment(

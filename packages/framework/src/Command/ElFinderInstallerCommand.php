@@ -85,6 +85,6 @@ EOF
 
         $io->success('elFinder assets successfully installed');
 
-        return 0;
+        return Command::SUCCESS;
     }
 }
