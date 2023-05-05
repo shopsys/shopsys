@@ -326,6 +326,24 @@
         </exec>
     </target>
 
+    <target name="db-migrations-count-with-maintenance" hidden="true" description="Get count of database migrations to execute and enable maintenance mode if more than zero.">
+        <exec executable="${path.php.executable}" checkreturn="true" outputProperty="migrationCounts">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:migrations:count"/>
+            <arg value="--simple"/>
+            <arg value="--verbose"/>
+        </exec>
+        <if>
+            <equals arg1="${migrationCounts}" arg2="0"/>
+            <then>
+                <echo message="There is no need to enable maintenance mode"/>
+            </then>
+            <else>
+                <phingcall target="maintenance-on"/>
+            </else>
+        </if>
+    </target>
+
     <target name="db-migrations-generate" depends="clean-cache,db-check-mapping" description="Generates migration file when DB schema is not satisfying ORM.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
