@@ -61,9 +61,11 @@ class LoginTest extends GraphQlTestCase
     {
         $expectedError = [
             'errors' => [
-                'message' => 'Token is not valid.',
-                'extensions' => [
-                    'category' => 'token',
+                [
+                    'message' => 'Token is not valid.',
+                    'extensions' => [
+                        'category' => 'token',
+                    ],
                 ],
             ],
         ];

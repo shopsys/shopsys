@@ -106,7 +106,7 @@ class TokenAuthenticator extends AbstractAuthenticator
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
         $responseData = [
-            'errors' => FormattedError::createFromException($exception),
+            'errors' => [FormattedError::createFromException($exception)],
         ];
 
         return new JsonResponse($responseData, Response::HTTP_UNAUTHORIZED);
