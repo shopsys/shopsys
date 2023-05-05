@@ -12,7 +12,7 @@ class InvalidAccountOrPasswordUserError extends UserError implements UserErrorWi
     protected const CODE = 'invalid-account-or-password';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

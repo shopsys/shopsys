@@ -65,7 +65,7 @@ abstract class AbstractExportSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     abstract public static function getSubscribedEvents(): array;
 

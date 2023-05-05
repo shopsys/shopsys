@@ -21,14 +21,10 @@ final class InheritDocFormatFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTestingFiles(): iterable
     {
         yield [__DIR__ . '/fixed/fixed.php', __DIR__ . '/wrong/wrong.php'];
-        //yield [__DIR__ . '/correct/correct.php'];
-        //yield [__DIR__ . '/correct/correct2.php'];
-        //yield [__DIR__ . '/correct/correct3.php'];
-        //yield [__DIR__ . '/correct/correct4.php'];
     }
 }

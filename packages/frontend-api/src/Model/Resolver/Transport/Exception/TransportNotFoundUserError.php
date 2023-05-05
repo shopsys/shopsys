@@ -12,7 +12,7 @@ class TransportNotFoundUserError extends EntityNotFoundUserError implements User
     protected const CODE = 'transport-not-found';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

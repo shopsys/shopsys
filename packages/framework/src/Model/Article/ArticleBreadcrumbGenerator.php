@@ -21,7 +21,7 @@ class ArticleBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getBreadcrumbItems($routeName, array $routeParameters = [])
     {
@@ -33,7 +33,7 @@ class ArticleBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getRouteNames()
     {

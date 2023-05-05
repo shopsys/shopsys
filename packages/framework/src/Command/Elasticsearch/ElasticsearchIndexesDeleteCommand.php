@@ -15,7 +15,7 @@ class ElasticsearchIndexesDeleteCommand extends AbstractElasticsearchIndexComman
     protected static $defaultName = 'shopsys:elasticsearch:indexes-delete';
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
@@ -23,7 +23,7 @@ class ElasticsearchIndexesDeleteCommand extends AbstractElasticsearchIndexComman
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getCommandDescription(): string
     {
@@ -31,7 +31,7 @@ class ElasticsearchIndexesDeleteCommand extends AbstractElasticsearchIndexComman
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getArgumentNameDescription(): string
     {
@@ -42,7 +42,7 @@ class ElasticsearchIndexesDeleteCommand extends AbstractElasticsearchIndexComman
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getActionStartedMessage(): string
     {
@@ -50,7 +50,7 @@ class ElasticsearchIndexesDeleteCommand extends AbstractElasticsearchIndexComman
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getActionFinishedMessage(): string
     {

@@ -59,7 +59,7 @@ class BestsellingProductDataFixture extends AbstractReferenceFixture implements 
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDependencies()
     {

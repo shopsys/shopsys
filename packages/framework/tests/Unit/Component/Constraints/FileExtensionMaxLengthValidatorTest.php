@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 class FileExtensionMaxLengthValidatorTest extends ConstraintValidatorTestCase
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function createValidator()
     {

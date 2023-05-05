@@ -28,7 +28,7 @@ class ArticleNotFoundUserError extends EntityNotFoundUserError implements UserEr
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

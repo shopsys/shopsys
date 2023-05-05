@@ -60,7 +60,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
     {
@@ -70,7 +70,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function enterNode(Node $node): int|Node|null
     {
@@ -86,7 +86,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function leaveNode(Node $node): int|Node|null
     {
@@ -133,7 +133,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function beforeTraverse(array $nodes): ?array
     {
@@ -141,7 +141,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function afterTraverse(array $nodes): ?array
     {
@@ -149,7 +149,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function visitFile(SplFileInfo $file, MessageCatalogue $catalogue)
     {
@@ -157,7 +157,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, TwigNode $ast)
     {

@@ -15,7 +15,7 @@ class ElasticsearchChangedDataExportCommand extends ElasticsearchDataExportComma
     protected static $defaultName = 'shopsys:elasticsearch:changed-data-export';
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
@@ -27,7 +27,7 @@ class ElasticsearchChangedDataExportCommand extends ElasticsearchDataExportComma
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getCommandDescription(): string
     {
@@ -35,7 +35,7 @@ class ElasticsearchChangedDataExportCommand extends ElasticsearchDataExportComma
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getActionStartedMessage(): string
     {
@@ -43,7 +43,7 @@ class ElasticsearchChangedDataExportCommand extends ElasticsearchDataExportComma
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getActionFinishedMessage(): string
     {
