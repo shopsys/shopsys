@@ -407,8 +407,8 @@ There you can find links to upgrade notes for other versions too.
     - parameter `$expectedStatusCode` of `getUrlContent()` changed from no type to `int`
     - maintenance mode is now detected by checking presence of `maintenance` key in Redis instead of `MAINTENANCE` file in root directory
     - maintenance page template is now standard twig template (`@ShopsysFramework/Common/maintenance.html.twig`) instead of php file
-    - constructor `CronCommand` changed its interface
     - class `Shopsys\FrameworkBundle\Command\CommandResultCodes` was removed
+    - constructor `CronCommand` changed its interface
     ```diff
         public function __construct(
     -       CronFacade $cronFacade,

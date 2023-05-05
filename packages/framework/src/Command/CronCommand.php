@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Command;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeZone;
+use NinjaMutex\Lock\LockInterface;
 use Shopsys\FrameworkBundle\Command\Exception\CronCommandException;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
@@ -29,34 +30,17 @@ class CronCommand extends Command
     protected static $defaultName = 'shopsys:cron';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Cron\CronFacade
-     */
-    private $cronFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Cron\MutexFactory
-     */
-    private $mutexFactory;
-
-    /**
-     * @var \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface
-     */
-    private $parameterBag;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
      * @param \Shopsys\FrameworkBundle\Component\Cron\MutexFactory $mutexFactory
      * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
+     * @param \NinjaMutex\Lock\LockInterface $lock
      */
     public function __construct(
-        CronFacade $cronFacade,
-        MutexFactory $mutexFactory,
-        ParameterBagInterface $parameterBag
+        protected readonly CronFacade $cronFacade,
+        protected readonly MutexFactory $mutexFactory,
+        protected readonly ParameterBagInterface $parameterBag,
+        protected readonly LockInterface $lock,
     ) {
-        $this->cronFacade = $cronFacade;
-        $this->mutexFactory = $mutexFactory;
-        $this->parameterBag = $parameterBag;
-
         parent::__construct();
     }
 
@@ -70,7 +54,7 @@ class CronCommand extends Command
                 self::OPTION_INSTANCE_NAME,
                 null,
                 InputOption::VALUE_REQUIRED,
-                'specific cron instance identifier'
+                'specific cron instance identifier',
             );
     }
 
@@ -84,11 +68,19 @@ class CronCommand extends Command
 
         if ($optionList === true) {
             $this->listAllCronModulesSortedByServiceId($input, $output, $this->cronFacade);
-        } else {
-            $instanceName = $optionInstanceName ?? $this->chooseInstance($input, $output);
 
-            $this->runCron($input, $this->cronFacade, $this->mutexFactory, $instanceName);
+            return Command::SUCCESS;
         }
+
+        if ($this->lock->isLocked(CronLockCommand::CRON_MUTEX_LOCK_NAME)) {
+            $output->writeln('Crons are locked with `deploy:cron:lock` command. Nothing to do.');
+
+            return Command::FAILURE;
+        }
+
+
+        $instanceName = $optionInstanceName ?? $this->chooseInstance($input, $output);
+        $this->runCron($input, $this->cronFacade, $this->mutexFactory, $instanceName);
 
         return Command::SUCCESS;
     }
@@ -129,7 +121,7 @@ class CronCommand extends Command
             $cronModuleConfigs,
             function (CronModuleConfig $cronModuleConfigA, CronModuleConfig $cronModuleConfigB) {
                 return strcmp($cronModuleConfigA->getServiceId(), $cronModuleConfigB->getServiceId());
-            }
+            },
         );
 
         $commands = [];
@@ -139,7 +131,7 @@ class CronCommand extends Command
                 'php bin/console %s --%s="%s"',
                 $this->getName(),
                 self::OPTION_MODULE,
-                $cronModuleConfig->getServiceId()
+                $cronModuleConfig->getServiceId(),
             );
 
             if ($includeInstance) {
@@ -203,7 +195,7 @@ class CronCommand extends Command
             func_get_args(),
             0,
             CronModuleConfig::RUN_EVERY_MIN_DEFAULT,
-            true
+            true,
         );
 
         $time = new DateTime('now', $this->getCronTimeZone());
@@ -225,9 +217,9 @@ class CronCommand extends Command
         $defaultInstanceName = in_array(
             CronModuleConfig::DEFAULT_INSTANCE_NAME,
             $instanceNames,
-            true
+            true,
         ) ? CronModuleConfig::DEFAULT_INSTANCE_NAME : reset(
-            $instanceNames
+            $instanceNames,
         );
 
         if (count($instanceNames) === 1) {
@@ -245,7 +237,7 @@ class CronCommand extends Command
         return $io->choice(
             'There is more than one cron instance. Which instance do you want to use?',
             $instanceNameChoices,
-            $defaultInstanceName
+            $defaultInstanceName,
         );
     }
 
