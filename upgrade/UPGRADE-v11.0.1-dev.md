@@ -156,8 +156,8 @@ There you can find links to upgrade notes for other versions too.
         ```
     - if you have implemented a custom storefront using frontend API then you should consider implementing this functionality into your storefront
     - see #project-base-diff to update your project
-- enable login rate limits to prevent brute force attacks ([#2599](https://github.com/shopsys/shopsys/pull/2599))
-    - see #project-base-diff to update your project
+- enable login rate limits to prevent brute force attacks ([#2599](https://github.com/shopsys/shopsys/pull/2599) and [#2613](https://github.com/shopsys/shopsys/pull/2613))
+    - see #project-base-diff and then #project-base-diff2 to update your project
 - improve your installation on macOS by replacing `Docker-sync` with `Mutagen` ([#2593](https://github.com/shopsys/shopsys/pull/2593))
     - see #project-base-diff to update your project
 - improve config folder structure ([#2607](https://github.com/shopsys/shopsys/pull/2607))

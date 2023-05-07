@@ -2281,6 +2281,9 @@ msgstr "Na setiny (haléře)"
 msgid "To whole numbers"
 msgstr "Na celá čísla (koruny)"
 
+msgid "Too many login attempts. Please try again later."
+msgstr "Příliš mnoho pokusů o přihlášení. Zkuste to prosím později."
+
 msgid "Total"
 msgstr "Celkem"
 

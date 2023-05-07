@@ -616,6 +616,9 @@ msgstr "Tyto stránky používají cookies. Setrváním na stránkách s tímto 
 msgid "To prevent the possibility of account theft, the change of the email address must be dealt with individually. If your email address has changed, please contact us."
 msgstr "Abychom předešli možnosti zcizení účtu, je třeba změnu e-mailu řešit individuálně. Pokud se Vám e-mailová adresa změnila, tak nás prosím kontaktujte."
 
+msgid "Too many login attempts. Please try again later."
+msgstr "Příliš mnoho pokusů o přihlášení. Prosím, zkuste to později."
+
 msgid "Total"
 msgstr "Celkem"
 
