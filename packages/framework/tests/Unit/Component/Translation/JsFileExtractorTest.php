@@ -18,7 +18,7 @@ class JsFileExtractorTest extends TestCase
     public function testExtract()
     {
         /*
-         * the method that generates this file is tested elsewhere (project-base/assets/js/commands/translations/parseFile.test.js)
+         * the method that generates this file is tested elsewhere (project-base/app/assets/js/commands/translations/parseFile.test.js)
          */
         $fileName = 'translationsDump.json';
 

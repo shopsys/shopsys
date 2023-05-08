@@ -6,19 +6,17 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 
 $symfonyDumpFunctionPath = 'vendor/symfony/var-dumper/Resources/functions/dump.php';
 
-if (file_exists(__DIR__ . '/../' . $symfonyDumpFunctionPath)) {
-    require_once __DIR__ . '/../' . $symfonyDumpFunctionPath;
+$projectRootDirectory = __DIR__ . '/..';
+
+// change autoloading source for monorepo
+if (file_exists(__DIR__ . '/../../../parameters_monorepo.yaml')) {
+    $projectRootDirectory = __DIR__ . '/../../..';
 }
 
-if (file_exists(__DIR__ . '/../../' . $symfonyDumpFunctionPath)) {
-    require_once __DIR__ . '/../../' . $symfonyDumpFunctionPath;
+if (file_exists(__DIR__ . $projectRootDirectory . '/' . $symfonyDumpFunctionPath)) {
+    require_once __DIR__ . $projectRootDirectory . '/' . $symfonyDumpFunctionPath;
 }
 
-/** @var \Composer\Autoload\ClassLoader $loader */
-$loader = file_exists(
-    __DIR__ . '/../vendor/autoload.php',
-) ? require __DIR__ . '/../vendor/autoload.php' : require __DIR__ . '/../../vendor/autoload.php';
-
-AnnotationRegistry::registerLoader([$loader, 'loadClass']);
+$loader = require $projectRootDirectory . '/vendor/autoload.php';
 
 return $loader;

@@ -3,7 +3,7 @@
 
     <property name="check-and-fix-annotations" value="true"/>
     <property name="npm.framework" value="@shopsys/framework"/>
-    <property name="path.root" value="${project.basedir}/project-base"/>
+    <property name="path.root" value="${project.basedir}/project-base/app"/>
     <property name="path.vendor" value="${project.basedir}/vendor"/>
     <property name="path.packages" value="${project.basedir}/packages"/>
     <property name="path.frontend-api" value="${path.packages}/frontend-api"/>
@@ -44,7 +44,7 @@
             <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
-            <arg path="${path.root}/*.md"/>
+            <arg path="${path.root}/../*.md"/>
             <arg path="${path.root}/docs"/>
             <arg path="${path.packages}/*/src"/>
             <arg path="${path.packages}/*/tests"/>
@@ -62,7 +62,7 @@
             <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
-            <arg path="${path.root}/*.md"/>
+            <arg path="${path.root}/../*.md"/>
             <arg path="${path.root}/docs"/>
             <arg path="${path.packages}/*/src"/>
             <arg path="${path.packages}/*/tests"/>
@@ -82,7 +82,7 @@
             <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
-            <arg path="${path.root}/*.md"/>
+            <arg path="${path.root}/../*.md"/>
             <arg path="${path.root}/docs"/>
             <arg path="${path.packages}/*/src"/>
             <arg path="${path.packages}/*/tests"/>
@@ -101,7 +101,7 @@
             <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
-            <arg path="${path.root}/*.md"/>
+            <arg path="${path.root}/../*.md"/>
             <arg path="${path.root}/docs"/>
             <arg path="${path.packages}/*/src"/>
             <arg path="${path.packages}/*/tests"/>
@@ -245,7 +245,7 @@
         </exec>
     </target>
 
-    <target name="project-base-vendor-check" description="Check there exists no vendor directory in project-base/ as that would break the autoloader" hidden="true">
+    <target name="project-base-vendor-check" description="Check there exists no vendor directory in project-base/app as that would break the autoloader" hidden="true">
         <if>
             <available file="${path.root}/vendor" type="dir" property="dir.Exists"/>
             <then>

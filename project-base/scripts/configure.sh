@@ -33,7 +33,7 @@ do
 done
 
 if [[ -d "project-base" ]]; then
-    projectPathPrefix="project-base/"
+    projectPathPrefix="project-base/app"
     echo "You are in monorepo, prefixing paths app paths with ${projectPathPrefix}"
 fi
 

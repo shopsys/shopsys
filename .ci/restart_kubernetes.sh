@@ -9,7 +9,7 @@
 kubectl create namespace ${JOB_NAME} || true
 
 # Go to kustomize folder
-cd project-base/kubernetes/kustomize
+cd project-base/app/kubernetes/kustomize
 
 # Echo Kustomize build for debugging
 kustomize build overlays/ci

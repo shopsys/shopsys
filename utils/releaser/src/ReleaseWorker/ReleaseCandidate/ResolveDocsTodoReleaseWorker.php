@@ -90,7 +90,7 @@ final class ResolveDocsTodoReleaseWorker extends AbstractShopsysReleaseWorker
             ->name('*.md')
             ->in(getcwd())
             ->exclude('vendor')
-            ->exclude('project-base/var');
+            ->exclude('project-base/app/var');
 
         return iterator_to_array($finder->getIterator());
     }

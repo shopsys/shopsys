@@ -38,7 +38,7 @@ jobs:
                     DOCKER_USERNAME: ${{ github.repository_owner }}
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 run: |
-                    DOCKER_PHP_FPM_IMAGE_TAG=github-action-`find project-base/docker/php-fpm -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    DOCKER_PHP_FPM_IMAGE_TAG=github-action-`find project-base/app/docker/php-fpm -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
                     echo "DOCKER_PHP_FPM_IMAGE_TAG=${DOCKER_PHP_FPM_IMAGE_TAG}" >> $GITHUB_ENV
                     echo "DOCKER_USERNAME=${DOCKER_USERNAME}" >> $GITHUB_ENV
                     DOCKER_PHP_FPM_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} php-fpm ${DOCKER_PHP_FPM_IMAGE_TAG} ${GITHUB_TOKEN} > /dev/null ; echo $?`
@@ -50,7 +50,7 @@ jobs:
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 run: |
-                    DOCKER_ELASTICSEARCH_IMAGE_TAG=github-action-`find project-base/docker/elasticsearch -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    DOCKER_ELASTICSEARCH_IMAGE_TAG=github-action-`find project-base/app/docker/elasticsearch -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
                     echo "DOCKER_ELASTICSEARCH_IMAGE_TAG=${DOCKER_ELASTICSEARCH_IMAGE_TAG}" >> $GITHUB_ENV
                     DOCKER_ELASTICSEARCH_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} elasticsearch ${DOCKER_ELASTICSEARCH_IMAGE_TAG} ${GITHUB_TOKEN} > /dev/null ; echo $?`
                     echo "DOCKER_ELASTICSEARCH_IMAGE_EXISTS=${DOCKER_ELASTICSEARCH_IMAGE_EXISTS}" >> $GITHUB_ENV
@@ -166,13 +166,13 @@ jobs:
                 run: docker-compose logs php-fpm
             -   name: Copy Codeception logs from container
                 if: ${{ failure() }}
-                run: docker cp shopsys-framework-php-fpm:/var/www/html/project-base/var/log ./project-base/var/log
+                run: docker cp shopsys-framework-php-fpm:/var/www/html/project-base/app/var/log ./project-base/app/var/log
             -   name: Upload Codeception logs to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v3
                 with:
                     name: acceptance-logs
-                    path: ./project-base/var/log/
+                    path: ./project-base/app/var/log/
     build-fork-docker-images:
         if: github.event.pull_request.head.repo.full_name != 'shopsys/shopsys'
         name: Build application and run standards checks and tests
@@ -187,7 +187,7 @@ jobs:
                     DOCKER_USERNAME: ${{ github.repository_owner }}
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 run: |
-                    DOCKER_PHP_FPM_IMAGE_TAG=github-action-`find project-base/docker/php-fpm -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    DOCKER_PHP_FPM_IMAGE_TAG=github-action-`find project-base/app/docker/php-fpm -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
                     echo "DOCKER_PHP_FPM_IMAGE_TAG=${DOCKER_PHP_FPM_IMAGE_TAG}" >> $GITHUB_ENV
                     echo "DOCKER_USERNAME=${DOCKER_USERNAME}" >> $GITHUB_ENV
                     DOCKER_PHP_FPM_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} php-fpm ${DOCKER_PHP_FPM_IMAGE_TAG} ${GITHUB_TOKEN} > /dev/null ; echo $?`
@@ -197,18 +197,18 @@ jobs:
                 if: env.DOCKER_PHP_FPM_IMAGE_EXISTS == 0
                 run: |
                     docker image build \
-                        --build-arg project_root=project-base \
+                        --build-arg project_root=project-base/app \
                         --build-arg www_data_uid=$(id -u) \
                         --build-arg www_data_gid=$(id -g) \
                         --tag ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG} \
                         --target production \
                         --no-cache \
                         --compress \
-                        -f project-base/docker/php-fpm/Dockerfile \
+                        -f project-base/app/docker/php-fpm/Dockerfile \
                         .
             -   name: Check if Elasticseach image exists
                 run: |
-                    DOCKER_ELASTICSEARCH_IMAGE_TAG=github-action-`find project-base/docker/elasticsearch -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    DOCKER_ELASTICSEARCH_IMAGE_TAG=github-action-`find project-base/app/docker/elasticsearch -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
                     echo "DOCKER_ELASTICSEARCH_IMAGE_TAG=${DOCKER_ELASTICSEARCH_IMAGE_TAG}" >> $GITHUB_ENV
                     DOCKER_ELASTICSEARCH_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} elasticsearch ${DOCKER_ELASTICSEARCH_IMAGE_TAG} ${GITHUB_TOKEN} > /dev/null ; echo $?`
                     echo "DOCKER_ELASTICSEARCH_IMAGE_EXISTS=${DOCKER_ELASTICSEARCH_IMAGE_EXISTS}" >> $GITHUB_ENV
@@ -219,7 +219,7 @@ jobs:
                         --tag ghcr.io/${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG} \
                         --no-cache \
                         --compress \
-                        -f project-base/docker/elasticsearch/Dockerfile \
+                        -f project-base/app/docker/elasticsearch/Dockerfile \
                         .
             -   name: Copy and rename docker-compose.github-actions.yml.dist to docker-compose.yml
                 run: cp -f ./docker/conf/docker-compose.github-actions.yml.dist ./docker-compose.yml
@@ -247,13 +247,13 @@ jobs:
                 run: docker-compose logs php-fpm
             -   name: Copy Codeception logs from container
                 if: ${{ failure() }}
-                run: docker cp shopsys-framework-php-fpm:/var/www/html/project-base/var/log ./project-base/var/log
+                run: docker cp shopsys-framework-php-fpm:/var/www/html/project-base/app/var/log ./project-base/app/var/log
             -   name: Upload Codeception logs to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v3
                 with:
                     name: acceptance-logs
-                    path: ./project-base/var/log/
+                    path: ./project-base/app/var/log/
     build-successful:
         if: ${{ always() }}
         name: Build successful

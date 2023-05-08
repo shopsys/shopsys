@@ -45,15 +45,15 @@ final class CreateAndCommitLockFilesReleaseWorker extends AbstractShopsysRelease
         $this->processRunner->run(sprintf('cd %s/project-base && php phing db-rebuild', $tempDirectory));
 
         $this->symfonyStyle->note('Committing changes in composer.lock, symfony.lock, package-lock.json, and migrations-lock.yml');
-        $this->processRunner->run(sprintf('cp %s/project-base/composer.lock %s/project-base/composer.lock', $tempDirectory, $currentDir));
-        $this->processRunner->run(sprintf('cp %s/project-base/symfony.lock %s/project-base/symfony.lock', $tempDirectory, $currentDir));
-        $this->processRunner->run(sprintf('cp %s/project-base/package-lock.json %s/project-base/package-lock.json', $tempDirectory, $currentDir));
-        $this->processRunner->run(sprintf('cp %s/project-base/migrations-lock.yml %s/project-base/migrations-lock.yml', $tempDirectory, $currentDir));
+        $this->processRunner->run(sprintf('cp %s/project-base/app/composer.lock %s/project-base/app/composer.lock', $tempDirectory, $currentDir));
+        $this->processRunner->run(sprintf('cp %s/project-base/app/symfony.lock %s/project-base/app/symfony.lock', $tempDirectory, $currentDir));
+        $this->processRunner->run(sprintf('cp %s/project-base/app/package-lock.json %s/project-base/app/package-lock.json', $tempDirectory, $currentDir));
+        $this->processRunner->run(sprintf('cp %s/project-base/app/migrations-lock.yml %s/project-base/app/migrations-lock.yml', $tempDirectory, $currentDir));
 
-        $this->processRunner->run('git add -f project-base/composer.lock');
-        $this->processRunner->run('git add project-base/symfony.lock');
-        $this->processRunner->run('git add -f project-base/package-lock.json');
-        $this->processRunner->run('git add -f project-base/migrations-lock.yml');
+        $this->processRunner->run('git add -f project-base/app/composer.lock');
+        $this->processRunner->run('git add project-base/app/symfony.lock');
+        $this->processRunner->run('git add -f project-base/app/package-lock.json');
+        $this->processRunner->run('git add -f project-base/app/migrations-lock.yml');
 
         $message = sprintf('locked versions of dependencies for %s release', $version->getVersionString());
         $this->commit($message);

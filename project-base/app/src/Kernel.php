@@ -43,7 +43,7 @@ class Kernel extends BaseKernel
         return dirname(__DIR__);
     }
 
-    public function boot()
+    public function boot(): void
     {
         parent::boot();
 
@@ -82,8 +82,8 @@ class Kernel extends BaseKernel
         $loader->load($confDir . '/{services}' . self::CONFIG_EXTS, 'glob');
         $loader->load($confDir . '/{services}_' . $this->environment . self::CONFIG_EXTS, 'glob');
 
-        if (file_exists(__DIR__ . '/../../parameters_monorepo.yaml')) {
-            $loader->load(__DIR__ . '/../../parameters_monorepo.yaml');
+        if (file_exists(__DIR__ . '/../../../parameters_monorepo.yaml')) {
+            $loader->load(__DIR__ . '/../../../parameters_monorepo.yaml');
         }
 
         if (file_exists($confDir . '/parameters_version.yaml')) {

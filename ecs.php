@@ -19,9 +19,9 @@ return static function (ECSConfig $ecsConfig): void {
         [
             PhpdocToPropertyTypeFixer::class => [
                 __DIR__ . '/packages/*',
-                __DIR__ . '/project-base/src/*',
-                __DIR__ . '/project-base/app/*',
-                __DIR__ . '/project-base/tests/App/Acceptance/*',
+                __DIR__ . '/project-base/app/src/*',
+                __DIR__ . '/project-base/app/app/*',
+                __DIR__ . '/project-base/app/tests/App/Acceptance/*',
                 __DIR__ . '/utils/*',
             ],
             DeclareStrictTypesFixer::class => [
@@ -29,12 +29,12 @@ return static function (ECSConfig $ecsConfig): void {
                 __DIR__ . '/utils/*',
             ],
             ConstantVisibilityRequiredSniff::class => [
-                __DIR__ . '/project-base/src/*',
-                __DIR__ . '/project-base/tests/App/*',
+                __DIR__ . '/project-base/app/src/*',
+                __DIR__ . '/project-base/app/tests/App/*',
             ],
             ForceLateStaticBindingForProtectedConstantsSniff::class => [
-                __DIR__ . '/project-base/src/*',
-                __DIR__ . '/project-base/tests/App/*',
+                __DIR__ . '/project-base/app/src/*',
+                __DIR__ . '/project-base/app/tests/App/*',
             ],
             FunctionLengthSniff::class => [
                 __DIR__ . '/utils/releaser/src/ReleaseWorker/Release/CreateAndPushGitTagsExceptProjectBaseReleaseWorker.php',
@@ -46,5 +46,5 @@ return static function (ECSConfig $ecsConfig): void {
     );
 
     $ecsConfig->import(__DIR__ . '/packages/*/ecs.php');
-    $ecsConfig->import(__DIR__ . '/project-base/ecs.php');
+    $ecsConfig->import(__DIR__ . '/project-base/app/ecs.php');
 };
