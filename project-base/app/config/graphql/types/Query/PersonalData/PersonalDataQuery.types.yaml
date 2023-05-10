@@ -1,0 +1,20 @@
+PersonalDataQuery:
+    type: object
+    config:
+        fields:
+            personalDataPage:
+                type: 'PersonalDataPage'
+                resolve: "@=query('personalDataPageQuery')"
+                description: "Return personal data page content and URL"
+            accessPersonalData:
+                type: PersonalData!
+                description: "Access personal data using hash received in email from personal data access request"
+                args:
+                    hash:
+                        type: "String!"
+                        description: "Hash to securely recognize access"
+                        validation:
+                            -   Length:
+                                    min: 20
+                                    max: 20
+                resolve: "@=query('personalDataAccessQuery', args['hash'], validator)"

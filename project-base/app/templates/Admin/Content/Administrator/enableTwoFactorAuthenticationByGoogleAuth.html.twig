@@ -1,0 +1,23 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}
+    - {{ 'Enable two factor authentication by Google Authenticator'|trans }}
+{% endblock %}
+
+{% block h1 %}{{ 'Enable two factor authentication by Google Authenticator'|trans }}{% endblock %}
+
+{% block main_content %}
+    <div class="wrap-divider">
+        <img src="{{ qrCodeDataUri }}" />
+
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        {{ form_end(form) }}
+    </div>
+
+    <div class="wrap-divider">
+        {{ 'Authenticator key'|trans }}
+        <p>{{ googleAuthenticatorSecret }}</p>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends '@!ShopsysFramework/Admin/Content/TransportAndPayment/list.html.twig' %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\TransportController::listAction')) }}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\PaymentController::listAction')) }}
+
+    {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+        {% block fixed_bar_content %}
+            <button class="js-drag-and-drop-grid-submit-all btn btn--disabled" type="button">{{ 'Save changes in order'|trans }}</button>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

@@ -56,9 +56,9 @@ parameters:
             message: '#^Service "doctrine.orm.default_metadata_driver" is private.$#'
             path: %currentWorkingDirectory%/packages/framework/src/DependencyInjection/Compiler/RegisterExtendedEntitiesCompilerPass.php
         -
-            # Annotations in Codeception are not well describing
-            message: '#^Parameter \#(\d+) (\$cssOrXPath|\$cssOrXPathOrRegex|\$field|\$selector|\$element) of method (Tests\\(.*)\\Codeception\\(.*)|Codeception\\Module\\WebDriver::moveMouseOver\(\)) expects (.*)#'
-            path: %currentWorkingDirectory%/project-base/app/tests/App/*
+            # in fact, anything can be passed to the load function, it just has a bad annotation
+            message: '#^Parameter \#1 \$key of method Overblog\\DataLoader\\DataLoaderInterface::load\(\) expects string#'
+            path: %currentWorkingDirectory%/project-base/app/src/FrontendApi/*
     excludePaths:
         # Exclude coding standards from packages as it is in incompatible version
         - %currentWorkingDirectory%/packages/coding-standards/*
@@ -67,7 +67,7 @@ parameters:
         # Exclude backend api package as the integration is currently removed
         - %currentWorkingDirectory%/packages/backend-api/*
         # Exclude coding standards for generated files
-        - %currentWorkingDirectory%/project-base/tests/App/Test/Codeception/_generated/*
+        - %currentWorkingDirectory%/project-base/app/tests/App/Test/Codeception/_generated/*
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon

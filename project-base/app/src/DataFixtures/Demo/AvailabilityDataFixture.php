@@ -21,9 +21,9 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
     public const AVAILABILITY_PREPARING = 'availability_preparing';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
+     * @param \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactory $availabilityDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
+     * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(

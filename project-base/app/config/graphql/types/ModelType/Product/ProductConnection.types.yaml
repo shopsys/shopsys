@@ -1,0 +1,18 @@
+ProductConnection:
+    type: relay-connection
+    config:
+        nodeType: Product
+        connectionFields:
+            totalCount:
+                type: "Int!"
+                description: "Total number of products"
+            productFilterOptions:
+                type: "ProductFilterOptions!"
+            orderingMode:
+                type: "ProductOrderingModeEnum!"
+                description: "The current ordering mode"
+            defaultOrderingMode:
+                type: "ProductOrderingModeEnum"
+                description: "The default ordering mode that is set for the given connection (e.g. in a category, search page, or ready category SEO mix)"
+    inherits:
+        - 'ProductConnectionDecorator'

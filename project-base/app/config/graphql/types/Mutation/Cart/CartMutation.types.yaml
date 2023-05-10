@@ -1,0 +1,20 @@
+CartMutation:
+    type: object
+    config:
+        fields:
+            AddToCart:
+                type: AddToCartResult!
+                description: "Add product to cart for future checkout"
+                args:
+                    input:
+                        type: AddToCartInput!
+                        validation: cascade
+                resolve: "@=mutation('addToCartMutation', args, validator)"
+            RemoveFromCart:
+                type: Cart!
+                description: "Remove product from cart"
+                args:
+                    input:
+                        type: RemoveFromCartInput!
+                        validation: cascade
+                resolve: "@=mutation('removeFromCartMutation', args, validator)"

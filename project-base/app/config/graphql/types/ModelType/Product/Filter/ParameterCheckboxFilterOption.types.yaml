@@ -1,0 +1,9 @@
+ParameterCheckboxFilterOption:
+    type: object
+    inherits:
+        - 'AppParameterFilterOptionDecorator'
+    config:
+        fields:
+            values:
+                type: "[ParameterValueFilterOption!]!"
+                description: "Filter options of parameter values"

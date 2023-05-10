@@ -39,19 +39,46 @@ class BrandDataFixture extends AbstractReferenceFixture
     public const BRAND_HYUNDAI = 'brand_hyundai';
     public const BRAND_NIKON = 'brand_nikon';
 
-    private BrandDataFactory $brandDataFactory;
+    /**
+     * @var string[]
+     */
+    private array $uuidPool = [
+        'd660b994-5765-42ec-a64a-df9660e6af21',
+        '1287c26a-5da0-4e61-b17d-2a1374560b9a',
+        '980d99c3-286f-4662-9b88-faaa9165cc15',
+        '5c11567e-7326-4f79-bcef-562da0094312',
+        '230bcb59-acfa-4305-84a2-d8af65394044',
+        'e373c9fb-5200-4b28-9c6b-ec231ee08810',
+        '04dd0a5e-72d7-4f5f-beb8-12ff413c9d1e',
+        '8d1add90-9eb4-4757-8193-cd9670524eec',
+        '374cbf2a-12d3-43c7-9a4f-08abfb6261d9',
+        '97538164-b8e0-426e-ba82-6786b55ed4b5',
+        '8901c304-b513-4f0f-af70-0447ab9fa707',
+        'ed124d8d-2689-4cdb-b701-6f2db8659165',
+        '632dd0a1-c4eb-4a71-ba6e-3a6dbedbf0be',
+        'c1934e06-5957-4cab-be42-7036a89c7dae',
+        '0ce9e493-f4f7-4920-a7de-0baf466481b7',
+        '7ed15961-ea05-4730-8513-22f889d4d936',
+        '6124d29c-604e-4ae0-8e6c-f3cdb56b6db1',
+        '5c68edb5-d555-45fd-ae1d-56dbb802fb1e',
+        '0d021b11-99f0-46d1-a767-14ad62cfdc17',
+        '8f189fef-3e28-44c7-9c7a-61083e6888ab',
+        '59e018a7-5683-4d5c-8d7d-6b2fec015c71',
+        '8a8dfdac-223b-41b6-a35d-a1577d376255',
+        'cec82d51-0671-4368-9ea8-a3d3d0ad1d22',
+        '738ead90-3108-433d-ad6e-1ea23f68a13d',
+    ];
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
+     * @param \App\Model\Product\Brand\BrandFacade $brandFacade
      * @param \App\Model\Product\Brand\BrandDataFactory $brandDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly BrandFacade $brandFacade,
-        BrandDataFactoryInterface $brandDataFactory,
+        private readonly BrandDataFactoryInterface $brandDataFactory,
         private readonly Domain $domain,
     ) {
-        $this->brandDataFactory = $brandDataFactory;
     }
 
     /**
@@ -63,6 +90,7 @@ class BrandDataFixture extends AbstractReferenceFixture
 
         foreach ($this->getBrandNamesIndexedByBrandConstants() as $brandConstant => $brandName) {
             $brandData->name = $brandName;
+            $brandData->uuid = array_pop($this->uuidPool);
 
             foreach ($this->domain->getAllLocales() as $locale) {
                 $brandData->descriptions[$locale] = t(

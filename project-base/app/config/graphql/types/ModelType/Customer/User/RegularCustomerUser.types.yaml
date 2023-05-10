@@ -1,0 +1,5 @@
+RegularCustomerUser:
+    type: object
+    config:
+        interfaces:
+            - 'CustomerUser'

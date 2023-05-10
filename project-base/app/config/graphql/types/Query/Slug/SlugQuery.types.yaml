@@ -1,0 +1,11 @@
+SlugQuery:
+    type: object
+    config:
+        fields:
+            slug:
+                type: 'Slug'
+                resolve: "@=query('slugQuery', args['slug'], info)"
+                description: "Returns entity by slug"
+                args:
+                    slug:
+                        type: "String!"

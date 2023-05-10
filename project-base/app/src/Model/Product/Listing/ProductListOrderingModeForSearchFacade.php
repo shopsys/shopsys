@@ -7,6 +7,10 @@ namespace App\Model\Product\Listing;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForSearchFacade as BaseProductListOrderingModeForSearchFacade;
 
+/**
+ * @property \App\Model\Product\Listing\RequestToOrderingModeIdConverter $requestToOrderingModeIdConverter
+ * @method __construct(\App\Model\Product\Listing\RequestToOrderingModeIdConverter $requestToOrderingModeIdConverter)
+ */
 class ProductListOrderingModeForSearchFacade extends BaseProductListOrderingModeForSearchFacade
 {
     /**
@@ -17,8 +21,6 @@ class ProductListOrderingModeForSearchFacade extends BaseProductListOrderingMode
         return [
             ProductListOrderingConfig::ORDER_BY_RELEVANCE => t('relevance'),
             ProductListOrderingConfig::ORDER_BY_PRIORITY => t('TOP'),
-            ProductListOrderingConfig::ORDER_BY_NAME_ASC => t('alphabetically A -> Z'),
-            ProductListOrderingConfig::ORDER_BY_NAME_DESC => t('alphabetically Z -> A'),
             ProductListOrderingConfig::ORDER_BY_PRICE_ASC => t('from the cheapest'),
             ProductListOrderingConfig::ORDER_BY_PRICE_DESC => t('from most expensive'),
         ];

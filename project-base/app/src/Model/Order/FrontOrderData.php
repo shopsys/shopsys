@@ -14,7 +14,28 @@ use Shopsys\FrameworkBundle\Model\Order\FrontOrderData as BaseFrontOrderData;
  * @property \App\Model\Order\Item\OrderItemData|null $orderPayment
  * @property \App\Model\Order\Item\OrderItemData|null $orderTransport
  * @method \App\Model\Order\Item\OrderItemData[] getNewItemsWithoutTransportAndPayment()
+ * @property \App\Model\Order\Status\OrderStatus|null $status
+ * @property \App\Model\Customer\DeliveryAddress $deliveryAddress
  */
 class FrontOrderData extends BaseFrontOrderData
 {
+    /**
+     * @var \App\Model\Store\Store|null
+     */
+    public $personalPickupStore;
+
+    /**
+     * @var \App\Model\GoPay\BankSwift\GoPayBankSwift
+     */
+    public $goPayBankSwift;
+
+    /**
+     * @var string|null
+     */
+    public $password;
+
+    /**
+     * @var bool
+     */
+    public $register = false;
 }

@@ -9,9 +9,10 @@ use League\Flysystem\FilesystemOperator;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageException;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageGeneratorFacade;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class ImageController extends FrontBaseController
+class ImageController extends AbstractController
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageGeneratorFacade $imageGeneratorFacade

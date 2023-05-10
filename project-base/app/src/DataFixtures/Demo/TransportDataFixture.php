@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
-use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 
 class TransportDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -21,22 +20,30 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     public const TRANSPORT_CZECH_POST = 'transport_cp';
     public const TRANSPORT_PPL = 'transport_ppl';
     public const TRANSPORT_PERSONAL = 'transport_personal';
-
-    private TransportDataFactory $transportDataFactory;
+    public const TRANSPORT_DRONE = 'transport_drone';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
+     * @var string[]
+     */
+    private array $uuidPool = [
+        '5e4cf5fd-16f1-4f1e-8a1b-fe81286ce8ed',
+        '45e4fe5a-db4a-49e8-80ec-5242a9858dce',
+        'ca676696-7fcf-43d8-a77e-9e9892cd464a',
+        'c5bf95f7-0093-4345-96d9-562e9371a273',
+    ];
+
+    /**
+     * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Transport\TransportDataFactory $transportDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
      */
     public function __construct(
         private readonly TransportFacade $transportFacade,
-        TransportDataFactoryInterface $transportDataFactory,
+        private readonly TransportDataFactory $transportDataFactory,
         private readonly Domain $domain,
         private readonly PriceConverter $priceConverter,
     ) {
-        $this->transportDataFactory = $transportDataFactory;
     }
 
     /**
@@ -45,24 +52,34 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     public function load(ObjectManager $manager)
     {
         $transportData = $this->transportDataFactory->create();
+        $transportData->daysUntilDelivery = 5;
+        $transportData->maxWeight = 5000;
+        $transportData->trackingUrl = 'https://www.postaonline.cz/trackandtrace/-/zasilka/cislo?parcelNumbers={tracking_number}';
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $transportData->name[$locale] = t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->trackingInstructions[$locale] = t('To track your package, click on this link: <a href="{tracking_url}">{tracking_number}</a>.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->description[$locale] = t('Czech state post service.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->instructions[$locale] = t('the Czech Post will try to deliver your parcel on time, but it will not succeed and despite the constant presence of your person at home, it will not catch you and you will have to pick up the parcel personally at the counter. Here, however, you have to endure an endlessly long line and an eternally grumpy lady postman.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $this->setPriceForAllDomains($transportData, Money::create('99.95'));
         $this->createTransport(self::TRANSPORT_CZECH_POST, $transportData);
 
         $transportData = $this->transportDataFactory->create();
+        $transportData->daysUntilDelivery = 4;
+        $transportData->trackingUrl = 'https://www.ppl.cz/vyhledat-zasilku?shipmentId={tracking_number}';
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $transportData->name[$locale] = t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->trackingInstructions[$locale] = t('To track your package, click on this link: <a href="{tracking_url}">{tracking_url}</a>.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
         $this->setPriceForAllDomains($transportData, Money::create('199.95'));
         $this->createTransport(self::TRANSPORT_PPL, $transportData);
 
         $transportData = $this->transportDataFactory->create();
+        $transportData->daysUntilDelivery = 0;
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $transportData->name[$locale] = t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -80,8 +97,24 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             );
         }
 
+        $transportData->personalPickup = true;
+
         $this->setPriceForAllDomains($transportData, Money::zero());
         $this->createTransport(self::TRANSPORT_PERSONAL, $transportData);
+
+        $transportData = $this->transportDataFactory->create();
+        $transportData->daysUntilDelivery = 0;
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $transportData->name[$locale] = t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->description[$locale] = t('Vhodné pro všechny druhy zboží', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $transportData->instructions[$locale] = t('Očekávejte dodávku koncem příštího měsíce', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+
+        $transportData->personalPickup = false;
+
+        $this->setPriceForAllDomains($transportData, Money::zero());
+        $this->createTransport(self::TRANSPORT_DRONE, $transportData);
     }
 
     /**
@@ -90,6 +123,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
      */
     private function createTransport($referenceName, TransportData $transportData)
     {
+        $transportData->uuid = array_pop($this->uuidPool);
         $transport = $this->transportFacade->create($transportData);
         $this->addReference($referenceName, $transport);
     }

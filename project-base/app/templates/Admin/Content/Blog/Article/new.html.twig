@@ -1,0 +1,8 @@
+{% extends 'Admin/Content/Blog/Article/detail.html.twig' %}
+
+{% block title %}- {{ 'Nový článek blogu'|trans }}{% endblock %}
+{% block h1 %}{{ 'Nový článek blogu'|trans }}{% endblock %}
+
+{% block article_urls %}
+    {% do form.urls.setRendered %}
+{% endblock %}

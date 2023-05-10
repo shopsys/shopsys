@@ -4,17 +4,38 @@ declare(strict_types=1);
 
 namespace App\Model\Article;
 
-use Shopsys\FrameworkBundle\Model\Article\Article;
+use Shopsys\FrameworkBundle\Model\Article\Article as BaseArticle;
 use Shopsys\FrameworkBundle\Model\Article\ArticleData as BaseArticleData;
 use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory as BaseArticleDataFactory;
 
 /**
- * @method \App\Model\Article\ArticleData create()
- * @method \App\Model\Article\ArticleData createFromArticle(\App\Model\Article\Article $article)
  * @method fillNew(\App\Model\Article\ArticleData $articleData)
  */
 class ArticleDataFactory extends BaseArticleDataFactory
 {
+    /**
+     * @param \App\Model\Article\Article $article
+     * @return \App\Model\Article\ArticleData
+     */
+    public function createFromArticle(BaseArticle $article): BaseArticleData
+    {
+        $articleData = new ArticleData();
+        $this->fillFromArticle($articleData, $article);
+
+        return $articleData;
+    }
+
+    /**
+     * @return \App\Model\Article\ArticleData
+     */
+    public function create(): BaseArticleData
+    {
+        $articleData = new ArticleData();
+        $this->fillNew($articleData);
+
+        return $articleData;
+    }
+
     /**
      * @return \App\Model\Article\ArticleData
      */
@@ -27,8 +48,12 @@ class ArticleDataFactory extends BaseArticleDataFactory
      * @param \App\Model\Article\ArticleData $articleData
      * @param \App\Model\Article\Article $article
      */
-    protected function fillFromArticle(BaseArticleData $articleData, Article $article): void
+    protected function fillFromArticle(BaseArticleData $articleData, BaseArticle $article)
     {
         parent::fillFromArticle($articleData, $article);
+
+        $articleData->external = $article->isExternal();
+        $articleData->type = $article->getType();
+        $articleData->url = $article->getUrl();
     }
 }

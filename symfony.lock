@@ -360,6 +360,9 @@
             "project-base/config/packages/nyholm_psr7.yaml"
         ]
     },
+    "overblog/dataloader-bundle": {
+        "version": "v0.5.2"
+    },
     "overblog/graphiql-bundle": {
         "version": "0.1",
         "recipe": {
@@ -397,6 +400,21 @@
     },
     "phing/phing": {
         "version": "2.16.1"
+    },
+    "php-http/discovery": {
+        "version": "1.18",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.18",
+            "ref": "f45b5dd173a27873ab19f5e3180b2f661c21de02"
+        },
+        "files": [
+            "project-base/app/config/packages/http_discovery.yaml"
+        ]
+    },
+    "php-http/message-factory": {
+        "version": "v1.0.2"
     },
     "php-parallel-lint/php-parallel-lint": {
         "version": "v1.3.1"
@@ -509,6 +527,19 @@
     "roave/signature": {
         "version": "1.0.0"
     },
+    "scheb/2fa-bundle": {
+        "version": "5.13",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.0",
+            "ref": "0a83961ef50ff91812b229a6f0caf28431d94aec"
+        },
+        "files": [
+            "project-base/app/config/packages/scheb_2fa.yaml",
+            "project-base/app/config/routes/scheb_2fa.yaml"
+        ]
+    },
     "sebastian/cli-parser": {
         "version": "1.0.1"
     },
@@ -573,6 +604,18 @@
         },
         "files": [
             "project-base/config/packages/sensio_framework_extra.yaml"
+        ]
+    },
+    "sentry/sentry-symfony": {
+        "version": "4.8",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "4.6",
+            "ref": "f7b4706a3e8a6f096b7392f3146f4f7f65ff594c"
+        },
+        "files": [
+            "project-base/app/config/packages/sentry.yaml"
         ]
     },
     "shopsys/jsformvalidator-bundle": {

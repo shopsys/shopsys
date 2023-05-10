@@ -28,3 +28,31 @@ fm_elfinder:
                             - 'mkfile'
                             - 'netmount'
                             - 'zipdl'
+        grapesJs:
+            editor: custom
+            editor_template: 'Admin/Inline/Elfinder/grapesjs-template.html.twig'
+            relative_path: false
+            connector:
+                debug: true
+                roots:
+                    local:
+                        driver: Flysystem
+                        path: 'web/%shopsys.filemanager_upload_web_dir%'
+                        flysystem:
+                            enabled: true
+                            filesystem: 'main_filesystem'
+                        upload_allow: [ 'image/png', 'image/jpg', 'image/jpeg' ]
+                        tmb_path: 'web/%shopsys.filemanager_upload_web_dir%/_thumbnails'
+                        url: '%shopsys.filemanager_upload_web_dir%'
+                        tmb_url: '/%shopsys.filemanager_upload_web_dir%/_thumbnails'
+                        attributes:
+                            thumbnails:
+                                pattern: '/^\/web\/content\/wysiwyg\/_thumbnails$/'
+                                hidden: true
+                        disabled_commands:
+                            - 'archive'
+                            - 'extract'
+                            - 'edit'
+                            - 'mkfile'
+                            - 'netmount'
+                            - 'zipdl'

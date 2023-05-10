@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Component\Setting\Setting;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Mail\Setting\MailSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
@@ -16,12 +17,18 @@ use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 
 class SettingValueDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
+    public const FREE_TRANSPORT_AND_PAYMENT_LIMIT = 10000;
+
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
+     * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      */
-    public function __construct(private readonly Setting $setting, private readonly Domain $domain)
-    {
+    public function __construct(
+        private readonly Setting $setting,
+        private readonly Domain $domain,
+        private readonly PricingSetting $pricingSetting,
+    ) {
     }
 
     /**
@@ -32,6 +39,12 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
             $locale = $domainConfig->getLocale();
+            if ($domainId === 1) {
+                $this->pricingSetting->setFreeTransportAndPaymentPriceLimit(
+                    $domainId,
+                    Money::create(self::FREE_TRANSPORT_AND_PAYMENT_LIMIT)
+                );
+            }
 
             /** @var \App\Model\Article\Article $termsAndConditions */
             $termsAndConditions = $this->getReferenceForDomain(
@@ -116,6 +129,17 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
                 'Disallow: /admin',
                 $domainId,
             );
+            $this->setting->setForDomain(
+                Setting::DELIVERY_DAYS_ON_STOCK,
+                70,
+                $domainId
+            );
+            $this->setting->setForDomain(
+                Setting::TRANSFER_DAYS_BETWEEN_STOCKS,
+                7,
+                $domainId
+            );
+
             $this->setting->setForDomain(
                 MailSetting::MAIL_WHITELIST,
                 '["/@shopsys\\\\.com$/"]',

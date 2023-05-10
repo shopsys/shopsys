@@ -1,0 +1,6 @@
+parameters:
+    packetery_config:
+        enabled: '%env(bool:PACKETERY_ENABLED)%'
+        rest_api_url: '%env(PACKETERY_REST_API_URL)%'
+        api_password: '%env(PACKETERY_API_PASSWORD)%'
+        sender: '%env(PACKETERY_SENDER)%'

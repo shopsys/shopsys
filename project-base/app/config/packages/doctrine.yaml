@@ -20,6 +20,7 @@ doctrine:
         auto_generate_proxy_classes: false
         dql:
             string_functions:
+                bool_and: App\Component\Doctrine\BoolAndFunction
                 collate: Shopsys\FrameworkBundle\Component\Doctrine\CollateFunction
                 normalize: Shopsys\FrameworkBundle\Component\Doctrine\NormalizeFunction
                 field: Shopsys\FrameworkBundle\Component\Doctrine\FieldFunction

@@ -1,0 +1,18 @@
+PaymentMutation:
+    type: object
+    config:
+        fields:
+            PayOrder:
+                type: PaymentSetupCreationData!
+                description: "Pay order(create payment transaction in payment gateway) and get payment setup data for redirect or creating JS payment gateway layer"
+                args:
+                    orderUuid:
+                        type: "Uuid!"
+                resolve: "@=mutation('payOrderMutation', args)"
+            CheckPaymentStatus:
+                type: "Boolean!"
+                description: "check payment status of order after callback from payment service"
+                args:
+                    orderUuid:
+                        type: "Uuid!"
+                resolve: "@=mutation('checkPaymentStatusMutation', args)"

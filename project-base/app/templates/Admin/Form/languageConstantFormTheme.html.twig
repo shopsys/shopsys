@@ -1,0 +1,19 @@
+{% extends '@ShopsysFramework/Admin/Form/theme.html.twig' %}
+
+{% block _language_constant_form_userTranslation_row %}
+    <div class="form-line{{ attr.disabledField is defined ? ' form-input-disabled form-line--disabled' }}">
+        {{ form_label(form, label) }}
+        <div class="form-line__side">
+            {{ form_widget(form) }}
+            {{ form_errors(form) }}
+        </div>
+        {% if attr.disabledField is defined %}
+            <span class="form-disabled {{ attr.disabledFieldClass }} js-tooltip"
+                  data-toggle="tooltip"
+                  data-placement="{{ attr.disabledFieldPlacement|default('right') }}"
+                  title="{{ attr.disabledFieldTitle }}">
+                {{ icon('pencil') }}
+            </span>
+        {% endif %}
+    </div>
+{% endblock _language_constant_form_userTranslation_row %}

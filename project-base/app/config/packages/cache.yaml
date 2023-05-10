@@ -13,3 +13,7 @@ framework:
             doctrine.query_cache_pool:
                 adapter: cache.adapter.redis
                 provider: snc_redis.doctrine_query
+            image_cache:
+                adapter: cache.adapter.redis
+                provider: snc_redis.image
+                default_lifetime: 43200

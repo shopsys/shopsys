@@ -1,0 +1,51 @@
+{% extends '@!ShopsysFramework/Admin/Content/Article/list.html.twig' %}
+
+{% block main_content %}
+
+    <div class="js-multiple-grids-rows-unified">
+        {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+        {% if articlesCountOnSelectedDomain > 0 %}
+            <div class="wrap-divider wrap-divider--no-border">
+                <h2>{{ 'Articles in upper menu'|trans }}</h2>
+                {{ gridViewTop.render() }}
+            </div>
+
+            <div class="wrap-divider wrap-divider--no-border">
+                <h2>{{ 'Articles in footer'|trans }} 1</h2>
+                {{ gridViewFooter1.render() }}
+            </div>
+
+            <div class="wrap-divider wrap-divider--no-border">
+                <h2>{{ 'Articles in footer'|trans }} 2</h2>
+                {{ gridViewFooter2.render() }}
+            </div>
+
+            <div class="wrap-divider wrap-divider--no-border">
+                <h2>{{ 'Articles in footer'|trans }} 3</h2>
+                {{ gridViewFooter3.render() }}
+            </div>
+
+            <div class="wrap-divider wrap-divider--no-border">
+                <h2>{{ 'Articles in footer'|trans }} 4</h2>
+                {{ gridViewFooter4.render() }}
+            </div>
+
+            <div class="wrap-divider wrap-divider--no-border">
+                <h2>{{ 'Articles without positioning'|trans }}</h2>
+                {{ gridViewNone.render() }}
+            </div>
+
+            {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+                {% block fixed_bar_content %}
+                    <button class="js-multiple-grids-save-all-button btn btn--disabled" data-drag-and-drop-url-save-ordering="{{ url('admin_article_saveordering') }}" type="button">{{ 'Save changes in order'|trans }}</button>
+                {% endblock %}
+            {% endembed %}
+        {% else %}
+            <div class="in-message in-message--info">
+                {{ 'No articles found on this domain. You have to create some first.'|trans }}
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

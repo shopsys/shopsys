@@ -1,0 +1,17 @@
+{% extends 'Admin/Layout/errorLayout.html.twig' %}
+
+{% block error_content %}
+    <h1>{{ 'Oops! Error occurred.'|trans }}</h1>
+
+    <p>
+        {{ 'Uh-oh, uh-oh. And specially <strong>"%status_code% %status_text%"</strong>, as if it was on purpose!'|transHtml({ '%status_code%': status_code, '%status_text%': status_text }) }}
+    </p>
+
+    <p>
+        {{ 'Please excuse this error, we are working on fixing it. If needed, contact us on %mail% or by phone %phone%.'|trans({ '%mail%': getShopInfoEmail(), '%phone%': getShopInfoPhoneNumber() }) }}
+    </p>
+
+    <p>
+        Error ID: <span id="js-error-id">{{ '{{ERROR_ID}}' }}</span>
+    </p>
+{% endblock %}

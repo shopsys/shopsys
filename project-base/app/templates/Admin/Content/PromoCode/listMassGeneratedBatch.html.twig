@@ -1,0 +1,15 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Slevové kupóny - vygenerované dávky'|trans }}{% endblock %}
+{% block h1 %}{{ 'Slevové kupóny - vygenerované dávky'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ gridView.render() }}
+    {% if downloadBatchId is not null %}
+        <script type="text/javascript">
+            $(document).ready(function () {
+                document.location.href = '{{ url('admin_promocode_downloadmassgeneratebatch', {batchId: downloadBatchId}) }}';
+            });
+        </script>
+    {% endif %}
+{% endblock %}

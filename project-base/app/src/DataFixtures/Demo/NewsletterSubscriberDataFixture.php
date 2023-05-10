@@ -45,6 +45,7 @@ class NewsletterSubscriberDataFixture extends AbstractReferenceFixture
     private function getDefaultEmailData(): array
     {
         return [
+            'no-reply@shopsys.com',
             'james.black@no-reply.com',
             'johny.good@no-reply.com',
             'andrew.mathewson@no-reply.com',

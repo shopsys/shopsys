@@ -1,0 +1,67 @@
+Store:
+    type: object
+    config:
+        interfaces:
+            - 'Breadcrumb'
+            - 'Slug'
+        fields:
+            slug:
+                type: "String!"
+                description: "Store URL slug"
+            uuid:
+                type: "Uuid!"
+                description: "UUID"
+            isDefault:
+                type: "Boolean!"
+                description: "Is set as default store"
+            name:
+                type: "String!"
+                description: "Store name"
+            description:
+                type: "String"
+                description: "Store description"
+            street:
+                type: "String!"
+                description: "Store address street"
+            city:
+                type: "String!"
+                description: "Store address city"
+            postcode:
+                type: "String!"
+                description: "Store address postcode"
+            country:
+                type: "Country!"
+                description: "Store address country"
+            openingHours:
+                type: "String"
+                description: "Store opening hours"
+            openingHoursHtml:
+                type: "String"
+                description: "Store opening hours, newlines are rendered as HTML breakline"
+            contactInfo:
+                type: "String"
+                description: ""
+            specialMessage:
+                type: "String"
+                description: ""
+            locationLatitude:
+                type: "String"
+                description: "Store location latitude"
+            locationLongitude:
+                type: "String"
+                description: "Store location longitude"
+            breadcrumb:
+                type: "[Link!]!"
+                description: "Hierarchy of the current element in relation to the structure"
+                resolve: '@=query("breadcrumbQuery", value.getId(), "front_stores_detail")'
+            images:
+                type: "[Image!]!"
+                description: "Store images"
+                resolve: '@=query("imagesByStorePromiseQuery", value, args["type"], args["sizes"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    sizes:
+                        type: "[String!]"
+                        defaultValue: null

@@ -28,4 +28,4 @@ framework:
         base_urls:
             - '%env(CDN_DOMAIN)%'
 
-    error_controller: 'Shopsys\FrameworkBundle\Component\Error\ErrorController::showAction'
+    error_controller: 'App\Controller\Admin\ErrorController::showAction'

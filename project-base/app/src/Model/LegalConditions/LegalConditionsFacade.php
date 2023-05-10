@@ -14,6 +14,9 @@ use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade as BaseL
  * @method bool isArticleUsedAsLegalConditions(\App\Model\Article\Article $article)
  * @method \App\Model\Article\Article|null findArticle(string $settingKey, int $domainId)
  * @method setArticle(string $settingKey, int $domainId, \App\Model\Article\Article|null $article = null)
+ * @property \App\Model\Article\ArticleFacade $articleFacade
+ * @property \App\Component\Setting\Setting $setting
+ * @method __construct(\App\Model\Article\ArticleFacade $articleFacade, \App\Component\Setting\Setting $setting, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain)
  */
 class LegalConditionsFacade extends BaseLegalConditionsFacade
 {

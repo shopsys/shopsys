@@ -5,10 +5,13 @@ msgstr ""
 "Language: cs\n"
 
 msgid "%brandName% SEO H1"
-msgstr "%brandName% SEO H1"
+msgstr ""
 
 msgid "%brandName% SEO Title"
-msgstr "%brandName% SEO Titulek"
+msgstr ""
+
+msgid "%locale% perex - lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu."
+msgstr ""
 
 msgid "(Mon - Sat: 9 - 10 a.m. to 8 - 10 p.m.)"
 msgstr "(po-pá, 10:00 - 16:00)"
@@ -23,7 +26,7 @@ msgid "1.7GHz"
 msgstr "1.7GHz"
 
 msgid "100 Czech crowns ticket"
-msgstr "Stokorunová poukázka"
+msgstr "100 Korun českých - poukázka"
 
 msgid "1024 MB"
 msgstr "1024 MB"
@@ -73,6 +76,9 @@ msgstr "2"
 msgid "2 l"
 msgstr "2 l"
 
+msgid "2 litre coffeemakers in sale"
+msgstr "2 litrové kávovary v akci"
+
 msgid "2.0"
 msgstr "2.0"
 
@@ -90,6 +96,15 @@ msgstr "22\" Sencor SLE 22F46DM4 HELLO KITTY"
 
 msgid "220 x 250 x 9 mm"
 msgstr "220 x 250 x 9 mm"
+
+msgid "24\""
+msgstr ""
+
+msgid "24\" Philips 32PFL4308"
+msgstr ""
+
+msgid "24\" Philips CRT 32PFL4308"
+msgstr ""
 
 msgid "240 x 205 x 15 mm"
 msgstr "240 x 205 x 15 mm, klazeta s aktivnim uhlikem"
@@ -114,6 +129,9 @@ msgstr "27\""
 
 msgid "275 kWh/year"
 msgstr "275 kWh/rok"
+
+msgid "27” Hyundai PLASMA T27D590EY"
+msgstr ""
 
 msgid "27” Hyundai T27D590EY"
 msgstr "27” Hyundai T27D590EY"
@@ -160,8 +178,14 @@ msgstr "36\""
 msgid "36\" Hyundai 32PFL4308"
 msgstr "36\" Hyundai 32PFL4360"
 
+msgid "36\" Hyundai PLASMA 32PFL4308"
+msgstr ""
+
 msgid "36\" Philips 32PFL4308"
 msgstr "36\" Philips 32PFL4308"
+
+msgid "36\" Philips CRT 32PFL4308"
+msgstr ""
 
 msgid "380 g"
 msgstr "380 g"
@@ -174,6 +198,12 @@ msgstr "4 W"
 
 msgid "4.5\""
 msgstr "4.5\""
+
+msgid "40% SLEVA NA POSTELE, MATRACE A ROŠTY"
+msgstr ""
+
+msgid "40% SLEVA NA ÚLOŽNÉ PROSTORY"
+msgstr ""
 
 msgid "400 g"
 msgstr "400 g"
@@ -232,6 +262,9 @@ msgstr "50"
 msgid "50 g"
 msgstr "50 g"
 
+msgid "51,5\""
+msgstr ""
+
 msgid "51,5” Hyundai 22HD44D"
 msgstr "51,5” Hyundai 22HD44D"
 
@@ -240,6 +273,9 @@ msgstr "54\""
 
 msgid "54\" Philips 32PFL4308"
 msgstr "54\" Philips 32PFL4308"
+
+msgid "54\" Philips CRT 32PFL4308"
+msgstr ""
 
 msgid "55"
 msgstr "55"
@@ -280,6 +316,9 @@ msgstr "80x70x70 mm"
 msgid "9 Mpix"
 msgstr "9 Mpix"
 
+msgid "<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>"
+msgstr "<b>Zvolili jste platbu GoPay, bude Vám zobrazena platební brána.</b>"
+
 msgid "<b>You have chosen payment by credit card. Please finish it in two business days.</b>"
 msgstr "<b>Zvolili jste platbu kreditní kartou. Prosím proveďte ji do dvou pracovních dnů.</b>"
 
@@ -290,10 +329,10 @@ msgid "<h2> Specifications: </h2> <ul> <li> Height: 140 mm </li> <li> Width: 600
 msgstr "<h2>Technické parametry:</h2><ul><li>Výška: 140 mm</li><li>Šířka: 600 mm</li><li>Hloubka: 470 mm</li><li>Příslušenství: zpětná klapka</li><li>Bílé provedení</li><li>Horní odtah - možnost recirkulace</li><li>Ovládání - posuvný slider</li><li>3 stupně výkonu</li><li>Max. výkon: 185 m3/hod.</li><li>Max.hlučnost na nejvyšším stupni 66 dB (A)</li><li>Žárovka 40 W</li><li>Textilní filtr proti mastnotám</li><li>Průměr odtahu: 120 mm</li></ul><h2>Detailní popis:</h2><ul><li>Volitelné příslušenství: 1x textilní filtr 61990026, 1x uhlíkový filtr 61990028</li><li>1 motor/ventilátor</li><li>Minimální vzdálenost od elektrické varné desky: 650 mm</li><li>Minimální vzdálenost od plynové varné desky: 750 mm</li><li>Netto hmotnost: 4,5 kg</li><li>Napětí: 230 V ~ 50Hz</li><li>Příkon: 150 W</li><li>Délka přívodního kabelu:1,5 m</li></ul>"
 
 msgid "<h2>47 \"LG 47LA790V</h2>> Luxury TV from the South Korean company LG bears <strong> 47LA790S </strong>. At first glance its <strong> beautiful design </strong> That pleases the eye of every lover of pure and precise shapes. Inside the TV is hidden except <strong> M13 dual-core processor </strong> number of extra features. I so belong to the energy class <strong> A + </strong> . Micro Pixel Control function is performed local dimming backlight and thus significantly <strong> reduces </strong> up to 64 W. This is so gigantic screen with really great. <br> <br> This TV is considerate to your eyes because of the image <strong> eliminates the annoying flicker </strong> caused by conventional 3D glasses, and you so you can enjoy long evenings of film <strong> without fatigue and eye pain </strong> . User-friendly environment allows <strong> adjust the 3D depth effect </strong> and yourself, you can choose whether you prefer comfort or deeper experience when watching 3D content. You could very well happen that while watching a football match <strong> flips the ball right into your living room </strong> Because special functions for image conversion<strong> improve any broadcasting the third dimension </strong> . <br> <br> Avid gamers will appreciate the <strong> Dual Play </strong> When television broadcasts two separate 2D images and each player using glasses to see their part to the full screen area. No more worry when a split screen. <strong> Intel WiDi </strong> (Wireless Display), respectively. wireless transmission of video and audio, allows quick and easy connection of TVs and laptops without cables or an Internet connection. It is very convenient and fast you'll love this feature."
-msgstr "<p>Cinema 3D Smart TV LG 47LA790V se Cinema 3D Screen Designem je 3D televizor s technologií LG Cinema 3D a úhlopříčkou 47&quot;, který určitě splní vaše očekávání. Oplývá veškerou moderní obrazovou technologií LG, která je zárukou výjimečné kvality obrazu s vysokou věrností barev a hlubším kontrastem včetně <span style=\"color:#FF0000\"><strong>konverze z 2D na 3D</strong></span>, která vám umožní sledovat běžné televizní vysílání ve 3D prostorovém obrazu.</p>  <p><img alt=\"\" src=\"/content/images/product/default/1.png\" style=\"height:256px; width:256px\" /></p>  <p>Příjemným překvapením pro vaše děti bude také funkce Dual Play umožňující <strong><span style=\"color:#FF0000\">hraní her ve dvou lidech bez rozdělení obrazovky televize</span></strong>. Tento model Cinema 3D LED TV poskytuje kromě snížení spotřeby energie také různé možností konektivity, disponuje integrovanými DVB-T/C/S2 tunery a technologií Smart Energy Saving. Oproti nižším řadám je vybaven lepším dvoujádrovým procesorem a Magickým stojanem a lze k němu dokoupit TV kameru AN-VC500. Poznejte bohatý a stále se rozšiřující svět 3D zábavy, který máte na dosah ruky - stačí jen použít Magický dálkový ovladač Karta Svět 3D v menu LG TV nabízí nekonečné množství 3D obsahu, který zahrnuje filmy, sport, hudbu, videa, vzdělávací pořady a mnoho dalšího!</p>  <h2>FLICKER FREE - 3D OBRAZ BEZ BLIKÁNÍ</h2>  <p>Užívejte si 3D TV, jejíž sledování je mnohem příjemnější pro Vaše oči, protože obraz vůbec nebliká. Na rozdíl od běžných 3D TV, LG CINEMA 3D Smart TV vůbec nebliká a 3D obraz je mnohem jasnější. To je mnohem příjemnější pro Vaše oči a obraz je čistší a ostřejší, takže Vám přijde, jako by vystupoval úplně z obrazovky. Cinema 3D Smart TV LG 47LA790V se Cinema 3D Screen Designem je 3D televizor s technologií LG Cinema 3D a úhlopříčkou 47&quot;, který určitě splní vaše očekávání. Oplývá veškerou moderní obrazovou technologií LG, která je zárukou výjimečné kvality obrazu s vysokou věrností barev a hlubším kontrastem včetně konverze z 2D na 3D, která vám umožní sledovat běžné televizní vysílání ve 3D prostorovém obrazu. Příjemným překvapením pro vaše děti bude také funkce Dual Play umožňující hraní her ve dvou lidech bez rozdělení obrazovky televize. Tento model Cinema 3D LED TV poskytuje kromě snížení spotřeby energie také různé možností konektivity, disponuje integrovanými DVB-T/C/S2 tunery a technologií Smart Energy Saving. Oproti nižším řadám je vybaven lepším dvoujádrovým procesorem a Magickým stojanem a lze k němu dokoupit TV kameru AN-VC500. Poznejte bohatý a stále se rozšiřující svět 3D zábavy, který máte na dosah ruky - stačí jen použít Magický dálkový ovladač Karta Svět 3D v menu LG TV nabízí nekonečné množství 3D obsahu, který zahrnuje filmy, sport, hudbu, videa, vzdělávací pořady a mnoho dalšího!&nbsp;</p>  <p><iframe align=\"middle\" frameborder=\"1\" height=\"400\" longdesc=\"adresa sídla fírmy shopsys\" name=\"shopsys\" scrolling=\"yes\" src=\"http://www.mapy.cz/s/cQc0\" title=\"Kde nás najdete\" width=\"600\"></iframe></p>"
+msgstr "<p>Cinema 3D Smart TV LG 47LA790V se Cinema 3D Screen Designem je 3D televizor s technologií LG Cinema 3D a úhlopříčkou 47&quot;, který určitě splní vaše očekávání. Oplývá veškerou moderní obrazovou technologií LG, která je zárukou výjimečné kvality obrazu s vysokou věrností barev a hlubším kontrastem včetně <span style=\"color:#FF0000\"><strong>konverze z 2D na 3D</strong></span>, která vám umožní sledovat běžné televizní vysílání ve 3D prostorovém obrazu.</p>  <p><img alt=\"\" src=\"/content/images/product/default/1.jpg\" style=\"height:256px; width:256px\" /></p>  <p>Příjemným překvapením pro vaše děti bude také funkce Dual Play umožňující <strong><span style=\"color:#FF0000\">hraní her ve dvou lidech bez rozdělení obrazovky televize</span></strong>. Tento model Cinema 3D LED TV poskytuje kromě snížení spotřeby energie také různé možností konektivity, disponuje integrovanými DVB-T/C/S2 tunery a technologií Smart Energy Saving. Oproti nižším řadám je vybaven lepším dvoujádrovým procesorem a Magickým stojanem a lze k němu dokoupit TV kameru AN-VC500. Poznejte bohatý a stále se rozšiřující svět 3D zábavy, který máte na dosah ruky - stačí jen použít Magický dálkový ovladač Karta Svět 3D v menu LG TV nabízí nekonečné množství 3D obsahu, který zahrnuje filmy, sport, hudbu, videa, vzdělávací pořady a mnoho dalšího!</p>  <h2>FLICKER FREE - 3D OBRAZ BEZ BLIKÁNÍ</h2>  <p>Užívejte si 3D TV, jejíž sledování je mnohem příjemnější pro Vaše oči, protože obraz vůbec nebliká. Na rozdíl od běžných 3D TV, LG CINEMA 3D Smart TV vůbec nebliká a 3D obraz je mnohem jasnější. To je mnohem příjemnější pro Vaše oči a obraz je čistší a ostřejší, takže Vám přijde, jako by vystupoval úplně z obrazovky. Cinema 3D Smart TV LG 47LA790V se Cinema 3D Screen Designem je 3D televizor s technologií LG Cinema 3D a úhlopříčkou 47&quot;, který určitě splní vaše očekávání. Oplývá veškerou moderní obrazovou technologií LG, která je zárukou výjimečné kvality obrazu s vysokou věrností barev a hlubším kontrastem včetně konverze z 2D na 3D, která vám umožní sledovat běžné televizní vysílání ve 3D prostorovém obrazu. Příjemným překvapením pro vaše děti bude také funkce Dual Play umožňující hraní her ve dvou lidech bez rozdělení obrazovky televize. Tento model Cinema 3D LED TV poskytuje kromě snížení spotřeby energie také různé možností konektivity, disponuje integrovanými DVB-T/C/S2 tunery a technologií Smart Energy Saving. Oproti nižším řadám je vybaven lepším dvoujádrovým procesorem a Magickým stojanem a lze k němu dokoupit TV kameru AN-VC500. Poznejte bohatý a stále se rozšiřující svět 3D zábavy, který máte na dosah ruky - stačí jen použít Magický dálkový ovladač Karta Svět 3D v menu LG TV nabízí nekonečné množství 3D obsahu, který zahrnuje filmy, sport, hudbu, videa, vzdělávací pořady a mnoho dalšího!&nbsp;</p>  <p><iframe align=\"middle\" frameborder=\"1\" height=\"400\" longdesc=\"adresa sídla fírmy shopsys\" name=\"shopsys\" scrolling=\"yes\" src=\"http://www.mapy.cz/s/cQc0\" title=\"Kde nás najdete\" width=\"600\"></iframe></p>"
 
 msgid "<h2>A4tech X710BK</h2>Playing computer mouse has five buttons and scrolovacím button for easier browsing documents or Internet pages. News is a key 3XFire that in one pressing regulating a triple clicks. The mouse has five options to set up the sensor sensitivity and in steps 400, 600, 1200, 1600 and 2000 DPI. The mouse has an ergonomic design, it connects via high-speed USB interface and is equipped with 16 Kb internal memory that is possible with the Oscar Mouse Editor to record scripts to control your favorite games. It is fully compatible with all modern operating systems including Windows Vista. <br><br><strong> Specifications: </strong><br><br><strong> Interface: </strong><br> USB 2.0 <br> Reduction in PS/2 <br><br><strong> OS Compatibility: </strong><br> Microsoft Windows 2000/XP/2003/Vista"
-msgstr "<h2>Herní počítačová myš A4Tech X-710BK s pěti tlačítky a scrolovacím kolečkem pro snadnější ovládání dokumentů, či prohlížení internetových stránek.</h2>  <p>Novinkou u této série je 3XFire tlačítko, které při jednom zmáčknutí reaguje jako troj-klik. Další inovací je 5 DPI změna citlivosti snímáče a to v krocích 400/600/1200/1600/2000 DPI. Myš je pohodlně tvarovaná a připojuje se pomocí USB rozhraní. Novinkou je 16KB interní paměť do které je možné pomocí programu Oskar Mouse Editor nahrávat scripty na Vaše oblíbené hry. A4tech X710BK Herní počítačová myš vybavená pěti tlačítky a scrolovacím tlačítkem pro snadnější ovládání dokumentů nebo prohlížení internetových stránek. Novinkou je pak tlačítko 3XFire, které při jednom zmáčknutí reguje jako trojité kliknutí. Myš disponuje možností nastavit až pět citlivostí snímače a to v krocích 400, 600, 1200, 1600 a 2000 DPI. Myš má ergonomický design, připojuje se přes vysokorychlostní USB rozhraní a je vybavena 16 Kb interní paměti, do které je možné pomocí programu Oscar Mouse Editor nahrávat scripty pro ovládání vašich oblíbených her.</p>  <p><strong>Je plně kompatibilní se všemi moderními operačními systémy včetně Windows Vista. </strong></p>  <h3>Parametry a specifikace:</h3>  <ol>  <li>Rozhraní: USB 2.0</li>  <li>Redukce do PS/2</li>  <li>Kompatibilita OS: Microsoft Windows 2000/XP/2003/Vista.</li> </ol>  <p><img alt=\"\" src=\"/content/images/product/default/1.png\" style=\"height:380px; width:380px\" /></p>  <p>&nbsp;</p>"
+msgstr "<h2>Herní počítačová myš A4Tech X-710BK s pěti tlačítky a scrolovacím kolečkem pro snadnější ovládání dokumentů, či prohlížení internetových stránek.</h2>  <p>Novinkou u této série je 3XFire tlačítko, které při jednom zmáčknutí reaguje jako troj-klik. Další inovací je 5 DPI změna citlivosti snímáče a to v krocích 400/600/1200/1600/2000 DPI. Myš je pohodlně tvarovaná a připojuje se pomocí USB rozhraní. Novinkou je 16KB interní paměť do které je možné pomocí programu Oskar Mouse Editor nahrávat scripty na Vaše oblíbené hry. A4tech X710BK Herní počítačová myš vybavená pěti tlačítky a scrolovacím tlačítkem pro snadnější ovládání dokumentů nebo prohlížení internetových stránek. Novinkou je pak tlačítko 3XFire, které při jednom zmáčknutí reguje jako trojité kliknutí. Myš disponuje možností nastavit až pět citlivostí snímače a to v krocích 400, 600, 1200, 1600 a 2000 DPI. Myš má ergonomický design, připojuje se přes vysokorychlostní USB rozhraní a je vybavena 16 Kb interní paměti, do které je možné pomocí programu Oscar Mouse Editor nahrávat scripty pro ovládání vašich oblíbených her.</p>  <p><strong>Je plně kompatibilní se všemi moderními operačními systémy včetně Windows Vista. </strong></p>  <h3>Parametry a specifikace:</h3>  <ol>  <li>Rozhraní: USB 2.0</li>  <li>Redukce do PS/2</li>  <li>Kompatibilita OS: Microsoft Windows 2000/XP/2003/Vista.</li> </ol>  <p><img alt=\"\" src=\"/content/images/product/default/1.jpg\" style=\"height:380px; width:380px\" /></p>  <p>&nbsp;</p>"
 
 msgid "<h2>Canon EH-22L</h2> High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D. Provides protection while traveling from dust, scratches and other negative influences. You also have the camera ready at hand. It fits into the unit with lens 18-55 mm."
 msgstr "Canon EH-22L - pouzdro pro EOS 650D"
@@ -356,7 +395,7 @@ msgid "<p> It is safe for you to your loved ones as important as us? In that cas
 msgstr "<p>Je pro Vás bezpečí Vašich blízkých stejně důležité jako pro nás? V tom případě uvítáte u varné desky SDV-3460 funkci ukazatele zbytkového tepla - H, která Vás a Vaše blízké uchrání před nepříjemným popálením. Ukazatel zbytkového tepla signalizuje zbytkovou teplotu varné zóny i po jejím vypnutí.</p><br /><h2>Důvody proč se rozhodnout právě pro vestavnou sklokeramickou desku Concept SDV-3460:</h2><br /><ol><li>Tato vestavná sklokeramická deska SDV-3460 Vás jistě zaujme <strong>praktickým dotykovým ovládáním</strong>.</li><li>Speciální topná tělesa varných zón <strong>HI-LIGHT</strong> se dokáží rozehřát na maximum během několika málo sekund.</li><li><strong>Ukazatel zbytkového tepla –H</strong>- Vás ochrání před nepříjemným popálením. Signalizuje zbytkovou teplotu varné zóny i po jejím vypnutí.</li><li>Jestliže si chcete přímo navolit čas, po který chcete vařit, určitě využijete možnosti funkce <strong>zpožděného vypnutí</strong>.</li></ol><br /><h2>Technické parametry:</h2><br /><ul><li>Výška: 60 mm</li><li>Šířka: 590 mm</li><li>Hloubka: 520 mm</li><li>Sklokeramika</li><li>V příslušenství čistící škrabka</li><li>Dotykové ovládání</li><li>Ukazatel zbytkového tepla - H</li><li>Bez rámu, šikmé zabroušené hrany</li><li>4 varné zóny</li><li>Funkce automatického vypnutí - EXTRA BEZPEČNÁ</li><li>Funkce zpožděného vypnutí</li><li>Akustický signál</li><li>Ovládací panel vpředu uprostřed</li><li>Dětská pojistka</li><li>Ukazatel zapnutého stavu</li></ul><br /><h2>Detailní popis:</h2><br /><ul><li>Rozměry pro vestavbu (vxšxh): 50 x 560 x 490 mm</li><li>Hlavní vypínač</li><li>Průměr přední levé plotny: 165x265 mm</li><li>Příkon přední levé plotny: 1100/2000 W</li><li><strong>Zadní levá plotna:</strong> kruhová HI-LIGHT</li><li>Průměr zadní levé plotny: 165 mm</li><li>Příkon zadní levé plotny: 1200 W</li><li><strong>Zadní pravá plotna:</strong> kruhová HI-LIGHT</li><li>Průměr zadní pravé plotny: 200mm</li><li>Příkon zadní pravé plotny: 1800 W</li><li><strong>Přední pravá plotna:</strong> kruhová HI-LIHGT</li><li>Průměr přední pravé plotny: 165 mm</li><li>Příkon přední pravé plotny: 1200 W</li><li>Max.příkon-el.: 5700 - 6800 W</li><li>Hmotnost: 10 kg</li><li>Napětí: 220-240/400 V 2N ~ 50/60 Hz</li></ul>"
 
 msgid "<p> Order number {number} has been sent, thank you for your purchase. We will contact you about next order status. <br /><br /> <a href=\"{order_detail_url}\">Track</a> the status of your order. <br /> {transport_instructions} <br /> {payment_instructions} <br /> </p>"
-msgstr "<p> Objednávka číslo {number} byla odeslána, děkujeme za Váš nákup. Budeme Vás kontaktovat o dalším průběhu vyřizování. <br /><br /> Uschovejte si permanentní <a href=\"{order_detail_url}\">odkaz na detail objednávky</a>. <br /> {transport_instructions} <br /> {payment_instructions} <br /> </p>"
+msgstr "<p> Objednávka číslo {number} byla úspěšně odeslána, děkujeme za Váš nákup. O dalším stavu objednávky Vás budeme informovat. Stav Vaší objednávky můžete sledovat <a href=\"{order_detail_url}\">zde.</a> <br /> {transport_instructions} <br /> {payment_instructions} </p>"
 
 msgid "<p> The minimum space requirements excels sub-mounting range hood OPP-2060th Suitable for very small kitchens. Metal buttons provide ease of use and precise adjustment of the corresponding stage performance. </p> <br /> <br /> <h2> Reasons to choose just the sub-mounting range hood Concept OPP-2060: </h2> <br /> <br /> <ol> <li> Performance is the most important parameter hoods and should be at least equal to ten times the volume of the room. The sub-mounting range hood brand Concept OPP-2060 will surprise performance <strong> 186 m3 per hour </strong>. </li><li> Very practical is the ability to select <strong> 4 Ways exhaust </strong>. </li></ol> Model OPP-2060 is equipped with a practical <strong> metal grease filter </strong>, its maintenance is very easy and unlimited lifespan. If you can not pay out of steam, you can choose instead of exhaust classic <strong> recirculation system </strong> using a carbon filter, which can be bought."
 msgstr "<p>Minimální prostorovou náročností vyniká podstavný odsavač par OPP-2060. Vhodný  i pro velmi malé kuchyně. Kovová tlačítka zajišťují jednoduchost ovládání a přesné nastavení odpovídajícího stupně výkonu.</p><br /><br /><h2>Důvody, proč se rozhodnout právě pro podstavný odsavač par Concept OPP-2060:</h2><br /><br /><ol><li>Výkon je nejdůležitějším parametrem odsavačů  a měl by odpovídat minimálně desetinásobku objemu místnosti. Podstavný odsavač par značky Concept  OPP-2060 Vás překvapí výkonem <strong>186 m3 za hodinu</strong>.</li><li>Velice praktická je možnost navolit <strong>4 způsoby odtahu</strong>.</li><li>Model OPP-2060 je vybaven praktickým <strong>kovovým filtrem proti mastnotám</strong>, jeho údržba je velice snadná a životnost neomezená. Pokud nemáte možnost odvést páry ven, můžete zvolit namísto klasického odtahu <strong>systém recirkulace</strong>s užitím  uhlíkového filtru, který lze dokoupit. Jakmile bude filtr znečištěný, odsavač Vás sám upozorní.</li></ol><br /><h2>Technické parametry:</h2><br /><ul><li>Výška: 150 mm</li><li>Šířka: 600 mm</li><li>Hloubka: 490 mm</li><li>Příslušenství: zpětná klapka</li><li>Nerezové provedení</li><li>Možnost horního, zadního, bočního levého a pravého odtahu nebo recirkulace</li><li>Kovová tlačítka</li><li>3 stupně výkonu</li><li>Max. výkon: 186 m3/hod.</li><li>Max.hlučnost na nejvyšším stupni 66 dB (A)</li><li>Žárovka 40 W</li><li>1x kovový filtr proti mastnotám</li><li>Průměr odtahu: 100 mm</li></ul><br /><h2>Detailní popis:</h2><br /><ul><li>Volitelné příslušenství: 1x uhlíkový filtr 61990022</li><li>1 motor/ventilátor</li><li>Minimální vzdálenost od elektrické varné desky: 650 mm</li><li>Minimální vzdálenost od plynové varné desky: 750 mm</li><li>Netto hmotnost: 4,8 kg</li><li>Napětí: 230 V ~ 50Hz</li><li>Příkon: 150 W</li><li>Délka přívodního kabelu: 1,2 m</li></ul>"
@@ -427,6 +466,9 @@ msgstr "Aktivní"
 msgid "Active/Passive"
 msgstr "Aktivní/Pasivní"
 
+msgid "Add to cart"
+msgstr "Přidat do košíku"
+
 msgid "All kind of electronic devices."
 msgstr "Všechny druhy elektroniky."
 
@@ -439,8 +481,38 @@ msgstr "Apple iPhone 5S 64GB, zlatý"
 msgid "Aquila Aquagym non-carbonated spring water"
 msgstr "Aquila Aquagym Pramenitá voda neperlivá"
 
+msgid "Aquila Aquagym non-carbonated spring water, description."
+msgstr ""
+
+msgid "Article for search testing"
+msgstr ""
+
+msgid "Article text for search testing, the search phrase is &#34;Dina&#34;."
+msgstr ""
+
+msgid "Authentication code"
+msgstr "Autentifikační kód"
+
+msgid "Authentication code for two factor authentication: {authentication_code}"
+msgstr "Autentifikační kód pro dvoufaktorovou autentifikaci: {authentication_code}"
+
 msgid "BROTHER PT-H300"
 msgstr "BROTHER PT-H300"
+
+msgid "Blog article example %counter% %locale%"
+msgstr "Ukázkový článek blogu %counter% %locale%"
+
+msgid "Blog article example %counter% %locale% - H1"
+msgstr "Ukázkový článek blogu %counter% %locale% - H1"
+
+msgid "Blog article example %counter% %locale% - Meta description"
+msgstr "Ukázkový článek blogu %counter% %locale% - meta popisek"
+
+msgid "Blog article for products testing"
+msgstr "Článek blogu pro testování produktů"
+
+msgid "Blog article for search testing"
+msgstr "Článek blogu pro testování vyhledávání"
 
 msgid "Bluetooth"
 msgstr "Bluetooth"
@@ -463,6 +535,9 @@ msgstr "Kniha Bodový systém a pravidla silničního provozu"
 msgid "Books"
 msgstr "Knihy"
 
+msgid "Bookworm"
+msgstr "Knihomolové"
+
 msgid "By entering an email below, you can download your personal and other information (for example, order history) from our online store. An email with a link will be sent to you after entering your email address, to verify your identity. Clicking on the link will take you to a page where you’ll be able to download these informations in readable format - it will be the data registered to given email address on this online store domain."
 msgstr "Zadáním e-mailu níže si můžete stáhnout své osobní a jiné informace (například historii objednávek) z našeho internetového obchodu. Pro ověření vaší totožnosti vám po zadání e-mailové adresy bude zaslán e-mail s odkazem. Klikem na odkaz se dostanete na stránku s s možností stažení těchto informací ve strojově čitelném formátu - půjde o údaje evidované k dané e-mailové adrese na této doméně internetového obchodu."
 
@@ -471,6 +546,9 @@ msgstr "Zadáním e-mailu níže si můžete nechat zobrazit vaše osobní údaj
 
 msgid "CD-R VERBATIM 210MB"
 msgstr "CD-R VERBATIM 210MB"
+
+msgid "CRT"
+msgstr ""
 
 msgid "Camera type"
 msgstr "Typ fotoaparátu"
@@ -538,6 +616,9 @@ msgstr "Hotově"
 msgid "Cash on delivery"
 msgstr "Dobírka"
 
+msgid "Catalog"
+msgstr "Katalog"
+
 msgid "Circumaural"
 msgstr "Okolo uší - Circumaurální"
 
@@ -598,6 +679,9 @@ msgstr "Česká pošta - balík do ruky"
 msgid "Czech republic"
 msgstr "Česká republika"
 
+msgid "Czech state post service."
+msgstr "Česká pošta."
+
 msgid "D-Link"
 msgstr "D-Link"
 
@@ -616,8 +700,8 @@ msgstr "DeLonghi ECAM 44.660 B Eletta Plus"
 msgid "Dear customer, <br /><br /> based on your email {email}, we are sending you a link to your personal details. By clicking on the link below, you will be taken to a page listing all the<br/> personal details which we have in evidence in our online store {domain}. <br/><br/> To overview your personal information please click here - {url} <br/> The link is valid for next 24 hours.<br/> Best Regards <br/><br/> team of {domain}"
 msgstr "Vážený zákazníku,<br /><br /> na základě vašeho zadaného e-mailu {email}, Vám zasíláme odkaz na zobrazení osobních údajů. Klikem na odkaz níže se dostanete na stránku s <br/> přehledem všech osobních údajů, které k Vašemu e-mailu evidujeme na našem e-shopu {domain}.<br/><br/> Pro zobrazení osobních údajů klikněte zde - {url}<br/> Odkaz je platný 24 hodin.<br/><br/> S pozdravem<br/> tým {domain}"
 
-msgid "Dear customer, <br /><br />Processing your order has been finished."
-msgstr "Vážený zákazníku, <br /><br />zpracování objednávky bylo dokončeno."
+msgid "Dear customer, <br /><br />Processing your order has been finished.<br /><br />{tracking_instructions}"
+msgstr "Vážený zákazníku, <br /><br />Vaše objednávka byla zpracována.<br /><br />{tracking_instructions}"
 
 msgid "Dear customer, <br /><br />Your order has been cancelled."
 msgstr "Vážený zákazníku, <br /><br />Vaše objednávka byla zrušena."
@@ -640,6 +724,12 @@ msgstr "Vážený zákazníku,<br /><br />na tomto odkazu můžete nastavit nov�
 msgid "Deep baking sheet ETV-2560/2860/2960 / 3160bc"
 msgstr "Plech pečicí hluboký ETV-2560/2860/2960/3160bc"
 
+msgid "Defaultní varianta - prefix"
+msgstr ""
+
+msgid "Defaultní varianta - suffix"
+msgstr ""
+
 msgid "Defender 2.0 SPK-480"
 msgstr "Defender 2.0 SPK-480"
 
@@ -649,7 +739,7 @@ msgstr "reproduktory 2.0, jednopásmové, výkon 2x2W RMS, 90Hz až 20kHz, USB n
 msgid "Demo advert"
 msgstr "Demo reklama"
 
-msgid "Demo category advert"
+msgid "Demo advert in category"
 msgstr "Demo reklama v kategorii"
 
 msgid "Determination"
@@ -706,6 +796,12 @@ msgstr "Typ displeje"
 msgid "Done"
 msgstr "Vyřízena"
 
+msgid "Doprava a platba"
+msgstr ""
+
+msgid "Drone delivery"
+msgstr "Doprava dronem"
+
 msgid "DéLonghi ECAM 44.660.B. Start the morning with your favorite drink with the DeLonghi ECAM 44.660.B Eletta automatic coffee maker"
 msgstr "DeLonghi ECAM 44.660 B Luxusní plnoautomatický kávovar Eletta Plus v černé barvě s nerezovými částmi,1450 W"
 
@@ -726,6 +822,21 @@ msgstr "Elektrické věci"
 
 msgid "Electronics"
 msgstr "Elektro"
+
+msgid "Electronics from most expensive"
+msgstr "Elektro od nejdražšího"
+
+msgid "Electronics in black"
+msgstr "Elektro v černé barvě"
+
+msgid "Electronics in red"
+msgstr "Elektro v červené barvě"
+
+msgid "Electronics with LED technology and size 30 inch in sale"
+msgstr "Elektro s LED technologií a úhlopříčkou 30 palců v akci"
+
+msgid "Electronics without HDMI in sale"
+msgstr "Elektro bez HDMI v akci"
 
 msgid "Element arrangement"
 msgstr "Uspořádání prvků"
@@ -754,6 +865,12 @@ msgstr "Filtr uhlíkový OPK4290"
 msgid "Filter input VP-9161 / SF-9162 / SF-8210"
 msgstr "Filtr vstupní VP-9161/VP-9162/VP-8210"
 
+msgid "First subsection %locale%"
+msgstr "První podsekce %locale%"
+
+msgid "First subsection %locale% - h1"
+msgstr "První podsekce %locale% - h1"
+
 msgid "Floor nozzle metal VP-9310"
 msgstr "Hubice podlahová kovová VP-9310"
 
@@ -775,6 +892,9 @@ msgstr "Jídlo"
 msgid "Food is any substance consumed to provide nutritional support for the body. It is usually of plant or animal origin, and contains essential nutrients, such as fats, proteins, vitamins, or minerals. The substance is ingested by an organism and assimilated by the organism's cells to provide energy, maintain life, or stimulate growth."
 msgstr "Potravina je výrobek nebo látka určená pro výživu lidí a konzumovaná ústy v nezměněném nebo upraveném stavu. Potraviny se dělí na poživatiny a pochutiny. Potraviny mohou být rostlinného, živočišného nebo jiného původu."
 
+msgid "Full HD Electronics with LED technology and USB"
+msgstr "Elektro ve Full HD s technologií LED a USB"
+
 msgid "GENIUS LuxeMate I222 is a stylish black keyboard, which at first glance invites you to use your Apple design."
 msgstr "klávesnice s myší, bezdrátová, ultratenká, nano přijímač s konektorem USB, s bezdrátovou optickou myší s turborolováním, dosah až 10m, klávesnice obsahuje české znaky"
 
@@ -783,6 +903,9 @@ msgstr "GIGABYTE KM7580 CZ"
 
 msgid "GPS module"
 msgstr "GPS modul"
+
+msgid "Gadgets"
+msgstr "Vychytávky"
 
 msgid "Gaming mouse"
 msgstr "Herní myš"
@@ -804,6 +927,18 @@ msgstr "Genius repro SP-M120 černá"
 
 msgid "Glass cleaner and a glass-ceramic plates (4019786908123)"
 msgstr "Čistič skla a sklokeramických desek ( 4019786908123 )"
+
+msgid "GoPay - Payment By Card"
+msgstr "GoPay - Platba kartou"
+
+msgid "GoPay - Quick Bank Account Transfer"
+msgstr "GoPay - Rychlý bankovní převod"
+
+msgid "GrapesJS page"
+msgstr ""
+
+msgid "Growing"
+msgstr "Pěstování"
 
 msgid "HDMI"
 msgstr "HDMI"
@@ -838,6 +973,9 @@ msgstr "tiskárna samolepících štítků, ruční, rychlost tisku 20 mm/s, kl�
 msgid "Have you ever experienced an accident and didn't know how to react? Or are you going to? This book is just for you!"
 msgstr "Karta je vyrobena z odolného materiálu a obsahuje přehledný návod na poskytnutí první pomoci"
 
+msgid "Heading"
+msgstr ""
+
 msgid "Hello Kitty TV"
 msgstr "Hello Kitty TV"
 
@@ -855,6 +993,12 @@ msgstr "S touto jednoduchou a cenově dostupnou multifunkční tiskárnou HP Des
 
 msgid "High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D."
 msgstr "Canon EH-22L - pouzdro pro EOS 650D"
+
+msgid "Hlavní údaje"
+msgstr ""
+
+msgid "Hlavní údaje myš"
+msgstr ""
 
 msgid "Home Listening"
 msgstr "Domácí poslech"
@@ -889,8 +1033,14 @@ msgstr "JURA Impressa J9 TFT Carbon"
 msgid "Kabel HDMI A - HDMI A M/M 2m gold-plated connectors High Speed HD"
 msgstr "Kabel HDMI A - HDMI A M/M 2m zlacene konektory High Speed HD"
 
+msgid "Kde nás najdete"
+msgstr ""
+
 msgid "Knife potato RM-3240/3250"
 msgstr "Nůž na bramboráky RM-3240/3250"
+
+msgid "Kontakty"
+msgstr ""
 
 msgid "LCD"
 msgstr "LCD"
@@ -936,6 +1086,21 @@ msgstr "MIO Cyclo 100, cyklopočítač na jízdní kolo, 1,8\""
 
 msgid "Magazine capacity for beans"
 msgstr "Kapacita zásobníku na zrna"
+
+msgid "Main blog page - %locale%"
+msgstr "Hlavní stránka blogu - %locale%"
+
+msgid "Main blog page - %locale% - H1"
+msgstr "Hlavní stránka blogu - %locale% - H1"
+
+msgid "Main blog page - %locale% - Title"
+msgstr "Hlavní stránka blogu - %locale% - Titulek"
+
+msgid "Main blog page - %locale% - meta description"
+msgstr "Hlavní stránka blogu - %locale% - meta popisek"
+
+msgid "Material"
+msgstr "Materiál"
 
 msgid "Maximum size"
 msgstr "Maximální formát"
@@ -1021,11 +1186,14 @@ msgstr "NS-9310 Infant náhradní sáčky papírové pro VP-9310"
 msgid "NS-9710 Prominent replacement paper bags for VP-9711/12/13"
 msgstr "NS-9710 Prominent náhradní sáčky papírové pro VP-9711/12/13"
 
+msgid "Nejčastější dotazy FAQ"
+msgstr ""
+
 msgid "New [adjective]"
 msgstr "Nová"
 
-msgid "New [noun]"
-msgstr "Novinka"
+msgid "New computers with USB"
+msgstr ""
 
 msgid "New driving rules and tips just for you!"
 msgstr "Prostudujte si nová pravidla silničního provozu platná od 1. července 2006!"
@@ -1054,6 +1222,9 @@ msgstr "Nikon VH-520"
 msgid "No"
 msgstr "Ne"
 
+msgid "Notification in the bar, notification of a new event."
+msgstr "Notifikace v liště, upozornění na novou akci."
+
 msgid "Nozzle with brush VP-4290"
 msgstr "Hubice s kartáčem VP-4290"
 
@@ -1065,6 +1236,12 @@ msgstr "Počet barev"
 
 msgid "Number of processor cores"
 msgstr "Počet jader procesoru"
+
+msgid "Nákup na splátky"
+msgstr ""
+
+msgid "O nás"
+msgstr ""
 
 msgid "OKI MC861cdxm"
 msgstr "OKI MC861cdxm"
@@ -1096,8 +1273,14 @@ msgstr "OPP-2060  Odsavač par podstavný 60 cm"
 msgid "OPV-3260 Built-in retractable hood is 60 cm"
 msgstr "OPV-3260 Vestavný odsavač výsuvný 60cm"
 
-msgid "On request"
-msgstr "Na dotaz"
+msgid "Obchodní podmínky OD"
+msgstr ""
+
+msgid "Obchodní podmínky e-shopu"
+msgstr ""
+
+msgid "Odstoupení od smlouvy"
+msgstr ""
 
 msgid "Open"
 msgstr "Otevřená"
@@ -1123,14 +1306,20 @@ msgstr "Pevné"
 msgid "Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.)."
 msgstr "Spotřební elektronika zahrnuje elektronická zařízení každodenního (nebo alespoň častého) použití pro komunikaci, v kanceláři i doma."
 
-msgid "Out of stock"
-msgstr "Nedostupné"
+msgid "Our electronics include devices used for entertainment, communicationsand home office activities."
+msgstr "Naše elektronika zahrnuje zařízení používaná pro zábavu, komunikaci a domácí kancelářské aktivity."
 
 msgid "Overall performance"
 msgstr "Celkový výkon"
 
+msgid "Očekávejte dodávku koncem příštího měsíce"
+msgstr ""
+
 msgid "PANASONIC DMC FT5EP"
 msgstr "PANASONIC DMC FT5EP"
+
+msgid "PLASMA"
+msgstr ""
 
 msgid "POS cookbook_steam oven GB"
 msgstr "POS kuchařka_parní trouba CZ"
@@ -1147,8 +1336,8 @@ msgstr "Počet stránek"
 msgid "Parallel port"
 msgstr "Paralelní port"
 
-msgid "Partner"
-msgstr "Partner"
+msgid "Pay later"
+msgstr "Zaplaťte později"
 
 msgid "Perfectly cleans, treats and protects stainless steel surfaces in one step.<ul> <li> <strong> remove </strong> without smudges dust, dirt, fingerprints and grease </li><li> long-lasting protective film <strong> repellent </strong> water and prevents new settling of dirt </li><li> <strong> acts </strong> antistatically </li></ul>"
 msgstr "<p>Dokonale čistí, ošetřuje a chrání nerezové plochy v jednom pracovním kroku.</p><ul><li><strong>odstraňuje</strong> bez šmouh prach, špínu, otisky prstů a mastnotu</li><li>dlouhotrvající ochranný film <strong>odpuzující</strong> vodu a zabraňující novému usazování špíny</li><li><strong>působí</strong> antistaticky</li><li><strong>neobsahuje</strong> silikon</li></ul>"
@@ -1195,11 +1384,11 @@ msgstr "Tato USB myš funguje spolehlivě na téměř libovolném povrchu a je u
 msgid "Practical and stylish optical mouse ideal for everyday office use.With its ergonomic shape fits perfect and is suitable for left and for right-handers.Using an optical sensor with high sensitivity is move the cursor on the screen fast and smooth.Benefits are also programmable buttons to help with easy access to the programs and documents you use most often.The computer mouse simply connect using a cable with a USB connector and the support Plug and Play, no need to install drivers and you can immediately get to work."
 msgstr "Tato USB myš funguje spolehlivě na téměř libovolném povrchu a je uzpůsobená pro ovládání pravou i levou rukou."
 
+msgid "Pravidla akce"
+msgstr ""
+
 msgid "PremiumCord micro USB, A-B, 1m"
 msgstr "PremiumCord micro USB, A-B, 1m"
-
-msgid "Preparing"
-msgstr "Připravuje se"
 
 msgid "Pressure"
 msgstr "Tlak"
@@ -1222,14 +1411,29 @@ msgstr "Tiskárny"
 msgid "Privacy policy"
 msgstr "Zásady ochrany osobních údajů"
 
+msgid "Pro média"
+msgstr ""
+
 msgid "Processor frequency"
 msgstr "Frekvence procesoru"
+
+msgid "Processor frequency (GHz)"
+msgstr "Frekvence procesoru (GHz)"
+
+msgid "Práce v Shopsys"
+msgstr ""
+
+msgid "Péče o nábytek"
+msgstr ""
 
 msgid "Quality digital camera with CMOS sensor with a resolution of 18 megapixels"
 msgstr "Kvalitní digitální zrcadlovka s CMOS snímačem s rozlišením 18 megapixelů"
 
 msgid "Quality set keyboard and optical mouse from Gigabyte. Both components are color-matched to the sleek glossy black color."
 msgstr "klávesnice s myší, multimediální, bezdrátová rádiová 2.4GHz, nano přijímač na USB, 15 multimediálních kláves, dosah až 5m, napájení klávesnice a myši 4x AAA, hmotnost 518 a 60 gramů, klávesnice obsahuje české znaky"
+
+msgid "Quick and Safe payment via bank account transfer."
+msgstr "Rychlá a bezpečná platba převodem mezi účty."
 
 msgid "Quick, cheap and reliable!"
 msgstr "Rychle, levně a spolehlivě!"
@@ -1258,6 +1462,9 @@ msgstr "Reflexní páska pro bezpečný pohyb na cestě"
 msgid "Registration completed"
 msgstr "Registrace byla dokončena"
 
+msgid "Reklamace"
+msgstr ""
+
 msgid "Replacement textile bag for vacuum cleaners CONCEPT Sprinter - VP9070. Package: 1 pc"
 msgstr "Náhradní textilní sáček pro vysavače CONCEPT Sprinter - VP9070. Balení: 1 ks"
 
@@ -1278,6 +1485,9 @@ msgstr "SDV-3360 Sklokeramická deska vestavná 60 cm"
 
 msgid "SDV 3460-built ceramic plate 60 cm"
 msgstr "SDV-3460 Sklokeramická deska vestavná 60 cm"
+
+msgid "SLEVA 20% + 21% DPH NAVÍC"
+msgstr ""
 
 msgid "SLR"
 msgstr "zrcadlovky"
@@ -1314,6 +1524,12 @@ msgstr "Samsung UE75HU7500 (UHD)"
 
 msgid "Screen size"
 msgstr "Úhlopříčka"
+
+msgid "Second subsection %locale%"
+msgstr "Druhá podsekce %locale%"
+
+msgid "Second subsection %locale% - h1"
+msgstr "Druhá podsekce %locale% - h1"
 
 msgid "Sencor SDB 4002M4"
 msgstr "Sencor SDB 4002M4 (HDMI)"
@@ -1360,6 +1576,12 @@ msgstr "Kráječ na pizzu ETV-2860"
 msgid "Slovakia"
 msgstr "Slovensko"
 
+msgid "Služby obchodních domů"
+msgstr ""
+
+msgid "Snack"
+msgstr "Něco na zub"
+
 msgid "Spare paper bags for vacuum cleaners CONCEPT Clipper 9030/31/32/33 VP and VP 9130/31/32"
 msgstr "Náhradní papírové sáčky pro vysavače CONCEPT Clipper VP 9030/31/32/33 a VP 9130/31/32"
 
@@ -1393,6 +1615,18 @@ msgstr "Kapesní reproduktor pro MP3 přehrávače, mobilní telefony, počíta�
 msgid "Speakers 2 x 3W RMS, 2.0 stereo, portable, volume control, frequency range of 150Hz-20kHz, sensitivity 80dB, 4Ohm impedance, power supply via USB, 3.5 mm audio jack, dimensions 85x85x107mm, weight 550 g"
 msgstr "Kapesní reproduktor pro MP3 přehrávače, mobilní telefony, počítače, notebooky, tablety atd. Stačí vybalit, zapojit a spustit přehrávání. S tímto reproduktorem získáte 360° zvukový zážitek na cestách."
 
+msgid "Spolupráce"
+msgstr ""
+
+msgid "Store in Ostrava Přívoz"
+msgstr "Prodejna v Ostravě Přívoze"
+
+msgid "Store in Žilina"
+msgstr "Prodejna v Žilině"
+
+msgid "Store v Pardubice"
+msgstr "Prodejna v Pardubicích"
+
 msgid "Super LCD"
 msgstr "Super LCD"
 
@@ -1408,14 +1642,14 @@ msgstr "TFT"
 msgid "TK-9710 Turbo brush Prominent VP 971"
 msgstr "TK-9710 Turbo kartáč Prominent VP 971"
 
-msgid "TOP"
-msgstr "Nejprodávanější"
-
 msgid "TS-9080 replacement bag for textile VP-9080"
 msgstr "TS-9080 náhradní sáček textilní pro VP-9080"
 
 msgid "TS-9170 replacement bag for textile VP-9171"
 msgstr "TS-9170 náhradní sáček textilní pro VP-9171"
+
+msgid "TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A +"
+msgstr ""
 
 msgid "TV Cinema 3D LED SMART diagonal 119 cm, 700 MCI, 1920x1080 Full HD"
 msgstr "Televize Cinema 3D SMART LED, úhlopříčka 119cm, MCI 700, FullHD 1920x1080"
@@ -1429,6 +1663,9 @@ msgstr "Televize LED, 100Hz, úhlopříčka 32 palců, 100Hz, Full HD 1920×1080
 msgid "TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A +"
 msgstr "Televize LED, 100Hz, úhlopříčka 80cm, 100Hz, Full HD 1920×1080, DVB-T/C, 2x HDMI, USB, CI+, VGA, SCART, repro 16W, energ. třída A+"
 
+msgid "TV PLASMA, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A +"
+msgstr "TV PLASMA, 100Hz, úhlopříčka 80cm, 100Hz, Full HD 1920×1080, DVB-T/C, 2x HDMI, USB, CI+, VGA, SCART, repro 16W, energ. třída A+"
+
 msgid "TV SMART LED TV, 147 cm diagonal, 4K Ultra HD 3840x2160 4K upscaler"
 msgstr "Televize SMART LED TV, úhlopříčka 147cm, 4K Ultra HD 3840x2160, 4K Upscaler"
 
@@ -1437,6 +1674,15 @@ msgstr "Televize SMART LED TV, úhlopříčka 147cm, 4K Ultra HD 3840x2160, 4K U
 
 msgid "TV, audio"
 msgstr "Televize, audio"
+
+msgid "TV, audio from the cheapest"
+msgstr "Televize, audio od nejlevnějšího"
+
+msgid "TV, audio in sale"
+msgstr "Televize, audio výprodej"
+
+msgid "TV, audio plasma with HDMI"
+msgstr "Televize, audio plasma s HDMI"
 
 msgid "Technology"
 msgstr "Technologie"
@@ -1451,7 +1697,7 @@ msgid "Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with
 msgstr "Sencor SLE 22F46DM4 Hello Kitty je televizor LED pro ty, kteří hledají pro své děti něco, co mají rádi a co by je potěšilo . Televizor s motivy populární Hello Kity a provedením v růžové barvě vaše dítko určitě zaujme!"
 
 msgid "Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback (DivX, XviD, MP3, WMA, JPEG), HDMI, SCART, VGA, pink execution, energ. Class B"
-msgstr "<p><strong>Sencor SLE 22F46DM4 Hello Kitty je televizor LED pro ty, kteří hledají pro své děti něco, co mají rádi a co by je potěšilo . Televizor s motivy populární Hello Kity a provedením v růžové barvě vaše dítko určitě zaujme!</strong></p>  <p><img alt=\"\" src=\"/content/images/product/default/1.png\" style=\"height:300px; width:300px\" /></p>  <ul>  <li>Úhlopříčka 55 cm (21,5&quot;)</li>  <li>LED podsvícení displeje</li>  <li>Integrovaný DVD/DivX přehrávač</li>  <li>Nahrávání na USB disk (formát TS) / přehrávání z USB disku (PVR)</li>  <li>Timeshift (časový posun)</li>  <li>rozlišení displeje 1920x1080 bodů</li>  <li>Vestavěný HD DVB-T/C MPEG4 tuner</li>  <li>USB port (přehrávání z externího disku)</li><li> Připojení: HDMI, SCART, AV vstup, YPbPr, VGA kabel, PC Audio vstup, USB 2.0</li> </ul>  <p><em>Podporované formáty: DivX, XviD, MP3,WMA, JPEG </em></p>  <p>Kontrast 1000:1 Jas 250 cd/m2 Rychlost odezvy 5 ms Progressive Scan PAL, SECAM BG/DK/A2/NICAM, AV vstup i NTSC 4,43 Široký pozorovací úhel 170&deg;/160&deg; Elektronický programový průvodce (EPG) Teletext Vícejazyčné menu Obvody pro zlepšení obrazu (DNR) Digitální hřebenový filtr (DCF 3D) AVL ZOOM Ekvalizér Hodiny Časovač vypnutí Dětská pojistka Jednoduchý hotelový mód. Sencor SLE 22F46DM4 Hello Kitty je televizor LED pro ty, kteří hledají pro své děti něco, co mají rádi a co by je potěšilo . Televizor s motivy populární Hello Kity a provedením v růžové barvě vaše dítko určitě zaujme! LED televize Sencor SLE 22F46DM4 HELLO KITTY LED Full HD televizor Úhlopříčka 55 cm (21,5&quot;) LED podsvícení displeje Integrovaný DVD/DivX přehrávač Nahrávání na USB disk (formát TS) / přehrávání z USB disku (PVR) Timeshift (časový posun) na připojený USB disk Full HD rozlišení displeje 1920x1080 bodů Vestavěný HD DVB-T/C MPEG4 tuner USB port (přehrávání z externího disku) Podporované formáty: DivX, XviD, MP3,WMA, JPEG Kontrast 1000:1 Jas 250 cd/m2 Rychlost odezvy 5 ms Progressive Scan PAL, SECAM BG/DK/A2/NICAM, AV vstup i NTSC 4,43 Široký pozorovací úhel 170&deg;/160&deg; Elektronický programový průvodce (EPG) Teletext Vícejazyčné menu Obvody pro zlepšení obrazu (DNR) Digitální hřebenový filtr (DCF 3D) AVL ZOOM Ekvalizér Hodiny Časovač vypnutí Dětská pojistka Jednoduchý hotelový mód</p>  <p>&nbsp;</p>"
+msgstr "<p><strong>Sencor SLE 22F46DM4 Hello Kitty je televizor LED pro ty, kteří hledají pro své děti něco, co mají rádi a co by je potěšilo . Televizor s motivy populární Hello Kity a provedením v růžové barvě vaše dítko určitě zaujme!</strong></p>  <p><img alt=\"\" src=\"/content/images/product/default/1.jpg\" style=\"height:300px; width:300px\" /></p>  <ul>  <li>Úhlopříčka 55 cm (21,5&quot;)</li>  <li>LED podsvícení displeje</li>  <li>Integrovaný DVD/DivX přehrávač</li>  <li>Nahrávání na USB disk (formát TS) / přehrávání z USB disku (PVR)</li>  <li>Timeshift (časový posun)</li>  <li>rozlišení displeje 1920x1080 bodů</li>  <li>Vestavěný HD DVB-T/C MPEG4 tuner</li>  <li>USB port (přehrávání z externího disku)</li><li> Připojení: HDMI, SCART, AV vstup, YPbPr, VGA kabel, PC Audio vstup, USB 2.0</li> </ul>  <p><em>Podporované formáty: DivX, XviD, MP3,WMA, JPEG </em></p>  <p>Kontrast 1000:1 Jas 250 cd/m2 Rychlost odezvy 5 ms Progressive Scan PAL, SECAM BG/DK/A2/NICAM, AV vstup i NTSC 4,43 Široký pozorovací úhel 170&deg;/160&deg; Elektronický programový průvodce (EPG) Teletext Vícejazyčné menu Obvody pro zlepšení obrazu (DNR) Digitální hřebenový filtr (DCF 3D) AVL ZOOM Ekvalizér Hodiny Časovač vypnutí Dětská pojistka Jednoduchý hotelový mód. Sencor SLE 22F46DM4 Hello Kitty je televizor LED pro ty, kteří hledají pro své děti něco, co mají rádi a co by je potěšilo . Televizor s motivy populární Hello Kity a provedením v růžové barvě vaše dítko určitě zaujme! LED televize Sencor SLE 22F46DM4 HELLO KITTY LED Full HD televizor Úhlopříčka 55 cm (21,5&quot;) LED podsvícení displeje Integrovaný DVD/DivX přehrávač Nahrávání na USB disk (formát TS) / přehrávání z USB disku (PVR) Timeshift (časový posun) na připojený USB disk Full HD rozlišení displeje 1920x1080 bodů Vestavěný HD DVB-T/C MPEG4 tuner USB port (přehrávání z externího disku) Podporované formáty: DivX, XviD, MP3,WMA, JPEG Kontrast 1000:1 Jas 250 cd/m2 Rychlost odezvy 5 ms Progressive Scan PAL, SECAM BG/DK/A2/NICAM, AV vstup i NTSC 4,43 Široký pozorovací úhel 170&deg;/160&deg; Elektronický programový průvodce (EPG) Teletext Vícejazyčné menu Obvody pro zlepšení obrazu (DNR) Digitální hřebenový filtr (DCF 3D) AVL ZOOM Ekvalizér Hodiny Časovač vypnutí Dětská pojistka Jednoduchý hotelový mód</p>  <p>&nbsp;</p>"
 
 msgid "Television LED, diagonal 82 cm, 1366x768, DVB-T/C MPEG4 tuner"
 msgstr "Televize LED, úhlopříčka 82 cm, 1366x768, DVB-T/C MPEG4 tuner"
@@ -1486,8 +1732,8 @@ msgstr "Televizní monitor IPS, 5M:1, 250cd/m2, 5ms GTG, FullHD 1920x1080, DVB-T
 msgid "Television or TV is a telecommunication medium used for transmitting sound with moving images in monochrome (black-and-white), or in color, and in two or three dimensions"
 msgstr "Televize (z řeckého tele – daleko a latinského vize – vidět) je široce používané jednosměrné dálkové plošné vysílání (tzv. broadcasting) a individuální přijímání televizního vysílání – obrazu a zvuku do televizoru. Výrazně přispívá k celkové socializaci lidí takřka po celém světě."
 
-msgid "Terms and conditions"
-msgstr "Obchodní podmínky"
+msgid "Televize"
+msgstr ""
 
 msgid "Thank you for your order no. {number} placed at {date}"
 msgstr "Děkujeme za objednávku č. {number} ze dne {date}"
@@ -1523,7 +1769,7 @@ msgid "The telescopic hood is very elegant and practical variant of the classica
 msgstr "<p>Výsuvný odsavač par je velice elegantní a praktickou variantou klasického odsavače s minimální prostorovou náročností, proto je vhodný i pro malé kuchyně. Nerezová přední lišta s kolébkovým přepínačem umožňuje snadné ovládání.</p><br /><br /><h2>Důvody, proč se rozhodnout právě pro výsuvný odsavač par Concept OPV-3260:</h2><br /><br /><ol><li>Výkon je nejdůležitějším parametrem odsavačů  a měl by odpovídat minimálně desetinásobku objemu místnosti. Výsuvný odsavač par značky Concept  OPV-3260 Vás překvapí <strong>výkonem 198 m3 za hodinu</strong>.</li><li>Model OPV-3260 je vybaven <strong>dvěma</strong> praktickými <strong>kovovými filtry proti mastnotám</strong>, jejichž údržba je velice snadná a životnost neomezená. Pokud nemáte možnost odvést páry ven, můžete zvolit namísto klasického odtahu <strong>systém recirkulace</strong> s užitím 2 uhlíkových filtrů, které lze dokoupit (kat.číslo: 61990005).</li></ol><br /><h2>Technické parametry:</h2><br /><br /><ul><li>Výška: 175 mm</li><li>Šířka: 600 mm</li><li>Hloubka: 310-470 mm</li><li>Příslušenství: zpětná klapka</li><li>Nerezová přední lišta</li><li>Možnost horního odtahu nebo recirkulace</li><li>Kolébkový přepínač</li><li>2 stupně výkonu</li><li>Max. výkon: 198 m3/hod.</li><li>Max.hlučnost na nejvyšším stupni 66dB (A)</li><li>Žárovka 40 W</li><li>2x kovový filtr proti mastnotám</li><li>Průměr odtahu: 120 mm</li></ul><br /><h2>Detailní popis:</h2><br /><ul><li>Volitelné příslušenství: 2x uhlíkový filtr 61990005</li><li>1 motor/ventilátor</li><li>Minimální vzdálenost od elektrické varné desky: 650 mm</li><li>Minimální vzdálenost od plynové varné desky: 750 mm</li><li>Rozměry pro zabudování (vxšxh): 133 x 560 x 272 mm</li><li>Netto hmotnost: 5,9 kg</li><li>Napětí: 230 V ~ 50 Hz</li><li>Příkon: 150 W</li><li>Délka přívodního kabelu: 2,2 m</li></ul>"
 
 msgid "This is SEO meta description of brand %brandName%."
-msgstr "Toto je SEO meta popis značky %brandName%."
+msgstr "Toto je SEO meta popisek značky %brandName%."
 
 msgid "This is description of brand %brandName%."
 msgstr "Toto je popis značky %brandName%."
@@ -1542,6 +1788,12 @@ msgstr "Poukázka na 100 CZK"
 
 msgid "Ticket for 100 Czech crowns"
 msgstr "Poukázka na 100 korun českých"
+
+msgid "To track your package, click on this link: <a href=\"{tracking_url}\">{tracking_number}</a>."
+msgstr "Chcete-li sledovat svůj balíček, klikněte na tento odkaz: <a href=\"{tracking_url}\">{tracking_number}</a>."
+
+msgid "To track your package, click on this link: <a href=\"{tracking_url}\">{tracking_url}</a>."
+msgstr "Pro sledování Vaši zásilky klikněte na tento odkaz: <a href=\"{tracking_url}\">{tracking_url}</a>."
 
 msgid "Toilet paper with Euro pictures. Even you can feel rich now!"
 msgstr "toaleťák s potiskem bankovek EURO, pocit z použití tohoto toaletního papíru dá zapomenout na jakékoliv trable spojené s finanční krizí"
@@ -1567,17 +1819,29 @@ msgstr "USB"
 msgid "Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts."
 msgstr "Použití parní trouby Concept  je překvapivě všestranné. Lze v ní připravit předkrmy, polévky, maso, ryby, zeleninu, vegetariánská jídla, knedlíky, rýži, ovoce i dezerty."
 
+msgid "V"
+msgstr ""
+
 msgid "VERBATIM 1TB external HDD 2,5\" USB 3.0 GT SuperSpeed red"
 msgstr "VERBATIM 1TB externí disk 2,5\" USB 3.0 GT SuperSpeed červený"
 
-msgid "VIP customer"
-msgstr "VIP zákazník"
+msgid "VIP"
+msgstr ""
+
+msgid "Vhodné pro všechny druhy zboží"
+msgstr ""
 
 msgid "Video"
 msgstr "Video"
 
 msgid "Viewfinder type"
 msgstr "Typ hledáčku"
+
+msgid "W"
+msgstr ""
+
+msgid "Warranty (in years)"
+msgstr "Záruka (v letech)"
 
 msgid "Watch broadcast in stunning Full HD, while at the same stylish devices work."
 msgstr "Sledujte vysílání v úžasném rozlišení Full HD a zároveň na stejném stylovém zařízení pracujte."
@@ -1593,6 +1857,9 @@ msgstr "Těšíme se na Vaši návštěvu."
 
 msgid "Weight"
 msgstr "Hmotnost"
+
+msgid "Weight (kg)"
+msgstr "Hmotnost (kg)"
 
 msgid "Well known USB cable with A and micro B connectors."
 msgstr "Značkový USB kabel s koncovkami A a micro B, délka kabelu 1 metr, vhodné k vybraným mobilním zařízením a fotoaparátům."
@@ -1639,14 +1906,68 @@ msgstr "Uvítá Vás milý personál!"
 msgid "ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue"
 msgstr "ZN-8009 napařovací žehlička Ferratte nerez 2200 W modrá"
 
+msgid "Způsob připojení"
+msgstr ""
+
 msgid "battery"
 msgstr "akumulátor"
 
 msgid "black"
 msgstr "černá"
 
+msgid "book"
+msgstr "kniha"
+
 msgid "classic"
 msgstr "klasické"
+
+msgid "cm"
+msgstr ""
+
+msgid "description - First subsection %locale%"
+msgstr "popis - První podsekce %locale%"
+
+msgid "description - Lorem ipsum dolor sit amet, <div class=\"gjs-products\" data-products=\"9177759,7700768,9146508\"><div class=\"gjs-product\" data-product=\"9177759\"></div><div class=\"gjs-product\" data-product=\"7700768\"></div><div class=\"gjs-product\" data-product=\"9146508\"></div></div> consectetur <div class=\"gjs-products\" data-products=\"9177759,9176508\"><div class=\"gjs-product\" data-product=\"9177759\"></div><div class=\"gjs-product\" data-product=\"9176508\"></div></div> adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue."
+msgstr ""
+
+msgid "description - Main blog page - %locale%"
+msgstr "popis - Hlavní stránka blogu %locale%"
+
+msgid "description - Second subsection %locale%"
+msgstr "popis - Druhá podsekce %locale%"
+
+msgid "description of 2 litre coffeemakers in sale seo category"
+msgstr "popis 'dvoulitrové kávovary' seo kategorie"
+
+msgid "description of Electronics from most expensive seo category"
+msgstr "popis 'Elektronika od nejdražší' seo kategorie"
+
+msgid "description of Electronics in black seo category"
+msgstr "popis 'Elektronika v černé' seo kategorie"
+
+msgid "description of Electronics in red seo category"
+msgstr "popis 'Elektronika v červené' seo kategorie"
+
+msgid "description of Electronics with LED technology and size 30 inch in sale seo category"
+msgstr "popis 'elektronika s LED technologií a velikosti 30 palců ve slevě' seo kategorie"
+
+msgid "description of Electronics without HDMI in sale seo category"
+msgstr "popis 'Elektronika bez HDMI ve slevě' seo kategorie"
+
+msgid "description of Full HD Electronics with LED technology and USB seo category"
+msgstr "popis 'Full HD elekronika s LED technologií a USB' seo kategorie"
+
+msgid "description of New computers with USB seo category"
+msgstr "popis 'Nové počítače s USB' seo kategorie"
+
+msgid "description of TV, audio from the cheapest seo category"
+msgstr "popis 'Nejlevnější televize a audio' seo kategorie"
+
+msgid "description of TV, audio in sale seo category"
+msgstr "popis 'Televize a audio ve slevě' seo kategorie"
+
+msgid "description of TV, audio plasma with HDMI seo category"
+msgstr "popis 'Televize a audie s plasmovou technologií a HDMI' seo kategorie"
 
 msgid "fits into VP812x VP9520"
 msgstr "pasuje do VP812x VP9520"
@@ -1654,14 +1975,62 @@ msgstr "pasuje do VP812x VP9520"
 msgid "flash disk"
 msgstr "flash disk"
 
+msgid "g"
+msgstr ""
+
 msgid "hardcover"
 msgstr "pevný"
+
+msgid "in"
+msgstr ""
 
 msgid "inkjet"
 msgstr "inkoustové"
 
+msgid "kW"
+msgstr ""
+
+msgid "kg"
+msgstr ""
+
+msgid "m"
+msgstr ""
+
 msgid "media 210MB, 24min., writing speed 24x, slim box"
 msgstr "médium 210MB, 24min., rychlost zápisu 24x, slim box"
+
+msgid "meta description of 2 litre coffeemakers in sale seo category"
+msgstr "meta popis 'dvoulitrové kávovary' seo kategorie"
+
+msgid "meta description of Electronics from most expensive seo category"
+msgstr "meta popis 'Elektronika od nejdražší' seo kategorie"
+
+msgid "meta description of Electronics in black seo category"
+msgstr "meta popis 'Elektronika v černé' seo kategorie"
+
+msgid "meta description of Electronics in red seo category"
+msgstr "meta popis 'Elektronika v červené' seo kategorie"
+
+msgid "meta description of Electronics with LED technology and size 30 inch in sale seo category"
+msgstr "meta popis 'elektronika s LED technologií a velikosti 30 palců ve slevě' seo kategorie"
+
+msgid "meta description of Full HD Electronics with LED technology and USB seo category"
+msgstr "meta popis 'Full HD elekronika s LED technologií a USB' seo kategorie"
+
+msgid "meta description of New computers with USB seo category"
+msgstr "meta popis 'Nové počítače s USB' seo kategorie"
+
+msgid "meta description of TV, audio from the cheapest seo category"
+msgstr "meta popis 'Nejlevnější televize a audio' seo kategorie"
+
+msgid "meta description of TV, audio in sale seo category"
+msgstr "meta popis 'Televize a audio ve slevě' seo kategorie"
+
+msgid "meta description of TV, audio plasma with HDMI seo category"
+msgstr "meta popis 'Televize a audio ve slevě' seo kategorie"
+
+msgid "metal"
+msgstr "kov"
 
 msgid "m³"
 msgstr "m³"
@@ -1681,9 +2050,105 @@ msgstr "papír"
 msgid "pcs"
 msgstr "ks"
 
+msgid "perex"
+msgstr ""
+
+msgid "plastic"
+msgstr "plast"
+
+msgid "plazmová"
+msgstr ""
+
+msgid "red"
+msgstr "červená"
+
+msgid "short description of 2 litre coffeemakers in sale seo category"
+msgstr "krátký popis 'dvoulitrové kávovary' seo kategorie"
+
+msgid "short description of Electronics from most expensive seo category"
+msgstr "krátký popis 'Elektronika od nejdražší' seo kategorie"
+
+msgid "short description of Electronics in black seo category"
+msgstr "krátký popis 'Elektronika v černé' seo kategorie"
+
+msgid "short description of Electronics in red seo category"
+msgstr "krátký popis 'Elektronika v červené' seo kategorie"
+
+msgid "short description of Electronics with LED technology and size 30 inch in sale seo category"
+msgstr "krátký popis 'elektronika s LED technologií a velikosti 30 palců ve slevě' seo kategorie"
+
+msgid "short description of Electronics without HDMI in sale seo category"
+msgstr "krátký popis 'Elektronika bez HDMI ve slevě' seo kategorie"
+
+msgid "short description of Full HD Electronics with LED technology and USB seo category"
+msgstr "krátký popis 'Full HD elekronika s LED technologií a USB' seo kategorie"
+
+msgid "short description of New computers with USB seo category"
+msgstr "krátký popis 'Nové počítače s USB' seo kategorie"
+
+msgid "short description of TV, audio from the cheapest seo category"
+msgstr "krátký popis 'Nejlevnější televize a audio' seo kategorie"
+
+msgid "short description of TV, audio in sale seo category"
+msgstr "krátký popis 'Televize a audio ve slevě' seo kategorie"
+
+msgid "short description of TV, audio plasma with HDMI seo category"
+msgstr "krátký popis 'Televize a audio ve slevě' seo kategorie"
+
+msgid "t"
+msgstr ""
+
+msgid "the Czech Post will try to deliver your parcel on time, but it will not succeed and despite the constant presence of your person at home, it will not catch you and you will have to pick up the parcel personally at the counter. Here, however, you have to endure an endlessly long line and an eternally grumpy lady postman."
+msgstr "Česká pošta se pokusí doručit Vaši zásilku včas, avšak to se jí nepovede a i přes neustálou přítomnost Vaší osoby doma, Vás nezastihne a budete muset osobně vyzvednout zásilku na přepážce. Zde však musíte vytrpět nekonečně dlouhou řadu a věčně mrzutou paní pošťačku."
+
+msgid "title"
+msgstr "titulek"
+
+msgid "title - Blog article example %counter% %locale%"
+msgstr "titulek - Ukázkový článek blogu %counter% %locale%"
+
+msgid "title - First subsection %locale%"
+msgstr "titulek - První podsekce %locale%"
+
+msgid "title - Second subsection %locale%"
+msgstr "titulek - Druhé podsekce %locale%"
+
+msgid "title of 2 litre coffeemakers in sale seo category"
+msgstr "titulek 'dvoulitrové kávovary' seo kategorie"
+
+msgid "title of Electronics from most expensive seo category"
+msgstr "titulek 'Elektronika od nejdražší' seo kategorie"
+
+msgid "title of Electronics in black seo category"
+msgstr "titulek 'Elektronika v černé' seo kategorie"
+
+msgid "title of Electronics in red seo category"
+msgstr "titulek 'Elektronika v červené' seo kategorie"
+
+msgid "title of Electronics with LED technology and size 30 inch in sale seo category"
+msgstr "titulek 'elektronika s LED technologií a velikosti 30 palců ve slevě' seo kategorie"
+
+msgid "title of Full HD Electronics with LED technology and USB seo category"
+msgstr "titulek 'Full HD elekronika s LED technologií a USB' seo kategorie"
+
+msgid "title of New computers with USB seo category"
+msgstr "titulek 'Nové počítače s USB' seo kategorie"
+
+msgid "title of TV, audio from the cheapest seo category"
+msgstr "titulek 'Nejlevnější televize a audio' seo kategorie"
+
+msgid "title of TV, audio in sale seo category"
+msgstr "titulek 'Televize a audio ve slevě' seo kategorie"
+
+msgid "title of TV, audio plasma with HDMI seo category"
+msgstr "titulek 'Televize a audio ve slevě' seo kategorie"
+
 msgid "white"
 msgstr "bílá"
 
-msgid "| Demo eshop"
-msgstr "| Demo obchod"
+msgid "wood"
+msgstr "dřevo"
+
+msgid "| Commerce Cloud"
+msgstr ""
 

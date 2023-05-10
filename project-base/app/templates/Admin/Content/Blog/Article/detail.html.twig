@@ -1,0 +1,23 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+{% import '@ShopsysFramework/Admin/Form/seoFormRowMacros.html.twig' as seoFormRowMacros %}
+
+{% block title %}- {{ 'Článek blogu'|trans }}{% endblock %}
+{% block h1 %}{{ 'Článek blogu'|trans }}{% endblock %}
+{% block main_content %}
+    {% if isMultidomain() %}
+        {% set cssClassOnMultidomainInputs = 'input--domain' %}
+    {% else %}
+        {% set cssClassOnMultidomainInputs = '' %}
+    {% endif %}
+
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+            {% block fixed_bar_content %}
+                <a href="{{ url('admin_blogarticle_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
+                {{ form_save(blogArticle|default(null), form) }}
+            {% endblock %}
+        {% endembed %}
+    {{ form_end(form) }}
+{% endblock %}

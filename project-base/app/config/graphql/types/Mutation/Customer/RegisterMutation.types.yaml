@@ -1,0 +1,12 @@
+RegisterMutation:
+    type: object
+    config:
+        fields:
+            Register:
+                type: "LoginResult!"
+                description: "Register new customer user"
+                args:
+                    input:
+                        type: RegistrationDataInput!
+                        validation: cascade
+                resolve: "@=mutation('registerMutation', args, validator)"

@@ -1,0 +1,12 @@
+Slug:
+    type: interface
+    config:
+        description: "Represents entity retrievable by slug"
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID"
+            name:
+                type: "String"
+            slug:
+                type: "String!"

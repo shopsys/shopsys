@@ -19,8 +19,6 @@ class CategoryDataFixture
 {
     public const FIRST_PERFORMANCE_CATEGORY = 'first_performance_category';
 
-    private CategoryDataFactory $categoryDataFactory;
-
     /**
      * @var int[]
      */
@@ -31,7 +29,7 @@ class CategoryDataFixture
     /**
      * @param int[] $categoryCountsByLevel
      * @param \App\Model\Category\CategoryDataFactory $categoryDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
+     * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      * @param \Faker\Generator $faker
@@ -39,7 +37,7 @@ class CategoryDataFixture
      */
     public function __construct(
         $categoryCountsByLevel,
-        CategoryDataFactoryInterface $categoryDataFactory,
+        private readonly CategoryDataFactoryInterface $categoryDataFactory,
         private readonly CategoryFacade $categoryFacade,
         private readonly SqlLoggerFacade $sqlLoggerFacade,
         private readonly PersistentReferenceFacade $persistentReferenceFacade,
@@ -47,7 +45,6 @@ class CategoryDataFixture
         private readonly ProgressBarFactory $progressBarFactory,
     ) {
         $this->categoryCountsByLevel = $categoryCountsByLevel;
-        $this->categoryDataFactory = $categoryDataFactory;
         $this->categoriesCreated = 0;
     }
 

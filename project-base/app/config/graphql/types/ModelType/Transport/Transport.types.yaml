@@ -1,0 +1,49 @@
+Transport:
+    type: object
+    inherits:
+        - 'TransportDecorator'
+    config:
+        fields:
+            daysUntilDelivery:
+                type: "Int!"
+                description: "Number of days until goods are delivered"
+            transportType:
+                type: "TransportType!"
+                description: "Type of transport"
+            stores:
+                type: "StoreConnection"
+                description: "Stores available for personal pickup"
+                resolve: "@=query('storesByTransportQuery', value, args)"
+            price:
+                type: "Price!"
+                description: "Transport price"
+                resolve: '@=query("priceByTransportQuery", value, args["cartUuid"], context)'
+                args:
+                    cartUuid:
+                        type: "Uuid"
+                        defaultValue: null
+            images:
+                type: "[Image!]!"
+                description: "Transport images"
+                resolve: '@=query("imagesByEntityPromiseQuery", value, args["type"], args["sizes"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    sizes:
+                        type: "[String!]"
+                        defaultValue: null
+            mainImage:
+                type: "Image"
+                description: "Transport image by params"
+                resolve: '@=query("mainImageByEntityPromiseQuery", value, args["type"], args["size"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    size:
+                        type: "String"
+                        defaultValue: null
+            isPersonalPickup:
+                type: "Boolean!"
+                description: "Pointer telling if the transport is of type personal pickup"

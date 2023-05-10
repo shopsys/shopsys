@@ -1,0 +1,7 @@
+{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_action_cell_type_delete %}
+    {% if row.userTranslation is not empty %}
+        {{ gridView.renderBlock('grid_action_cell', { actionColumn: actionColumn, row: row}) }}
+    {% endif %}
+{% endblock %}

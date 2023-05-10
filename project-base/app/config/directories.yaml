@@ -1,3 +1,5 @@
 parameters:
     public_directories:
+        - "%shopsys.product_files_dir%"
     internal_directories:
+        - '%kernel.cache_dir%/localeFileUploads'

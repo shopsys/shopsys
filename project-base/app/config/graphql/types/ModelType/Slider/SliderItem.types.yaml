@@ -1,0 +1,47 @@
+SliderItem:
+    type: object
+    config:
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID"
+            name:
+                type: "String!"
+                description: "Slider name"
+            link:
+                type: "String!"
+                description: "Target link"
+            extendedText:
+                type: "String"
+                description: "Text below slider"
+            extendedTextLink:
+                type: "String"
+                description: "Target link of text below slider"
+            gtmId:
+                type: "String!"
+                description: "GTM ID"
+            gtmCreative:
+                type: "String"
+                description: "GTM creative"
+            images:
+                type: "[Image!]!"
+                description: "Slider item images"
+                resolve: '@=query("imagesByEntityPromiseQuery", value, args["type"], args["sizes"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    sizes:
+                        type: "[String!]"
+                        defaultValue: null
+            mainImage:
+                type: "Image"
+                description: "Slider item image by params"
+                resolve: '@=query("mainImageByEntityPromiseQuery", value, args["type"], args["size"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    size:
+                        type: "String"
+                        defaultValue: null

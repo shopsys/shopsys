@@ -1,0 +1,18 @@
+Price:
+    type: object
+    inherits:
+        - 'PriceDecorator'
+    config:
+        interfaces:
+            - 'PriceInterface'
+        description: "Represents the price"
+        fields:
+            priceWithVat:
+                type: "Money!"
+                description: "Price with VAT"
+            priceWithoutVat:
+                type: "Money!"
+                description: "Price without VAT"
+            vatAmount:
+                type: "Money!"
+                description: "Total value of VAT"

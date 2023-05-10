@@ -7,3 +7,6 @@ framework:
             doctrine.query_cache_pool:
                 adapter: cache.adapter.array
                 provider: ~
+            main_friendly_url_slug_cache:
+                adapter: cache.adapter.array
+                provider: ~

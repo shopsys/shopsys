@@ -1,0 +1,15 @@
+CompanyCustomerUser:
+    type: object
+    config:
+        interfaces:
+            - 'CustomerUser'
+        fields:
+            companyName:
+                type: "String"
+                description: "The customer’s company name (only when customer is a company)"
+            companyNumber:
+                type: "String"
+                description: "The customer’s company identification number (only when customer is a company)"
+            companyTaxNumber:
+                type: "String"
+                description: "The customer’s company tax number (only when customer is a company)"

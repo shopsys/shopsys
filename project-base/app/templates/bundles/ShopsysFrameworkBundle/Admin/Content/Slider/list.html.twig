@@ -1,0 +1,12 @@
+{% extends '@!ShopsysFramework/Admin/Content/Slider/list.html.twig' %}
+
+{% block title %}- {{ 'Banners'|trans }}{% endblock %}
+{% block h1 %}{{ 'Banners'|trans }}{% endblock %}
+
+{% block btn %}
+    <div class="wrap-bar__buttons">
+        <a href="{{ url('admin_slider_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>{{ 'Create new banner'|trans }}
+        </a>
+    </div>
+{% endblock %}

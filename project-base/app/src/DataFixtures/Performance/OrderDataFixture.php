@@ -48,8 +48,6 @@ class OrderDataFixture
      */
     private array $performanceUserIds;
 
-    private OrderDataFactory $orderDataFactory;
-
     /**
      * @param int $orderTotalCount
      * @param int $orderItemCountPerOrder
@@ -57,9 +55,9 @@ class OrderDataFixture
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
+     * @param \App\Model\Order\OrderFacade $orderFacade
+     * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
+     * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
@@ -76,12 +74,11 @@ class OrderDataFixture
         private readonly ProductFacade $productFacade,
         private readonly CustomerUserFacade $customerUserFacade,
         private readonly ProgressBarFactory $progressBarFactory,
-        OrderDataFactoryInterface $orderDataFactory,
+        private readonly OrderDataFactoryInterface $orderDataFactory,
     ) {
         $this->orderTotalCount = $orderTotalCount;
         $this->orderItemCountPerOrder = $orderItemCountPerOrder;
         $this->performanceProductIds = [];
-        $this->orderDataFactory = $orderDataFactory;
     }
 
     /**

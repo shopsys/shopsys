@@ -2,7 +2,7 @@
   "settings": {
     "index": {
       "number_of_shards": 1,
-      "number_of_replicas": 0
+      "number_of_replicas": 1
     },
     "analysis": {
       "filter": {
@@ -64,6 +64,14 @@
             "asciifolding"
           ]
         },
+        "full_without_diacritic_html": {
+          "char_filter": "html_strip",
+          "tokenizer": "keep_special_chars",
+          "filter": [
+            "lowercase",
+            "asciifolding"
+          ]
+        },
         "edge_ngram_without_diacritic_html": {
           "char_filter": "html_strip",
           "tokenizer": "keep_special_chars",
@@ -78,13 +86,32 @@
           "filter": [
             "edge_ngram"
           ]
+        },
+        "edge_ngram_unanalyzed_words": {
+          "tokenizer": "whitespace",
+          "filter": [
+            "edge_ngram"
+          ]
+        },
+        "whitespace_without_dots": {
+          "tokenizer": "whitespace",
+          "char_filter": [
+            "dots_replace_filter"
+          ]
+        }
+      },
+      "char_filter": {
+        "dots_replace_filter": {
+          "type": "pattern_replace",
+          "pattern": "\\.",
+          "replacement": ""
         }
       }
     }
   },
   "mappings": {
     "properties": {
-      "name": {
+      "searching_names": {
         "type": "text",
         "analyzer": "stemming",
         "fields": {
@@ -98,12 +125,24 @@
           },
           "edge_ngram_with_diacritic": {
             "type": "text",
-            "analyzer": "edge_ngram_with_diacritic"
+            "analyzer": "edge_ngram_with_diacritic",
+            "search_analyzer": "full_with_diacritic"
           },
           "edge_ngram_without_diacritic": {
             "type": "text",
-            "analyzer": "edge_ngram_without_diacritic"
+            "analyzer": "edge_ngram_without_diacritic",
+            "search_analyzer": "full_without_diacritic"
           },
+          "keyword": {
+            "type": "icu_collation_keyword",
+            "language": "cs",
+            "index": false
+          }
+        }
+      },
+      "name": {
+        "type": "text",
+        "fields": {
           "keyword": {
             "type": "icu_collation_keyword",
             "language": "en",
@@ -111,46 +150,70 @@
           }
         }
       },
-      "catnum": {
+      "name_prefix": {
+        "type": "text"
+      },
+      "name_sufix": {
+        "type": "text"
+      },
+      "searching_catnums": {
         "type": "text",
-        "analyzer": "keyword",
+        "analyzer": "whitespace",
+        "search_analyzer": "whitespace_without_dots",
         "fields": {
-          "edge_ngram": {
+          "edge_ngram_unanalyzed_words": {
             "type": "text",
-            "analyzer": "edge_ngram_unanalyzed",
-            "search_analyzer": "keyword"
+            "analyzer": "edge_ngram_unanalyzed_words",
+            "search_analyzer": "whitespace_without_dots"
+          }
+        }
+      },
+      "catnum": {
+        "type": "text"
+      },
+      "searching_partnos": {
+        "type": "text",
+        "analyzer": "whitespace",
+        "fields": {
+          "edge_ngram_unanalyzed_words": {
+            "type": "text",
+            "analyzer": "edge_ngram_unanalyzed_words",
+            "search_analyzer": "whitespace"
           }
         }
       },
       "partno": {
+        "type": "text"
+      },
+      "searching_eans": {
         "type": "text",
-        "analyzer": "keyword",
+        "analyzer": "whitespace",
         "fields": {
-          "edge_ngram": {
+          "edge_ngram_unanalyzed_words": {
             "type": "text",
-            "analyzer": "edge_ngram_unanalyzed",
-            "search_analyzer": "keyword"
+            "analyzer": "edge_ngram_unanalyzed_words",
+            "search_analyzer": "whitespace"
           }
         }
       },
       "ean": {
-        "type": "text",
-        "analyzer": "keyword",
-        "fields": {
-          "edge_ngram": {
+        "type": "text"
+      },
+      "searching_short_descriptions": {
             "type": "text",
-            "analyzer": "edge_ngram_unanalyzed",
-            "search_analyzer": "keyword"
-          }
-        }
+        "analyzer": "edge_ngram_without_diacritic",
+        "search_analyzer": "full_without_diacritic"
       },
       "short_description": {
+        "type": "text"
+      },
+      "searching_descriptions": {
         "type": "text",
-        "analyzer": "edge_ngram_without_diacritic"
+        "analyzer": "edge_ngram_without_diacritic_html",
+        "search_analyzer": "full_without_diacritic_html"
       },
       "description": {
-        "type": "text",
-        "analyzer": "edge_ngram_without_diacritic_html"
+        "type": "text"
       },
       "flags": {
         "type": "integer"
@@ -165,9 +228,6 @@
         "type": "text"
       },
       "categories": {
-        "type": "integer"
-      },
-      "main_category_id": {
         "type": "integer"
       },
       "prices": {
@@ -187,10 +247,19 @@
           },
           "price_from": {
             "type": "boolean"
+          },
+          "filtering_minimal_price": {
+            "type": "float"
+          },
+          "filtering_maximal_price": {
+            "type": "float"
           }
         }
       },
       "in_stock": {
+        "type": "boolean"
+      },
+      "is_available": {
         "type": "boolean"
       },
       "parameters": {
@@ -205,6 +274,12 @@
           "parameter_name": {
             "type": "text"
           },
+          "parameter_unit": {
+            "type": "text"
+          },
+          "parameter_group": {
+            "type": "text"
+          },
           "parameter_value_id": {
             "type": "integer"
           },
@@ -213,6 +288,12 @@
           },
           "parameter_value_text": {
             "type": "text"
+          },
+          "parameter_is_dimensional": {
+            "type": "boolean"
+          },
+          "parameter_value_for_slider_filter": {
+            "type": "float"
           }
         }
       },
@@ -226,6 +307,9 @@
         "type": "boolean"
       },
       "availability": {
+        "type": "text"
+      },
+      "availability_status": {
         "type": "text"
       },
       "availability_dispatch_time": {
@@ -257,11 +341,11 @@
       "unit": {
         "type": "text"
       },
-      "is_using_stock": {
-        "type": "boolean"
-      },
       "stock_quantity": {
         "type": "integer"
+      },
+      "has_preorder": {
+        "type": "boolean"
       },
       "variants": {
         "type": "integer"
@@ -277,6 +361,77 @@
       },
       "seo_meta_description": {
         "type": "text"
+      },
+      "is_sale_exclusion": {
+        "type": "boolean"
+      },
+      "product_available_stores_count_information": {
+        "type": "text"
+      },
+      "product_count_exposed_in_stores": {
+        "type": "text"
+      },
+      "store_availabilities_information": {
+        "type": "nested",
+        "properties": {
+          "store_name": {
+            "type": "text"
+          },
+          "store_id": {
+            "type": "integer"
+          },
+          "availability_information": {
+            "type": "text"
+          },
+          "exposed": {
+            "type": "boolean"
+          },
+          "availability_status": {
+            "type": "text"
+          }
+        }
+      },
+      "files": {
+        "type": "nested",
+        "properties": {
+          "anchor_text": {
+            "type": "text"
+          },
+          "url":{
+            "type": "text"
+          }
+        }
+      },
+      "usps": {
+        "type": "text"
+      },
+      "main_category_id": {
+        "type": "integer"
+      },
+      "main_category_path": {
+        "type": "text"
+      },
+      "slug": {
+        "type": "text"
+      },
+      "available_stores_count": {
+        "type": "integer"
+      },
+      "exposed_stores_count": {
+        "type": "integer"
+      },
+      "related_products": {
+        "type": "integer"
+      },
+      "breadcrumb": {
+        "properties": {
+          "name": {
+            "type": "text"
+          },
+          "slug":  {
+            "type": "keyword"
+          }
+        }
       }
     }
   }

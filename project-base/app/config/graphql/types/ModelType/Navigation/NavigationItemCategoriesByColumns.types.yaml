@@ -1,0 +1,11 @@
+NavigationItemCategoriesByColumns:
+    type: object
+    config:
+        description: "Represents a single column inside the navigation item"
+        fields:
+            columnNumber:
+                type: "Int!"
+                description: "Column number"
+            categories:
+                type: "[Category!]!"
+                description: "Categories"

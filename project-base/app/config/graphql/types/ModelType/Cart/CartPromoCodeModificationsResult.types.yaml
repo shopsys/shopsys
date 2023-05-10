@@ -1,0 +1,6 @@
+CartPromoCodeModificationsResult:
+    type: object
+    config:
+        fields:
+            noLongerApplicablePromoCode:
+                type: "[String!]!"

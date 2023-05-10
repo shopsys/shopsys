@@ -33,6 +33,13 @@ services:
     League\Flysystem\FilesystemOperator:
         alias: 'main_filesystem'
 
+    Tests\FrontendApiBundle\Functional\Payment\GoPay\GoPayClientFactory:
+        arguments:
+            - '%gopay_config%'
+
+    App\Model\GoPay\GoPayClientFactory:
+        alias: Tests\FrontendApiBundle\Functional\Payment\GoPay\GoPayClientFactory
+
     Tests\App\Functional\EntityExtension\EntityExtensionTestHelper: ~
 
     Symfony\Component\HttpFoundation\RequestStack:

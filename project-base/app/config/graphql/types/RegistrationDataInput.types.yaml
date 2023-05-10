@@ -1,4 +1,0 @@
-RegistrationDataInput:
-    type: input-object
-    inherits:
-        - 'RegistrationDataInputDecorator'

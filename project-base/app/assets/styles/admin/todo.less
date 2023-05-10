@@ -1,1 +1,92 @@
 // file for temporary styles eg. added by a programmer
+
+@color-blue: #009BD9;
+@color-inactive: @color-a;
+
+.cursor-default {
+    cursor: default !important;
+}
+
+#descriptions-legend {
+    .form-line__side {
+        padding: 13px 10px 11px 0;
+        font-size: 15px;
+        color: red;
+    }
+}
+
+.input__domain {
+    &--long {
+        width: 180px;
+    }
+
+    &__label {
+        position: relative;
+        float: left;
+    }
+}
+
+.seo-icon {
+    &--active {
+        color: @color-blue;
+        font-size: 16px;
+        height: 16px;
+    }
+
+    &--inactive {
+        color: @color-inactive;
+        font-size: 16px;
+        height: 16px;
+    }
+}
+
+.form-tree__item__controls {
+    &--indented {
+        right: -200px;
+    }
+}
+
+.background-color-ddd {
+    background-color: #ddd !important;
+}
+
+.width-80 {
+    width: 80px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.js-promo-code-group-unpack {
+    float: right;
+}
+
+.visibility-hidden {
+    visibility: hidden;
+}
+
+.hide {
+    display: none;
+}
+
+.table-grid__cell--actions {
+    width: 100px;
+}
+
+.roles-row {
+    display: flex;
+
+    &:nth-child(odd) {
+        background-color: #f6f6f6;
+    }
+}
+
+.roles-column {
+    flex: 1;
+    box-sizing: border-box;
+}
+
+.administrator_role_group .table-grid__cell--actions {
+    width: 200px;
+}

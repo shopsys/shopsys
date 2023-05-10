@@ -1,7 +1,11 @@
 monolog:
     handlers:
         main:
-            # change "fingers_crossed" handler to "group" that works as a passthrough to "nested"
-            type: group
-            members: [ nested ]
+            type: "null"
+            level: emergency
             excluded_http_codes: []
+        log_stream: # difference between common setup and DEV env log_stream handler is only in level: for DEV env is logging enabled from NOTICE
+            type: stream
+            path: "%shopsys.log_stream%"
+            level: notice
+            formatter: "monolog.formatter.line"
