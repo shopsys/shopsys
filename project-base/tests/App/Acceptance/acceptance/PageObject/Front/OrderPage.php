@@ -132,11 +132,7 @@ class OrderPage extends AbstractPage
 
     public function acceptLegalConditions()
     {
-        $frontCheckboxClicker = FrontCheckbox::createByCss(
-            $this->tester,
-            '#order_personal_info_form_legalConditionsAgreement'
-        );
-        $frontCheckboxClicker->check();
+        $this->tester->executeJS("$('label[for=\'order_personal_info_form_legalConditionsAgreement\']').click();");
         $this->tester->waitForAjax();
         $this->tester->wait(1);
     }

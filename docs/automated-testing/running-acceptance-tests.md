@@ -24,28 +24,20 @@ php phing tests-acceptance
     More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)
 
 ### How to watch what is going on in the selenium browser
-By default, Shopsys Framework uses `selenium/standalone-chrome` image for `selenium-server` service which means you are not able to watch what is going on in the selenium browser.
-However, there is a quick solution which allows you to watch the progress of your acceptance tests:
+Shopsys Framework uses `seleniarm/standalone-firefox` image for `selenium-server` service which provides two ways of watching acceptance tests progress:
 
-In your `docker-compose.yml`, use `standalone-chrome-debug` image for `selenium-server` service and new settings of ports:
-
-```diff
-  selenium-server:
--    image: selenium/standalone-chrome:3.141.5
-+    image: selenium/standalone-chrome-debug:3.141.5
-     container_name: shopsys-framework-acceptance-tests
-         ports:
-             - "4400:4444"
-+            - "5900:5900"
-```
-
-Run `docker-compose up -d`
-
+#### VNC
 From your local machine, connect to the remote desktop on `vnc://127.0.0.1:5900`
 
-- for the connection, you can use e.g. *Remmina* tool that is installed by default in Ubuntu
+- on Linux, you can use for example *Remmina* tool that is installed by default in Ubuntu
 - on Mac, you can run `open vnc://127.0.0.1:5900` in your terminal
 - the default password for the connection is `secret`
+
+Run acceptance tests as described in [the paragraph above](#running-in-docker)
+
+#### noVNC
+On your local machine open in browser [http://127.0.0.1:7900/](http://127.0.0.1:7900/) to run noVNC.
+You will be prompted for a password, which is `secret` by default.
 
 Run acceptance tests as described in [the paragraph above](#running-in-docker)
 

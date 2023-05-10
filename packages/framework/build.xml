@@ -1185,6 +1185,11 @@
             </then>
         </if>
         <phingcall target="test-db-dump"/>
+        <delete failonerror="false" includeemptydirs="true">
+            <fileset dir="${path.var}/log/codeception/">
+                <exclude name="/"/>
+            </fileset>
+        </delete>
     </target>
 
     <target name="tests-acceptance-build" depends="production-protection" description="Generates AcceptanceTesterActions.php (execute after change of Codeception modules, eg. StrictWebDriver)." hidden="true">
