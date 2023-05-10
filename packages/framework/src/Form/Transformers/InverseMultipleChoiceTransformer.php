@@ -20,7 +20,7 @@ class InverseMultipleChoiceTransformer implements DataTransformerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function transform($value): ?array
     {
@@ -32,7 +32,7 @@ class InverseMultipleChoiceTransformer implements DataTransformerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function reverseTransform($value): ?array
     {

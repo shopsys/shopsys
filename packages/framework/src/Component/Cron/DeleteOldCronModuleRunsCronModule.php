@@ -18,7 +18,7 @@ class DeleteOldCronModuleRunsCronModule implements SimpleCronModuleInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setLogger(Logger $logger): void
     {

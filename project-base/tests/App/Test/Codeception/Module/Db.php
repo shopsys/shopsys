@@ -28,7 +28,7 @@ class Db extends BaseDb
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function _loadDump($databaseKey = null, $databaseConfig = null)
     {

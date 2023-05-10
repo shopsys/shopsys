@@ -32,7 +32,7 @@ class StrictWebDriver extends WebDriver
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function match($page, $selector, $throwMalformed = true): array
     {
@@ -45,7 +45,7 @@ class StrictWebDriver extends WebDriver
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function findFields($selector): array
     {

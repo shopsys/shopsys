@@ -35,7 +35,7 @@ class DatabaseDumpCommand extends Command
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function configure(): void
     {
@@ -46,7 +46,7 @@ class DatabaseDumpCommand extends Command
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

@@ -11,7 +11,7 @@ use Tests\App\Test\Codeception\Module\Db;
 class DatabaseHelper extends Module
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function _initialize()
     {

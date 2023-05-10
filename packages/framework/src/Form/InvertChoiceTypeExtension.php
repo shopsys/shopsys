@@ -14,7 +14,7 @@ class InvertChoiceTypeExtension extends AbstractTypeExtension
     protected const INVERT_OPTION = 'invert';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getExtendedTypes(): iterable
     {
@@ -22,7 +22,7 @@ class InvertChoiceTypeExtension extends AbstractTypeExtension
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -40,7 +40,7 @@ class InvertChoiceTypeExtension extends AbstractTypeExtension
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {

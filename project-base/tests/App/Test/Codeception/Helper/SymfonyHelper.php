@@ -19,7 +19,7 @@ class SymfonyHelper extends Module
     private Kernel $kernel;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function _initialize()
     {
@@ -30,7 +30,7 @@ class SymfonyHelper extends Module
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function _before(TestInterface $test)
     {

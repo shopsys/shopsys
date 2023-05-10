@@ -10,7 +10,7 @@ use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 final class ConstantVisibilityRequiredSniffTest extends AbstractSniffTestCase
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getSniffClassName(): string
     {
@@ -18,7 +18,7 @@ final class ConstantVisibilityRequiredSniffTest extends AbstractSniffTestCase
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getWrongFiles(): iterable
     {
@@ -31,7 +31,7 @@ final class ConstantVisibilityRequiredSniffTest extends AbstractSniffTestCase
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getCorrectFiles(): iterable
     {
