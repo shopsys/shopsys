@@ -1,0 +1,10 @@
+fragment FlagDetailFragment on Flag {
+    __typename
+    uuid
+    slug
+    breadcrumb {
+        ...BreadcrumbFragment
+    }
+    name
+    ...ListedProductsPreviewFragment
+}

@@ -1,0 +1,16 @@
+fragment BlogArticleDetailFragment on BlogArticle {
+    __typename
+    id
+    uuid
+    name
+    slug
+    link
+    ...BlogArticleImageListGridFragment
+    breadcrumb {
+        ...BreadcrumbFragment
+    }
+    text
+    publishDate
+    seoTitle
+    seoMetaDescription
+}

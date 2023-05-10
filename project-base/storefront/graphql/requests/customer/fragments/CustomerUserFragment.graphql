@@ -1,0 +1,27 @@
+fragment CustomerUserFragment on CustomerUser {
+    __typename
+    uuid
+    firstName
+    lastName
+    email
+    telephone
+    street
+    city
+    postcode
+    country {
+        ...CountryFragment
+    }
+    newsletterSubscription
+    defaultDeliveryAddress {
+        ...DeliveryAddressFragment
+    }
+    deliveryAddresses {
+        ...DeliveryAddressFragment
+    }
+    ... on CompanyCustomerUser {
+        companyName
+        companyNumber
+        companyTaxNumber
+    }
+    pricingGroup
+}

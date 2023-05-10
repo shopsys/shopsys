@@ -1,0 +1,11 @@
+fragment ParameterFragment on Parameter {
+    __typename
+    uuid
+    name
+    visible
+    values {
+        __typename
+        uuid
+        text
+    }
+}

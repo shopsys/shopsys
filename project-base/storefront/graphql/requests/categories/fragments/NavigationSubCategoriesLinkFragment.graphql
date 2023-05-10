@@ -1,0 +1,8 @@
+fragment NavigationSubCategoriesLinkFragment on Category {
+    __typename
+    children {
+        __typename
+        name
+        slug
+    }
+}

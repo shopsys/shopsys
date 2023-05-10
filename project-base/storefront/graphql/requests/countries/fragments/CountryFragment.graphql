@@ -1,0 +1,5 @@
+fragment CountryFragment on Country {
+    __typename
+    name
+    code
+}

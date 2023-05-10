@@ -1,0 +1,8 @@
+fragment SimpleArticleLinkFragment on ArticleLink {
+    __typename
+    uuid
+    name
+    url
+    placement
+    external
+}

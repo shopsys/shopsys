@@ -1,0 +1,10 @@
+fragment ImageSizeFragment on ImageSize {
+    __typename
+    size
+    url
+    width
+    height
+    additionalSizes {
+        ...AdditionalSizeFragment
+    }
+}

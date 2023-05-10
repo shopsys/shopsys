@@ -1,0 +1,6 @@
+mutation PersonalDataRequestMutation($email: String!, $type: PersonalDataAccessRequestTypeEnum) {
+    RequestPersonalDataAccess(input: { email: $email, type: $type }) {
+        displaySiteSlug
+        exportSiteSlug
+    }
+}

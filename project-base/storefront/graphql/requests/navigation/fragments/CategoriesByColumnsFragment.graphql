@@ -1,0 +1,8 @@
+fragment CategoriesByColumnFragment on NavigationItem {
+    __typename
+    name
+    link
+    categoriesByColumns {
+        ...ColumnCategoriesFragment
+    }
+}

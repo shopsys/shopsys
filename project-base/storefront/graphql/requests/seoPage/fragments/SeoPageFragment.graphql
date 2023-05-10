@@ -1,0 +1,11 @@
+fragment SeoPageFragment on SeoPage {
+    __typename
+    title
+    metaDescription
+    canonicalUrl
+    ogTitle
+    ogDescription
+    ogImage(size: "default") {
+        ...ImageSizesFragment
+    }
+}

@@ -1,0 +1,45 @@
+fragment ProductDetailInterfaceFragment on Product {
+    __typename
+    id
+    uuid
+    slug
+    fullName
+    name
+    namePrefix
+    nameSuffix
+    breadcrumb {
+        ...BreadcrumbFragment
+    }
+    catalogNumber
+    ean
+    description
+    images {
+        ...ImageSizesFragment
+    }
+    price {
+        ...ProductPriceFragment
+    }
+    parameters {
+        ...ParameterFragment
+    }
+    stockQuantity
+    accessories {
+        ...ListedProductFragment
+    }
+    brand {
+        ...SimpleBrandFragment
+    }
+    categories {
+        name
+    }
+    flags {
+        ...SimpleFlagFragment
+    }
+    isSellingDenied
+    availability {
+        ...AvailabilityFragment
+    }
+    seoTitle
+    seoMetaDescription
+    isMainVariant
+}

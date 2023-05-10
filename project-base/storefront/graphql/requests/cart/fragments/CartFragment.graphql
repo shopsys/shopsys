@@ -1,0 +1,29 @@
+fragment CartFragment on CartInterface {
+    __typename
+    uuid
+    items {
+        ...CartItemFragment
+    }
+    totalPrice {
+        ...PriceFragment
+    }
+    totalItemsPrice {
+        ...PriceFragment
+    }
+    totalDiscountPrice {
+        ...PriceFragment
+    }
+    modifications {
+        ...CartModificationsFragment
+    }
+    remainingAmountWithVatForFreeTransport
+    transport {
+        ...TransportWithAvailablePaymentsAndStoresFragment
+    }
+    payment {
+        ...SimplePaymentFragment
+    }
+    promoCode
+    selectedPickupPlaceIdentifier
+    paymentGoPayBankSwift
+}

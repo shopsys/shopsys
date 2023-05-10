@@ -1,0 +1,8 @@
+query BlogArticlesQuery (
+    $first: Int,
+    $onlyHomepageArticles: Boolean
+) @redisCache(ttl: 3600) {
+    blogArticles(first: $first, onlyHomepageArticles: $onlyHomepageArticles) {
+        ...BlogArticleConnectionFragment
+    }
+}

@@ -1,0 +1,305 @@
+@import 'fonts.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    @apply h-full min-h-full;
+}
+
+body {
+    @apply min-h-full;
+}
+
+body,
+form,
+input,
+select,
+button,
+p,
+pre,
+dfn,
+address,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+img,
+table,
+tr,
+td,
+th,
+textarea {
+    @apply font-default leading-default text-dark;
+}
+
+img:not(.icon):not(.responsive-image) {
+    @apply max-w-full;
+    image-rendering: -webkit-optimize-contrast;
+}
+
+td,
+th {
+    @apply text-left;
+}
+
+hr {
+    @apply h-[1px];
+}
+
+dfn {
+    @apply not-italic;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+p {
+    @apply break-words;
+}
+
+a {
+    @apply cursor-pointer text-greyDark underline outline-none hover:text-primary hover:underline;
+}
+
+b,
+strong {
+    @apply font-extrabold;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    @apply m-0;
+    -webkit-appearance: none;
+}
+
+/* Firefox */
+input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+/* Stuff for react-select */
+
+.select__placeholder {
+    @apply hidden;
+}
+
+.select__control {
+    @apply !z-[2] !min-h-[56px] !cursor-pointer !items-end !self-end !rounded-xl !border-2 !border-border !shadow-none hover:!border-2 hover:!border-border;
+}
+
+.select__indicator {
+    @apply !flex h-12 w-12 !items-center !justify-center !p-0 transition-all [&_i]:!text-greyDark;
+}
+
+.select__menu {
+    @apply !m-0 !overflow-hidden !rounded-b-xl !border-2 !border-t-0 !border-border !shadow-none;
+}
+
+.select__menu-list {
+    @apply [&::-webkit-scrollbar]:h-[0px] [&::-webkit-scrollbar]:w-[5px] [&::-webkit-scrollbar-track]:bg-greyVeryLight [&::-webkit-scrollbar-thumb]:bg-greyLight [&::-webkit-scrollbar-thumb]:hover:bg-grey;
+}
+
+.select__option {
+    @apply !cursor-pointer !p-3 !text-dark active:!bg-blueLight;
+}
+
+.select__option--is-selected,
+.select__option--is-focused {
+    @apply !bg-blueLight;
+}
+
+.select__control--menu-is-open {
+    @apply !items-end !rounded-b-none [&.select__indicator]:!rotate-180 [&.select__indicator>svg]:!text-primary;
+}
+
+/* Toastify styling */
+
+.Toastify {
+    --toastify-toast-min-height: 48px;
+    --toastify-toast-width: 700px;
+    --toastify-font-family: sans-serif;
+    --toastify-z-index: 10100;
+}
+
+.Toastify__toast {
+    @apply !rounded-xl;
+}
+
+.Toastify__toast-body {
+    @apply !text-dark;
+}
+
+.Toastify__close-button {
+    @apply !self-center !text-dark !opacity-100;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--info {
+    @apply !border !border-primary !bg-[#f2f2ff];
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--info .Toastify__toast-icon {
+    @apply !text-primary;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--info
+    .Toastify__progress-bar-theme--colored.Toastify__progress-bar--info {
+    @apply !bg-primaryLight;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--success {
+    @apply !border !border-green !bg-[#ddf9f5];
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--success .Toastify__toast-icon {
+    @apply !text-green;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--success
+    .Toastify__progress-bar-theme--colored.Toastify__progress-bar--success {
+    @apply !bg-greenLight;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--error {
+    @apply !border !border-red !bg-[#ffc4c4];
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--error .Toastify__toast-icon {
+    @apply !text-red;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--error
+    .Toastify__progress-bar-theme--colored.Toastify__progress-bar--error {
+    @apply !bg-redLight;
+}
+
+/* CSS Transition styles */
+
+.dropdown-enter {
+    @apply -translate-y-[110%];
+}
+
+.dropdown-enter-active {
+    @apply translate-y-0;
+}
+
+.dropdown-exit {
+    @apply translate-y-0;
+}
+
+.dropdown-exit-active {
+    @apply -translate-y-[110%];
+}
+
+.menu-primary-left-enter {
+    @apply absolute -translate-x-full;
+}
+
+.menu-primary-left-enter-active {
+    @apply translate-x-0;
+}
+
+.menu-primary-left-exit {
+    @apply absolute;
+}
+
+.menu-primary-left-exit-active {
+    @apply -translate-x-full;
+}
+
+.menu-secondary-left-enter {
+    @apply absolute -translate-x-full;
+}
+
+.menu-secondary-left-enter-active {
+    @apply translate-x-0;
+}
+
+.menu-secondary-left-exit-active {
+    @apply translate-x-full;
+}
+
+.menu-tertiary-left-enter {
+    @apply translate-x-0;
+}
+
+.menu-tertiary-left-enter-active {
+    @apply translate-x-full;
+}
+
+.menu-tertiary-left-exit {
+    @apply translate-x-0;
+}
+
+.menu-tertiary-left-exit-active {
+    @apply translate-x-full;
+}
+
+.menu-primary-right-enter {
+    @apply absolute -translate-x-full;
+}
+
+.menu-primary-right-enter-active {
+    @apply translate-x-0;
+}
+
+.menu-primary-right-exit {
+    @apply absolute;
+}
+
+.menu-primary-right-exit-active {
+    @apply -translate-x-full;
+}
+
+.menu-secondary-right-enter {
+    @apply translate-x-full;
+}
+
+.menu-secondary-right-enter-active {
+    @apply translate-x-0;
+}
+
+.menu-secondary-right-exit {
+    @apply absolute translate-x-0;
+}
+
+.menu-secondary-right-exit-active {
+    @apply -translate-x-full;
+}
+
+.menu-tertiary-right-enter {
+    @apply absolute translate-x-full;
+}
+
+.menu-tertiary-right-enter-active {
+    @apply translate-x-0;
+}
+
+.menu-tertiary-right-exit-active {
+    @apply translate-x-full;
+}
+
+/* Seznam map */
+div.smap img {
+    max-width: initial !important;
+    display: initial;
+    vertical-align: initial;
+}
+
+div.smap > div {
+    @apply cursor-move;
+}
+
+div.smap .cluster > div {
+    @apply flex items-center justify-center !text-dark;
+}
+
+div.smap .cluster img {
+    @apply !bg-dark;
+}

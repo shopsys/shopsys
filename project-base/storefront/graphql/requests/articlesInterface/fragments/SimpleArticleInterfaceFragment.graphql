@@ -1,0 +1,5 @@
+fragment SimpleArticleInterfaceFragment on ArticleInterface {
+    __typename
+    ...SimpleArticleSiteFragment
+    ...SimpleBlogArticleFragment
+}

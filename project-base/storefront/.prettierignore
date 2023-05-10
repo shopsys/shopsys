@@ -1,0 +1,16 @@
+.next/
+public/fonts/
+public/icons/
+public/images/
+public/svg/
+node_modules/
+coverage/
+__snapshots__/
+__tests__/
+pnpm-lock.yaml
+.pnpm-store/
+generated/
+*/dist/
+pages/_error.js
+schema.graphql.json
+prettier.config.js

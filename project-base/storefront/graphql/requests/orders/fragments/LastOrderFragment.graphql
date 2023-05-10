@@ -1,0 +1,16 @@
+fragment LastOrderFragment on Order {
+    __typename
+    transport {
+        ...SimpleTransportFragment
+    }
+    payment {
+        ...SimplePaymentFragment
+    }
+    pickupPlaceIdentifier
+    deliveryStreet
+    deliveryCity
+    deliveryPostcode
+    deliveryCountry {
+        ...CountryFragment
+    }
+}
