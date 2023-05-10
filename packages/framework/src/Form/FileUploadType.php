@@ -166,7 +166,7 @@ class FileUploadType extends AbstractType
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getParent(): ?string
     {

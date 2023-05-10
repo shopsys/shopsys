@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints;
 class HoneyPotType extends AbstractType
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getParent(): ?string
     {

@@ -30,7 +30,7 @@ class NormalizingExtractorManager extends ExtractorManager
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function extract(): MessageCatalogue
     {

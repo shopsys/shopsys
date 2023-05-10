@@ -12,7 +12,7 @@ class InvalidAccessUserError extends UserError implements UserErrorWithCodeInter
     protected const CODE = 'invalid-access';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

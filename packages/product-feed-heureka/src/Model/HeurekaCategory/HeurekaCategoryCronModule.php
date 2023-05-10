@@ -35,7 +35,7 @@ class HeurekaCategoryCronModule implements SimpleCronModuleInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setLogger(Logger $logger)
     {
@@ -43,7 +43,7 @@ class HeurekaCategoryCronModule implements SimpleCronModuleInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function run()
     {

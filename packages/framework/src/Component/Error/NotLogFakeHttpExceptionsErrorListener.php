@@ -34,7 +34,7 @@ class NotLogFakeHttpExceptionsErrorListener extends ErrorListener
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function logException(Throwable $exception, string $message, ?string $logLevel = null): void
     {

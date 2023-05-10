@@ -65,7 +65,7 @@ EOF
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function complete(CompletionInput $input, CompletionSuggestions $suggestions): void
     {
@@ -73,7 +73,7 @@ EOF
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

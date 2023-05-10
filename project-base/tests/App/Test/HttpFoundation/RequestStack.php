@@ -27,7 +27,7 @@ class RequestStack extends BaseRequestStack
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function push(Request $request)
     {
@@ -35,7 +35,7 @@ class RequestStack extends BaseRequestStack
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function pop()
     {
@@ -43,7 +43,7 @@ class RequestStack extends BaseRequestStack
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getCurrentRequest()
     {
@@ -51,7 +51,7 @@ class RequestStack extends BaseRequestStack
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getMainRequest(): ?Request
     {
@@ -59,7 +59,7 @@ class RequestStack extends BaseRequestStack
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getMasterRequest()
     {
@@ -67,7 +67,7 @@ class RequestStack extends BaseRequestStack
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getParentRequest()
     {
@@ -75,7 +75,7 @@ class RequestStack extends BaseRequestStack
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getSession(): SessionInterface
     {

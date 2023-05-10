@@ -34,7 +34,7 @@ class VatDeletionCronModule implements IteratedCronModuleInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setLogger(Logger $logger)
     {
@@ -52,7 +52,7 @@ class VatDeletionCronModule implements IteratedCronModuleInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function iterate()
     {

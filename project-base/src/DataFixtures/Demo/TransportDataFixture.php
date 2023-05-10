@@ -140,7 +140,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDependencies()
     {

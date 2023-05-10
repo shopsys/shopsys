@@ -28,7 +28,7 @@ class ContactFormSettingsDataFactory implements ContactFormSettingsDataFactoryIn
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function createFromSettingsByDomainId(int $domainId): ContactFormSettingsData
     {

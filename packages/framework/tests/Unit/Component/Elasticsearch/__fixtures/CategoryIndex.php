@@ -18,7 +18,7 @@ class CategoryIndex extends AbstractIndex
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getTotalCount(int $domainId): int
     {
@@ -26,7 +26,7 @@ class CategoryIndex extends AbstractIndex
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getExportDataForIds(int $domainId, array $restrictToIds): array
     {
@@ -34,7 +34,7 @@ class CategoryIndex extends AbstractIndex
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getExportDataForBatch(int $domainId, int $lastProcessedId, int $batchSize): array
     {

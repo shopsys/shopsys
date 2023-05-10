@@ -18,7 +18,7 @@ class ImageSitemapCronModule implements SimpleCronModuleInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setLogger(Logger $logger)
     {

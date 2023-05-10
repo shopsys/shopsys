@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
 class PersonalDataBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getBreadcrumbItems($routeName, array $routeParameters = [])
     {
@@ -22,7 +22,7 @@ class PersonalDataBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getRouteNames()
     {

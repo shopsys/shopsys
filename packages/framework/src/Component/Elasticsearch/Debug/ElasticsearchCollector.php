@@ -25,7 +25,7 @@ class ElasticsearchCollector extends DataCollector
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function collect(Request $request, Response $response, ?Throwable $exception = null): void
     {
@@ -42,7 +42,7 @@ class ElasticsearchCollector extends DataCollector
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getName(): string
     {

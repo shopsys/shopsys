@@ -12,7 +12,7 @@ class ImageTypeInvalidUserError extends UserError implements UserErrorWithCodeIn
     protected const CODE = 'image-type-invalid';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

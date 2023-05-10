@@ -12,7 +12,7 @@ class ProductNotFoundUserError extends EntityNotFoundUserError implements UserEr
     protected const CODE = 'product-not-found';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

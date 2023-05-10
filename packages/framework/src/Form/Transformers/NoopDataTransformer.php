@@ -7,7 +7,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 class NoopDataTransformer implements DataTransformerInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function reverseTransform($value): mixed
     {
@@ -15,7 +15,7 @@ class NoopDataTransformer implements DataTransformerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function transform($value): mixed
     {

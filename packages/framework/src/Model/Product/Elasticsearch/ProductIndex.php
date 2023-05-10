@@ -33,7 +33,7 @@ class ProductIndex extends AbstractIndex implements IndexSupportChangesOnlyInter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getTotalCount(int $domainId): int
     {
@@ -41,7 +41,7 @@ class ProductIndex extends AbstractIndex implements IndexSupportChangesOnlyInter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getChangedCount(int $domainId): int
     {
@@ -49,7 +49,7 @@ class ProductIndex extends AbstractIndex implements IndexSupportChangesOnlyInter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getChangedIdsForBatch(int $domainId, int $lastProcessedId, int $batchSize): array
     {
@@ -57,7 +57,7 @@ class ProductIndex extends AbstractIndex implements IndexSupportChangesOnlyInter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getExportDataForIds(int $domainId, array $restrictToIds): array
     {
@@ -69,7 +69,7 @@ class ProductIndex extends AbstractIndex implements IndexSupportChangesOnlyInter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getExportDataForBatch(int $domainId, int $lastProcessedId, int $batchSize): array
     {
@@ -82,7 +82,7 @@ class ProductIndex extends AbstractIndex implements IndexSupportChangesOnlyInter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public static function getName(): string
     {
