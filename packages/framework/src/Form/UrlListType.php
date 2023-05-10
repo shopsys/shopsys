@@ -142,8 +142,10 @@ class UrlListType extends AbstractType
     private function getFriendlyUrlsIndexedByDomain($routeName, $entityId)
     {
         $friendlyUrlsByDomain = [];
+
         if ($entityId !== null) {
             $friendlyUrls = $this->friendlyUrlFacade->getAllByRouteNameAndEntityId($routeName, $entityId);
+
             foreach ($friendlyUrls as $friendlyUrl) {
                 $friendlyUrlsByDomain[$friendlyUrl->getDomainId()][] = $friendlyUrl;
             }
@@ -161,9 +163,11 @@ class UrlListType extends AbstractType
     {
         $friendlyUrlsByDomain = $this->getFriendlyUrlsIndexedByDomain($routeName, $entityId);
         $absoluteUrlsByDomainIdAndSlug = [];
+
         foreach ($friendlyUrlsByDomain as $domainId => $friendlyUrls) {
             $domainRouter = $this->domainRouterFactory->getRouter($domainId);
             $absoluteUrlsByDomainIdAndSlug[$domainId] = [];
+
             foreach ($friendlyUrls as $friendlyUrl) {
                 $absoluteUrlsByDomainIdAndSlug[$domainId][$friendlyUrl->getSlug()] =
                     $domainRouter->generateByFriendlyUrl(
@@ -185,6 +189,7 @@ class UrlListType extends AbstractType
     private function getMainFriendlyUrlSlugsIndexedByDomainId($routeName, $entityId)
     {
         $mainFriendlyUrlsSlugsByDomainId = [];
+
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
             $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
@@ -192,6 +197,7 @@ class UrlListType extends AbstractType
                 $routeName,
                 $entityId
             );
+
             if ($mainFriendlyUrl !== null) {
                 $mainFriendlyUrlsSlugsByDomainId[$domainId] = $mainFriendlyUrl->getSlug();
             } else {
@@ -208,6 +214,7 @@ class UrlListType extends AbstractType
     private function getDomainUrlsIndexedById()
     {
         $domainUrlsById = [];
+
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainUrlsById[$domainConfig->getId()] = $domainConfig->getUrl();
         }

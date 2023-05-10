@@ -42,6 +42,7 @@ final class ResolveDocsTodoReleaseWorker extends AbstractShopsysReleaseWorker
 
         foreach ($fileInfos as $fileInfo) {
             $todoFound = Strings::matchAll($fileInfo->getContents(), '#' . preg_quote(self::TODO_PLACEHOLDER) . '#');
+
             if ($todoFound === []) {
                 continue;
             }

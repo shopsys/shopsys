@@ -41,6 +41,7 @@ class Version20160512152113 extends AbstractMigration
             REFERENCES countries (id) NOT DEFERRABLE INITIALLY IMMEDIATE'
         );
         $this->sql('CREATE INDEX IDX_E52FFDEEF92F3E70 ON orders (country_id)');
+
         foreach ($this->getAllDomainIds() as $domainId) {
             $countOfOrdersOnDomain = $this->sql(
                 'SELECT COUNT(*) FROM orders WHERE domain_id = :domainId;',

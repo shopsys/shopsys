@@ -32,6 +32,7 @@ class QueryBuilderWithRowManipulatorDataSource extends QueryBuilderDataSource
     public function getOneRow($rowId)
     {
         $row = parent::getOneRow($rowId);
+
         return call_user_func($this->manipulateRowCallback, $row);
     }
 
@@ -46,6 +47,7 @@ class QueryBuilderWithRowManipulatorDataSource extends QueryBuilderDataSource
     {
         $originalPaginationResult = parent::getPaginatedRows($limit, $page, $orderSourceColumnName, $orderDirection);
         $results = array_map($this->manipulateRowCallback, $originalPaginationResult->getResults());
+
         return new PaginationResult(
             $originalPaginationResult->getPage(),
             $originalPaginationResult->getPageSize(),

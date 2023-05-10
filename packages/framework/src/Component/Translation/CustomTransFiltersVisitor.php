@@ -29,6 +29,7 @@ class CustomTransFiltersVisitor extends AbstractNodeVisitor
         if ($node instanceof FilterExpression) {
             $filterNameConstantNode = $node->getNode('filter');
             $filterName = $filterNameConstantNode->getAttribute('value');
+
             if (array_key_exists($filterName, static::CUSTOM_TO_DEFAULT_TRANS_FILTERS_MAP)) {
                 $newFilterName = static::CUSTOM_TO_DEFAULT_TRANS_FILTERS_MAP[$filterName];
                 $this->replaceCustomFilterName($node, $newFilterName);

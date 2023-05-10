@@ -46,10 +46,12 @@ class DelayedPricingSetting
         switch ($inputPriceType) {
             case PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT:
                 $this->inputPriceRecalculationScheduler->scheduleSetInputPricesWithoutVat();
+
                 break;
 
             case PricingSetting::INPUT_PRICE_TYPE_WITH_VAT:
                 $this->inputPriceRecalculationScheduler->scheduleSetInputPricesWithVat();
+
                 break;
         }
     }

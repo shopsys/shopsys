@@ -174,6 +174,7 @@ class Grid
     ) {
         if ($id === '') {
             $message = 'Grid id cannot be empty.';
+
             throw new EmptyGridIdException($message);
         }
 
@@ -212,6 +213,7 @@ class Grid
         }
         $column = new Column($id, $sourceColumnName, $title, $sortable);
         $this->columnsById[$id] = $column;
+
         return $column;
     }
 
@@ -335,6 +337,7 @@ class Grid
     public function createView()
     {
         $gridView = $this->createViewWithoutRows();
+
         if ($this->isEnabledPaging()) {
             $this->executeTotalQuery();
         }
@@ -361,6 +364,7 @@ class Grid
     public function createViewWithoutRows()
     {
         $this->rows = [];
+
         return new GridView(
             $this,
             $this->requestStack,
@@ -467,6 +471,7 @@ class Grid
     public function isRowSelected(array $row)
     {
         $rowId = $this->getRowId($row);
+
         return in_array($rowId, $this->selectedRowIds, true);
     }
 
@@ -542,6 +547,7 @@ class Grid
     public function getOrderSourceColumnNameWithDirection()
     {
         $prefix = '';
+
         if ($this->getOrderDirection() === DataSourceInterface::ORDER_DESC) {
             $prefix = '-';
         }
@@ -589,15 +595,19 @@ class Grid
     protected function loadFromRequest()
     {
         $queryData = $this->requestStack->getMainRequest()->query->all(self::GET_PARAMETER);
+
         if (array_key_exists($this->id, $queryData)) {
             $gridQueryData = $queryData[$this->id];
+
             if (array_key_exists('limit', $gridQueryData)) {
                 $this->setLimit((int)trim($gridQueryData['limit']));
                 $this->isLimitFromRequest = true;
             }
+
             if (array_key_exists('page', $gridQueryData)) {
                 $this->page = max((int)trim($gridQueryData['page']), 1);
             }
+
             if (array_key_exists('order', $gridQueryData)) {
                 $this->setOrderingByOrderString(trim($gridQueryData['order']));
                 $this->isOrderFromRequest = true;
@@ -605,11 +615,13 @@ class Grid
         }
 
         $requestData = $this->requestStack->getMainRequest()->request->all(self::GET_PARAMETER);
+
         if (!array_key_exists($this->id, $requestData)) {
             return;
         }
 
         $gridRequestData = $requestData[$this->id];
+
         if (array_key_exists('selectedRowIds', $gridRequestData) && is_array($gridRequestData['selectedRowIds'])) {
             $this->selectedRowIds = array_map('json_decode', $gridRequestData['selectedRowIds']);
         }
@@ -622,12 +634,15 @@ class Grid
     public function getGridParameters($removeParameters = [])
     {
         $gridParameters = [];
+
         if ($this->isEnabledPaging()) {
             $gridParameters['limit'] = $this->getLimit();
+
             if ($this->getPage() > 1) {
                 $gridParameters['page'] = $this->getPage();
             }
         }
+
         if ($this->getOrderSourceColumnName() !== null) {
             $gridParameters['order'] = $this->getOrderSourceColumnNameWithDirection();
         }
@@ -735,6 +750,7 @@ class Grid
             if (array_key_exists($sourceColumnNameParts[1], $row)) {
                 return $row[$sourceColumnNameParts[1]];
             }
+
             return $row[$sourceColumnName];
         }
 

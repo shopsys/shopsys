@@ -84,6 +84,7 @@ EOF
         $this->fileSystem->mirror($vendorDir . '/' . self::ELFINDER_SOUNDS_DIR, $publicDir . '/sounds');
 
         $io->success('elFinder assets successfully installed');
+
         return 0;
     }
 }

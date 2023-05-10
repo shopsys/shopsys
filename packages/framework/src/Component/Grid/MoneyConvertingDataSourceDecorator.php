@@ -50,6 +50,7 @@ class MoneyConvertingDataSourceDecorator implements DataSourceInterface
         );
 
         $results = $paginationResult->getResults();
+
         foreach ($results as $key => $result) {
             $results[$key] = $this->convertRow($result);
         }

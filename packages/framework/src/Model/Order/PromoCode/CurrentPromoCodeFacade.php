@@ -25,6 +25,7 @@ class CurrentPromoCodeFacade
     public function getValidEnteredPromoCodeOrNull(): ?PromoCode
     {
         $enteredCode = $this->requestStack->getSession()->get(static::PROMO_CODE_SESSION_KEY);
+
         if ($enteredCode === null) {
             return null;
         }
@@ -38,6 +39,7 @@ class CurrentPromoCodeFacade
     public function setEnteredPromoCode(string $enteredCode): void
     {
         $promoCode = $this->promoCodeFacade->findPromoCodeByCode($enteredCode);
+
         if ($promoCode === null) {
             throw new InvalidPromoCodeException($enteredCode);
         }

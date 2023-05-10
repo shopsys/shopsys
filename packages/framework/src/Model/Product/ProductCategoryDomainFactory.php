@@ -46,6 +46,7 @@ class ProductCategoryDomainFactory implements ProductCategoryDomainFactoryInterf
         array $categoriesIndexedByDomainId
     ): array {
         $productCategoryDomains = [];
+
         foreach ($categoriesIndexedByDomainId as $domainId => $categoriesOnDomain) {
             foreach ($categoriesOnDomain as $category) {
                 $productCategoryDomains[] = $this->create(

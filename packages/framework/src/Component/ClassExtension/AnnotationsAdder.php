@@ -29,9 +29,11 @@ class AnnotationsAdder
     {
         $projectClassDocComment = $betterReflectionClass->getDocComment();
         $projectClassFileName = $betterReflectionClass->getFileName();
+
         if ($propertyAndMethodAnnotationsLines === '') {
             return;
         }
+
         if ($projectClassDocComment === '') {
             $classKeywordWithName = 'class ' . $betterReflectionClass->getShortName();
             $this->fileContentReplacer->replaceInFile(
@@ -67,10 +69,12 @@ class AnnotationsAdder
         $annotationLines = explode("\n", $classDocBlock);
         $annotationStart = array_shift($annotationLines);
         $annotationEnd = array_pop($annotationLines);
+
         foreach ($annotationLines as $annotationLine) {
             $annotationLinesByName[$this->extractPropertyOrMethodAnnotationName($annotationLine)] = $annotationLine;
         }
         $annotationLinesToAdd = array_filter(explode("\n", $propertyAndMethodAnnotationsLines));
+
         foreach ($annotationLinesToAdd as $annotationLine) {
             $annotationLinesByName[$this->extractPropertyOrMethodAnnotationName($annotationLine)] = $annotationLine;
         }

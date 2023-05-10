@@ -52,6 +52,7 @@ class CronModuleRepository
     public function getCronModuleByServiceId($serviceId)
     {
         $cronModule = $this->getCronModuleRepository()->find($serviceId);
+
         if ($cronModule === null) {
             $cronModule = $this->cronModuleFactory->create($serviceId);
             $this->em->persist($cronModule);
@@ -94,6 +95,7 @@ class CronModuleRepository
             ->getQuery()->getResult();
 
         $cronModuleRunTimesIndexedByCronModuleId = [];
+
         foreach ($cronModuleRunTimes as $cronModuleRunTime) {
             $cronModuleRunTimesIndexedByCronModuleId[$cronModuleRunTime['cronModuleId']] = $cronModuleRunTime;
         }

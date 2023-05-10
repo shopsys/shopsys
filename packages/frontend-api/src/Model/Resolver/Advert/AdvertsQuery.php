@@ -50,11 +50,13 @@ class AdvertsQuery extends AbstractQuery
         }
 
         $domainId = $this->domain->getId();
+
         if ($positionName === null) {
             return $this->advertFacade->getVisibleAdvertsByDomainId($domainId);
         }
 
         $category = null;
+
         if ($categoryUuid !== null) {
             $category = $this->categoryFacade->getByUuid($categoryUuid);
         }

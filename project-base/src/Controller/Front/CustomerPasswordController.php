@@ -66,6 +66,7 @@ class CustomerPasswordController extends FrontBaseController
                         'email' => $email,
                     ]
                 );
+
                 return $this->redirectToRoute('front_registration_reset_password');
             } catch (CustomerUserNotFoundByEmailAndDomainException $ex) {
                 $this->addErrorFlashTwig(
@@ -94,6 +95,7 @@ class CustomerPasswordController extends FrontBaseController
 
         if (!$this->customerUserPasswordFacade->isResetPasswordHashValid($email, $this->domain->getId(), $hash)) {
             $this->addErrorFlash(t('The link to change your password expired.'));
+
             return $this->redirectToRoute('front_homepage');
         }
 
@@ -128,6 +130,7 @@ class CustomerPasswordController extends FrontBaseController
             }
 
             $this->addSuccessFlash(t('Password successfully changed'));
+
             return $this->redirectToRoute('front_homepage');
         }
 

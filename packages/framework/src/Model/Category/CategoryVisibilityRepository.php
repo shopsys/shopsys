@@ -43,6 +43,7 @@ class CategoryVisibilityRepository
     public function refreshCategoriesVisibility()
     {
         $domains = $this->domain->getAll();
+
         foreach ($domains as $domainConfig) {
             $this->refreshCategoriesVisibilityOnDomain($domainConfig);
         }
@@ -149,6 +150,7 @@ class CategoryVisibilityRepository
             $this->em->commit();
         } catch (Exception $ex) {
             $this->em->rollback();
+
             throw $ex;
         }
     }

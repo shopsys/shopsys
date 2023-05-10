@@ -84,6 +84,7 @@ class PaymentController extends AdminBaseController
                     'url' => $this->generateUrl('admin_payment_edit', ['id' => $payment->getId()]),
                 ]
             );
+
             return $this->redirectToRoute('admin_transportandpayment_list');
         }
 
@@ -122,6 +123,7 @@ class PaymentController extends AdminBaseController
                     'url' => $this->generateUrl('admin_payment_edit', ['id' => $payment->getId()]),
                 ]
             );
+
             return $this->redirectToRoute('admin_transportandpayment_list');
         }
 

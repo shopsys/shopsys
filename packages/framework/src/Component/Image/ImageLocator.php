@@ -141,6 +141,7 @@ class ImageLocator
         if ($type !== null) {
             $pathParts[] = $type;
         }
+
         if ($sizeName === null) {
             $pathParts[] = ImageConfig::DEFAULT_SIZE_NAME;
         } else {

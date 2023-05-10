@@ -65,6 +65,7 @@ class AllFeedsTest extends KernelTestCase
 
         $performanceTestSamples = [];
         $allFeedGenerationData = $this->getAllFeedGenerationData();
+
         foreach ($allFeedGenerationData as $feedGenerationData) {
             /** @var \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface $feedInfo */
             $feedInfo = $feedGenerationData[0];
@@ -147,6 +148,7 @@ class AllFeedsTest extends KernelTestCase
     private function getFeedGenerationData(array $feeds, array $domainConfigs, $maxDuration)
     {
         $feedGenerationData = [];
+
         foreach ($domainConfigs as $domainConfig) {
             foreach ($feeds as $feed) {
                 $feedGenerationData[] = [$feed->getInfo(), $domainConfig, $maxDuration];
@@ -228,6 +230,7 @@ class AllFeedsTest extends KernelTestCase
         $performanceTestSample = new PerformanceTestSample($feed, $domainConfig, $uri, $duration, $statusCode);
 
         $expectedStatusCode = 302;
+
         if ($statusCode !== $expectedStatusCode) {
             $failMessage = sprintf(
                 'Admin request on %s ended with status code %d, expected %d.',

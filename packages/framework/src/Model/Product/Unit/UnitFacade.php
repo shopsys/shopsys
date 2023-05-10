@@ -110,6 +110,7 @@ class UnitFacade
         if ($newUnitId !== null) {
             $newUnit = $this->unitRepository->getById($newUnitId);
             $this->unitRepository->replaceUnit($oldUnit, $newUnit);
+
             if ($this->isUnitDefault($oldUnit)) {
                 $this->setDefaultUnit($newUnit);
             }

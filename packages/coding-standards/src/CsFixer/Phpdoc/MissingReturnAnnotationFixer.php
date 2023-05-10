@@ -49,6 +49,7 @@ final class MissingReturnAnnotationFixer extends AbstractMissingAnnotationsFixer
 
         if ($docToken !== null) {
             $this->updateDocWithLines($tokens, $index, $docToken, [$newLine]);
+
             return;
         }
 

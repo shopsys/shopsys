@@ -101,8 +101,10 @@ class DomainDataCreator
     public function createNewDomainsData()
     {
         $newDomainsCount = 0;
+
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domainConfig) {
             $domainId = $domainConfig->getId();
+
             try {
                 $this->setting->getForDomain(Setting::DOMAIN_DATA_CREATED, $domainId);
             } catch (SettingValueNotFoundException $ex) {
@@ -119,6 +121,7 @@ class DomainDataCreator
                     self::TEMPLATE_DOMAIN_ID,
                     $domainId
                 );
+
                 if ($isNewLocale) {
                     $this->translatableEntityDataCreator->copyAllTranslatableDataForNewLocale(
                         $this->getTemplateLocale(),
@@ -172,6 +175,7 @@ class DomainDataCreator
     {
         $pricingGroupData = $this->pricingGroupDataFactory->create();
         $pricingGroupData->name = 'Default';
+
         return $this->pricingGroupFacade->create($pricingGroupData, $domainId);
     }
 

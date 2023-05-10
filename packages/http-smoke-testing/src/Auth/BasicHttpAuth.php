@@ -32,6 +32,7 @@ class BasicHttpAuth implements AuthInterface
     public function authenticateRequest(Request $request)
     {
         $request->server->set('PHP_AUTH_USER', $this->username);
+
         if ($this->password !== null) {
             $request->server->set('PHP_AUTH_PW', $this->password);
         }

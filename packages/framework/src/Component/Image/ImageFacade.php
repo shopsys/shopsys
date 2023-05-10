@@ -122,6 +122,7 @@ class ImageFacade
                 $this->deleteImages($entity, $orderedImages);
             }
             $this->uploadImage($entity, $imageUploadData->uploadedFilenames, $uploadedFiles, $type);
+
             if (count($uploadedFiles) === 0) {
                 $this->saveImagesPathnames($imageUploadData);
             }
@@ -198,6 +199,7 @@ class ImageFacade
             $entityId = $this->getEntityId($entity);
 
             $images = $this->imageFactory->createMultiple($imageEntityConfig, $entityId, $namesIndexedByImageIdAndLocale, $temporaryFilenamesIndexedByImageId, $type);
+
             foreach ($images as $image) {
                 $this->em->persist($image);
             }
@@ -289,6 +291,7 @@ class ImageFacade
         $sizeConfigs = $image->getType() === null ? $imageConfig->getSizeConfigs() : $imageConfig->getSizeConfigsByType(
             $image->getType()
         );
+
         foreach ($sizeConfigs as $sizeConfig) {
             $filepath = $this->imageLocator->getAbsoluteImageFilepath($image, $sizeConfig->getName());
 
@@ -306,11 +309,13 @@ class ImageFacade
     {
         $entityMetadata = $this->em->getClassMetadata(get_class($entity));
         $identifier = $entityMetadata->getIdentifierValues($entity);
+
         if (count($identifier) === 1) {
             return array_pop($identifier);
         }
 
         $message = 'Entity "' . get_class($entity) . '" has not set primary key or primary key is compound."';
+
         throw new EntityIdentifierException($message);
     }
 
@@ -332,6 +337,7 @@ class ImageFacade
     public function getImageUrl(DomainConfig $domainConfig, $imageOrEntity, $sizeName = null, $type = null)
     {
         $image = $this->getImageByObject($imageOrEntity, $type);
+
         if ($this->imageLocator->imageExists($image)) {
             return $domainConfig->getUrl()
                 . $this->imageUrlPrefix
@@ -384,10 +390,12 @@ class ImageFacade
         $sizeConfig = $entityConfig->getSizeConfigByType($type, $sizeName);
 
         $result = [];
+
         foreach ($sizeConfig->getAdditionalSizes() as $additionalSizeIndex => $additionalSizeConfig) {
             $url = $this->getAdditionalImageUrl($domainConfig, $additionalSizeIndex, $image, $sizeName);
             $result[] = new AdditionalImageData($additionalSizeConfig->getMedia(), $url);
         }
+
         return $result;
     }
 
@@ -412,6 +420,7 @@ class ImageFacade
         $sizeConfig = $entityConfig->getSizeConfigByType($type, $sizeName);
 
         $result = [];
+
         foreach ($sizeConfig->getAdditionalSizes() as $additionalSizeIndex => $additionalSizeConfig) {
             $imageFilepath = $this->imageLocator->getRelativeImageFilepathFromAttributes(
                 $id,
@@ -457,6 +466,7 @@ class ImageFacade
         if ($imageOrEntity instanceof Image) {
             return $imageOrEntity;
         }
+
         return $this->getImageByEntity($imageOrEntity, $type);
     }
 
@@ -477,6 +487,7 @@ class ImageFacade
     {
         $sourceImages = $this->getAllImagesByEntity($sourceEntity);
         $targetImages = [];
+
         foreach ($sourceImages as $sourceImage) {
             try {
                 $this->mountManager->copy(
@@ -490,6 +501,7 @@ class ImageFacade
                 );
             } catch (UnableToDeleteFile $exception) {
                 $this->logger->error('Image could not be copied because file was not found', [$exception]);
+
                 continue;
             }
 
@@ -513,6 +525,7 @@ class ImageFacade
     protected function setImagePositionsByOrder($orderedImages)
     {
         $position = 0;
+
         foreach ($orderedImages as $image) {
             $image->setPosition($position);
             $position++;

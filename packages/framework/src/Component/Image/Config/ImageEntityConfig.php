@@ -100,6 +100,7 @@ class ImageEntityConfig
         if (array_key_exists($type, $this->sizeConfigsByType)) {
             return $this->sizeConfigsByType[$type];
         }
+
         throw new ImageTypeNotFoundException($this->entityClass, $type);
     }
 
@@ -124,6 +125,7 @@ class ImageEntityConfig
         } else {
             $typeSizes = $this->getSizeConfigsByType($type);
         }
+
         return $this->getSizeConfigFromSizeConfigs($typeSizes, $sizeName);
     }
 
@@ -134,9 +136,11 @@ class ImageEntityConfig
     public function isMultiple($type)
     {
         $key = Utils::ifNull($type, self::WITHOUT_NAME_KEY);
+
         if (array_key_exists($key, $this->multipleByType)) {
             return $this->multipleByType[$key];
         }
+
         throw new ImageTypeNotFoundException($this->entityClass, $type);
     }
 
@@ -148,9 +152,11 @@ class ImageEntityConfig
     protected function getSizeConfigFromSizeConfigs($sizes, $sizeName)
     {
         $key = Utils::ifNull($sizeName, self::WITHOUT_NAME_KEY);
+
         if (array_key_exists($key, $sizes)) {
             return $sizes[$key];
         }
+
         throw new ImageSizeNotFoundException($this->entityClass, $sizeName);
     }
 }

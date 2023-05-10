@@ -13,6 +13,7 @@ class NotUniqueModuleLabelException extends Exception implements ModuleException
     public function __construct(array $moduleLabelsIndexedByNames, ?Exception $previous = null)
     {
         $moduleDescriptions = [];
+
         foreach ($moduleLabelsIndexedByNames as $moduleName => $moduleLabel) {
             $moduleDescriptions[] = sprintf('"%s" => "%s"', $moduleName, $moduleLabel);
         }

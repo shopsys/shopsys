@@ -68,6 +68,7 @@ class OrderDataFactory implements OrderDataFactoryInterface
         $orderData->postcode = $order->getPostcode();
         $orderData->country = $order->getCountry();
         $orderData->deliveryAddressSameAsBillingAddress = $order->isDeliveryAddressSameAsBillingAddress();
+
         if (!$order->isDeliveryAddressSameAsBillingAddress()) {
             $orderData->deliveryFirstName = $order->getDeliveryFirstName();
             $orderData->deliveryLastName = $order->getDeliveryLastName();
@@ -80,6 +81,7 @@ class OrderDataFactory implements OrderDataFactoryInterface
         }
         $orderData->note = $order->getNote();
         $orderItemsWithoutTransportAndPaymentData = [];
+
         foreach ($order->getItemsWithoutTransportAndPayment() as $orderItem) {
             $orderItemData = $this->orderItemDataFactory->createFromOrderItem($orderItem);
             $orderItemsWithoutTransportAndPaymentData[$orderItem->getId()] = $orderItemData;

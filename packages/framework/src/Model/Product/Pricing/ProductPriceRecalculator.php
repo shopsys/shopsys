@@ -79,6 +79,7 @@ class ProductPriceRecalculator
 
         for ($count = 0; $count < static::BATCH_SIZE; $count++) {
             $row = $this->productRowsIterator->next();
+
             if ($row === false) {
                 $this->clearCache();
                 $this->em->clear();
@@ -98,6 +99,7 @@ class ProductPriceRecalculator
         $this->runImmediateRecalculations();
 
         $this->productRowsIterator = null;
+
         while ($this->runBatchOfScheduledDelayedRecalculations()) {
         }
     }
@@ -105,6 +107,7 @@ class ProductPriceRecalculator
     public function runImmediateRecalculations()
     {
         $products = $this->productPriceRecalculationScheduler->getProductsForImmediateRecalculation();
+
         foreach ($products as $product) {
             $this->recalculateProductPrices($product);
         }

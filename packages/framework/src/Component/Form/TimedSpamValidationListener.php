@@ -35,6 +35,7 @@ class TimedSpamValidationListener implements EventSubscriberInterface
     public function preSubmit(FormEvent $event)
     {
         $form = $event->getForm();
+
         if ($form->isRoot() &&
             $form->getConfig()->getOption('compound') &&
             !$this->formTimeProvider->isFormTimeValid($form->getName(), $this->options)

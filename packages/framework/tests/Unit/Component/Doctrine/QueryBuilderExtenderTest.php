@@ -79,6 +79,7 @@ class QueryBuilderExtenderTest extends TestCase
     public function extendJoinWithExtendedEntityProvider(): array
     {
         $extensionMap = [BaseProduct::class => Product::class];
+
         return [
             'extend base entity join with extended entity' => [
                 'firstJoinedEntity' => BaseProduct::class,

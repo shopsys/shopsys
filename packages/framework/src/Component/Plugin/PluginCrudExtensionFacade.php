@@ -51,6 +51,7 @@ class PluginCrudExtensionFacade
     public function getAllData($type, $id)
     {
         $allData = [];
+
         foreach ($this->pluginCrudExtensionRegistry->getCrudExtensions($type) as $key => $crudExtension) {
             $allData[$key] = $crudExtension->getData($id);
         }

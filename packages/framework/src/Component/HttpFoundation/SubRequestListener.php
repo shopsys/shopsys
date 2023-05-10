@@ -68,6 +68,7 @@ class SubRequestListener
         if ($subResponse->isRedirection()) {
             if ($this->redirectResponse !== null) {
                 $message = 'Only one subresponse can do a redirect.';
+
                 throw new TooManyRedirectResponsesException($message);
             }
 

@@ -25,6 +25,7 @@ class PriceFactory
                 $priceWithoutVat = Money::create((string)$priceArray['price_without_vat']);
                 $priceWithVat = Money::create((string)$priceArray['price_with_vat']);
                 $price = new Price($priceWithoutVat, $priceWithVat);
+
                 return new ProductPrice($price, $priceArray['price_from']);
             }
         }

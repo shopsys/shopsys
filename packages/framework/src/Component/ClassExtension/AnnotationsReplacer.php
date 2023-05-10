@@ -51,6 +51,7 @@ class AnnotationsReplacer
     {
         $methodReturnTypes = $this->docBlockParser->getReturnTypes($reflectionMethod->getDocComment());
         $replacedReturnTypes = [];
+
         foreach ($methodReturnTypes as $methodReturnType) {
             $replacedReturnTypes[] = $this->replaceIn((string)$methodReturnType);
         }

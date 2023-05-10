@@ -72,6 +72,7 @@ class WysiwygTypeExtension extends AbstractTypeExtension
         }
 
         $keyOfFrontendWysiwygLess = static::FRONTEND_WYSIWYG_ENTRY_PREFIX . $this->domain->getCurrentDomainConfig()->getStylesDirectory();
+
         if (array_key_exists($keyOfFrontendWysiwygLess, $entrypoints) === true) {
             $entrypointsOutput = array_merge($entrypointsOutput, $entrypoints[$keyOfFrontendWysiwygLess]['css']);
         }

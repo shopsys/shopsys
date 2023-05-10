@@ -73,6 +73,7 @@ class Version20191112122617 extends AbstractMigration
 
             foreach ($paymentDomains as $paymentDomain) {
                 $vatId = $payment['vat_id'];
+
                 if ($paymentDomain['domain_id'] > 1) {
                     $vatId = $this
                         ->sql(
@@ -152,6 +153,7 @@ class Version20191112122617 extends AbstractMigration
 
             foreach ($transportDomains as $transportDomain) {
                 $vatId = $transport['vat_id'];
+
                 if ($transportDomain['domain_id'] > 1) {
                     $vatId = $this
                         ->sql(

@@ -79,6 +79,7 @@ class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
         $this->assertCount(10, $rows);
 
         $lastId = null;
+
         foreach ($rows as $row) {
             if ($lastId === null) {
                 $lastId = $row['p']['id'];
@@ -106,6 +107,7 @@ class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
         $this->assertCount(10, $rows);
 
         $lastId = null;
+
         foreach ($rows as $row) {
             if ($lastId === null) {
                 $lastId = $row['p']['id'];

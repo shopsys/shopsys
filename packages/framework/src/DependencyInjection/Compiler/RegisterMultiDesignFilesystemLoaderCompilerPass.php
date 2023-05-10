@@ -21,6 +21,7 @@ class RegisterMultiDesignFilesystemLoaderCompilerPass implements CompilerPassInt
         $twigFilesystemLoaderDefinition->setAutowired(true);
 
         $environment = $container->getParameter('kernel.environment');
+
         if ($environment === EnvironmentType::TEST) {
             $twigFilesystemLoaderDefinition->setPublic(true);
         }

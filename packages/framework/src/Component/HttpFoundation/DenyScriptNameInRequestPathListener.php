@@ -16,6 +16,7 @@ class DenyScriptNameInRequestPathListener implements EventSubscriberInterface
     {
         if ($event->isMainRequest()) {
             $request = $event->getRequest();
+
             if ($request->getBasePath() !== $request->getBaseUrl()) {
                 throw new NotFoundHttpException(
                     'Requested URL contains script file name (/index.php). Access to an URL with script file is denied '

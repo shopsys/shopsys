@@ -42,6 +42,7 @@ class FormDetailExtension extends AbstractExtension
         if ($object === null) {
             return '';
         }
+
         return '<div class="form-line">
                         <label class="form-line__label">ID:</label>
                         <div class="form-line__side">

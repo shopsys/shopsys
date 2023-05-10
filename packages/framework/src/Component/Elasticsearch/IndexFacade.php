@@ -65,6 +65,7 @@ class IndexFacade
         ));
 
         $alias = $indexDefinition->getIndexAlias();
+
         try {
             if (!$this->isIndexUpToDate($indexDefinition)) {
                 throw new ElasticsearchIndexException(sprintf(
@@ -109,6 +110,7 @@ class IndexFacade
         ));
 
         $this->createIndexWhenNoAliasFound($indexDefinition, $output);
+
         if (!$this->isIndexUpToDate($indexDefinition)) {
             $this->migrate($indexDefinition, $output);
         }
@@ -123,6 +125,7 @@ class IndexFacade
 
         $exportedIds = [];
         $lastProcessedId = 0;
+
         do {
             // detach objects from manager to prevent memory leaks
             $this->entityManager->clear();
@@ -227,11 +230,13 @@ class IndexFacade
         } catch (ElasticsearchNoAliasException $exception) {
             $output->writeln(sprintf('No index for alias "%s" was not found on domain "%s"', $indexName, $domainId));
             $this->create($indexDefinition, $output);
+
             return;
         }
 
         if ($existingIndexName === $indexDefinition->getVersionedIndexName()) {
             $output->writeln(sprintf('Index "%s" on domain "%s" is up to date', $indexName, $domainId));
+
             return;
         }
 
@@ -267,6 +272,7 @@ class IndexFacade
             }
 
             $idsToDelete = array_values(array_diff($idsToExport, array_keys($currentBatchData)));
+
             if (count($idsToDelete) > 0) {
                 $this->indexRepository->deleteIds($indexAlias, $idsToDelete);
             }
@@ -343,6 +349,7 @@ class IndexFacade
     protected function isIndexUpToDate(IndexDefinition $indexDefinition): bool
     {
         $existingIndexName = $this->indexRepository->findCurrentIndexNameForAlias($indexDefinition->getIndexAlias());
+
         return $existingIndexName === $indexDefinition->getVersionedIndexName();
     }
 }

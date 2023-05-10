@@ -120,6 +120,7 @@ class ExtendedClassesAnnotationsCommand extends Command
         $symfonyStyle = new SymfonyStyle($input, $output);
         $isDryRun = (bool)$input->getOption(static::DRY_RUN);
         $filesForReplacingAnnotations = $this->replaceFrameworkWithProjectAnnotations($isDryRun);
+
         if (count($filesForReplacingAnnotations) > 0) {
             if ($isDryRun) {
                 $symfonyStyle->error('Following files need fixing annotations:');
@@ -148,13 +149,16 @@ class ExtendedClassesAnnotationsCommand extends Command
                 );
             }
         }
+
         if (count($filesForReplacingAnnotations) === 0 && count($filesForAddingPropertyOrMethodAnnotations) === 0) {
             $symfonyStyle->success('All good!');
+
             return CommandResultCodes::RESULT_OK;
         }
 
         if ($isDryRun) {
             $symfonyStyle->note('You can fix the annotations using "annotations-fix" phing command.');
+
             return CommandResultCodes::RESULT_FAIL;
         }
 
@@ -169,9 +173,11 @@ class ExtendedClassesAnnotationsCommand extends Command
     {
         $finder = $this->getFinderForReplacingAnnotations();
         $filesForReplacingAnnotations = [];
+
         foreach ($finder as $file) {
             $pathname = $file->getPathname();
             $filesForReplacingAnnotations[] = $file->getRealPath();
+
             if ($isDryRun) {
                 continue;
             }
@@ -207,6 +213,7 @@ class ExtendedClassesAnnotationsCommand extends Command
     {
         $classExtensionMap = $this->classExtensionRegistry->getClassExtensionMap();
         $filesForAddingPropertyOrMethodAnnotations = [];
+
         foreach ($classExtensionMap as $frameworkClass => $projectClass) {
             $frameworkClassBetterReflection = ReflectionObject::createFromName($frameworkClass);
             $projectClassBetterReflection = ReflectionObject::createFromName($projectClass);
@@ -219,6 +226,7 @@ class ExtendedClassesAnnotationsCommand extends Command
                 $frameworkClassBetterReflection,
                 $projectClassBetterReflection
             );
+
             if (!$isDryRun) {
                 $this->annotationsAdder->addAnnotationToClass(
                     $projectClassBetterReflection,

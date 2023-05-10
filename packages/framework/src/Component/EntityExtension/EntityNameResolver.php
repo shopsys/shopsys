@@ -82,6 +82,7 @@ class EntityNameResolver
     protected function resolveInObjectProperties($object): void
     {
         $reflection = new ReflectionObject($object);
+
         foreach ($reflection->getProperties() as $property) {
             $property->setAccessible(true);
             $value = $property->getValue($object);

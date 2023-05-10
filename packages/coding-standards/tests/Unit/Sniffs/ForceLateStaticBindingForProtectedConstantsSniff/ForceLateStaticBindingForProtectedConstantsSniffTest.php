@@ -31,6 +31,7 @@ final class ForceLateStaticBindingForProtectedConstantsSniffTest extends Abstrac
     public function getFixableFiles(): iterable
     {
         yield [__DIR__ . '/fixed/SingleValue.php', __DIR__ . '/wrong/SingleValue.php'];
+
         yield [__DIR__ . '/fixed/SelfWithMethodsAndVariables.php', __DIR__ . '/wrong/SelfWithMethodsAndVariables.php'];
     }
 

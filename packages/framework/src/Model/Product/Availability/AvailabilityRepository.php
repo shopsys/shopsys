@@ -51,6 +51,7 @@ class AvailabilityRepository
 
         if ($availability === null) {
             $message = 'Availability with ID ' . $availabilityId . ' not found.';
+
             throw new AvailabilityNotFoundException($message);
         }
 

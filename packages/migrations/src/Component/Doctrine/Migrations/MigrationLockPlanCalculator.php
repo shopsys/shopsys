@@ -106,6 +106,7 @@ class MigrationLockPlanCalculator implements MigrationPlanCalculator
                 return false;
             }
         }
+
         return true;
     }
 }

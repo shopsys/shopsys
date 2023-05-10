@@ -34,6 +34,7 @@ abstract class AbstractTranslatableEntity extends AbstractTranslatable
     {
         /** @var \Prezent\Doctrine\Translatable\Entity\AbstractTranslation[] $translations */
         $translations = $this->getTranslations();
+
         foreach ($translations as $translation) {
             if ($translation->getLocale() === $locale) {
                 return $translation;
@@ -65,6 +66,7 @@ abstract class AbstractTranslatableEntity extends AbstractTranslatable
         }
 
         $translation = $this->findTranslation($locale);
+
         if ($translation === null) {
             $translation = $this->createTranslation();
             $translation->setLocale($locale);
@@ -72,6 +74,7 @@ abstract class AbstractTranslatableEntity extends AbstractTranslatable
         }
 
         $this->currentTranslation = $translation;
+
         return $translation;
     }
 

@@ -26,6 +26,7 @@ class AdvertPositionRegistry
     public function assertPositionNameIsKnown(string $positionName): void
     {
         $knownPositionsNames = array_keys($this->getAllLabelsIndexedByNames());
+
         if (!in_array($positionName, $knownPositionsNames, true)) {
             throw new AdvertPositionNotKnownException(
                 $positionName,

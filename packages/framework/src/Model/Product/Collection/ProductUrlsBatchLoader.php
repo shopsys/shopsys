@@ -61,6 +61,7 @@ class ProductUrlsBatchLoader
     public function getProductUrl(Product $product, DomainConfig $domainConfig): string
     {
         $key = $this->getKey($product, $domainConfig);
+
         if (!array_key_exists($key, $this->loadedProductUrls)) {
             throw new ProductUrlNotLoadedException($product, $domainConfig);
         }
@@ -76,6 +77,7 @@ class ProductUrlsBatchLoader
     public function getProductImageUrl(Product $product, DomainConfig $domainConfig): ?string
     {
         $key = $this->getKey($product, $domainConfig);
+
         if (!array_key_exists($key, $this->loadedProductImageUrls)) {
             throw new ProductImageUrlNotLoadedException($product, $domainConfig);
         }

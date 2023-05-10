@@ -84,6 +84,7 @@ class PaymentGridFactory implements GridFactoryInterface
             function ($row) {
                 $payment = $this->paymentRepository->findById($row['p']['id']);
                 $row['displayPrice'] = $this->getDisplayPrice($payment);
+
                 return $row;
             }
         );

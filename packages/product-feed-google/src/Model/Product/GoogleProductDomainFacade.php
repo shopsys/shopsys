@@ -70,6 +70,7 @@ class GoogleProductDomainFacade
         array $newGoogleProductDomainsData
     ) {
         $domainsIdsWithNewGoogleProductDomains = [];
+
         foreach ($newGoogleProductDomainsData as $newGoogleProductDomainData) {
             $domainsIdsWithNewGoogleProductDomains[$newGoogleProductDomainData->domainId] = $newGoogleProductDomainData->domainId;
         }

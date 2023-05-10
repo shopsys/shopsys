@@ -44,6 +44,7 @@ class InlineEditFacade
     public function saveFormData($serviceName, Request $request, $rowId)
     {
         $gridInlineEdit = $this->gridInlineEditRegistry->getGridInlineEdit($serviceName);
+
         return $gridInlineEdit->saveForm($request, $rowId);
     }
 
@@ -61,6 +62,7 @@ class InlineEditFacade
         $gridView = $grid->createViewWithOneRow($rowId);
         $rows = $grid->getRows();
         $rowData = array_pop($rows);
+
         return $gridView->renderBlock('grid_row', [
             'loopIndex' => 0,
             'lastRow' => false,
@@ -77,6 +79,7 @@ class InlineEditFacade
     protected function renderFormAsRow(GridInlineEditInterface $gridInlineEditService, $rowId, Form $form)
     {
         $grid = $gridInlineEditService->getGrid();
+
         if ($rowId === null) {
             $gridView = $grid->createViewWithoutRows();
         } else {

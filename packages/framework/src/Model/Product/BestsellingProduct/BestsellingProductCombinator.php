@@ -19,6 +19,7 @@ class BestsellingProductCombinator
             $automaticProducts,
             $manualProductsIndexedByPosition
         );
+
         return $this->getCombinedProducts(
             $manualProductsIndexedByPosition,
             $automaticProductsExcludingManual,
@@ -37,6 +38,7 @@ class BestsellingProductCombinator
     ) {
         foreach ($manualProducts as $manualProduct) {
             $automaticProductKey = array_search($manualProduct, $automaticProducts, true);
+
             if ($automaticProductKey !== false) {
                 unset($automaticProducts[$automaticProductKey]);
             }
@@ -57,6 +59,7 @@ class BestsellingProductCombinator
         $maxResults
     ) {
         $combinedProducts = [];
+
         for ($position = 0; $position < $maxResults; $position++) {
             if (array_key_exists($position, $manualProductsIndexedByPosition)) {
                 $combinedProducts[] = $manualProductsIndexedByPosition[$position];
@@ -64,6 +67,7 @@ class BestsellingProductCombinator
                 $combinedProducts[] = array_shift($automaticProductsExcludingManual);
             }
         }
+
         return $combinedProducts;
     }
 }

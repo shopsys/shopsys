@@ -104,6 +104,7 @@ class TransportRepository
     public function getById($id)
     {
         $transport = $this->findById($id);
+
         if ($transport === null) {
             throw new TransportNotFoundException(
                 'Transport with ID ' . $id . ' not found.'

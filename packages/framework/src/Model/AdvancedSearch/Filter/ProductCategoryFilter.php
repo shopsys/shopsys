@@ -76,6 +76,7 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
             'choices' => $this->categoryFacade->getAllTranslated($this->localization->getAdminLocale()),
             'choice_label' => function (Category $category) {
                 $padding = str_repeat("\u{00a0}", ($category->getLevel() - 1) * 2);
+
                 return $padding . $category->getName();
             },
             'choice_value' => 'id',
@@ -90,6 +91,7 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
     {
         $isCategory = [];
         $isNotCategory = [];
+
         foreach ($rulesData as $ruleData) {
             if ($ruleData->operator === self::OPERATOR_IS) {
                 $isCategory[] = $ruleData->value;
@@ -97,6 +99,7 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
                 $isNotCategory[] = $ruleData->value;
             }
         }
+
         if (count($isCategory) + count($isNotCategory) === 0) {
             return;
         }
@@ -107,6 +110,7 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
             $queryBuilder->andWhere($queryBuilder->expr()->in('p.id', sprintf($subQuery, 'pcd_is', 'isCategory')));
             $queryBuilder->setParameter('isCategory', $isCategory);
         }
+
         if (count($isNotCategory) === 0) {
             return;
         }

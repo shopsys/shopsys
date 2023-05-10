@@ -58,6 +58,7 @@ class AdministratorRolesChangedSubscriber implements EventSubscriberInterface
 
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null $administrator */
         $administrator = null;
+
         if ($token !== null) {
             $administrator = $token->getUser();
         }

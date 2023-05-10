@@ -58,6 +58,7 @@ class ParameterGridFactory implements GridFactoryInterface
                 t('Name %locale%', ['%locale%' => $this->localization->getLanguageName($adminLocale)]),
                 true
             );
+
             foreach ($locales as $locale) {
                 if ($locale !== $adminLocale) {
                     $grid->addColumn(

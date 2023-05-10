@@ -217,6 +217,7 @@ class ProductDataFixture
             try {
                 $mainProduct = $this->getProductByCatnum($mainVariantCatnum . $uniqueIndex);
                 $variants = [];
+
                 foreach ($variantsCatnums as $variantCatnum) {
                     $variants[] = $this->getProductByCatnum($variantCatnum . $uniqueIndex);
                 }
@@ -288,6 +289,7 @@ class ProductDataFixture
         $this->productTemplates = [];
 
         $i = 1;
+
         while (true) {
             try {
                 /** @var \App\Model\Product\Product $product */

@@ -29,6 +29,7 @@ class IndependentTransportVisibilityCalculation
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
         $transportName = $transport->getName($locale);
+
         if ($transportName === '' || $transportName === null) {
             return false;
         }

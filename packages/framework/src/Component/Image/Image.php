@@ -117,6 +117,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     public function getNames(): array
     {
         $namesByLocale = [];
+
         foreach ($this->translations as $translation) {
             $namesByLocale[$translation->getLocale()] = $translation->getName();
         }
@@ -148,6 +149,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     public function getTemporaryFilesForUpload(): array
     {
         $files = [];
+
         if ($this->temporaryFilename !== null) {
             $files[static::UPLOAD_KEY] = new FileForUpload(
                 $this->temporaryFilename,
@@ -157,6 +159,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
                 FileNamingConvention::TYPE_ID
             );
         }
+
         return $files;
     }
 

@@ -56,6 +56,7 @@ class SeoExtension extends AbstractExtension
     public function getSeoTitleAddOn()
     {
         $currentDomainId = $this->domain->getId();
+
         return $this->seoSettingFacade->getTitleAddOn($currentDomainId);
     }
 
@@ -65,6 +66,7 @@ class SeoExtension extends AbstractExtension
     public function getSeoMetaDescription()
     {
         $currentDomainId = $this->domain->getId();
+
         return $this->seoSettingFacade->getDescriptionMainPage($currentDomainId);
     }
 }

@@ -34,6 +34,7 @@ class AvailabilityDataFactory implements AvailabilityDataFactoryInterface
     {
         $availabilityData = $this->createInstance();
         $this->fillNew($availabilityData);
+
         return $availabilityData;
     }
 
@@ -70,6 +71,7 @@ class AvailabilityDataFactory implements AvailabilityDataFactoryInterface
         /** @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityTranslation[] $translations */
         $translations = $availability->getTranslations();
         $names = [];
+
         foreach ($translations as $translate) {
             $names[$translate->getLocale()] = $translate->getName();
         }

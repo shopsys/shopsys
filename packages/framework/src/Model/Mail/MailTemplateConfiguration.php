@@ -131,6 +131,7 @@ class MailTemplateConfiguration
             );
 
         $allOrderStatuses = $this->orderStatusFacade->getAll();
+
         foreach ($allOrderStatuses as $orderStatus) {
             $this->addMailTemplateVariables(
                 OrderMail::getMailTemplateNameByStatus($orderStatus),

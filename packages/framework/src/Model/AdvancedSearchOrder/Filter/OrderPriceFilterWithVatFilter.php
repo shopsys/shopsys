@@ -55,6 +55,7 @@ class OrderPriceFilterWithVatFilter implements AdvancedSearchFilterInterface
     {
         foreach ($rulesData as $index => $ruleData) {
             $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
+
             if ($dqlOperator === null || $ruleData->value === '' || $ruleData->value === null) {
                 continue;
             }
@@ -83,6 +84,7 @@ class OrderPriceFilterWithVatFilter implements AdvancedSearchFilterInterface
             case self::OPERATOR_IS:
                 return '=';
         }
+
         return null;
     }
 }

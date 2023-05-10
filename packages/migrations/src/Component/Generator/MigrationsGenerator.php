@@ -66,6 +66,7 @@ class MigrationsGenerator
     protected function formatSqlCommandsIfLengthOverflow(array $filteredSchemaDiffSqlCommands)
     {
         $formattedSqlCommands = [];
+
         foreach ($filteredSchemaDiffSqlCommands as $filteredSchemaDiffSqlCommand) {
             if (strlen($filteredSchemaDiffSqlCommand) > static::LINE_LENGTH_LIMIT) {
                 $formattedSqlCommands[] = $this->formatSqlCommand($filteredSchemaDiffSqlCommand);

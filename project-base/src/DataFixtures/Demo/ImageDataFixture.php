@@ -112,6 +112,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
             $brand = $this->getReference($brandName);
 
             $names = [];
+
             foreach ($this->domain->getAllLocales() as $locale) {
                 $names[$locale] = $brandName;
             }
@@ -141,6 +142,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
             $category = $this->getReference($categoryName);
 
             $names = [];
+
             foreach ($this->domain->getAllLocales() as $locale) {
                 $names[$locale] = $categoryName;
             }
@@ -162,6 +164,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
             $payment = $this->getReference($paymentName);
 
             $names = [];
+
             foreach ($this->domain->getAllLocales() as $locale) {
                 $names[$locale] = $paymentName;
             }
@@ -183,6 +186,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
             $transport = $this->getReference($transportName);
 
             $names = [];
+
             foreach ($this->domain->getAllLocales() as $locale) {
                 $names[$locale] = $transportName;
             }
@@ -209,6 +213,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
 
         foreach ($productsIdsWithImageIdSameAsProductId as $productId) {
             $names = [];
+
             foreach ($this->domain->getAllLocales() as $locale) {
                 $names[$locale] = 'Product ' . $productId . ' image';
             }
@@ -218,6 +223,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
 
         foreach ($specificProductsIdsIndexedByImagesIds as $imageId => $productId) {
             $names = [];
+
             foreach ($this->domain->getAllLocales() as $locale) {
                 $names[$locale] = 'Product ' . $productId . ' image';
             }
@@ -236,6 +242,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
 
         foreach ($imagesIdsIndexedBySliderItemsIds as $sliderItemId => $imageId) {
             $names = [];
+
             foreach ($this->domain->getAllLocales() as $locale) {
                 $names[$locale] = 'Product ' . $sliderItemId . ' image';
             }
@@ -270,6 +277,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
                 'modified_at' => Types::DATETIME_IMMUTABLE,
             ]
         );
+
         foreach ($this->domain->getAllLocales() as $locale) {
             $this->em->getConnection()->executeStatement(
                 'INSERT INTO images_translations ( translatable_id, name, locale)
@@ -296,6 +304,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
     {
         $finder = new Finder();
         $finder->files()->in($origin);
+
         foreach ($finder as $file) {
             $filepath = TransformString::removeDriveLetterFromPath($file->getPathname());
 

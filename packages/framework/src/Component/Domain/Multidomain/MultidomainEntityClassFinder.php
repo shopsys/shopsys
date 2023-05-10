@@ -18,10 +18,12 @@ class MultidomainEntityClassFinder
         array $manualMultidomainEntitiesNames
     ) {
         $multidomainEntitiesNames = [];
+
         foreach ($allClassesMetadata as $classMetadata) {
             $entityName = $classMetadata->getName();
             $isEntityIgnored = in_array($entityName, $ignoredEntitiesNames, true);
             $isManualMultidomainEntity = in_array($entityName, $manualMultidomainEntitiesNames, true);
+
             if (
                 $isManualMultidomainEntity
                 || !$isEntityIgnored

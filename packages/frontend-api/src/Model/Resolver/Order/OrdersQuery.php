@@ -34,6 +34,7 @@ class OrdersQuery extends AbstractQuery
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+
         if (!$customerUser) {
             throw new InvalidTokenUserMessageException();
         }

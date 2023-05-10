@@ -20,11 +20,15 @@ final class CheckRedisCommandTest extends TestCase
     public function pingAllRedisClientsProvider(): iterable
     {
         yield [true, new RedisFacade([])];
+
         yield [true, new RedisFacade([$this->createRedisMockExpectingPing()])];
+
         yield [true, new RedisFacade(
             [$this->createRedisMockExpectingPing(), $this->createRedisMockExpectingPing(), $this->createRedisMockExpectingPing()]
         )];
+
         yield [false, new RedisFacade([$this->createRedisMockThrowingException()])];
+
         yield [false, new RedisFacade(
             [$this->createRedisMockExpectingPing(), $this->createRedisMockThrowingException()]
         )];

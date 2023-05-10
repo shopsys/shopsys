@@ -98,6 +98,7 @@ class CreateDomainsDataCommand extends Command
 
         $multidomainEntitiesNames = $this->multidomainEntityClassFinderFacade->getMultidomainEntitiesNames();
         $output->writeln('<fg=green>Multidomain entities found:</fg=green>');
+
         foreach ($multidomainEntitiesNames as $multidomainEntityName) {
             $output->writeln($multidomainEntityName);
         }

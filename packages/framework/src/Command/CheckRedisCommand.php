@@ -47,6 +47,7 @@ class CheckRedisCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $io->comment('Checks availability of Redis...');
+
         try {
             $this->redisFacade->pingAllClients();
             $io->success('Redis is available.');

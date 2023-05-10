@@ -251,6 +251,7 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
     private function setVats(ProductData $productData): void
     {
         $productVatsIndexedByDomainId = [];
+
         foreach ($this->domain->getAllIds() as $domainId) {
             $productVatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
         }

@@ -40,12 +40,14 @@ class ConfigConstraintMessageExtractor implements FileVisitorInterface
     {
         if ($file->getExtension() === 'yaml' || $file->getExtension() === 'yml') {
             $yamlContent = Yaml::parseFile($file->getRealPath(), Yaml::PARSE_CUSTOM_TAGS);
+
             if ($yamlContent !== null) {
                 $validationArrays = $this->getAllValuesOfArrayKeysByPattern($yamlContent, '/^validation$/');
                 $validationArraysWithoutCascade = array_filter($validationArrays, static function ($value) {
                     return $value !== 'cascade';
                 });
                 $messages = $this->getAllValuesOfArrayKeysByPattern($validationArraysWithoutCascade, '/.*message.*/i');
+
                 foreach ($messages as $message) {
                     // message value can be null or ~
                     if (is_string($message)) {
@@ -66,8 +68,10 @@ class ConfigConstraintMessageExtractor implements FileVisitorInterface
         $iterator = new RecursiveArrayIterator($yamlContent);
         $recursive = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::SELF_FIRST);
         $elements = [];
+
         foreach ($recursive as $key => $value) {
             preg_match($pattern, (string)$key, $matches);
+
             if (count($matches) > 0) {
                 $elements[] = $value;
             }

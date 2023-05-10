@@ -134,6 +134,7 @@ class ScriptFacade
         $scriptCodes = $this->getScriptCodesByPlacement(Script::PLACEMENT_ORDER_SENT_PAGE);
 
         $scriptCodesWithReplacedVariables = [];
+
         foreach ($scriptCodes as $scriptCode) {
             $scriptCodesWithReplacedVariables[] = $this->replaceVariables($scriptCode, $order);
         }

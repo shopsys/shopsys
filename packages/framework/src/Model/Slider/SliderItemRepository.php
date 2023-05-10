@@ -38,10 +38,13 @@ class SliderItemRepository
     {
         /** @var \Shopsys\FrameworkBundle\Model\Slider\SliderItem|null $sliderItem */
         $sliderItem = $this->getSliderItemRepository()->find($sliderItemId);
+
         if ($sliderItem === null) {
             $message = 'Slider item with ID ' . $sliderItemId . ' not found.';
+
             throw new SliderItemNotFoundException($message);
         }
+
         return $sliderItem;
     }
 
@@ -53,6 +56,7 @@ class SliderItemRepository
     {
         /** @var \Shopsys\FrameworkBundle\Model\Slider\SliderItem $sliderItem */
         $sliderItem = $this->getSliderItemRepository()->find($id);
+
         return $sliderItem;
     }
 

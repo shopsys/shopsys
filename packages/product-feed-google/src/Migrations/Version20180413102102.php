@@ -39,8 +39,10 @@ class Version20180413102102 extends AbstractMigration
                 'context' => 'product',
             ]
         )->fetchAllAssociative();
+
         foreach ($rows as $row) {
             $jsonData = json_decode($row['json_value'], true);
+
             foreach ($jsonData['show'] ?? [] as $domainId => $show) {
                 $this->sql(
                     'INSERT INTO google_product_domains (product_id, domain_id, show) 

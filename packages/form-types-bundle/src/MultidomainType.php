@@ -34,6 +34,7 @@ class MultidomainType extends AbstractType
         $entryOptions['constraints'] = $entryOptions['constraints'] ?? [];
 
         $domainIds = $this->domainIdsProvider->getAllIds();
+
         foreach ($domainIds as $domainId) {
             if (array_key_exists($domainId, $options['options_by_domain_id'])) {
                 $domainOptions = array_merge($entryOptions, $options['options_by_domain_id'][$domainId]);

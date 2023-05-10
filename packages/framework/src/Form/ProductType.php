@@ -51,6 +51,7 @@ class ProductType extends AbstractType
 
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
         $product = $form->getData();
+
         if ($product !== null) {
             $view->vars['productName'] = $product->getName();
         }

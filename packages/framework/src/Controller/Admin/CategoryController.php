@@ -63,6 +63,7 @@ class CategoryController extends AdminBaseController
                     'url' => $this->generateUrl('admin_category_edit', ['id' => $category->getId()]),
                 ]
             );
+
             return $this->redirectToRoute('admin_category_list');
         }
 
@@ -229,6 +230,7 @@ class CategoryController extends AdminBaseController
         $categories = $parentCategory->getChildren();
 
         $categoriesData = [];
+
         foreach ($categories as $category) {
             $categoriesData[] = [
                 'id' => $category->getId(),

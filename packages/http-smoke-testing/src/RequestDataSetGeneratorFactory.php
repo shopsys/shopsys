@@ -12,6 +12,7 @@ class RequestDataSetGeneratorFactory
     {
         $requestDataSetGenerator = new RequestDataSetGenerator($routeInfo);
         $requestDataSetGenerator->fulfillRequestFromAnnotations();
+
         return $requestDataSetGenerator;
     }
 }

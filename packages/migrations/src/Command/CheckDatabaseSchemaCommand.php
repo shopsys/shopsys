@@ -46,14 +46,17 @@ class CheckDatabaseSchemaCommand extends Command
         $output->writeln('Checking database schema...');
 
         $filteredSchemaDiffSqlCommands = $this->databaseSchemaFacade->getFilteredSchemaDiffSqlCommands();
+
         if (count($filteredSchemaDiffSqlCommands) === 0) {
             $output->writeln('<info>Database schema is satisfying ORM.</info>');
+
             return static::RETURN_CODE_OK;
         }
 
         $output->writeln('<error>Database schema is not satisfying ORM!</error>');
         $output->writeln('<error>Following SQL commands should fix the problem (revise them before!):</error>');
         $output->writeln('');
+
         foreach ($filteredSchemaDiffSqlCommands as $sqlCommand) {
             $output->writeln('<fg=red>' . $sqlCommand . ';</fg=red>');
         }

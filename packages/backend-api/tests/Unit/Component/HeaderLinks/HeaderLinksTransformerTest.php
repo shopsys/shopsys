@@ -32,18 +32,22 @@ class HeaderLinksTransformerTest extends TestCase
             new PaginationResult(1, 20, 10, []),
             new HeaderLinks(),
         ];
+
         yield [
             new PaginationResult(1, 10, 10, []),
             new HeaderLinks(),
         ];
+
         yield [
             new PaginationResult(1, 10, 20, []),
             $this->createHeaderLinks(null, null, '2', '2'),
         ];
+
         yield [
             new PaginationResult(2, 10, 20, []),
             $this->createHeaderLinks('1', '1'),
         ];
+
         yield [
             new PaginationResult(3, 10, 100, []),
             $this->createHeaderLinks('1', '2', '4', '10'),
@@ -60,15 +64,19 @@ class HeaderLinksTransformerTest extends TestCase
     protected function createHeaderLinks(?string $first = null, ?string $prev = null, ?string $next = null, ?string $last = null): HeaderLinks
     {
         $headerLinks = new HeaderLinks();
+
         if ($first) {
             $headerLinks = $headerLinks->add('http://example.com/x?page=' . $first, 'first');
         }
+
         if ($prev) {
             $headerLinks = $headerLinks->add('http://example.com/x?page=' . $prev, 'prev');
         }
+
         if ($next) {
             $headerLinks = $headerLinks->add('http://example.com/x?page=' . $next, 'next');
         }
+
         if ($last) {
             $headerLinks = $headerLinks->add('http://example.com/x?page=' . $last, 'last');
         }

@@ -96,6 +96,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     protected function setCurrentExecutionContextVariableNamesFromNode(ClassMethod $node)
     {
         $this->currentExecutionContextVariableNames = [];
+
         foreach ($node->getParams() as $parameter) {
             if ($this->isParameterExecutionContextInterfaceSubclass($parameter)) {
                 $this->currentExecutionContextVariableNames[] = $parameter->var->name;
@@ -136,6 +137,7 @@ class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
     protected function extractMessage(MethodCall $methodCall)
     {
         $firstArgumentWithMessage = reset($methodCall->args);
+
         if (!($firstArgumentWithMessage->value instanceof String_)) {
             return;
         }

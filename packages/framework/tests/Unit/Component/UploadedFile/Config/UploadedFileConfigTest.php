@@ -117,6 +117,7 @@ class UploadedFileConfigTest extends TestCase
     private function getUploadedFileConfig(): UploadedFileConfig
     {
         $fileEntityConfigsByClass = $this->getFileEntityConfigsByClass();
+
         return new UploadedFileConfig($fileEntityConfigsByClass);
     }
 }

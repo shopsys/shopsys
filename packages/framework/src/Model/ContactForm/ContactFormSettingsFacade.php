@@ -37,6 +37,7 @@ class ContactFormSettingsFacade
     public function getAllMainTextsIndexedByDomainId(): array
     {
         $mainTexts = [];
+
         foreach ($this->domain->getAllIds() as $domainId) {
             $mainTexts[$domainId] = $this->getMainText($domainId);
         }

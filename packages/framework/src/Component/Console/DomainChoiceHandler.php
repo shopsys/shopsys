@@ -43,6 +43,7 @@ class DomainChoiceHandler
         }
 
         $domainChoices = [];
+
         foreach ($domainConfigs as $domainConfig) {
             $domainChoices[$domainConfig->getId()] = $domainConfig->getName();
         }
@@ -51,6 +52,7 @@ class DomainChoiceHandler
             $domainChoices,
             $firstDomainConfig->getName()
         );
+
         foreach ($domainConfigs as $domainConfig) {
             if ($domainConfig->getName() === $chosenDomainName) {
                 return $domainConfig;

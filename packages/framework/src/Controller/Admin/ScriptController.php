@@ -109,6 +109,7 @@ class ScriptController extends AdminBaseController
                         'url' => $this->generateUrl('admin_script_edit', ['scriptId' => $scriptId]),
                     ]
                 );
+
             return $this->redirectToRoute('admin_script_list');
         }
 

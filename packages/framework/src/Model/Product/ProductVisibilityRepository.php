@@ -152,6 +152,7 @@ class ProductVisibilityRepository
             'pricingGroup' => $pricingGroup->getId(),
             'domainId' => $domainId,
         ]);
+
         if ($productVisibility === null) {
             throw new ProductVisibilityNotFoundException();
         }
@@ -185,6 +186,7 @@ class ProductVisibilityRepository
     protected function calculateIndependentVisibility($onlyMarkedProducts)
     {
         $now = new DateTime();
+
         if ($onlyMarkedProducts) {
             $onlyMarkedProductsCondition = ' AND p.recalculate_visibility = TRUE';
         } else {

@@ -99,6 +99,7 @@ class PaymentPriceCalculation
         int $domainId
     ): array {
         $paymentsPricesByPaymentId = [];
+
         foreach ($payments as $payment) {
             $paymentsPricesByPaymentId[$payment->getId()] = $this->calculatePrice(
                 $payment,

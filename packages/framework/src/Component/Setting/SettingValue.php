@@ -94,6 +94,7 @@ class SettingValue
     {
         if ($this->value === null && $this->type !== static::TYPE_NULL) {
             $message = 'Setting value type "' . $this->type . '" does not allow null value.';
+
             throw new SettingValueTypeNotMatchValueException($message);
         }
 
@@ -127,6 +128,7 @@ class SettingValue
     protected function setValue($value)
     {
         $this->type = $this->getValueType($value);
+
         if ($this->type === static::TYPE_BOOLEAN) {
             $this->value = $value === true ? static::BOOLEAN_TRUE : static::BOOLEAN_FALSE;
         } elseif ($this->type === static::TYPE_NULL) {
@@ -183,6 +185,7 @@ class SettingValue
                 DateTime::class,
                 Money::class
             );
+
         throw new InvalidArgumentException($message);
     }
 }

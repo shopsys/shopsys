@@ -127,6 +127,7 @@ class ProductPickerController extends AdminBaseController
         $quickSearchForm->handleRequest($request);
 
         $isAdvancedSearchFormSubmitted = $this->advancedSearchProductFacade->isAdvancedSearchFormSubmitted($request);
+
         if ($isAdvancedSearchFormSubmitted) {
             $queryBuilder = $this->advancedSearchProductFacade->getQueryBuilderByAdvancedSearchData(
                 $advancedSearchData
@@ -141,6 +142,7 @@ class ProductPickerController extends AdminBaseController
             function ($row) {
                 $product = $this->productFacade->getById($row['p']['id']);
                 $row['product'] = $product;
+
                 return $row;
             }
         );

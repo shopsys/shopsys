@@ -59,10 +59,12 @@ class EnvelopeListenerTest extends TestCase
         $sender = new Address('no-reply@shopsys.com');
         $headers = new Headers(new MailboxListHeader('To', $mailsTo));
         $recipients = $mailsTo;
+
         if ($mailCc !== null) {
             $headers->add(new MailboxListHeader('Cc', [$mailCc]));
             $recipients[] = $mailCc;
         }
+
         if ($mailBcc !== null) {
             $headers->add(new MailboxListHeader('Bcc', [$mailBcc]));
             $recipients[] = $mailBcc;

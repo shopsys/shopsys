@@ -67,15 +67,18 @@ class ElasticsearchTracer extends AbstractLogger
     {
         if ($level === LogLevel::INFO) {
             $this->lastRequestCurl = $message;
+
             return;
         }
 
         if ($level === LogLevel::DEBUG) {
             $this->logRequest($message, $context);
+
             return;
         }
 
         $exceptionMessage = sprintf('Not supported log level `%s`', $level);
+
         throw new NotSupportedException($exceptionMessage);
     }
 
@@ -87,6 +90,7 @@ class ElasticsearchTracer extends AbstractLogger
     {
         if ($message !== 'Response:') {
             $exceptionMessage = sprintf('Not supported message `%s`, It supports only exactly `Response:`', $message);
+
             throw new NotSupportedException($exceptionMessage);
         }
 

@@ -104,6 +104,7 @@ class AvailabilityController extends AdminBaseController
         try {
             $availability = $this->availabilityFacade->getById($id);
             $isAvailabilityDefault = $this->availabilityFacade->isAvailabilityDefault($availability);
+
             if ($this->availabilityFacade->isAvailabilityUsed($availability) || $isAvailabilityDefault) {
                 if ($isAvailabilityDefault) {
                     $message = t(

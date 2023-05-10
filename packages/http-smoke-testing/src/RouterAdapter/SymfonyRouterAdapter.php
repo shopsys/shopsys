@@ -82,11 +82,13 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
     private function getControllerMethodAnnotations(ReflectionMethod $reflectionMethod): array
     {
         $annotations = [];
+
         foreach ($this->annotationsReader->getMethodAnnotations($reflectionMethod) as $annotation) {
             if ($annotation instanceof DataSet || $annotation instanceof Skipped) {
                 $annotations[] = $annotation;
             }
         }
+
         return $annotations;
     }
 

@@ -40,6 +40,7 @@ class PromoCodeController extends FrontBaseController
     public function applyAction(Request $request)
     {
         $promoCode = $request->get(self::PROMO_CODE_PARAMETER);
+
         try {
             $this->currentPromoCodeFacade->setEnteredPromoCode($promoCode);
         } catch (InvalidPromoCodeException $ex) {

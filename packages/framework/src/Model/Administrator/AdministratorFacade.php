@@ -39,6 +39,7 @@ class AdministratorFacade
     public function create(AdministratorData $administratorData): Administrator
     {
         $administratorByUserName = $this->administratorRepository->findByUserName($administratorData->username);
+
         if ($administratorByUserName !== null) {
             throw new DuplicateUserNameException($administratorByUserName->getUsername());
         }
@@ -63,6 +64,7 @@ class AdministratorFacade
         $administrator = $this->administratorRepository->getById($administratorId);
         $this->checkUsername($administrator, $administratorData->username);
         $administrator->edit($administratorData);
+
         if ($administratorData->password !== null) {
             $this->setPassword($administrator, $administratorData->password);
         }
@@ -81,6 +83,7 @@ class AdministratorFacade
     protected function checkUsername(Administrator $administrator, string $username): void
     {
         $administratorByUserName = $this->administratorRepository->findByUserName($username);
+
         if ($administratorByUserName !== null
             && $administratorByUserName !== $administrator
             && $administratorByUserName->getUsername() === $username
@@ -117,12 +120,15 @@ class AdministratorFacade
     protected function checkForDelete(Administrator $administrator): void
     {
         $adminCountExcludingSuperadmin = $this->administratorRepository->getCountExcludingSuperadmin();
+
         if ($adminCountExcludingSuperadmin === 1) {
             throw new DeletingLastAdministratorException();
         }
+
         if ($this->tokenStorage->getToken()->getUser() === $administrator) {
             throw new DeletingSelfException();
         }
+
         if ($administrator->isSuperadmin()) {
             throw new DeletingSuperadminException();
         }

@@ -142,6 +142,7 @@ class VatFacade
 
         if ($newVat !== null) {
             $newDefaultVat = $this->getDefaultVatForDomain($oldVat->getDomainId());
+
             if ($newDefaultVat->getId() === $oldVat->getId()) {
                 $newDefaultVat = $newVat;
             }
@@ -163,6 +164,7 @@ class VatFacade
     public function deleteAllReplacedVats()
     {
         $vatsForDelete = $this->vatRepository->getVatsWithoutProductsMarkedForDeletion();
+
         foreach ($vatsForDelete as $vatForDelete) {
             $this->em->remove($vatForDelete);
         }
@@ -199,6 +201,7 @@ class VatFacade
     {
         foreach ($this->domain->getAllIds() as $domainId) {
             $defaultVatForDomain = $this->getDefaultVatForDomain($domainId);
+
             if ($defaultVatForDomain === $vat) {
                 return true;
             }

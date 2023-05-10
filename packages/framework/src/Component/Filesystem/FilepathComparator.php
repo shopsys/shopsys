@@ -14,6 +14,7 @@ class FilepathComparator
     public function isPathWithinDirectory($path, $directoryPath)
     {
         $directoryPathRealpath = realpath($directoryPath);
+
         if ($directoryPathRealpath === false) {
             throw new DirectoryDoesNotExistException(
                 $directoryPath
@@ -37,6 +38,7 @@ class FilepathComparator
         if ($this->hasAncestorPath($path)) {
             return $this->isPathWithinDirectoryRealpathRecursive(dirname($path), $directoryRealpath);
         }
+
         return false;
     }
 

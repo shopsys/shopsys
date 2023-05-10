@@ -196,6 +196,7 @@ class ResizeFormListener implements EventSubscriberInterface
         if ($normData === null) {
             $normData = [];
         }
+
         if (!is_array($normData) && !($normData instanceof Traversable && $normData instanceof ArrayAccess)) {
             throw new UnexpectedTypeException(
                 $normData,
@@ -206,6 +207,7 @@ class ResizeFormListener implements EventSubscriberInterface
         if ($previousViewData === null) {
             $previousViewData = [];
         }
+
         if (
             !is_array($previousViewData)
             && !(

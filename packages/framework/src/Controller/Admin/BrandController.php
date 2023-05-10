@@ -105,6 +105,7 @@ class BrandController extends AdminBaseController
                         'url' => $this->generateUrl('admin_brand_edit', ['id' => $brand->getId()]),
                     ]
                 );
+
             return $this->redirectToRoute('admin_brand_list');
         }
 
@@ -177,6 +178,7 @@ class BrandController extends AdminBaseController
                         'url' => $this->generateUrl('admin_brand_edit', ['id' => $brand->getId()]),
                     ]
                 );
+
             return $this->redirectToRoute('admin_brand_list');
         }
 

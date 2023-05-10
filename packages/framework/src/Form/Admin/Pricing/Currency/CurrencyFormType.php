@@ -49,6 +49,7 @@ class CurrencyFormType extends AbstractType
         $intlCurrencies = $this->intlCurrencyRepository->getAll($this->localization->getLocale());
 
         $possibleCurrencyCodes = [];
+
         foreach ($intlCurrencies as $intlCurrency) {
             $possibleCurrencyCodes[] = $intlCurrency->getCurrencyCode();
         }

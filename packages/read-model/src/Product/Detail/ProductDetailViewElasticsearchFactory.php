@@ -114,6 +114,7 @@ class ProductDetailViewElasticsearchFactory
     public function createFromProductArray(array $productArray): ProductDetailView
     {
         $parameterViews = [];
+
         foreach ($productArray['parameters'] as $parameterArray) {
             $parameterViews[] = $this->parameterViewFactory->createFromParameterArray($parameterArray);
         }

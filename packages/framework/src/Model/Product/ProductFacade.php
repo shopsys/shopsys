@@ -308,6 +308,7 @@ class ProductFacade
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
         $this->saveParameters($product, $productData->parameters);
+
         if (!$product->isMainVariant()) {
             $this->refreshProductManualInputPrices($product, $productData->manualInputPricesByPricingGroupId);
         } else {
@@ -341,6 +342,7 @@ class ProductFacade
         $product = $this->productRepository->getById($productId);
         $productDeleteResult = $product->getProductDeleteResult();
         $productsForRecalculations = $productDeleteResult->getProductsForRecalculations();
+
         foreach ($productsForRecalculations as $productForRecalculations) {
             $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation(
                 $productForRecalculations
@@ -371,12 +373,14 @@ class ProductFacade
         // That's why it's necessary to do remove and flush first.
 
         $oldProductParameterValues = $this->parameterRepository->getProductParameterValuesByProduct($product);
+
         foreach ($oldProductParameterValues as $oldProductParameterValue) {
             $this->em->remove($oldProductParameterValue);
         }
         $this->em->flush();
 
         $toFlush = [];
+
         foreach ($productParameterValuesData as $productParameterValueData) {
             $productParameterValue = $this->productParameterValueFactory->create(
                 $product,
@@ -452,8 +456,10 @@ class ProductFacade
     protected function createProductVisibilities(Product $product)
     {
         $toFlush = [];
+
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
+
             foreach ($this->pricingGroupRepository->getPricingGroupsByDomainId($domainId) as $pricingGroup) {
                 $productVisibility = $this->productVisibilityFactory->create($product, $pricingGroup, $domainId);
                 $this->em->persist($productVisibility);
@@ -473,12 +479,14 @@ class ProductFacade
     protected function refreshProductAccessories(Product $product, array $accessories)
     {
         $oldProductAccessories = $this->productAccessoryRepository->getAllByProduct($product);
+
         foreach ($oldProductAccessories as $oldProductAccessory) {
             $this->em->remove($oldProductAccessory);
         }
         $this->em->flush();
 
         $toFlush = [];
+
         foreach ($accessories as $position => $accessory) {
             $newProductAccessory = $this->productAccessoryFactory->create($product, $accessory, $position);
             $this->em->persist($newProductAccessory);
@@ -578,6 +586,7 @@ class ProductFacade
     protected function createFriendlyUrlsWhenRenamed(Product $product, array $originalNames): void
     {
         $changedNames = $this->getChangedNamesByLocale($product, $originalNames);
+
         if (count($changedNames) === 0) {
             return;
         }
@@ -597,11 +606,13 @@ class ProductFacade
     protected function getChangedNamesByLocale(Product $product, array $originalNames): array
     {
         $changedProductNames = [];
+
         foreach ($product->getNames() as $locale => $name) {
             if ($name !== null && $name !== $originalNames[$locale]) {
                 $changedProductNames[$locale] = $name;
             }
         }
+
         return $changedProductNames;
     }
 }

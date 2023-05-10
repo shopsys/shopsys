@@ -115,12 +115,15 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
         switch ($propertyName) {
             case 'show':
                 $zboziProductDomainData->show = $propertyValue;
+
                 break;
             case 'cpc':
                 $zboziProductDomainData->cpc = $propertyValue;
+
                 break;
             case 'cpc_search':
                 $zboziProductDomainData->cpcSearch = $propertyValue;
+
                 break;
         }
     }

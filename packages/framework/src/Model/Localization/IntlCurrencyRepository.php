@@ -189,9 +189,11 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
             return parent::get($currencyCode, $locale);
         } catch (UnknownCurrencyException $ex) {
             $legacyCurrencies = $this->getLegacyCurrenciesIndexedByCurrencyCodes();
+
             if (array_key_exists($currencyCode, $legacyCurrencies)) {
                 return $legacyCurrencies[$currencyCode];
             }
+
             throw new UndefinedLegacyCurrencyException($currencyCode);
         }
     }
@@ -207,8 +209,10 @@ class IntlCurrencyRepository extends BaseCurrencyRepository
         $intlCurrencies = parent::getAll($locale);
 
         $supportedCurrencies = [];
+
         foreach ($intlCurrencies as $intlCurrency) {
             $currencyCode = $intlCurrency->getCurrencyCode();
+
             if ($this->isSupportedCurrency($currencyCode)) {
                 $supportedCurrencies[$currencyCode] = $intlCurrency;
             }

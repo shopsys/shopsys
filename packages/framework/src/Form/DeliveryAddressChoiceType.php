@@ -55,6 +55,7 @@ class DeliveryAddressChoiceType extends AbstractType
         parent::buildView($view, $form, $options);
 
         $deliveryAddresses = [];
+
         foreach ($this->currentCustomerUser->findCurrentCustomerUser()->getCustomer()->getDeliveryAddresses() as $deliveryAddress) {
             $deliveryAddresses[$deliveryAddress->getId()] = $deliveryAddress;
         }

@@ -9252,6 +9252,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $mainProduct = $this->getProductFromCacheByCatnum($mainVariantCatnum);
 
             $variants = [];
+
             foreach ($variantsCatnums as $variantCatnum) {
                 $variants[] = $this->getProductFromCacheByCatnum($variantCatnum);
             }
@@ -9422,6 +9423,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[] $productVatsIndexedByDomainId */
         $productVatsIndexedByDomainId = [];
+
         foreach ($this->domain->getAllIds() as $domainId) {
             if ($vatReference !== null) {
                 $productVatsIndexedByDomainId[$domainId] = $this->persistentReferenceFacade->getReferenceForDomain(

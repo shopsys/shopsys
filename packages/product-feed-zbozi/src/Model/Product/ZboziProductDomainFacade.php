@@ -55,6 +55,7 @@ class ZboziProductDomainFacade
     public function getZboziProductDomainsByProductsAndDomainIndexedByProductId(array $products, DomainConfig $domain)
     {
         $productIds = [];
+
         foreach ($products as $product) {
             $productIds[] = $product->getId();
         }
@@ -89,6 +90,7 @@ class ZboziProductDomainFacade
         array $newZboziProductDomainsData
     ) {
         $domainsIdsWithNewZboziProductDomains = [];
+
         foreach ($newZboziProductDomainsData as $newZboziProductDomainData) {
             $domainsIdsWithNewZboziProductDomains[$newZboziProductDomainData->domainId] = $newZboziProductDomainData->domainId;
         }

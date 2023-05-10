@@ -150,6 +150,7 @@ class CronModuleFacade
          * therefore the native query for setting CRON error status is used here.
          */
         $connection = $this->em->getConnection();
+
         if (!$connection->isConnected()) {
             return;
         }

@@ -23,12 +23,14 @@ class AdvertPositionsQuery extends AbstractQuery
     public function advertPositionsQuery(): array
     {
         $serialized = [];
+
         foreach ($this->advertPositionRegistry->getAllLabelsIndexedByNames() as $positionName => $description) {
             $serialized[] = [
                 'description' => $description,
                 'positionName' => $positionName,
             ];
         }
+
         return $serialized;
     }
 }

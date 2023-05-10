@@ -75,6 +75,7 @@ final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends Abstr
         $this->confirm(
             sprintf('Confirm you have pushed the new commit into the "%s" branch', $this->currentBranchName)
         );
+
         if ($this->currentBranchName === AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME) {
             return;
         }

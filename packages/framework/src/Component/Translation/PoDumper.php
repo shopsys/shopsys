@@ -27,6 +27,7 @@ class PoDumper implements DumperInterface
 
         foreach ($sortedMessages as $message) {
             $output .= sprintf('msgid "%s"' . "\n", $this->escape($message->getId()));
+
             if ($message->isNew()) {
                 $output .= 'msgstr ""' . "\n";
             } else {

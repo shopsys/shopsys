@@ -24,6 +24,7 @@ class AdvancedSearchConfig
     {
         if (array_key_exists($filter->getName(), $this->filters)) {
             $message = 'Filter "' . $filter->getName() . '" already exists.';
+
             throw new AdvancedSearchFilterAlreadyExistsException($message);
         }
 
@@ -46,6 +47,7 @@ class AdvancedSearchConfig
     {
         if (!array_key_exists($filterName, $this->filters)) {
             $message = 'Filter "' . $filterName . '" not found.';
+
             throw new AdvancedSearchFilterNotFoundException($message);
         }
 

@@ -88,12 +88,15 @@ class ProductPriceCalculation
             $domainId,
             $pricingGroup
         );
+
         if (count($variants) === 0) {
             $message = 'Main variant ID = ' . $mainVariant->getId() . ' has no sellable variants.';
+
             throw new MainVariantPriceCalculationException($message);
         }
 
         $variantPrices = [];
+
         foreach ($variants as $variant) {
             $variantPrices[] = $this->calculatePrice($variant, $domainId, $pricingGroup);
         }
@@ -115,6 +118,7 @@ class ProductPriceCalculation
             $product,
             $pricingGroup
         );
+
         if ($manualInputPrice !== null) {
             $inputPrice = $manualInputPrice->getInputPrice() ?? Money::zero();
         } else {
@@ -146,6 +150,7 @@ class ProductPriceCalculation
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null $minimumPrice */
         $minimumPrice = null;
+
         foreach ($prices as $price) {
             if (
                 $minimumPrice === null
@@ -170,6 +175,7 @@ class ProductPriceCalculation
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Price $firstPrice */
         $firstPrice = array_pop($prices);
+
         foreach ($prices as $price) {
             if (!$price->getPriceWithoutVat()->equals($firstPrice->getPriceWithoutVat())
                 || !$price->getPriceWithVat()->equals($firstPrice->getPriceWithVat())

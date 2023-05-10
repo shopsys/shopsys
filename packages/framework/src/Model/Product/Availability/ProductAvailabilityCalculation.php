@@ -77,9 +77,11 @@ class ProductAvailabilityCalculation
         if ($product->isMainVariant()) {
             return $this->calculateMainVariantAvailability($product);
         }
+
         if ($product->isUsingStock()) {
             return $this->calculateAvailabilityForUsingStockProduct($product);
         }
+
         return $product->getAvailability();
     }
 
@@ -94,6 +96,7 @@ class ProductAvailabilityCalculation
         ) {
             return $product->getOutOfStockAvailability();
         }
+
         return $this->availabilityFacade->getDefaultInStockAvailability();
     }
 
@@ -104,6 +107,7 @@ class ProductAvailabilityCalculation
     protected function calculateMainVariantAvailability(Product $mainVariant)
     {
         $atLeastSomewhereSellableVariants = $this->getAtLeastSomewhereSellableVariantsByMainVariant($mainVariant);
+
         if (count($atLeastSomewhereSellableVariants) === 0) {
             return $this->availabilityFacade->getDefaultInStockAvailability();
         }
@@ -111,6 +115,7 @@ class ProductAvailabilityCalculation
 
         foreach ($atLeastSomewhereSellableVariants as $variant) {
             $variantCalculatedAvailability = $this->calculateAvailability($variant);
+
             if ($fastestAvailability->getDispatchTime() === null
                 || $variantCalculatedAvailability->getDispatchTime() !== null
                 && $variantCalculatedAvailability->getDispatchTime() < $fastestAvailability->getDispatchTime()
@@ -129,6 +134,7 @@ class ProductAvailabilityCalculation
     protected function getAtLeastSomewhereSellableVariantsByMainVariant(Product $mainVariant)
     {
         $allVariants = $mainVariant->getVariants();
+
         foreach ($allVariants as $variant) {
             $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($variant);
             $variant->markForVisibilityRecalculation();

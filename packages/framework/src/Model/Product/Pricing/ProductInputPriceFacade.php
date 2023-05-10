@@ -114,6 +114,7 @@ class ProductInputPriceFacade
 
         for ($count = 0; $count < static::BATCH_SIZE; $count++) {
             $row = $this->productRowsIterator->next();
+
             if ($row === false) {
                 $this->em->flush();
                 $this->em->clear();
@@ -126,6 +127,7 @@ class ProductInputPriceFacade
 
             $productManualInputPrices = $this->productManualInputPriceRepository->getByProduct($product);
             $inputPriceType = $this->pricingSetting->getInputPriceType();
+
             foreach ($productManualInputPrices as $productManualInputPrice) {
                 $domainId = $productManualInputPrice->getPricingGroup()->getDomainId();
                 $newVat = $product->getVatForDomain($domainId)->getReplaceWith();

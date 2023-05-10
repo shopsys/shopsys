@@ -90,6 +90,7 @@ class ManualBestsellingProductRepository
 
         $rows = $queryBuilder->getQuery()->execute();
         $countsIndexedByCategoryId = [];
+
         foreach ($rows as $row) {
             $countsIndexedByCategoryId[$row['id']] = $row['cnt'];
         }

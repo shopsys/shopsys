@@ -97,6 +97,7 @@ class GetArticleTest extends GraphQlTestCase
     {
         $data = [];
         $articleIds = [1, 2, 3];
+
         foreach ($articleIds as $articleId) {
             $article = $this->articleFacade->getById($articleId);
             $data[] = [
@@ -107,6 +108,7 @@ class GetArticleTest extends GraphQlTestCase
                 ],
             ];
         }
+
         return $data;
     }
 
@@ -116,6 +118,7 @@ class GetArticleTest extends GraphQlTestCase
     private function getSpecialArticleDataProvider(): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
+
         return [
             [
                 'termsAndConditionsArticle',

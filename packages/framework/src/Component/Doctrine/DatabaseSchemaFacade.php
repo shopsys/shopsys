@@ -49,12 +49,15 @@ class DatabaseSchemaFacade
     {
         $connection = $this->em->getConnection();
         $handle = fopen($this->defaultSchemaFilepath, 'r');
+
         if (!$handle) {
             $message = 'Failed to open file ' . $this->defaultSchemaFilepath . ' with default database schema.';
+
             throw new DefaultSchemaImportException($message);
         }
 
         $line = fgets($handle);
+
         while ($line !== false) {
             $connection->executeQuery($line);
             $line = fgets($handle);

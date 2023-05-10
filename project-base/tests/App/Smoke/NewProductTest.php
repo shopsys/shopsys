@@ -21,6 +21,7 @@ class NewProductTest extends ApplicationTestCase
     public function createOrEditProductProvider(): iterable
     {
         yield ['admin/product/new/'];
+
         yield ['admin/product/edit/1'];
     }
 
@@ -78,6 +79,7 @@ class NewProductTest extends ApplicationTestCase
 
         /** @var \Symfony\Component\DomCrawler\Field\InputFormField[] $nameForms */
         $nameForms = $form->get('product_form[name]');
+
         foreach ($nameForms as $nameForm) {
             $nameForm->setValue('testProduct');
         }
@@ -111,6 +113,7 @@ class NewProductTest extends ApplicationTestCase
         $priceInputFieldFormPath = 'product_form[pricesGroup][productCalculatedPricesGroup][manualInputPricesByPricingGroupId]';
 
         $priceInputFields = $form->get($priceInputFieldFormPath);
+
         foreach ($priceInputFields as $priceInputField) {
             $priceInputField->setValue('10000');
         }
@@ -124,6 +127,7 @@ class NewProductTest extends ApplicationTestCase
         $vatInputFieldFormPath = 'product_form[pricesGroup][productCalculatedPricesGroup][vatsIndexedByDomainId]';
 
         $vatInputFields = $form->get($vatInputFieldFormPath);
+
         foreach ($vatInputFields as $domainId => $vatInputField) {
             /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
             $vat = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);

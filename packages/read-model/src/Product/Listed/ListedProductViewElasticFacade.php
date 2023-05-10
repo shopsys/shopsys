@@ -257,8 +257,10 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
         );
 
         $listedProductViews = [];
+
         foreach ($productsArray as $productArray) {
             $productId = $productArray['id'];
+
             try {
                 $listedProductViews[$productId] = $this->listedProductViewFactory->createFromArray(
                     $productArray,

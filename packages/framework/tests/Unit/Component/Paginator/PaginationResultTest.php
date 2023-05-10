@@ -42,7 +42,9 @@ class PaginationResultTest extends TestCase
     public function getTestIsFirstPageData()
     {
         yield [1, 10, 20, true];
+
         yield [2, 10, 20, false];
+
         yield [1, null, 20, true];
     }
 
@@ -63,10 +65,15 @@ class PaginationResultTest extends TestCase
     public function getTestIsLastPageData()
     {
         yield [1, 10, 20, false];
+
         yield [2, 10, 20, true];
+
         yield [1, 10, 21, false];
+
         yield [2, 10, 21, false];
+
         yield [3, 10, 21, true];
+
         yield [1, null, 20, true];
     }
 
@@ -87,8 +94,11 @@ class PaginationResultTest extends TestCase
     public function getTestGetPreviousPageData()
     {
         yield [1, 10, 20, null];
+
         yield [2, 10, 20, 1];
+
         yield [3, 10, 21, 2];
+
         yield [1, null, 20, null];
     }
 
@@ -109,9 +119,13 @@ class PaginationResultTest extends TestCase
     public function getTestGetNextPageData()
     {
         yield [1, 10, 20, 2];
+
         yield [2, 10, 20, null];
+
         yield [2, 10, 21, 3];
+
         yield [3, 10, 21, null];
+
         yield [1, null, 20, null];
     }
 

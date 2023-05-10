@@ -147,6 +147,7 @@ class TransportFacade
         $transport = $this->getById($id);
         $transport->markAsDeleted();
         $paymentsByTransport = $this->paymentRepository->getAllByTransport($transport);
+
         foreach ($paymentsByTransport as $payment) {
             $payment->removeTransport($transport);
         }
@@ -216,6 +217,7 @@ class TransportFacade
     {
         $transportPricesWithVatByTransportId = [];
         $transports = $this->getAllIncludingDeleted();
+
         foreach ($transports as $transport) {
             $transportPrice = $this->transportPriceCalculation->calculateIndependentPrice(
                 $transport,
@@ -236,6 +238,7 @@ class TransportFacade
     {
         $transportVatPercentsByTransportId = [];
         $transports = $this->getAllIncludingDeleted();
+
         foreach ($transports as $transport) {
             $transportVatPercentsByTransportId[$transport->getId()] = $transport->getTransportDomain(
                 $domainId
@@ -252,6 +255,7 @@ class TransportFacade
     public function getIndependentBasePricesIndexedByDomainId(Transport $transport): array
     {
         $prices = [];
+
         foreach ($transport->getPrices() as $transportInputPrice) {
             $domainId = $transportInputPrice->getDomainId();
             $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
@@ -275,8 +279,10 @@ class TransportFacade
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+
             if ($transport === null) {
                 $prices[$domainId] = Price::zero();
+
                 continue;
             }
 

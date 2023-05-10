@@ -53,6 +53,7 @@ class ChangeEnvironmentCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $targetEnvironment = $input->getArgument(self::ARG_ENVIRONMENT);
+
         if ($targetEnvironment === null && $input->isInteractive()) {
             $targetEnvironment = $io->choice('What environment do you want to set?', EnvironmentType::ALL);
         }

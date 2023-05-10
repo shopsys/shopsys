@@ -24,6 +24,7 @@ class FormTimeProvider
         $startTime = new DateTime();
         $key = $this->getSessionKey($name);
         $this->requestStack->getSession()->set($key, $startTime);
+
         return $startTime;
     }
 
@@ -56,6 +57,7 @@ class FormTimeProvider
     public function hasFormTime($name)
     {
         $key = $this->getSessionKey($name);
+
         return $this->requestStack->getSession()->has($key);
     }
 
@@ -66,9 +68,11 @@ class FormTimeProvider
     public function findFormTime($name)
     {
         $key = $this->getSessionKey($name);
+
         if ($this->hasFormTime($name)) {
             return $this->requestStack->getSession()->get($key);
         }
+
         return null;
     }
 

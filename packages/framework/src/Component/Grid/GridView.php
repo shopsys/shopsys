@@ -108,8 +108,10 @@ class GridView
 
                 if ($echo) {
                     echo $template->renderBlock($name, $templateParameters);
+
                     return null;
                 }
+
                 return $template->renderBlock($name, $templateParameters);
             }
         }
@@ -152,9 +154,11 @@ class GridView
                 'grid_value_cell_edit',
             ];
         }
+
         foreach ($possibleBlocks as $blockName) {
             if ($this->blockExists($blockName)) {
                 $this->renderBlock($blockName, $blockParameters);
+
                 break;
             }
         }
@@ -170,9 +174,11 @@ class GridView
             'grid_action_cell_type_' . $actionColumn->getType(),
             'grid_action_cell',
         ];
+
         foreach ($posibleBlocks as $blockName) {
             if ($this->blockExists($blockName)) {
                 $this->renderBlock($blockName, ['actionColumn' => $actionColumn, 'row' => $row]);
+
                 break;
             }
         }
@@ -187,9 +193,11 @@ class GridView
             'grid_title_cell_id_' . $column->getId(),
             'grid_title_cell',
         ];
+
         foreach ($posibleBlocks as $blockName) {
             if ($this->blockExists($blockName)) {
                 $this->renderBlock($blockName, ['column' => $column]);
+
                 break;
             }
         }
@@ -252,6 +260,7 @@ class GridView
     {
         if ($this->templates === null || count($this->templates) === 0) {
             $this->templates = [];
+
             if (is_array($this->theme)) {
                 foreach ($this->theme as $theme) {
                     $this->templates[] = $this->getTemplateFromString($theme);

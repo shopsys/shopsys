@@ -56,6 +56,7 @@ class UploadedFileConfig
                 return true;
             }
         }
+
         return false;
     }
 

@@ -51,8 +51,11 @@ final class OrderProductFacadeTest extends TestCase
     public function subtractOrderProductsFromStockUsingStockProvider(): iterable
     {
         yield [15, 10, 5];
+
         yield [10, 10, 0];
+
         yield [5, 0, 5];
+
         yield [0, 5, -5];
     }
 
@@ -78,8 +81,11 @@ final class OrderProductFacadeTest extends TestCase
     public function addOrderProductsFromStockUsingStockProvider(): iterable
     {
         yield [15, 10, 25];
+
         yield [10, 10, 20];
+
         yield [5, 0, 5];
+
         yield [0, 5, 5];
     }
 

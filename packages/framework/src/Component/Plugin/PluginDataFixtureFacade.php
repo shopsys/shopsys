@@ -20,6 +20,7 @@ class PluginDataFixtureFacade
     public function loadAll()
     {
         $pluginDataFixtures = $this->pluginDataFixtureRegistry->getDataFixtures();
+
         foreach ($pluginDataFixtures as $pluginDataFixture) {
             $pluginDataFixture->load();
         }

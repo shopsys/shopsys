@@ -43,6 +43,7 @@ class BrandCachedFacade
                 $brandId
             );
         }
+
         return $this->brandUrlsIndexedByBrandIdAndDomainId[$brandId][$domainId];
     }
 }

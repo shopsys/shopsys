@@ -83,9 +83,11 @@ class DomainController extends AdminBaseController
         $this->adminDomainTabsFacade->setSelectedDomainId($id);
 
         $referer = $request->server->get('HTTP_REFERER');
+
         if ($referer === null) {
             return $this->redirectToRoute('admin_default_dashboard');
         }
+
         return $this->redirect($referer);
     }
 
@@ -129,6 +131,7 @@ class DomainController extends AdminBaseController
                 /** @var \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData|null $iconData */
                 $iconData = $form->getData()[DomainFormType::FIELD_ICON];
                 $files = $iconData !== null ? $iconData->uploadedFiles : [];
+
                 if (count($files) !== 0) {
                     $iconName = reset($files);
 
@@ -164,6 +167,7 @@ class DomainController extends AdminBaseController
     protected function loadData()
     {
         $data = [];
+
         foreach ($this->domain->getAll() as $domainConfig) {
             $data[] = [
                 'id' => $domainConfig->getId(),

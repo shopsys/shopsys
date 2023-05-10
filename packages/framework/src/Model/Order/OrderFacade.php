@@ -355,12 +355,14 @@ class OrderFacade
         );
 
         $this->em->flush();
+
         if ($orderEditResult->isStatusChanged()) {
             $this->orderMailFacade->sendEmail($order);
 
             if ($originalOrderStatus->getType() === OrderStatus::TYPE_CANCELED) {
                 $this->orderProductFacade->subtractOrderProductsFromStock($order->getProductItems());
             }
+
             if ($orderData->status->getType() === OrderStatus::TYPE_CANCELED) {
                 $this->orderProductFacade->addOrderProductsToStock($order->getProductItems());
             }
@@ -405,6 +407,7 @@ class OrderFacade
     public function deleteById($orderId)
     {
         $order = $this->orderRepository->getById($orderId);
+
         if ($order->getStatus()->getType() !== OrderStatus::TYPE_CANCELED) {
             $this->orderProductFacade->addOrderProductsToStock($order->getProductItems());
         }
@@ -656,6 +659,7 @@ class OrderFacade
     protected function refreshOrderItemsWithoutTransportAndPayment(Order $order, OrderData $orderData): void
     {
         $orderItemsWithoutTransportAndPaymentData = $orderData->itemsWithoutTransportAndPayment;
+
         foreach ($order->getItemsWithoutTransportAndPayment() as $orderItem) {
             if (array_key_exists($orderItem->getId(), $orderItemsWithoutTransportAndPaymentData)) {
                 $orderItemData = $orderItemsWithoutTransportAndPaymentData[$orderItem->getId()];
@@ -681,6 +685,7 @@ class OrderFacade
                 $newOrderItemData->unitName,
                 $newOrderItemData->catnum
             );
+
             if ($newOrderItemData->usePriceCalculation) {
                 continue;
             }
@@ -739,11 +744,13 @@ class OrderFacade
         $orderLocale = $this->domain->getDomainConfigById($order->getDomainId())->getLocale();
 
         $orderTransportData = $orderData->orderTransport;
+
         if ($orderTransportData->transport !== $order->getTransport()) {
             $orderTransportData->name = $orderTransportData->transport->getName($orderLocale);
         }
 
         $orderPaymentData = $orderData->orderPayment;
+
         if ($orderPaymentData->payment !== $order->getPayment()) {
             $orderPaymentData->name = $orderPaymentData->payment->getName($orderLocale);
         }

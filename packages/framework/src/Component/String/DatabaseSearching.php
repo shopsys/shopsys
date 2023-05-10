@@ -17,6 +17,7 @@ class DatabaseSearching
             ['\%', '\_', '%', '_'],
             $string
         );
+
         return $string;
     }
 

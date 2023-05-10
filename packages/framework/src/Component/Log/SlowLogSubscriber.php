@@ -47,6 +47,7 @@ class SlowLogSubscriber implements EventSubscriberInterface
     public function addNotice(TerminateEvent $event): void
     {
         $requestTime = $this->getRequestTime();
+
         if ($requestTime <= static::REQUEST_TIME_LIMIT_SECONDS) {
             return;
         }

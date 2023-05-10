@@ -48,6 +48,7 @@ class ProductAvailabilityRecalculator
     public function runAllScheduledRecalculations()
     {
         $this->productRowsIterator = null;
+
         while ($this->runBatchOfScheduledDelayedRecalculations()) {
         }
     }
@@ -63,6 +64,7 @@ class ProductAvailabilityRecalculator
 
         for ($count = 0; $count < static::BATCH_SIZE; $count++) {
             $row = $this->productRowsIterator->next();
+
             if ($row === false) {
                 $this->em->clear();
 
@@ -79,6 +81,7 @@ class ProductAvailabilityRecalculator
     public function runImmediateRecalculations()
     {
         $products = $this->productAvailabilityRecalculationScheduler->getProductsForImmediateRecalculation();
+
         foreach ($products as $product) {
             $this->recalculateProductAvailability($product);
         }
@@ -92,6 +95,7 @@ class ProductAvailabilityRecalculator
     {
         $calculatedAvailability = $this->productAvailabilityCalculation->calculateAvailability($product);
         $product->setCalculatedAvailability($calculatedAvailability);
+
         if ($product->isVariant()) {
             $this->recalculateProductAvailability($product->getMainVariant());
         }

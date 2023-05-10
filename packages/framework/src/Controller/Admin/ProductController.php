@@ -208,6 +208,7 @@ class ProductController extends AdminBaseController
             $productData = $this->productDataFactory->create();
         } catch (NotFoundHttpException $e) {
             $this->addErrorFlash(t('Please fill all default values before creating a product'));
+
             return $this->redirectToRoute('admin_product_list');
         }
 
@@ -261,6 +262,7 @@ class ProductController extends AdminBaseController
         $massActionForm->handleRequest($request);
 
         $isAdvancedSearchFormSubmitted = $this->advancedSearchProductFacade->isAdvancedSearchFormSubmitted($request);
+
         if ($isAdvancedSearchFormSubmitted) {
             $queryBuilder = $this->advancedSearchProductFacade->getQueryBuilderByAdvancedSearchData(
                 $advancedSearchData
@@ -355,6 +357,7 @@ class ProductController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
             $mainVariant = $formData[VariantFormType::MAIN_VARIANT];
+
             try {
                 $newMainVariant = $this->productVariantFacade->createVariant(
                     $mainVariant,
@@ -394,6 +397,7 @@ class ProductController extends AdminBaseController
             function ($row) {
                 $product = $this->productFacade->getById($row['p']['id']);
                 $row['product'] = $product;
+
                 return $row;
             }
         );

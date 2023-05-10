@@ -46,8 +46,10 @@ class AdministratorRepository
     public function getById($administratorId)
     {
         $administrator = $this->getAdministratorRepository()->find($administratorId);
+
         if ($administrator === null) {
             $message = 'Administrator with ID ' . $administratorId . ' not found.';
+
             throw new AdministratorNotFoundException($message);
         }
 
@@ -66,8 +68,10 @@ class AdministratorRepository
             ->setParameter('multidomainLoginToken', $multidomainLoginToken)
             ->andWhere('a.multidomainLoginTokenExpiration > CURRENT_TIMESTAMP()');
         $administrator = $queryBuilder->getQuery()->getOneOrNullResult();
+
         if ($administrator === null) {
             $message = 'Administrator with valid multidomain login token ' . $multidomainLoginToken . ' not found.';
+
             throw new InvalidTokenException($message);
         }
 
@@ -90,6 +94,7 @@ class AdministratorRepository
     public function getByUserName($administratorUserName)
     {
         $administrator = $this->findByUserName($administratorUserName);
+
         if ($administrator === null) {
             throw new AdministratorNotFoundException(
                 'Administrator with username "' . $administratorUserName . '" not found.'

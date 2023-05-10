@@ -69,6 +69,7 @@ class LoginController extends AdminBaseController
     public function loginAction(Request $request)
     {
         $currentDomainId = $this->domain->getId();
+
         if ($currentDomainId !== Domain::MAIN_ADMIN_DOMAIN_ID && !$this->isGranted(Roles::ROLE_ADMIN)) {
             $mainAdminDomainRouter = $this->domainRouterFactory->getRouter(Domain::MAIN_ADMIN_DOMAIN_ID);
             $redirectTo = $mainAdminDomainRouter->generate(
@@ -82,6 +83,7 @@ class LoginController extends AdminBaseController
 
             return $this->redirect($redirectTo);
         }
+
         if ($this->isGranted(Roles::ROLE_ADMIN)) {
             return $this->redirectToRoute('admin_default_dashboard');
         }
@@ -147,6 +149,7 @@ class LoginController extends AdminBaseController
     {
         $multidomainLoginToken = $request->get(static::MULTIDOMAIN_LOGIN_TOKEN_PARAMETER_NAME);
         $originalReferer = $request->get(self::ORIGINAL_REFERER_PARAMETER_NAME);
+
         try {
             $this->administratorLoginFacade->loginByMultidomainToken($request, $multidomainLoginToken);
         } catch (InvalidTokenException $ex) {

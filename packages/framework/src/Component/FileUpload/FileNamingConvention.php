@@ -25,6 +25,7 @@ class FileNamingConvention
             return $originalFilename;
         }
         $message = 'Naming convention ' . $namingConventionType . ' cannot by resolved to filename';
+
         throw new UnresolvedNamingConventionException($message);
     }
 }

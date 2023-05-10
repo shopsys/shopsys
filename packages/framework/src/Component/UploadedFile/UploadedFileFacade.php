@@ -232,11 +232,13 @@ class UploadedFileFacade
     {
         $entityMetadata = $this->em->getClassMetadata(get_class($entity));
         $identifier = $entityMetadata->getIdentifierValues($entity);
+
         if (count($identifier) === 1) {
             return array_pop($identifier);
         }
 
         $message = 'Entity "' . get_class($entity) . '" has not set primary key or primary key is compound."';
+
         throw new EntityIdentifierException($message);
     }
 
@@ -274,6 +276,7 @@ class UploadedFileFacade
     protected function updateFilesOrder(array $uploadedFiles): void
     {
         $i = 0;
+
         foreach ($uploadedFiles as $uploadedFile) {
             $uploadedFile->setPosition($i++);
         }

@@ -40,6 +40,7 @@ class DeliveryAddressOfCurrentCustomerValidator extends ConstraintValidator
         }
 
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+
         if (
             $customerUser === null
             || !in_array($deliveryAddress, $customerUser->getCustomer()->getDeliveryAddresses(), true)

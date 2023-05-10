@@ -66,6 +66,7 @@ class CheckTimezonesCommand extends Command
                 $phpTimezone,
                 $postgreSqlTimezone
             );
+
             throw new DifferentTimezonesException($message);
         }
 

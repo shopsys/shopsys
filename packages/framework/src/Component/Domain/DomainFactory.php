@@ -41,6 +41,7 @@ class DomainFactory
         $domain = new Domain($domainConfigs, $this->setting);
 
         $domainId = getenv('DOMAIN');
+
         if ($domainId !== false) {
             $domain->switchDomainById((int)$domainId);
         }

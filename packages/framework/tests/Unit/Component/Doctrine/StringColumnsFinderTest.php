@@ -29,6 +29,7 @@ class StringColumnsFinderTest extends TestCase
                 if ($fieldName === 'textField') {
                     return 'text';
                 }
+
                 return 'other';
             });
         $classMetadataInfoMock

@@ -46,6 +46,7 @@ class SeoSettingFormType extends AbstractType
         $titlesOnOtherDomains = [];
         $titleAddOnsOnOtherDomains = [];
         $descriptionsOnOtherDomains = [];
+
         foreach ($this->domain->getAllIds() as $domainId) {
             if ($domainId !== $options['domain_id']) {
                 $titlesOnOtherDomains[] = $this->seoSettingFacade->getTitleMainPage($domainId);

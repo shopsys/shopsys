@@ -127,12 +127,15 @@ class MailTemplateVariables
             case self::CONTEXT_BOTH:
                 $this->bodyVariables[] = $variable;
                 $this->subjectVariables[] = $variable;
+
                 break;
             case self::CONTEXT_BODY:
                 $this->bodyVariables[] = $variable;
+
                 break;
             case self::CONTEXT_SUBJECT:
                 $this->subjectVariables[] = $variable;
+
                 break;
             default:
                 throw new InvalidMailTemplateVariablesConfigurationException(
@@ -160,6 +163,7 @@ class MailTemplateVariables
 
                 $this->requiredBodyVariables[] = $variable;
                 $this->requiredSubjectVariables[] = $variable;
+
                 break;
             case self::REQUIRED_BODY:
                 if ($context === self::CONTEXT_SUBJECT) {
@@ -169,6 +173,7 @@ class MailTemplateVariables
                 }
 
                 $this->requiredBodyVariables[] = $variable;
+
                 break;
             case self::REQUIRED_SUBJECT:
                 if ($context === self::CONTEXT_BODY) {
@@ -177,6 +182,7 @@ class MailTemplateVariables
                     );
                 }
                 $this->requiredSubjectVariables[] = $variable;
+
                 break;
             default:
                 throw new InvalidMailTemplateVariablesConfigurationException(

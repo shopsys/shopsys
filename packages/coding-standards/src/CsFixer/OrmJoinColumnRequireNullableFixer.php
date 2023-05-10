@@ -67,6 +67,7 @@ SAMPLE
         /** @var \PhpCsFixer\Tokenizer\Token $token */
         foreach ($tokens->findGivenKind(T_DOC_COMMENT) as $index => $token) {
             $doc = new DocBlock($token->getContent());
+
             foreach ($doc->getAnnotations() as $annotation) {
                 if ($this->isRelationAnnotation($annotation)) {
                     $this->fixRelationAnnotation($doc, $annotation);
@@ -116,6 +117,7 @@ SAMPLE
     private function fixRelationAnnotation(DocBlock $doc, Annotation $relationAnnotation): void
     {
         $joinColumnAnnotation = $this->findJoinColumnAnnotation($doc);
+
         if ($joinColumnAnnotation === null) {
             $this->addJoinColumnAnnotation($doc, $relationAnnotation);
         } elseif (preg_match('~(,|\\(|\\*\\s)\\s*nullable\\s*=~', $joinColumnAnnotation->getContent()) !== 1) {
@@ -157,6 +159,7 @@ SAMPLE
     private function extendJoinColumnAnnotation(DocBlock $doc, Annotation $joinColumnAnnotation): void
     {
         $firstLine = $doc->getLine($joinColumnAnnotation->getStart());
+
         if (preg_match('~\\)\\s*$~', $firstLine->getContent()) === 1) {
             $firstLine->setContent(preg_replace(
                 '~(@ORM\\\JoinColumn\\()~',

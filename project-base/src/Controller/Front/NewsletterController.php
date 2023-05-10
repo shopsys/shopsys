@@ -93,6 +93,7 @@ class NewsletterController extends FrontBaseController
     private function parseErrors(FormErrorIterator $formErrors): array
     {
         $errors = [];
+
         foreach ($formErrors as $error) {
             $errors[] = $error->getMessage();
         }

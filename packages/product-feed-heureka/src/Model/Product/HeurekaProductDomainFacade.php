@@ -55,6 +55,7 @@ class HeurekaProductDomainFacade
     public function getHeurekaProductDomainsByProductsAndDomainIndexedByProductId(array $products, DomainConfig $domain)
     {
         $productIds = [];
+
         foreach ($products as $product) {
             $productIds[] = $product->getId();
         }
@@ -126,6 +127,7 @@ class HeurekaProductDomainFacade
         array $newHeurekaProductDomainsData
     ) {
         $domainsIdsWithNewHeurekaProductDomains = [];
+
         foreach ($newHeurekaProductDomainsData as $newHeurekaProductDomainData) {
             $domainsIdsWithNewHeurekaProductDomains[$newHeurekaProductDomainData->domainId] = $newHeurekaProductDomainData->domainId;
         }

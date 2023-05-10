@@ -38,10 +38,12 @@ abstract class AbstractGridInlineEdit implements GridInlineEditInterface
             foreach ($form->getErrors(true) as $error) {
                 $formErrors[] = $error->getMessage();
             }
+
             throw new InvalidFormDataException($formErrors);
         }
 
         $formData = $form->getData();
+
         if ($rowId !== null) {
             $this->editEntity($rowId, $formData);
         } else {

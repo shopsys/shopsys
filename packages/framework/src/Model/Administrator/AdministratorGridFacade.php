@@ -51,11 +51,13 @@ class AdministratorGridFacade
         if (!$grid->isEnabledPaging()) {
             throw new RememberGridLimitException($grid->getId());
         }
+
         if ($grid->getLimit() <= 0) {
             throw new InvalidGridLimitValueException($grid->getLimit());
         }
 
         $gridLimit = $administrator->getGridLimit($grid->getId());
+
         if ($gridLimit === null) {
             $gridLimit = $this->administratorGridLimitFactory->create(
                 $administrator,

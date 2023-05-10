@@ -26,9 +26,11 @@ class FileProfilerStorage extends BaseFileProfilerStorage
         $file = $this->getFilename($profile->getToken());
 
         $profileIndexed = is_file($file);
+
         if (!$profileIndexed) {
             // Create directory
             $dir = dirname($file);
+
             if (!is_dir($dir) && @mkdir($dir, 0777, true) === false && !is_dir($dir)) {
                 throw new RuntimeException(sprintf('Unable to create the storage directory (%s).', $dir));
             }
@@ -69,13 +71,16 @@ class FileProfilerStorage extends BaseFileProfilerStorage
     {
         if (str_ends_with($profile->getUrl(), '/graphql/') && $profile->hasCollector('request')) {
             $collector = $profile->getCollector('request');
+
             if ($collector instanceof RequestDataCollector) {
                 try {
                     $content = json_decode($collector->getContent(), true);
+
                     if (is_array($content) && array_key_exists('query', $content) && strpos($content['query'], '{')) {
                         $queryString = $content['query'];
                         $re = '/(?<type>query|mutation)[^{]*{\s*(?<name>[a-zA-Z0-9]+)/m';
                         $matches = [];
+
                         if (preg_match($re, $queryString, $matches) !== false) {
                             $profile->setUrl($profile->getUrl() . ' - ' . $matches['type'] . ' ' . $matches['name']);
                         }
@@ -117,6 +122,7 @@ class FileProfilerStorage extends BaseFileProfilerStorage
         ];
 
         $data = serialize($data);
+
         if (function_exists('gzencode')) {
             $data = gzencode($data, 3);
         }

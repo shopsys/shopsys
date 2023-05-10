@@ -67,9 +67,11 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
         $pluginData = [
             'show' => [],
         ];
+
         foreach ($googleProductDomains as $googleProductDomain) {
             $pluginData['show'][$googleProductDomain->getDomainId()] = $googleProductDomain->getShow();
         }
+
         return $pluginData;
     }
 
@@ -80,6 +82,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
     public function saveData($productId, $data)
     {
         $googleProductDomainsDataIndexedByDomainId = [];
+
         foreach ($data as $productAttributeName => $productAttributeValuesByDomainIds) {
             foreach ($productAttributeValuesByDomainIds as $domainId => $productAttributeValue) {
                 if (!array_key_exists($domainId, $googleProductDomainsDataIndexedByDomainId)) {
@@ -116,6 +119,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
         switch ($propertyName) {
             case 'show':
                 $googleProductDomainData->show = $propertyValue;
+
                 break;
         }
     }

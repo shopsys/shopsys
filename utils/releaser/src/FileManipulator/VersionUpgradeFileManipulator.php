@@ -49,6 +49,7 @@ final class VersionUpgradeFileManipulator
     private function updateHeadline(Version $version, string $content, string $initialBranchName): string
     {
         $versionString = $version->getOriginalString();
+
         return Strings::replace(
             $content,
             self::HEADLINE_WITH_LINK_PATTERN,
@@ -76,6 +77,7 @@ final class VersionUpgradeFileManipulator
     private function updateFileContentInformation(Version $version, string $content): string
     {
         $versionString = $version->getOriginalString();
+
         return Strings::replace(
             $content,
             self::FILE_CONTENT_INFORMATION_PATTERN,

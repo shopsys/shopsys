@@ -57,12 +57,14 @@ class TokenFacadeTest extends TestCase
         $privateKey = $jwtConfiguration->signingKey();
 
         $builder = clone $builderTemplate;
+
         yield [
             $builder->getToken($signer, $privateKey),
             null,
         ];
 
         $builder = clone $builderTemplate;
+
         yield [
             $builder
                 ->issuedBy('http://another-server:8080')
@@ -71,12 +73,14 @@ class TokenFacadeTest extends TestCase
         ];
 
         $builder = clone $builderTemplate;
+
         yield [
             $builder->getToken($signer, InMemory::file(__DIR__ . '/testKeys/invalid-private.key')),
             NotVerifiedTokenUserMessageException::class,
         ];
 
         $builder = clone $builderTemplate;
+
         yield [
             $builder
                 ->expiresAt(new DateTimeImmutable('- 5 minutes'))

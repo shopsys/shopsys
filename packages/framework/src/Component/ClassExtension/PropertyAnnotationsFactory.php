@@ -42,8 +42,10 @@ class PropertyAnnotationsFactory
     ): string {
         $projectClassDocBlock = $projectClassBetterReflection->getDocComment();
         $propertyAnnotationsLines = '';
+
         foreach ($frameworkClassBetterReflection->getProperties() as $property) {
             $propertyAnnotationLine = $this->getPropertyAnnotationLine($property, $projectClassBetterReflection);
+
             if ($propertyAnnotationLine !== '' && strpos($projectClassDocBlock, $propertyAnnotationLine) === false) {
                 $propertyAnnotationsLines .= $propertyAnnotationLine;
             }
@@ -95,6 +97,7 @@ class PropertyAnnotationsFactory
     protected function isPropertyDeclaredInClass(string $propertyName, ReflectionClass $reflectionClass): bool
     {
         $reflectionProperty = $reflectionClass->getProperty($propertyName);
+
         if ($reflectionProperty === null) {
             return false;
         }

@@ -51,6 +51,7 @@ class ProductSellingDeniedRecalculator
     protected function getProductsForCalculations(Product $product)
     {
         $products = [$product];
+
         if ($product->isMainVariant()) {
             $products = array_merge($products, $product->getVariants());
         } elseif ($product->isVariant()) {

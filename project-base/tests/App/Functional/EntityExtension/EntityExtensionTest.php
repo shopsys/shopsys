@@ -274,6 +274,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         $query = $qb->getQuery();
         $product = $query->getSingleResult();
         $this->assertInstanceOf(ExtendedProduct::class, $product);
+
         return $product;
     }
 
@@ -413,6 +414,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         $query = $qb->getQuery();
         $category = $query->getSingleResult();
         $this->assertInstanceOf(ExtendedCategory::class, $category);
+
         return $category;
     }
 
@@ -442,6 +444,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         $query = $qb->getQuery();
         $result = $query->getSingleResult();
         $this->assertInstanceOf(ExtendedOrderItem::class, $result);
+
         return $result;
     }
 

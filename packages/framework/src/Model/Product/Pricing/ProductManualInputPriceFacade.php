@@ -50,6 +50,7 @@ class ProductManualInputPriceFacade
             $product,
             $pricingGroup
         );
+
         if ($manualInputPrice === null) {
             $manualInputPrice = $this->productManualInputPriceFactory->create($product, $pricingGroup, $inputPrice);
         } else {

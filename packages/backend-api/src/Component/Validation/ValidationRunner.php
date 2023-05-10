@@ -31,6 +31,7 @@ class ValidationRunner
 
         if ($violations->count()) {
             $errors = [];
+
             foreach ($violations->getIterator() as $violation) {
                 $propertyPath = $this->convertBracketToDotNotation($violation->getPropertyPath());
                 $errors[$propertyPath] = $violation->getMessage();
@@ -48,6 +49,7 @@ class ValidationRunner
     {
         $search = ['][', ']', '['];
         $replace = ['.', '', ''];
+
         return str_replace($search, $replace, $propertyPath);
     }
 }

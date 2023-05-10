@@ -36,14 +36,23 @@ final class IntervalEvaluatorTest extends TestCase
     public function provideData(): Iterator
     {
         yield ['v1.1.1', true];
+
         yield ['v1.1.1|v6.2.1', true];
+
         yield ['v1.1.1 |    v6.2.1', true];
+
         yield ['>1.1,<1.2', true];
+
         yield ['>1.1 ,   <1.2', true];
+
         yield ['>1.1|<1.2', false];
+
         yield ['>1.1', false];
+
         yield ['>=1.1  || <1.4', false];
+
         yield ['<3.0||>=3.2.0,<3.2.2', false];
+
         yield ['<3.0 || >= 3.2.0 , < 3.2.2', false];
     }
 }

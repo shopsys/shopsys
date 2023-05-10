@@ -141,6 +141,7 @@ class EntityExtensionSubscriber implements EventSubscriber
 
         foreach ($this->parentEntitiesByClass[$currentEntityClass] as $parentClass) {
             $parentMetadata = $this->getClassMetadataForEntity($parentClass);
+
             foreach ($parentMetadata->getAssociationMappings() as $associationName => $parentEntityAssociationMapping) {
                 if (isset($parentEntityAssociationMapping['sourceEntity']) && $parentEntityAssociationMapping['sourceEntity'] === $parentClass) {
                     $parentEntityAssociationMapping['sourceEntity'] = $currentEntityClass;
@@ -153,6 +154,7 @@ class EntityExtensionSubscriber implements EventSubscriber
 
                 $isDifferenceBetweenChildAssociationMappingAndParentAssociationMapping = !isset($classMetadata->associationMappings[$associationName]) || $classMetadata->associationMappings[$associationName] !== $parentEntityAssociationMapping;
                 $isOverriddenPropertyInChildClass = true;
+
                 if ($isDifferenceBetweenChildAssociationMappingAndParentAssociationMapping) {
                     $overridingClassReflection = new ReflectionClass($currentEntityClass);
                     $overridingClassProperties = $overridingClassReflection->getProperties();
@@ -182,6 +184,7 @@ class EntityExtensionSubscriber implements EventSubscriber
                 return true;
             }
         }
+
         return false;
     }
 
@@ -314,6 +317,7 @@ class EntityExtensionSubscriber implements EventSubscriber
         $reflectionClass = new ReflectionClass($parentClass);
         $namespace = $reflectionClass->getNamespaceName();
         $absoluteTargetEntity = $namespace . '\\' . $classNameCandidate;
+
         if (class_exists($absoluteTargetEntity)) {
             return $absoluteTargetEntity;
         }

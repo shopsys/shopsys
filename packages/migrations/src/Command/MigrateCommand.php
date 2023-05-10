@@ -75,6 +75,7 @@ class MigrateCommand extends Command
             });
         } catch (Exception $ex) {
             $message = 'Database migration process did not run properly. Transaction was reverted.';
+
             throw new MigrateCommandException($message, $ex);
         }
 
@@ -102,6 +103,7 @@ class MigrateCommand extends Command
 
         if ($exitCode !== 0) {
             $message = 'Doctrine migration command did not exit properly (exit code is ' . $exitCode . ').';
+
             throw new MigrateCommandException($message);
         }
     }
@@ -122,6 +124,7 @@ class MigrateCommand extends Command
 
         if ($exitCode !== 0) {
             $message = 'Database schema check did not exit properly (exit code is ' . $exitCode . ').';
+
             throw new CheckSchemaCommandException($message);
         }
     }

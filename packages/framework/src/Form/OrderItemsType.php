@@ -48,11 +48,13 @@ class OrderItemsType extends AbstractType
         $order = $options['order'];
 
         $payments = $this->paymentFacade->getVisibleByDomainId($order->getDomainId());
+
         if (!in_array($order->getPayment(), $payments, true)) {
             $payments[] = $order->getPayment();
         }
 
         $transports = $this->transportFacade->getVisibleByDomainId($order->getDomainId(), $payments);
+
         if (!in_array($order->getTransport(), $transports, true)) {
             $transports[] = $order->getTransport();
         }

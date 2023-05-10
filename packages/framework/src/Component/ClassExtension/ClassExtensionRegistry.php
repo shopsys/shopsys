@@ -70,6 +70,7 @@ class ClassExtensionRegistry
         foreach ($finder as $file) {
             $frameworkClassFqcn = $this->getFqcn($file->getPathname());
             $projectClassFqcn = str_replace('Shopsys\FrameworkBundle', 'App', $frameworkClassFqcn);
+
             if (class_exists($projectClassFqcn)) {
                 $otherClassesMap[$frameworkClassFqcn] = $projectClassFqcn;
             }
@@ -86,6 +87,7 @@ class ClassExtensionRegistry
     {
         $astLocator = (new BetterReflection())->astLocator();
         $reflector = new DefaultReflector(new SingleFileSourceLocator($pathname, $astLocator));
+
         return $reflector->reflectAllClasses()[0]->getName();
     }
 

@@ -94,6 +94,7 @@ class ImageSitemapFacade
                 continue;
             }
         }
+
         return $imageSitemapItems;
     }
 }

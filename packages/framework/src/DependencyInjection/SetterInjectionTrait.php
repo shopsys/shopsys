@@ -27,6 +27,7 @@ trait SetterInjectionTrait
                 sprintf('Method "%s()" has been already called and cannot be called multiple times.', $methodName)
             );
         }
+
         if ($this->{$propertyName} !== null) {
             return;
         }

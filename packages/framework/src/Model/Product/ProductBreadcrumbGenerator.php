@@ -73,6 +73,7 @@ class ProductBreadcrumbGenerator implements BreadcrumbGeneratorInterface
         );
 
         $breadcrumbItems = [];
+
         foreach ($categoriesInPath as $categoryInPath) {
             $breadcrumbItems[] = new BreadcrumbItem(
                 $categoryInPath->getName(),

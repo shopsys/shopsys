@@ -186,6 +186,7 @@ class ImagesQuery extends AbstractQuery
     protected function getSizeConfigsForAdvert(Advert $advert, ?string $type, ?string $size): array
     {
         $entityName = static::IMAGE_ENTITY_ADVERT;
+
         if ($size === null) {
             return array_merge(
                 $this->getSizeConfigs($type, $advert->getPositionName(), $entityName),

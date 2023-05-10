@@ -63,6 +63,7 @@ class DateTimeFormatter implements DateTimeFormatterInterface
             $dateType,
             $timeType
         );
+
         if ($dateTimePattern !== null) {
             $pattern = $dateTimePattern->getPattern();
         } else {

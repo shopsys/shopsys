@@ -73,9 +73,11 @@ class CustomerUserRepository
     public function getCustomerUserById($id)
     {
         $customerUser = $this->findById($id);
+
         if ($customerUser === null) {
             throw new CustomerUserNotFoundException((string)$id);
         }
+
         return $customerUser;
     }
 

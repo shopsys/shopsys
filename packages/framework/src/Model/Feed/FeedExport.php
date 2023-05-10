@@ -143,6 +143,7 @@ class FeedExport
         }
 
         $countInBatch = 0;
+
         foreach ($itemsInBatch as $item) {
             $this->writeToFeed($this->feedRenderer->renderItem($this->domainConfig, $item));
             $this->lastSeekId = $item->getSeekId();

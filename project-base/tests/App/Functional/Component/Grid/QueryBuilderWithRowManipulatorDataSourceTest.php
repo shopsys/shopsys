@@ -19,6 +19,7 @@ class QueryBuilderWithRowManipulatorDataSourceTest extends TransactionFunctional
 
         $dataSource = new QueryBuilderWithRowManipulatorDataSource($qb, 'p.id', function ($row) {
             $row['newField'] = 'newValue';
+
             return $row;
         });
 
@@ -41,6 +42,7 @@ class QueryBuilderWithRowManipulatorDataSourceTest extends TransactionFunctional
 
         $dataSource = new QueryBuilderWithRowManipulatorDataSource($qb, 'p.id', function ($row) {
             $row['newField'] = 'newValue' . $row['p']['id'];
+
             return $row;
         });
 
@@ -58,6 +60,7 @@ class QueryBuilderWithRowManipulatorDataSourceTest extends TransactionFunctional
 
         $dataSource = new QueryBuilderWithRowManipulatorDataSource($qb, 'p.id', function ($row) {
             $row['newField'] = 'newValue' . $row['p']['id'];
+
             return $row;
         });
 

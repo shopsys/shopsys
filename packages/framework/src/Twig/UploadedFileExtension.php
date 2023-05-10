@@ -83,15 +83,18 @@ class UploadedFileExtension extends AbstractExtension
     public function getUploadedFilePreviewHtml(UploadedFile $uploadedFile): string
     {
         $filepath = $this->uploadedFileFacade->getAbsoluteUploadedFileFilepath($uploadedFile);
+
         try {
             $fileThumbnailInfo = $this->fileThumbnailExtension->getFileThumbnailInfo($filepath);
         } catch (ImageNotFoundException $exception) {
             return $this->getUploadedFileIconHtml(static::FILE_NOT_FOUND_ICON_TYPE);
         }
         $uploadedFileIconType = $fileThumbnailInfo->getIconType();
+
         if ($uploadedFileIconType !== null) {
             return $this->getUploadedFileIconHtml($uploadedFileIconType);
         }
+
         return '<img src="' . $fileThumbnailInfo->getImageUri() . '"/>';
     }
 
@@ -109,6 +112,7 @@ class UploadedFileExtension extends AbstractExtension
             'text-no-decoration',
             'cursor-pointer',
         ];
+
         return '<i class="' . implode(' ', $classes) . '"></i>';
     }
 

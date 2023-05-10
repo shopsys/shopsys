@@ -320,6 +320,7 @@ class ProductExportRepository
     protected function extractFlags(Product $product): array
     {
         $flagIds = [];
+
         foreach ($product->getFlags() as $flag) {
             $flagIds[] = $flag->getId();
         }
@@ -336,6 +337,7 @@ class ProductExportRepository
     {
         $categoryIds = [];
         $categoriesIndexedByDomainId = $product->getCategoriesIndexedByDomainId();
+
         if (isset($categoriesIndexedByDomainId[$domainId])) {
             foreach ($categoriesIndexedByDomainId[$domainId] as $category) {
                 $categoryIds[] = $category->getId();
@@ -357,9 +359,11 @@ class ProductExportRepository
             $product,
             $locale
         );
+
         foreach ($productParameterValues as $productParameterValue) {
             $parameter = $productParameterValue->getParameter();
             $parameterValue = $productParameterValue->getValue();
+
             if ($parameter->getName($locale) === null || $parameterValue->getLocale() !== $locale) {
                 continue;
             }
@@ -387,9 +391,11 @@ class ProductExportRepository
         $prices = [];
         /** @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[] $productSellingPrices */
         $productSellingPrices = $this->productFacade->getAllProductSellingPricesByDomainId($product, $domainId);
+
         foreach ($productSellingPrices as $productSellingPrice) {
             $sellingPrice = $productSellingPrice->getSellingPrice();
             $priceFrom = false;
+
             if ($sellingPrice instanceof ProductPrice) {
                 $priceFrom = $sellingPrice->isPriceFrom();
             }
@@ -436,6 +442,7 @@ class ProductExportRepository
     protected function getBrandUrlForDomainByProduct(Product $product, int $domainId): string
     {
         $brand = $product->getBrand();
+
         if ($brand === null) {
             return '';
         }

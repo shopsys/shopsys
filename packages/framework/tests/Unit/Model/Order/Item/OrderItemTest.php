@@ -173,6 +173,7 @@ class OrderItemTest extends TestCase
 
         $paymentMock = $this->createPaymentMock();
         $orderPayment->setPayment($paymentMock);
+
         return $orderPayment;
     }
 
@@ -192,6 +193,7 @@ class OrderItemTest extends TestCase
             null
         );
         $orderTransport->setTransport($this->createTransportMock());
+
         return $orderTransport;
     }
 
@@ -212,6 +214,7 @@ class OrderItemTest extends TestCase
             null
         );
         $orderProduct->setProduct($product);
+
         return $orderProduct;
     }
 

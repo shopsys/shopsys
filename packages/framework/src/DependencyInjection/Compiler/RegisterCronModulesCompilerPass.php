@@ -20,6 +20,7 @@ class RegisterCronModulesCompilerPass implements CompilerPassInterface
         $cronInstances = $container->getParameter('cron_instances');
 
         $taggedServiceIds = $container->findTaggedServiceIds('shopsys.cron');
+
         foreach ($taggedServiceIds as $serviceId => $tags) {
             foreach ($tags as $tag) {
                 $instanceName = $tag['instanceName'] ?? CronModuleConfig::DEFAULT_INSTANCE_NAME;

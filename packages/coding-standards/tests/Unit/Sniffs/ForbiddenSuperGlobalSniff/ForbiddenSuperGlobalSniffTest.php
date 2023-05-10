@@ -23,6 +23,7 @@ final class ForbiddenSuperGlobalSniffTest extends AbstractSniffTestCase
     public function getWrongFiles(): iterable
     {
         yield [__DIR__ . '/wrong/env.php.inc'];
+
         yield [__DIR__ . '/wrong/post.php.inc'];
     }
 }

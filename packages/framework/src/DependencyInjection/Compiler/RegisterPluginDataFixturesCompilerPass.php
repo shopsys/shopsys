@@ -19,6 +19,7 @@ class RegisterPluginDataFixturesCompilerPass implements CompilerPassInterface
             PluginDataFixtureRegistry::class
         );
         $taggedServiceIds = $container->findTaggedServiceIds('shopsys.data_fixture');
+
         foreach (array_keys($taggedServiceIds) as $serviceId) {
             $this->registerDataFixture($pluginDataFixtureRegistryDefinition, $serviceId);
         }

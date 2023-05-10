@@ -53,6 +53,7 @@ class DomainRouterFactoryTest extends TestCase
                 function (DomainConfig $actualDomainConfig, RequestContext $context) use ($domainConfig, $friendlyUrlRouterMock) {
                     $this->assertSame($domainConfig, $actualDomainConfig);
                     $this->assertSame('example.com', $context->getHost());
+
                     return $friendlyUrlRouterMock;
                 }
             );

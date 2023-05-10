@@ -87,6 +87,7 @@ class CachedBestsellingProductFacade
     public function invalidateCacheByDomainIdAndCategory($domainId, Category $category)
     {
         $pricingGroups = $this->pricingGroupRepository->getPricingGroupsByDomainId($domainId);
+
         foreach ($pricingGroups as $pricingGroup) {
             $cacheId = $this->getCacheId($domainId, $category, $pricingGroup);
             $this->cache->delete($cacheId);

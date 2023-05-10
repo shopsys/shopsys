@@ -54,8 +54,10 @@ class MailTemplateRepository
     public function getByNameAndDomainId($templateName, $domainId)
     {
         $mailTemplate = $this->findByNameAndDomainId($templateName, $domainId);
+
         if ($mailTemplate === null) {
             $message = 'Email template with name "' . $templateName . '" was not found on domain with ID ' . $domainId . '.';
+
             throw new MailTemplateNotFoundException($message);
         }
 
@@ -69,6 +71,7 @@ class MailTemplateRepository
     public function getAllByDomainId($domainId)
     {
         $criteria = ['domainId' => $domainId];
+
         return $this->getMailTemplateRepository()->findBy($criteria);
     }
 

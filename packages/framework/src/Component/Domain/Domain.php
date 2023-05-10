@@ -96,8 +96,10 @@ class Domain implements DomainIdsProviderInterface
     public function getAll()
     {
         $domainConfigsWithDataCreated = [];
+
         foreach ($this->domainConfigs as $domainConfig) {
             $domainId = $domainConfig->getId();
+
             try {
                 $this->setting->getForDomain(Setting::DOMAIN_DATA_CREATED, $domainId);
                 $domainConfigsWithDataCreated[] = $domainConfig;
@@ -115,6 +117,7 @@ class Domain implements DomainIdsProviderInterface
     public function getAllIds()
     {
         $ids = [];
+
         foreach ($this->getAll() as $domainConfig) {
             $ids[] = $domainConfig->getId();
         }
@@ -128,6 +131,7 @@ class Domain implements DomainIdsProviderInterface
     public function getAllLocales(): array
     {
         $locales = [];
+
         foreach ($this->getAll() as $domainConfig) {
             $locale = $domainConfig->getLocale();
             $locales[$locale] = $locale;
@@ -177,6 +181,7 @@ class Domain implements DomainIdsProviderInterface
         foreach ($this->domainConfigs as $domainConfig) {
             if ($domainConfig->getUrl() === $url) {
                 $this->currentDomainConfig = $domainConfig;
+
                 return;
             }
         }

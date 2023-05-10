@@ -38,14 +38,17 @@ class QueryBuilderExtender
 
         $joinAlreadyUsed = false;
         $resolvedClass = $this->entityNameResolver->resolve($class);
+
         foreach ($joins as $join) {
             if ($join->getAlias() === $alias) {
                 $resolvedJoinClass = $this->entityNameResolver->resolve($join->getJoin());
+
                 if ($resolvedJoinClass !== $resolvedClass) {
                     throw new DuplicatedAliasException($alias, $resolvedClass, $resolvedJoinClass);
                 }
 
                 $joinAlreadyUsed = true;
+
                 break;
             }
         }
@@ -71,9 +74,11 @@ class QueryBuilderExtender
     protected function getRootAlias(QueryBuilder $queryBuilder)
     {
         $rootAliases = $queryBuilder->getRootAliases();
+
         if (count($rootAliases) !== static::REQUIRED_ALIASES_COUNT) {
             throw new InvalidCountOfAliasesException($rootAliases);
         }
+
         return reset($rootAliases);
     }
 
@@ -86,6 +91,7 @@ class QueryBuilderExtender
         $rootAlias = $this->getRootAlias($queryBuilder);
 
         $joinDqlPart = $queryBuilder->getDQLPart('join');
+
         if (array_key_exists($rootAlias, $joinDqlPart) === true) {
             return $joinDqlPart[$rootAlias];
         }

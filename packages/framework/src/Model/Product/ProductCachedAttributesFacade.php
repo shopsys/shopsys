@@ -58,6 +58,7 @@ class ProductCachedAttributesFacade
         if (isset($this->sellingPricesByProductId[$product->getId()])) {
             return $this->sellingPricesByProductId[$product->getId()];
         }
+
         try {
             $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCurrentUser($product);
         } catch (MainVariantPriceCalculationException $ex) {
@@ -83,8 +84,10 @@ class ProductCachedAttributesFacade
             $product,
             $locale
         );
+
         foreach ($productParameterValues as $index => $productParameterValue) {
             $parameter = $productParameterValue->getParameter();
+
             if ($parameter->getName() === null
                 || $productParameterValue->getValue()->getLocale() !== $locale
             ) {

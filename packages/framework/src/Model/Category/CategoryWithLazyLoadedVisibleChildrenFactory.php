@@ -32,6 +32,7 @@ class CategoryWithLazyLoadedVisibleChildrenFactory
         );
 
         $categoriesWithLazyLoadedVisibleChildren = [];
+
         foreach ($categories as $category) {
             $hasChildren = in_array($category, $categoriesWithVisibleChildren, true);
             $categoriesWithLazyLoadedVisibleChildren[] = new CategoryWithLazyLoadedVisibleChildren(

@@ -41,6 +41,7 @@ class AdvertDataFactory implements AdvertDataFactoryInterface
     {
         $advertData = $this->createInstance();
         $this->fillFromAdvert($advertData, $advert);
+
         return $advertData;
     }
 

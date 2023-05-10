@@ -55,11 +55,13 @@ class ImageGeneratorFacade
     {
         if ($image->getEntityName() !== $entityName) {
             $message = sprintf('Image (ID = %s) does not have entity name "%s"', $image->getId(), $entityName);
+
             throw new ImageNotFoundException($message);
         }
 
         if ($image->getType() !== $type) {
             $message = sprintf('Image (ID = %s) does not have type "%s"', $image->getId(), $type);
+
             throw new ImageNotFoundException($message);
         }
     }

@@ -50,6 +50,7 @@ class GroupedScalarHydrator extends AbstractHydrator
 
         foreach ($data as $key => $value) {
             $cacheKeyInfo = $this->hydrateColumnInfo($key);
+
             if ($cacheKeyInfo === null) {
                 continue;
             }

@@ -54,12 +54,14 @@ class PhingConfigFixerCommand extends Command
 
         $checkOnly = $input->getOption(static::OPTION_ONLY_CHECK);
         $paths = $input->getArgument(static::ARG_XML_PATH);
+
         foreach ($paths as $path) {
             $content = file_get_contents($path);
 
             $sortedContent = $this->fixConfiguration($content);
 
             $isContentChanged = $content !== $sortedContent;
+
             if ($checkOnly && $isContentChanged) {
                 $returnCode = static::RETURN_CODE_ERROR;
 
@@ -125,6 +127,7 @@ class PhingConfigFixerCommand extends Command
         $xml = new SimpleXMLElement($content);
 
         $targetBlocks = [];
+
         foreach ($xml as $tagName => $item) {
             if ($tagName === 'target') {
                 $targetBlocks[(string)$item['name']] = $item->asXML();
@@ -160,6 +163,7 @@ class PhingConfigFixerCommand extends Command
     protected function replaceTargetsByPlaceholders(string $content, array $targetBlocks): string
     {
         $position = 1;
+
         foreach ($targetBlocks as $targetBlock) {
             $targetPlaceholder = $this->getTargetPlaceholder($position++);
 
@@ -185,6 +189,7 @@ class PhingConfigFixerCommand extends Command
     protected function replacePlaceholdersByTargets(string $content, array $targetBlocks): string
     {
         $position = 1;
+
         foreach ($targetBlocks as $targetBlock) {
             $targetPlaceholder = $this->getTargetPlaceholder($position++);
 

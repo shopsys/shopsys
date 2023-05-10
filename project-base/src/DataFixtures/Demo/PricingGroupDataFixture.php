@@ -91,6 +91,7 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
         ?string $referenceName = null
     ): void {
         $pricingGroup = $this->pricingGroupFacade->create($pricingGroupData, $domainId);
+
         if ($referenceName !== null) {
             $this->addReferenceForDomain($referenceName, $pricingGroup, $domainId);
         }

@@ -120,6 +120,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         array $transportsReferenceNames
     ) {
         $paymentData->transports = [];
+
         foreach ($transportsReferenceNames as $transportReferenceName) {
             /** @var \App\Model\Transport\Transport $transport */
             $transport = $this->getReference($transportReferenceName);

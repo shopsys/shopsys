@@ -28,6 +28,7 @@ class AdministratorDataFactory implements AdministratorDataFactoryInterface
     {
         $administratorData = $this->createInstance();
         $this->fillFromAdministrator($administratorData, $administrator);
+
         return $administratorData;
     }
 

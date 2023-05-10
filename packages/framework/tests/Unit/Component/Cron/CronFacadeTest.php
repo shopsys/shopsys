@@ -41,6 +41,7 @@ class CronFacadeTest extends TestCase
         $cronModuleServiceMock->expects($this->exactly($iterations))->method('iterate')->willReturnCallback(
             function () use (&$iterations) {
                 $iterations--;
+
                 return $iterations > 0;
             }
         );
@@ -139,6 +140,7 @@ class CronFacadeTest extends TestCase
     {
         $cronTimeResolver = $cronTimeResolverMock !== null ? $cronTimeResolverMock : new CronTimeResolver();
         $cronConfig = new CronConfig($cronTimeResolver);
+
         foreach ($servicesIndexedById as $serviceId => $service) {
             $cronConfig->registerCronModuleInstance(
                 $service,

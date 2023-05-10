@@ -149,6 +149,7 @@ class PricingGroupController extends AdminBaseController
                 'Do you really want to remove pricing group "%name%" permanently? It is not used anywhere.',
                 ['%name%' => $pricingGroup->getName()]
             );
+
             return $this->confirmDeleteResponseFactory->createDeleteResponse(
                 $message,
                 'admin_pricinggroup_delete',

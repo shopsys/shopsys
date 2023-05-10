@@ -23,9 +23,13 @@ final class ForbiddenDumpSniffTest extends AbstractSniffTestCase
     public function getWrongFiles(): iterable
     {
         yield [__DIR__ . '/wrong/d.php.inc'];
+
         yield [__DIR__ . '/wrong/dump.php.inc'];
+
         yield [__DIR__ . '/wrong/print_r.php.inc'];
+
         yield [__DIR__ . '/wrong/var_dump.php.inc'];
+
         yield [__DIR__ . '/wrong/var_export.php.inc'];
     }
 }

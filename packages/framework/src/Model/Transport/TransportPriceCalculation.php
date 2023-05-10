@@ -99,6 +99,7 @@ class TransportPriceCalculation
         int $domainId
     ): array {
         $transportsPricesByTransportId = [];
+
         foreach ($transports as $transport) {
             $transportsPricesByTransportId[$transport->getId()] = $this->calculatePrice(
                 $transport,

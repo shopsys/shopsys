@@ -35,6 +35,7 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
         $actualMigrations = $migrationLockPlanCalculator->getMigrations()->getItems();
 
         $this->assertSame(count($expectedMigrationClasses), count($actualMigrations));
+
         foreach ($actualMigrations as $key => $migration) {
             $this->assertSame($expectedMigrationClasses[$key], (string)$migration->getVersion());
         }
@@ -83,6 +84,7 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
         $actualMigrations = $migrationLockPlanCalculator->getPlanUntilVersion($toVersion);
 
         $this->assertSame(count($expectedMigrationClasses), count($actualMigrations));
+
         foreach ($actualMigrations->getItems() as $key => $migrationPlan) {
             $this->assertSame($expectedMigrationClasses[$key], (string)$migrationPlan->getVersion());
         }
@@ -102,11 +104,13 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
             'orderedMigrationClassesFromLock' => [$versionClass2, $versionClass3, $versionClass1],
             'expectedMigrationClasses' => [$versionClass2, $versionClass3, $versionClass1],
         ];
+
         yield [
             'availableMigrationsClasses' => [$versionClass2, $versionClass3, $versionClass1],
             'orderedMigrationClassesFromLock' => [],
             'expectedMigrationClasses' => [$versionClass1, $versionClass2, $versionClass3],
         ];
+
         yield [
             'availableMigrationsClasses' => [$versionClass1, $versionClass2, $versionClass3],
             'orderedMigrationClassesFromLock' => [$versionClass2, $versionClass3],
@@ -130,6 +134,7 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
             'toVersion' => $this->createMockedAvailableMigration($versionClass2)->getVersion(),
             'expectedMigrationClasses' => [$versionClass1, $versionClass2],
         ];
+
         yield [
             'availableMigrationClasses' => [$versionClass1, $versionClass2],
             'orderedMigrationClassesFromLock' => [$versionClass1, $versionClass2],
@@ -137,6 +142,7 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
             'toVersion' => $this->createMockedAvailableMigration($versionClass2)->getVersion(),
             'expectedMigrationClasses' => [],
         ];
+
         yield [
             'availableMigrationClasses' => [$versionClass1, $versionClass2, $versionClass3],
             'orderedMigrationClassesFromLock' => [$versionClass1, $versionClass2, $versionClass3],
@@ -180,6 +186,7 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
     private function getExecutedMigrationsList(array $executedMigrationClasses): ExecutedMigrationsList
     {
         $executedMigrations = [];
+
         foreach ($executedMigrationClasses as $executedMigrationClass) {
             $executedMigrations[] = new ExecutedMigration(new Version($executedMigrationClass));
         }
@@ -194,6 +201,7 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
     private function getAvailableMigrationsSet(array $availableMigrationClasses): AvailableMigrationsSet
     {
         $availableMigrations = [];
+
         foreach ($availableMigrationClasses as $availableMigrationClass) {
             $availableMigrations[] = $this->createMockedAvailableMigration($availableMigrationClass);
         }

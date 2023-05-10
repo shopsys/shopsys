@@ -73,6 +73,7 @@ class OrderProductFacade
     {
         if ($this->moduleFacade->isEnabled(ModuleList::PRODUCT_STOCK_CALCULATIONS)) {
             $orderProductsUsingStock = $this->getOrderProductsUsingStockFromOrderProducts($orderProducts);
+
             foreach ($orderProductsUsingStock as $orderProductUsingStock) {
                 $product = $orderProductUsingStock->getProduct();
                 $product->subtractStockQuantity($orderProductUsingStock->getQuantity());
@@ -89,6 +90,7 @@ class OrderProductFacade
     {
         if ($this->moduleFacade->isEnabled(ModuleList::PRODUCT_STOCK_CALCULATIONS)) {
             $orderProductsUsingStock = $this->getOrderProductsUsingStockFromOrderProducts($orderProducts);
+
             foreach ($orderProductsUsingStock as $orderProductUsingStock) {
                 $product = $orderProductUsingStock->getProduct();
                 $product->addStockQuantity($orderProductUsingStock->getQuantity());
@@ -105,6 +107,7 @@ class OrderProductFacade
     {
         $orderProductsUsingStock = $this->getOrderProductsUsingStockFromOrderProducts($orderProducts);
         $relevantProducts = [];
+
         foreach ($orderProductsUsingStock as $orderProductUsingStock) {
             $relevantProducts[] = $orderProductUsingStock->getProduct();
         }
@@ -129,8 +132,10 @@ class OrderProductFacade
     protected function getOrderProductsUsingStockFromOrderProducts(array $orderProducts)
     {
         $orderProductsUsingStock = [];
+
         foreach ($orderProducts as $orderProduct) {
             $product = $orderProduct->getProduct();
+
             if ($product !== null && $product->isUsingStock()) {
                 $orderProductsUsingStock[] = $orderProduct;
             }

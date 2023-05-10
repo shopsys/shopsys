@@ -177,6 +177,7 @@ class ListedProductViewFactory
         $productActionViews = $this->productActionViewFacade->getForProducts($products);
 
         $listedProductViews = [];
+
         foreach ($products as $product) {
             $productId = $product->getId();
             $listedProductViews[$productId] = $this->createFromProduct(
@@ -201,8 +202,10 @@ class ListedProductViewFactory
         );
 
         $listedProductViews = [];
+
         foreach ($productsArray as $productArray) {
             $productId = $productArray['id'];
+
             try {
                 $listedProductViews[$productId] = $this->createFromArray(
                     $productArray,
@@ -236,6 +239,7 @@ class ListedProductViewFactory
     protected function getFlagIdsForProduct(Product $product): array
     {
         $flagIds = [];
+
         foreach ($product->getFlags() as $flag) {
             $flagIds[] = $flag->getId();
         }

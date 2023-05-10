@@ -95,6 +95,7 @@ class ProductsTest extends ProductsGraphQlTestCase
         $this->assertArrayHasKey('edges', $responseData);
 
         $queryResult = [];
+
         foreach ($responseData['edges'] as $edge) {
             $this->assertArrayHasKey('node', $edge);
             $queryResult[] = $edge['node'];
@@ -219,6 +220,7 @@ class ProductsTest extends ProductsGraphQlTestCase
     private function getExpectedDataForLastProduct(): string
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
+
         return '{
     "data": {
         "products": {

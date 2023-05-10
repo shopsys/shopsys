@@ -71,6 +71,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
     {
         $productData = $this->productDataFactory->createFromProduct($product);
         $this->setProductDataByApi($productData, $productApiData);
+
         return $productData;
     }
 

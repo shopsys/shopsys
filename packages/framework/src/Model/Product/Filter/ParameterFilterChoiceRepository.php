@@ -93,6 +93,7 @@ class ParameterFilterChoiceRepository
     protected function getVisibleParametersIndexedByIdOrderedByName(array $rows, $locale)
     {
         $parameterIds = [];
+
         foreach ($rows as $row) {
             $parameterIds[$row['pp']['id']] = $row['pp']['id'];
         }
@@ -125,6 +126,7 @@ class ParameterFilterChoiceRepository
     protected function getParameterValuesIndexedByParameterIdOrderedByValueText(array $rows, $locale)
     {
         $parameterIdsByValueId = [];
+
         foreach ($rows as $row) {
             $valueId = $row['pv']['id'];
             $parameterId = $row['pp']['id'];
@@ -134,6 +136,7 @@ class ParameterFilterChoiceRepository
         $valuesIndexedById = $this->getParameterValuesIndexedByIdOrderedByText($rows, $locale);
 
         $valuesIndexedByParameterId = [];
+
         foreach ($valuesIndexedById as $valueId => $value) {
             foreach ($parameterIdsByValueId[$valueId] as $parameterId) {
                 $valuesIndexedByParameterId[$parameterId][] = $value;
@@ -151,6 +154,7 @@ class ParameterFilterChoiceRepository
     protected function getParameterValuesIndexedByIdOrderedByText(array $rows, $locale)
     {
         $valueIds = [];
+
         foreach ($rows as $row) {
             $valueId = $row['pv']['id'];
             $valueIds[$valueId] = $valueId;

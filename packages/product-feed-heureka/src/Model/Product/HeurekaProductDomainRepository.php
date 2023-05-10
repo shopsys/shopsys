@@ -72,6 +72,7 @@ class HeurekaProductDomainRepository
         $result = $queryBuilder->getQuery()->execute();
 
         $indexedResult = [];
+
         foreach ($result as $heurekaProductDomain) {
             $productId = $heurekaProductDomain->getProduct()->getId();
             $indexedResult[$productId] = $heurekaProductDomain;

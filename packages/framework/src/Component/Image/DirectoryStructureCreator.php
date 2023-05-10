@@ -59,6 +59,7 @@ class DirectoryStructureCreator
     {
         $imageEntityConfigs = $this->imageConfig->getAllImageEntityConfigsByClass();
         $directories = [];
+
         foreach ($imageEntityConfigs as $imageEntityConfig) {
             $sizeConfigs = $imageEntityConfig->getSizeConfigs();
             $sizesDirectories = $this->getTargetDirectoriesFromSizeConfigs(
@@ -95,6 +96,7 @@ class DirectoryStructureCreator
     protected function getTargetDirectoriesFromSizeConfigs($entityName, $type, array $sizeConfigs)
     {
         $directories = [];
+
         foreach ($sizeConfigs as $sizeConfig) {
             $relativePath = $this->imageLocator->getRelativeImagePath($entityName, $type, $sizeConfig->getName());
             $directories[] = $this->imageDir . $relativePath;

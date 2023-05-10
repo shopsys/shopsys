@@ -160,6 +160,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
             $limit,
             $categoryId
         );
+
         return $this->createPaginationResultWithData($paginationResult);
     }
 
@@ -180,6 +181,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
             $page,
             $limit
         );
+
         return $this->createPaginationResultWithData($paginationResult);
     }
 
@@ -198,6 +200,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
             $limit,
             $brandId
         );
+
         return $this->createPaginationResultWithData($paginationResult);
     }
 

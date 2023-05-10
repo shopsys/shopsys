@@ -94,6 +94,7 @@ class RegistrationController extends FrontBaseController
             $this->authenticator->loginUser($customerUser, $request);
 
             $this->addSuccessFlash(t('You have been successfully registered.'));
+
             return $this->redirectToRoute('front_homepage');
         }
 

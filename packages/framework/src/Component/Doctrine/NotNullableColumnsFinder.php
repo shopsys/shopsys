@@ -14,9 +14,11 @@ class NotNullableColumnsFinder
     public function getAllNotNullableColumnNamesIndexedByTableName(array $classesMetadata)
     {
         $notNullableColumnNamesIndexedByTableName = [];
+
         foreach ($classesMetadata as $classMetadata) {
             if (!($classMetadata instanceof ClassMetadataInfo)) {
                 $message = 'Instance of ' . ClassMetadataInfo::class . ' is required.';
+
                 throw new UnexpectedTypeException($message);
             }
             $notNullableColumnNamesIndexedByTableName[$classMetadata->getTableName()] =
@@ -36,6 +38,7 @@ class NotNullableColumnsFinder
     protected function getNotNullableFieldColumnNames(ClassMetadataInfo $classMetadataInfo)
     {
         $notNullableFieldNames = [];
+
         foreach ($classMetadataInfo->getFieldNames() as $fieldName) {
             if (!$classMetadataInfo->isNullable($fieldName)) {
                 $notNullableFieldNames[] = $classMetadataInfo->getColumnName($fieldName);
@@ -52,6 +55,7 @@ class NotNullableColumnsFinder
     protected function getNotNullableAssociationColumnNames(ClassMetadataInfo $classMetadataInfo)
     {
         $notNullableAssociationNames = [];
+
         foreach ($classMetadataInfo->getAssociationMappings() as $associationMapping) {
             if (array_key_exists('joinColumns', $associationMapping) === false) {
                 continue;

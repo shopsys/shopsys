@@ -25,6 +25,7 @@ class Environment
         $io = $event->getIO();
 
         $environmentFileSetting = self::getEnvironmentFileSetting();
+
         if (!$environmentFileSetting->isAnyEnvironmentSet()) {
             $environment = $event->isDevMode() ? EnvironmentType::DEVELOPMENT : EnvironmentType::PRODUCTION;
             $environmentFileSetting->createFileForEnvironment($environment);
@@ -58,6 +59,7 @@ class Environment
         if (self::$environmentFileSetting === null) {
             self::$environmentFileSetting = new EnvironmentFileSetting(__DIR__ . '/..');
         }
+
         return self::$environmentFileSetting;
     }
 }

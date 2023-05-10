@@ -66,6 +66,7 @@ class PaginationResult
 
         $this->fromItem = (($this->page - 1) * $this->pageSize) + 1;
         $this->toItem = $this->page * $this->pageSize;
+
         if ($this->toItem > $this->totalCount) {
             $this->toItem = $this->totalCount;
         }

@@ -71,6 +71,7 @@ class HeurekaCategoryFacade
         $existingHeurekaCategoriesIds = array_keys($existingHeurekaCategoriesIndexedByIds);
 
         $newHeurekaCategoriesIds = [];
+
         foreach ($newHeurekaCategoriesData as $newHeurekaCategoryData) {
             $newHeurekaCategoriesIds[] = $newHeurekaCategoryData->id;
         }

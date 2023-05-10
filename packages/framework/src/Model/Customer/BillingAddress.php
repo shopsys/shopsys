@@ -100,6 +100,7 @@ class BillingAddress
         $this->city = $billingAddressData->city;
         $this->postcode = $billingAddressData->postcode;
         $this->companyCustomer = $billingAddressData->companyCustomer;
+
         if ($this->companyCustomer) {
             $this->companyName = $billingAddressData->companyName;
             $this->companyNumber = $billingAddressData->companyNumber;

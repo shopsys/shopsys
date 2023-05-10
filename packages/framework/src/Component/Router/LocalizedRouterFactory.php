@@ -58,6 +58,7 @@ class LocalizedRouterFactory
         if (file_exists($this->getLocaleRouterResourceByLocale($locale)) === false) {
             $message = 'File with localized routes for locale `' . $locale . '` was not found. '
                 . 'Please create `' . $this->getLocaleRouterResourceByLocale($locale) . '` file.';
+
             throw new LocalizedRoutingConfigFileNotFoundException($message);
         }
 

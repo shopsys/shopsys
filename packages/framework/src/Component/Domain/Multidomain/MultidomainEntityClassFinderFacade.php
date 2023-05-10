@@ -72,6 +72,7 @@ class MultidomainEntityClassFinderFacade
     public function getAllNotNullableColumnNamesIndexedByTableName()
     {
         $multidomainClassesMetadata = [];
+
         foreach ($this->getMultidomainEntitiesNames() as $multidomainEntityName) {
             $resolvedClassName = $this->entityNameResolver->resolve($multidomainEntityName);
             $multidomainClassesMetadata[] = $this->em->getMetadataFactory()->getMetadataFor($resolvedClassName);

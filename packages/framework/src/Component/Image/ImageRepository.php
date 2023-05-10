@@ -58,8 +58,10 @@ class ImageRepository
     public function getImageByEntity($entityName, $entityId, $type)
     {
         $image = $this->findImageByEntity($entityName, $entityId, $type);
+
         if ($image === null) {
             $message = 'Image of type "' . ($type ?: 'NULL') . '" not found for entity "' . $entityName . '" with ID ' . $entityId;
+
             throw new ImageNotFoundException($message);
         }
 

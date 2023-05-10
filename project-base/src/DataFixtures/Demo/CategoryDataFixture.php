@@ -260,6 +260,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
     {
         /** @var \App\Model\Category\Category $category */
         $category = $this->categoryFacade->create($categoryData);
+
         if ($referenceName !== null) {
             $this->addReference($referenceName, $category);
         }

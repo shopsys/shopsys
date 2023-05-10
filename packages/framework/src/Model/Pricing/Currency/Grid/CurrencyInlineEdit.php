@@ -90,6 +90,7 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
     {
         if ($currencyId !== null) {
             $currency = $this->currencyFacade->getById($currencyId);
+
             if ($this->currencyFacade->isDefaultCurrency($currency)) {
                 return true;
             }

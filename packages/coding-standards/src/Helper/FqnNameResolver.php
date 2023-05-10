@@ -39,6 +39,7 @@ final class FqnNameResolver
         }
 
         $matchedClassName = $this->matchUseImports($tokens, $className);
+
         if ($matchedClassName !== null) {
             return $matchedClassName;
         }

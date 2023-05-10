@@ -44,9 +44,11 @@ class GridOrderingFacade
     protected function getEntityRepository($entityClass)
     {
         $interfaces = class_implements($entityClass);
+
         if (array_key_exists(OrderableEntityInterface::class, $interfaces)) {
             return $this->em->getRepository($entityClass);
         }
+
         throw new EntityIsNotOrderableException();
     }
 }

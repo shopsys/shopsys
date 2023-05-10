@@ -129,6 +129,7 @@ class CountryFormType extends AbstractType
     protected function getOtherCountryCodes(): array
     {
         $otherCountryCodes = [];
+
         foreach ($this->countryFacade->getAll() as $country) {
             if ($country !== $this->country) {
                 $otherCountryCodes[] = $country->getCode();

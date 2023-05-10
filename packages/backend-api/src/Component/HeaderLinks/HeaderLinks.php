@@ -23,6 +23,7 @@ class HeaderLinks
     {
         $clone = clone $this;
         $clone->links[] = ['link' => $link, 'rel' => $rel];
+
         return $clone;
     }
 
@@ -34,6 +35,7 @@ class HeaderLinks
         $links = array_map(static function (array $link) {
             return sprintf('<%s>; rel="%s"', $link['link'], $link['rel']);
         }, $this->links);
+
         return implode(', ', $links);
     }
 }

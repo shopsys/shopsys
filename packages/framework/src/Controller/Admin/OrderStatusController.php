@@ -109,6 +109,7 @@ class OrderStatusController extends AdminBaseController
     {
         try {
             $orderStatus = $this->orderStatusFacade->getById($id);
+
             if ($this->orderStatusFacade->isOrderStatusUsed($orderStatus)) {
                 $message = t(
                     'Because status "%name%"  is used with other orders also, you have to choose a new status which will replace '

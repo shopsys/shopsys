@@ -34,6 +34,7 @@ class FlagDataFactory implements FlagDataFactoryInterface
     {
         $flagData = $this->createInstance();
         $this->fillNew($flagData);
+
         return $flagData;
     }
 
@@ -68,6 +69,7 @@ class FlagDataFactory implements FlagDataFactoryInterface
         /** @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation[] $translations */
         $translations = $flag->getTranslations();
         $names = [];
+
         foreach ($translations as $translate) {
             $names[$translate->getLocale()] = $translate->getName();
         }

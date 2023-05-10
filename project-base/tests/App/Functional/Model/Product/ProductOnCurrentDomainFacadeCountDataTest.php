@@ -916,11 +916,13 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     private function removeEmptyParameters(ProductFilterCountData $countData): ProductFilterCountData
     {
         $result = clone $countData;
+
         foreach ($countData->countByParameterIdAndValueId as $parameterId => $values) {
             if (count($values) === 0) {
                 unset($result->countByParameterIdAndValueId[$parameterId]);
             }
         }
+
         return $result;
     }
 }

@@ -35,6 +35,7 @@ final class MissingParamAnnotationsFixer extends AbstractMissingAnnotationsFixer
     protected function processFunctionToken(Tokens $tokens, int $index, ?Token $docToken): void
     {
         $argumentAnalyses = $this->functionsAnalyzer->getFunctionArguments($tokens, $index);
+
         if (count($argumentAnalyses) === 0) {
             return;
         }
@@ -57,6 +58,7 @@ final class MissingParamAnnotationsFixer extends AbstractMissingAnnotationsFixer
 
         if ($docToken !== null) {
             $this->updateDocWithLines($tokens, $index, $docToken, $newLines);
+
             return;
         }
 
@@ -74,6 +76,7 @@ final class MissingParamAnnotationsFixer extends AbstractMissingAnnotationsFixer
 
         foreach ($doc->getAnnotationsOfType('param') as $annotation) {
             $matches = Strings::match($annotation->getContent(), PhpdocRegex::ARGUMENT_NAME_PATTERN);
+
             if (isset($matches[1])) {
                 unset($argumentAnalyses[$matches[1]]);
             }

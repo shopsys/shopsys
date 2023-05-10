@@ -43,6 +43,7 @@ class AdministratorTest extends TestCase
         $administrator = new Administrator($administratorData);
 
         $administratorRoles = [];
+
         foreach ($roles as $role) {
             $administratorRoleData = new AdministratorRoleData();
             $administratorRoleData->administrator = $administrator;

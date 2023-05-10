@@ -146,6 +146,7 @@ class ProductApiDataValidator implements ProductApiDataValidatorInterface
     protected function createNameConstraintDefinition(): array
     {
         $nameFields = [];
+
         foreach ($this->domain->getAllLocales() as $locale) {
             $nameFields[$locale] = new Constraints\Length([
                 'max' => 255,
@@ -162,6 +163,7 @@ class ProductApiDataValidator implements ProductApiDataValidatorInterface
     protected function createDescriptionConstraintDefinition(): array
     {
         $descriptionFields = [];
+
         foreach ($this->domain->getAllIds() as $domainId) {
             $descriptionFields[$domainId] = new Constraints\Type([
                 'type' => 'string',

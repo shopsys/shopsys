@@ -118,6 +118,7 @@ class ArticleController extends AdminBaseController
                         'url' => $this->generateUrl('admin_article_edit', ['id' => $article->getId()]),
                     ]
                 );
+
             return $this->redirectToRoute('admin_article_list');
         }
 
@@ -178,6 +179,7 @@ class ArticleController extends AdminBaseController
                         'url' => $this->generateUrl('admin_article_edit', ['id' => $article->getId()]),
                     ]
                 );
+
             return $this->redirectToRoute('admin_article_list');
         }
 
@@ -222,6 +224,7 @@ class ArticleController extends AdminBaseController
     public function deleteConfirmAction($id)
     {
         $article = $this->articleFacade->getById($id);
+
         if ($this->legalConditionsFacade->isArticleUsedAsLegalConditions($article)) {
             $message = t(
                 'Article "%name%" set for displaying legal conditions. This setting will be lost. Do you really want to delete it?',

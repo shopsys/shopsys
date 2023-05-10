@@ -24,10 +24,12 @@ class CustomerUserIdentifier
     {
         if ($cartIdentifier === '' && $customerUser === null) {
             $message = 'Can not be created empty CustomerUserIdentifier';
+
             throw new EmptyCustomerUserIdentifierException($message);
         }
 
         $this->customerUser = $customerUser;
+
         if ($this->customerUser === null) {
             $this->cartIdentifier = $cartIdentifier;
         }
@@ -59,6 +61,7 @@ class CustomerUserIdentifier
         } else {
             $customerUserId = 'NULL';
         }
+
         return 'session:' . $this->cartIdentifier . ';userId:' . $customerUserId . ';';
     }
 }

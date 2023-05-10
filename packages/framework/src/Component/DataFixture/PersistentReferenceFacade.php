@@ -73,6 +73,7 @@ class PersistentReferenceFacade
 
         if (!method_exists($object, 'getId')) {
             $message = 'Entity "' . $entityName . '" does not have a method "getId", which is necessary for persistent references.';
+
             throw new MethodGetIdDoesNotExistException($message);
         }
 
@@ -111,6 +112,7 @@ class PersistentReferenceFacade
     public function getReferenceForDomain(string $name, int $domainId)
     {
         $referenceName = $this->createDomainReferenceName($name, $domainId);
+
         return $this->getReference($referenceName);
     }
 

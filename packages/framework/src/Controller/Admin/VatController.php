@@ -73,6 +73,7 @@ class VatController extends AdminBaseController
     {
         try {
             $vat = $this->vatFacade->getById($id);
+
             if ($this->vatFacade->isVatUsed($vat)) {
                 $message = t(
                     'For deleting rate  "%name%" you have to choose other one to be set everywhere where the existing one is used. '

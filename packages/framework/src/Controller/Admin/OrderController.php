@@ -127,6 +127,7 @@ class OrderController extends AdminBaseController
                         'url' => $this->generateUrl('admin_order_edit', ['id' => $order->getId()]),
                     ]
                 );
+
                 return $this->redirectToRoute('admin_order_list');
             } catch (CustomerUserNotFoundException $e) {
                 $this->addErrorFlash(
@@ -194,6 +195,7 @@ class OrderController extends AdminBaseController
         $isAdvancedSearchFormSubmitted = $this->advancedSearchOrderFacade->isAdvancedSearchOrderFormSubmitted(
             $request
         );
+
         if ($isAdvancedSearchFormSubmitted) {
             $queryBuilder = $this->advancedSearchOrderFacade->getQueryBuilderByAdvancedSearchOrderData(
                 $advancedSearchData
@@ -218,6 +220,7 @@ class OrderController extends AdminBaseController
         $grid->addColumn('number', 'o.number', t('Order Nr.'), true);
         $grid->addColumn('created_at', 'o.createdAt', t('Created'), true);
         $grid->addColumn('customer_name', 'customerName', t('Customer'), true);
+
         if ($this->domain->isMultidomain()) {
             $grid->addColumn('domain_id', 'o.domainId', t('Domain'), true);
         }

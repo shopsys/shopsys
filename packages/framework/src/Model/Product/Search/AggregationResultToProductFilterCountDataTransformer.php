@@ -33,11 +33,13 @@ class AggregationResultToProductFilterCountDataTransformer
         $result = [];
 
         $flagsBucket = $aggregationResult['aggregations']['flags']['buckets'];
+
         foreach ($flagsBucket as $flagBucket) {
             $flagId = $flagBucket['key'];
             $flagCount = $flagBucket['doc_count'];
             $result[$flagId] = $flagCount;
         }
+
         return $result;
     }
 
@@ -51,11 +53,13 @@ class AggregationResultToProductFilterCountDataTransformer
         $result = [];
 
         $brandsBucket = $aggregationResult['aggregations']['brands']['buckets'];
+
         foreach ($brandsBucket as $brandBucket) {
             $brandId = $brandBucket['key'];
             $brandCount = $brandBucket['doc_count'];
             $result[$brandId] = $brandCount;
         }
+
         return $result;
     }
 
@@ -111,10 +115,12 @@ class AggregationResultToProductFilterCountDataTransformer
         $result = [];
 
         $parametersBucket = $aggregationResult['aggregations']['parameters']['by_parameters']['buckets'];
+
         foreach ($parametersBucket as $parameterBucket) {
             $parameterId = $parameterBucket['key'];
             $result[$parameterId] = $this->getValuesCount($parameterBucket);
         }
+
         return $result;
     }
 
@@ -126,11 +132,13 @@ class AggregationResultToProductFilterCountDataTransformer
     {
         $valueBuckets = $parameterBucket['by_value']['buckets'];
         $values = [];
+
         foreach ($valueBuckets as $valueBucket) {
             $valueKey = $valueBucket['key'];
             $valueCount = $valueBucket['doc_count'];
             $values[$valueKey] = $valueCount;
         }
+
         return $values;
     }
 
@@ -141,17 +149,20 @@ class AggregationResultToProductFilterCountDataTransformer
     public function translateParameterValuesPlusNumbers(array $aggregationResult): array
     {
         $parametersBuckets = $aggregationResult['aggregations']['parameters']['filtered_for_parameter']['by_parameters']['buckets'];
+
         if (count($parametersBuckets) === 0) {
             return [];
         }
         $thePossibleBucket = $parametersBuckets[0];
 
         $result = [];
+
         foreach ($thePossibleBucket['by_value']['buckets'] as $bucket) {
             $valueId = $bucket['key'];
             $valueCount = $bucket['doc_count'];
             $result[$valueId] = $valueCount;
         }
+
         return $result;
     }
 }

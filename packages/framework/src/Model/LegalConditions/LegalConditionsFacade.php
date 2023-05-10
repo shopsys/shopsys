@@ -124,6 +124,7 @@ abstract class LegalConditionsFacade
     protected function setArticle(string $settingKey, int $domainId, ?Article $article = null): void
     {
         $articleId = null;
+
         if ($article !== null) {
             $articleId = $article->getId();
         }

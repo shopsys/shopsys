@@ -44,6 +44,7 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
     {
         $customerUserData = $this->createInstance();
         $customerUserData->customer = $customer;
+
         return $customerUserData;
     }
 

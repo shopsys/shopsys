@@ -39,6 +39,7 @@ class ProductQueryParams
     {
         $query = clone $this;
         $query->uuids = $uuids;
+
         return $query;
     }
 

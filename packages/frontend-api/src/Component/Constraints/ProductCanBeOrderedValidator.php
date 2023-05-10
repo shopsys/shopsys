@@ -81,6 +81,7 @@ class ProductCanBeOrderedValidator extends ConstraintValidator
                 ProductCanBeOrdered::PRODUCT_NOT_FOUND_ERROR,
                 $uuid
             );
+
             return;
         }
 
@@ -92,6 +93,7 @@ class ProductCanBeOrderedValidator extends ConstraintValidator
                 ProductCanBeOrdered::NO_SELLING_PRICE_ERROR,
                 $uuid
             );
+
             return;
         }
 

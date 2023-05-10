@@ -37,6 +37,7 @@ class ImageConfig
     protected function setUpImageEntityConfigsByClass(array $imageEntityConfigsByClass): void
     {
         $imageEntityConfigsByNormalizedClass = [];
+
         foreach ($imageEntityConfigsByClass as $class => $imageEntityConfig) {
             $normalizedClass = $this->entityNameResolver->resolve($class);
             $imageEntityConfigsByNormalizedClass[$normalizedClass] = $imageEntityConfig;
@@ -52,6 +53,7 @@ class ImageConfig
     public function getEntityName($entity)
     {
         $entityConfig = $this->getImageEntityConfig($entity);
+
         return $entityConfig->getEntityName();
     }
 
@@ -64,6 +66,7 @@ class ImageConfig
     public function getImageSizeConfigByEntity($entity, $type, $sizeName)
     {
         $entityConfig = $this->getImageEntityConfig($entity);
+
         return $entityConfig->getSizeConfigByType($type, $sizeName);
     }
 
@@ -76,6 +79,7 @@ class ImageConfig
     public function getImageSizeConfigByEntityName($entityName, $type, $sizeName)
     {
         $entityConfig = $this->getEntityConfigByEntityName($entityName);
+
         return $entityConfig->getSizeConfigByType($type, $sizeName);
     }
 
@@ -97,6 +101,7 @@ class ImageConfig
     public function getImageSizeConfigByImage(Image $image, $sizeName)
     {
         $entityConfig = $this->getEntityConfigByEntityName($image->getEntityName());
+
         return $entityConfig->getSizeConfigByType($image->getType(), $sizeName);
     }
 
@@ -128,6 +133,7 @@ class ImageConfig
                 return true;
             }
         }
+
         return false;
     }
 
@@ -161,6 +167,7 @@ class ImageConfig
     public function getImageEntityConfigByClass($class)
     {
         $normalizedClass = $this->entityNameResolver->resolve($class);
+
         if (array_key_exists($normalizedClass, $this->imageEntityConfigsByClass)) {
             return $this->imageEntityConfigsByClass[$normalizedClass];
         }

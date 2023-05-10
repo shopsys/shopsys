@@ -28,6 +28,7 @@ class FormExtension extends AbstractExtension
     {
         $form = $formError->getOrigin();
         $sourceIdParts = [];
+
         do {
             $sourceIdParts[] = str_replace('_', '-', $form->getName());
             $form = $form->getParent();

@@ -58,9 +58,11 @@ class ApiProductTransformer
     protected function transformNames(Product $product): array
     {
         $result = [];
+
         foreach ($this->domain->getAllLocales() as $locale) {
             $result[$locale] = $product->getName($locale);
         }
+
         return $result;
     }
 
@@ -71,9 +73,11 @@ class ApiProductTransformer
     protected function transformShortDescriptions(Product $product): array
     {
         $result = [];
+
         foreach ($this->domain->getAllIds() as $domainId) {
             $result[$domainId] = $product->getShortDescription($domainId);
         }
+
         return $result;
     }
 
@@ -84,9 +88,11 @@ class ApiProductTransformer
     protected function transformLongDescriptions(Product $product): array
     {
         $result = [];
+
         foreach ($this->domain->getAllIds() as $domainId) {
             $result[$domainId] = $product->getDescription($domainId);
         }
+
         return $result;
     }
 

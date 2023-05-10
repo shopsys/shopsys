@@ -62,6 +62,7 @@ class TopProductFacade
     public function saveTopProductsForDomain($domainId, array $products)
     {
         $oldTopProducts = $this->topProductRepository->getAll($domainId);
+
         foreach ($oldTopProducts as $oldTopProduct) {
             $this->em->remove($oldTopProduct);
         }
@@ -69,6 +70,7 @@ class TopProductFacade
 
         $topProducts = [];
         $position = 1;
+
         foreach ($products as $product) {
             $topProduct = $this->topProductFactory->create($product, $domainId, $position++);
             $this->em->persist($topProduct);

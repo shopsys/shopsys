@@ -54,6 +54,7 @@ class OrderAdvancedSearchConfig extends AdvancedSearchConfig
         $this->registerFilter($orderNumberFilter);
         $this->registerFilter($orderCreateDateFilter);
         $this->registerFilter($orderStatusFilter);
+
         if ($domain->isMultidomain()) {
             $this->registerFilter($orderDomainFilter);
         }

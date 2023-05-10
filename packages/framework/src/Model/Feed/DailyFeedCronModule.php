@@ -90,6 +90,7 @@ class DailyFeedCronModule implements IteratedCronModuleInterface
             $this->currentFeedExport = null;
 
             $existsNext = $this->getFeedExportCreationDataQueue()->next();
+
             if ($existsNext === true) {
                 $this->currentFeedExport = $this->createCurrentFeedExport();
             }
@@ -133,8 +134,10 @@ class DailyFeedCronModule implements IteratedCronModuleInterface
     {
         $feedNameToContinue = $this->setting->get(Setting::FEED_NAME_TO_CONTINUE);
         $domainIdToContinue = $this->setting->get(Setting::FEED_DOMAIN_ID_TO_CONTINUE);
+
         if ($feedNameToContinue !== null && $domainIdToContinue !== null) {
             $queue = $this->getFeedExportCreationDataQueue();
+
             while (
                 $feedNameToContinue !== $queue->getCurrentFeedName()
                 || $domainIdToContinue !== $queue->getCurrentDomain()->getId()

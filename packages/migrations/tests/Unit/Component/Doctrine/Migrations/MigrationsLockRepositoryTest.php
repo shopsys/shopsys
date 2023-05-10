@@ -29,6 +29,7 @@ class MigrationsLockRepositoryTest extends AbstractMigrationLockTestCase
         $availableMigrationsSet = $migrationsLockRepository->getMigrations();
 
         $this->assertSame(count($expectedMigrationClasses), count($availableMigrationsSet->getItems()));
+
         foreach ($expectedMigrationClasses as $expectedMigrationClass) {
             $this->assertTrue($availableMigrationsSet->hasMigration(new Version($expectedMigrationClass)));
         }
@@ -43,6 +44,7 @@ class MigrationsLockRepositoryTest extends AbstractMigrationLockTestCase
             'foundMigrationClasses' => [],
             'expectedMigrationClasses' => [],
         ];
+
         yield [
             'foundMigrationClasses' => [
                 Version20180101000001::class,

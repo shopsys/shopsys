@@ -36,6 +36,7 @@ class EnvelopeListener implements EventSubscriberInterface
         }
 
         $message = $event->getMessage();
+
         if (!($message instanceof Message)) {
             return;
         }
@@ -58,6 +59,7 @@ class EnvelopeListener implements EventSubscriberInterface
     protected function getAddressesFromMessageHeader(Message $message, string $headerName): array
     {
         $header = $message->getHeaders()->get($headerName);
+
         if ($header instanceof MailboxListHeader) {
             return $header->getAddresses();
         }
@@ -72,6 +74,7 @@ class EnvelopeListener implements EventSubscriberInterface
     protected function getAllowedRecipients(array $originalRecipients): array
     {
         $allowedRecipients = [new Address($this->mailerSettingProvider->getMailerMasterEmailAddress())];
+
         foreach ($originalRecipients as $originalRecipient) {
             foreach ($this->mailerSettingProvider->getMailerWhitelistExpressions() as $whitelistedPattern) {
                 if (preg_match($whitelistedPattern, $originalRecipient->getAddress())) {

@@ -32,6 +32,7 @@ class ProductIdToProductTransformer implements DataTransformerInterface
         if ($product instanceof Product) {
             return $product->getId();
         }
+
         return null;
     }
 
@@ -44,11 +45,13 @@ class ProductIdToProductTransformer implements DataTransformerInterface
         if ((int)$productId === 0) {
             return null;
         }
+
         try {
             $product = $this->productRepository->getById($productId);
         } catch (ProductNotFoundException $e) {
             throw new TransformationFailedException('Product not found', 0, $e);
         }
+
         return $product;
     }
 }
