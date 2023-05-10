@@ -1,0 +1,6 @@
+query PersonalDataPageTextQuery {
+    personalDataPage {
+        displaySiteContent
+        exportSiteContent
+    }
+}

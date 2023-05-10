@@ -1,0 +1,11 @@
+fragment ListedCategoryFragment on Category {
+    __typename
+    uuid
+    name
+    slug
+    ...CategoryImagesDefaultFragment
+    products {
+        __typename
+        totalCount
+    }
+}

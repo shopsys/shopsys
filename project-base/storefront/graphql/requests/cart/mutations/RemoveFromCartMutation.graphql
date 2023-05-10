@@ -1,0 +1,5 @@
+mutation RemoveFromCartMutation($input: RemoveFromCartInput!) {
+    RemoveFromCart(input: $input) {
+        ...CartFragment
+    }
+}

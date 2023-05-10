@@ -1,0 +1,18 @@
+fragment BrandDetailFragment on Brand {
+    __typename
+    id
+    uuid
+    slug
+    breadcrumb {
+        ...BreadcrumbFragment
+    }
+    name
+    seoH1
+    description
+    images {
+        ...ImageSizesFragment
+    }
+    ...ListedProductsPreviewFragment
+    seoTitle
+    seoMetaDescription
+}

@@ -1,0 +1,49 @@
+fragment OrderDetailFragment on Order {
+    __typename
+    uuid
+    number
+    creationDate
+    items {
+        ...OrderDetailItemFragment
+    }
+    transport {
+        __typename
+        name
+    }
+    payment {
+        __typename
+        name
+    }
+    status
+    firstName
+    lastName
+    email
+    telephone
+    companyName
+    companyNumber
+    companyTaxNumber
+    street
+    city
+    postcode
+    country {
+        __typename
+        name
+    }
+    differentDeliveryAddress
+    deliveryFirstName
+    deliveryLastName
+    deliveryCompanyName
+    deliveryTelephone
+    deliveryStreet
+    deliveryCity
+    deliveryPostcode
+    deliveryCountry {
+        __typename
+        name
+    }
+    note
+    urlHash
+    promoCode
+    trackingNumber
+    trackingUrl
+}

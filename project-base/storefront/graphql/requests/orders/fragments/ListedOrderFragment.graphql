@@ -1,0 +1,24 @@
+fragment ListedOrderFragment on Order {
+    __typename
+    uuid
+    number
+    creationDate
+    productItems {
+        __typename
+        quantity
+    }
+    transport {
+        __typename
+        name
+        images {
+            ...ImageSizesFragment
+        }
+    }
+    payment {
+        __typename
+        name
+    }
+    totalPrice {
+        ...PriceFragment
+    }
+}

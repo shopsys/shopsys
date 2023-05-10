@@ -1,0 +1,14 @@
+fragment ProductFilterOptionsParametersColorFragment on ParameterColorFilterOption {
+    name
+    uuid
+    __typename
+    values {
+        __typename
+        uuid
+        text
+        count
+        rgbHex
+        isSelected
+    }
+    isCollapsed
+}

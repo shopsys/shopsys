@@ -1,0 +1,14 @@
+fragment DeliveryAddressFragment on DeliveryAddress {
+    __typename
+    uuid
+    companyName
+    street
+    city
+    postcode
+    telephone
+    country {
+        ...CountryFragment
+    }
+    firstName
+    lastName
+}

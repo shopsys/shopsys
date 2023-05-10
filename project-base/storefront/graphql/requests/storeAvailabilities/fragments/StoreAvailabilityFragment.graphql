@@ -1,0 +1,9 @@
+fragment StoreAvailabilityFragment on StoreAvailability {
+    __typename
+    exposed
+    availabilityInformation
+    availabilityStatus
+    store {
+        ...StoreDetailFragment
+    }
+}

@@ -1,0 +1,3 @@
+mutation CleanComparisonMutation($comparisonUuid: Uuid){
+    cleanComparison(comparisonUuid: $comparisonUuid)
+}

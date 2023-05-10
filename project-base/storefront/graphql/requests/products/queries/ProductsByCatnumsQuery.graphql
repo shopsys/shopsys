@@ -1,0 +1,5 @@
+query ProductsByCatnums($catnums: [String!]!) {
+    productsByCatnums(catnums: $catnums) {
+        ...ListedProductFragment
+    }
+}

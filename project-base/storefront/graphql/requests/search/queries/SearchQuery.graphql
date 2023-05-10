@@ -1,0 +1,14 @@
+query SearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $pageSize: Int) {
+    articlesSearch(search: $search) {
+        ...SimpleArticleInterfaceFragment
+    }
+    brandSearch(search: $search) {
+        ...ListedBrandFragment
+    }
+    categoriesSearch(search: $search) {
+        ...ListedCategoryConnectionFragment
+    }
+    productsSearch: products(search: $search, orderingMode: $orderingMode, filter: $filter, first: $pageSize) {
+        ...ListedProductConnectionPreviewFragment
+    }
+}

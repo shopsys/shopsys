@@ -1,0 +1,5 @@
+fragment CategoryImagesDefaultFragment on Category {
+    images {
+        ...ImageSizesFragment
+    }
+}

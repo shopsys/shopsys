@@ -1,0 +1,5 @@
+query NavigationQuery @redisCache(ttl: 3600) {
+    navigation {
+        ...CategoriesByColumnFragment
+    }
+}

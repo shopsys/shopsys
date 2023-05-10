@@ -1,0 +1,5 @@
+fragment CartPaymentModificationsFragment on CartPaymentModificationsResult {
+    __typename
+    paymentPriceChanged
+    paymentUnavailable
+}

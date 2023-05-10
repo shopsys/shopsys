@@ -1,0 +1,10 @@
+fragment ListedCategoryConnectionFragment on CategoryConnection {
+    __typename
+    totalCount
+    edges {
+        __typename
+        node {
+            ...ListedCategoryFragment
+        }
+    }
+}

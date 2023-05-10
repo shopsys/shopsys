@@ -1,0 +1,7 @@
+fragment ImageSizesFragment on Image {
+    __typename
+    name
+    sizes {
+        ...ImageSizeFragment
+    }
+}

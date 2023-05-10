@@ -1,0 +1,7 @@
+fragment ListedBrandFragment on Brand {
+    __typename
+    uuid
+    name
+    slug
+    ...BrandImageDefaultFragment
+}

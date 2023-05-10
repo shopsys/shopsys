@@ -1,0 +1,17 @@
+fragment ProductFilterOptionsFragment on ProductFilterOptions {
+    __typename
+    minimalPrice
+    maximalPrice
+    brands {
+        ...ProductFilterOptionsBrandsFragment
+    }
+    inStock
+    flags {
+        ...ProductFilterOptionsFlagsFragment
+    }
+    parameters {
+        ...ProductFilterOptionsParametersCheckboxFragment
+        ...ProductFilterOptionsParametersColorFragment
+        ...ProductFilterOptionsParametersSliderFragment
+    }
+}

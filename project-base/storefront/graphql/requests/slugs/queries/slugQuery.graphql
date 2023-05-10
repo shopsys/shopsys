@@ -1,0 +1,37 @@
+query SlugQuery($slug: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) {
+    slug(slug: $slug) {
+        __typename
+        ... on RegularProduct {
+            ...ProductDetailFragment
+        }
+        ... on Variant {
+            mainVariant {
+                slug
+            }
+        }
+        ... on MainVariant {
+            ...MainVariantDetailFragment
+        }
+        ... on Category {
+            ...CategoryDetailFragment
+        }
+        ... on Store {
+            ...StoreDetailFragment
+        }
+        ... on ArticleSite {
+            ...ArticleDetailFragment
+        }
+        ... on BlogArticle {
+            ...BlogArticleDetailFragment
+        }
+        ... on Brand {
+            ...BrandDetailFragment
+        }
+        ... on Flag {
+            ...FlagDetailFragment
+        }
+        ... on BlogCategory {
+            ...BlogCategoryDetailFragment
+        }
+    }
+}

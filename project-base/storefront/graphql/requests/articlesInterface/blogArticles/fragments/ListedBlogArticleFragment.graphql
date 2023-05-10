@@ -1,0 +1,13 @@
+fragment ListedBlogArticleFragment on BlogArticle {
+    __typename
+    uuid
+    name
+    link
+    ...BlogArticleImageListFragment
+    publishDate
+    perex
+    slug
+    blogCategories {
+        ...SimpleBlogCategoryFragment
+    }
+}

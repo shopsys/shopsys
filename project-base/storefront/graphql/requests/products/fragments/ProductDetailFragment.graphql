@@ -1,0 +1,9 @@
+fragment ProductDetailFragment on RegularProduct {
+    ... ProductDetailInterfaceFragment
+    shortDescription
+    storeAvailabilities {
+        ...StoreAvailabilityFragment
+    }
+    availableStoresCount
+    exposedStoresCount
+}

@@ -1,0 +1,5 @@
+query StoresQuery {
+    stores {
+        ...ListedStoreConnectionFragment
+    }
+}

@@ -1,0 +1,8 @@
+mutation Login($email: String!, $password: Password!, $previousCartUuid: Uuid) {
+    Login(input: { email: $email, password: $password, cartUuid: $previousCartUuid }) {
+        tokens {
+            ...TokenFragments
+        }
+        showCartMergeInfo
+    }
+}

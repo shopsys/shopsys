@@ -1,0 +1,3 @@
+mutation CheckPaymentStatusMutation($orderUuid: Uuid!) {
+    CheckPaymentStatus(orderUuid: $orderUuid)
+}

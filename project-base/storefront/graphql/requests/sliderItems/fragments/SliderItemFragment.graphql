@@ -1,0 +1,10 @@
+fragment SliderItemFragment on SliderItem {
+    __typename
+    uuid
+    name
+    link
+    extendedText
+    extendedTextLink
+    ...SliderItemImagesWebDefaultFragment
+    ...SliderItemImagesMobileDefaultFragment
+}

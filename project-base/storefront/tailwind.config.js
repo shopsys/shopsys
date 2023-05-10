@@ -1,0 +1,67 @@
+const em = (value) => value / 16 + 'em';
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+    content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+    theme: {
+        screens: {
+            xs: em(320),
+            sm: em(480),
+            md: em(600),
+            lg: em(769),
+            vl: em(1024),
+            xl: em(1240),
+            xxl: em(1560),
+        },
+        colors: {
+            dark: '#0d0d0d',
+            primary: '#4c5bfd',
+            primaryLight: '#a3abff',
+            primaryDarker: '#4451e3',
+            white: '#fff',
+            whitesmoke: '#e8e8ea',
+            black: '#000',
+            orange: '#ecb200',
+            orangeLight: '#fff0c4',
+            orangeDarker: '#d4a000',
+            border: '#c4c9ff',
+            red: '#ec5353',
+            redLight: '#f2a2a2',
+            green: '#00ecb1',
+            greenLight: '#81f7da',
+            greenVeryLight: '#e7fce6',
+            greenDark: '#22b92a',
+            grey: '#555764',
+            greyLight: '#a4a7c1',
+            greyVeryLight: '#f5f5f6',
+            greyDark: '#414353',
+            greyDarker: '#4c4e5a',
+            greyLighter: '#e2e3eb',
+            blueLight: '#f2f2ff',
+            blue: '#d9d9ff',
+            creamWhite: '#fefefe',
+            inStock: '#01946f',
+        },
+        fontFamily: {
+            default: ['DM Sans', 'Arial', 'Helvetica', 'sans-serif'],
+        },
+        zIndex: {
+            hidden: -1000,
+            above: 1,
+            menu: 1010,
+            aboveMenu: 1020,
+            overlay: 1030,
+            mobileMenu: 1040,
+            aboveMobileMenu: 1050,
+            cart: 6000,
+            aboveOverlay: 10001,
+            maximum: 10100,
+        },
+        extend: {
+            lineHeight: {
+                default: 1.3,
+            },
+        },
+        plugins: [],
+    },
+};

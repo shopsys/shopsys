@@ -1,0 +1,5 @@
+query OrderDetailByHashQuery($urlHash: String) {
+    order(urlHash: $urlHash) {
+        ...OrderDetailFragment
+    }
+}

@@ -1,0 +1,5 @@
+query CartQuery($cartUuid: Uuid) {
+    cart(cartInput: { cartUuid: $cartUuid }) {
+        ...CartFragment
+    }
+}

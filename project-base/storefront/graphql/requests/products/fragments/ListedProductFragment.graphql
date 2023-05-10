@@ -1,0 +1,33 @@
+fragment ListedProductFragment on Product {
+    __typename
+    id
+    uuid
+    slug
+    fullName
+    name
+    stockQuantity
+    isSellingDenied
+    flags {
+        ...SimpleFlagFragment
+    }
+    image: mainImage {
+        ...ImageSizesFragment
+    }
+    price {
+        ...ProductPriceFragment
+    }
+    availability {
+        ...AvailabilityFragment
+    }
+    availableStoresCount
+    exposedStoresCount
+    catalogNumber
+    brand {
+        ...SimpleBrandFragment
+    }
+    categories {
+        __typename
+        name
+    }
+    isMainVariant
+}

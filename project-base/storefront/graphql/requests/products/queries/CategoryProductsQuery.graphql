@@ -1,0 +1,13 @@
+query CategoryProductsQuery(
+    $endCursor: String!
+    $orderingMode: ProductOrderingModeEnum
+    $filter: ProductFilter
+    $uuid: Uuid
+    $pageSize: Int
+) {
+    category(uuid: $uuid) {
+        products(after: $endCursor, orderingMode: $orderingMode, filter: $filter, first: $pageSize) {
+            ...ListedProductConnectionFragment
+        }
+    }
+}
