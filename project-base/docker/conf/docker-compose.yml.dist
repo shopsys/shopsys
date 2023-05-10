@@ -1,12 +1,17 @@
-version: "3.7"
+version: "3.4"
+
+x-variables:
+    common_build_args: &common_build_args
+        www_data_uid: 1000
+        www_data_gid: 1000
 
 services:
     postgres:
         image: postgres:12.1-alpine
         container_name: shopsys-framework-postgres
         volumes:
-            - ./project-base/app/docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf:delegated
             - postgres-data:/var/lib/postgresql/data
+            - ./app/docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf
         environment:
             - PGDATA=/var/lib/postgresql/data/pgdata
             - POSTGRES_USER=root
@@ -24,49 +29,45 @@ services:
             - php-fpm
             - storefront
         volumes:
-            - ./project-base/app/web:/var/www/html/project-base/app/web:cached
-            - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:delegated
+            - ./app/:/var/www/html
+            - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
         ports:
             - "8000:8080"
 
     storefront:
         restart: always
         build:
-            context: ./project-base/storefront
+            context: ./storefront
             dockerfile: ./docker/dev.Dockerfile
             target: development
         container_name: shopsys-framework-storefront
         command: # Optional
             - dev # change to `- build` if you want to test application build
         volumes:
-            - storefront:/home/node/app
+            - ./storefront:/home/node/app
         ports:
             - "3000:3000"
 
     cypress:
         build:
-            context: ./project-base/storefront
+            context: ./storefront
             dockerfile: ./cypress/docker/Dockerfile
         container_name: shopsys-framework-cypress
         volumes:
-            - ./project-base/storefront/cypress:/app:delegated
+            - ./storefront:/app
         profiles:
             - storefront-acceptance-tests
 
     php-fpm:
         build:
-            context: .
-            dockerfile: project-base/app/docker/php-fpm/Dockerfile
+            context: ./app
+            dockerfile: docker/php-fpm/Dockerfile
             target: development
             args:
-                www_data_uid: 501
-                www_data_gid: 20
-                project_root: project-base/app
+                <<: *common_build_args
         container_name: shopsys-framework-php-fpm
         volumes:
-            - source-code:/var/www/html
-            - ./.git/:/var/www/html/.git:delegated
-            - ~/.gitconfig:/home/www-data/.gitconfig
+            - ./app/:/var/www/html
         ports:
             - "35729:35729"
 
@@ -79,21 +80,18 @@ services:
         image: ghcr.io/joeferner/redis-commander:latest
         restart: always
         environment:
-            - REDIS_HOSTS=redis
+            - REDIS_HOST=redis
         ports:
             - "1600:8081"
 
     selenium-server:
-        image: seleniarm/standalone-firefox:4.9.0
+        image: selenium/standalone-chrome:3.11
         container_name: shopsys-framework-acceptance-tests
         ports:
             - "4400:4444"
-            - "5900:5900"
-            - "7900:7900"
         environment:
             - HUB_PORT_4444_TCP_ADDR=hub
             - HUB_PORT_4444_TCP_PORT=4444
-        shm_size: '2GB'
 
     adminer:
         image: adminer:4.7.6
@@ -102,13 +100,13 @@ services:
             - "1100:8080"
 
     smtp-server:
-        image: ixdotai/smtp:latest
+        image: namshi/smtp:latest
         container_name: shopsys-framework-smtp-server
 
     elasticsearch:
         build:
-            context: .
-            dockerfile: project-base/app/docker/elasticsearch/Dockerfile
+            context: ./app/
+            dockerfile: docker/elasticsearch/Dockerfile
         container_name: shopsys-framework-elasticsearch
         ulimits:
             nofile:
@@ -129,52 +127,8 @@ services:
         ports:
             - "5601:5601"
 
-    mkdocs:
-        build:
-            context: .
-            dockerfile: docker/mkdocs/Dockerfile
-        ports:
-            - "1300:8000"
-        volumes:
-            - source-code:/var/www/html
-
 volumes:
-    source-code:
-    storefront:
     elasticsearch-data:
         driver: local
     postgres-data:
         driver: local
-
-x-mutagen:
-    sync:
-        defaults:
-            ignore:
-                vcs: true
-            permissions:
-                defaultOwner: "id:501"
-        source-code:
-            alpha: "."
-            beta: "volume://source-code"
-            mode: "two-way-resolved"
-            configurationBeta:
-                permissions:
-                    defaultOwner: "id:501"
-                    defaultDirectoryMode: 0777
-            ignore:
-                paths:
-                    - ./.DS_Store
-                    - ./.idea
-                    - ./.npm-global
-                    - ./nbproject
-                    - ./project-base/app/var/elasticsearch-data
-                    - ./project-base/app/var/postgres-data
-                    - ./project-base/storefront
-        storefront:
-            alpha: "./project-base/storefront"
-            beta: "volume://storefront"
-            mode: "two-way-resolved"
-            configurationBeta:
-                permissions:
-                    defaultOwner: "id:501"
-                    defaultDirectoryMode: 0777
