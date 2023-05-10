@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\NamingConventions\ValidVariableNameSniff;
 use Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer;
 use Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff;
 use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
+use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 /**

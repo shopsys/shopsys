@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff;
 use Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer;
 use Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff;
 use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
+use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 /**
