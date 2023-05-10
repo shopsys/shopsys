@@ -94,6 +94,7 @@ use PhpCsFixer\Fixer\Semicolon\SemicolonAfterInstructionFixer;
 use PhpCsFixer\Fixer\Semicolon\SpaceAfterSemicolonFixer;
 use PhpCsFixer\Fixer\Strict\StrictParamFixer;
 use PhpCsFixer\Fixer\StringNotation\SingleQuoteFixer;
+use PhpCsFixer\Fixer\Whitespace\BlankLineBeforeStatementFixer;
 use PhpCsFixer\Fixer\Whitespace\NoSpacesAroundOffsetFixer;
 use PhpCsFixer\Fixer\Whitespace\NoWhitespaceInBlankLineFixer;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
@@ -303,6 +304,25 @@ return static function (ECSConfig $ecsConfig): void {
             'method' => ClassAttributesSeparationFixer::SPACING_ONE,
         ],
     ]);
+    $ecsConfig->ruleWithConfiguration(BlankLineBeforeStatementFixer::class, [
+        'statements' => [
+            'break',
+            'continue',
+            'declare',
+            'do',
+            'for',
+            'foreach',
+            'if',
+            'return',
+            'switch',
+            'throw',
+            'try',
+            'while',
+            'yield',
+        ],
+    ]);
+
+    // Slevomat standards
     $ecsConfig->rule(DisallowEqualOperatorsSniff::class);
     $ecsConfig->rule(ValidClassNameSniff::class);
     $ecsConfig->rule(NoUselessElseFixer::class);
