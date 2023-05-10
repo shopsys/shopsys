@@ -168,3 +168,5 @@ There you can find links to upgrade notes for other versions too.
     - `Tests\FrameworkBundle\Test\Codeception\ActorInterface` interface:
         - method `moveMouseOverByCss` has been removed
     - see #project-base-diff to update your project
+- apply new coding standards for requiring blank line before break, continue, declare, do, for, foreach, if, return, switch, throw, try, while and yield statements ([#2128](https://github.com/shopsys/shopsys/pull/2128))
+    - run `php phing ecs-fix` to apply new standards
