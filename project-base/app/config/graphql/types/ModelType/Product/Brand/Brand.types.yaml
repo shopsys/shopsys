@@ -1,0 +1,50 @@
+Brand:
+    type: object
+    inherits:
+        - 'BrandDecorator'
+    config:
+        interfaces:
+            - 'Breadcrumb'
+            - 'Slug'
+            - 'ProductListable'
+        fields:
+            id:
+                type: "Int!"
+                description: "ID of category"
+            images:
+                type: "[Image!]!"
+                description: "Brand images"
+                resolve: '@=query("imagesByEntityPromiseQuery", value, args["type"], args["sizes"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    sizes:
+                        type: "[String!]"
+                        defaultValue: null
+            mainImage:
+                type: "Image"
+                description: "Brand image by params"
+                resolve: '@=query("mainImageByEntityIdPromiseQuery", value, args["type"], args["size"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    size:
+                        type: "String"
+                        defaultValue: null
+            slug:
+                type: "String!"
+                description: "Brand URL slug"
+            breadcrumb:
+                type: "[Link!]!"
+                description: "Hierarchy of the current element in relation to the structure"
+                resolve: '@=query("breadcrumbQuery", value.getId(), "front_brand_detail")'
+            products:
+                type: "ProductConnection!"
+                description: "Paginated and ordered products of brand"
+                argsBuilder:
+                    builder: "PaginatorArgumentsBuilder"
+                    config:
+                        orderingModeType: 'ProductOrderingModeEnum'
+                resolve: '@=query("productsByBrandQuery", args, value)'

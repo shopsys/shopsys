@@ -1,0 +1,9 @@
+RemoveFromCartInput:
+    type: input-object
+    inherits:
+        - CartInput
+    config:
+        fields:
+            cartItemUuid:
+                type: "Uuid!"
+                description: "Cart item UUID"

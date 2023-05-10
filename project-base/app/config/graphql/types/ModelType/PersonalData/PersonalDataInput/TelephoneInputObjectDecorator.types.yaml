@@ -1,0 +1,19 @@
+TelephoneInputObjectDecorator:
+    type: input-object
+    decorator: true
+    config:
+        fields:
+            telephone:
+                type: "String!"
+                description: "The customer's telephone number"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter telephone number"
+                    -   Length:
+                            min: 9
+                            minMessage: "Telephone number cannot be shorter than {{ limit }} characters"
+                            max: 30
+                            maxMessage: "Telephone number cannot be longer than {{ limit }} characters"
+                    -   Regex:
+                            pattern: '/^[0-9\+]+$/' # see \App\Component\Validator\RegexValidationRule::TELEPHONE_REGEX
+                            message: "Please enter only numbers and the + sign"

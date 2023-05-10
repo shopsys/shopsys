@@ -1,4 +1,0 @@
-Image:
-    type: object
-    inherits:
-        - 'ImageDecorator'

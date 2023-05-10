@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Slider\SliderItemFacade;
 use DateTimeImmutable;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\DBAL\Types\Types;
@@ -75,6 +76,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         $this->processTransportsImages();
         $this->processProductsImages();
         $this->processSliderItemsImages();
+        $this->processStoresImages();
         $this->restartImagesIdsDbSequence();
     }
 
@@ -209,6 +211,8 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         $specificProductsIdsIndexedByImagesIds = [
             64 => 1,
             67 => 5,
+            107 => 70,
+            108 => 71,
         ];
 
         foreach ($productsIdsWithImageIdSameAsProductId as $productId) {
@@ -218,7 +222,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
                 $names[$locale] = 'Product ' . $productId . ' image';
             }
 
-            $this->saveImageIntoDb($productId, 'product', $productId, $names);
+            $this->saveImageIntoDb($productId, 'product', $productId, $names, null, 'image_main');
         }
 
         foreach ($specificProductsIdsIndexedByImagesIds as $imageId => $productId) {
@@ -228,7 +232,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
                 $names[$locale] = 'Product ' . $productId . ' image';
             }
 
-            $this->saveImageIntoDb($productId, 'product', $imageId, $names);
+            $this->saveImageIntoDb($productId, 'product', $imageId, $names, null, 'image_main');
         }
     }
 
@@ -238,6 +242,9 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
             1 => 59,
             2 => 60,
             3 => 61,
+            4 => 208,
+            5 => 209,
+            6 => 210,
         ];
 
         foreach ($imagesIdsIndexedBySliderItemsIds as $sliderItemId => $imageId) {
@@ -247,7 +254,47 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
                 $names[$locale] = 'Product ' . $sliderItemId . ' image';
             }
 
-            $this->saveImageIntoDb($sliderItemId, 'sliderItem', $imageId, $names);
+            $this->saveImageIntoDb($sliderItemId, 'sliderItem', $imageId, $names, SliderItemFacade::IMAGE_TYPE_WEB);
+        }
+
+        //mobile version
+        $imagesIdsIndexedBySliderItemsIds = [
+            1 => 103,
+            2 => 104,
+            3 => 105,
+            4 => 211,
+            5 => 212,
+            6 => 213,
+        ];
+
+        foreach ($imagesIdsIndexedBySliderItemsIds as $sliderItemId => $imageId) {
+            $names = [];
+            foreach ($this->domain->getAllLocales() as $locale) {
+                $names[$locale] = 'Product ' . $sliderItemId . ' image';
+            }
+
+            $this->saveImageIntoDb($sliderItemId, 'sliderItem', $imageId, $names, SliderItemFacade::IMAGE_TYPE_MOBILE);
+        }
+    }
+
+    private function processStoresImages(): void
+    {
+        $storesImagesData = [
+            300,
+            301,
+            302,
+        ];
+
+        foreach ($storesImagesData as $imageId) {
+            /** @var \App\Model\Store\Store $store */
+            $store = $this->getReference(StoreDataFixture::STORE_PREFIX . '1');
+            $names = [];
+
+            foreach ($this->domain->getAllLocales() as $locale) {
+                $names[$locale] = sprintf('%s - %s', $store->getName(), $store->getDescription());
+            }
+
+            $this->saveImageIntoDb($store->getId(), 'store', $imageId, $names);
         }
     }
 
@@ -256,25 +303,34 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
      * @param string $entityName
      * @param int $imageId
      * @param array $names
+     * @param string|null $type
+     * @param string|null $akeneoImageType
+     * @throws \Doctrine\DBAL\Exception
      */
-    private function saveImageIntoDb(int $entityId, string $entityName, int $imageId, array $names = [])
+    private function saveImageIntoDb(int $entityId, string $entityName, int $imageId, array $names = [], ?string $type = null, ?string $akeneoImageType = null)
     {
         $this->em->getConnection()->executeStatement(
-            'INSERT INTO images (id, entity_name, entity_id, type, extension, position, modified_at)
-            VALUES (:id, :entity_name, :entity_id, NULL, :extension, NULL, :modified_at)',
+            'INSERT INTO images (id, entity_name, entity_id, type, extension, position, modified_at, akeneo_image_type)
+            VALUES (:id, :entity_name, :entity_id, :type, :extension, :position, :modified_at, :akeneo_image_type)',
             [
                 'id' => $imageId,
                 'entity_name' => $entityName,
                 'entity_id' => $entityId,
+                'type' => $type,
                 'extension' => self::IMAGE_TYPE,
+                'position' => null,
                 'modified_at' => new DateTimeImmutable('2015-04-16 11:36:06'),
+                'akeneo_image_type' => $akeneoImageType,
             ],
             [
                 'id' => Types::INTEGER,
                 'entity_name' => Types::STRING,
                 'entity_id' => Types::INTEGER,
+                'type' => Types::STRING,
                 'extension' => Types::STRING,
+                'position' => Types::STRING,
                 'modified_at' => Types::DATETIME_IMMUTABLE,
+                'akeneo_image_type' => Types::STRING,
             ],
         );
 

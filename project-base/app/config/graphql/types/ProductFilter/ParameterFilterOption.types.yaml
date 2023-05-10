@@ -1,4 +1,0 @@
-ParameterFilterOption:
-    type: object
-    inherits:
-        - 'ParameterFilterOptionDecorator'

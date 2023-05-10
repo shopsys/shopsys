@@ -10,6 +10,9 @@ msgstr ""
 msgid "%brandName% SEO Title"
 msgstr ""
 
+msgid "%locale% perex - lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu."
+msgstr ""
+
 msgid "(Mon - Sat: 9 - 10 a.m. to 8 - 10 p.m.)"
 msgstr ""
 
@@ -91,6 +94,15 @@ msgstr ""
 msgid "220 x 250 x 9 mm"
 msgstr ""
 
+msgid "24\""
+msgstr ""
+
+msgid "24\" Philips 32PFL4308"
+msgstr ""
+
+msgid "24\" Philips CRT 32PFL4308"
+msgstr ""
+
 msgid "240 x 205 x 15 mm"
 msgstr ""
 
@@ -113,6 +125,9 @@ msgid "27\""
 msgstr ""
 
 msgid "275 kWh/year"
+msgstr ""
+
+msgid "27” Hyundai PLASMA T27D590EY"
 msgstr ""
 
 msgid "27” Hyundai T27D590EY"
@@ -160,7 +175,13 @@ msgstr ""
 msgid "36\" Hyundai 32PFL4308"
 msgstr ""
 
+msgid "36\" Hyundai PLASMA 32PFL4308"
+msgstr ""
+
 msgid "36\" Philips 32PFL4308"
+msgstr ""
+
+msgid "36\" Philips CRT 32PFL4308"
 msgstr ""
 
 msgid "380 g"
@@ -173,6 +194,12 @@ msgid "4 W"
 msgstr ""
 
 msgid "4.5\""
+msgstr ""
+
+msgid "40% SLEVA NA POSTELE, MATRACE A ROŠTY"
+msgstr ""
+
+msgid "40% SLEVA NA ÚLOŽNÉ PROSTORY"
 msgstr ""
 
 msgid "400 g"
@@ -232,6 +259,9 @@ msgstr ""
 msgid "50 g"
 msgstr ""
 
+msgid "51,5\""
+msgstr ""
+
 msgid "51,5” Hyundai 22HD44D"
 msgstr ""
 
@@ -239,6 +269,9 @@ msgid "54\""
 msgstr ""
 
 msgid "54\" Philips 32PFL4308"
+msgstr ""
+
+msgid "54\" Philips CRT 32PFL4308"
 msgstr ""
 
 msgid "55"
@@ -278,6 +311,9 @@ msgid "80x70x70 mm"
 msgstr ""
 
 msgid "9 Mpix"
+msgstr ""
+
+msgid "<a class=\"btn\" href=\"{order_detail_url}\">Zobrazit moje objednávky</a>"
 msgstr ""
 
 msgid "<b>You have chosen payment by credit card. Please finish it in two business days.</b>"
@@ -355,9 +391,6 @@ msgstr ""
 msgid "<p> It is safe for you to your loved ones as important as us? In that case, you will appreciate with hob SDV-3460 feature residual heat indicators - H that you and your loved ones will protect against nasty burns. The residual heat indicator signals a residual temperature of the cooking zone even after power off. </p><br /> <h2> Reasons to opt just for built-in ceramic plate Concept SDV-3460: </h2><br /> <ol> <li> The built-in ceramic hob SDV-3460 you will be astonished <strong> handy touch controls </strong>. </li><li> Special radiators cooking zones <strong> HI-LIGHT </strong> are able to warm up to a maximum of a few seconds. </li><li> <strong> The residual heat indicator H </strong> - protects you against nasty burns. Indicates residual temperature of the cooking zone even after power off. </li><li> If you want to directly select the time that you want to cook, be sure to take the opportunity of the <strong> off-delay </strong>. </li></ol><br /> <h2> Specifications: </h2><br /> <ul> <li> Height: 60 mm </li> <li> Width: 590 mm </li><li> Depth: 520 mm </li><li> Glass ceramics </li><li> Accessories cleaning scraper </li><li> Touch control </li><li> The residual heat indicator - H </li><li> Without frame, angled edges Grounded </li><li> 4 cooking zones </li><li> Auto-off function - EXTRA SECURE </li><li> The off-delay </li><li> Beep </li><li> Control Panel front center </li><li> Child lock </li><li> The ON state </li></ul><br /> <h2> Details: </h2><br /> <ul> <li> Dimensions for installation (HxWxD): 50 x 560 x 490 mm </li><li> Main switch </li><li> <strong> Left Front plate: </strong> </li><li> The diameter of the front left plates: 165x265 mm </li><li> Input left front plate: 1100/2000 W </li><li> <strong> Rear Left plate: </strong> Circular HI-LIGHT </li><li> The diameter of the rear left of the plate 165 mm </li><li> Input left rear plate: 1200 W </li><li> <strong> The right rear plate: </strong> Circular HI-LIGHT </li><li> The diameter of the rear right plate: 200mm </li><li> wattage right rear plate: 1800 W </li><li> <strong> The front right plate: </strong> Circular HI-lihgt </li><li> The diameter of the front right plate: 165 mm </li><li> Input right front plate: 1200 W </li><li> Max.příkon-el .: 5700-6800 W </li><li> Weight: 10 kg </li><li> Voltage: 220-240 / 400 V 2N ~ 50/60 Hz </li> </ul>"
 msgstr ""
 
-msgid "<p> Order number {number} has been sent, thank you for your purchase. We will contact you about next order status. <br /><br /> <a href=\"{order_detail_url}\">Track</a> the status of your order. <br /> {transport_instructions} <br /> {payment_instructions} <br /> </p>"
-msgstr ""
-
 msgid "<p> The minimum space requirements excels sub-mounting range hood OPP-2060th Suitable for very small kitchens. Metal buttons provide ease of use and precise adjustment of the corresponding stage performance. </p> <br /> <br /> <h2> Reasons to choose just the sub-mounting range hood Concept OPP-2060: </h2> <br /> <br /> <ol> <li> Performance is the most important parameter hoods and should be at least equal to ten times the volume of the room. The sub-mounting range hood brand Concept OPP-2060 will surprise performance <strong> 186 m3 per hour </strong>. </li><li> Very practical is the ability to select <strong> 4 Ways exhaust </strong>. </li></ol> Model OPP-2060 is equipped with a practical <strong> metal grease filter </strong>, its maintenance is very easy and unlimited lifespan. If you can not pay out of steam, you can choose instead of exhaust classic <strong> recirculation system </strong> using a carbon filter, which can be bought."
 msgstr ""
 
@@ -418,13 +451,13 @@ msgstr ""
 msgid "A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,"
 msgstr ""
 
-msgid "Action"
-msgstr ""
-
 msgid "Active"
 msgstr ""
 
 msgid "Active/Passive"
+msgstr ""
+
+msgid "Add to cart"
 msgstr ""
 
 msgid "All kind of electronic devices."
@@ -439,7 +472,25 @@ msgstr ""
 msgid "Aquila Aquagym non-carbonated spring water"
 msgstr ""
 
+msgid "Aquila Aquagym non-carbonated spring water, description."
+msgstr ""
+
+msgid "Article for search testing"
+msgstr ""
+
+msgid "Article text for search testing, the search phrase is \"Dina\"."
+msgstr ""
+
+msgid "Authentication code"
+msgstr ""
+
+msgid "Authentication code for two factor authentication: {authentication_code}"
+msgstr ""
+
 msgid "BROTHER PT-H300"
+msgstr ""
+
+msgid "Blog article for search testing"
 msgstr ""
 
 msgid "Bluetooth"
@@ -470,6 +521,9 @@ msgid "By entering an email below, you can view your personal information that w
 msgstr ""
 
 msgid "CD-R VERBATIM 210MB"
+msgstr ""
+
+msgid "CRT"
 msgstr ""
 
 msgid "Camera type"
@@ -536,6 +590,9 @@ msgid "Cash"
 msgstr ""
 
 msgid "Cash on delivery"
+msgstr ""
+
+msgid "Catalog"
 msgstr ""
 
 msgid "Circumaural"
@@ -616,7 +673,7 @@ msgstr ""
 msgid "Dear customer, <br /><br /> based on your email {email}, we are sending you a link to your personal details. By clicking on the link below, you will be taken to a page listing all the<br/> personal details which we have in evidence in our online store {domain}. <br/><br/> To overview your personal information please click here - {url} <br/> The link is valid for next 24 hours.<br/> Best Regards <br/><br/> team of {domain}"
 msgstr ""
 
-msgid "Dear customer, <br /><br />Processing your order has been finished."
+msgid "Dear customer, <br /><br />Processing your order has been finished.<br /><br />{tracking_instructions}"
 msgstr ""
 
 msgid "Dear customer, <br /><br />Your order has been cancelled."
@@ -640,6 +697,12 @@ msgstr ""
 msgid "Deep baking sheet ETV-2560/2860/2960 / 3160bc"
 msgstr ""
 
+msgid "Defaultní varianta - prefix"
+msgstr ""
+
+msgid "Defaultní varianta - suffix"
+msgstr ""
+
 msgid "Defender 2.0 SPK-480"
 msgstr ""
 
@@ -649,7 +712,7 @@ msgstr ""
 msgid "Demo advert"
 msgstr ""
 
-msgid "Demo category advert"
+msgid "Demo advert in category"
 msgstr ""
 
 msgid "Determination"
@@ -704,6 +767,15 @@ msgid "Display type"
 msgstr ""
 
 msgid "Done"
+msgstr ""
+
+msgid "Doprava a platba"
+msgstr ""
+
+msgid "Druhá podsekce %locale%"
+msgstr ""
+
+msgid "Druhá podsekce %locale% - h1"
 msgstr ""
 
 msgid "DéLonghi ECAM 44.660.B. Start the morning with your favorite drink with the DeLonghi ECAM 44.660.B Eletta automatic coffee maker"
@@ -805,6 +877,12 @@ msgstr ""
 msgid "Glass cleaner and a glass-ceramic plates (4019786908123)"
 msgstr ""
 
+msgid "GoPay - Platba kartou"
+msgstr ""
+
+msgid "GrapesJS page"
+msgstr ""
+
 msgid "HDMI"
 msgstr ""
 
@@ -838,6 +916,9 @@ msgstr ""
 msgid "Have you ever experienced an accident and didn't know how to react? Or are you going to? This book is just for you!"
 msgstr ""
 
+msgid "Heading"
+msgstr ""
+
 msgid "Hello Kitty TV"
 msgstr ""
 
@@ -854,6 +935,15 @@ msgid "Hewlett-Packard was founded in the difficult times of the Great Depressio
 msgstr ""
 
 msgid "High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D."
+msgstr ""
+
+msgid "Hlavní stránka blogu - %locale%"
+msgstr ""
+
+msgid "Hlavní údaje"
+msgstr ""
+
+msgid "Hlavní údaje myš"
 msgstr ""
 
 msgid "Home Listening"
@@ -889,7 +979,13 @@ msgstr ""
 msgid "Kabel HDMI A - HDMI A M/M 2m gold-plated connectors High Speed HD"
 msgstr ""
 
+msgid "Kde nás najdete"
+msgstr ""
+
 msgid "Knife potato RM-3240/3250"
+msgstr ""
+
+msgid "Kontakty"
 msgstr ""
 
 msgid "LCD"
@@ -1021,10 +1117,13 @@ msgstr ""
 msgid "NS-9710 Prominent replacement paper bags for VP-9711/12/13"
 msgstr ""
 
-msgid "New [adjective]"
-msgstr "New"
+msgid "Nadlimitní"
+msgstr ""
 
-msgid "New [noun]"
+msgid "Nejčastější dotazy FAQ"
+msgstr ""
+
+msgid "New [adjective]"
 msgstr "New"
 
 msgid "New driving rules and tips just for you!"
@@ -1066,6 +1165,12 @@ msgstr ""
 msgid "Number of processor cores"
 msgstr ""
 
+msgid "Nákup na splátky"
+msgstr ""
+
+msgid "O nás"
+msgstr ""
+
 msgid "OKI MC861cdxm"
 msgstr ""
 
@@ -1096,7 +1201,13 @@ msgstr ""
 msgid "OPV-3260 Built-in retractable hood is 60 cm"
 msgstr ""
 
-msgid "On request"
+msgid "Obchodní podmínky OD"
+msgstr ""
+
+msgid "Obchodní podmínky e-shopu"
+msgstr ""
+
+msgid "Odstoupení od smlouvy"
 msgstr ""
 
 msgid "Open"
@@ -1123,13 +1234,16 @@ msgstr ""
 msgid "Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.)."
 msgstr ""
 
-msgid "Out of stock"
-msgstr ""
-
 msgid "Overall performance"
 msgstr ""
 
+msgid "Očekávejte dodávku koncem příštího měsíce"
+msgstr ""
+
 msgid "PANASONIC DMC FT5EP"
+msgstr ""
+
+msgid "PLASMA"
 msgstr ""
 
 msgid "POS cookbook_steam oven GB"
@@ -1145,9 +1259,6 @@ msgid "Pages count"
 msgstr ""
 
 msgid "Parallel port"
-msgstr ""
-
-msgid "Partner"
 msgstr ""
 
 msgid "Perfectly cleans, treats and protects stainless steel surfaces in one step.<ul> <li> <strong> remove </strong> without smudges dust, dirt, fingerprints and grease </li><li> long-lasting protective film <strong> repellent </strong> water and prevents new settling of dirt </li><li> <strong> acts </strong> antistatically </li></ul>"
@@ -1195,10 +1306,10 @@ msgstr ""
 msgid "Practical and stylish optical mouse ideal for everyday office use.With its ergonomic shape fits perfect and is suitable for left and for right-handers.Using an optical sensor with high sensitivity is move the cursor on the screen fast and smooth.Benefits are also programmable buttons to help with easy access to the programs and documents you use most often.The computer mouse simply connect using a cable with a USB connector and the support Plug and Play, no need to install drivers and you can immediately get to work."
 msgstr ""
 
-msgid "PremiumCord micro USB, A-B, 1m"
+msgid "Pravidla akce"
 msgstr ""
 
-msgid "Preparing"
+msgid "PremiumCord micro USB, A-B, 1m"
 msgstr ""
 
 msgid "Pressure"
@@ -1222,7 +1333,22 @@ msgstr ""
 msgid "Privacy policy"
 msgstr ""
 
+msgid "Pro média"
+msgstr ""
+
 msgid "Processor frequency"
+msgstr ""
+
+msgid "První podsekce %locale%"
+msgstr ""
+
+msgid "První podsekce %locale% - h1"
+msgstr ""
+
+msgid "Práce v Shopsys"
+msgstr ""
+
+msgid "Péče o nábytek"
 msgstr ""
 
 msgid "Quality digital camera with CMOS sensor with a resolution of 18 megapixels"
@@ -1258,6 +1384,9 @@ msgstr ""
 msgid "Registration completed"
 msgstr ""
 
+msgid "Reklamace"
+msgstr ""
+
 msgid "Replacement textile bag for vacuum cleaners CONCEPT Sprinter - VP9070. Package: 1 pc"
 msgstr ""
 
@@ -1277,6 +1406,9 @@ msgid "SDV 3360-built ceramic plate 60 cm"
 msgstr ""
 
 msgid "SDV 3460-built ceramic plate 60 cm"
+msgstr ""
+
+msgid "SLEVA 20% + 21% DPH NAVÍC"
 msgstr ""
 
 msgid "SLR"
@@ -1360,6 +1492,9 @@ msgstr ""
 msgid "Slovakia"
 msgstr ""
 
+msgid "Služby obchodních domů"
+msgstr ""
+
 msgid "Spare paper bags for vacuum cleaners CONCEPT Clipper 9030/31/32/33 VP and VP 9130/31/32"
 msgstr ""
 
@@ -1393,6 +1528,9 @@ msgstr ""
 msgid "Speakers 2 x 3W RMS, 2.0 stereo, portable, volume control, frequency range of 150Hz-20kHz, sensitivity 80dB, 4Ohm impedance, power supply via USB, 3.5 mm audio jack, dimensions 85x85x107mm, weight 550 g"
 msgstr ""
 
+msgid "Spolupráce"
+msgstr ""
+
 msgid "Super LCD"
 msgstr ""
 
@@ -1408,13 +1546,13 @@ msgstr ""
 msgid "TK-9710 Turbo brush Prominent VP 971"
 msgstr ""
 
-msgid "TOP"
-msgstr ""
-
 msgid "TS-9080 replacement bag for textile VP-9080"
 msgstr ""
 
 msgid "TS-9170 replacement bag for textile VP-9171"
+msgstr ""
+
+msgid "TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A +"
 msgstr ""
 
 msgid "TV Cinema 3D LED SMART diagonal 119 cm, 700 MCI, 1920x1080 Full HD"
@@ -1429,6 +1567,9 @@ msgstr ""
 msgid "TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A +"
 msgstr ""
 
+msgid "TV PLASMA, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A +"
+msgstr ""
+
 msgid "TV SMART LED TV, 147 cm diagonal, 4K Ultra HD 3840x2160 4K upscaler"
 msgstr ""
 
@@ -1436,6 +1577,15 @@ msgid "TV SMART LED TV, 147 cm diagonal, 4K Ultra HD 3840x2160 4K upscaler, DVB-
 msgstr ""
 
 msgid "TV, audio"
+msgstr ""
+
+msgid "TV, audio from the cheapest"
+msgstr ""
+
+msgid "TV, audio in sale"
+msgstr ""
+
+msgid "TV, audio plasma with HDMI"
 msgstr ""
 
 msgid "Technology"
@@ -1486,7 +1636,7 @@ msgstr ""
 msgid "Television or TV is a telecommunication medium used for transmitting sound with moving images in monochrome (black-and-white), or in color, and in two or three dimensions"
 msgstr ""
 
-msgid "Terms and conditions"
+msgid "Televize"
 msgstr ""
 
 msgid "Thank you for your order no. {number} placed at {date}"
@@ -1543,6 +1693,9 @@ msgstr ""
 msgid "Ticket for 100 Czech crowns"
 msgstr ""
 
+msgid "To track your package, click on this link: <a href=\"{tracking_url}\">{tracking_url}</a>."
+msgstr ""
+
 msgid "Toilet paper with Euro pictures. Even you can feel rich now!"
 msgstr ""
 
@@ -1564,19 +1717,34 @@ msgstr ""
 msgid "USB"
 msgstr ""
 
+msgid "Ukázkový článek blogu %counter% %locale%"
+msgstr ""
+
+msgid "Ukázkový článek blogu %counter% %locale% - H1"
+msgstr ""
+
 msgid "Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts."
+msgstr ""
+
+msgid "V"
 msgstr ""
 
 msgid "VERBATIM 1TB external HDD 2,5\" USB 3.0 GT SuperSpeed red"
 msgstr ""
 
-msgid "VIP customer"
+msgid "VIP"
+msgstr ""
+
+msgid "Vhodné pro nadměrné zboží"
 msgstr ""
 
 msgid "Video"
 msgstr ""
 
 msgid "Viewfinder type"
+msgstr ""
+
+msgid "W"
 msgstr ""
 
 msgid "Watch broadcast in stunning Full HD, while at the same stylish devices work."
@@ -1639,6 +1807,9 @@ msgstr ""
 msgid "ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue"
 msgstr ""
 
+msgid "Způsob připojení"
+msgstr ""
+
 msgid "battery"
 msgstr ""
 
@@ -1648,16 +1819,46 @@ msgstr ""
 msgid "classic"
 msgstr ""
 
+msgid "cm"
+msgstr ""
+
+msgid "description - Druhá podsekce %locale%"
+msgstr ""
+
+msgid "description - Hlavní stránka blogu - %locale%"
+msgstr ""
+
+msgid "description - Lorem ipsum dolor sit amet, {products=9177759,7700768,9146508} consectetur {products=9177759,9176508} adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue."
+msgstr ""
+
+msgid "description - První podsekce %locale%"
+msgstr ""
+
 msgid "fits into VP812x VP9520"
 msgstr ""
 
 msgid "flash disk"
 msgstr ""
 
+msgid "g"
+msgstr ""
+
 msgid "hardcover"
 msgstr ""
 
+msgid "in"
+msgstr ""
+
 msgid "inkjet"
+msgstr ""
+
+msgid "kW"
+msgstr ""
+
+msgid "kg"
+msgstr ""
+
+msgid "m"
 msgstr ""
 
 msgid "media 210MB, 24min., writing speed 24x, slim box"
@@ -1681,9 +1882,29 @@ msgstr ""
 msgid "pcs"
 msgstr ""
 
+msgid "perex"
+msgstr ""
+
+msgid "plazmová"
+msgstr ""
+
+msgid "t"
+msgstr ""
+
+msgid "title"
+msgstr ""
+
+msgid "title - Druhá podsekce %locale%"
+msgstr ""
+
+msgid "title - První podsekce %locale%"
+msgstr ""
+
+msgid "title - Ukázkový článek blogu %counter% %locale%"
+msgstr ""
+
 msgid "white"
 msgstr ""
 
-msgid "| Demo eshop"
+msgid "| Commerce Cloud"
 msgstr ""
-

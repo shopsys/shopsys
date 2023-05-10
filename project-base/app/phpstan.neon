@@ -40,7 +40,22 @@ parameters:
             # Annotations in Codeception are not well describing
             message: '#^Parameter \#(\d+) (\$cssOrXPath|\$cssOrXPathOrRegex|\$field|\$selector|\$element) of method (Tests\\(.*)\\Codeception\\(.*)|Codeception\\Module\\WebDriver::moveMouseOver\(\)) expects (.*)#'
             path: %currentWorkingDirectory%/tests/App/*
+        -
+            message: '#^Unreachable statement - code above always terminates\.#'
+            path: %currentWorkingDirectory%/tests/App/Functional/Model/Order/OrderFacade*Test.php
+        -
+            message: "#^PHPDoc tag @param for parameter \\$function with type callable is not subtype of native type Closure\\.$#"
+            path: tests/App/Test/Codeception/AcceptanceTester.php
+        -
+            # in fact, anything can be passed to the load function, it just has a bad annotation
+            message: '#^Parameter \#1 \$key of method Overblog\\DataLoader\\DataLoaderInterface::load\(\) expects string#'
+            path: %currentWorkingDirectory%/src/FrontendApi/*
+        -
+            message: '#^Unreachable statement - code above always terminates\.#'
+            path: %currentWorkingDirectory%/tests/App/Functional/EntityExtension/EntityExtensionTest.php
+
     excludePaths:
+        - tests/App/Unit/PhpStan/GedmoTestEntity.php
         # Exclude coding standards for generated files
         - %currentWorkingDirectory%/tests/App/Test/Codeception/_generated/*
 includes:
@@ -49,3 +64,4 @@ includes:
     - vendor/phpstan/phpstan-symfony/extension.neon
     - vendor/phpstan/phpstan-symfony/rules.neon
     - vendor/shopsys/coding-standards/extension.neon
+    - sniffer/PhpStan/extension.neon

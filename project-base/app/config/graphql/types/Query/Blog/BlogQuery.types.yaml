@@ -1,0 +1,32 @@
+BlogQuery:
+    type: object
+    config:
+        fields:
+            blogArticle:
+                type: 'BlogArticle'
+                resolve: "@=query('blogArticleByUuidOrUrlSlugQuery', args['uuid'], args['urlSlug'])"
+                args:
+                    uuid:
+                        type: "Uuid"
+                    urlSlug:
+                        type: "String"
+                description: "Returns blog article filtered using UUID or URL slug"
+            blogArticles:
+                type: "BlogArticleConnection!"
+                argsBuilder: "BlogArticlePaginatorArgumentsBuilder"
+                resolve: "@=query('blogArticlesQuery', args)"
+                complexity: "@=dynamicPaginationComplexity(args)"
+                description: "Returns a list of the blog articles that can be paginated using `first`, `last`, `before` and `after` keywords"
+            blogCategory:
+                type: 'BlogCategory'
+                resolve: "@=query('blogCategoryByUuidOrUrlSlugQuery', args['uuid'], args['urlSlug'])"
+                args:
+                    uuid:
+                        type: "Uuid"
+                    urlSlug:
+                        type: "String"
+                description: "Returns blog category filtered using UUID or URL slug"
+            blogCategories:
+                type: '[BlogCategory!]!'
+                resolve: "@=query('blogCategoriesQuery')"
+                description: "Returns a complete list of the blog categories"

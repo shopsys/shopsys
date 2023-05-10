@@ -68,6 +68,7 @@
         "ext-simplexml": "*",
         "ext-tokenizer": "*",
         "ext-xml": "*",
+        "akeneo/api-php-client-ee": "^5.0",
         "arvenil/ninja-mutex": "^0.4.1",
         "aws/aws-sdk-php": "^3.220.0",
         "barryvdh/elfinder-flysystem-driver": "^0.4.3",
@@ -93,6 +94,7 @@
         "friendsofsymfony/ckeditor-bundle": "^2.1",
         "gedmo/doctrine-extensions": "^3.5",
         "google/cloud-storage": "^1.10",
+        "gopay/payments-sdk-php": "^1.4",
         "gordalina/cachetool": "^8.5",
         "guzzlehttp/guzzle": "^7.5",
         "helios-ag/fm-elfinder-bundle": "^12.2",
@@ -104,13 +106,16 @@
         "jms/translation-bundle": "^1.6.2",
         "knplabs/knp-menu-bundle": "^3.2",
         "lcobucci/jwt": "^4.1.5",
+        "league/csv": "^9.6",
         "league/flysystem": "^3.11",
         "league/flysystem-aws-s3-v3": "^3.12.2",
         "league/flysystem-google-cloud-storage": "^3.0",
+        "league/iso3166": "^3.0",
         "litipk/php-bignumbers": "^0.8.6",
         "nette/utils": "^3.0",
         "nikic/php-parser": "^4.0",
         "nyholm/psr7": "^1.5",
+        "overblog/dataloader-bundle": "^0.5.2",
         "overblog/graphiql-bundle": "^0.3",
         "overblog/graphql-bundle": "^0.15",
         "phing/phing": "^2.17.3",
@@ -121,6 +126,11 @@
         "psr/log": "^1.0",
         "ramsey/uuid": "^4.3.1",
         "roave/better-reflection": "^5.4.0",
+        "scheb/2fa-bundle": "^5.7",
+        "scheb/2fa-email": "^5.7",
+        "scheb/2fa-google-authenticator": "^5.7",
+        "scheb/2fa-qr-code": "^5.7",
+        "sentry/sentry-symfony": "^4.2.8",
         "sensio/framework-extra-bundle": "^5.2",
         "shopsys/jsformvalidator-bundle": "^1.7.0",
         "shopsys/ordered-form": "^5.2",
@@ -137,6 +147,8 @@
         "symfony/event-dispatcher": "^5.4",
         "symfony/flex": "^1.17",
         "symfony/form": "^5.4",
+        "symfony/html-sanitizer": "^6.1.0",
+        "symfony/http-client": "^5.4",
         "symfony/mailer": "^5.4",
         "symfony/monolog-bridge": "^5.4",
         "symfony/monolog-bundle": "^3.5.0",
@@ -144,6 +156,7 @@
         "symfony/proxy-manager-bridge": "^5.4",
         "symfony/rate-limiter": "^5.4",
         "symfony/security-bundle": "^5.4",
+        "symfony/stopwatch": "^5.4",
         "symfony/translation": "^5.4",
         "symfony/twig-bundle": "^5.4",
         "symfony/validator": "^5.4",
@@ -152,6 +165,7 @@
         "symfony/webpack-encore-bundle": "^1.7",
         "symfony/workflow": "^5.4",
         "tracy/tracy": "^2.4.13",
+        "tuscanicz/enum": "^2.1",
         "twig/twig": "^3.5.0",
         "webmozart/assert": "^1.4",
         "webonyx/graphql-php": "^14.5"
@@ -180,7 +194,9 @@
     },
     "conflict": {
         "symfony/symfony": "*",
-        "doctrine/orm": "2.12.0"
+        "doctrine/orm": "2.12.0",
+        "friendsofphp/php-cs-fixer": "2.19.0",
+        "guzzlehttp/psr7": "<=1.8.3, >=2.0.0, <=2.1.0"
     },
     "scripts": {
         "post-install-cmd": [
@@ -209,7 +225,8 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "ocramius/package-versions": true,
-            "symfony/flex": true
+            "symfony/flex": true,
+            "php-http/discovery": true
         }
     },
     "extra": {

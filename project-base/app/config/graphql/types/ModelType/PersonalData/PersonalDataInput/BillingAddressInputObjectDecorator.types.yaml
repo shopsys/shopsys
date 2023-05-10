@@ -1,0 +1,45 @@
+BillingAddressInputObjectDecorator:
+    type: input-object
+    decorator: true
+    config:
+        fields:
+            street:
+                type: "String!"
+                description: "Billing address street name (will be on the tax invoice)"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter your street"
+                    -   Length:
+                            max: 100
+                            maxMessage: "Street cannot be longer than {{ limit }} characters"
+                    -   Regex:
+                            pattern: '/[0-9]+/' # see \App\Component\Validator\RegexValidationRule::STREET_NUMBER_REGEX
+                            message: "Street and house number must contain a number"
+                    -   Regex:
+                            pattern: '/[a-žA-Ž]+/' # see \App\Component\Validator\RegexValidationRule::STREET_ALPHABET_REGEX
+                            message: "Street and house number must contain letters"
+            city:
+                type: "String!"
+                description: "Billing address city name (will be on the tax invoice)"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter your city"
+                    -   Length:
+                            max: 100
+                            maxMessage: "City name cannot be longer than {{ limit }} characters"
+            postcode:
+                type: "String!"
+                description: "Billing address zip code (will be on the tax invoice)"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter your postal code"
+                    -   Length:
+                            max: 30
+                            maxMessage: "Postcode cannot be longer than {{ limit }} characters"
+            country:
+                type: "String!"
+                description: "Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice)"
+                validation:
+                    -   NotBlank:
+                            message: "Please choose country"
+                    -   \Shopsys\FrameworkBundle\Form\Constraints\Country: ~

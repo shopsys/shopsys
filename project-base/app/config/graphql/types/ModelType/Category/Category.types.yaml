@@ -1,0 +1,75 @@
+Category:
+    type: object
+    inherits:
+        - 'CategoryDecorator'
+    config:
+        interfaces:
+            - 'Breadcrumb'
+            - 'Slug'
+            - 'ProductListable'
+        fields:
+            id:
+                type: "Int!"
+                description: "ID of category"
+            name:
+                type: "String!"
+                description: "Localized category name (domain dependent)"
+            description:
+                type: "String"
+                description: "Localized category description (domain dependent)"
+            children:
+                type: "[Category!]!"
+                description: "Descendant categories"
+            bestsellers:
+                type: "[Product!]!"
+                description: "Best selling products"
+                resolve: '@=query("bestSellingProductsByCategoryOrReadyCategorySeoMixQuery", value)'
+            slug:
+                type: "String!"
+                description: "Category URL slug"
+            breadcrumb:
+                type: "[Link!]!"
+                description: "Hierarchy of the current element in relation to the structure"
+                resolve: '@=query("categoryBreadcrumbQuery", value)'
+            images:
+                type: "[Image!]!"
+                description: "Category images"
+                resolve: '@=query("imagesByCategoryOrReadyCategorySeoMixPromiseQuery", value, args["type"], args["sizes"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    sizes:
+                        type: "[String!]"
+                        defaultValue: null
+            products:
+                type: "ProductConnection!"
+                description: "Paginated and ordered products of category"
+                argsBuilder:
+                    builder: "PaginatorArgumentsBuilder"
+                    config:
+                        orderingModeType: 'ProductOrderingModeEnum'
+                resolve: '@=query("productsByCategoryOrReadyCategorySeoMixQuery", args, value)'
+            originalCategorySlug:
+                type: "String"
+                description: "Original category URL slug (for CategorySeoMixes slug of assigned category is returned, null is returned for regular category)"
+            readyCategorySeoMixLinks:
+                type: "[Link!]!"
+                description: "An array of links of prepared category SEO mixes of a given category"
+            linkedCategories:
+                type: "[Category!]!"
+                description: "A list of categories linked to the given category"
+            categoryHierarchy:
+                type: "[CategoryHierarchyItem!]!"
+                description: "All parent category names with their UUIDs"
+            mainImage:
+                type: "Image"
+                description: "Category image by params"
+                resolve: '@=query("mainImageByCategoryOrReadyCategorySeoMixPromiseQuery", value, args["type"], args["size"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    size:
+                        type: "String"
+                        defaultValue: null

@@ -39,6 +39,41 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType }
 
+    App\Form\Admin\Product\Parameter\ParameterFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ParameterFormType }
+
+    App\Form\Admin\Product\Unit\UnitFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Product\Unit\UnitFormType }
+
     App\Form\Admin\PaymentFormTypeExtension:
         tags:
             - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Payment\PaymentFormType }
+
+    App\Form\Admin\PromoCodeFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\PromoCode\PromoCodeFormType }
+
+    App\Form\Admin\SliderItemFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Slider\SliderItemFormType }
+
+    App\Form\Admin\AdvertFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Advert\AdvertFormType }
+    App\Form\Admin\Customer\BillingAddressFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Customer\BillingAddressFormType }
+
+    App\Form\Admin\Customer\DeliveryAddressFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Customer\DeliveryAddressFormType }
+
+    App\Form\Type\CKEditorTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: FOS\CKEditorBundle\Form\Type\CKEditorType }
+
+    App\Form\Admin\Mail\MailSettingFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Mail\MailSettingFormType }

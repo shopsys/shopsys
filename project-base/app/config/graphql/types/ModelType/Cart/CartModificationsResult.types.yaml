@@ -1,0 +1,14 @@
+CartModificationsResult:
+    type: object
+    config:
+        fields:
+            itemModifications:
+                type: "CartItemModificationsResult!"
+            transportModifications:
+                type: "CartTransportModificationsResult!"
+            paymentModifications:
+                type: "CartPaymentModificationsResult!"
+            promoCodeModifications:
+                type: "CartPromoCodeModificationsResult!"
+            someProductWasRemovedFromEshop:
+                type: "Boolean!"

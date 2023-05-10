@@ -1,0 +1,55 @@
+{% macro flagRow(flag, index) %}
+    <tr class="js-flags-item js-form-group table-form__row" data-index="{{ index }}">
+        <td class="table-form__cell table-form__cell--del-before">
+            {{ form_widget(flag.flag) }}
+            {{ form_errors(flag.flag, { errors_attr: { class: 'table-limits__cell__error' } } ) }}
+        </td>
+        <td class="table-form__cell table-form__cell--del">
+            <span class="svg svg-arrow-right"></span>
+        </td>
+        <td class="table-form__cell table-form__cell--del-before">
+            {{ form_widget(flag.type) }}
+            {{ form_errors(flag.type, { errors_attr: { class: 'table-limits__cell__error' } } ) }}
+        </td>
+        <td class="table-form__cell table-form__cell--actions">
+            <a href="#" class="js-flags-item-remove table-form__action"><i class="svg svg-delete-thin in-icon"></i></a>
+        </td>
+    </tr>
+{% endmacro %}
+
+{% block promo_code_flag_collection_widget %}
+    {% import _self as self %}
+    <div class="js-form-group form-group">
+        <table class="table-form" id="promo_code_flags">
+            <thead>
+            <tr class="table-form__row">
+                <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ 'Flag'|trans }}</th>
+                <th class="table-form__cell table-form__cell--del"></th>
+                <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ 'Type'|trans }}</th>
+                <th class="table-form__cell table-form__cell--del-after"></th>
+            </tr>
+            </thead>
+            <tbody class="js-flags" data-prototype="{{ self.flagRow(form.vars.prototype)|escape }}" data-index="{{ form|length }}">
+
+            {% for key, flag in form %}
+                {{ self.flagRow(flag, key) }}
+            {% else %}
+                {% do form.setRendered %}
+            {% endfor %}
+
+            <tr class="js-flags-empty-item table-form__row">
+                <td class="table-form__cell" colspan="4">{{ 'Add some flag'|trans }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="form-line form-line--no-top-border">
+            <div class="form-line__line form-line__line--no-space">
+                <a href="#" class="js-flags-item-add btn btn--plus">
+                    <i class="btn__icon">+</i>
+                    {{ 'Add another flag'|trans }}
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

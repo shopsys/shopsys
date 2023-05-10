@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Payment\Payment;
 use App\Model\Payment\PaymentDataFactory;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -21,22 +22,31 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     public const PAYMENT_CARD = 'payment_card';
     public const PAYMENT_CASH_ON_DELIVERY = 'payment_cash_on_delivery';
     public const PAYMENT_CASH = 'payment_cash';
-
-    private PaymentDataFactory $paymentDataFactory;
+    public const PAYMENT_GOPAY = Payment::TYPE_GOPAY;
+    public const PAYMENT_GOPAY_BANK_ACCOUNT = 'goPay_bank_account_transfer';
+    public const PAYMENT_LATER = 'payment_later';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
+     * @var string[]
+     */
+    private array $uuidPool = [
+        '60b0df97-047f-48e4-8864-1d90ba1aaf84', '5a8d0623-fecc-432e-a4a7-330e96da2dab',
+        '7adc774b-aa39-4727-b373-544345814929', '1dd4fd71-3d82-48cb-b2b0-eecff0f297d3',
+        'a22b0dde-77ab-448f-be5e-831c0b2b5a32',
+    ];
+
+    /**
+     * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \App\Model\Payment\PaymentDataFactory $paymentDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
      */
     public function __construct(
         private readonly PaymentFacade $paymentFacade,
-        PaymentDataFactoryInterface $paymentDataFactory,
+        private readonly PaymentDataFactory $paymentDataFactory,
         private readonly Domain $domain,
         private readonly PriceConverter $priceConverter,
     ) {
-        $this->paymentDataFactory = $paymentDataFactory;
     }
 
     /**
@@ -45,6 +55,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     public function load(ObjectManager $manager)
     {
         $paymentData = $this->paymentDataFactory->create();
+        $paymentData->type = Payment::TYPE_BASIC;
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $paymentData->name[$locale] = t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -65,6 +76,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         ]);
 
         $paymentData = $this->paymentDataFactory->create();
+        $paymentData->type = Payment::TYPE_BASIC;
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $paymentData->name[$locale] = t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -78,6 +90,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         );
 
         $paymentData = $this->paymentDataFactory->create();
+        $paymentData->type = Payment::TYPE_BASIC;
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $paymentData->name[$locale] = t('Cash', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -87,6 +100,50 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::zero());
         $this->createPayment(self::PAYMENT_CASH, $paymentData, [TransportDataFixture::TRANSPORT_PERSONAL]);
+
+        $paymentData = $this->paymentDataFactory->create();
+        $paymentData->type = Payment::TYPE_GOPAY;
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $paymentData->name[$locale] = t('GoPay - Payment By Card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $paymentData->description[$locale] = '';
+            $paymentData->instructions[$locale] = t('<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+        $paymentData->czkRounding = false;
+
+        $paymentData->goPayPaymentMethod = $this->getReference(GoPayDataFixture::PAYMENT_CARD_METHOD);
+
+        $paymentData->hidden = false;
+        $this->createPayment(self::PAYMENT_GOPAY, $paymentData, [
+            TransportDataFixture::TRANSPORT_PERSONAL,
+            TransportDataFixture::TRANSPORT_PPL,
+        ]);
+
+        $paymentData = $this->paymentDataFactory->create();
+        $paymentData->type = self::PAYMENT_GOPAY;
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $paymentData->name[$locale] = t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $paymentData->description[$locale] = t('Quick and Safe payment via bank account transfer.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $paymentData->instructions[$locale] = t('<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+        $paymentData->czkRounding = false;
+        $paymentData->goPayPaymentMethod = $this->getReference(GoPayDataFixture::BANK_ACCOUNT_METHOD);
+        $paymentData->hidden = false;
+        $this->createPayment(self::PAYMENT_GOPAY_BANK_ACCOUNT, $paymentData, [
+            TransportDataFixture::TRANSPORT_PERSONAL,
+            TransportDataFixture::TRANSPORT_CZECH_POST,
+            TransportDataFixture::TRANSPORT_PPL,
+            TransportDataFixture::TRANSPORT_DRONE,
+        ]);
+
+        $paymentData = $this->paymentDataFactory->create();
+        $paymentData->type = Payment::TYPE_BASIC;
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $paymentData->name[$locale] = t('Pay later', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+
+        $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('199.90'));
+        $this->createPayment(self::PAYMENT_LATER, $paymentData, [TransportDataFixture::TRANSPORT_DRONE]);
     }
 
     /**
@@ -99,6 +156,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         PaymentData $paymentData,
         array $transportsReferenceNames,
     ) {
+        $paymentData->uuid = array_pop($this->uuidPool);
         $paymentData->transports = [];
 
         foreach ($transportsReferenceNames as $transportReferenceName) {
@@ -120,6 +178,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
             TransportDataFixture::class,
             VatDataFixture::class,
             CurrencyDataFixture::class,
+            GoPayDataFixture::class,
             SettingValueDataFixture::class,
         ];
     }

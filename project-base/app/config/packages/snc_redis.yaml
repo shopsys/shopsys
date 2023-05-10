@@ -5,13 +5,13 @@ snc_redis:
             alias: 'bestselling_products'
             dsn: 'redis://%env(REDIS_HOST)%'
             options:
-                prefix: '%env(REDIS_PREFIX)%%build-version%:cache:bestselling_products:'
+                prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:bestselling_products:'
         doctrine_query:
             type: 'phpredis'
             alias: 'doctrine_query'
             dsn: 'redis://%env(REDIS_HOST)%'
             options:
-                prefix: '%env(REDIS_PREFIX)%%build-version%:cache:doctrine:query:'
+                prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:doctrine:query:'
         # client is used exclusively for cleaning old versions of redis caches and should not be used for anything else
         global:
             type: 'phpredis'
@@ -24,4 +24,23 @@ snc_redis:
             alias: 'main_friendly_url_slugs'
             dsn: 'redis://%env(REDIS_HOST)%'
             options:
-                prefix: '%env(REDIS_PREFIX)%%build-version%:cache:main_friendly_url_slugs:'
+                prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:main_friendly_url_slugs:'
+        storefront_graphql_query:
+            type: 'phpredis'
+            alias: 'storefront_graphql_query'
+            dsn: 'redis://%env(REDIS_HOST)%'
+            options:
+                prefix: '%env(REDIS_PREFIX)%:fe:queryCache:'
+        image:
+            type: 'phpredis'
+            alias: 'image'
+            dsn: 'redis://%env(REDIS_HOST)%'
+            options:
+                prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:image:'
+        blog_article_export_queue:
+            type: 'phpredis'
+            alias: 'blog_article_export_queue'
+            dsn: 'redis://%env(REDIS_HOST)%'
+            options:
+                serialization: 'json'
+                prefix: '%env(REDIS_PREFIX)%:queue:blog_article_export:'

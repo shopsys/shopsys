@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\DataFixtures\Performance;
 
 use App\DataFixtures\Demo\CountryDataFixture;
-use App\Model\Customer\User\CustomerUserDataFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Generator as Faker;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
@@ -24,8 +23,6 @@ class CustomerUserDataFixture
 
     private int $userCountPerDomain;
 
-    private CustomerUserDataFactory $customerUserDataFactory;
-
     /**
      * @param int $userCountPerDomain
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -36,8 +33,8 @@ class CustomerUserDataFixture
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
+     * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
+     * @param \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
      */
     public function __construct(
         $userCountPerDomain,
@@ -45,14 +42,13 @@ class CustomerUserDataFixture
         private readonly Domain $domain,
         private readonly SqlLoggerFacade $sqlLoggerFacade,
         private readonly CustomerUserFacade $customerUserEditFacade,
-        CustomerUserDataFactoryInterface $customerUserDataFactory,
+        private readonly CustomerUserDataFactoryInterface $customerUserDataFactory,
         private readonly Faker $faker,
         private readonly PersistentReferenceFacade $persistentReferenceFacade,
         private readonly ProgressBarFactory $progressBarFactory,
         private readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
         private readonly DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory,
     ) {
-        $this->customerUserDataFactory = $customerUserDataFactory;
         $this->userCountPerDomain = $userCountPerDomain;
     }
 
@@ -104,7 +100,7 @@ class CustomerUserDataFixture
     /**
      * @param int $domainId
      * @param int $userNumber
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
+     * @return \App\Model\Customer\User\CustomerUserUpdateData
      */
     private function getRandomCustomerUserUpdateDataByDomainId($domainId, $userNumber)
     {

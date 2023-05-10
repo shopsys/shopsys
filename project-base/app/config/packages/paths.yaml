@@ -16,6 +16,8 @@ parameters:
     shopsys.image_config_filepath: '%kernel.project_dir%/config/images.yaml'
     shopsys.image_dir: '/web%shopsys.image_url_prefix%'
     shopsys.image_url_prefix: '/%shopsys.content_dir_name%/images/'
+    shopsys.locale_file_url_prefix: '/%shopsys.content_dir_name%/locales/'
+    shopsys.locale_file_dir: '/web%shopsys.locale_file_url_prefix%'
     shopsys.log_stream: /tmp/log-pipe
     shopsys.resources_dir: '%kernel.project_dir%/src/Resources'
     shopsys.sitemaps_dir: '/web%shopsys.sitemaps_url_prefix%'
@@ -28,4 +30,7 @@ parameters:
     shopsys.data_fixtures_images.resources_dir: '%shopsys.data_fixtures.resources_dir%/images/'
     shopsys.elasticsearch.structure_dir: '%shopsys.resources_dir%/definition/'
     shopsys.json_entrypoints_path: '%kernel.project_dir%/web/build/entrypoints.json'
+    shopsys.product_files_dir: '/web%shopsys.product_files_url_prefix%'
+    shopsys.product_files_url_prefix: '/%shopsys.content_dir_name%/frontend/products/'
     shopsys.var_dir: '/var'
+    svg_icon_path: '%kernel.project_dir%/src/Shopsys/ShopBundle/Resources/svg'

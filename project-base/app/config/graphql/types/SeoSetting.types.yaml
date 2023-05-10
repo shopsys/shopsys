@@ -1,4 +1,0 @@
-SeoSetting:
-    type: object
-    inherits:
-        - 'SeoSettingDecorator'

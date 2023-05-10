@@ -1,0 +1,10 @@
+ProductFilter:
+    type: input-object
+    inherits:
+        - 'ProductFilterDecorator'
+    config:
+        fields:
+            parameters:
+                validation: cascade
+                type: "[ParameterFilter!]"
+                description: "Parameter filter"

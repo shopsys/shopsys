@@ -23,7 +23,7 @@ class VatDataFixture extends AbstractReferenceFixture
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory $vatDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
+     * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
@@ -51,7 +51,7 @@ class VatDataFixture extends AbstractReferenceFixture
         $vatData = $this->vatDataFactory->create();
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            if ($domainId !== 1) {
+            if ($domainId !== Domain::FIRST_DOMAIN_ID) {
                 $vatData->name = 'Zero rate';
                 $vatData->percent = '0';
                 $this->createVat($vatData, $domainId, self::VAT_ZERO);

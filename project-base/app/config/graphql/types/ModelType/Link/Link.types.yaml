@@ -1,0 +1,11 @@
+Link:
+    type: object
+    config:
+        description: "Represents an internal link"
+        fields:
+            name:
+                type: "String!"
+                description: "Clickable text for a hyperlink"
+            slug:
+                type: "String!"
+                description: "Target URL slug"

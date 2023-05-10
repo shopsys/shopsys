@@ -1,0 +1,30 @@
+CartInterface:
+    type: interface
+    config:
+        fields:
+            uuid:
+                type: "Uuid"
+            items:
+                type: "[CartItem!]!"
+            transport:
+                type: "Transport"
+            payment:
+                type: "Payment"
+            selectedPickupPlaceIdentifier:
+                type: "String"
+            promoCode:
+                type: "String"
+            modifications:
+                type: "CartModificationsResult!"
+            totalPrice:
+                type: "Price!"
+                description: "Total price including transport and payment"
+            totalItemsPrice:
+                type: "Price!"
+                description: "Total items price (excluding transport and payment)"
+            totalDiscountPrice:
+                type: "Price!"
+            remainingAmountWithVatForFreeTransport:
+                type: "Money"
+            paymentGoPayBankSwift:
+                type: "String"

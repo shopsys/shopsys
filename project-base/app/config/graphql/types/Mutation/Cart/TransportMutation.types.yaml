@@ -1,0 +1,12 @@
+TransportMutation:
+    type: object
+    config:
+        fields:
+            ChangeTransportInCart:
+                type: Cart!
+                description: "Add a transport to the cart, or remove a transport from the cart"
+                args:
+                    input:
+                        type: ChangeTransportInCartInput!
+                        validation: cascade
+                resolve: "@=mutation('changeTransportInCartMutation', args)"

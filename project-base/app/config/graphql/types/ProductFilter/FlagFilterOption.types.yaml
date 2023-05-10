@@ -1,4 +1,0 @@
-FlagFilterOption:
-    type: object
-    inherits:
-        - 'FlagFilterOptionDecorator'

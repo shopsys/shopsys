@@ -1,4 +1,0 @@
-Settings:
-    type: object
-    inherits:
-        - 'SettingsDecorator'

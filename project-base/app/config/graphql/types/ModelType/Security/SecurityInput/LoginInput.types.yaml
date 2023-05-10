@@ -1,0 +1,10 @@
+LoginInput:
+    type: input-object
+    inherits:
+        - 'LoginInputDecorator'
+    config:
+        fields:
+            cartUuid:
+                type: "Uuid"
+                description: "Uuid of the cart that should be merged to the cart of the user"
+                defaultValue: null

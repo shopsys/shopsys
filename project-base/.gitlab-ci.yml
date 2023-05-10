@@ -1,0 +1,303 @@
+stages:
+    - build
+    - test
+    - review
+    - deploy
+    - service
+
+.only-default: &only-default
+    rules:
+        -   if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+        -   if: '$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS'
+            when: never
+        -   if: '$CI_COMMIT_BRANCH && $CI_PIPELINE_SOURCE != "schedule"'
+
+variables:
+    TAG: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_SLUG}:${CI_COMMIT_SHA}
+    STOREFRONT_TAG: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_SLUG}:${CI_COMMIT_SHA}-storefront
+    HOST: ${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}
+    HOSTS: ${HOST}, cs.${HOST}
+    COMPOSE_PROJECT_NAME: ${CI_PROJECT_NAME}__${CI_COMMIT_REF_SLUG}
+
+before_script:
+    - echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} ${CI_REGISTRY} --password-stdin
+
+build:
+    stage: build
+    <<: *only-default
+    tags:
+        - build
+    script:
+        - cp -R ./docker/nginx/ ./app/docker/nginx/
+        - cd ./app/
+        - docker build -f ./docker/php-fpm/Dockerfile --target production --compress -t ${TAG} .
+        - docker push ${TAG}
+    interruptible: true
+
+build-storefront:
+    stage: build
+    <<: *only-default
+    tags:
+        - build
+    script:
+        - cp ./app/schema.graphql ./storefront/schema.graphql
+        - docker build -f ./storefront/docker/Dockerfile --target production --compress --build-arg SENTRY_RELEASE=${CI_COMMIT_SHORT_SHA} -t ${STOREFRONT_TAG} ./storefront
+        - docker push ${STOREFRONT_TAG}
+    interruptible: true
+
+test:standards-with-graphql-schema-check:
+    stage: test
+    <<: *only-default
+    tags:
+        - tests
+    needs:
+        - build
+    variables:
+        GIT_STRATEGY: none
+    script:
+        - docker run -i ${TAG} /bin/bash -c "mv PRODUCTION DEVELOPMENT; ./check-schema.sh && php phing composer-dev standards"
+    interruptible: true
+
+test:storefront-standards-with-codegen:
+    stage: test
+    <<: *only-default
+    image: node:18.15.0-alpine
+    tags:
+        - tests
+    needs:
+        - build-storefront
+    before_script:
+        - cp ./app/schema.graphql ./storefront/schema.graphql
+        - cd ./storefront
+        - npm ci
+    script:
+        - ./check-next-public-variable.sh
+        - ./check-code-gen.sh
+        - npm run check
+    interruptible: true
+
+tests:functional-and-acceptance:
+    image: tmaier/docker-compose:latest
+    stage: test
+    <<: *only-default
+    tags:
+        - tests
+    script:
+        - cp -f ./gitlab/docker-compose-ci.yml ./docker-compose.yml
+        - docker-compose up -d
+        - docker-compose exec -T php-fpm /bin/bash -c "mv PRODUCTION DEVELOPMENT; php phing composer-dev test-db-create frontend-api-generate-new-keys tests tests-acceptance-build tests-acceptance"
+    after_script:
+        - mkdir -p codeception/
+        - docker cp shopsys-framework-php-fpm:/var/www/html/var/log/codeception/ ./
+    artifacts:
+        paths:
+            - codeception/
+        when: on_failure
+        expire_in: 1 day
+    interruptible: true
+
+test:storefront-acceptance:
+    image: tmaier/docker-compose:latest
+    stage: test
+    <<: *only-default
+    tags:
+        - tests
+    artifacts:
+        paths:
+            - storefront/cypress/videos/
+            - storefront/cypress/screenshots/
+            - php-fpm-log.txt
+            - webserver-log.txt
+            - storefront-log.txt
+        when: on_failure
+        expire_in: 1 day
+    script:
+        - cp -f ./gitlab/docker-compose-ci-storefront-acceptance.yml ./docker-compose.yml
+        - docker-compose up -d
+        - docker-compose exec -T php-fpm sed -i "s/http:\/\/127.0.0.1:8000/http:\/\/webserver:8080/g" config/domains_urls.yaml
+        - docker-compose exec -T php-fpm php phing -D production.confirm.action=y composer-prod db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate
+        - docker-compose run cypress
+    after_script:
+        - docker-compose logs php-fpm > php-fpm-log.txt
+        - docker-compose logs webserver > webserver-log.txt
+        - docker-compose logs storefront > storefront-log.txt
+    interruptible: true
+
+review:
+    stage: review
+    environment:
+        name: "review/${CI_COMMIT_REF_SLUG}"
+        url: https://${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}
+        on_stop: review:stop
+        auto_stop_in: 1 week
+    needs:
+        - build
+        - build-storefront
+    <<: *only-default
+    artifacts:
+        paths:
+            - schema.graphql
+    script:
+        - cp -f ./gitlab/docker-compose-ci-review.yml ./docker-compose.yml
+        - chmod +x ./gitlab/scripts/set-urls-for-review.sh && ./gitlab/scripts/set-urls-for-review.sh setDomainsToDockerCompose
+        - docker-compose down --rmi all -v --remove-orphans
+        - docker-compose up -d
+        - "docker-compose exec -T php-fpm sed -i \"s/database_name:.*/database_name: ${COMPOSE_PROJECT_NAME}/\" config/parameters.yaml"
+        - ./gitlab/scripts/set-urls-for-review.sh setUrlsToDomainsUrls
+        - docker-compose exec -T php-fpm php phing -D production.confirm.action=y clean db-create build-review-ci
+        - ./gitlab/scripts/set-urls-for-review.sh printDomains
+    tags:
+        - review
+    interruptible: true
+
+review:stop:
+    stage: review
+    variables:
+        GIT_STRATEGY: none
+    needs:
+        - build
+    <<: *only-default
+    tags:
+        - review
+    script:
+        - cp -f ./gitlab/docker-compose-ci-review.yml ./docker-compose.yml
+        - docker-compose exec -T php-fpm php phing -D production.confirm.action=y elasticsearch-index-delete
+        - docker-compose down --rmi all -v --remove-orphans
+        - /home/ci/clean.sh ${COMPOSE_PROJECT_NAME}
+    rules:
+        -   if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+            when: manual
+            allow_failure: true
+        -   if: '$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS'
+            when: never
+        -   if: '$CI_COMMIT_BRANCH && $CI_PIPELINE_SOURCE != "schedule"'
+            when: manual
+            allow_failure: true
+    environment:
+        name: review/${CI_COMMIT_REF_SLUG}
+        action: stop
+
+repository:clean:
+    stage: service
+    image: dwdraju/alpine-curl-jq
+    tags:
+        - service
+    rules:
+        -   if: '$CI_PIPELINE_SOURCE == "schedule"'
+    before_script:
+        - chmod +x ./gitlab/scripts/repository-clean.sh
+    script:
+        - ./gitlab/scripts/repository-clean.sh
+
+security:check:
+    stage: service
+    tags:
+        - service
+    needs:
+        - build
+    rules:
+        -   if: '$CI_COMMIT_BRANCH == "master" && $CI_PIPELINE_SOURCE != "schedule"'
+    script:
+        - docker run -i ${TAG} composer security-check
+
+service:merge_request:
+    stage: service
+    image: dwdraju/alpine-curl-jq
+    tags:
+        - service
+    needs: []
+    rules:
+        -   if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    before_script:
+        - chmod +x ./gitlab/scripts/cancel-previous-pipelines.sh
+        - chmod +x ./gitlab/scripts/set-review-url-to-jira.sh
+    script:
+        - ./gitlab/scripts/cancel-previous-pipelines.sh
+        - ./gitlab/scripts/set-review-url-to-jira.sh
+
+.deploy: &deploy
+    image:
+        name: registry.shopsys.cz/devops/kubernetes-buildpack:1.1
+    stage: deploy
+    needs:
+        - build
+        - build-storefront
+    tags:
+        - deploy
+    rules:
+        -   if: '$CI_PIPELINE_SOURCE == "schedule"'
+            when: never
+    script:
+        - cd ./app/
+        - docker create -ti --name image ${TAG} bash
+        - docker cp image:/var/www/html/var/ ./
+        - echo "${KUBE_CONFIG}" > /root/.kube/config
+        - chmod +x ./deploy/deploy-project.sh && ./deploy/deploy-project.sh deploy
+
+deploy:production:
+    <<: *deploy
+    resource_group: deploy_production
+    variables:
+        KUBE_CONFIG: ${KUBE_CONFIG_PROD}
+    rules:
+        -   if: '$CI_PIPELINE_SOURCE == "schedule"'
+            when: never
+        -   if: '$CI_COMMIT_BRANCH == "master"'
+            allow_failure: false
+        -   if: '$CI_COMMIT_BRANCH =~ /^master-.*$/'
+            when: manual
+            allow_failure: false
+    environment:
+        name: production
+        url: https://${DOMAIN_HOSTNAME_1}
+        kubernetes:
+            namespace: ${PROJECT_NAME}
+
+deploy:devel:
+    <<: *deploy
+    resource_group: deploy_devel
+    variables:
+        KUBE_CONFIG: ${KUBE_CONFIG_DEVEL}
+    rules:
+        -   if: '$CI_PIPELINE_SOURCE == "schedule"'
+            when: never
+        -   if: '$CI_COMMIT_BRANCH == "devel" || $CI_COMMIT_BRANCH =~ /^devel-.*$/'
+    environment:
+        name: devel
+        url: https://${DOMAIN_HOSTNAME_1}
+        kubernetes:
+            namespace: ${PROJECT_NAME}
+
+test:gatling:
+    stage: test
+    image:
+        name: registry.shopsys.cz/devops/kubernetes-buildpack:1.1
+    tags:
+        - tests
+    variables:
+        GATLING_BASE_URL: ${GATLING_BASE_URL}
+        GATLING_PAGE_TEST_DURATION: '10'
+        GATLING_API_TEST_DURATION: '10'
+        GATLING_PAGE_USERS_COUNTS_LVL1: '2'
+        GATLING_PAGE_USERS_COUNTS_LVL2: '10'
+        GATLING_PAGE_USERS_COUNTS_LVL3: '15'
+        GATLING_RESULTS: ''
+        GATLING_STRESS_TEST_DURATION: '60'
+        GATLING_STRESS_TEST_USERS_COUNTS: '100'
+    needs: []
+    rules:
+        - if: '$CI_PIPELINE_SOURCE == "schedule"'
+          when: never
+        - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "devel"'
+          when: manual
+    allow_failure: true
+    before_script:
+        - chmod +x ./gatling/run.sh
+    script:
+        - cd ./gatling
+        - ./run.sh
+    artifacts:
+        paths:
+            - gatling/results
+        when: always
+        expire_in: 1 day

@@ -1,0 +1,27 @@
+CustomerUserQuery:
+    type: object
+    config:
+        fields:
+            CompanyCustomerUser:
+                type: 'CompanyCustomerUser'
+            RegularCustomerUser:
+                type: 'RegularCustomerUser'
+            currentCustomerUser:
+                type: 'CustomerUser'
+                resolve: "@=query('nullableCurrentCustomerUserQuery')"
+                description: "Returns currently logged in customer user"
+            isCustomerUserRegistered:
+                type: Boolean!
+                args:
+                    email:
+                        type: String!
+                        validation:
+                            -   NotBlank:
+                                    message: "Please enter valid email"
+                            -   Email:
+                                    message: "Please enter valid email"
+                            -   Length:
+                                    max: 255
+                                    maxMessage: "Email cannot be longer than {{ limit }} characters"
+                resolve: "@=query('isCustomerUserRegisteredQuery', args['email'])"
+                description: "Check if email is registered"

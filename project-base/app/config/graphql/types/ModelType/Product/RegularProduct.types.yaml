@@ -1,0 +1,8 @@
+RegularProduct:
+    type: object
+    inherits:
+        - 'RegularProductDecorator'
+    config:
+        interfaces:
+            - 'Breadcrumb'
+            - 'Slug'

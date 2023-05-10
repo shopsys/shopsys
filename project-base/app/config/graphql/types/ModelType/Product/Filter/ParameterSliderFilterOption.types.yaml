@@ -1,0 +1,15 @@
+ParameterSliderFilterOption:
+    type: object
+    inherits:
+        - 'AppParameterFilterOptionDecorator'
+    config:
+        fields:
+            minimalValue:
+                type: "Float!"
+                description: "The parameter minimal value"
+            maximalValue:
+                type: "Float!"
+                description: "The parameter maximal value"
+            selectedValue:
+                type: "Float"
+                description: "The pre-selected value (used for \"ready category seo mixes\")"

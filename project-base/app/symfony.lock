@@ -80,6 +80,9 @@
     "craue/formflow-bundle": {
         "version": "3.2.1"
     },
+    "dasprid/enum": {
+        "version": "1.0.3"
+    },
     "dealerdirect/phpcodesniffer-composer-installer": {
         "version": "v0.7.0"
     },
@@ -186,8 +189,11 @@
     "elasticsearch/elasticsearch": {
         "version": "v6.7.2"
     },
+    "endroid/qr-code": {
+        "version": "3.9.6"
+    },
     "enlightn/security-checker": {
-        "version": "v1.2"
+        "version": "v1.5.0"
     },
     "ezimuel/guzzlestreams": {
         "version": "3.0.1"
@@ -243,6 +249,12 @@
     "google/crc32": {
         "version": "v0.1.0"
     },
+    "gopay/payments-sdk-php": {
+        "version": "v1.4.1"
+    },
+    "gordalina/cachetool": {
+        "version": "4.1.1"
+    },
     "guzzlehttp/guzzle": {
         "version": "6.4.1"
     },
@@ -268,11 +280,17 @@
     "heureka/overeno-zakazniky": {
         "version": "v2.0.6"
     },
+    "http-interop/http-factory-guzzle": {
+        "version": "1.0.0"
+    },
     "intervention/image": {
         "version": "2.5.1"
     },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
+    },
+    "jean85/pretty-package-versions": {
+        "version": "1.2"
     },
     "jetbrains/phpstorm-stubs": {
         "version": "v2019.1"
@@ -303,6 +321,9 @@
     "justinrainbow/json-schema": {
         "version": "5.2.9"
     },
+    "khanamiryan/qrcode-detector-decoder": {
+        "version": "1.0.4"
+    },
     "knplabs/knp-menu": {
         "version": "2.6.0"
     },
@@ -316,13 +337,19 @@
         "version": "2.2.0"
     },
     "lcobucci/jwt": {
-        "version": "3.3.2"
+        "version": "3.4.5"
+    },
+    "league/csv": {
+        "version": "9.6.0"
     },
     "league/flysystem": {
         "version": "1.0.57"
     },
-    "league/flysystem-cached-adapter": {
-        "version": "1.0.9"
+    "league/flysystem-aws-s3-v3": {
+        "version": "1.0.23"
+    },
+    "league/iso3166": {
+        "version": "2.1.5"
     },
     "league/mime-type-detection": {
         "version": "1.5.1"
@@ -333,8 +360,14 @@
     "monolog/monolog": {
         "version": "1.25.1"
     },
+    "mtdowling/jmespath.php": {
+        "version": "2.5.0"
+    },
     "myclabs/deep-copy": {
         "version": "1.9.3"
+    },
+    "myclabs/php-enum": {
+        "version": "1.8.0"
     },
     "nette/utils": {
         "version": "v2.5.3"
@@ -353,6 +386,12 @@
         "files": [
             "config/packages/nyholm_psr7.yaml"
         ]
+    },
+    "overblog/dataloader-bundle": {
+        "version": "v0.5.2"
+    },
+    "overblog/dataloader-php": {
+        "version": "v0.6.0"
     },
     "overblog/graphiql-bundle": {
         "version": "0.1",
@@ -380,6 +419,9 @@
             "config/routes/graphql.yaml"
         ]
     },
+    "paragonie/constant_time_encoding": {
+        "version": "v2.4.0"
+    },
     "paragonie/random_compat": {
         "version": "v9.99.99"
     },
@@ -392,11 +434,26 @@
     "phing/phing": {
         "version": "2.16.1"
     },
-    "php-cs-fixer/diff": {
-        "version": "v1.3.0"
+    "php-http/client-common": {
+        "version": "2.5.0"
+    },
+    "php-http/discovery": {
+        "version": "1.7.4"
+    },
+    "php-http/httplug": {
+        "version": "2.1.0"
+    },
+    "php-http/message": {
+        "version": "1.12.0"
     },
     "php-http/message-factory": {
         "version": "v1.0.2"
+    },
+    "php-http/multipart-stream-builder": {
+        "version": "1.1.0"
+    },
+    "php-http/promise": {
+        "version": "v1.0.0"
     },
     "php-parallel-lint/php-parallel-lint": {
         "version": "v1.3.2"
@@ -479,6 +536,9 @@
     "psr/event-dispatcher": {
         "version": "1.0.0"
     },
+    "psr/http-client": {
+        "version": "1.0.0"
+    },
     "psr/http-factory": {
         "version": "1.0.1"
     },
@@ -511,6 +571,28 @@
     },
     "roave/signature": {
         "version": "1.0.0"
+    },
+    "scheb/2fa-bundle": {
+        "version": "5.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "5.0",
+            "ref": "95d9da4bffdc29417c209141cae8292e40d6af19"
+        },
+        "files": [
+            "config/packages/scheb_2fa.yaml",
+            "config/routes/scheb_2fa.yaml"
+        ]
+    },
+    "scheb/2fa-email": {
+        "version": "v5.7.0"
+    },
+    "scheb/2fa-google-authenticator": {
+        "version": "v5.7.0"
+    },
+    "scheb/2fa-qr-code": {
+        "version": "v5.7.0"
     },
     "sebastian/cli-parser": {
         "version": "1.0.1"
@@ -569,53 +651,71 @@
     "sensio/framework-extra-bundle": {
         "version": "v3.0.29"
     },
+    "sentry/sdk": {
+        "version": "2.2.0"
+    },
+    "sentry/sentry": {
+        "version": "2.5.2"
+    },
+    "sentry/sentry-symfony": {
+        "version": "3.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "9746f0823302d7980e5273ef7a69ef3f5ac80914"
+        },
+        "files": [
+            "config/packages/sentry.yaml"
+        ]
+    },
     "shopsys/coding-standards": {
-        "version": "dev-mg-weird-flex-but-ok"
+        "version": "v9.1.1"
     },
     "shopsys/form-types-bundle": {
-        "version": "dev-mg-weird-flex-but-ok"
+        "version": "v9.1.1"
     },
     "shopsys/framework": {
-        "version": "dev-mg-weird-flex-but-ok"
+        "version": "v9.1.1"
     },
     "shopsys/frontend-api": {
-        "version": "dev-mg-weird-flex-but-ok"
+        "version": "v9.1.1"
     },
     "shopsys/google-cloud-bundle": {
-        "version": "dev-mg-weird-flex-but-ok"
+        "version": "v9.1.1"
     },
     "shopsys/http-smoke-testing": {
-        "version": "dev-mg-weird-flex-but-ok"
+        "version": "v9.1.1"
     },
     "shopsys/jsformvalidator-bundle": {
         "version": "1.7.0"
     },
     "shopsys/migrations": {
-        "version": "dev-mg-weird-flex-but-ok"
+        "version": "v9.1.1"
     },
     "shopsys/ordered-form": {
         "version": "4.0.0"
     },
     "shopsys/plugin-interface": {
-        "version": "dev-mg-weird-flex-but-ok"
+        "version": "v9.1.1"
     },
     "shopsys/postgres-search-bundle": {
         "version": "0.1"
     },
     "shopsys/product-feed-google": {
-        "version": "dev-mg-weird-flex-but-ok"
+        "version": "v9.1.1"
     },
     "shopsys/product-feed-heureka": {
-        "version": "dev-mg-weird-flex-but-ok"
+        "version": "v9.1.1"
     },
     "shopsys/product-feed-heureka-delivery": {
-        "version": "dev-mg-weird-flex-but-ok"
+        "version": "v9.1.1"
     },
     "shopsys/product-feed-zbozi": {
-        "version": "dev-mg-weird-flex-but-ok"
+        "version": "v9.1.1"
     },
     "shopsys/read-model": {
-        "version": "dev-mg-weird-flex-but-ok"
+        "version": "v9.1.1"
     },
     "shopsys/s3-bridge": {
         "version": "12.0.x-dev"
@@ -637,6 +737,9 @@
         "files": [
             "config/packages/snc_redis.yaml"
         ]
+    },
+    "spomky-labs/otphp": {
+        "version": "v10.0.1"
     },
     "squizlabs/php_codesniffer": {
         "version": "3.0",
@@ -670,9 +773,6 @@
     },
     "studio-42/elfinder": {
         "version": "2.1.50"
-    },
-    "superbalist/flysystem-google-storage": {
-        "version": "7.2.2"
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.2.1"
@@ -712,9 +812,6 @@
         ]
     },
     "symfony/css-selector": {
-        "version": "v3.4.33"
-    },
-    "symfony/debug": {
         "version": "v3.4.33"
     },
     "symfony/debug-bundle": {
@@ -793,32 +890,17 @@
             "src/Kernel.php"
         ]
     },
+    "symfony/http-client": {
+        "version": "v4.4.27"
+    },
     "symfony/http-client-contracts": {
-        "version": "v1.1.7"
+        "version": "v2.3.1"
     },
     "symfony/http-foundation": {
         "version": "v3.4.33"
     },
     "symfony/http-kernel": {
         "version": "v3.4.33"
-    },
-    "symfony/inflector": {
-        "version": "v3.4.33"
-    },
-    "symfony/intl": {
-        "version": "v3.4.33"
-    },
-    "symfony/lock": {
-        "version": "5.4",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "5.2",
-            "ref": "8e937ff2b4735d110af1770f242c1107fdab4c8e"
-        },
-        "files": [
-            "project-base/config/packages/lock.yaml"
-        ]
     },
     "symfony/mailer": {
         "version": "5.4",
@@ -885,6 +967,9 @@
     "symfony/polyfill-php81": {
         "version": "v1.23.0"
     },
+    "symfony/polyfill-uuid": {
+        "version": "v1.23.0"
+    },
     "symfony/process": {
         "version": "v3.4.33"
     },
@@ -896,6 +981,9 @@
     },
     "symfony/proxy-manager-bridge": {
         "version": "v3.4.33"
+    },
+    "symfony/psr-http-message-bridge": {
+        "version": "v2.1.2"
     },
     "symfony/routing": {
         "version": "3.3",
@@ -910,9 +998,6 @@
             "config/routes.yaml"
         ]
     },
-    "symfony/security": {
-        "version": "v3.4.33"
-    },
     "symfony/security-bundle": {
         "version": "3.3",
         "recipe": {
@@ -926,7 +1011,7 @@
         ]
     },
     "symfony/service-contracts": {
-        "version": "v1.1.8"
+        "version": "v2.0.1"
     },
     "symfony/stopwatch": {
         "version": "v3.4.33"
@@ -1028,13 +1113,19 @@
         "version": "v3.4.33"
     },
     "symplify/easy-coding-standard": {
-        "version": "v5.4.13"
+        "version": "v7.2.2"
+    },
+    "thecodingmachine/safe": {
+        "version": "v1.3.3"
     },
     "theseer/tokenizer": {
         "version": "1.1.3"
     },
     "tracy/tracy": {
         "version": "v2.6.5"
+    },
+    "tuscanicz/enum": {
+        "version": "v2.1"
     },
     "twig/twig": {
         "version": "v2.12.1"
@@ -1043,7 +1134,7 @@
         "version": "1.5.0"
     },
     "webonyx/graphql-php": {
-        "version": "v0.13.8"
+        "version": "v0.13.9"
     },
     "zalas/injector": {
         "version": "v1.2.0"

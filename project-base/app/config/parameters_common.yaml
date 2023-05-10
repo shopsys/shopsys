@@ -4,6 +4,7 @@ parameters:
     # Symfony's FrameworkBundle sets throw_at (error_reporting) to 0 in production by default
     debug.error_handler.throw_at: -1
     locale: en
+    shopsys.admin_locale: en
     # Performance test parameters
     shopsys.performance_data.category.counts_by_level: [2, 4, 6]
     shopsys.performance_data.product.total_count: 40000
@@ -23,3 +24,4 @@ parameters:
     shopsys.display_timezone: Europe/Prague
     shopsys.cron_timezone: Europe/Prague
     shopsys.image.enable_lazy_load: true
+    admin_url: 'admin'

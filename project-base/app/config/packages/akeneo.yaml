@@ -1,0 +1,8 @@
+parameters:
+    akeneo_config:
+        enabled: '%env(bool:AKENEO_ENABLED)%'
+        base_uri: '%env(AKENEO_BASE_URI)%'
+        client_id: '%env(AKENEO_CLIENT_ID)%'
+        secret: '%env(AKENEO_SECRET)%'
+        user: '%env(AKENEO_USER)%'
+        password: '%env(AKENEO_PASSWORD)%'

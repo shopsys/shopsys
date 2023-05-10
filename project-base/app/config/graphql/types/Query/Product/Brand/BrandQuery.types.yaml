@@ -1,0 +1,11 @@
+BrandQuery:
+    type: object
+    config:
+        fields:
+            brandSearch:
+                type: "[Brand!]!"
+                resolve: "@=query('brandSearchQuery', args)"
+                args:
+                    search:
+                        type: "String!"
+                description: "Returns list of searched brands"

@@ -17,7 +17,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 class PricingGroupDataFixture extends AbstractReferenceFixture
 {
     public const PRICING_GROUP_ORDINARY = 'pricing_group_ordinary';
-    public const PRICING_GROUP_PARTNER = 'pricing_group_partner';
+    public const PRICING_GROUP_VIP = 'pricing_group_vip';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
@@ -39,37 +39,8 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
     public function load(ObjectManager $manager)
     {
         foreach ($this->domain->getAll() as $domainConfig) {
-            $domainId = $domainConfig->getId();
-            $locale = $domainConfig->getLocale();
-
-            $pricingGroupData = $this->pricingGroupDataFactory->create();
-
             $this->editDefaultPricingGroupOnDomain($domainConfig);
-
-            if ($domainId !== Domain::SECOND_DOMAIN_ID) {
-                $pricingGroupData->name = t('Partner', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-                $this->createPricingGroup($pricingGroupData, $domainId, self::PRICING_GROUP_PARTNER);
-            }
-
-            $pricingGroupData->name = t('VIP customer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $this->createPricingGroup($pricingGroupData, $domainId);
-        }
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
-     * @param int $domainId
-     * @param string|null $referenceName
-     */
-    private function createPricingGroup(
-        PricingGroupData $pricingGroupData,
-        int $domainId,
-        ?string $referenceName = null,
-    ): void {
-        $pricingGroup = $this->pricingGroupFacade->create($pricingGroupData, $domainId);
-
-        if ($referenceName !== null) {
-            $this->addReferenceForDomain($referenceName, $pricingGroup, $domainId);
+            $this->createVipPricingGroup($domainConfig);
         }
     }
 
@@ -84,16 +55,23 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
      */
     private function editDefaultPricingGroupOnDomain(DomainConfig $domainConfig): void
     {
-        $defaultPricingGroupOnDomain = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId(
-            $domainConfig->getId(),
+        $defaultPricingGroupOnDomain = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainConfig->getId(),
         );
         $pricingGroupData = $this->pricingGroupDataFactory->createFromPricingGroup($defaultPricingGroupOnDomain);
         $pricingGroupData->name = t('Ordinary customer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale());
         $this->pricingGroupFacade->edit($defaultPricingGroupOnDomain->getId(), $pricingGroupData);
-        $this->addReferenceForDomain(
-            self::PRICING_GROUP_ORDINARY,
-            $defaultPricingGroupOnDomain,
-            $domainConfig->getId(),
-        );
+        $this->addReferenceForDomain(self::PRICING_GROUP_ORDINARY, $defaultPricingGroupOnDomain, $domainConfig->getId());
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     */
+    private function createVipPricingGroup(DomainConfig $domainConfig): void
+    {
+        $pricingGroupData = $this->pricingGroupDataFactory->create();
+        $pricingGroupData->name = t('VIP', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale());
+        $domainId = $domainConfig->getId();
+        $pricingGroup = $this->pricingGroupFacade->create($pricingGroupData, $domainId);
+        $this->addReferenceForDomain(self::PRICING_GROUP_VIP, $pricingGroup, $domainId);
     }
 }

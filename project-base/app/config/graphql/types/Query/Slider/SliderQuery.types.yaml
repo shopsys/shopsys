@@ -1,0 +1,8 @@
+SliderQuery:
+    type: object
+    config:
+        fields:
+            sliderItems:
+                type: '[SliderItem!]!'
+                resolve: "@=query('sliderItemsQuery')"
+                description: "Returns a complete list of the slider items"

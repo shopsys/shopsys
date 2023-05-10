@@ -12,3 +12,9 @@
     types:
         -   name: default
             multiple: true
+
+-   name: parameterValue
+    class: App\Model\Product\Parameter\ParameterValue
+    types:
+        -   name: default
+            multiple: false

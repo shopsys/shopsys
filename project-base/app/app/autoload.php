@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Doctrine\Common\Annotations\AnnotationRegistry;
-
 $symfonyDumpFunctionPath = 'vendor/symfony/var-dumper/Resources/functions/dump.php';
 
 $projectRootDirectory = __DIR__ . '/..';

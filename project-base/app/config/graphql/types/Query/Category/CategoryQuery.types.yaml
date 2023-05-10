@@ -1,0 +1,17 @@
+CategoryQuery:
+    type: object
+    config:
+        fields:
+            promotedCategories:
+                type: '[Category!]!'
+                resolve: "@=query('promotedCategoriesQuery')"
+                description: "Returns promoted categories"
+            categoriesSearch:
+                type: "CategoryConnection!"
+                argsBuilder: "Relay::Connection"
+                resolve: "@=query('categoriesSearchQuery', args)"
+                complexity: "@=dynamicPaginationComplexity(args)"
+                args:
+                    search:
+                        type: "String!"
+                description: "Returns list of searched categories that can be paginated using `first`, `last`, `before` and `after` keywords"

@@ -19,6 +19,8 @@ fos_ck_editor:
                 - ['Format']
                 - ['FontSize']
                 - ['TextColor']
+                - ['AddLayout']
+            extraPlugins: 'layoutmanager'
 
         email:
             entities_greek: false
@@ -37,3 +39,14 @@ fos_ck_editor:
                 - ['Format']
                 - ['FontSize']
                 - ['TextColor']
+
+    plugins:
+        layoutmanager:
+            path: '/bundles/fosckeditor/plugins/layoutmanager/'
+            filename: 'plugin.js'
+        sharedspace:
+            path: '/bundles/fosckeditor/plugins/sharedspace/'
+            filename: 'plugin.js'
+        strinsert:
+            path: '/bundles/fosckeditor/plugins/strinsert/'
+            filename: 'plugin.js'

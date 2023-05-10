@@ -1,0 +1,11 @@
+TransportQuery:
+    type: object
+    config:
+        fields:
+            transports:
+                type: '[Transport!]!'
+                resolve: "@=query('transportsQuery', args['cartUuid'])"
+                args:
+                    cartUuid:
+                        type: "Uuid"
+                description: "Returns available transport methods based on the current cart state"

@@ -1,0 +1,12 @@
+CartTransportModificationsResult:
+    type: object
+    config:
+        fields:
+            transportPriceChanged:
+                type: "Boolean!"
+            transportUnavailable:
+                type: "Boolean!"
+            transportWeightLimitExceeded:
+                type: "Boolean!"
+            personalPickupStoreUnavailable:
+                type: "Boolean!"

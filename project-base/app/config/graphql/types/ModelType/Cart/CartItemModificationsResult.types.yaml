@@ -1,0 +1,12 @@
+CartItemModificationsResult:
+    type: object
+    config:
+        fields:
+            noLongerListableCartItems:
+                type: "[CartItem!]!"
+            cartItemsWithModifiedPrice:
+                type: "[CartItem!]!"
+            cartItemsWithChangedQuantity:
+                type: "[CartItem!]!"
+            noLongerAvailableCartItemsDueToQuantity:
+                type: "[CartItem!]!"

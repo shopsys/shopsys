@@ -1,0 +1,8 @@
+{% extends 'Admin/Content/Blog/Category/detail.html.twig' %}
+
+{% block title %}- {{ 'Nová rubrika blogu'|trans }}{% endblock %}
+{% block h1 %}{{ 'Nová rubrika blogu'|trans }}{% endblock %}
+
+{% block category_urls %}
+    {% do form.urls.setRendered %}
+{% endblock %}

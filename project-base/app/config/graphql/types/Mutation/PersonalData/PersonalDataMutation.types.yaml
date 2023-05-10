@@ -1,0 +1,20 @@
+PersonalDataMutation:
+    type: object
+    config:
+        fields:
+            ChangePersonalData:
+                type: 'CustomerUser!'
+                description: "Changes customer user personal data"
+                args:
+                    input:
+                        type: ChangePersonalDataInput!
+                        validation: cascade
+                resolve: "@=mutation('changePersonalDataMutation', args, validator)"
+            RequestPersonalDataAccess:
+                type: PersonalDataPage!
+                description: "Request access to personal data"
+                args:
+                    input:
+                        type: PersonalDataAccessRequestInput!
+                        validation: cascade
+                resolve: "@=mutation('requestPersonalDataAccessMutation', args, validator)"

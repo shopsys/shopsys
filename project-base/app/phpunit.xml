@@ -32,12 +32,13 @@
         <env name="KERNEL_CLASS" value="App\Kernel" />
         <env name="APP_ENV" value="test" />
         <env name="APP_DEBUG" value="false" />
-        <ini name="memory_limit" value="768M" />
+        <ini name="memory_limit" value="2G" />
     </php>
 
     <testsuites>
         <testsuite name="Unit">
             <directory>tests/App/Unit</directory>
+            <directory>tests/*Bundle/Unit</directory>
         </testsuite>
         <testsuite name="Functional">
             <directory>tests/App/Functional</directory>

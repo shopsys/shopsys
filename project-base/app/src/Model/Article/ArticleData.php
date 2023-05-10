@@ -8,8 +8,18 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleData as BaseArticleData;
 
 class ArticleData extends BaseArticleData
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    /**
+     * @var bool
+     */
+    public $external = false;
+
+    /**
+     * @var string
+     */
+    public $type = Article::TYPE_SITE;
+
+    /**
+     * @var string|null
+     */
+    public ?string $url = null;
 }

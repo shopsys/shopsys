@@ -19,9 +19,19 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData
  *     }
  * )
  * @ORM\Entity
+ * @property \App\Model\Customer\DeliveryAddress|null $defaultDeliveryAddress
+ * @property \App\Model\Customer\User\CustomerUserRefreshTokenChain[]|\Doctrine\Common\Collections\Collection $refreshTokenChain
+ * @method addRefreshTokenChain(\App\Model\Customer\User\CustomerUserRefreshTokenChain $customerUserRefreshTokenChain)
+ * @method \App\Model\Customer\DeliveryAddress|null getDefaultDeliveryAddress()
  */
 class CustomerUser extends BaseUser
 {
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $newsletterSubscription;
+
     /**
      * @param \App\Model\Customer\User\CustomerUserData $customerUserData
      */
@@ -45,5 +55,26 @@ class CustomerUser extends BaseUser
     protected function setData(BaseUserData $customerUserData): void
     {
         parent::setData($customerUserData);
+
+        $this->newsletterSubscription = $customerUserData->newsletterSubscription;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNewsletterSubscription(): bool
+    {
+        return $this->newsletterSubscription;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActivated(): bool
+    {
+        /** @var \App\Model\Customer\BillingAddress $billingAddress */
+        $billingAddress = $this->getCustomer()->getBillingAddress();
+
+        return $billingAddress->isActivated();
     }
 }

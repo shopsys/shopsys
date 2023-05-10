@@ -1,0 +1,69 @@
+{% extends '@!ShopsysFramework/Admin/Form/imageuploadFields.html.twig' %}
+
+{% block image_upload_row %}
+    {% if entity is not null %}
+        {% if form.orderedImages|length > 0 %}
+            <div class="list-files__wrap">
+                <ul class="list-files js-file-upload">
+                    {% for imageForm in form.orderedImages %}
+                        {% set image = images_by_id[imageForm.vars.value] %}
+                        {% set isRemoved = false %}
+                        {% if not multiple and loop.index > 1 %}
+                            {% set isRemoved = true %}
+                        {% endif %}
+                        <li class="list-files__item js-file-upload-file" data-id="{{ image.id }}" data-delete-input="#{{ form.imagesToDelete.vars.id }}">
+                            <div class="list-files__item__in">
+                                <div class="list-files__item__file js-file-upload-preview {% if isRemoved %}list-files__item__in--removed{% endif %}">
+                                    {{ image(image, {size: 'original', height: '100', type: image_type, lazy: false}) }}
+                                </div>
+                                {% if multiple %}
+                                    <span class="list-files__item__main">
+                                        {{ 'Main image'|trans }}
+                                    </span>
+                                    <span class="js-file-upload-file-handle list-files__item__move" title="{{ 'Move'|trans }}">
+                                        {{ icon('move') }}
+                                    </span>
+                                {% endif %}
+                                {% if not isRemoved %}
+                                    <button class="js-file-upload-delete-button btn-no-style list-files__item__remove" type="button" title="{{ 'Delete'|trans }}">
+                                        {{ icon('delete') }}
+                                    </button>
+                                    <button class="btn-no-style js-file-upload-delete-revert-button display-none list-files__item__revert" type="button" title="{{ 'Return back'|trans }}">
+                                        {{ icon('forward-page') }}
+                                    </button>
+                                {% endif %}
+                                <span class="list-files__item__overlay {% if isRemoved %}list-files__item__overlay__show{% endif %} js-file-upload-file-overlay">
+                                    {{ 'Image will be deleted after saving.'|trans }}
+                                </span>
+                            </div>
+                            {# Ignore indices from form definition. Let them reflect new positions. #}
+                            {{ form_widget(imageForm, { full_name: form.orderedImages.vars.full_name ~ '[]'}) }}
+                            {{ form_widget(form.namesIndexedByImageIdAndLocale.children[imageForm.vars.value]) }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            {% do form.orderedImages.setRendered %}
+            <div class="form-line">
+                <label class="form-line__label">
+                    {{ 'Image'|trans }}:
+                </label>
+                <div class="form-line__side">
+                    <div class="form-line__item">
+                        {{ image(entity, { size: 'original', height: 100, type: null, lazy: false }) }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div class="display-none">
+            {{ form_widget(form.imagesToDelete) }}
+        </div>
+    {% endif %}
+    {% set disabledField = form.vars.disabled %}
+    <div class="form-line{{ disabledField == true ? ' form-input-disabled form-line--disabled' }}">
+        {{ form_errors(form) }}
+        {{ form_label(form, label) }}
+        {{ form_widget(form) }}
+    </div>
+{% endblock image_upload_row %}

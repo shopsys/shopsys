@@ -1,0 +1,20 @@
+AppParameterFilterOptionDecorator:
+    type: object
+    decorator: true
+    config:
+        interfaces:
+            - 'ParameterFilterOptionInterface'
+        description: "Parameter filter option"
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "The parameter UUID"
+            isCollapsed:
+                type: "Boolean!"
+                description: "Indicator whether the parameter should be collapsed based on the current category setting"
+            name:
+                type: "String!"
+                description: "The parameter name"
+            unit:
+                type: "Unit"
+                description: "The parameter unit"

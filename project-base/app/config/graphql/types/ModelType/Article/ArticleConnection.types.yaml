@@ -1,0 +1,10 @@
+ArticleConnection:
+    type: relay-connection
+    config:
+        nodeType: NotBlogArticleInterface
+        connectionFields:
+            totalCount:
+                type: "Int!"
+                description: "Total number of articles"
+    inherits:
+        - 'ArticleConnectionDecorator'

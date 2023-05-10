@@ -1,0 +1,175 @@
+.gjs-layer {
+    * {
+        box-sizing: initial;
+    }
+
+    &.open {
+        .gjs-layer-caret {
+            transform: rotate(180deg);
+        }
+    }
+}
+
+.gjs-editor-cont {
+    width: 100% !important;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+}
+
+.gjs-one-bg {
+    background-color: #fff;
+}
+
+.gjs-two-color,
+.gjs-two-color-h:hover {
+    color: #252525;
+}
+
+.gjs-four-color,
+.gjs-four-color-h:hover {
+    color: #009bd9;
+}
+
+.gjs-color-warn {
+    fill: #dc3d3d;
+    color: #dc3d3d;
+}
+
+.gjs-editor {
+    box-sizing: border-box;
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    font-size: 0.75rem;
+    height: 100%;
+    position: relative;
+}
+
+.gjs-field {
+    background-color: #fff;
+    border: 2px solid #dce2ea;
+    border-radius: 3px;
+    box-shadow: none;
+    box-sizing: border-box;
+    padding: 0;
+    position: relative;
+}
+
+.gjs-field .gjs-sel-arrow {
+    border-left: 2px solid #dce2ea;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 20px;
+    z-index: 0;
+}
+
+.gjs-radio-item:hover {
+    background: #fcbd46;
+    color: #fff;
+}
+
+.gjs-pn-btn:hover {
+    color: #009bd9;
+}
+
+.gjs-radio-item input:checked + .gjs-radio-item-label {
+    background: #fcbd46;
+    color: #fff;
+}
+
+.gjs-field .gjs-d-s-arrow {
+    border-left: 3px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #888;
+    cursor: pointer;
+    height: 0;
+    right: 5px;
+    width: 0;
+}
+
+.gjs-field-arrow-d,
+.gjs-field-arrow-u {
+    border-left: 3px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #888;
+    bottom: 4px;
+    cursor: pointer;
+    height: 0;
+    position: absolute;
+    width: 0;
+}
+
+.gjs-field-arrow-u {
+    border-bottom: 4px solid #888;
+    border-top: none;
+    top: 4px;
+}
+
+.gjs-three-bg {
+    background-color: #fcbd46;
+    color: #fff;
+}
+
+.gjs-clm-tags .gjs-sm-stack #gjs-sm-add,
+.gjs-color-main,
+.gjs-off-prv,
+.gjs-sm-sector .gjs-sm-stack #gjs-sm-add {
+    fill: #252525;
+    color: #252525;
+}
+
+.gjs-am-assets-cont {
+    background-color: #fff;
+    border-radius: 3px;
+    box-sizing: border-box;
+    float: right;
+    height: 325px;
+    overflow: hidden;
+    padding: 10px;
+    width: 45%;
+}
+
+.gjs-am-file-uploader > form {
+    background-color: #f3f3f3;
+    border: 2px dashed #aeb4ba;
+    border-radius: 3px;
+    margin-bottom: 15px;
+    position: relative;
+    text-align: center;
+}
+
+.gjs-am-file-uploader #gjs-am-title {
+    padding: 150px 10px;
+    position: absolute;
+    width: 100%;
+    color: #364353;
+}
+
+.gjs-btn-prim,
+.gjs-btn-prim:active {
+    background-color: #fcbd46;
+    color: #fff;
+}
+
+.gjs-field input[type="checkbox"]:checked + .gjs-chk-icon {
+    border-color: #009bd9;
+}
+
+.gjs-clm-tags #gjs-clm-new {
+    color: #000;
+}
+
+.grapes-js-editor-opened {
+    overflow: hidden;
+    height: 100%;
+}
+
+.fa-clock-o,
+.fa-link {
+    .gjs-block__media {
+        display: none;
+    }
+}

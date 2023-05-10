@@ -4,5 +4,5 @@ monolog:
             type: fingers_crossed
             buffer_size: 1000
             action_level: warning
-            handler: nested
+            handler: sentry
             excluded_http_codes: [{ 404: ['^/'] }]

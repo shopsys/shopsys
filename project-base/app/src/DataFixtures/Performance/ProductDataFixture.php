@@ -19,7 +19,6 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalc
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
-use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -41,8 +40,6 @@ class ProductDataFixture
      */
     private array $productsByCatnum;
 
-    private ProductDataFactory $productDataFactory;
-
     /**
      * @var array|\App\Model\Product\Product[]
      */
@@ -51,11 +48,11 @@ class ProductDataFixture
     /**
      * @param int $productTotalCount
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
+     * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade $productVariantFacade
+     * @param \App\Model\Product\ProductVariantFacade $productVariantFacade
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade $persistentReferenceFacade
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
+     * @param \App\Model\Category\CategoryRepository $categoryRepository
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
@@ -74,12 +71,11 @@ class ProductDataFixture
         private readonly ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
         private readonly ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         private readonly ProgressBarFactory $progressBarFactory,
-        ProductDataFactoryInterface $productDataFactory,
+        private readonly ProductDataFactory $productDataFactory,
     ) {
         $this->productTotalCount = $productTotalCount;
         $this->countImported = 0;
         $this->demoDataIterationCounter = 0;
-        $this->productDataFactory = $productDataFactory;
     }
 
     /**
@@ -266,8 +262,6 @@ class ProductDataFixture
             $performanceCategoryIds,
             $this->faker->numberBetween(1, 4),
         );
-
-        /** @var \App\Model\Category\Category[] $randomPerformanceCategories */
         $randomPerformanceCategories = $this->categoryRepository->getCategoriesByIds($randomPerformanceCategoryIds);
 
         foreach ($randomPerformanceCategories as $performanceCategory) {

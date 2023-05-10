@@ -1,0 +1,30 @@
+{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_no_data %}
+    {{ 'No SEO pages found.'|trans }}
+{% endblock %}
+
+{% block grid_pager_totalcount %}
+    {% set entityName = 'SEO pages'|trans %}
+    {{ parent() }}
+{% endblock %}
+
+{% block grid_value_cell_id_pageName %}
+    <a href="{{ url('admin_seopage_edit', { id: row.sp.id }) }}">{{ row.sp.pageName }}</a>
+{% endblock %}
+
+{% block grid_value_cell_id_seoPageTargetUrl %}
+    <a href="{{ row.seoPageTargetUrl }}">{{ row.seoPageSlug }}</a>
+{% endblock %}
+
+{% block grid_action_cell_type_delete %}
+    {% if row.sp.defaultPage is same as(true) %}
+        <span title="{{ 'This SEO page cannot be deleted.'|trans }}"
+              class="js-tooltip cursor-help in-icon in-icon--info" data-toggle="tooltip" data-placement="left"
+        >
+            {{ icon('info') }}
+        </span>
+    {% else %}
+        {{ gridView.renderBlock('grid_action_cell', {actionColumn: actionColumn, row: row}) }}
+    {% endif %}
+{% endblock %}

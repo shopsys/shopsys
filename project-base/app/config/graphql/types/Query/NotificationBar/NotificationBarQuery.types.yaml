@@ -1,0 +1,8 @@
+NotificationBarQuery:
+    type: object
+    config:
+        fields:
+            notificationBars:
+                type: '[NotificationBar!]'
+                resolve: "@=query('notificationBarsQuery')"
+                description: "Returns a list of notifications supposed to be displayed on all pages"

@@ -1,0 +1,11 @@
+AvailabilityStatusEnum:
+    type: enum
+    config:
+        description: "Product Availability statuses"
+        values:
+            InStock:
+                value: "in-stock"
+                description: "Product availability status in stock"
+            OutOfStock:
+                value: "out-of-stock"
+                description: "Product availability status out of stock"

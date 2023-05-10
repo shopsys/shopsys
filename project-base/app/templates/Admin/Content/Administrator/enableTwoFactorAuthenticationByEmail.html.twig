@@ -1,0 +1,21 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}
+    - {{ 'Enable two factor authentication by email'|trans }}
+{% endblock %}
+
+{% block h1 %}{{ 'Enable two factor authentication by email'|trans }}{% endblock %}
+
+{% block main_content %}
+    <div class="wrap-divider">
+        {{ form_start(formVerification) }}
+        {{ form_errors(formVerification) }}
+        {{ form_end(formVerification) }}
+    </div>
+    <div class="wrap-divider">
+        {{ form_start(formSendEmail) }}
+        {{ form_errors(formSendEmail) }}
+        {{ form_end(formSendEmail) }}
+    </div>
+
+{% endblock %}
