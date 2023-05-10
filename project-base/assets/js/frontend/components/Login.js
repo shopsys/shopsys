@@ -38,13 +38,13 @@ export default class Login {
                 } else {
                     const $validationErrors = $('.js-window-validation-errors');
                     if ($validationErrors.hasClass('display-none')) {
-                        if (data.message === undefined) {
+                        if (data.reason === 'too-many-attempts') {
                             $validationErrors
-                                .text(Translator.trans('This account doesn\'t exist or password is incorrect'))
+                                .text(Translator.trans('Too many login attempts. Please try again later.'))
                                 .show();
                         } else {
                             $validationErrors
-                                .text(Translator.trans(data.message))
+                                .text(Translator.trans('This account doesn\'t exist or password is incorrect'))
                                 .show();
                         }
                     }

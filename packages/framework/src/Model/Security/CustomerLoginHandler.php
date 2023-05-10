@@ -60,7 +60,7 @@ class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, Aut
             ];
 
             if ($exception instanceof TooManyLoginAttemptsAuthenticationException) {
-                $responseData['message'] = t('Too many login attempts. Please try again later.');
+                $responseData['reason'] = 'too-many-attempts';
             }
 
             return new JsonResponse($responseData);

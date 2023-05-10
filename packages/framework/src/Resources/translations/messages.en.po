@@ -2281,6 +2281,9 @@ msgstr ""
 msgid "To whole numbers"
 msgstr ""
 
+msgid "Too many login attempts. Please try again later."
+msgstr ""
+
 msgid "Total"
 msgstr ""
 
