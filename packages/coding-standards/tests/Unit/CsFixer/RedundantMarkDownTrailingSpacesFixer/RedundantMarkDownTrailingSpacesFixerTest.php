@@ -18,7 +18,7 @@ final class RedundantMarkDownTrailingSpacesFixerTest extends AbstractFixerTestCa
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTestingFiles(): iterable
     {

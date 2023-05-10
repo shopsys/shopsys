@@ -36,7 +36,7 @@ final class ForceLateStaticBindingForProtectedConstantsSniffTest extends Abstrac
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getSniffClassName(): string
     {

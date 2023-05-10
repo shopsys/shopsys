@@ -358,14 +358,14 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function eraseCredentials()
     {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getRoles(): array
     {
@@ -373,7 +373,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getSalt(): ?string
     {

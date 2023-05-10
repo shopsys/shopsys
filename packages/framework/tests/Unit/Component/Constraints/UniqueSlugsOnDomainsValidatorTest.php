@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function createValidator()
     {

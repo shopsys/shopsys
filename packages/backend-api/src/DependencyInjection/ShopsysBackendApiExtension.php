@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class ShopsysBackendApiExtension extends Extension implements PrependExtensionInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -25,7 +25,7 @@ class ShopsysBackendApiExtension extends Extension implements PrependExtensionIn
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function prepend(ContainerBuilder $container)
     {

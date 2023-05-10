@@ -61,7 +61,7 @@ class AdvertDataFixture extends AbstractReferenceFixture implements DependentFix
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDependencies()
     {

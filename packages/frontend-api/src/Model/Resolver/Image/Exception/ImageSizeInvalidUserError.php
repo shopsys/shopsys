@@ -12,7 +12,7 @@ class ImageSizeInvalidUserError extends UserError implements UserErrorWithCodeIn
     protected const CODE = 'image-size-invalid';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

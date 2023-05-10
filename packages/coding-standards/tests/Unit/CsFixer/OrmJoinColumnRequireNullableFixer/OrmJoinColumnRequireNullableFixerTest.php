@@ -18,7 +18,7 @@ final class OrmJoinColumnRequireNullableFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTestingFiles(): iterable
     {

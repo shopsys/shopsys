@@ -45,7 +45,7 @@ class ImageAbstractFilesystemValidator extends ImageValidator
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function validate($value, Constraint $constraint)
     {

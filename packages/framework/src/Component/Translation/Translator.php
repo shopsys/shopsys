@@ -90,7 +90,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getLocale(): string
     {
@@ -98,7 +98,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setLocale($locale): void
     {
@@ -107,7 +107,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getCatalogue($locale = null): MessageCatalogueInterface
     {

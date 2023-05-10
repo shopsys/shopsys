@@ -26,7 +26,7 @@ class ProductAvailabilityCronModule implements IteratedCronModuleInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function setLogger(Logger $logger)
     {
@@ -42,7 +42,7 @@ class ProductAvailabilityCronModule implements IteratedCronModuleInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function iterate()
     {

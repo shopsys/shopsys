@@ -35,7 +35,7 @@ class FilesystemLoader extends BaseFilesystemLoader
      * When exists a template with filename.{designId}.html.twig, then it is automatically used
      * on domain with this {designId} whenever template named filename.html.twig is on input
      *
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function findTemplate($template, $throw = true): string|false|null
     {

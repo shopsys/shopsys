@@ -39,7 +39,7 @@ final class MissingParamAnnotationsFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTestingFiles(): iterable
     {

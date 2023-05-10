@@ -345,14 +345,14 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function eraseCredentials()
     {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getRoles(): array
     {
@@ -366,7 +366,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getSalt(): ?string
     {
@@ -374,7 +374,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function isMultidomainLogin()
     {
@@ -382,7 +382,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setMultidomainLogin($multidomainLogin)
     {

@@ -154,7 +154,7 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDependencies()
     {

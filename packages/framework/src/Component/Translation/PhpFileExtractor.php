@@ -82,7 +82,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function enterNode(Node $node): int|Node|null
     {
@@ -241,7 +241,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function beforeTraverse(array $nodes): ?array
     {
@@ -249,7 +249,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function leaveNode(Node $node): int|Node|null
     {
@@ -257,7 +257,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function afterTraverse(array $nodes): ?array
     {
@@ -274,7 +274,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function visitTwigFile(SplFileInfo $file, MessageCatalogue $catalogue, TwigNode $ast)
     {

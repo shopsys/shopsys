@@ -10,7 +10,7 @@ use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
 final class ForbiddenDumpSniffTest extends AbstractSniffTestCase
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function getSniffClassName(): string
     {
@@ -18,7 +18,7 @@ final class ForbiddenDumpSniffTest extends AbstractSniffTestCase
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getWrongFiles(): iterable
     {

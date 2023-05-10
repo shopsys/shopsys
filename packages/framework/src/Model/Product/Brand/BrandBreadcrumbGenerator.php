@@ -45,7 +45,7 @@ class BrandBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getRouteNames()
     {

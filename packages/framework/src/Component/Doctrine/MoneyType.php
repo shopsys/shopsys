@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 class MoneyType extends Type
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName(): string
     {
@@ -19,7 +19,7 @@ class MoneyType extends Type
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
@@ -27,7 +27,7 @@ class MoneyType extends Type
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
@@ -43,7 +43,7 @@ class MoneyType extends Type
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function convertToPHPValue($value, AbstractPlatform $platform): ?Money
     {

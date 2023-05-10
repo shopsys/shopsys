@@ -12,7 +12,7 @@ class MailUserError extends UserError implements UserErrorWithCodeInterface
     protected const CODE = 'mail-failed';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

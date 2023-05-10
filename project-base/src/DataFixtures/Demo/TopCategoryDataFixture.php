@@ -49,7 +49,7 @@ class TopCategoryDataFixture extends AbstractReferenceFixture implements Depende
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDependencies()
     {

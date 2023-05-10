@@ -75,7 +75,7 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDependencies()
     {

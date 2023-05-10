@@ -24,7 +24,7 @@ final class OrderedParamAnnotationsFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTestingFiles(): iterable
     {

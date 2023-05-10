@@ -26,7 +26,7 @@ class ChainedFixer implements FixerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isCandidate(Tokens $tokens): bool
     {
@@ -40,7 +40,7 @@ class ChainedFixer implements FixerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isRisky(): bool
     {
@@ -54,7 +54,7 @@ class ChainedFixer implements FixerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function fix(SplFileInfo $file, Tokens $tokens): void
     {
@@ -64,7 +64,7 @@ class ChainedFixer implements FixerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName(): string
     {
@@ -72,7 +72,7 @@ class ChainedFixer implements FixerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getPriority(): int
     {
@@ -80,7 +80,7 @@ class ChainedFixer implements FixerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supports(SplFileInfo $file): bool
     {

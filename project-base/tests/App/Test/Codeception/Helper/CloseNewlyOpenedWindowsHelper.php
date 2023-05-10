@@ -13,7 +13,7 @@ use Tests\App\Test\Codeception\Module\StrictWebDriver;
 class CloseNewlyOpenedWindowsHelper extends Module
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function _after(TestInterface $test)
     {

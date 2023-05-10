@@ -23,7 +23,7 @@ final class ForbiddenPrivateVisibilityFixerTest extends AbstractFixerTestCase
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTestingFiles(): iterable
     {

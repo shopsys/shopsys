@@ -18,7 +18,7 @@ class AdministratorFormTypeExtension extends AbstractTypeExtension
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getExtendedTypes(): iterable
     {

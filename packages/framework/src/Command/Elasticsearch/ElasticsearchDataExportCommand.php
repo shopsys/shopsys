@@ -41,7 +41,7 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function executeForIndex(OutputInterface $output, AbstractIndex $index): void
     {
@@ -54,7 +54,7 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
@@ -66,7 +66,7 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getCommandDescription(): string
     {
@@ -74,7 +74,7 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getArgumentNameDescription(): string
     {
@@ -85,7 +85,7 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getActionStartedMessage(): string
     {
@@ -93,7 +93,7 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getActionFinishedMessage(): string
     {

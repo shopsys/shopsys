@@ -9,7 +9,7 @@ use Fp\JsFormValidatorBundle\Twig\Extension\JsFormValidatorTwigExtension as Base
 class JsFormValidatorTwigExtension extends BaseJsFormValidatorTwigExtension
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getJsValidator($form = null, $onLoad = true, $wrapped = true): string
     {

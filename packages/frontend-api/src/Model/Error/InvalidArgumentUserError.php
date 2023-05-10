@@ -11,7 +11,7 @@ class InvalidArgumentUserError extends UserError implements UserErrorWithCodeInt
     protected const CODE = 'invalid-argument';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

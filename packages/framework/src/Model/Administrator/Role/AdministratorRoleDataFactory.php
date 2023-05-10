@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Administrator\Role;
 class AdministratorRoleDataFactory implements AdministratorRoleDataFactoryInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function createInstance(): AdministratorRoleData
     {
@@ -15,7 +15,7 @@ class AdministratorRoleDataFactory implements AdministratorRoleDataFactoryInterf
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function create(): AdministratorRoleData
     {
@@ -23,7 +23,7 @@ class AdministratorRoleDataFactory implements AdministratorRoleDataFactoryInterf
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function createFromAdministratorRole(AdministratorRole $administratorRole): AdministratorRoleData
     {

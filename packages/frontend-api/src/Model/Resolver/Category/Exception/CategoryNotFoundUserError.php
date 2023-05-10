@@ -12,7 +12,7 @@ class CategoryNotFoundUserError extends EntityNotFoundUserError implements UserE
     protected const CODE = 'category-not-found';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

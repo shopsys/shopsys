@@ -40,7 +40,7 @@ class ProductExportSubscriber extends AbstractExportSubscriber
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public static function getSubscribedEvents(): array
     {
