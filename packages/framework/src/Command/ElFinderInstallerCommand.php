@@ -28,6 +28,8 @@ final class ElFinderInstallerCommand extends Command
 
     /**
      * @var string
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName
      */
     protected static $defaultName = 'elfinder:install';
 

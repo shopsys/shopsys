@@ -11,6 +11,8 @@ class ElasticsearchIndexesDeleteCommand extends AbstractElasticsearchIndexComman
 {
     /**
      * @var string
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName
      */
     protected static $defaultName = 'shopsys:elasticsearch:indexes-delete';
 

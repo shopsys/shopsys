@@ -14,6 +14,8 @@ class OrderStatusTranslation extends AbstractTranslation
 {
     /**
      * @Prezent\Translatable(targetEntity="Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus")
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName
      */
     protected $translatable;
 
