@@ -68,9 +68,7 @@ class RoundingTest extends TestCase
     ) {
         $rounding = new Rounding();
 
-        $currencyData = new CurrencyData();
-        $currencyData->roundingType = Currency::ROUNDING_TYPE_INTEGER;
-        $currency = new Currency($currencyData);
+        $currency = $this->createCurrency(Currency::ROUNDING_TYPE_INTEGER);
 
         $this->assertThat(
             $rounding->roundPriceWithVatByCurrency($unroundedPrice, $currency),
@@ -136,22 +134,34 @@ class RoundingTest extends TestCase
 
     /**
      * @dataProvider roundingPriceWithVatProvider
-     * @param mixed $roundingType
-     * @param mixed $inputPrice
-     * @param mixed $outputPrice
+     * @param string $roundingType
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $outputPrice
      */
     public function testRoundingPriceWithVatByCurrency(
-        $roundingType,
-        $inputPrice,
-        $outputPrice
+        string $roundingType,
+        Money $inputPrice,
+        Money $outputPrice
     ) {
-        $currencyData = new CurrencyData();
-        $currencyData->roundingType = $roundingType;
-        $currency = new Currency($currencyData);
+        $currency = $this->createCurrency($roundingType);
 
         $rounding = new Rounding();
         $roundedPrice = $rounding->roundPriceWithVatByCurrency($inputPrice, $currency);
 
         $this->assertThat($roundedPrice, new IsMoneyEqual($outputPrice));
+    }
+
+    /**
+     * @param string $roundingType
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+     */
+    private function createCurrency(string $roundingType): Currency
+    {
+        $currencyData = new CurrencyData();
+        $currencyData->name = 'currency name';
+        $currencyData->code = 'currency code';
+        $currencyData->roundingType = $roundingType;
+
+        return new Currency($currencyData);
     }
 }
