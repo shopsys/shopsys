@@ -22,6 +22,9 @@ class ProductPriceRecalculatorTest extends TestCase
         $productMock = $this->getMockBuilder(Product::class)->setMethods(
             null
         )->disableOriginalConstructor()->getMock();
+
+        $this->setValueOfProtectedProperty($productMock, 'variantType', Product::VARIANT_TYPE_NONE);
+
         $pricingGroupMock = $this->getMockBuilder(PricingGroup::class)->setMethods(
             null
         )->disableOriginalConstructor()->getMock();
