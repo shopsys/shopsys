@@ -11,7 +11,7 @@ class BrandCachedFacade
     protected FriendlyUrlFacade $friendlyUrlFacade;
 
     /**
-     * @var array
+     * @var array<int, array<int, string>>
      */
     protected array $brandUrlsIndexedByBrandIdAndDomainId = [];
 

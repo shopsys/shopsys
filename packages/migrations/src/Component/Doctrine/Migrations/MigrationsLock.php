@@ -12,7 +12,7 @@ class MigrationsLock
     protected string $migrationsLockFilePath;
 
     /**
-     * @var array|null
+     * @var array<string, mixed>|null
      */
     protected ?array $parsedMigrationsLock = null;
 

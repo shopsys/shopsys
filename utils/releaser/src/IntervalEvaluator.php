@@ -13,10 +13,7 @@ final class IntervalEvaluator
      */
     private const EXACT_VERSION_PATTERN = '#^(v|[0-9])#';
 
-    /**
-     * @return bool
-     */
-    private $isClosedInterval = true;
+    private bool $isClosedInterval = true;
 
     /**
      * @param string $version

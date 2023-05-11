@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\String\TransformString;
 class TransportTranslation extends AbstractTranslation
 {
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Transport\Transport
      * @Prezent\Translatable(targetEntity="Shopsys\FrameworkBundle\Model\Transport\Transport")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName

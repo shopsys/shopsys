@@ -179,7 +179,7 @@ class EntityNameResolverTest extends TestCase
             'Shopsys\FrameworkBundle\Model\Entity' => 'App\Model\MyEntity',
         ]);
         $object = new class() {
-            private $property = 'SELECT * FROM Shopsys\FrameworkBundle\Model\Entity';
+            private string $property = 'SELECT * FROM Shopsys\FrameworkBundle\Model\Entity';
 
             /**
              * @return string
@@ -201,7 +201,7 @@ class EntityNameResolverTest extends TestCase
             'Shopsys\FrameworkBundle\Model\Entity' => 'App\Model\MyEntity',
         ]);
         $innerObject = new class() {
-            private $property = 'SELECT * FROM Shopsys\FrameworkBundle\Model\Entity';
+            private string $property = 'SELECT * FROM Shopsys\FrameworkBundle\Model\Entity';
 
             /**
              * @return string

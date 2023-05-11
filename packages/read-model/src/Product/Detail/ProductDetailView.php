@@ -58,7 +58,7 @@ class ProductDetailView
     protected ?int $mainVariantId = null;
 
     /**
-     * @var array
+     * @var \Shopsys\ReadModelBundle\Parameter\ParameterView[]
      */
     protected array $parameterViews;
 

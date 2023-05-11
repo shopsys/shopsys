@@ -52,7 +52,7 @@ class CategoryData
     public $image;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     public $pluginData;
 

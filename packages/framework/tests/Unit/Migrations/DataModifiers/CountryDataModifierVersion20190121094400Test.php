@@ -7,7 +7,10 @@ use Shopsys\FrameworkBundle\Migrations\DataModifiers\CountryDataModifierVersion2
 
 class CountryDataModifierVersion20190121094400Test extends TestCase
 {
-    protected $data = [
+    /**
+     * @var array<int, array<string, mixed>>
+     */
+    protected array $data = [
         [
             'id' => 2,
             'name' => 'Slovakia',

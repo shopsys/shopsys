@@ -13,6 +13,7 @@ use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 class FlagTranslation extends AbstractTranslation
 {
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
      * @Prezent\Translatable(targetEntity="Shopsys\FrameworkBundle\Model\Product\Flag\Flag")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName

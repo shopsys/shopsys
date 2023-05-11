@@ -13,6 +13,7 @@ use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 class AvailabilityTranslation extends AbstractTranslation
 {
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
      * @Prezent\Translatable(targetEntity="Shopsys\FrameworkBundle\Model\Product\Availability\Availability")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName

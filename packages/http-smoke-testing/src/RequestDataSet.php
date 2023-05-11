@@ -19,7 +19,7 @@ class RequestDataSet implements RequestDataSetConfig
     private ?int $expectedStatusCode = null;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     private array $parameters;
 

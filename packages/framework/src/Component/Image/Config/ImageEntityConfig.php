@@ -15,7 +15,7 @@ class ImageEntityConfig
     protected string $entityClass;
 
     /**
-     * @var array
+     * @var array<string, \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig>
      */
     protected array $sizeConfigsByType;
 
@@ -25,7 +25,7 @@ class ImageEntityConfig
     protected array $sizeConfigs;
 
     /**
-     * @var array
+     * @var array<string, bool>
      */
     protected array $multipleByType;
 

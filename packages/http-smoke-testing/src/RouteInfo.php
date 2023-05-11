@@ -11,7 +11,7 @@ class RouteInfo
     private Route $route;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     private array $annotations;
 

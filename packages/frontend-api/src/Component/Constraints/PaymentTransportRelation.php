@@ -13,8 +13,13 @@ class PaymentTransportRelation extends Constraint
 {
     public const INVALID_COMBINATION_ERROR = '46ccd6d3-61e7-4a34-a42a-b13b92291e28';
 
-    public $invalidCombinationMessage = 'Please choose a valid combination of transport and payment';
+    public string $invalidCombinationMessage = 'Please choose a valid combination of transport and payment';
 
+    /**
+     * @var array<string, string>
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName
+     */
     protected static $errorNames = [
         self::INVALID_COMBINATION_ERROR => 'INVALID_COMBINATION_ERROR',
     ];

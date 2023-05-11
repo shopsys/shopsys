@@ -14,14 +14,14 @@ class FilterQuery
     protected const MAXIMUM_REASONABLE_AGGREGATION_BUCKET_COUNT = 100;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected array $filters = [];
 
     protected string $indexName;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected array $sorting = [];
 
@@ -30,7 +30,7 @@ class FilterQuery
     protected int $page = 1;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected array $match;
 
