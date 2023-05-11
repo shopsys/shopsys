@@ -196,6 +196,7 @@ class ZboziFeedItemTest extends TestCase
     {
         $zboziProductDomainData = new ZboziProductDomainData();
         $zboziProductDomainData->cpc = Money::create('5.0');
+        $zboziProductDomainData->product = $this->defaultProduct;
         $zboziProductDomain = new ZboziProductDomain($zboziProductDomainData);
 
         $zboziFeedItem = $this->zboziFeedItemFactory->create(
@@ -212,6 +213,7 @@ class ZboziFeedItemTest extends TestCase
     {
         $zboziProductDomainData = new ZboziProductDomainData();
         $zboziProductDomainData->cpcSearch = Money::create('5.0');
+        $zboziProductDomainData->product = $this->defaultProduct;
         $zboziProductDomain = new ZboziProductDomain($zboziProductDomainData);
 
         $zboziFeedItem = $this->zboziFeedItemFactory->create(
