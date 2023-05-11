@@ -7,12 +7,12 @@ namespace Shopsys\FrameworkBundle\Migrations\DataModifiers;
 class CountryDataModifierVersion20190121094400
 {
     /**
-     * @var array
+     * @var mixed[]
      */
     private $data;
 
     /**
-     * @var array
+     * @var string[]
      */
     private $tmpIds;
 

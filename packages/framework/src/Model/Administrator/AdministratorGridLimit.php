@@ -19,6 +19,7 @@ class AdministratorGridLimit
     protected $administrator;
 
     /**
+     * @var string
      * @ORM\Id
      * @ORM\Column(type="string", length=128)
      */

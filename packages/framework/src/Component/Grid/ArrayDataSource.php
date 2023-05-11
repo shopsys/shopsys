@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 class ArrayDataSource implements DataSourceInterface
 {
     /**
-     * @var array
+     * @var mixed[]
      */
     protected $data;
 

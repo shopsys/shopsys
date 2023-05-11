@@ -45,7 +45,7 @@ class PersonalDataController extends FrontBaseController
      */
     private $newsletterFacade;
 
-    /*
+    /**
      * @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade
      */
     private $personalDataAccessRequestFacade;

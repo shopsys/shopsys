@@ -28,6 +28,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAuthenticatedUserInterface
 {
     /**
+     * @var int
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -42,21 +43,25 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     protected $customer;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=100)
      */
     protected $firstName;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=100)
      */
     protected $lastName;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255)
      */
     protected $email;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=100)
      */
     protected $password;

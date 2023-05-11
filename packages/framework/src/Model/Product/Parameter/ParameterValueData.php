@@ -17,5 +17,5 @@ class ParameterValueData
     /**
      * @var string|null
      */
-    public $uuid;
+    public ?string $uuid = null;
 }

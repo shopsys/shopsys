@@ -6,6 +6,9 @@ namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
 abstract class AbstractExportScheduler
 {
+    /**
+     * @var int[]
+     */
     protected $rowIds = [];
 
     /**

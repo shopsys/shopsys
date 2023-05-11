@@ -9,7 +9,7 @@ use Webmozart\Assert\Assert;
 class FriendlyUrlDataProviderRegistry
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderInterface[]
+     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderInterface[]|iterable
      */
     protected $friendlyUrlDataProviders;
 

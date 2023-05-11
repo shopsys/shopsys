@@ -25,6 +25,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLoginInterface, PasswordAuthenticatedUserInterface
 {
     /**
+     * @var int
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -32,21 +33,25 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     protected $id;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=100, unique = true)
      */
     protected $username;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=100)
      */
     protected $realName;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=100)
      */
     protected $password;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=32)
      */
     protected $loginToken;
@@ -57,6 +62,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     protected $lastActivity;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255)
      */
     protected $email;
@@ -195,9 +201,9 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getPassword(): ?string
+    public function getPassword(): string
     {
         return $this->password;
     }

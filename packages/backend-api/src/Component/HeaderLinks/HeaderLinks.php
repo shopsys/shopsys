@@ -10,7 +10,7 @@ namespace Shopsys\BackendApiBundle\Component\HeaderLinks;
 class HeaderLinks
 {
     /**
-     * @var array[] in format [link, rel]
+     * @var array<int, array{link: string, rel: string}>
      */
     protected $links = [];
 

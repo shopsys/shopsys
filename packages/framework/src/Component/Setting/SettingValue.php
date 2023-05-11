@@ -48,7 +48,7 @@ class SettingValue
     protected $domainId;
 
     /**
-     * @var string
+     * @var string|\Shopsys\FrameworkBundle\Component\Money\Money|\DateTime|float|int|bool|null
      * @ORM\Column(type="text", nullable=true)
      */
     protected $value;

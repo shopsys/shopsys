@@ -55,7 +55,7 @@ class Advert
     protected $code;
 
     /**
-     * @var string
+     * @var string|null
      * @ORM\Column(type="text", nullable=true)
      */
     protected $link;

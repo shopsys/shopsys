@@ -43,7 +43,7 @@ class MailTemplateVariables
     protected $readableName;
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $variables = [];
 

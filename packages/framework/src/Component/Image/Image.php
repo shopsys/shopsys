@@ -52,7 +52,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     protected $entityId;
 
     /**
-     * @var string
+     * @var string|null
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $type;
@@ -64,7 +64,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     protected $extension;
 
     /**
-     * @var int
+     * @var int|null
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $position;

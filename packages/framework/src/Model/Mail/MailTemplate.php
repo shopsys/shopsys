@@ -21,6 +21,7 @@ class MailTemplate
     public const PERSONAL_DATA_EXPORT_NAME = 'personal_data_export';
 
     /**
+     * @var int
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")

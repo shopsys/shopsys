@@ -9,14 +9,15 @@ use Shopsys\FrameworkBundle\Model\Localization\Exception\ImplicitLocaleNotSetExc
 abstract class AbstractTranslatableEntity extends AbstractTranslatable
 {
     /**
+     * @var string|null
      * @Prezent\CurrentLocale
      */
     protected $currentLocale;
 
     /**
-     * @var \Prezent\Doctrine\Translatable\Entity\AbstractTranslation
+     * @var \Prezent\Doctrine\Translatable\Entity\AbstractTranslation|null
      */
-    protected $currentTranslation;
+    protected ?\Prezent\Doctrine\Translatable\Entity\AbstractTranslation $currentTranslation = null;
 
     /**
      * @return string|null

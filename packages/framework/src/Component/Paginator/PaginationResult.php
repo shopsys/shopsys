@@ -10,7 +10,7 @@ class PaginationResult
     protected $page;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $pageSize;
 
@@ -20,7 +20,7 @@ class PaginationResult
     protected $totalCount;
 
     /**
-     * @var array
+     * @var mixed[]
      */
     protected $results;
 
@@ -81,7 +81,7 @@ class PaginationResult
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getPageSize()
     {

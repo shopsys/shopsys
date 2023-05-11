@@ -37,12 +37,12 @@ class ActionColumn
     protected $route;
 
     /**
-     * @var array
+     * @var mixed[]
      */
     protected $bindingRouteParams;
 
     /**
-     * @var array
+     * @var mixed[]
      */
     protected $additionalRouteParams;
 

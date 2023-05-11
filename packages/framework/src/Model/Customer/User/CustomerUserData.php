@@ -45,9 +45,9 @@ class CustomerUserData
     public $telephone;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\Customer
+     * @var \Shopsys\FrameworkBundle\Model\Customer\Customer|null
      */
-    public $customer;
+    public $customer = null;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
