@@ -3,7 +3,7 @@
 namespace Tests\FrameworkBundle\Unit\Model\Product\Pricing;
 
 use Doctrine\ORM\EntityManager;
-use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Tests\FrameworkBundle\Unit\TestCase;
 
 class ProductPriceRecalculatorTest extends TestCase
 {
@@ -24,6 +25,9 @@ class ProductPriceRecalculatorTest extends TestCase
         $pricingGroupMock = $this->getMockBuilder(PricingGroup::class)->setMethods(
             null
         )->disableOriginalConstructor()->getMock();
+
+        $this->setValueOfProtectedProperty($pricingGroupMock, 'domainId', Domain::FIRST_DOMAIN_ID);
+
         $emMock = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
             ->setMethods(['clear', 'flush'])
