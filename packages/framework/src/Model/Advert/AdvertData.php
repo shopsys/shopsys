@@ -45,9 +45,9 @@ class AdvertData
     public $domainId;
 
     /**
-     * @var string
+     * @var string|null
      */
-    public $uuid;
+    public $uuid = null;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category[]

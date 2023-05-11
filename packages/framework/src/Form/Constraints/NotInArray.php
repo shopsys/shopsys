@@ -16,6 +16,7 @@ class NotInArray extends Constraint
 
     /**
      * @var array|\Traversable|\ArrayAccess
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification
      */
     public $array = [];
 

@@ -11,8 +11,14 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class AddConstraintValidatorsPass implements CompilerPassInterface
 {
+    /**
+     * @var string
+     */
     private $validatorFactoryServiceId;
 
+    /**
+     * @var string
+     */
     private $constraintValidatorTag;
 
     /**

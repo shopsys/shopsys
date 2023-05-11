@@ -21,6 +21,9 @@ final class ForbiddenPrivateVisibilityFixer implements ConfigurableFixerInterfac
 {
     private const OPTION_ANALYZED_NAMESPACE = 'analyzed_namespaces';
 
+    /**
+     * @var string[]
+     */
     private array $analyzedNamespaces = [];
 
     /**

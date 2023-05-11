@@ -18,7 +18,7 @@ class MailTemplateConfiguration
     public const TYPE_ORDER_STATUS = 'order-status';
 
     /**
-     * @var array
+     * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables[]
      */
     protected $mailTemplateVariables = [];
 

@@ -15,7 +15,7 @@ class BreadcrumbItem
     protected $routeName;
 
     /**
-     * @var array
+     * @var mixed[]
      */
     protected $routeParameters;
 

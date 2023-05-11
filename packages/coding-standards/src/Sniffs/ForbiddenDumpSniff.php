@@ -15,6 +15,7 @@ final class ForbiddenDumpSniff extends ForbiddenFunctionsSniff
      * function should just not be used.
      *
      * @var string[]|null[]
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     public $forbiddenFunctions = [
         'd' => null,

@@ -93,7 +93,7 @@ class OrderItem
     protected $quantity;
 
     /**
-     * @var string
+     * @var string|null
      * @ORM\Column(type="string", length=10, nullable=true)
      */
     protected $unitName;

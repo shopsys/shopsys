@@ -7,7 +7,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 class InverseMultipleChoiceTransformer implements DataTransformerInterface
 {
     /**
-     * @var array
+     * @var mixed[]
      */
     protected $allChoices;
 

@@ -47,6 +47,7 @@ class PersonalDataAccessRequest
     protected $domainId;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=50)
      */
     protected $type;

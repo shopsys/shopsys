@@ -18,7 +18,7 @@ class UrlListData
     public $mainFriendlyUrlsByDomainId;
 
     /**
-     * @var array[]
+     * @var array<int, array<string, mixed>>
      *
      * Format:
      * [

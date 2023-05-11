@@ -21,7 +21,7 @@ class ResizeFormListener implements EventSubscriberInterface
     protected $type;
 
     /**
-     * @var array
+     * @var mixed[]
      */
     protected $options;
 

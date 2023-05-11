@@ -42,7 +42,7 @@ class Grid
     protected $enableSelecting = false;
 
     /**
-     * @var array
+     * @var int[]
      */
     protected $allowedLimits = [30, 100, 200, 500];
 
@@ -87,7 +87,7 @@ class Grid
     protected $isOrderFromRequest = false;
 
     /**
-     * @var array
+     * @var mixed[]
      */
     protected $rows = [];
 
@@ -142,12 +142,12 @@ class Grid
     protected $viewTheme;
 
     /**
-     * @var array
+     * @var mixed[]
      */
     protected $viewTemplateParameters;
 
     /**
-     * @var array
+     * @var int[]
      */
     protected $selectedRowIds;
 

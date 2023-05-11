@@ -53,9 +53,9 @@ class ArticleData
     public $seoH1;
 
     /**
-     * @var string
+     * @var string|null
      */
-    public $uuid;
+    public ?string $uuid = null;
 
     /**
      * @var \DateTime|null

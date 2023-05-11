@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Elasticsearch\Debug;
 class ElasticsearchRequestCollection
 {
     /**
-     * @var array
+     * @var array<int, array{requestCurl: string, requestJson: string|null, requestData: mixed, method: string, uri: string, statusCode: int|null, response: mixed, duration: float}>
      */
     protected $collectedData = [];
 

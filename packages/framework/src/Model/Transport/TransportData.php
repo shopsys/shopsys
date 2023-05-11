@@ -52,7 +52,7 @@ class TransportData
     /**
      * @var string|null
      */
-    public $uuid;
+    public ?string $uuid = null;
 
     public function __construct()
     {

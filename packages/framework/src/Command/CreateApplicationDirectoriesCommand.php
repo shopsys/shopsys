@@ -15,22 +15,22 @@ use Symfony\Component\Filesystem\Filesystem;
 class CreateApplicationDirectoriesCommand extends Command
 {
     /**
-     * @var array
+     * @var string[]
      */
     private $defaultInternalDirectories;
 
     /**
-     * @var array
+     * @var string[]
      */
     private $defaultPublicDirectories;
 
     /**
-     * @var array|null
+     * @var string[]|null
      */
     private $internalDirectories;
 
     /**
-     * @var array|null
+     * @var string[]|null
      */
     private $publicDirectories;
 

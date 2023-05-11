@@ -9,7 +9,13 @@ use Symfony\Component\Validator\Constraint;
  */
 class UniqueSlugsOnDomains extends Constraint
 {
+    /**
+     * @var string
+     */
     public $message = 'Address {{ url }} already exists.';
 
+    /**
+     * @var string
+     */
     public $messageDuplicate = 'Address {{ url }} can be entered only once.';
 }

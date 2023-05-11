@@ -17,7 +17,7 @@ class GridView
     protected $grid;
 
     /**
-     * @var array
+     * @var mixed[]
      */
     protected $templateParameters;
 

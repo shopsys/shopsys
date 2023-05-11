@@ -164,7 +164,7 @@ class ProductData
     /**
      * @var string|null
      */
-    public $uuid;
+    public ?string $uuid = null;
 
     /**
      * @var array

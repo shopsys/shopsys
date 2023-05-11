@@ -9,7 +9,7 @@ use Redis;
 class RedisFacade
 {
     /**
-     * @var \Redis[]
+     * @var \Redis[]|iterable
      */
     protected $allClients;
 
