@@ -238,7 +238,7 @@ class GridView
      */
     protected function getTemplates()
     {
-        if ($this->templates === null || count($this->templates) === 0) {
+        if (count($this->templates) === 0) {
             $this->templates = [];
             if (is_array($this->theme)) {
                 foreach ($this->theme as $theme) {

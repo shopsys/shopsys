@@ -120,7 +120,6 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         $this->lastActivity = new DateTime();
         $this->gridLimits = new ArrayCollection();
         $this->loginToken = '';
-        $this->multidomainLogin = false;
         $this->multidomainLoginToken = '';
         $this->multidomainLoginTokenExpiration = new DateTime();
         $this->roles = new ArrayCollection();

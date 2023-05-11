@@ -7,16 +7,10 @@ use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidServiceEx
 class GridInlineEditRegistry
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface[]
-     */
-    protected array $gridInlineEdits;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface[] $gridInlineEdits
      */
-    public function __construct(iterable $gridInlineEdits)
+    public function __construct(protected iterable $gridInlineEdits)
     {
-        $this->gridInlineEdits = $gridInlineEdits;
     }
 
     /**

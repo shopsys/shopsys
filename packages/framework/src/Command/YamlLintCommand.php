@@ -31,7 +31,7 @@ class YamlLintCommand extends Command
      */
     protected static $defaultName = 'lint:yaml';
 
-    private Parser $parser;
+    private ?Parser $parser = null;
 
     private string $format;
 

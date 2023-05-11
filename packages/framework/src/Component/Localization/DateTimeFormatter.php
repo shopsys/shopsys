@@ -36,7 +36,7 @@ class DateTimeFormatter implements DateTimeFormatterInterface
             $locale,
             $dateType,
             $timeType,
-            $this->displayTimeZoneProvider !== null ? $this->displayTimeZoneProvider->getDisplayTimeZone() : null,
+            $this->displayTimeZoneProvider->getDisplayTimeZone(),
             null,
             $this->getCustomPattern($locale, $dateType, $timeType)
         );

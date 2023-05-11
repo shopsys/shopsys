@@ -6,10 +6,7 @@ class PaginationResult
 {
     protected int $page;
 
-    /**
-     * @var int|null
-     */
-    protected int $pageSize;
+    protected ?int $pageSize;
 
     protected int $totalCount;
 

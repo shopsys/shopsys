@@ -12,7 +12,7 @@ class CountryDataModifierVersion20190121094400
     private array $data;
 
     /**
-     * @var string[]
+     * @var array<int, int>
      */
     private array $tmpIds;
 

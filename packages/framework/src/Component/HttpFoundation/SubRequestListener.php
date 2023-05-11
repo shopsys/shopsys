@@ -13,7 +13,7 @@ class SubRequestListener
 {
     protected ?RedirectResponse $redirectResponse = null;
 
-    protected Request $masterRequest;
+    protected ?Request $masterRequest = null;
 
     /**
      * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event

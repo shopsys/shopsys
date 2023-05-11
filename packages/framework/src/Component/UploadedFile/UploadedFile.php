@@ -105,10 +105,6 @@ class UploadedFile implements EntityFileUploadInterface
      */
     public function getTemporaryFilesForUpload(): array
     {
-        if ($this->temporaryFilename === null) {
-            return [];
-        }
-
         return [
             static::UPLOAD_KEY => new FileForUpload(
                 $this->temporaryFilename,
