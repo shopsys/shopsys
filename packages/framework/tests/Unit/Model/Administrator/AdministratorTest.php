@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Administrator;
 
-use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorData;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\MandatoryAdministratorRoleIsMissingException;
 use Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole;
 use Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleData;
+use Tests\FrameworkBundle\Unit\TestCase;
 
 class AdministratorTest extends TestCase
 {
@@ -64,6 +64,8 @@ class AdministratorTest extends TestCase
         $administratorData->password = 'pa55w0rd';
 
         $administrator = new Administrator($administratorData);
+
+        $this->setValueOfProtectedProperty($administrator, 'id', 1);
 
         $administratorRoleData = new AdministratorRoleData();
         $administratorRoleData->administrator = $administrator;
