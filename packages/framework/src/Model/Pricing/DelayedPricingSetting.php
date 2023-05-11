@@ -6,15 +6,9 @@ use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidInputPriceTypeExcepti
 
 class DelayedPricingSetting
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting
-     */
-    protected $pricingSetting;
+    protected PricingSetting $pricingSetting;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculationScheduler
-     */
-    protected $inputPriceRecalculationScheduler;
+    protected InputPriceRecalculationScheduler $inputPriceRecalculationScheduler;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting

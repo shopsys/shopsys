@@ -11,10 +11,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class OrderItemResolverMap extends ResolverMap
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation
-     */
-    protected $orderItemPriceCalculation;
+    protected OrderItemPriceCalculation $orderItemPriceCalculation;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation

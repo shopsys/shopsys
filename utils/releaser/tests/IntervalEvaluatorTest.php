@@ -10,10 +10,7 @@ use Shopsys\Releaser\IntervalEvaluator;
 
 final class IntervalEvaluatorTest extends TestCase
 {
-    /**
-     * @var \Shopsys\Releaser\IntervalEvaluator
-     */
-    private $intervalEvaluator;
+    private IntervalEvaluator $intervalEvaluator;
 
     protected function setUp(): void
     {

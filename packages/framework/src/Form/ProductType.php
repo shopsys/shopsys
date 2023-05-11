@@ -12,10 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductType extends AbstractType
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Form\Transformers\ProductIdToProductTransformer
-     */
-    private $productIdToProductTransformer;
+    private ProductIdToProductTransformer $productIdToProductTransformer;
 
     /**
      * @param \Shopsys\FrameworkBundle\Form\Transformers\ProductIdToProductTransformer $productIdToProductTransformer

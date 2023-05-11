@@ -10,25 +10,13 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 abstract class AbstractAdvancedSearchFormFactory
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchConfig
-     */
-    protected $advancedSearchConfig;
+    protected AdvancedSearchConfig $advancedSearchConfig;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchFilterTranslation
-     */
-    protected $advancedSearchFilterTranslation;
+    protected AdvancedSearchFilterTranslation $advancedSearchFilterTranslation;
 
-    /**
-     * @var \Symfony\Component\Form\FormFactoryInterface
-     */
-    protected $formFactory;
+    protected FormFactoryInterface $formFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchOperatorTranslation
-     */
-    protected $advancedSearchOperatorTranslation;
+    protected AdvancedSearchOperatorTranslation $advancedSearchOperatorTranslation;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchConfig $advancedSearchConfig

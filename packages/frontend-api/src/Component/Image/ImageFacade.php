@@ -8,10 +8,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageRepository;
 
 class ImageFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageRepository
-     */
-    protected $imageRepository;
+    protected ImageRepository $imageRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageRepository $imageRepository

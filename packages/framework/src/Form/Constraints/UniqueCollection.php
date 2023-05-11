@@ -9,18 +9,12 @@ use Symfony\Component\Validator\Constraint;
  */
 class UniqueCollection extends Constraint
 {
-    /**
-     * @var string
-     */
-    public $message = 'Values are duplicate.';
+    public string $message = 'Values are duplicate.';
 
     /**
      * @var mixed[]|null
      */
-    public $fields = null;
+    public ?array $fields = null;
 
-    /**
-     * @var bool
-     */
-    public $allowEmpty = false;
+    public bool $allowEmpty = false;
 }

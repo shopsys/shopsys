@@ -18,13 +18,11 @@ class FragmentHandlerTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Symfony\Bridge\Twig\Extension\HttpKernelRuntime
      * @inject
      */
     private HttpKernelRuntime $httpKernelRuntime;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
      * @inject
      */
     private RequestStack $requestStack;

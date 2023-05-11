@@ -4,15 +4,9 @@ namespace Shopsys\FrameworkBundle\Model\Localization;
 
 class DbIndexesFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
-    protected $localization;
+    protected Localization $localization;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\DbIndexesRepository
-     */
-    protected $dbIndexesRepository;
+    protected DbIndexesRepository $dbIndexesRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization

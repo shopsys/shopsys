@@ -17,30 +17,15 @@ use Twig\Environment;
 
 final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @var \Shopsys\Releaser\FileManipulator\MonorepoUpgradeFileManipulator
-     */
-    private $monorepoUpgradeFileManipulator;
+    private MonorepoUpgradeFileManipulator $monorepoUpgradeFileManipulator;
 
-    /**
-     * @var \Shopsys\Releaser\FileManipulator\GeneralUpgradeFileManipulator
-     */
-    private $generalUpgradeFileManipulator;
+    private GeneralUpgradeFileManipulator $generalUpgradeFileManipulator;
 
-    /**
-     * @var \Shopsys\Releaser\FileManipulator\VersionUpgradeFileManipulator
-     */
-    private $versionUpgradeFileManipulator;
+    private VersionUpgradeFileManipulator $versionUpgradeFileManipulator;
 
-    /**
-     * @var \Twig\Environment
-     */
-    private $twigEnvironment;
+    private Environment $twigEnvironment;
 
-    /**
-     * @var string
-     */
-    private $nextDevelopmentVersionString;
+    private string $nextDevelopmentVersionString;
 
     /**
      * @param \Shopsys\Releaser\FileManipulator\MonorepoUpgradeFileManipulator $monorepoUpgradeFileManipulator

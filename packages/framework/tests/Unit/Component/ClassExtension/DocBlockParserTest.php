@@ -19,9 +19,6 @@ use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\DummyClassForAnno
 
 class DocBlockParserTest extends TestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\DocBlockParser
-     */
     private DocBlockParser $docBlockParser;
 
     protected function setUp(): void

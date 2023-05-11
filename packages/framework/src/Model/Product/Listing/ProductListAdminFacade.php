@@ -8,15 +8,9 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 
 class ProductListAdminFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminRepository
-     */
-    protected $productListAdminRepository;
+    protected ProductListAdminRepository $productListAdminRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade
-     */
-    protected $pricingGroupSettingFacade;
+    protected PricingGroupSettingFacade $pricingGroupSettingFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminRepository $productListAdminRepository

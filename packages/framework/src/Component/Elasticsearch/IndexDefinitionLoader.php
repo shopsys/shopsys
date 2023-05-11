@@ -6,15 +6,9 @@ namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
 class IndexDefinitionLoader
 {
-    /**
-     * @var string
-     */
-    protected $indexDefinitionsDirectory;
+    protected string $indexDefinitionsDirectory;
 
-    /**
-     * @var string
-     */
-    protected $indexPrefix;
+    protected string $indexPrefix;
 
     /**
      * @param string $indexDefinitionsDirectory

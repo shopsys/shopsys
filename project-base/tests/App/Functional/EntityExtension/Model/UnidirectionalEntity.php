@@ -12,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class UnidirectionalEntity
 {
     /**
-     * @var int
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -20,7 +19,6 @@ class UnidirectionalEntity
     protected int $id;
 
     /**
-     * @var string
      * @ORM\Column(type="string")
      */
     protected string $name;

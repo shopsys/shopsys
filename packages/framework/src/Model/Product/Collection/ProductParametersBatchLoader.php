@@ -8,15 +8,12 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductParametersBatchLoader
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade
-     */
-    protected $productCollectionFacade;
+    protected ProductCollectionFacade $productCollectionFacade;
 
     /**
      * @var string[][]|null[][]
      */
-    protected $loadedProductParametersByName = [];
+    protected array $loadedProductParametersByName = [];
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade

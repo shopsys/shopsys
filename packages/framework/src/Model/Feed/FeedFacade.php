@@ -9,30 +9,15 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class FeedFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Feed\FeedRegistry
-     */
-    protected $feedRegistry;
+    protected FeedRegistry $feedRegistry;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade
-     */
-    protected $productVisibilityFacade;
+    protected ProductVisibilityFacade $productVisibilityFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Feed\FeedExportFactory
-     */
-    protected $feedExportFactory;
+    protected FeedExportFactory $feedExportFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Feed\FeedPathProvider
-     */
-    protected $feedPathProvider;
+    protected FeedPathProvider $feedPathProvider;
 
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    protected $filesystem;
+    protected FilesystemOperator $filesystem;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedRegistry $feedRegistry

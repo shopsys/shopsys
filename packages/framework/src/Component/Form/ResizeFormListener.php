@@ -15,30 +15,18 @@ use Traversable;
  */
 class ResizeFormListener implements EventSubscriberInterface
 {
-    /**
-     * @var string
-     */
-    protected $type;
+    protected string $type;
 
     /**
      * @var mixed[]
      */
-    protected $options;
+    protected array $options;
 
-    /**
-     * @var bool
-     */
-    protected $allowAdd;
+    protected bool $allowAdd;
 
-    /**
-     * @var bool
-     */
-    protected $allowDelete;
+    protected bool $allowDelete;
 
-    /**
-     * @var bool
-     */
-    protected $deleteEmpty;
+    protected bool $deleteEmpty;
 
     /**
      * @param string|null $type

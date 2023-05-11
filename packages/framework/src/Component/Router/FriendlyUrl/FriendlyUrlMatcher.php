@@ -8,10 +8,7 @@ use Symfony\Component\Routing\RouteCollection;
 
 class FriendlyUrlMatcher
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository
-     */
-    protected $friendlyUrlRepository;
+    protected FriendlyUrlRepository $friendlyUrlRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository

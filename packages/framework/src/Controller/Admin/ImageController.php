@@ -7,10 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ImageController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
-     */
-    protected $imageFacade;
+    protected ImageFacade $imageFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade

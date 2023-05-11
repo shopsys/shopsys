@@ -22,10 +22,7 @@ use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotatio
 
 class PropertyAnnotationsFactoryTest extends TestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\PropertyAnnotationsFactory
-     */
-    private $propertyAnnotationsFactory;
+    private PropertyAnnotationsFactory $propertyAnnotationsFactory;
 
     protected function setUp(): void
     {

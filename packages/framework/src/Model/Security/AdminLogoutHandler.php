@@ -8,15 +8,9 @@ use Symfony\Component\Routing\RouterInterface;
 
 class AdminLogoutHandler
 {
-    /**
-     * @var \Symfony\Component\Routing\RouterInterface
-     */
-    protected $router;
+    protected RouterInterface $router;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Security\AdministratorLoginFacade
-     */
-    protected $administratorLoginFacade;
+    protected AdministratorLoginFacade $administratorLoginFacade;
 
     /**
      * @param \Symfony\Component\Routing\RouterInterface $router

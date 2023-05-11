@@ -4,15 +4,9 @@ namespace Shopsys\FrameworkBundle\Model\Order\Watcher;
 
 class TransportAndPaymentCheckResult
 {
-    /**
-     * @var bool
-     */
-    protected $transportPriceChanged;
+    protected bool $transportPriceChanged;
 
-    /**
-     * @var bool
-     */
-    protected $paymentPriceChanged;
+    protected bool $paymentPriceChanged;
 
     /**
      * @param bool $transportPriceChanged

@@ -14,10 +14,7 @@ use function substr;
 
 class Money implements JsonSerializable
 {
-    /**
-     * @var \Litipk\BigNumbers\Decimal
-     */
-    protected $decimal;
+    protected Decimal $decimal;
 
     /**
      * @param \Litipk\BigNumbers\Decimal $decimal

@@ -22,50 +22,23 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
 
 class ProductExportRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository
-     */
-    protected $parameterRepository;
+    protected ParameterRepository $parameterRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
-     */
-    protected $productFacade;
+    protected ProductFacade $productFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository
-     */
-    protected $friendlyUrlRepository;
+    protected FriendlyUrlRepository $friendlyUrlRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository
-     */
-    protected $productVisibilityRepository;
+    protected ProductVisibilityRepository $productVisibilityRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    protected $friendlyUrlFacade;
+    protected FriendlyUrlFacade $friendlyUrlFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
-     */
-    protected $categoryFacade;
+    protected CategoryFacade $categoryFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade
-     */
-    protected $productAccessoryFacade;
+    protected ProductAccessoryFacade $productAccessoryFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade
-     */
-    protected $brandCachedFacade;
+    protected BrandCachedFacade $brandCachedFacade;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

@@ -11,25 +11,13 @@ use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSou
 
 class VatGridFactory implements GridFactoryInterface
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    protected $gridFactory;
+    protected GridFactory $gridFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
-     */
-    protected $vatFacade;
+    protected VatFacade $vatFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    protected $adminDomainTabsFacade;
+    protected AdminDomainTabsFacade $adminDomainTabsFacade;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

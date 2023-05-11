@@ -14,20 +14,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UnitController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade
-     */
-    protected $unitFacade;
+    protected UnitFacade $unitFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitInlineEdit
-     */
-    protected $unitInlineEdit;
+    protected UnitInlineEdit $unitInlineEdit;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory
-     */
-    protected $confirmDeleteResponseFactory;
+    protected ConfirmDeleteResponseFactory $confirmDeleteResponseFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade

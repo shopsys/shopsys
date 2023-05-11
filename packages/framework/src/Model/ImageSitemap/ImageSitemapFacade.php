@@ -15,14 +15,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class ImageSitemapFacade
 {
-    /**
-     * @var string
-     */
     protected string $sitemapsDir;
 
-    /**
-     * @var string
-     */
     protected string $sitemapsUrlPrefix;
 
     /**

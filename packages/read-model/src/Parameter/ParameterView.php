@@ -6,25 +6,13 @@ namespace Shopsys\ReadModelBundle\Parameter;
 
 class ParameterView
 {
-    /**
-     * @var int
-     */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name;
 
-    /**
-     * @var int
-     */
-    protected $valueId;
+    protected int $valueId;
 
-    /**
-     * @var string
-     */
-    protected $valueText;
+    protected string $valueText;
 
     /**
      * @param int $id

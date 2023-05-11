@@ -6,10 +6,7 @@ use Shopsys\FrameworkBundle\Component\Domain\DomainFacade;
 
 class MenuController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\DomainFacade
-     */
-    protected $domainFacade;
+    protected DomainFacade $domainFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\DomainFacade $domainFacade

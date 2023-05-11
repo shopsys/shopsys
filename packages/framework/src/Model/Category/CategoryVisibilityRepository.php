@@ -10,20 +10,11 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class CategoryVisibilityRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRecalculationScheduler
-     */
-    protected $categoryVisibilityRecalculationScheduler;
+    protected CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

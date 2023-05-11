@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\BackendApiBundle\Unit\Controller\V1\Product;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\BackendApiBundle\Component\HeaderLinks\HeaderLinksTransformer;
 use Shopsys\BackendApiBundle\Controller\V1\Product\ApiProductTransformer;
@@ -21,15 +22,9 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class ProductControllerTest extends TestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $productFacade;
+    protected ProductFacade|MockObject $productFacade;
 
-    /**
-     * @var \Shopsys\BackendApiBundle\Controller\V1\Product\ProductController
-     */
-    protected $productController;
+    protected ProductController $productController;
 
     protected function setUp(): void
     {

@@ -18,10 +18,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class ImageConfigLoaderTest extends TestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigLoader
-     */
-    private $imageConfigLoader;
+    private ImageConfigLoader $imageConfigLoader;
 
     protected function setUp(): void
     {

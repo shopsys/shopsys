@@ -18,19 +18,16 @@ class OrderStatusFacadeTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade
      * @inject
      */
     private OrderStatusFacade $orderStatusFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
      * @inject
      */
     private OrderFacade $orderFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface
      * @inject
      */
     private OrderDataFactoryInterface $orderDataFactory;

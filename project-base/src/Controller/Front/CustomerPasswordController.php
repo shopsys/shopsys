@@ -15,20 +15,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CustomerPasswordController extends FrontBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade
-     */
-    private $customerUserPasswordFacade;
+    private CustomerUserPasswordFacade $customerUserPasswordFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Security\Authenticator
-     */
-    private $authenticator;
+    private Authenticator $authenticator;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

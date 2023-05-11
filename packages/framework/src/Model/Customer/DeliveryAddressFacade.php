@@ -8,20 +8,11 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class DeliveryAddressFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory
-     */
-    protected $deliveryAddressFactory;
+    protected DeliveryAddressFactory $deliveryAddressFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressRepository
-     */
-    protected $deliveryAddressRepository;
+    protected DeliveryAddressRepository $deliveryAddressRepository;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory $deliveryAddressFactory

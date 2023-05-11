@@ -9,15 +9,9 @@ use Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryFeed
 
 class HeurekaDeliveryFeed implements FeedInterface
 {
-    /**
-     * @var \Shopsys\ProductFeed\HeurekaDeliveryBundle\HeurekaDeliveryFeedInfo
-     */
-    protected $feedInfo;
+    protected HeurekaDeliveryFeedInfo $feedInfo;
 
-    /**
-     * @var \Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryFeedItemFacade
-     */
-    protected $feedItemFacade;
+    protected HeurekaDeliveryFeedItemFacade $feedItemFacade;
 
     /**
      * @param \Shopsys\ProductFeed\HeurekaDeliveryBundle\HeurekaDeliveryFeedInfo $feedInfo

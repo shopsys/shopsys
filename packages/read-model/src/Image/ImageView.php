@@ -6,30 +6,15 @@ namespace Shopsys\ReadModelBundle\Image;
 
 class ImageView
 {
-    /**
-     * @var int
-     */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @var string
-     */
-    protected $extension;
+    protected string $extension;
 
-    /**
-     * @var string
-     */
-    protected $entityName;
+    protected string $entityName;
 
-    /**
-     * @var string|null
-     */
-    protected $type;
+    protected ?string $type = null;
 
-    /**
-     * @var string|null
-     */
-    protected $name;
+    protected ?string $name = null;
 
     /**
      * @param int $id

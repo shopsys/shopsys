@@ -9,7 +9,6 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 abstract class TransactionFunctionalTestCase extends FunctionalTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      * @inject
      */
     protected EntityManagerDecorator $em;

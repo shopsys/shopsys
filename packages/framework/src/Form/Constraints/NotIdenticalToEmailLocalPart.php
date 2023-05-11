@@ -6,23 +6,11 @@ use Symfony\Component\Validator\Constraint;
 
 class NotIdenticalToEmailLocalPart extends Constraint
 {
-    /**
-     * @var string
-     */
-    public $password;
+    public string $password;
 
-    /**
-     * @var string
-     */
-    public $email;
+    public string $email;
 
-    /**
-     * @var string
-     */
-    public $errorPath;
+    public string $errorPath;
 
-    /**
-     * @var string
-     */
-    public $message = 'Password cannot be local part of email.';
+    public string $message = 'Password cannot be local part of email.';
 }

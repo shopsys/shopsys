@@ -28,35 +28,17 @@ use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
  */
 class ProductController extends AbstractFOSRestController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
-     */
-    protected $productFacade;
+    protected ProductFacade $productFacade;
 
-    /**
-     * @var \Shopsys\BackendApiBundle\Controller\V1\Product\ApiProductTransformer
-     */
-    protected $productTransformer;
+    protected ApiProductTransformer $productTransformer;
 
-    /**
-     * @var \Shopsys\BackendApiBundle\Component\HeaderLinks\HeaderLinksTransformer
-     */
-    protected $linksTransformer;
+    protected HeaderLinksTransformer $linksTransformer;
 
-    /**
-     * @var int
-     */
-    protected $pageSize = 100;
+    protected int $pageSize = 100;
 
-    /**
-     * @var \Shopsys\BackendApiBundle\Controller\V1\Product\ProductDataFactoryInterface
-     */
-    protected $productDataFactory;
+    protected ProductDataFactoryInterface $productDataFactory;
 
-    /**
-     * @var \Shopsys\BackendApiBundle\Controller\V1\Product\ProductApiDataValidatorInterface
-     */
-    protected $productApiDataValidator;
+    protected ProductApiDataValidatorInterface $productApiDataValidator;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade

@@ -6,34 +6,16 @@ namespace Tests\App\Performance\Page;
 
 class PerformanceTestSample
 {
-    /**
-     * @var string
-     */
     private string $routeName;
 
-    /**
-     * @var string
-     */
     private string $url;
 
-    /**
-     * @var float
-     */
     private float $duration;
 
-    /**
-     * @var int
-     */
     private int $queryCount;
 
-    /**
-     * @var int
-     */
     private int $statusCode;
 
-    /**
-     * @var bool
-     */
     private bool $isSuccessful;
 
     /**

@@ -36,7 +36,6 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
     protected const DOMAIN_ID_FIRST = Domain::FIRST_DOMAIN_ID;
 
     /**
-     * @var \Twig\Environment
      * @inject
      */
     private Environment $twigEnvironment;

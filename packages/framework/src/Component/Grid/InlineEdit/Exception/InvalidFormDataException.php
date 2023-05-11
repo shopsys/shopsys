@@ -9,7 +9,7 @@ class InvalidFormDataException extends Exception implements InlineEditException
     /**
      * @var string[]
      */
-    protected $formErrors;
+    protected array $formErrors;
 
     /**
      * @param array $formErrors

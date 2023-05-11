@@ -13,14 +13,8 @@ class MailerSettingProvider
      */
     protected array $mailerWhitelistExpressions;
 
-    /**
-     * @var string|null
-     */
     protected ?string $mailerMasterEmailAddress;
 
-    /**
-     * @var bool
-     */
     protected bool $deliveryDisabled;
 
     /**

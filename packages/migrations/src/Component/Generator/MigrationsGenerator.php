@@ -14,15 +14,9 @@ class MigrationsGenerator
     protected const INDENT_CHARACTERS = '    ';
     protected const INDENT_TABULATOR_COUNT = 3;
 
-    /**
-     * @var \Twig\Environment
-     */
-    protected $twigEnvironment;
+    protected Environment $twigEnvironment;
 
-    /**
-     * @var \Symfony\Component\Filesystem\Filesystem
-     */
-    protected $filesystem;
+    protected Filesystem $filesystem;
 
     /**
      * @param \Twig\Environment $twigEnvironment

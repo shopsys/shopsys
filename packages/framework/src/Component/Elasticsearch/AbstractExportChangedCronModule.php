@@ -12,30 +12,15 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 abstract class AbstractExportChangedCronModule implements SimpleCronModuleInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex
-     */
-    protected $index;
+    protected AbstractIndex $index;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade
-     */
-    protected $indexFacade;
+    protected IndexFacade $indexFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader
-     */
-    protected $indexDefinitionLoader;
+    protected IndexDefinitionLoader $indexDefinitionLoader;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index

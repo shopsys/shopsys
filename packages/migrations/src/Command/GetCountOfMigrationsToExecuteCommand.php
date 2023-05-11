@@ -21,14 +21,8 @@ class GetCountOfMigrationsToExecuteCommand extends Command
      */
     protected static $defaultName = 'shopsys:migrations:count';
 
-    /**
-     * @var \Doctrine\Migrations\Version\AliasResolver
-     */
     protected AliasResolver $aliasResolver;
 
-    /**
-     * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator
-     */
     protected MigrationLockPlanCalculator $migrationLockPlanCalculator;
 
     /**

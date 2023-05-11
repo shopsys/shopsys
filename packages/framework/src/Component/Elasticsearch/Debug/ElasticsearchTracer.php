@@ -16,15 +16,9 @@ use function GuzzleHttp\json_encode;
  */
 class ElasticsearchTracer extends AbstractLogger
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchRequestCollection
-     */
-    protected $elasticsearchRequestCollection;
+    protected ElasticsearchRequestCollection $elasticsearchRequestCollection;
 
-    /**
-     * @var string|null
-     */
-    protected $lastRequestCurl;
+    protected ?string $lastRequestCurl = null;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchRequestCollection $elasticsearchRequestCollection

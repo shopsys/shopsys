@@ -6,10 +6,7 @@ use Exception;
 
 class InvalidOrderStatusTypeException extends Exception implements OrderStatusException
 {
-    /**
-     * @var int
-     */
-    protected $orderStatusType;
+    protected int $orderStatusType;
 
     /**
      * @param int $orderStatusType

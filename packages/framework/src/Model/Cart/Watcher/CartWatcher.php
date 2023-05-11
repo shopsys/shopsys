@@ -12,20 +12,11 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
 
 class CartWatcher
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
-     */
-    protected $productPriceCalculationForCustomerUser;
+    protected ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository
-     */
-    protected $productVisibilityRepository;
+    protected ProductVisibilityRepository $productVisibilityRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser

@@ -6,20 +6,11 @@ namespace Shopsys\ReadModelBundle\Brand;
 
 class BrandView
 {
-    /**
-     * @var int
-     */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name;
 
-    /**
-     * @var string
-     */
-    protected $mainUrl;
+    protected string $mainUrl;
 
     /**
      * @param int $id

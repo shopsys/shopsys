@@ -9,20 +9,11 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 
 abstract class LegalConditionsFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleFacade
-     */
-    protected $articleFacade;
+    protected ArticleFacade $articleFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    protected $setting;
+    protected Setting $setting;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade

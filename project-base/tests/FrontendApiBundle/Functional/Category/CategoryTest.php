@@ -11,9 +11,6 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CategoryTest extends GraphQlTestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\Category
-     */
     protected Category $category;
 
     protected function setUp(): void

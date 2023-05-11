@@ -21,49 +21,22 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdvertController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
-     */
-    protected $breadcrumbOverrider;
+    protected BreadcrumbOverrider $breadcrumbOverrider;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade
-     */
-    protected $administratorGridFacade;
+    protected AdministratorGridFacade $administratorGridFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Advert\AdvertFacade
-     */
-    protected $advertFacade;
+    protected AdvertFacade $advertFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    protected $adminDomainTabsFacade;
+    protected AdminDomainTabsFacade $adminDomainTabsFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    protected $gridFactory;
+    protected GridFactory $gridFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Twig\ImageExtension
-     */
-    protected $imageExtension;
+    protected ImageExtension $imageExtension;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactoryInterface
-     */
-    protected $advertDataFactory;
+    protected AdvertDataFactoryInterface $advertDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry
-     */
-    protected $advertPositionRegistry;
+    protected AdvertPositionRegistry $advertPositionRegistry;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
     protected EntityManagerInterface $entityManager;
 
     /**

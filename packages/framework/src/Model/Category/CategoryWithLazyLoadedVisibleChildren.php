@@ -13,25 +13,16 @@ use Closure;
  */
 class CategoryWithLazyLoadedVisibleChildren
 {
-    /**
-     * @var \Closure
-     */
-    protected $lazyLoadChildrenCallback;
+    protected Closure $lazyLoadChildrenCallback;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\Category
-     */
-    protected $category;
+    protected Category $category;
 
-    /**
-     * @var bool
-     */
-    protected $hasChildren;
+    protected bool $hasChildren;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildren[]|null
      */
-    protected $children;
+    protected ?array $children = null;
 
     /**
      * @param \Closure $lazyLoadChildrenCallback

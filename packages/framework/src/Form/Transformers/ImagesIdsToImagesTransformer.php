@@ -9,10 +9,7 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class ImagesIdsToImagesTransformer implements DataTransformerInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
-     */
-    protected $imageFacade;
+    protected ImageFacade $imageFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageRepository

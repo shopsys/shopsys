@@ -17,19 +17,16 @@ class PaymentTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \App\Model\Payment\PaymentDataFactory
      * @inject
      */
     private PaymentDataFactory $paymentDataFactory;
 
     /**
-     * @var \App\Model\Transport\TransportDataFactory
      * @inject
      */
     private TransportDataFactory $transportDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
      * @inject
      */
     private TransportFacade $transportFacade;

@@ -8,10 +8,7 @@ use Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusNotFoundExce
 
 class OrderStatusRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager

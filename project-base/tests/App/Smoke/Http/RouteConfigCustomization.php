@@ -27,9 +27,6 @@ class RouteConfigCustomization
 {
     protected const DEFAULT_ID_VALUE = 1;
 
-    /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
-     */
     private ContainerInterface $container;
 
     /**

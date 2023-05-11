@@ -8,19 +8,10 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 
 class ParameterValueFilterOption
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
-     */
     public ParameterValue $value;
 
-    /**
-     * @var int
-     */
     public int $count;
 
-    /**
-     * @var bool
-     */
     public bool $isAbsolute;
 
     /**

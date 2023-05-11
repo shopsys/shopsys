@@ -19,19 +19,16 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
     protected const SECOND_DOMAIN_ID = 2;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation
      * @inject
      */
     private IndependentPaymentVisibilityCalculation $independentPaymentVisibilityCalculation;
 
     /**
-     * @var \App\Model\Payment\PaymentDataFactory
      * @inject
      */
     private PaymentDataFactory $paymentDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
      * @inject
      */
     private Localization $localization;

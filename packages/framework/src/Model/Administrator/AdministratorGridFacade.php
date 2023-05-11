@@ -12,12 +12,9 @@ class AdministratorGridFacade
     /**
      * @var \Doctrine\ORM\EntityManagerInterface;
      */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimitFactoryInterface
-     */
-    protected $administratorGridLimitFactory;
+    protected AdministratorGridLimitFactoryInterface $administratorGridLimitFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

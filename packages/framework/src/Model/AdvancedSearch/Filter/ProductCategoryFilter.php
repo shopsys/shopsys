@@ -16,15 +16,9 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
 {
     public const NAME = 'productCategory';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
-     */
-    protected $categoryFacade;
+    protected CategoryFacade $categoryFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization|null
-     */
-    protected $localization;
+    protected ?Localization $localization = null;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade

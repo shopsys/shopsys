@@ -8,14 +8,8 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class ProductFilterOptions
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     public Money $minimalPrice;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     */
     public Money $maximalPrice;
 
     /**
@@ -28,9 +22,6 @@ class ProductFilterOptions
      */
     public array $flags;
 
-    /**
-     * @var int
-     */
     public int $inStock;
 
     /**

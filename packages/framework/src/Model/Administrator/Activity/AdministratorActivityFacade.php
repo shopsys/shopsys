@@ -7,20 +7,11 @@ use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 
 class AdministratorActivityFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityRepository
-     */
-    protected $administratorActivityRepository;
+    protected AdministratorActivityRepository $administratorActivityRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFactoryInterface
-     */
-    protected $administratorActivityFactory;
+    protected AdministratorActivityFactoryInterface $administratorActivityFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

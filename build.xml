@@ -37,7 +37,7 @@
         </exec>
     </target>
 
-    <target name="ecs" description="Checks coding standards in all files in the whole monorepo by PHP easy coding standards." hidden="true">
+    <target name="ecs" description="Checks coding standards in all files in the whole monorepo by PHP easy coding standards." depends="entities-dump" hidden="true">
         <exec executable="${path.ecs.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="check"/>
             <arg value="--clear-cache"/>
@@ -56,7 +56,7 @@
         </exec>
     </target>
 
-    <target name="ecs-diff" description="Checks coding standards in changed files in the whole monorepo by PHP easy coding standards." hidden="true">
+    <target name="ecs-diff" description="Checks coding standards in changed files in the whole monorepo by PHP easy coding standards." depends="entities-dump" hidden="true">
         <exec executable="${path.ecs.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="check"/>
             <arg path="${path.app}"/>
@@ -74,7 +74,7 @@
         </exec>
     </target>
 
-    <target name="ecs-fix" description="Checks and fixes automatically fixable coding standards in all files in the whole monorepo by PHP easy coding standards." hidden="true">
+    <target name="ecs-fix" description="Checks and fixes automatically fixable coding standards in all files in the whole monorepo by PHP easy coding standards." depends="entities-dump" hidden="true">
         <exec executable="${path.ecs.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="check"/>
             <arg value="--clear-cache"/>
@@ -94,7 +94,7 @@
         </exec>
     </target>
 
-    <target name="ecs-fix-diff" description="Checks and fixes automatically fixable coding standards in changed files in the whole monorepo by PHP easy coding standards." hidden="true">
+    <target name="ecs-fix-diff" description="Checks and fixes automatically fixable coding standards in changed files in the whole monorepo by PHP easy coding standards." depends="entities-dump" hidden="true">
         <exec executable="${path.ecs.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="check"/>
             <arg value="--fix"/>

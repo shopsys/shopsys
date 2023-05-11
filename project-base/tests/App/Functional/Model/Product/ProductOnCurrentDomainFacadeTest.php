@@ -29,13 +29,11 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository
      * @inject
      */
     private ParameterRepository $parameterRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
      * @inject
      */
     protected PriceConverter $priceConverter;

@@ -13,10 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFactory;
 
 class ProductFactoryTest extends TestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFactory
-     */
-    protected $productFactory;
+    protected ProductFactory $productFactory;
 
     /**
      * {@inheritdoc}

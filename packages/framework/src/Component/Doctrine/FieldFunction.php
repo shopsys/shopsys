@@ -10,15 +10,12 @@ use Doctrine\ORM\Query\SqlWalker;
 
 class FieldFunction extends FunctionNode
 {
-    /**
-     * @var \Doctrine\ORM\Query\AST\Node
-     */
-    protected $firstArgumentExpression;
+    protected Node $firstArgumentExpression;
 
     /**
      * @var \Doctrine\ORM\Query\AST\Node[]
      */
-    protected $nextArgumentExpressions;
+    protected array $nextArgumentExpressions;
 
     /**
      * @param \Doctrine\ORM\Query\Parser $parser

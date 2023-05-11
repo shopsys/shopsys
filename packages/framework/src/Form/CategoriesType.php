@@ -13,10 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CategoriesType extends AbstractType
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Form\Transformers\CategoriesTypeTransformer
-     */
-    private $categoriesTypeTransformer;
+    private CategoriesTypeTransformer $categoriesTypeTransformer;
 
     /**
      * @param \Shopsys\FrameworkBundle\Form\Transformers\CategoriesTypeTransformer $categoryTransformer

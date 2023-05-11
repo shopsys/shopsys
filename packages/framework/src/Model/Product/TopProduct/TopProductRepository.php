@@ -8,15 +8,9 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class TopProductRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
-     */
-    protected $productRepository;
+    protected ProductRepository $productRepository;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager

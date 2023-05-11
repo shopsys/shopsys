@@ -27,25 +27,19 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
     private const PAYMENT_ITEM_ID = 46;
     private const TRANSPORT_ITEM_ID = 47;
 
-    /**
-     * @var \App\Model\Order\Order
-     */
     private Order $order;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
      * @inject
      */
     private OrderFacade $orderFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface
      * @inject
      */
     private OrderDataFactoryInterface $orderDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface
      * @inject
      */
     private OrderItemDataFactoryInterface $orderItemDataFactory;

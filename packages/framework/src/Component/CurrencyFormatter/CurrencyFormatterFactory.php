@@ -13,15 +13,9 @@ class CurrencyFormatterFactory
 {
     public const MAXIMUM_FRACTION_DIGITS = 10;
 
-    /**
-     * @var \CommerceGuys\Intl\NumberFormat\NumberFormatRepositoryInterface
-     */
-    protected $numberFormatRepository;
+    protected NumberFormatRepositoryInterface $numberFormatRepository;
 
-    /**
-     * @var \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface
-     */
-    protected $intlCurrencyRepository;
+    protected CurrencyRepositoryInterface $intlCurrencyRepository;
 
     /**
      * @param \CommerceGuys\Intl\NumberFormat\NumberFormatRepositoryInterface $numberFormatRepository

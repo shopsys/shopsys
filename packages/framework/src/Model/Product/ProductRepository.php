@@ -29,30 +29,15 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 
 class ProductRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository
-     */
-    protected $productFilterRepository;
+    protected ProductFilterRepository $productFilterRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender
-     */
-    protected $queryBuilderExtender;
+    protected QueryBuilderExtender $queryBuilderExtender;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
-    protected $localization;
+    protected Localization $localization;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository
-     */
-    protected $productElasticsearchRepository;
+    protected ProductElasticsearchRepository $productElasticsearchRepository;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

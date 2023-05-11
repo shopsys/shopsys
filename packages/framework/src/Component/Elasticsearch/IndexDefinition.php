@@ -8,30 +8,15 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndex
 
 class IndexDefinition
 {
-    /**
-     * @var string
-     */
-    protected $indexName;
+    protected string $indexName;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex
-     */
-    protected $index;
+    protected AbstractIndex $index;
 
-    /**
-     * @var string
-     */
-    protected $definitionsDirectory;
+    protected string $definitionsDirectory;
 
-    /**
-     * @var string
-     */
-    protected $indexPrefix;
+    protected string $indexPrefix;
 
-    /**
-     * @var int
-     */
-    protected $domainId;
+    protected int $domainId;
 
     /**
      * @param string $indexName

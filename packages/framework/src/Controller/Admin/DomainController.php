@@ -17,30 +17,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DomainController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    protected $adminDomainTabsFacade;
+    protected AdminDomainTabsFacade $adminDomainTabsFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    protected $gridFactory;
+    protected GridFactory $gridFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\DomainFacade
-     */
-    protected $domainFacade;
+    protected DomainFacade $domainFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor
-     */
-    protected $errorExtractor;
+    protected ErrorExtractor $errorExtractor;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

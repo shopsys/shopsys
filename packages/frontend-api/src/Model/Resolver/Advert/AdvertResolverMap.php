@@ -13,10 +13,7 @@ class AdvertResolverMap extends ResolverMap
     protected const RESOLVER_ADVERT_CODE = 'AdvertCode';
     protected const RESOLVER_ADVERT_IMAGE = 'AdvertImage';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
-     */
-    protected $imageFacade;
+    protected ImageFacade $imageFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade

@@ -27,10 +27,7 @@ class PricingGroupEvent extends Event
      */
     public const DELETE = 'pricingGroup.delete';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
-     */
-    protected $pricingGroup;
+    protected PricingGroup $pricingGroup;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup

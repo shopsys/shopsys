@@ -11,45 +11,21 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationSched
 
 class ProductVariantFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
-     */
-    protected $productFacade;
+    protected ProductFacade $productFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
-     */
-    protected $productDataFactory;
+    protected ProductDataFactoryInterface $productDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
-     */
-    protected $imageFacade;
+    protected ImageFacade $imageFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface
-     */
-    protected $productFactory;
+    protected ProductFactoryInterface $productFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler
-     */
-    protected $productPriceRecalculationScheduler;
+    protected ProductPriceRecalculationScheduler $productPriceRecalculationScheduler;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler
-     */
-    protected $productAvailabilityRecalculationScheduler;
+    protected ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler
-     */
-    protected $productExportScheduler;
+    protected ProductExportScheduler $productExportScheduler;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

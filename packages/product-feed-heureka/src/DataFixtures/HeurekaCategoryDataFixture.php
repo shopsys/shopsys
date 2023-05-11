@@ -18,15 +18,9 @@ class HeurekaCategoryDataFixture implements PluginDataFixtureInterface
     protected const CATEGORY_ID_FOURTH = 5;
     protected const CATEGORY_ID_FIFTH = 6;
 
-    /**
-     * @var \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade
-     */
-    private $heurekaCategoryFacade;
+    private HeurekaCategoryFacade $heurekaCategoryFacade;
 
-    /**
-     * @var \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDataFactoryInterface
-     */
-    private $heurekaCategoryDataFactory;
+    private HeurekaCategoryDataFactoryInterface $heurekaCategoryDataFactory;
 
     /**
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade $heurekaCategoryFacade

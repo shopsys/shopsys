@@ -11,14 +11,8 @@ use Twig\TwigFunction;
 
 class CKEditorExtension extends AbstractExtension
 {
-    /**
-     * @var \FOS\CKEditorBundle\Config\CKEditorConfigurationInterface
-     */
     protected CKEditorConfigurationInterface $configuration;
 
-    /**
-     * @var \FOS\CKEditorBundle\Twig\CKEditorExtension
-     */
     protected BaseCKEditorExtension $ckEditorExtension;
 
     /**

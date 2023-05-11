@@ -7,10 +7,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class OrderFactory implements OrderFactoryInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
-     */
-    protected $entityNameResolver;
+    protected EntityNameResolver $entityNameResolver;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

@@ -10,15 +10,9 @@ use Shopsys\FrameworkBundle\Component\Doctrine\SqlParametersFlattener;
 
 class QueryPaginator implements PaginatorInterface
 {
-    /**
-     * @var \Doctrine\ORM\QueryBuilder
-     */
-    protected $queryBuilder;
+    protected QueryBuilder $queryBuilder;
 
-    /**
-     * @var string|null
-     */
-    protected $hydrationMode;
+    protected ?string $hydrationMode = null;
 
     /**
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder

@@ -10,25 +10,13 @@ use Twig\Environment;
 
 class ContactFormFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade
-     */
-    protected $mailSettingFacade;
+    protected MailSettingFacade $mailSettingFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\Mailer
-     */
-    protected $mailer;
+    protected Mailer $mailer;
 
-    /**
-     * @var \Twig\Environment
-     */
-    protected $twig;
+    protected Environment $twig;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade $mailSettingFacade

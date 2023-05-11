@@ -8,9 +8,6 @@ use Tests\App\Performance\JmeterCsvReporter;
 
 class PerformanceResultsCsvExporter
 {
-    /**
-     * @var \Tests\App\Performance\JmeterCsvReporter
-     */
     private JmeterCsvReporter $jmeterCsvReporter;
 
     /**

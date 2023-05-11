@@ -16,25 +16,13 @@ use Symplify\MonorepoBuilder\Package\PackageNamesProvider;
 
 final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @var \Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider
-     */
-    private $composerJsonFilesProvider;
+    private ComposerJsonFilesProvider $composerJsonFilesProvider;
 
-    /**
-     * @var \Symplify\ComposerJsonManipulator\FileSystem\JsonFileManager
-     */
-    private $jsonFileManager;
+    private JsonFileManager $jsonFileManager;
 
-    /**
-     * @var bool
-     */
-    private $isSuccessful = false;
+    private bool $isSuccessful = false;
 
-    /**
-     * @var \Symplify\MonorepoBuilder\Package\PackageNamesProvider
-     */
-    private $packageNamesProvider;
+    private PackageNamesProvider $packageNamesProvider;
 
     /**
      * @param \Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider $composerJsonFilesProvider

@@ -11,25 +11,13 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 class PricingGroupInlineEdit extends AbstractGridInlineEdit
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
-     */
-    protected $pricingGroupFacade;
+    protected PricingGroupFacade $pricingGroupFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    protected $adminDomainTabsFacade;
+    protected AdminDomainTabsFacade $adminDomainTabsFacade;
 
-    /**
-     * @var \Symfony\Component\Form\FormFactoryInterface
-     */
-    protected $formFactory;
+    protected FormFactoryInterface $formFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactoryInterface
-     */
-    protected $pricingGroupDataFactory;
+    protected PricingGroupDataFactoryInterface $pricingGroupDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\Grid\PricingGroupGridFactory $pricingGroupGridFactory

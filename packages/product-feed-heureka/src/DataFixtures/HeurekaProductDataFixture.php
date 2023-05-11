@@ -17,15 +17,9 @@ class HeurekaProductDataFixture implements PluginDataFixtureInterface
     protected const PRODUCT_ID_FOURTH = 4;
     protected const PRODUCT_ID_FIFTH = 5;
 
-    /**
-     * @var \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainFacade
-     */
-    private $heurekaProductDomainFacade;
+    private HeurekaProductDomainFacade $heurekaProductDomainFacade;
 
-    /**
-     * @var \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainDataFactoryInterface
-     */
-    private $heurekaProductDomainDataFactory;
+    private HeurekaProductDomainDataFactoryInterface $heurekaProductDomainDataFactory;
 
     /**
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainFacade $heurekaProductDomainFacade

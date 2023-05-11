@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Controller\Front;
 
 use App\Form\Front\Registration\RegistrationFormType;
+use App\Model\Customer\User\CustomerUserDataFactory;
+use App\Model\LegalConditions\LegalConditionsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
-use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
+use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade as BaseLegalConditionsFacade;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,30 +18,15 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RegistrationController extends FrontBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
-     */
-    private $customerUserFacade;
+    private CustomerUserFacade $customerUserFacade;
 
-    /**
-     * @var \App\Model\Customer\User\CustomerUserDataFactory
-     */
-    private $customerUserDataFactory;
+    private CustomerUserDataFactory $customerUserDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Security\Authenticator
-     */
-    private $authenticator;
+    private Authenticator $authenticator;
 
-    /**
-     * @var \App\Model\LegalConditions\LegalConditionsFacade
-     */
-    private $legalConditionsFacade;
+    private LegalConditionsFacade $legalConditionsFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -53,7 +40,7 @@ class RegistrationController extends FrontBaseController
         CustomerUserDataFactoryInterface $customerUserDataFactory,
         CustomerUserFacade $customerUserFacade,
         Authenticator $authenticator,
-        LegalConditionsFacade $legalConditionsFacade
+        BaseLegalConditionsFacade $legalConditionsFacade
     ) {
         $this->domain = $domain;
         $this->customerUserDataFactory = $customerUserDataFactory;

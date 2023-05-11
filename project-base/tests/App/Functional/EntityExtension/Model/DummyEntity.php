@@ -13,7 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class DummyEntity
 {
     /**
-     * @var int
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")

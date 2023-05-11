@@ -8,20 +8,11 @@ use Symfony\Bridge\Monolog\Logger;
 
 class VatDeletionCronModule implements IteratedCronModuleInterface
 {
-    /**
-     * @var \Symfony\Bridge\Monolog\Logger
-     */
-    protected $logger;
+    protected Logger $logger;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
-     */
-    protected $vatFacade;
+    protected VatFacade $vatFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade
-     */
-    protected $productInputPriceFacade;
+    protected ProductInputPriceFacade $productInputPriceFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade

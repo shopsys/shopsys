@@ -11,9 +11,6 @@ class ArticleNotFoundUserError extends EntityNotFoundUserError implements UserEr
 {
     protected const CODE = 'article-not-found';
 
-    /**
-     * @var string|null
-     */
     protected ?string $articleIdentifier;
 
     /**

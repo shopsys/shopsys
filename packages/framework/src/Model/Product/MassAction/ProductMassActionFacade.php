@@ -9,20 +9,11 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class ProductMassActionFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionRepository
-     */
-    protected $productMassActionRepository;
+    protected ProductMassActionRepository $productMassActionRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade
-     */
-    protected $productVisibilityFacade;
+    protected ProductVisibilityFacade $productVisibilityFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator
-     */
-    protected $productHiddenRecalculator;
+    protected ProductHiddenRecalculator $productHiddenRecalculator;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionRepository $productMassActionRepository

@@ -10,25 +10,13 @@ use Shopsys\FrameworkBundle\Component\Image\Processing\Exception\OriginalSizeIma
 
 class ImageGenerator
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor
-     */
-    protected $imageProcessor;
+    protected ImageProcessor $imageProcessor;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageLocator
-     */
-    protected $imageLocator;
+    protected ImageLocator $imageLocator;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
-     */
-    protected $imageConfig;
+    protected ImageConfig $imageConfig;
 
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    protected $filesystem;
+    protected FilesystemOperator $filesystem;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor $imageProcessor

@@ -17,10 +17,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class RoutingExtension implements ExtensionInterface
 {
-    /**
-     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
-     */
-    protected $generator;
+    protected UrlGeneratorInterface $generator;
 
     /**
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $generator

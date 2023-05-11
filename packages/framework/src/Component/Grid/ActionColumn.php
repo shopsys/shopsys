@@ -11,55 +11,31 @@ class ActionColumn
     public const TYPE_DELETE = 'delete';
     public const TYPE_EDIT = 'edit';
 
-    /**
-     * @var \Symfony\Component\Routing\RouterInterface
-     */
-    protected $router;
+    protected RouterInterface $router;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector
-     */
-    protected $routeCsrfProtector;
+    protected RouteCsrfProtector $routeCsrfProtector;
 
-    /**
-     * @var string
-     */
-    protected $type;
+    protected string $type;
 
-    /**
-     * @var string
-     */
-    protected $title;
+    protected string $title;
 
-    /**
-     * @var string
-     */
-    protected $route;
+    protected string $route;
 
     /**
      * @var mixed[]
      */
-    protected $bindingRouteParams;
+    protected array $bindingRouteParams;
 
     /**
      * @var mixed[]
      */
-    protected $additionalRouteParams;
+    protected array $additionalRouteParams;
 
-    /**
-     * @var string|null
-     */
-    protected $classAttribute;
+    protected ?string $classAttribute = null;
 
-    /**
-     * @var string|null
-     */
-    protected $confirmMessage;
+    protected ?string $confirmMessage = null;
 
-    /**
-     * @var bool
-     */
-    protected $isAjaxConfirm;
+    protected bool $isAjaxConfirm;
 
     /**
      * @param \Symfony\Component\Routing\RouterInterface $router

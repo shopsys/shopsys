@@ -9,20 +9,11 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 
 class DirectoryStructureCreator
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig
-     */
-    protected $uploadedFileConfig;
+    protected UploadedFileConfig $uploadedFileConfig;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator
-     */
-    protected $uploadedFileLocator;
+    protected UploadedFileLocator $uploadedFileLocator;
 
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    protected $filesysytem;
+    protected FilesystemOperator $filesysytem;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig

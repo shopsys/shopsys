@@ -14,20 +14,11 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class SitemapRepository
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
-     */
-    protected $productRepository;
+    protected ProductRepository $productRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryRepository
-     */
-    protected $categoryRepository;
+    protected CategoryRepository $categoryRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleRepository
-     */
-    protected $articleRepository;
+    protected ArticleRepository $articleRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository

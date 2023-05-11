@@ -57,65 +57,29 @@ class ProductFormType extends AbstractType
     public const VALIDATION_GROUP_NOT_USING_STOCK = 'notUsingStock';
     public const CSRF_TOKEN_ID = 'product_edit_type';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
-     */
-    private $vatFacade;
+    private VatFacade $vatFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade
-     */
-    private $availabilityFacade;
+    private AvailabilityFacade $availabilityFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade
-     */
-    private $brandFacade;
+    private BrandFacade $brandFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade
-     */
-    private $flagFacade;
+    private FlagFacade $flagFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade
-     */
-    private $unitFacade;
+    private UnitFacade $unitFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade
-     */
-    private $seoSettingFacade;
+    private SeoSettingFacade $seoSettingFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
-     */
-    private $categoryFacade;
+    private CategoryFacade $categoryFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer
-     */
-    private $removeDuplicatesTransformer;
+    private RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
-     */
-    private $pricingGroupFacade;
+    private PricingGroupFacade $pricingGroupFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade
-     */
-    private $pluginDataFormExtensionFacade;
+    private PluginCrudExtensionFacade $pluginDataFormExtensionFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Form\Transformers\ProductParameterValueToProductParameterValuesLocalizedTransformer
-     */
-    private $productParameterValueToProductParameterValuesLocalizedTransformer;
+    private ProductParameterValueToProductParameterValuesLocalizedTransformer $productParameterValueToProductParameterValuesLocalizedTransformer;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade

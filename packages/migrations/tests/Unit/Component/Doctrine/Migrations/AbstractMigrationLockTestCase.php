@@ -12,9 +12,6 @@ abstract class AbstractMigrationLockTestCase extends AbstractMigrationTestCase
     protected const MIGRATION_LOCK_TEMPLATE = __DIR__ . '/Resources/migrations-lock.yml';
     protected const MIGRATION_LOCK = __DIR__ . '/Resources/migrations-lock.yml.tmp';
 
-    /**
-     * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock
-     */
     protected MigrationsLock $migrationsLock;
 
     protected function setUp(): void

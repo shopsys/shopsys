@@ -11,10 +11,7 @@ use Shopsys\FrameworkBundle\Model\Country\Exception\CountryNotFoundException;
 
 class CountryRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager

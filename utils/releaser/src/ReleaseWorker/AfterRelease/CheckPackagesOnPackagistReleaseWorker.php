@@ -12,10 +12,7 @@ use Shopsys\Releaser\Stage;
 
 final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @var \Shopsys\Releaser\Packagist\PackageProvider
-     */
-    private $packageProvider;
+    private PackageProvider $packageProvider;
 
     /**
      * @param \Shopsys\Releaser\Packagist\PackageProvider $packageProvider

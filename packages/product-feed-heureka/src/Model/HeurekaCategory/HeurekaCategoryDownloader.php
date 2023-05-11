@@ -7,15 +7,9 @@ use SimpleXMLElement;
 
 class HeurekaCategoryDownloader
 {
-    /**
-     * @var string
-     */
-    protected $heurekaCategoryFeedUrl;
+    protected string $heurekaCategoryFeedUrl;
 
-    /**
-     * @var \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDataFactoryInterface
-     */
-    protected $heurekaCategoryDataFactory;
+    protected HeurekaCategoryDataFactoryInterface $heurekaCategoryDataFactory;
 
     /**
      * @param string $heurekaCategoryFeedUrl

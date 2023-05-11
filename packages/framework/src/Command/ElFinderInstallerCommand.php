@@ -33,15 +33,9 @@ final class ElFinderInstallerCommand extends Command
      */
     protected static $defaultName = 'elfinder:install';
 
-    /**
-     * @var \Symfony\Component\Filesystem\Filesystem
-     */
-    protected $fileSystem;
+    protected Filesystem $fileSystem;
 
-    /**
-     * @var \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface
-     */
-    protected  $parameterBag;
+    protected ParameterBagInterface  $parameterBag;
 
     /**
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem

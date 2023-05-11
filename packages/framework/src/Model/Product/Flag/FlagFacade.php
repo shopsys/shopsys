@@ -9,25 +9,13 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class FlagFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository
-     */
-    protected $flagRepository;
+    protected FlagRepository $flagRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactory
-     */
-    protected $flagFactory;
+    protected FlagFactory $flagFactory;
 
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

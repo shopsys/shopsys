@@ -21,45 +21,21 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 class PlaceOrderFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
-     */
-    protected $orderFacade;
+    protected OrderFacade $orderFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade
-     */
-    protected $orderProductFacade;
+    protected OrderProductFacade $orderProductFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository
-     */
-    protected $orderStatusRepository;
+    protected OrderStatusRepository $orderStatusRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory
-     */
-    protected $orderPreviewFactory;
+    protected OrderPreviewFactory $orderPreviewFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    protected $currencyFacade;
+    protected CurrencyFacade $currencyFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    protected $currentCustomerUser;
+    protected CurrentCustomerUser $currentCustomerUser;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
-     */
-    protected $customerUserFacade;
+    protected CustomerUserFacade $customerUserFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade

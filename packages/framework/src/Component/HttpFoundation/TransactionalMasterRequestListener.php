@@ -9,15 +9,9 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class TransactionalMasterRequestListener
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var bool
-     */
-    protected $inTransaction;
+    protected bool $inTransaction;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

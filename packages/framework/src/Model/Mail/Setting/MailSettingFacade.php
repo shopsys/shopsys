@@ -6,10 +6,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 
 class MailSettingFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    protected $setting;
+    protected Setting $setting;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting

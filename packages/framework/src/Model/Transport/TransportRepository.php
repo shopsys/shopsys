@@ -8,10 +8,7 @@ use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException
 
 class TransportRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

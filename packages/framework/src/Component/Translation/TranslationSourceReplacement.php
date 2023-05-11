@@ -4,25 +4,16 @@ namespace Shopsys\FrameworkBundle\Component\Translation;
 
 class TranslationSourceReplacement
 {
-    /**
-     * @var string
-     */
-    protected $oldSource;
+    protected string $oldSource;
 
-    /**
-     * @var string
-     */
-    protected $newSource;
+    protected string $newSource;
 
-    /**
-     * @var string
-     */
-    protected $domain;
+    protected string $domain;
 
     /**
      * @var string[]
      */
-    protected $sourceFileReferences;
+    protected array $sourceFileReferences;
 
     /**
      * @param string $oldSource

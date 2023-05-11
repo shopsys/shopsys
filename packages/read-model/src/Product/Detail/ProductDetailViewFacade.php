@@ -8,15 +8,9 @@ use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 
 class ProductDetailViewFacade implements ProductDetailViewFacadeInterface
 {
-    /**
-     * @var \Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFactory
-     */
-    protected $productDetailViewFactory;
+    protected ProductDetailViewFactory $productDetailViewFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface
-     */
-    protected $productOnCurrentDomainFacade;
+    protected ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade;
 
     /**
      * @param \Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFactory $productDetailViewFactory

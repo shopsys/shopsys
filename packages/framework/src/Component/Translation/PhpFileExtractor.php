@@ -21,35 +21,20 @@ use Twig\Node\Node as TwigNode;
 
 class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
 {
-    /**
-     * @var \PhpParser\NodeTraverser
-     */
-    protected $traverser;
+    protected NodeTraverser $traverser;
 
-    /**
-     * @var \Doctrine\Common\Annotations\DocParser
-     */
-    protected $docParser;
+    protected DocParser $docParser;
 
-    /**
-     * @var \JMS\TranslationBundle\Model\MessageCatalogue
-     */
-    protected $catalogue;
+    protected MessageCatalogue $catalogue;
 
-    /**
-     * @var \SplFileInfo
-     */
-    protected $file;
+    protected SplFileInfo $file;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Translation\TransMethodSpecification[]
      */
-    protected $transMethodSpecifications;
+    protected array $transMethodSpecifications;
 
-    /**
-     * @var \PhpParser\Node|null
-     */
-    protected $previousNode;
+    protected ?Node $previousNode = null;
 
     /**
      * @param \Doctrine\Common\Annotations\DocParser $docParser

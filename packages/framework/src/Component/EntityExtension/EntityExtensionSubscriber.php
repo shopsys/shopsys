@@ -21,9 +21,6 @@ class EntityExtensionSubscriber implements EventSubscriber
      */
     protected array $entityExtensionMap;
 
-    /**
-     * @var bool
-     */
     protected bool $isEntityMapLoaded = false;
 
     /**
@@ -41,9 +38,6 @@ class EntityExtensionSubscriber implements EventSubscriber
      */
     protected ?array $allRegisteredEntitiesCache = null;
 
-    /**
-     * @var \Doctrine\ORM\Configuration
-     */
     protected Configuration $configuration;
 
     /**

@@ -6,15 +6,9 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class QuantifiedProduct
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Product
-     */
-    protected $product;
+    protected Product $product;
 
-    /**
-     * @var int
-     */
-    protected $quantity;
+    protected int $quantity;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product

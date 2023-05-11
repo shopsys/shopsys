@@ -10,25 +10,13 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 
 class CustomerMailFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\Mailer
-     */
-    protected $mailer;
+    protected Mailer $mailer;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade
-     */
-    protected $mailTemplateFacade;
+    protected MailTemplateFacade $mailTemplateFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\Mail\RegistrationMail
-     */
-    protected $registrationMail;
+    protected RegistrationMail $registrationMail;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade
-     */
-    protected $uploadedFileFacade;
+    protected UploadedFileFacade $uploadedFileFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailer

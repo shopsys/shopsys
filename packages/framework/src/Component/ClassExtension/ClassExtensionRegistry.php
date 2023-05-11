@@ -14,22 +14,19 @@ class ClassExtensionRegistry
     /**
      * @var string[]
      */
-    protected $entityExtensionMap = [];
+    protected array $entityExtensionMap = [];
 
     /**
      * @var string[]
      */
-    protected $serviceExtensionMap = [];
+    protected array $serviceExtensionMap = [];
 
     /**
      * @var string[]
      */
-    protected $otherClassesExtensionMap = [];
+    protected array $otherClassesExtensionMap = [];
 
-    /**
-     * @var string
-     */
-    protected $frameworkRootDir;
+    protected string $frameworkRootDir;
 
     /**
      * @param string[] $entityExtensionMap

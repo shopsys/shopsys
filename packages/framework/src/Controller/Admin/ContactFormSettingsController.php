@@ -13,20 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ContactFormSettingsController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    protected $adminDomainTabsFacade;
+    protected AdminDomainTabsFacade $adminDomainTabsFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsDataFactoryInterface
-     */
-    protected $contactFormSettingsDataFactory;
+    protected ContactFormSettingsDataFactoryInterface $contactFormSettingsDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsFacade
-     */
-    protected $contactFormSettingsFacade;
+    protected ContactFormSettingsFacade $contactFormSettingsFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade

@@ -8,9 +8,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 
 class ParameterFilterOption
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
-     */
     public Parameter $parameter;
 
     /**

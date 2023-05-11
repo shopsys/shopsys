@@ -8,15 +8,9 @@ use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 
 class ErrorIdProvider
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\String\HashGenerator
-     */
-    protected $hashGenerator;
+    protected HashGenerator $hashGenerator;
 
-    /**
-     * @var string|null
-     */
-    protected $errorId;
+    protected ?string $errorId = null;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator

@@ -7,25 +7,13 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class CountryFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\CountryRepository
-     */
-    protected $countryRepository;
+    protected CountryRepository $countryRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\CountryFactoryInterface
-     */
-    protected $countryFactory;
+    protected CountryFactoryInterface $countryFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

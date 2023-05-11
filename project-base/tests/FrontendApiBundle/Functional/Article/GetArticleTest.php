@@ -13,7 +13,6 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 class GetArticleTest extends GraphQlTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleFacade
      * @inject
      */
     private ArticleFacade $articleFacade;

@@ -9,25 +9,13 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 class VatInlineEdit extends AbstractGridInlineEdit
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
-     */
-    protected $vatFacade;
+    protected VatFacade $vatFacade;
 
-    /**
-     * @var \Symfony\Component\Form\FormFactoryInterface
-     */
-    protected $formFactory;
+    protected FormFactoryInterface $formFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactoryInterface
-     */
-    protected $vatDataFactory;
+    protected VatDataFactoryInterface $vatDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    protected $adminDomainTabsFacade;
+    protected AdminDomainTabsFacade $adminDomainTabsFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatGridFactory $vatGridFactory

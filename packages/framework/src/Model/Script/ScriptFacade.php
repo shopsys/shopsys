@@ -12,30 +12,15 @@ class ScriptFacade
     public const VARIABLE_NUMBER = '{number}';
     public const VARIABLE_TOTAL_PRICE = '{total_price}';
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Script\ScriptRepository
-     */
-    protected $scriptRepository;
+    protected ScriptRepository $scriptRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    protected $setting;
+    protected Setting $setting;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Script\ScriptFactoryInterface
-     */
-    protected $scriptFactory;
+    protected ScriptFactoryInterface $scriptFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Twig\MoneyExtension
-     */
-    protected $moneyExtension;
+    protected MoneyExtension $moneyExtension;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

@@ -10,10 +10,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class PhpToDocTypeTransformer
 {
-    /**
-     * @var \Shopsys\CodingStandards\Helper\FqnNameResolver
-     */
-    private $fqnNameResolver;
+    private FqnNameResolver $fqnNameResolver;
 
     /**
      * @param \Shopsys\CodingStandards\Helper\FqnNameResolver $fqnNameResolver

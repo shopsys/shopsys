@@ -20,10 +20,7 @@ class CheckOrmMappingCommand extends Command
      */
     protected static $defaultName = 'shopsys:migrations:check-mapping';
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

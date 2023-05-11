@@ -13,10 +13,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 
 class CustomerUserRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager

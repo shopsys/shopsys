@@ -33,25 +33,13 @@ class OrderFormType extends AbstractType
 {
     public const VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS = 'deliveryAddressSameAsBillingAddress';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade
-     */
-    private $countryFacade;
+    private CountryFacade $countryFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade
-     */
-    private $orderStatusFacade;
+    private OrderStatusFacade $orderStatusFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension
-     */
-    private $dateTimeFormatterExtension;
+    private DateTimeFormatterExtension $dateTimeFormatterExtension;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade

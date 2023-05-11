@@ -10,25 +10,13 @@ use Twig\TwigFunction;
 
 class DomainExtension extends AbstractExtension
 {
-    /**
-     * @var string
-     */
-    protected $domainImagesUrlPrefix;
+    protected string $domainImagesUrlPrefix;
 
-    /**
-     * @var \Symfony\Component\Asset\Packages
-     */
-    protected $assetPackages;
+    protected Packages $assetPackages;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\DomainFacade
-     */
-    protected $domainFacade;
+    protected DomainFacade $domainFacade;
 
     /**
      * @param mixed $domainImagesUrlPrefix

@@ -10,10 +10,7 @@ class ShopInfoSettingFacade
     public const SHOP_INFO_EMAIL = 'shopInfoEmail';
     public const SHOP_INFO_PHONE_HOURS = 'shopInfoPhoneHours';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    protected $setting;
+    protected Setting $setting;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting

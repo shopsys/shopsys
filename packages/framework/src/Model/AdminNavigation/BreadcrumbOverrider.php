@@ -4,10 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\AdminNavigation;
 
 class BreadcrumbOverrider
 {
-    /**
-     * @var string|null
-     */
-    protected $lastItemLabel;
+    protected ?string $lastItemLabel = null;
 
     /**
      * @param string $lastItemLabel

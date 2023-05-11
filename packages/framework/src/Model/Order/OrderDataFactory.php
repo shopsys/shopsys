@@ -6,10 +6,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface;
 
 class OrderDataFactory implements OrderDataFactoryInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface
-     */
-    protected $orderItemDataFactory;
+    protected OrderItemDataFactoryInterface $orderItemDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface $orderItemDataFactory

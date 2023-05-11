@@ -9,15 +9,12 @@ use Symfony\Component\Validator\Constraint;
  */
 class FileAllowedExtension extends Constraint
 {
-    /**
-     * @var string
-     */
-    public $message = 'File extension {{ value }} is not between allowed extension. Allowed extensions are {{ extensions }}.';
+    public string $message = 'File extension {{ value }} is not between allowed extension. Allowed extensions are {{ extensions }}.';
 
     /**
      * @var string[]
      */
-    public $extensions;
+    public array $extensions;
 
     /**
      * {@inheritdoc}

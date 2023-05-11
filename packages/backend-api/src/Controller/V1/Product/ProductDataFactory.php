@@ -16,20 +16,11 @@ use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface as BasePro
  */
 class ProductDataFactory implements ProductDataFactoryInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
-     */
-    protected $productDataFactory;
+    protected BaseProductDataFactoryInterface $productDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade
-     */
-    protected $availabilityFacade;
+    protected AvailabilityFacade $availabilityFacade;
 
-    /**
-     * @var \Shopsys\BackendApiBundle\Component\DataSetter\ApiDataSetter
-     */
-    protected $apiDataSetter;
+    protected ApiDataSetter $apiDataSetter;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface $productDataFactory

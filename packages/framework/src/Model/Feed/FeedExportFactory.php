@@ -10,35 +10,17 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class FeedExportFactory
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Feed\FeedRendererFactory
-     */
-    protected $feedRendererFactory;
+    protected FeedRendererFactory $feedRendererFactory;
 
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    protected $filesystem;
+    protected FilesystemOperator $filesystem;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Feed\FeedPathProvider
-     */
-    protected $feedPathProvider;
+    protected FeedPathProvider $feedPathProvider;
 
-    /**
-     * @var \Symfony\Component\Filesystem\Filesystem
-     */
-    protected $localFilesystem;
+    protected Filesystem $localFilesystem;
 
-    /**
-     * @var \League\Flysystem\MountManager
-     */
-    protected $mountManager;
+    protected MountManager $mountManager;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedRendererFactory $feedRendererFactory

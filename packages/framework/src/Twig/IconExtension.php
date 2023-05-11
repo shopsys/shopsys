@@ -10,10 +10,7 @@ use Twig\TwigFunction;
 
 class IconExtension extends AbstractExtension
 {
-    /**
-     * @var \Twig\Environment
-     */
-    protected $twigEnvironment;
+    protected Environment $twigEnvironment;
 
     /**
      * @param \Twig\Environment $twigEnvironment

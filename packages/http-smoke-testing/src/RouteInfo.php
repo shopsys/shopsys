@@ -6,20 +6,14 @@ use Symfony\Component\Routing\Route;
 
 class RouteInfo
 {
-    /**
-     * @var string
-     */
-    private $routeName;
+    private string $routeName;
 
-    /**
-     * @var \Symfony\Component\Routing\Route
-     */
-    private $route;
+    private Route $route;
 
     /**
      * @var array
      */
-    private $annotations;
+    private array $annotations;
 
     /**
      * @param string $routeName

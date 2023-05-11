@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Front;
 
 use App\Form\Front\Order\DomainAwareOrderFlowFactory;
+use App\Model\LegalConditions\LegalConditionsFacade;
 use App\Model\Order\FrontOrderData;
 use App\Model\Order\OrderData;
 use App\Model\Order\OrderDataMapper;
@@ -12,7 +13,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
-use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
+use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade as BaseLegalConditionsFacade;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
@@ -33,80 +34,35 @@ class OrderController extends FrontBaseController
 {
     public const SESSION_CREATED_ORDER = 'created_order_id';
 
-    /**
-     * @var \App\Form\Front\Order\DomainAwareOrderFlowFactory
-     */
-    private $domainAwareOrderFlowFactory;
+    private DomainAwareOrderFlowFactory $domainAwareOrderFlowFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\CartFacade
-     */
-    private $cartFacade;
+    private CartFacade $cartFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade
-     */
-    private $orderMailFacade;
+    private OrderMailFacade $orderMailFacade;
 
-    /**
-     * @var \App\Model\Order\OrderDataMapper
-     */
-    private $orderDataMapper;
+    private OrderDataMapper $orderDataMapper;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
-     */
-    private $orderFacade;
+    private OrderFacade $orderFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory
-     */
-    private $orderPreviewFactory;
+    private OrderPreviewFactory $orderPreviewFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Watcher\TransportAndPaymentWatcher
-     */
-    private $transportAndPaymentWatcher;
+    private TransportAndPaymentWatcher $transportAndPaymentWatcher;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade
-     */
-    private $paymentFacade;
+    private PaymentFacade $paymentFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation
-     */
-    private $paymentPriceCalculation;
+    private PaymentPriceCalculation $paymentPriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    private $currencyFacade;
+    private CurrencyFacade $currencyFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
-     */
-    private $transportFacade;
+    private TransportFacade $transportFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation
-     */
-    private $transportPriceCalculation;
+    private TransportPriceCalculation $transportPriceCalculation;
 
-    /**
-     * @var \App\Model\LegalConditions\LegalConditionsFacade
-     */
-    private $legalConditionsFacade;
+    private LegalConditionsFacade $legalConditionsFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade
-     */
-    private $newsletterFacade;
+    private NewsletterFacade $newsletterFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
@@ -139,7 +95,7 @@ class OrderController extends FrontBaseController
         DomainAwareOrderFlowFactory $domainAwareOrderFlowFactory,
         TransportAndPaymentWatcher $transportAndPaymentWatcher,
         OrderMailFacade $orderMailFacade,
-        LegalConditionsFacade $legalConditionsFacade,
+        BaseLegalConditionsFacade $legalConditionsFacade,
         NewsletterFacade $newsletterFacade
     ) {
         $this->orderFacade = $orderFacade;

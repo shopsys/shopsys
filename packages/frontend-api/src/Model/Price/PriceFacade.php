@@ -10,14 +10,8 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 
 class PriceFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory
-     */
     protected PriceFactory $priceFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
     protected CurrentCustomerUser $currentCustomerUser;
 
     /**

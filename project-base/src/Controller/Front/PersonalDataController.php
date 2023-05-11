@@ -20,50 +20,23 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PersonalDataController extends FrontBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    private $setting;
+    private Setting $setting;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
-     */
-    private $customerUserFacade;
+    private CustomerUserFacade $customerUserFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
-     */
-    private $orderFacade;
+    private OrderFacade $orderFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade
-     */
-    private $newsletterFacade;
+    private NewsletterFacade $newsletterFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade
-     */
-    private $personalDataAccessRequestFacade;
+    private PersonalDataAccessRequestFacade $personalDataAccessRequestFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMailFacade
-     */
-    private $personalDataAccessMailFacade;
+    private PersonalDataAccessMailFacade $personalDataAccessMailFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactoryInterface
-     */
-    private $personalDataAccessRequestDataFactory;
+    private PersonalDataAccessRequestDataFactoryInterface $personalDataAccessRequestDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\HttpFoundation\XmlResponse
-     */
-    private $xmlResponse;
+    private XmlResponse $xmlResponse;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting

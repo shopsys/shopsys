@@ -12,7 +12,6 @@ use Tests\App\Test\FunctionalTestCase;
 class ProductActionViewFacadeTest extends FunctionalTestCase
 {
     /**
-     * @var \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface
      * @inject
      */
     private ProductActionViewFacadeInterface $productActionViewFacade;

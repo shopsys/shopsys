@@ -10,25 +10,13 @@ use Symfony\Bridge\Monolog\Logger;
 
 class HeurekaFacade
 {
-    /**
-     * @var \Symfony\Bridge\Monolog\Logger
-     */
-    protected $logger;
+    protected Logger $logger;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationFactory
-     */
-    protected $heurekaShopCertificationFactory;
+    protected HeurekaShopCertificationFactory $heurekaShopCertificationFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationLocaleHelper
-     */
-    protected $heurekaShopCertificationLocaleHelper;
+    protected HeurekaShopCertificationLocaleHelper $heurekaShopCertificationLocaleHelper;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting
-     */
-    protected $heurekaSetting;
+    protected HeurekaSetting $heurekaSetting;
 
     /**
      * @param \Symfony\Bridge\Monolog\Logger $logger

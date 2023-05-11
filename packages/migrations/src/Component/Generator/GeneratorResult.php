@@ -4,15 +4,9 @@ namespace Shopsys\MigrationBundle\Component\Generator;
 
 class GeneratorResult
 {
-    /**
-     * @var string
-     */
-    protected $migrationFilePath;
+    protected string $migrationFilePath;
 
-    /**
-     * @var int|false
-     */
-    protected $writtenBytes;
+    protected int|false $writtenBytes;
 
     /**
      * @param string $migrationFilePath

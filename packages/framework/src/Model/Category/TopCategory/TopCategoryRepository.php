@@ -8,15 +8,9 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 
 class TopCategoryRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryRepository
-     */
-    protected $categoryRepository;
+    protected CategoryRepository $categoryRepository;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager

@@ -9,25 +9,13 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ParameterFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository
-     */
-    protected $parameterRepository;
+    protected ParameterRepository $parameterRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface
-     */
-    protected $parameterFactory;
+    protected ParameterFactoryInterface $parameterFactory;
 
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

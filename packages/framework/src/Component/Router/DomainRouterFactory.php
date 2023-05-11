@@ -15,44 +15,23 @@ use Symfony\Component\Routing\RequestContext;
 
 class DomainRouterFactory
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory
-     */
-    protected $localizedRouterFactory;
+    protected LocalizedRouterFactory $localizedRouterFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory
-     */
-    protected $friendlyUrlRouterFactory;
+    protected FriendlyUrlRouterFactory $friendlyUrlRouterFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var string
-     */
-    protected $routerConfiguration;
+    protected string $routerConfiguration;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouter[]
      */
-    protected $routersByDomainId = [];
+    protected array $routersByDomainId = [];
 
-    /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
-     */
-    protected $requestStack;
+    protected RequestStack $requestStack;
 
-    /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
-     */
     protected ContainerInterface $container;
 
-    /**
-     * @var string
-     */
     protected string $cacheDir;
 
     /**

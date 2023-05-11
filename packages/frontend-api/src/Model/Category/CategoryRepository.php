@@ -13,14 +13,8 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryRepository as FrameworkCatego
 
 class CategoryRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
     protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryRepository
-     */
     protected FrameworkCategoryRepository $categoryRepository;
 
     /**

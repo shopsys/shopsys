@@ -27,10 +27,7 @@ class ParameterEvent extends Event
      */
     public const DELETE = 'parameter.delete';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
-     */
-    protected $parameter;
+    protected Parameter $parameter;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter

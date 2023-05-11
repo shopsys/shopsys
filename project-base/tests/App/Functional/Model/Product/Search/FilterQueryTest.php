@@ -23,25 +23,21 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Elasticsearch\Client
      * @inject
      */
     private Client $elasticsearchClient;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory
      * @inject
      */
     private FilterQueryFactory $filterQueryFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
      * @inject
      */
     private PriceConverter $priceConverter;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader
      * @inject
      */
     private IndexDefinitionLoader $indexDefinitionLoader;

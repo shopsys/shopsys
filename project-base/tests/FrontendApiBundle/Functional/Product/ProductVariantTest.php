@@ -11,14 +11,8 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ProductVariantTest extends GraphQlTestCase
 {
-    /**
-     * @var \App\Model\Product\Product
-     */
     private Product $productAsMainVariant;
 
-    /**
-     * @var \App\Model\Product\Product
-     */
     private Product $productAsVariant;
 
     protected function setUp(): void

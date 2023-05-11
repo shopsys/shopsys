@@ -11,10 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 abstract class AbstractReferenceFixture implements FixtureInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade
-     */
-    protected $persistentReferenceFacade;
+    protected PersistentReferenceFacade $persistentReferenceFacade;
 
     /**
      * @required

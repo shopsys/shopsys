@@ -8,20 +8,11 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class HeurekaShopCertificationFactory
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting
-     */
-    protected $heurekaSetting;
+    protected HeurekaSetting $heurekaSetting;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationLocaleHelper
-     */
-    protected $heurekaShopCertificationLocaleHelper;
+    protected HeurekaShopCertificationLocaleHelper $heurekaShopCertificationLocaleHelper;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

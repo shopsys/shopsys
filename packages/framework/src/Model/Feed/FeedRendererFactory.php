@@ -6,10 +6,7 @@ use Twig\Environment;
 
 class FeedRendererFactory
 {
-    /**
-     * @var \Twig\Environment
-     */
-    protected $twig;
+    protected Environment $twig;
 
     /**
      * @param \Twig\Environment $twig

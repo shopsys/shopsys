@@ -9,25 +9,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class FriendlyUrlGeneratorFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
-     */
-    protected $domainRouterFactory;
+    protected DomainRouterFactory $domainRouterFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    protected $friendlyUrlFacade;
+    protected FriendlyUrlFacade $friendlyUrlFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderRegistry
-     */
-    protected $friendlyUrlDataProviderConfig;
+    protected FriendlyUrlDataProviderRegistry $friendlyUrlDataProviderConfig;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

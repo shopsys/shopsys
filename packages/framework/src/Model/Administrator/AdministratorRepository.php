@@ -9,10 +9,7 @@ use Shopsys\FrameworkBundle\Model\Security\Roles;
 
 class AdministratorRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

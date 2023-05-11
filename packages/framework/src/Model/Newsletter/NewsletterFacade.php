@@ -8,20 +8,11 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 
 class NewsletterFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterRepository
-     */
-    protected $newsletterRepository;
+    protected NewsletterRepository $newsletterRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriberFactoryInterface
-     */
-    protected $newsletterSubscriberFactory;
+    protected NewsletterSubscriberFactoryInterface $newsletterSubscriberFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

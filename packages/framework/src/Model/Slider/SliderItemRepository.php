@@ -9,10 +9,7 @@ use Shopsys\FrameworkBundle\Model\Slider\Exception\SliderItemNotFoundException;
 
 class SliderItemRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

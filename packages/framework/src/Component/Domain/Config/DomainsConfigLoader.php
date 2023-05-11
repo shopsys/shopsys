@@ -11,10 +11,7 @@ use Symfony\Component\Yaml\Parser;
 
 class DomainsConfigLoader
 {
-    /**
-     * @var \Symfony\Component\Filesystem\Filesystem
-     */
-    protected $filesystem;
+    protected Filesystem $filesystem;
 
     /**
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem

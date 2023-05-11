@@ -17,19 +17,16 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
      * @inject
      */
     private Localization $localization;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\IndependentTransportVisibilityCalculation
      * @inject
      */
     private IndependentTransportVisibilityCalculation $independentTransportVisibilityCalculation;
 
     /**
-     * @var \App\Model\Transport\TransportDataFactory
      * @inject
      */
     private TransportDataFactory $transportDataFactory;

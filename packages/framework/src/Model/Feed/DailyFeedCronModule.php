@@ -9,35 +9,17 @@ use Symfony\Bridge\Monolog\Logger;
 
 class DailyFeedCronModule implements IteratedCronModuleInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Feed\FeedFacade
-     */
-    protected $feedFacade;
+    protected FeedFacade $feedFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    protected $setting;
+    protected Setting $setting;
 
-    /**
-     * @var \Symfony\Bridge\Monolog\Logger
-     */
-    protected $logger;
+    protected Logger $logger;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Feed\FeedExportCreationDataQueue|null
-     */
-    protected $feedExportCreationDataQueue;
+    protected ?FeedExportCreationDataQueue $feedExportCreationDataQueue = null;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Feed\FeedExport|null
-     */
-    protected $currentFeedExport;
+    protected ?FeedExport $currentFeedExport = null;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedFacade $feedFacade

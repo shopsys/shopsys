@@ -6,15 +6,12 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search;
 
 class ProductIdsResult
 {
-    /**
-     * @var int
-     */
-    protected $total;
+    protected int $total;
 
     /**
      * @var int[]
      */
-    protected $ids;
+    protected array $ids;
 
     /**
      * @param int $total

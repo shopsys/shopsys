@@ -13,25 +13,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CountryController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\Grid\CountryGridFactory
-     */
-    protected $countryGridFactory;
+    protected CountryGridFactory $countryGridFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\CountryDataFactory
-     */
-    protected $countryDataFactory;
+    protected CountryDataFactory $countryDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade
-     */
-    protected $countryFacade;
+    protected CountryFacade $countryFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
-     */
-    protected $breadcrumbOverrider;
+    protected BreadcrumbOverrider $breadcrumbOverrider;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\Grid\CountryGridFactory $countryGridFactory

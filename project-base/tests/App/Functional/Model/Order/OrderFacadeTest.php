@@ -27,49 +27,41 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\CartFacade
      * @inject
      */
     private CartFacade $cartFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
      * @inject
      */
     private OrderFacade $orderFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory
      * @inject
      */
     private OrderPreviewFactory $orderPreviewFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderRepository
      * @inject
      */
     private OrderRepository $orderRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
      * @inject
      */
     private ProductRepository $productRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportRepository
      * @inject
      */
     private TransportRepository $transportRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentRepository
      * @inject
      */
     private PaymentRepository $paymentRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface
      * @inject
      */
     private OrderDataFactoryInterface $orderDataFactory;

@@ -16,7 +16,7 @@ class FeedExportCreationDataQueue
     /**
      * @var array<int, array{feed_name: string, domain: \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig}>
      */
-    protected $dataInQueue = [];
+    protected array $dataInQueue = [];
 
     /**
      * @param string[] $feedNames

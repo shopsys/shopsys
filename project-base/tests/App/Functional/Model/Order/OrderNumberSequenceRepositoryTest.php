@@ -13,7 +13,6 @@ class OrderNumberSequenceRepositoryTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository
      * @inject
      */
     private OrderNumberSequenceRepository $orderNumberSequenceRepository;

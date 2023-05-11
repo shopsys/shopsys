@@ -29,31 +29,26 @@ class CartWatcherTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
      * @inject
      */
     private ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher
      * @inject
      */
     private CartWatcher $cartWatcher;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade
      * @inject
      */
     private ProductManualInputPriceFacade $manualInputPriceFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
      * @inject
      */
     private ProductDataFactoryInterface $productDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
      * @inject
      */
     private VatFacade $vatFacade;

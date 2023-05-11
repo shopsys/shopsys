@@ -7,10 +7,7 @@ use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 class DoctrineListener
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload
-     */
-    protected $fileUpload;
+    protected FileUpload $fileUpload;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload

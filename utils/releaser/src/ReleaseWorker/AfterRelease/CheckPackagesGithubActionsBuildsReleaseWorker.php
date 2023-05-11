@@ -11,10 +11,7 @@ use Shopsys\Releaser\Stage;
 
 final class CheckPackagesGithubActionsBuildsReleaseWorker extends AbstractCheckPackagesGithubActionsBuildsReleaseWorker
 {
-    /**
-     * @var string
-     */
-    private $releasingBranchName;
+    private string $releasingBranchName;
 
     /**
      * @return string

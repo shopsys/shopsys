@@ -9,15 +9,9 @@ use Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItemFacade;
 
 class ZboziFeed implements FeedInterface
 {
-    /**
-     * @var \Shopsys\ProductFeed\ZboziBundle\ZboziFeedInfo
-     */
-    protected $feedInfo;
+    protected ZboziFeedInfo $feedInfo;
 
-    /**
-     * @var \Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItemFacade
-     */
-    protected $feedItemFacade;
+    protected ZboziFeedItemFacade $feedItemFacade;
 
     /**
      * @param \Shopsys\ProductFeed\ZboziBundle\ZboziFeedInfo $feedInfo

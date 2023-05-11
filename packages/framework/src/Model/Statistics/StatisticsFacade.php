@@ -10,15 +10,9 @@ use DateTimeImmutable;
 
 class StatisticsFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Statistics\StatisticsRepository
-     */
-    protected $statisticsRepository;
+    protected StatisticsRepository $statisticsRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPointFormatter
-     */
-    protected $valueByDateTimeDataPointFormatter;
+    protected ValueByDateTimeDataPointFormatter $valueByDateTimeDataPointFormatter;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Statistics\StatisticsRepository $statisticsRepository

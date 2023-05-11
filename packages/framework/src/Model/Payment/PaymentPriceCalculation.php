@@ -11,15 +11,9 @@ use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 
 class PaymentPriceCalculation
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation
-     */
-    protected $basePriceCalculation;
+    protected BasePriceCalculation $basePriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting
-     */
-    protected $pricingSetting;
+    protected PricingSetting $pricingSetting;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation

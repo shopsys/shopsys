@@ -15,10 +15,7 @@ class TimedFormTypeExtension extends AbstractTypeExtension
     public const OPTION_ENABLED = 'timed_spam_enabled';
     public const OPTION_MINIMUM_SECONDS = 'timed_spam_minimum_seconds';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Form\FormTimeProvider
-     */
-    protected $formTimeProvider;
+    protected FormTimeProvider $formTimeProvider;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Form\FormTimeProvider $formTimeProvider

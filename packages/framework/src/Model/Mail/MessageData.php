@@ -51,9 +51,6 @@ class MessageData
      */
     public array $attachments;
 
-    /**
-     * @var string|null
-     */
     public ?string $replyTo;
 
     /**

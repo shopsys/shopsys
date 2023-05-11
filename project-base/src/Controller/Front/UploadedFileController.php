@@ -10,15 +10,9 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 
 class UploadedFileController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade
-     */
-    private $uploadedFileFacade;
+    private UploadedFileFacade $uploadedFileFacade;
 
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    private $filesystem;
+    private FilesystemOperator $filesystem;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade

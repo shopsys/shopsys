@@ -7,10 +7,7 @@ use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
 
 class BrandBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository
-     */
-    protected $brandRepository;
+    protected BrandRepository $brandRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository $brandRepository

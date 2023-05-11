@@ -36,19 +36,10 @@ class MigrationsLockRepository implements MigrationsRepository
      */
     protected array $migrationDirectories;
 
-    /**
-     * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock
-     */
     protected MigrationsLock $migrationsLock;
 
-    /**
-     * @var \Doctrine\Migrations\Finder\MigrationFinder
-     */
     protected MigrationFinder $migrationFinder;
 
-    /**
-     * @var \Doctrine\Migrations\Version\MigrationFactory
-     */
     protected MigrationFactory $migrationFactory;
 
     /**

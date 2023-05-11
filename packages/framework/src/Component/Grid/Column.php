@@ -4,35 +4,17 @@ namespace Shopsys\FrameworkBundle\Component\Grid;
 
 class Column
 {
-    /**
-     * @var string
-     */
-    protected $id;
+    protected string $id;
 
-    /**
-     * @var string
-     */
-    protected $sourceColumnName;
+    protected string $sourceColumnName;
 
-    /**
-     * @var string
-     */
-    protected $title;
+    protected string $title;
 
-    /**
-     * @var bool
-     */
-    protected $sortable;
+    protected bool $sortable;
 
-    /**
-     * @var string
-     */
-    protected $classAttribute;
+    protected string $classAttribute;
 
-    /**
-     * @var string
-     */
-    protected $orderSourceColumnName;
+    protected string $orderSourceColumnName;
 
     /**
      * @param string $id

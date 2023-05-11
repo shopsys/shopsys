@@ -33,20 +33,11 @@ use Twig\Node\Node as TwigNode;
  */
 class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
 {
-    /**
-     * @var \PhpParser\NodeTraverser
-     */
-    protected $traverser;
+    protected NodeTraverser $traverser;
 
-    /**
-     * @var \JMS\TranslationBundle\Model\MessageCatalogue
-     */
-    protected $catalogue;
+    protected MessageCatalogue $catalogue;
 
-    /**
-     * @var \SplFileInfo
-     */
-    protected $file;
+    protected SplFileInfo $file;
 
     public function __construct()
     {

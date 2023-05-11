@@ -8,10 +8,7 @@ use Doctrine\ORM\Events;
 
 class ClearSettingsCacheDoctrineSubscriber implements EventSubscriber
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    protected $setting;
+    protected Setting $setting;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting

@@ -12,6 +12,7 @@ use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
 use Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ClassLengthSniff;
 use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 /**
@@ -104,6 +105,7 @@ return static function (ECSConfig $ecsConfig): void {
         ForbiddenSuperGlobalSniff::class => [
             __DIR__ . '/tests/App/Functional/Controller/CdnTest.php',
         ],
+        PropertyTypeHintSniff::class => json_decode(file_get_contents(__DIR__ . '/var/cache/entities-dump.json'), true),
     ]);
 
     $ecsConfig->import(__DIR__ . '/vendor/shopsys/coding-standards/ecs.php', null, true);

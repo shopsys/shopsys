@@ -24,7 +24,6 @@ class CartMigrationFacadeTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface
      * @inject
      */
     private CartItemFactoryInterface $cartItemFactory;

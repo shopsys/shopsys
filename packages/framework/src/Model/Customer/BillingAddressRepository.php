@@ -10,10 +10,7 @@ use Shopsys\FrameworkBundle\Model\Customer\Exception\BillingAddressNotFoundExcep
 
 class BillingAddressRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager

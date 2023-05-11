@@ -17,19 +17,16 @@ class ProductRenameRedirectPreviousUrlTest extends ApplicationTestCase
     private const TESTED_PRODUCT_ID = 100;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
      * @inject
      */
     private ProductDataFactoryInterface $productDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
      * @inject
      */
     private ProductFacade $productFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade
      * @inject
      */
     private FriendlyUrlFacade $friendlyUrlFacade;

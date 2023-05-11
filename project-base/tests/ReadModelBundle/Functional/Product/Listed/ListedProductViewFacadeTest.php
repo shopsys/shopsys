@@ -17,7 +17,6 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface
      * @inject
      */
     private ListedProductViewFacadeInterface $listedProductViewFacade;

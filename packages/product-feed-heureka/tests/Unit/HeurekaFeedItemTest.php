@@ -2,6 +2,7 @@
 
 namespace Tests\ProductFeed\HeurekaBundle\Unit;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -23,40 +24,19 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class HeurekaFeedItemTest extends TestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser|\PHPUnit\Framework\MockObject\MockObject
-     */
-    private $productPriceCalculationForCustomerUserMock;
+    private ProductPriceCalculationForCustomerUser|MockObject $productPriceCalculationForCustomerUserMock;
 
-    /**
-     * @var \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaProductDataBatchLoader|\PHPUnit\Framework\MockObject\MockObject
-     */
-    private $heurekaProductDataBatchLoaderMock;
+    private HeurekaProductDataBatchLoader|MockObject $heurekaProductDataBatchLoaderMock;
 
-    /**
-     * @var \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade|\PHPUnit\Framework\MockObject\MockObject
-     */
-    private $heurekaCategoryFacadeMock;
+    private HeurekaCategoryFacade|MockObject $heurekaCategoryFacadeMock;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade|\PHPUnit\Framework\MockObject\MockObject
-     */
-    private $categoryFacadeMock;
+    private CategoryFacade|MockObject $categoryFacadeMock;
 
-    /**
-     * @var \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory
-     */
-    private $heurekaFeedItemFactory;
+    private HeurekaFeedItemFactory $heurekaFeedItemFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
-    private $defaultDomain;
+    private DomainConfig $defaultDomain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Product|\PHPUnit\Framework\MockObject\MockObject
-     */
-    private $defaultProduct;
+    private Product|MockObject $defaultProduct;
 
     protected function setUp(): void
     {

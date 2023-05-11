@@ -10,25 +10,13 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 
 class OrderMailFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\Mailer
-     */
-    protected $mailer;
+    protected Mailer $mailer;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade
-     */
-    protected $mailTemplateFacade;
+    protected MailTemplateFacade $mailTemplateFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail
-     */
-    protected $orderMail;
+    protected OrderMail $orderMail;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade
-     */
-    protected $uploadedFileFacade;
+    protected UploadedFileFacade $uploadedFileFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailer

@@ -17,15 +17,9 @@ use Symfony\Component\Validator\Constraints;
 
 class CurrencyFormType extends AbstractType
 {
-    /**
-     * @var \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface
-     */
-    private $intlCurrencyRepository;
+    private CurrencyRepositoryInterface $intlCurrencyRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
-    private $localization;
+    private Localization $localization;
 
     /**
      * @param \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface $intlCurrencyRepository

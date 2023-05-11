@@ -16,10 +16,7 @@ class OrderFlow extends FormFlow
      */
     protected $allowDynamicStepNavigation = true;
 
-    /**
-     * @var int
-     */
-    private $domainId;
+    private int $domainId;
 
     /**
      * @param int $domainId

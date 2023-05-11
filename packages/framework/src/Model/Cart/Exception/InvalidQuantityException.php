@@ -6,10 +6,7 @@ use Exception;
 
 class InvalidQuantityException extends Exception implements CartException
 {
-    /**
-     * @var mixed
-     */
-    protected $invalidValue;
+    protected mixed $invalidValue;
 
     /**
      * @param mixed $invalidValue

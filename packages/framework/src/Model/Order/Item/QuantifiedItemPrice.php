@@ -9,20 +9,11 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 class QuantifiedItemPrice
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    protected $unitPrice;
+    protected Price $unitPrice;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    protected $totalPrice;
+    protected Price $totalPrice;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     */
-    protected $vat;
+    protected Vat $vat;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $unitPrice

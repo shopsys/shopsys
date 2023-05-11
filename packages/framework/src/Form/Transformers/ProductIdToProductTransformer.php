@@ -10,10 +10,7 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class ProductIdToProductTransformer implements DataTransformerInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
-     */
-    protected $productRepository;
+    protected ProductRepository $productRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository

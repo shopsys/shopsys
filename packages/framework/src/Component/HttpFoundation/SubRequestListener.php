@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\HttpFoundation;
 
 use Shopsys\FrameworkBundle\Component\HttpFoundation\Exception\TooManyRedirectResponsesException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
@@ -10,15 +11,9 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class SubRequestListener
 {
-    /**
-     * @var \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    protected $redirectResponse;
+    protected ?RedirectResponse $redirectResponse = null;
 
-    /**
-     * @var \Symfony\Component\HttpFoundation\Request
-     */
-    protected $masterRequest;
+    protected Request $masterRequest;
 
     /**
      * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event

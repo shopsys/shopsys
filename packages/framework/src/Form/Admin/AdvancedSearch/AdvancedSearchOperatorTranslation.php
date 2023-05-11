@@ -10,7 +10,7 @@ class AdvancedSearchOperatorTranslation
     /**
      * @var string[]
      */
-    protected $operatorsTranslations;
+    protected array $operatorsTranslations;
 
     public function __construct()
     {

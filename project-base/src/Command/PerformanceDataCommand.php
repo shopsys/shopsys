@@ -21,25 +21,13 @@ class PerformanceDataCommand extends Command
      */
     protected static $defaultName = 'shopsys:performance-data';
 
-    /**
-     * @var \App\DataFixtures\Performance\CategoryDataFixture
-     */
-    private $categoryDataFixture;
+    private CategoryDataFixture $categoryDataFixture;
 
-    /**
-     * @var \App\DataFixtures\Performance\ProductDataFixture
-     */
-    private $productDataFixture;
+    private ProductDataFixture $productDataFixture;
 
-    /**
-     * @var \App\DataFixtures\Performance\CustomerUserDataFixture
-     */
-    private $customerUserDataFixture;
+    private CustomerUserDataFixture $customerUserDataFixture;
 
-    /**
-     * @var \App\DataFixtures\Performance\OrderDataFixture
-     */
-    private $orderDataFixture;
+    private OrderDataFixture $orderDataFixture;
 
     /**
      * @param \App\DataFixtures\Performance\CategoryDataFixture $categoryDataFixture

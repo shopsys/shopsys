@@ -9,7 +9,7 @@ class InverseMultipleChoiceTransformer implements DataTransformerInterface
     /**
      * @var mixed[]
      */
-    protected $allChoices;
+    protected array $allChoices;
 
     /**
      * @param array $allChoices Choices from ChoiceType options

@@ -7,20 +7,11 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class GoogleProductDomainFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainRepository
-     */
-    protected $googleProductDomainRepository;
+    protected GoogleProductDomainRepository $googleProductDomainRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
-     */
-    protected $productRepository;
+    protected ProductRepository $productRepository;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

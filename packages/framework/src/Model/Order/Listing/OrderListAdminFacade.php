@@ -6,15 +6,9 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class OrderListAdminFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Listing\OrderListAdminRepository
-     */
-    protected $orderListAdminRepository;
+    protected OrderListAdminRepository $orderListAdminRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
-    protected $localization;
+    protected Localization $localization;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Listing\OrderListAdminRepository $orderListAdminRepository

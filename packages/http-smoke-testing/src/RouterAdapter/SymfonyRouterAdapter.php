@@ -15,10 +15,7 @@ use Symfony\Component\Routing\RouterInterface;
 
 class SymfonyRouterAdapter implements RouterAdapterInterface
 {
-    /**
-     * @var \Symfony\Component\Routing\RouterInterface
-     */
-    private $router;
+    private RouterInterface $router;
 
     private $annotationsReader;
 

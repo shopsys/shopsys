@@ -8,9 +8,6 @@ use Doctrine\DBAL\Logging\SQLLogger;
 
 class PerformanceTestSampleQueryCounter implements SQLLogger
 {
-    /**
-     * @var int
-     */
     private int $queryCount = 0;
 
     /**

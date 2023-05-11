@@ -24,50 +24,23 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class OrderController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
-     */
-    protected $breadcrumbOverrider;
+    protected BreadcrumbOverrider $breadcrumbOverrider;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade
-     */
-    protected $administratorGridFacade;
+    protected AdministratorGridFacade $administratorGridFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\AdvancedSearchOrderFacade
-     */
-    protected $advancedSearchOrderFacade;
+    protected AdvancedSearchOrderFacade $advancedSearchOrderFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    protected $gridFactory;
+    protected GridFactory $gridFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation
-     */
-    protected $orderItemPriceCalculation;
+    protected OrderItemPriceCalculation $orderItemPriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
-     */
-    protected $orderFacade;
+    protected OrderFacade $orderFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade
-     */
-    protected $orderItemFacade;
+    protected OrderItemFacade $orderItemFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface
-     */
-    protected $orderDataFactory;
+    protected OrderDataFactoryInterface $orderDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade

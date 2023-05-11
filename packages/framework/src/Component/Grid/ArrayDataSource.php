@@ -11,12 +11,9 @@ class ArrayDataSource implements DataSourceInterface
     /**
      * @var mixed[]
      */
-    protected $data;
+    protected array $data;
 
-    /**
-     * @var string
-     */
-    protected $rowIdSourceColumnName;
+    protected string $rowIdSourceColumnName;
 
     /**
      * @param array $data

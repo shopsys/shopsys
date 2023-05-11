@@ -6,18 +6,13 @@ use Doctrine\ORM\Configuration;
 use Doctrine\ORM\Decorator\EntityManagerDecorator as BaseEntityManagerDecorator;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\Repository\RepositoryFactory;
 
 class EntityManagerDecorator extends BaseEntityManagerDecorator
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
-     */
-    protected $entityNameResolver;
+    protected EntityNameResolver $entityNameResolver;
 
-    /**
-     * @var \Doctrine\ORM\Repository\RepositoryFactory
-     */
-    protected $repositoryFactory;
+    protected RepositoryFactory $repositoryFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

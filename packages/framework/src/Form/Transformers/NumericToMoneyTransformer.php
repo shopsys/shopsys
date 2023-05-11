@@ -11,10 +11,7 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class NumericToMoneyTransformer implements DataTransformerInterface
 {
-    /**
-     * @var int
-     */
-    protected $floatScale;
+    protected int $floatScale;
 
     /**
      * @param int $floatScale

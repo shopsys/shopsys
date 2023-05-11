@@ -9,10 +9,7 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class OrderFacade
 {
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Order\OrderRepository
-     */
-    protected $orderRepository;
+    protected OrderRepository $orderRepository;
 
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderRepository $orderRepository

@@ -9,25 +9,13 @@ use Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductRepository;
 
 class GoogleFeedItemFacade
 {
-    /**
-     * @var \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductRepository
-     */
-    protected $googleProductRepository;
+    protected GoogleProductRepository $googleProductRepository;
 
-    /**
-     * @var \Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItemFactory
-     */
-    protected $feedItemFactory;
+    protected GoogleFeedItemFactory $feedItemFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade
-     */
-    protected $pricingGroupSettingFacade;
+    protected PricingGroupSettingFacade $pricingGroupSettingFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader
-     */
-    protected $productUrlsBatchLoader;
+    protected ProductUrlsBatchLoader $productUrlsBatchLoader;
 
     /**
      * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductRepository $googleProductRepository

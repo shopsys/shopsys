@@ -22,10 +22,7 @@ class ChangeEnvironmentCommand extends Command
      */
     protected static $defaultName = 'shopsys:environment:change';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting
-     */
-    private $environmentFileSetting;
+    private EnvironmentFileSetting $environmentFileSetting;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting $environmentFileSetting

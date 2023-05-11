@@ -14,35 +14,17 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductCollectionFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
-     */
-    protected $imageConfig;
+    protected ImageConfig $imageConfig;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageRepository
-     */
-    protected $imageRepository;
+    protected ImageRepository $imageRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
-     */
-    protected $imageFacade;
+    protected ImageFacade $imageFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository
-     */
-    protected $friendlyUrlRepository;
+    protected FriendlyUrlRepository $friendlyUrlRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository
-     */
-    protected $parameterRepository;
+    protected ParameterRepository $parameterRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    protected $friendlyUrlFacade;
+    protected FriendlyUrlFacade $friendlyUrlFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig

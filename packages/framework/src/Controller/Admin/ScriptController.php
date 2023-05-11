@@ -16,25 +16,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ScriptController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Script\ScriptFacade
-     */
-    protected $scriptFacade;
+    protected ScriptFacade $scriptFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    protected $gridFactory;
+    protected GridFactory $gridFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    protected $adminDomainTabsFacade;
+    protected AdminDomainTabsFacade $adminDomainTabsFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Script\ScriptDataFactoryInterface
-     */
-    protected $scriptDataFactory;
+    protected ScriptDataFactoryInterface $scriptDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Script\ScriptFacade $scriptFacade

@@ -8,15 +8,12 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 
 class ParameterWithValues
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
-     */
-    protected $parameter;
+    protected Parameter $parameter;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
-    protected $values;
+    protected array $values;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter

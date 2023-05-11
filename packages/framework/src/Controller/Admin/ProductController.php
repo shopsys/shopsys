@@ -34,75 +34,33 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionFacade
-     */
-    protected $productMassActionFacade;
+    protected ProductMassActionFacade $productMassActionFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    protected $gridFactory;
+    protected GridFactory $gridFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
-     */
-    protected $productFacade;
+    protected ProductFacade $productFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
-     */
-    protected $productDataFactory;
+    protected ProductDataFactoryInterface $productDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
-     */
-    protected $breadcrumbOverrider;
+    protected BreadcrumbOverrider $breadcrumbOverrider;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade
-     */
-    protected $administratorGridFacade;
+    protected AdministratorGridFacade $administratorGridFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade
-     */
-    protected $productListAdminFacade;
+    protected ProductListAdminFacade $productListAdminFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchProductFacade
-     */
-    protected $advancedSearchProductFacade;
+    protected AdvancedSearchProductFacade $advancedSearchProductFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade
-     */
-    protected $productVariantFacade;
+    protected ProductVariantFacade $productVariantFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Twig\ProductExtension
-     */
-    protected $productExtension;
+    protected ProductExtension $productExtension;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade
-     */
-    protected $unitFacade;
+    protected UnitFacade $unitFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    protected $setting;
+    protected Setting $setting;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade
-     */
-    protected $availabilityFacade;
+    protected AvailabilityFacade $availabilityFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionFacade $productMassActionFacade

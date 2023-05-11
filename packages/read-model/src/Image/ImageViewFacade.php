@@ -9,15 +9,9 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 
 class ImageViewFacade implements ImageViewFacadeInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
-     */
-    protected $imageFacade;
+    protected ImageFacade $imageFacade;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Image\ImageViewFactory
-     */
-    protected $imageViewFactory;
+    protected ImageViewFactory $imageViewFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade

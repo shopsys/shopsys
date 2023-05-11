@@ -6,35 +6,17 @@ class DomainConfig
 {
     public const STYLES_DIRECTORY_DEFAULT = 'common';
 
-    /**
-     * @var int
-     */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @var string
-     */
-    protected $url;
+    protected string $url;
 
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name;
 
-    /**
-     * @var string
-     */
-    protected $locale;
+    protected string $locale;
 
-    /**
-     * @var string
-     */
-    protected $stylesDirectory;
+    protected string $stylesDirectory;
 
-    /**
-     * @var string|null
-     */
-    protected $designId;
+    protected ?string $designId = null;
 
     /**
      * @param int $id

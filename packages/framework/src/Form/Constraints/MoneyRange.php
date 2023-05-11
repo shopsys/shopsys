@@ -17,25 +17,13 @@ use function is_object;
  */
 class MoneyRange extends Constraint
 {
-    /**
-     * @var string
-     */
-    public $minMessage = 'The amount of money should be {{ limit }} or more.';
+    public string $minMessage = 'The amount of money should be {{ limit }} or more.';
 
-    /**
-     * @var string
-     */
-    public $maxMessage = 'The amount of money should be {{ limit }} or less.';
+    public string $maxMessage = 'The amount of money should be {{ limit }} or less.';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     */
-    public $min;
+    public ?Money $min = null;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     */
-    public $max;
+    public ?Money $max = null;
 
     /**
      * @param array $options

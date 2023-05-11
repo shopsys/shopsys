@@ -38,25 +38,16 @@ use Twig\Node\Node as TwigNode;
  */
 class ConstraintViolationExtractor implements FileVisitorInterface, NodeVisitor
 {
-    /**
-     * @var \PhpParser\NodeTraverser
-     */
-    protected $traverser;
+    protected NodeTraverser $traverser;
 
-    /**
-     * @var \JMS\TranslationBundle\Model\MessageCatalogue
-     */
-    protected $catalogue;
+    protected MessageCatalogue $catalogue;
 
-    /**
-     * @var \SplFileInfo
-     */
-    protected $file;
+    protected SplFileInfo $file;
 
     /**
      * @var string[]
      */
-    protected $currentExecutionContextVariableNames;
+    protected array $currentExecutionContextVariableNames;
 
     public function __construct()
     {

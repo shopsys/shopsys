@@ -18,14 +18,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade;
 
 class ProductFilterOptionsFactory
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Module\ModuleFacade
-     */
     protected ModuleFacade $moduleFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade
-     */
     protected ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade;
 
     /**

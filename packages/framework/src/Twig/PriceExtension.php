@@ -18,30 +18,15 @@ use Twig\TwigFunction;
 
 class PriceExtension extends AbstractExtension
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    protected $currencyFacade;
+    protected CurrencyFacade $currencyFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
-    protected $localization;
+    protected Localization $localization;
 
-    /**
-     * @var \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface
-     */
-    protected $intlCurrencyRepository;
+    protected CurrencyRepositoryInterface $intlCurrencyRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory
-     */
-    protected $currencyFormatterFactory;
+    protected CurrencyFormatterFactory $currencyFormatterFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade

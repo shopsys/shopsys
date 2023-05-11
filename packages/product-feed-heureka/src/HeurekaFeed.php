@@ -9,15 +9,9 @@ use Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFacade;
 
 class HeurekaFeed implements FeedInterface
 {
-    /**
-     * @var \Shopsys\ProductFeed\HeurekaBundle\HeurekaFeedInfo
-     */
-    protected $feedInfo;
+    protected HeurekaFeedInfo $feedInfo;
 
-    /**
-     * @var \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFacade
-     */
-    protected $feedItemFacade;
+    protected HeurekaFeedItemFacade $feedItemFacade;
 
     /**
      * @param \Shopsys\ProductFeed\HeurekaBundle\HeurekaFeedInfo $feedInfo

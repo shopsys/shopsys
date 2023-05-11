@@ -13,15 +13,9 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ImageController extends FrontBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\Processing\ImageGeneratorFacade
-     */
-    private $imageGeneratorFacade;
+    private ImageGeneratorFacade $imageGeneratorFacade;
 
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    private $filesystem;
+    private FilesystemOperator $filesystem;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageGeneratorFacade $imageGeneratorFacade

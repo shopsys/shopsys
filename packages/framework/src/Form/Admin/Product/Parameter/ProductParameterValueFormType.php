@@ -13,10 +13,7 @@ use Symfony\Component\Validator\Constraints;
 
 class ProductParameterValueFormType extends AbstractType
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade
-     */
-    private $parameterFacade;
+    private ParameterFacade $parameterFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade

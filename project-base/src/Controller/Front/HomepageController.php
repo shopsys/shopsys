@@ -11,25 +11,13 @@ use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface;
 
 class HomepageController extends FrontBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade
-     */
-    private $seoSettingFacade;
+    private SeoSettingFacade $seoSettingFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade
-     */
-    private $sliderItemFacade;
+    private SliderItemFacade $sliderItemFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface
-     */
-    private $listedProductViewFacade;
+    private ListedProductViewFacadeInterface $listedProductViewFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade $sliderItemFacade

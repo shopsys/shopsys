@@ -18,7 +18,6 @@ class GetAllEmailsDataIteratorMethodTest extends TransactionFunctionalTestCase
     protected const FIRST_DOMAIN_SUBSCRIBER_EMAIL = 'james.black@no-reply.com';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterRepository
      * @inject
      */
     private NewsletterRepository $newsletterRepository;

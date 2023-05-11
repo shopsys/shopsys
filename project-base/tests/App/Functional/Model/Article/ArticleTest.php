@@ -16,13 +16,11 @@ class ArticleTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface
      * @inject
      */
     private ArticleDataFactoryInterface $articleDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface
      * @inject
      */
     private ArticleFactoryInterface $articleFactory;

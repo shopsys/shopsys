@@ -6,10 +6,7 @@ use Exception;
 
 class RememberGridLimitException extends Exception implements AdministratorException
 {
-    /**
-     * @var string
-     */
-    protected $gridId;
+    protected string $gridId;
 
     /**
      * @param string $gridId

@@ -10,30 +10,15 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class UnitFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitRepository
-     */
-    protected $unitRepository;
+    protected UnitRepository $unitRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    protected $setting;
+    protected Setting $setting;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFactoryInterface
-     */
-    protected $unitFactory;
+    protected UnitFactoryInterface $unitFactory;
 
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

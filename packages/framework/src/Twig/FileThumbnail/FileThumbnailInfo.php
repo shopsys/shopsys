@@ -4,15 +4,9 @@ namespace Shopsys\FrameworkBundle\Twig\FileThumbnail;
 
 class FileThumbnailInfo
 {
-    /**
-     * @var string|null
-     */
-    protected $iconType;
+    protected ?string $iconType = null;
 
-    /**
-     * @var string|null
-     */
-    protected $imageUri;
+    protected ?string $imageUri = null;
 
     /**
      * @param string|null $iconType

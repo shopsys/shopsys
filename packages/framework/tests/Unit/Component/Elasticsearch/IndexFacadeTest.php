@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\Elasticsearch;
 
 use Doctrine\ORM\EntityManager;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
@@ -17,25 +18,13 @@ use Symfony\Component\Console\Output\NullOutput;
 
 class IndexFacadeTest extends TestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository|\PHPUnit\Framework\MockObject\MockObject
-     */
-    private $indexRepositoryMock;
+    private IndexRepository|MockObject $indexRepositoryMock;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory
-     */
-    private $progressBarFactoryMock;
+    private ProgressBarFactory $progressBarFactoryMock;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade
-     */
-    private $sqlLoggerFacadeMock;
+    private SqlLoggerFacade $sqlLoggerFacadeMock;
 
-    /**
-     * @var \Doctrine\ORM\EntityManager
-     */
-    private $entityManagerMock;
+    private EntityManager $entityManagerMock;
 
     protected function setUp(): void
     {

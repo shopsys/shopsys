@@ -13,20 +13,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TopCategoriesFormType extends AbstractType
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
-     */
-    private $categoryFacade;
+    private CategoryFacade $categoryFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer
-     */
-    private $removeDuplicatesTransformer;
+    private RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer
-     */
-    private $categoriesIdsToCategoriesTransformer;
+    private CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade

@@ -10,15 +10,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TopCategoryController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade
-     */
-    protected $topCategoryFacade;
+    protected TopCategoryFacade $topCategoryFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    protected $adminDomainTabsFacade;
+    protected AdminDomainTabsFacade $adminDomainTabsFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade

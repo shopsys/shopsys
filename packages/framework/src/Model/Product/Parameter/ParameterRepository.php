@@ -11,20 +11,11 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ParameterRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactoryInterface
-     */
-    protected $parameterValueFactory;
+    protected ParameterValueFactoryInterface $parameterValueFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface
-     */
-    protected $parameterValueDataFactory;
+    protected ParameterValueDataFactoryInterface $parameterValueDataFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager

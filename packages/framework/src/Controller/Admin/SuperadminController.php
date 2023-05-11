@@ -18,40 +18,19 @@ use Symfony\Component\Routing\RequestContext;
 
 class SuperadminController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Module\ModuleList
-     */
-    protected $moduleList;
+    protected ModuleList $moduleList;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Module\ModuleFacade
-     */
-    protected $moduleFacade;
+    protected ModuleFacade $moduleFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory
-     */
-    protected $localizedRouterFactory;
+    protected LocalizedRouterFactory $localizedRouterFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    protected $gridFactory;
+    protected GridFactory $gridFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
-    protected $localization;
+    protected Localization $localization;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting
-     */
-    protected $pricingSetting;
+    protected PricingSetting $pricingSetting;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\DelayedPricingSetting
-     */
-    protected $delayedPricingSetting;
+    protected DelayedPricingSetting $delayedPricingSetting;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleList $moduleList

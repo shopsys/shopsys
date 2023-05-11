@@ -10,15 +10,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FlagController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade
-     */
-    protected $flagFacade;
+    protected FlagFacade $flagFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagInlineEdit
-     */
-    protected $flagInlineEdit;
+    protected FlagInlineEdit $flagInlineEdit;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade

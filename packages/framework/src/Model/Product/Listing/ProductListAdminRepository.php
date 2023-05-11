@@ -13,15 +13,9 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductListAdminRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
-    protected $localization;
+    protected Localization $localization;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

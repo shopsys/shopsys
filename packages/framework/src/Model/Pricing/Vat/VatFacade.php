@@ -11,35 +11,17 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationSched
 
 class VatFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatRepository
-     */
-    protected $vatRepository;
+    protected VatRepository $vatRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    protected $setting;
+    protected Setting $setting;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler
-     */
-    protected $productPriceRecalculationScheduler;
+    protected ProductPriceRecalculationScheduler $productPriceRecalculationScheduler;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactoryInterface
-     */
-    protected $vatFactory;
+    protected VatFactoryInterface $vatFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

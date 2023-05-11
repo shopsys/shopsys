@@ -6,10 +6,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 
 class CategoryWithLazyLoadedVisibleChildrenFactory
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryRepository
-     */
-    protected $categoryRepository;
+    protected CategoryRepository $categoryRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository

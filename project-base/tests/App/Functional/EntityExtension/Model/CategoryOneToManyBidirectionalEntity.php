@@ -12,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class CategoryOneToManyBidirectionalEntity
 {
     /**
-     * @var int
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -20,14 +19,12 @@ class CategoryOneToManyBidirectionalEntity
     protected int $id;
 
     /**
-     * @var \Tests\App\Functional\EntityExtension\Model\ExtendedCategory
      * @ORM\ManyToOne(targetEntity="ExtendedCategory", inversedBy="oneToManyBidirectionalEntity")
      * @ORM\JoinColumn(nullable=false, name="category_id", referencedColumnName="id")
      */
     protected ExtendedCategory $category;
 
     /**
-     * @var string
      * @ORM\Column(type="string")
      */
     protected string $name;

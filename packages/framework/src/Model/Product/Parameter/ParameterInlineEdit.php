@@ -8,20 +8,11 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 class ParameterInlineEdit extends AbstractGridInlineEdit
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade
-     */
-    protected $parameterFacade;
+    protected ParameterFacade $parameterFacade;
 
-    /**
-     * @var \Symfony\Component\Form\FormFactoryInterface
-     */
-    protected $formFactory;
+    protected FormFactoryInterface $formFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactoryInterface
-     */
-    protected $parameterDataFactory;
+    protected ParameterDataFactoryInterface $parameterDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGridFactory $parameterGridFactory

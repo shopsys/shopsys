@@ -11,10 +11,7 @@ use Twig\TwigFunction;
 
 class ScriptsExtension extends AbstractExtension
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Script\ScriptFacade
-     */
-    protected $scriptFacade;
+    protected ScriptFacade $scriptFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Script\ScriptFacade $scriptFacade

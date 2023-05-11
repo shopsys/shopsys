@@ -14,15 +14,9 @@ class ProductListFriendlyUrlDataProvider implements FriendlyUrlDataProviderInter
 {
     protected const ROUTE_NAME = 'front_product_list';
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactoryInterface
-     */
-    protected $friendlyUrlDataFactory;
+    protected FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

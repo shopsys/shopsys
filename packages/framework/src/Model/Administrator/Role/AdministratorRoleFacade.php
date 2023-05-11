@@ -10,20 +10,11 @@ use Shopsys\FrameworkBundle\Model\Security\Roles;
 
 class AdministratorRoleFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFactoryInterface
-     */
-    protected $administratorRoleFactory;
+    protected AdministratorRoleFactoryInterface $administratorRoleFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleDataFactoryInterface
-     */
-    protected $administratorRoleDataFactory;
+    protected AdministratorRoleDataFactoryInterface $administratorRoleDataFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

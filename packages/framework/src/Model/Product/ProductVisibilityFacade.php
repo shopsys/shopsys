@@ -7,15 +7,9 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class ProductVisibilityFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository
-     */
-    protected $productVisibilityRepository;
+    protected ProductVisibilityRepository $productVisibilityRepository;
 
-    /**
-     * @var bool
-     */
-    protected $recalcVisibilityForMarked = false;
+    protected bool $recalcVisibilityForMarked = false;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository

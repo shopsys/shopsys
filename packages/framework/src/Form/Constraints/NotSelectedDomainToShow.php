@@ -9,8 +9,5 @@ use Symfony\Component\Validator\Constraint;
  */
 class NotSelectedDomainToShow extends Constraint
 {
-    /**
-     * @var string
-     */
-    public $message = 'You have to select any domain.';
+    public string $message = 'You have to select any domain.';
 }

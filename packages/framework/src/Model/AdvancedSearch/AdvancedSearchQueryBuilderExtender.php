@@ -8,10 +8,7 @@ use Doctrine\ORM\QueryBuilder;
 
 class AdvancedSearchQueryBuilderExtender
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchConfig
-     */
-    protected $advancedSearchConfig;
+    protected AdvancedSearchConfig $advancedSearchConfig;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchConfig $advancedSearchConfig

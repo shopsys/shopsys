@@ -10,20 +10,11 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class ProductAccessoryRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
-     */
-    protected $productRepository;
+    protected ProductRepository $productRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender
-     */
-    protected $queryBuilderExtender;
+    protected QueryBuilderExtender $queryBuilderExtender;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

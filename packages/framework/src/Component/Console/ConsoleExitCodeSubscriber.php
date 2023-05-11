@@ -18,9 +18,6 @@ class ConsoleExitCodeSubscriber implements EventSubscriberInterface
 {
     protected const LOG_LEVEL = LogLevel::ERROR;
 
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
     protected LoggerInterface $logger;
 
     /**

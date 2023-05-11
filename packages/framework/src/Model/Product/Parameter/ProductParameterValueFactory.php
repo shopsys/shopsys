@@ -7,10 +7,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductParameterValueFactory implements ProductParameterValueFactoryInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
-     */
-    protected $entityNameResolver;
+    protected EntityNameResolver $entityNameResolver;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

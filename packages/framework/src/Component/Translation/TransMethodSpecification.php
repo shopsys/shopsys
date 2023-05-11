@@ -4,20 +4,11 @@ namespace Shopsys\FrameworkBundle\Component\Translation;
 
 class TransMethodSpecification
 {
-    /**
-     * @var string
-     */
-    protected $methodName;
+    protected string $methodName;
 
-    /**
-     * @var int
-     */
-    protected $messageIdArgumentIndex;
+    protected int $messageIdArgumentIndex;
 
-    /**
-     * @var int|null
-     */
-    protected $domainArgumentIndex;
+    protected ?int $domainArgumentIndex = null;
 
     /**
      * @param string $methodName

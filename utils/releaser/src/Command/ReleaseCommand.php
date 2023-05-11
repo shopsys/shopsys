@@ -25,25 +25,13 @@ final class ReleaseCommand extends Command
     private const RESUME_STEP = 'resume-step';
     private const INITIAL_BRANCH_NAME = 'initial-branch';
 
-    /**
-     * @var \Symfony\Component\Console\Style\SymfonyStyle
-     */
-    private $symfonyStyle;
+    private SymfonyStyle $symfonyStyle;
 
-    /**
-     * @var \Symplify\MonorepoBuilder\Release\Guard\ReleaseGuard
-     */
-    private $releaseGuard;
+    private ReleaseGuard $releaseGuard;
 
-    /**
-     * @var \Shopsys\Releaser\ReleaseWorker\ReleaseWorkerProvider
-     */
-    private $releaseWorkerProvider;
+    private ReleaseWorkerProvider $releaseWorkerProvider;
 
-    /**
-     * @var \Symplify\MonorepoBuilder\Release\Version\VersionFactory
-     */
-    private $versionFactory;
+    private VersionFactory $versionFactory;
 
     /**
      * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyle

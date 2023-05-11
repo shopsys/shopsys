@@ -27,10 +27,7 @@ class AvailabilityEvent extends Event
      */
     public const DELETE = 'availability.delete';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
-     */
-    protected $availability;
+    protected Availability $availability;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability

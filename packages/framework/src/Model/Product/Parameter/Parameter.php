@@ -40,10 +40,9 @@ class Parameter extends AbstractTranslatableEntity
     protected $translations;
 
     /**
-     * @var bool
      * @ORM\Column(type="boolean")
      */
-    protected $visible;
+    protected bool $visible;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData

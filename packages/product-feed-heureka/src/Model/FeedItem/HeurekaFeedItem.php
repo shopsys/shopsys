@@ -8,70 +8,34 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class HeurekaFeedItem implements FeedItemInterface
 {
-    /**
-     * @var int
-     */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @var int|null
-     */
-    protected $mainVariantId;
+    protected ?int $mainVariantId = null;
 
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name;
 
-    /**
-     * @var string|null
-     */
-    protected $description;
+    protected ?string $description = null;
 
-    /**
-     * @var string
-     */
-    protected $url;
+    protected string $url;
 
-    /**
-     * @var string|null
-     */
-    protected $imgUrl;
+    protected ?string $imgUrl = null;
 
-    /**
-     * @var string|null
-     */
-    protected $brandName;
+    protected ?string $brandName = null;
 
-    /**
-     * @var string|null
-     */
-    protected $ean;
+    protected ?string $ean = null;
 
-    /**
-     * @var int|null
-     */
-    protected $availabilityDispatchTime;
+    protected ?int $availabilityDispatchTime = null;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    protected $price;
+    protected Price $price;
 
-    /**
-     * @var string|null
-     */
-    protected $heurekaCategoryFullName;
+    protected ?string $heurekaCategoryFullName = null;
 
     /**
      * @var string[]
      */
-    protected $parametersByName;
+    protected array $parametersByName;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     */
-    protected $cpc;
+    protected ?Money $cpc = null;
 
     /**
      * @param int $id

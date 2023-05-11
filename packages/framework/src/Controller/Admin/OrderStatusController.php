@@ -14,20 +14,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class OrderStatusController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory
-     */
-    protected $confirmDeleteResponseFactory;
+    protected ConfirmDeleteResponseFactory $confirmDeleteResponseFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Status\Grid\OrderStatusInlineEdit
-     */
-    protected $orderStatusInlineEdit;
+    protected OrderStatusInlineEdit $orderStatusInlineEdit;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade
-     */
-    protected $orderStatusFacade;
+    protected OrderStatusFacade $orderStatusFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade

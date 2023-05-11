@@ -2,26 +2,18 @@
 
 namespace Shopsys\FrameworkBundle\Component\Doctrine;
 
+use Doctrine\DBAL\Logging\SQLLogger;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Doctrine\Exception\SqlLoggerAlreadyDisabledException;
 use Shopsys\FrameworkBundle\Component\Doctrine\Exception\SqlLoggerAlreadyEnabledException;
 
 class SqlLoggerFacade
 {
-    /**
-     * @var \Doctrine\DBAL\Logging\SQLLogger|null
-     */
-    protected $sqlLogger;
+    protected ?SQLLogger $sqlLogger = null;
 
-    /**
-     * @var bool
-     */
-    protected $isLoggerTemporarilyDisabled;
+    protected bool $isLoggerTemporarilyDisabled;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

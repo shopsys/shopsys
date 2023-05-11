@@ -10,80 +10,41 @@ class ZboziFeedItem implements FeedItemInterface
 {
     protected const CATEGORY_PATH_SEPARATOR = ' | ';
 
-    /**
-     * @var int
-     */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @var int|null
-     */
-    protected $mainVariantId;
+    protected ?int $mainVariantId = null;
 
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name;
 
-    /**
-     * @var string|null
-     */
-    protected $description;
+    protected ?string $description = null;
 
-    /**
-     * @var string
-     */
-    protected $url;
+    protected string $url;
 
-    /**
-     * @var string|null
-     */
-    protected $imgUrl;
+    protected ?string $imgUrl = null;
 
-    /**
-     * @var string|null
-     */
-    protected $brandName;
+    protected ?string $brandName = null;
 
-    /**
-     * @var string|null
-     */
-    protected $ean;
+    protected ?string $ean = null;
 
-    /**
-     * @var string|null
-     */
-    protected $partno;
+    protected ?string $partno = null;
 
-    /**
-     * @var int|null
-     */
-    protected $availabilityDispatchTime;
+    protected ?int $availabilityDispatchTime = null;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    protected $price;
+    protected Price $price;
 
     /**
      * @var string[]
      */
-    protected $pathToMainCategory;
+    protected array $pathToMainCategory;
 
     /**
      * @var string[]
      */
-    protected $parametersByName;
+    protected array $parametersByName;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     */
-    protected $cpc;
+    protected ?Money $cpc = null;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     */
-    protected $cpcSearch;
+    protected ?Money $cpcSearch = null;
 
     /**
      * @param int $id

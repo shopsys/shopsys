@@ -15,10 +15,7 @@ class RegistrationPage extends AbstractPage
 {
     private const MINIMUM_FORM_SUBMIT_WAIT_TIME = 10;
 
-    /**
-     * @var \Tests\App\Acceptance\acceptance\PageObject\Front\LoginPage
-     */
-    private $loginPage;
+    private LoginPage $loginPage;
 
     /**
      * @param \Tests\App\Test\Codeception\Module\StrictWebDriver $strictWebDriver

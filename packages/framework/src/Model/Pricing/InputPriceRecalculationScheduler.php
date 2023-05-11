@@ -7,25 +7,13 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class InputPriceRecalculationScheduler
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculator
-     */
-    protected $inputPriceRecalculator;
+    protected InputPriceRecalculator $inputPriceRecalculator;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    protected $setting;
+    protected Setting $setting;
 
-    /**
-     * @var bool
-     */
-    protected $recalculateInputPricesWithoutVat;
+    protected bool $recalculateInputPricesWithoutVat;
 
-    /**
-     * @var bool
-     */
-    protected $recalculateInputPricesWithVat;
+    protected bool $recalculateInputPricesWithVat;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculator $inputPriceRecalculator

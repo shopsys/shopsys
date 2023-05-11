@@ -17,10 +17,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class MarkProductForExportSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
-     */
-    protected $productFacade;
+    protected ProductFacade $productFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade

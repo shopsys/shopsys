@@ -9,15 +9,9 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 
 class UploadedFileDeleteDoctrineListener
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig
-     */
-    protected $uploadedFileConfig;
+    protected UploadedFileConfig $uploadedFileConfig;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade
-     */
-    protected $uploadedFileFacade;
+    protected UploadedFileFacade $uploadedFileFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig

@@ -6,10 +6,7 @@ use Exception;
 
 class ImageEntityConfigNotFoundException extends Exception implements ImageConfigException
 {
-    /**
-     * @var string
-     */
-    protected $entityClassOrName;
+    protected string $entityClassOrName;
 
     /**
      * @param string $entityClassOrName

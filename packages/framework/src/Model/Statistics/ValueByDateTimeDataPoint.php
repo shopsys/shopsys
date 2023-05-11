@@ -6,15 +6,9 @@ use DateTime;
 
 class ValueByDateTimeDataPoint
 {
-    /**
-     * @var int
-     */
-    protected $value;
+    protected int $value;
 
-    /**
-     * @var \DateTime
-     */
-    protected $dateTime;
+    protected DateTime $dateTime;
 
     /**
      * @param mixed $count

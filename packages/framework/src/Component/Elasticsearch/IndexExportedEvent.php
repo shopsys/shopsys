@@ -10,10 +10,7 @@ class IndexExportedEvent extends Event
 {
     public const INDEX_EXPORTED = 'elasticsearch.index.exported';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex
-     */
-    protected $index;
+    protected AbstractIndex $index;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index

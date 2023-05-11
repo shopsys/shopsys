@@ -9,9 +9,6 @@ use Symfony\Component\Yaml\Yaml;
 
 class MigrationsLock
 {
-    /**
-     * @var string
-     */
     protected string $migrationsLockFilePath;
 
     /**
@@ -19,9 +16,6 @@ class MigrationsLock
      */
     protected ?array $parsedMigrationsLock = null;
 
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
     protected LoggerInterface $logger;
 
     /**

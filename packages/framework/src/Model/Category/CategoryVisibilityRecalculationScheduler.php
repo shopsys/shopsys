@@ -6,15 +6,9 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class CategoryVisibilityRecalculationScheduler
 {
-    /**
-     * @var bool
-     */
-    protected $recalculate = false;
+    protected bool $recalculate = false;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade
-     */
-    protected $productVisibilityFacade;
+    protected ProductVisibilityFacade $productVisibilityFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade

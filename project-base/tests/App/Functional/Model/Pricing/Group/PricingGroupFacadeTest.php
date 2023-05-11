@@ -22,31 +22,26 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
      * @inject
      */
     private PricingGroupFacade $pricingGroupFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator
      * @inject
      */
     private ProductPriceRecalculator $productPriceRecalculator;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
      * @inject
      */
     private CustomerUserFacade $customerUserFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface
      * @inject
      */
     private CustomerUserDataFactoryInterface $customerUserDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface
      * @inject
      */
     private CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory;

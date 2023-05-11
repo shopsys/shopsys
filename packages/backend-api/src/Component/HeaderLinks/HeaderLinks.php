@@ -12,7 +12,7 @@ class HeaderLinks
     /**
      * @var array<int, array{link: string, rel: string}>
      */
-    protected $links = [];
+    protected array $links = [];
 
     /**
      * @param string $link

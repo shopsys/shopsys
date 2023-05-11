@@ -7,15 +7,12 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class ProductPriceRecalculationScheduler
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
-     */
-    protected $productRepository;
+    protected ProductRepository $productRepository;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    protected $products = [];
+    protected array $products = [];
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository

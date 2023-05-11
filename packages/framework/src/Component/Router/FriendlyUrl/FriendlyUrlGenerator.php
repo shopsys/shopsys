@@ -16,19 +16,10 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 class FriendlyUrlGenerator extends BaseUrlGenerator
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository
-     */
-    protected $friendlyUrlRepository;
+    protected FriendlyUrlRepository $friendlyUrlRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider
-     */
     protected FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider;
 
-    /**
-     * @var \Symfony\Contracts\Cache\CacheInterface
-     */
     protected CacheInterface $mainFriendlyUrlSlugCache;
 
     /**

@@ -11,45 +11,24 @@ use Webmozart\Assert\Assert;
 
 class ListedProductView
 {
-    /**
-     * @var int
-     */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Image\ImageView|null
-     */
-    protected $image;
+    protected ?ImageView $image = null;
 
-    /**
-     * @var string
-     */
-    protected $availability;
+    protected string $availability;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
-     */
-    protected $sellingPrice;
+    protected ProductPrice $sellingPrice;
 
-    /**
-     * @var string|null
-     */
-    protected $shortDescription;
+    protected ?string $shortDescription = null;
 
     /**
      * @var int[]
      */
-    protected $flagIds = [];
+    protected array $flagIds = [];
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Product\Action\ProductActionView
-     */
-    protected $action;
+    protected ProductActionView $action;
 
     /**
      * ListedProductView constructor.

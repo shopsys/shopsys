@@ -11,10 +11,7 @@ class PriceCalculation
 {
     protected const PRICE_CALCULATION_MAX_SCALE = 6;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Rounding
-     */
-    protected $rounding;
+    protected Rounding $rounding;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding

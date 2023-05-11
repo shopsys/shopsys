@@ -9,9 +9,6 @@ use Doctrine\Migrations\Version\Version;
 
 class MigrationsLockComparator implements Comparator
 {
-    /**
-     * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock
-     */
     protected MigrationsLock $migrationsLock;
 
     /**

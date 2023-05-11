@@ -20,25 +20,13 @@ abstract class AbstractElasticsearchIndexCommand extends Command
 {
     private const ARGUMENT_INDEX_NAME = 'name';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry
-     */
-    protected $indexRegistry;
+    protected IndexRegistry $indexRegistry;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade
-     */
-    protected $indexFacade;
+    protected IndexFacade $indexFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader
-     */
-    protected $indexDefinitionLoader;
+    protected IndexDefinitionLoader $indexDefinitionLoader;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry $indexRegistry

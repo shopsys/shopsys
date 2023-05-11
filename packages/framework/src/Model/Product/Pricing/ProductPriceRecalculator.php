@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Internal\Hydration\IterableResult;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -12,40 +13,25 @@ class ProductPriceRecalculator
 {
     protected const BATCH_SIZE = 250;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation
-     */
-    protected $productPriceCalculation;
+    protected ProductPriceCalculation $productPriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPriceRepository
-     */
-    protected $productCalculatedPriceRepository;
+    protected ProductCalculatedPriceRepository $productCalculatedPriceRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler
-     */
-    protected $productPriceRecalculationScheduler;
+    protected ProductPriceRecalculationScheduler $productPriceRecalculationScheduler;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
-     */
-    protected $pricingGroupFacade;
+    protected PricingGroupFacade $pricingGroupFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[]|null
      */
-    protected $allPricingGroups;
+    protected ?array $allPricingGroups = null;
 
     /**
      * @var \Doctrine\ORM\Internal\Hydration\IterableResult|\Shopsys\FrameworkBundle\Model\Product\Product[][]|null
      */
-    protected $productRowsIterator;
+    protected IterableResult|array|null $productRowsIterator = null;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

@@ -20,25 +20,13 @@ class VatDataFixture extends AbstractReferenceFixture
     public const VAT_LOW = 'vat_low';
     public const VAT_HIGH = 'vat_high';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
-     */
-    private $vatFacade;
+    private VatFacade $vatFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactoryInterface
-     */
-    private $vatDataFactory;
+    private VatDataFactoryInterface $vatDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    private $setting;
+    private Setting $setting;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade

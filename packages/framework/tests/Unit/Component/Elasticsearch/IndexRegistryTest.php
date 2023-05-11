@@ -14,10 +14,7 @@ use Tests\FrameworkBundle\Unit\Component\Elasticsearch\__fixtures\CategoryIndex;
 
 class IndexRegistryTest extends TestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry
-     */
-    protected $indexRegistry;
+    protected IndexRegistry $indexRegistry;
 
     protected function setUp(): void
     {

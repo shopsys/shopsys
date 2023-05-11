@@ -8,20 +8,11 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class ZboziProductDomainFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainRepository
-     */
-    protected $zboziProductDomainRepository;
+    protected ZboziProductDomainRepository $zboziProductDomainRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
-     */
-    protected $productRepository;
+    protected ProductRepository $productRepository;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

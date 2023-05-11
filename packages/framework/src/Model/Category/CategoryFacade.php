@@ -18,55 +18,25 @@ class CategoryFacade
 {
     protected const INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY = 1;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryRepository
-     */
-    protected $categoryRepository;
+    protected CategoryRepository $categoryRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRecalculationScheduler
-     */
-    protected $categoryVisibilityRecalculationScheduler;
+    protected CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    protected $friendlyUrlFacade;
+    protected FriendlyUrlFacade $friendlyUrlFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
-     */
-    protected $imageFacade;
+    protected ImageFacade $imageFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade
-     */
-    protected $pluginCrudExtensionFacade;
+    protected PluginCrudExtensionFacade $pluginCrudExtensionFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildrenFactory
-     */
-    protected $categoryWithPreloadedChildrenFactory;
+    protected CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildrenFactory
-     */
-    protected $categoryWithLazyLoadedVisibleChildrenFactory;
+    protected CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface
-     */
-    protected $categoryFactory;
+    protected CategoryFactoryInterface $categoryFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

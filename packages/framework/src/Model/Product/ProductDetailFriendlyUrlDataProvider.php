@@ -13,15 +13,9 @@ class ProductDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInt
 {
     protected const ROUTE_NAME = 'front_product_detail';
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactoryInterface
-     */
-    protected $friendlyUrlDataFactory;
+    protected FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

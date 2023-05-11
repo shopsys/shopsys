@@ -12,15 +12,9 @@ use Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade;
 
 class SliderItemDataFixture extends AbstractReferenceFixture
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade
-     */
-    private $sliderItemFacade;
+    private SliderItemFacade $sliderItemFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactoryInterface
-     */
-    private $sliderItemDataFactory;
+    private SliderItemDataFactoryInterface $sliderItemDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade $sliderItemFacade

@@ -13,10 +13,7 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 
 class StatisticsRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager

@@ -12,15 +12,12 @@ namespace Shopsys\FrameworkBundle\Model\Category;
  */
 class CategoryWithPreloadedChildren
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\Category
-     */
-    protected $category;
+    protected Category $category;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildren[]
      */
-    protected $children;
+    protected array $children;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category

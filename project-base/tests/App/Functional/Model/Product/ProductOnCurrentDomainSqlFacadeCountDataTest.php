@@ -13,7 +13,6 @@ class ProductOnCurrentDomainSqlFacadeCountDataTest extends ProductOnCurrentDomai
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade
      * @inject
      */
     private ProductOnCurrentDomainFacade $productOnCurrentDomainSqlFacade;

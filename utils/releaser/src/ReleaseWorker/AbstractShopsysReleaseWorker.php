@@ -49,25 +49,13 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
         'shopsys/sysstdlib',
     ];
 
-    /**
-     * @var \Symfony\Component\Console\Style\SymfonyStyle
-     */
-    protected $symfonyStyle;
+    protected SymfonyStyle $symfonyStyle;
 
-    /**
-     * @var \Symplify\MonorepoBuilder\Release\Process\ProcessRunner
-     */
-    protected $processRunner;
+    protected ProcessRunner $processRunner;
 
-    /**
-     * @var \Symfony\Component\Console\Helper\QuestionHelper
-     */
-    private $questionHelper;
+    private QuestionHelper $questionHelper;
 
-    /**
-     * @var string
-     */
-    protected $currentBranchName;
+    protected string $currentBranchName;
 
     /**
      * @required

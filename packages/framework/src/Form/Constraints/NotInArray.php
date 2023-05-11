@@ -2,23 +2,21 @@
 
 namespace Shopsys\FrameworkBundle\Form\Constraints;
 
+use ArrayAccess;
 use Symfony\Component\Validator\Constraint;
+use Traversable;
 
 /**
  * @Annotation
  */
 class NotInArray extends Constraint
 {
-    /**
-     * @var string
-     */
-    public $message = 'Value must not be neither of following: {{ array }}';
+    public string $message = 'Value must not be neither of following: {{ array }}';
 
     /**
-     * @var array|\Traversable|\ArrayAccess
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification
      */
-    public $array = [];
+    public array|Traversable|ArrayAccess $array = [];
 
     /**
      * {@inheritdoc}

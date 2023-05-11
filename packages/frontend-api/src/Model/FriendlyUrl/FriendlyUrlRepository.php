@@ -11,14 +11,8 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository a
 
 class FriendlyUrlRepository
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository
-     */
     protected FrameworkFriendlyUrlRepository $friendlyUrlRepository;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
     protected EntityManagerInterface $em;
 
     /**

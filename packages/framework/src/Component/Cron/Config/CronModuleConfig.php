@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Cron\Config;
 
 use Shopsys\FrameworkBundle\Component\Cron\CronTimeInterface;
+use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
 class CronModuleConfig implements CronTimeInterface
 {
@@ -12,44 +13,20 @@ class CronModuleConfig implements CronTimeInterface
     public const RUN_EVERY_MIN_DEFAULT = 5;
     public const TIMEOUT_ITERATED_CRON_SEC_DEFAULT = 240;
 
-    /**
-     * @var \Shopsys\Plugin\Cron\SimpleCronModuleInterface
-     */
-    protected $service;
+    protected SimpleCronModuleInterface $service;
 
-    /**
-     * @var string
-     */
-    protected $serviceId;
+    protected string $serviceId;
 
-    /**
-     * @var string
-     */
-    protected $timeMinutes;
+    protected string $timeMinutes;
 
-    /**
-     * @var string
-     */
-    protected $timeHours;
+    protected string $timeHours;
 
-    /**
-     * @var string
-     */
-    protected $instanceName;
+    protected string $instanceName;
 
-    /**
-     * @var string|null
-     */
-    protected $readableName;
+    protected ?string $readableName = null;
 
-    /**
-     * @var int
-     */
     protected int $runEveryMin;
 
-    /**
-     * @var int
-     */
     protected int $timeoutIteratedCronSec;
 
     /**

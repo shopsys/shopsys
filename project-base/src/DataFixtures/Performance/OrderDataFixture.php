@@ -11,6 +11,7 @@ use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Performance\CustomerUserDataFixture as PerformanceUserDataFixture;
 use App\DataFixtures\Performance\ProductDataFixture as PerformanceProductDataFixture;
+use App\Model\Order\OrderDataFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Generator as Faker;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
@@ -33,75 +34,39 @@ class OrderDataFixture
 
     private const BATCH_SIZE = 10;
 
-    /**
-     * @var int
-     */
-    private $orderTotalCount;
+    private int $orderTotalCount;
 
-    /**
-     * @var int
-     */
-    private $orderItemCountPerOrder;
+    private int $orderItemCountPerOrder;
 
     /**
      * @var int[]
      */
-    private $performanceProductIds;
+    private array $performanceProductIds;
 
     /**
      * @var int[]
      */
-    private $performanceUserIds;
+    private array $performanceUserIds;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
+    private EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade
-     */
-    private $sqlLoggerFacade;
+    private SqlLoggerFacade $sqlLoggerFacade;
 
-    /**
-     * @var \Faker\Generator
-     */
-    private $faker;
+    private Faker $faker;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade
-     */
-    private $persistentReferenceFacade;
+    private PersistentReferenceFacade $persistentReferenceFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
-     */
-    private $orderFacade;
+    private OrderFacade $orderFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory
-     */
-    private $orderPreviewFactory;
+    private OrderPreviewFactory $orderPreviewFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
-     */
-    private $productFacade;
+    private ProductFacade $productFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
-     */
-    private $customerUserFacade;
+    private CustomerUserFacade $customerUserFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory
-     */
-    private $progressBarFactory;
+    private ProgressBarFactory $progressBarFactory;
 
-    /**
-     * @var \App\Model\Order\OrderDataFactory
-     */
-    private $orderDataFactory;
+    private OrderDataFactory $orderDataFactory;
 
     /**
      * @param int $orderTotalCount

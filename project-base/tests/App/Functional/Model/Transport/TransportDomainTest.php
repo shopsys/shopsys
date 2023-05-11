@@ -18,13 +18,11 @@ class TransportDomainTest extends TransactionFunctionalTestCase
     protected const SECOND_DOMAIN_ID = 2;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface
      * @inject
      */
     private TransportDataFactoryInterface $transportDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFactoryInterface
      * @inject
      */
     private TransportFactoryInterface $transportFactory;

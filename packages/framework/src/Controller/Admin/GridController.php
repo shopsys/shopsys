@@ -11,15 +11,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class GridController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\InlineEditFacade
-     */
-    protected $inlineEditFacade;
+    protected InlineEditFacade $inlineEditFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\Ordering\GridOrderingFacade
-     */
-    protected $gridOrderingFacade;
+    protected GridOrderingFacade $gridOrderingFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\Ordering\GridOrderingFacade $gridOrderingFacade

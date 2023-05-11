@@ -13,20 +13,11 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactoryInterface;
 
 class OrderItemPriceCalculation
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation
-     */
-    protected $priceCalculation;
+    protected PriceCalculation $priceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactoryInterface
-     */
-    protected $vatFactory;
+    protected VatFactoryInterface $vatFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactoryInterface
-     */
-    protected $vatDataFactory;
+    protected VatDataFactoryInterface $vatDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation

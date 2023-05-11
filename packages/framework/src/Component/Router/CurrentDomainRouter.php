@@ -9,20 +9,11 @@ use Symfony\Component\Routing\RequestContext;
 
 class CurrentDomainRouter implements ChainRouterInterface
 {
-    /**
-     * @var \Symfony\Component\Routing\RequestContext
-     */
-    protected $context;
+    protected RequestContext $context;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
-     */
-    protected $domainRouterFactory;
+    protected DomainRouterFactory $domainRouterFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

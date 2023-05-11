@@ -18,40 +18,19 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticse
 
 class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacadeInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
-     */
-    protected $productRepository;
+    protected ProductRepository $productRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    protected $currentCustomerUser;
+    protected CurrentCustomerUser $currentCustomerUser;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository
-     */
-    protected $productAccessoryRepository;
+    protected ProductAccessoryRepository $productAccessoryRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository
-     */
-    protected $productElasticsearchRepository;
+    protected ProductElasticsearchRepository $productElasticsearchRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticsearchRepository
-     */
-    protected $productFilterCountDataElasticsearchRepository;
+    protected ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory
-     */
-    protected $filterQueryFactory;
+    protected FilterQueryFactory $filterQueryFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository

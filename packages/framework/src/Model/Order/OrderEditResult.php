@@ -4,10 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 
 class OrderEditResult
 {
-    /**
-     * @var bool
-     */
-    protected $statusChanged;
+    protected bool $statusChanged;
 
     /**
      * @param bool $statusChanged

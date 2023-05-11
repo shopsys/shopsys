@@ -25,31 +25,26 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
      * @inject
      */
     private Setting $setting;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting
      * @inject
      */
     private PricingSetting $pricingSetting;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceRecalculator
      * @inject
      */
     private ProductInputPriceRecalculator $productInputPriceRecalculator;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
      * @inject
      */
     private VatFacade $vatFacade;
 
     /**
-     * @var \App\Model\Product\ProductDataFactory
      * @inject
      */
     private ProductDataFactory $productDataFactory;

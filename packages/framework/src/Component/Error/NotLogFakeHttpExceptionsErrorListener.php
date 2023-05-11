@@ -11,10 +11,7 @@ use Throwable;
 
 class NotLogFakeHttpExceptionsErrorListener extends ErrorListener
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider
-     */
-    protected $errorIdProvider;
+    protected ErrorIdProvider $errorIdProvider;
 
     /**
      * @param mixed $controller

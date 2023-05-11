@@ -11,8 +11,5 @@ use Symfony\Component\Validator\Constraint;
  */
 class NotNegativeMoneyAmount extends Constraint
 {
-    /**
-     * @var string
-     */
-    public $message = 'Amount of money should be greater than or equal to zero.';
+    public string $message = 'Amount of money should be greater than or equal to zero.';
 }

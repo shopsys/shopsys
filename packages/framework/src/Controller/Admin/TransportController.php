@@ -15,30 +15,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TransportController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
-     */
-    protected $breadcrumbOverrider;
+    protected BreadcrumbOverrider $breadcrumbOverrider;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    protected $currencyFacade;
+    protected CurrencyFacade $currencyFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\Grid\TransportGridFactory
-     */
-    protected $transportGridFactory;
+    protected TransportGridFactory $transportGridFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface
-     */
-    protected $transportDataFactory;
+    protected TransportDataFactoryInterface $transportDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
-     */
-    protected $transportFacade;
+    protected TransportFacade $transportFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade

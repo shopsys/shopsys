@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\Domain;
 
 use Shopsys\FormTypesBundle\Domain\DomainIdsProviderInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainException;
@@ -17,20 +18,14 @@ class Domain implements DomainIdsProviderInterface
     public const THIRD_DOMAIN_ID = 3;
     public const MAIN_ADMIN_DOMAIN_ID = 1;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig|null
-     */
-    protected $currentDomainConfig;
+    protected ?DomainConfig $currentDomainConfig = null;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
-    protected $domainConfigs;
+    protected array $domainConfigs;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    protected $setting;
+    protected Setting $setting;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[] $domainConfigs

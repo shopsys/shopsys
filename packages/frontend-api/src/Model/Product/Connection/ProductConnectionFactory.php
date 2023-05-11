@@ -14,14 +14,8 @@ use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory;
 
 class ProductConnectionFactory
 {
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory
-     */
     protected ProductFilterOptionsFactory $productFilterOptionsFactory;
 
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade
-     */
     protected ProductFilterFacade $productFilterFacade;
 
     /**

@@ -11,20 +11,11 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class ParameterGridFactory implements GridFactoryInterface
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    protected $gridFactory;
+    protected GridFactory $gridFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
-    protected $localization;
+    protected Localization $localization;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

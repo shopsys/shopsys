@@ -17,20 +17,11 @@ class CountryDataFixture extends AbstractReferenceFixture
     public const COUNTRY_CZECH_REPUBLIC = 'country_czech_republic';
     public const COUNTRY_SLOVAKIA = 'country_slovakia';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade
-     */
-    private $countryFacade;
+    private CountryFacade $countryFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\CountryDataFactoryInterface
-     */
-    private $countryDataFactory;
+    private CountryDataFactoryInterface $countryDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\EntityExtension\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,7 +14,6 @@ use Doctrine\ORM\Mapping as ORM;
 class ProductManyToManyBidirectionalEntity
 {
     /**
-     * @var int
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -24,10 +24,9 @@ class ProductManyToManyBidirectionalEntity
      * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ExtendedProduct[]
      * @ORM\ManyToMany(targetEntity="ExtendedProduct", mappedBy="manyToManyBidirectionalEntities")
      */
-    protected $products;
+    protected Collection|array $products;
 
     /**
-     * @var string
      * @ORM\Column(type="string")
      */
     protected string $name;

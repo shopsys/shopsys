@@ -10,13 +10,9 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ProductImagesTest extends GraphQlTestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Product
-     */
     private Product $product;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
      * @inject
      */
     private ProductFacade $productFacade;

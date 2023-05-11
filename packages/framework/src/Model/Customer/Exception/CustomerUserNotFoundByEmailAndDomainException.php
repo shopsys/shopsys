@@ -6,15 +6,9 @@ use Exception;
 
 class CustomerUserNotFoundByEmailAndDomainException extends CustomerUserNotFoundException
 {
-    /**
-     * @var string
-     */
-    protected $email;
+    protected string $email;
 
-    /**
-     * @var int
-     */
-    protected $domainId;
+    protected int $domainId;
 
     /**
      * @param string $email

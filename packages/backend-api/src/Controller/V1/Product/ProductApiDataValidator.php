@@ -14,15 +14,9 @@ use Symfony\Component\Validator\Constraints;
  */
 class ProductApiDataValidator implements ProductApiDataValidatorInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\BackendApiBundle\Component\Validation\ValidationRunner
-     */
-    protected $validationRunner;
+    protected ValidationRunner $validationRunner;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

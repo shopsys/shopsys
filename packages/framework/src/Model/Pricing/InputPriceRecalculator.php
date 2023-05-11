@@ -15,30 +15,15 @@ class InputPriceRecalculator
 {
     protected const BATCH_SIZE = 500;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\InputPriceCalculation
-     */
-    protected $inputPriceCalculation;
+    protected InputPriceCalculation $inputPriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation
-     */
-    protected $paymentPriceCalculation;
+    protected PaymentPriceCalculation $paymentPriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation
-     */
-    protected $transportPriceCalculation;
+    protected TransportPriceCalculation $transportPriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    protected $currencyFacade;
+    protected CurrencyFacade $currencyFacade;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

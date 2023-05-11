@@ -11,10 +11,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportDomain;
 
 class VatRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

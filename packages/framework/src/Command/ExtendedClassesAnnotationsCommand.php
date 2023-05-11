@@ -29,39 +29,18 @@ class ExtendedClassesAnnotationsCommand extends Command
      */
     protected static $defaultName = 'shopsys:extended-classes:annotations';
 
-    /**
-     * @var string
-     */
     protected string $projectRootDirectory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry
-     */
     protected ClassExtensionRegistry $classExtensionRegistry;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer
-     */
     protected AnnotationsReplacer $annotationsReplacer;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap
-     */
     protected AnnotationsReplacementsMap $annotationsReplacementsMap;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\PropertyAnnotationsFactory
-     */
     protected PropertyAnnotationsFactory $propertyAnnotationsFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\MethodAnnotationsFactory
-     */
     protected MethodAnnotationsFactory $methodAnnotationsAdder;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsAdder
-     */
     protected AnnotationsAdder $annotationsAdder;
 
     /**

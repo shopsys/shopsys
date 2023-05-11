@@ -18,20 +18,11 @@ class FlagDataFixture extends AbstractReferenceFixture
     public const FLAG_TOP_PRODUCT = 'flag_top_product';
     public const FLAG_ACTION_PRODUCT = 'flag_action';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade
-     */
-    private $flagFacade;
+    private FlagFacade $flagFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactoryInterface
-     */
-    private $flagDataFactory;
+    private FlagDataFactoryInterface $flagDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade

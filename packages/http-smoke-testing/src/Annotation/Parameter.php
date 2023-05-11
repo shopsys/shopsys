@@ -14,14 +14,12 @@ use Doctrine\Common\Annotations\Annotation\Target;
 class Parameter
 {
     /**
-     * @var string
      * @Required()
      */
-    public $name;
+    public string $name;
 
     /**
-     * @var string
      * @Required()
      */
-    public $value;
+    public string $value;
 }

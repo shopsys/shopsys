@@ -17,10 +17,7 @@ class CheckTimezonesCommand extends Command
      */
     protected static $defaultName = 'shopsys:check-timezones';
 
-    /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    private $connection;
+    private Connection $connection;
 
     /**
      * @param \Doctrine\DBAL\Connection $connection

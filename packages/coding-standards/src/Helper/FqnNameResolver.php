@@ -9,10 +9,7 @@ use PhpCsFixer\Tokenizer\Tokens;
 
 final class FqnNameResolver
 {
-    /**
-     * @var \PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer
-     */
-    private $namespaceUsesAnalyzer;
+    private NamespaceUsesAnalyzer $namespaceUsesAnalyzer;
 
     /**
      * @param \PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer $namespaceUsesAnalyzer

@@ -12,10 +12,7 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
 {
     public const NAME = 'orderStatus';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade
-     */
-    protected $orderStatusFacade;
+    protected OrderStatusFacade $orderStatusFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade

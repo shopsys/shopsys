@@ -11,120 +11,66 @@ use Shopsys\ReadModelBundle\Product\Action\ProductActionView;
 
 class ProductDetailView
 {
-    /**
-     * @var int
-     */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name;
 
     /**
      * @var int[]
      */
-    protected $flagIds;
+    protected array $flagIds;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Image\ImageView|null
-     */
-    protected $mainImageView;
+    protected ?ImageView $mainImageView = null;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Product\Action\ProductActionView
-     */
-    protected $actionView;
+    protected ProductActionView $actionView;
 
-    /**
-     * @var string
-     */
-    protected $seoPageTitle;
+    protected string $seoPageTitle;
 
-    /**
-     * @var string
-     */
-    protected $availability;
+    protected string $availability;
 
-    /**
-     * @var bool
-     */
-    protected $isInStock;
+    protected bool $isInStock;
 
-    /**
-     * @var bool
-     */
-    protected $isSellingDenied;
+    protected bool $isSellingDenied;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null
-     */
-    protected $sellingPrice;
+    protected ?ProductPrice $sellingPrice = null;
 
-    /**
-     * @var int|null
-     */
-    protected $mainCategoryId;
+    protected ?int $mainCategoryId = null;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Brand\BrandView|null
-     */
-    protected $brandView;
+    protected ?BrandView $brandView = null;
 
-    /**
-     * @var string
-     */
-    protected $catnum;
+    protected string $catnum;
 
-    /**
-     * @var string
-     */
-    protected $partno;
+    protected string $partno;
 
-    /**
-     * @var string
-     */
-    protected $ean;
+    protected string $ean;
 
-    /**
-     * @var string
-     */
-    protected $description;
+    protected string $description;
 
     /**
      * @var \Shopsys\ReadModelBundle\Image\ImageView[]
      */
-    protected $galleryImageViews;
+    protected array $galleryImageViews;
 
-    /**
-     * @var string
-     */
-    protected $seoMetaDescription;
+    protected string $seoMetaDescription;
 
-    /**
-     * @var bool
-     */
-    protected $isMainVariant;
+    protected bool $isMainVariant;
 
-    /**
-     * @var int|null
-     */
-    protected $mainVariantId;
+    protected ?int $mainVariantId = null;
 
     /**
      * @var array
      */
-    protected $parameterViews;
+    protected array $parameterViews;
 
     /**
      * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
      */
-    protected $accessories;
+    protected array $accessories;
 
     /**
      * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
      */
-    protected $variants;
+    protected array $variants;
 
     /**
      * @param int $id

@@ -7,15 +7,9 @@ use Symfony\Bridge\Monolog\Logger;
 
 class ProductAvailabilityCronModule implements IteratedCronModuleInterface
 {
-    /**
-     * @var \Symfony\Bridge\Monolog\Logger
-     */
-    protected $logger;
+    protected Logger $logger;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator
-     */
-    protected $productAvailabilityRecalculator;
+    protected ProductAvailabilityRecalculator $productAvailabilityRecalculator;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator $productAvailabilityRecalculator

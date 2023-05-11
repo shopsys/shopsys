@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures\Performance;
 
 use App\DataFixtures\Demo\ProductDataFixture as DemoProductDataFixture;
+use App\Model\Product\ProductDataFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
 use Faker\Generator as Faker;
@@ -29,85 +30,43 @@ class ProductDataFixture
 
     public const FIRST_PERFORMANCE_PRODUCT = 'first_performance_product';
 
-    /**
-     * @var int
-     */
-    private $productTotalCount;
+    private int $productTotalCount;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
+    private EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
-     */
-    private $productFacade;
+    private ProductFacade $productFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade
-     */
-    private $sqlLoggerFacade;
+    private SqlLoggerFacade $sqlLoggerFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade
-     */
-    private $productVariantFacade;
+    private ProductVariantFacade $productVariantFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade
-     */
-    private $persistentReferenceFacade;
+    private PersistentReferenceFacade $persistentReferenceFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryRepository
-     */
-    private $categoryRepository;
+    private CategoryRepository $categoryRepository;
 
-    /**
-     * @var int
-     */
-    private $countImported;
+    private int $countImported;
 
-    /**
-     * @var int
-     */
-    private $demoDataIterationCounter;
+    private int $demoDataIterationCounter;
 
     /**
      * @var \App\Model\Product\Product[]
      */
-    private $productsByCatnum;
+    private array $productsByCatnum;
 
-    /**
-     * @var \Faker\Generator
-     */
-    private $faker;
+    private Faker $faker;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler
-     */
-    private $productAvailabilityRecalculationScheduler;
+    private ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler
-     */
-    private $productPriceRecalculationScheduler;
+    private ProductPriceRecalculationScheduler $productPriceRecalculationScheduler;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory
-     */
-    private $progressBarFactory;
+    private ProgressBarFactory $progressBarFactory;
 
-    /**
-     * @var \App\Model\Product\ProductDataFactory
-     */
-    private $productDataFactory;
+    private ProductDataFactory $productDataFactory;
 
     /**
      * @var array|\App\Model\Product\Product[]
      */
-    private $productTemplates;
+    private array $productTemplates;
 
     /**
      * @param int $productTotalCount

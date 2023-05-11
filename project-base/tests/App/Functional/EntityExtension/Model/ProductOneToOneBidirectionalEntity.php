@@ -12,7 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class ProductOneToOneBidirectionalEntity
 {
     /**
-     * @var int
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -20,14 +19,12 @@ class ProductOneToOneBidirectionalEntity
     protected int $id;
 
     /**
-     * @var \Tests\App\Functional\EntityExtension\Model\ExtendedProduct
      * @ORM\OneToOne(targetEntity="ExtendedProduct", inversedBy="oneToOneBidirectionalEntity")
      * @ORM\JoinColumn(nullable=false, name="product_id", referencedColumnName="id")
      */
     protected ExtendedProduct $product;
 
     /**
-     * @var string
      * @ORM\Column(type="string")
      */
     protected string $name;

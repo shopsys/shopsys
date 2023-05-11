@@ -20,31 +20,26 @@ class CategoryRepositoryTest extends TransactionFunctionalTestCase
     protected const SECOND_DOMAIN_ID = 2;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
      * @inject
      */
     private CategoryFacade $categoryFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryRepository
      * @inject
      */
     private CategoryRepository $categoryRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository
      * @inject
      */
     private CategoryVisibilityRepository $categoryVisibilityRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface
      * @inject
      */
     private CategoryDataFactoryInterface $categoryDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
      * @inject
      */
     private Localization $localization;

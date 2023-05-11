@@ -16,10 +16,7 @@ use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @var \Shopsys\Releaser\FileManipulator\ChangelogFileManipulator
-     */
-    private $changelogFileManipulator;
+    private ChangelogFileManipulator $changelogFileManipulator;
 
     /**
      * @param \Shopsys\Releaser\FileManipulator\ChangelogFileManipulator $changelogFileManipulator

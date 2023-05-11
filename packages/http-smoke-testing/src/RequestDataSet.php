@@ -10,40 +10,28 @@ class RequestDataSet implements RequestDataSetConfig
 {
     private const DEFAULT_EXPECTED_STATUS_CODE = 200;
 
-    /**
-     * @var string
-     */
-    private $routeName;
+    private string $routeName;
 
-    /**
-     * @var bool
-     */
-    private $skipped;
+    private bool $skipped;
 
-    /**
-     * @var \Shopsys\HttpSmokeTesting\Auth\AuthInterface|null
-     */
-    private $auth;
+    private ?AuthInterface $auth = null;
 
-    /**
-     * @var int|null
-     */
-    private $expectedStatusCode;
+    private ?int $expectedStatusCode = null;
 
     /**
      * @var array
      */
-    private $parameters;
+    private array $parameters;
 
     /**
      * @var string[]
      */
-    private $debugNotes;
+    private array $debugNotes;
 
     /**
      * @var callable[]
      */
-    private $callsDuringTestExecution;
+    private array $callsDuringTestExecution;
 
     /**
      * @param string $routeName

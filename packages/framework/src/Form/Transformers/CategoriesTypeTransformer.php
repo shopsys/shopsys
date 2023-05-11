@@ -7,10 +7,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class CategoriesTypeTransformer implements DataTransformerInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
-     */
-    protected $categoryFacade;
+    protected CategoryFacade $categoryFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade

@@ -14,29 +14,14 @@ use Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade;
 
 class ProductEntityFieldMapper
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
     protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade
-     */
     protected ProductCollectionFacade $productCollectionFacade;
 
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade
-     */
     protected ProductAccessoryFacade $productAccessoryFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
     protected CurrentCustomerUser $currentCustomerUser;
 
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory
-     */
     protected ParameterWithValuesFactory $parameterWithValuesFactory;
 
     /**

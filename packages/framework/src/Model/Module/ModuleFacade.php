@@ -6,20 +6,11 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ModuleFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Module\EnabledModuleRepository
-     */
-    protected $enabledModuleRepository;
+    protected EnabledModuleRepository $enabledModuleRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Module\EnabledModuleFactoryInterface
-     */
-    protected $enabledModuleFactory;
+    protected EnabledModuleFactoryInterface $enabledModuleFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

@@ -11,10 +11,7 @@ use Twig\Node\Node;
 
 class TwigFileExtractor implements FileVisitorInterface
 {
-    /**
-     * @var \JMS\TranslationBundle\Translation\Extractor\File\TwigFileExtractor
-     */
-    protected $originalTwigFileExtractor;
+    protected OriginalTwigFileExtractor $originalTwigFileExtractor;
 
     /**
      * @param \JMS\TranslationBundle\Translation\Extractor\File\TwigFileExtractor $originalTwigFileExtractor

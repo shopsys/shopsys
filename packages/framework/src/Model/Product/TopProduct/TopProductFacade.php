@@ -6,20 +6,11 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class TopProductFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductRepository
-     */
-    protected $topProductRepository;
+    protected TopProductRepository $topProductRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFactoryInterface
-     */
-    protected $topProductFactory;
+    protected TopProductFactoryInterface $topProductFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

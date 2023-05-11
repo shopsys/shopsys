@@ -9,7 +9,7 @@ class AnnotationsReplacementsMap
     /**
      * @var string[]
      */
-    protected $classExtensionMap;
+    protected array $classExtensionMap;
 
     /**
      * @param string[] $classExtensionMap

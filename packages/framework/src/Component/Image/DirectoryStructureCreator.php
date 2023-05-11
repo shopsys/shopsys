@@ -9,30 +9,15 @@ use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 
 class DirectoryStructureCreator
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
-     */
-    protected $imageConfig;
+    protected ImageConfig $imageConfig;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageLocator
-     */
-    protected $imageLocator;
+    protected ImageLocator $imageLocator;
 
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    protected $filesystem;
+    protected FilesystemOperator $filesystem;
 
-    /**
-     * @var string
-     */
-    protected $imageDir;
+    protected string $imageDir;
 
-    /**
-     * @var string
-     */
-    protected $domainImageDir;
+    protected string $domainImageDir;
 
     /**
      * @param string $imageDir

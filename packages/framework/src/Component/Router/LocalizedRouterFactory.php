@@ -12,24 +12,15 @@ use Symfony\Component\Routing\RequestContext;
 
 class LocalizedRouterFactory
 {
-    /**
-     * @var string
-     */
-    protected $localeRoutersResourcesFilepathMask;
+    protected string $localeRoutersResourcesFilepathMask;
 
     /**
      * @var \Symfony\Component\Routing\Router[][]
      */
-    protected $routersByLocaleAndHost;
+    protected array $routersByLocaleAndHost;
 
-    /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
-     */
     protected ContainerInterface $container;
 
-    /**
-     * @var string
-     */
     protected string $cacheDir;
 
     /**

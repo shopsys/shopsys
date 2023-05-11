@@ -11,10 +11,7 @@ use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class MonorepoUpgradeFileManipulatorTest extends TestCase
 {
-    /**
-     * @var \Shopsys\Releaser\FileManipulator\MonorepoUpgradeFileManipulator
-     */
-    private $upgradeFileManipulator;
+    private MonorepoUpgradeFileManipulator $upgradeFileManipulator;
 
     protected function setUp(): void
     {

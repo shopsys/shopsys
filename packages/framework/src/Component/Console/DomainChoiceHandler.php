@@ -11,10 +11,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class DomainChoiceHandler
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

@@ -11,7 +11,7 @@ class IndexRegistry
     /**
      * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex[]
      */
-    protected $registeredIndexes;
+    protected array $registeredIndexes;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex[] $indexes

@@ -13,13 +13,11 @@ use Tests\App\Test\FunctionalTestCase;
 class AllFeedsTest extends FunctionalTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Feed\FeedFacade
      * @inject
      */
     private FeedFacade $feedFacade;
 
     /**
-     * @var \League\Flysystem\FilesystemOperator
      * @inject
      */
     private FilesystemOperator $filesystem;

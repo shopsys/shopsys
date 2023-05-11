@@ -7,15 +7,9 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 
 class DomainFactory
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigLoader
-     */
-    protected $domainsConfigLoader;
+    protected DomainsConfigLoader $domainsConfigLoader;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    protected $setting;
+    protected Setting $setting;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigLoader $domainsConfigLoader

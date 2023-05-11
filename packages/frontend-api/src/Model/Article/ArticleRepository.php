@@ -10,10 +10,7 @@ use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 
 class ArticleRepository
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleRepository
-     */
-    protected $articleRepository;
+    protected \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository

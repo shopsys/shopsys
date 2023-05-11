@@ -4,15 +4,9 @@ namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 class FriendlyUrlUniqueResult
 {
-    /**
-     * @var bool
-     */
-    protected $unique;
+    protected bool $unique;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl
-     */
-    protected $friendlyUrlForPersist;
+    protected FriendlyUrl $friendlyUrlForPersist;
 
     /**
      * @param bool $unique

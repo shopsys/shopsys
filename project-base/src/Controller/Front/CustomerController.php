@@ -21,40 +21,19 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CustomerController extends FrontBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
-     */
-    private $customerUserFacade;
+    private CustomerUserFacade $customerUserFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation
-     */
-    private $orderItemPriceCalculation;
+    private OrderItemPriceCalculation $orderItemPriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
-     */
-    private $orderFacade;
+    private OrderFacade $orderFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade
-     */
-    private $loginAsUserFacade;
+    private LoginAsUserFacade $loginAsUserFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface
-     */
-    private $customerUserUpdateDataFactory;
+    private CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade
-     */
-    private $deliveryAddressFacade;
+    private DeliveryAddressFacade $deliveryAddressFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade

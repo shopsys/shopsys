@@ -40,135 +40,57 @@ class OrderFacade
     public const VARIABLE_PAYMENT_INSTRUCTIONS = '{payment_instructions}';
     public const VARIABLE_TRANSPORT_INSTRUCTIONS = '{transport_instructions}';
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository
-     */
-    protected $orderNumberSequenceRepository;
+    protected OrderNumberSequenceRepository $orderNumberSequenceRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderRepository
-     */
-    protected $orderRepository;
+    protected OrderRepository $orderRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator
-     */
-    protected $orderUrlGenerator;
+    protected OrderUrlGenerator $orderUrlGenerator;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository
-     */
-    protected $orderStatusRepository;
+    protected OrderStatusRepository $orderStatusRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade
-     */
-    protected $orderMailFacade;
+    protected OrderMailFacade $orderMailFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderHashGeneratorRepository
-     */
-    protected $orderHashGeneratorRepository;
+    protected OrderHashGeneratorRepository $orderHashGeneratorRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    protected $setting;
+    protected Setting $setting;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
-    protected $localization;
+    protected Localization $localization;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade
-     */
-    protected $administratorFrontSecurityFacade;
+    protected AdministratorFrontSecurityFacade $administratorFrontSecurityFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade
-     */
-    protected $currentPromoCodeFacade;
+    protected CurrentPromoCodeFacade $currentPromoCodeFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\CartFacade
-     */
-    protected $cartFacade;
+    protected CartFacade $cartFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
-     */
-    protected $customerUserFacade;
+    protected CustomerUserFacade $customerUserFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    protected $currentCustomerUser;
+    protected CurrentCustomerUser $currentCustomerUser;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory
-     */
-    protected $orderPreviewFactory;
+    protected OrderPreviewFactory $orderPreviewFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade
-     */
-    protected $orderProductFacade;
+    protected OrderProductFacade $orderProductFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade
-     */
-    protected $heurekaFacade;
+    protected HeurekaFacade $heurekaFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFactoryInterface
-     */
-    protected $orderFactory;
+    protected OrderFactoryInterface $orderFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation
-     */
-    protected $orderPriceCalculation;
+    protected OrderPriceCalculation $orderPriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation
-     */
-    protected $orderItemPriceCalculation;
+    protected OrderItemPriceCalculation $orderItemPriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\FrontOrderDataMapper
-     */
-    protected $frontOrderDataMapper;
+    protected FrontOrderDataMapper $frontOrderDataMapper;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension
-     */
-    protected $numberFormatterExtension;
+    protected NumberFormatterExtension $numberFormatterExtension;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation
-     */
-    protected $paymentPriceCalculation;
+    protected PaymentPriceCalculation $paymentPriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation
-     */
-    protected $transportPriceCalculation;
+    protected TransportPriceCalculation $transportPriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface
-     */
-    protected $orderItemFactory;
+    protected OrderItemFactoryInterface $orderItemFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

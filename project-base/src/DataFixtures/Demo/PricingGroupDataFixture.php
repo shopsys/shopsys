@@ -19,25 +19,13 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
     public const PRICING_GROUP_ORDINARY = 'pricing_group_ordinary';
     public const PRICING_GROUP_PARTNER = 'pricing_group_partner';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
-     */
-    private $pricingGroupFacade;
+    private PricingGroupFacade $pricingGroupFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactoryInterface
-     */
-    private $pricingGroupDataFactory;
+    private PricingGroupDataFactoryInterface $pricingGroupDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade
-     */
-    private $pricingGroupSettingFacade;
+    private PricingGroupSettingFacade $pricingGroupSettingFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade

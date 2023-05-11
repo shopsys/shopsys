@@ -17,22 +17,22 @@ class CreateApplicationDirectoriesCommand extends Command
     /**
      * @var string[]
      */
-    private $defaultInternalDirectories;
+    private array $defaultInternalDirectories;
 
     /**
      * @var string[]
      */
-    private $defaultPublicDirectories;
+    private array $defaultPublicDirectories;
 
     /**
      * @var string[]|null
      */
-    private $internalDirectories;
+    private ?array $internalDirectories = null;
 
     /**
      * @var string[]|null
      */
-    private $publicDirectories;
+    private ?array $publicDirectories = null;
 
     /**
      * @var string
@@ -41,25 +41,13 @@ class CreateApplicationDirectoriesCommand extends Command
      */
     protected static $defaultName = 'shopsys:create-directories';
 
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    private $filesystem;
+    private FilesystemOperator $filesystem;
 
-    /**
-     * @var \Symfony\Component\Filesystem\Filesystem
-     */
-    private $localFilesystem;
+    private Filesystem $localFilesystem;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\DirectoryStructureCreator
-     */
-    private $imageDirectoryStructureCreator;
+    private ImageDirectoryStructureCreator $imageDirectoryStructureCreator;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\DirectoryStructureCreator
-     */
-    private $uploadedFileDirectoryStructureCreator;
+    private UploadedFileDirectoryStructureCreator $uploadedFileDirectoryStructureCreator;
 
     /**
      * @param array $defaultInternalDirectories

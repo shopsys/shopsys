@@ -7,10 +7,7 @@ use Shopsys\FrameworkBundle\Model\Script\Exception\ScriptNotFoundException;
 
 class ScriptRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

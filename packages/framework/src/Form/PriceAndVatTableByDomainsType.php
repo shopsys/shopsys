@@ -19,15 +19,9 @@ use Symfony\Component\Validator\Constraints;
 
 class PriceAndVatTableByDomainsType extends AbstractType
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
-     */
-    private $vatFacade;
+    private VatFacade $vatFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

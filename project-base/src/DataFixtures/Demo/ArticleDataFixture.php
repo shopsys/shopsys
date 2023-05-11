@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Article\ArticleDataFactory;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -27,20 +28,11 @@ class ArticleDataFixture extends AbstractReferenceFixture
     private const ATTRIBUTE_SEO_META_DESCRIPTION_KEY = 'soeMetaDescription';
     private const REFERENCE_NAME_KEY = 'referenceName';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleFacade
-     */
-    private $articleFacade;
+    private ArticleFacade $articleFacade;
 
-    /**
-     * @var \App\Model\Article\ArticleDataFactory
-     */
-    private $articleDataFactory;
+    private ArticleDataFactory $articleDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade

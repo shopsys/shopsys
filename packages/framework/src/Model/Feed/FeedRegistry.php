@@ -12,22 +12,19 @@ class FeedRegistry
     /**
      * @var \Shopsys\FrameworkBundle\Model\Feed\FeedInterface[][]
      */
-    protected $feedsByType = [];
+    protected array $feedsByType = [];
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Feed\FeedInterface[]
      */
-    protected $feedsByName = [];
+    protected array $feedsByName = [];
 
     /**
      * @var string[]
      */
-    protected $knownTypes;
+    protected array $knownTypes;
 
-    /**
-     * @var string
-     */
-    protected $defaultType;
+    protected string $defaultType;
 
     /**
      * @param string[] $knownTypes

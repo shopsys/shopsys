@@ -16,15 +16,9 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class PromoCodeFormType extends AbstractType
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade
-     */
-    private $promoCodeFacade;
+    private PromoCodeFacade $promoCodeFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null
-     */
-    private $promoCode;
+    private ?PromoCode $promoCode = null;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade

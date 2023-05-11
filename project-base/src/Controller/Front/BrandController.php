@@ -8,10 +8,7 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 
 class BrandController extends FrontBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade
-     */
-    private $brandFacade;
+    private BrandFacade $brandFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade

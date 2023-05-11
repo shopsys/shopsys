@@ -15,30 +15,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PromoCodeController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade
-     */
-    protected $promoCodeFacade;
+    protected PromoCodeFacade $promoCodeFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade
-     */
-    protected $administratorGridFacade;
+    protected AdministratorGridFacade $administratorGridFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface
-     */
-    protected $promoCodeDataFactory;
+    protected PromoCodeDataFactoryInterface $promoCodeDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory
-     */
-    protected $promoCodeGridFactory;
+    protected PromoCodeGridFactory $promoCodeGridFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
-     */
-    protected $breadcrumbOverrider;
+    protected BreadcrumbOverrider $breadcrumbOverrider;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade

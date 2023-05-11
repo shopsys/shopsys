@@ -13,20 +13,11 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface
-     */
-    protected $billingAddressDataFactory;
+    protected BillingAddressDataFactoryInterface $billingAddressDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface
-     */
-    protected $deliveryAddressDataFactory;
+    protected DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface
-     */
-    protected $customerUserDataFactory;
+    protected CustomerUserDataFactoryInterface $customerUserDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory

@@ -9,30 +9,15 @@ use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 
 class OrderStatusFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository
-     */
-    protected $orderStatusRepository;
+    protected OrderStatusRepository $orderStatusRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderRepository
-     */
-    protected $orderRepository;
+    protected OrderRepository $orderRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade
-     */
-    protected $mailTemplateFacade;
+    protected MailTemplateFacade $mailTemplateFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFactoryInterface
-     */
-    protected $orderStatusFactory;
+    protected OrderStatusFactoryInterface $orderStatusFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

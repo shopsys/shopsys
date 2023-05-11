@@ -16,44 +16,20 @@ class FriendlyUrlFacade
 {
     protected const MAX_URL_UNIQUE_RESOLVE_ATTEMPT = 100;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
-     */
-    protected $domainRouterFactory;
+    protected DomainRouterFactory $domainRouterFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResultFactory
-     */
-    protected $friendlyUrlUniqueResultFactory;
+    protected FriendlyUrlUniqueResultFactory $friendlyUrlUniqueResultFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository
-     */
-    protected $friendlyUrlRepository;
+    protected FriendlyUrlRepository $friendlyUrlRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactoryInterface
-     */
-    protected $friendlyUrlFactory;
+    protected FriendlyUrlFactoryInterface $friendlyUrlFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider
-     */
     protected FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider;
 
-    /**
-     * @var \Symfony\Contracts\Cache\CacheInterface
-     */
     protected CacheInterface $mainFriendlyUrlSlugCache;
 
     /**

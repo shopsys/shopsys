@@ -10,7 +10,7 @@ abstract class SimpleBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     /**
      * @var string[]|null
      */
-    protected $routeNameMap;
+    protected ?array $routeNameMap = null;
 
     /**
      * @param string $routeName

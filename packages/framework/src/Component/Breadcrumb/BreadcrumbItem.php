@@ -4,20 +4,14 @@ namespace Shopsys\FrameworkBundle\Component\Breadcrumb;
 
 class BreadcrumbItem
 {
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name;
 
-    /**
-     * @var string|null
-     */
-    protected $routeName;
+    protected ?string $routeName = null;
 
     /**
      * @var mixed[]
      */
-    protected $routeParameters;
+    protected array $routeParameters;
 
     /**
      * @param string $name

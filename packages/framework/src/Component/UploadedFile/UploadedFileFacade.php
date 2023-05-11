@@ -13,35 +13,17 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\EntityIdentifierExc
 
 class UploadedFileFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig
-     */
-    protected $uploadedFileConfig;
+    protected UploadedFileConfig $uploadedFileConfig;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRepository
-     */
-    protected $uploadedFileRepository;
+    protected UploadedFileRepository $uploadedFileRepository;
 
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    protected $filesystem;
+    protected FilesystemOperator $filesystem;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator
-     */
-    protected $uploadedFileLocator;
+    protected UploadedFileLocator $uploadedFileLocator;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactoryInterface
-     */
-    protected $uploadedFileFactory;
+    protected UploadedFileFactoryInterface $uploadedFileFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

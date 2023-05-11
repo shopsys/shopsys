@@ -17,34 +17,16 @@ use Tracy\Debugger;
 
 class ErrorController extends AbstractController
 {
-    /**
-     * @var bool
-     */
     protected bool $debug;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Error\ExceptionListener
-     */
     protected ExceptionListener $exceptionListener;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade
-     */
     protected ErrorPagesFacade $errorPagesFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
     protected Domain $domain;
 
-    /**
-     * @var string
-     */
     protected string $environment;
 
-    /**
-     * @var string|null
-     */
     protected ?string $overwriteDomainUrl;
 
     /**

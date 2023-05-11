@@ -9,15 +9,9 @@ use Doctrine\ORM\QueryBuilder;
 
 class CronModuleRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Cron\CronModuleFactoryInterface
-     */
-    protected $cronModuleFactory;
+    protected CronModuleFactoryInterface $cronModuleFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

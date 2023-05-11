@@ -8,10 +8,7 @@ use Roave\BetterReflection\Reflection\ReflectionClass;
 
 class AnnotationsAdder
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\FileContentsReplacer
-     */
-    protected $fileContentReplacer;
+    protected FileContentsReplacer $fileContentReplacer;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\FileContentsReplacer $fileContentReplacer

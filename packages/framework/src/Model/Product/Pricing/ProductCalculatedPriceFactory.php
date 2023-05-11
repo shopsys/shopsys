@@ -9,10 +9,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductCalculatedPriceFactory implements ProductCalculatedPriceFactoryInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
-     */
-    protected $entityNameResolver;
+    protected EntityNameResolver $entityNameResolver;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

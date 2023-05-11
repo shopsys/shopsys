@@ -15,15 +15,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MoneyTypeExtension extends AbstractTypeExtension
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
-    private $localization;
+    private Localization $localization;
 
-    /**
-     * @var \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface
-     */
-    private $intlCurrencyRepository;
+    private CurrencyRepositoryInterface $intlCurrencyRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization

@@ -33,45 +33,21 @@ class CartController extends FrontBaseController
 
     public const PAGES_WITH_DISABLED_CART_HOVER = ['front_cart', 'front_error_page', 'front_order_index', 'front_order_sent'];
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\CartFacade
-     */
-    private $cartFacade;
+    private CartFacade $cartFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade
-     */
-    private $freeTransportAndPaymentFacade;
+    private FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory
-     */
-    private $orderPreviewFactory;
+    private OrderPreviewFactory $orderPreviewFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor
-     */
-    private $errorExtractor;
+    private ErrorExtractor $errorExtractor;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface
-     */
-    private $listedProductViewFacade;
+    private ListedProductViewFacadeInterface $listedProductViewFacade;
 
-    /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
-     */
-    private $requestStack;
+    private RequestStack $requestStack;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Module\ModuleFacade
-     */
-    private $moduleFacade;
+    private ModuleFacade $moduleFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade

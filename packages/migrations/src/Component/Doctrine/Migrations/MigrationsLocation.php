@@ -4,15 +4,9 @@ namespace Shopsys\MigrationBundle\Component\Doctrine\Migrations;
 
 class MigrationsLocation
 {
-    /**
-     * @var string
-     */
-    protected $directory;
+    protected string $directory;
 
-    /**
-     * @var string
-     */
-    protected $namespace;
+    protected string $namespace;
 
     /**
      * @param string $directory

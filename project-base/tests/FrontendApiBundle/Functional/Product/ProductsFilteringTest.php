@@ -14,9 +14,6 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
 {
     private const PARAMETER_NUMBER_OF_BUTTONS_ID = 9;
 
-    /**
-     * @var string
-     */
     private string $firstDomainLocale;
 
     public function setUp(): void

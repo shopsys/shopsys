@@ -8,10 +8,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ManualBestsellingProductFactory implements ManualBestsellingProductFactoryInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
-     */
-    protected $entityNameResolver;
+    protected EntityNameResolver $entityNameResolver;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

@@ -23,40 +23,19 @@ class ListedProductViewFactory
 {
     use SetterInjectionTrait;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade
-     */
-    protected $productCachedAttributesFacade;
+    protected ProductCachedAttributesFacade $productCachedAttributesFacade;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface
-     */
-    protected $imageViewFacade;
+    protected ImageViewFacadeInterface $imageViewFacade;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface
-     */
-    protected $productActionViewFacade;
+    protected ProductActionViewFacadeInterface $productActionViewFacade;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory
-     */
-    protected $productActionViewFactory;
+    protected ProductActionViewFactory $productActionViewFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    protected $currentCustomerUser;
+    protected CurrentCustomerUser $currentCustomerUser;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory
-     */
-    protected $priceFactory;
+    protected PriceFactory $priceFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

@@ -9,7 +9,7 @@ abstract class AbstractExportScheduler
     /**
      * @var int[]
      */
-    protected $rowIds = [];
+    protected array $rowIds = [];
 
     /**
      * @param int $rowId

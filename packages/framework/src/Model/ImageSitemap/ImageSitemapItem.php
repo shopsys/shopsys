@@ -6,9 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\ImageSitemap;
 
 class ImageSitemapItem
 {
-    /**
-     * @var string
-     */
     public string $loc;
 
     /**

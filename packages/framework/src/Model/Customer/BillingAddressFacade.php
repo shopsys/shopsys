@@ -8,20 +8,11 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class BillingAddressFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactory
-     */
-    protected $billingAddressFactory;
+    protected BillingAddressFactory $billingAddressFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\BillingAddressRepository
-     */
-    protected $billingAddressRepository;
+    protected BillingAddressRepository $billingAddressRepository;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactory $billingAddressFactory
