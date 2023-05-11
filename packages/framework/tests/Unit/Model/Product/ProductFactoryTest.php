@@ -8,7 +8,6 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFactory;
 
 class ProductFactoryTest extends TestCase
@@ -30,11 +29,10 @@ class ProductFactoryTest extends TestCase
 
     public function testCreateVariant()
     {
-        $mainVariantData = new ProductData();
-        $mainProduct = Product::create(new ProductData());
+        $mainProduct = Product::create(TestProductProvider::getTestProductData());
         $variants = [];
 
-        $mainVariant = $this->productFactory->createMainVariant($mainVariantData, $mainProduct, $variants);
+        $mainVariant = $this->productFactory->createMainVariant(TestProductProvider::getTestProductData(), $mainProduct, $variants);
 
         $this->assertNotSame($mainProduct, $mainVariant);
         $this->assertTrue(in_array($mainProduct, $mainVariant->getVariants(), true));
