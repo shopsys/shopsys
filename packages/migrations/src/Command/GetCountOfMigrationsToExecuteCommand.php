@@ -16,6 +16,8 @@ class GetCountOfMigrationsToExecuteCommand extends Command
 
     /**
      * @var string
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName
      */
     protected static $defaultName = 'shopsys:migrations:count';
 

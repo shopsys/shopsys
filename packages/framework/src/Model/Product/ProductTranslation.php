@@ -15,6 +15,8 @@ class ProductTranslation extends AbstractTranslation
 {
     /**
      * @Prezent\Translatable(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product")
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName
      */
     protected $translatable;
 

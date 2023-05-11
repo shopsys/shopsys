@@ -17,6 +17,8 @@ class CountryTranslation extends AbstractTranslation
     /**
      * @var \Shopsys\FrameworkBundle\Model\Country\Country
      * @Prezent\Translatable(targetEntity="\Shopsys\FrameworkBundle\Model\Country\Country")
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName
      */
     protected $translatable;
 

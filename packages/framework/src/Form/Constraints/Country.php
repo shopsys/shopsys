@@ -20,6 +20,8 @@ class Country extends Constraint
 
     /**
      * @var string[]
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName
      */
     protected static $errorNames = [
         self::INVALID_COUNTRY_ERROR => 'INVALID_COUNTRY_ERROR',

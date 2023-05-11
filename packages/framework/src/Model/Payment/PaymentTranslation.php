@@ -16,6 +16,8 @@ class PaymentTranslation extends AbstractTranslation
     /**
      * @var \Shopsys\FrameworkBundle\Model\Payment\Payment
      * @Prezent\Translatable(targetEntity="Shopsys\FrameworkBundle\Model\Payment\Payment")
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName
      */
     protected $translatable;
 

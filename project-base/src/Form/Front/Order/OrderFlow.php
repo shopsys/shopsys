@@ -11,6 +11,8 @@ class OrderFlow extends FormFlow
 {
     /**
      * @var bool
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName
      */
     protected $allowDynamicStepNavigation = true;
 

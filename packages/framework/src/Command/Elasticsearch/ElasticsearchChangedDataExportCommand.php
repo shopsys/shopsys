@@ -11,6 +11,8 @@ class ElasticsearchChangedDataExportCommand extends ElasticsearchDataExportComma
 {
     /**
      * @var string
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName
      */
     protected static $defaultName = 'shopsys:elasticsearch:changed-data-export';
 
