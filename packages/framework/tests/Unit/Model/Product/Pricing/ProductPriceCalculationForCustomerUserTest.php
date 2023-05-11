@@ -5,6 +5,7 @@ namespace Tests\FrameworkBundle\Unit\Model\Product\Pricing;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
@@ -21,14 +22,22 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
 {
     public function testCalculatePriceByUserAndDomainIdWithUser()
     {
+        $customerMock = $this->createMock(Customer::class);
+
         $product = $this->createMock(Product::class);
+
         $pricingGroupData = new PricingGroupData();
         $pricingGroupData->name = 'name';
         $pricingGroup = new PricingGroup($pricingGroupData, 1);
+
         $customerUserData = new CustomerUserData();
         $customerUserData->pricingGroup = $pricingGroup;
         $customerUserData->email = 'no-reply@shopsys.com';
         $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
+        $customerUserData->customer = $customerMock;
+        $customerUserData->firstName = 'firstName';
+        $customerUserData->lastName = 'lastName';
+
         $customerUser = new CustomerUser($customerUserData);
         $expectedProductPrice = new ProductPrice(new Price(Money::create(1), Money::create(1)), false);
 
