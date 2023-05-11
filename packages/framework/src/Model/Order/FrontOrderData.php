@@ -20,7 +20,7 @@ class FrontOrderData extends OrderData
     public $disallowHeurekaVerifiedByCustomers;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
+     * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null
      */
     public $deliveryAddress;
 

@@ -38,10 +38,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
 
     protected SplFileInfo $file;
 
-    /**
-     * @var bool|null
-     */
-    protected bool $isInsideConstraintClass = null;
+    protected ?bool $isInsideConstraintClass = null;
 
     public function __construct()
     {

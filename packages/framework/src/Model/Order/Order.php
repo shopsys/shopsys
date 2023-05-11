@@ -192,7 +192,7 @@ class Order
      * @var string|null
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    protected $deliveryCompanyName = null;
+    protected $deliveryCompanyName ;
 
     /**
      * @var string|null

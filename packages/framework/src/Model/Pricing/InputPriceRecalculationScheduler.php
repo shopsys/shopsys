@@ -11,9 +11,9 @@ class InputPriceRecalculationScheduler
 
     protected Setting $setting;
 
-    protected bool $recalculateInputPricesWithoutVat;
+    protected bool $recalculateInputPricesWithoutVat = false;
 
-    protected bool $recalculateInputPricesWithVat;
+    protected bool $recalculateInputPricesWithVat = false;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculator $inputPriceRecalculator

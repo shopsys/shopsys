@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class AdministratorRolesChangedSubscriber implements EventSubscriberInterface
 {
-    protected bool $rolesChanged;
+    protected bool $rolesChanged = false;
 
     protected TokenStorageInterface $tokenStorage;
 
