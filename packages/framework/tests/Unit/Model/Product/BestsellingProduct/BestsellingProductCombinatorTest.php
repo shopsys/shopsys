@@ -5,7 +5,7 @@ namespace Tests\FrameworkBundle\Unit\Model\Product\BestsellingProduct;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductCombinator;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductData;
+use Tests\FrameworkBundle\Unit\Model\Product\TestProductProvider;
 
 class BestsellingProductCombinatorTest extends TestCase
 {
@@ -14,7 +14,7 @@ class BestsellingProductCombinatorTest extends TestCase
         $bestsellingProductCombinator = new BestsellingProductCombinator();
 
         $maxResults = 4;
-        $productData = new ProductData();
+        $productData = TestProductProvider::getTestProductData();
         $productData->name = ['cs' => 'Product 1'];
         $product1 = Product::create($productData);
         $product2 = Product::create($productData);
