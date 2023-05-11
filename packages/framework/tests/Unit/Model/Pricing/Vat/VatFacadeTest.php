@@ -18,7 +18,11 @@ class VatFacadeTest extends TestCase
 {
     public function testGetDefaultVat()
     {
-        $expected = new Vat(new VatData(), Domain::FIRST_DOMAIN_ID);
+        $vatData = new VatData();
+        $vatData->percent = '0';
+        $vatData->name = 'vat name';
+
+        $expected = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
         $emMock = $this->createMock(EntityManager::class);
 
         $settingMock = $this->getMockBuilder(Setting::class)
