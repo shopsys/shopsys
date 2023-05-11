@@ -11,9 +11,9 @@ class FlagsProvider
     protected FlagFacade $flagFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
+     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]|null
      */
-    protected array $allFlags;
+    protected ?array $allFlags = null;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade

@@ -21,7 +21,7 @@ class GridView
     /**
      * @var \Twig\TemplateWrapper[]
      */
-    protected array $templates;
+    protected array $templates = [];
 
     /**
      * @var string|string[]|null
