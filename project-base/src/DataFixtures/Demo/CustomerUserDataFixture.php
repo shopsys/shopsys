@@ -166,7 +166,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     private function setDeliveryAddressData(CustomerUserUpdateData $customerUserUpdateData, array $deliveryAddressInputData): void
     {
         $deliveryAddressData = $customerUserUpdateData->deliveryAddressData;
-        $deliveryAddressData->addressFilled = $deliveryAddressInputData[self::KEY_ADDRESS_ADDRESS_FILLED] ?? null;
+        $deliveryAddressData->addressFilled = $deliveryAddressInputData[self::KEY_ADDRESS_ADDRESS_FILLED] ?? false;
         $deliveryAddressData->companyName = $deliveryAddressInputData[self::KEY_ADDRESS_COMPANY_NAME] ?? null;
         $deliveryAddressData->firstName = $deliveryAddressInputData[self::KEY_ADDRESS_FIRST_NAME] ?? null;
         $deliveryAddressData->lastName = $deliveryAddressInputData[self::KEY_ADDRESS_LAST_NAME] ?? null;
