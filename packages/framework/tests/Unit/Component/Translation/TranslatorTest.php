@@ -29,7 +29,6 @@ class TranslatorTest extends TestCase
         $this->originalTranslatorMock = $this->getMockBuilder(SymfonyTranslator::class)
             ->setConstructorArgs(['en'])
             ->getMock();
-        // @phpstan-ignore-next-line
         $this->originalTranslatorBagMock = $this->getMockBuilder(TranslatorBagInterface::class)->getMock();
         $this->messageIdNormalizerMock = $this->getMockBuilder(MessageIdNormalizer::class)->getMock();
         $this->identityTranslator = new IdentityTranslator();

@@ -9,18 +9,11 @@ use Webmozart\Assert\Assert;
 class FriendlyUrlDataProviderRegistry
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderInterface[]|iterable
-     */
-    protected array $friendlyUrlDataProviders;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderInterface[] $friendlyUrlDataProviders
      */
-    public function __construct(iterable $friendlyUrlDataProviders)
+    public function __construct(protected iterable $friendlyUrlDataProviders)
     {
         Assert::allIsInstanceOf($friendlyUrlDataProviders, FriendlyUrlDataProviderInterface::class);
-
-        $this->friendlyUrlDataProviders = $friendlyUrlDataProviders;
     }
 
     /**

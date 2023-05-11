@@ -13,7 +13,7 @@ class ArrayDataSource implements DataSourceInterface
      */
     protected array $data;
 
-    protected string $rowIdSourceColumnName;
+    protected ?string $rowIdSourceColumnName;
 
     /**
      * @param array $data

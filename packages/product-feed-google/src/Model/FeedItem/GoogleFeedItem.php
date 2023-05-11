@@ -17,9 +17,9 @@ class GoogleFeedItem implements FeedItemInterface
 
     protected string $name;
 
-    protected string $brandName;
+    protected ?string $brandName;
 
-    protected string $description;
+    protected ?string $description;
 
     protected ?string $ean = null;
 

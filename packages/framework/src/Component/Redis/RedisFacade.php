@@ -9,11 +9,6 @@ use Redis;
 class RedisFacade
 {
     /**
-     * @var \Redis[]|iterable
-     */
-    protected array $allClients;
-
-    /**
      * @var \Redis[]
      */
     protected array $persistentClients;
@@ -22,9 +17,8 @@ class RedisFacade
      * @param \Redis[] $allClients
      * @param \Redis[] $persistentClients
      */
-    public function __construct(iterable $allClients, iterable $persistentClients = [])
+    public function __construct(protected iterable $allClients, iterable $persistentClients = [])
     {
-        $this->allClients = $allClients;
         $this->persistentClients = $persistentClients;
     }
 

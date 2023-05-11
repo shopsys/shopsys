@@ -13,7 +13,7 @@ class ProductDetailView
 {
     protected int $id;
 
-    protected string $name;
+    protected ?string $name;
 
     /**
      * @var int[]
@@ -24,7 +24,7 @@ class ProductDetailView
 
     protected ProductActionView $actionView;
 
-    protected string $seoPageTitle;
+    protected ?string $seoPageTitle;
 
     protected string $availability;
 
@@ -38,20 +38,20 @@ class ProductDetailView
 
     protected ?BrandView $brandView = null;
 
-    protected string $catnum;
+    protected ?string $catnum;
 
-    protected string $partno;
+    protected ?string $partno;
 
-    protected string $ean;
+    protected ?string $ean;
 
-    protected string $description;
+    protected ?string $description;
 
     /**
      * @var \Shopsys\ReadModelBundle\Image\ImageView[]
      */
     protected array $galleryImageViews;
 
-    protected string $seoMetaDescription;
+    protected ?string $seoMetaDescription;
 
     protected bool $isMainVariant;
 

@@ -6,7 +6,7 @@ class FriendlyUrlUniqueResult
 {
     protected bool $unique;
 
-    protected FriendlyUrl $friendlyUrlForPersist;
+    protected ?FriendlyUrl $friendlyUrlForPersist;
 
     /**
      * @param bool $unique
