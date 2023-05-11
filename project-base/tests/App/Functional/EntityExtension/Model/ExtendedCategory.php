@@ -6,6 +6,7 @@ namespace Tests\App\Functional\EntityExtension\Model;
 
 use App\Model\Category\CategoryData;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 
@@ -16,34 +17,29 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 class ExtendedCategory extends Category
 {
     /**
-     * @var string|null
      * @ORM\Column(type="string", nullable=true)
      */
     protected ?string $stringField;
 
     /**
-     * @var \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity
      * @ORM\ManyToOne(targetEntity="UnidirectionalEntity")
      * @ORM\JoinColumn(nullable=true, name="manyToOneUnidirectionalEntity_id", referencedColumnName="id")
      */
     protected UnidirectionalEntity $manyToOneUnidirectionalEntity;
 
     /**
-     * @var \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity
      * @ORM\OneToOne(targetEntity="UnidirectionalEntity")
      * @ORM\JoinColumn(nullable=true, name="oneToOneUnidirectionalEntity_id", referencedColumnName="id")
      */
     protected UnidirectionalEntity $oneToOneUnidirectionalEntity;
 
     /**
-     * @var \Tests\App\Functional\EntityExtension\Model\CategoryOneToOneBidirectionalEntity
      * @ORM\OneToOne(targetEntity="CategoryOneToOneBidirectionalEntity", mappedBy="category")
      * @ORM\JoinColumn(nullable=true)
      */
     protected CategoryOneToOneBidirectionalEntity $oneToOneBidirectionalEntity;
 
     /**
-     * @var \Tests\App\Functional\EntityExtension\Model\ExtendedCategory
      * @ORM\OneToOne(targetEntity="ExtendedCategory")
      * @ORM\JoinColumn(nullable=true, name="oneToOneSelfReferencing_id", referencedColumnName="id")
      */
@@ -53,7 +49,7 @@ class ExtendedCategory extends Category
      * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\CategoryOneToManyBidirectionalEntity[]
      * @ORM\OneToMany(targetEntity="CategoryOneToManyBidirectionalEntity", mappedBy="category")
      */
-    protected $oneToManyBidirectionalEntities;
+    protected Collection|array $oneToManyBidirectionalEntities;
 
     /**
      * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity[]
@@ -63,20 +59,19 @@ class ExtendedCategory extends Category
      *      inverseJoinColumns={@ORM\JoinColumn(name="oneToManyUnidirectionalWithJoinTableEntity_id", referencedColumnName="id", unique=true)}
      *      )
      */
-    protected $oneToManyUnidirectionalWithJoinTableEntities;
+    protected Collection|array $oneToManyUnidirectionalWithJoinTableEntities;
 
     /**
      * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ExtendedCategory[]
      * @ORM\OneToMany(targetEntity="ExtendedCategory", mappedBy="oneToManySelfReferencingInverseEntity")
      */
-    protected $oneToManySelfReferencingEntities;
+    protected Collection|array $oneToManySelfReferencingEntities;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ExtendedCategory
      * @ORM\ManyToOne(targetEntity="ExtendedCategory", inversedBy="oneToManySelfReferencingEntities")
      * @ORM\JoinColumn(nullable=true, name="oneToManySelfReferencingParent_id", referencedColumnName="id")
      */
-    protected $oneToManySelfReferencingInverseEntity;
+    protected Collection|ExtendedCategory $oneToManySelfReferencingInverseEntity;
 
     /**
      * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity[]
@@ -86,20 +81,20 @@ class ExtendedCategory extends Category
      *      inverseJoinColumns={@ORM\JoinColumn(name="manyToManyUnidirectionalEntity_id", referencedColumnName="id")}
      *      )
      */
-    protected $manyToManyUnidirectionalEntities;
+    protected Collection|array $manyToManyUnidirectionalEntities;
 
     /**
      * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\CategoryManyToManyBidirectionalEntity[]
      * @ORM\ManyToMany(targetEntity="CategoryManyToManyBidirectionalEntity", inversedBy="categories")
      * @ORM\JoinTable(name="categories_manyToManyBidirectionalEntity")
      */
-    protected $manyToManyBidirectionalEntities;
+    protected Collection|array $manyToManyBidirectionalEntities;
 
     /**
      * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ExtendedCategory[]
      * @ORM\ManyToMany(targetEntity="ExtendedCategory", mappedBy="manyToManySelfReferencingInverseEntities")
      */
-    protected $manyToManySelfReferencingEntities;
+    protected Collection|array $manyToManySelfReferencingEntities;
 
     /**
      * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ExtendedCategory[]
@@ -109,7 +104,7 @@ class ExtendedCategory extends Category
      *      inverseJoinColumns={@ORM\JoinColumn(name="manyToManySelfReferencing_id", referencedColumnName="id")}
      *      )
      */
-    protected $manyToManySelfReferencingInverseEntities;
+    protected Collection|array $manyToManySelfReferencingInverseEntities;
 
     /**
      * @param \App\Model\Category\CategoryData $categoryData

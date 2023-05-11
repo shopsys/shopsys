@@ -8,9 +8,6 @@ use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
 
 class CKEditorRendererDecorator implements CKEditorRendererInterface
 {
-    /**
-     * @var \FOS\CKEditorBundle\Renderer\CKEditorRendererInterface
-     */
     protected CKEditorRendererInterface $baseCkEditorRenderer;
 
     /**

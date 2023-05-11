@@ -13,60 +13,27 @@ class GoogleFeedItem implements FeedItemInterface
     protected const AVAILABILITY_OUT_OF_STOCK = 'out of stock';
     protected const AVAILABILITY_IN_STOCK = 'in stock';
 
-    /**
-     * @var int
-     */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name;
 
-    /**
-     * @var string
-     */
-    protected $brandName;
+    protected string $brandName;
 
-    /**
-     * @var string
-     */
-    protected $description;
+    protected string $description;
 
-    /**
-     * @var string|null
-     */
-    protected $ean;
+    protected ?string $ean = null;
 
-    /**
-     * @var string|null
-     */
-    protected $partno;
+    protected ?string $partno = null;
 
-    /**
-     * @var string
-     */
-    protected $url;
+    protected string $url;
 
-    /**
-     * @var string|null
-     */
-    protected $imgUrl;
+    protected ?string $imgUrl = null;
 
-    /**
-     * @var bool
-     */
-    protected $sellingDenied;
+    protected bool $sellingDenied;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    protected $price;
+    protected Price $price;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
-     */
-    protected $currency;
+    protected Currency $currency;
 
     /**
      * @param int $id

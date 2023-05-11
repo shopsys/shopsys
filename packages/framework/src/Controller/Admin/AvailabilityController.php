@@ -14,20 +14,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AvailabilityController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory
-     */
-    protected $confirmDeleteResponseFactory;
+    protected ConfirmDeleteResponseFactory $confirmDeleteResponseFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade
-     */
-    protected $availabilityFacade;
+    protected AvailabilityFacade $availabilityFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityInlineEdit
-     */
-    protected $availabilityInlineEdit;
+    protected AvailabilityInlineEdit $availabilityInlineEdit;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade

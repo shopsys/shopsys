@@ -22,31 +22,26 @@ class VatFacadeTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
      * @inject
      */
     private VatFacade $vatFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
      * @inject
      */
     private TransportFacade $transportFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface
      * @inject
      */
     private TransportDataFactoryInterface $transportDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface
      * @inject
      */
     private PaymentDataFactoryInterface $paymentDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade
      * @inject
      */
     private PaymentFacade $paymentFacade;

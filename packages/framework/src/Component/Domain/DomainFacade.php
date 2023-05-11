@@ -7,30 +7,15 @@ use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 
 class DomainFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\DomainIconResizer
-     */
-    protected $domainIconResizer;
+    protected DomainIconResizer $domainIconResizer;
 
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    protected $filesystem;
+    protected FilesystemOperator $filesystem;
 
-    /**
-     * @var string
-     */
-    protected $domainImagesDirectory;
+    protected string $domainImagesDirectory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload
-     */
-    protected $fileUpload;
+    protected FileUpload $fileUpload;
 
     /**
      * @param mixed $domainImagesDirectory

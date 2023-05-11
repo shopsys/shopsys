@@ -8,10 +8,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductManualInputPriceRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

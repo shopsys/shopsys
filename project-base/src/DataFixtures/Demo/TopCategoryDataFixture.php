@@ -12,15 +12,9 @@ use Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade;
 
 class TopCategoryDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade
-     */
-    private $topCategoryFacade;
+    private TopCategoryFacade $topCategoryFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade

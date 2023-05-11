@@ -44,6 +44,7 @@ class CdnFacade
         }
 
         $escapedDomainUrls = [];
+
         foreach ($this->domain->getAll() as $domainConfig) {
             $escapedDomainUrls[] = preg_quote($domainConfig->getUrl(), '/');
         }

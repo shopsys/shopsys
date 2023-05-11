@@ -8,10 +8,7 @@ use Shopsys\FrameworkBundle\Model\Customer\Exception\DeliveryAddressNotFoundExce
 
 class DeliveryAddressRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager

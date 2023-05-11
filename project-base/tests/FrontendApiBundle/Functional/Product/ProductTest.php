@@ -12,9 +12,6 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ProductTest extends GraphQlTestCase
 {
-    /**
-     * @var \App\Model\Product\Product
-     */
     private Product $product;
 
     protected function setUp(): void

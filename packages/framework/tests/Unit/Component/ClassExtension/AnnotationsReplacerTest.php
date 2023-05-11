@@ -16,10 +16,7 @@ use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\DummyClassForAnno
 
 class AnnotationsReplacerTest extends TestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer
-     */
-    private $annotationsReplacer;
+    private AnnotationsReplacer $annotationsReplacer;
 
     protected function setUp(): void
     {

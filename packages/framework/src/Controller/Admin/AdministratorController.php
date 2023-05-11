@@ -24,35 +24,17 @@ class AdministratorController extends AdminBaseController
 {
     protected const MAX_ADMINISTRATOR_ACTIVITIES_COUNT = 10;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
-     */
-    protected $breadcrumbOverrider;
+    protected BreadcrumbOverrider $breadcrumbOverrider;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade
-     */
-    protected $administratorFacade;
+    protected AdministratorFacade $administratorFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    protected $gridFactory;
+    protected GridFactory $gridFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade
-     */
-    protected $administratorActivityFacade;
+    protected AdministratorActivityFacade $administratorActivityFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface
-     */
-    protected $administratorDataFactory;
+    protected AdministratorDataFactoryInterface $administratorDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade
-     */
-    protected $administratorRolesChangedFacade;
+    protected AdministratorRolesChangedFacade $administratorRolesChangedFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade

@@ -11,10 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CronLockCommand extends Command
 {
-    /**
-     * @var string
-     */
-    protected static $defaultName = 'deploy:cron:lock';
+    protected static string $defaultName = 'deploy:cron:lock';
 
     public const CRON_MUTEX_LOCK_NAME = 'cronLocker';
 

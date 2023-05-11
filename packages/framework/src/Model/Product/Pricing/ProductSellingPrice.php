@@ -7,15 +7,9 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class ProductSellingPrice
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
-     */
-    protected $pricingGroup;
+    protected PricingGroup $pricingGroup;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    protected $sellingPrice;
+    protected Price $sellingPrice;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup

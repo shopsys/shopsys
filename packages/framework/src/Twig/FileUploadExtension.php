@@ -8,10 +8,7 @@ use Twig\TwigFunction;
 
 class FileUploadExtension extends AbstractExtension
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload
-     */
-    protected $fileUpload;
+    protected FileUpload $fileUpload;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload

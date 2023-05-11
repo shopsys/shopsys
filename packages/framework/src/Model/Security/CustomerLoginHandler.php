@@ -6,6 +6,7 @@ use Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\TooManyLoginAttemptsAuthenticationException;
@@ -15,10 +16,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerI
 
 class CustomerLoginHandler implements AuthenticationSuccessHandlerInterface, AuthenticationFailureHandlerInterface
 {
-    /**
-     * @var \Symfony\Component\Routing\RouterInterface
-     */
-    protected $router;
+    protected RouterInterface $router;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter $router

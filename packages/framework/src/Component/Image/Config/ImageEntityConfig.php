@@ -10,30 +10,24 @@ class ImageEntityConfig
 {
     public const WITHOUT_NAME_KEY = '__NULL__';
 
-    /**
-     * @var string
-     */
-    protected $entityName;
+    protected string $entityName;
 
-    /**
-     * @var string
-     */
-    protected $entityClass;
+    protected string $entityClass;
 
     /**
      * @var array
      */
-    protected $sizeConfigsByType;
+    protected array $sizeConfigsByType;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]
      */
-    protected $sizeConfigs;
+    protected array $sizeConfigs;
 
     /**
      * @var array
      */
-    protected $multipleByType;
+    protected array $multipleByType;
 
     /**
      * @param string $entityName

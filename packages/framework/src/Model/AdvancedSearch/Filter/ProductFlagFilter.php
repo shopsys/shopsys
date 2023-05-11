@@ -13,10 +13,7 @@ class ProductFlagFilter implements AdvancedSearchFilterInterface
 {
     public const NAME = 'productFlag';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade
-     */
-    protected $flagFacade;
+    protected FlagFacade $flagFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade

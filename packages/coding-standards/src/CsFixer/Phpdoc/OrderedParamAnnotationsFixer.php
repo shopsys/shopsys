@@ -19,9 +19,6 @@ use SplFileInfo;
 
 final class OrderedParamAnnotationsFixer implements FixerInterface
 {
-    /**
-     * @var \PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer
-     */
     private FunctionsAnalyzer $functionsAnalyzer;
 
     /**

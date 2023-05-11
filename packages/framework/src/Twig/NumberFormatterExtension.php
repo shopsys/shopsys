@@ -14,20 +14,11 @@ class NumberFormatterExtension extends AbstractExtension
     protected const MINIMUM_FRACTION_DIGITS = 0;
     protected const MAXIMUM_FRACTION_DIGITS = 10;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
-    protected $localization;
+    protected Localization $localization;
 
-    /**
-     * @var \CommerceGuys\Intl\NumberFormat\NumberFormatRepositoryInterface
-     */
-    protected $numberFormatRepository;
+    protected NumberFormatRepositoryInterface $numberFormatRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade
-     */
-    protected $administrationFacade;
+    protected AdministrationFacade $administrationFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization

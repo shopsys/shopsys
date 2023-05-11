@@ -9,15 +9,9 @@ use Roave\BetterReflection\Reflection\ReflectionProperty;
 
 class PropertyAnnotationsFactory
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap
-     */
-    protected $annotationsReplacementsMap;
+    protected AnnotationsReplacementsMap $annotationsReplacementsMap;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer
-     */
-    protected $annotationsReplacer;
+    protected AnnotationsReplacer $annotationsReplacer;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap $annotationsReplacementsMap

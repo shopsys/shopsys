@@ -11,10 +11,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInt
 
 class CustomerUserUpdateDataFactory
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface
-     */
-    protected $customerUserUpdateDataFactory;
+    protected CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory

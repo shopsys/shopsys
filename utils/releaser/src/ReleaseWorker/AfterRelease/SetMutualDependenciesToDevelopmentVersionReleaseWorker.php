@@ -13,20 +13,11 @@ use Symplify\MonorepoBuilder\Package\PackageNamesProvider;
 
 final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @var \Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider
-     */
-    private $composerJsonFilesProvider;
+    private ComposerJsonFilesProvider $composerJsonFilesProvider;
 
-    /**
-     * @var \Symplify\MonorepoBuilder\DependencyUpdater
-     */
-    private $dependencyUpdater;
+    private DependencyUpdater $dependencyUpdater;
 
-    /**
-     * @var \Symplify\MonorepoBuilder\Package\PackageNamesProvider
-     */
-    private $packageNamesProvider;
+    private PackageNamesProvider $packageNamesProvider;
 
     /**
      * @param \Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider $composerJsonFilesProvider

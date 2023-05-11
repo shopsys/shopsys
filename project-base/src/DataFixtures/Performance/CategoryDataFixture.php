@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Performance;
 
+use App\Model\Category\CategoryDataFactory;
 use Faker\Generator as Faker;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
@@ -18,45 +19,24 @@ class CategoryDataFixture
 {
     public const FIRST_PERFORMANCE_CATEGORY = 'first_performance_category';
 
-    /**
-     * @var \App\Model\Category\CategoryDataFactory
-     */
-    private $categoryDataFactory;
+    private CategoryDataFactory $categoryDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
-     */
-    private $categoryFacade;
+    private CategoryFacade $categoryFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade
-     */
-    private $sqlLoggerFacade;
+    private SqlLoggerFacade $sqlLoggerFacade;
 
-    /**
-     * @var \Faker\Generator
-     */
-    private $faker;
+    private Faker $faker;
 
     /**
      * @var int[]
      */
-    private $categoryCountsByLevel;
+    private array $categoryCountsByLevel;
 
-    /**
-     * @var int
-     */
-    private $categoriesCreated;
+    private int $categoriesCreated;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade
-     */
-    private $persistentReferenceFacade;
+    private PersistentReferenceFacade $persistentReferenceFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory
-     */
-    private $progressBarFactory;
+    private ProgressBarFactory $progressBarFactory;
 
     /**
      * @param int[] $categoryCountsByLevel

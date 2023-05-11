@@ -14,55 +14,25 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class TransportFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentRepository
-     */
-    protected $paymentRepository;
+    protected PaymentRepository $paymentRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportRepository
-     */
-    protected $transportRepository;
+    protected TransportRepository $transportRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation
-     */
-    protected $transportVisibilityCalculation;
+    protected TransportVisibilityCalculation $transportVisibilityCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
-     */
-    protected $imageFacade;
+    protected ImageFacade $imageFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    protected $currencyFacade;
+    protected CurrencyFacade $currencyFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation
-     */
-    protected $transportPriceCalculation;
+    protected TransportPriceCalculation $transportPriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFactoryInterface
-     */
-    protected $transportFactory;
+    protected TransportFactoryInterface $transportFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactoryInterface
-     */
-    protected $transportPriceFactory;
+    protected TransportPriceFactoryInterface $transportPriceFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

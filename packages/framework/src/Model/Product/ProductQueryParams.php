@@ -6,20 +6,14 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 
 class ProductQueryParams
 {
-    /**
-     * @var int
-     */
-    protected $page;
+    protected int $page;
 
-    /**
-     * @var int
-     */
-    protected $pageSize;
+    protected int $pageSize;
 
     /**
      * @var string[]|null
      */
-    protected $uuids;
+    protected ?array $uuids = null;
 
     /**
      * @param int $pageSize

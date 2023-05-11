@@ -7,22 +7,19 @@ class ProductFilterConfig
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[]
      */
-    protected $parameterChoices;
+    protected array $parameterChoices;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
-    protected $flagChoices;
+    protected array $flagChoices;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
-    protected $brandChoices;
+    protected array $brandChoices;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
-     */
-    protected $priceRange;
+    protected PriceRange $priceRange;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[] $parameterChoices

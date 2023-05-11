@@ -15,30 +15,18 @@ class FrontendApiUser implements UserInterface
     public const CLAIM_SECRET_CHAIN = 'secretChain';
     public const CLAIM_DEVICE_ID = 'deviceId';
 
-    /**
-     * @var string
-     */
-    protected $uuid;
+    protected string $uuid;
 
-    /**
-     * @var string
-     */
-    protected $fullName;
+    protected string $fullName;
 
-    /**
-     * @var string
-     */
-    protected $email;
+    protected string $email;
 
     /**
      * @var string[]
      */
-    protected $roles;
+    protected array $roles;
 
-    /**
-     * @var string
-     */
-    protected $deviceId;
+    protected string $deviceId;
 
     /**
      * @param string $uuid

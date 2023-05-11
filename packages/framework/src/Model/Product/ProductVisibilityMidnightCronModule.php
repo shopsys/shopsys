@@ -7,10 +7,7 @@ use Symfony\Bridge\Monolog\Logger;
 
 class ProductVisibilityMidnightCronModule implements SimpleCronModuleInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade
-     */
-    protected $productVisibilityFacade;
+    protected ProductVisibilityFacade $productVisibilityFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade

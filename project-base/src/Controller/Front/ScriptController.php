@@ -11,15 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ScriptController extends FrontBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Script\ScriptFacade
-     */
-    private $scriptFacade;
+    private ScriptFacade $scriptFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Script\ScriptFacade $scriptFacade

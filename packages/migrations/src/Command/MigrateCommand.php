@@ -22,19 +22,10 @@ class MigrateCommand extends Command
      */
     protected static $defaultName = 'shopsys:migrations:migrate';
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
     protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock
-     */
     protected MigrationsLock $migrationsLock;
 
-    /**
-     * @var \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator
-     */
     protected MigrationLockPlanCalculator $migrationLockPlanCalculator;
 
     /**

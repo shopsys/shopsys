@@ -18,10 +18,7 @@ class EnvironmentFileSetting
         EnvironmentType::PRODUCTION,
     ];
 
-    /**
-     * @var string
-     */
-    protected $environmentFileDirectory;
+    protected string $environmentFileDirectory;
 
     /**
      * @param string $environmentFileDirectory

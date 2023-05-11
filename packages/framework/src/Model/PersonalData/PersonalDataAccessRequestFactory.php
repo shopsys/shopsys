@@ -6,10 +6,7 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class PersonalDataAccessRequestFactory implements PersonalDataAccessRequestFactoryInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
-     */
-    protected $entityNameResolver;
+    protected EntityNameResolver $entityNameResolver;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

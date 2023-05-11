@@ -10,30 +10,15 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 
 class ProductFilterConfigFactory
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository
-     */
-    protected $parameterFilterChoiceRepository;
+    protected ParameterFilterChoiceRepository $parameterFilterChoiceRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\FlagFilterChoiceRepository
-     */
-    protected $flagFilterChoiceRepository;
+    protected FlagFilterChoiceRepository $flagFilterChoiceRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    protected $currentCustomerUser;
+    protected CurrentCustomerUser $currentCustomerUser;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\BrandFilterChoiceRepository
-     */
-    protected $brandFilterChoiceRepository;
+    protected BrandFilterChoiceRepository $brandFilterChoiceRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository
-     */
-    protected $priceRangeRepository;
+    protected PriceRangeRepository $priceRangeRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository $parameterFilterChoiceRepository

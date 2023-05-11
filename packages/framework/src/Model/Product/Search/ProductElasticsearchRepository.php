@@ -11,30 +11,18 @@ use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 
 class ProductElasticsearchRepository
 {
-    /**
-     * @var \Elasticsearch\Client
-     */
-    protected $client;
+    protected Client $client;
 
     /**
      * @var int[][][]
      */
-    protected $foundProductIdsCache = [];
+    protected array $foundProductIdsCache = [];
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter
-     */
-    protected $productElasticsearchConverter;
+    protected ProductElasticsearchConverter $productElasticsearchConverter;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory
-     */
-    protected $filterQueryFactory;
+    protected FilterQueryFactory $filterQueryFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader
-     */
-    protected $indexDefinitionLoader;
+    protected IndexDefinitionLoader $indexDefinitionLoader;
 
     /**
      * @param \Elasticsearch\Client $client

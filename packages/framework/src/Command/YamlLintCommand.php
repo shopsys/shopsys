@@ -31,20 +31,11 @@ class YamlLintCommand extends Command
      */
     protected static $defaultName = 'lint:yaml';
 
-    /**
-     * @var \Symfony\Component\Yaml\Parser
-     */
-    private $parser;
+    private Parser $parser;
 
-    /**
-     * @var string
-     */
-    private $format;
+    private string $format;
 
-    /**
-     * @var bool
-     */
-    private $displayCorrectFiles;
+    private bool $displayCorrectFiles;
 
     public function __construct()
     {

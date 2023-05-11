@@ -58,6 +58,7 @@ SAMPLE
         /** @var \PhpCsFixer\Tokenizer\Token $token */
         foreach ($tokens->findGivenKind(T_DOC_COMMENT) as $index => $token) {
             $doc = new DocBlock($token->getContent());
+
             foreach ($doc->getLines() as $line) {
                 if ($this->isInheritDocCandidate($line)) {
                     $this->fixInheritDoc($line);

@@ -31,37 +31,31 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
      * @inject
      */
     private ProductDataFactoryInterface $productDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
      * @inject
      */
     private PricingGroupFacade $pricingGroupFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator
      * @inject
      */
     private ProductPriceRecalculator $productPriceRecalculator;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
      * @inject
      */
     private ProductFacade $productFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository
      * @inject
      */
     private ProductVisibilityRepository $productVisibilityRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
      * @inject
      */
     private Localization $localization;

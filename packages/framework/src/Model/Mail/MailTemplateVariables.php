@@ -37,40 +37,34 @@ class MailTemplateVariables
      */
     public const REQUIRED_BOTH = 3;
 
-    /**
-     * @var string
-     */
-    protected $readableName;
+    protected string $readableName;
 
     /**
      * @var string[]
      */
-    protected $variables = [];
+    protected array $variables = [];
 
     /**
      * @var string[]
      */
-    protected $bodyVariables = [];
+    protected array $bodyVariables = [];
 
     /**
      * @var string[]
      */
-    protected $subjectVariables = [];
+    protected array $subjectVariables = [];
 
     /**
      * @var string[]
      */
-    protected $requiredBodyVariables = [];
+    protected array $requiredBodyVariables = [];
 
     /**
      * @var string[]
      */
-    protected $requiredSubjectVariables = [];
+    protected array $requiredSubjectVariables = [];
 
-    /**
-     * @var string|null
-     */
-    protected $type;
+    protected ?string $type = null;
 
     /**
      * @param string $readableName

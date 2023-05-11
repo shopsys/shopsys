@@ -548,7 +548,7 @@
         </exec>
     </target>
 
-    <target name="ecs" description="Checks coding standards in all files by PHP easy coding standards." hidden="true">
+    <target name="ecs" description="Checks coding standards in all files by PHP easy coding standards." depends="entities-dump" hidden="true">
         <exec executable="${path.ecs.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="check"/>
             <arg value="--clear-cache"/>
@@ -560,7 +560,7 @@
         </exec>
     </target>
 
-    <target name="ecs-diff" description="Checks coding standards in changed files by PHP easy coding standards." hidden="true">
+    <target name="ecs-diff" description="Checks coding standards in changed files by PHP easy coding standards." depends="entities-dump" hidden="true">
         <exec executable="${path.ecs.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="check"/>
             <arg path="${path.app}"/>
@@ -571,7 +571,7 @@
         </exec>
     </target>
 
-    <target name="ecs-fix" description="Checks and fixes automatically fixable coding standards in all files by PHP easy coding standards." hidden="true">
+    <target name="ecs-fix" description="Checks and fixes automatically fixable coding standards in all files by PHP easy coding standards." depends="entities-dump" hidden="true">
         <exec executable="${path.ecs.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="check"/>
             <arg value="--clear-cache"/>
@@ -584,7 +584,7 @@
         </exec>
     </target>
 
-    <target name="ecs-fix-diff" description="Checks and fixes automatically fixable coding standards in changed files by PHP easy coding standards." hidden="true">
+    <target name="ecs-fix-diff" description="Checks and fixes automatically fixable coding standards in changed files by PHP easy coding standards." depends="entities-dump" hidden="true">
         <exec executable="${path.ecs.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="check"/>
             <arg value="--fix"/>
@@ -648,6 +648,14 @@
     </target>
 
     <target name="elasticsearch-index-recreate" depends="production-protection, elasticsearch-index-delete, elasticsearch-index-migrate" description="Recreates indexes into elasticsearch (deletes existing indexes and creates new one)"/>
+
+    <target name="entities-dump" description="Dumps entities paths into a file." hidden="true">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:entities:dump"/>
+            <arg value="--verbose"/>
+        </exec>
+    </target>
 
     <target name="environment-change" depends="production-protection" description="Change application environment and install composer dev-dependencies when development environment is selected.">
         <if>

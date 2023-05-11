@@ -6,20 +6,11 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class OrderTotalPrice
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    protected $priceWithVat;
+    protected Money $priceWithVat;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    protected $priceWithoutVat;
+    protected Money $priceWithoutVat;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    protected $productPriceWithVat;
+    protected Money $productPriceWithVat;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat

@@ -131,19 +131,19 @@ class Order
      * @var string|null
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    protected $companyName;
+    protected $companyName = null;
 
     /**
      * @var string|null
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    protected $companyNumber;
+    protected $companyNumber = null;
 
     /**
      * @var string|null
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    protected $companyTaxNumber;
+    protected $companyTaxNumber = null;
 
     /**
      * @var string
@@ -192,10 +192,10 @@ class Order
      * @var string|null
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    protected $deliveryCompanyName;
+    protected $deliveryCompanyName = null;
 
     /**
-     * @var string
+     * @var string|null
      * @ORM\Column(type="string", length=30, nullable=true)
      */
     protected $deliveryTelephone;

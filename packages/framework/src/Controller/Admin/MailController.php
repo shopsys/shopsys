@@ -19,40 +19,19 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MailController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    protected $adminDomainTabsFacade;
+    protected AdminDomainTabsFacade $adminDomainTabsFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade
-     */
-    protected $mailTemplateFacade;
+    protected MailTemplateFacade $mailTemplateFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade
-     */
-    protected $mailSettingFacade;
+    protected MailSettingFacade $mailSettingFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
-     */
-    protected $breadcrumbOverrider;
+    protected BreadcrumbOverrider $breadcrumbOverrider;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\Grid\MailTemplateGridFactory
-     */
-    protected $mailTemplateGridFactory;
+    protected MailTemplateGridFactory $mailTemplateGridFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration
-     */
-    protected $mailTemplateConfiguration;
+    protected MailTemplateConfiguration $mailTemplateConfiguration;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactory
-     */
-    protected $mailTemplateDataFactory;
+    protected MailTemplateDataFactory $mailTemplateDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade

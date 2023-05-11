@@ -12,15 +12,12 @@ use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
 class CronConfig
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver
-     */
-    protected $cronTimeResolver;
+    protected CronTimeResolver $cronTimeResolver;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[]
      */
-    protected $cronModuleConfigs;
+    protected array $cronModuleConfigs;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver $cronTimeResolver

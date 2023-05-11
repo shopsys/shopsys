@@ -10,10 +10,7 @@ use Shopsys\FrameworkBundle\Model\Mail\Exception\MailTemplateNotFoundException;
 
 class MailTemplateRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

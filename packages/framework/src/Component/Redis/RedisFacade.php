@@ -11,12 +11,12 @@ class RedisFacade
     /**
      * @var \Redis[]|iterable
      */
-    protected $allClients;
+    protected array $allClients;
 
     /**
      * @var \Redis[]
      */
-    protected $persistentClients;
+    protected array $persistentClients;
 
     /**
      * @param \Redis[] $allClients

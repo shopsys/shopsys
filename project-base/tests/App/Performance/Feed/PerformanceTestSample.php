@@ -9,34 +9,16 @@ use Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface;
 
 class PerformanceTestSample
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface
-     */
     private FeedInfoInterface $feedInfo;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
     private DomainConfig $domainConfig;
 
-    /**
-     * @var string
-     */
     private string $generationUri;
 
-    /**
-     * @var float
-     */
     private float $duration;
 
-    /**
-     * @var int
-     */
     private int $statusCode;
 
-    /**
-     * @var string|null
-     */
     private ?string $message;
 
     /**

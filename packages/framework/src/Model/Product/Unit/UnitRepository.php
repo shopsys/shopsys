@@ -9,10 +9,7 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\Exception\UnitNotFoundException;
 
 class UnitRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager

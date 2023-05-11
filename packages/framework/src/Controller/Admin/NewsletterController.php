@@ -17,20 +17,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class NewsletterController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade
-     */
-    protected $newsletterFacade;
+    protected NewsletterFacade $newsletterFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    protected $adminDomainTabsFacade;
+    protected AdminDomainTabsFacade $adminDomainTabsFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    protected $gridFactory;
+    protected GridFactory $gridFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade

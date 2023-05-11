@@ -7,10 +7,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductAccessoryFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository
-     */
-    protected $productAccessoryRepository;
+    protected ProductAccessoryRepository $productAccessoryRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository

@@ -11,15 +11,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class BrandResolverMap extends ResolverMap
 {
-    /**
-     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
-     */
-    protected $urlGenerator;
+    protected UrlGeneratorInterface $urlGenerator;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
     /**
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator

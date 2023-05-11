@@ -14,10 +14,7 @@ class DatePickerType extends AbstractType
     protected const FORMAT_PHP = 'dd.MM.yyyy';
     public const FORMAT_JS = 'dd.mm.yy';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface|null
-     */
-    protected $displayTimeZoneProvider;
+    protected ?DisplayTimeZoneProviderInterface $displayTimeZoneProvider = null;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface|null $displayTimeZoneProvider

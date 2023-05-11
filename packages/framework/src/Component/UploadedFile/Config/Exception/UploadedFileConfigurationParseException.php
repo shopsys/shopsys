@@ -7,10 +7,7 @@ use Throwable;
 
 class UploadedFileConfigurationParseException extends Exception implements UploadedFileConfigException
 {
-    /**
-     * @var string
-     */
-    protected $entityClass;
+    protected string $entityClass;
 
     /**
      * @param string $entityClass

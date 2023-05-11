@@ -16,17 +16,11 @@ class FileThumbnailExtension extends AbstractExtension
     /**
      * @var string[]
      */
-    protected $iconsByExtension;
+    protected array $iconsByExtension;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload
-     */
-    protected $fileUpload;
+    protected FileUpload $fileUpload;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\Processing\ImageThumbnailFactory
-     */
-    protected $imageThumbnailFactory;
+    protected ImageThumbnailFactory $imageThumbnailFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload

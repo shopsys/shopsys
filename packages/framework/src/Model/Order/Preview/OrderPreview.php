@@ -11,57 +11,33 @@ class OrderPreview
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[]
      */
-    protected $quantifiedProductsByIndex;
+    protected array $quantifiedProductsByIndex;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[]
      */
-    protected $quantifiedItemsPricesByIndex;
+    protected array $quantifiedItemsPricesByIndex;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Price[]
      */
-    protected $quantifiedItemsDiscountsByIndex;
+    protected array $quantifiedItemsDiscountsByIndex;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\Transport|null
-     */
-    protected $transport;
+    protected ?Transport $transport = null;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null
-     */
-    protected $transportPrice;
+    protected ?Price $transportPrice = null;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\Payment|null
-     */
-    protected $payment;
+    protected ?Payment $payment = null;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null
-     */
-    protected $paymentPrice;
+    protected ?Price $paymentPrice = null;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    protected $totalPrice;
+    protected Price $totalPrice;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    protected $productsPrice;
+    protected Price $productsPrice;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null
-     */
-    protected $roundingPrice;
+    protected ?Price $roundingPrice = null;
 
-    /**
-     * @var string|null
-     */
-    protected $promoCodeDiscountPercent;
+    protected ?string $promoCodeDiscountPercent = null;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProductsByIndex

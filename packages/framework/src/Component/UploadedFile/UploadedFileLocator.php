@@ -11,20 +11,11 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundExcepti
 
 class UploadedFileLocator
 {
-    /**
-     * @var string
-     */
-    protected $uploadedFileDir;
+    protected string $uploadedFileDir;
 
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    protected $filesystem;
+    protected FilesystemOperator $filesystem;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
-     */
-    protected $domainRouterFactory;
+    protected DomainRouterFactory $domainRouterFactory;
 
     /**
      * @param string $uploadedFileDir

@@ -7,10 +7,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class PaymentPriceFactory implements PaymentPriceFactoryInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
-     */
-    protected $entityNameResolver;
+    protected EntityNameResolver $entityNameResolver;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

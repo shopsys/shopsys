@@ -7,10 +7,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 
 class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade
-     */
-    protected $pricingGroupSettingFacade;
+    protected PricingGroupSettingFacade $pricingGroupSettingFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade

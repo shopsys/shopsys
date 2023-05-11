@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
@@ -14,20 +15,11 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\ProductVisibilityNotFoundExc
 
 class ProductVisibilityRepository
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
-     */
-    protected $em;
+    protected EntityManagerDecorator $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository
-     */
-    protected $pricingGroupRepository;
+    protected PricingGroupRepository $pricingGroupRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em

@@ -14,14 +14,8 @@ class JwtConfigurationFactory
 {
     protected const FRONTEND_API_KEYS_FILEPATH_PARAMETER = 'shopsys.frontend_api.keys_filepath';
 
-    /**
-     * @var \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface
-     */
     protected ParameterBagInterface $parameterBag;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
     protected Domain $domain;
 
     /**

@@ -22,13 +22,11 @@ class CartItemTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \App\Model\Product\ProductDataFactory
      * @inject
      */
     private ProductDataFactory $productDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
      * @inject
      */
     private VatFacade $vatFacade;

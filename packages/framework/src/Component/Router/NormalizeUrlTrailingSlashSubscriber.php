@@ -14,10 +14,7 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class NormalizeUrlTrailingSlashSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter
-     */
-    protected $currentDomainRouter;
+    protected CurrentDomainRouter $currentDomainRouter;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter $currentDomainRouter

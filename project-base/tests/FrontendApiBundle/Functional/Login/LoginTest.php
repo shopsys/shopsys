@@ -12,7 +12,6 @@ use Throwable;
 class LoginTest extends GraphQlTestCase
 {
     /**
-     * @var \Shopsys\FrontendApiBundle\Model\Token\TokenFacade
      * @inject
      */
     protected TokenFacade $tokenFacade;

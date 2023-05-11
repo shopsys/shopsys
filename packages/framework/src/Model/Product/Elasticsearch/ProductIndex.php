@@ -10,15 +10,9 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexSupportChangesOnlyInter
 
 class ProductIndex extends AbstractIndex implements IndexSupportChangesOnlyInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository
-     */
-    protected $productExportRepository;
+    protected ProductExportRepository $productExportRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

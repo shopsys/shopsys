@@ -18,7 +18,6 @@ class NumberFormatterExtensionTest extends FunctionalTestCase
     protected const NBSP = "\xc2\xa0";
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade
      * @inject
      */
     private AdministrationFacade $administrationFacade;

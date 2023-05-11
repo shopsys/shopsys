@@ -11,10 +11,7 @@ use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 
 class Environment
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting|null
-     */
-    private static $environmentFileSetting;
+    private static ?EnvironmentFileSetting $environmentFileSetting = null;
 
     /**
      * @param \Composer\Script\Event $event

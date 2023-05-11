@@ -12,10 +12,7 @@ class QueryBuilderExtender
 {
     protected const REQUIRED_ALIASES_COUNT = 1;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
-     */
-    protected $entityNameResolver;
+    protected EntityNameResolver $entityNameResolver;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

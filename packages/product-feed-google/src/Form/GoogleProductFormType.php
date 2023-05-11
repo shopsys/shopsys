@@ -12,10 +12,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class GoogleProductFormType extends AbstractType
 {
-    /**
-     * @var \Symfony\Contracts\Translation\TranslatorInterface
-     */
-    private $translator;
+    private TranslatorInterface $translator;
 
     /**
      * @param \Symfony\Contracts\Translation\TranslatorInterface $translator

@@ -11,40 +11,19 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 
 class MailTemplateFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateRepository
-     */
-    protected $mailTemplateRepository;
+    protected MailTemplateRepository $mailTemplateRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade
-     */
-    protected $uploadedFileFacade;
+    protected UploadedFileFacade $uploadedFileFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface
-     */
-    protected $mailTemplateFactory;
+    protected MailTemplateFactoryInterface $mailTemplateFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactoryInterface
-     */
-    protected $mailTemplateDataFactory;
+    protected MailTemplateDataFactoryInterface $mailTemplateDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateAttachmentFilepathProvider
-     */
-    protected $mailTemplateAttachmentFilepathProvider;
+    protected MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

@@ -7,10 +7,7 @@ use Throwable;
 
 class MissingLocaleException extends Exception
 {
-    /**
-     * @var string
-     */
-    private $locale;
+    private string $locale;
 
     /**
      * @param mixed $missingLocale

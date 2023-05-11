@@ -18,19 +18,16 @@ class AuthenticatorTest extends FunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Security\Authenticator
      * @inject
      */
     private Authenticator $authenticator;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
      * @inject
      */
     private CustomerUserFacade $customerUserFacade;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
      * @inject
      */
     private RequestStack $requestStack;

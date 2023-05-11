@@ -14,7 +14,6 @@ use Tests\App\Test\TransactionFunctionalTestCase;
 class QueryBuilderExtenderTest extends TransactionFunctionalTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender
      * @inject
      */
     private QueryBuilderExtender $queryBuilderExtender;

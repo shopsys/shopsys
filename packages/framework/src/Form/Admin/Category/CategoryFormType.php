@@ -33,30 +33,15 @@ class CategoryFormType extends AbstractType
     public const SCENARIO_CREATE = 'create';
     public const SCENARIO_EDIT = 'edit';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
-     */
-    private $categoryFacade;
+    private CategoryFacade $categoryFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade
-     */
-    private $seoSettingFacade;
+    private SeoSettingFacade $seoSettingFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade
-     */
-    private $pluginCrudExtensionFacade;
+    private PluginCrudExtensionFacade $pluginCrudExtensionFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
-    private $localization;
+    private Localization $localization;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade

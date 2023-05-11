@@ -23,15 +23,9 @@ class CategoryRepository extends NestedTreeRepository
 {
     public const MOVE_DOWN_TO_BOTTOM = true;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
-     */
-    protected $productRepository;
+    protected ProductRepository $productRepository;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

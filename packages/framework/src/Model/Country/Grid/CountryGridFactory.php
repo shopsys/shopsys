@@ -12,25 +12,13 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class CountryGridFactory implements GridFactoryInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    protected $gridFactory;
+    protected GridFactory $gridFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
-    protected $localization;
+    protected Localization $localization;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\CountryRepository
-     */
-    protected $countryRepository;
+    protected CountryRepository $countryRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryRepository $countryRepository

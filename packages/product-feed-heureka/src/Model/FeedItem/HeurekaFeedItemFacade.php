@@ -8,25 +8,13 @@ use Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductRepository;
 
 class HeurekaFeedItemFacade
 {
-    /**
-     * @var \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductRepository
-     */
-    protected $heurekaProductRepository;
+    protected HeurekaProductRepository $heurekaProductRepository;
 
-    /**
-     * @var \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory
-     */
-    protected $feedItemFactory;
+    protected HeurekaFeedItemFactory $feedItemFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade
-     */
-    protected $pricingGroupSettingFacade;
+    protected PricingGroupSettingFacade $pricingGroupSettingFacade;
 
-    /**
-     * @var \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaProductDataBatchLoader
-     */
-    protected $productDataBatchLoader;
+    protected HeurekaProductDataBatchLoader $productDataBatchLoader;
 
     /**
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductRepository $heurekaProductRepository

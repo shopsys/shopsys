@@ -10,10 +10,7 @@ use Twig\Loader\FilesystemLoader as BaseFilesystemLoader;
 
 class FilesystemLoader extends BaseFilesystemLoader
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain|null
-     */
-    protected $domain;
+    protected ?Domain $domain = null;
 
     /**
      * @param array $paths

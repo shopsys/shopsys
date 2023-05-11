@@ -9,12 +9,12 @@ class CountryDataModifierVersion20190121094400
     /**
      * @var mixed[]
      */
-    private $data;
+    private array $data;
 
     /**
      * @var string[]
      */
-    private $tmpIds;
+    private array $tmpIds;
 
     /**
      * @param array $data

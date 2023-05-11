@@ -19,15 +19,9 @@ class RegistrationMail implements MessageFactoryInterface
     public const VARIABLE_URL = '{url}';
     public const VARIABLE_LOGIN_PAGE = '{login_page}';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    protected $setting;
+    protected Setting $setting;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
-     */
-    protected $domainRouterFactory;
+    protected DomainRouterFactory $domainRouterFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting

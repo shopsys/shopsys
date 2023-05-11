@@ -8,25 +8,13 @@ use Shopsys\FrameworkBundle\Model\Security\Filesystem\Exception\InstanceNotInjec
 
 class FilemanagerAccess
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Security\Filesystem\FilemanagerAccess|null
-     */
-    protected static $self;
+    protected static ?FilemanagerAccess $self = null;
 
-    /**
-     * @var string
-     */
-    protected $filemanagerUploadDir;
+    protected string $filemanagerUploadDir;
 
-    /**
-     * @var \FM\ElfinderBundle\Configuration\ElFinderConfigurationReader
-     */
-    protected $elFinderConfigurationReader;
+    protected ElFinderConfigurationReader $elFinderConfigurationReader;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Filesystem\FilepathComparator
-     */
-    protected $filepathComparator;
+    protected FilepathComparator $filepathComparator;
 
     /**
      * @param mixed $filamanagerUploadDir

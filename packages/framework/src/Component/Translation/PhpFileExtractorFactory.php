@@ -6,10 +6,7 @@ use Doctrine\Common\Annotations\DocParser;
 
 class PhpFileExtractorFactory
 {
-    /**
-     * @var \Doctrine\Common\Annotations\DocParser
-     */
-    protected $docParser;
+    protected DocParser $docParser;
 
     /**
      * @param \Doctrine\Common\Annotations\DocParser $docParser

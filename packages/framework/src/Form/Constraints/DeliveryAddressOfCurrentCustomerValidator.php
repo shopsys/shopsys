@@ -11,10 +11,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class DeliveryAddressOfCurrentCustomerValidator extends ConstraintValidator
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    protected $currentCustomerUser;
+    protected CurrentCustomerUser $currentCustomerUser;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser

@@ -6,10 +6,7 @@ class MultipleFormSetting
 {
     public const DEFAULT_MULTIPLE = false;
 
-    /**
-     * @var bool
-     */
-    protected $isCurrentFormMultiple = self::DEFAULT_MULTIPLE;
+    protected bool $isCurrentFormMultiple = self::DEFAULT_MULTIPLE;
 
     public function currentFormIsMultiple()
     {

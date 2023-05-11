@@ -21,45 +21,21 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ArticleController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
-     */
-    protected $breadcrumbOverrider;
+    protected BreadcrumbOverrider $breadcrumbOverrider;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleFacade
-     */
-    protected $articleFacade;
+    protected ArticleFacade $articleFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface
-     */
-    protected $articleDataFactory;
+    protected ArticleDataFactoryInterface $articleDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    protected $adminDomainTabsFacade;
+    protected AdminDomainTabsFacade $adminDomainTabsFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    protected $gridFactory;
+    protected GridFactory $gridFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory
-     */
-    protected $confirmDeleteResponseFactory;
+    protected ConfirmDeleteResponseFactory $confirmDeleteResponseFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade
-     */
-    protected $legalConditionsFacade;
+    protected LegalConditionsFacade $legalConditionsFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade
-     */
-    protected $cookiesFacade;
+    protected CookiesFacade $cookiesFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade

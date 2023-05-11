@@ -11,7 +11,6 @@ use Tests\App\Test\TransactionFunctionalTestCase;
 class EntityExtensionSubscriberTest extends TransactionFunctionalTestCase
 {
     /**
-     * @var \Tests\App\Functional\EntityExtension\EntityExtensionTestHelper
      * @inject
      */
     private EntityExtensionTestHelper $entityExtensionTestHelper;

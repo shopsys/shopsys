@@ -8,10 +8,7 @@ use Shopsys\FrameworkBundle\Model\Article\Article;
 
 class ArticleFacade
 {
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Article\ArticleRepository
-     */
-    protected $articleRepository;
+    protected ArticleRepository $articleRepository;
 
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Article\ArticleRepository $articleRepository

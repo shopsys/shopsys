@@ -28,61 +28,51 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\CartFactory
      * @inject
      */
     private CartFactory $cartFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
      * @inject
      */
     private ProductRepository $productRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
      * @inject
      */
     private CurrentCustomerUser $currentCustomerUser;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade
      * @inject
      */
     private CurrentPromoCodeFacade $currentPromoCodeFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
      * @inject
      */
     private ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface
      * @inject
      */
     private CartItemFactoryInterface $cartItemFactoryInterface;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\CartRepository
      * @inject
      */
     private CartRepository $cartRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade
      * @inject
      */
     private CartWatcherFacade $cartWatcherFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
      * @inject
      */
     private ProductFacade $productFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
      * @inject
      */
     private CustomerUserFacade $customerUserFacade;

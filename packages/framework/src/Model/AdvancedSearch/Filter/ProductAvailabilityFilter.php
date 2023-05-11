@@ -13,10 +13,7 @@ class ProductAvailabilityFilter implements AdvancedSearchFilterInterface
 {
     public const NAME = 'productAvailability';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade
-     */
-    protected $availabilityFacade;
+    protected AvailabilityFacade $availabilityFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade

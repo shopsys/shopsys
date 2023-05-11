@@ -10,15 +10,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TransportAndPaymentController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting
-     */
-    protected $pricingSetting;
+    protected PricingSetting $pricingSetting;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

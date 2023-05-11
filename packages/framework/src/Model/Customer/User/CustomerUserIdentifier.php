@@ -6,15 +6,9 @@ use Shopsys\FrameworkBundle\Model\Customer\Exception\EmptyCustomerUserIdentifier
 
 class CustomerUserIdentifier
 {
-    /**
-     * @var string
-     */
-    protected $cartIdentifier = '';
+    protected string $cartIdentifier = '';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
-     */
-    protected $customerUser;
+    protected ?CustomerUser $customerUser = null;
 
     /**
      * @param string $cartIdentifier

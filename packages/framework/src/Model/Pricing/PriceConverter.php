@@ -13,19 +13,10 @@ class PriceConverter
 {
     protected const DEFAULT_SCALE = 2;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    protected $currencyFacade;
+    protected CurrencyFacade $currencyFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Rounding
-     */
-    protected $rounding;
+    protected Rounding $rounding;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
     protected Setting $setting;
 
     /**

@@ -8,30 +8,15 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 
 class SliderItemFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Slider\SliderItemRepository
-     */
-    protected $sliderItemRepository;
+    protected SliderItemRepository $sliderItemRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
-     */
-    protected $imageFacade;
+    protected ImageFacade $imageFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Slider\SliderItemFactoryInterface
-     */
-    protected $sliderItemFactory;
+    protected SliderItemFactoryInterface $sliderItemFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

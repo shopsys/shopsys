@@ -13,7 +13,6 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository
      * @inject
      */
     private ProductExportRepository $repository;

@@ -18,34 +18,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SliderController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
-     */
-    protected $breadcrumbOverrider;
+    protected BreadcrumbOverrider $breadcrumbOverrider;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    protected $adminDomainTabsFacade;
+    protected AdminDomainTabsFacade $adminDomainTabsFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    protected $gridFactory;
+    protected GridFactory $gridFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade
-     */
-    protected $sliderItemFacade;
+    protected SliderItemFacade $sliderItemFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactoryInterface
-     */
-    protected $sliderItemDataFactory;
+    protected SliderItemDataFactoryInterface $sliderItemDataFactory;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
     protected EntityManagerInterface $entityManager;
 
     /**

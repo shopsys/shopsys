@@ -6,10 +6,7 @@ use Exception;
 
 class DuplicateEntityNameException extends Exception implements ImageConfigException
 {
-    /**
-     * @var string
-     */
-    protected $entityName;
+    protected string $entityName;
 
     /**
      * @param string $entityName

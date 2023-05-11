@@ -15,15 +15,9 @@ use Throwable;
 
 class ShopsysFrameworkDataCollector extends DataCollector
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface
-     */
-    protected $displayTimeZoneProvider;
+    protected DisplayTimeZoneProviderInterface $displayTimeZoneProvider;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

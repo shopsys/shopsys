@@ -18,40 +18,19 @@ use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 
 class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
-     */
-    protected $productRepository;
+    protected ProductRepository $productRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    protected $currentCustomerUser;
+    protected CurrentCustomerUser $currentCustomerUser;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryRepository
-     */
-    protected $categoryRepository;
+    protected CategoryRepository $categoryRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountRepository
-     */
-    protected $productFilterCountRepository;
+    protected ProductFilterCountRepository $productFilterCountRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository
-     */
-    protected $productAccessoryRepository;
+    protected ProductAccessoryRepository $productAccessoryRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository
-     */
-    protected $brandRepository;
+    protected BrandRepository $brandRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository

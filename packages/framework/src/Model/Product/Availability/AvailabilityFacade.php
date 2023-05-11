@@ -10,35 +10,17 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AvailabilityFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityRepository
-     */
-    protected $availabilityRepository;
+    protected AvailabilityRepository $availabilityRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    protected $setting;
+    protected Setting $setting;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler
-     */
-    protected $productAvailabilityRecalculationScheduler;
+    protected ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFactoryInterface
-     */
-    protected $availabilityFactory;
+    protected AvailabilityFactoryInterface $availabilityFactory;
 
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

@@ -9,30 +9,21 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCust
 
 class ProductCachedAttributesFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
-     */
-    protected $productPriceCalculationForCustomerUser;
+    protected ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository
-     */
-    protected $parameterRepository;
+    protected ParameterRepository $parameterRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
-    protected $localization;
+    protected Localization $localization;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice[]
      */
-    protected $sellingPricesByProductId;
+    protected array $sellingPricesByProductId;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[][]
      */
-    protected $parameterValuesByProductId;
+    protected array $parameterValuesByProductId;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser

@@ -6,10 +6,7 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 
 class CustomerUserListAdminFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository
-     */
-    protected $customerUserRepository;
+    protected CustomerUserRepository $customerUserRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository

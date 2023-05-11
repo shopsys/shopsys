@@ -10,15 +10,9 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 
 class ProductElasticsearchProvider
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository
-     */
-    protected $productElasticsearchRepository;
+    protected ProductElasticsearchRepository $productElasticsearchRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory
-     */
-    protected $filterQueryFactory;
+    protected FilterQueryFactory $filterQueryFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository

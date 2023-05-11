@@ -6,10 +6,7 @@ use Exception;
 
 class DuplicateSizeNameException extends Exception implements ImageConfigException
 {
-    /**
-     * @var string|null
-     */
-    protected $sizeName;
+    protected ?string $sizeName = null;
 
     /**
      * @param string|null $sizeName

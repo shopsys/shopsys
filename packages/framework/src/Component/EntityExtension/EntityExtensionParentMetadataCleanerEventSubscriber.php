@@ -10,10 +10,7 @@ use Doctrine\ORM\Mapping\ClassMetadataInfo;
 
 class EntityExtensionParentMetadataCleanerEventSubscriber implements EventSubscriber
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
-     */
-    protected $entityNameResolver;
+    protected EntityNameResolver $entityNameResolver;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

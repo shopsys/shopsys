@@ -4,27 +4,19 @@ namespace Shopsys\FrameworkBundle\Component\Localization;
 
 class DateTimeFormatPattern
 {
-    /**
-     * @var string
-     */
-    protected $pattern;
+    protected string $pattern;
 
-    /**
-     * @var string
-     */
-    protected $locale;
+    protected string $locale;
 
     /**
      * @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
-     * @var int|null
      */
-    protected $dateType;
+    protected ?int $dateType = null;
 
     /**
      * @see http://php.net/manual/en/class.intldateformatter.php#intl.intldateformatter-constants
-     * @var int|null
      */
-    protected $timeType;
+    protected ?int $timeType = null;
 
     /**
      * @param string $pattern

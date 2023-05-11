@@ -8,15 +8,9 @@ use Redis;
 
 class RedisVersionsFacade
 {
-    /**
-     * @var \Redis
-     */
-    protected $globalClient;
+    protected Redis $globalClient;
 
-    /**
-     * @var string
-     */
-    protected $currentVersion;
+    protected string $currentVersion;
 
     /**
      * @param \Redis $globalClient

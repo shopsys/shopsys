@@ -10,24 +10,12 @@ class PerformanceTestSampleQualifier
     public const STATUS_WARNING = 1;
     public const STATUS_CRITICAL = 2;
 
-    /**
-     * @var int
-     */
     private int $durationWarning;
 
-    /**
-     * @var int
-     */
     private int $durationCritical;
 
-    /**
-     * @var int
-     */
     private int $queryCountWarning;
 
-    /**
-     * @var int
-     */
     private int $queryCountCritical;
 
     /**

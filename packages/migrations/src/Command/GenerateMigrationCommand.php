@@ -25,24 +25,12 @@ class GenerateMigrationCommand extends Command
      */
     protected static $defaultName = 'shopsys:migrations:generate';
 
-    /**
-     * @var \Shopsys\MigrationBundle\Component\Doctrine\DatabaseSchemaFacade
-     */
     protected DatabaseSchemaFacade $databaseSchemaFacade;
 
-    /**
-     * @var \Shopsys\MigrationBundle\Component\Generator\MigrationsGenerator
-     */
     protected MigrationsGenerator $migrationsGenerator;
 
-    /**
-     * @var string
-     */
     protected string $vendorDirectoryPath;
 
-    /**
-     * @var \Doctrine\Migrations\Configuration\Configuration
-     */
     protected Configuration $configuration;
 
     /**

@@ -13,9 +13,6 @@ use Symfony\Component\HttpKernel\Kernel;
 
 class SymfonyHelper extends Module
 {
-    /**
-     * @var \Symfony\Component\HttpKernel\Kernel
-     */
     private Kernel $kernel;
 
     /**

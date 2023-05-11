@@ -2,6 +2,7 @@
 
 namespace Tests\ProductFeed\ZboziBundle\Unit;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -23,40 +24,19 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class ZboziFeedItemTest extends TestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser|\PHPUnit\Framework\MockObject\MockObject
-     */
-    private $productPriceCalculationForCustomerUserMock;
+    private ProductPriceCalculationForCustomerUser|MockObject $productPriceCalculationForCustomerUserMock;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader|\PHPUnit\Framework\MockObject\MockObject
-     */
-    private $productUrlsBatchLoaderMock;
+    private ProductUrlsBatchLoader|MockObject $productUrlsBatchLoaderMock;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader|\PHPUnit\Framework\MockObject\MockObject
-     */
-    private $productParametersBatchLoaderMock;
+    private ProductParametersBatchLoader|MockObject $productParametersBatchLoaderMock;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade|\PHPUnit\Framework\MockObject\MockObject
-     */
-    private $categoryFacadeMock;
+    private CategoryFacade|MockObject $categoryFacadeMock;
 
-    /**
-     * @var \Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItemFactory
-     */
-    private $zboziFeedItemFactory;
+    private ZboziFeedItemFactory $zboziFeedItemFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
-    private $defaultDomain;
+    private DomainConfig $defaultDomain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Product|\PHPUnit\Framework\MockObject\MockObject
-     */
-    private $defaultProduct;
+    private Product|MockObject $defaultProduct;
 
     protected function setUp(): void
     {

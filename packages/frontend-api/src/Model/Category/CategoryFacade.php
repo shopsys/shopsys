@@ -6,9 +6,6 @@ namespace Shopsys\FrontendApiBundle\Model\Category;
 
 class CategoryFacade
 {
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Category\CategoryRepository
-     */
     protected CategoryRepository $categoryRepository;
 
     /**

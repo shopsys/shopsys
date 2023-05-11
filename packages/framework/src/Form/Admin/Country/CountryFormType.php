@@ -19,15 +19,9 @@ use Symfony\Component\Validator\Constraints;
 
 class CountryFormType extends AbstractType
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\Country|null
-     */
-    protected $country;
+    protected ?Country $country = null;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade
-     */
-    protected $countryFacade;
+    protected CountryFacade $countryFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade

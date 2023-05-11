@@ -12,20 +12,11 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class GoogleFeedItemFactory
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
-     */
-    protected $productPriceCalculationForCustomerUser;
+    protected ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    protected $currencyFacade;
+    protected CurrencyFacade $currencyFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader
-     */
-    protected $productUrlsBatchLoader;
+    protected ProductUrlsBatchLoader $productUrlsBatchLoader;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser

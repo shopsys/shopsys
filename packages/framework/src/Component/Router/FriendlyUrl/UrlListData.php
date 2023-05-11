@@ -30,7 +30,7 @@ class UrlListData
      * ]
      * @see \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade::saveUrlListFormData()
      */
-    public $newUrls;
+    public array $newUrls;
 
     public function __construct()
     {

@@ -24,9 +24,6 @@ use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotations
 
 class MethodAnnotationsFactoryTest extends TestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\MethodAnnotationsFactory
-     */
     private MethodAnnotationsFactory $methodAnnotationsFactory;
 
     protected function setUp(): void

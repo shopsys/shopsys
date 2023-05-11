@@ -6,25 +6,13 @@ namespace Shopsys\ReadModelBundle\Product\Action;
 
 class ProductActionView
 {
-    /**
-     * @var int
-     */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @var bool
-     */
-    protected $sellingDenied;
+    protected bool $sellingDenied;
 
-    /**
-     * @var bool
-     */
-    protected $isMainVariant;
+    protected bool $isMainVariant;
 
-    /**
-     * @var string
-     */
-    protected $detailUrl;
+    protected string $detailUrl;
 
     /**
      * @param int $id

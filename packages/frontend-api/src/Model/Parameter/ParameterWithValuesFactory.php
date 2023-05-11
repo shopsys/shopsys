@@ -10,10 +10,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 
 class ParameterWithValuesFactory
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade
-     */
-    protected $productCachedAttributesFacade;
+    protected ProductCachedAttributesFacade $productCachedAttributesFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade

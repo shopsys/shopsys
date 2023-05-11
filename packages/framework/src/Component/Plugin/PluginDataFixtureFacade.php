@@ -4,10 +4,7 @@ namespace Shopsys\FrameworkBundle\Component\Plugin;
 
 class PluginDataFixtureFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Plugin\PluginDataFixtureRegistry
-     */
-    protected $pluginDataFixtureRegistry;
+    protected PluginDataFixtureRegistry $pluginDataFixtureRegistry;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginDataFixtureRegistry $pluginDataFixtureRegistry

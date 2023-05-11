@@ -12,20 +12,11 @@ class BestsellingProductFacade
     public const MAX_SHOW_RESULTS = 3;
     public const MAX_RESULTS_ADMIN = 10;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\AutomaticBestsellingProductRepository
-     */
-    protected $automaticBestsellingProductRepository;
+    protected AutomaticBestsellingProductRepository $automaticBestsellingProductRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductRepository
-     */
-    protected $manualBestsellingProductRepository;
+    protected ManualBestsellingProductRepository $manualBestsellingProductRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductCombinator
-     */
-    protected $bestsellingProductCombinator;
+    protected BestsellingProductCombinator $bestsellingProductCombinator;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\AutomaticBestsellingProductRepository $automaticBestsellingProductRepository

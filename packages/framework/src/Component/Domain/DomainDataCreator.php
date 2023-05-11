@@ -17,50 +17,23 @@ class DomainDataCreator
 {
     public const TEMPLATE_DOMAIN_ID = 1;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    protected $setting;
+    protected Setting $setting;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\SettingValueRepository
-     */
-    protected $settingValueRepository;
+    protected SettingValueRepository $settingValueRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityDataCreator
-     */
-    protected $multidomainEntityDataCreator;
+    protected MultidomainEntityDataCreator $multidomainEntityDataCreator;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Translation\TranslatableEntityDataCreator
-     */
-    protected $translatableEntityDataCreator;
+    protected TranslatableEntityDataCreator $translatableEntityDataCreator;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory
-     */
-    protected $pricingGroupDataFactory;
+    protected PricingGroupDataFactory $pricingGroupDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
-     */
-    protected $pricingGroupFacade;
+    protected PricingGroupFacade $pricingGroupFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory
-     */
-    protected $vatDataFactory;
+    protected VatDataFactory $vatDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
-     */
-    protected $vatFacade;
+    protected VatFacade $vatFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

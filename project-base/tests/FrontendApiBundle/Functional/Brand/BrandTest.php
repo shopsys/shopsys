@@ -11,9 +11,6 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class BrandTest extends GraphQlTestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
-     */
     protected Brand $brand;
 
     protected function setUp(): void

@@ -15,13 +15,11 @@ use Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase;
 abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade
      * @inject
      */
     private PersistentReferenceFacade $persistentReferenceFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      * @inject
      */
     protected Domain $domain;

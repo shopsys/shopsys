@@ -11,25 +11,13 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 class CachedBestsellingProductFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductFacade
-     */
-    protected $bestsellingProductFacade;
+    protected BestsellingProductFacade $bestsellingProductFacade;
 
-    /**
-     * @var \Symfony\Contracts\Cache\CacheInterface
-     */
     protected CacheInterface $cache;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
-     */
-    protected $productRepository;
+    protected ProductRepository $productRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository
-     */
-    protected $pricingGroupRepository;
+    protected PricingGroupRepository $pricingGroupRepository;
 
     /**
      * @param \Symfony\Contracts\Cache\CacheInterface $cache

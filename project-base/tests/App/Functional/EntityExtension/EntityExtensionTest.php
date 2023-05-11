@@ -44,7 +44,6 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
     protected const ORDER_ITEM_ID = 1;
 
     /**
-     * @var \Tests\App\Functional\EntityExtension\EntityExtensionTestHelper
      * @inject
      */
     private EntityExtensionTestHelper $entityExtensionTestHelper;

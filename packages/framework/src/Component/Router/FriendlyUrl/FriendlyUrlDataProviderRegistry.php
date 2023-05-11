@@ -11,7 +11,7 @@ class FriendlyUrlDataProviderRegistry
     /**
      * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderInterface[]|iterable
      */
-    protected $friendlyUrlDataProviders;
+    protected array $friendlyUrlDataProviders;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderInterface[] $friendlyUrlDataProviders

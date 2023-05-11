@@ -7,20 +7,14 @@ use Shopsys\HttpSmokeTesting\Annotation\Skipped;
 
 class RequestDataSetGenerator implements RouteConfig
 {
-    /**
-     * @var \Shopsys\HttpSmokeTesting\RouteInfo
-     */
-    private $routeInfo;
+    private RouteInfo $routeInfo;
 
-    /**
-     * @var \Shopsys\HttpSmokeTesting\RequestDataSet
-     */
-    private $defaultRequestDataSet;
+    private RequestDataSet $defaultRequestDataSet;
 
     /**
      * @var \Shopsys\HttpSmokeTesting\RequestDataSet[]
      */
-    private $extraRequestDataSets;
+    private array $extraRequestDataSets;
 
     /**
      * @param \Shopsys\HttpSmokeTesting\RouteInfo $routeInfo

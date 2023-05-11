@@ -12,14 +12,10 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 class PaymentTest extends GraphQlTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade
      * @inject
      */
     protected PaymentFacade $paymentFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\Payment
-     */
     protected Payment $payment;
 
     protected function setUp(): void

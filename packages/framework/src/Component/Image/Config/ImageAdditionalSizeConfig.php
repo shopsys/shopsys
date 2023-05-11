@@ -4,20 +4,11 @@ namespace Shopsys\FrameworkBundle\Component\Image\Config;
 
 class ImageAdditionalSizeConfig
 {
-    /**
-     * @var int|null
-     */
-    protected $width;
+    protected ?int $width = null;
 
-    /**
-     * @var int|null
-     */
-    protected $height;
+    protected ?int $height = null;
 
-    /**
-     * @var string
-     */
-    protected $media;
+    protected string $media;
 
     /**
      * @param int|null $width

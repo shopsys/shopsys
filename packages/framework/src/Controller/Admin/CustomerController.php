@@ -32,64 +32,28 @@ class CustomerController extends AdminBaseController
 {
     protected const LOGIN_AS_TOKEN_ID_PREFIX = 'loginAs';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface
-     */
-    protected $customerUserDataFactory;
+    protected CustomerUserDataFactoryInterface $customerUserDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade
-     */
-    protected $customerUserListAdminFacade;
+    protected CustomerUserListAdminFacade $customerUserListAdminFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
-     */
-    protected $customerUserFacade;
+    protected CustomerUserFacade $customerUserFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
-     */
-    protected $breadcrumbOverrider;
+    protected BreadcrumbOverrider $breadcrumbOverrider;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade
-     */
-    protected $administratorGridFacade;
+    protected AdministratorGridFacade $administratorGridFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    protected $gridFactory;
+    protected GridFactory $gridFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    protected $adminDomainTabsFacade;
+    protected AdminDomainTabsFacade $adminDomainTabsFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
-     */
-    protected $orderFacade;
+    protected OrderFacade $orderFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade
-     */
-    protected $loginAsUserFacade;
+    protected LoginAsUserFacade $loginAsUserFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
-     */
-    protected $domainRouterFactory;
+    protected DomainRouterFactory $domainRouterFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface
-     */
-    protected $customerUserUpdateDataFactory;
+    protected CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
     protected Domain $domain;
 
     /**

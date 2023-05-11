@@ -7,10 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class PluginCrudExtensionFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionRegistry
-     */
-    protected $pluginCrudExtensionRegistry;
+    protected PluginCrudExtensionRegistry $pluginCrudExtensionRegistry;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionRegistry $pluginCrudExtensionRegistry

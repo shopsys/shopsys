@@ -6,15 +6,9 @@ use Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculatio
 
 class TransportVisibilityCalculation
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\IndependentTransportVisibilityCalculation
-     */
-    protected $independentTransportVisibilityCalculation;
+    protected IndependentTransportVisibilityCalculation $independentTransportVisibilityCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation
-     */
-    protected $independentPaymentVisibilityCalculation;
+    protected IndependentPaymentVisibilityCalculation $independentPaymentVisibilityCalculation;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\IndependentTransportVisibilityCalculation $independentTransportVisibilityCalculation

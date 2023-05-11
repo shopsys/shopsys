@@ -19,40 +19,19 @@ class OrderDataFactory
 {
     protected const ORDER_ORIGIN_GRAPHQL = 'Frontend API';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade
-     */
-    protected $paymentFacade;
+    protected PaymentFacade $paymentFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
-     */
-    protected $transportFacade;
+    protected TransportFacade $transportFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    protected $currencyFacade;
+    protected CurrencyFacade $currencyFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade
-     */
-    protected $countryFacade;
+    protected CountryFacade $countryFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface
-     */
-    protected $orderDataFactory;
+    protected OrderDataFactoryInterface $orderDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
-     */
-    protected $productFacade;
+    protected ProductFacade $productFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface $orderDataFactory

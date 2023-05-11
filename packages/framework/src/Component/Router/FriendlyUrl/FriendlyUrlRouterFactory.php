@@ -9,29 +9,14 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 class FriendlyUrlRouterFactory
 {
-    /**
-     * @var \Symfony\Component\Config\Loader\LoaderInterface
-     */
-    protected $configLoader;
+    protected LoaderInterface $configLoader;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository
-     */
-    protected $friendlyUrlRepository;
+    protected FriendlyUrlRepository $friendlyUrlRepository;
 
-    /**
-     * @var string
-     */
-    protected $friendlyUrlRouterResourceFilepath;
+    protected string $friendlyUrlRouterResourceFilepath;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider
-     */
     protected FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider;
 
-    /**
-     * @var \Symfony\Contracts\Cache\CacheInterface
-     */
     protected CacheInterface $mainFriendlyUrlSlugCache;
 
     /**

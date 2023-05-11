@@ -27,26 +27,20 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory
      * @inject
      */
     protected ProductFilterConfigFactory $productFilterConfigFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository
      * @inject
      */
     protected ParameterRepository $parameterRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
      * @inject
      */
     protected PriceConverter $priceConverter;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface
-     */
     protected ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade;
 
     protected function setUp(): void

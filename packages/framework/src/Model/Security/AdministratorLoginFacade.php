@@ -19,30 +19,15 @@ class AdministratorLoginFacade
     protected const MULTIDOMAIN_LOGIN_TOKEN_LENGTH = 50;
     protected const MULTIDOMAIN_LOGIN_TOKEN_VALID_SECONDS = 10;
 
-    /**
-     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
-     */
-    protected $tokenStorage;
+    protected TokenStorageInterface $tokenStorage;
 
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository
-     */
-    protected $administratorRepository;
+    protected AdministratorRepository $administratorRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\String\HashGenerator
-     */
-    protected $hashGenerator;
+    protected HashGenerator $hashGenerator;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage

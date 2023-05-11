@@ -17,15 +17,9 @@ class CreateDomainsDbFunctionsCommand extends Command
      */
     protected static $defaultName = 'shopsys:domains-db-functions:create';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\DomainDbFunctionsFacade
-     */
-    private $domainDbFunctionsFacade;
+    private DomainDbFunctionsFacade $domainDbFunctionsFacade;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
+    private EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

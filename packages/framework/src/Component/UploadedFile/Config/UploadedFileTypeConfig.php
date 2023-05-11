@@ -8,15 +8,9 @@ class UploadedFileTypeConfig
 {
     public const DEFAULT_TYPE_NAME = 'default';
 
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name;
 
-    /**
-     * @var bool
-     */
-    protected $multiple;
+    protected bool $multiple;
 
     /**
      * @param string $name

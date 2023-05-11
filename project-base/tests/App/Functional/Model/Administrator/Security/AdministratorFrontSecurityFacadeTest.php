@@ -17,19 +17,16 @@ class AdministratorFrontSecurityFacadeTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade
      * @inject
      */
     private AdministratorFrontSecurityFacade $administratorFrontSecurityFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade
      * @inject
      */
     private AdministratorActivityFacade $administratorActivityFacade;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
      * @inject
      */
     protected RequestStack $requestStack;

@@ -25,7 +25,7 @@ final class MailWhitelistFormType extends AbstractType
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

@@ -15,15 +15,9 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
 class OrderRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Listing\OrderListAdminRepository
-     */
-    protected $orderListAdminRepository;
+    protected OrderListAdminRepository $orderListAdminRepository;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

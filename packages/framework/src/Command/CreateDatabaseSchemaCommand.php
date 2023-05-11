@@ -16,10 +16,7 @@ class CreateDatabaseSchemaCommand extends Command
      */
     protected static $defaultName = 'shopsys:schema:create';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Doctrine\DatabaseSchemaFacade
-     */
-    private $databaseSchemaFacade;
+    private DatabaseSchemaFacade $databaseSchemaFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\DatabaseSchemaFacade $databaseSchemaFacade

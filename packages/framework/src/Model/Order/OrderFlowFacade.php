@@ -4,10 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 
 class OrderFlowFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFlowFactoryInterface
-     */
-    protected $orderFlowFactory;
+    protected OrderFlowFactoryInterface $orderFlowFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFlowFactoryInterface $orderFlowFactory

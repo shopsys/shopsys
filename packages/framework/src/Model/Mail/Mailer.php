@@ -22,9 +22,9 @@ class Mailer
      * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
-        protected /* readonly */ MailerInterface $symfonyMailer,
-        protected /* readonly */ MailTemplateFacade $mailTemplateFacade,
-        protected /* readonly */ LoggerInterface $logger,
+        protected readonly MailerInterface $symfonyMailer,
+        protected readonly MailTemplateFacade $mailTemplateFacade,
+        protected readonly LoggerInterface $logger,
     ) {
     }
 

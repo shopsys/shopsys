@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Controller\Front;
 
 use App\Form\Front\Product\ProductFilterFormType;
+use App\Model\Product\Listing\ProductListOrderingModeForBrandFacade;
+use App\Model\Product\Listing\ProductListOrderingModeForListFacade;
+use App\Model\Product\Listing\ProductListOrderingModeForSearchFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Category\Category;
@@ -14,9 +17,9 @@ use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
-use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForBrandFacade;
-use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade;
-use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForSearchFacade;
+use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForBrandFacade as BaseProductListOrderingModeForBrandFacade;
+use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade as BaseProductListOrderingModeForListFacade;
+use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForSearchFacade as BaseProductListOrderingModeForSearchFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrameworkBundle\Twig\RequestExtension;
 use Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFacadeInterface;
@@ -31,70 +34,31 @@ class ProductController extends FrontBaseController
     public const PAGE_QUERY_PARAMETER = 'page';
     public const PRODUCTS_PER_PAGE = 12;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory
-     */
-    private $productFilterConfigFactory;
+    private ProductFilterConfigFactory $productFilterConfigFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
-     */
-    private $categoryFacade;
+    private CategoryFacade $categoryFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade
-     */
-    private $productOnCurrentDomainFacade;
+    private ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Twig\RequestExtension
-     */
-    private $requestExtension;
+    private RequestExtension $requestExtension;
 
-    /**
-     * @var \App\Model\Product\Listing\ProductListOrderingModeForListFacade
-     */
-    private $productListOrderingModeForListFacade;
+    private ProductListOrderingModeForListFacade $productListOrderingModeForListFacade;
 
-    /**
-     * @var \App\Model\Product\Listing\ProductListOrderingModeForBrandFacade
-     */
-    private $productListOrderingModeForBrandFacade;
+    private ProductListOrderingModeForBrandFacade $productListOrderingModeForBrandFacade;
 
-    /**
-     * @var \App\Model\Product\Listing\ProductListOrderingModeForSearchFacade
-     */
-    private $productListOrderingModeForSearchFacade;
+    private ProductListOrderingModeForSearchFacade $productListOrderingModeForSearchFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Module\ModuleFacade
-     */
-    private $moduleFacade;
+    private ModuleFacade $moduleFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade
-     */
-    private $brandFacade;
+    private BrandFacade $brandFacade;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade
-     */
-    private $listedProductViewFacade;
+    private ListedProductViewFacadeInterface $listedProductViewFacade;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductVariantsViewFacadeInterface
-     */
-    protected $listedProductVariantsViewFacade;
+    protected ListedProductVariantsViewFacadeInterface $listedProductVariantsViewFacade;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFacadeInterface
-     */
-    protected $productDetailViewFacade;
+    protected ProductDetailViewFacadeInterface $productDetailViewFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
@@ -117,9 +81,9 @@ class ProductController extends FrontBaseController
         Domain $domain,
         ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
         ProductFilterConfigFactory $productFilterConfigFactory,
-        ProductListOrderingModeForListFacade $productListOrderingModeForListFacade,
-        ProductListOrderingModeForBrandFacade $productListOrderingModeForBrandFacade,
-        ProductListOrderingModeForSearchFacade $productListOrderingModeForSearchFacade,
+        BaseProductListOrderingModeForListFacade $productListOrderingModeForListFacade,
+        BaseProductListOrderingModeForBrandFacade $productListOrderingModeForBrandFacade,
+        BaseProductListOrderingModeForSearchFacade $productListOrderingModeForSearchFacade,
         ModuleFacade $moduleFacade,
         BrandFacade $brandFacade,
         ListedProductViewFacadeInterface $listedProductViewFacade,

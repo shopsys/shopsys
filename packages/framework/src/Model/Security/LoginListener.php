@@ -12,20 +12,11 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class LoginListener
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFlowFacade
-     */
-    protected $orderFlowFacade;
+    protected OrderFlowFacade $orderFlowFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade
-     */
-    protected $administratorActivityFacade;
+    protected AdministratorActivityFacade $administratorActivityFacade;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

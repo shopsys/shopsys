@@ -9,15 +9,9 @@ use Symfony\Component\Validator\Constraint;
  */
 class Contains extends Constraint
 {
-    /**
-     * @var string
-     */
-    public $message = 'Field must contain {{ needle }}.';
+    public string $message = 'Field must contain {{ needle }}.';
 
-    /**
-     * @var string|null
-     */
-    public $needle = null;
+    public ?string $needle = null;
 
     /**
      * {@inheritdoc}

@@ -7,15 +7,9 @@ use Symfony\Bridge\Monolog\Logger;
 
 class ProductPriceCronModule implements IteratedCronModuleInterface
 {
-    /**
-     * @var \Symfony\Bridge\Monolog\Logger
-     */
-    protected $logger;
+    protected Logger $logger;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator
-     */
-    protected $productPriceRecalculator;
+    protected ProductPriceRecalculator $productPriceRecalculator;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator $productPriceRecalculator

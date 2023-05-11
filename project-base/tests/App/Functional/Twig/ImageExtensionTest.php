@@ -17,7 +17,6 @@ class ImageExtensionTest extends FunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageLocator
      * @inject
      */
     private ImageLocator $imageLocator;

@@ -9,20 +9,11 @@ class ImageLocator
 {
     protected const ADDITIONAL_IMAGE_MASK = 'additional_{index}_{filename}';
 
-    /**
-     * @var string
-     */
-    protected $imageDir;
+    protected string $imageDir;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
-     */
-    protected $imageConfig;
+    protected ImageConfig $imageConfig;
 
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    protected $filesystem;
+    protected FilesystemOperator $filesystem;
 
     /**
      * @param mixed $imageDir

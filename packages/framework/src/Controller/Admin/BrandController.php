@@ -19,39 +19,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BrandController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
-     */
-    protected $breadcrumbOverrider;
+    protected BreadcrumbOverrider $breadcrumbOverrider;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade
-     */
-    protected $administratorGridFacade;
+    protected AdministratorGridFacade $administratorGridFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade
-     */
-    protected $brandFacade;
+    protected BrandFacade $brandFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    protected $gridFactory;
+    protected GridFactory $gridFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface
-     */
-    protected $brandDataFactory;
+    protected BrandDataFactoryInterface $brandDataFactory;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
     protected EntityManagerInterface $entityManager;
 
     /**

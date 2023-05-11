@@ -7,10 +7,7 @@ use Shopsys\FrameworkBundle\Component\DataFixture\Exception\PersistentReferenceN
 
 class PersistentReferenceRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

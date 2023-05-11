@@ -29,39 +29,18 @@ class ImageExtension extends AbstractExtension
         'lazy',
     ];
 
-    /**
-     * @var string
-     */
-    protected $frontDesignImageUrlPrefix;
+    protected string $frontDesignImageUrlPrefix;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageLocator
-     */
-    protected $imageLocator;
+    protected ImageLocator $imageLocator;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
-     */
-    protected $imageFacade;
+    protected ImageFacade $imageFacade;
 
-    /**
-     * @var \Twig\Environment
-     */
-    protected $twigEnvironment;
+    protected Environment $twigEnvironment;
 
-    /**
-     * @var bool
-     */
-    protected $isLazyLoadEnabled;
+    protected bool $isLazyLoadEnabled;
 
-    /**
-     * @var \Sinergi\BrowserDetector\Browser
-     */
     protected Browser $browser;
 
     /**

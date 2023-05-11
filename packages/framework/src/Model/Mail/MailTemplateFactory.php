@@ -6,10 +6,7 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class MailTemplateFactory implements MailTemplateFactoryInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
-     */
-    protected $entityNameResolver;
+    protected EntityNameResolver $entityNameResolver;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

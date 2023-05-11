@@ -15,15 +15,9 @@ class ProductFilterRepository
 {
     protected const DAYS_FOR_STOCK_FILTER = 0;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender
-     */
-    protected $queryBuilderExtender;
+    protected QueryBuilderExtender $queryBuilderExtender;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterRepository
-     */
-    protected $parameterFilterRepository;
+    protected ParameterFilterRepository $parameterFilterRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender

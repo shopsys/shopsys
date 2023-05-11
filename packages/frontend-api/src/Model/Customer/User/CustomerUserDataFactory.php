@@ -11,15 +11,9 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface
 
 class CustomerUserDataFactory
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface
-     */
-    protected $customerUserDataFactory;
+    protected CustomerUserDataFactoryInterface $customerUserDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface $customerUserDataFactory

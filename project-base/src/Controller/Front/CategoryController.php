@@ -13,30 +13,15 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CategoryController extends FrontBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
-     */
-    private $categoryFacade;
+    private CategoryFacade $categoryFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \App\Model\Category\CurrentCategoryResolver
-     */
-    private $currentCategoryResolver;
+    private CurrentCategoryResolver $currentCategoryResolver;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade
-     */
-    private $topCategoryFacade;
+    private TopCategoryFacade $topCategoryFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    private $currentCustomerUser;
+    private CurrentCustomerUser $currentCustomerUser;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

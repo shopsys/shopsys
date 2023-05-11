@@ -8,15 +8,9 @@ use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 
 class ListedProductVariantsViewFacade implements ListedProductVariantsViewFacadeInterface
 {
-    /**
-     * @var  \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface
-     */
-    protected $productOnCurrentDomainFacade;
+    protected ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory
-     */
-    protected $listedProductViewFactory;
+    protected ListedProductViewFactory $listedProductViewFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade

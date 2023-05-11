@@ -14,35 +14,17 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 class OrderPreviewFactory
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewCalculation
-     */
-    protected $orderPreviewCalculation;
+    protected OrderPreviewCalculation $orderPreviewCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    protected $currencyFacade;
+    protected CurrencyFacade $currencyFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    protected $currentCustomerUser;
+    protected CurrentCustomerUser $currentCustomerUser;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\CartFacade
-     */
-    protected $cartFacade;
+    protected CartFacade $cartFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade
-     */
-    protected $currentPromoCodeFacade;
+    protected CurrentPromoCodeFacade $currentPromoCodeFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewCalculation $orderPreviewCalculation

@@ -6,15 +6,9 @@ use Shopsys\FrameworkBundle\Model\Feed\FeedItemInterface;
 
 class HeurekaDeliveryFeedItem implements FeedItemInterface
 {
-    /**
-     * @var int
-     */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @var int
-     */
-    protected $stockQuantity;
+    protected int $stockQuantity;
 
     /**
      * @param int $id

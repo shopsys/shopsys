@@ -24,17 +24,11 @@ class ImageProcessor
     /**
      * @var string[]
      */
-    protected $supportedImageExtensions;
+    protected array $supportedImageExtensions;
 
-    /**
-     * @var \Intervention\Image\ImageManager
-     */
-    protected $imageManager;
+    protected ImageManager $imageManager;
 
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    protected $filesystem;
+    protected FilesystemOperator $filesystem;
 
     /**
      * @param \Intervention\Image\ImageManager $imageManager

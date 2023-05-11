@@ -20,65 +20,29 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class CustomerUserFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository
-     */
-    protected $customerUserRepository;
+    protected CustomerUserRepository $customerUserRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface
-     */
-    protected $customerUserUpdateDataFactory;
+    protected CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade
-     */
-    protected $customerMailFacade;
+    protected CustomerMailFacade $customerMailFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface
-     */
-    protected $billingAddressDataFactory;
+    protected BillingAddressDataFactoryInterface $billingAddressDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface
-     */
-    protected $customerUserFactory;
+    protected CustomerUserFactoryInterface $customerUserFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade
-     */
-    protected $customerUserPasswordFacade;
+    protected CustomerUserPasswordFacade $customerUserPasswordFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade
-     */
-    protected $customerFacade;
+    protected CustomerFacade $customerFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade
-     */
-    protected $deliveryAddressFacade;
+    protected DeliveryAddressFacade $deliveryAddressFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface
-     */
-    protected $customerDataFactory;
+    protected CustomerDataFactoryInterface $customerDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade
-     */
-    protected $billingAddressFacade;
+    protected BillingAddressFacade $billingAddressFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade
-     */
-    protected $customerUserRefreshTokenChainFacade;
+    protected CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

@@ -11,7 +11,7 @@ class UploadedFileConfig
     /**
      * @var \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig[]
      */
-    protected $uploadedFileEntityConfigsByClass;
+    protected array $uploadedFileEntityConfigsByClass;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig[] $uploadedFileEntityConfigsByClass

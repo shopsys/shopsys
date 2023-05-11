@@ -11,20 +11,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class HeurekaController extends FrontBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade
-     */
-    private $heurekaFacade;
+    private HeurekaFacade $heurekaFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting
-     */
-    private $heurekaSetting;
+    private HeurekaSetting $heurekaSetting;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade

@@ -19,12 +19,9 @@ class ComposerJsonFilesProvider
     /**
      * @var string[]
      */
-    protected $packageDirectories;
+    protected array $packageDirectories;
 
-    /**
-     * @var \Symplify\SmartFileSystem\Finder\FinderSanitizer
-     */
-    protected $finderSanitizer;
+    protected FinderSanitizer $finderSanitizer;
 
     /**
      * @param string[] $packageDirectories

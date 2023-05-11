@@ -16,25 +16,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CurrencyController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory
-     */
-    protected $confirmDeleteResponseFactory;
+    protected ConfirmDeleteResponseFactory $confirmDeleteResponseFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    protected $currencyFacade;
+    protected CurrencyFacade $currencyFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Grid\CurrencyInlineEdit
-     */
-    protected $currencyInlineEdit;
+    protected CurrencyInlineEdit $currencyInlineEdit;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade

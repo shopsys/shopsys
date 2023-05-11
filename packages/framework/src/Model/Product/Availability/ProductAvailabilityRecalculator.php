@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Product\Availability;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Internal\Hydration\IterableResult;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
@@ -10,25 +11,16 @@ class ProductAvailabilityRecalculator
 {
     protected const BATCH_SIZE = 100;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler
-     */
-    protected $productAvailabilityRecalculationScheduler;
+    protected ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation
-     */
-    protected $productAvailabilityCalculation;
+    protected ProductAvailabilityCalculation $productAvailabilityCalculation;
 
     /**
      * @var \Doctrine\ORM\Internal\Hydration\IterableResult|\Shopsys\FrameworkBundle\Model\Product\Product[][]|null
      */
-    protected $productRowsIterator;
+    protected IterableResult|array|null $productRowsIterator = null;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

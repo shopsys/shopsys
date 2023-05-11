@@ -6,20 +6,11 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 
 class AddProductResult
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem
-     */
-    protected $cartItem;
+    protected CartItem $cartItem;
 
-    /**
-     * @var bool
-     */
-    protected $isNew;
+    protected bool $isNew;
 
-    /**
-     * @var int
-     */
-    protected $addedQuantity;
+    protected int $addedQuantity;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItem $cartItem

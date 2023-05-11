@@ -7,10 +7,7 @@ use Symfony\Bridge\Monolog\Logger;
 
 class ErrorPageCronModule implements SimpleCronModuleInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade
-     */
-    protected $errorPagesFacade;
+    protected ErrorPagesFacade $errorPagesFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade $errorPagesFacade

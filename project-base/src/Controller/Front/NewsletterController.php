@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Controller\Front;
 
 use App\Form\Front\Newsletter\SubscriptionFormType;
+use App\Model\LegalConditions\LegalConditionsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Form\FormTimeProvider;
-use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
+use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade as BaseLegalConditionsFacade;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormErrorIterator;
@@ -16,25 +17,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class NewsletterController extends FrontBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade
-     */
-    private $newsletterFacade;
+    private NewsletterFacade $newsletterFacade;
 
-    /**
-     * @var \App\Model\LegalConditions\LegalConditionsFacade
-     */
-    private $legalConditionsFacade;
+    private LegalConditionsFacade $legalConditionsFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Form\FormTimeProvider
-     */
-    private $formTimeProvider;
+    private FormTimeProvider $formTimeProvider;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
@@ -44,7 +33,7 @@ class NewsletterController extends FrontBaseController
      */
     public function __construct(
         NewsletterFacade $newsletterFacade,
-        LegalConditionsFacade $legalConditionsFacade,
+        BaseLegalConditionsFacade $legalConditionsFacade,
         Domain $domain,
         FormTimeProvider $formTimeProvider
     ) {

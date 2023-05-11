@@ -12,10 +12,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class CustomerRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager

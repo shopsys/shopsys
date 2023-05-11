@@ -6,15 +6,9 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class DomainDbFunctionsFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

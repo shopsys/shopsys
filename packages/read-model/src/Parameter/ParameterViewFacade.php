@@ -9,20 +9,11 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 
 class ParameterViewFacade implements ParameterViewFacadeInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
-     */
-    protected $productFacade;
+    protected ProductFacade $productFacade;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Parameter\ParameterViewFactory
-     */
-    protected $parameterViewFactory;
+    protected ParameterViewFactory $parameterViewFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade
-     */
-    protected $productCachedAttributesFacade;
+    protected ProductCachedAttributesFacade $productCachedAttributesFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade

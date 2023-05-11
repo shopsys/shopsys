@@ -7,15 +7,9 @@ use Shopsys\FrameworkBundle\Component\Doctrine\Exception\DefaultSchemaImportExce
 
 class DatabaseSchemaFacade
 {
-    /**
-     * @var string
-     */
-    protected $defaultSchemaFilepath;
+    protected string $defaultSchemaFilepath;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param mixed $defaultSchemaFilepath

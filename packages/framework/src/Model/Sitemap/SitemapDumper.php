@@ -14,15 +14,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SitemapDumper extends Dumper
 {
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    protected $abstractFilesystem;
+    protected FilesystemOperator $abstractFilesystem;
 
-    /**
-     * @var \League\Flysystem\MountManager
-     */
-    protected $mountManager;
+    protected MountManager $mountManager;
 
     /**
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher

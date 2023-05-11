@@ -25,20 +25,11 @@ use Symfony\Component\Validator\Constraints;
 
 class ArticleFormType extends AbstractType
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade
-     */
-    private $seoSettingFacade;
+    private SeoSettingFacade $seoSettingFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleFacade
-     */
-    private $articleFacade;
+    private ArticleFacade $articleFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade

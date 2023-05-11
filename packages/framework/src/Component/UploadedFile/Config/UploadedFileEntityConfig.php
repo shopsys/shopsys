@@ -8,20 +8,14 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFile
 
 class UploadedFileEntityConfig
 {
-    /**
-     * @var string
-     */
-    protected $entityName;
+    protected string $entityName;
 
-    /**
-     * @var string
-     */
-    protected $entityClass;
+    protected string $entityClass;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig[]
      */
-    protected $types;
+    protected array $types;
 
     /**
      * @param string $entityName

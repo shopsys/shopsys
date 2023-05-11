@@ -17,29 +17,14 @@ use Tests\App\Test\Codeception\Module\StrictWebDriver;
 
 class LocalizationHelper extends Module
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
     private Localization $localization;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
     private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
-     */
     private DomainRouterFactory $domainRouterFactory;
 
-    /**
-     * @var \Tests\App\Test\Codeception\Module\StrictWebDriver
-     */
     private StrictWebDriver $webDriver;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade
-     */
     private UnitFacade $unitFacade;
 
     /**

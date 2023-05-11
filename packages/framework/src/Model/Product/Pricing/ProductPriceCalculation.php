@@ -14,30 +14,15 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class ProductPriceCalculation
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation
-     */
-    protected $basePriceCalculation;
+    protected BasePriceCalculation $basePriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting
-     */
-    protected $pricingSetting;
+    protected PricingSetting $pricingSetting;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository
-     */
-    protected $productManualInputPriceRepository;
+    protected ProductManualInputPriceRepository $productManualInputPriceRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
-     */
-    protected $productRepository;
+    protected ProductRepository $productRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    protected $currencyFacade;
+    protected CurrencyFacade $currencyFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation

@@ -17,7 +17,6 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\FlagFilterChoiceRepository
      * @inject
      */
     private FlagFilterChoiceRepository $flagFilterChoiceRepository;

@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Internal\Hydration\IterableResult;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
@@ -11,35 +12,20 @@ class ProductInputPriceFacade
 {
     protected const BATCH_SIZE = 50;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting
-     */
-    protected $pricingSetting;
+    protected PricingSetting $pricingSetting;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository
-     */
-    protected $productManualInputPriceRepository;
+    protected ProductManualInputPriceRepository $productManualInputPriceRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
-     */
-    protected $productRepository;
+    protected ProductRepository $productRepository;
 
     /**
      * @var \Doctrine\ORM\Internal\Hydration\IterableResult|\Shopsys\FrameworkBundle\Model\Product\Product[][]|null
      */
-    protected $productRowsIterator;
+    protected IterableResult|array|null $productRowsIterator = null;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceRecalculator
-     */
-    protected $productInputPriceRecalculator;
+    protected ProductInputPriceRecalculator $productInputPriceRecalculator;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

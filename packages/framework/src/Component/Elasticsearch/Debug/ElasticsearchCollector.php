@@ -11,10 +11,7 @@ use Throwable;
 
 class ElasticsearchCollector extends DataCollector
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchRequestCollection
-     */
-    protected $elasticsearchRequestCollection;
+    protected ElasticsearchRequestCollection $elasticsearchRequestCollection;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchRequestCollection $elasticsearchRequestCollection

@@ -14,14 +14,8 @@ use PHPUnit\Framework\ExpectationFailedException;
  */
 class IsIdenticalString extends Constraint
 {
-    /**
-     * @var mixed
-     */
     private mixed $value;
 
-    /**
-     * @var \PHPUnit\Framework\Constraint\IsIdentical
-     */
     private IsIdentical $isIdentical;
 
     /**

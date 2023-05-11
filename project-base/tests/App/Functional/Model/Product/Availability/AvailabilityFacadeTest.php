@@ -19,25 +19,21 @@ final class AvailabilityFacadeTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface
      * @inject
      */
     private AvailabilityDataFactoryInterface $availabilityDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade
      * @inject
      */
     private AvailabilityFacade $availabilityFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
      * @inject
      */
     private ProductDataFactoryInterface $productDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
      * @inject
      */
     private ProductFacade $productFacade;

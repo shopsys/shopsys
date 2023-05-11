@@ -19,20 +19,15 @@ use Tests\App\Test\FunctionalTestCase;
 class ImageExtensionTest extends FunctionalTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
      * @inject
      */
     private ImageFacade $imageFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageLocator
      * @inject
      */
     private ImageLocator $imageLocator;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
     private Domain $domainMock;
 
     public function testGetImageHtmlWithMockedImageFacade(): void

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Product\Brand\BrandDataFactory;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -38,20 +39,11 @@ class BrandDataFixture extends AbstractReferenceFixture
     public const BRAND_HYUNDAI = 'brand_hyundai';
     public const BRAND_NIKON = 'brand_nikon';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade
-     */
-    private $brandFacade;
+    private BrandFacade $brandFacade;
 
-    /**
-     * @var \App\Model\Product\Brand\BrandDataFactory
-     */
-    private $brandDataFactory;
+    private BrandDataFactory $brandDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade

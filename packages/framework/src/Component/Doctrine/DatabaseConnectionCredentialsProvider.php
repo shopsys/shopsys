@@ -6,29 +6,14 @@ namespace Shopsys\FrameworkBundle\Component\Doctrine;
 
 class DatabaseConnectionCredentialsProvider
 {
-    /**
-     * @var string
-     */
     protected string $databaseHost;
 
-    /**
-     * @var string
-     */
     protected string $databasePort;
 
-    /**
-     * @var string
-     */
     protected string $databaseName;
 
-    /**
-     * @var string
-     */
     protected string $databaseUsername;
 
-    /**
-     * @var string
-     */
     protected string $databasePassword;
 
     /**

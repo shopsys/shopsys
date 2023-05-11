@@ -16,20 +16,11 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class AdministratorUserProvider implements UserProviderInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository
-     */
-    protected $administratorRepository;
+    protected AdministratorRepository $administratorRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade
-     */
-    protected $administratorActivityFacade;
+    protected AdministratorActivityFacade $administratorActivityFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedSubscriber
-     */
-    protected $administratorRolesChangedSubscriber;
+    protected AdministratorRolesChangedSubscriber $administratorRolesChangedSubscriber;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository $administratorRepository

@@ -9,10 +9,7 @@ use Twig\TwigFunction;
 
 class FormDetailExtension extends AbstractExtension
 {
-    /**
-     * @var \Twig\Environment
-     */
-    protected $twigEnvironment;
+    protected Environment $twigEnvironment;
 
     /**
      * @param \Twig\Environment $twigEnvironment

@@ -9,15 +9,9 @@ use Symfony\Component\Validator\Constraint;
  */
 class FileExtensionMaxLength extends Constraint
 {
-    /**
-     * @var string
-     */
-    public $message = 'File extension {{ value }} is too long. It should have {{ limit }} character or less.';
+    public string $message = 'File extension {{ value }} is too long. It should have {{ limit }} character or less.';
 
-    /**
-     * @var int
-     */
-    public $limit;
+    public int $limit;
 
     /**
      * {@inheritdoc}

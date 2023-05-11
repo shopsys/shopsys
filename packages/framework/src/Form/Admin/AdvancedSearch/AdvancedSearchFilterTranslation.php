@@ -9,7 +9,7 @@ class AdvancedSearchFilterTranslation
     /**
      * @var string[]
      */
-    protected $filtersTranslationsByFilterName;
+    protected array $filtersTranslationsByFilterName;
 
     public function __construct()
     {

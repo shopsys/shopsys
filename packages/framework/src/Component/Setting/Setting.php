@@ -24,20 +24,14 @@ class Setting
     public const FEED_DOMAIN_ID_TO_CONTINUE = 'feedDomainIdToContinue';
     public const FEED_ITEM_ID_TO_CONTINUE = 'feedItemIdToContinue';
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\SettingValueRepository
-     */
-    protected $settingValueRepository;
+    protected SettingValueRepository $settingValueRepository;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Setting\SettingValue[][]
      */
-    protected $values;
+    protected array $values;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

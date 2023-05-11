@@ -9,20 +9,17 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductUrlsBatchLoader
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade
-     */
-    protected $productCollectionFacade;
+    protected ProductCollectionFacade $productCollectionFacade;
 
     /**
      * @var string[]
      */
-    protected $loadedProductUrls = [];
+    protected array $loadedProductUrls = [];
 
     /**
      * @var string[]|null[]
      */
-    protected $loadedProductImageUrls = [];
+    protected array $loadedProductImageUrls = [];
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade

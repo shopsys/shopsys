@@ -10,15 +10,9 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UniqueEmailValidator extends ConstraintValidator
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
-     */
-    protected $customerUserFacade;
+    protected CustomerUserFacade $customerUserFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade

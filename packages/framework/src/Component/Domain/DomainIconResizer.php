@@ -14,20 +14,11 @@ class DomainIconResizer
     protected const DOMAIN_ICON_HEIGHT = 26;
     protected const DOMAIN_ICON_CROP = false;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor
-     */
-    protected $imageProcessor;
+    protected ImageProcessor $imageProcessor;
 
-    /**
-     * @var \Symfony\Bridge\Monolog\Logger
-     */
-    protected $logger;
+    protected Logger $logger;
 
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    protected $filesystem;
+    protected FilesystemOperator $filesystem;
 
     /**
      * @param \Symfony\Bridge\Monolog\Logger $logger

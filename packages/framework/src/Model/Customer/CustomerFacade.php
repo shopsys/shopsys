@@ -8,20 +8,11 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class CustomerFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface
-     */
-    protected $customerFactory;
+    protected CustomerFactoryInterface $customerFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\CustomerRepository
-     */
-    protected $customerRepository;
+    protected CustomerRepository $customerRepository;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

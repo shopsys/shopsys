@@ -6,10 +6,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class AvailabilityDataFactory implements AvailabilityDataFactoryInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

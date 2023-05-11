@@ -10,10 +10,7 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 
 class CategoryResolverMap extends ResolverMap
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

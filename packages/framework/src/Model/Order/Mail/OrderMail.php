@@ -35,45 +35,21 @@ class OrderMail implements MessageFactoryInterface
     public const VARIABLE_TRANSPORT_INSTRUCTIONS = '{transport_instructions}';
     public const VARIABLE_PAYMENT_INSTRUCTIONS = '{payment_instructions}';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    protected $setting;
+    protected Setting $setting;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
-     */
-    protected $domainRouterFactory;
+    protected DomainRouterFactory $domainRouterFactory;
 
-    /**
-     * @var \Twig\Environment
-     */
-    protected $twig;
+    protected Environment $twig;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation
-     */
-    protected $orderItemPriceCalculation;
+    protected OrderItemPriceCalculation $orderItemPriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Twig\PriceExtension
-     */
-    protected $priceExtension;
+    protected PriceExtension $priceExtension;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension
-     */
-    protected $dateTimeFormatterExtension;
+    protected DateTimeFormatterExtension $dateTimeFormatterExtension;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator
-     */
-    protected $orderUrlGenerator;
+    protected OrderUrlGenerator $orderUrlGenerator;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting

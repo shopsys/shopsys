@@ -27,10 +27,7 @@ class FlagEvent extends Event
      */
     public const DELETE = 'flag.delete';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     */
-    protected $flag;
+    protected Flag $flag;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag

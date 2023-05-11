@@ -12,20 +12,11 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 
 class MailTemplateAttachmentFilepathProvider
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload
-     */
-    protected $fileUpload;
+    protected FileUpload $fileUpload;
 
-    /**
-     * @var \League\Flysystem\MountManager
-     */
-    protected $mountManager;
+    protected MountManager $mountManager;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade
-     */
-    protected $uploadedFileFacade;
+    protected UploadedFileFacade $uploadedFileFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload

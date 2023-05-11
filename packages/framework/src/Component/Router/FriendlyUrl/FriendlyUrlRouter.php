@@ -11,9 +11,6 @@ use Symfony\Component\Routing\RouterInterface;
 
 class FriendlyUrlRouter implements RouterInterface
 {
-    /**
-     * @var \Symfony\Component\Routing\RouteCollection|null
-     */
     protected ?RouteCollection $collection = null;
 
     /**

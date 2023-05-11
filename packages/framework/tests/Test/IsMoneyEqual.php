@@ -3,19 +3,14 @@
 namespace Tests\FrameworkBundle\Test;
 
 use PHPUnit\Framework\Constraint\Constraint;
+use SebastianBergmann\Exporter\Exporter;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
 final class IsMoneyEqual extends Constraint
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    private $value;
+    private Money $value;
 
-    /**
-     * @var \SebastianBergmann\Exporter\Exporter
-     */
-    private $exporter;
+    private Exporter $exporter;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $value

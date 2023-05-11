@@ -6,35 +6,20 @@ use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageAdditionalSize
 
 class ImageSizeConfig
 {
-    /**
-     * @var string|null
-     */
-    protected $name;
+    protected ?string $name = null;
 
-    /**
-     * @var int|null
-     */
-    protected $width;
+    protected ?int $width = null;
 
-    /**
-     * @var int|null
-     */
-    protected $height;
+    protected ?int $height = null;
 
-    /**
-     * @var bool
-     */
-    protected $crop;
+    protected bool $crop;
 
-    /**
-     * @var string|null
-     */
-    protected $occurrence;
+    protected ?string $occurrence = null;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageAdditionalSizeConfig[]
      */
-    protected $additionalSizes;
+    protected array $additionalSizes;
 
     /**
      * @param string|null $name

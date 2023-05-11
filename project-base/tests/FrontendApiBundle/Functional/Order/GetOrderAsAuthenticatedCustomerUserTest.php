@@ -12,7 +12,6 @@ use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
      * @inject
      */
     private OrderFacade $orderFacade;

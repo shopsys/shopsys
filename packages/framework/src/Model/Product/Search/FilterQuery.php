@@ -16,37 +16,25 @@ class FilterQuery
     /**
      * @var array
      */
-    protected $filters = [];
+    protected array $filters = [];
 
-    /**
-     * @var string
-     */
-    protected $indexName;
+    protected string $indexName;
 
     /**
      * @var array
      */
-    protected $sorting = [];
+    protected array $sorting = [];
 
-    /**
-     * @var int
-     */
-    protected $limit = 1000;
+    protected int $limit = 1000;
 
-    /**
-     * @var int
-     */
-    protected $page = 1;
+    protected int $page = 1;
 
     /**
      * @var array
      */
-    protected $match;
+    protected array $match;
 
-    /**
-     * @var int|null
-     */
-    protected $from;
+    protected ?int $from = null;
 
     /**
      * @param string $indexName

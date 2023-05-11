@@ -16,19 +16,16 @@ class AdvancedSearchOperatorTranslationTest extends FunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig
      * @inject
      */
     private ProductAdvancedSearchConfig $productAdvancedSearchConfig;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\AdvancedSearch\OrderAdvancedSearchConfig
      * @inject
      */
     private OrderAdvancedSearchConfig $orderAdvancedSearchConfig;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchOperatorTranslation
      * @inject
      */
     private AdvancedSearchOperatorTranslation $advancedSearchOperatorTranslation;

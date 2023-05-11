@@ -14,17 +14,11 @@ class ProductListOrderingConfig
     /**
      * @var string[]
      */
-    protected $supportedOrderingModesNamesById;
+    protected array $supportedOrderingModesNamesById;
 
-    /**
-     * @var string
-     */
-    protected $defaultOrderingModeId;
+    protected string $defaultOrderingModeId;
 
-    /**
-     * @var string
-     */
-    protected $cookieName;
+    protected string $cookieName;
 
     /**
      * @param string[] $supportedOrderingModesNamesById

@@ -11,20 +11,11 @@ use Shopsys\FrameworkBundle\Model\Localization\TranslatableListener;
 
 class TestTranslatableListener extends TranslatableListener
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade
-     */
-    protected $administrationFacade;
+    protected AdministrationFacade $administrationFacade;
 
-    /**
-     * @var string
-     */
-    protected $adminLocale;
+    protected string $adminLocale;
 
     /**
      * @param \Metadata\MetadataFactory $factory

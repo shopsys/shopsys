@@ -32,25 +32,13 @@ use Twig\Node\Node as TwigNode;
  */
 class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVisitor
 {
-    /**
-     * @var \PhpParser\NodeTraverser
-     */
-    protected $traverser;
+    protected NodeTraverser $traverser;
 
-    /**
-     * @var \JMS\TranslationBundle\Model\MessageCatalogue
-     */
-    protected $catalogue;
+    protected MessageCatalogue $catalogue;
 
-    /**
-     * @var \SplFileInfo
-     */
-    protected $file;
+    protected SplFileInfo $file;
 
-    /**
-     * @var bool|null
-     */
-    protected $isInsideConstraintClass = null;
+    protected ?bool $isInsideConstraintClass = null;
 
     public function __construct()
     {

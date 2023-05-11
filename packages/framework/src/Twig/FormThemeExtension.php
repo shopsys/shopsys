@@ -13,10 +13,7 @@ class FormThemeExtension extends AbstractExtension
     protected const ADMIN_THEME = '@ShopsysFramework/Admin/Form/theme.html.twig';
     protected const FRONT_THEME = 'Front/Form/theme.html.twig';
 
-    /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
-     */
-    protected $requestStack;
+    protected RequestStack $requestStack;
 
     /**
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack

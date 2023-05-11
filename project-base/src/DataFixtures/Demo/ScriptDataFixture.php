@@ -12,15 +12,9 @@ use Shopsys\FrameworkBundle\Model\Script\ScriptFacade;
 
 class ScriptDataFixture extends AbstractReferenceFixture
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Script\ScriptFacade
-     */
-    private $scriptFacade;
+    private ScriptFacade $scriptFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Script\ScriptDataFactory
-     */
-    private $scriptDataFactory;
+    private ScriptDataFactoryInterface $scriptDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Script\ScriptFacade $scriptFacade

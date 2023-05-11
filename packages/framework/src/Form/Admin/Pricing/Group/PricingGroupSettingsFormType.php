@@ -12,10 +12,7 @@ use Symfony\Component\Validator\Constraints;
 
 class PricingGroupSettingsFormType extends AbstractType
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
-     */
-    private $pricingGroupFacade;
+    private PricingGroupFacade $pricingGroupFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade

@@ -6,10 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class SqlQuoter
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

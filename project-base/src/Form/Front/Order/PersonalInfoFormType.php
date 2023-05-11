@@ -30,25 +30,13 @@ class PersonalInfoFormType extends AbstractType
     public const VALIDATION_GROUP_COMPANY_CUSTOMER = 'companyCustomer';
     public const VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS = 'differentDeliveryAddress';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade
-     */
-    private $countryFacade;
+    private CountryFacade $countryFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade
-     */
-    private $heurekaFacade;
+    private HeurekaFacade $heurekaFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    private $currentCustomerUser;
+    private CurrentCustomerUser $currentCustomerUser;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade

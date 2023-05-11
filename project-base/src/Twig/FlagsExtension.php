@@ -11,15 +11,9 @@ use Twig\TwigFunction;
 
 class FlagsExtension extends AbstractExtension
 {
-    /**
-     * @var \Twig\Environment
-     */
-    private $twigEnvironment;
+    private Environment $twigEnvironment;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Flag\FlagsProvider
-     */
-    private $flagsProvider;
+    private FlagsProvider $flagsProvider;
 
     /**
      * @param \Shopsys\ReadModelBundle\Flag\FlagsProvider $flagsProvider

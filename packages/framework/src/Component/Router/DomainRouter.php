@@ -12,15 +12,9 @@ use Symfony\Component\Routing\RouterInterface;
 
 class DomainRouter extends ChainRouter
 {
-    /**
-     * @var bool
-     */
-    protected $freeze = false;
+    protected bool $freeze = false;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouter
-     */
-    protected $friendlyUrlRouter;
+    protected FriendlyUrlRouter $friendlyUrlRouter;
 
     /**
      * @param \Symfony\Component\Routing\RequestContext $context

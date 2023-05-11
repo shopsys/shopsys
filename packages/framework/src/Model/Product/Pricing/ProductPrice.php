@@ -6,10 +6,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class ProductPrice extends Price
 {
-    /**
-     * @var bool
-     */
-    protected $priceFrom;
+    protected bool $priceFrom;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price

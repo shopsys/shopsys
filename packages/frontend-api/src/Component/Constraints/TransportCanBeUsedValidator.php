@@ -15,25 +15,13 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class TransportCanBeUsedValidator extends ConstraintValidator
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
-     */
-    protected $transportFacade;
+    protected TransportFacade $transportFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation
-     */
-    protected $transportPriceCalculation;
+    protected TransportPriceCalculation $transportPriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    protected $currencyFacade;
+    protected CurrencyFacade $currencyFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade

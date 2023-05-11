@@ -17,30 +17,15 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 
 class OrderPreviewCalculation
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation
-     */
-    protected $quantifiedProductPriceCalculation;
+    protected QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductDiscountCalculation
-     */
-    protected $quantifiedProductDiscountCalculation;
+    protected QuantifiedProductDiscountCalculation $quantifiedProductDiscountCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation
-     */
-    protected $transportPriceCalculation;
+    protected TransportPriceCalculation $transportPriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation
-     */
-    protected $paymentPriceCalculation;
+    protected PaymentPriceCalculation $paymentPriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation
-     */
-    protected $orderPriceCalculation;
+    protected OrderPriceCalculation $orderPriceCalculation;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation

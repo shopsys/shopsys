@@ -8,25 +8,13 @@ use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 
 class PersonalDataAccessRequestFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\String\HashGenerator
-     */
-    protected $hashGenerator;
+    protected HashGenerator $hashGenerator;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestRepository
-     */
-    protected $personalDataAccessRequestRepository;
+    protected PersonalDataAccessRequestRepository $personalDataAccessRequestRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFactoryInterface
-     */
-    protected $personalDataAccessRequestFactory;
+    protected PersonalDataAccessRequestFactoryInterface $personalDataAccessRequestFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

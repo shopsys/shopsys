@@ -10,25 +10,13 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductPriceCalculationForCustomerUser
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation
-     */
-    protected $productPriceCalculation;
+    protected ProductPriceCalculation $productPriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    protected $currentCustomerUser;
+    protected CurrentCustomerUser $currentCustomerUser;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade
-     */
-    protected $pricingGroupSettingFacade;
+    protected PricingGroupSettingFacade $pricingGroupSettingFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation

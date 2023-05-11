@@ -10,25 +10,13 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 
 class ResetPasswordMailFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\Mailer
-     */
-    protected $mailer;
+    protected Mailer $mailer;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade
-     */
-    protected $mailTemplateFacade;
+    protected MailTemplateFacade $mailTemplateFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMail
-     */
-    protected $resetPasswordMail;
+    protected ResetPasswordMail $resetPasswordMail;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade
-     */
-    protected $uploadedFileFacade;
+    protected UploadedFileFacade $uploadedFileFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailer

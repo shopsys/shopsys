@@ -9,9 +9,6 @@ use Twig\Error\RuntimeError;
 
 class ExceptionListener
 {
-    /**
-     * @var \Throwable|null
-     */
     protected ?Throwable $lastThrowable;
 
     /**

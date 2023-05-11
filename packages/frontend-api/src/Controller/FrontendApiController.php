@@ -13,20 +13,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FrontendApiController
 {
-    /**
-     * @var \Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker
-     */
-    protected $enabledOnDomainChecker;
+    protected EnabledOnDomainChecker $enabledOnDomainChecker;
 
-    /**
-     * @var \Overblog\GraphQLBundle\Controller\GraphController
-     */
-    protected $graphController;
+    protected GraphController $graphController;
 
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\GraphqlConfigurator
-     */
-    protected $graphqlConfigurator;
+    protected GraphqlConfigurator $graphqlConfigurator;
 
     /**
      * @param \Overblog\GraphQLBundle\Controller\GraphController $graphController

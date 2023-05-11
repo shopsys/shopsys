@@ -11,20 +11,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HeurekaController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    protected $adminDomainTabsFacade;
+    protected AdminDomainTabsFacade $adminDomainTabsFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting
-     */
-    protected $heurekaSetting;
+    protected HeurekaSetting $heurekaSetting;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade
-     */
-    protected $heurekaFacade;
+    protected HeurekaFacade $heurekaFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade

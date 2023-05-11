@@ -17,40 +17,19 @@ class FileUpload
     protected const TEMPORARY_DIRECTORY = 'fileUploads';
     protected const DELETE_OLD_FILES_SECONDS = 86400;
 
-    /**
-     * @var string
-     */
-    protected $temporaryDir;
+    protected string $temporaryDir;
 
-    /**
-     * @var string
-     */
-    protected $uploadedFileDir;
+    protected string $uploadedFileDir;
 
-    /**
-     * @var string
-     */
-    protected $imageDir;
+    protected string $imageDir;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention
-     */
-    protected $fileNamingConvention;
+    protected FileNamingConvention $fileNamingConvention;
 
-    /**
-     * @var \League\Flysystem\MountManager
-     */
-    protected $mountManager;
+    protected MountManager $mountManager;
 
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    protected $filesystem;
+    protected FilesystemOperator $filesystem;
 
-    /**
-     * @var \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface
-     */
-    protected $parameterBag;
+    protected ParameterBagInterface $parameterBag;
 
     /**
      * @param string $temporaryDir

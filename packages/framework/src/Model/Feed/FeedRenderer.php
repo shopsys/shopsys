@@ -9,15 +9,9 @@ use Twig\TemplateWrapper;
 
 class FeedRenderer
 {
-    /**
-     * @var \Twig\Environment
-     */
-    protected $twig;
+    protected Environment $twig;
 
-    /**
-     * @var \Twig\TemplateWrapper
-     */
-    protected $template;
+    protected TemplateWrapper $template;
 
     /**
      * @param \Twig\Environment $twig

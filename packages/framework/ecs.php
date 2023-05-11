@@ -16,6 +16,7 @@ use SlevomatCodingStandard\Sniffs\Classes\ClassLengthSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ParentCallSpacingSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff;
 use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\Variables\UnusedVariableSniff;
 use Symplify\CodingStandard\Fixer\Commenting\RemoveUselessDefaultCommentFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
@@ -134,6 +135,10 @@ return static function (ECSConfig $ecsConfig): void {
         ],
         RemoveUselessDefaultCommentFixer::class => [
             __DIR__ . '/tests/Unit/Component/ClassExtension/Source/AnnotationsAdderTest/DummyClassWithAnAnnotation.php',
+        ],
+        PropertyTypeHintSniff::class => [
+            __DIR__ . '/tests/Unit/Component/ClassExtension/Source/*/*.php',
+            __DIR__ . '/tests/Unit/Component/ClassExtension/Source/*.php',
         ],
     ]);
 

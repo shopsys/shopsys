@@ -18,25 +18,13 @@ class UnitDataFixture extends AbstractReferenceFixture
     public const UNIT_CUBIC_METERS = 'unit_m3';
     public const UNIT_PIECES = 'unit_pcs';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade
-     */
-    private $unitFacade;
+    private UnitFacade $unitFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactory
-     */
-    private $unitDataFactory;
+    private UnitDataFactoryInterface $unitDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    private $setting;
+    private Setting $setting;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade

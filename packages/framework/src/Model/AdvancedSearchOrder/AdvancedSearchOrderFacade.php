@@ -13,25 +13,13 @@ class AdvancedSearchOrderFacade
 {
     public const RULES_FORM_NAME = 'as';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdvancedSearch\OrderAdvancedSearchFormFactory
-     */
-    protected $orderAdvancedSearchFormFactory;
+    protected OrderAdvancedSearchFormFactory $orderAdvancedSearchFormFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender
-     */
-    protected $advancedSearchQueryBuilderExtender;
+    protected AdvancedSearchQueryBuilderExtender $advancedSearchQueryBuilderExtender;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Listing\OrderListAdminFacade
-     */
-    protected $orderListAdminFacade;
+    protected OrderListAdminFacade $orderListAdminFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdvancedSearch\RuleFormViewDataFactory
-     */
-    protected $ruleFormViewDataFactory;
+    protected RuleFormViewDataFactory $ruleFormViewDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\OrderAdvancedSearchFormFactory $orderAdvancedSearchFormFactory

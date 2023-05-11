@@ -8,30 +8,15 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class MultidomainEntityClassFinderFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassFinder
-     */
-    protected $multidomainEntityClassFinder;
+    protected MultidomainEntityClassFinder $multidomainEntityClassFinder;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassProviderInterface
-     */
-    protected $multidomainEntityClassProvider;
+    protected MultidomainEntityClassProviderInterface $multidomainEntityClassProvider;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Doctrine\NotNullableColumnsFinder
-     */
-    protected $notNullableColumnsFinder;
+    protected NotNullableColumnsFinder $notNullableColumnsFinder;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
-     */
-    protected $entityNameResolver;
+    protected EntityNameResolver $entityNameResolver;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

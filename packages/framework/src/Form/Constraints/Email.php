@@ -9,8 +9,5 @@ use Symfony\Component\Validator\Constraint;
  */
 class Email extends Constraint
 {
-    /**
-     * @var string
-     */
-    public $message = 'This value is not a valid email address.';
+    public string $message = 'This value is not a valid email address.';
 }

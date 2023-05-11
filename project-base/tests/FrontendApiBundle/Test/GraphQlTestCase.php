@@ -22,31 +22,24 @@ use Tests\App\Test\ApplicationTestCase;
 
 abstract class GraphQlTestCase extends ApplicationTestCase
 {
-    /**
-     * @var string
-     */
     protected string $firstDomainUrl;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation
      * @inject
      */
     protected BasePriceCalculation $basePriceCalculation;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
      * @inject
      */
     protected PriceConverter $priceConverter;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
      * @inject
      */
     protected CurrencyFacade $currencyFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
      * @inject
      */
     protected VatFacade $vatFacade;

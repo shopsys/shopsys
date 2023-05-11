@@ -6,15 +6,9 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class PriceRange
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    protected $minimalPrice;
+    protected Money $minimalPrice;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    protected $maximalPrice;
+    protected Money $maximalPrice;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $minimalPrice

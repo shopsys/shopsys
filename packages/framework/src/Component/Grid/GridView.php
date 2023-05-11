@@ -11,40 +11,28 @@ use Twig\Environment;
 
 class GridView
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\Grid
-     */
-    protected $grid;
+    protected Grid $grid;
 
     /**
      * @var mixed[]
      */
-    protected $templateParameters;
+    protected array $templateParameters;
 
     /**
      * @var \Twig\TemplateWrapper[]
      */
-    protected $templates;
+    protected array $templates;
 
     /**
      * @var string|string[]|null
      */
-    protected $theme;
+    protected string|array|null $theme = null;
 
-    /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
-     */
-    protected $requestStack;
+    protected RequestStack $requestStack;
 
-    /**
-     * @var \Symfony\Component\Routing\RouterInterface
-     */
-    protected $router;
+    protected RouterInterface $router;
 
-    /**
-     * @var \Twig\Environment
-     */
-    protected $twig;
+    protected Environment $twig;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid

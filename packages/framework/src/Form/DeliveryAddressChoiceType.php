@@ -12,10 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DeliveryAddressChoiceType extends AbstractType
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    private $currentCustomerUser;
+    private CurrentCustomerUser $currentCustomerUser;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser

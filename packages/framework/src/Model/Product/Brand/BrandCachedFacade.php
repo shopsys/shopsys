@@ -8,15 +8,12 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class BrandCachedFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    protected $friendlyUrlFacade;
+    protected FriendlyUrlFacade $friendlyUrlFacade;
 
     /**
      * @var array
      */
-    protected $brandUrlsIndexedByBrandIdAndDomainId = [];
+    protected array $brandUrlsIndexedByBrandIdAndDomainId = [];
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade

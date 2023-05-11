@@ -7,10 +7,7 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
 
 class FlagRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager

@@ -8,10 +8,7 @@ abstract class ProductListOrderingModeForBrandFacade
 {
     protected const COOKIE_NAME = 'productListOrderingModeForBrand';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Listing\RequestToOrderingModeIdConverter
-     */
-    protected $requestToOrderingModeIdConverter;
+    protected RequestToOrderingModeIdConverter $requestToOrderingModeIdConverter;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Listing\RequestToOrderingModeIdConverter $requestToOrderingModeIdConverter

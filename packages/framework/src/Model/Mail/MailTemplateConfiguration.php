@@ -20,12 +20,9 @@ class MailTemplateConfiguration
     /**
      * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables[]
      */
-    protected $mailTemplateVariables = [];
+    protected array $mailTemplateVariables = [];
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade
-     */
-    protected $orderStatusFacade;
+    protected OrderStatusFacade $orderStatusFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade

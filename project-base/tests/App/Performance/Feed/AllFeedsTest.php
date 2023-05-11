@@ -21,19 +21,10 @@ class AllFeedsTest extends KernelTestCase
     public const ADMIN_USERNAME = 'admin';
     public const ADMIN_PASSWORD = 'admin123';
 
-    /**
-     * @var int
-     */
     private int $maxDuration;
 
-    /**
-     * @var int
-     */
     private int $deliveryMaxDuration;
 
-    /**
-     * @var int
-     */
     private int $minDuration;
 
     protected function setUp(): void

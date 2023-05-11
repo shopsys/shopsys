@@ -7,10 +7,7 @@ use Throwable;
 
 class EntityParseException extends Exception implements ImageConfigException
 {
-    /**
-     * @var string
-     */
-    protected $entityClass;
+    protected string $entityClass;
 
     /**
      * @param string $entityClass

@@ -7,25 +7,13 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 
 class ManualBestsellingProductFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductRepository
-     */
-    protected $manualBestsellingProductRepository;
+    protected ManualBestsellingProductRepository $manualBestsellingProductRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade
-     */
-    protected $cachedBestsellingProductFacade;
+    protected CachedBestsellingProductFacade $cachedBestsellingProductFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFactoryInterface
-     */
-    protected $manualBestsellingProductFactory;
+    protected ManualBestsellingProductFactoryInterface $manualBestsellingProductFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

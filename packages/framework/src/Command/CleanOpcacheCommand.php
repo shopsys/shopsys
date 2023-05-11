@@ -13,10 +13,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class CleanOpcacheCommand extends Command
 {
-    /**
-     * @var string
-     */
-    protected static $defaultName = 'shopsys:clean-opcache';
+    protected static string $defaultName = 'shopsys:clean-opcache';
 
     /**
      * {@inheritdoc}

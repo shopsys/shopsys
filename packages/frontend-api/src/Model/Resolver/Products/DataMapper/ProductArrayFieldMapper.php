@@ -13,29 +13,14 @@ use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
 
 class ProductArrayFieldMapper
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
-     */
     protected CategoryFacade $categoryFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade
-     */
     protected FlagFacade $flagFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade
-     */
     protected BrandFacade $brandFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider
-     */
     protected ProductElasticsearchProvider $productElasticsearchProvider;
 
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory
-     */
     protected ParameterWithValuesFactory $parameterWithValuesFactory;
 
     /**

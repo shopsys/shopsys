@@ -7,10 +7,7 @@ use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 
 class MailTemplateDataFactory implements MailTemplateDataFactoryInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactoryInterface
-     */
-    protected $uploadedFileDataFactory;
+    protected UploadedFileDataFactoryInterface $uploadedFileDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactoryInterface $uploadedFileDataFactory

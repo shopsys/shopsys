@@ -13,9 +13,6 @@ use Shopsys\FrameworkBundle\Component\ClassExtension\Exception\DocBlockParserAmb
 
 class DocBlockParser
 {
-    /**
-     * @var \phpDocumentor\Reflection\DocBlockFactory
-     */
     protected DocBlockFactory $docBlockFactory;
 
     public function __construct()

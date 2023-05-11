@@ -14,60 +14,27 @@ class FeedExport
     protected const TEMPORARY_FILENAME_SUFFIX = '.tmp';
     protected const BATCH_SIZE = 1000;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Feed\FeedInterface
-     */
-    protected $feed;
+    protected FeedInterface $feed;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig
-     */
-    protected $domainConfig;
+    protected DomainConfig $domainConfig;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Feed\FeedRenderer
-     */
-    protected $feedRenderer;
+    protected FeedRenderer $feedRenderer;
 
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    protected $filesystem;
+    protected FilesystemOperator $filesystem;
 
-    /**
-     * @var \Symfony\Component\Filesystem\Filesystem
-     */
-    protected $localFilesystem;
+    protected Filesystem $localFilesystem;
 
-    /**
-     * @var \League\Flysystem\MountManager
-     */
-    protected $mountManager;
+    protected MountManager $mountManager;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var string
-     */
-    protected $feedFilepath;
+    protected string $feedFilepath;
 
-    /**
-     * @var string
-     */
-    protected $feedLocalFilepath;
+    protected string $feedLocalFilepath;
 
-    /**
-     * @var int|null
-     */
-    protected $lastSeekId;
+    protected ?int $lastSeekId = null;
 
-    /**
-     * @var bool
-     */
-    protected $finished = false;
+    protected bool $finished = false;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedInterface $feed

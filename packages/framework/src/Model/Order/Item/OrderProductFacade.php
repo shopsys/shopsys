@@ -12,35 +12,17 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class OrderProductFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator
-     */
-    protected $productHiddenRecalculator;
+    protected ProductHiddenRecalculator $productHiddenRecalculator;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator
-     */
-    protected $productSellingDeniedRecalculator;
+    protected ProductSellingDeniedRecalculator $productSellingDeniedRecalculator;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler
-     */
-    protected $productAvailabilityRecalculationScheduler;
+    protected ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade
-     */
-    protected $productVisibilityFacade;
+    protected ProductVisibilityFacade $productVisibilityFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Module\ModuleFacade
-     */
-    protected $moduleFacade;
+    protected ModuleFacade $moduleFacade;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

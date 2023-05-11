@@ -9,10 +9,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 
 class CartRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

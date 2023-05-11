@@ -16,10 +16,7 @@ class RedisCleanCacheCommand extends Command
      */
     protected static $defaultName = 'shopsys:redis:clean-cache';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Redis\RedisFacade
-     */
-    private $redisFacade;
+    private RedisFacade $redisFacade;
 
     /**
      * RedisCleanCacheCommand constructor.

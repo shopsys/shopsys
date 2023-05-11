@@ -16,10 +16,7 @@ class GenerateErrorPagesCommand extends Command
      */
     protected static $defaultName = 'shopsys:error-page:generate-all';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade
-     */
-    private $errorPagesFacade;
+    private ErrorPagesFacade $errorPagesFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade $errorPagesFacade

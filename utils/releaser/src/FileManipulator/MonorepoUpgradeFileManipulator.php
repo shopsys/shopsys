@@ -25,10 +25,7 @@ final class MonorepoUpgradeFileManipulator
      */
     private const FROM_TO_NEXT_DEV_LINK_PATTERN = '#^(?<start>\[From [\w.-]+ to )[\w.-]+-dev(?<middle>.*?\.\.\.).*?\n#m';
 
-    /**
-     * @var string
-     */
-    private $monorepoPackageName;
+    private string $monorepoPackageName;
 
     /**
      * @param string $monorepoPackageName

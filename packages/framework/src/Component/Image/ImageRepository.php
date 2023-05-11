@@ -7,10 +7,7 @@ use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 
 class ImageRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

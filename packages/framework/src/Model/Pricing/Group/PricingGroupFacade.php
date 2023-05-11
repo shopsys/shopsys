@@ -14,55 +14,25 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PricingGroupFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository
-     */
-    protected $pricingGroupRepository;
+    protected PricingGroupRepository $pricingGroupRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler
-     */
-    protected $productPriceRecalculationScheduler;
+    protected ProductPriceRecalculationScheduler $productPriceRecalculationScheduler;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade
-     */
-    protected $pricingGroupSettingFacade;
+    protected PricingGroupSettingFacade $pricingGroupSettingFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository
-     */
-    protected $productVisibilityRepository;
+    protected ProductVisibilityRepository $productVisibilityRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPriceRepository
-     */
-    protected $productCalculatedPriceRepository;
+    protected ProductCalculatedPriceRepository $productCalculatedPriceRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository
-     */
-    protected $customerUserRepository;
+    protected CustomerUserRepository $customerUserRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFactoryInterface
-     */
-    protected $pricingGroupFactory;
+    protected PricingGroupFactoryInterface $pricingGroupFactory;
 
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

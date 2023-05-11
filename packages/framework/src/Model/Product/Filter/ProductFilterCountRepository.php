@@ -11,15 +11,9 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductFilterCountRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository
-     */
-    protected $productFilterRepository;
+    protected ProductFilterRepository $productFilterRepository;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

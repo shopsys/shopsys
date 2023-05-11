@@ -10,10 +10,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class ZboziProductRepository
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
-     */
-    protected $productRepository;
+    protected ProductRepository $productRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository

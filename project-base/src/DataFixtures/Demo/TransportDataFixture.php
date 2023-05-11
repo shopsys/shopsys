@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Transport\TransportDataFactory;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
@@ -21,25 +22,13 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     public const TRANSPORT_PPL = 'transport_ppl';
     public const TRANSPORT_PERSONAL = 'transport_personal';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
-     */
-    private $transportFacade;
+    private TransportFacade $transportFacade;
 
-    /**
-     * @var \App\Model\Transport\TransportDataFactory
-     */
-    private $transportDataFactory;
+    private TransportDataFactory $transportDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
-     */
-    private $priceConverter;
+    private PriceConverter $priceConverter;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade

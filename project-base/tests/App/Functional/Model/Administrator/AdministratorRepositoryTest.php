@@ -16,7 +16,6 @@ class AdministratorRepositoryTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository
      * @inject
      */
     private AdministratorRepository $administratorRepository;

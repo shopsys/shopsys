@@ -4,30 +4,15 @@ namespace Shopsys\FrameworkBundle\Component\FileUpload;
 
 class FileForUpload
 {
-    /**
-     * @var string
-     */
-    protected $temporaryFilename;
+    protected string $temporaryFilename;
 
-    /**
-     * @var bool
-     */
-    protected $isImage;
+    protected bool $isImage;
 
-    /**
-     * @var string
-     */
-    protected $category;
+    protected string $category;
 
-    /**
-     * @var string|null
-     */
-    protected $targetDirectory;
+    protected ?string $targetDirectory = null;
 
-    /**
-     * @var int
-     */
-    protected $nameConventionType;
+    protected int $nameConventionType;
 
     /**
      * @param string $temporaryFilename

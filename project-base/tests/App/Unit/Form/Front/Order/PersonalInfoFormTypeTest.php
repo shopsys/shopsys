@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Unit\Form\Front\Order;
 
 use App\Form\Front\Order\PersonalInfoFormType;
+use PHPUnit\Framework\MockObject\MockObject;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
@@ -21,22 +22,22 @@ class PersonalInfoFormTypeTest extends TypeTestCase
     /**
      * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade|\PHPUnit\Framework\MockObject\MockObject
      */
-    private $countryFacade;
+    private CountryFacade|MockObject $countryFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade|\PHPUnit\Framework\MockObject\MockObject
      */
-    private $heurekaFacade;
+    private HeurekaFacade|MockObject $heurekaFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain|\PHPUnit\Framework\MockObject\MockObject
      */
-    private $domain;
+    private Domain|MockObject $domain;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser|\PHPUnit\Framework\MockObject\MockObject
      */
-    private $currentCustomerUser;
+    private CurrentCustomerUser|MockObject $currentCustomerUser;
 
     /**
      * @return array

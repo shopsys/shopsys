@@ -21,35 +21,17 @@ class RecalculationsCommand extends Command
      */
     protected static $defaultName = 'shopsys:recalculations';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository
-     */
-    private $categoryVisibilityRepository;
+    private CategoryVisibilityRepository $categoryVisibilityRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator
-     */
-    private $productHiddenRecalculator;
+    private ProductHiddenRecalculator $productHiddenRecalculator;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator
-     */
-    private $productPriceRecalculator;
+    private ProductPriceRecalculator $productPriceRecalculator;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade
-     */
-    private $productVisibilityFacade;
+    private ProductVisibilityFacade $productVisibilityFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator
-     */
-    private $productAvailabilityRecalculator;
+    private ProductAvailabilityRecalculator $productAvailabilityRecalculator;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator
-     */
-    private $productSellingDeniedRecalculator;
+    private ProductSellingDeniedRecalculator $productSellingDeniedRecalculator;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository $categoryVisibilityRepository

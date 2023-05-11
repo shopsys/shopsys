@@ -15,9 +15,6 @@ class MaintenanceModeSubscriber implements EventSubscriberInterface
 {
     public const MAINTENANCE_KEY = 'maintenance';
 
-    /**
-     * @var bool|null
-     */
     protected ?bool $isMaintenanceMode = null;
 
     /**

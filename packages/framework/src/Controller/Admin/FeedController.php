@@ -13,20 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FeedController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Feed\FeedFacade
-     */
-    protected $feedFacade;
+    protected FeedFacade $feedFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    protected $gridFactory;
+    protected GridFactory $gridFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedFacade $feedFacade

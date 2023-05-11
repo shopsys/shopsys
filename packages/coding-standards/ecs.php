@@ -128,6 +128,7 @@ use SlevomatCodingStandard\Sniffs\Namespaces\ReferenceUsedNamesOnlySniff;
 use SlevomatCodingStandard\Sniffs\Operators\DisallowEqualOperatorsSniff;
 use SlevomatCodingStandard\Sniffs\PHP\ForbiddenClassesSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\NullableTypeForNullDefaultValueSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSpacingSniff;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayListItemNewlineFixer;
 use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayOpenerAndCloserNewlineFixer;
@@ -322,6 +323,8 @@ return static function (ECSConfig $ecsConfig): void {
             'yield',
         ],
     ]);
+    // Slevomat Coding Standards
+    $ecsConfig->rule(PropertyTypeHintSniff::class);
     $ecsConfig->rule(DisallowEqualOperatorsSniff::class);
     $ecsConfig->rule(ValidClassNameSniff::class);
     $ecsConfig->rule(NoUselessElseFixer::class);
@@ -379,5 +382,8 @@ return static function (ECSConfig $ecsConfig): void {
         // rule breaks jms/translation-bundle as it fails on this usage: `[, $b] = $var`
         // won't do any changes after upgrade
         ListSyntaxFixer::class => null,
+        PropertyTypeHintSniff::class => [
+            '**Data.php',
+        ],
     ]);
 };

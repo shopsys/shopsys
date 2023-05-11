@@ -9,10 +9,7 @@ use Psr\Log\LoggerInterface;
 
 class NormalizingExtractorManager extends ExtractorManager
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Translation\MessageIdNormalizer
-     */
-    protected $messageIdNormalizer;
+    protected MessageIdNormalizer $messageIdNormalizer;
 
     /**
      * @param \JMS\TranslationBundle\Translation\Extractor\FileExtractor $extractor

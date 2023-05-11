@@ -7,20 +7,11 @@ use Symfony\Bridge\Monolog\Logger;
 
 class HeurekaCategoryCronModule implements SimpleCronModuleInterface
 {
-    /**
-     * @var \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDownloader
-     */
-    protected $heurekaCategoryDownloader;
+    protected HeurekaCategoryDownloader $heurekaCategoryDownloader;
 
-    /**
-     * @var \Symfony\Bridge\Monolog\Logger
-     */
-    protected $logger;
+    protected Logger $logger;
 
-    /**
-     * @var \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade
-     */
-    protected $heurekaCategoryFacade;
+    protected HeurekaCategoryFacade $heurekaCategoryFacade;
 
     /**
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDownloader $heurekaCategoryDownloader

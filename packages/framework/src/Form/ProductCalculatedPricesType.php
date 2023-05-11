@@ -12,15 +12,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductCalculatedPricesType extends AbstractType
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
-     */
-    private $pricingGroupFacade;
+    private PricingGroupFacade $pricingGroupFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
-     */
-    private $productFacade;
+    private ProductFacade $productFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade

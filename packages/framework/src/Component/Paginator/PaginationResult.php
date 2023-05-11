@@ -4,40 +4,25 @@ namespace Shopsys\FrameworkBundle\Component\Paginator;
 
 class PaginationResult
 {
-    /**
-     * @var int
-     */
-    protected $page;
+    protected int $page;
 
     /**
      * @var int|null
      */
-    protected $pageSize;
+    protected int $pageSize;
 
-    /**
-     * @var int
-     */
-    protected $totalCount;
+    protected int $totalCount;
 
     /**
      * @var mixed[]
      */
-    protected $results;
+    protected array $results;
 
-    /**
-     * @var int
-     */
-    protected $pageCount;
+    protected int $pageCount;
 
-    /**
-     * @var int
-     */
-    protected $fromItem;
+    protected int $fromItem;
 
-    /**
-     * @var int
-     */
-    protected $toItem;
+    protected int $toItem;
 
     /**
      * @param int $page

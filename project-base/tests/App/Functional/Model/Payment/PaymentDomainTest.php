@@ -18,13 +18,11 @@ class PaymentDomainTest extends TransactionFunctionalTestCase
     protected const SECOND_DOMAIN_ID = 2;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface
      * @inject
      */
     private PaymentDataFactoryInterface $paymentDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFactoryInterface
      * @inject
      */
     private PaymentFactoryInterface $paymentFactory;

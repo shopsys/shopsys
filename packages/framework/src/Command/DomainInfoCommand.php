@@ -31,10 +31,7 @@ class DomainInfoCommand extends Command
      */
     protected static $defaultName = 'shopsys:domains:info';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

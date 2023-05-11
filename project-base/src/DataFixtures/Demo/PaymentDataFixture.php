@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Payment\PaymentDataFactory;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
@@ -21,25 +22,13 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     public const PAYMENT_CASH_ON_DELIVERY = 'payment_cash_on_delivery';
     public const PAYMENT_CASH = 'payment_cash';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade
-     */
-    private $paymentFacade;
+    private PaymentFacade $paymentFacade;
 
-    /**
-     * @var \App\Model\Payment\PaymentDataFactory
-     */
-    private $paymentDataFactory;
+    private PaymentDataFactory $paymentDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
-     */
-    private $priceConverter;
+    private PriceConverter $priceConverter;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade

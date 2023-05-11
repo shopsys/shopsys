@@ -11,10 +11,7 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class FilesIdsToFilesTransformer implements DataTransformerInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade
-     */
-    protected $uploadedFileFacade;
+    protected UploadedFileFacade $uploadedFileFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade

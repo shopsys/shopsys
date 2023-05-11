@@ -9,15 +9,9 @@ use Twig\TwigFunction;
 
 class ShopInfoExtension extends AbstractExtension
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\ShopInfo\ShopInfoSettingFacade
-     */
-    protected $shopInfoSettingFacade;
+    protected ShopInfoSettingFacade $shopInfoSettingFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\ShopInfo\ShopInfoSettingFacade $shopInfoSettingFacade

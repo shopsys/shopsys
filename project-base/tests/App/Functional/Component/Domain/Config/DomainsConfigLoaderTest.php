@@ -13,7 +13,6 @@ use Tests\App\Test\FunctionalTestCase;
 class DomainsConfigLoaderTest extends FunctionalTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigLoader
      * @inject
      */
     private DomainsConfigLoader $domainsConfigLoader;

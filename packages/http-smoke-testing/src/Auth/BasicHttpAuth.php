@@ -6,15 +6,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BasicHttpAuth implements AuthInterface
 {
-    /**
-     * @var string
-     */
-    private $username;
+    private string $username;
 
-    /**
-     * @var string|null
-     */
-    private $password;
+    private ?string $password = null;
 
     /**
      * @param string $username

@@ -14,10 +14,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class MaintenanceModeCommand extends Command
 {
-    /**
-     * @var string
-     */
-    protected static $defaultName = 'deploy:maintenance';
+    protected static string $defaultName = 'deploy:maintenance';
 
     /**
      * @var string

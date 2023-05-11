@@ -11,15 +11,9 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class AdministratorRolesChangedFacade
 {
-    /**
-     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
-     */
-    protected $tokenStorage;
+    protected TokenStorageInterface $tokenStorage;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade
-     */
-    protected $administratorFacade;
+    protected AdministratorFacade $administratorFacade;
 
     /**
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage

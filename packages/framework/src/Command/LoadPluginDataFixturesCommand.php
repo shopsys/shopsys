@@ -16,10 +16,7 @@ class LoadPluginDataFixturesCommand extends Command
      */
     protected static $defaultName = 'shopsys:plugin-data-fixtures:load';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Plugin\PluginDataFixtureFacade
-     */
-    private $pluginDataFixtureFacade;
+    private PluginDataFixtureFacade $pluginDataFixtureFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginDataFixtureFacade $pluginDataFixtureFacade

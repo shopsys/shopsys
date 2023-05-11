@@ -13,15 +13,9 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class FrontendCustomerUserProvider implements UserProviderInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository
-     */
-    protected $customerUserRepository;
+    protected CustomerUserRepository $customerUserRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository

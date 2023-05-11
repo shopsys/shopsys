@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures\Performance;
 
 use App\DataFixtures\Demo\CountryDataFixture;
+use App\Model\Customer\User\CustomerUserDataFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Generator as Faker;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
@@ -21,60 +22,27 @@ class CustomerUserDataFixture
 {
     public const FIRST_PERFORMANCE_USER = 'first_performance_user';
 
-    /**
-     * @var int
-     */
-    private $userCountPerDomain;
+    private int $userCountPerDomain;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
+    private EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade
-     */
-    private $sqlLoggerFacade;
+    private SqlLoggerFacade $sqlLoggerFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
-     */
-    private $customerUserEditFacade;
+    private CustomerUserFacade $customerUserEditFacade;
 
-    /**
-     * @var \App\Model\Customer\User\CustomerUserDataFactory
-     */
-    private $customerUserDataFactory;
+    private CustomerUserDataFactory $customerUserDataFactory;
 
-    /**
-     * @var \Faker\Generator
-     */
-    private $faker;
+    private Faker $faker;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade
-     */
-    private $persistentReferenceFacade;
+    private PersistentReferenceFacade $persistentReferenceFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory
-     */
-    private $progressBarFactory;
+    private ProgressBarFactory $progressBarFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory
-     */
-    private $customerUserUpdateDataFactory;
+    private CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory
-     */
-    private $deliveryAddressDataFactory;
+    private DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory;
 
     /**
      * @param int $userCountPerDomain

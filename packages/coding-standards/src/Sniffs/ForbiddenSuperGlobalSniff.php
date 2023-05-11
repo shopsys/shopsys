@@ -17,7 +17,7 @@ final class ForbiddenSuperGlobalSniff implements Sniff
     /**
      * @var string[]
      */
-    private $superglobalVariables = [
+    private array $superglobalVariables = [
         '$_COOKIE', '$_GET', '$_FILES', '$_POST', '$_REQUEST', '$_SERVER', '$_SESSION', '$_ENV', '$GLOBALS',
     ];
 

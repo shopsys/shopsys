@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;

@@ -9,10 +9,7 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class CategoriesIdsToCategoriesTransformer implements DataTransformerInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryRepository
-     */
-    protected $categoryRepository;
+    protected CategoryRepository $categoryRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository

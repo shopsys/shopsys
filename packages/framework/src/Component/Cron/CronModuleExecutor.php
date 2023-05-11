@@ -21,13 +21,9 @@ class CronModuleExecutor
 
     /**
      * @deprecated This will be removed in next major version
-     * @var \DateTimeImmutable|null
      */
-    protected $canRunTo;
+    protected ?DateTimeImmutable $canRunTo = null;
 
-    /**
-     * @var \DateTimeImmutable
-     */
     protected DateTimeImmutable $startedAt;
 
     /**

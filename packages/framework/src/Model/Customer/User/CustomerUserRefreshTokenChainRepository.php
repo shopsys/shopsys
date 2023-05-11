@@ -9,10 +9,7 @@ use Doctrine\Persistence\ObjectRepository;
 
 class CustomerUserRefreshTokenChainRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager

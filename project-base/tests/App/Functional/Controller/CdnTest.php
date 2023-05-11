@@ -10,9 +10,6 @@ use Tests\App\Test\FunctionalTestCase;
 
 class CdnTest extends FunctionalTestCase
 {
-    /**
-     * @var string|null
-     */
     private ?string $originalCdnDomain;
 
     public function testImageHasCdnUrl(): void
@@ -47,6 +44,7 @@ class CdnTest extends FunctionalTestCase
             'product',
             null,
         );
+
         foreach ($additionalImagesData as $additionalImageData) {
             $this->assertStringStartsWith($cdnDomain, $additionalImageData->url);
         }
@@ -57,6 +55,7 @@ class CdnTest extends FunctionalTestCase
             null,
             null,
         );
+
         foreach ($additionalImagesData as $additionalImageData) {
             $this->assertStringStartsWith($cdnDomain, $additionalImageData->url);
         }

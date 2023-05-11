@@ -7,20 +7,11 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 
 class HeurekaCategoryFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryRepository
-     */
-    protected $heurekaCategoryRepository;
+    protected HeurekaCategoryRepository $heurekaCategoryRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryRepository
-     */
-    protected $categoryRepository;
+    protected CategoryRepository $categoryRepository;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

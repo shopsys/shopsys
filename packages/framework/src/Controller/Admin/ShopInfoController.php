@@ -10,15 +10,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ShopInfoController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    protected $adminDomainTabsFacade;
+    protected AdminDomainTabsFacade $adminDomainTabsFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\ShopInfo\ShopInfoSettingFacade
-     */
-    protected $shopInfoSettingFacade;
+    protected ShopInfoSettingFacade $shopInfoSettingFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\ShopInfo\ShopInfoSettingFacade $shopInfoSettingFacade

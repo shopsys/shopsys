@@ -7,7 +7,7 @@ class DateTimeFormatPatternRepository
     /**
      * @var \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatPattern[]
      */
-    protected $dateTimeFormatPatterns;
+    protected array $dateTimeFormatPatterns;
 
     public function __construct()
     {

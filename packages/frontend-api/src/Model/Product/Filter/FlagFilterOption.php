@@ -8,19 +8,10 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 
 class FlagFilterOption
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
-     */
     public Flag $flag;
 
-    /**
-     * @var int
-     */
     public int $count;
 
-    /**
-     * @var bool
-     */
     public bool $isAbsolute;
 
     /**

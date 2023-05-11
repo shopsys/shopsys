@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Product\ProductDataFactory;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
@@ -12,15 +13,9 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 
 class ProductAccessoriesDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    /**
-     * @var \App\Model\Product\ProductDataFactory
-     */
-    private $productDataFactory;
+    private ProductDataFactory $productDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
-     */
-    private $productFacade;
+    private ProductFacade $productFacade;
 
     /**
      * @param \App\Model\Product\ProductDataFactory $productDataFactory

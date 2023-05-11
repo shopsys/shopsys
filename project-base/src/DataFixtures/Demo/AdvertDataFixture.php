@@ -15,15 +15,9 @@ use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
 
 class AdvertDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Advert\AdvertFacade
-     */
-    private $advertFacade;
+    private AdvertFacade $advertFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory
-     */
-    private $advertDataFactory;
+    private AdvertDataFactoryInterface $advertDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertFacade $advertFacade

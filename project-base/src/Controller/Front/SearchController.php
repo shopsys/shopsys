@@ -14,15 +14,9 @@ class SearchController extends FrontBaseController
     protected const AUTOCOMPLETE_CATEGORY_LIMIT = 3;
     protected const AUTOCOMPLETE_PRODUCT_LIMIT = 5;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
-     */
-    private $categoryFacade;
+    private CategoryFacade $categoryFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade
-     */
-    private $productOnCurrentDomainFacade;
+    private ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade

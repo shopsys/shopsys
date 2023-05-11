@@ -19,15 +19,9 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class TransportAndPaymentFormType extends AbstractType
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
-     */
-    private $transportFacade;
+    private TransportFacade $transportFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade
-     */
-    private $paymentFacade;
+    private PaymentFacade $paymentFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade

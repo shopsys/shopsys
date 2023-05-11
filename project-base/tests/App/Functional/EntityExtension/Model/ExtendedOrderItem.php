@@ -14,7 +14,6 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 class ExtendedOrderItem extends OrderItem
 {
     /**
-     * @var string|null
      * @ORM\Column(type="string", nullable=true)
      */
     protected ?string $stringField;

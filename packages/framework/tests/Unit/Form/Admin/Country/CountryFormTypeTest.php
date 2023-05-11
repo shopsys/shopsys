@@ -24,20 +24,11 @@ use Symfony\Component\Validator\Validation;
 
 class CountryFormTypeTest extends TypeTestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
-    private $localization;
+    private Localization $localization;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade
-     */
-    private $countryFacade;
+    private CountryFacade $countryFacade;
 
     /**
      * @return array

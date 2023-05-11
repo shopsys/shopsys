@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 class ParameterTransactionFunctionalTestCase extends TransactionFunctionalTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade
      * @inject
      */
     protected ParameterFacade $parameterFacade;

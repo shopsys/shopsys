@@ -13,40 +13,19 @@ class OrderItemFacade
 {
     protected const DEFAULT_PRODUCT_QUANTITY = 1;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderRepository
-     */
-    protected $orderRepository;
+    protected OrderRepository $orderRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
-     */
-    protected $productRepository;
+    protected ProductRepository $productRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
-     */
-    protected $productPriceCalculationForCustomerUser;
+    protected ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation
-     */
-    protected $orderPriceCalculation;
+    protected OrderPriceCalculation $orderPriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface
-     */
-    protected $orderItemFactory;
+    protected OrderItemFactoryInterface $orderItemFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

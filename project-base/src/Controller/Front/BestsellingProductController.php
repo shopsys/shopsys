@@ -12,20 +12,11 @@ use Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingPr
 
 class BestsellingProductController extends FrontBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade
-     */
-    private $cachedBestsellingProductFacade;
+    private CachedBestsellingProductFacade $cachedBestsellingProductFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    private $currentCustomerUser;
+    private CurrentCustomerUser $currentCustomerUser;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade $cachedBestsellingProductFacade

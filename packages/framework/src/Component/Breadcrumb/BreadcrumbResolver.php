@@ -12,7 +12,7 @@ class BreadcrumbResolver
     /**
      * @var \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface[]
      */
-    protected $breadcrumbGeneratorsByRouteName;
+    protected array $breadcrumbGeneratorsByRouteName;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface[] $breadcrumbGenerators

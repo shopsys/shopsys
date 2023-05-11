@@ -8,25 +8,13 @@ use Doctrine\ORM\Tools\SchemaTool;
 
 class DatabaseSchemaFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\MigrationBundle\Component\Doctrine\SchemaDiffFilter
-     */
-    protected $schemaDiffFilter;
+    protected SchemaDiffFilter $schemaDiffFilter;
 
-    /**
-     * @var \Doctrine\DBAL\Schema\Comparator
-     */
-    protected $comparator;
+    protected Comparator $comparator;
 
-    /**
-     * @var \Doctrine\ORM\Tools\SchemaTool
-     */
-    protected $schemaTool;
+    protected SchemaTool $schemaTool;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

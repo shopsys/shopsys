@@ -11,19 +11,10 @@ use Roave\BetterReflection\Reflection\ReflectionMethod;
 
 class MethodAnnotationsFactory
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap
-     */
     protected AnnotationsReplacementsMap $annotationsReplacementsMap;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer
-     */
     protected AnnotationsReplacer $annotationsReplacer;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ClassExtension\DocBlockParser
-     */
     protected DocBlockParser $docBlockParser;
 
     /**

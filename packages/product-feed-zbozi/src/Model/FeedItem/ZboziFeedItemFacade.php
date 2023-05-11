@@ -11,35 +11,17 @@ use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductRepository;
 
 class ZboziFeedItemFacade
 {
-    /**
-     * @var \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductRepository
-     */
-    protected $zboziProductRepository;
+    protected ZboziProductRepository $zboziProductRepository;
 
-    /**
-     * @var \Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItemFactory
-     */
-    protected $feedItemFactory;
+    protected ZboziFeedItemFactory $feedItemFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade
-     */
-    protected $pricingGroupSettingFacade;
+    protected PricingGroupSettingFacade $pricingGroupSettingFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader
-     */
-    protected $productUrlsBatchLoader;
+    protected ProductUrlsBatchLoader $productUrlsBatchLoader;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader
-     */
-    protected $productParametersBatchLoader;
+    protected ProductParametersBatchLoader $productParametersBatchLoader;
 
-    /**
-     * @var \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainFacade
-     */
-    protected $zboziProductDomainFacade;
+    protected ZboziProductDomainFacade $zboziProductDomainFacade;
 
     /**
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductRepository $zboziProductRepository

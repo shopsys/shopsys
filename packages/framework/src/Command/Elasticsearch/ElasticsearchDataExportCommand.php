@@ -23,10 +23,7 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
      */
     protected static $defaultName = 'shopsys:elasticsearch:data-export';
 
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry $indexRegistry

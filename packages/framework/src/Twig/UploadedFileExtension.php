@@ -17,24 +17,12 @@ class UploadedFileExtension extends AbstractExtension
 {
     protected const FILE_NOT_FOUND_ICON_TYPE = 'not-found';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade
-     */
-    protected $uploadedFileFacade;
+    protected UploadedFileFacade $uploadedFileFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailExtension
-     */
-    protected $fileThumbnailExtension;
+    protected FileThumbnailExtension $fileThumbnailExtension;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator
-     */
     protected UploadedFileLocator $uploadedFileLocator;
 
     /**

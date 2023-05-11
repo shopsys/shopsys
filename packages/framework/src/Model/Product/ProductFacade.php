@@ -32,115 +32,49 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 
 class ProductFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
-     */
-    protected $productRepository;
+    protected ProductRepository $productRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade
-     */
-    protected $productVisibilityFacade;
+    protected ProductVisibilityFacade $productVisibilityFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository
-     */
-    protected $parameterRepository;
+    protected ParameterRepository $parameterRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
-     */
-    protected $imageFacade;
+    protected ImageFacade $imageFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler
-     */
-    protected $productPriceRecalculationScheduler;
+    protected ProductPriceRecalculationScheduler $productPriceRecalculationScheduler;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository
-     */
-    protected $pricingGroupRepository;
+    protected PricingGroupRepository $pricingGroupRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade
-     */
-    protected $productManualInputPriceFacade;
+    protected ProductManualInputPriceFacade $productManualInputPriceFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler
-     */
-    protected $productAvailabilityRecalculationScheduler;
+    protected ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    protected $friendlyUrlFacade;
+    protected FriendlyUrlFacade $friendlyUrlFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator
-     */
-    protected $productHiddenRecalculator;
+    protected ProductHiddenRecalculator $productHiddenRecalculator;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator
-     */
-    protected $productSellingDeniedRecalculator;
+    protected ProductSellingDeniedRecalculator $productSellingDeniedRecalculator;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository
-     */
-    protected $productAccessoryRepository;
+    protected ProductAccessoryRepository $productAccessoryRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade
-     */
-    protected $pluginCrudExtensionFacade;
+    protected PluginCrudExtensionFacade $pluginCrudExtensionFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface
-     */
-    protected $productFactory;
+    protected ProductFactoryInterface $productFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface
-     */
-    protected $productAccessoryFactory;
+    protected ProductAccessoryFactoryInterface $productAccessoryFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface
-     */
-    protected $productCategoryDomainFactory;
+    protected ProductCategoryDomainFactoryInterface $productCategoryDomainFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface
-     */
-    protected $productParameterValueFactory;
+    protected ProductParameterValueFactoryInterface $productParameterValueFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface
-     */
-    protected $productVisibilityFactory;
+    protected ProductVisibilityFactoryInterface $productVisibilityFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation
-     */
-    protected $productPriceCalculation;
+    protected ProductPriceCalculation $productPriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler
-     */
-    protected $productExportScheduler;
+    protected ProductExportScheduler $productExportScheduler;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

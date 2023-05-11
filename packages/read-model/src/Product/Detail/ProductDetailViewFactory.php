@@ -23,55 +23,25 @@ use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface;
 
 class ProductDetailViewFactory
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade
-     */
-    protected $seoSettingFacade;
+    protected SeoSettingFacade $seoSettingFacade;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface
-     */
-    protected $imageViewFacade;
+    protected ImageViewFacadeInterface $imageViewFacade;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface
-     */
-    protected $productActionViewFacade;
+    protected ProductActionViewFacadeInterface $productActionViewFacade;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Brand\BrandViewFacadeInterface
-     */
-    protected $brandViewFacade;
+    protected BrandViewFacadeInterface $brandViewFacade;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Parameter\ParameterViewFacadeInterface
-     */
-    protected $parameterViewFacade;
+    protected ParameterViewFacadeInterface $parameterViewFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade
-     */
-    protected $productCachedAttributesFacade;
+    protected ProductCachedAttributesFacade $productCachedAttributesFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
-     */
-    protected $categoryFacade;
+    protected CategoryFacade $categoryFacade;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface
-     */
-    protected $listedProductViewFacade;
+    protected ListedProductViewFacadeInterface $listedProductViewFacade;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductVariantsViewFacadeInterface
-     */
-    protected $listedProductVariantsViewFacade;
+    protected ListedProductVariantsViewFacadeInterface $listedProductVariantsViewFacade;
 
     /**
      * @param \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface $imageViewFacade

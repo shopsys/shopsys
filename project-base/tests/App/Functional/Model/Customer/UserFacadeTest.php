@@ -20,13 +20,11 @@ class UserFacadeTest extends TransactionFunctionalTestCase
     protected const EXISTING_EMAIL_ON_DOMAIN_2 = 'no-reply.4@shopsys.com';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
      * @inject
      */
     protected CustomerUserFacade $customerUserFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface
      * @inject
      */
     protected CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory;

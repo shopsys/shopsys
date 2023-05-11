@@ -11,20 +11,11 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 
 class ProductFilterCountDataElasticsearchRepository
 {
-    /**
-     * @var \Elasticsearch\Client
-     */
-    protected $client;
+    protected Client $client;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer
-     */
-    protected $productFilterDataToQueryTransformer;
+    protected ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Search\AggregationResultToProductFilterCountDataTransformer
-     */
-    protected $aggregationResultToCountDataTransformer;
+    protected AggregationResultToProductFilterCountDataTransformer $aggregationResultToCountDataTransformer;
 
     /**
      * @param \Elasticsearch\Client $client

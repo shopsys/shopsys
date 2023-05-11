@@ -7,10 +7,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception\CurrencyNotFoundExc
 
 class CurrencyRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

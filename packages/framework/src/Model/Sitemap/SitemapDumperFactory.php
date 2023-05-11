@@ -12,34 +12,16 @@ class SitemapDumperFactory
 {
     protected const MAX_ITEMS_IN_FILE = 50000;
 
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
-    /**
-     * @var \Symfony\Component\Filesystem\Filesystem
-     */
-    protected $localFilesystem;
+    protected Filesystem $localFilesystem;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Sitemap\SitemapFilePrefixer
-     */
-    protected $sitemapFilePrefixer;
+    protected SitemapFilePrefixer $sitemapFilePrefixer;
 
-    /**
-     * @var \League\Flysystem\MountManager
-     */
-    protected $mountManager;
+    protected MountManager $mountManager;
 
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    protected $filesystem;
+    protected FilesystemOperator $filesystem;
 
-    /**
-     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
-     */
     protected UrlGeneratorInterface $urlGenerator;
 
     /**

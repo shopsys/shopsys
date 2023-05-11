@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Component\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException;
 use Shopsys\FrameworkBundle\Component\Grid\Exception\EmptyGridIdException;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface;
+use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
@@ -16,145 +17,82 @@ class Grid
     protected const DEFAULT_VIEW_THEME = '@ShopsysFramework/Admin/Grid/Grid.html.twig';
     protected const DEFAULT_LIMIT = 30;
 
-    /**
-     * @var string
-     */
-    protected $id;
+    protected string $id;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Grid\Column[]
      */
-    protected $columnsById = [];
+    protected array $columnsById = [];
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Grid\ActionColumn[]
      */
-    protected $actionColumns = [];
+    protected array $actionColumns = [];
 
-    /**
-     * @var bool
-     */
-    protected $enablePaging = false;
+    protected bool $enablePaging = false;
 
-    /**
-     * @var bool
-     */
-    protected $enableSelecting = false;
+    protected bool $enableSelecting = false;
 
     /**
      * @var int[]
      */
-    protected $allowedLimits = [30, 100, 200, 500];
+    protected array $allowedLimits = [30, 100, 200, 500];
 
-    /**
-     * @var int
-     */
-    protected $limit;
+    protected int $limit;
 
-    /**
-     * @var bool
-     */
-    protected $isLimitFromRequest = false;
+    protected bool $isLimitFromRequest = false;
 
-    /**
-     * @var int
-     */
-    protected $page = 1;
+    protected int $page = 1;
 
-    /**
-     * @var int|null
-     */
-    protected $totalCount;
+    protected ?int $totalCount = null;
 
-    /**
-     * @var int|null
-     */
-    protected $pageCount;
+    protected ?int $pageCount = null;
 
-    /**
-     * @var string|null
-     */
-    protected $orderSourceColumnName;
+    protected ?string $orderSourceColumnName = null;
 
-    /**
-     * @var string|null
-     */
-    protected $orderDirection;
+    protected ?string $orderDirection = null;
 
-    /**
-     * @var bool
-     */
-    protected $isOrderFromRequest = false;
+    protected bool $isOrderFromRequest = false;
 
     /**
      * @var mixed[]
      */
-    protected $rows = [];
+    protected array $rows = [];
 
-    /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
-     */
-    protected $requestStack;
+    protected RequestStack $requestStack;
 
-    /**
-     * @var \Symfony\Component\Routing\RouterInterface
-     */
-    protected $router;
+    protected RouterInterface $router;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector
-     */
-    protected $routeCsrfProtector;
+    protected RouteCsrfProtector $routeCsrfProtector;
 
-    /**
-     * @var \Twig\Environment
-     */
-    protected $twig;
+    protected Environment $twig;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface
-     */
-    protected $dataSource;
+    protected DataSourceInterface $dataSource;
 
-    /**
-     * @var string
-     */
-    protected $actionColumnClassAttribute = '';
+    protected string $actionColumnClassAttribute = '';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface|null
-     */
-    protected $inlineEditService;
+    protected ?GridInlineEditInterface $inlineEditService = null;
 
-    /**
-     * @var string|null
-     */
-    protected $orderingEntityClass;
+    protected ?string $orderingEntityClass = null;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
-    protected $paginationResults;
+    protected PaginationResult $paginationResults;
 
     /**
      * @var string|string[]|null
      */
-    protected $viewTheme;
+    protected string|array|null $viewTheme = null;
 
     /**
      * @var mixed[]
      */
-    protected $viewTemplateParameters;
+    protected array $viewTemplateParameters;
 
     /**
      * @var int[]
      */
-    protected $selectedRowIds;
+    protected array $selectedRowIds;
 
-    /**
-     * @var bool
-     */
-    protected $multipleDragAndDrop;
+    protected bool $multipleDragAndDrop;
 
     /**
      * @param string $id

@@ -11,20 +11,11 @@ use Twig\TwigFunction;
 
 class ProductVisibilityExtension extends AbstractExtension
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository
-     */
-    protected $productVisibilityRepository;
+    protected ProductVisibilityRepository $productVisibilityRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade
-     */
-    protected $pricingGroupSettingFacade;
+    protected PricingGroupSettingFacade $pricingGroupSettingFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository

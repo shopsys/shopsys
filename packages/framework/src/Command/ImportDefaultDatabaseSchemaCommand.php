@@ -16,10 +16,7 @@ class ImportDefaultDatabaseSchemaCommand extends Command
      */
     protected static $defaultName = 'shopsys:schema:import-default';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Doctrine\DatabaseSchemaFacade
-     */
-    private $databaseSchemaFacade;
+    private DatabaseSchemaFacade $databaseSchemaFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\DatabaseSchemaFacade $databaseSchemaFacade

@@ -9,20 +9,11 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductManualInputPriceFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository
-     */
-    protected $productManualInputPriceRepository;
+    protected ProductManualInputPriceRepository $productManualInputPriceRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFactoryInterface
-     */
-    protected $productManualInputPriceFactory;
+    protected ProductManualInputPriceFactoryInterface $productManualInputPriceFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

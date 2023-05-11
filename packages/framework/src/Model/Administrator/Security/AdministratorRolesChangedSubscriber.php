@@ -12,20 +12,11 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class AdministratorRolesChangedSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var bool
-     */
-    protected $rolesChanged;
+    protected bool $rolesChanged;
 
-    /**
-     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
-     */
-    protected $tokenStorage;
+    protected TokenStorageInterface $tokenStorage;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade
-     */
-    protected $administratorRolesChangedFacade;
+    protected AdministratorRolesChangedFacade $administratorRolesChangedFacade;
 
     /**
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage

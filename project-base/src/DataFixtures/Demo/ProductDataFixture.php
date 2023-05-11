@@ -6,6 +6,7 @@ namespace App\DataFixtures\Demo;
 
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
+use App\Model\Product\ProductDataFactory;
 use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,70 +30,34 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 {
     public const PRODUCT_PREFIX = 'product_';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
-     */
-    private $productFacade;
+    private ProductFacade $productFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade
-     */
-    private $productVariantFacade;
+    private ProductVariantFacade $productVariantFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
-     */
-    private $pricingGroupFacade;
+    private PricingGroupFacade $pricingGroupFacade;
 
-    /**
-     * @var \App\Model\Product\ProductDataFactory
-     */
-    private $productDataFactory;
+    private ProductDataFactory $productDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory
-     */
-    private $productParameterValueDataFactory;
+    private ProductParameterValueDataFactory $productParameterValueDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory
-     */
-    private $parameterValueDataFactory;
+    private ParameterValueDataFactory $parameterValueDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade
-     */
-    private $parameterFacade;
+    private ParameterFacade $parameterFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactory
-     */
-    private $parameterDataFactory;
+    private ParameterDataFactory $parameterDataFactory;
 
-    /**
-     * @var int
-     */
-    private $productNo = 1;
+    private int $productNo = 1;
 
     /**
      * @var int[]
      */
-    private $productIdsByCatnum = [];
+    private array $productIdsByCatnum = [];
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
-     */
-    private $priceConverter;
+    private PriceConverter $priceConverter;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
+    private EntityManagerInterface $em;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade

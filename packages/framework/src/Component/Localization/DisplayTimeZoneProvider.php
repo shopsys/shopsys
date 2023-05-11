@@ -8,10 +8,7 @@ use DateTimeZone;
 
 class DisplayTimeZoneProvider implements DisplayTimeZoneProviderInterface
 {
-    /**
-     * @var \DateTimeZone
-     */
-    protected $displayTimeZone;
+    protected DateTimeZone $displayTimeZone;
 
     /**
      * @param string|null $timeZoneString

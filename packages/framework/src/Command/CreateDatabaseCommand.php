@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Command;
 
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
@@ -19,15 +20,9 @@ class CreateDatabaseCommand extends Command
      */
     protected static $defaultName = 'shopsys:database:create';
 
-    /**
-     * @var \Doctrine\DBAL\Connection|null
-     */
-    private $connection;
+    private ?Connection $connection = null;
 
-    /**
-     * @var \Doctrine\Persistence\ManagerRegistry
-     */
-    private $doctrineRegistry;
+    private ManagerRegistry $doctrineRegistry;
 
     /**
      * @param \Doctrine\Persistence\ManagerRegistry $managerRegistry

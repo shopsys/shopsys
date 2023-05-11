@@ -12,10 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CronWatchCommand extends Command
 {
-    /**
-     * @var string
-     */
-    protected static $defaultName = 'deploy:cron:watch';
+    protected static string $defaultName = 'deploy:cron:watch';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade

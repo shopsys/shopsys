@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Order\OrderDataFactory;
 use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -22,35 +23,17 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
 {
     public const ORDER_PREFIX = 'order_';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository
-     */
-    private $customerUserRepository;
+    private CustomerUserRepository $customerUserRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
-     */
-    private $orderFacade;
+    private OrderFacade $orderFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory
-     */
-    private $orderPreviewFactory;
+    private OrderPreviewFactory $orderPreviewFactory;
 
-    /**
-     * @var \App\Model\Order\OrderDataFactory
-     */
-    private $orderDataFactory;
+    private OrderDataFactory $orderDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    private $currencyFacade;
+    private CurrencyFacade $currencyFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository

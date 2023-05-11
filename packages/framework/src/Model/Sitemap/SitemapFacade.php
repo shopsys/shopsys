@@ -8,35 +8,17 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 
 class SitemapFacade
 {
-    /**
-     * @var string
-     */
-    protected $sitemapsDir;
+    protected string $sitemapsDir;
 
-    /**
-     * @var string
-     */
-    protected $sitemapsUrlPrefix;
+    protected string $sitemapsUrlPrefix;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumperFactory
-     */
-    protected $domainSitemapDumperFactory;
+    protected SitemapDumperFactory $domainSitemapDumperFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Sitemap\SitemapRepository
-     */
-    protected $sitemapRepository;
+    protected SitemapRepository $sitemapRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade
-     */
-    protected $pricingGroupSettingFacade;
+    protected PricingGroupSettingFacade $pricingGroupSettingFacade;
 
     /**
      * @param mixed $sitemapsDir

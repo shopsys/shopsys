@@ -8,10 +8,7 @@ use Twig\TwigFunction;
 
 class CookiesExtension extends AbstractExtension
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade
-     */
-    protected $cookiesFacade;
+    protected CookiesFacade $cookiesFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade $cookiesFacade

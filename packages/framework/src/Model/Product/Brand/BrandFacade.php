@@ -12,40 +12,19 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class BrandFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository
-     */
-    protected $brandRepository;
+    protected BrandRepository $brandRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
-     */
-    protected $imageFacade;
+    protected ImageFacade $imageFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    protected $friendlyUrlFacade;
+    protected FriendlyUrlFacade $friendlyUrlFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFactoryInterface
-     */
-    protected $brandFactory;
+    protected BrandFactoryInterface $brandFactory;
 
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

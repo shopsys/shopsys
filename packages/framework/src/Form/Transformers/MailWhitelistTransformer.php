@@ -10,7 +10,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 class MailWhitelistTransformer implements DataTransformerInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function transform($value)
     {
@@ -20,7 +20,7 @@ class MailWhitelistTransformer implements DataTransformerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function reverseTransform($value)
     {

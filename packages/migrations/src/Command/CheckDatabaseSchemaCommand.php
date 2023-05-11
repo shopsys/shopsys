@@ -19,10 +19,7 @@ class CheckDatabaseSchemaCommand extends Command
      */
     protected static $defaultName = 'shopsys:migrations:check-schema';
 
-    /**
-     * @var \Shopsys\MigrationBundle\Component\Doctrine\DatabaseSchemaFacade
-     */
-    protected $databaseSchemaFacade;
+    protected DatabaseSchemaFacade $databaseSchemaFacade;
 
     /**
      * @param \Shopsys\MigrationBundle\Component\Doctrine\DatabaseSchemaFacade $databaseSchemaFacade

@@ -7,15 +7,9 @@ use Shopsys\FrameworkBundle\Model\Module\Exception\UnsupportedModuleException;
 
 class EnabledModuleRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Module\ModuleList
-     */
-    protected $moduleList;
+    protected ModuleList $moduleList;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

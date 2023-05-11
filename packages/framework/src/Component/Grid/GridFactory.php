@@ -9,25 +9,13 @@ use Twig\Environment;
 
 class GridFactory
 {
-    /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
-     */
-    protected $requestStack;
+    protected RequestStack $requestStack;
 
-    /**
-     * @var \Symfony\Component\Routing\RouterInterface
-     */
-    protected $router;
+    protected RouterInterface $router;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector
-     */
-    protected $routeCsrfProtector;
+    protected RouteCsrfProtector $routeCsrfProtector;
 
-    /**
-     * @var \Twig\Environment
-     */
-    protected $twig;
+    protected Environment $twig;
 
     /**
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack

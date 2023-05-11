@@ -21,55 +21,25 @@ use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory;
 
 class ProductDetailViewElasticsearchFactory
 {
-    /**
-     * @var \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface
-     */
-    protected $imageViewFacade;
+    protected ImageViewFacadeInterface $imageViewFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    protected $currentCustomerUser;
+    protected CurrentCustomerUser $currentCustomerUser;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory
-     */
-    protected $productActionViewFactory;
+    protected ProductActionViewFactory $productActionViewFactory;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Parameter\ParameterViewFactory
-     */
-    protected $parameterViewFactory;
+    protected ParameterViewFactory $parameterViewFactory;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Brand\BrandViewFactory
-     */
-    protected $brandViewFactory;
+    protected BrandViewFactory $brandViewFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade
-     */
-    protected $seoSettingFacade;
+    protected SeoSettingFacade $seoSettingFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider
-     */
-    protected $productElasticsearchProvider;
+    protected ProductElasticsearchProvider $productElasticsearchProvider;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory
-     */
-    protected $listedProductViewFactory;
+    protected ListedProductViewFactory $listedProductViewFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory
-     */
-    protected $priceFactory;
+    protected PriceFactory $priceFactory;
 
     /**
      * @param \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface $imageViewFacade

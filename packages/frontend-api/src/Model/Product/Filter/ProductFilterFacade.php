@@ -14,24 +14,12 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 
 class ProductFilterFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
     protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterDataMapper
-     */
     protected ProductFilterDataMapper $productFilterDataMapper;
 
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer
-     */
     protected ProductFilterNormalizer $productFilterNormalizer;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory
-     */
     protected ProductFilterConfigFactory $productFilterConfigFactory;
 
     /**

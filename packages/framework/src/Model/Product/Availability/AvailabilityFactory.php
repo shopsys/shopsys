@@ -6,10 +6,7 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class AvailabilityFactory implements AvailabilityFactoryInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
-     */
-    protected $entityNameResolver;
+    protected EntityNameResolver $entityNameResolver;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

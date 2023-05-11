@@ -17,20 +17,14 @@ final class GithubActionsStatusReporter
      */
     private const EXTRA_PACKAGES = [];
 
-    /**
-     * @var \Shopsys\Releaser\Packagist\PackageProvider
-     */
-    private $packageProvider;
+    private PackageProvider $packageProvider;
 
-    /**
-     * @var \Shopsys\Releaser\Guzzle\ApiCaller
-     */
-    private $apiCaller;
+    private ApiCaller $apiCaller;
 
     /**
      * @var string[]
      */
-    private $statusForPackages = [];
+    private array $statusForPackages = [];
 
     /**
      * @param \Shopsys\Releaser\Packagist\PackageProvider $packageProvider

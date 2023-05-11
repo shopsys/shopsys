@@ -16,7 +16,6 @@ class ParameterFilterChoiceRepositoryTest extends ParameterTransactionFunctional
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository
      * @inject
      */
     private ParameterFilterChoiceRepository $parameterFilterChoiceRepository;

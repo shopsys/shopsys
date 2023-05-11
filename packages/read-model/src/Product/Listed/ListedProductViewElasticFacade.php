@@ -20,55 +20,25 @@ use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory;
 
 class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
-     */
-    protected $productFacade;
+    protected ProductFacade $productFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade
-     */
-    protected $productAccessoryFacade;
+    protected ProductAccessoryFacade $productAccessoryFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    protected $currentCustomerUser;
+    protected CurrentCustomerUser $currentCustomerUser;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade
-     */
-    protected $topProductFacade;
+    protected TopProductFacade $topProductFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface
-     */
-    protected $productOnCurrentDomainFacade;
+    protected ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory
-     */
-    protected $listedProductViewFactory;
+    protected ListedProductViewFactory $listedProductViewFactory;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface
-     */
-    protected $imageViewFacade;
+    protected ImageViewFacadeInterface $imageViewFacade;
 
-    /**
-     * @var \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory
-     */
-    protected $productActionViewFactory;
+    protected ProductActionViewFactory $productActionViewFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider
-     */
-    protected $productElasticsearchProvider;
+    protected ProductElasticsearchProvider $productElasticsearchProvider;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade

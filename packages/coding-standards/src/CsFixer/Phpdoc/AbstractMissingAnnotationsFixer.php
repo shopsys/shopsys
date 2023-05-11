@@ -25,24 +25,12 @@ use Symplify\CodingStandard\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector;
  */
 abstract class AbstractMissingAnnotationsFixer implements FixerInterface
 {
-    /**
-     * @var \PhpCsFixer\WhitespacesFixerConfig
-     */
     protected WhitespacesFixerConfig $whitespacesFixerConfig;
 
-    /**
-     * @var \PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer
-     */
     protected FunctionsAnalyzer $functionsAnalyzer;
 
-    /**
-     * @var \Symplify\CodingStandard\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector
-     */
     private IndentDetector $indentDetector;
 
-    /**
-     * @var \Shopsys\CodingStandards\Helper\PhpToDocTypeTransformer
-     */
     protected PhpToDocTypeTransformer $phpToDocTypeTransformer;
 
     /**

@@ -6,15 +6,9 @@ use Exception;
 
 class ImageSizeNotFoundException extends Exception implements ImageConfigException
 {
-    /**
-     * @var string
-     */
-    protected $entityClass;
+    protected string $entityClass;
 
-    /**
-     * @var string
-     */
-    protected $sizeName;
+    protected string $sizeName;
 
     /**
      * @param string $entityClass

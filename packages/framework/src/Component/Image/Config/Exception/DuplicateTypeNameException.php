@@ -6,10 +6,7 @@ use Exception;
 
 class DuplicateTypeNameException extends Exception implements ImageConfigException
 {
-    /**
-     * @var string|null
-     */
-    protected $typeName;
+    protected ?string $typeName = null;
 
     /**
      * @param string|null $typeName

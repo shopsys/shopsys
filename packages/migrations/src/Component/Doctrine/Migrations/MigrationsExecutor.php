@@ -30,29 +30,14 @@ class MigrationsExecutor implements Executor
      */
     protected array $sqlQueries = [];
 
-    /**
-     * @var \Doctrine\Migrations\Provider\SchemaDiffProvider
-     */
     protected SchemaDiffProvider $schemaDiffProvider;
 
-    /**
-     * @var \Symfony\Component\Stopwatch\Stopwatch
-     */
     protected Stopwatch $stopwatch;
 
-    /**
-     * @var \Doctrine\Migrations\Metadata\Storage\MetadataStorage
-     */
     protected MetadataStorage $metadataStorage;
 
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
     protected LoggerInterface $logger;
 
-    /**
-     * @var \Doctrine\Migrations\EventDispatcher
-     */
     protected EventDispatcher $dispatcher;
 
     /**

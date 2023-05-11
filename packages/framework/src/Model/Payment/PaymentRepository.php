@@ -11,10 +11,7 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 class PaymentRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

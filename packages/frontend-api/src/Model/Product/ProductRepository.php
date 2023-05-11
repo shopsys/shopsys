@@ -11,10 +11,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository as FrameworkProductR
 
 class ProductRepository
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
-     */
-    protected $productRepository;
+    protected \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository

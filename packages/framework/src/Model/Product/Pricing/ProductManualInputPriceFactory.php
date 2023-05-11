@@ -9,10 +9,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductManualInputPriceFactory implements ProductManualInputPriceFactoryInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
-     */
-    protected $entityNameResolver;
+    protected EntityNameResolver $entityNameResolver;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

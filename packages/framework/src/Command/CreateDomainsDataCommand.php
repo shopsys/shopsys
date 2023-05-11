@@ -20,25 +20,13 @@ class CreateDomainsDataCommand extends Command
      */
     protected static $defaultName = 'shopsys:domains-data:create';
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
+    private EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\DomainDataCreator
-     */
-    private $domainDataCreator;
+    private DomainDataCreator $domainDataCreator;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassFinderFacade
-     */
-    private $multidomainEntityClassFinderFacade;
+    private MultidomainEntityClassFinderFacade $multidomainEntityClassFinderFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\DbIndexesFacade
-     */
-    private $dbIndexesFacade;
+    private DbIndexesFacade $dbIndexesFacade;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

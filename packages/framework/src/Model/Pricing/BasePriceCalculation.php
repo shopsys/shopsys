@@ -11,15 +11,9 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 class BasePriceCalculation
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation
-     */
-    protected $priceCalculation;
+    protected PriceCalculation $priceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Rounding
-     */
-    protected $rounding;
+    protected Rounding $rounding;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation

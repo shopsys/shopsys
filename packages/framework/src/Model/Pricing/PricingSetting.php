@@ -17,10 +17,7 @@ class PricingSetting
     public const INPUT_PRICE_TYPE_WITH_VAT = 1;
     public const INPUT_PRICE_TYPE_WITHOUT_VAT = 2;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    protected $setting;
+    protected Setting $setting;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting

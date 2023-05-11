@@ -4,10 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Statistics;
 
 class StatisticsProcessingFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPointFormatter
-     */
-    protected $valueByDateTimeDataPointFormatter;
+    protected ValueByDateTimeDataPointFormatter $valueByDateTimeDataPointFormatter;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPointFormatter $valueByDateTimeDataPointFormatter

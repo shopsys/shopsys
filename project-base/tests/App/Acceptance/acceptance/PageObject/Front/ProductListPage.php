@@ -12,10 +12,7 @@ use Tests\App\Test\Codeception\Module\StrictWebDriver;
 
 class ProductListPage extends AbstractPage
 {
-    /**
-     * @var \Tests\App\Acceptance\acceptance\PageObject\Front\ProductListComponent
-     */
-    private $productListComponent;
+    private ProductListComponent $productListComponent;
 
     /**
      * @param \Tests\App\Test\Codeception\Module\StrictWebDriver $strictWebDriver

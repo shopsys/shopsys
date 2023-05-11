@@ -16,15 +16,9 @@ class ResetPasswordMail implements MessageFactoryInterface
     public const VARIABLE_EMAIL = '{email}';
     public const VARIABLE_NEW_PASSWORD_URL = '{new_password_url}';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    protected $setting;
+    protected Setting $setting;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
-     */
-    protected $domainRouterFactory;
+    protected DomainRouterFactory $domainRouterFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting

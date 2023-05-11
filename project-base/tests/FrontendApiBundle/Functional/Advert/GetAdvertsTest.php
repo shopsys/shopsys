@@ -20,30 +20,23 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 class GetAdvertsTest extends GraphQlTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory
      * @inject
      */
     private AdvertDataFactory $advertDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Advert\AdvertFacade
      * @inject
      */
     private AdvertFacade $advertFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload
      * @inject
      */
     private FileUpload $fileUpload;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Advert\Advert
-     */
     private Advert $advertWithImage;
 
     /**
-     * @var \League\Flysystem\MountManager
      * @inject
      */
     private MountManager $mountManager;

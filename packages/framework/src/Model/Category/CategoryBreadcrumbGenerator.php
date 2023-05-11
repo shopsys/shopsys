@@ -8,15 +8,9 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class CategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryRepository
-     */
-    protected $categoryRepository;
+    protected CategoryRepository $categoryRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository

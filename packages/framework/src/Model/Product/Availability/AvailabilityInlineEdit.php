@@ -8,20 +8,11 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 class AvailabilityInlineEdit extends AbstractGridInlineEdit
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade
-     */
-    protected $availabilityFacade;
+    protected AvailabilityFacade $availabilityFacade;
 
-    /**
-     * @var \Symfony\Component\Form\FormFactoryInterface
-     */
-    protected $formFactory;
+    protected FormFactoryInterface $formFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface
-     */
-    protected $availabilityDataFactory;
+    protected AvailabilityDataFactoryInterface $availabilityDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityGridFactory $availabilityGridFactory

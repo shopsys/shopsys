@@ -20,44 +20,20 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 
 class NumberFormatHelper extends Module
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
     private CurrencyFacade $currencyFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory
-     */
     private CurrencyFormatterFactory $currencyFormatterFactory;
 
-    /**
-     * @var \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface
-     */
     private CurrencyRepositoryInterface $intlCurrencyRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension
-     */
     private NumberFormatterExtension $numberFormatterExtension;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
-     */
     private PriceConverter $priceConverter;
 
-    /**
-     * @var \CommerceGuys\Intl\Formatter\NumberFormatter
-     */
     private NumberFormatter $numberFormatter;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Rounding
-     */
     private Rounding $rounding;
 
-    /**
-     * @var \Tests\App\Test\Codeception\Helper\LocalizationHelper
-     */
     private LocalizationHelper $localizationHelper;
 
     /**

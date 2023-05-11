@@ -15,9 +15,6 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 {
     private const PARAMETER_HDMI = 5;
 
-    /**
-     * @var string
-     */
     private string $firstDomainLocale;
 
     public function setUp(): void

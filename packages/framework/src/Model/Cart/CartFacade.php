@@ -20,60 +20,27 @@ class CartFacade
 {
     protected const DAYS_LIMIT = 130;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\CartFactory
-     */
-    protected $cartFactory;
+    protected CartFactory $cartFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
-     */
-    protected $productRepository;
+    protected ProductRepository $productRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory
-     */
-    protected $customerUserIdentifierFactory;
+    protected CustomerUserIdentifierFactory $customerUserIdentifierFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    protected $currentCustomerUser;
+    protected CurrentCustomerUser $currentCustomerUser;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade
-     */
-    protected $currentPromoCodeFacade;
+    protected CurrentPromoCodeFacade $currentPromoCodeFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
-     */
-    protected $productPriceCalculation;
+    protected ProductPriceCalculationForCustomerUser $productPriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface
-     */
-    protected $cartItemFactory;
+    protected CartItemFactoryInterface $cartItemFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\CartRepository
-     */
-    protected $cartRepository;
+    protected CartRepository $cartRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade
-     */
-    protected $cartWatcherFacade;
+    protected CartWatcherFacade $cartWatcherFacade;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

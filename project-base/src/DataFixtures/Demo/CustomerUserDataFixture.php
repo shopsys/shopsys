@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Customer\User\CustomerUserDataFactory;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
@@ -44,40 +46,19 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     private const KEY_ADDRESS_FIRST_NAME = 'firstName';
     private const KEY_ADDRESS_LAST_NAME = 'lastName';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
-     */
-    private $customerUserFacade;
+    private CustomerUserFacade $customerUserFacade;
 
-    /**
-     * @var \Faker\Generator
-     */
-    private $faker;
+    private Generator $faker;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
-     */
-    private $em;
+    private EntityManagerDecorator $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\String\HashGenerator
-     */
-    private $hashGenerator;
+    private HashGenerator $hashGenerator;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory
-     */
-    private $customerUserUpdateDataFactory;
+    private CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory;
 
-    /**
-     * @var \App\Model\Customer\User\CustomerUserDataFactory
-     */
-    private $customerUserDataFactory;
+    private CustomerUserDataFactory $customerUserDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade

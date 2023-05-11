@@ -13,7 +13,6 @@ class ProductOnCurrentDomainElasticFacadeTest extends ProductOnCurrentDomainFaca
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade
      * @inject
      */
     private ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade;

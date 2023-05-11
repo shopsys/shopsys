@@ -10,20 +10,11 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 class OrderStatusInlineEdit extends AbstractGridInlineEdit
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade
-     */
-    protected $orderStatusFacade;
+    protected OrderStatusFacade $orderStatusFacade;
 
-    /**
-     * @var \Symfony\Component\Form\FormFactoryInterface
-     */
-    protected $formFactory;
+    protected FormFactoryInterface $formFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactoryInterface
-     */
-    protected $orderStatusDataFactory;
+    protected OrderStatusDataFactoryInterface $orderStatusDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\Grid\OrderStatusGridFactory $orderStatusGridFactory

@@ -13,10 +13,7 @@ use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class SetFrameworkBundleVersionToDevReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @var \Shopsys\Releaser\FileManipulator\FrameworkBundleVersionFileManipulator
-     */
-    private $frameworkBundleVersionFileManipulator;
+    private FrameworkBundleVersionFileManipulator $frameworkBundleVersionFileManipulator;
 
     /**
      * @param \Shopsys\Releaser\FileManipulator\FrameworkBundleVersionFileManipulator $frameworkBundleVersionFileManipulator

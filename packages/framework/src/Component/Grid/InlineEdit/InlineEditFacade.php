@@ -8,10 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class InlineEditFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditRegistry
-     */
-    protected $gridInlineEditRegistry;
+    protected GridInlineEditRegistry $gridInlineEditRegistry;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditRegistry $gridInlineEditRegistry

@@ -10,20 +10,14 @@ use Shopsys\FrameworkBundle\Model\Localization\Exception\AdminLocaleNotFoundExce
 
 class Localization
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
     /**
      * @var string[]|null
      */
-    protected $allLocales;
+    protected ?array $allLocales = null;
 
-    /**
-     * @var string
-     */
-    protected $adminLocale;
+    protected string $adminLocale;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

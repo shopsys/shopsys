@@ -9,8 +9,5 @@ use Symfony\Component\Validator\Constraint;
  */
 class UniqueProductParameters extends Constraint
 {
-    /**
-     * @var string
-     */
-    public $message = 'Product parameters are duplicate.';
+    public string $message = 'Product parameters are duplicate.';
 }

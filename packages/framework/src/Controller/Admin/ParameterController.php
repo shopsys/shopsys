@@ -10,15 +10,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ParameterController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade
-     */
-    protected $parameterFacade;
+    protected ParameterFacade $parameterFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterInlineEdit
-     */
-    protected $parameterInlineEdit;
+    protected ParameterInlineEdit $parameterInlineEdit;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade

@@ -26,25 +26,21 @@ class PriceExtensionTest extends FunctionalTestCase
     protected const NBSP = "\xc2\xa0";
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository
      * @inject
      */
     private IntlCurrencyRepository $intlCurrencyRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory
      * @inject
      */
     private CurrencyFormatterFactory $currencyFormatterFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactoryInterface
      * @inject
      */
     private CurrencyFactoryInterface $currencyFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface
      * @inject
      */
     private CurrencyDataFactoryInterface $currencyDataFactory;

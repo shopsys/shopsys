@@ -11,15 +11,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class AdministratorChecker extends InMemoryUserChecker
 {
-    /**
-     * @var string
-     */
-    protected $environment;
+    protected string $environment;
 
-    /**
-     * @var bool
-     */
-    protected $ignoreDefaultAdminPasswordCheck;
+    protected bool $ignoreDefaultAdminPasswordCheck;
 
     /**
      * @param string $environment

@@ -16,20 +16,17 @@ use Symfony\Component\Yaml\Parser;
 
 class UploadedFileConfigLoader
 {
-    /**
-     * @var \Symfony\Component\Filesystem\Filesystem
-     */
-    protected $filesystem;
+    protected Filesystem $filesystem;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig[]
      */
-    protected $uploadedFileEntityConfigsByClass;
+    protected array $uploadedFileEntityConfigsByClass;
 
     /**
      * @var string[]
      */
-    protected $entityNamesByEntityNames;
+    protected array $entityNamesByEntityNames;
 
     /**
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem

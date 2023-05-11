@@ -29,25 +29,13 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class CustomerUserFormType extends AbstractType
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
-     */
-    private $pricingGroupFacade;
+    private PricingGroupFacade $pricingGroupFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension
-     */
-    private $dateTimeFormatterExtension;
+    private DateTimeFormatterExtension $dateTimeFormatterExtension;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
-     */
-    private $customerUserFacade;
+    private CustomerUserFacade $customerUserFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
-     */
-    private $customerUser;
+    private ?CustomerUser $customerUser = null;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade

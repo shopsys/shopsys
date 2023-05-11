@@ -7,10 +7,7 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException
 
 class BrandRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager

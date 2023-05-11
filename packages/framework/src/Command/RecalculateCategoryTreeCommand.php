@@ -19,9 +19,6 @@ class RecalculateCategoryTreeCommand extends Command
      */
     protected static $defaultName = 'shopsys:categories:recalculate';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
-     */
     protected CategoryFacade $categoryFacade;
 
     /**

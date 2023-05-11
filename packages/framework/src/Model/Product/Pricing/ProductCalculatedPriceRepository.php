@@ -10,15 +10,9 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductCalculatedPriceRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPriceFactoryInterface
-     */
-    protected $productCalculatedPriceFactory;
+    protected ProductCalculatedPriceFactoryInterface $productCalculatedPriceFactory;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

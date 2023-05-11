@@ -8,20 +8,11 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 
 class DomainFactoryOverwritingDomainUrl
 {
-    /**
-     * @var string|null
-     */
-    protected $overwriteDomainUrl;
+    protected ?string $overwriteDomainUrl = null;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigLoader
-     */
-    protected $domainsConfigLoader;
+    protected DomainsConfigLoader $domainsConfigLoader;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Setting\Setting
-     */
-    protected $setting;
+    protected Setting $setting;
 
     /**
      * @param string|null $overwriteDomainUrl

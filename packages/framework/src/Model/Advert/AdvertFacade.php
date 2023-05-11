@@ -8,35 +8,17 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 
 class AdvertFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Advert\AdvertRepository
-     */
-    protected $advertRepository;
+    protected AdvertRepository $advertRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
-     */
-    protected $imageFacade;
+    protected ImageFacade $imageFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Advert\AdvertFactoryInterface
-     */
-    protected $advertFactory;
+    protected AdvertFactoryInterface $advertFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry
-     */
-    protected $advertPositionRegistry;
+    protected AdvertPositionRegistry $advertPositionRegistry;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

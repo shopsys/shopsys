@@ -9,10 +9,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\Exception\PricingGroupNotFoundEx
 
 class PricingGroupRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

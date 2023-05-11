@@ -13,14 +13,10 @@ use const PHP_URL_SCHEME;
 abstract class ApplicationTestCase extends WebTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      * @inject
      */
     protected EntityManagerDecorator $em;
 
-    /**
-     * @var \Tests\App\Test\Client|null
-     */
     protected static ?Client $client = null;
 
     protected function setUp(): void

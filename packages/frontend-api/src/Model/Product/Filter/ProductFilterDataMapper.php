@@ -12,19 +12,10 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
 class ProductFilterDataMapper
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade
-     */
     protected FlagFacade $flagFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade
-     */
     protected BrandFacade $brandFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade
-     */
     protected ParameterFacade $parameterFacade;
 
     /**

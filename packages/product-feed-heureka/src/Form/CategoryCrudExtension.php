@@ -9,15 +9,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CategoryCrudExtension implements PluginCrudExtensionInterface
 {
-    /**
-     * @var \Symfony\Contracts\Translation\TranslatorInterface
-     */
-    private $translator;
+    private TranslatorInterface $translator;
 
-    /**
-     * @var \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade
-     */
-    private $heurekaCategoryFacade;
+    private HeurekaCategoryFacade $heurekaCategoryFacade;
 
     /**
      * @param \Symfony\Contracts\Translation\TranslatorInterface $translator

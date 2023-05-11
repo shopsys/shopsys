@@ -15,25 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VatController extends AdminBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory
-     */
-    protected $confirmDeleteResponseFactory;
+    protected ConfirmDeleteResponseFactory $confirmDeleteResponseFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
-     */
-    protected $vatFacade;
+    protected VatFacade $vatFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatInlineEdit
-     */
-    protected $vatInlineEdit;
+    protected VatInlineEdit $vatInlineEdit;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    protected $adminDomainTabsFacade;
+    protected AdminDomainTabsFacade $adminDomainTabsFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade

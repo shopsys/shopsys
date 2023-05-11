@@ -20,10 +20,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 final class OrderProductFacadeTest extends TestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade
-     */
-    private $orderProductFacade;
+    private OrderProductFacade $orderProductFacade;
 
     protected function setUp(): void
     {

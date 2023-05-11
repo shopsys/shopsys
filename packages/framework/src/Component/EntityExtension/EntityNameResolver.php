@@ -9,7 +9,7 @@ class EntityNameResolver
     /**
      * @var string[]
      */
-    protected $entityExtensionMap;
+    protected array $entityExtensionMap;
 
     /**
      * @param string[] $entityExtensionMap

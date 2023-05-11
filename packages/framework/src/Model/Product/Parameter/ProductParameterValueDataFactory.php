@@ -4,10 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 class ProductParameterValueDataFactory implements ProductParameterValueDataFactoryInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface
-     */
-    protected $parameterValueDataFactory;
+    protected ParameterValueDataFactoryInterface $parameterValueDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface $parameterValueDataFactory

@@ -7,15 +7,9 @@ use IntlDateFormatter;
 
 class DateTimeFormatter implements DateTimeFormatterInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatPatternRepository
-     */
-    protected $customDateTimeFormatPatternRepository;
+    protected DateTimeFormatPatternRepository $customDateTimeFormatPatternRepository;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface
-     */
-    protected $displayTimeZoneProvider;
+    protected DisplayTimeZoneProviderInterface $displayTimeZoneProvider;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatPatternRepository $customDateTimeFormatPatternRepository

@@ -15,10 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CustomerUserUpdateFormType extends AbstractType
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface
-     */
-    private $customerUserUpdateDataFactory;
+    private CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory

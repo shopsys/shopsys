@@ -11,25 +11,13 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class SideMenuBuilder
 {
-    /**
-     * @var \Knp\Menu\FactoryInterface
-     */
-    protected $menuFactory;
+    protected FactoryInterface $menuFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
-    /**
-     * @var \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
-     */
-    protected $authorizationChecker;
+    protected AuthorizationCheckerInterface $authorizationChecker;
 
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
     /**
      * @param \Knp\Menu\FactoryInterface $menuFactory

@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 class MailWhitelistCollectionType extends AbstractType
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getParent(): ?string
     {

@@ -8,10 +8,7 @@ use Twig\TwigFunction;
 
 class ModuleExtension extends AbstractExtension
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Module\ModuleFacade
-     */
-    protected $moduleFacade;
+    protected ModuleFacade $moduleFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade

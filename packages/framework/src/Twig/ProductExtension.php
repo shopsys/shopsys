@@ -11,15 +11,9 @@ use Twig\TwigFunction;
 
 class ProductExtension extends AbstractExtension
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
-     */
-    protected $categoryFacade;
+    protected CategoryFacade $categoryFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade
-     */
-    protected $productCachedAttributesFacade;
+    protected ProductCachedAttributesFacade $productCachedAttributesFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade

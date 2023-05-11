@@ -22,13 +22,9 @@ class MailerSettingProvider
 
     /**
      * @deprecated This will be removed in next major version
-     * @var string|null
      */
     protected ?string $mailerMasterEmailAddress;
 
-    /**
-     * @var bool
-     */
     protected bool $deliveryDisabled;
 
     /**

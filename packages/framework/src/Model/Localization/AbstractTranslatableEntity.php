@@ -4,20 +4,17 @@ namespace Shopsys\FrameworkBundle\Model\Localization;
 
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslatable;
+use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 use Shopsys\FrameworkBundle\Model\Localization\Exception\ImplicitLocaleNotSetException;
 
 abstract class AbstractTranslatableEntity extends AbstractTranslatable
 {
     /**
-     * @var string|null
      * @Prezent\CurrentLocale
      */
-    protected $currentLocale;
+    protected ?string $currentLocale = null;
 
-    /**
-     * @var \Prezent\Doctrine\Translatable\Entity\AbstractTranslation|null
-     */
-    protected ?\Prezent\Doctrine\Translatable\Entity\AbstractTranslation $currentTranslation = null;
+    protected ?AbstractTranslation $currentTranslation = null;
 
     /**
      * @return string|null

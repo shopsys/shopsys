@@ -15,13 +15,11 @@ class AdvancedSearchOrderFilterTranslationTest extends FunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\AdvancedSearch\OrderAdvancedSearchConfig
      * @inject
      */
     private OrderAdvancedSearchConfig $advancedSearchConfig;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchOrderFilterTranslation
      * @inject
      */
     private AdvancedSearchOrderFilterTranslation $advancedSearchOrderFilterTranslation;

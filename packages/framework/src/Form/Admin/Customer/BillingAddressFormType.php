@@ -20,10 +20,7 @@ class BillingAddressFormType extends AbstractType
 {
     public const VALIDATION_GROUP_COMPANY_CUSTOMER = 'companyCustomer';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade
-     */
-    private $countryFacade;
+    private CountryFacade $countryFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade

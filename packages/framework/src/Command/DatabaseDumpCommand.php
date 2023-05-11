@@ -21,9 +21,6 @@ class DatabaseDumpCommand extends Command
      */
     protected static $defaultName = 'shopsys:database:dump';
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Doctrine\DatabaseConnectionCredentialsProvider
-     */
     protected DatabaseConnectionCredentialsProvider $databaseConnectionCredentialsProvider;
 
     /**

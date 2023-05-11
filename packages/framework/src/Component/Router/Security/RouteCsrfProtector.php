@@ -17,14 +17,8 @@ class RouteCsrfProtector implements EventSubscriberInterface
     public const CSRF_TOKEN_REQUEST_PARAMETER = 'routeCsrfToken';
     public const CSRF_TOKEN_ID_PREFIX = 'route_';
 
-    /**
-     * @var \Doctrine\Common\Annotations\Reader
-     */
     protected Reader $annotationReader;
 
-    /**
-     * @var \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
-     */
     protected CsrfTokenManagerInterface $tokenManager;
 
     /**

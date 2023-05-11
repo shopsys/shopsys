@@ -14,20 +14,11 @@ use Symfony\Component\Validator\Constraints\FileValidator;
 
 class FileAbstractFilesystemValidator extends FileValidator
 {
-    /**
-     * @var \League\Flysystem\MountManager
-     */
-    protected $mountManager;
+    protected MountManager $mountManager;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload
-     */
-    protected $fileUpload;
+    protected FileUpload $fileUpload;
 
-    /**
-     * @var \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface
-     */
-    protected $parameterBag;
+    protected ParameterBagInterface $parameterBag;
 
     /**
      * @param \League\Flysystem\MountManager $mountManager

@@ -9,10 +9,7 @@ use Symplify\SmartFileSystem\SmartFileInfo;
 
 class GeneralUpgradeFileManipulatorTest extends TestCase
 {
-    /**
-     * @var \Shopsys\Releaser\FileManipulator\GeneralUpgradeFileManipulator
-     */
-    private $generalUpgradeFileManipulator;
+    private GeneralUpgradeFileManipulator $generalUpgradeFileManipulator;
 
     protected function setUp(): void
     {

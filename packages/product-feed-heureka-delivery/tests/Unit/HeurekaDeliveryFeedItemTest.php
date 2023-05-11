@@ -9,10 +9,7 @@ use Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryFeed
 
 class HeurekaDeliveryFeedItemTest extends TestCase
 {
-    /**
-     * @var \Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryFeedItemFactory
-     */
-    private $heurekaDeliveryFeedItemFactory;
+    private HeurekaDeliveryFeedItemFactory $heurekaDeliveryFeedItemFactory;
 
     protected function setUp(): void
     {

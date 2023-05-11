@@ -10,30 +10,15 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class ProductAvailabilityCalculation
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade
-     */
-    protected $availabilityFacade;
+    protected AvailabilityFacade $availabilityFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator
-     */
-    protected $productSellingDeniedRecalculator;
+    protected ProductSellingDeniedRecalculator $productSellingDeniedRecalculator;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade
-     */
-    protected $productVisibilityFacade;
+    protected ProductVisibilityFacade $productVisibilityFacade;
 
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
-     */
-    protected $productRepository;
+    protected ProductRepository $productRepository;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade

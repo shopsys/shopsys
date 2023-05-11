@@ -14,12 +14,9 @@ class ImageConfig
     /**
      * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[]
      */
-    protected $imageEntityConfigsByClass;
+    protected array $imageEntityConfigsByClass;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
-     */
-    protected $entityNameResolver;
+    protected EntityNameResolver $entityNameResolver;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[] $imageEntityConfigsByClass

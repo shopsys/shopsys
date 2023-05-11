@@ -92,11 +92,11 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     /**
      * @var bool
      */
-    protected $multidomainLogin;
+    protected $multidomainLogin = false;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
      * @var string
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     protected $multidomainLoginToken;
 

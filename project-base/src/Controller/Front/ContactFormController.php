@@ -5,34 +5,23 @@ declare(strict_types=1);
 namespace App\Controller\Front;
 
 use App\Form\Front\Contact\ContactFormType;
+use App\Model\LegalConditions\LegalConditionsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormData;
 use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormFacade;
 use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsFacade;
-use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
+use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade as BaseLegalConditionsFacade;
 use Symfony\Component\HttpFoundation\Request;
 
 class ContactFormController extends FrontBaseController
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormFacade
-     */
-    private $contactFormFacade;
+    private ContactFormFacade $contactFormFacade;
 
-    /**
-     * @var \App\Model\LegalConditions\LegalConditionsFacade
-     */
-    private $legalConditionsFacade;
+    private LegalConditionsFacade $legalConditionsFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private Domain $domain;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsFacade
-     */
-    private $contactFormSettingsFacade;
+    private ContactFormSettingsFacade $contactFormSettingsFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormFacade $contactFormFacade
@@ -42,7 +31,7 @@ class ContactFormController extends FrontBaseController
      */
     public function __construct(
         ContactFormFacade $contactFormFacade,
-        LegalConditionsFacade $legalConditionsFacade,
+        BaseLegalConditionsFacade $legalConditionsFacade,
         Domain $domain,
         ContactFormSettingsFacade $contactFormSettingsFacade
     ) {

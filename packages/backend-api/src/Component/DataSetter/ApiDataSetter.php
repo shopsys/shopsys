@@ -12,10 +12,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
  */
 class ApiDataSetter
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

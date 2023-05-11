@@ -10,20 +10,11 @@ use Shopsys\FrameworkBundle\Model\Pricing\InputPriceCalculation;
 
 class ProductInputPriceRecalculator
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation
-     */
-    protected $basePriceCalculation;
+    protected BasePriceCalculation $basePriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\InputPriceCalculation
-     */
-    protected $inputPriceCalculation;
+    protected InputPriceCalculation $inputPriceCalculation;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    protected $currencyFacade;
+    protected CurrencyFacade $currencyFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation

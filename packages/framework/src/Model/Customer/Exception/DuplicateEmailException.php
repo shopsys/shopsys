@@ -6,10 +6,7 @@ use Exception;
 
 class DuplicateEmailException extends Exception implements CustomerUserException
 {
-    /**
-     * @var string
-     */
-    protected $email;
+    protected string $email;
 
     /**
      * @param string $email

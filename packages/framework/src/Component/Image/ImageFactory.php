@@ -10,20 +10,11 @@ use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 
 class ImageFactory implements ImageFactoryInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor
-     */
-    protected $imageProcessor;
+    protected ImageProcessor $imageProcessor;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload
-     */
-    protected $fileUpload;
+    protected FileUpload $fileUpload;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
-     */
-    protected $entityNameResolver;
+    protected EntityNameResolver $entityNameResolver;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor $imageProcessor

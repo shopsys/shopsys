@@ -11,10 +11,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class OrderResolverMap extends ResolverMap
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
+    protected Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
