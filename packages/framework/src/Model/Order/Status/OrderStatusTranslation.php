@@ -13,6 +13,7 @@ use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 class OrderStatusTranslation extends AbstractTranslation
 {
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus
      * @Prezent\Translatable(targetEntity="Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName

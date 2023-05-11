@@ -6,5 +6,5 @@ namespace Tests\FrameworkBundle\Unit\Component\Translation\Resources;
 
 class NonConstraintClass
 {
-    public $message = 'This value will not be extracted (not inside a constraint).';
+    public string $message = 'This value will not be extracted (not inside a constraint).';
 }

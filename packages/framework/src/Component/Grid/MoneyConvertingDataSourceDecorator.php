@@ -12,13 +12,13 @@ class MoneyConvertingDataSourceDecorator implements DataSourceInterface
     protected DataSourceInterface $innerDataSource;
 
     /**
-     * @var array
+     * @var string[]
      */
     protected array $moneyColumnNames;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $innerDataSource
-     * @param array $moneyColumnNames
+     * @param string[] $moneyColumnNames
      */
     public function __construct(DataSourceInterface $innerDataSource, array $moneyColumnNames)
     {

@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\String\TransformString;
 class BrandTranslation extends AbstractTranslation
 {
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
      * @Prezent\Translatable(targetEntity="Shopsys\FrameworkBundle\Model\Product\Brand\Brand")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName

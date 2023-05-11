@@ -26,7 +26,7 @@ class ImageConfigLoader
     protected array $foundEntityConfigs;
 
     /**
-     * @var array
+     * @var string[]
      */
     protected array $foundEntityNames;
 

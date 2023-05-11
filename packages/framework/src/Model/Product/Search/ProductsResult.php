@@ -9,7 +9,7 @@ class ProductsResult
     protected int $total;
 
     /**
-     * @var array
+     * @var \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     protected array $hits;
 

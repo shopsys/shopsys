@@ -17,7 +17,7 @@ class SymfonyRouterAdapter implements RouterAdapterInterface
 {
     private RouterInterface $router;
 
-    private $annotationsReader;
+    private AnnotationReader $annotationsReader;
 
     /**
      * @param \Symfony\Component\Routing\RouterInterface $router

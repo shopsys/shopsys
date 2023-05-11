@@ -15,6 +15,7 @@ use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 class ImageTranslation extends AbstractTranslation
 {
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Image\Image
      * @Prezent\Translatable(targetEntity="Shopsys\FrameworkBundle\Component\Image\Image")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName

@@ -16,7 +16,7 @@ class Country extends Constraint
     public string $message = 'Country with code {{ country_code }} does not exists. Available country codes are {{ available_country_codes }}.';
 
     /**
-     * @var string[]
+     * @var array<string, string>
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName
      */

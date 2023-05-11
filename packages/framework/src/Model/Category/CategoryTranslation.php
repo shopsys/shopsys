@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\String\TransformString;
 class CategoryTranslation extends AbstractTranslation
 {
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Category\Category
      * @Prezent\Translatable(targetEntity="Shopsys\FrameworkBundle\Model\Category\Category")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName
