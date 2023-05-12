@@ -25,14 +25,6 @@ final class ReleaseCommand extends Command
     private const RESUME_STEP = 'resume-step';
     private const INITIAL_BRANCH_NAME = 'initial-branch';
 
-    private SymfonyStyle $symfonyStyle;
-
-    private ReleaseGuard $releaseGuard;
-
-    private ReleaseWorkerProvider $releaseWorkerProvider;
-
-    private VersionFactory $versionFactory;
-
     /**
      * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyle
      * @param \Shopsys\Releaser\ReleaseWorker\ReleaseWorkerProvider $releaseWorkerProvider
@@ -40,17 +32,12 @@ final class ReleaseCommand extends Command
      * @param \Symplify\MonorepoBuilder\Release\Version\VersionFactory $versionFactory
      */
     public function __construct(
-        SymfonyStyle $symfonyStyle,
-        ReleaseWorkerProvider $releaseWorkerProvider,
-        ReleaseGuard $releaseGuard,
-        VersionFactory $versionFactory
+        private readonly SymfonyStyle $symfonyStyle,
+        private readonly ReleaseWorkerProvider $releaseWorkerProvider,
+        private readonly ReleaseGuard $releaseGuard,
+        private readonly VersionFactory $versionFactory
     ) {
         parent::__construct();
-
-        $this->symfonyStyle = $symfonyStyle;
-        $this->releaseGuard = $releaseGuard;
-        $this->releaseWorkerProvider = $releaseWorkerProvider;
-        $this->versionFactory = $versionFactory;
     }
 
     protected function configure(): void

@@ -11,25 +11,16 @@ use Twig\TwigFunction;
 
 class ProductVisibilityExtension extends AbstractExtension
 {
-    protected ProductVisibilityRepository $productVisibilityRepository;
-
-    protected PricingGroupSettingFacade $pricingGroupSettingFacade;
-
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        ProductVisibilityRepository $productVisibilityRepository,
-        PricingGroupSettingFacade $pricingGroupSettingFacade,
-        Domain $domain
+        protected readonly ProductVisibilityRepository $productVisibilityRepository,
+        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
+        protected readonly Domain $domain
     ) {
-        $this->productVisibilityRepository = $productVisibilityRepository;
-        $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
-        $this->domain = $domain;
     }
 
     /**

@@ -11,14 +11,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LocalizedType extends AbstractType
 {
-    private Localization $localization;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
-    public function __construct(Localization $localization)
+    public function __construct(private readonly Localization $localization)
     {
-        $this->localization = $localization;
     }
 
     /**

@@ -9,14 +9,11 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class OrderFacade
 {
-    protected OrderRepository $orderRepository;
-
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderRepository $orderRepository
      */
-    public function __construct(OrderRepository $orderRepository)
+    public function __construct(protected readonly OrderRepository $orderRepository)
     {
-        $this->orderRepository = $orderRepository;
     }
 
     /**

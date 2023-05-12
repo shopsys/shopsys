@@ -24,20 +24,14 @@ use Symfony\Component\Validator\Constraints;
 
 class TransportFormType extends AbstractType
 {
-    private PaymentFacade $paymentFacade;
-
-    private TransportFacade $transportFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      */
     public function __construct(
-        PaymentFacade $paymentFacade,
-        TransportFacade $transportFacade
+        private readonly PaymentFacade $paymentFacade,
+        private readonly TransportFacade $transportFacade
     ) {
-        $this->paymentFacade = $paymentFacade;
-        $this->transportFacade = $transportFacade;
     }
 
     /**

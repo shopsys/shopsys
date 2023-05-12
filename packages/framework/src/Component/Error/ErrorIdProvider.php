@@ -8,16 +8,13 @@ use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 
 class ErrorIdProvider
 {
-    protected HashGenerator $hashGenerator;
-
     protected ?string $errorId = null;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
      */
-    public function __construct(HashGenerator $hashGenerator)
+    public function __construct(protected readonly HashGenerator $hashGenerator)
     {
-        $this->hashGenerator = $hashGenerator;
     }
 
     /**

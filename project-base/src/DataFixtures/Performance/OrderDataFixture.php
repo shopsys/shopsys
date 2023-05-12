@@ -48,24 +48,6 @@ class OrderDataFixture
      */
     private array $performanceUserIds;
 
-    private EntityManagerInterface $em;
-
-    private SqlLoggerFacade $sqlLoggerFacade;
-
-    private Faker $faker;
-
-    private PersistentReferenceFacade $persistentReferenceFacade;
-
-    private OrderFacade $orderFacade;
-
-    private OrderPreviewFactory $orderPreviewFactory;
-
-    private ProductFacade $productFacade;
-
-    private CustomerUserFacade $customerUserFacade;
-
-    private ProgressBarFactory $progressBarFactory;
-
     private OrderDataFactory $orderDataFactory;
 
     /**
@@ -85,29 +67,20 @@ class OrderDataFixture
     public function __construct(
         $orderTotalCount,
         $orderItemCountPerOrder,
-        EntityManagerInterface $em,
-        SqlLoggerFacade $sqlLoggerFacade,
-        Faker $faker,
-        PersistentReferenceFacade $persistentReferenceFacade,
-        OrderFacade $orderFacade,
-        OrderPreviewFactory $orderPreviewFactory,
-        ProductFacade $productFacade,
-        CustomerUserFacade $customerUserFacade,
-        ProgressBarFactory $progressBarFactory,
+        private readonly EntityManagerInterface $em,
+        private readonly SqlLoggerFacade $sqlLoggerFacade,
+        private readonly Faker $faker,
+        private readonly PersistentReferenceFacade $persistentReferenceFacade,
+        private readonly OrderFacade $orderFacade,
+        private readonly OrderPreviewFactory $orderPreviewFactory,
+        private readonly ProductFacade $productFacade,
+        private readonly CustomerUserFacade $customerUserFacade,
+        private readonly ProgressBarFactory $progressBarFactory,
         OrderDataFactoryInterface $orderDataFactory
     ) {
         $this->orderTotalCount = $orderTotalCount;
         $this->orderItemCountPerOrder = $orderItemCountPerOrder;
         $this->performanceProductIds = [];
-        $this->em = $em;
-        $this->sqlLoggerFacade = $sqlLoggerFacade;
-        $this->faker = $faker;
-        $this->persistentReferenceFacade = $persistentReferenceFacade;
-        $this->orderFacade = $orderFacade;
-        $this->orderPreviewFactory = $orderPreviewFactory;
-        $this->productFacade = $productFacade;
-        $this->customerUserFacade = $customerUserFacade;
-        $this->progressBarFactory = $progressBarFactory;
         $this->orderDataFactory = $orderDataFactory;
     }
 

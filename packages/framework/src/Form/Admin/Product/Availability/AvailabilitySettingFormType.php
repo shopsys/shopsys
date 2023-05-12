@@ -12,14 +12,11 @@ use Symfony\Component\Validator\Constraints;
 
 class AvailabilitySettingFormType extends AbstractType
 {
-    private AvailabilityFacade $availabilityFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      */
-    public function __construct(AvailabilityFacade $availabilityFacade)
+    public function __construct(private readonly AvailabilityFacade $availabilityFacade)
     {
-        $this->availabilityFacade = $availabilityFacade;
     }
 
     /**

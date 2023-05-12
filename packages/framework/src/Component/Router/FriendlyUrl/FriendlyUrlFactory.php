@@ -8,20 +8,14 @@ use Shopsys\FrameworkBundle\Component\String\TransformString;
 
 class FriendlyUrlFactory implements FriendlyUrlFactoryInterface
 {
-    protected EntityNameResolver $entityNameResolver;
-
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
     public function __construct(
-        Domain $domain,
-        EntityNameResolver $entityNameResolver
+        protected readonly Domain $domain,
+        protected readonly EntityNameResolver $entityNameResolver
     ) {
-        $this->domain = $domain;
-        $this->entityNameResolver = $entityNameResolver;
     }
 
     /**

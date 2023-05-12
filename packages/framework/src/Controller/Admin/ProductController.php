@@ -34,34 +34,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AdminBaseController
 {
-    protected ProductMassActionFacade $productMassActionFacade;
-
-    protected GridFactory $gridFactory;
-
-    protected ProductFacade $productFacade;
-
-    protected ProductDataFactoryInterface $productDataFactory;
-
-    protected BreadcrumbOverrider $breadcrumbOverrider;
-
-    protected AdministratorGridFacade $administratorGridFacade;
-
-    protected ProductListAdminFacade $productListAdminFacade;
-
-    protected AdvancedSearchProductFacade $advancedSearchProductFacade;
-
-    protected ProductVariantFacade $productVariantFacade;
-
-    protected ProductExtension $productExtension;
-
-    protected Domain $domain;
-
-    protected UnitFacade $unitFacade;
-
-    protected Setting $setting;
-
-    protected AvailabilityFacade $availabilityFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionFacade $productMassActionFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
@@ -79,35 +51,21 @@ class ProductController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      */
     public function __construct(
-        ProductMassActionFacade $productMassActionFacade,
-        GridFactory $gridFactory,
-        ProductFacade $productFacade,
-        ProductDataFactoryInterface $productDataFactory,
-        BreadcrumbOverrider $breadcrumbOverrider,
-        AdministratorGridFacade $administratorGridFacade,
-        ProductListAdminFacade $productListAdminFacade,
-        AdvancedSearchProductFacade $advancedSearchProductFacade,
-        ProductVariantFacade $productVariantFacade,
-        ProductExtension $productExtension,
-        Domain $domain,
-        UnitFacade $unitFacade,
-        Setting $setting,
-        AvailabilityFacade $availabilityFacade
+        protected readonly ProductMassActionFacade $productMassActionFacade,
+        protected readonly GridFactory $gridFactory,
+        protected readonly ProductFacade $productFacade,
+        protected readonly ProductDataFactoryInterface $productDataFactory,
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+        protected readonly AdministratorGridFacade $administratorGridFacade,
+        protected readonly ProductListAdminFacade $productListAdminFacade,
+        protected readonly AdvancedSearchProductFacade $advancedSearchProductFacade,
+        protected readonly ProductVariantFacade $productVariantFacade,
+        protected readonly ProductExtension $productExtension,
+        protected readonly Domain $domain,
+        protected readonly UnitFacade $unitFacade,
+        protected readonly Setting $setting,
+        protected readonly AvailabilityFacade $availabilityFacade
     ) {
-        $this->productMassActionFacade = $productMassActionFacade;
-        $this->gridFactory = $gridFactory;
-        $this->productFacade = $productFacade;
-        $this->productDataFactory = $productDataFactory;
-        $this->breadcrumbOverrider = $breadcrumbOverrider;
-        $this->administratorGridFacade = $administratorGridFacade;
-        $this->productListAdminFacade = $productListAdminFacade;
-        $this->advancedSearchProductFacade = $advancedSearchProductFacade;
-        $this->productVariantFacade = $productVariantFacade;
-        $this->productExtension = $productExtension;
-        $this->domain = $domain;
-        $this->unitFacade = $unitFacade;
-        $this->setting = $setting;
-        $this->availabilityFacade = $availabilityFacade;
     }
 
     /**

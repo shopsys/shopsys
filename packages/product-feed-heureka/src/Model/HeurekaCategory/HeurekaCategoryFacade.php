@@ -7,25 +7,16 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 
 class HeurekaCategoryFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected HeurekaCategoryRepository $heurekaCategoryRepository;
-
-    protected CategoryRepository $categoryRepository;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryRepository $heurekaCategoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
      */
     public function __construct(
-        EntityManagerInterface $em,
-        HeurekaCategoryRepository $heurekaCategoryRepository,
-        CategoryRepository $categoryRepository
+        protected readonly EntityManagerInterface $em,
+        protected readonly HeurekaCategoryRepository $heurekaCategoryRepository,
+        protected readonly CategoryRepository $categoryRepository
     ) {
-        $this->em = $em;
-        $this->heurekaCategoryRepository = $heurekaCategoryRepository;
-        $this->categoryRepository = $categoryRepository;
     }
 
     /**

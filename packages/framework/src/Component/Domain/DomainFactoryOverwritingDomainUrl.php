@@ -10,20 +10,14 @@ class DomainFactoryOverwritingDomainUrl
 {
     protected ?string $overwriteDomainUrl = null;
 
-    protected DomainsConfigLoader $domainsConfigLoader;
-
-    protected Setting $setting;
-
     /**
      * @param string|null $overwriteDomainUrl
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigLoader $domainsConfigLoader
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
-    public function __construct($overwriteDomainUrl, DomainsConfigLoader $domainsConfigLoader, Setting $setting)
+    public function __construct($overwriteDomainUrl, protected readonly DomainsConfigLoader $domainsConfigLoader, protected readonly Setting $setting)
     {
         $this->overwriteDomainUrl = $overwriteDomainUrl;
-        $this->domainsConfigLoader = $domainsConfigLoader;
-        $this->setting = $setting;
     }
 
     /**

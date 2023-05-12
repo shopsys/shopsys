@@ -20,15 +20,11 @@ class CheckOrmMappingCommand extends Command
      */
     protected static $defaultName = 'shopsys:migrations:check-mapping';
 
-    protected EntityManagerInterface $em;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(protected readonly EntityManagerInterface $em)
     {
-        $this->em = $em;
-
         parent::__construct();
     }
 

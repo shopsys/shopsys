@@ -16,12 +16,6 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 class FriendlyUrlGenerator extends BaseUrlGenerator
 {
-    protected FriendlyUrlRepository $friendlyUrlRepository;
-
-    protected FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider;
-
-    protected CacheInterface $mainFriendlyUrlSlugCache;
-
     /**
      * @param \Symfony\Component\Routing\RequestContext $context
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
@@ -30,15 +24,11 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
      */
     public function __construct(
         RequestContext $context,
-        FriendlyUrlRepository $friendlyUrlRepository,
-        FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider,
-        CacheInterface $mainFriendlyUrlSlugCache
+        protected readonly FriendlyUrlRepository $friendlyUrlRepository,
+        protected readonly FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider,
+        protected readonly CacheInterface $mainFriendlyUrlSlugCache
     ) {
         parent::__construct(new RouteCollection(), $context, null);
-
-        $this->friendlyUrlRepository = $friendlyUrlRepository;
-        $this->friendlyUrlCacheKeyProvider = $friendlyUrlCacheKeyProvider;
-        $this->mainFriendlyUrlSlugCache = $mainFriendlyUrlSlugCache;
     }
 
     /**

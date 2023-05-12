@@ -19,20 +19,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MailController extends AdminBaseController
 {
-    protected AdminDomainTabsFacade $adminDomainTabsFacade;
-
-    protected MailTemplateFacade $mailTemplateFacade;
-
-    protected MailSettingFacade $mailSettingFacade;
-
-    protected BreadcrumbOverrider $breadcrumbOverrider;
-
-    protected MailTemplateGridFactory $mailTemplateGridFactory;
-
-    protected MailTemplateConfiguration $mailTemplateConfiguration;
-
-    protected MailTemplateDataFactory $mailTemplateDataFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
@@ -43,21 +29,14 @@ class MailController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactory $mailTemplateDataFactory
      */
     public function __construct(
-        AdminDomainTabsFacade $adminDomainTabsFacade,
-        MailTemplateFacade $mailTemplateFacade,
-        MailSettingFacade $mailSettingFacade,
-        BreadcrumbOverrider $breadcrumbOverrider,
-        MailTemplateGridFactory $mailTemplateGridFactory,
-        MailTemplateConfiguration $mailTemplateConfiguration,
-        MailTemplateDataFactory $mailTemplateDataFactory
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly MailTemplateFacade $mailTemplateFacade,
+        protected readonly MailSettingFacade $mailSettingFacade,
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+        protected readonly MailTemplateGridFactory $mailTemplateGridFactory,
+        protected readonly MailTemplateConfiguration $mailTemplateConfiguration,
+        protected readonly MailTemplateDataFactory $mailTemplateDataFactory
     ) {
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
-        $this->mailTemplateFacade = $mailTemplateFacade;
-        $this->mailSettingFacade = $mailSettingFacade;
-        $this->breadcrumbOverrider = $breadcrumbOverrider;
-        $this->mailTemplateGridFactory = $mailTemplateGridFactory;
-        $this->mailTemplateConfiguration = $mailTemplateConfiguration;
-        $this->mailTemplateDataFactory = $mailTemplateDataFactory;
     }
 
     /**

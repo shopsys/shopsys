@@ -5,38 +5,17 @@ namespace Shopsys\FrameworkBundle\Model\Product\Filter;
 class ProductFilterConfig
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[]
-     */
-    protected array $parameterChoices;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
-     */
-    protected array $flagChoices;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
-     */
-    protected array $brandChoices;
-
-    protected PriceRange $priceRange;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[] $parameterChoices
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[] $flagChoices
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[] $brandChoices
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange $priceRange
      */
     public function __construct(
-        array $parameterChoices,
-        array $flagChoices,
-        array $brandChoices,
-        PriceRange $priceRange
+        protected readonly array $parameterChoices,
+        protected readonly array $flagChoices,
+        protected readonly array $brandChoices,
+        protected readonly PriceRange $priceRange
     ) {
-        $this->parameterChoices = $parameterChoices;
-        $this->flagChoices = $flagChoices;
-        $this->brandChoices = $brandChoices;
-        $this->priceRange = $priceRange;
     }
 
     /**

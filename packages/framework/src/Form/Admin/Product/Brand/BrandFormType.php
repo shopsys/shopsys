@@ -22,20 +22,14 @@ use Symfony\Component\Validator\Constraints;
 
 class BrandFormType extends AbstractType
 {
-    private Domain $domain;
-
-    private SeoSettingFacade $seoSettingFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      */
     public function __construct(
-        Domain $domain,
-        SeoSettingFacade $seoSettingFacade
+        private readonly Domain $domain,
+        private readonly SeoSettingFacade $seoSettingFacade
     ) {
-        $this->domain = $domain;
-        $this->seoSettingFacade = $seoSettingFacade;
     }
 
     /**

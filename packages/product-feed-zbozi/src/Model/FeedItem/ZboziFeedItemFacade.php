@@ -11,18 +11,6 @@ use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductRepository;
 
 class ZboziFeedItemFacade
 {
-    protected ZboziProductRepository $zboziProductRepository;
-
-    protected ZboziFeedItemFactory $feedItemFactory;
-
-    protected PricingGroupSettingFacade $pricingGroupSettingFacade;
-
-    protected ProductUrlsBatchLoader $productUrlsBatchLoader;
-
-    protected ProductParametersBatchLoader $productParametersBatchLoader;
-
-    protected ZboziProductDomainFacade $zboziProductDomainFacade;
-
     /**
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductRepository $zboziProductRepository
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItemFactory $feedItemFactory
@@ -32,19 +20,13 @@ class ZboziFeedItemFacade
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainFacade $zboziProductDomainFacade
      */
     public function __construct(
-        ZboziProductRepository $zboziProductRepository,
-        ZboziFeedItemFactory $feedItemFactory,
-        PricingGroupSettingFacade $pricingGroupSettingFacade,
-        ProductUrlsBatchLoader $productUrlsBatchLoader,
-        ProductParametersBatchLoader $productParametersBatchLoader,
-        ZboziProductDomainFacade $zboziProductDomainFacade
+        protected readonly ZboziProductRepository $zboziProductRepository,
+        protected readonly ZboziFeedItemFactory $feedItemFactory,
+        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
+        protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
+        protected readonly ProductParametersBatchLoader $productParametersBatchLoader,
+        protected readonly ZboziProductDomainFacade $zboziProductDomainFacade
     ) {
-        $this->zboziProductRepository = $zboziProductRepository;
-        $this->feedItemFactory = $feedItemFactory;
-        $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
-        $this->productUrlsBatchLoader = $productUrlsBatchLoader;
-        $this->productParametersBatchLoader = $productParametersBatchLoader;
-        $this->zboziProductDomainFacade = $zboziProductDomainFacade;
     }
 
     /**

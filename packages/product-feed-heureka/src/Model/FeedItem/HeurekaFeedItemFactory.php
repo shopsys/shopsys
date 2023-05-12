@@ -11,13 +11,7 @@ use Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacad
 
 class HeurekaFeedItemFactory
 {
-    protected ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser;
-
     protected HeurekaProductDataBatchLoader $productDataBatchLoader;
-
-    protected HeurekaCategoryFacade $heurekaCategoryFacade;
-
-    protected CategoryFacade $categoryFacade;
 
     /**
      * @var string[]|null[]
@@ -31,15 +25,12 @@ class HeurekaFeedItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      */
     public function __construct(
-        ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
+        protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         HeurekaProductDataBatchLoader $heurekaProductDataBatchLoader,
-        HeurekaCategoryFacade $heurekaCategoryFacade,
-        CategoryFacade $categoryFacade
+        protected readonly HeurekaCategoryFacade $heurekaCategoryFacade,
+        protected readonly CategoryFacade $categoryFacade
     ) {
-        $this->productPriceCalculationForCustomerUser = $productPriceCalculationForCustomerUser;
         $this->productDataBatchLoader = $heurekaProductDataBatchLoader;
-        $this->heurekaCategoryFacade = $heurekaCategoryFacade;
-        $this->categoryFacade = $categoryFacade;
     }
 
     /**

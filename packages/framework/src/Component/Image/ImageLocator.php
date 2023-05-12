@@ -11,20 +11,14 @@ class ImageLocator
 
     protected string $imageDir;
 
-    protected ImageConfig $imageConfig;
-
-    protected FilesystemOperator $filesystem;
-
     /**
      * @param mixed $imageDir
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \League\Flysystem\FilesystemOperator $filesystem
      */
-    public function __construct($imageDir, ImageConfig $imageConfig, FilesystemOperator $filesystem)
+    public function __construct($imageDir, protected readonly ImageConfig $imageConfig, protected readonly FilesystemOperator $filesystem)
     {
         $this->imageDir = $imageDir;
-        $this->imageConfig = $imageConfig;
-        $this->filesystem = $filesystem;
     }
 
     /**

@@ -6,14 +6,11 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class OrderStatusDataFactory implements OrderStatusDataFactoryInterface
 {
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(Domain $domain)
+    public function __construct(protected readonly Domain $domain)
     {
-        $this->domain = $domain;
     }
 
     /**

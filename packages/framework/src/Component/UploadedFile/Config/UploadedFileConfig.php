@@ -9,16 +9,10 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFile
 class UploadedFileConfig
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig[]
-     */
-    protected array $uploadedFileEntityConfigsByClass;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig[] $uploadedFileEntityConfigsByClass
      */
-    public function __construct(array $uploadedFileEntityConfigsByClass)
+    public function __construct(protected readonly array $uploadedFileEntityConfigsByClass)
     {
-        $this->uploadedFileEntityConfigsByClass = $uploadedFileEntityConfigsByClass;
     }
 
     /**

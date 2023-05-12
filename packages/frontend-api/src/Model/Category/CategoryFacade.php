@@ -6,14 +6,11 @@ namespace Shopsys\FrontendApiBundle\Model\Category;
 
 class CategoryFacade
 {
-    protected CategoryRepository $categoryRepository;
-
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Category\CategoryRepository $categoryRepository
      */
-    public function __construct(CategoryRepository $categoryRepository)
+    public function __construct(protected readonly CategoryRepository $categoryRepository)
     {
-        $this->categoryRepository = $categoryRepository;
     }
 
     /**

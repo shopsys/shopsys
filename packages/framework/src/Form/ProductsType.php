@@ -13,14 +13,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductsType extends AbstractType
 {
-    private ProductsIdsToProductsTransformer $productsIdsToProductsTransformer;
-
     /**
      * @param \Shopsys\FrameworkBundle\Form\Transformers\ProductsIdsToProductsTransformer $productsIdsToProductsTransformer
      */
-    public function __construct(ProductsIdsToProductsTransformer $productsIdsToProductsTransformer)
+    public function __construct(private readonly ProductsIdsToProductsTransformer $productsIdsToProductsTransformer)
     {
-        $this->productsIdsToProductsTransformer = $productsIdsToProductsTransformer;
     }
 
     /**

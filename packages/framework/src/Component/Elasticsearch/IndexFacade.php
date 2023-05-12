@@ -14,14 +14,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class IndexFacade
 {
-    protected IndexRepository $indexRepository;
-
-    protected ProgressBarFactory $progressBarFactory;
-
-    protected SqlLoggerFacade $sqlLoggerFacade;
-
-    protected EntityManagerInterface $entityManager;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRepository $indexRepository
      * @param \Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory $progressBarFactory
@@ -29,15 +21,11 @@ class IndexFacade
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
     public function __construct(
-        IndexRepository $indexRepository,
-        ProgressBarFactory $progressBarFactory,
-        SqlLoggerFacade $sqlLoggerFacade,
-        EntityManagerInterface $entityManager
+        protected readonly IndexRepository $indexRepository,
+        protected readonly ProgressBarFactory $progressBarFactory,
+        protected readonly SqlLoggerFacade $sqlLoggerFacade,
+        protected readonly EntityManagerInterface $entityManager
     ) {
-        $this->indexRepository = $indexRepository;
-        $this->progressBarFactory = $progressBarFactory;
-        $this->sqlLoggerFacade = $sqlLoggerFacade;
-        $this->entityManager = $entityManager;
     }
 
     /**

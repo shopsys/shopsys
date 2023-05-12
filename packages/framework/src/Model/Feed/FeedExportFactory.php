@@ -10,18 +10,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class FeedExportFactory
 {
-    protected FeedRendererFactory $feedRendererFactory;
-
-    protected FilesystemOperator $filesystem;
-
-    protected EntityManagerInterface $em;
-
-    protected FeedPathProvider $feedPathProvider;
-
-    protected Filesystem $localFilesystem;
-
-    protected MountManager $mountManager;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedRendererFactory $feedRendererFactory
      * @param \League\Flysystem\FilesystemOperator $filesystem
@@ -31,19 +19,13 @@ class FeedExportFactory
      * @param \League\Flysystem\MountManager $mountManager
      */
     public function __construct(
-        FeedRendererFactory $feedRendererFactory,
-        FilesystemOperator $filesystem,
-        EntityManagerInterface $em,
-        FeedPathProvider $feedPathProvider,
-        Filesystem $localFilesystem,
-        MountManager $mountManager
+        protected readonly FeedRendererFactory $feedRendererFactory,
+        protected readonly FilesystemOperator $filesystem,
+        protected readonly EntityManagerInterface $em,
+        protected readonly FeedPathProvider $feedPathProvider,
+        protected readonly Filesystem $localFilesystem,
+        protected readonly MountManager $mountManager
     ) {
-        $this->feedRendererFactory = $feedRendererFactory;
-        $this->filesystem = $filesystem;
-        $this->em = $em;
-        $this->feedPathProvider = $feedPathProvider;
-        $this->localFilesystem = $localFilesystem;
-        $this->mountManager = $mountManager;
     }
 
     /**

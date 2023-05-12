@@ -19,10 +19,6 @@ class LocalizedRouterFactory
      */
     protected array $routersByLocaleAndHost;
 
-    protected ContainerInterface $container;
-
-    protected string $cacheDir;
-
     /**
      * @param string $localeRoutersResourcesFilepathMask
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
@@ -30,13 +26,11 @@ class LocalizedRouterFactory
      */
     public function __construct(
         $localeRoutersResourcesFilepathMask,
-        ContainerInterface $container,
-        string $cacheDir
+        protected readonly ContainerInterface $container,
+        protected readonly string $cacheDir
     ) {
         $this->localeRoutersResourcesFilepathMask = $localeRoutersResourcesFilepathMask;
         $this->routersByLocaleAndHost = [];
-        $this->container = $container;
-        $this->cacheDir = $cacheDir;
     }
 
     /**

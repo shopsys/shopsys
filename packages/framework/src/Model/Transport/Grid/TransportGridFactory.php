@@ -14,16 +14,6 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
 
 class TransportGridFactory implements GridFactoryInterface
 {
-    protected GridFactory $gridFactory;
-
-    protected TransportRepository $transportRepository;
-
-    protected Localization $localization;
-
-    protected TransportFacade $transportFacade;
-
-    protected AdminDomainTabsFacade $adminDomainTabsFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportRepository $transportRepository
@@ -32,17 +22,12 @@ class TransportGridFactory implements GridFactoryInterface
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
-        GridFactory $gridFactory,
-        TransportRepository $transportRepository,
-        Localization $localization,
-        TransportFacade $transportFacade,
-        AdminDomainTabsFacade $adminDomainTabsFacade
+        protected readonly GridFactory $gridFactory,
+        protected readonly TransportRepository $transportRepository,
+        protected readonly Localization $localization,
+        protected readonly TransportFacade $transportFacade,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade
     ) {
-        $this->gridFactory = $gridFactory;
-        $this->transportRepository = $transportRepository;
-        $this->localization = $localization;
-        $this->transportFacade = $transportFacade;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**

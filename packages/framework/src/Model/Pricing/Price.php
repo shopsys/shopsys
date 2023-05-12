@@ -6,20 +6,14 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class Price
 {
-    protected Money $priceWithoutVat;
-
-    protected Money $priceWithVat;
-
     protected Money $vatAmount;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithoutVat
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
      */
-    public function __construct(Money $priceWithoutVat, Money $priceWithVat)
+    public function __construct(protected readonly Money $priceWithoutVat, protected readonly Money $priceWithVat)
     {
-        $this->priceWithoutVat = $priceWithoutVat;
-        $this->priceWithVat = $priceWithVat;
         $this->vatAmount = $priceWithVat->subtract($priceWithoutVat);
     }
 

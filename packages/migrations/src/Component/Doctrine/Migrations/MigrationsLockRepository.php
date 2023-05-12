@@ -36,8 +36,6 @@ class MigrationsLockRepository implements MigrationsRepository
      */
     protected array $migrationDirectories;
 
-    protected MigrationsLock $migrationsLock;
-
     protected MigrationFinder $migrationFinder;
 
     protected MigrationFactory $migrationFactory;
@@ -47,11 +45,10 @@ class MigrationsLockRepository implements MigrationsRepository
      * @param \Doctrine\Migrations\DependencyFactory $dependencyFactory
      */
     public function __construct(
-        MigrationsLock $migrationsLock,
+        protected readonly MigrationsLock $migrationsLock,
         DependencyFactory $dependencyFactory
     ) {
         $configuration = $dependencyFactory->getConfiguration();
-        $this->migrationsLock = $migrationsLock;
         $this->migrationDirectories = $configuration->getMigrationDirectories();
         $this->migrationFinder = $dependencyFactory->getMigrationsFinder();
         $this->migrationFactory = $dependencyFactory->getMigrationFactory();

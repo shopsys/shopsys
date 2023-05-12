@@ -21,14 +21,11 @@ class CountryFormType extends AbstractType
 {
     protected ?Country $country = null;
 
-    protected CountryFacade $countryFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      */
-    public function __construct(CountryFacade $countryFacade)
+    public function __construct(protected readonly CountryFacade $countryFacade)
     {
-        $this->countryFacade = $countryFacade;
     }
 
     /**

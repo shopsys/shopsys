@@ -7,25 +7,16 @@ use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 
 class AdministratorActivityFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected AdministratorActivityRepository $administratorActivityRepository;
-
-    protected AdministratorActivityFactoryInterface $administratorActivityFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityRepository $administratorActivityRepository
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFactoryInterface $administratorActivityFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        AdministratorActivityRepository $administratorActivityRepository,
-        AdministratorActivityFactoryInterface $administratorActivityFactory
+        protected readonly EntityManagerInterface $em,
+        protected readonly AdministratorActivityRepository $administratorActivityRepository,
+        protected readonly AdministratorActivityFactoryInterface $administratorActivityFactory
     ) {
-        $this->em = $em;
-        $this->administratorActivityRepository = $administratorActivityRepository;
-        $this->administratorActivityFactory = $administratorActivityFactory;
     }
 
     /**

@@ -10,14 +10,6 @@ use Twig\Environment;
 
 class ContactFormFacade
 {
-    protected MailSettingFacade $mailSettingFacade;
-
-    protected Domain $domain;
-
-    protected Mailer $mailer;
-
-    protected Environment $twig;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade $mailSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -25,15 +17,11 @@ class ContactFormFacade
      * @param \Twig\Environment $twig
      */
     public function __construct(
-        MailSettingFacade $mailSettingFacade,
-        Domain $domain,
-        Mailer $mailer,
-        Environment $twig
+        protected readonly MailSettingFacade $mailSettingFacade,
+        protected readonly Domain $domain,
+        protected readonly Mailer $mailer,
+        protected readonly Environment $twig
     ) {
-        $this->mailSettingFacade = $mailSettingFacade;
-        $this->domain = $domain;
-        $this->mailer = $mailer;
-        $this->twig = $twig;
     }
 
     /**

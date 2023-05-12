@@ -18,8 +18,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade;
 
 class ProductFilterOptionsFactory
 {
-    protected ModuleFacade $moduleFacade;
-
     protected ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade;
 
     /**
@@ -27,10 +25,9 @@ class ProductFilterOptionsFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
      */
     public function __construct(
-        ModuleFacade $moduleFacade,
+        protected readonly ModuleFacade $moduleFacade,
         ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
     ) {
-        $this->moduleFacade = $moduleFacade;
         $this->productOnCurrentDomainElasticFacade = $productOnCurrentDomainFacade;
     }
 

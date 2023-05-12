@@ -20,25 +20,16 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class UrlListType extends AbstractType
 {
-    private FriendlyUrlFacade $friendlyUrlFacade;
-
-    private DomainRouterFactory $domainRouterFactory;
-
-    private Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        FriendlyUrlFacade $friendlyUrlFacade,
-        DomainRouterFactory $domainRouterFactory,
-        Domain $domain
+        private readonly FriendlyUrlFacade $friendlyUrlFacade,
+        private readonly DomainRouterFactory $domainRouterFactory,
+        private readonly Domain $domain
     ) {
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->domainRouterFactory = $domainRouterFactory;
-        $this->domain = $domain;
     }
 
     /**

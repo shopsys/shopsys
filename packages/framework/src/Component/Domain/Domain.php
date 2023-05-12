@@ -21,20 +21,13 @@ class Domain implements DomainIdsProviderInterface
     protected ?DomainConfig $currentDomainConfig = null;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
-     */
-    protected array $domainConfigs;
-
-    protected Setting $setting;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[] $domainConfigs
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
-    public function __construct(array $domainConfigs, Setting $setting)
-    {
-        $this->domainConfigs = $domainConfigs;
-        $this->setting = $setting;
+    public function __construct(
+        protected array $domainConfigs,
+        protected Setting $setting
+    ) {
     }
 
     /**

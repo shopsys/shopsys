@@ -23,23 +23,16 @@ class CategoryRepository extends NestedTreeRepository
 {
     public const MOVE_DOWN_TO_BOTTOM = true;
 
-    protected EntityManagerInterface $em;
-
-    protected ProductRepository $productRepository;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
     public function __construct(
-        EntityManagerInterface $em,
-        ProductRepository $productRepository,
+        protected readonly EntityManagerInterface $em,
+        protected readonly ProductRepository $productRepository,
         EntityNameResolver $entityNameResolver
     ) {
-        $this->em = $em;
-        $this->productRepository = $productRepository;
-
         $resolvedClassName = $entityNameResolver->resolve(Category::class);
         $classMetadata = $this->em->getClassMetadata($resolvedClassName);
 

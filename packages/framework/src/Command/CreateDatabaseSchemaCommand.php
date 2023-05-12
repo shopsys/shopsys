@@ -16,15 +16,11 @@ class CreateDatabaseSchemaCommand extends Command
      */
     protected static $defaultName = 'shopsys:schema:create';
 
-    private DatabaseSchemaFacade $databaseSchemaFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\DatabaseSchemaFacade $databaseSchemaFacade
      */
-    public function __construct(DatabaseSchemaFacade $databaseSchemaFacade)
+    public function __construct(private readonly DatabaseSchemaFacade $databaseSchemaFacade)
     {
-        $this->databaseSchemaFacade = $databaseSchemaFacade;
-
         parent::__construct();
     }
 

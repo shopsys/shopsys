@@ -13,14 +13,11 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
  */
 class ApiProductTransformer
 {
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(Domain $domain)
+    public function __construct(protected readonly Domain $domain)
     {
-        $this->domain = $domain;
     }
 
     /**

@@ -14,14 +14,6 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 
 class ProductFilterFacade
 {
-    protected Domain $domain;
-
-    protected ProductFilterDataMapper $productFilterDataMapper;
-
-    protected ProductFilterNormalizer $productFilterNormalizer;
-
-    protected ProductFilterConfigFactory $productFilterConfigFactory;
-
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig[]
      */
@@ -34,15 +26,11 @@ class ProductFilterFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory $productFilterConfigFactory
      */
     public function __construct(
-        Domain $domain,
-        ProductFilterDataMapper $productFilterDataMapper,
-        ProductFilterNormalizer $productFilterNormalizer,
-        ProductFilterConfigFactory $productFilterConfigFactory
+        protected readonly Domain $domain,
+        protected readonly ProductFilterDataMapper $productFilterDataMapper,
+        protected readonly ProductFilterNormalizer $productFilterNormalizer,
+        protected readonly ProductFilterConfigFactory $productFilterConfigFactory
     ) {
-        $this->productFilterDataMapper = $productFilterDataMapper;
-        $this->productFilterNormalizer = $productFilterNormalizer;
-        $this->productFilterConfigFactory = $productFilterConfigFactory;
-        $this->domain = $domain;
     }
 
     /**

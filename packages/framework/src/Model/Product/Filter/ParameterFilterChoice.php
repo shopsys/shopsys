@@ -9,20 +9,14 @@ class ParameterFilterChoice
     protected Parameter $parameter;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
-     */
-    protected array $values;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $values
      */
     public function __construct(
         ?Parameter $parameter = null,
-        array $values = []
+        protected readonly array $values = []
     ) {
         $this->parameter = $parameter;
-        $this->values = $values;
     }
 
     /**

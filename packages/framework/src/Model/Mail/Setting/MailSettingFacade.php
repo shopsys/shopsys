@@ -6,15 +6,12 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 
 class MailSettingFacade
 {
-    protected Setting $setting;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
     public function __construct(
-        Setting $setting
+        protected readonly Setting $setting
     ) {
-        $this->setting = $setting;
     }
 
     /**

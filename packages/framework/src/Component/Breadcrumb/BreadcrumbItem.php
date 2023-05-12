@@ -9,20 +9,14 @@ class BreadcrumbItem
     protected ?string $routeName = null;
 
     /**
-     * @var mixed[]
-     */
-    protected array $routeParameters;
-
-    /**
      * @param string $name
      * @param string|null $routeName
      * @param array $routeParameters
      */
-    public function __construct($name, $routeName = null, array $routeParameters = [])
+    public function __construct($name, $routeName = null, protected readonly array $routeParameters = [])
     {
         $this->name = $name;
         $this->routeName = $routeName;
-        $this->routeParameters = $routeParameters;
     }
 
     /**

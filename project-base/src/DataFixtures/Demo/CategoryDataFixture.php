@@ -27,11 +27,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
     public const CATEGORY_GARDEN_TOOLS = 'category_garden_tools';
     public const CATEGORY_FOOD = 'category_food';
 
-    private CategoryFacade $categoryFacade;
-
     private CategoryDataFactory $categoryDataFactory;
-
-    private Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
@@ -39,13 +35,11 @@ class CategoryDataFixture extends AbstractReferenceFixture
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        CategoryFacade $categoryFacade,
+        private readonly CategoryFacade $categoryFacade,
         CategoryDataFactoryInterface $categoryDataFactory,
-        Domain $domain
+        private readonly Domain $domain
     ) {
-        $this->categoryFacade = $categoryFacade;
         $this->categoryDataFactory = $categoryDataFactory;
-        $this->domain = $domain;
     }
 
     /**

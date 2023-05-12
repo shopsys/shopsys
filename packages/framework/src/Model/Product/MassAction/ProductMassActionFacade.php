@@ -9,25 +9,16 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class ProductMassActionFacade
 {
-    protected ProductMassActionRepository $productMassActionRepository;
-
-    protected ProductVisibilityFacade $productVisibilityFacade;
-
-    protected ProductHiddenRecalculator $productHiddenRecalculator;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionRepository $productMassActionRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
      */
     public function __construct(
-        ProductMassActionRepository $productMassActionRepository,
-        ProductVisibilityFacade $productVisibilityFacade,
-        ProductHiddenRecalculator $productHiddenRecalculator
+        protected readonly ProductMassActionRepository $productMassActionRepository,
+        protected readonly ProductVisibilityFacade $productVisibilityFacade,
+        protected readonly ProductHiddenRecalculator $productHiddenRecalculator
     ) {
-        $this->productMassActionRepository = $productMassActionRepository;
-        $this->productVisibilityFacade = $productVisibilityFacade;
-        $this->productHiddenRecalculator = $productHiddenRecalculator;
     }
 
     /**

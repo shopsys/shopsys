@@ -14,20 +14,14 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 class QuantifiedProductPriceCalculation
 {
-    protected ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser;
-
-    protected PriceCalculation $priceCalculation;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation
      */
     public function __construct(
-        ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
-        PriceCalculation $priceCalculation
+        protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
+        protected readonly PriceCalculation $priceCalculation
     ) {
-        $this->productPriceCalculationForCustomerUser = $productPriceCalculationForCustomerUser;
-        $this->priceCalculation = $priceCalculation;
     }
 
     /**

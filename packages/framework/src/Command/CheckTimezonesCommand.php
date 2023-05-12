@@ -17,15 +17,11 @@ class CheckTimezonesCommand extends Command
      */
     protected static $defaultName = 'shopsys:check-timezones';
 
-    private Connection $connection;
-
     /**
      * @param \Doctrine\DBAL\Connection $connection
      */
-    public function __construct(Connection $connection)
+    public function __construct(private readonly Connection $connection)
     {
-        $this->connection = $connection;
-
         parent::__construct();
     }
 

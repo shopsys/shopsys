@@ -9,23 +9,17 @@ use Symfony\Component\Yaml\Yaml;
 
 class MigrationsLock
 {
-    protected string $migrationsLockFilePath;
-
     /**
      * @var array<string, mixed>|null
      */
     protected ?array $parsedMigrationsLock = null;
 
-    protected LoggerInterface $logger;
-
     /**
      * @param string $migrationsLockFilePath
      * @param \Psr\Log\LoggerInterface $logger
      */
-    public function __construct(string $migrationsLockFilePath, LoggerInterface $logger)
+    public function __construct(protected readonly string $migrationsLockFilePath, protected readonly LoggerInterface $logger)
     {
-        $this->migrationsLockFilePath = $migrationsLockFilePath;
-        $this->logger = $logger;
     }
 
     /**

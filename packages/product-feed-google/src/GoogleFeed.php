@@ -9,20 +9,14 @@ use Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItemFacade;
 
 class GoogleFeed implements FeedInterface
 {
-    protected GoogleFeedInfo $feedInfo;
-
-    protected GoogleFeedItemFacade $feedItemFacade;
-
     /**
      * @param \Shopsys\ProductFeed\GoogleBundle\GoogleFeedInfo $feedInfo
      * @param \Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItemFacade $feedItemFacade
      */
     public function __construct(
-        GoogleFeedInfo $feedInfo,
-        GoogleFeedItemFacade $feedItemFacade
+        protected readonly GoogleFeedInfo $feedInfo,
+        protected readonly GoogleFeedItemFacade $feedItemFacade
     ) {
-        $this->feedInfo = $feedInfo;
-        $this->feedItemFacade = $feedItemFacade;
     }
 
     /**

@@ -8,14 +8,6 @@ use Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductRepository;
 
 class HeurekaFeedItemFacade
 {
-    protected HeurekaProductRepository $heurekaProductRepository;
-
-    protected HeurekaFeedItemFactory $feedItemFactory;
-
-    protected PricingGroupSettingFacade $pricingGroupSettingFacade;
-
-    protected HeurekaProductDataBatchLoader $productDataBatchLoader;
-
     /**
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductRepository $heurekaProductRepository
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory $feedItemFactory
@@ -23,15 +15,11 @@ class HeurekaFeedItemFacade
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaProductDataBatchLoader $productDataBatchLoader
      */
     public function __construct(
-        HeurekaProductRepository $heurekaProductRepository,
-        HeurekaFeedItemFactory $feedItemFactory,
-        PricingGroupSettingFacade $pricingGroupSettingFacade,
-        HeurekaProductDataBatchLoader $productDataBatchLoader
+        protected readonly HeurekaProductRepository $heurekaProductRepository,
+        protected readonly HeurekaFeedItemFactory $feedItemFactory,
+        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
+        protected readonly HeurekaProductDataBatchLoader $productDataBatchLoader
     ) {
-        $this->heurekaProductRepository = $heurekaProductRepository;
-        $this->feedItemFactory = $feedItemFactory;
-        $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
-        $this->productDataBatchLoader = $productDataBatchLoader;
     }
 
     /**

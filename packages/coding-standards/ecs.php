@@ -115,6 +115,7 @@ use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
 use Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ClassLengthSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ParentCallSpacingSniff;
+use SlevomatCodingStandard\Sniffs\Classes\RequireConstructorPropertyPromotionSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\DisallowCommentAfterCodeSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\InlineDocCommentDeclarationSniff;
@@ -305,6 +306,7 @@ return static function (ECSConfig $ecsConfig): void {
     ]);
 
     // Slevomat Coding Standards
+    $ecsConfig->rule(RequireConstructorPropertyPromotionSniff::class);
     $ecsConfig->rule(PropertyTypeHintSniff::class);
     $ecsConfig->rule(DisallowEqualOperatorsSniff::class);
     $ecsConfig->rule(ValidClassNameSniff::class);

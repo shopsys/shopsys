@@ -8,20 +8,14 @@ use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 
 class ProductDetailViewFacade implements ProductDetailViewFacadeInterface
 {
-    protected ProductDetailViewFactory $productDetailViewFactory;
-
-    protected ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade;
-
     /**
      * @param \Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFactory $productDetailViewFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
      */
     public function __construct(
-        ProductDetailViewFactory $productDetailViewFactory,
-        ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
+        protected readonly ProductDetailViewFactory $productDetailViewFactory,
+        protected readonly ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
     ) {
-        $this->productDetailViewFactory = $productDetailViewFactory;
-        $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
     }
 
     /**

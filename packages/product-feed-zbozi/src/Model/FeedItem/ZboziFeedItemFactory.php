@@ -13,14 +13,6 @@ use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain;
 
 class ZboziFeedItemFactory
 {
-    protected ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser;
-
-    protected ProductUrlsBatchLoader $productUrlsBatchLoader;
-
-    protected ProductParametersBatchLoader $productParametersBatchLoader;
-
-    protected CategoryFacade $categoryFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader $productUrlsBatchLoader
@@ -28,15 +20,11 @@ class ZboziFeedItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      */
     public function __construct(
-        ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
-        ProductUrlsBatchLoader $productUrlsBatchLoader,
-        ProductParametersBatchLoader $productParametersBatchLoader,
-        CategoryFacade $categoryFacade
+        protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
+        protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
+        protected readonly ProductParametersBatchLoader $productParametersBatchLoader,
+        protected readonly CategoryFacade $categoryFacade
     ) {
-        $this->productPriceCalculationForCustomerUser = $productPriceCalculationForCustomerUser;
-        $this->productUrlsBatchLoader = $productUrlsBatchLoader;
-        $this->productParametersBatchLoader = $productParametersBatchLoader;
-        $this->categoryFacade = $categoryFacade;
     }
 
     /**

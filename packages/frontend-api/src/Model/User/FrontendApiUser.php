@@ -15,19 +15,6 @@ class FrontendApiUser implements UserInterface
     public const CLAIM_SECRET_CHAIN = 'secretChain';
     public const CLAIM_DEVICE_ID = 'deviceId';
 
-    protected string $uuid;
-
-    protected string $fullName;
-
-    protected string $email;
-
-    /**
-     * @var string[]
-     */
-    protected array $roles;
-
-    protected string $deviceId;
-
     /**
      * @param string $uuid
      * @param string $fullName
@@ -35,13 +22,8 @@ class FrontendApiUser implements UserInterface
      * @param string $deviceId
      * @param string[] $roles
      */
-    public function __construct(string $uuid, string $fullName, string $email, string $deviceId, array $roles)
+    public function __construct(protected readonly string $uuid, protected readonly string $fullName, protected readonly string $email, protected readonly string $deviceId, protected readonly array $roles)
     {
-        $this->uuid = $uuid;
-        $this->fullName = $fullName;
-        $this->email = $email;
-        $this->roles = $roles;
-        $this->deviceId = $deviceId;
     }
 
     /**

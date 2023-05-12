@@ -11,25 +11,15 @@ use Shopsys\FrameworkBundle\Model\Localization\TranslatableListener;
 
 class TestTranslatableListener extends TranslatableListener
 {
-    protected Domain $domain;
-
-    protected AdministrationFacade $administrationFacade;
-
-    protected string $adminLocale;
-
     /**
      * @param \Metadata\MetadataFactory $factory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade $administrationFacade
      * @param string $adminLocale
      */
-    public function __construct(MetadataFactory $factory, Domain $domain, AdministrationFacade $administrationFacade, string $adminLocale)
+    public function __construct(MetadataFactory $factory, protected readonly Domain $domain, protected readonly AdministrationFacade $administrationFacade, protected readonly string $adminLocale)
     {
         parent::__construct($factory);
-
-        $this->domain = $domain;
-        $this->administrationFacade = $administrationFacade;
-        $this->adminLocale = $adminLocale;
     }
 
     /**

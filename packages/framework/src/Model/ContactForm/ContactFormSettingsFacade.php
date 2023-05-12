@@ -11,18 +11,12 @@ class ContactFormSettingsFacade
 {
     protected const CONTACT_FORM_MAIN_TEXT = 'contactFormMainText';
 
-    protected Setting $setting;
-
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(Setting $setting, Domain $domain)
+    public function __construct(protected readonly Setting $setting, protected readonly Domain $domain)
     {
-        $this->setting = $setting;
-        $this->domain = $domain;
     }
 
     /**

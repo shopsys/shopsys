@@ -8,12 +8,6 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 class FlagInlineEdit extends AbstractGridInlineEdit
 {
-    protected FlagFacade $flagFacade;
-
-    protected FormFactoryInterface $formFactory;
-
-    protected FlagDataFactoryInterface $flagDataFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagGridFactory $flagGridFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
@@ -22,15 +16,11 @@ class FlagInlineEdit extends AbstractGridInlineEdit
      */
     public function __construct(
         FlagGridFactory $flagGridFactory,
-        FlagFacade $flagFacade,
-        FormFactoryInterface $formFactory,
-        FlagDataFactoryInterface $flagDataFactory
+        protected readonly FlagFacade $flagFacade,
+        protected readonly FormFactoryInterface $formFactory,
+        protected readonly FlagDataFactoryInterface $flagDataFactory
     ) {
         parent::__construct($flagGridFactory);
-
-        $this->flagFacade = $flagFacade;
-        $this->formFactory = $formFactory;
-        $this->flagDataFactory = $flagDataFactory;
     }
 
     /**

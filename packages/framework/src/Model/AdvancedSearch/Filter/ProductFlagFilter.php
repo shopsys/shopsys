@@ -13,14 +13,11 @@ class ProductFlagFilter implements AdvancedSearchFilterInterface
 {
     public const NAME = 'productFlag';
 
-    protected FlagFacade $flagFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
      */
-    public function __construct(FlagFacade $flagFacade)
+    public function __construct(protected readonly FlagFacade $flagFacade)
     {
-        $this->flagFacade = $flagFacade;
     }
 
     /**

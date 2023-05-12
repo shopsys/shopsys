@@ -16,25 +16,16 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class AdministratorUserProvider implements UserProviderInterface
 {
-    protected AdministratorRepository $administratorRepository;
-
-    protected AdministratorActivityFacade $administratorActivityFacade;
-
-    protected AdministratorRolesChangedSubscriber $administratorRolesChangedSubscriber;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository $administratorRepository
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade $administratorActivityFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedSubscriber $administratorRolesChangedSubscriber
      */
     public function __construct(
-        AdministratorRepository $administratorRepository,
-        AdministratorActivityFacade $administratorActivityFacade,
-        AdministratorRolesChangedSubscriber $administratorRolesChangedSubscriber
+        protected readonly AdministratorRepository $administratorRepository,
+        protected readonly AdministratorActivityFacade $administratorActivityFacade,
+        protected readonly AdministratorRolesChangedSubscriber $administratorRolesChangedSubscriber
     ) {
-        $this->administratorRepository = $administratorRepository;
-        $this->administratorActivityFacade = $administratorActivityFacade;
-        $this->administratorRolesChangedSubscriber = $administratorRolesChangedSubscriber;
     }
 
     /**

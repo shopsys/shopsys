@@ -12,20 +12,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FileUploadController extends AdminBaseController
 {
-    protected FileUpload $fileUpload;
-
-    protected FileThumbnailExtension $fileThumbnailExtension;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
      * @param \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailExtension $fileThumbnailExtension
      */
     public function __construct(
-        FileUpload $fileUpload,
-        FileThumbnailExtension $fileThumbnailExtension
+        protected readonly FileUpload $fileUpload,
+        protected readonly FileThumbnailExtension $fileThumbnailExtension
     ) {
-        $this->fileUpload = $fileUpload;
-        $this->fileThumbnailExtension = $fileThumbnailExtension;
     }
 
     /**

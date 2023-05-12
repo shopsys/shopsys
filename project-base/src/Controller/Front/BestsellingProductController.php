@@ -12,25 +12,16 @@ use Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingPr
 
 class BestsellingProductController extends FrontBaseController
 {
-    private CachedBestsellingProductFacade $cachedBestsellingProductFacade;
-
-    private Domain $domain;
-
-    private CurrentCustomerUser $currentCustomerUser;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade $cachedBestsellingProductFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      */
     public function __construct(
-        CachedBestsellingProductFacade $cachedBestsellingProductFacade,
-        Domain $domain,
-        CurrentCustomerUser $currentCustomerUser
+        private readonly CachedBestsellingProductFacade $cachedBestsellingProductFacade,
+        private readonly Domain $domain,
+        private readonly CurrentCustomerUser $currentCustomerUser
     ) {
-        $this->cachedBestsellingProductFacade = $cachedBestsellingProductFacade;
-        $this->domain = $domain;
-        $this->currentCustomerUser = $currentCustomerUser;
     }
 
     /**

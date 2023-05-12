@@ -12,20 +12,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class BrandFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected BrandRepository $brandRepository;
-
-    protected ImageFacade $imageFacade;
-
-    protected FriendlyUrlFacade $friendlyUrlFacade;
-
-    protected Domain $domain;
-
-    protected BrandFactoryInterface $brandFactory;
-
-    protected EventDispatcherInterface $eventDispatcher;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository $brandRepository
@@ -36,21 +22,14 @@ class BrandFacade
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
-        EntityManagerInterface $em,
-        BrandRepository $brandRepository,
-        ImageFacade $imageFacade,
-        FriendlyUrlFacade $friendlyUrlFacade,
-        Domain $domain,
-        BrandFactoryInterface $brandFactory,
-        EventDispatcherInterface $eventDispatcher
+        protected readonly EntityManagerInterface $em,
+        protected readonly BrandRepository $brandRepository,
+        protected readonly ImageFacade $imageFacade,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly Domain $domain,
+        protected readonly BrandFactoryInterface $brandFactory,
+        protected readonly EventDispatcherInterface $eventDispatcher
     ) {
-        $this->em = $em;
-        $this->brandRepository = $brandRepository;
-        $this->imageFacade = $imageFacade;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->domain = $domain;
-        $this->brandFactory = $brandFactory;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**

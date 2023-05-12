@@ -8,35 +8,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class HeurekaFeedItem implements FeedItemInterface
 {
-    protected int $id;
-
-    protected ?int $mainVariantId = null;
-
-    protected string $name;
-
-    protected ?string $description = null;
-
-    protected string $url;
-
-    protected ?string $imgUrl = null;
-
-    protected ?string $brandName = null;
-
-    protected ?string $ean = null;
-
-    protected ?int $availabilityDispatchTime = null;
-
-    protected Price $price;
-
-    protected ?string $heurekaCategoryFullName = null;
-
-    /**
-     * @var string[]
-     */
-    protected array $parametersByName;
-
-    protected ?Money $cpc = null;
-
     /**
      * @param int $id
      * @param int|null $mainVariantId
@@ -53,33 +24,20 @@ class HeurekaFeedItem implements FeedItemInterface
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $cpc
      */
     public function __construct(
-        int $id,
-        ?int $mainVariantId,
-        string $name,
-        ?string $description,
-        string $url,
-        ?string $imgUrl,
-        ?string $brandName,
-        ?string $ean,
-        ?int $availabilityDispatchTime,
-        Price $price,
-        ?string $heurekaCategoryFullName,
-        array $parametersByName,
-        ?Money $cpc
+        protected readonly int $id,
+        protected readonly ?int $mainVariantId = null,
+        protected readonly string $name,
+        protected readonly ?string $description = null,
+        protected readonly string $url,
+        protected readonly ?string $imgUrl = null,
+        protected readonly ?string $brandName = null,
+        protected readonly ?string $ean = null,
+        protected readonly ?int $availabilityDispatchTime = null,
+        protected readonly Price $price,
+        protected readonly ?string $heurekaCategoryFullName = null,
+        protected readonly array $parametersByName,
+        protected readonly ?Money $cpc = null
     ) {
-        $this->id = $id;
-        $this->mainVariantId = $mainVariantId;
-        $this->name = $name;
-        $this->description = $description;
-        $this->url = $url;
-        $this->imgUrl = $imgUrl;
-        $this->brandName = $brandName;
-        $this->ean = $ean;
-        $this->availabilityDispatchTime = $availabilityDispatchTime;
-        $this->price = $price;
-        $this->heurekaCategoryFullName = $heurekaCategoryFullName;
-        $this->parametersByName = $parametersByName;
-        $this->cpc = $cpc;
     }
 
     /**

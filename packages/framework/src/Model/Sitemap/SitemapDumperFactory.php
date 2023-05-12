@@ -12,18 +12,6 @@ class SitemapDumperFactory
 {
     protected const MAX_ITEMS_IN_FILE = 50000;
 
-    protected EventDispatcherInterface $eventDispatcher;
-
-    protected Filesystem $localFilesystem;
-
-    protected SitemapFilePrefixer $sitemapFilePrefixer;
-
-    protected MountManager $mountManager;
-
-    protected FilesystemOperator $filesystem;
-
-    protected UrlGeneratorInterface $urlGenerator;
-
     /**
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
@@ -33,19 +21,13 @@ class SitemapDumperFactory
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        Filesystem $localFilesystem,
-        FilesystemOperator $filesystem,
-        MountManager $mountManager,
-        SitemapFilePrefixer $sitemapFilePrefixer,
-        UrlGeneratorInterface $urlGenerator
+        protected readonly EventDispatcherInterface $eventDispatcher,
+        protected readonly Filesystem $localFilesystem,
+        protected readonly FilesystemOperator $filesystem,
+        protected readonly MountManager $mountManager,
+        protected readonly SitemapFilePrefixer $sitemapFilePrefixer,
+        protected readonly UrlGeneratorInterface $urlGenerator
     ) {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->localFilesystem = $localFilesystem;
-        $this->sitemapFilePrefixer = $sitemapFilePrefixer;
-        $this->mountManager = $mountManager;
-        $this->filesystem = $filesystem;
-        $this->urlGenerator = $urlGenerator;
     }
 
     /**

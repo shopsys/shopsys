@@ -12,10 +12,6 @@ class FilemanagerAccess
 
     protected string $filemanagerUploadDir;
 
-    protected ElFinderConfigurationReader $elFinderConfigurationReader;
-
-    protected FilepathComparator $filepathComparator;
-
     /**
      * @param mixed $filamanagerUploadDir
      * @param \FM\ElfinderBundle\Configuration\ElFinderConfigurationReader $elFinderConfigurationReader
@@ -23,12 +19,10 @@ class FilemanagerAccess
      */
     public function __construct(
         $filamanagerUploadDir,
-        ElFinderConfigurationReader $elFinderConfigurationReader,
-        FilepathComparator $filepathComparator
+        protected readonly ElFinderConfigurationReader $elFinderConfigurationReader,
+        protected readonly FilepathComparator $filepathComparator
     ) {
         $this->filemanagerUploadDir = realpath($filamanagerUploadDir);
-        $this->elFinderConfigurationReader = $elFinderConfigurationReader;
-        $this->filepathComparator = $filepathComparator;
     }
 
     /**

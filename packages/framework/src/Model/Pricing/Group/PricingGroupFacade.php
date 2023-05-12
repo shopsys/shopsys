@@ -14,26 +14,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class PricingGroupFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected PricingGroupRepository $pricingGroupRepository;
-
-    protected Domain $domain;
-
-    protected ProductPriceRecalculationScheduler $productPriceRecalculationScheduler;
-
-    protected PricingGroupSettingFacade $pricingGroupSettingFacade;
-
-    protected ProductVisibilityRepository $productVisibilityRepository;
-
-    protected ProductCalculatedPriceRepository $productCalculatedPriceRepository;
-
-    protected CustomerUserRepository $customerUserRepository;
-
-    protected PricingGroupFactoryInterface $pricingGroupFactory;
-
-    protected EventDispatcherInterface $eventDispatcher;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
@@ -47,27 +27,17 @@ class PricingGroupFacade
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
-        EntityManagerInterface $em,
-        PricingGroupRepository $pricingGroupRepository,
-        Domain $domain,
-        ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
-        PricingGroupSettingFacade $pricingGroupSettingFacade,
-        ProductVisibilityRepository $productVisibilityRepository,
-        ProductCalculatedPriceRepository $productCalculatedPriceRepository,
-        CustomerUserRepository $customerUserRepository,
-        PricingGroupFactoryInterface $pricingGroupFactory,
-        EventDispatcherInterface $eventDispatcher
+        protected readonly EntityManagerInterface $em,
+        protected readonly PricingGroupRepository $pricingGroupRepository,
+        protected readonly Domain $domain,
+        protected readonly ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
+        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
+        protected readonly ProductVisibilityRepository $productVisibilityRepository,
+        protected readonly ProductCalculatedPriceRepository $productCalculatedPriceRepository,
+        protected readonly CustomerUserRepository $customerUserRepository,
+        protected readonly PricingGroupFactoryInterface $pricingGroupFactory,
+        protected readonly EventDispatcherInterface $eventDispatcher
     ) {
-        $this->em = $em;
-        $this->pricingGroupRepository = $pricingGroupRepository;
-        $this->domain = $domain;
-        $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
-        $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
-        $this->productVisibilityRepository = $productVisibilityRepository;
-        $this->productCalculatedPriceRepository = $productCalculatedPriceRepository;
-        $this->customerUserRepository = $customerUserRepository;
-        $this->pricingGroupFactory = $pricingGroupFactory;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**

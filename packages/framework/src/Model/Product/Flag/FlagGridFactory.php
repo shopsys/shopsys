@@ -11,25 +11,16 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class FlagGridFactory implements GridFactoryInterface
 {
-    protected EntityManagerInterface $em;
-
-    protected GridFactory $gridFactory;
-
-    protected Localization $localization;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
-        EntityManagerInterface $em,
-        GridFactory $gridFactory,
-        Localization $localization
+        protected readonly EntityManagerInterface $em,
+        protected readonly GridFactory $gridFactory,
+        protected readonly Localization $localization
     ) {
-        $this->em = $em;
-        $this->gridFactory = $gridFactory;
-        $this->localization = $localization;
     }
 
     /**

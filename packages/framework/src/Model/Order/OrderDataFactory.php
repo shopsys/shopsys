@@ -6,15 +6,12 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface;
 
 class OrderDataFactory implements OrderDataFactoryInterface
 {
-    protected OrderItemDataFactoryInterface $orderItemDataFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface $orderItemDataFactory
      */
     public function __construct(
-        OrderItemDataFactoryInterface $orderItemDataFactory
+        protected readonly OrderItemDataFactoryInterface $orderItemDataFactory
     ) {
-        $this->orderItemDataFactory = $orderItemDataFactory;
     }
 
     /**

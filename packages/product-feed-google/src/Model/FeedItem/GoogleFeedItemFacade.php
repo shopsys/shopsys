@@ -9,14 +9,6 @@ use Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductRepository;
 
 class GoogleFeedItemFacade
 {
-    protected GoogleProductRepository $googleProductRepository;
-
-    protected GoogleFeedItemFactory $feedItemFactory;
-
-    protected PricingGroupSettingFacade $pricingGroupSettingFacade;
-
-    protected ProductUrlsBatchLoader $productUrlsBatchLoader;
-
     /**
      * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductRepository $googleProductRepository
      * @param \Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItemFactory $feedItemFactory
@@ -24,15 +16,11 @@ class GoogleFeedItemFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader $productUrlsBatchLoader
      */
     public function __construct(
-        GoogleProductRepository $googleProductRepository,
-        GoogleFeedItemFactory $feedItemFactory,
-        PricingGroupSettingFacade $pricingGroupSettingFacade,
-        ProductUrlsBatchLoader $productUrlsBatchLoader
+        protected readonly GoogleProductRepository $googleProductRepository,
+        protected readonly GoogleFeedItemFactory $feedItemFactory,
+        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
+        protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader
     ) {
-        $this->googleProductRepository = $googleProductRepository;
-        $this->feedItemFactory = $feedItemFactory;
-        $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
-        $this->productUrlsBatchLoader = $productUrlsBatchLoader;
     }
 
     /**

@@ -7,14 +7,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class CountryFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected CountryRepository $countryRepository;
-
-    protected Domain $domain;
-
-    protected CountryFactoryInterface $countryFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryRepository $countryRepository
@@ -22,15 +14,11 @@ class CountryFacade
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFactoryInterface $countryFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        CountryRepository $countryRepository,
-        Domain $domain,
-        CountryFactoryInterface $countryFactory
+        protected readonly EntityManagerInterface $em,
+        protected readonly CountryRepository $countryRepository,
+        protected readonly Domain $domain,
+        protected readonly CountryFactoryInterface $countryFactory
     ) {
-        $this->em = $em;
-        $this->countryRepository = $countryRepository;
-        $this->domain = $domain;
-        $this->countryFactory = $countryFactory;
     }
 
     /**

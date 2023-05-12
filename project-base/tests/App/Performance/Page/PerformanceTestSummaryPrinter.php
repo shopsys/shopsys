@@ -8,14 +8,11 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 
 class PerformanceTestSummaryPrinter
 {
-    private PerformanceTestSampleQualifier $performanceTestSampleQualifier;
-
     /**
      * @param \Tests\App\Performance\Page\PerformanceTestSampleQualifier $performanceTestSampleQualifier
      */
-    public function __construct(PerformanceTestSampleQualifier $performanceTestSampleQualifier)
+    public function __construct(private readonly PerformanceTestSampleQualifier $performanceTestSampleQualifier)
     {
-        $this->performanceTestSampleQualifier = $performanceTestSampleQualifier;
     }
 
     /**

@@ -8,8 +8,6 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 
 class FlagsProvider
 {
-    protected FlagFacade $flagFacade;
-
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]|null
      */
@@ -18,9 +16,8 @@ class FlagsProvider
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
      */
-    public function __construct(FlagFacade $flagFacade)
+    public function __construct(protected readonly FlagFacade $flagFacade)
     {
-        $this->flagFacade = $flagFacade;
     }
 
     /**

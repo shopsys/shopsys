@@ -16,8 +16,6 @@ use Symfony\Component\Yaml\Parser;
 
 class UploadedFileConfigLoader
 {
-    protected Filesystem $filesystem;
-
     /**
      * @var \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileEntityConfig[]
      */
@@ -31,9 +29,8 @@ class UploadedFileConfigLoader
     /**
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem
      */
-    public function __construct(Filesystem $filesystem)
+    public function __construct(protected readonly Filesystem $filesystem)
     {
-        $this->filesystem = $filesystem;
     }
 
     /**

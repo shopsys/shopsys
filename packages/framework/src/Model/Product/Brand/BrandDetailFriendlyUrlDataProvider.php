@@ -13,20 +13,14 @@ class BrandDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInter
 {
     protected const ROUTE_NAME = 'front_brand_detail';
 
-    protected EntityManagerInterface $em;
-
-    protected FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory
+        protected readonly EntityManagerInterface $em,
+        protected readonly FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory
     ) {
-        $this->em = $em;
-        $this->friendlyUrlDataFactory = $friendlyUrlDataFactory;
     }
 
     /**

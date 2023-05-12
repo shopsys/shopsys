@@ -11,14 +11,11 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchNoAli
 
 class IndexRepository
 {
-    protected Client $elasticsearchClient;
-
     /**
      * @param \Elasticsearch\Client $elasticsearchClient
      */
-    public function __construct(Client $elasticsearchClient)
+    public function __construct(protected readonly Client $elasticsearchClient)
     {
-        $this->elasticsearchClient = $elasticsearchClient;
     }
 
     /**

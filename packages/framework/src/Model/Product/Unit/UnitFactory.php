@@ -6,14 +6,11 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class UnitFactory implements UnitFactoryInterface
 {
-    protected EntityNameResolver $entityNameResolver;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
-    public function __construct(EntityNameResolver $entityNameResolver)
+    public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
-        $this->entityNameResolver = $entityNameResolver;
     }
 
     /**

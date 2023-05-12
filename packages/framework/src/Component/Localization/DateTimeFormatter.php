@@ -7,20 +7,14 @@ use IntlDateFormatter;
 
 class DateTimeFormatter implements DateTimeFormatterInterface
 {
-    protected DateTimeFormatPatternRepository $customDateTimeFormatPatternRepository;
-
-    protected DisplayTimeZoneProviderInterface $displayTimeZoneProvider;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatPatternRepository $customDateTimeFormatPatternRepository
      * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
      */
     public function __construct(
-        DateTimeFormatPatternRepository $customDateTimeFormatPatternRepository,
-        DisplayTimeZoneProviderInterface $displayTimeZoneProvider
+        protected readonly DateTimeFormatPatternRepository $customDateTimeFormatPatternRepository,
+        protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider
     ) {
-        $this->customDateTimeFormatPatternRepository = $customDateTimeFormatPatternRepository;
-        $this->displayTimeZoneProvider = $displayTimeZoneProvider;
     }
 
     /**

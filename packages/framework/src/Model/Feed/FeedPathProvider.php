@@ -7,26 +7,14 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 
 class FeedPathProvider
 {
-    protected string $feedUrlPrefix;
-
-    protected string $feedDir;
-
-    protected Setting $setting;
-
-    protected string $projectDir;
-
     /**
      * @param string $feedUrlPrefix
      * @param string $feedDir
      * @param string $projectDir
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
-    public function __construct(string $feedUrlPrefix, string $feedDir, string $projectDir, Setting $setting)
+    public function __construct(protected readonly string $feedUrlPrefix, protected readonly string $feedDir, protected readonly string $projectDir, protected readonly Setting $setting)
     {
-        $this->feedUrlPrefix = $feedUrlPrefix;
-        $this->feedDir = $feedDir;
-        $this->setting = $setting;
-        $this->projectDir = $projectDir;
     }
 
     /**

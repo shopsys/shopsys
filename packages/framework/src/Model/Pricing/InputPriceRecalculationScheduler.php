@@ -7,10 +7,6 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class InputPriceRecalculationScheduler
 {
-    protected InputPriceRecalculator $inputPriceRecalculator;
-
-    protected Setting $setting;
-
     protected bool $recalculateInputPricesWithoutVat = false;
 
     protected bool $recalculateInputPricesWithVat = false;
@@ -19,10 +15,8 @@ class InputPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculator $inputPriceRecalculator
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
-    public function __construct(InputPriceRecalculator $inputPriceRecalculator, Setting $setting)
+    public function __construct(protected readonly InputPriceRecalculator $inputPriceRecalculator, protected readonly Setting $setting)
     {
-        $this->inputPriceRecalculator = $inputPriceRecalculator;
-        $this->setting = $setting;
     }
 
     public function scheduleSetInputPricesWithoutVat()

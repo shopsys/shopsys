@@ -8,12 +8,6 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 class UnitInlineEdit extends AbstractGridInlineEdit
 {
-    protected UnitFacade $unitFacade;
-
-    protected FormFactoryInterface $formFactory;
-
-    protected UnitDataFactoryInterface $unitDataFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitGridFactory $unitGridFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
@@ -22,15 +16,11 @@ class UnitInlineEdit extends AbstractGridInlineEdit
      */
     public function __construct(
         UnitGridFactory $unitGridFactory,
-        UnitFacade $unitFacade,
-        FormFactoryInterface $formFactory,
-        UnitDataFactoryInterface $unitDataFactory
+        protected readonly UnitFacade $unitFacade,
+        protected readonly FormFactoryInterface $formFactory,
+        protected readonly UnitDataFactoryInterface $unitDataFactory
     ) {
         parent::__construct($unitGridFactory);
-
-        $this->unitFacade = $unitFacade;
-        $this->formFactory = $formFactory;
-        $this->unitDataFactory = $unitDataFactory;
     }
 
     /**

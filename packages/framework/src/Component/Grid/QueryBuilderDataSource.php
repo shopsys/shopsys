@@ -8,17 +8,14 @@ use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 
 class QueryBuilderDataSource implements DataSourceInterface
 {
-    protected QueryBuilder $queryBuilder;
-
     protected string $rowIdSourceColumnName;
 
     /**
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string $rowIdSourceColumnName
      */
-    public function __construct(QueryBuilder $queryBuilder, $rowIdSourceColumnName)
+    public function __construct(protected readonly QueryBuilder $queryBuilder, $rowIdSourceColumnName)
     {
-        $this->queryBuilder = $queryBuilder;
         $this->rowIdSourceColumnName = $rowIdSourceColumnName;
     }
 

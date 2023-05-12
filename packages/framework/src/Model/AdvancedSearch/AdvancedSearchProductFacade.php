@@ -10,14 +10,6 @@ class AdvancedSearchProductFacade
 {
     public const RULES_FORM_NAME = 'as';
 
-    protected ProductAdvancedSearchFormFactory $advancedSearchFormFactory;
-
-    protected AdvancedSearchQueryBuilderExtender $advancedSearchQueryBuilderExtender;
-
-    protected ProductListAdminFacade $productListAdminFacade;
-
-    protected RuleFormViewDataFactory $ruleFormViewDataFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchFormFactory $advancedSearchFormFactory
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender $advancedSearchQueryBuilderExtender
@@ -25,15 +17,11 @@ class AdvancedSearchProductFacade
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\RuleFormViewDataFactory $ruleFormViewDataFactory
      */
     public function __construct(
-        ProductAdvancedSearchFormFactory $advancedSearchFormFactory,
-        AdvancedSearchQueryBuilderExtender $advancedSearchQueryBuilderExtender,
-        ProductListAdminFacade $productListAdminFacade,
-        RuleFormViewDataFactory $ruleFormViewDataFactory
+        protected readonly ProductAdvancedSearchFormFactory $advancedSearchFormFactory,
+        protected readonly AdvancedSearchQueryBuilderExtender $advancedSearchQueryBuilderExtender,
+        protected readonly ProductListAdminFacade $productListAdminFacade,
+        protected readonly RuleFormViewDataFactory $ruleFormViewDataFactory
     ) {
-        $this->advancedSearchFormFactory = $advancedSearchFormFactory;
-        $this->advancedSearchQueryBuilderExtender = $advancedSearchQueryBuilderExtender;
-        $this->productListAdminFacade = $productListAdminFacade;
-        $this->ruleFormViewDataFactory = $ruleFormViewDataFactory;
     }
 
     /**

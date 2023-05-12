@@ -6,17 +6,14 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class QuantifiedProduct
 {
-    protected Product $product;
-
     protected int $quantity;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $quantity
      */
-    public function __construct(Product $product, $quantity)
+    public function __construct(protected readonly Product $product, $quantity)
     {
-        $this->product = $product;
         $this->quantity = $quantity;
     }
 

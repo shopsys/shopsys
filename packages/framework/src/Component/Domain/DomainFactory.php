@@ -7,18 +7,12 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 
 class DomainFactory
 {
-    protected DomainsConfigLoader $domainsConfigLoader;
-
-    protected Setting $setting;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigLoader $domainsConfigLoader
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
-    public function __construct(DomainsConfigLoader $domainsConfigLoader, Setting $setting)
+    public function __construct(protected readonly DomainsConfigLoader $domainsConfigLoader, protected readonly Setting $setting)
     {
-        $this->domainsConfigLoader = $domainsConfigLoader;
-        $this->setting = $setting;
     }
 
     /**

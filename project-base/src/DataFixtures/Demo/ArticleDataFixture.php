@@ -28,11 +28,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
     private const ATTRIBUTE_SEO_META_DESCRIPTION_KEY = 'soeMetaDescription';
     private const REFERENCE_NAME_KEY = 'referenceName';
 
-    private ArticleFacade $articleFacade;
-
     private ArticleDataFactory $articleDataFactory;
-
-    private Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
@@ -40,13 +36,11 @@ class ArticleDataFixture extends AbstractReferenceFixture
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        ArticleFacade $articleFacade,
+        private readonly ArticleFacade $articleFacade,
         ArticleDataFactoryInterface $articleDataFactory,
-        Domain $domain
+        private readonly Domain $domain
     ) {
-        $this->articleFacade = $articleFacade;
         $this->articleDataFactory = $articleDataFactory;
-        $this->domain = $domain;
     }
 
     /**

@@ -11,14 +11,11 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class OrderResolverMap extends ResolverMap
 {
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(Domain $domain)
+    public function __construct(protected readonly Domain $domain)
     {
-        $this->domain = $domain;
     }
 
     /**

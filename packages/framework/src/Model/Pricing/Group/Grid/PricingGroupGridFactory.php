@@ -11,25 +11,16 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 
 class PricingGroupGridFactory implements GridFactoryInterface
 {
-    protected EntityManagerInterface $em;
-
-    protected GridFactory $gridFactory;
-
-    protected AdminDomainTabsFacade $adminDomainTabsFacade;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
-        EntityManagerInterface $em,
-        GridFactory $gridFactory,
-        AdminDomainTabsFacade $adminDomainTabsFacade
+        protected readonly EntityManagerInterface $em,
+        protected readonly GridFactory $gridFactory,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade
     ) {
-        $this->em = $em;
-        $this->gridFactory = $gridFactory;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**

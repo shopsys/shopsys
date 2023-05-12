@@ -25,12 +25,6 @@ class GenerateMigrationCommand extends Command
      */
     protected static $defaultName = 'shopsys:migrations:generate';
 
-    protected DatabaseSchemaFacade $databaseSchemaFacade;
-
-    protected MigrationsGenerator $migrationsGenerator;
-
-    protected string $vendorDirectoryPath;
-
     protected Configuration $configuration;
 
     /**
@@ -40,14 +34,11 @@ class GenerateMigrationCommand extends Command
      * @param \Doctrine\Migrations\DependencyFactory $dependencyFactory
      */
     public function __construct(
-        string $vendorDirectoryPath,
-        DatabaseSchemaFacade $databaseSchemaFacade,
-        MigrationsGenerator $migrationsGenerator,
+        protected readonly string $vendorDirectoryPath,
+        protected readonly DatabaseSchemaFacade $databaseSchemaFacade,
+        protected readonly MigrationsGenerator $migrationsGenerator,
         DependencyFactory $dependencyFactory
     ) {
-        $this->databaseSchemaFacade = $databaseSchemaFacade;
-        $this->migrationsGenerator = $migrationsGenerator;
-        $this->vendorDirectoryPath = $vendorDirectoryPath;
         $this->configuration = $dependencyFactory->getConfiguration();
 
         parent::__construct();

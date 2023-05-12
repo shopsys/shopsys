@@ -15,14 +15,6 @@ class CookiesFacade
 
     protected string $environment;
 
-    protected ArticleFacade $articleFacade;
-
-    protected Setting $setting;
-
-    protected Domain $domain;
-
-    protected RequestStack $requestStack;
-
     /**
      * @param string $environment
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
@@ -32,16 +24,12 @@ class CookiesFacade
      */
     public function __construct(
         $environment,
-        ArticleFacade $articleFacade,
-        Setting $setting,
-        Domain $domain,
-        RequestStack $requestStack
+        protected readonly ArticleFacade $articleFacade,
+        protected readonly Setting $setting,
+        protected readonly Domain $domain,
+        protected readonly RequestStack $requestStack
     ) {
         $this->environment = $environment;
-        $this->articleFacade = $articleFacade;
-        $this->setting = $setting;
-        $this->domain = $domain;
-        $this->requestStack = $requestStack;
     }
 
     /**

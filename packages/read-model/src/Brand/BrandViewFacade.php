@@ -9,25 +9,16 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 
 class BrandViewFacade implements BrandViewFacadeInterface
 {
-    protected ProductFacade $productFacade;
-
-    protected BrandViewFactory $brandViewFactory;
-
-    protected FriendlyUrlFacade $friendlyUrlFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\ReadModelBundle\Brand\BrandViewFactory $brandViewFactory
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
     public function __construct(
-        ProductFacade $productFacade,
-        BrandViewFactory $brandViewFactory,
-        FriendlyUrlFacade $friendlyUrlFacade
+        protected readonly ProductFacade $productFacade,
+        protected readonly BrandViewFactory $brandViewFactory,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade
     ) {
-        $this->productFacade = $productFacade;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->brandViewFactory = $brandViewFactory;
     }
 
     /**

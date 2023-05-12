@@ -41,14 +41,6 @@ class CreateApplicationDirectoriesCommand extends Command
      */
     protected static $defaultName = 'shopsys:create-directories';
 
-    private FilesystemOperator $filesystem;
-
-    private Filesystem $localFilesystem;
-
-    private ImageDirectoryStructureCreator $imageDirectoryStructureCreator;
-
-    private UploadedFileDirectoryStructureCreator $uploadedFileDirectoryStructureCreator;
-
     /**
      * @param array $defaultInternalDirectories
      * @param array $defaultPublicDirectories
@@ -64,19 +56,15 @@ class CreateApplicationDirectoriesCommand extends Command
         $defaultPublicDirectories,
         $internalDirectories,
         $publicDirectories,
-        FilesystemOperator $filesystem,
-        Filesystem $localFilesystem,
-        ImageDirectoryStructureCreator $imageDirectoryStructureCreator,
-        UploadedFileDirectoryStructureCreator $uploadedFileDirectoryStructureCreator
+        private readonly FilesystemOperator $filesystem,
+        private readonly Filesystem $localFilesystem,
+        private readonly ImageDirectoryStructureCreator $imageDirectoryStructureCreator,
+        private readonly UploadedFileDirectoryStructureCreator $uploadedFileDirectoryStructureCreator
     ) {
         $this->defaultInternalDirectories = $defaultInternalDirectories;
         $this->defaultPublicDirectories = $defaultPublicDirectories;
         $this->internalDirectories = $internalDirectories;
         $this->publicDirectories = $publicDirectories;
-        $this->filesystem = $filesystem;
-        $this->localFilesystem = $localFilesystem;
-        $this->imageDirectoryStructureCreator = $imageDirectoryStructureCreator;
-        $this->uploadedFileDirectoryStructureCreator = $uploadedFileDirectoryStructureCreator;
 
         parent::__construct();
     }

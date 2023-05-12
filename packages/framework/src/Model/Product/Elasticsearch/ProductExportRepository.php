@@ -22,24 +22,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
 
 class ProductExportRepository
 {
-    protected EntityManagerInterface $em;
-
-    protected ParameterRepository $parameterRepository;
-
-    protected ProductFacade $productFacade;
-
-    protected FriendlyUrlRepository $friendlyUrlRepository;
-
-    protected ProductVisibilityRepository $productVisibilityRepository;
-
-    protected FriendlyUrlFacade $friendlyUrlFacade;
-
-    protected CategoryFacade $categoryFacade;
-
-    protected ProductAccessoryFacade $productAccessoryFacade;
-
-    protected BrandCachedFacade $brandCachedFacade;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
@@ -52,25 +34,16 @@ class ProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade $brandCachedFacade
      */
     public function __construct(
-        EntityManagerInterface $em,
-        ParameterRepository $parameterRepository,
-        ProductFacade $productFacade,
-        FriendlyUrlRepository $friendlyUrlRepository,
-        ProductVisibilityRepository $productVisibilityRepository,
-        FriendlyUrlFacade $friendlyUrlFacade,
-        CategoryFacade $categoryFacade,
-        ProductAccessoryFacade $productAccessoryFacade,
-        BrandCachedFacade $brandCachedFacade
+        protected readonly EntityManagerInterface $em,
+        protected readonly ParameterRepository $parameterRepository,
+        protected readonly ProductFacade $productFacade,
+        protected readonly FriendlyUrlRepository $friendlyUrlRepository,
+        protected readonly ProductVisibilityRepository $productVisibilityRepository,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly CategoryFacade $categoryFacade,
+        protected readonly ProductAccessoryFacade $productAccessoryFacade,
+        protected readonly BrandCachedFacade $brandCachedFacade
     ) {
-        $this->parameterRepository = $parameterRepository;
-        $this->productFacade = $productFacade;
-        $this->em = $em;
-        $this->friendlyUrlRepository = $friendlyUrlRepository;
-        $this->productVisibilityRepository = $productVisibilityRepository;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->categoryFacade = $categoryFacade;
-        $this->productAccessoryFacade = $productAccessoryFacade;
-        $this->brandCachedFacade = $brandCachedFacade;
     }
 
     /**

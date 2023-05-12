@@ -15,20 +15,14 @@ class DateTimeFormatterExtension extends AbstractExtension
 {
     protected const HOUR_IN_SECONDS = 60 * 60;
 
-    protected DateTimeFormatterInterface $dateTimeFormatter;
-
-    protected Localization $localization;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface $dateTimeFormatter
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
-        DateTimeFormatterInterface $dateTimeFormatter,
-        Localization $localization
+        protected readonly DateTimeFormatterInterface $dateTimeFormatter,
+        protected readonly Localization $localization
     ) {
-        $this->dateTimeFormatter = $dateTimeFormatter;
-        $this->localization = $localization;
     }
 
     /**

@@ -13,16 +13,11 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class ApiDataSetter
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected $domain;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(Domain $domain)
-    {
-        $this->domain = $domain;
+    public function __construct(
+        protected readonly Domain $domain
+    ) {
     }
 
     /**

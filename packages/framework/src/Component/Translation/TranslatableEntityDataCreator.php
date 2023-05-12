@@ -10,25 +10,16 @@ use Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter;
 
 class TranslatableEntityDataCreator
 {
-    protected EntityManagerInterface $em;
-
-    protected NotNullableColumnsFinder $notNullableColumnsFinder;
-
-    protected SqlQuoter $sqlQuoter;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\NotNullableColumnsFinder $notNullableColumnsFinder
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter $sqlQuoter
      */
     public function __construct(
-        EntityManagerInterface $em,
-        NotNullableColumnsFinder $notNullableColumnsFinder,
-        SqlQuoter $sqlQuoter
+        protected readonly EntityManagerInterface $em,
+        protected readonly NotNullableColumnsFinder $notNullableColumnsFinder,
+        protected readonly SqlQuoter $sqlQuoter
     ) {
-        $this->em = $em;
-        $this->notNullableColumnsFinder = $notNullableColumnsFinder;
-        $this->sqlQuoter = $sqlQuoter;
     }
 
     /**

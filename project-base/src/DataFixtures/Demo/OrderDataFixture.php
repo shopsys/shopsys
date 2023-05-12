@@ -23,17 +23,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
 {
     public const ORDER_PREFIX = 'order_';
 
-    private CustomerUserRepository $customerUserRepository;
-
-    private OrderFacade $orderFacade;
-
-    private OrderPreviewFactory $orderPreviewFactory;
-
     private OrderDataFactory $orderDataFactory;
-
-    private Domain $domain;
-
-    private CurrencyFacade $currencyFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
@@ -44,19 +34,14 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
-        CustomerUserRepository $customerUserRepository,
-        OrderFacade $orderFacade,
-        OrderPreviewFactory $orderPreviewFactory,
+        private readonly CustomerUserRepository $customerUserRepository,
+        private readonly OrderFacade $orderFacade,
+        private readonly OrderPreviewFactory $orderPreviewFactory,
         OrderDataFactoryInterface $orderDataFactory,
-        Domain $domain,
-        CurrencyFacade $currencyFacade
+        private readonly Domain $domain,
+        private readonly CurrencyFacade $currencyFacade
     ) {
-        $this->customerUserRepository = $customerUserRepository;
-        $this->orderFacade = $orderFacade;
-        $this->orderPreviewFactory = $orderPreviewFactory;
         $this->orderDataFactory = $orderDataFactory;
-        $this->domain = $domain;
-        $this->currencyFacade = $currencyFacade;
     }
 
     /**

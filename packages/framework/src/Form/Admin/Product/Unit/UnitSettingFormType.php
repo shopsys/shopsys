@@ -12,14 +12,11 @@ use Symfony\Component\Validator\Constraints;
 
 class UnitSettingFormType extends AbstractType
 {
-    private UnitFacade $unitFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      */
-    public function __construct(UnitFacade $unitFacade)
+    public function __construct(private readonly UnitFacade $unitFacade)
     {
-        $this->unitFacade = $unitFacade;
     }
 
     /**

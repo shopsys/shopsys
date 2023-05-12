@@ -14,16 +14,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class ProductPriceCalculation
 {
-    protected BasePriceCalculation $basePriceCalculation;
-
-    protected PricingSetting $pricingSetting;
-
-    protected ProductManualInputPriceRepository $productManualInputPriceRepository;
-
-    protected ProductRepository $productRepository;
-
-    protected CurrencyFacade $currencyFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
@@ -32,17 +22,12 @@ class ProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
-        BasePriceCalculation $basePriceCalculation,
-        PricingSetting $pricingSetting,
-        ProductManualInputPriceRepository $productManualInputPriceRepository,
-        ProductRepository $productRepository,
-        CurrencyFacade $currencyFacade
+        protected readonly BasePriceCalculation $basePriceCalculation,
+        protected readonly PricingSetting $pricingSetting,
+        protected readonly ProductManualInputPriceRepository $productManualInputPriceRepository,
+        protected readonly ProductRepository $productRepository,
+        protected readonly CurrencyFacade $currencyFacade
     ) {
-        $this->pricingSetting = $pricingSetting;
-        $this->basePriceCalculation = $basePriceCalculation;
-        $this->productManualInputPriceRepository = $productManualInputPriceRepository;
-        $this->productRepository = $productRepository;
-        $this->currencyFacade = $currencyFacade;
     }
 
     /**

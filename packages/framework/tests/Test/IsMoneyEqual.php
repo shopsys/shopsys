@@ -8,16 +8,13 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 
 final class IsMoneyEqual extends Constraint
 {
-    private Money $value;
-
     private Exporter $exporter;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $value
      */
-    public function __construct(Money $value)
+    public function __construct(private readonly Money $value)
     {
-        $this->value = $value;
         $this->exporter = new MoneyExporter();
     }
 

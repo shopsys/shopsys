@@ -11,14 +11,11 @@ class PriceCalculation
 {
     protected const PRICE_CALCULATION_MAX_SCALE = 6;
 
-    protected Rounding $rounding;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
      */
-    public function __construct(Rounding $rounding)
+    public function __construct(protected readonly Rounding $rounding)
     {
-        $this->rounding = $rounding;
     }
 
     /**

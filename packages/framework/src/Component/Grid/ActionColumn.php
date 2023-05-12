@@ -11,25 +11,11 @@ class ActionColumn
     public const TYPE_DELETE = 'delete';
     public const TYPE_EDIT = 'edit';
 
-    protected RouterInterface $router;
-
-    protected RouteCsrfProtector $routeCsrfProtector;
-
     protected string $type;
 
     protected string $title;
 
     protected string $route;
-
-    /**
-     * @var mixed[]
-     */
-    protected array $bindingRouteParams;
-
-    /**
-     * @var mixed[]
-     */
-    protected array $additionalRouteParams;
 
     protected ?string $classAttribute = null;
 
@@ -47,21 +33,17 @@ class ActionColumn
      * @param array $additionalRouteParams
      */
     public function __construct(
-        RouterInterface $router,
-        RouteCsrfProtector $routeCsrfProtector,
+        protected readonly RouterInterface $router,
+        protected readonly RouteCsrfProtector $routeCsrfProtector,
         $type,
         $title,
         $route,
-        array $bindingRouteParams,
-        array $additionalRouteParams
+        protected readonly array $bindingRouteParams,
+        protected readonly array $additionalRouteParams
     ) {
-        $this->router = $router;
-        $this->routeCsrfProtector = $routeCsrfProtector;
         $this->type = $type;
         $this->title = $title;
         $this->route = $route;
-        $this->bindingRouteParams = $bindingRouteParams;
-        $this->additionalRouteParams = $additionalRouteParams;
         $this->isAjaxConfirm = false;
     }
 

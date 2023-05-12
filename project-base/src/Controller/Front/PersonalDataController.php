@@ -20,24 +20,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PersonalDataController extends FrontBaseController
 {
-    private Setting $setting;
-
-    private Domain $domain;
-
-    private CustomerUserFacade $customerUserFacade;
-
-    private OrderFacade $orderFacade;
-
-    private NewsletterFacade $newsletterFacade;
-
-    private PersonalDataAccessRequestFacade $personalDataAccessRequestFacade;
-
-    private PersonalDataAccessMailFacade $personalDataAccessMailFacade;
-
-    private PersonalDataAccessRequestDataFactoryInterface $personalDataAccessRequestDataFactory;
-
-    private XmlResponse $xmlResponse;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -50,25 +32,16 @@ class PersonalDataController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Component\HttpFoundation\XmlResponse $xmlResponse
      */
     public function __construct(
-        Setting $setting,
-        Domain $domain,
-        CustomerUserFacade $customerUserFacade,
-        OrderFacade $orderFacade,
-        NewsletterFacade $newsletterFacade,
-        PersonalDataAccessMailFacade $personalDataAccessMailFacade,
-        PersonalDataAccessRequestFacade $personalDataAccessRequestFacade,
-        PersonalDataAccessRequestDataFactoryInterface $personalDataAccessRequestDataFactory,
-        XmlResponse $xmlResponse
+        private readonly Setting $setting,
+        private readonly Domain $domain,
+        private readonly CustomerUserFacade $customerUserFacade,
+        private readonly OrderFacade $orderFacade,
+        private readonly NewsletterFacade $newsletterFacade,
+        private readonly PersonalDataAccessMailFacade $personalDataAccessMailFacade,
+        private readonly PersonalDataAccessRequestFacade $personalDataAccessRequestFacade,
+        private readonly PersonalDataAccessRequestDataFactoryInterface $personalDataAccessRequestDataFactory,
+        private readonly XmlResponse $xmlResponse
     ) {
-        $this->setting = $setting;
-        $this->domain = $domain;
-        $this->customerUserFacade = $customerUserFacade;
-        $this->orderFacade = $orderFacade;
-        $this->newsletterFacade = $newsletterFacade;
-        $this->personalDataAccessMailFacade = $personalDataAccessMailFacade;
-        $this->personalDataAccessRequestFacade = $personalDataAccessRequestFacade;
-        $this->personalDataAccessRequestDataFactory = $personalDataAccessRequestDataFactory;
-        $this->xmlResponse = $xmlResponse;
     }
 
     /**

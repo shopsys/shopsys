@@ -22,15 +22,11 @@ class ChangeEnvironmentCommand extends Command
      */
     protected static $defaultName = 'shopsys:environment:change';
 
-    private EnvironmentFileSetting $environmentFileSetting;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting $environmentFileSetting
      */
-    public function __construct(EnvironmentFileSetting $environmentFileSetting)
+    public function __construct(private readonly EnvironmentFileSetting $environmentFileSetting)
     {
-        $this->environmentFileSetting = $environmentFileSetting;
-
         parent::__construct();
     }
 

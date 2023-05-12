@@ -14,16 +14,13 @@ use PHPUnit\Framework\ExpectationFailedException;
  */
 class IsIdenticalString extends Constraint
 {
-    private mixed $value;
-
     private IsIdentical $isIdentical;
 
     /**
      * @param mixed $value
      */
-    public function __construct(mixed $value)
+    public function __construct(private readonly mixed $value)
     {
-        $this->value = $value;
         $this->isIdentical = new IsIdentical($this->value);
     }
 

@@ -8,20 +8,14 @@ use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 
 class ImageDeleteDoctrineListener
 {
-    protected ImageConfig $imageConfig;
-
-    protected ImageFacade $imageFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      */
     public function __construct(
-        ImageConfig $imageConfig,
-        ImageFacade $imageFacade
+        protected readonly ImageConfig $imageConfig,
+        protected readonly ImageFacade $imageFacade
     ) {
-        $this->imageConfig = $imageConfig;
-        $this->imageFacade = $imageFacade;
     }
 
     /**

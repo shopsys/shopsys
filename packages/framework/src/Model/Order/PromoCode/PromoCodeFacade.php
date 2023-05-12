@@ -6,25 +6,16 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class PromoCodeFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected PromoCodeRepository $promoCodeRepository;
-
-    protected PromoCodeFactoryInterface $promoCodeFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeRepository $promoCodeRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactoryInterface $promoCodeFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        PromoCodeRepository $promoCodeRepository,
-        PromoCodeFactoryInterface $promoCodeFactory
+        protected readonly EntityManagerInterface $em,
+        protected readonly PromoCodeRepository $promoCodeRepository,
+        protected readonly PromoCodeFactoryInterface $promoCodeFactory
     ) {
-        $this->em = $em;
-        $this->promoCodeRepository = $promoCodeRepository;
-        $this->promoCodeFactory = $promoCodeFactory;
     }
 
     /**

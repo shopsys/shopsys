@@ -10,18 +10,12 @@ use Roave\BetterReflection\Reflection\ReflectionProperty;
 
 class AnnotationsReplacer
 {
-    protected AnnotationsReplacementsMap $annotationsReplacementsMap;
-
-    protected DocBlockParser $docBlockParser;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap $annotationsReplacementsMap
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\DocBlockParser $docBlockParser
      */
-    public function __construct(AnnotationsReplacementsMap $annotationsReplacementsMap, DocBlockParser $docBlockParser)
+    public function __construct(protected readonly AnnotationsReplacementsMap $annotationsReplacementsMap, protected readonly DocBlockParser $docBlockParser)
     {
-        $this->annotationsReplacementsMap = $annotationsReplacementsMap;
-        $this->docBlockParser = $docBlockParser;
     }
 
     /**

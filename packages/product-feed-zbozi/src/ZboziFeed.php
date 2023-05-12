@@ -9,18 +9,12 @@ use Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItemFacade;
 
 class ZboziFeed implements FeedInterface
 {
-    protected ZboziFeedInfo $feedInfo;
-
-    protected ZboziFeedItemFacade $feedItemFacade;
-
     /**
      * @param \Shopsys\ProductFeed\ZboziBundle\ZboziFeedInfo $feedInfo
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItemFacade $feedItemFacade
      */
-    public function __construct(ZboziFeedInfo $feedInfo, ZboziFeedItemFacade $feedItemFacade)
+    public function __construct(protected readonly ZboziFeedInfo $feedInfo, protected readonly ZboziFeedItemFacade $feedItemFacade)
     {
-        $this->feedInfo = $feedInfo;
-        $this->feedItemFacade = $feedItemFacade;
     }
 
     /**

@@ -6,26 +6,14 @@ namespace Shopsys\ReadModelBundle\Product\Action;
 
 class ProductActionView
 {
-    protected int $id;
-
-    protected bool $sellingDenied;
-
-    protected bool $isMainVariant;
-
-    protected string $detailUrl;
-
     /**
      * @param int $id
      * @param bool $sellingDenied
      * @param bool $isMainVariant
      * @param string $detailUrl
      */
-    public function __construct(int $id, bool $sellingDenied, bool $isMainVariant, string $detailUrl)
+    public function __construct(protected readonly int $id, protected readonly bool $sellingDenied, protected readonly bool $isMainVariant, protected readonly string $detailUrl)
     {
-        $this->id = $id;
-        $this->sellingDenied = $sellingDenied;
-        $this->isMainVariant = $isMainVariant;
-        $this->detailUrl = $detailUrl;
     }
 
     /**

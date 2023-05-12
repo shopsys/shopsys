@@ -13,18 +13,12 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductListAdminRepository
 {
-    protected EntityManagerInterface $em;
-
-    protected Localization $localization;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
-    public function __construct(EntityManagerInterface $em, Localization $localization)
+    public function __construct(protected readonly EntityManagerInterface $em, protected readonly Localization $localization)
     {
-        $this->em = $em;
-        $this->localization = $localization;
     }
 
     /**

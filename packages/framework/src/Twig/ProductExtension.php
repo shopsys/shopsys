@@ -11,20 +11,14 @@ use Twig\TwigFunction;
 
 class ProductExtension extends AbstractExtension
 {
-    protected CategoryFacade $categoryFacade;
-
-    protected ProductCachedAttributesFacade $productCachedAttributesFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      */
     public function __construct(
-        CategoryFacade $categoryFacade,
-        ProductCachedAttributesFacade $productCachedAttributesFacade
+        protected readonly CategoryFacade $categoryFacade,
+        protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade
     ) {
-        $this->categoryFacade = $categoryFacade;
-        $this->productCachedAttributesFacade = $productCachedAttributesFacade;
     }
 
     /**

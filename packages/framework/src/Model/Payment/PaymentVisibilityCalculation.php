@@ -6,20 +6,14 @@ use Shopsys\FrameworkBundle\Model\Transport\IndependentTransportVisibilityCalcul
 
 class PaymentVisibilityCalculation
 {
-    protected IndependentPaymentVisibilityCalculation $independentPaymentVisibilityCalculation;
-
-    protected IndependentTransportVisibilityCalculation $independentTransportVisibilityCalculation;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation $independentPaymentVisibilityCalculation
      * @param \Shopsys\FrameworkBundle\Model\Transport\IndependentTransportVisibilityCalculation $independentTransportVisibilityCalculation
      */
     public function __construct(
-        IndependentPaymentVisibilityCalculation $independentPaymentVisibilityCalculation,
-        IndependentTransportVisibilityCalculation $independentTransportVisibilityCalculation
+        protected readonly IndependentPaymentVisibilityCalculation $independentPaymentVisibilityCalculation,
+        protected readonly IndependentTransportVisibilityCalculation $independentTransportVisibilityCalculation
     ) {
-        $this->independentPaymentVisibilityCalculation = $independentPaymentVisibilityCalculation;
-        $this->independentTransportVisibilityCalculation = $independentTransportVisibilityCalculation;
     }
 
     /**

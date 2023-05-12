@@ -16,15 +16,11 @@ class DropDatabaseSchemaCommand extends Command
      */
     protected static $defaultName = 'shopsys:schema:drop';
 
-    private DatabaseSchemaFacade $databaseSchemaFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\DatabaseSchemaFacade $databaseSchemaFacade
      */
-    public function __construct(DatabaseSchemaFacade $databaseSchemaFacade)
+    public function __construct(private readonly DatabaseSchemaFacade $databaseSchemaFacade)
     {
-        $this->databaseSchemaFacade = $databaseSchemaFacade;
-
         parent::__construct();
     }
 

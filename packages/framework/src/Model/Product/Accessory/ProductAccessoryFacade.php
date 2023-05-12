@@ -7,14 +7,11 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductAccessoryFacade
 {
-    protected ProductAccessoryRepository $productAccessoryRepository;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
      */
-    public function __construct(ProductAccessoryRepository $productAccessoryRepository)
+    public function __construct(protected readonly ProductAccessoryRepository $productAccessoryRepository)
     {
-        $this->productAccessoryRepository = $productAccessoryRepository;
     }
 
     /**

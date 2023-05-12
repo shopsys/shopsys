@@ -23,18 +23,15 @@ class GetCountOfMigrationsToExecuteCommand extends Command
 
     protected AliasResolver $aliasResolver;
 
-    protected MigrationLockPlanCalculator $migrationLockPlanCalculator;
-
     /**
      * @param \Doctrine\Migrations\DependencyFactory $dependencyFactory
      * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator $migrationLockPlanCalculator
      */
-    public function __construct(DependencyFactory $dependencyFactory, MigrationLockPlanCalculator $migrationLockPlanCalculator)
+    public function __construct(DependencyFactory $dependencyFactory, protected readonly MigrationLockPlanCalculator $migrationLockPlanCalculator)
     {
         parent::__construct();
 
         $this->aliasResolver = $dependencyFactory->getVersionAliasResolver();
-        $this->migrationLockPlanCalculator = $migrationLockPlanCalculator;
     }
 
     protected function configure(): void

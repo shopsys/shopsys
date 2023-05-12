@@ -15,14 +15,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class PaymentCanBeUsedValidator extends ConstraintValidator
 {
-    protected PaymentFacade $paymentFacade;
-
-    protected Domain $domain;
-
-    protected PaymentPriceCalculation $paymentPriceCalculation;
-
-    protected CurrencyFacade $currencyFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -30,15 +22,11 @@ class PaymentCanBeUsedValidator extends ConstraintValidator
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
-        PaymentFacade $paymentFacade,
-        Domain $domain,
-        PaymentPriceCalculation $paymentPriceCalculation,
-        CurrencyFacade $currencyFacade
+        protected readonly PaymentFacade $paymentFacade,
+        protected readonly Domain $domain,
+        protected readonly PaymentPriceCalculation $paymentPriceCalculation,
+        protected readonly CurrencyFacade $currencyFacade
     ) {
-        $this->paymentFacade = $paymentFacade;
-        $this->domain = $domain;
-        $this->paymentPriceCalculation = $paymentPriceCalculation;
-        $this->currencyFacade = $currencyFacade;
     }
 
     /**

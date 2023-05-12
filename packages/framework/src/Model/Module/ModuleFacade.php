@@ -6,25 +6,16 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ModuleFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected EnabledModuleRepository $enabledModuleRepository;
-
-    protected EnabledModuleFactoryInterface $enabledModuleFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Module\EnabledModuleRepository $enabledModuleRepository
      * @param \Shopsys\FrameworkBundle\Model\Module\EnabledModuleFactoryInterface $enabledModuleFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        EnabledModuleRepository $enabledModuleRepository,
-        EnabledModuleFactoryInterface $enabledModuleFactory
+        protected readonly EntityManagerInterface $em,
+        protected readonly EnabledModuleRepository $enabledModuleRepository,
+        protected readonly EnabledModuleFactoryInterface $enabledModuleFactory
     ) {
-        $this->em = $em;
-        $this->enabledModuleRepository = $enabledModuleRepository;
-        $this->enabledModuleFactory = $enabledModuleFactory;
     }
 
     /**

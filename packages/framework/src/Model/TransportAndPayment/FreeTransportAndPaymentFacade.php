@@ -7,14 +7,11 @@ use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 
 class FreeTransportAndPaymentFacade
 {
-    protected PricingSetting $pricingSetting;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      */
-    public function __construct(PricingSetting $pricingSetting)
+    public function __construct(protected readonly PricingSetting $pricingSetting)
     {
-        $this->pricingSetting = $pricingSetting;
     }
 
     /**

@@ -39,22 +39,16 @@ class BrandDataFixture extends AbstractReferenceFixture
     public const BRAND_HYUNDAI = 'brand_hyundai';
     public const BRAND_NIKON = 'brand_nikon';
 
-    private BrandFacade $brandFacade;
-
     private BrandDataFactory $brandDataFactory;
-
-    private Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \App\Model\Product\Brand\BrandDataFactory $brandDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(BrandFacade $brandFacade, BrandDataFactoryInterface $brandDataFactory, Domain $domain)
+    public function __construct(private readonly BrandFacade $brandFacade, BrandDataFactoryInterface $brandDataFactory, private readonly Domain $domain)
     {
-        $this->brandFacade = $brandFacade;
         $this->brandDataFactory = $brandDataFactory;
-        $this->domain = $domain;
     }
 
     /**

@@ -17,16 +17,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DomainController extends AdminBaseController
 {
-    protected Domain $domain;
-
-    protected AdminDomainTabsFacade $adminDomainTabsFacade;
-
-    protected GridFactory $gridFactory;
-
-    protected DomainFacade $domainFacade;
-
-    protected ErrorExtractor $errorExtractor;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
@@ -35,17 +25,12 @@ class DomainController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor $errorExtractor
      */
     public function __construct(
-        Domain $domain,
-        AdminDomainTabsFacade $adminDomainTabsFacade,
-        GridFactory $gridFactory,
-        DomainFacade $domainFacade,
-        ErrorExtractor $errorExtractor
+        protected readonly Domain $domain,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly GridFactory $gridFactory,
+        protected readonly DomainFacade $domainFacade,
+        protected readonly ErrorExtractor $errorExtractor
     ) {
-        $this->domain = $domain;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
-        $this->gridFactory = $gridFactory;
-        $this->domainFacade = $domainFacade;
-        $this->errorExtractor = $errorExtractor;
     }
 
     public function domainTabsAction()

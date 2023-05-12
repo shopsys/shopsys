@@ -21,26 +21,6 @@ use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory;
 
 class ProductDetailViewElasticsearchFactory
 {
-    protected ImageViewFacadeInterface $imageViewFacade;
-
-    protected CurrentCustomerUser $currentCustomerUser;
-
-    protected ProductActionViewFactory $productActionViewFactory;
-
-    protected ParameterViewFactory $parameterViewFactory;
-
-    protected BrandViewFactory $brandViewFactory;
-
-    protected SeoSettingFacade $seoSettingFacade;
-
-    protected Domain $domain;
-
-    protected ProductElasticsearchProvider $productElasticsearchProvider;
-
-    protected ListedProductViewFactory $listedProductViewFactory;
-
-    protected PriceFactory $priceFactory;
-
     /**
      * @param \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface $imageViewFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
@@ -54,27 +34,17 @@ class ProductDetailViewElasticsearchFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory $priceFactory
      */
     public function __construct(
-        ImageViewFacadeInterface $imageViewFacade,
-        CurrentCustomerUser $currentCustomerUser,
-        ProductActionViewFactory $productActionViewFactory,
-        ParameterViewFactory $parameterViewFactory,
-        BrandViewFactory $brandViewFactory,
-        SeoSettingFacade $seoSettingFacade,
-        Domain $domain,
-        ProductElasticsearchProvider $productElasticsearchProvider,
-        ListedProductViewFactory $listedProductViewFactory,
-        PriceFactory $priceFactory
+        protected readonly ImageViewFacadeInterface $imageViewFacade,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly ProductActionViewFactory $productActionViewFactory,
+        protected readonly ParameterViewFactory $parameterViewFactory,
+        protected readonly BrandViewFactory $brandViewFactory,
+        protected readonly SeoSettingFacade $seoSettingFacade,
+        protected readonly Domain $domain,
+        protected readonly ProductElasticsearchProvider $productElasticsearchProvider,
+        protected readonly ListedProductViewFactory $listedProductViewFactory,
+        protected readonly PriceFactory $priceFactory
     ) {
-        $this->imageViewFacade = $imageViewFacade;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->productActionViewFactory = $productActionViewFactory;
-        $this->parameterViewFactory = $parameterViewFactory;
-        $this->brandViewFactory = $brandViewFactory;
-        $this->seoSettingFacade = $seoSettingFacade;
-        $this->domain = $domain;
-        $this->productElasticsearchProvider = $productElasticsearchProvider;
-        $this->listedProductViewFactory = $listedProductViewFactory;
-        $this->priceFactory = $priceFactory;
     }
 
     /**

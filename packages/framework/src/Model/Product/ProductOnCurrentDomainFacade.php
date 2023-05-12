@@ -18,20 +18,6 @@ use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 
 class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterface
 {
-    protected ProductRepository $productRepository;
-
-    protected Domain $domain;
-
-    protected CurrentCustomerUser $currentCustomerUser;
-
-    protected CategoryRepository $categoryRepository;
-
-    protected ProductFilterCountRepository $productFilterCountRepository;
-
-    protected ProductAccessoryRepository $productAccessoryRepository;
-
-    protected BrandRepository $brandRepository;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -42,21 +28,14 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository $brandRepository
      */
     public function __construct(
-        ProductRepository $productRepository,
-        Domain $domain,
-        CurrentCustomerUser $currentCustomerUser,
-        CategoryRepository $categoryRepository,
-        ProductFilterCountRepository $productFilterCountRepository,
-        ProductAccessoryRepository $productAccessoryRepository,
-        BrandRepository $brandRepository
+        protected readonly ProductRepository $productRepository,
+        protected readonly Domain $domain,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly CategoryRepository $categoryRepository,
+        protected readonly ProductFilterCountRepository $productFilterCountRepository,
+        protected readonly ProductAccessoryRepository $productAccessoryRepository,
+        protected readonly BrandRepository $brandRepository
     ) {
-        $this->productRepository = $productRepository;
-        $this->domain = $domain;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->categoryRepository = $categoryRepository;
-        $this->productFilterCountRepository = $productFilterCountRepository;
-        $this->productAccessoryRepository = $productAccessoryRepository;
-        $this->brandRepository = $brandRepository;
     }
 
     /**

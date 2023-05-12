@@ -14,8 +14,6 @@ class DomainRouter extends ChainRouter
 {
     protected bool $freeze = false;
 
-    protected FriendlyUrlRouter $friendlyUrlRouter;
-
     /**
      * @param \Symfony\Component\Routing\RequestContext $context
      * @param \Symfony\Component\Routing\RouterInterface $basicRouter
@@ -27,14 +25,13 @@ class DomainRouter extends ChainRouter
         RequestContext $context,
         RouterInterface $basicRouter,
         RouterInterface $localizedRouter,
-        FriendlyUrlRouter $friendlyUrlRouter,
+        protected readonly FriendlyUrlRouter $friendlyUrlRouter,
         ?LoggerInterface $logger = null
     ) {
         parent::__construct($logger);
 
         $this->setContext($context);
         $this->freeze = true;
-        $this->friendlyUrlRouter = $friendlyUrlRouter;
 
         $this->add($basicRouter, 30);
         $this->add($localizedRouter, 20);

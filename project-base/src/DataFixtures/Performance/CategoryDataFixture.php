@@ -21,22 +21,12 @@ class CategoryDataFixture
 
     private CategoryDataFactory $categoryDataFactory;
 
-    private CategoryFacade $categoryFacade;
-
-    private SqlLoggerFacade $sqlLoggerFacade;
-
-    private Faker $faker;
-
     /**
      * @var int[]
      */
     private array $categoryCountsByLevel;
 
     private int $categoriesCreated;
-
-    private PersistentReferenceFacade $persistentReferenceFacade;
-
-    private ProgressBarFactory $progressBarFactory;
 
     /**
      * @param int[] $categoryCountsByLevel
@@ -50,20 +40,15 @@ class CategoryDataFixture
     public function __construct(
         $categoryCountsByLevel,
         CategoryDataFactoryInterface $categoryDataFactory,
-        CategoryFacade $categoryFacade,
-        SqlLoggerFacade $sqlLoggerFacade,
-        PersistentReferenceFacade $persistentReferenceFacade,
-        Faker $faker,
-        ProgressBarFactory $progressBarFactory
+        private readonly CategoryFacade $categoryFacade,
+        private readonly SqlLoggerFacade $sqlLoggerFacade,
+        private readonly PersistentReferenceFacade $persistentReferenceFacade,
+        private readonly Faker $faker,
+        private readonly ProgressBarFactory $progressBarFactory
     ) {
         $this->categoryCountsByLevel = $categoryCountsByLevel;
         $this->categoryDataFactory = $categoryDataFactory;
-        $this->categoryFacade = $categoryFacade;
-        $this->sqlLoggerFacade = $sqlLoggerFacade;
-        $this->faker = $faker;
         $this->categoriesCreated = 0;
-        $this->persistentReferenceFacade = $persistentReferenceFacade;
-        $this->progressBarFactory = $progressBarFactory;
     }
 
     /**

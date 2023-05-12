@@ -21,22 +21,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ArticleController extends AdminBaseController
 {
-    protected BreadcrumbOverrider $breadcrumbOverrider;
-
-    protected ArticleFacade $articleFacade;
-
-    protected ArticleDataFactoryInterface $articleDataFactory;
-
-    protected AdminDomainTabsFacade $adminDomainTabsFacade;
-
-    protected GridFactory $gridFactory;
-
-    protected ConfirmDeleteResponseFactory $confirmDeleteResponseFactory;
-
-    protected LegalConditionsFacade $legalConditionsFacade;
-
-    protected CookiesFacade $cookiesFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface $articleDataFactory
@@ -48,23 +32,15 @@ class ArticleController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade $cookiesFacade
      */
     public function __construct(
-        ArticleFacade $articleFacade,
-        ArticleDataFactoryInterface $articleDataFactory,
-        GridFactory $gridFactory,
-        AdminDomainTabsFacade $adminDomainTabsFacade,
-        BreadcrumbOverrider $breadcrumbOverrider,
-        ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
-        LegalConditionsFacade $legalConditionsFacade,
-        CookiesFacade $cookiesFacade
+        protected readonly ArticleFacade $articleFacade,
+        protected readonly ArticleDataFactoryInterface $articleDataFactory,
+        protected readonly GridFactory $gridFactory,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+        protected readonly ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
+        protected readonly LegalConditionsFacade $legalConditionsFacade,
+        protected readonly CookiesFacade $cookiesFacade
     ) {
-        $this->articleFacade = $articleFacade;
-        $this->articleDataFactory = $articleDataFactory;
-        $this->gridFactory = $gridFactory;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
-        $this->breadcrumbOverrider = $breadcrumbOverrider;
-        $this->confirmDeleteResponseFactory = $confirmDeleteResponseFactory;
-        $this->legalConditionsFacade = $legalConditionsFacade;
-        $this->cookiesFacade = $cookiesFacade;
     }
 
     /**

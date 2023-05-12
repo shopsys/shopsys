@@ -9,18 +9,12 @@ use Twig\TemplateWrapper;
 
 class FeedRenderer
 {
-    protected Environment $twig;
-
-    protected TemplateWrapper $template;
-
     /**
      * @param \Twig\Environment $twig
      * @param \Twig\TemplateWrapper $template
      */
-    public function __construct(Environment $twig, TemplateWrapper $template)
+    public function __construct(protected readonly Environment $twig, protected readonly TemplateWrapper $template)
     {
-        $this->twig = $twig;
-        $this->template = $template;
     }
 
     /**

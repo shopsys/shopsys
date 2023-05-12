@@ -6,15 +6,12 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ZboziProductDomainRepository
 {
-    protected EntityManagerInterface $em;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
-        EntityManagerInterface $em
+        protected readonly EntityManagerInterface $em
     ) {
-        $this->em = $em;
     }
 
     /**

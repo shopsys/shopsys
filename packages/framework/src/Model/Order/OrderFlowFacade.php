@@ -4,14 +4,11 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 
 class OrderFlowFacade
 {
-    protected OrderFlowFactoryInterface $orderFlowFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFlowFactoryInterface $orderFlowFactory
      */
-    public function __construct(OrderFlowFactoryInterface $orderFlowFactory)
+    public function __construct(protected readonly OrderFlowFactoryInterface $orderFlowFactory)
     {
-        $this->orderFlowFactory = $orderFlowFactory;
     }
 
     public function resetOrderForm()

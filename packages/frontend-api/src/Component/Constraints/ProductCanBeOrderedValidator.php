@@ -15,14 +15,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class ProductCanBeOrderedValidator extends ConstraintValidator
 {
-    protected ProductCachedAttributesFacade $productCachedAttributesFacade;
-
-    protected Domain $domain;
-
-    protected CurrentCustomerUser $currentCustomerUser;
-
-    protected FrontendApiProductFacade $frontendApiProductFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -30,15 +22,11 @@ class ProductCanBeOrderedValidator extends ConstraintValidator
      * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade $frontendApiProductFacade
      */
     public function __construct(
-        ProductCachedAttributesFacade $productCachedAttributesFacade,
-        Domain $domain,
-        CurrentCustomerUser $currentCustomerUser,
-        FrontendApiProductFacade $frontendApiProductFacade
+        protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
+        protected readonly Domain $domain,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly FrontendApiProductFacade $frontendApiProductFacade
     ) {
-        $this->productCachedAttributesFacade = $productCachedAttributesFacade;
-        $this->domain = $domain;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->frontendApiProductFacade = $frontendApiProductFacade;
     }
 
     /**

@@ -4,14 +4,11 @@ namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 class FriendlyUrlUniqueResultFactory
 {
-    protected FriendlyUrlFactoryInterface $friendlyUrlFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactoryInterface $friendlyUrlFactory
      */
-    public function __construct(FriendlyUrlFactoryInterface $friendlyUrlFactory)
+    public function __construct(protected readonly FriendlyUrlFactoryInterface $friendlyUrlFactory)
     {
-        $this->friendlyUrlFactory = $friendlyUrlFactory;
     }
 
     /**

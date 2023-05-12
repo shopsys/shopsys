@@ -10,25 +10,16 @@ use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 
 class ImageFactory implements ImageFactoryInterface
 {
-    protected ImageProcessor $imageProcessor;
-
-    protected FileUpload $fileUpload;
-
-    protected EntityNameResolver $entityNameResolver;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor $imageProcessor
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
     public function __construct(
-        ImageProcessor $imageProcessor,
-        FileUpload $fileUpload,
-        EntityNameResolver $entityNameResolver
+        protected readonly ImageProcessor $imageProcessor,
+        protected readonly FileUpload $fileUpload,
+        protected readonly EntityNameResolver $entityNameResolver
     ) {
-        $this->imageProcessor = $imageProcessor;
-        $this->fileUpload = $fileUpload;
-        $this->entityNameResolver = $entityNameResolver;
     }
 
     /**

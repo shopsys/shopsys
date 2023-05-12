@@ -16,16 +16,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PricingGroupController extends AdminBaseController
 {
-    protected PricingGroupSettingFacade $pricingGroupSettingFacade;
-
-    protected PricingGroupFacade $pricingGroupFacade;
-
-    protected PricingGroupInlineEdit $pricingGroupInlineEdit;
-
-    protected ConfirmDeleteResponseFactory $confirmDeleteResponseFactory;
-
-    protected AdminDomainTabsFacade $adminDomainTabsFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
@@ -34,17 +24,12 @@ class PricingGroupController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
-        PricingGroupSettingFacade $pricingGroupSettingFacade,
-        PricingGroupFacade $pricingGroupFacade,
-        PricingGroupInlineEdit $pricingGroupInlineEdit,
-        ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
-        AdminDomainTabsFacade $adminDomainTabsFacade
+        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
+        protected readonly PricingGroupFacade $pricingGroupFacade,
+        protected readonly PricingGroupInlineEdit $pricingGroupInlineEdit,
+        protected readonly ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade
     ) {
-        $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
-        $this->pricingGroupFacade = $pricingGroupFacade;
-        $this->pricingGroupInlineEdit = $pricingGroupInlineEdit;
-        $this->confirmDeleteResponseFactory = $confirmDeleteResponseFactory;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**

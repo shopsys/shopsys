@@ -14,16 +14,6 @@ use Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade;
 
 class ProductEntityFieldMapper
 {
-    protected Domain $domain;
-
-    protected ProductCollectionFacade $productCollectionFacade;
-
-    protected ProductAccessoryFacade $productAccessoryFacade;
-
-    protected CurrentCustomerUser $currentCustomerUser;
-
-    protected ParameterWithValuesFactory $parameterWithValuesFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade
@@ -32,17 +22,12 @@ class ProductEntityFieldMapper
      * @param \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
      */
     public function __construct(
-        Domain $domain,
-        ProductCollectionFacade $productCollectionFacade,
-        ProductAccessoryFacade $productAccessoryFacade,
-        CurrentCustomerUser $currentCustomerUser,
-        ParameterWithValuesFactory $parameterWithValuesFactory
+        protected readonly Domain $domain,
+        protected readonly ProductCollectionFacade $productCollectionFacade,
+        protected readonly ProductAccessoryFacade $productAccessoryFacade,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly ParameterWithValuesFactory $parameterWithValuesFactory
     ) {
-        $this->domain = $domain;
-        $this->productCollectionFacade = $productCollectionFacade;
-        $this->productAccessoryFacade = $productAccessoryFacade;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->parameterWithValuesFactory = $parameterWithValuesFactory;
     }
 
     /**

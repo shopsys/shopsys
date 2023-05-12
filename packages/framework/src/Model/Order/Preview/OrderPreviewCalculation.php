@@ -17,16 +17,6 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 
 class OrderPreviewCalculation
 {
-    protected QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation;
-
-    protected QuantifiedProductDiscountCalculation $quantifiedProductDiscountCalculation;
-
-    protected TransportPriceCalculation $transportPriceCalculation;
-
-    protected PaymentPriceCalculation $paymentPriceCalculation;
-
-    protected OrderPriceCalculation $orderPriceCalculation;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductDiscountCalculation $quantifiedProductDiscountCalculation
@@ -35,17 +25,12 @@ class OrderPreviewCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
      */
     public function __construct(
-        QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation,
-        QuantifiedProductDiscountCalculation $quantifiedProductDiscountCalculation,
-        TransportPriceCalculation $transportPriceCalculation,
-        PaymentPriceCalculation $paymentPriceCalculation,
-        OrderPriceCalculation $orderPriceCalculation
+        protected readonly QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation,
+        protected readonly QuantifiedProductDiscountCalculation $quantifiedProductDiscountCalculation,
+        protected readonly TransportPriceCalculation $transportPriceCalculation,
+        protected readonly PaymentPriceCalculation $paymentPriceCalculation,
+        protected readonly OrderPriceCalculation $orderPriceCalculation
     ) {
-        $this->quantifiedProductPriceCalculation = $quantifiedProductPriceCalculation;
-        $this->quantifiedProductDiscountCalculation = $quantifiedProductDiscountCalculation;
-        $this->transportPriceCalculation = $transportPriceCalculation;
-        $this->paymentPriceCalculation = $paymentPriceCalculation;
-        $this->orderPriceCalculation = $orderPriceCalculation;
     }
 
     /**

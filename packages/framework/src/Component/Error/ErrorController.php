@@ -17,18 +17,6 @@ use Tracy\Debugger;
 
 class ErrorController extends AbstractController
 {
-    protected bool $debug;
-
-    protected ExceptionListener $exceptionListener;
-
-    protected ErrorPagesFacade $errorPagesFacade;
-
-    protected Domain $domain;
-
-    protected string $environment;
-
-    protected ?string $overwriteDomainUrl;
-
     /**
      * @param bool $debug
      * @param \Shopsys\FrameworkBundle\Component\Error\ExceptionListener $exceptionListener
@@ -38,19 +26,13 @@ class ErrorController extends AbstractController
      * @param string|null $overwriteDomainUrl
      */
     public function __construct(
-        bool $debug,
-        ExceptionListener $exceptionListener,
-        ErrorPagesFacade $errorPagesFacade,
-        Domain $domain,
-        string $environment,
-        ?string $overwriteDomainUrl = null
+        protected readonly bool $debug,
+        protected readonly ExceptionListener $exceptionListener,
+        protected readonly ErrorPagesFacade $errorPagesFacade,
+        protected readonly Domain $domain,
+        protected readonly string $environment,
+        protected readonly ?string $overwriteDomainUrl = null
     ) {
-        $this->debug = $debug;
-        $this->exceptionListener = $exceptionListener;
-        $this->errorPagesFacade = $errorPagesFacade;
-        $this->domain = $domain;
-        $this->environment = $environment;
-        $this->overwriteDomainUrl = $overwriteDomainUrl;
     }
 
     /**

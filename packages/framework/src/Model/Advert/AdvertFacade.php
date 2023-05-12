@@ -8,18 +8,6 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 
 class AdvertFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected AdvertRepository $advertRepository;
-
-    protected Domain $domain;
-
-    protected ImageFacade $imageFacade;
-
-    protected AdvertFactoryInterface $advertFactory;
-
-    protected AdvertPositionRegistry $advertPositionRegistry;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertRepository $advertRepository
@@ -29,19 +17,13 @@ class AdvertFacade
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry $advertPositionRegistry
      */
     public function __construct(
-        EntityManagerInterface $em,
-        AdvertRepository $advertRepository,
-        ImageFacade $imageFacade,
-        Domain $domain,
-        AdvertFactoryInterface $advertFactory,
-        AdvertPositionRegistry $advertPositionRegistry
+        protected readonly EntityManagerInterface $em,
+        protected readonly AdvertRepository $advertRepository,
+        protected readonly ImageFacade $imageFacade,
+        protected readonly Domain $domain,
+        protected readonly AdvertFactoryInterface $advertFactory,
+        protected readonly AdvertPositionRegistry $advertPositionRegistry
     ) {
-        $this->em = $em;
-        $this->advertRepository = $advertRepository;
-        $this->imageFacade = $imageFacade;
-        $this->domain = $domain;
-        $this->advertFactory = $advertFactory;
-        $this->advertPositionRegistry = $advertPositionRegistry;
     }
 
     /**

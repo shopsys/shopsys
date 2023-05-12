@@ -23,8 +23,6 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
      */
     protected static $defaultName = 'shopsys:elasticsearch:data-export';
 
-    protected EventDispatcherInterface $eventDispatcher;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry $indexRegistry
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade $indexFacade
@@ -32,11 +30,9 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(IndexRegistry $indexRegistry, IndexFacade $indexFacade, IndexDefinitionLoader $indexDefinitionLoader, Domain $domain, EventDispatcherInterface $eventDispatcher)
+    public function __construct(IndexRegistry $indexRegistry, IndexFacade $indexFacade, IndexDefinitionLoader $indexDefinitionLoader, Domain $domain, protected readonly EventDispatcherInterface $eventDispatcher)
     {
         parent::__construct($indexRegistry, $indexFacade, $indexDefinitionLoader, $domain);
-
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**

@@ -26,21 +26,14 @@ class ImageProcessor
      */
     protected array $supportedImageExtensions;
 
-    protected ImageManager $imageManager;
-
-    protected FilesystemOperator $filesystem;
-
     /**
      * @param \Intervention\Image\ImageManager $imageManager
      * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
-        ImageManager $imageManager,
-        FilesystemOperator $filesystem
+        protected readonly ImageManager $imageManager,
+        protected readonly FilesystemOperator $filesystem
     ) {
-        $this->imageManager = $imageManager;
-        $this->filesystem = $filesystem;
-
         $this->supportedImageExtensions = [
             self::EXTENSION_JPEG,
             self::EXTENSION_JPG,

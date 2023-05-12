@@ -8,23 +8,14 @@ class RouteInfo
 {
     private string $routeName;
 
-    private Route $route;
-
-    /**
-     * @var array<string, mixed>
-     */
-    private array $annotations;
-
     /**
      * @param string $routeName
      * @param \Symfony\Component\Routing\Route $route
      * @param array $annotations
      */
-    public function __construct($routeName, Route $route, array $annotations = [])
+    public function __construct($routeName, private readonly Route $route, private readonly array $annotations = [])
     {
         $this->routeName = $routeName;
-        $this->route = $route;
-        $this->annotations = $annotations;
     }
 
     /**

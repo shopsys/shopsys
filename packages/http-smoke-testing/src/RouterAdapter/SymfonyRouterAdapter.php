@@ -15,18 +15,15 @@ use Symfony\Component\Routing\RouterInterface;
 
 class SymfonyRouterAdapter implements RouterAdapterInterface
 {
-    private RouterInterface $router;
-
     private AnnotationReader $annotationsReader;
 
     /**
      * @param \Symfony\Component\Routing\RouterInterface $router
      */
-    public function __construct(RouterInterface $router)
+    public function __construct(private readonly RouterInterface $router)
     {
         AnnotationRegistry::registerLoader('class_exists');
 
-        $this->router = $router;
         $this->annotationsReader = new AnnotationReader();
     }
 

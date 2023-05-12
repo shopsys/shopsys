@@ -27,14 +27,11 @@ class UnitEvent extends Event
      */
     public const DELETE = 'unit.delete';
 
-    protected Unit $unit;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit
      */
-    public function __construct(Unit $unit)
+    public function __construct(protected readonly Unit $unit)
     {
-        $this->unit = $unit;
     }
 
     /**

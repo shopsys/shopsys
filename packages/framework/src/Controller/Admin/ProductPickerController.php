@@ -16,16 +16,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProductPickerController extends AdminBaseController
 {
-    protected AdministratorGridFacade $administratorGridFacade;
-
-    protected AdvancedSearchProductFacade $advancedSearchProductFacade;
-
-    protected GridFactory $gridFactory;
-
-    protected ProductListAdminFacade $productListAdminFacade;
-
-    protected ProductFacade $productFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
@@ -34,17 +24,12 @@ class ProductPickerController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
-        AdministratorGridFacade $administratorGridFacade,
-        GridFactory $gridFactory,
-        ProductListAdminFacade $productListAdminFacade,
-        AdvancedSearchProductFacade $advancedSearchProductFacade,
-        ProductFacade $productFacade
+        protected readonly AdministratorGridFacade $administratorGridFacade,
+        protected readonly GridFactory $gridFactory,
+        protected readonly ProductListAdminFacade $productListAdminFacade,
+        protected readonly AdvancedSearchProductFacade $advancedSearchProductFacade,
+        protected readonly ProductFacade $productFacade
     ) {
-        $this->administratorGridFacade = $administratorGridFacade;
-        $this->gridFactory = $gridFactory;
-        $this->productListAdminFacade = $productListAdminFacade;
-        $this->advancedSearchProductFacade = $advancedSearchProductFacade;
-        $this->productFacade = $productFacade;
     }
 
     /**

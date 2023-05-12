@@ -9,15 +9,12 @@ use Twig\TwigFunction;
 
 class InputPriceLabelExtension extends AbstractExtension
 {
-    protected PricingSetting $pricingSetting;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      */
     public function __construct(
-        PricingSetting $pricingSetting
+        protected readonly PricingSetting $pricingSetting
     ) {
-        $this->pricingSetting = $pricingSetting;
     }
 
     /**

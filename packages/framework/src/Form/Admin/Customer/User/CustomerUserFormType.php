@@ -29,12 +29,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class CustomerUserFormType extends AbstractType
 {
-    private PricingGroupFacade $pricingGroupFacade;
-
-    private DateTimeFormatterExtension $dateTimeFormatterExtension;
-
-    private CustomerUserFacade $customerUserFacade;
-
     private ?CustomerUser $customerUser = null;
 
     /**
@@ -43,13 +37,10 @@ class CustomerUserFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      */
     public function __construct(
-        PricingGroupFacade $pricingGroupFacade,
-        DateTimeFormatterExtension $dateTimeFormatterExtension,
-        CustomerUserFacade $customerUserFacade
+        private readonly PricingGroupFacade $pricingGroupFacade,
+        private readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
+        private readonly CustomerUserFacade $customerUserFacade
     ) {
-        $this->pricingGroupFacade = $pricingGroupFacade;
-        $this->dateTimeFormatterExtension = $dateTimeFormatterExtension;
-        $this->customerUserFacade = $customerUserFacade;
     }
 
     /**

@@ -11,14 +11,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CategoryCheckboxType extends AbstractType
 {
-    private CategoryFacade $categoryFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      */
-    public function __construct(CategoryFacade $categoryFacade)
+    public function __construct(private readonly CategoryFacade $categoryFacade)
     {
-        $this->categoryFacade = $categoryFacade;
     }
 
     /**

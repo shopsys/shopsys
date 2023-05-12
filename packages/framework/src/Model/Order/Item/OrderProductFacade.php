@@ -12,18 +12,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class OrderProductFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected ProductHiddenRecalculator $productHiddenRecalculator;
-
-    protected ProductSellingDeniedRecalculator $productSellingDeniedRecalculator;
-
-    protected ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler;
-
-    protected ProductVisibilityFacade $productVisibilityFacade;
-
-    protected ModuleFacade $moduleFacade;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
@@ -33,19 +21,13 @@ class OrderProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      */
     public function __construct(
-        EntityManagerInterface $em,
-        ProductHiddenRecalculator $productHiddenRecalculator,
-        ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
-        ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
-        ProductVisibilityFacade $productVisibilityFacade,
-        ModuleFacade $moduleFacade
+        protected readonly EntityManagerInterface $em,
+        protected readonly ProductHiddenRecalculator $productHiddenRecalculator,
+        protected readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
+        protected readonly ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
+        protected readonly ProductVisibilityFacade $productVisibilityFacade,
+        protected readonly ModuleFacade $moduleFacade
     ) {
-        $this->em = $em;
-        $this->productHiddenRecalculator = $productHiddenRecalculator;
-        $this->productSellingDeniedRecalculator = $productSellingDeniedRecalculator;
-        $this->productAvailabilityRecalculationScheduler = $productAvailabilityRecalculationScheduler;
-        $this->productVisibilityFacade = $productVisibilityFacade;
-        $this->moduleFacade = $moduleFacade;
     }
 
     /**

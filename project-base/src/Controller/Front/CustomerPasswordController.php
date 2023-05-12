@@ -15,25 +15,16 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CustomerPasswordController extends FrontBaseController
 {
-    private CustomerUserPasswordFacade $customerUserPasswordFacade;
-
-    private Domain $domain;
-
-    private Authenticator $authenticator;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
      * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
      */
     public function __construct(
-        Domain $domain,
-        CustomerUserPasswordFacade $customerUserPasswordFacade,
-        Authenticator $authenticator
+        private readonly Domain $domain,
+        private readonly CustomerUserPasswordFacade $customerUserPasswordFacade,
+        private readonly Authenticator $authenticator
     ) {
-        $this->domain = $domain;
-        $this->customerUserPasswordFacade = $customerUserPasswordFacade;
-        $this->authenticator = $authenticator;
     }
 
     /**

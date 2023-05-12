@@ -13,20 +13,6 @@ class OrderItemFacade
 {
     protected const DEFAULT_PRODUCT_QUANTITY = 1;
 
-    protected EntityManagerInterface $em;
-
-    protected OrderRepository $orderRepository;
-
-    protected ProductRepository $productRepository;
-
-    protected ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser;
-
-    protected Domain $domain;
-
-    protected OrderPriceCalculation $orderPriceCalculation;
-
-    protected OrderItemFactoryInterface $orderItemFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository
@@ -37,21 +23,14 @@ class OrderItemFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface $orderItemFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        OrderRepository $orderRepository,
-        ProductRepository $productRepository,
-        ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
-        Domain $domain,
-        OrderPriceCalculation $orderPriceCalculation,
-        OrderItemFactoryInterface $orderItemFactory
+        protected readonly EntityManagerInterface $em,
+        protected readonly OrderRepository $orderRepository,
+        protected readonly ProductRepository $productRepository,
+        protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
+        protected readonly Domain $domain,
+        protected readonly OrderPriceCalculation $orderPriceCalculation,
+        protected readonly OrderItemFactoryInterface $orderItemFactory
     ) {
-        $this->em = $em;
-        $this->orderRepository = $orderRepository;
-        $this->productRepository = $productRepository;
-        $this->productPriceCalculationForCustomerUser = $productPriceCalculationForCustomerUser;
-        $this->domain = $domain;
-        $this->orderPriceCalculation = $orderPriceCalculation;
-        $this->orderItemFactory = $orderItemFactory;
     }
 
     /**

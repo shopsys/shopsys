@@ -8,14 +8,11 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class HeurekaDeliveryDataRepository
 {
-    protected ProductRepository $productRepository;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      */
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(protected readonly ProductRepository $productRepository)
     {
-        $this->productRepository = $productRepository;
     }
 
     /**

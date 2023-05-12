@@ -35,22 +35,6 @@ class OrderMail implements MessageFactoryInterface
     public const VARIABLE_TRANSPORT_INSTRUCTIONS = '{transport_instructions}';
     public const VARIABLE_PAYMENT_INSTRUCTIONS = '{payment_instructions}';
 
-    protected Setting $setting;
-
-    protected DomainRouterFactory $domainRouterFactory;
-
-    protected Environment $twig;
-
-    protected OrderItemPriceCalculation $orderItemPriceCalculation;
-
-    protected Domain $domain;
-
-    protected PriceExtension $priceExtension;
-
-    protected DateTimeFormatterExtension $dateTimeFormatterExtension;
-
-    protected OrderUrlGenerator $orderUrlGenerator;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
@@ -62,23 +46,15 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator
      */
     public function __construct(
-        Setting $setting,
-        DomainRouterFactory $domainRouterFactory,
-        Environment $twig,
-        OrderItemPriceCalculation $orderItemPriceCalculation,
-        Domain $domain,
-        PriceExtension $priceExtension,
-        DateTimeFormatterExtension $dateTimeFormatterExtension,
-        OrderUrlGenerator $orderUrlGenerator
+        protected readonly Setting $setting,
+        protected readonly DomainRouterFactory $domainRouterFactory,
+        protected readonly Environment $twig,
+        protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
+        protected readonly Domain $domain,
+        protected readonly PriceExtension $priceExtension,
+        protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
+        protected readonly OrderUrlGenerator $orderUrlGenerator
     ) {
-        $this->setting = $setting;
-        $this->domainRouterFactory = $domainRouterFactory;
-        $this->twig = $twig;
-        $this->orderItemPriceCalculation = $orderItemPriceCalculation;
-        $this->domain = $domain;
-        $this->priceExtension = $priceExtension;
-        $this->dateTimeFormatterExtension = $dateTimeFormatterExtension;
-        $this->orderUrlGenerator = $orderUrlGenerator;
     }
 
     /**

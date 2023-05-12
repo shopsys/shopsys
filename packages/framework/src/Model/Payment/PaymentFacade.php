@@ -14,26 +14,6 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
 
 class PaymentFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected PaymentRepository $paymentRepository;
-
-    protected TransportRepository $transportRepository;
-
-    protected PaymentVisibilityCalculation $paymentVisibilityCalculation;
-
-    protected Domain $domain;
-
-    protected ImageFacade $imageFacade;
-
-    protected CurrencyFacade $currencyFacade;
-
-    protected PaymentPriceCalculation $paymentPriceCalculation;
-
-    protected PaymentFactoryInterface $paymentFactory;
-
-    protected PaymentPriceFactoryInterface $paymentPriceFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentRepository $paymentRepository
@@ -47,27 +27,17 @@ class PaymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface $paymentPriceFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        PaymentRepository $paymentRepository,
-        TransportRepository $transportRepository,
-        PaymentVisibilityCalculation $paymentVisibilityCalculation,
-        Domain $domain,
-        ImageFacade $imageFacade,
-        CurrencyFacade $currencyFacade,
-        PaymentPriceCalculation $paymentPriceCalculation,
-        PaymentFactoryInterface $paymentFactory,
-        PaymentPriceFactoryInterface $paymentPriceFactory
+        protected readonly EntityManagerInterface $em,
+        protected readonly PaymentRepository $paymentRepository,
+        protected readonly TransportRepository $transportRepository,
+        protected readonly PaymentVisibilityCalculation $paymentVisibilityCalculation,
+        protected readonly Domain $domain,
+        protected readonly ImageFacade $imageFacade,
+        protected readonly CurrencyFacade $currencyFacade,
+        protected readonly PaymentPriceCalculation $paymentPriceCalculation,
+        protected readonly PaymentFactoryInterface $paymentFactory,
+        protected readonly PaymentPriceFactoryInterface $paymentPriceFactory
     ) {
-        $this->em = $em;
-        $this->paymentRepository = $paymentRepository;
-        $this->transportRepository = $transportRepository;
-        $this->paymentVisibilityCalculation = $paymentVisibilityCalculation;
-        $this->domain = $domain;
-        $this->imageFacade = $imageFacade;
-        $this->currencyFacade = $currencyFacade;
-        $this->paymentPriceCalculation = $paymentPriceCalculation;
-        $this->paymentFactory = $paymentFactory;
-        $this->paymentPriceFactory = $paymentPriceFactory;
     }
 
     /**

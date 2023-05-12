@@ -18,18 +18,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SliderController extends AdminBaseController
 {
-    protected BreadcrumbOverrider $breadcrumbOverrider;
-
-    protected AdminDomainTabsFacade $adminDomainTabsFacade;
-
-    protected GridFactory $gridFactory;
-
-    protected SliderItemFacade $sliderItemFacade;
-
-    protected SliderItemDataFactoryInterface $sliderItemDataFactory;
-
-    protected EntityManagerInterface $entityManager;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade $sliderItemFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
@@ -39,19 +27,13 @@ class SliderController extends AdminBaseController
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
     public function __construct(
-        SliderItemFacade $sliderItemFacade,
-        GridFactory $gridFactory,
-        AdminDomainTabsFacade $adminDomainTabsFacade,
-        BreadcrumbOverrider $breadcrumbOverrider,
-        SliderItemDataFactoryInterface $sliderItemDataFactory,
-        EntityManagerInterface $entityManager
+        protected readonly SliderItemFacade $sliderItemFacade,
+        protected readonly GridFactory $gridFactory,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+        protected readonly SliderItemDataFactoryInterface $sliderItemDataFactory,
+        protected readonly EntityManagerInterface $entityManager
     ) {
-        $this->sliderItemFacade = $sliderItemFacade;
-        $this->gridFactory = $gridFactory;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
-        $this->breadcrumbOverrider = $breadcrumbOverrider;
-        $this->sliderItemDataFactory = $sliderItemDataFactory;
-        $this->entityManager = $entityManager;
     }
 
     /**

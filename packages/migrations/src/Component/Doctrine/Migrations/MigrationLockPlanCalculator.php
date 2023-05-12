@@ -18,11 +18,7 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\PartialMigra
 
 class MigrationLockPlanCalculator implements MigrationPlanCalculator
 {
-    protected MigrationsLockRepository $migrationsLockRepository;
-
     protected MetadataStorage $metadataStorage;
-
-    protected MigrationsLockComparator $migrationsLockComparator;
 
     /**
      * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLockRepository $migrationsLockRepository
@@ -30,12 +26,10 @@ class MigrationLockPlanCalculator implements MigrationPlanCalculator
      * @param \Doctrine\Migrations\DependencyFactory $dependencyFactory
      */
     public function __construct(
-        MigrationsLockRepository $migrationsLockRepository,
-        MigrationsLockComparator $migrationsLockComparator,
+        protected readonly MigrationsLockRepository $migrationsLockRepository,
+        protected readonly MigrationsLockComparator $migrationsLockComparator,
         DependencyFactory $dependencyFactory
     ) {
-        $this->migrationsLockRepository = $migrationsLockRepository;
-        $this->migrationsLockComparator = $migrationsLockComparator;
         $this->metadataStorage = $dependencyFactory->getMetadataStorage();
     }
 

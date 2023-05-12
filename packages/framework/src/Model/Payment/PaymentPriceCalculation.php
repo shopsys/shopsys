@@ -11,20 +11,14 @@ use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 
 class PaymentPriceCalculation
 {
-    protected BasePriceCalculation $basePriceCalculation;
-
-    protected PricingSetting $pricingSetting;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      */
     public function __construct(
-        BasePriceCalculation $basePriceCalculation,
-        PricingSetting $pricingSetting
+        protected readonly BasePriceCalculation $basePriceCalculation,
+        protected readonly PricingSetting $pricingSetting
     ) {
-        $this->pricingSetting = $pricingSetting;
-        $this->basePriceCalculation = $basePriceCalculation;
     }
 
     /**

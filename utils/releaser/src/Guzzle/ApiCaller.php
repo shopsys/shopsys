@@ -11,14 +11,11 @@ use function GuzzleHttp\Promise\unwrap;
 
 final class ApiCaller
 {
-    private ClientInterface $client;
-
     /**
      * @param \GuzzleHttp\ClientInterface $client
      */
-    public function __construct(ClientInterface $client)
+    public function __construct(private readonly ClientInterface $client)
     {
-        $this->client = $client;
     }
 
     /**

@@ -11,20 +11,6 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 
 class MailTemplateFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected MailTemplateRepository $mailTemplateRepository;
-
-    protected Domain $domain;
-
-    protected UploadedFileFacade $uploadedFileFacade;
-
-    protected MailTemplateFactoryInterface $mailTemplateFactory;
-
-    protected MailTemplateDataFactoryInterface $mailTemplateDataFactory;
-
-    protected MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateRepository $mailTemplateRepository
@@ -35,21 +21,14 @@ class MailTemplateFacade
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider
      */
     public function __construct(
-        EntityManagerInterface $em,
-        MailTemplateRepository $mailTemplateRepository,
-        Domain $domain,
-        UploadedFileFacade $uploadedFileFacade,
-        MailTemplateFactoryInterface $mailTemplateFactory,
-        MailTemplateDataFactoryInterface $mailTemplateDataFactory,
-        MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider
+        protected readonly EntityManagerInterface $em,
+        protected readonly MailTemplateRepository $mailTemplateRepository,
+        protected readonly Domain $domain,
+        protected readonly UploadedFileFacade $uploadedFileFacade,
+        protected readonly MailTemplateFactoryInterface $mailTemplateFactory,
+        protected readonly MailTemplateDataFactoryInterface $mailTemplateDataFactory,
+        protected readonly MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider
     ) {
-        $this->em = $em;
-        $this->mailTemplateRepository = $mailTemplateRepository;
-        $this->domain = $domain;
-        $this->uploadedFileFacade = $uploadedFileFacade;
-        $this->mailTemplateFactory = $mailTemplateFactory;
-        $this->mailTemplateDataFactory = $mailTemplateDataFactory;
-        $this->mailTemplateAttachmentFilepathProvider = $mailTemplateAttachmentFilepathProvider;
     }
 
     /**

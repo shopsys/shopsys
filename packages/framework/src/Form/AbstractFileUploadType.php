@@ -26,14 +26,11 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class AbstractFileUploadType extends AbstractType implements DataTransformerInterface
 {
-    private FileUpload $fileUpload;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
      */
-    public function __construct(FileUpload $fileUpload)
+    public function __construct(private readonly FileUpload $fileUpload)
     {
-        $this->fileUpload = $fileUpload;
     }
 
     /**

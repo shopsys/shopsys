@@ -12,16 +12,13 @@ class ManualBestsellingProductRepository
 {
     protected EntityManagerInterface $em;
 
-    protected ProductRepository $productRepository;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      */
-    public function __construct(EntityManagerInterface $entityManager, ProductRepository $productRepository)
+    public function __construct(EntityManagerInterface $entityManager, protected readonly ProductRepository $productRepository)
     {
         $this->em = $entityManager;
-        $this->productRepository = $productRepository;
     }
 
     /**

@@ -17,11 +17,6 @@ class ImageSizeConfig
     protected ?string $occurrence = null;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageAdditionalSizeConfig[]
-     */
-    protected array $additionalSizes;
-
-    /**
      * @param string|null $name
      * @param int|null $width
      * @param int|null $height
@@ -29,14 +24,13 @@ class ImageSizeConfig
      * @param string|null $occurrence
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageAdditionalSizeConfig[] $additionalSizes
      */
-    public function __construct($name, $width, $height, $crop, $occurrence, array $additionalSizes)
+    public function __construct($name, $width, $height, $crop, $occurrence, protected readonly array $additionalSizes)
     {
         $this->name = $name;
         $this->width = $width;
         $this->height = $height;
         $this->crop = $crop;
         $this->occurrence = $occurrence;
-        $this->additionalSizes = $additionalSizes;
     }
 
     /**

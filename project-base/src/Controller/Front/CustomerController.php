@@ -21,20 +21,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CustomerController extends FrontBaseController
 {
-    private CustomerUserFacade $customerUserFacade;
-
-    private Domain $domain;
-
-    private OrderItemPriceCalculation $orderItemPriceCalculation;
-
-    private OrderFacade $orderFacade;
-
-    private LoginAsUserFacade $loginAsUserFacade;
-
-    private CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory;
-
-    private DeliveryAddressFacade $deliveryAddressFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
@@ -45,21 +31,14 @@ class CustomerController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
      */
     public function __construct(
-        CustomerUserFacade $customerUserFacade,
-        OrderFacade $orderFacade,
-        Domain $domain,
-        OrderItemPriceCalculation $orderItemPriceCalculation,
-        LoginAsUserFacade $loginAsUserFacade,
-        CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
-        DeliveryAddressFacade $deliveryAddressFacade
+        private readonly CustomerUserFacade $customerUserFacade,
+        private readonly OrderFacade $orderFacade,
+        private readonly Domain $domain,
+        private readonly OrderItemPriceCalculation $orderItemPriceCalculation,
+        private readonly LoginAsUserFacade $loginAsUserFacade,
+        private readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
+        private readonly DeliveryAddressFacade $deliveryAddressFacade
     ) {
-        $this->customerUserFacade = $customerUserFacade;
-        $this->orderFacade = $orderFacade;
-        $this->domain = $domain;
-        $this->orderItemPriceCalculation = $orderItemPriceCalculation;
-        $this->loginAsUserFacade = $loginAsUserFacade;
-        $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
-        $this->deliveryAddressFacade = $deliveryAddressFacade;
     }
 
     /**

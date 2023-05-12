@@ -14,20 +14,14 @@ class MigrationsGenerator
     protected const INDENT_CHARACTERS = '    ';
     protected const INDENT_TABULATOR_COUNT = 3;
 
-    protected Environment $twigEnvironment;
-
-    protected Filesystem $filesystem;
-
     /**
      * @param \Twig\Environment $twigEnvironment
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem
      */
     public function __construct(
-        Environment $twigEnvironment,
-        Filesystem $filesystem
+        protected readonly Environment $twigEnvironment,
+        protected readonly Filesystem $filesystem
     ) {
-        $this->twigEnvironment = $twigEnvironment;
-        $this->filesystem = $filesystem;
     }
 
     /**

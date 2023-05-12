@@ -15,25 +15,16 @@ class Mailer
 {
     public const DISABLED_MAILER_DSN = 'null://null';
 
-    protected MailerInterface $symfonyMailer;
-
-    protected MailTemplateFacade $mailTemplateFacade;
-
-    protected LoggerInterface $logger;
-
     /**
      * @param \Symfony\Component\Mailer\MailerInterface $symfonyMailer
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
      * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
-        MailerInterface $symfonyMailer,
-        MailTemplateFacade $mailTemplateFacade,
-        LoggerInterface $logger
+        protected readonly MailerInterface $symfonyMailer,
+        protected readonly MailTemplateFacade $mailTemplateFacade,
+        protected readonly LoggerInterface $logger
     ) {
-        $this->symfonyMailer = $symfonyMailer;
-        $this->mailTemplateFacade = $mailTemplateFacade;
-        $this->logger = $logger;
     }
 
     /**

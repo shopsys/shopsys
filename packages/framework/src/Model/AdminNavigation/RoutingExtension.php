@@ -17,14 +17,11 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class RoutingExtension implements ExtensionInterface
 {
-    protected UrlGeneratorInterface $generator;
-
     /**
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $generator
      */
-    public function __construct(UrlGeneratorInterface $generator)
+    public function __construct(protected readonly UrlGeneratorInterface $generator)
     {
-        $this->generator = $generator;
     }
 
     /**

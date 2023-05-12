@@ -10,22 +10,13 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductActionViewFacade implements ProductActionViewFacadeInterface
 {
-    protected ProductCollectionFacade $productCollectionFacade;
-
-    protected Domain $domain;
-
-    protected ProductActionViewFactory $productActionViewFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory $productActionViewFactory
      */
-    public function __construct(ProductCollectionFacade $productCollectionFacade, Domain $domain, ProductActionViewFactory $productActionViewFactory)
+    public function __construct(protected readonly ProductCollectionFacade $productCollectionFacade, protected readonly Domain $domain, protected readonly ProductActionViewFactory $productActionViewFactory)
     {
-        $this->productCollectionFacade = $productCollectionFacade;
-        $this->domain = $domain;
-        $this->productActionViewFactory = $productActionViewFactory;
     }
 
     /**

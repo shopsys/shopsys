@@ -11,25 +11,6 @@ use Webmozart\Assert\Assert;
 
 class ListedProductView
 {
-    protected int $id;
-
-    protected string $name;
-
-    protected ?ImageView $image = null;
-
-    protected string $availability;
-
-    protected ProductPrice $sellingPrice;
-
-    protected ?string $shortDescription = null;
-
-    /**
-     * @var int[]
-     */
-    protected array $flagIds = [];
-
-    protected ProductActionView $action;
-
     /**
      * ListedProductView constructor.
      *
@@ -43,25 +24,16 @@ class ListedProductView
      * @param \Shopsys\ReadModelBundle\Image\ImageView|null $image
      */
     public function __construct(
-        int $id,
-        string $name,
-        ?string $shortDescription,
-        string $availability,
-        ProductPrice $sellingPrice,
-        array $flagIds,
-        ProductActionView $action,
-        ?ImageView $image
+        protected readonly int $id,
+        protected readonly string $name,
+        protected readonly ?string $shortDescription = null,
+        protected readonly string $availability,
+        protected readonly ProductPrice $sellingPrice,
+        protected readonly array $flagIds = [],
+        protected readonly ProductActionView $action,
+        protected readonly ?ImageView $image = null
     ) {
         Assert::allInteger($flagIds);
-
-        $this->id = $id;
-        $this->name = $name;
-        $this->image = $image;
-        $this->availability = $availability;
-        $this->sellingPrice = $sellingPrice;
-        $this->shortDescription = $shortDescription;
-        $this->flagIds = $flagIds;
-        $this->action = $action;
     }
 
     /**

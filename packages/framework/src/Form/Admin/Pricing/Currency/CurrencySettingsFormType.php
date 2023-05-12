@@ -13,14 +13,11 @@ use Symfony\Component\Validator\Constraints;
 
 class CurrencySettingsFormType extends AbstractType
 {
-    private CurrencyFacade $currencyFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
-    public function __construct(CurrencyFacade $currencyFacade)
+    public function __construct(private readonly CurrencyFacade $currencyFacade)
     {
-        $this->currencyFacade = $currencyFacade;
     }
 
     /**

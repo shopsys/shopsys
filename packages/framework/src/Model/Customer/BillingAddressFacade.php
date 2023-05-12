@@ -8,25 +8,16 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class BillingAddressFacade
 {
-    protected BillingAddressFactory $billingAddressFactory;
-
-    protected BillingAddressRepository $billingAddressRepository;
-
-    protected EntityManagerInterface $em;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactory $billingAddressFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressRepository $billingAddressRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
-        BillingAddressFactory $billingAddressFactory,
-        BillingAddressRepository $billingAddressRepository,
-        EntityManagerInterface $em
+        protected readonly BillingAddressFactory $billingAddressFactory,
+        protected readonly BillingAddressRepository $billingAddressRepository,
+        protected readonly EntityManagerInterface $em
     ) {
-        $this->billingAddressFactory = $billingAddressFactory;
-        $this->billingAddressRepository = $billingAddressRepository;
-        $this->em = $em;
     }
 
     /**

@@ -8,14 +8,11 @@ use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
 
 class CKEditorRendererDecorator implements CKEditorRendererInterface
 {
-    protected CKEditorRendererInterface $baseCkEditorRenderer;
-
     /**
      * @param \FOS\CKEditorBundle\Renderer\CKEditorRendererInterface $baseCkEditorRenderer
      */
-    public function __construct(CKEditorRendererInterface $baseCkEditorRenderer)
+    public function __construct(protected readonly CKEditorRendererInterface $baseCkEditorRenderer)
     {
-        $this->baseCkEditorRenderer = $baseCkEditorRenderer;
     }
 
     /**

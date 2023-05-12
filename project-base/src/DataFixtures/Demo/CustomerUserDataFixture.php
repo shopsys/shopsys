@@ -46,17 +46,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     private const KEY_ADDRESS_FIRST_NAME = 'firstName';
     private const KEY_ADDRESS_LAST_NAME = 'lastName';
 
-    private CustomerUserFacade $customerUserFacade;
-
-    private Generator $faker;
-
     private EntityManagerDecorator $em;
-
-    private HashGenerator $hashGenerator;
-
-    private Domain $domain;
-
-    private CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory;
 
     private CustomerUserDataFactory $customerUserDataFactory;
 
@@ -70,20 +60,15 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
      * @param \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
      */
     public function __construct(
-        CustomerUserFacade $customerUserFacade,
-        Generator $faker,
+        private readonly CustomerUserFacade $customerUserFacade,
+        private readonly Generator $faker,
         EntityManagerInterface $em,
-        HashGenerator $hashGenerator,
-        Domain $domain,
-        CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
+        private readonly HashGenerator $hashGenerator,
+        private readonly Domain $domain,
+        private readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
         CustomerUserDataFactoryInterface $customerUserDataFactory
     ) {
-        $this->customerUserFacade = $customerUserFacade;
-        $this->faker = $faker;
         $this->em = $em;
-        $this->hashGenerator = $hashGenerator;
-        $this->domain = $domain;
-        $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
         $this->customerUserDataFactory = $customerUserDataFactory;
     }
 

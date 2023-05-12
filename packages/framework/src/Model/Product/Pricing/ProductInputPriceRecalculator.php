@@ -10,25 +10,16 @@ use Shopsys\FrameworkBundle\Model\Pricing\InputPriceCalculation;
 
 class ProductInputPriceRecalculator
 {
-    protected BasePriceCalculation $basePriceCalculation;
-
-    protected InputPriceCalculation $inputPriceCalculation;
-
-    protected CurrencyFacade $currencyFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\InputPriceCalculation $inputPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
-        BasePriceCalculation $basePriceCalculation,
-        InputPriceCalculation $inputPriceCalculation,
-        CurrencyFacade $currencyFacade
+        protected readonly BasePriceCalculation $basePriceCalculation,
+        protected readonly InputPriceCalculation $inputPriceCalculation,
+        protected readonly CurrencyFacade $currencyFacade
     ) {
-        $this->basePriceCalculation = $basePriceCalculation;
-        $this->inputPriceCalculation = $inputPriceCalculation;
-        $this->currencyFacade = $currencyFacade;
     }
 
     /**

@@ -15,16 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PromoCodeController extends AdminBaseController
 {
-    protected PromoCodeFacade $promoCodeFacade;
-
-    protected AdministratorGridFacade $administratorGridFacade;
-
-    protected PromoCodeDataFactoryInterface $promoCodeDataFactory;
-
-    protected PromoCodeGridFactory $promoCodeGridFactory;
-
-    protected BreadcrumbOverrider $breadcrumbOverrider;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
@@ -33,17 +23,12 @@ class PromoCodeController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      */
     public function __construct(
-        PromoCodeFacade $promoCodeFacade,
-        AdministratorGridFacade $administratorGridFacade,
-        PromoCodeDataFactoryInterface $promoCodeDataFactory,
-        PromoCodeGridFactory $promoCodeGridFactory,
-        BreadcrumbOverrider $breadcrumbOverrider
+        protected readonly PromoCodeFacade $promoCodeFacade,
+        protected readonly AdministratorGridFacade $administratorGridFacade,
+        protected readonly PromoCodeDataFactoryInterface $promoCodeDataFactory,
+        protected readonly PromoCodeGridFactory $promoCodeGridFactory,
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider
     ) {
-        $this->promoCodeFacade = $promoCodeFacade;
-        $this->administratorGridFacade = $administratorGridFacade;
-        $this->promoCodeDataFactory = $promoCodeDataFactory;
-        $this->promoCodeGridFactory = $promoCodeGridFactory;
-        $this->breadcrumbOverrider = $breadcrumbOverrider;
     }
 
     /**

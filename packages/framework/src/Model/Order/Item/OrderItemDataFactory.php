@@ -6,14 +6,11 @@ use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemUnitPricesAreInc
 
 class OrderItemDataFactory implements OrderItemDataFactoryInterface
 {
-    protected OrderItemPriceCalculation $orderItemPriceCalculation;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
      */
-    public function __construct(OrderItemPriceCalculation $orderItemPriceCalculation)
+    public function __construct(protected readonly OrderItemPriceCalculation $orderItemPriceCalculation)
     {
-        $this->orderItemPriceCalculation = $orderItemPriceCalculation;
     }
 
     /**

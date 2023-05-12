@@ -19,20 +19,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BrandController extends AdminBaseController
 {
-    protected BreadcrumbOverrider $breadcrumbOverrider;
-
-    protected AdministratorGridFacade $administratorGridFacade;
-
-    protected BrandFacade $brandFacade;
-
-    protected GridFactory $gridFactory;
-
-    protected Domain $domain;
-
-    protected BrandDataFactoryInterface $brandDataFactory;
-
-    protected EntityManagerInterface $entityManager;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
@@ -43,21 +29,14 @@ class BrandController extends AdminBaseController
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
     public function __construct(
-        BrandFacade $brandFacade,
-        AdministratorGridFacade $administratorGridFacade,
-        GridFactory $gridFactory,
-        BreadcrumbOverrider $breadcrumbOverrider,
-        Domain $domain,
-        BrandDataFactoryInterface $brandDataFactory,
-        EntityManagerInterface $entityManager
+        protected readonly BrandFacade $brandFacade,
+        protected readonly AdministratorGridFacade $administratorGridFacade,
+        protected readonly GridFactory $gridFactory,
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+        protected readonly Domain $domain,
+        protected readonly BrandDataFactoryInterface $brandDataFactory,
+        protected readonly EntityManagerInterface $entityManager
     ) {
-        $this->brandFacade = $brandFacade;
-        $this->administratorGridFacade = $administratorGridFacade;
-        $this->gridFactory = $gridFactory;
-        $this->breadcrumbOverrider = $breadcrumbOverrider;
-        $this->domain = $domain;
-        $this->brandDataFactory = $brandDataFactory;
-        $this->entityManager = $entityManager;
     }
 
     /**

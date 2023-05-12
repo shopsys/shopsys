@@ -30,20 +30,14 @@ class AdvertFormType extends AbstractType
     public const SCENARIO_CREATE = 'create';
     public const SCENARIO_EDIT = 'edit';
 
-    private Domain $domain;
-
-    private AdvertPositionRegistry $advertPositionRegistry;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry $advertPositionRegistry
      */
     public function __construct(
-        Domain $domain,
-        AdvertPositionRegistry $advertPositionRegistry
+        private readonly Domain $domain,
+        private readonly AdvertPositionRegistry $advertPositionRegistry
     ) {
-        $this->domain = $domain;
-        $this->advertPositionRegistry = $advertPositionRegistry;
     }
 
     /**

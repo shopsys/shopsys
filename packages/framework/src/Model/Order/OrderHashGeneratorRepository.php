@@ -10,20 +10,14 @@ class OrderHashGeneratorRepository
     protected const HASH_LENGTH = 50;
     protected const MAX_GENERATE_TRIES = 100;
 
-    protected OrderRepository $orderRepository;
-
-    protected HashGenerator $hashGenerator;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
      */
     public function __construct(
-        OrderRepository $orderRepository,
-        HashGenerator $hashGenerator
+        protected readonly OrderRepository $orderRepository,
+        protected readonly HashGenerator $hashGenerator
     ) {
-        $this->orderRepository = $orderRepository;
-        $this->hashGenerator = $hashGenerator;
     }
 
     /**

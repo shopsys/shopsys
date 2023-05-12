@@ -15,16 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PaymentController extends AdminBaseController
 {
-    protected BreadcrumbOverrider $breadcrumbOverrider;
-
-    protected PaymentGridFactory $paymentGridFactory;
-
-    protected PaymentDataFactoryInterface $paymentDataFactory;
-
-    protected PaymentFacade $paymentFacade;
-
-    protected CurrencyFacade $currencyFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface $paymentDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
@@ -33,17 +23,12 @@ class PaymentController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      */
     public function __construct(
-        PaymentDataFactoryInterface $paymentDataFactory,
-        CurrencyFacade $currencyFacade,
-        PaymentFacade $paymentFacade,
-        PaymentGridFactory $paymentGridFactory,
-        BreadcrumbOverrider $breadcrumbOverrider
+        protected readonly PaymentDataFactoryInterface $paymentDataFactory,
+        protected readonly CurrencyFacade $currencyFacade,
+        protected readonly PaymentFacade $paymentFacade,
+        protected readonly PaymentGridFactory $paymentGridFactory,
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider
     ) {
-        $this->paymentDataFactory = $paymentDataFactory;
-        $this->currencyFacade = $currencyFacade;
-        $this->paymentFacade = $paymentFacade;
-        $this->paymentGridFactory = $paymentGridFactory;
-        $this->breadcrumbOverrider = $breadcrumbOverrider;
     }
 
     /**

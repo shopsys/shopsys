@@ -11,14 +11,11 @@ use Symfony\Component\Yaml\Parser;
 
 class DomainsConfigLoader
 {
-    protected Filesystem $filesystem;
-
     /**
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem
      */
-    public function __construct(Filesystem $filesystem)
+    public function __construct(protected readonly Filesystem $filesystem)
     {
-        $this->filesystem = $filesystem;
     }
 
     /**

@@ -21,14 +21,6 @@ class PerformanceDataCommand extends Command
      */
     protected static $defaultName = 'shopsys:performance-data';
 
-    private CategoryDataFixture $categoryDataFixture;
-
-    private ProductDataFixture $productDataFixture;
-
-    private CustomerUserDataFixture $customerUserDataFixture;
-
-    private OrderDataFixture $orderDataFixture;
-
     /**
      * @param \App\DataFixtures\Performance\CategoryDataFixture $categoryDataFixture
      * @param \App\DataFixtures\Performance\ProductDataFixture $productDataFixture
@@ -36,16 +28,11 @@ class PerformanceDataCommand extends Command
      * @param \App\DataFixtures\Performance\OrderDataFixture $orderDataFixture
      */
     public function __construct(
-        CategoryDataFixture $categoryDataFixture,
-        ProductDataFixture $productDataFixture,
-        CustomerUserDataFixture $customerUserDataFixture,
-        OrderDataFixture $orderDataFixture
+        private readonly CategoryDataFixture $categoryDataFixture,
+        private readonly ProductDataFixture $productDataFixture,
+        private readonly CustomerUserDataFixture $customerUserDataFixture,
+        private readonly OrderDataFixture $orderDataFixture
     ) {
-        $this->categoryDataFixture = $categoryDataFixture;
-        $this->productDataFixture = $productDataFixture;
-        $this->customerUserDataFixture = $customerUserDataFixture;
-        $this->orderDataFixture = $orderDataFixture;
-
         parent::__construct();
     }
 

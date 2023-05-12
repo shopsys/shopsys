@@ -20,23 +20,14 @@ class FeedRegistry
     protected array $feedsByName = [];
 
     /**
-     * @var string[]
-     */
-    protected array $knownTypes;
-
-    protected string $defaultType;
-
-    /**
      * @param string[] $knownTypes
      * @param string $defaultType
      */
-    public function __construct(array $knownTypes, string $defaultType)
+    public function __construct(protected readonly array $knownTypes, protected readonly string $defaultType)
     {
         foreach ($knownTypes as $type) {
             $this->feedsByType[$type] = [];
         }
-        $this->knownTypes = $knownTypes;
-        $this->defaultType = $defaultType;
     }
 
     /**

@@ -14,18 +14,6 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 class OrderPreviewFactory
 {
-    protected OrderPreviewCalculation $orderPreviewCalculation;
-
-    protected Domain $domain;
-
-    protected CurrencyFacade $currencyFacade;
-
-    protected CurrentCustomerUser $currentCustomerUser;
-
-    protected CartFacade $cartFacade;
-
-    protected CurrentPromoCodeFacade $currentPromoCodeFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewCalculation $orderPreviewCalculation
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -35,19 +23,13 @@ class OrderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      */
     public function __construct(
-        OrderPreviewCalculation $orderPreviewCalculation,
-        Domain $domain,
-        CurrencyFacade $currencyFacade,
-        CurrentCustomerUser $currentCustomerUser,
-        CartFacade $cartFacade,
-        CurrentPromoCodeFacade $currentPromoCodeFacade
+        protected readonly OrderPreviewCalculation $orderPreviewCalculation,
+        protected readonly Domain $domain,
+        protected readonly CurrencyFacade $currencyFacade,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly CartFacade $cartFacade,
+        protected readonly CurrentPromoCodeFacade $currentPromoCodeFacade
     ) {
-        $this->orderPreviewCalculation = $orderPreviewCalculation;
-        $this->domain = $domain;
-        $this->currencyFacade = $currencyFacade;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->cartFacade = $cartFacade;
-        $this->currentPromoCodeFacade = $currentPromoCodeFacade;
     }
 
     /**

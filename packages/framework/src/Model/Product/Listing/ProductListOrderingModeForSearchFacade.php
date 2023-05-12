@@ -8,14 +8,11 @@ abstract class ProductListOrderingModeForSearchFacade
 {
     protected const COOKIE_NAME = 'productSearchOrderingMode';
 
-    protected RequestToOrderingModeIdConverter $requestToOrderingModeIdConverter;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Listing\RequestToOrderingModeIdConverter $requestToOrderingModeIdConverter
      */
-    public function __construct(RequestToOrderingModeIdConverter $requestToOrderingModeIdConverter)
+    public function __construct(protected readonly RequestToOrderingModeIdConverter $requestToOrderingModeIdConverter)
     {
-        $this->requestToOrderingModeIdConverter = $requestToOrderingModeIdConverter;
     }
 
     /**

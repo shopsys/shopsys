@@ -14,25 +14,16 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 
 class ProductFacade
 {
-    protected ProductRepository $productRepository;
-
-    protected FilterQueryFactory $filterQueryFactory;
-
-    protected ProductElasticsearchRepository $productElasticsearchRepository;
-
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
      */
     public function __construct(
-        ProductRepository $productRepository,
-        FilterQueryFactory $filterQueryFactory,
-        ProductElasticsearchRepository $productElasticsearchRepository
+        protected readonly ProductRepository $productRepository,
+        protected readonly FilterQueryFactory $filterQueryFactory,
+        protected readonly ProductElasticsearchRepository $productElasticsearchRepository
     ) {
-        $this->productRepository = $productRepository;
-        $this->filterQueryFactory = $filterQueryFactory;
-        $this->productElasticsearchRepository = $productElasticsearchRepository;
     }
 
     /**

@@ -28,7 +28,7 @@ class CurrencyFacade
         protected readonly OrderRepository $orderRepository,
         protected readonly Domain $domain,
         protected readonly ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
-        protected readonly CurrencyFactoryInterface $currencyFactory
+        protected readonly CurrencyFactoryInterface $currencyFactory,
     ) {
     }
 

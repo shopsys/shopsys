@@ -16,15 +16,11 @@ class GenerateErrorPagesCommand extends Command
      */
     protected static $defaultName = 'shopsys:error-page:generate-all';
 
-    private ErrorPagesFacade $errorPagesFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade $errorPagesFacade
      */
-    public function __construct(ErrorPagesFacade $errorPagesFacade)
+    public function __construct(private readonly ErrorPagesFacade $errorPagesFacade)
     {
-        $this->errorPagesFacade = $errorPagesFacade;
-
         parent::__construct();
     }
 

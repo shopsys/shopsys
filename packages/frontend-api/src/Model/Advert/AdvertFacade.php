@@ -8,14 +8,11 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 
 class AdvertFacade
 {
-    protected AdvertRepository $advertRepository;
-
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Advert\AdvertRepository $advertRepository
      */
-    public function __construct(AdvertRepository $advertRepository)
+    public function __construct(protected readonly AdvertRepository $advertRepository)
     {
-        $this->advertRepository = $advertRepository;
     }
 
     /**

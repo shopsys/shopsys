@@ -10,15 +10,12 @@ use Twig\TwigFunction;
 
 class IconExtension extends AbstractExtension
 {
-    protected Environment $twigEnvironment;
-
     /**
      * @param \Twig\Environment $twigEnvironment
      */
     public function __construct(
-        Environment $twigEnvironment
+        protected readonly Environment $twigEnvironment
     ) {
-        $this->twigEnvironment = $twigEnvironment;
     }
 
     /**

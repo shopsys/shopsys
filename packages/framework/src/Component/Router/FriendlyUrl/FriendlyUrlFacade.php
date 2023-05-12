@@ -16,22 +16,6 @@ class FriendlyUrlFacade
 {
     protected const MAX_URL_UNIQUE_RESOLVE_ATTEMPT = 100;
 
-    protected EntityManagerInterface $em;
-
-    protected DomainRouterFactory $domainRouterFactory;
-
-    protected FriendlyUrlUniqueResultFactory $friendlyUrlUniqueResultFactory;
-
-    protected FriendlyUrlRepository $friendlyUrlRepository;
-
-    protected Domain $domain;
-
-    protected FriendlyUrlFactoryInterface $friendlyUrlFactory;
-
-    protected FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider;
-
-    protected CacheInterface $mainFriendlyUrlSlugCache;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
@@ -43,23 +27,15 @@ class FriendlyUrlFacade
      * @param \Symfony\Contracts\Cache\CacheInterface $mainFriendlyUrlSlugCache
      */
     public function __construct(
-        EntityManagerInterface $em,
-        DomainRouterFactory $domainRouterFactory,
-        FriendlyUrlUniqueResultFactory $friendlyUrlUniqueResultFactory,
-        FriendlyUrlRepository $friendlyUrlRepository,
-        Domain $domain,
-        FriendlyUrlFactoryInterface $friendlyUrlFactory,
-        FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider,
-        CacheInterface $mainFriendlyUrlSlugCache
+        protected readonly EntityManagerInterface $em,
+        protected readonly DomainRouterFactory $domainRouterFactory,
+        protected readonly FriendlyUrlUniqueResultFactory $friendlyUrlUniqueResultFactory,
+        protected readonly FriendlyUrlRepository $friendlyUrlRepository,
+        protected readonly Domain $domain,
+        protected readonly FriendlyUrlFactoryInterface $friendlyUrlFactory,
+        protected readonly FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider,
+        protected readonly CacheInterface $mainFriendlyUrlSlugCache
     ) {
-        $this->em = $em;
-        $this->domainRouterFactory = $domainRouterFactory;
-        $this->friendlyUrlUniqueResultFactory = $friendlyUrlUniqueResultFactory;
-        $this->friendlyUrlRepository = $friendlyUrlRepository;
-        $this->domain = $domain;
-        $this->friendlyUrlFactory = $friendlyUrlFactory;
-        $this->mainFriendlyUrlSlugCache = $mainFriendlyUrlSlugCache;
-        $this->friendlyUrlCacheKeyProvider = $friendlyUrlCacheKeyProvider;
     }
 
     /**

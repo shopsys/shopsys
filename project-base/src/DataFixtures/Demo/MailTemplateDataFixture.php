@@ -15,25 +15,16 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface;
 
 class MailTemplateDataFixture extends AbstractReferenceFixture
 {
-    private MailTemplateFactoryInterface $mailTemplateFactory;
-
-    private MailTemplateDataFactoryInterface $mailTemplateDataFactory;
-
-    private Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface $mailTemplateFactory
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactoryInterface $mailTemplateDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        MailTemplateFactoryInterface $mailTemplateFactory,
-        MailTemplateDataFactoryInterface $mailTemplateDataFactory,
-        Domain $domain
+        private readonly MailTemplateFactoryInterface $mailTemplateFactory,
+        private readonly MailTemplateDataFactoryInterface $mailTemplateDataFactory,
+        private readonly Domain $domain
     ) {
-        $this->mailTemplateFactory = $mailTemplateFactory;
-        $this->mailTemplateDataFactory = $mailTemplateDataFactory;
-        $this->domain = $domain;
     }
 
     /**

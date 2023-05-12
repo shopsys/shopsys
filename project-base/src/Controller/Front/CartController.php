@@ -33,22 +33,6 @@ class CartController extends FrontBaseController
 
     public const PAGES_WITH_DISABLED_CART_HOVER = ['front_cart', 'front_error_page', 'front_order_index', 'front_order_sent'];
 
-    private CartFacade $cartFacade;
-
-    private Domain $domain;
-
-    private FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade;
-
-    private OrderPreviewFactory $orderPreviewFactory;
-
-    private ErrorExtractor $errorExtractor;
-
-    private ListedProductViewFacadeInterface $listedProductViewFacade;
-
-    private RequestStack $requestStack;
-
-    private ModuleFacade $moduleFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -60,23 +44,15 @@ class CartController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      */
     public function __construct(
-        CartFacade $cartFacade,
-        Domain $domain,
-        FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade,
-        OrderPreviewFactory $orderPreviewFactory,
-        ErrorExtractor $errorExtractor,
-        ListedProductViewFacadeInterface $listedProductViewFacade,
-        RequestStack $requestStack,
-        ModuleFacade $moduleFacade
+        private readonly CartFacade $cartFacade,
+        private readonly Domain $domain,
+        private readonly FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade,
+        private readonly OrderPreviewFactory $orderPreviewFactory,
+        private readonly ErrorExtractor $errorExtractor,
+        private readonly ListedProductViewFacadeInterface $listedProductViewFacade,
+        private readonly RequestStack $requestStack,
+        private readonly ModuleFacade $moduleFacade
     ) {
-        $this->cartFacade = $cartFacade;
-        $this->domain = $domain;
-        $this->freeTransportAndPaymentFacade = $freeTransportAndPaymentFacade;
-        $this->orderPreviewFactory = $orderPreviewFactory;
-        $this->errorExtractor = $errorExtractor;
-        $this->listedProductViewFacade = $listedProductViewFacade;
-        $this->requestStack = $requestStack;
-        $this->moduleFacade = $moduleFacade;
     }
 
     /**

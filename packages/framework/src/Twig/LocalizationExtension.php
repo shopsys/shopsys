@@ -9,22 +9,13 @@ use Twig\TwigFunction;
 
 class LocalizationExtension extends AbstractExtension
 {
-    protected Localization $localization;
-
-    protected Packages $assetPackages;
-
-    protected string $webDir;
-
     /**
      * @param string $webDir
      * @param \Symfony\Component\Asset\Packages $assetPackages
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
-    public function __construct(string $webDir, Packages $assetPackages, Localization $localization)
+    public function __construct(protected readonly string $webDir, protected readonly Packages $assetPackages, protected readonly Localization $localization)
     {
-        $this->assetPackages = $assetPackages;
-        $this->localization = $localization;
-        $this->webDir = $webDir;
     }
 
     /**

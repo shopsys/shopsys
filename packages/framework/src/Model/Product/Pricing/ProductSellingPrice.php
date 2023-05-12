@@ -7,18 +7,12 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class ProductSellingPrice
 {
-    protected PricingGroup $pricingGroup;
-
-    protected Price $sellingPrice;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $sellingPrice
      */
-    public function __construct(PricingGroup $pricingGroup, Price $sellingPrice)
+    public function __construct(protected readonly PricingGroup $pricingGroup, protected readonly Price $sellingPrice)
     {
-        $this->pricingGroup = $pricingGroup;
-        $this->sellingPrice = $sellingPrice;
     }
 
     /**

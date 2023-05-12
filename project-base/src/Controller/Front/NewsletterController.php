@@ -17,13 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class NewsletterController extends FrontBaseController
 {
-    private NewsletterFacade $newsletterFacade;
-
     private LegalConditionsFacade $legalConditionsFacade;
-
-    private Domain $domain;
-
-    private FormTimeProvider $formTimeProvider;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
@@ -32,15 +26,12 @@ class NewsletterController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Component\Form\FormTimeProvider $formTimeProvider
      */
     public function __construct(
-        NewsletterFacade $newsletterFacade,
+        private readonly NewsletterFacade $newsletterFacade,
         BaseLegalConditionsFacade $legalConditionsFacade,
-        Domain $domain,
-        FormTimeProvider $formTimeProvider
+        private readonly Domain $domain,
+        private readonly FormTimeProvider $formTimeProvider
     ) {
-        $this->newsletterFacade = $newsletterFacade;
         $this->legalConditionsFacade = $legalConditionsFacade;
-        $this->domain = $domain;
-        $this->formTimeProvider = $formTimeProvider;
     }
 
     /**

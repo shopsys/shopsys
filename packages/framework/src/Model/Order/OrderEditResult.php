@@ -4,14 +4,11 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 
 class OrderEditResult
 {
-    protected bool $statusChanged;
-
     /**
      * @param bool $statusChanged
      */
-    public function __construct(bool $statusChanged)
+    public function __construct(protected readonly bool $statusChanged)
     {
-        $this->statusChanged = $statusChanged;
     }
 
     /**

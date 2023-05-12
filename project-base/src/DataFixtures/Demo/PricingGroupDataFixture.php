@@ -19,14 +19,6 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
     public const PRICING_GROUP_ORDINARY = 'pricing_group_ordinary';
     public const PRICING_GROUP_PARTNER = 'pricing_group_partner';
 
-    private PricingGroupFacade $pricingGroupFacade;
-
-    private PricingGroupDataFactoryInterface $pricingGroupDataFactory;
-
-    private Domain $domain;
-
-    private PricingGroupSettingFacade $pricingGroupSettingFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactoryInterface $pricingGroupDataFactory
@@ -34,15 +26,11 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      */
     public function __construct(
-        PricingGroupFacade $pricingGroupFacade,
-        PricingGroupDataFactoryInterface $pricingGroupDataFactory,
-        Domain $domain,
-        PricingGroupSettingFacade $pricingGroupSettingFacade
+        private readonly PricingGroupFacade $pricingGroupFacade,
+        private readonly PricingGroupDataFactoryInterface $pricingGroupDataFactory,
+        private readonly Domain $domain,
+        private readonly PricingGroupSettingFacade $pricingGroupSettingFacade
     ) {
-        $this->pricingGroupFacade = $pricingGroupFacade;
-        $this->pricingGroupDataFactory = $pricingGroupDataFactory;
-        $this->domain = $domain;
-        $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
     }
 
     /**

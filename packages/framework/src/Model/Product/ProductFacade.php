@@ -32,50 +32,6 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 
 class ProductFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected ProductRepository $productRepository;
-
-    protected ProductVisibilityFacade $productVisibilityFacade;
-
-    protected ParameterRepository $parameterRepository;
-
-    protected Domain $domain;
-
-    protected ImageFacade $imageFacade;
-
-    protected ProductPriceRecalculationScheduler $productPriceRecalculationScheduler;
-
-    protected PricingGroupRepository $pricingGroupRepository;
-
-    protected ProductManualInputPriceFacade $productManualInputPriceFacade;
-
-    protected ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler;
-
-    protected FriendlyUrlFacade $friendlyUrlFacade;
-
-    protected ProductHiddenRecalculator $productHiddenRecalculator;
-
-    protected ProductSellingDeniedRecalculator $productSellingDeniedRecalculator;
-
-    protected ProductAccessoryRepository $productAccessoryRepository;
-
-    protected PluginCrudExtensionFacade $pluginCrudExtensionFacade;
-
-    protected ProductFactoryInterface $productFactory;
-
-    protected ProductAccessoryFactoryInterface $productAccessoryFactory;
-
-    protected ProductCategoryDomainFactoryInterface $productCategoryDomainFactory;
-
-    protected ProductParameterValueFactoryInterface $productParameterValueFactory;
-
-    protected ProductVisibilityFactoryInterface $productVisibilityFactory;
-
-    protected ProductPriceCalculation $productPriceCalculation;
-
-    protected ProductExportScheduler $productExportScheduler;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
@@ -101,51 +57,29 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler $productExportScheduler
      */
     public function __construct(
-        EntityManagerInterface $em,
-        ProductRepository $productRepository,
-        ProductVisibilityFacade $productVisibilityFacade,
-        ParameterRepository $parameterRepository,
-        Domain $domain,
-        ImageFacade $imageFacade,
-        ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
-        PricingGroupRepository $pricingGroupRepository,
-        ProductManualInputPriceFacade $productManualInputPriceFacade,
-        ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
-        FriendlyUrlFacade $friendlyUrlFacade,
-        ProductHiddenRecalculator $productHiddenRecalculator,
-        ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
-        ProductAccessoryRepository $productAccessoryRepository,
-        PluginCrudExtensionFacade $pluginCrudExtensionFacade,
-        ProductFactoryInterface $productFactory,
-        ProductAccessoryFactoryInterface $productAccessoryFactory,
-        ProductCategoryDomainFactoryInterface $productCategoryDomainFactory,
-        ProductParameterValueFactoryInterface $productParameterValueFactory,
-        ProductVisibilityFactoryInterface $productVisibilityFactory,
-        ProductPriceCalculation $productPriceCalculation,
-        ProductExportScheduler $productExportScheduler
+        protected readonly EntityManagerInterface $em,
+        protected readonly ProductRepository $productRepository,
+        protected readonly ProductVisibilityFacade $productVisibilityFacade,
+        protected readonly ParameterRepository $parameterRepository,
+        protected readonly Domain $domain,
+        protected readonly ImageFacade $imageFacade,
+        protected readonly ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
+        protected readonly PricingGroupRepository $pricingGroupRepository,
+        protected readonly ProductManualInputPriceFacade $productManualInputPriceFacade,
+        protected readonly ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly ProductHiddenRecalculator $productHiddenRecalculator,
+        protected readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
+        protected readonly ProductAccessoryRepository $productAccessoryRepository,
+        protected readonly PluginCrudExtensionFacade $pluginCrudExtensionFacade,
+        protected readonly ProductFactoryInterface $productFactory,
+        protected readonly ProductAccessoryFactoryInterface $productAccessoryFactory,
+        protected readonly ProductCategoryDomainFactoryInterface $productCategoryDomainFactory,
+        protected readonly ProductParameterValueFactoryInterface $productParameterValueFactory,
+        protected readonly ProductVisibilityFactoryInterface $productVisibilityFactory,
+        protected readonly ProductPriceCalculation $productPriceCalculation,
+        protected readonly ProductExportScheduler $productExportScheduler
     ) {
-        $this->em = $em;
-        $this->productRepository = $productRepository;
-        $this->productVisibilityFacade = $productVisibilityFacade;
-        $this->parameterRepository = $parameterRepository;
-        $this->domain = $domain;
-        $this->imageFacade = $imageFacade;
-        $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
-        $this->pricingGroupRepository = $pricingGroupRepository;
-        $this->productManualInputPriceFacade = $productManualInputPriceFacade;
-        $this->productAvailabilityRecalculationScheduler = $productAvailabilityRecalculationScheduler;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->productHiddenRecalculator = $productHiddenRecalculator;
-        $this->productSellingDeniedRecalculator = $productSellingDeniedRecalculator;
-        $this->productAccessoryRepository = $productAccessoryRepository;
-        $this->pluginCrudExtensionFacade = $pluginCrudExtensionFacade;
-        $this->productFactory = $productFactory;
-        $this->productAccessoryFactory = $productAccessoryFactory;
-        $this->productCategoryDomainFactory = $productCategoryDomainFactory;
-        $this->productParameterValueFactory = $productParameterValueFactory;
-        $this->productVisibilityFactory = $productVisibilityFactory;
-        $this->productPriceCalculation = $productPriceCalculation;
-        $this->productExportScheduler = $productExportScheduler;
     }
 
     /**

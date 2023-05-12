@@ -15,14 +15,11 @@ use Symfony\Component\Validator\Constraints;
 
 class ScriptFormType extends AbstractType
 {
-    protected ScriptFacade $scriptFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Script\ScriptFacade $scriptFacade
      */
-    public function __construct(ScriptFacade $scriptFacade)
+    public function __construct(protected readonly ScriptFacade $scriptFacade)
     {
-        $this->scriptFacade = $scriptFacade;
     }
 
     /**

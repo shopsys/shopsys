@@ -8,12 +8,6 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 class AvailabilityInlineEdit extends AbstractGridInlineEdit
 {
-    protected AvailabilityFacade $availabilityFacade;
-
-    protected FormFactoryInterface $formFactory;
-
-    protected AvailabilityDataFactoryInterface $availabilityDataFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityGridFactory $availabilityGridFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
@@ -22,15 +16,11 @@ class AvailabilityInlineEdit extends AbstractGridInlineEdit
      */
     public function __construct(
         AvailabilityGridFactory $availabilityGridFactory,
-        AvailabilityFacade $availabilityFacade,
-        FormFactoryInterface $formFactory,
-        AvailabilityDataFactoryInterface $availabilityDataFactory
+        protected readonly AvailabilityFacade $availabilityFacade,
+        protected readonly FormFactoryInterface $formFactory,
+        protected readonly AvailabilityDataFactoryInterface $availabilityDataFactory
     ) {
         parent::__construct($availabilityGridFactory);
-
-        $this->availabilityFacade = $availabilityFacade;
-        $this->formFactory = $formFactory;
-        $this->availabilityDataFactory = $availabilityDataFactory;
     }
 
     /**

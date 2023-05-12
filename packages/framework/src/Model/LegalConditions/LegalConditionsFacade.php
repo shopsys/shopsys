@@ -9,25 +9,16 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 
 abstract class LegalConditionsFacade
 {
-    protected ArticleFacade $articleFacade;
-
-    protected Setting $setting;
-
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        ArticleFacade $articleFacade,
-        Setting $setting,
-        Domain $domain
+        protected readonly ArticleFacade $articleFacade,
+        protected readonly Setting $setting,
+        protected readonly Domain $domain
     ) {
-        $this->articleFacade = $articleFacade;
-        $this->setting = $setting;
-        $this->domain = $domain;
     }
 
     /**

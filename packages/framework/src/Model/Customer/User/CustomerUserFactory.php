@@ -6,20 +6,14 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class CustomerUserFactory implements CustomerUserFactoryInterface
 {
-    protected EntityNameResolver $entityNameResolver;
-
-    protected CustomerUserPasswordFacade $customerUserPasswordFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
      */
     public function __construct(
-        EntityNameResolver $entityNameResolver,
-        CustomerUserPasswordFacade $customerUserPasswordFacade
+        protected readonly EntityNameResolver $entityNameResolver,
+        protected readonly CustomerUserPasswordFacade $customerUserPasswordFacade
     ) {
-        $this->entityNameResolver = $entityNameResolver;
-        $this->customerUserPasswordFacade = $customerUserPasswordFacade;
     }
 
     /**

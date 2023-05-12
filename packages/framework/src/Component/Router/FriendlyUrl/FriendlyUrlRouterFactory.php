@@ -9,15 +9,7 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 class FriendlyUrlRouterFactory
 {
-    protected LoaderInterface $configLoader;
-
-    protected FriendlyUrlRepository $friendlyUrlRepository;
-
     protected string $friendlyUrlRouterResourceFilepath;
-
-    protected FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider;
-
-    protected CacheInterface $mainFriendlyUrlSlugCache;
 
     /**
      * @param mixed $friendlyUrlRouterResourceFilepath
@@ -28,16 +20,12 @@ class FriendlyUrlRouterFactory
      */
     public function __construct(
         $friendlyUrlRouterResourceFilepath,
-        LoaderInterface $configLoader,
-        FriendlyUrlRepository $friendlyUrlRepository,
-        FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider,
-        CacheInterface $mainFriendlyUrlSlugCache
+        protected readonly LoaderInterface $configLoader,
+        protected readonly FriendlyUrlRepository $friendlyUrlRepository,
+        protected readonly FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider,
+        protected readonly CacheInterface $mainFriendlyUrlSlugCache
     ) {
         $this->friendlyUrlRouterResourceFilepath = $friendlyUrlRouterResourceFilepath;
-        $this->configLoader = $configLoader;
-        $this->friendlyUrlRepository = $friendlyUrlRepository;
-        $this->friendlyUrlCacheKeyProvider = $friendlyUrlCacheKeyProvider;
-        $this->mainFriendlyUrlSlugCache = $mainFriendlyUrlSlugCache;
     }
 
     /**

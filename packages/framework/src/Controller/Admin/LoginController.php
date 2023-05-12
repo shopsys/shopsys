@@ -22,14 +22,6 @@ class LoginController extends AdminBaseController
     public const ORIGINAL_DOMAIN_ID_PARAMETER_NAME = 'originalDomainId';
     public const ORIGINAL_REFERER_PARAMETER_NAME = 'originalReferer';
 
-    protected Authenticator $authenticator;
-
-    protected Domain $domain;
-
-    protected DomainRouterFactory $domainRouterFactory;
-
-    protected AdministratorLoginFacade $administratorLoginFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -37,15 +29,11 @@ class LoginController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Security\AdministratorLoginFacade $administratorLoginFacade
      */
     public function __construct(
-        Authenticator $authenticator,
-        Domain $domain,
-        DomainRouterFactory $domainRouterFactory,
-        AdministratorLoginFacade $administratorLoginFacade
+        protected readonly Authenticator $authenticator,
+        protected readonly Domain $domain,
+        protected readonly DomainRouterFactory $domainRouterFactory,
+        protected readonly AdministratorLoginFacade $administratorLoginFacade
     ) {
-        $this->authenticator = $authenticator;
-        $this->domain = $domain;
-        $this->domainRouterFactory = $domainRouterFactory;
-        $this->administratorLoginFacade = $administratorLoginFacade;
     }
 
     /**

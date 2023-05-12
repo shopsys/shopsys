@@ -10,16 +10,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class ProductAvailabilityCalculation
 {
-    protected AvailabilityFacade $availabilityFacade;
-
-    protected ProductSellingDeniedRecalculator $productSellingDeniedRecalculator;
-
-    protected ProductVisibilityFacade $productVisibilityFacade;
-
-    protected EntityManagerInterface $em;
-
-    protected ProductRepository $productRepository;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
@@ -28,17 +18,12 @@ class ProductAvailabilityCalculation
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      */
     public function __construct(
-        AvailabilityFacade $availabilityFacade,
-        ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
-        ProductVisibilityFacade $productVisibilityFacade,
-        EntityManagerInterface $em,
-        ProductRepository $productRepository
+        protected readonly AvailabilityFacade $availabilityFacade,
+        protected readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
+        protected readonly ProductVisibilityFacade $productVisibilityFacade,
+        protected readonly EntityManagerInterface $em,
+        protected readonly ProductRepository $productRepository
     ) {
-        $this->availabilityFacade = $availabilityFacade;
-        $this->productSellingDeniedRecalculator = $productSellingDeniedRecalculator;
-        $this->em = $em;
-        $this->productVisibilityFacade = $productVisibilityFacade;
-        $this->productRepository = $productRepository;
     }
 
     /**

@@ -10,18 +10,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 abstract class AbstractExportSubscriber implements EventSubscriberInterface
 {
-    protected AbstractExportScheduler $exportScheduler;
-
-    protected EntityManagerInterface $entityManager;
-
-    protected IndexFacade $indexFacade;
-
-    protected IndexDefinitionLoader $indexDefinitionLoader;
-
-    protected AbstractIndex $index;
-
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractExportScheduler $exportScheduler
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
@@ -31,19 +19,13 @@ abstract class AbstractExportSubscriber implements EventSubscriberInterface
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        AbstractExportScheduler $exportScheduler,
-        EntityManagerInterface $entityManager,
-        IndexFacade $indexFacade,
-        IndexDefinitionLoader $indexDefinitionLoader,
-        AbstractIndex $index,
-        Domain $domain
+        protected readonly AbstractExportScheduler $exportScheduler,
+        protected readonly EntityManagerInterface $entityManager,
+        protected readonly IndexFacade $indexFacade,
+        protected readonly IndexDefinitionLoader $indexDefinitionLoader,
+        protected readonly AbstractIndex $index,
+        protected readonly Domain $domain
     ) {
-        $this->exportScheduler = $exportScheduler;
-        $this->entityManager = $entityManager;
-        $this->indexFacade = $indexFacade;
-        $this->indexDefinitionLoader = $indexDefinitionLoader;
-        $this->index = $index;
-        $this->domain = $domain;
     }
 
     /**

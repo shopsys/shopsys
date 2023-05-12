@@ -6,14 +6,11 @@ use Shopsys\FrameworkBundle\Component\Domain\DomainFacade;
 
 class MenuController extends AdminBaseController
 {
-    protected DomainFacade $domainFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\DomainFacade $domainFacade
      */
-    public function __construct(DomainFacade $domainFacade)
+    public function __construct(protected readonly DomainFacade $domainFacade)
     {
-        $this->domainFacade = $domainFacade;
     }
 
     public function menuAction()

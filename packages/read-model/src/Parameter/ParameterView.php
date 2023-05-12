@@ -6,14 +6,6 @@ namespace Shopsys\ReadModelBundle\Parameter;
 
 class ParameterView
 {
-    protected int $id;
-
-    protected string $name;
-
-    protected int $valueId;
-
-    protected string $valueText;
-
     /**
      * @param int $id
      * @param string $name
@@ -21,15 +13,11 @@ class ParameterView
      * @param string $valueText
      */
     public function __construct(
-        int $id,
-        string $name,
-        int $valueId,
-        string $valueText
+        protected readonly int $id,
+        protected readonly string $name,
+        protected readonly int $valueId,
+        protected readonly string $valueText
     ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->valueId = $valueId;
-        $this->valueText = $valueText;
     }
 
     /**

@@ -23,14 +23,6 @@ class FileUpload
 
     protected string $imageDir;
 
-    protected FileNamingConvention $fileNamingConvention;
-
-    protected MountManager $mountManager;
-
-    protected FilesystemOperator $filesystem;
-
-    protected ParameterBagInterface $parameterBag;
-
     /**
      * @param string $temporaryDir
      * @param string $uploadedFileDir
@@ -44,18 +36,14 @@ class FileUpload
         $temporaryDir,
         $uploadedFileDir,
         $imageDir,
-        FileNamingConvention $fileNamingConvention,
-        MountManager $mountManager,
-        FilesystemOperator $filesystem,
-        ParameterBagInterface $parameterBag
+        protected readonly FileNamingConvention $fileNamingConvention,
+        protected readonly MountManager $mountManager,
+        protected readonly FilesystemOperator $filesystem,
+        protected readonly ParameterBagInterface $parameterBag
     ) {
         $this->temporaryDir = $temporaryDir;
         $this->uploadedFileDir = $uploadedFileDir;
         $this->imageDir = $imageDir;
-        $this->fileNamingConvention = $fileNamingConvention;
-        $this->mountManager = $mountManager;
-        $this->filesystem = $filesystem;
-        $this->parameterBag = $parameterBag;
     }
 
     /**

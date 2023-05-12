@@ -10,20 +10,14 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class ProductParameterValueToProductParameterValuesLocalizedTransformer implements DataTransformerInterface
 {
-    protected ProductParameterValueDataFactoryInterface $productParameterValueDataFactory;
-
-    protected ParameterValueDataFactoryInterface $parameterValueDataFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface $parameterValueDataFactory
      */
     public function __construct(
-        ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
-        ParameterValueDataFactoryInterface $parameterValueDataFactory
+        protected readonly ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
+        protected readonly ParameterValueDataFactoryInterface $parameterValueDataFactory
     ) {
-        $this->productParameterValueDataFactory = $productParameterValueDataFactory;
-        $this->parameterValueDataFactory = $parameterValueDataFactory;
     }
 
     /**

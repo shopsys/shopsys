@@ -7,14 +7,11 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class TransportPriceFactory implements TransportPriceFactoryInterface
 {
-    protected EntityNameResolver $entityNameResolver;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
-    public function __construct(EntityNameResolver $entityNameResolver)
+    public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
-        $this->entityNameResolver = $entityNameResolver;
     }
 
     /**

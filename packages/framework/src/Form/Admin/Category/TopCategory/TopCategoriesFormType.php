@@ -13,25 +13,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TopCategoriesFormType extends AbstractType
 {
-    private CategoryFacade $categoryFacade;
-
-    private RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer;
-
-    private CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer
      * @param \Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer
      */
     public function __construct(
-        CategoryFacade $categoryFacade,
-        RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer,
-        CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer
+        private readonly CategoryFacade $categoryFacade,
+        private readonly RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer,
+        private readonly CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer
     ) {
-        $this->categoryFacade = $categoryFacade;
-        $this->removeDuplicatesTransformer = $removeDuplicatesTransformer;
-        $this->categoriesIdsToCategoriesTransformer = $categoriesIdsToCategoriesTransformer;
     }
 
     /**

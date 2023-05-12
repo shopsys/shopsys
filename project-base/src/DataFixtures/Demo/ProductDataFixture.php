@@ -30,23 +30,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 {
     public const PRODUCT_PREFIX = 'product_';
 
-    private ProductFacade $productFacade;
-
-    private ProductVariantFacade $productVariantFacade;
-
-    private Domain $domain;
-
-    private PricingGroupFacade $pricingGroupFacade;
-
     private ProductDataFactory $productDataFactory;
-
-    private ProductParameterValueDataFactory $productParameterValueDataFactory;
-
-    private ParameterValueDataFactory $parameterValueDataFactory;
-
-    private ParameterFacade $parameterFacade;
-
-    private ParameterDataFactory $parameterDataFactory;
 
     private int $productNo = 1;
 
@@ -54,10 +38,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @var int[]
      */
     private array $productIdsByCatnum = [];
-
-    private PriceConverter $priceConverter;
-
-    private EntityManagerInterface $em;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
@@ -73,29 +53,19 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
-        ProductFacade $productFacade,
-        ProductVariantFacade $productVariantFacade,
-        Domain $domain,
-        PricingGroupFacade $pricingGroupFacade,
+        private readonly ProductFacade $productFacade,
+        private readonly ProductVariantFacade $productVariantFacade,
+        private readonly Domain $domain,
+        private readonly PricingGroupFacade $pricingGroupFacade,
         ProductDataFactoryInterface $productDataFactory,
-        ProductParameterValueDataFactory $productParameterValueDataFactory,
-        ParameterValueDataFactory $parameterValueDataFactory,
-        ParameterFacade $parameterFacade,
-        ParameterDataFactory $parameterDataFactory,
-        PriceConverter $priceConverter,
-        EntityManagerInterface $em
+        private readonly ProductParameterValueDataFactory $productParameterValueDataFactory,
+        private readonly ParameterValueDataFactory $parameterValueDataFactory,
+        private readonly ParameterFacade $parameterFacade,
+        private readonly ParameterDataFactory $parameterDataFactory,
+        private readonly PriceConverter $priceConverter,
+        private readonly EntityManagerInterface $em
     ) {
-        $this->productFacade = $productFacade;
-        $this->productVariantFacade = $productVariantFacade;
-        $this->domain = $domain;
-        $this->pricingGroupFacade = $pricingGroupFacade;
         $this->productDataFactory = $productDataFactory;
-        $this->productParameterValueDataFactory = $productParameterValueDataFactory;
-        $this->parameterValueDataFactory = $parameterValueDataFactory;
-        $this->parameterFacade = $parameterFacade;
-        $this->parameterDataFactory = $parameterDataFactory;
-        $this->priceConverter = $priceConverter;
-        $this->em = $em;
     }
 
     /**

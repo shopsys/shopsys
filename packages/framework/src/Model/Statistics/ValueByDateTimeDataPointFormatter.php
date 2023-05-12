@@ -8,14 +8,11 @@ use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 
 class ValueByDateTimeDataPointFormatter
 {
-    protected DateTimeFormatterExtension $dateTimeFormatterExtension;
-
     /**
      * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
      */
-    public function __construct(DateTimeFormatterExtension $dateTimeFormatterExtension)
+    public function __construct(protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension)
     {
-        $this->dateTimeFormatterExtension = $dateTimeFormatterExtension;
     }
 
     /**

@@ -15,18 +15,12 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class PriceRangeRepository
 {
-    protected ProductRepository $productRepository;
-
-    protected QueryBuilderExtender $queryBuilderExtender;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
      */
-    public function __construct(ProductRepository $productRepository, QueryBuilderExtender $queryBuilderExtender)
+    public function __construct(protected readonly ProductRepository $productRepository, protected readonly QueryBuilderExtender $queryBuilderExtender)
     {
-        $this->productRepository = $productRepository;
-        $this->queryBuilderExtender = $queryBuilderExtender;
     }
 
     /**

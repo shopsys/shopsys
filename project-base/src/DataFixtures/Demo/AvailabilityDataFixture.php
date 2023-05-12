@@ -20,14 +20,6 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
     public const AVAILABILITY_OUT_OF_STOCK = 'availability_out_of_stock';
     public const AVAILABILITY_PREPARING = 'availability_preparing';
 
-    private AvailabilityFacade $availabilityFacade;
-
-    private AvailabilityDataFactoryInterface $availabilityDataFactory;
-
-    private Setting $setting;
-
-    private Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface $availabilityDataFactory
@@ -35,15 +27,11 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        AvailabilityFacade $availabilityFacade,
-        AvailabilityDataFactoryInterface $availabilityDataFactory,
-        Setting $setting,
-        Domain $domain
+        private readonly AvailabilityFacade $availabilityFacade,
+        private readonly AvailabilityDataFactoryInterface $availabilityDataFactory,
+        private readonly Setting $setting,
+        private readonly Domain $domain
     ) {
-        $this->availabilityFacade = $availabilityFacade;
-        $this->availabilityDataFactory = $availabilityDataFactory;
-        $this->setting = $setting;
-        $this->domain = $domain;
     }
 
     /**

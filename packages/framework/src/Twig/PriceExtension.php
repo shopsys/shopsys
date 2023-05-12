@@ -18,16 +18,6 @@ use Twig\TwigFunction;
 
 class PriceExtension extends AbstractExtension
 {
-    protected CurrencyFacade $currencyFacade;
-
-    protected Domain $domain;
-
-    protected Localization $localization;
-
-    protected CurrencyRepositoryInterface $intlCurrencyRepository;
-
-    protected CurrencyFormatterFactory $currencyFormatterFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -36,17 +26,12 @@ class PriceExtension extends AbstractExtension
      * @param \Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory $currencyFormatterFactory
      */
     public function __construct(
-        CurrencyFacade $currencyFacade,
-        Domain $domain,
-        Localization $localization,
-        CurrencyRepositoryInterface $intlCurrencyRepository,
-        CurrencyFormatterFactory $currencyFormatterFactory
+        protected readonly CurrencyFacade $currencyFacade,
+        protected readonly Domain $domain,
+        protected readonly Localization $localization,
+        protected readonly CurrencyRepositoryInterface $intlCurrencyRepository,
+        protected readonly CurrencyFormatterFactory $currencyFormatterFactory
     ) {
-        $this->currencyFacade = $currencyFacade;
-        $this->domain = $domain;
-        $this->localization = $localization;
-        $this->intlCurrencyRepository = $intlCurrencyRepository;
-        $this->currencyFormatterFactory = $currencyFormatterFactory;
     }
 
     /**

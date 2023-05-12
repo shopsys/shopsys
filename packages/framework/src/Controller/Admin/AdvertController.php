@@ -21,24 +21,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdvertController extends AdminBaseController
 {
-    protected BreadcrumbOverrider $breadcrumbOverrider;
-
-    protected AdministratorGridFacade $administratorGridFacade;
-
-    protected AdvertFacade $advertFacade;
-
-    protected AdminDomainTabsFacade $adminDomainTabsFacade;
-
-    protected GridFactory $gridFactory;
-
-    protected ImageExtension $imageExtension;
-
-    protected AdvertDataFactoryInterface $advertDataFactory;
-
-    protected AdvertPositionRegistry $advertPositionRegistry;
-
-    protected EntityManagerInterface $entityManager;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertFacade $advertFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
@@ -51,25 +33,16 @@ class AdvertController extends AdminBaseController
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
     public function __construct(
-        AdvertFacade $advertFacade,
-        AdministratorGridFacade $administratorGridFacade,
-        GridFactory $gridFactory,
-        AdminDomainTabsFacade $adminDomainTabsFacade,
-        BreadcrumbOverrider $breadcrumbOverrider,
-        ImageExtension $imageExtension,
-        AdvertDataFactoryInterface $advertDataFactory,
-        AdvertPositionRegistry $advertPositionRegistry,
-        EntityManagerInterface $entityManager
+        protected readonly AdvertFacade $advertFacade,
+        protected readonly AdministratorGridFacade $administratorGridFacade,
+        protected readonly GridFactory $gridFactory,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+        protected readonly ImageExtension $imageExtension,
+        protected readonly AdvertDataFactoryInterface $advertDataFactory,
+        protected readonly AdvertPositionRegistry $advertPositionRegistry,
+        protected readonly EntityManagerInterface $entityManager
     ) {
-        $this->advertFacade = $advertFacade;
-        $this->administratorGridFacade = $administratorGridFacade;
-        $this->gridFactory = $gridFactory;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
-        $this->breadcrumbOverrider = $breadcrumbOverrider;
-        $this->imageExtension = $imageExtension;
-        $this->advertDataFactory = $advertDataFactory;
-        $this->advertPositionRegistry = $advertPositionRegistry;
-        $this->entityManager = $entityManager;
     }
 
     /**

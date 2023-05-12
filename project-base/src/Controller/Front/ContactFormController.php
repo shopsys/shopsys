@@ -15,13 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ContactFormController extends FrontBaseController
 {
-    private ContactFormFacade $contactFormFacade;
-
     private LegalConditionsFacade $legalConditionsFacade;
-
-    private Domain $domain;
-
-    private ContactFormSettingsFacade $contactFormSettingsFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormFacade $contactFormFacade
@@ -30,15 +24,12 @@ class ContactFormController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsFacade $contactFormSettingsFacade
      */
     public function __construct(
-        ContactFormFacade $contactFormFacade,
+        private readonly ContactFormFacade $contactFormFacade,
         BaseLegalConditionsFacade $legalConditionsFacade,
-        Domain $domain,
-        ContactFormSettingsFacade $contactFormSettingsFacade
+        private readonly Domain $domain,
+        private readonly ContactFormSettingsFacade $contactFormSettingsFacade
     ) {
-        $this->contactFormFacade = $contactFormFacade;
         $this->legalConditionsFacade = $legalConditionsFacade;
-        $this->domain = $domain;
-        $this->contactFormSettingsFacade = $contactFormSettingsFacade;
     }
 
     /**

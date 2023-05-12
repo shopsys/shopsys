@@ -12,20 +12,14 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class CountryValidator extends ConstraintValidator
 {
-    protected CountryFacade $countryFacade;
-
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        CountryFacade $countryFacade,
-        Domain $domain
+        protected readonly CountryFacade $countryFacade,
+        protected readonly Domain $domain
     ) {
-        $this->domain = $domain;
-        $this->countryFacade = $countryFacade;
     }
 
     /**

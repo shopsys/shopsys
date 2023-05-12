@@ -6,25 +6,16 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class TopCategoryFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected TopCategoryRepository $topCategoryRepository;
-
-    protected TopCategoryFactoryInterface $topCategoryFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryRepository $topCategoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFactoryInterface $topCategoryFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        TopCategoryRepository $topCategoryRepository,
-        TopCategoryFactoryInterface $topCategoryFactory
+        protected readonly EntityManagerInterface $em,
+        protected readonly TopCategoryRepository $topCategoryRepository,
+        protected readonly TopCategoryFactoryInterface $topCategoryFactory
     ) {
-        $this->em = $em;
-        $this->topCategoryRepository = $topCategoryRepository;
-        $this->topCategoryFactory = $topCategoryFactory;
     }
 
     /**

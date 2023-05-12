@@ -11,20 +11,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class GridController extends AdminBaseController
 {
-    protected InlineEditFacade $inlineEditFacade;
-
-    protected GridOrderingFacade $gridOrderingFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\Ordering\GridOrderingFacade $gridOrderingFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\InlineEditFacade $inlineEditFacade
      */
     public function __construct(
-        GridOrderingFacade $gridOrderingFacade,
-        InlineEditFacade $inlineEditFacade
+        protected readonly GridOrderingFacade $gridOrderingFacade,
+        protected readonly InlineEditFacade $inlineEditFacade
     ) {
-        $this->gridOrderingFacade = $gridOrderingFacade;
-        $this->inlineEditFacade = $inlineEditFacade;
     }
 
     /**

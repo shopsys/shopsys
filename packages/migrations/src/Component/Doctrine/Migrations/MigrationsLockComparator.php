@@ -9,14 +9,11 @@ use Doctrine\Migrations\Version\Version;
 
 class MigrationsLockComparator implements Comparator
 {
-    protected MigrationsLock $migrationsLock;
-
     /**
      * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock $migrationsLock
      */
-    public function __construct(MigrationsLock $migrationsLock)
+    public function __construct(protected readonly MigrationsLock $migrationsLock)
     {
-        $this->migrationsLock = $migrationsLock;
     }
 
     /**

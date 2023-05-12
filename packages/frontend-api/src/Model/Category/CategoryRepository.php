@@ -13,18 +13,12 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryRepository as FrameworkCatego
 
 class CategoryRepository
 {
-    protected EntityManagerInterface $em;
-
-    protected FrameworkCategoryRepository $categoryRepository;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
      */
-    public function __construct(EntityManagerInterface $em, FrameworkCategoryRepository $categoryRepository)
+    public function __construct(protected readonly EntityManagerInterface $em, protected readonly FrameworkCategoryRepository $categoryRepository)
     {
-        $this->em = $em;
-        $this->categoryRepository = $categoryRepository;
     }
 
     /**

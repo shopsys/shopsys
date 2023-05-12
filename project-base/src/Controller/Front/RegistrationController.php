@@ -18,13 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RegistrationController extends FrontBaseController
 {
-    private CustomerUserFacade $customerUserFacade;
-
     private CustomerUserDataFactory $customerUserDataFactory;
-
-    private Domain $domain;
-
-    private Authenticator $authenticator;
 
     private LegalConditionsFacade $legalConditionsFacade;
 
@@ -36,16 +30,13 @@ class RegistrationController extends FrontBaseController
      * @param \App\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
      */
     public function __construct(
-        Domain $domain,
+        private readonly Domain $domain,
         CustomerUserDataFactoryInterface $customerUserDataFactory,
-        CustomerUserFacade $customerUserFacade,
-        Authenticator $authenticator,
+        private readonly CustomerUserFacade $customerUserFacade,
+        private readonly Authenticator $authenticator,
         BaseLegalConditionsFacade $legalConditionsFacade
     ) {
-        $this->domain = $domain;
         $this->customerUserDataFactory = $customerUserDataFactory;
-        $this->customerUserFacade = $customerUserFacade;
-        $this->authenticator = $authenticator;
         $this->legalConditionsFacade = $legalConditionsFacade;
     }
 

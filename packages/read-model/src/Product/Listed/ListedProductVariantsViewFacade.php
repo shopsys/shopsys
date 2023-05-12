@@ -8,20 +8,14 @@ use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 
 class ListedProductVariantsViewFacade implements ListedProductVariantsViewFacadeInterface
 {
-    protected ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade;
-
-    protected ListedProductViewFactory $listedProductViewFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory $listedProductViewFactory
      */
     public function __construct(
-        ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
-        ListedProductViewFactory $listedProductViewFactory
+        protected readonly ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
+        protected readonly ListedProductViewFactory $listedProductViewFactory
     ) {
-        $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
-        $this->listedProductViewFactory = $listedProductViewFactory;
     }
 
     /**

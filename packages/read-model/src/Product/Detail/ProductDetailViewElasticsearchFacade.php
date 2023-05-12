@@ -8,20 +8,14 @@ use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 
 class ProductDetailViewElasticsearchFacade implements ProductDetailViewFacadeInterface
 {
-    protected ProductDetailViewElasticsearchFactory $productDetailViewElasticsearchFactory;
-
-    protected ProductElasticsearchProvider $productElasticsearchProvider;
-
     /**
      * @param \Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewElasticsearchFactory $productDetailViewElasticsearchFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      */
     public function __construct(
-        ProductDetailViewElasticsearchFactory $productDetailViewElasticsearchFactory,
-        ProductElasticsearchProvider $productElasticsearchProvider
+        protected readonly ProductDetailViewElasticsearchFactory $productDetailViewElasticsearchFactory,
+        protected readonly ProductElasticsearchProvider $productElasticsearchProvider
     ) {
-        $this->productDetailViewElasticsearchFactory = $productDetailViewElasticsearchFactory;
-        $this->productElasticsearchProvider = $productElasticsearchProvider;
     }
 
     /**

@@ -17,20 +17,14 @@ class ZboziPluginDataFixture implements PluginDataFixtureInterface
     protected const PRODUCT_ID_FOURTH = 4;
     protected const PRODUCT_ID_FIFTH = 5;
 
-    private ZboziProductDomainFacade $zboziProductDomainFacade;
-
-    private ZboziProductDomainDataFactoryInterface $zboziProductDomainDataFactory;
-
     /**
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainFacade $zboziProductDomainFacade
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainDataFactoryInterface $zboziProductDomainDataFactory
      */
     public function __construct(
-        ZboziProductDomainFacade $zboziProductDomainFacade,
-        ZboziProductDomainDataFactoryInterface $zboziProductDomainDataFactory
+        private readonly ZboziProductDomainFacade $zboziProductDomainFacade,
+        private readonly ZboziProductDomainDataFactoryInterface $zboziProductDomainDataFactory
     ) {
-        $this->zboziProductDomainFacade = $zboziProductDomainFacade;
-        $this->zboziProductDomainDataFactory = $zboziProductDomainDataFactory;
     }
 
     public function load()

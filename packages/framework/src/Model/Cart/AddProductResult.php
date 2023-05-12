@@ -6,8 +6,6 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 
 class AddProductResult
 {
-    protected CartItem $cartItem;
-
     protected bool $isNew;
 
     protected int $addedQuantity;
@@ -17,9 +15,8 @@ class AddProductResult
      * @param bool $isNew
      * @param int $addedQuantity
      */
-    public function __construct(CartItem $cartItem, $isNew, $addedQuantity)
+    public function __construct(protected readonly CartItem $cartItem, $isNew, $addedQuantity)
     {
-        $this->cartItem = $cartItem;
         $this->isNew = $isNew;
         $this->addedQuantity = $addedQuantity;
     }

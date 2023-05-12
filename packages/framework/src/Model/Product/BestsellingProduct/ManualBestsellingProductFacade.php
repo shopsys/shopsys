@@ -7,14 +7,6 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 
 class ManualBestsellingProductFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected ManualBestsellingProductRepository $manualBestsellingProductRepository;
-
-    protected CachedBestsellingProductFacade $cachedBestsellingProductFacade;
-
-    protected ManualBestsellingProductFactoryInterface $manualBestsellingProductFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductRepository $manualBestsellingProductRepository
@@ -22,15 +14,11 @@ class ManualBestsellingProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFactoryInterface $manualBestsellingProductFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        ManualBestsellingProductRepository $manualBestsellingProductRepository,
-        CachedBestsellingProductFacade $cachedBestsellingProductFacade,
-        ManualBestsellingProductFactoryInterface $manualBestsellingProductFactory
+        protected readonly EntityManagerInterface $em,
+        protected readonly ManualBestsellingProductRepository $manualBestsellingProductRepository,
+        protected readonly CachedBestsellingProductFacade $cachedBestsellingProductFacade,
+        protected readonly ManualBestsellingProductFactoryInterface $manualBestsellingProductFactory
     ) {
-        $this->em = $em;
-        $this->manualBestsellingProductRepository = $manualBestsellingProductRepository;
-        $this->cachedBestsellingProductFacade = $cachedBestsellingProductFacade;
-        $this->manualBestsellingProductFactory = $manualBestsellingProductFactory;
     }
 
     /**

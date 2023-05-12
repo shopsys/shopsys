@@ -21,22 +21,6 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 class PlaceOrderFacade
 {
-    protected OrderFacade $orderFacade;
-
-    protected OrderProductFacade $orderProductFacade;
-
-    protected OrderStatusRepository $orderStatusRepository;
-
-    protected OrderPreviewFactory $orderPreviewFactory;
-
-    protected CurrencyFacade $currencyFacade;
-
-    protected Domain $domain;
-
-    protected CurrentCustomerUser $currentCustomerUser;
-
-    protected CustomerUserFacade $customerUserFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade $orderProductFacade
@@ -48,23 +32,15 @@ class PlaceOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      */
     public function __construct(
-        OrderFacade $orderFacade,
-        OrderProductFacade $orderProductFacade,
-        OrderStatusRepository $orderStatusRepository,
-        OrderPreviewFactory $orderPreviewFactory,
-        CurrencyFacade $currencyFacade,
-        Domain $domain,
-        CurrentCustomerUser $currentCustomerUser,
-        CustomerUserFacade $customerUserFacade
+        protected readonly OrderFacade $orderFacade,
+        protected readonly OrderProductFacade $orderProductFacade,
+        protected readonly OrderStatusRepository $orderStatusRepository,
+        protected readonly OrderPreviewFactory $orderPreviewFactory,
+        protected readonly CurrencyFacade $currencyFacade,
+        protected readonly Domain $domain,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly CustomerUserFacade $customerUserFacade
     ) {
-        $this->orderFacade = $orderFacade;
-        $this->orderProductFacade = $orderProductFacade;
-        $this->orderStatusRepository = $orderStatusRepository;
-        $this->orderPreviewFactory = $orderPreviewFactory;
-        $this->currencyFacade = $currencyFacade;
-        $this->domain = $domain;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->customerUserFacade = $customerUserFacade;
     }
 
     /**

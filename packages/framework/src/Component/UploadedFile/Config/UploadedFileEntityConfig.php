@@ -8,25 +8,13 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFile
 
 class UploadedFileEntityConfig
 {
-    protected string $entityName;
-
-    protected string $entityClass;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig[]
-     */
-    protected array $types;
-
     /**
      * @param string $entityName
      * @param string $entityClass
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig[] $types
      */
-    public function __construct(string $entityName, string $entityClass, array $types)
+    public function __construct(protected readonly string $entityName, protected readonly string $entityClass, protected readonly array $types)
     {
-        $this->entityName = $entityName;
-        $this->entityClass = $entityClass;
-        $this->types = $types;
     }
 
     /**

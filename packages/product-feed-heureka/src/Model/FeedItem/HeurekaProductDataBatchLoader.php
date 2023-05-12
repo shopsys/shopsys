@@ -14,12 +14,6 @@ use Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainFacade;
 
 class HeurekaProductDataBatchLoader
 {
-    protected ProductUrlsBatchLoader $productUrlsBatchLoader;
-
-    protected ProductParametersBatchLoader $productParametersBatchLoader;
-
-    protected HeurekaProductDomainFacade $heurekaProductDomainFacade;
-
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money[]|null[]
      */
@@ -31,13 +25,10 @@ class HeurekaProductDataBatchLoader
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainFacade $heurekaProductDomainFacade
      */
     public function __construct(
-        ProductUrlsBatchLoader $productUrlsBatchLoader,
-        ProductParametersBatchLoader $productParametersBatchLoader,
-        HeurekaProductDomainFacade $heurekaProductDomainFacade
+        protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
+        protected readonly ProductParametersBatchLoader $productParametersBatchLoader,
+        protected readonly HeurekaProductDomainFacade $heurekaProductDomainFacade
     ) {
-        $this->productUrlsBatchLoader = $productUrlsBatchLoader;
-        $this->productParametersBatchLoader = $productParametersBatchLoader;
-        $this->heurekaProductDomainFacade = $heurekaProductDomainFacade;
     }
 
     /**

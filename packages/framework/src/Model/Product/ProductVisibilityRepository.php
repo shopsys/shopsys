@@ -17,10 +17,6 @@ class ProductVisibilityRepository
 {
     protected EntityManagerDecorator $em;
 
-    protected Domain $domain;
-
-    protected PricingGroupRepository $pricingGroupRepository;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -28,12 +24,10 @@ class ProductVisibilityRepository
      */
     public function __construct(
         EntityManagerInterface $em,
-        Domain $domain,
-        PricingGroupRepository $pricingGroupRepository
+        protected readonly Domain $domain,
+        protected readonly PricingGroupRepository $pricingGroupRepository
     ) {
         $this->em = $em;
-        $this->domain = $domain;
-        $this->pricingGroupRepository = $pricingGroupRepository;
     }
 
     /**

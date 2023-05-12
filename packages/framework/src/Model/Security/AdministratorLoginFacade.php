@@ -19,16 +19,6 @@ class AdministratorLoginFacade
     protected const MULTIDOMAIN_LOGIN_TOKEN_LENGTH = 50;
     protected const MULTIDOMAIN_LOGIN_TOKEN_VALID_SECONDS = 10;
 
-    protected TokenStorageInterface $tokenStorage;
-
-    protected EventDispatcherInterface $eventDispatcher;
-
-    protected AdministratorRepository $administratorRepository;
-
-    protected HashGenerator $hashGenerator;
-
-    protected EntityManagerInterface $em;
-
     /**
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
@@ -37,17 +27,12 @@ class AdministratorLoginFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
-        TokenStorageInterface $tokenStorage,
-        EventDispatcherInterface $eventDispatcher,
-        AdministratorRepository $administratorRepository,
-        HashGenerator $hashGenerator,
-        EntityManagerInterface $em
+        protected readonly TokenStorageInterface $tokenStorage,
+        protected readonly EventDispatcherInterface $eventDispatcher,
+        protected readonly AdministratorRepository $administratorRepository,
+        protected readonly HashGenerator $hashGenerator,
+        protected readonly EntityManagerInterface $em
     ) {
-        $this->tokenStorage = $tokenStorage;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->administratorRepository = $administratorRepository;
-        $this->hashGenerator = $hashGenerator;
-        $this->em = $em;
     }
 
     /**

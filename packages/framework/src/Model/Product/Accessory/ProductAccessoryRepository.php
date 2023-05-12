@@ -10,25 +10,16 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class ProductAccessoryRepository
 {
-    protected EntityManagerInterface $em;
-
-    protected ProductRepository $productRepository;
-
-    protected QueryBuilderExtender $queryBuilderExtender;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
      */
     public function __construct(
-        EntityManagerInterface $em,
-        ProductRepository $productRepository,
-        QueryBuilderExtender $queryBuilderExtender
+        protected readonly EntityManagerInterface $em,
+        protected readonly ProductRepository $productRepository,
+        protected readonly QueryBuilderExtender $queryBuilderExtender
     ) {
-        $this->em = $em;
-        $this->productRepository = $productRepository;
-        $this->queryBuilderExtender = $queryBuilderExtender;
     }
 
     /**

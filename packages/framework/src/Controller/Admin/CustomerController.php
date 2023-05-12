@@ -32,30 +32,6 @@ class CustomerController extends AdminBaseController
 {
     protected const LOGIN_AS_TOKEN_ID_PREFIX = 'loginAs';
 
-    protected CustomerUserDataFactoryInterface $customerUserDataFactory;
-
-    protected CustomerUserListAdminFacade $customerUserListAdminFacade;
-
-    protected CustomerUserFacade $customerUserFacade;
-
-    protected BreadcrumbOverrider $breadcrumbOverrider;
-
-    protected AdministratorGridFacade $administratorGridFacade;
-
-    protected GridFactory $gridFactory;
-
-    protected AdminDomainTabsFacade $adminDomainTabsFacade;
-
-    protected OrderFacade $orderFacade;
-
-    protected LoginAsUserFacade $loginAsUserFacade;
-
-    protected DomainRouterFactory $domainRouterFactory;
-
-    protected CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory;
-
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface $customerUserDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade $customerUserListAdminFacade
@@ -71,31 +47,19 @@ class CustomerController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        CustomerUserDataFactoryInterface $customerUserDataFactory,
-        CustomerUserListAdminFacade $customerUserListAdminFacade,
-        CustomerUserFacade $customerUserFacade,
-        BreadcrumbOverrider $breadcrumbOverrider,
-        AdministratorGridFacade $administratorGridFacade,
-        GridFactory $gridFactory,
-        AdminDomainTabsFacade $adminDomainTabsFacade,
-        OrderFacade $orderFacade,
-        LoginAsUserFacade $loginAsUserFacade,
-        DomainRouterFactory $domainRouterFactory,
-        CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
-        Domain $domain
+        protected readonly CustomerUserDataFactoryInterface $customerUserDataFactory,
+        protected readonly CustomerUserListAdminFacade $customerUserListAdminFacade,
+        protected readonly CustomerUserFacade $customerUserFacade,
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+        protected readonly AdministratorGridFacade $administratorGridFacade,
+        protected readonly GridFactory $gridFactory,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly OrderFacade $orderFacade,
+        protected readonly LoginAsUserFacade $loginAsUserFacade,
+        protected readonly DomainRouterFactory $domainRouterFactory,
+        protected readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
+        protected readonly Domain $domain
     ) {
-        $this->customerUserDataFactory = $customerUserDataFactory;
-        $this->customerUserListAdminFacade = $customerUserListAdminFacade;
-        $this->customerUserFacade = $customerUserFacade;
-        $this->breadcrumbOverrider = $breadcrumbOverrider;
-        $this->administratorGridFacade = $administratorGridFacade;
-        $this->gridFactory = $gridFactory;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
-        $this->orderFacade = $orderFacade;
-        $this->loginAsUserFacade = $loginAsUserFacade;
-        $this->domainRouterFactory = $domainRouterFactory;
-        $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
-        $this->domain = $domain;
     }
 
     /**

@@ -14,21 +14,7 @@ class CronModuleConfig implements CronTimeInterface
     public const RUN_EVERY_MIN_DEFAULT = 5;
     public const TIMEOUT_ITERATED_CRON_SEC_DEFAULT = 240;
 
-    protected SimpleCronModuleInterface|IteratedCronModuleInterface $service;
-
-    protected string $serviceId;
-
-    protected string $timeMinutes;
-
-    protected string $timeHours;
-
     protected string $instanceName;
-
-    protected ?string $readableName = null;
-
-    protected int $runEveryMin;
-
-    protected int $timeoutIteratedCronSec;
 
     /**
      * @param \Shopsys\Plugin\Cron\SimpleCronModuleInterface|\Shopsys\Plugin\Cron\IteratedCronModuleInterface $service
@@ -40,21 +26,14 @@ class CronModuleConfig implements CronTimeInterface
      * @param int $timeoutIteratedCronSec
      */
     public function __construct(
-        SimpleCronModuleInterface|IteratedCronModuleInterface $service,
-        string $serviceId,
-        string $timeHours,
-        string $timeMinutes,
-        ?string $readableName = null,
-        int $runEveryMin = self::RUN_EVERY_MIN_DEFAULT,
-        int $timeoutIteratedCronSec = self::TIMEOUT_ITERATED_CRON_SEC_DEFAULT,
+        protected readonly SimpleCronModuleInterface|IteratedCronModuleInterface $service,
+        protected readonly string $serviceId,
+        protected readonly string $timeHours,
+        protected readonly string $timeMinutes,
+        protected readonly ?string $readableName = null,
+        protected readonly int $runEveryMin = self::RUN_EVERY_MIN_DEFAULT,
+        protected readonly int $timeoutIteratedCronSec = self::TIMEOUT_ITERATED_CRON_SEC_DEFAULT,
     ) {
-        $this->service = $service;
-        $this->serviceId = $serviceId;
-        $this->timeHours = $timeHours;
-        $this->timeMinutes = $timeMinutes;
-        $this->readableName = $readableName;
-        $this->runEveryMin = $runEveryMin;
-        $this->timeoutIteratedCronSec = $timeoutIteratedCronSec;
         $this->assignToInstance(self::DEFAULT_INSTANCE_NAME);
     }
 

@@ -29,16 +29,6 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 
 class ProductRepository
 {
-    protected EntityManagerInterface $em;
-
-    protected ProductFilterRepository $productFilterRepository;
-
-    protected QueryBuilderExtender $queryBuilderExtender;
-
-    protected Localization $localization;
-
-    protected ProductElasticsearchRepository $productElasticsearchRepository;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository $productFilterRepository
@@ -47,17 +37,12 @@ class ProductRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
      */
     public function __construct(
-        EntityManagerInterface $em,
-        ProductFilterRepository $productFilterRepository,
-        QueryBuilderExtender $queryBuilderExtender,
-        Localization $localization,
-        ProductElasticsearchRepository $productElasticsearchRepository
+        protected readonly EntityManagerInterface $em,
+        protected readonly ProductFilterRepository $productFilterRepository,
+        protected readonly QueryBuilderExtender $queryBuilderExtender,
+        protected readonly Localization $localization,
+        protected readonly ProductElasticsearchRepository $productElasticsearchRepository
     ) {
-        $this->em = $em;
-        $this->productFilterRepository = $productFilterRepository;
-        $this->queryBuilderExtender = $queryBuilderExtender;
-        $this->localization = $localization;
-        $this->productElasticsearchRepository = $productElasticsearchRepository;
     }
 
     /**

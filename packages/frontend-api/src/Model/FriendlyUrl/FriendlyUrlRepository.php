@@ -11,20 +11,14 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository a
 
 class FriendlyUrlRepository
 {
-    protected FrameworkFriendlyUrlRepository $friendlyUrlRepository;
-
-    protected EntityManagerInterface $em;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      */
     public function __construct(
-        EntityManagerInterface $em,
-        FrameworkFriendlyUrlRepository $friendlyUrlRepository
+        protected readonly EntityManagerInterface $em,
+        protected readonly FrameworkFriendlyUrlRepository $friendlyUrlRepository
     ) {
-        $this->friendlyUrlRepository = $friendlyUrlRepository;
-        $this->em = $em;
     }
 
     /**

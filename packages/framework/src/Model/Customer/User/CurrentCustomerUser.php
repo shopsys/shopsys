@@ -13,25 +13,16 @@ class CurrentCustomerUser
      */
     protected array $customerUserCache = [];
 
-    protected TokenStorageInterface $tokenStorage;
-
-    protected PricingGroupSettingFacade $pricingGroupSettingFacade;
-
-    protected CustomerUserFacade $customerUserFacade;
-
     /**
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      */
     public function __construct(
-        TokenStorageInterface $tokenStorage,
-        PricingGroupSettingFacade $pricingGroupSettingFacade,
-        CustomerUserFacade $customerUserFacade
+        protected readonly TokenStorageInterface $tokenStorage,
+        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
+        protected readonly CustomerUserFacade $customerUserFacade
     ) {
-        $this->tokenStorage = $tokenStorage;
-        $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
-        $this->customerUserFacade = $customerUserFacade;
     }
 
     /**

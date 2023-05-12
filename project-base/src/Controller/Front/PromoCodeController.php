@@ -13,15 +13,12 @@ class PromoCodeController extends FrontBaseController
 {
     public const PROMO_CODE_PARAMETER = 'code';
 
-    private CurrentPromoCodeFacade $currentPromoCodeFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      */
     public function __construct(
-        CurrentPromoCodeFacade $currentPromoCodeFacade
+        private readonly CurrentPromoCodeFacade $currentPromoCodeFacade
     ) {
-        $this->currentPromoCodeFacade = $currentPromoCodeFacade;
     }
 
     public function indexAction()

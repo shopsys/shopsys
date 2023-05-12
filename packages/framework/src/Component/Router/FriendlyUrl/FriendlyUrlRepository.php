@@ -7,14 +7,11 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNo
 
 class FriendlyUrlRepository
 {
-    protected EntityManagerInterface $em;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(protected readonly EntityManagerInterface $em)
     {
-        $this->em = $em;
     }
 
     /**

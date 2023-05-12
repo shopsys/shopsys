@@ -11,20 +11,14 @@ use Twig\TwigFunction;
 
 class FlagsExtension extends AbstractExtension
 {
-    private Environment $twigEnvironment;
-
-    private FlagsProvider $flagsProvider;
-
     /**
      * @param \Shopsys\ReadModelBundle\Flag\FlagsProvider $flagsProvider
      * @param \Twig\Environment $twigEnvironment
      */
     public function __construct(
-        FlagsProvider $flagsProvider,
-        Environment $twigEnvironment
+        private readonly FlagsProvider $flagsProvider,
+        private readonly Environment $twigEnvironment
     ) {
-        $this->twigEnvironment = $twigEnvironment;
-        $this->flagsProvider = $flagsProvider;
     }
 
     /**

@@ -9,14 +9,11 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 
 class ArticleController extends FrontBaseController
 {
-    private ArticleFacade $articleFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
      */
-    public function __construct(ArticleFacade $articleFacade)
+    public function __construct(private readonly ArticleFacade $articleFacade)
     {
-        $this->articleFacade = $articleFacade;
     }
 
     /**

@@ -6,14 +6,11 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 
 class CustomerUserListAdminFacade
 {
-    protected CustomerUserRepository $customerUserRepository;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      */
-    public function __construct(CustomerUserRepository $customerUserRepository)
+    public function __construct(protected readonly CustomerUserRepository $customerUserRepository)
     {
-        $this->customerUserRepository = $customerUserRepository;
     }
 
     /**

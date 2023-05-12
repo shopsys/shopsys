@@ -22,13 +22,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     public const TRANSPORT_PPL = 'transport_ppl';
     public const TRANSPORT_PERSONAL = 'transport_personal';
 
-    private TransportFacade $transportFacade;
-
     private TransportDataFactory $transportDataFactory;
-
-    private Domain $domain;
-
-    private PriceConverter $priceConverter;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
@@ -37,15 +31,12 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
      */
     public function __construct(
-        TransportFacade $transportFacade,
+        private readonly TransportFacade $transportFacade,
         TransportDataFactoryInterface $transportDataFactory,
-        Domain $domain,
-        PriceConverter $priceConverter
+        private readonly Domain $domain,
+        private readonly PriceConverter $priceConverter
     ) {
-        $this->transportFacade = $transportFacade;
         $this->transportDataFactory = $transportDataFactory;
-        $this->domain = $domain;
-        $this->priceConverter = $priceConverter;
     }
 
     /**

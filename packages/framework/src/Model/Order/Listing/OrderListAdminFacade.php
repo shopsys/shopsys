@@ -6,20 +6,14 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class OrderListAdminFacade
 {
-    protected OrderListAdminRepository $orderListAdminRepository;
-
-    protected Localization $localization;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Listing\OrderListAdminRepository $orderListAdminRepository
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
-        OrderListAdminRepository $orderListAdminRepository,
-        Localization $localization
+        protected readonly OrderListAdminRepository $orderListAdminRepository,
+        protected readonly Localization $localization
     ) {
-        $this->orderListAdminRepository = $orderListAdminRepository;
-        $this->localization = $localization;
     }
 
     /**

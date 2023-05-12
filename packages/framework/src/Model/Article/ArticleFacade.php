@@ -8,16 +8,6 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class ArticleFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected ArticleRepository $articleRepository;
-
-    protected Domain $domain;
-
-    protected FriendlyUrlFacade $friendlyUrlFacade;
-
-    protected ArticleFactoryInterface $articleFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
@@ -26,17 +16,12 @@ class ArticleFacade
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface $articleFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        ArticleRepository $articleRepository,
-        Domain $domain,
-        FriendlyUrlFacade $friendlyUrlFacade,
-        ArticleFactoryInterface $articleFactory
+        protected readonly EntityManagerInterface $em,
+        protected readonly ArticleRepository $articleRepository,
+        protected readonly Domain $domain,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly ArticleFactoryInterface $articleFactory
     ) {
-        $this->em = $em;
-        $this->articleRepository = $articleRepository;
-        $this->domain = $domain;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->articleFactory = $articleFactory;
     }
 
     /**

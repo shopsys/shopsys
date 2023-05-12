@@ -6,14 +6,11 @@ use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 
 class BreadcrumbController extends AdminBaseController
 {
-    protected BreadcrumbOverrider $breadcrumbOverrider;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      */
-    public function __construct(BreadcrumbOverrider $breadcrumbOverrider)
+    public function __construct(protected readonly BreadcrumbOverrider $breadcrumbOverrider)
     {
-        $this->breadcrumbOverrider = $breadcrumbOverrider;
     }
 
     public function indexAction()

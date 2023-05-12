@@ -11,8 +11,6 @@ use Twig\Environment;
 
 class GridView
 {
-    protected Grid $grid;
-
     /**
      * @var mixed[]
      */
@@ -28,12 +26,6 @@ class GridView
      */
     protected string|array|null $theme = null;
 
-    protected RequestStack $requestStack;
-
-    protected RouterInterface $router;
-
-    protected Environment $twig;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
@@ -43,18 +35,13 @@ class GridView
      * @param array $templateParameters
      */
     public function __construct(
-        Grid $grid,
-        RequestStack $requestStack,
-        RouterInterface $router,
-        Environment $twig,
+        protected readonly Grid $grid,
+        protected readonly RequestStack $requestStack,
+        protected readonly RouterInterface $router,
+        protected readonly Environment $twig,
         $theme,
         array $templateParameters = []
     ) {
-        $this->grid = $grid;
-        $this->requestStack = $requestStack;
-        $this->router = $router;
-        $this->twig = $twig;
-
         $this->setTheme($theme, $templateParameters);
     }
 

@@ -17,14 +17,11 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class MarkProductForExportSubscriber implements EventSubscriberInterface
 {
-    protected ProductFacade $productFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      */
-    public function __construct(ProductFacade $productFacade)
+    public function __construct(protected readonly ProductFacade $productFacade)
     {
-        $this->productFacade = $productFacade;
     }
 
     /**

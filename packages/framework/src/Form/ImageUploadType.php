@@ -23,25 +23,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class ImageUploadType extends AbstractType
 {
-    private ImageFacade $imageFacade;
-
-    private ImagesIdsToImagesTransformer $imagesIdsToImagesTransformer;
-
-    private ImageConfig $imageConfig;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Form\Transformers\ImagesIdsToImagesTransformer $imagesIdsToImagesTransformer
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      */
     public function __construct(
-        ImageFacade $imageFacade,
-        ImagesIdsToImagesTransformer $imagesIdsToImagesTransformer,
-        ImageConfig $imageConfig
+        private readonly ImageFacade $imageFacade,
+        private readonly ImagesIdsToImagesTransformer $imagesIdsToImagesTransformer,
+        private readonly ImageConfig $imageConfig
     ) {
-        $this->imageFacade = $imageFacade;
-        $this->imagesIdsToImagesTransformer = $imagesIdsToImagesTransformer;
-        $this->imageConfig = $imageConfig;
     }
 
     /**

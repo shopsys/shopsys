@@ -10,14 +10,6 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 abstract class AbstractAdvancedSearchFormFactory
 {
-    protected AdvancedSearchConfig $advancedSearchConfig;
-
-    protected AdvancedSearchFilterTranslation $advancedSearchFilterTranslation;
-
-    protected FormFactoryInterface $formFactory;
-
-    protected AdvancedSearchOperatorTranslation $advancedSearchOperatorTranslation;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchConfig $advancedSearchConfig
      * @param \Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchFilterTranslation $advancedSearchFilterTranslation
@@ -25,15 +17,11 @@ abstract class AbstractAdvancedSearchFormFactory
      * @param \Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchOperatorTranslation $advancedSearchOperatorTranslation
      */
     public function __construct(
-        AdvancedSearchConfig $advancedSearchConfig,
-        AdvancedSearchFilterTranslation $advancedSearchFilterTranslation,
-        FormFactoryInterface $formFactory,
-        AdvancedSearchOperatorTranslation $advancedSearchOperatorTranslation
+        protected readonly AdvancedSearchConfig $advancedSearchConfig,
+        protected readonly AdvancedSearchFilterTranslation $advancedSearchFilterTranslation,
+        protected readonly FormFactoryInterface $formFactory,
+        protected readonly AdvancedSearchOperatorTranslation $advancedSearchOperatorTranslation
     ) {
-        $this->advancedSearchConfig = $advancedSearchConfig;
-        $this->advancedSearchFilterTranslation = $advancedSearchFilterTranslation;
-        $this->formFactory = $formFactory;
-        $this->advancedSearchOperatorTranslation = $advancedSearchOperatorTranslation;
     }
 
     /**

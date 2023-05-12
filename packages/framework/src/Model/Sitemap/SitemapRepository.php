@@ -14,25 +14,16 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class SitemapRepository
 {
-    protected ProductRepository $productRepository;
-
-    protected CategoryRepository $categoryRepository;
-
-    protected ArticleRepository $articleRepository;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
      */
     public function __construct(
-        ProductRepository $productRepository,
-        CategoryRepository $categoryRepository,
-        ArticleRepository $articleRepository
+        protected readonly ProductRepository $productRepository,
+        protected readonly CategoryRepository $categoryRepository,
+        protected readonly ArticleRepository $articleRepository
     ) {
-        $this->productRepository = $productRepository;
-        $this->categoryRepository = $categoryRepository;
-        $this->articleRepository = $articleRepository;
     }
 
     /**

@@ -19,25 +19,16 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
     public const ORDER_STATUS_DONE = 'order_status_done';
     public const ORDER_STATUS_CANCELED = 'order_status_canceled';
 
-    private OrderStatusFacade $orderStatusFacade;
-
-    private Domain $domain;
-
-    private OrderStatusDataFactoryInterface $orderStatusDataFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactoryInterface $orderStatusDataFactory
      */
     public function __construct(
-        OrderStatusFacade $orderStatusFacade,
-        Domain $domain,
-        OrderStatusDataFactoryInterface $orderStatusDataFactory
+        private readonly OrderStatusFacade $orderStatusFacade,
+        private readonly Domain $domain,
+        private readonly OrderStatusDataFactoryInterface $orderStatusDataFactory
     ) {
-        $this->orderStatusFacade = $orderStatusFacade;
-        $this->domain = $domain;
-        $this->orderStatusDataFactory = $orderStatusDataFactory;
     }
 
     /**

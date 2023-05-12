@@ -10,14 +10,6 @@ use Throwable;
 
 class CronFacade
 {
-    protected Logger $logger;
-
-    protected CronConfig $cronConfig;
-
-    protected CronModuleFacade $cronModuleFacade;
-
-    protected CronModuleExecutor $cronModuleExecutor;
-
     /**
      * @param \Symfony\Bridge\Monolog\Logger $logger
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
@@ -25,15 +17,11 @@ class CronFacade
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor $cronModuleExecutor
      */
     public function __construct(
-        Logger $logger,
-        CronConfig $cronConfig,
-        CronModuleFacade $cronModuleFacade,
-        CronModuleExecutor $cronModuleExecutor
+        protected readonly Logger $logger,
+        protected readonly CronConfig $cronConfig,
+        protected readonly CronModuleFacade $cronModuleFacade,
+        protected readonly CronModuleExecutor $cronModuleExecutor
     ) {
-        $this->logger = $logger;
-        $this->cronConfig = $cronConfig;
-        $this->cronModuleFacade = $cronModuleFacade;
-        $this->cronModuleExecutor = $cronModuleExecutor;
     }
 
     /**

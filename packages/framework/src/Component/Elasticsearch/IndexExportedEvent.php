@@ -10,14 +10,11 @@ class IndexExportedEvent extends Event
 {
     public const INDEX_EXPORTED = 'elasticsearch.index.exported';
 
-    protected AbstractIndex $index;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
      */
-    public function __construct(AbstractIndex $index)
+    public function __construct(protected readonly AbstractIndex $index)
     {
-        $this->index = $index;
     }
 
     /**

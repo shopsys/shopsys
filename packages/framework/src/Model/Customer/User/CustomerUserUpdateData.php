@@ -35,11 +35,11 @@ class CustomerUserUpdateData
     public function __construct(
         BillingAddressData $billingAddressData,
         DeliveryAddressData $deliveryAddressData,
-        CustomerUserData $customerUserData
+        CustomerUserData $customerUserData,
     ) {
-        $this->customerUserData = $customerUserData;
         $this->billingAddressData = $billingAddressData;
         $this->deliveryAddressData = $deliveryAddressData;
+        $this->customerUserData = $customerUserData;
         $this->sendRegistrationMail = false;
     }
 }

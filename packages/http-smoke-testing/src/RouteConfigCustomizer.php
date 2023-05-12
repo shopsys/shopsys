@@ -7,16 +7,10 @@ use Shopsys\HttpSmokeTesting\Exception\RouteNameNotFoundException;
 class RouteConfigCustomizer
 {
     /**
-     * @var \Shopsys\HttpSmokeTesting\RequestDataSetGenerator[]
-     */
-    private array $requestDataSetGenerators;
-
-    /**
      * @param \Shopsys\HttpSmokeTesting\RequestDataSetGenerator[] $requestDataSetGenerators
      */
-    public function __construct(array $requestDataSetGenerators)
+    public function __construct(private readonly array $requestDataSetGenerators)
     {
-        $this->requestDataSetGenerators = $requestDataSetGenerators;
     }
 
     /**

@@ -8,25 +8,16 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class DeliveryAddressFacade
 {
-    protected DeliveryAddressFactory $deliveryAddressFactory;
-
-    protected DeliveryAddressRepository $deliveryAddressRepository;
-
-    protected EntityManagerInterface $em;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory $deliveryAddressFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressRepository $deliveryAddressRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
-        DeliveryAddressFactory $deliveryAddressFactory,
-        DeliveryAddressRepository $deliveryAddressRepository,
-        EntityManagerInterface $em
+        protected readonly DeliveryAddressFactory $deliveryAddressFactory,
+        protected readonly DeliveryAddressRepository $deliveryAddressRepository,
+        protected readonly EntityManagerInterface $em
     ) {
-        $this->deliveryAddressFactory = $deliveryAddressFactory;
-        $this->deliveryAddressRepository = $deliveryAddressRepository;
-        $this->em = $em;
     }
 
     /**

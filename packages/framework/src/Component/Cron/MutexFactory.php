@@ -9,8 +9,6 @@ class MutexFactory
 {
     protected const MUTEX_CRON_NAME = 'cron';
 
-    protected LockInterface $lock;
-
     /**
      * @var \NinjaMutex\Mutex[]
      */
@@ -19,9 +17,8 @@ class MutexFactory
     /**
      * @param \NinjaMutex\Lock\LockInterface $lock
      */
-    public function __construct(LockInterface $lock)
+    public function __construct(protected readonly LockInterface $lock)
     {
-        $this->lock = $lock;
         $this->mutexesByName = [];
     }
 

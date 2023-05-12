@@ -16,20 +16,14 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
 
 class ProductResolverMap extends ResolverMap
 {
-    protected ProductEntityFieldMapper $productEntityFieldMapper;
-
-    protected ProductArrayFieldMapper $productArrayFieldMapper;
-
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper $productEntityFieldMapper
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper $productArrayFieldMapper
      */
     public function __construct(
-        ProductEntityFieldMapper $productEntityFieldMapper,
-        ProductArrayFieldMapper $productArrayFieldMapper
+        protected readonly ProductEntityFieldMapper $productEntityFieldMapper,
+        protected readonly ProductArrayFieldMapper $productArrayFieldMapper
     ) {
-        $this->productEntityFieldMapper = $productEntityFieldMapper;
-        $this->productArrayFieldMapper = $productArrayFieldMapper;
     }
 
     /**

@@ -33,14 +33,6 @@ class OrderFormType extends AbstractType
 {
     public const VALIDATION_GROUP_DELIVERY_ADDRESS_SAME_AS_BILLING_ADDRESS = 'deliveryAddressSameAsBillingAddress';
 
-    private CountryFacade $countryFacade;
-
-    private OrderStatusFacade $orderStatusFacade;
-
-    private DateTimeFormatterExtension $dateTimeFormatterExtension;
-
-    private Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
@@ -48,15 +40,11 @@ class OrderFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        CountryFacade $countryFacade,
-        OrderStatusFacade $orderStatusFacade,
-        DateTimeFormatterExtension $dateTimeFormatterExtension,
-        Domain $domain
+        private readonly CountryFacade $countryFacade,
+        private readonly OrderStatusFacade $orderStatusFacade,
+        private readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
+        private readonly Domain $domain
     ) {
-        $this->countryFacade = $countryFacade;
-        $this->orderStatusFacade = $orderStatusFacade;
-        $this->dateTimeFormatterExtension = $dateTimeFormatterExtension;
-        $this->domain = $domain;
     }
 
     /**

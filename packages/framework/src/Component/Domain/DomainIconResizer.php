@@ -14,25 +14,16 @@ class DomainIconResizer
     protected const DOMAIN_ICON_HEIGHT = 26;
     protected const DOMAIN_ICON_CROP = false;
 
-    protected ImageProcessor $imageProcessor;
-
-    protected Logger $logger;
-
-    protected FilesystemOperator $filesystem;
-
     /**
      * @param \Symfony\Bridge\Monolog\Logger $logger
      * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor $imageProcessor
      * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
-        Logger $logger,
-        ImageProcessor $imageProcessor,
-        FilesystemOperator $filesystem
+        protected readonly Logger $logger,
+        protected readonly ImageProcessor $imageProcessor,
+        protected readonly FilesystemOperator $filesystem
     ) {
-        $this->logger = $logger;
-        $this->imageProcessor = $imageProcessor;
-        $this->filesystem = $filesystem;
     }
 
     /**

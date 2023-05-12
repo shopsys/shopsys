@@ -32,11 +32,7 @@ class MigrationsExecutor implements Executor
 
     protected SchemaDiffProvider $schemaDiffProvider;
 
-    protected Stopwatch $stopwatch;
-
     protected MetadataStorage $metadataStorage;
-
-    protected LoggerInterface $logger;
 
     protected EventDispatcher $dispatcher;
 
@@ -47,14 +43,12 @@ class MigrationsExecutor implements Executor
      */
     public function __construct(
         DependencyFactory $dependencyFactory,
-        LoggerInterface $logger,
-        Stopwatch $stopwatch
+        protected readonly LoggerInterface $logger,
+        protected readonly Stopwatch $stopwatch
     ) {
         $this->schemaDiffProvider = $dependencyFactory->getSchemaDiffProvider();
         $this->metadataStorage = $dependencyFactory->getMetadataStorage();
         $this->dispatcher = $dependencyFactory->getEventDispatcher();
-        $this->logger = $logger;
-        $this->stopwatch = $stopwatch;
     }
 
     /**

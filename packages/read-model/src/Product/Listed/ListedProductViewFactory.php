@@ -23,20 +23,6 @@ class ListedProductViewFactory
 {
     use SetterInjectionTrait;
 
-    protected Domain $domain;
-
-    protected ProductCachedAttributesFacade $productCachedAttributesFacade;
-
-    protected ImageViewFacadeInterface $imageViewFacade;
-
-    protected ProductActionViewFacadeInterface $productActionViewFacade;
-
-    protected ProductActionViewFactory $productActionViewFactory;
-
-    protected CurrentCustomerUser $currentCustomerUser;
-
-    protected PriceFactory $priceFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
@@ -47,21 +33,14 @@ class ListedProductViewFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory $priceFactory
      */
     public function __construct(
-        Domain $domain,
-        ProductCachedAttributesFacade $productCachedAttributesFacade,
-        ImageViewFacadeInterface $imageViewFacade,
-        ProductActionViewFacadeInterface $productActionViewFacade,
-        ProductActionViewFactory $productActionViewFactory,
-        CurrentCustomerUser $currentCustomerUser,
-        PriceFactory $priceFactory
+        protected readonly Domain $domain,
+        protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
+        protected readonly ImageViewFacadeInterface $imageViewFacade,
+        protected readonly ProductActionViewFacadeInterface $productActionViewFacade,
+        protected readonly ProductActionViewFactory $productActionViewFactory,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly PriceFactory $priceFactory
     ) {
-        $this->domain = $domain;
-        $this->productCachedAttributesFacade = $productCachedAttributesFacade;
-        $this->imageViewFacade = $imageViewFacade;
-        $this->productActionViewFacade = $productActionViewFacade;
-        $this->productActionViewFactory = $productActionViewFactory;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->priceFactory = $priceFactory;
     }
 
     /**

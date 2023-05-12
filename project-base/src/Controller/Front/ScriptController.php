@@ -11,20 +11,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ScriptController extends FrontBaseController
 {
-    private ScriptFacade $scriptFacade;
-
-    private Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Script\ScriptFacade $scriptFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        ScriptFacade $scriptFacade,
-        Domain $domain
+        private readonly ScriptFacade $scriptFacade,
+        private readonly Domain $domain
     ) {
-        $this->scriptFacade = $scriptFacade;
-        $this->domain = $domain;
     }
 
     public function embedAllPagesGoogleAnalyticsScriptAction()

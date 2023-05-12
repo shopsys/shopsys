@@ -10,14 +10,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MultidomainType extends AbstractType
 {
-    private DomainIdsProviderInterface $domainIdsProvider;
-
     /**
      * @param \Shopsys\FormTypesBundle\Domain\DomainIdsProviderInterface $domainIdsProvider
      */
-    public function __construct(DomainIdsProviderInterface $domainIdsProvider)
+    public function __construct(private readonly DomainIdsProviderInterface $domainIdsProvider)
     {
-        $this->domainIdsProvider = $domainIdsProvider;
     }
 
     /**

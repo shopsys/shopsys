@@ -6,10 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 
 class ProductQueryParams
 {
-    protected int $page;
-
-    protected int $pageSize;
-
     /**
      * @var string[]|null
      */
@@ -19,10 +15,8 @@ class ProductQueryParams
      * @param int $pageSize
      * @param int $page
      */
-    public function __construct(int $pageSize, int $page = 1)
+    public function __construct(protected readonly int $pageSize, protected readonly int $page = 1)
     {
-        $this->pageSize = $pageSize;
-        $this->page = $page;
     }
 
     /**

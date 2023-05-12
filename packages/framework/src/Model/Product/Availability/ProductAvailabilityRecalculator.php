@@ -11,12 +11,6 @@ class ProductAvailabilityRecalculator
 {
     protected const BATCH_SIZE = 100;
 
-    protected EntityManagerInterface $em;
-
-    protected ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler;
-
-    protected ProductAvailabilityCalculation $productAvailabilityCalculation;
-
     /**
      * @var \Doctrine\ORM\Internal\Hydration\IterableResult|\Shopsys\FrameworkBundle\Model\Product\Product[][]|null
      */
@@ -28,13 +22,10 @@ class ProductAvailabilityRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation $productAvailabilityCalculation
      */
     public function __construct(
-        EntityManagerInterface $em,
-        ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
-        ProductAvailabilityCalculation $productAvailabilityCalculation
+        protected readonly EntityManagerInterface $em,
+        protected readonly ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
+        protected readonly ProductAvailabilityCalculation $productAvailabilityCalculation
     ) {
-        $this->em = $em;
-        $this->productAvailabilityRecalculationScheduler = $productAvailabilityRecalculationScheduler;
-        $this->productAvailabilityCalculation = $productAvailabilityCalculation;
     }
 
     public function runAllScheduledRecalculations()
