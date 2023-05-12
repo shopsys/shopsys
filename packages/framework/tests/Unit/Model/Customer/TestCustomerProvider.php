@@ -39,6 +39,7 @@ class TestCustomerProvider
         $customerUserData->firstName = 'Firstname';
         $customerUserData->lastName = 'Lastname';
         $customerUserData->email = 'no-reply@shopsys.com';
+        $customerUserData->password = 'pa55w0rd';
         $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
         $customerUserData->customer = $customer;
         $customerUserData->pricingGroup = $pricingGroup;
