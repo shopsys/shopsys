@@ -15,9 +15,9 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
+use Tests\FrameworkBundle\Unit\Model\Product\TestProductProvider;
 
 class OrderItemTest extends TestCase
 {
@@ -42,8 +42,11 @@ class OrderItemTest extends TestCase
         $orderItem = $this->createOrderTransport();
 
         $orderItemData = new OrderItemData();
+        $orderItemData->name = 'order item transport';
         $orderItemData->priceWithVat = Money::zero();
         $orderItemData->priceWithoutVat = Money::zero();
+        $orderItemData->vatPercent = '0';
+        $orderItemData->quantity = 1;
         /** @var \Shopsys\FrameworkBundle\Model\Transport\Transport|\PHPUnit\Framework\MockObject\MockObject $transport */
         $transport = $this->createTransportMock();
         $orderItemData->transport = $transport;
@@ -73,8 +76,11 @@ class OrderItemTest extends TestCase
         $orderItem = $this->createOrderPayment();
 
         $orderItemData = new OrderItemData();
+        $orderItemData->name = 'order item payment';
         $orderItemData->priceWithVat = Money::zero();
         $orderItemData->priceWithoutVat = Money::zero();
+        $orderItemData->vatPercent = '0';
+        $orderItemData->quantity = 1;
         /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment|\PHPUnit\Framework\MockObject\MockObject $payment */
         $payment = $this->createPaymentMock();
         $orderItemData->payment = $payment;
@@ -147,8 +153,8 @@ class OrderItemTest extends TestCase
 
     public function testConstructWithMainVariantThrowsException()
     {
-        $variant = Product::create(new ProductData());
-        $mainVariant = Product::createMainVariant(new ProductData(), [$variant]);
+        $variant = Product::create(TestProductProvider::getTestProductData());
+        $mainVariant = Product::createMainVariant(TestProductProvider::getTestProductData(), [$variant]);
 
         $this->expectException(MainVariantCannotBeOrderedException::class);
 
