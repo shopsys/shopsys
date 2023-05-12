@@ -8,15 +8,12 @@ use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbResolver;
 
 class BreadcrumbController extends FrontBaseController
 {
-    private BreadcrumbResolver $breadcrumbResolver;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbResolver $breadcrumbResolver
      */
     public function __construct(
-        BreadcrumbResolver $breadcrumbResolver
+        private readonly BreadcrumbResolver $breadcrumbResolver
     ) {
-        $this->breadcrumbResolver = $breadcrumbResolver;
     }
 
     /**

@@ -8,25 +8,16 @@ use Shopsys\FrameworkBundle\Component\Doctrine\StringColumnsFinder;
 
 class DomainUrlReplacer
 {
-    protected StringColumnsFinder $stringColumnsFinder;
-
-    protected EntityManagerInterface $em;
-
-    protected SqlQuoter $sqlQuoter;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\StringColumnsFinder $stringColumnsFinder
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter $sqlQuoter
      */
     public function __construct(
-        StringColumnsFinder $stringColumnsFinder,
-        EntityManagerInterface $em,
-        SqlQuoter $sqlQuoter
+        protected readonly StringColumnsFinder $stringColumnsFinder,
+        protected readonly EntityManagerInterface $em,
+        protected readonly SqlQuoter $sqlQuoter
     ) {
-        $this->stringColumnsFinder = $stringColumnsFinder;
-        $this->em = $em;
-        $this->sqlQuoter = $sqlQuoter;
     }
 
     /**

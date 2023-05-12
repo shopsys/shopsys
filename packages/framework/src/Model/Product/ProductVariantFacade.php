@@ -11,22 +11,6 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationSched
 
 class ProductVariantFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected ProductFacade $productFacade;
-
-    protected ProductDataFactoryInterface $productDataFactory;
-
-    protected ImageFacade $imageFacade;
-
-    protected ProductFactoryInterface $productFactory;
-
-    protected ProductPriceRecalculationScheduler $productPriceRecalculationScheduler;
-
-    protected ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler;
-
-    protected ProductExportScheduler $productExportScheduler;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
@@ -38,23 +22,15 @@ class ProductVariantFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler $productExportScheduler
      */
     public function __construct(
-        EntityManagerInterface $em,
-        ProductFacade $productFacade,
-        ProductDataFactoryInterface $productDataFactory,
-        ImageFacade $imageFacade,
-        ProductFactoryInterface $productFactory,
-        ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
-        ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
-        ProductExportScheduler $productExportScheduler
+        protected readonly EntityManagerInterface $em,
+        protected readonly ProductFacade $productFacade,
+        protected readonly ProductDataFactoryInterface $productDataFactory,
+        protected readonly ImageFacade $imageFacade,
+        protected readonly ProductFactoryInterface $productFactory,
+        protected readonly ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
+        protected readonly ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
+        protected readonly ProductExportScheduler $productExportScheduler
     ) {
-        $this->em = $em;
-        $this->productFacade = $productFacade;
-        $this->productDataFactory = $productDataFactory;
-        $this->imageFacade = $imageFacade;
-        $this->productFactory = $productFactory;
-        $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
-        $this->productAvailabilityRecalculationScheduler = $productAvailabilityRecalculationScheduler;
-        $this->productExportScheduler = $productExportScheduler;
     }
 
     /**

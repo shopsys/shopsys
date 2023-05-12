@@ -24,25 +24,7 @@ class CustomerUserDataFixture
 
     private int $userCountPerDomain;
 
-    private EntityManagerInterface $em;
-
-    private Domain $domain;
-
-    private SqlLoggerFacade $sqlLoggerFacade;
-
-    private CustomerUserFacade $customerUserEditFacade;
-
     private CustomerUserDataFactory $customerUserDataFactory;
-
-    private Faker $faker;
-
-    private PersistentReferenceFacade $persistentReferenceFacade;
-
-    private ProgressBarFactory $progressBarFactory;
-
-    private CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory;
-
-    private DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory;
 
     /**
      * @param int $userCountPerDomain
@@ -59,28 +41,19 @@ class CustomerUserDataFixture
      */
     public function __construct(
         $userCountPerDomain,
-        EntityManagerInterface $em,
-        Domain $domain,
-        SqlLoggerFacade $sqlLoggerFacade,
-        CustomerUserFacade $customerUserEditFacade,
+        private readonly EntityManagerInterface $em,
+        private readonly Domain $domain,
+        private readonly SqlLoggerFacade $sqlLoggerFacade,
+        private readonly CustomerUserFacade $customerUserEditFacade,
         CustomerUserDataFactoryInterface $customerUserDataFactory,
-        Faker $faker,
-        PersistentReferenceFacade $persistentReferenceFacade,
-        ProgressBarFactory $progressBarFactory,
-        CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
-        DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
+        private readonly Faker $faker,
+        private readonly PersistentReferenceFacade $persistentReferenceFacade,
+        private readonly ProgressBarFactory $progressBarFactory,
+        private readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
+        private readonly DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
     ) {
-        $this->em = $em;
-        $this->domain = $domain;
-        $this->sqlLoggerFacade = $sqlLoggerFacade;
-        $this->customerUserEditFacade = $customerUserEditFacade;
         $this->customerUserDataFactory = $customerUserDataFactory;
-        $this->faker = $faker;
-        $this->persistentReferenceFacade = $persistentReferenceFacade;
         $this->userCountPerDomain = $userCountPerDomain;
-        $this->progressBarFactory = $progressBarFactory;
-        $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
-        $this->deliveryAddressDataFactory = $deliveryAddressDataFactory;
     }
 
     /**

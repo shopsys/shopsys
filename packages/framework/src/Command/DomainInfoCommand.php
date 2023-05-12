@@ -31,16 +31,12 @@ class DomainInfoCommand extends Command
      */
     protected static $defaultName = 'shopsys:domains:info';
 
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(Domain $domain)
+    public function __construct(protected readonly Domain $domain)
     {
         parent::__construct();
-
-        $this->domain = $domain;
     }
 
     /**

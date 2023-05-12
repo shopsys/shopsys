@@ -8,14 +8,11 @@ use Twig\TwigFunction;
 
 class RequestExtension extends AbstractExtension
 {
-    protected RequestStack $requestStack;
-
     /**
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      */
-    public function __construct(RequestStack $requestStack)
+    public function __construct(protected readonly RequestStack $requestStack)
     {
-        $this->requestStack = $requestStack;
     }
 
     /**

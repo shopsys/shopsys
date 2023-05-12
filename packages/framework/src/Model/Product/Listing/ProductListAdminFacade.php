@@ -8,20 +8,14 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 
 class ProductListAdminFacade
 {
-    protected ProductListAdminRepository $productListAdminRepository;
-
-    protected PricingGroupSettingFacade $pricingGroupSettingFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminRepository $productListAdminRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      */
     public function __construct(
-        ProductListAdminRepository $productListAdminRepository,
-        PricingGroupSettingFacade $pricingGroupSettingFacade
+        protected readonly ProductListAdminRepository $productListAdminRepository,
+        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade
     ) {
-        $this->productListAdminRepository = $productListAdminRepository;
-        $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
     }
 
     /**

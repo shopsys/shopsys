@@ -14,20 +14,14 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class PaymentTransportRelationValidator extends ConstraintValidator
 {
-    protected PaymentFacade $paymentFacade;
-
-    protected TransportFacade $transportFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      */
     public function __construct(
-        PaymentFacade $paymentFacade,
-        TransportFacade $transportFacade
+        protected readonly PaymentFacade $paymentFacade,
+        protected readonly TransportFacade $transportFacade,
     ) {
-        $this->paymentFacade = $paymentFacade;
-        $this->transportFacade = $transportFacade;
     }
 
     /**

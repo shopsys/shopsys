@@ -33,16 +33,6 @@ class CategoryFormType extends AbstractType
     public const SCENARIO_CREATE = 'create';
     public const SCENARIO_EDIT = 'edit';
 
-    private CategoryFacade $categoryFacade;
-
-    private Domain $domain;
-
-    private SeoSettingFacade $seoSettingFacade;
-
-    private PluginCrudExtensionFacade $pluginCrudExtensionFacade;
-
-    private Localization $localization;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -51,17 +41,12 @@ class CategoryFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
-        CategoryFacade $categoryFacade,
-        Domain $domain,
-        SeoSettingFacade $seoSettingFacade,
-        PluginCrudExtensionFacade $pluginCrudExtensionFacade,
-        Localization $localization
+        private readonly CategoryFacade $categoryFacade,
+        private readonly Domain $domain,
+        private readonly SeoSettingFacade $seoSettingFacade,
+        private readonly PluginCrudExtensionFacade $pluginCrudExtensionFacade,
+        private readonly Localization $localization
     ) {
-        $this->categoryFacade = $categoryFacade;
-        $this->domain = $domain;
-        $this->seoSettingFacade = $seoSettingFacade;
-        $this->pluginCrudExtensionFacade = $pluginCrudExtensionFacade;
-        $this->localization = $localization;
     }
 
     /**

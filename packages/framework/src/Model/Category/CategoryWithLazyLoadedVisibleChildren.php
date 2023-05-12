@@ -13,10 +13,6 @@ use Closure;
  */
 class CategoryWithLazyLoadedVisibleChildren
 {
-    protected Closure $lazyLoadChildrenCallback;
-
-    protected Category $category;
-
     protected bool $hasChildren;
 
     /**
@@ -30,12 +26,10 @@ class CategoryWithLazyLoadedVisibleChildren
      * @param bool $hasChildren
      */
     public function __construct(
-        Closure $lazyLoadChildrenCallback,
-        Category $category,
+        protected readonly Closure $lazyLoadChildrenCallback,
+        protected readonly Category $category,
         $hasChildren
     ) {
-        $this->lazyLoadChildrenCallback = $lazyLoadChildrenCallback;
-        $this->category = $category;
         $this->hasChildren = $hasChildren;
     }
 

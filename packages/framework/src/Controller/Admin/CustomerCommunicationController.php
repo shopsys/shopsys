@@ -11,20 +11,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CustomerCommunicationController extends AdminBaseController
 {
-    protected AdminDomainTabsFacade $adminDomainTabsFacade;
-
-    protected Setting $setting;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
-        Setting $setting,
-        AdminDomainTabsFacade $adminDomainTabsFacade
+        protected readonly Setting $setting,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade
     ) {
-        $this->setting = $setting;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**

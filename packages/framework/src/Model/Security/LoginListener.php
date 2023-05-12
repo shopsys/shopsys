@@ -12,25 +12,16 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class LoginListener
 {
-    protected EntityManagerInterface $em;
-
-    protected OrderFlowFacade $orderFlowFacade;
-
-    protected AdministratorActivityFacade $administratorActivityFacade;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFlowFacade $orderFlowFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade $administratorActivityFacade
      */
     public function __construct(
-        EntityManagerInterface $em,
-        OrderFlowFacade $orderFlowFacade,
-        AdministratorActivityFacade $administratorActivityFacade
+        protected readonly EntityManagerInterface $em,
+        protected readonly OrderFlowFacade $orderFlowFacade,
+        protected readonly AdministratorActivityFacade $administratorActivityFacade
     ) {
-        $this->em = $em;
-        $this->orderFlowFacade = $orderFlowFacade;
-        $this->administratorActivityFacade = $administratorActivityFacade;
     }
 
     /**

@@ -12,12 +12,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
 class ProductFilterDataMapper
 {
-    protected FlagFacade $flagFacade;
-
-    protected BrandFacade $brandFacade;
-
-    protected ParameterFacade $parameterFacade;
-
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
@@ -34,13 +28,10 @@ class ProductFilterDataMapper
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
      */
     public function __construct(
-        FlagFacade $flagFacade,
-        BrandFacade $brandFacade,
-        ParameterFacade $parameterFacade
+        protected readonly FlagFacade $flagFacade,
+        protected readonly BrandFacade $brandFacade,
+        protected readonly ParameterFacade $parameterFacade
     ) {
-        $this->flagFacade = $flagFacade;
-        $this->brandFacade = $brandFacade;
-        $this->parameterFacade = $parameterFacade;
     }
 
     /**

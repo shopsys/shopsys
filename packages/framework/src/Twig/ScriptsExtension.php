@@ -11,15 +11,12 @@ use Twig\TwigFunction;
 
 class ScriptsExtension extends AbstractExtension
 {
-    protected ScriptFacade $scriptFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Script\ScriptFacade $scriptFacade
      */
     public function __construct(
-        ScriptFacade $scriptFacade
+        protected readonly ScriptFacade $scriptFacade
     ) {
-        $this->scriptFacade = $scriptFacade;
     }
 
     /**

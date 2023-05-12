@@ -12,14 +12,6 @@ class SitemapFacade
 
     protected string $sitemapsUrlPrefix;
 
-    protected Domain $domain;
-
-    protected SitemapDumperFactory $domainSitemapDumperFactory;
-
-    protected SitemapRepository $sitemapRepository;
-
-    protected PricingGroupSettingFacade $pricingGroupSettingFacade;
-
     /**
      * @param mixed $sitemapsDir
      * @param mixed $sitemapsUrlPrefix
@@ -31,17 +23,13 @@ class SitemapFacade
     public function __construct(
         $sitemapsDir,
         $sitemapsUrlPrefix,
-        Domain $domain,
-        SitemapDumperFactory $domainSitemapDumperFactory,
-        SitemapRepository $sitemapRepository,
-        PricingGroupSettingFacade $pricingGroupSettingFacade
+        protected readonly Domain $domain,
+        protected readonly SitemapDumperFactory $domainSitemapDumperFactory,
+        protected readonly SitemapRepository $sitemapRepository,
+        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade
     ) {
         $this->sitemapsDir = $sitemapsDir;
         $this->sitemapsUrlPrefix = $sitemapsUrlPrefix;
-        $this->domain = $domain;
-        $this->domainSitemapDumperFactory = $domainSitemapDumperFactory;
-        $this->sitemapRepository = $sitemapRepository;
-        $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
     }
 
     public function generateForAllDomains()

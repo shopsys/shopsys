@@ -11,14 +11,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class OrderListType extends AbstractType
 {
-    private OrderFacade $orderFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      */
-    public function __construct(OrderFacade $orderFacade)
+    public function __construct(private readonly OrderFacade $orderFacade)
     {
-        $this->orderFacade = $orderFacade;
     }
 
     /**

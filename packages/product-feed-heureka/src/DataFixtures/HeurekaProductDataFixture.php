@@ -17,20 +17,14 @@ class HeurekaProductDataFixture implements PluginDataFixtureInterface
     protected const PRODUCT_ID_FOURTH = 4;
     protected const PRODUCT_ID_FIFTH = 5;
 
-    private HeurekaProductDomainFacade $heurekaProductDomainFacade;
-
-    private HeurekaProductDomainDataFactoryInterface $heurekaProductDomainDataFactory;
-
     /**
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainFacade $heurekaProductDomainFacade
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainDataFactoryInterface $heurekaProductDomainDataFactory
      */
     public function __construct(
-        HeurekaProductDomainFacade $heurekaProductDomainFacade,
-        HeurekaProductDomainDataFactoryInterface $heurekaProductDomainDataFactory
+        private readonly HeurekaProductDomainFacade $heurekaProductDomainFacade,
+        private readonly HeurekaProductDomainDataFactoryInterface $heurekaProductDomainDataFactory
     ) {
-        $this->heurekaProductDomainFacade = $heurekaProductDomainFacade;
-        $this->heurekaProductDomainDataFactory = $heurekaProductDomainDataFactory;
     }
 
     public function load()

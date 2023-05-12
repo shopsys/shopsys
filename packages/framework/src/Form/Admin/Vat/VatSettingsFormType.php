@@ -14,18 +14,12 @@ use Symfony\Component\Validator\Constraints;
 
 class VatSettingsFormType extends AbstractType
 {
-    private VatFacade $vatFacade;
-
-    private AdminDomainTabsFacade $adminDomainTabsFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
-    public function __construct(VatFacade $vatFacade, AdminDomainTabsFacade $adminDomainTabsFacade)
+    public function __construct(private readonly VatFacade $vatFacade, private readonly AdminDomainTabsFacade $adminDomainTabsFacade)
     {
-        $this->vatFacade = $vatFacade;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**

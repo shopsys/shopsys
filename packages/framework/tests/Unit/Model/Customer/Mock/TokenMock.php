@@ -9,14 +9,11 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class TokenMock implements TokenInterface
 {
-    private CustomerUser $customerUser;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      */
-    public function __construct(CustomerUser $customerUser)
+    public function __construct(private readonly CustomerUser $customerUser)
     {
-        $this->customerUser = $customerUser;
     }
 
     public function serialize()

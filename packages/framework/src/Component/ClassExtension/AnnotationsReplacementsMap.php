@@ -7,16 +7,10 @@ namespace Shopsys\FrameworkBundle\Component\ClassExtension;
 class AnnotationsReplacementsMap
 {
     /**
-     * @var string[]
-     */
-    protected array $classExtensionMap;
-
-    /**
      * @param string[] $classExtensionMap
      */
-    public function __construct(array $classExtensionMap)
+    public function __construct(protected readonly array $classExtensionMap)
     {
-        $this->classExtensionMap = $classExtensionMap;
     }
 
     /**

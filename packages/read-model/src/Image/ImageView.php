@@ -6,16 +6,6 @@ namespace Shopsys\ReadModelBundle\Image;
 
 class ImageView
 {
-    protected int $id;
-
-    protected string $extension;
-
-    protected string $entityName;
-
-    protected ?string $type = null;
-
-    protected ?string $name = null;
-
     /**
      * @param int $id
      * @param string $extension
@@ -23,13 +13,8 @@ class ImageView
      * @param string|null $type
      * @param string|null $name
      */
-    public function __construct(int $id, string $extension, string $entityName, ?string $type, ?string $name = null)
+    public function __construct(protected readonly int $id, protected readonly string $extension, protected readonly string $entityName, protected readonly ?string $type = null, protected readonly ?string $name = null)
     {
-        $this->id = $id;
-        $this->extension = $extension;
-        $this->entityName = $entityName;
-        $this->type = $type;
-        $this->name = $name;
     }
 
     /**

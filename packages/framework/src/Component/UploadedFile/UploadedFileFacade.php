@@ -13,18 +13,6 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\EntityIdentifierExc
 
 class UploadedFileFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected UploadedFileConfig $uploadedFileConfig;
-
-    protected UploadedFileRepository $uploadedFileRepository;
-
-    protected FilesystemOperator $filesystem;
-
-    protected UploadedFileLocator $uploadedFileLocator;
-
-    protected UploadedFileFactoryInterface $uploadedFileFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
@@ -34,19 +22,13 @@ class UploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactoryInterface $uploadedFileFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        UploadedFileConfig $uploadedFileConfig,
-        UploadedFileRepository $uploadedFileRepository,
-        FilesystemOperator $filesystem,
-        UploadedFileLocator $uploadedFileLocator,
-        UploadedFileFactoryInterface $uploadedFileFactory
+        protected readonly EntityManagerInterface $em,
+        protected readonly UploadedFileConfig $uploadedFileConfig,
+        protected readonly UploadedFileRepository $uploadedFileRepository,
+        protected readonly FilesystemOperator $filesystem,
+        protected readonly UploadedFileLocator $uploadedFileLocator,
+        protected readonly UploadedFileFactoryInterface $uploadedFileFactory
     ) {
-        $this->em = $em;
-        $this->uploadedFileConfig = $uploadedFileConfig;
-        $this->uploadedFileRepository = $uploadedFileRepository;
-        $this->filesystem = $filesystem;
-        $this->uploadedFileLocator = $uploadedFileLocator;
-        $this->uploadedFileFactory = $uploadedFileFactory;
     }
 
     /**

@@ -14,26 +14,6 @@ class FeedExport
     protected const TEMPORARY_FILENAME_SUFFIX = '.tmp';
     protected const BATCH_SIZE = 1000;
 
-    protected FeedInterface $feed;
-
-    protected DomainConfig $domainConfig;
-
-    protected FeedRenderer $feedRenderer;
-
-    protected FilesystemOperator $filesystem;
-
-    protected Filesystem $localFilesystem;
-
-    protected MountManager $mountManager;
-
-    protected EntityManagerInterface $em;
-
-    protected string $feedFilepath;
-
-    protected string $feedLocalFilepath;
-
-    protected ?int $lastSeekId = null;
-
     protected bool $finished = false;
 
     /**
@@ -49,27 +29,17 @@ class FeedExport
      * @param int|null $lastSeekId
      */
     public function __construct(
-        FeedInterface $feed,
-        DomainConfig $domainConfig,
-        FeedRenderer $feedRenderer,
-        FilesystemOperator $filesystem,
-        Filesystem $localFilesystem,
-        MountManager $mountManager,
-        EntityManagerInterface $em,
-        string $feedFilepath,
-        string $feedLocalFilepath,
-        ?int $lastSeekId
+        protected readonly FeedInterface $feed,
+        protected readonly DomainConfig $domainConfig,
+        protected readonly FeedRenderer $feedRenderer,
+        protected readonly FilesystemOperator $filesystem,
+        protected readonly Filesystem $localFilesystem,
+        protected readonly MountManager $mountManager,
+        protected readonly EntityManagerInterface $em,
+        protected readonly string $feedFilepath,
+        protected readonly string $feedLocalFilepath,
+        protected ?int $lastSeekId = null
     ) {
-        $this->feed = $feed;
-        $this->domainConfig = $domainConfig;
-        $this->feedRenderer = $feedRenderer;
-        $this->filesystem = $filesystem;
-        $this->localFilesystem = $localFilesystem;
-        $this->mountManager = $mountManager;
-        $this->em = $em;
-        $this->feedFilepath = $feedFilepath;
-        $this->feedLocalFilepath = $feedLocalFilepath;
-        $this->lastSeekId = $lastSeekId;
     }
 
     public function wakeUp(): void

@@ -35,25 +35,16 @@ class TokenFacade
 
     protected const REFRESH_TOKEN_EXPIRATION = 3600 * 24 * 14;
 
-    protected Domain $domain;
-
-    protected CustomerUserFacade $customerUserFacade;
-
-    protected Configuration $jwtConfiguration;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Lcobucci\JWT\Configuration $jwtConfiguration
      */
     public function __construct(
-        Domain $domain,
-        CustomerUserFacade $customerUserFacade,
-        Configuration $jwtConfiguration
+        protected readonly Domain $domain,
+        protected readonly CustomerUserFacade $customerUserFacade,
+        protected readonly Configuration $jwtConfiguration
     ) {
-        $this->domain = $domain;
-        $this->customerUserFacade = $customerUserFacade;
-        $this->jwtConfiguration = $jwtConfiguration;
     }
 
     /**

@@ -31,16 +31,6 @@ class ImageExtension extends AbstractExtension
 
     protected string $frontDesignImageUrlPrefix;
 
-    protected Domain $domain;
-
-    protected ImageLocator $imageLocator;
-
-    protected ImageFacade $imageFacade;
-
-    protected Environment $twigEnvironment;
-
-    protected bool $isLazyLoadEnabled;
-
     protected Browser $browser;
 
     /**
@@ -53,18 +43,13 @@ class ImageExtension extends AbstractExtension
      */
     public function __construct(
         $frontDesignImageUrlPrefix,
-        Domain $domain,
-        ImageLocator $imageLocator,
-        ImageFacade $imageFacade,
-        Environment $twigEnvironment,
-        bool $isLazyLoadEnabled = false
+        protected readonly Domain $domain,
+        protected readonly ImageLocator $imageLocator,
+        protected readonly ImageFacade $imageFacade,
+        protected readonly Environment $twigEnvironment,
+        protected readonly bool $isLazyLoadEnabled = false
     ) {
         $this->frontDesignImageUrlPrefix = rtrim($frontDesignImageUrlPrefix, '/');
-        $this->domain = $domain;
-        $this->imageLocator = $imageLocator;
-        $this->imageFacade = $imageFacade;
-        $this->twigEnvironment = $twigEnvironment;
-        $this->isLazyLoadEnabled = $isLazyLoadEnabled;
     }
 
     /**

@@ -15,10 +15,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class ImageSitemapFacade
 {
-    protected string $sitemapsDir;
-
-    protected string $sitemapsUrlPrefix;
-
     /**
      * @param string $sitemapsDir
      * @param string $sitemapsUrlPrefix
@@ -31,8 +27,8 @@ class ImageSitemapFacade
      * @param \Doctrine\ORM\EntityManager $entityManager
      */
     public function __construct(
-        string $sitemapsDir,
-        string $sitemapsUrlPrefix,
+        protected readonly string $sitemapsDir,
+        protected readonly string $sitemapsUrlPrefix,
         protected readonly Domain $domain,
         protected readonly ImageSitemapDumperFactory $imageSitemapDumperFactory,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
@@ -41,8 +37,6 @@ class ImageSitemapFacade
         protected readonly ProductRepository $productRepository,
         protected readonly EntityManagerInterface $entityManager
     ) {
-        $this->sitemapsDir = $sitemapsDir;
-        $this->sitemapsUrlPrefix = $sitemapsUrlPrefix;
     }
 
     public function generateForAllDomains(): void

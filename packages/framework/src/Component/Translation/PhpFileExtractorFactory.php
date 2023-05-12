@@ -6,14 +6,11 @@ use Doctrine\Common\Annotations\DocParser;
 
 class PhpFileExtractorFactory
 {
-    protected DocParser $docParser;
-
     /**
      * @param \Doctrine\Common\Annotations\DocParser $docParser
      */
-    public function __construct(DocParser $docParser)
+    public function __construct(protected readonly DocParser $docParser)
     {
-        $this->docParser = $docParser;
     }
 
     /**

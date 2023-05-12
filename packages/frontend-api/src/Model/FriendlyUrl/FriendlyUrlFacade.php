@@ -10,14 +10,11 @@ use Shopsys\FrameworkBundle\Component\String\TransformString;
 
 class FriendlyUrlFacade
 {
-    protected FriendlyUrlRepository $friendlyUrlRepository;
-
     /**
      * @param \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      */
-    public function __construct(FriendlyUrlRepository $friendlyUrlRepository)
+    public function __construct(protected readonly FriendlyUrlRepository $friendlyUrlRepository)
     {
-        $this->friendlyUrlRepository = $friendlyUrlRepository;
     }
 
     /**

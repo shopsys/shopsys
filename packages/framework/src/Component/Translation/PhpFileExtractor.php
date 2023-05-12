@@ -23,8 +23,6 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
 {
     protected NodeTraverser $traverser;
 
-    protected DocParser $docParser;
-
     protected MessageCatalogue $catalogue;
 
     protected SplFileInfo $file;
@@ -40,9 +38,8 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
      * @param \Doctrine\Common\Annotations\DocParser $docParser
      * @param \Shopsys\FrameworkBundle\Component\Translation\TransMethodSpecification[] $transMethodSpecifications
      */
-    public function __construct(DocParser $docParser, array $transMethodSpecifications)
+    public function __construct(protected readonly DocParser $docParser, array $transMethodSpecifications)
     {
-        $this->docParser = $docParser;
         $this->traverser = new NodeTraverser();
         $this->traverser->addVisitor($this);
 

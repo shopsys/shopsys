@@ -8,18 +8,12 @@ class UploadedFileTypeConfig
 {
     public const DEFAULT_TYPE_NAME = 'default';
 
-    protected string $name;
-
-    protected bool $multiple;
-
     /**
      * @param string $name
      * @param bool $multiple
      */
-    public function __construct(string $name, bool $multiple)
+    public function __construct(protected readonly string $name, protected readonly bool $multiple)
     {
-        $this->name = $name;
-        $this->multiple = $multiple;
     }
 
     /**

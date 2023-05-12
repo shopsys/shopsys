@@ -12,20 +12,14 @@ use Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingPr
 
 class BestsellingProductDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    private ManualBestsellingProductFacade $manualBestsellingProductFacade;
-
-    private Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFacade $manualBestsellingProductFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        ManualBestsellingProductFacade $manualBestsellingProductFacade,
-        Domain $domain
+        private readonly ManualBestsellingProductFacade $manualBestsellingProductFacade,
+        private readonly Domain $domain
     ) {
-        $this->manualBestsellingProductFacade = $manualBestsellingProductFacade;
-        $this->domain = $domain;
     }
 
     /**

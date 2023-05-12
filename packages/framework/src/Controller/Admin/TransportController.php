@@ -15,16 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TransportController extends AdminBaseController
 {
-    protected BreadcrumbOverrider $breadcrumbOverrider;
-
-    protected CurrencyFacade $currencyFacade;
-
-    protected TransportGridFactory $transportGridFactory;
-
-    protected TransportDataFactoryInterface $transportDataFactory;
-
-    protected TransportFacade $transportFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\Grid\TransportGridFactory $transportGridFactory
@@ -33,17 +23,12 @@ class TransportController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      */
     public function __construct(
-        TransportFacade $transportFacade,
-        TransportGridFactory $transportGridFactory,
-        TransportDataFactoryInterface $transportDataFactory,
-        CurrencyFacade $currencyFacade,
-        BreadcrumbOverrider $breadcrumbOverrider
+        protected readonly TransportFacade $transportFacade,
+        protected readonly TransportGridFactory $transportGridFactory,
+        protected readonly TransportDataFactoryInterface $transportDataFactory,
+        protected readonly CurrencyFacade $currencyFacade,
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider
     ) {
-        $this->transportFacade = $transportFacade;
-        $this->transportGridFactory = $transportGridFactory;
-        $this->transportDataFactory = $transportDataFactory;
-        $this->currencyFacade = $currencyFacade;
-        $this->breadcrumbOverrider = $breadcrumbOverrider;
     }
 
     /**

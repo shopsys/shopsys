@@ -14,10 +14,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class SitemapDumper extends Dumper
 {
-    protected FilesystemOperator $abstractFilesystem;
-
-    protected MountManager $mountManager;
-
     /**
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem
@@ -30,16 +26,13 @@ class SitemapDumper extends Dumper
     public function __construct(
         EventDispatcherInterface $dispatcher,
         Filesystem $filesystem,
-        FilesystemOperator $abstractFilesystem,
-        MountManager $mountManager,
+        protected readonly FilesystemOperator $abstractFilesystem,
+        protected readonly MountManager $mountManager,
         UrlGeneratorInterface $urlGenerator,
         string $sitemapFilePrefix = Configuration::DEFAULT_FILENAME,
         ?int $itemsBySet = null
     ) {
         parent::__construct($dispatcher, $filesystem, $sitemapFilePrefix, $itemsBySet, $urlGenerator);
-
-        $this->abstractFilesystem = $abstractFilesystem;
-        $this->mountManager = $mountManager;
     }
 
     /**

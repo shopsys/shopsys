@@ -25,14 +25,11 @@ final class MonorepoUpgradeFileManipulator
      */
     private const FROM_TO_NEXT_DEV_LINK_PATTERN = '#^(?<start>\[From [\w.-]+ to )[\w.-]+-dev(?<middle>.*?\.\.\.).*?\n#m';
 
-    private string $monorepoPackageName;
-
     /**
      * @param string $monorepoPackageName
      */
-    public function __construct(string $monorepoPackageName)
+    public function __construct(private readonly string $monorepoPackageName)
     {
-        $this->monorepoPackageName = $monorepoPackageName;
     }
 
     /**

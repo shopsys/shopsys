@@ -8,8 +8,6 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class BrandCachedFacade
 {
-    protected FriendlyUrlFacade $friendlyUrlFacade;
-
     /**
      * @var array<int, array<int, string>>
      */
@@ -18,9 +16,8 @@ class BrandCachedFacade
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
-    public function __construct(FriendlyUrlFacade $friendlyUrlFacade)
+    public function __construct(protected readonly FriendlyUrlFacade $friendlyUrlFacade)
     {
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
     }
 
     /**

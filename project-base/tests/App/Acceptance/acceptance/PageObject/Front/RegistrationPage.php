@@ -15,17 +15,13 @@ class RegistrationPage extends AbstractPage
 {
     private const MINIMUM_FORM_SUBMIT_WAIT_TIME = 10;
 
-    private LoginPage $loginPage;
-
     /**
      * @param \Tests\App\Test\Codeception\Module\StrictWebDriver $strictWebDriver
      * @param \Tests\App\Test\Codeception\AcceptanceTester $tester
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\LoginPage $loginPage
      */
-    public function __construct(StrictWebDriver $strictWebDriver, AcceptanceTester $tester, LoginPage $loginPage)
+    public function __construct(StrictWebDriver $strictWebDriver, AcceptanceTester $tester, private readonly LoginPage $loginPage)
     {
-        $this->loginPage = $loginPage;
-
         parent::__construct($strictWebDriver, $tester);
     }
 

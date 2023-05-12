@@ -22,13 +22,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     public const PAYMENT_CASH_ON_DELIVERY = 'payment_cash_on_delivery';
     public const PAYMENT_CASH = 'payment_cash';
 
-    private PaymentFacade $paymentFacade;
-
     private PaymentDataFactory $paymentDataFactory;
-
-    private Domain $domain;
-
-    private PriceConverter $priceConverter;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
@@ -37,15 +31,12 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
      */
     public function __construct(
-        PaymentFacade $paymentFacade,
+        private readonly PaymentFacade $paymentFacade,
         PaymentDataFactoryInterface $paymentDataFactory,
-        Domain $domain,
-        PriceConverter $priceConverter
+        private readonly Domain $domain,
+        private readonly PriceConverter $priceConverter
     ) {
-        $this->paymentFacade = $paymentFacade;
         $this->paymentDataFactory = $paymentDataFactory;
-        $this->domain = $domain;
-        $this->priceConverter = $priceConverter;
     }
 
     /**

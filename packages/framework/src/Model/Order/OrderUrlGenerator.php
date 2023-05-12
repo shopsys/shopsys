@@ -9,14 +9,11 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class OrderUrlGenerator
 {
-    protected DomainRouterFactory $domainRouterFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      */
-    public function __construct(DomainRouterFactory $domainRouterFactory)
+    public function __construct(protected readonly DomainRouterFactory $domainRouterFactory)
     {
-        $this->domainRouterFactory = $domainRouterFactory;
     }
 
     /**

@@ -23,14 +23,11 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         'shopsys/project-base',
     ];
 
-    private PackageProvider $packageProvider;
-
     /**
      * @param \Shopsys\Releaser\Packagist\PackageProvider $packageProvider
      */
-    public function __construct(PackageProvider $packageProvider)
+    public function __construct(private readonly PackageProvider $packageProvider)
     {
-        $this->packageProvider = $packageProvider;
     }
 
     /**

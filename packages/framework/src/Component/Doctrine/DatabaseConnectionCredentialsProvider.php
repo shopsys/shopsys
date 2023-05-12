@@ -6,16 +6,6 @@ namespace Shopsys\FrameworkBundle\Component\Doctrine;
 
 class DatabaseConnectionCredentialsProvider
 {
-    protected string $databaseHost;
-
-    protected string $databasePort;
-
-    protected string $databaseName;
-
-    protected string $databaseUsername;
-
-    protected string $databasePassword;
-
     /**
      * @param string $databaseHost
      * @param string $databasePort
@@ -24,17 +14,12 @@ class DatabaseConnectionCredentialsProvider
      * @param string $databasePassword
      */
     public function __construct(
-        string $databaseHost,
-        string $databasePort,
-        string $databaseName,
-        string $databaseUsername,
-        string $databasePassword
+        protected readonly string $databaseHost,
+        protected readonly string $databasePort,
+        protected readonly string $databaseName,
+        protected readonly string $databaseUsername,
+        protected readonly string $databasePassword
     ) {
-        $this->databaseHost = $databaseHost;
-        $this->databasePort = $databasePort;
-        $this->databaseName = $databaseName;
-        $this->databaseUsername = $databaseUsername;
-        $this->databasePassword = $databasePassword;
     }
 
     /**

@@ -18,18 +18,12 @@ class FileThumbnailExtension extends AbstractExtension
      */
     protected array $iconsByExtension;
 
-    protected FileUpload $fileUpload;
-
-    protected ImageThumbnailFactory $imageThumbnailFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
      * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageThumbnailFactory $imageThumbnailFactory
      */
-    public function __construct(FileUpload $fileUpload, ImageThumbnailFactory $imageThumbnailFactory)
+    public function __construct(protected readonly FileUpload $fileUpload, protected readonly ImageThumbnailFactory $imageThumbnailFactory)
     {
-        $this->fileUpload = $fileUpload;
-        $this->imageThumbnailFactory = $imageThumbnailFactory;
         $this->iconsByExtension = [
             'csv' => 'excel',
             'doc' => 'word',

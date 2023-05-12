@@ -12,14 +12,6 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 
 class FilterQueryFactory
 {
-    protected ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer;
-
-    protected CurrentCustomerUser $currentCustomerUser;
-
-    protected IndexDefinitionLoader $indexDefinitionLoader;
-
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
@@ -27,15 +19,11 @@ class FilterQueryFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer,
-        CurrentCustomerUser $currentCustomerUser,
-        IndexDefinitionLoader $indexDefinitionLoader,
-        Domain $domain
+        protected readonly ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly IndexDefinitionLoader $indexDefinitionLoader,
+        protected readonly Domain $domain
     ) {
-        $this->productFilterDataToQueryTransformer = $productFilterDataToQueryTransformer;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->indexDefinitionLoader = $indexDefinitionLoader;
-        $this->domain = $domain;
     }
 
     /**

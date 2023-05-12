@@ -7,20 +7,14 @@ use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 
 class UploadedFileFactory implements UploadedFileFactoryInterface
 {
-    protected FileUpload $fileUpload;
-
-    protected EntityNameResolver $entityNameResolver;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
     public function __construct(
-        FileUpload $fileUpload,
-        EntityNameResolver $entityNameResolver
+        protected readonly FileUpload $fileUpload,
+        protected readonly EntityNameResolver $entityNameResolver
     ) {
-        $this->fileUpload = $fileUpload;
-        $this->entityNameResolver = $entityNameResolver;
     }
 
     /**

@@ -29,20 +29,6 @@ class ExtendedClassesAnnotationsCommand extends Command
      */
     protected static $defaultName = 'shopsys:extended-classes:annotations';
 
-    protected string $projectRootDirectory;
-
-    protected ClassExtensionRegistry $classExtensionRegistry;
-
-    protected AnnotationsReplacer $annotationsReplacer;
-
-    protected AnnotationsReplacementsMap $annotationsReplacementsMap;
-
-    protected PropertyAnnotationsFactory $propertyAnnotationsFactory;
-
-    protected MethodAnnotationsFactory $methodAnnotationsAdder;
-
-    protected AnnotationsAdder $annotationsAdder;
-
     /**
      * {@inheritdoc}
      */
@@ -74,23 +60,15 @@ class ExtendedClassesAnnotationsCommand extends Command
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsAdder $annotationsAdder
      */
     public function __construct(
-        string $projectRootDirectory,
-        ClassExtensionRegistry $classExtensionRegistry,
-        PropertyAnnotationsFactory $propertyAnnotationsFactory,
-        MethodAnnotationsFactory $methodAnnotationsAdder,
-        AnnotationsReplacer $annotationsReplacer,
-        AnnotationsReplacementsMap $annotationsReplacementsMap,
-        AnnotationsAdder $annotationsAdder
+        protected readonly string $projectRootDirectory,
+        protected readonly ClassExtensionRegistry $classExtensionRegistry,
+        protected readonly PropertyAnnotationsFactory $propertyAnnotationsFactory,
+        protected readonly MethodAnnotationsFactory $methodAnnotationsAdder,
+        protected readonly AnnotationsReplacer $annotationsReplacer,
+        protected readonly AnnotationsReplacementsMap $annotationsReplacementsMap,
+        protected readonly AnnotationsAdder $annotationsAdder
     ) {
         parent::__construct();
-
-        $this->projectRootDirectory = $projectRootDirectory;
-        $this->classExtensionRegistry = $classExtensionRegistry;
-        $this->annotationsReplacer = $annotationsReplacer;
-        $this->annotationsReplacementsMap = $annotationsReplacementsMap;
-        $this->propertyAnnotationsFactory = $propertyAnnotationsFactory;
-        $this->methodAnnotationsAdder = $methodAnnotationsAdder;
-        $this->annotationsAdder = $annotationsAdder;
     }
 
     /**

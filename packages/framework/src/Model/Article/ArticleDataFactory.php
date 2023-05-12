@@ -8,25 +8,16 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class ArticleDataFactory implements ArticleDataFactoryInterface
 {
-    protected FriendlyUrlFacade $friendlyUrlFacade;
-
-    protected Domain $domain;
-
-    protected AdminDomainTabsFacade $adminDomainTabsFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
-        FriendlyUrlFacade $friendlyUrlFacade,
-        Domain $domain,
-        AdminDomainTabsFacade $adminDomainTabsFacade
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly Domain $domain,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade
     ) {
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->domain = $domain;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**

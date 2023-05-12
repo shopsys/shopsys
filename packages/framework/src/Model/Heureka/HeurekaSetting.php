@@ -9,14 +9,11 @@ class HeurekaSetting
     protected const HEUREKA_API_KEY = 'heurekaApiKey';
     protected const HEUREKA_WIDGET_CODE = 'heurekaWidgetCode';
 
-    protected Setting $setting;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
-    public function __construct(Setting $setting)
+    public function __construct(protected readonly Setting $setting)
     {
-        $this->setting = $setting;
     }
 
     /**

@@ -9,14 +9,11 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class ProductsIdsToProductsTransformer implements DataTransformerInterface
 {
-    protected ProductRepository $productRepository;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      */
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(protected readonly ProductRepository $productRepository)
     {
-        $this->productRepository = $productRepository;
     }
 
     /**

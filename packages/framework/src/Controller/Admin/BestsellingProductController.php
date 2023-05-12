@@ -12,14 +12,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BestsellingProductController extends AdminBaseController
 {
-    protected BreadcrumbOverrider $breadcrumbOverrider;
-
-    protected CategoryFacade $categoryFacade;
-
-    protected AdminDomainTabsFacade $adminDomainTabsFacade;
-
-    protected ManualBestsellingProductFacade $manualBestsellingProductFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFacade $manualBestsellingProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
@@ -27,15 +19,11 @@ class BestsellingProductController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      */
     public function __construct(
-        ManualBestsellingProductFacade $manualBestsellingProductFacade,
-        CategoryFacade $categoryFacade,
-        AdminDomainTabsFacade $adminDomainTabsFacade,
-        BreadcrumbOverrider $breadcrumbOverrider
+        protected readonly ManualBestsellingProductFacade $manualBestsellingProductFacade,
+        protected readonly CategoryFacade $categoryFacade,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider
     ) {
-        $this->manualBestsellingProductFacade = $manualBestsellingProductFacade;
-        $this->categoryFacade = $categoryFacade;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
-        $this->breadcrumbOverrider = $breadcrumbOverrider;
     }
 
     /**

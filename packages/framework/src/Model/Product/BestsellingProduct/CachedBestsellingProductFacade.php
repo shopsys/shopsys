@@ -11,14 +11,6 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 class CachedBestsellingProductFacade
 {
-    protected BestsellingProductFacade $bestsellingProductFacade;
-
-    protected CacheInterface $cache;
-
-    protected ProductRepository $productRepository;
-
-    protected PricingGroupRepository $pricingGroupRepository;
-
     /**
      * @param \Symfony\Contracts\Cache\CacheInterface $cache
      * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductFacade $bestsellingProductFacade
@@ -26,15 +18,11 @@ class CachedBestsellingProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
      */
     public function __construct(
-        CacheInterface $cache,
-        BestsellingProductFacade $bestsellingProductFacade,
-        ProductRepository $productRepository,
-        PricingGroupRepository $pricingGroupRepository
+        protected readonly CacheInterface $cache,
+        protected readonly BestsellingProductFacade $bestsellingProductFacade,
+        protected readonly ProductRepository $productRepository,
+        protected readonly PricingGroupRepository $pricingGroupRepository
     ) {
-        $this->cache = $cache;
-        $this->bestsellingProductFacade = $bestsellingProductFacade;
-        $this->productRepository = $productRepository;
-        $this->pricingGroupRepository = $pricingGroupRepository;
     }
 
     /**

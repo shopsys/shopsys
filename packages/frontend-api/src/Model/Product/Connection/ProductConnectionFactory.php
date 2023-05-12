@@ -14,20 +14,14 @@ use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory;
 
 class ProductConnectionFactory
 {
-    protected ProductFilterOptionsFactory $productFilterOptionsFactory;
-
-    protected ProductFilterFacade $productFilterFacade;
-
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory $productFilterOptionsFactory
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade $productFilterFacade
      */
     public function __construct(
-        ProductFilterOptionsFactory $productFilterOptionsFactory,
-        ProductFilterFacade $productFilterFacade
+        protected readonly ProductFilterOptionsFactory $productFilterOptionsFactory,
+        protected readonly ProductFilterFacade $productFilterFacade
     ) {
-        $this->productFilterOptionsFactory = $productFilterOptionsFactory;
-        $this->productFilterFacade = $productFilterFacade;
     }
 
     /**

@@ -10,20 +10,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TopCategoryController extends AdminBaseController
 {
-    protected TopCategoryFacade $topCategoryFacade;
-
-    protected AdminDomainTabsFacade $adminDomainTabsFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
-        TopCategoryFacade $topCategoryFacade,
-        AdminDomainTabsFacade $adminDomainTabsFacade
+        protected readonly TopCategoryFacade $topCategoryFacade,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade
     ) {
-        $this->topCategoryFacade = $topCategoryFacade;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**

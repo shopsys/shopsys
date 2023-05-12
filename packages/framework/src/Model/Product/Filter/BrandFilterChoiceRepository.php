@@ -12,15 +12,12 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class BrandFilterChoiceRepository
 {
-    protected ProductRepository $productRepository;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      */
     public function __construct(
-        ProductRepository $productRepository
+        protected readonly ProductRepository $productRepository
     ) {
-        $this->productRepository = $productRepository;
     }
 
     /**

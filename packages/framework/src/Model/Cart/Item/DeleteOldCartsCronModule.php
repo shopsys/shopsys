@@ -8,14 +8,11 @@ use Symfony\Bridge\Monolog\Logger;
 
 class DeleteOldCartsCronModule implements SimpleCronModuleInterface
 {
-    protected CartFacade $cartFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      */
-    public function __construct(CartFacade $cartFacade)
+    public function __construct(protected readonly CartFacade $cartFacade)
     {
-        $this->cartFacade = $cartFacade;
     }
 
     /**

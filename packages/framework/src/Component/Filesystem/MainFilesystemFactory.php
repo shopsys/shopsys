@@ -8,14 +8,11 @@ use League\Flysystem\Local\LocalFilesystemAdapter;
 
 class MainFilesystemFactory implements FilesystemFactoryInterface
 {
-    protected string $projectDir;
-
     /**
      * @param string $projectDir
      */
-    public function __construct(string $projectDir)
+    public function __construct(protected readonly string $projectDir)
     {
-        $this->projectDir = $projectDir;
     }
 
     /**

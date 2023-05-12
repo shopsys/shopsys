@@ -15,14 +15,11 @@ use Symfony\Component\Mime\Message;
 
 class EnvelopeListener implements EventSubscriberInterface
 {
-    protected MailerSettingProvider $mailerSettingProvider;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider $mailerSettingProvider
      */
-    public function __construct(MailerSettingProvider $mailerSettingProvider)
+    public function __construct(protected readonly MailerSettingProvider $mailerSettingProvider)
     {
-        $this->mailerSettingProvider = $mailerSettingProvider;
     }
 
     /**

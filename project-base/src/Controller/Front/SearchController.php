@@ -14,20 +14,14 @@ class SearchController extends FrontBaseController
     protected const AUTOCOMPLETE_CATEGORY_LIMIT = 3;
     protected const AUTOCOMPLETE_PRODUCT_LIMIT = 5;
 
-    private CategoryFacade $categoryFacade;
-
-    private ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
      */
     public function __construct(
-        CategoryFacade $categoryFacade,
-        ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
+        private readonly CategoryFacade $categoryFacade,
+        private readonly ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
     ) {
-        $this->categoryFacade = $categoryFacade;
-        $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
     }
 
     /**

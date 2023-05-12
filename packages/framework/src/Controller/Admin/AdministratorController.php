@@ -24,18 +24,6 @@ class AdministratorController extends AdminBaseController
 {
     protected const MAX_ADMINISTRATOR_ACTIVITIES_COUNT = 10;
 
-    protected BreadcrumbOverrider $breadcrumbOverrider;
-
-    protected AdministratorFacade $administratorFacade;
-
-    protected GridFactory $gridFactory;
-
-    protected AdministratorActivityFacade $administratorActivityFacade;
-
-    protected AdministratorDataFactoryInterface $administratorDataFactory;
-
-    protected AdministratorRolesChangedFacade $administratorRolesChangedFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
@@ -45,19 +33,13 @@ class AdministratorController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade $administratorRolesChangedFacade
      */
     public function __construct(
-        AdministratorFacade $administratorFacade,
-        GridFactory $gridFactory,
-        BreadcrumbOverrider $breadcrumbOverrider,
-        AdministratorActivityFacade $administratorActivityFacade,
-        AdministratorDataFactoryInterface $administratorDataFactory,
-        AdministratorRolesChangedFacade $administratorRolesChangedFacade
+        protected readonly AdministratorFacade $administratorFacade,
+        protected readonly GridFactory $gridFactory,
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+        protected readonly AdministratorActivityFacade $administratorActivityFacade,
+        protected readonly AdministratorDataFactoryInterface $administratorDataFactory,
+        protected readonly AdministratorRolesChangedFacade $administratorRolesChangedFacade
     ) {
-        $this->administratorFacade = $administratorFacade;
-        $this->gridFactory = $gridFactory;
-        $this->breadcrumbOverrider = $breadcrumbOverrider;
-        $this->administratorActivityFacade = $administratorActivityFacade;
-        $this->administratorDataFactory = $administratorDataFactory;
-        $this->administratorRolesChangedFacade = $administratorRolesChangedFacade;
     }
 
     /**

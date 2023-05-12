@@ -7,15 +7,9 @@ use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 
 class DomainFacade
 {
-    protected Domain $domain;
-
-    protected DomainIconResizer $domainIconResizer;
-
     protected FilesystemOperator $filesystem;
 
     protected string $domainImagesDirectory;
-
-    protected FileUpload $fileUpload;
 
     /**
      * @param mixed $domainImagesDirectory
@@ -26,16 +20,13 @@ class DomainFacade
      */
     public function __construct(
         $domainImagesDirectory,
-        Domain $domain,
-        DomainIconResizer $domainIconResizer,
+        protected readonly Domain $domain,
+        protected readonly DomainIconResizer $domainIconResizer,
         FilesystemOperator $fileSystem,
-        FileUpload $fileUpload
+        protected readonly FileUpload $fileUpload
     ) {
         $this->domainImagesDirectory = $domainImagesDirectory;
-        $this->domain = $domain;
-        $this->domainIconResizer = $domainIconResizer;
         $this->filesystem = $fileSystem;
-        $this->fileUpload = $fileUpload;
     }
 
     /**

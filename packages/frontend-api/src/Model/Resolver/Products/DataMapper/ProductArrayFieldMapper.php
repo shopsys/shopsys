@@ -13,16 +13,6 @@ use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
 
 class ProductArrayFieldMapper
 {
-    protected CategoryFacade $categoryFacade;
-
-    protected FlagFacade $flagFacade;
-
-    protected BrandFacade $brandFacade;
-
-    protected ProductElasticsearchProvider $productElasticsearchProvider;
-
-    protected ParameterWithValuesFactory $parameterWithValuesFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
@@ -31,17 +21,12 @@ class ProductArrayFieldMapper
      * @param \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
      */
     public function __construct(
-        CategoryFacade $categoryFacade,
-        FlagFacade $flagFacade,
-        BrandFacade $brandFacade,
-        ProductElasticsearchProvider $productElasticsearchProvider,
-        ParameterWithValuesFactory $parameterWithValuesFactory
+        protected readonly CategoryFacade $categoryFacade,
+        protected readonly FlagFacade $flagFacade,
+        protected readonly BrandFacade $brandFacade,
+        protected readonly ProductElasticsearchProvider $productElasticsearchProvider,
+        protected readonly ParameterWithValuesFactory $parameterWithValuesFactory
     ) {
-        $this->categoryFacade = $categoryFacade;
-        $this->flagFacade = $flagFacade;
-        $this->brandFacade = $brandFacade;
-        $this->productElasticsearchProvider = $productElasticsearchProvider;
-        $this->parameterWithValuesFactory = $parameterWithValuesFactory;
     }
 
     /**

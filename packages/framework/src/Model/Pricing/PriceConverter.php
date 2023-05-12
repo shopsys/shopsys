@@ -13,22 +13,13 @@ class PriceConverter
 {
     protected const DEFAULT_SCALE = 2;
 
-    protected CurrencyFacade $currencyFacade;
-
-    protected Rounding $rounding;
-
-    protected Setting $setting;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
-    public function __construct(CurrencyFacade $currencyFacade, Rounding $rounding, Setting $setting)
+    public function __construct(protected readonly CurrencyFacade $currencyFacade, protected readonly Rounding $rounding, protected readonly Setting $setting)
     {
-        $this->currencyFacade = $currencyFacade;
-        $this->rounding = $rounding;
-        $this->setting = $setting;
     }
 
     /**

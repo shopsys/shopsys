@@ -12,23 +12,14 @@ namespace Shopsys\FrameworkBundle\Model\Category;
  */
 class CategoryWithPreloadedChildren
 {
-    protected Category $category;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildren[]
-     */
-    protected array $children;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildren[] $children
      */
     public function __construct(
-        Category $category,
-        array $children
+        protected readonly Category $category,
+        protected readonly array $children
     ) {
-        $this->category = $category;
-        $this->children = $children;
     }
 
     /**

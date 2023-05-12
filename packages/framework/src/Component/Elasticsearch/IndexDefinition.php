@@ -8,15 +8,7 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndex
 
 class IndexDefinition
 {
-    protected string $indexName;
-
     protected AbstractIndex $index;
-
-    protected string $definitionsDirectory;
-
-    protected string $indexPrefix;
-
-    protected int $domainId;
 
     /**
      * @param string $indexName
@@ -24,12 +16,8 @@ class IndexDefinition
      * @param string $indexPrefix
      * @param int $domainId
      */
-    public function __construct(string $indexName, string $definitionsDirectory, string $indexPrefix, int $domainId)
+    public function __construct(protected readonly string $indexName, protected readonly string $definitionsDirectory, protected readonly string $indexPrefix, protected readonly int $domainId)
     {
-        $this->indexName = $indexName;
-        $this->definitionsDirectory = $definitionsDirectory;
-        $this->indexPrefix = $indexPrefix;
-        $this->domainId = $domainId;
     }
 
     /**

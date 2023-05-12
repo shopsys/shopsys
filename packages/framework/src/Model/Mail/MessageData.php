@@ -7,51 +7,9 @@ namespace Shopsys\FrameworkBundle\Model\Mail;
 class MessageData
 {
     /**
-     * @var string
-     */
-    public string $toEmail;
-
-    /**
-     * @var string|null
-     */
-    public ?string $bccEmail;
-
-    /**
-     * @var string
-     */
-    public string $body;
-
-    /**
-     * @var string
-     */
-    public string $subject;
-
-    /**
-     * @var string
-     */
-    public string $fromEmail;
-
-    /**
-     * @var string
-     */
-    public string $fromName;
-
-    /**
      * @var string[]
      */
     public array $variablesReplacementsForSubject;
-
-    /**
-     * @var string[]
-     */
-    public array $variablesReplacementsForBody;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
-     */
-    public array $attachments;
-
-    public ?string $replyTo;
 
     /**
      * @param string $toEmail
@@ -66,31 +24,21 @@ class MessageData
      * @param string|null $replyTo
      */
     public function __construct(
-        string $toEmail,
-        ?string $bccEmail,
-        string $body,
-        string $subject,
-        string $fromEmail,
-        string $fromName,
-        array $variablesReplacementsForBody = [],
+        public string $toEmail,
+        public ?string $bccEmail,
+        public string $body,
+        public string $subject,
+        public string $fromEmail,
+        public string $fromName,
+        public array $variablesReplacementsForBody = [],
         array $variablesReplacementsForSubject = [],
-        array $attachments = [],
-        ?string $replyTo = null
+        public array $attachments = [],
+        public ?string $replyTo = null
     ) {
-        $this->toEmail = $toEmail;
-        $this->bccEmail = $bccEmail;
-        $this->body = $body;
-        $this->subject = $subject;
-        $this->fromEmail = $fromEmail;
-        $this->fromName = $fromName;
-        $this->variablesReplacementsForBody = $variablesReplacementsForBody;
-
         if (count($variablesReplacementsForSubject) > 0) {
             $this->variablesReplacementsForSubject = $variablesReplacementsForSubject;
         } else {
             $this->variablesReplacementsForSubject = $variablesReplacementsForBody;
         }
-        $this->attachments = $attachments;
-        $this->replyTo = $replyTo;
     }
 }

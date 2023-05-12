@@ -15,14 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VatController extends AdminBaseController
 {
-    protected ConfirmDeleteResponseFactory $confirmDeleteResponseFactory;
-
-    protected VatFacade $vatFacade;
-
-    protected VatInlineEdit $vatInlineEdit;
-
-    protected AdminDomainTabsFacade $adminDomainTabsFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatInlineEdit $vatInlineEdit
@@ -30,15 +22,11 @@ class VatController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
-        VatFacade $vatFacade,
-        VatInlineEdit $vatInlineEdit,
-        ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
-        AdminDomainTabsFacade $adminDomainTabsFacade
+        protected readonly VatFacade $vatFacade,
+        protected readonly VatInlineEdit $vatInlineEdit,
+        protected readonly ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade
     ) {
-        $this->vatFacade = $vatFacade;
-        $this->vatInlineEdit = $vatInlineEdit;
-        $this->confirmDeleteResponseFactory = $confirmDeleteResponseFactory;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**

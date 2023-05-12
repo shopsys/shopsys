@@ -13,14 +13,11 @@ class AdministratorDataFixture extends AbstractReferenceFixture
     public const SUPERADMINISTRATOR = 'administrator_superadministrator';
     public const ADMINISTRATOR = 'administrator_administrator';
 
-    private AdministratorFacade $administratorFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
      */
-    public function __construct(AdministratorFacade $administratorFacade)
+    public function __construct(private readonly AdministratorFacade $administratorFacade)
     {
-        $this->administratorFacade = $administratorFacade;
     }
 
     /**

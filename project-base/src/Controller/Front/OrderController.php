@@ -34,35 +34,7 @@ class OrderController extends FrontBaseController
 {
     public const SESSION_CREATED_ORDER = 'created_order_id';
 
-    private DomainAwareOrderFlowFactory $domainAwareOrderFlowFactory;
-
-    private CartFacade $cartFacade;
-
-    private Domain $domain;
-
-    private OrderMailFacade $orderMailFacade;
-
-    private OrderDataMapper $orderDataMapper;
-
-    private OrderFacade $orderFacade;
-
-    private OrderPreviewFactory $orderPreviewFactory;
-
-    private TransportAndPaymentWatcher $transportAndPaymentWatcher;
-
-    private PaymentFacade $paymentFacade;
-
-    private PaymentPriceCalculation $paymentPriceCalculation;
-
-    private CurrencyFacade $currencyFacade;
-
-    private TransportFacade $transportFacade;
-
-    private TransportPriceCalculation $transportPriceCalculation;
-
     private LegalConditionsFacade $legalConditionsFacade;
-
-    private NewsletterFacade $newsletterFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
@@ -82,37 +54,23 @@ class OrderController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      */
     public function __construct(
-        OrderFacade $orderFacade,
-        CartFacade $cartFacade,
-        OrderPreviewFactory $orderPreviewFactory,
-        TransportPriceCalculation $transportPriceCalculation,
-        PaymentPriceCalculation $paymentPriceCalculation,
-        Domain $domain,
-        TransportFacade $transportFacade,
-        PaymentFacade $paymentFacade,
-        CurrencyFacade $currencyFacade,
-        OrderDataMapper $orderDataMapper,
-        DomainAwareOrderFlowFactory $domainAwareOrderFlowFactory,
-        TransportAndPaymentWatcher $transportAndPaymentWatcher,
-        OrderMailFacade $orderMailFacade,
+        private readonly OrderFacade $orderFacade,
+        private readonly CartFacade $cartFacade,
+        private readonly OrderPreviewFactory $orderPreviewFactory,
+        private readonly TransportPriceCalculation $transportPriceCalculation,
+        private readonly PaymentPriceCalculation $paymentPriceCalculation,
+        private readonly Domain $domain,
+        private readonly TransportFacade $transportFacade,
+        private readonly PaymentFacade $paymentFacade,
+        private readonly CurrencyFacade $currencyFacade,
+        private readonly OrderDataMapper $orderDataMapper,
+        private readonly DomainAwareOrderFlowFactory $domainAwareOrderFlowFactory,
+        private readonly TransportAndPaymentWatcher $transportAndPaymentWatcher,
+        private readonly OrderMailFacade $orderMailFacade,
         BaseLegalConditionsFacade $legalConditionsFacade,
-        NewsletterFacade $newsletterFacade
+        private readonly NewsletterFacade $newsletterFacade
     ) {
-        $this->orderFacade = $orderFacade;
-        $this->cartFacade = $cartFacade;
-        $this->orderPreviewFactory = $orderPreviewFactory;
-        $this->transportPriceCalculation = $transportPriceCalculation;
-        $this->paymentPriceCalculation = $paymentPriceCalculation;
-        $this->domain = $domain;
-        $this->transportFacade = $transportFacade;
-        $this->paymentFacade = $paymentFacade;
-        $this->currencyFacade = $currencyFacade;
-        $this->orderDataMapper = $orderDataMapper;
-        $this->domainAwareOrderFlowFactory = $domainAwareOrderFlowFactory;
-        $this->transportAndPaymentWatcher = $transportAndPaymentWatcher;
-        $this->orderMailFacade = $orderMailFacade;
         $this->legalConditionsFacade = $legalConditionsFacade;
-        $this->newsletterFacade = $newsletterFacade;
     }
 
     /**

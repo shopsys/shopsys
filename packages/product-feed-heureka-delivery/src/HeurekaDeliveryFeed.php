@@ -9,18 +9,12 @@ use Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryFeed
 
 class HeurekaDeliveryFeed implements FeedInterface
 {
-    protected HeurekaDeliveryFeedInfo $feedInfo;
-
-    protected HeurekaDeliveryFeedItemFacade $feedItemFacade;
-
     /**
      * @param \Shopsys\ProductFeed\HeurekaDeliveryBundle\HeurekaDeliveryFeedInfo $feedInfo
      * @param \Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryFeedItemFacade $feedItemFacade
      */
-    public function __construct(HeurekaDeliveryFeedInfo $feedInfo, HeurekaDeliveryFeedItemFacade $feedItemFacade)
+    public function __construct(protected readonly HeurekaDeliveryFeedInfo $feedInfo, protected readonly HeurekaDeliveryFeedItemFacade $feedItemFacade)
     {
-        $this->feedInfo = $feedInfo;
-        $this->feedItemFacade = $feedItemFacade;
     }
 
     /**

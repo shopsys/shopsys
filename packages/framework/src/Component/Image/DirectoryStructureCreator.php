@@ -9,12 +9,6 @@ use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 
 class DirectoryStructureCreator
 {
-    protected ImageConfig $imageConfig;
-
-    protected ImageLocator $imageLocator;
-
-    protected FilesystemOperator $filesystem;
-
     protected string $imageDir;
 
     protected string $domainImageDir;
@@ -29,15 +23,12 @@ class DirectoryStructureCreator
     public function __construct(
         $imageDir,
         $domainImageDir,
-        ImageConfig $imageConfig,
-        ImageLocator $imageLocator,
-        FilesystemOperator $filesystem
+        protected readonly ImageConfig $imageConfig,
+        protected readonly ImageLocator $imageLocator,
+        protected readonly FilesystemOperator $filesystem
     ) {
         $this->imageDir = $imageDir;
         $this->domainImageDir = $domainImageDir;
-        $this->imageConfig = $imageConfig;
-        $this->imageLocator = $imageLocator;
-        $this->filesystem = $filesystem;
     }
 
     public function makeImageDirectories()

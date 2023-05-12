@@ -10,14 +10,6 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 
 class ResetPasswordMailFacade
 {
-    protected Mailer $mailer;
-
-    protected MailTemplateFacade $mailTemplateFacade;
-
-    protected ResetPasswordMail $resetPasswordMail;
-
-    protected UploadedFileFacade $uploadedFileFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailer
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
@@ -25,15 +17,11 @@ class ResetPasswordMailFacade
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      */
     public function __construct(
-        Mailer $mailer,
-        MailTemplateFacade $mailTemplateFacade,
-        ResetPasswordMail $resetPasswordMail,
-        UploadedFileFacade $uploadedFileFacade
+        protected readonly Mailer $mailer,
+        protected readonly MailTemplateFacade $mailTemplateFacade,
+        protected readonly ResetPasswordMail $resetPasswordMail,
+        protected readonly UploadedFileFacade $uploadedFileFacade
     ) {
-        $this->mailer = $mailer;
-        $this->mailTemplateFacade = $mailTemplateFacade;
-        $this->resetPasswordMail = $resetPasswordMail;
-        $this->uploadedFileFacade = $uploadedFileFacade;
     }
 
     /**

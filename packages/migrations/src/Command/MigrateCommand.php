@@ -22,26 +22,16 @@ class MigrateCommand extends Command
      */
     protected static $defaultName = 'shopsys:migrations:migrate';
 
-    protected EntityManagerInterface $em;
-
-    protected MigrationsLock $migrationsLock;
-
-    protected MigrationLockPlanCalculator $migrationLockPlanCalculator;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLock $migrationsLock
      * @param \Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator $migrationLockPlanCalculator
      */
     public function __construct(
-        EntityManagerInterface $em,
-        MigrationsLock $migrationsLock,
-        MigrationLockPlanCalculator $migrationLockPlanCalculator
+        protected readonly EntityManagerInterface $em,
+        protected readonly MigrationsLock $migrationsLock,
+        protected readonly MigrationLockPlanCalculator $migrationLockPlanCalculator
     ) {
-        $this->em = $em;
-        $this->migrationsLock = $migrationsLock;
-        $this->migrationLockPlanCalculator = $migrationLockPlanCalculator;
-
         parent::__construct();
     }
 

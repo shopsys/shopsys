@@ -20,28 +20,6 @@ class CartFacade
 {
     protected const DAYS_LIMIT = 130;
 
-    protected EntityManagerInterface $em;
-
-    protected CartFactory $cartFactory;
-
-    protected ProductRepository $productRepository;
-
-    protected CustomerUserIdentifierFactory $customerUserIdentifierFactory;
-
-    protected Domain $domain;
-
-    protected CurrentCustomerUser $currentCustomerUser;
-
-    protected CurrentPromoCodeFacade $currentPromoCodeFacade;
-
-    protected ProductPriceCalculationForCustomerUser $productPriceCalculation;
-
-    protected CartItemFactoryInterface $cartItemFactory;
-
-    protected CartRepository $cartRepository;
-
-    protected CartWatcherFacade $cartWatcherFacade;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFactory $cartFactory
@@ -56,29 +34,18 @@ class CartFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade $cartWatcherFacade
      */
     public function __construct(
-        EntityManagerInterface $em,
-        CartFactory $cartFactory,
-        ProductRepository $productRepository,
-        CustomerUserIdentifierFactory $customerUserIdentifierFactory,
-        Domain $domain,
-        CurrentCustomerUser $currentCustomerUser,
-        CurrentPromoCodeFacade $currentPromoCodeFacade,
-        ProductPriceCalculationForCustomerUser $productPriceCalculation,
-        CartItemFactoryInterface $cartItemFactory,
-        CartRepository $cartRepository,
-        CartWatcherFacade $cartWatcherFacade
+        protected readonly EntityManagerInterface $em,
+        protected readonly CartFactory $cartFactory,
+        protected readonly ProductRepository $productRepository,
+        protected readonly CustomerUserIdentifierFactory $customerUserIdentifierFactory,
+        protected readonly Domain $domain,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly CurrentPromoCodeFacade $currentPromoCodeFacade,
+        protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculation,
+        protected readonly CartItemFactoryInterface $cartItemFactory,
+        protected readonly CartRepository $cartRepository,
+        protected readonly CartWatcherFacade $cartWatcherFacade
     ) {
-        $this->em = $em;
-        $this->cartFactory = $cartFactory;
-        $this->productRepository = $productRepository;
-        $this->customerUserIdentifierFactory = $customerUserIdentifierFactory;
-        $this->domain = $domain;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->currentPromoCodeFacade = $currentPromoCodeFacade;
-        $this->productPriceCalculation = $productPriceCalculation;
-        $this->cartItemFactory = $cartItemFactory;
-        $this->cartRepository = $cartRepository;
-        $this->cartWatcherFacade = $cartWatcherFacade;
     }
 
     /**

@@ -9,25 +9,16 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductManualInputPriceFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected ProductManualInputPriceRepository $productManualInputPriceRepository;
-
-    protected ProductManualInputPriceFactoryInterface $productManualInputPriceFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository $productManualInputPriceRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFactoryInterface $productManualInputPriceFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        ProductManualInputPriceRepository $productManualInputPriceRepository,
-        ProductManualInputPriceFactoryInterface $productManualInputPriceFactory
+        protected readonly EntityManagerInterface $em,
+        protected readonly ProductManualInputPriceRepository $productManualInputPriceRepository,
+        protected readonly ProductManualInputPriceFactoryInterface $productManualInputPriceFactory
     ) {
-        $this->em = $em;
-        $this->productManualInputPriceRepository = $productManualInputPriceRepository;
-        $this->productManualInputPriceFactory = $productManualInputPriceFactory;
     }
 
     /**

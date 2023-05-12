@@ -8,14 +8,11 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig
 
 class UploadedFileDataFactory implements UploadedFileDataFactoryInterface
 {
-    protected UploadedFileFacade $uploadedFileFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      */
-    public function __construct(UploadedFileFacade $uploadedFileFacade)
+    public function __construct(protected readonly UploadedFileFacade $uploadedFileFacade)
     {
-        $this->uploadedFileFacade = $uploadedFileFacade;
     }
 
     /**

@@ -11,14 +11,11 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class DomainChoiceHandler
 {
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(Domain $domain)
+    public function __construct(protected readonly Domain $domain)
     {
-        $this->domain = $domain;
     }
 
     /**

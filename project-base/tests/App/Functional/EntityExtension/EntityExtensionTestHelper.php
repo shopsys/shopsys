@@ -13,25 +13,16 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 
 class EntityExtensionTestHelper
 {
-    private EntityManagerDecorator $em;
-
-    private OverwritableEntityNameResolver $overwritableEntityNameResolver;
-
-    private OverwritableEntityExtensionSubscriber $overwritableEntityExtensionSubscriber;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Tests\App\Functional\EntityExtension\OverwritableEntityNameResolver $overwritableEntityNameResolver
      * @param \Tests\App\Functional\EntityExtension\OverwritableEntityExtensionSubscriber $overwritableEntityExtensionSubscriber
      */
     public function __construct(
-        EntityManagerDecorator $em,
-        OverwritableEntityNameResolver $overwritableEntityNameResolver,
-        OverwritableEntityExtensionSubscriber $overwritableEntityExtensionSubscriber
+        private readonly EntityManagerDecorator $em,
+        private readonly OverwritableEntityNameResolver $overwritableEntityNameResolver,
+        private readonly OverwritableEntityExtensionSubscriber $overwritableEntityExtensionSubscriber
     ) {
-        $this->em = $em;
-        $this->overwritableEntityNameResolver = $overwritableEntityNameResolver;
-        $this->overwritableEntityExtensionSubscriber = $overwritableEntityExtensionSubscriber;
     }
 
     /**

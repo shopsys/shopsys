@@ -9,21 +9,12 @@ use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
 class MoneyConvertingDataSourceDecorator implements DataSourceInterface
 {
-    protected DataSourceInterface $innerDataSource;
-
-    /**
-     * @var string[]
-     */
-    protected array $moneyColumnNames;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface $innerDataSource
      * @param string[] $moneyColumnNames
      */
-    public function __construct(DataSourceInterface $innerDataSource, array $moneyColumnNames)
+    public function __construct(protected readonly DataSourceInterface $innerDataSource, protected readonly array $moneyColumnNames)
     {
-        $this->innerDataSource = $innerDataSource;
-        $this->moneyColumnNames = $moneyColumnNames;
     }
 
     /**

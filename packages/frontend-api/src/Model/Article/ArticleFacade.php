@@ -8,14 +8,11 @@ use Shopsys\FrameworkBundle\Model\Article\Article;
 
 class ArticleFacade
 {
-    protected ArticleRepository $articleRepository;
-
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Article\ArticleRepository $articleRepository
      */
-    public function __construct(ArticleRepository $articleRepository)
+    public function __construct(protected readonly ArticleRepository $articleRepository)
     {
-        $this->articleRepository = $articleRepository;
     }
 
     /**

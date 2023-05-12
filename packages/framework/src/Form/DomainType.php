@@ -11,14 +11,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DomainType extends AbstractType
 {
-    private Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(Domain $domain)
+    public function __construct(private readonly Domain $domain)
     {
-        $this->domain = $domain;
     }
 
     /**

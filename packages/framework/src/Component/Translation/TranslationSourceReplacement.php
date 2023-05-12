@@ -11,22 +11,16 @@ class TranslationSourceReplacement
     protected string $domain;
 
     /**
-     * @var string[]
-     */
-    protected array $sourceFileReferences;
-
-    /**
      * @param string $oldSource
      * @param string $newSource
      * @param string $domain
      * @param string[] $sourceFileReferences
      */
-    public function __construct($oldSource, $newSource, $domain, array $sourceFileReferences)
+    public function __construct($oldSource, $newSource, $domain, protected readonly array $sourceFileReferences)
     {
         $this->oldSource = $oldSource;
         $this->newSource = $newSource;
         $this->domain = $domain;
-        $this->sourceFileReferences = $sourceFileReferences;
     }
 
     /**

@@ -8,20 +8,14 @@ use Symfony\Bridge\Monolog\Logger;
 
 class HourlyFeedCronModule implements SimpleCronModuleInterface
 {
-    protected FeedFacade $feedFacade;
-
-    protected Domain $domain;
-
     protected Logger $logger;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedFacade $feedFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(FeedFacade $feedFacade, Domain $domain)
+    public function __construct(protected readonly FeedFacade $feedFacade, protected readonly Domain $domain)
     {
-        $this->feedFacade = $feedFacade;
-        $this->domain = $domain;
     }
 
     /**

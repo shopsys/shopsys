@@ -7,14 +7,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class PluginCrudExtensionFacade
 {
-    protected PluginCrudExtensionRegistry $pluginCrudExtensionRegistry;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionRegistry $pluginCrudExtensionRegistry
      */
-    public function __construct(PluginCrudExtensionRegistry $pluginCrudExtensionRegistry)
+    public function __construct(protected readonly PluginCrudExtensionRegistry $pluginCrudExtensionRegistry)
     {
-        $this->pluginCrudExtensionRegistry = $pluginCrudExtensionRegistry;
     }
 
     /**

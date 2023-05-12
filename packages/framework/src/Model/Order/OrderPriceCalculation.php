@@ -13,20 +13,14 @@ use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
 
 class OrderPriceCalculation
 {
-    protected OrderItemPriceCalculation $orderItemPriceCalculation;
-
-    protected Rounding $rounding;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
      */
     public function __construct(
-        OrderItemPriceCalculation $orderItemPriceCalculation,
-        Rounding $rounding
+        protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
+        protected readonly Rounding $rounding
     ) {
-        $this->orderItemPriceCalculation = $orderItemPriceCalculation;
-        $this->rounding = $rounding;
     }
 
     /**

@@ -10,25 +10,16 @@ use Shopsys\FrameworkBundle\Model\Security\Roles;
 
 class AdministratorRoleFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected AdministratorRoleFactoryInterface $administratorRoleFactory;
-
-    protected AdministratorRoleDataFactoryInterface $administratorRoleDataFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFactoryInterface $administratorRoleFactory
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleDataFactoryInterface $administratorRoleDataFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        AdministratorRoleFactoryInterface $administratorRoleFactory,
-        AdministratorRoleDataFactoryInterface $administratorRoleDataFactory
+        protected readonly EntityManagerInterface $em,
+        protected readonly AdministratorRoleFactoryInterface $administratorRoleFactory,
+        protected readonly AdministratorRoleDataFactoryInterface $administratorRoleDataFactory
     ) {
-        $this->em = $em;
-        $this->administratorRoleFactory = $administratorRoleFactory;
-        $this->administratorRoleDataFactory = $administratorRoleDataFactory;
     }
 
     /**

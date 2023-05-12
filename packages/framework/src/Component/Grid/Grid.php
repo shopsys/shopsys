@@ -59,16 +59,6 @@ class Grid
      */
     protected array $rows = [];
 
-    protected RequestStack $requestStack;
-
-    protected RouterInterface $router;
-
-    protected RouteCsrfProtector $routeCsrfProtector;
-
-    protected Environment $twig;
-
-    protected DataSourceInterface $dataSource;
-
     protected string $actionColumnClassAttribute = '';
 
     protected ?GridInlineEditInterface $inlineEditService = null;
@@ -104,11 +94,11 @@ class Grid
      */
     public function __construct(
         $id,
-        DataSourceInterface $dataSource,
-        RequestStack $requestStack,
-        RouterInterface $router,
-        RouteCsrfProtector $routeCsrfProtector,
-        Environment $twig
+        protected readonly DataSourceInterface $dataSource,
+        protected readonly RequestStack $requestStack,
+        protected readonly RouterInterface $router,
+        protected readonly RouteCsrfProtector $routeCsrfProtector,
+        protected readonly Environment $twig
     ) {
         if ($id === '') {
             $message = 'Grid id cannot be empty.';
@@ -117,11 +107,6 @@ class Grid
         }
 
         $this->id = $id;
-        $this->dataSource = $dataSource;
-        $this->requestStack = $requestStack;
-        $this->router = $router;
-        $this->routeCsrfProtector = $routeCsrfProtector;
-        $this->twig = $twig;
 
         $this->limit = static::DEFAULT_LIMIT;
         $this->page = 1;

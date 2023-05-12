@@ -11,14 +11,6 @@ use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface;
 
 class HomepageController extends FrontBaseController
 {
-    private SeoSettingFacade $seoSettingFacade;
-
-    private SliderItemFacade $sliderItemFacade;
-
-    private Domain $domain;
-
-    private ListedProductViewFacadeInterface $listedProductViewFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade $sliderItemFacade
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
@@ -26,15 +18,11 @@ class HomepageController extends FrontBaseController
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade $listedProductViewFacade
      */
     public function __construct(
-        SliderItemFacade $sliderItemFacade,
-        SeoSettingFacade $seoSettingFacade,
-        Domain $domain,
-        ListedProductViewFacadeInterface $listedProductViewFacade
+        private readonly SliderItemFacade $sliderItemFacade,
+        private readonly SeoSettingFacade $seoSettingFacade,
+        private readonly Domain $domain,
+        private readonly ListedProductViewFacadeInterface $listedProductViewFacade
     ) {
-        $this->sliderItemFacade = $sliderItemFacade;
-        $this->seoSettingFacade = $seoSettingFacade;
-        $this->domain = $domain;
-        $this->listedProductViewFacade = $listedProductViewFacade;
     }
 
     public function indexAction()

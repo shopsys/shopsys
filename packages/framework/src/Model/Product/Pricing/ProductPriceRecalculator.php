@@ -13,16 +13,6 @@ class ProductPriceRecalculator
 {
     protected const BATCH_SIZE = 250;
 
-    protected EntityManagerInterface $em;
-
-    protected ProductPriceCalculation $productPriceCalculation;
-
-    protected ProductCalculatedPriceRepository $productCalculatedPriceRepository;
-
-    protected ProductPriceRecalculationScheduler $productPriceRecalculationScheduler;
-
-    protected PricingGroupFacade $pricingGroupFacade;
-
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[]|null
      */
@@ -41,17 +31,12 @@ class ProductPriceRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      */
     public function __construct(
-        EntityManagerInterface $em,
-        ProductPriceCalculation $productPriceCalculation,
-        ProductCalculatedPriceRepository $productCalculatedPriceRepository,
-        ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
-        PricingGroupFacade $pricingGroupFacade
+        protected readonly EntityManagerInterface $em,
+        protected readonly ProductPriceCalculation $productPriceCalculation,
+        protected readonly ProductCalculatedPriceRepository $productCalculatedPriceRepository,
+        protected readonly ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
+        protected readonly PricingGroupFacade $pricingGroupFacade
     ) {
-        $this->em = $em;
-        $this->productPriceCalculation = $productPriceCalculation;
-        $this->productCalculatedPriceRepository = $productCalculatedPriceRepository;
-        $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
-        $this->pricingGroupFacade = $pricingGroupFacade;
     }
 
     /**

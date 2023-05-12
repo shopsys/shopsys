@@ -7,14 +7,11 @@ use GuzzleHttp\RequestOptions;
 
 class MicroserviceClient
 {
-    protected Client $guzzleClient;
-
     /**
      * @param \GuzzleHttp\Client $guzzleClient
      */
-    public function __construct(Client $guzzleClient)
+    public function __construct(protected readonly Client $guzzleClient)
     {
-        $this->guzzleClient = $guzzleClient;
     }
 
     /**

@@ -13,18 +13,12 @@ class CurrencyFormatterFactory
 {
     public const MAXIMUM_FRACTION_DIGITS = 10;
 
-    protected NumberFormatRepositoryInterface $numberFormatRepository;
-
-    protected CurrencyRepositoryInterface $intlCurrencyRepository;
-
     /**
      * @param \CommerceGuys\Intl\NumberFormat\NumberFormatRepositoryInterface $numberFormatRepository
      * @param \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface $intlCurrencyRepository
      */
-    public function __construct(NumberFormatRepositoryInterface $numberFormatRepository, CurrencyRepositoryInterface $intlCurrencyRepository)
+    public function __construct(protected readonly NumberFormatRepositoryInterface $numberFormatRepository, protected readonly CurrencyRepositoryInterface $intlCurrencyRepository)
     {
-        $this->numberFormatRepository = $numberFormatRepository;
-        $this->intlCurrencyRepository = $intlCurrencyRepository;
     }
 
     /**

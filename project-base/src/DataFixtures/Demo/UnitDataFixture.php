@@ -18,14 +18,6 @@ class UnitDataFixture extends AbstractReferenceFixture
     public const UNIT_CUBIC_METERS = 'unit_m3';
     public const UNIT_PIECES = 'unit_pcs';
 
-    private UnitFacade $unitFacade;
-
-    private UnitDataFactoryInterface $unitDataFactory;
-
-    private Setting $setting;
-
-    private Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactory $unitDataFactory
@@ -33,15 +25,11 @@ class UnitDataFixture extends AbstractReferenceFixture
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        UnitFacade $unitFacade,
-        UnitDataFactoryInterface $unitDataFactory,
-        Setting $setting,
-        Domain $domain
+        private readonly UnitFacade $unitFacade,
+        private readonly UnitDataFactoryInterface $unitDataFactory,
+        private readonly Setting $setting,
+        private readonly Domain $domain
     ) {
-        $this->unitFacade = $unitFacade;
-        $this->unitDataFactory = $unitDataFactory;
-        $this->setting = $setting;
-        $this->domain = $domain;
     }
 
     /**

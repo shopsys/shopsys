@@ -7,20 +7,14 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalcul
 
 class ProductFactory implements ProductFactoryInterface
 {
-    protected EntityNameResolver $entityNameResolver;
-
-    protected ProductAvailabilityCalculation $productAvailabilityCalculation;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation $productAvailabilityCalculation
      */
     public function __construct(
-        EntityNameResolver $entityNameResolver,
-        ProductAvailabilityCalculation $productAvailabilityCalculation
+        protected readonly EntityNameResolver $entityNameResolver,
+        protected readonly ProductAvailabilityCalculation $productAvailabilityCalculation
     ) {
-        $this->entityNameResolver = $entityNameResolver;
-        $this->productAvailabilityCalculation = $productAvailabilityCalculation;
     }
 
     /**

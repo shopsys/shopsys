@@ -30,14 +30,6 @@ class PersonalInfoFormType extends AbstractType
     public const VALIDATION_GROUP_COMPANY_CUSTOMER = 'companyCustomer';
     public const VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS = 'differentDeliveryAddress';
 
-    private CountryFacade $countryFacade;
-
-    private HeurekaFacade $heurekaFacade;
-
-    private Domain $domain;
-
-    private CurrentCustomerUser $currentCustomerUser;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
@@ -45,15 +37,11 @@ class PersonalInfoFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      */
     public function __construct(
-        CountryFacade $countryFacade,
-        HeurekaFacade $heurekaFacade,
-        Domain $domain,
-        CurrentCustomerUser $currentCustomerUser
+        private readonly CountryFacade $countryFacade,
+        private readonly HeurekaFacade $heurekaFacade,
+        private readonly Domain $domain,
+        private readonly CurrentCustomerUser $currentCustomerUser
     ) {
-        $this->countryFacade = $countryFacade;
-        $this->heurekaFacade = $heurekaFacade;
-        $this->domain = $domain;
-        $this->currentCustomerUser = $currentCustomerUser;
     }
 
     /**

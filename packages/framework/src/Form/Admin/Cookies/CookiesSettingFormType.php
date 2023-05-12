@@ -12,14 +12,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CookiesSettingFormType extends AbstractType
 {
-    private ArticleFacade $articleFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
      */
-    public function __construct(ArticleFacade $articleFacade)
+    public function __construct(private readonly ArticleFacade $articleFacade)
     {
-        $this->articleFacade = $articleFacade;
     }
 
     /**

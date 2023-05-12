@@ -9,14 +9,11 @@ class ProductPriceCronModule implements IteratedCronModuleInterface
 {
     protected Logger $logger;
 
-    protected ProductPriceRecalculator $productPriceRecalculator;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator $productPriceRecalculator
      */
-    public function __construct(ProductPriceRecalculator $productPriceRecalculator)
+    public function __construct(protected readonly ProductPriceRecalculator $productPriceRecalculator)
     {
-        $this->productPriceRecalculator = $productPriceRecalculator;
     }
 
     /**

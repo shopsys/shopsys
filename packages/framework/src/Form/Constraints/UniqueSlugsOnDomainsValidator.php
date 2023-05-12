@@ -12,18 +12,12 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UniqueSlugsOnDomainsValidator extends ConstraintValidator
 {
-    protected Domain $domain;
-
-    protected DomainRouterFactory $domainRouterFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      */
-    public function __construct(Domain $domain, DomainRouterFactory $domainRouterFactory)
+    public function __construct(protected readonly Domain $domain, protected readonly DomainRouterFactory $domainRouterFactory)
     {
-        $this->domain = $domain;
-        $this->domainRouterFactory = $domainRouterFactory;
     }
 
     /**

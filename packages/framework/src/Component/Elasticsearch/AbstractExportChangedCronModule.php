@@ -12,16 +12,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 abstract class AbstractExportChangedCronModule implements SimpleCronModuleInterface
 {
-    protected AbstractIndex $index;
-
-    protected IndexFacade $indexFacade;
-
-    protected IndexDefinitionLoader $indexDefinitionLoader;
-
-    protected Domain $domain;
-
-    protected EventDispatcherInterface $eventDispatcher;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade $indexFacade
@@ -30,17 +20,12 @@ abstract class AbstractExportChangedCronModule implements SimpleCronModuleInterf
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
-        AbstractIndex $index,
-        IndexFacade $indexFacade,
-        IndexDefinitionLoader $indexDefinitionLoader,
-        Domain $domain,
-        EventDispatcherInterface $eventDispatcher
+        protected readonly AbstractIndex $index,
+        protected readonly IndexFacade $indexFacade,
+        protected readonly IndexDefinitionLoader $indexDefinitionLoader,
+        protected readonly Domain $domain,
+        protected readonly EventDispatcherInterface $eventDispatcher
     ) {
-        $this->index = $index;
-        $this->indexFacade = $indexFacade;
-        $this->indexDefinitionLoader = $indexDefinitionLoader;
-        $this->domain = $domain;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**

@@ -8,18 +8,12 @@ use Symfony\Component\Routing\RouterInterface;
 
 class AdminLogoutHandler
 {
-    protected RouterInterface $router;
-
-    protected AdministratorLoginFacade $administratorLoginFacade;
-
     /**
      * @param \Symfony\Component\Routing\RouterInterface $router
      * @param \Shopsys\FrameworkBundle\Model\Security\AdministratorLoginFacade $administratorLoginFacade
      */
-    public function __construct(RouterInterface $router, AdministratorLoginFacade $administratorLoginFacade)
+    public function __construct(protected readonly RouterInterface $router, protected readonly AdministratorLoginFacade $administratorLoginFacade)
     {
-        $this->router = $router;
-        $this->administratorLoginFacade = $administratorLoginFacade;
     }
 
     /**

@@ -8,25 +8,16 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 
 class NewsletterFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected NewsletterRepository $newsletterRepository;
-
-    protected NewsletterSubscriberFactoryInterface $newsletterSubscriberFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterRepository $newsletterRepository
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriberFactoryInterface $newsletterSubscriberFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        NewsletterRepository $newsletterRepository,
-        NewsletterSubscriberFactoryInterface $newsletterSubscriberFactory
+        protected readonly EntityManagerInterface $em,
+        protected readonly NewsletterRepository $newsletterRepository,
+        protected readonly NewsletterSubscriberFactoryInterface $newsletterSubscriberFactory
     ) {
-        $this->em = $em;
-        $this->newsletterRepository = $newsletterRepository;
-        $this->newsletterSubscriberFactory = $newsletterSubscriberFactory;
     }
 
     /**

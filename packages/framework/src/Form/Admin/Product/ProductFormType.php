@@ -57,30 +57,6 @@ class ProductFormType extends AbstractType
     public const VALIDATION_GROUP_NOT_USING_STOCK = 'notUsingStock';
     public const CSRF_TOKEN_ID = 'product_edit_type';
 
-    private VatFacade $vatFacade;
-
-    private AvailabilityFacade $availabilityFacade;
-
-    private BrandFacade $brandFacade;
-
-    private FlagFacade $flagFacade;
-
-    private UnitFacade $unitFacade;
-
-    private Domain $domain;
-
-    private SeoSettingFacade $seoSettingFacade;
-
-    private CategoryFacade $categoryFacade;
-
-    private RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer;
-
-    private PricingGroupFacade $pricingGroupFacade;
-
-    private PluginCrudExtensionFacade $pluginDataFormExtensionFacade;
-
-    private ProductParameterValueToProductParameterValuesLocalizedTransformer $productParameterValueToProductParameterValuesLocalizedTransformer;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade $availabilityFacade
@@ -96,31 +72,19 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Form\Transformers\ProductParameterValueToProductParameterValuesLocalizedTransformer $productParameterValueToProductParameterValuesLocalizedTransformer
      */
     public function __construct(
-        VatFacade $vatFacade,
-        AvailabilityFacade $availabilityFacade,
-        BrandFacade $brandFacade,
-        FlagFacade $flagFacade,
-        UnitFacade $unitFacade,
-        Domain $domain,
-        SeoSettingFacade $seoSettingFacade,
-        CategoryFacade $categoryFacade,
-        RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer,
-        PricingGroupFacade $pricingGroupFacade,
-        PluginCrudExtensionFacade $pluginDataFormExtensionFacade,
-        ProductParameterValueToProductParameterValuesLocalizedTransformer $productParameterValueToProductParameterValuesLocalizedTransformer
+        private readonly VatFacade $vatFacade,
+        private readonly AvailabilityFacade $availabilityFacade,
+        private readonly BrandFacade $brandFacade,
+        private readonly FlagFacade $flagFacade,
+        private readonly UnitFacade $unitFacade,
+        private readonly Domain $domain,
+        private readonly SeoSettingFacade $seoSettingFacade,
+        private readonly CategoryFacade $categoryFacade,
+        private readonly RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer,
+        private readonly PricingGroupFacade $pricingGroupFacade,
+        private readonly PluginCrudExtensionFacade $pluginDataFormExtensionFacade,
+        private readonly ProductParameterValueToProductParameterValuesLocalizedTransformer $productParameterValueToProductParameterValuesLocalizedTransformer
     ) {
-        $this->vatFacade = $vatFacade;
-        $this->availabilityFacade = $availabilityFacade;
-        $this->brandFacade = $brandFacade;
-        $this->flagFacade = $flagFacade;
-        $this->unitFacade = $unitFacade;
-        $this->domain = $domain;
-        $this->seoSettingFacade = $seoSettingFacade;
-        $this->categoryFacade = $categoryFacade;
-        $this->removeDuplicatesTransformer = $removeDuplicatesTransformer;
-        $this->pricingGroupFacade = $pricingGroupFacade;
-        $this->pluginDataFormExtensionFacade = $pluginDataFormExtensionFacade;
-        $this->productParameterValueToProductParameterValuesLocalizedTransformer = $productParameterValueToProductParameterValuesLocalizedTransformer;
     }
 
     /**

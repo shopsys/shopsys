@@ -13,16 +13,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class DomainAwareOrderFlowFactory implements OrderFlowFactoryInterface
 {
-    private Domain $domain;
-
-    private EventDispatcherInterface $eventDispatcher;
-
-    private RequestStack $requestStack;
-
-    private FormFactoryInterface $formFactory;
-
-    private DataManager $dataManager;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
@@ -31,17 +21,12 @@ class DomainAwareOrderFlowFactory implements OrderFlowFactoryInterface
      * @param \Craue\FormFlowBundle\Storage\DataManager $dataManager
      */
     public function __construct(
-        Domain $domain,
-        EventDispatcherInterface $eventDispatcher,
-        RequestStack $requestStack,
-        FormFactoryInterface $formFactory,
-        DataManager $dataManager
+        private readonly Domain $domain,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly RequestStack $requestStack,
+        private readonly FormFactoryInterface $formFactory,
+        private readonly DataManager $dataManager
     ) {
-        $this->domain = $domain;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->requestStack = $requestStack;
-        $this->formFactory = $formFactory;
-        $this->dataManager = $dataManager;
     }
 
     /**

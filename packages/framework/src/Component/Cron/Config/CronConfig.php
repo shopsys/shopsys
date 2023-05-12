@@ -12,8 +12,6 @@ use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
 class CronConfig
 {
-    protected CronTimeResolver $cronTimeResolver;
-
     /**
      * @var \Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig[]
      */
@@ -22,9 +20,8 @@ class CronConfig
     /**
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver $cronTimeResolver
      */
-    public function __construct(CronTimeResolver $cronTimeResolver)
+    public function __construct(protected readonly CronTimeResolver $cronTimeResolver)
     {
-        $this->cronTimeResolver = $cronTimeResolver;
         $this->cronModuleConfigs = [];
     }
 

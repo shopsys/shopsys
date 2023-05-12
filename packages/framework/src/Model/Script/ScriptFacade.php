@@ -12,16 +12,6 @@ class ScriptFacade
     public const VARIABLE_NUMBER = '{number}';
     public const VARIABLE_TOTAL_PRICE = '{total_price}';
 
-    protected EntityManagerInterface $em;
-
-    protected ScriptRepository $scriptRepository;
-
-    protected Setting $setting;
-
-    protected ScriptFactoryInterface $scriptFactory;
-
-    protected MoneyExtension $moneyExtension;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Script\ScriptRepository $scriptRepository
@@ -30,17 +20,12 @@ class ScriptFacade
      * @param \Shopsys\FrameworkBundle\Twig\MoneyExtension $moneyExtension
      */
     public function __construct(
-        EntityManagerInterface $em,
-        ScriptRepository $scriptRepository,
-        Setting $setting,
-        ScriptFactoryInterface $scriptFactory,
-        MoneyExtension $moneyExtension
+        protected readonly EntityManagerInterface $em,
+        protected readonly ScriptRepository $scriptRepository,
+        protected readonly Setting $setting,
+        protected readonly ScriptFactoryInterface $scriptFactory,
+        protected readonly MoneyExtension $moneyExtension
     ) {
-        $this->em = $em;
-        $this->scriptRepository = $scriptRepository;
-        $this->setting = $setting;
-        $this->scriptFactory = $scriptFactory;
-        $this->moneyExtension = $moneyExtension;
     }
 
     /**

@@ -15,20 +15,14 @@ use Symfony\Component\Security\Http\SecurityEvents;
 
 class Authenticator
 {
-    protected TokenStorageInterface $tokenStorage;
-
-    protected EventDispatcherInterface $eventDispatcher;
-
     /**
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
-        TokenStorageInterface $tokenStorage,
-        EventDispatcherInterface $eventDispatcher
+        protected readonly TokenStorageInterface $tokenStorage,
+        protected readonly EventDispatcherInterface $eventDispatcher
     ) {
-        $this->tokenStorage = $tokenStorage;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**

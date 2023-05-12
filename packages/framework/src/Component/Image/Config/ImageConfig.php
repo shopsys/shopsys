@@ -16,15 +16,12 @@ class ImageConfig
      */
     protected array $imageEntityConfigsByClass;
 
-    protected EntityNameResolver $entityNameResolver;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[] $imageEntityConfigsByClass
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
-    public function __construct(array $imageEntityConfigsByClass, EntityNameResolver $entityNameResolver)
+    public function __construct(array $imageEntityConfigsByClass, protected readonly EntityNameResolver $entityNameResolver)
     {
-        $this->entityNameResolver = $entityNameResolver;
         $this->setUpImageEntityConfigsByClass($imageEntityConfigsByClass);
     }
 

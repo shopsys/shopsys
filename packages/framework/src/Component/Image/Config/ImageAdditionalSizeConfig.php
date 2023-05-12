@@ -4,22 +4,13 @@ namespace Shopsys\FrameworkBundle\Component\Image\Config;
 
 class ImageAdditionalSizeConfig
 {
-    protected ?int $width = null;
-
-    protected ?int $height = null;
-
-    protected string $media;
-
     /**
      * @param int|null $width
      * @param int|null $height
      * @param string $media
      */
-    public function __construct(?int $width, ?int $height, string $media)
+    public function __construct(protected readonly ?int $width = null, protected readonly ?int $height = null, protected readonly string $media)
     {
-        $this->width = $width;
-        $this->height = $height;
-        $this->media = $media;
     }
 
     /**

@@ -19,20 +19,6 @@ class OrderDataFactory
 {
     protected const ORDER_ORIGIN_GRAPHQL = 'Frontend API';
 
-    protected Domain $domain;
-
-    protected PaymentFacade $paymentFacade;
-
-    protected TransportFacade $transportFacade;
-
-    protected CurrencyFacade $currencyFacade;
-
-    protected CountryFacade $countryFacade;
-
-    protected OrderDataFactoryInterface $orderDataFactory;
-
-    protected ProductFacade $productFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface $orderDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -43,21 +29,14 @@ class OrderDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
-        OrderDataFactoryInterface $orderDataFactory,
-        Domain $domain,
-        PaymentFacade $paymentFacade,
-        TransportFacade $transportFacade,
-        CurrencyFacade $currencyFacade,
-        CountryFacade $countryFacade,
-        ProductFacade $productFacade
+        protected readonly OrderDataFactoryInterface $orderDataFactory,
+        protected readonly Domain $domain,
+        protected readonly PaymentFacade $paymentFacade,
+        protected readonly TransportFacade $transportFacade,
+        protected readonly CurrencyFacade $currencyFacade,
+        protected readonly CountryFacade $countryFacade,
+        protected readonly ProductFacade $productFacade
     ) {
-        $this->domain = $domain;
-        $this->paymentFacade = $paymentFacade;
-        $this->transportFacade = $transportFacade;
-        $this->currencyFacade = $currencyFacade;
-        $this->countryFacade = $countryFacade;
-        $this->orderDataFactory = $orderDataFactory;
-        $this->productFacade = $productFacade;
     }
 
     /**

@@ -14,26 +14,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class TransportFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected PaymentRepository $paymentRepository;
-
-    protected TransportRepository $transportRepository;
-
-    protected TransportVisibilityCalculation $transportVisibilityCalculation;
-
-    protected Domain $domain;
-
-    protected ImageFacade $imageFacade;
-
-    protected CurrencyFacade $currencyFacade;
-
-    protected TransportPriceCalculation $transportPriceCalculation;
-
-    protected TransportFactoryInterface $transportFactory;
-
-    protected TransportPriceFactoryInterface $transportPriceFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportRepository $transportRepository
@@ -47,27 +27,17 @@ class TransportFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactoryInterface $transportPriceFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        TransportRepository $transportRepository,
-        PaymentRepository $paymentRepository,
-        TransportVisibilityCalculation $transportVisibilityCalculation,
-        Domain $domain,
-        ImageFacade $imageFacade,
-        CurrencyFacade $currencyFacade,
-        TransportPriceCalculation $transportPriceCalculation,
-        TransportFactoryInterface $transportFactory,
-        TransportPriceFactoryInterface $transportPriceFactory
+        protected readonly EntityManagerInterface $em,
+        protected readonly TransportRepository $transportRepository,
+        protected readonly PaymentRepository $paymentRepository,
+        protected readonly TransportVisibilityCalculation $transportVisibilityCalculation,
+        protected readonly Domain $domain,
+        protected readonly ImageFacade $imageFacade,
+        protected readonly CurrencyFacade $currencyFacade,
+        protected readonly TransportPriceCalculation $transportPriceCalculation,
+        protected readonly TransportFactoryInterface $transportFactory,
+        protected readonly TransportPriceFactoryInterface $transportPriceFactory
     ) {
-        $this->em = $em;
-        $this->transportRepository = $transportRepository;
-        $this->paymentRepository = $paymentRepository;
-        $this->transportVisibilityCalculation = $transportVisibilityCalculation;
-        $this->domain = $domain;
-        $this->imageFacade = $imageFacade;
-        $this->currencyFacade = $currencyFacade;
-        $this->transportPriceCalculation = $transportPriceCalculation;
-        $this->transportFactory = $transportFactory;
-        $this->transportPriceFactory = $transportPriceFactory;
     }
 
     /**

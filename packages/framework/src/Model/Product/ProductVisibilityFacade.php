@@ -7,16 +7,13 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class ProductVisibilityFacade
 {
-    protected ProductVisibilityRepository $productVisibilityRepository;
-
     protected bool $recalcVisibilityForMarked = false;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
      */
-    public function __construct(ProductVisibilityRepository $productVisibilityRepository)
+    public function __construct(protected readonly ProductVisibilityRepository $productVisibilityRepository)
     {
-        $this->productVisibilityRepository = $productVisibilityRepository;
     }
 
     public function refreshProductsVisibilityForMarkedDelayed()

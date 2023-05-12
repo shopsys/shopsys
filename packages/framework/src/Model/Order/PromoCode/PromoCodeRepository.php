@@ -7,14 +7,11 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeNotFoundExc
 
 class PromoCodeRepository
 {
-    protected EntityManagerInterface $em;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(protected readonly EntityManagerInterface $em)
     {
-        $this->em = $em;
     }
 
     /**

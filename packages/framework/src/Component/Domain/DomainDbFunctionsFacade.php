@@ -6,18 +6,12 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class DomainDbFunctionsFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected Domain $domain;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(EntityManagerInterface $em, Domain $domain)
+    public function __construct(protected readonly EntityManagerInterface $em, protected readonly Domain $domain)
     {
-        $this->em = $em;
-        $this->domain = $domain;
     }
 
     public function createDomainDbFunctions()

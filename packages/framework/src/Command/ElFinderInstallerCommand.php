@@ -33,19 +33,14 @@ final class ElFinderInstallerCommand extends Command
      */
     protected static $defaultName = 'elfinder:install';
 
-    protected Filesystem $fileSystem;
-
-    protected ParameterBagInterface  $parameterBag;
-
     /**
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem
      * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
      */
-    public function __construct(Filesystem $filesystem, ParameterBagInterface $parameterBag)
-    {
-        $this->fileSystem = $filesystem;
-        $this->parameterBag = $parameterBag;
-
+    public function __construct(
+        protected Filesystem $filesystem,
+        protected readonly ParameterBagInterface $parameterBag,
+    ) {
         parent::__construct();
     }
 
@@ -83,10 +78,10 @@ EOF
 
         $io->note(sprintf('Starting to install elfinder to %s folder', $publicDir));
 
-        $this->fileSystem->mirror($vendorDir . '/' . self::ELFINDER_CSS_DIR, $publicDir . '/css');
-        $this->fileSystem->mirror($vendorDir . '/' . self::ELFINDER_IMG_DIR, $publicDir . '/img');
-        $this->fileSystem->mirror($vendorDir . '/' . self::ELFINDER_JS_DIR, $publicDir . '/js');
-        $this->fileSystem->mirror($vendorDir . '/' . self::ELFINDER_SOUNDS_DIR, $publicDir . '/sounds');
+        $this->filesystem->mirror($vendorDir . '/' . self::ELFINDER_CSS_DIR, $publicDir . '/css');
+        $this->filesystem->mirror($vendorDir . '/' . self::ELFINDER_IMG_DIR, $publicDir . '/img');
+        $this->filesystem->mirror($vendorDir . '/' . self::ELFINDER_JS_DIR, $publicDir . '/js');
+        $this->filesystem->mirror($vendorDir . '/' . self::ELFINDER_SOUNDS_DIR, $publicDir . '/sounds');
 
         $io->success('elFinder assets successfully installed');
 

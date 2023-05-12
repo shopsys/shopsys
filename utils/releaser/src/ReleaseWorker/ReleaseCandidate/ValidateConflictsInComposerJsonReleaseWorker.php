@@ -14,16 +14,10 @@ use Symplify\ComposerJsonManipulator\FileSystem\JsonFileManager;
 
 final class ValidateConflictsInComposerJsonReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    private ComposerJsonFilesProvider $composerJsonFilesProvider;
-
-    private JsonFileManager $jsonFileManager;
-
     /**
      * @var string
      */
     private const CONFLICT_SECTION = 'conflict';
-
-    private IntervalEvaluator $intervalEvaluator;
 
     private const IGNORED_CONFLICT_PACKAGES = [
         'symfony/symfony' => '*',
@@ -35,13 +29,10 @@ final class ValidateConflictsInComposerJsonReleaseWorker extends AbstractShopsys
      * @param \Shopsys\Releaser\IntervalEvaluator $intervalEvaluator
      */
     public function __construct(
-        ComposerJsonFilesProvider $composerJsonFilesProvider,
-        JsonFileManager $jsonFileManager,
-        IntervalEvaluator $intervalEvaluator
+        private readonly ComposerJsonFilesProvider $composerJsonFilesProvider,
+        private readonly JsonFileManager $jsonFileManager,
+        private readonly IntervalEvaluator $intervalEvaluator
     ) {
-        $this->composerJsonFilesProvider = $composerJsonFilesProvider;
-        $this->jsonFileManager = $jsonFileManager;
-        $this->intervalEvaluator = $intervalEvaluator;
     }
 
     /**

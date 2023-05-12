@@ -10,8 +10,6 @@ use Twig\Loader\FilesystemLoader as BaseFilesystemLoader;
 
 class FilesystemLoader extends BaseFilesystemLoader
 {
-    protected ?Domain $domain = null;
-
     /**
      * @param array $paths
      * @param string|null $rootPath
@@ -20,11 +18,10 @@ class FilesystemLoader extends BaseFilesystemLoader
     public function __construct(
         array $paths = [],
         ?string $rootPath = null,
-        ?Domain $domain = null
+        protected readonly ?Domain $domain = null
     ) {
         parent::__construct($paths, $rootPath);
 
-        $this->domain = $domain;
         $this->assertDomainDependency();
     }
 

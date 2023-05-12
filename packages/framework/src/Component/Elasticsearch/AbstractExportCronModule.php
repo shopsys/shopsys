@@ -11,14 +11,6 @@ use Symfony\Component\Console\Output\NullOutput;
 
 abstract class AbstractExportCronModule implements SimpleCronModuleInterface
 {
-    protected AbstractIndex $index;
-
-    protected IndexFacade $indexFacade;
-
-    protected IndexDefinitionLoader $indexDefinitionLoader;
-
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex $index
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade $indexFacade
@@ -26,15 +18,11 @@ abstract class AbstractExportCronModule implements SimpleCronModuleInterface
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        AbstractIndex $index,
-        IndexFacade $indexFacade,
-        IndexDefinitionLoader $indexDefinitionLoader,
-        Domain $domain
+        protected readonly AbstractIndex $index,
+        protected readonly IndexFacade $indexFacade,
+        protected readonly IndexDefinitionLoader $indexDefinitionLoader,
+        protected readonly Domain $domain
     ) {
-        $this->index = $index;
-        $this->indexFacade = $indexFacade;
-        $this->indexDefinitionLoader = $indexDefinitionLoader;
-        $this->domain = $domain;
     }
 
     /**

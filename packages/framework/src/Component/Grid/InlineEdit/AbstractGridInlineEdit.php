@@ -8,14 +8,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractGridInlineEdit implements GridInlineEditInterface
 {
-    protected GridFactoryInterface $gridFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface $gridFactory
      */
-    public function __construct(GridFactoryInterface $gridFactory)
+    public function __construct(protected readonly GridFactoryInterface $gridFactory)
     {
-        $this->gridFactory = $gridFactory;
     }
 
     /**

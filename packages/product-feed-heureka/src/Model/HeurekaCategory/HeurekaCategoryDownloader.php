@@ -9,18 +9,15 @@ class HeurekaCategoryDownloader
 {
     protected string $heurekaCategoryFeedUrl;
 
-    protected HeurekaCategoryDataFactoryInterface $heurekaCategoryDataFactory;
-
     /**
      * @param string $heurekaCategoryFeedUrl
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDataFactoryInterface $heurekaCategoryDataFactory
      */
     public function __construct(
         $heurekaCategoryFeedUrl,
-        HeurekaCategoryDataFactoryInterface $heurekaCategoryDataFactory
+        protected readonly HeurekaCategoryDataFactoryInterface $heurekaCategoryDataFactory
     ) {
         $this->heurekaCategoryFeedUrl = $heurekaCategoryFeedUrl;
-        $this->heurekaCategoryDataFactory = $heurekaCategoryDataFactory;
     }
 
     /**

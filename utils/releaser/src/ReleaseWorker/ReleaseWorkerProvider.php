@@ -9,16 +9,10 @@ use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\StageAwareInterface;
 class ReleaseWorkerProvider
 {
     /**
-     * @var \Shopsys\Releaser\ReleaseWorker\StageWorkerInterface[]
-     */
-    private array $releaseWorkers;
-
-    /**
      * @param \Shopsys\Releaser\ReleaseWorker\StageWorkerInterface[] $releaseWorkers
      */
-    public function __construct(array $releaseWorkers)
+    public function __construct(private readonly array $releaseWorkers)
     {
-        $this->releaseWorkers = $releaseWorkers;
     }
 
     /**

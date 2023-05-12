@@ -20,14 +20,6 @@ abstract class AbstractElasticsearchIndexCommand extends Command
 {
     private const ARGUMENT_INDEX_NAME = 'name';
 
-    protected IndexRegistry $indexRegistry;
-
-    protected IndexFacade $indexFacade;
-
-    protected IndexDefinitionLoader $indexDefinitionLoader;
-
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexRegistry $indexRegistry
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade $indexFacade
@@ -35,16 +27,11 @@ abstract class AbstractElasticsearchIndexCommand extends Command
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        IndexRegistry $indexRegistry,
-        IndexFacade $indexFacade,
-        IndexDefinitionLoader $indexDefinitionLoader,
-        Domain $domain
+        protected readonly IndexRegistry $indexRegistry,
+        protected readonly IndexFacade $indexFacade,
+        protected readonly IndexDefinitionLoader $indexDefinitionLoader,
+        protected readonly Domain $domain
     ) {
-        $this->indexRegistry = $indexRegistry;
-        $this->indexFacade = $indexFacade;
-        $this->indexDefinitionLoader = $indexDefinitionLoader;
-        $this->domain = $domain;
-
         parent::__construct();
     }
 

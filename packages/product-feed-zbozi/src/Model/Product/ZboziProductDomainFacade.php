@@ -8,25 +8,16 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class ZboziProductDomainFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected ZboziProductDomainRepository $zboziProductDomainRepository;
-
-    protected ProductRepository $productRepository;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainRepository $zboziProductDomainRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      */
     public function __construct(
-        EntityManagerInterface $em,
-        ZboziProductDomainRepository $zboziProductDomainRepository,
-        ProductRepository $productRepository
+        protected readonly EntityManagerInterface $em,
+        protected readonly ZboziProductDomainRepository $zboziProductDomainRepository,
+        protected readonly ProductRepository $productRepository
     ) {
-        $this->em = $em;
-        $this->zboziProductDomainRepository = $zboziProductDomainRepository;
-        $this->productRepository = $productRepository;
     }
 
     /**

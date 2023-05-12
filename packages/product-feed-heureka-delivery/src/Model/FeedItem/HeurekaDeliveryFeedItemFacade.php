@@ -7,25 +7,16 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 
 class HeurekaDeliveryFeedItemFacade
 {
-    protected HeurekaDeliveryDataRepository $heurekaDeliveryDataRepository;
-
-    protected HeurekaDeliveryFeedItemFactory $feedItemFactory;
-
-    protected PricingGroupSettingFacade $pricingGroupSettingFacade;
-
     /**
      * @param \Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryDataRepository $heurekaDeliveryDataRepository
      * @param \Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryFeedItemFactory $feedItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      */
     public function __construct(
-        HeurekaDeliveryDataRepository $heurekaDeliveryDataRepository,
-        HeurekaDeliveryFeedItemFactory $feedItemFactory,
-        PricingGroupSettingFacade $pricingGroupSettingFacade
+        protected readonly HeurekaDeliveryDataRepository $heurekaDeliveryDataRepository,
+        protected readonly HeurekaDeliveryFeedItemFactory $feedItemFactory,
+        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade
     ) {
-        $this->heurekaDeliveryDataRepository = $heurekaDeliveryDataRepository;
-        $this->feedItemFactory = $feedItemFactory;
-        $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
     }
 
     /**

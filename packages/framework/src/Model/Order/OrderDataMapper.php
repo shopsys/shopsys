@@ -4,14 +4,11 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 
 class OrderDataMapper
 {
-    protected OrderDataFactoryInterface $orderDataFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface $orderDataFactory
      */
-    public function __construct(OrderDataFactoryInterface $orderDataFactory)
+    public function __construct(protected readonly OrderDataFactoryInterface $orderDataFactory)
     {
-        $this->orderDataFactory = $orderDataFactory;
     }
 
     /**

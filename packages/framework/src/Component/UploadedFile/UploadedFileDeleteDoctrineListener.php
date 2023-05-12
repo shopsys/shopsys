@@ -9,20 +9,14 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 
 class UploadedFileDeleteDoctrineListener
 {
-    protected UploadedFileConfig $uploadedFileConfig;
-
-    protected UploadedFileFacade $uploadedFileFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      */
     public function __construct(
-        UploadedFileConfig $uploadedFileConfig,
-        UploadedFileFacade $uploadedFileFacade
+        protected readonly UploadedFileConfig $uploadedFileConfig,
+        protected readonly UploadedFileFacade $uploadedFileFacade
     ) {
-        $this->uploadedFileConfig = $uploadedFileConfig;
-        $this->uploadedFileFacade = $uploadedFileFacade;
     }
 
     /**

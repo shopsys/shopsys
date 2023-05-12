@@ -10,20 +10,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CookiesController extends AdminBaseController
 {
-    protected AdminDomainTabsFacade $adminDomainTabsFacade;
-
-    protected CookiesFacade $cookiesFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade $cookiesFacade
      */
     public function __construct(
-        AdminDomainTabsFacade $adminDomainTabsFacade,
-        CookiesFacade $cookiesFacade
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly CookiesFacade $cookiesFacade
     ) {
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
-        $this->cookiesFacade = $cookiesFacade;
     }
 
     /**

@@ -24,24 +24,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class OrderController extends AdminBaseController
 {
-    protected BreadcrumbOverrider $breadcrumbOverrider;
-
-    protected AdministratorGridFacade $administratorGridFacade;
-
-    protected AdvancedSearchOrderFacade $advancedSearchOrderFacade;
-
-    protected GridFactory $gridFactory;
-
-    protected OrderItemPriceCalculation $orderItemPriceCalculation;
-
-    protected OrderFacade $orderFacade;
-
-    protected OrderItemFacade $orderItemFacade;
-
-    protected Domain $domain;
-
-    protected OrderDataFactoryInterface $orderDataFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\AdvancedSearchOrderFacade $advancedSearchOrderFacade
@@ -54,25 +36,16 @@ class OrderController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface $orderDataFactory
      */
     public function __construct(
-        OrderFacade $orderFacade,
-        AdvancedSearchOrderFacade $advancedSearchOrderFacade,
-        OrderItemPriceCalculation $orderItemPriceCalculation,
-        AdministratorGridFacade $administratorGridFacade,
-        GridFactory $gridFactory,
-        BreadcrumbOverrider $breadcrumbOverrider,
-        OrderItemFacade $orderItemFacade,
-        Domain $domain,
-        OrderDataFactoryInterface $orderDataFactory
+        protected readonly OrderFacade $orderFacade,
+        protected readonly AdvancedSearchOrderFacade $advancedSearchOrderFacade,
+        protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
+        protected readonly AdministratorGridFacade $administratorGridFacade,
+        protected readonly GridFactory $gridFactory,
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+        protected readonly OrderItemFacade $orderItemFacade,
+        protected readonly Domain $domain,
+        protected readonly OrderDataFactoryInterface $orderDataFactory
     ) {
-        $this->orderFacade = $orderFacade;
-        $this->advancedSearchOrderFacade = $advancedSearchOrderFacade;
-        $this->orderItemPriceCalculation = $orderItemPriceCalculation;
-        $this->administratorGridFacade = $administratorGridFacade;
-        $this->gridFactory = $gridFactory;
-        $this->breadcrumbOverrider = $breadcrumbOverrider;
-        $this->orderItemFacade = $orderItemFacade;
-        $this->domain = $domain;
-        $this->orderDataFactory = $orderDataFactory;
     }
 
     /**

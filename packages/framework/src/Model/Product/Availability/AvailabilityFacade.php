@@ -10,18 +10,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AvailabilityFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected AvailabilityRepository $availabilityRepository;
-
-    protected Setting $setting;
-
-    protected ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler;
-
-    protected AvailabilityFactoryInterface $availabilityFactory;
-
-    protected EventDispatcherInterface $eventDispatcher;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityRepository $availabilityRepository
@@ -31,19 +19,13 @@ class AvailabilityFacade
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
-        EntityManagerInterface $em,
-        AvailabilityRepository $availabilityRepository,
-        Setting $setting,
-        ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
-        AvailabilityFactoryInterface $availabilityFactory,
-        EventDispatcherInterface $eventDispatcher
+        protected readonly EntityManagerInterface $em,
+        protected readonly AvailabilityRepository $availabilityRepository,
+        protected readonly Setting $setting,
+        protected readonly ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
+        protected readonly AvailabilityFactoryInterface $availabilityFactory,
+        protected readonly EventDispatcherInterface $eventDispatcher
     ) {
-        $this->em = $em;
-        $this->availabilityRepository = $availabilityRepository;
-        $this->setting = $setting;
-        $this->productAvailabilityRecalculationScheduler = $productAvailabilityRecalculationScheduler;
-        $this->availabilityFactory = $availabilityFactory;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**

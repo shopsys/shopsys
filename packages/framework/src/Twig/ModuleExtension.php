@@ -8,14 +8,11 @@ use Twig\TwigFunction;
 
 class ModuleExtension extends AbstractExtension
 {
-    protected ModuleFacade $moduleFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      */
-    public function __construct(ModuleFacade $moduleFacade)
+    public function __construct(protected readonly ModuleFacade $moduleFacade)
     {
-        $this->moduleFacade = $moduleFacade;
     }
 
     /**

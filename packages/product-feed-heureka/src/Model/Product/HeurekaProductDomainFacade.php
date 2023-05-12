@@ -8,25 +8,16 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class HeurekaProductDomainFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected HeurekaProductDomainRepository $heurekaProductDomainRepository;
-
-    protected ProductRepository $productRepository;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainRepository $heurekaProductDomainRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      */
     public function __construct(
-        EntityManagerInterface $em,
-        HeurekaProductDomainRepository $heurekaProductDomainRepository,
-        ProductRepository $productRepository
+        protected readonly EntityManagerInterface $em,
+        protected readonly HeurekaProductDomainRepository $heurekaProductDomainRepository,
+        protected readonly ProductRepository $productRepository
     ) {
-        $this->em = $em;
-        $this->heurekaProductDomainRepository = $heurekaProductDomainRepository;
-        $this->productRepository = $productRepository;
     }
 
     /**

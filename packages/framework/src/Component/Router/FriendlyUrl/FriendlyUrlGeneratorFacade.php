@@ -9,14 +9,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class FriendlyUrlGeneratorFacade
 {
-    protected Domain $domain;
-
-    protected DomainRouterFactory $domainRouterFactory;
-
-    protected FriendlyUrlFacade $friendlyUrlFacade;
-
-    protected FriendlyUrlDataProviderRegistry $friendlyUrlDataProviderConfig;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
@@ -24,15 +16,11 @@ class FriendlyUrlGeneratorFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderRegistry $friendlyUrlDataProviderConfig
      */
     public function __construct(
-        Domain $domain,
-        DomainRouterFactory $domainRouterFactory,
-        FriendlyUrlFacade $friendlyUrlFacade,
-        FriendlyUrlDataProviderRegistry $friendlyUrlDataProviderConfig
+        protected readonly Domain $domain,
+        protected readonly DomainRouterFactory $domainRouterFactory,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly FriendlyUrlDataProviderRegistry $friendlyUrlDataProviderConfig
     ) {
-        $this->domain = $domain;
-        $this->domainRouterFactory = $domainRouterFactory;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->friendlyUrlDataProviderConfig = $friendlyUrlDataProviderConfig;
     }
 
     /**

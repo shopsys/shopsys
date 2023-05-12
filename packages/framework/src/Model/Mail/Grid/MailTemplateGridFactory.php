@@ -15,14 +15,6 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateRepository;
 
 class MailTemplateGridFactory implements GridFactoryInterface
 {
-    protected GridFactory $gridFactory;
-
-    protected MailTemplateRepository $mailTemplateRepository;
-
-    protected AdminDomainTabsFacade $adminDomainTabsFacade;
-
-    protected MailTemplateConfiguration $mailTemplateConfiguration;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateRepository $mailTemplateRepository
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
@@ -30,15 +22,11 @@ class MailTemplateGridFactory implements GridFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration $mailTemplateConfiguration
      */
     public function __construct(
-        MailTemplateRepository $mailTemplateRepository,
-        GridFactory $gridFactory,
-        AdminDomainTabsFacade $adminDomainTabsFacade,
-        MailTemplateConfiguration $mailTemplateConfiguration
+        protected readonly MailTemplateRepository $mailTemplateRepository,
+        protected readonly GridFactory $gridFactory,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly MailTemplateConfiguration $mailTemplateConfiguration
     ) {
-        $this->gridFactory = $gridFactory;
-        $this->mailTemplateRepository = $mailTemplateRepository;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
-        $this->mailTemplateConfiguration = $mailTemplateConfiguration;
     }
 
     /**

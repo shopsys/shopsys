@@ -9,14 +9,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class FlagFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected FlagRepository $flagRepository;
-
-    protected FlagFactory $flagFactory;
-
-    protected EventDispatcherInterface $eventDispatcher;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository $flagRepository
@@ -24,15 +16,11 @@ class FlagFacade
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
-        EntityManagerInterface $em,
-        FlagRepository $flagRepository,
-        FlagFactory $flagFactory,
-        EventDispatcherInterface $eventDispatcher
+        protected readonly EntityManagerInterface $em,
+        protected readonly FlagRepository $flagRepository,
+        protected readonly FlagFactory $flagFactory,
+        protected readonly EventDispatcherInterface $eventDispatcher
     ) {
-        $this->em = $em;
-        $this->flagRepository = $flagRepository;
-        $this->flagFactory = $flagFactory;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**

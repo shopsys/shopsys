@@ -7,11 +7,6 @@ namespace Shopsys\FrameworkBundle\Migrations\DataModifiers;
 class CountryDataModifierVersion20190121094400
 {
     /**
-     * @var mixed[]
-     */
-    private array $data;
-
-    /**
      * @var array<int, int>
      */
     private array $tmpIds;
@@ -19,9 +14,8 @@ class CountryDataModifierVersion20190121094400
     /**
      * @param array $data
      */
-    public function __construct(array $data)
+    public function __construct(private readonly array $data)
     {
-        $this->data = $data;
         $this->tmpIds = [];
     }
 

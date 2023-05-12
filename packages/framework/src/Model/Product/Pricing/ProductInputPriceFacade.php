@@ -12,20 +12,10 @@ class ProductInputPriceFacade
 {
     protected const BATCH_SIZE = 50;
 
-    protected EntityManagerInterface $em;
-
-    protected PricingSetting $pricingSetting;
-
-    protected ProductManualInputPriceRepository $productManualInputPriceRepository;
-
-    protected ProductRepository $productRepository;
-
     /**
      * @var \Doctrine\ORM\Internal\Hydration\IterableResult|\Shopsys\FrameworkBundle\Model\Product\Product[][]|null
      */
     protected IterableResult|array|null $productRowsIterator = null;
-
-    protected ProductInputPriceRecalculator $productInputPriceRecalculator;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -35,17 +25,12 @@ class ProductInputPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceRecalculator $productInputPriceRecalculator
      */
     public function __construct(
-        EntityManagerInterface $em,
-        PricingSetting $pricingSetting,
-        ProductManualInputPriceRepository $productManualInputPriceRepository,
-        ProductRepository $productRepository,
-        ProductInputPriceRecalculator $productInputPriceRecalculator
+        protected readonly EntityManagerInterface $em,
+        protected readonly PricingSetting $pricingSetting,
+        protected readonly ProductManualInputPriceRepository $productManualInputPriceRepository,
+        protected readonly ProductRepository $productRepository,
+        protected readonly ProductInputPriceRecalculator $productInputPriceRecalculator
     ) {
-        $this->em = $em;
-        $this->pricingSetting = $pricingSetting;
-        $this->productManualInputPriceRepository = $productManualInputPriceRepository;
-        $this->productRepository = $productRepository;
-        $this->productInputPriceRecalculator = $productInputPriceRecalculator;
     }
 
     /**

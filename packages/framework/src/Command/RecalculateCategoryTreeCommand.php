@@ -19,16 +19,12 @@ class RecalculateCategoryTreeCommand extends Command
      */
     protected static $defaultName = 'shopsys:categories:recalculate';
 
-    protected CategoryFacade $categoryFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      */
-    public function __construct(CategoryFacade $categoryFacade)
+    public function __construct(protected readonly CategoryFacade $categoryFacade)
     {
         parent::__construct();
-
-        $this->categoryFacade = $categoryFacade;
     }
 
     protected function configure(): void

@@ -10,16 +10,6 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 
 class ProductFilterConfigFactory
 {
-    protected ParameterFilterChoiceRepository $parameterFilterChoiceRepository;
-
-    protected FlagFilterChoiceRepository $flagFilterChoiceRepository;
-
-    protected CurrentCustomerUser $currentCustomerUser;
-
-    protected BrandFilterChoiceRepository $brandFilterChoiceRepository;
-
-    protected PriceRangeRepository $priceRangeRepository;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository $parameterFilterChoiceRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\FlagFilterChoiceRepository $flagFilterChoiceRepository
@@ -28,17 +18,12 @@ class ProductFilterConfigFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository $priceRangeRepository
      */
     public function __construct(
-        ParameterFilterChoiceRepository $parameterFilterChoiceRepository,
-        FlagFilterChoiceRepository $flagFilterChoiceRepository,
-        CurrentCustomerUser $currentCustomerUser,
-        BrandFilterChoiceRepository $brandFilterChoiceRepository,
-        PriceRangeRepository $priceRangeRepository
+        protected readonly ParameterFilterChoiceRepository $parameterFilterChoiceRepository,
+        protected readonly FlagFilterChoiceRepository $flagFilterChoiceRepository,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly BrandFilterChoiceRepository $brandFilterChoiceRepository,
+        protected readonly PriceRangeRepository $priceRangeRepository
     ) {
-        $this->parameterFilterChoiceRepository = $parameterFilterChoiceRepository;
-        $this->flagFilterChoiceRepository = $flagFilterChoiceRepository;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->brandFilterChoiceRepository = $brandFilterChoiceRepository;
-        $this->priceRangeRepository = $priceRangeRepository;
     }
 
     /**

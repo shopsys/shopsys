@@ -10,20 +10,14 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 
 class ProductElasticsearchProvider
 {
-    protected ProductElasticsearchRepository $productElasticsearchRepository;
-
-    protected FilterQueryFactory $filterQueryFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory
      */
     public function __construct(
-        ProductElasticsearchRepository $productElasticsearchRepository,
-        FilterQueryFactory $filterQueryFactory
+        protected readonly ProductElasticsearchRepository $productElasticsearchRepository,
+        protected readonly FilterQueryFactory $filterQueryFactory
     ) {
-        $this->productElasticsearchRepository = $productElasticsearchRepository;
-        $this->filterQueryFactory = $filterQueryFactory;
     }
 
     /**

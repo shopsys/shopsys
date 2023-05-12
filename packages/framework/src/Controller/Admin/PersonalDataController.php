@@ -10,20 +10,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PersonalDataController extends AdminBaseController
 {
-    protected AdminDomainTabsFacade $adminDomainTabsFacade;
-
-    protected Setting $setting;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
     public function __construct(
-        AdminDomainTabsFacade $adminDomainTabsFacade,
-        Setting $setting
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly Setting $setting
     ) {
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
-        $this->setting = $setting;
     }
 
     /**

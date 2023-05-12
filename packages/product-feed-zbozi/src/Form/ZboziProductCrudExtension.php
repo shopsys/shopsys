@@ -10,25 +10,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ZboziProductCrudExtension implements PluginCrudExtensionInterface
 {
-    private TranslatorInterface $translator;
-
-    private ZboziProductDomainFacade $zboziProductDomainFacade;
-
-    private ZboziProductDomainDataFactoryInterface $zboziProductDomainDataFactory;
-
     /**
      * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainFacade $zboziProductDomainFacade
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainDataFactoryInterface $zboziProductDomainDataFactory
      */
     public function __construct(
-        TranslatorInterface $translator,
-        ZboziProductDomainFacade $zboziProductDomainFacade,
-        ZboziProductDomainDataFactoryInterface $zboziProductDomainDataFactory
+        private readonly TranslatorInterface $translator,
+        private readonly ZboziProductDomainFacade $zboziProductDomainFacade,
+        private readonly ZboziProductDomainDataFactoryInterface $zboziProductDomainDataFactory
     ) {
-        $this->translator = $translator;
-        $this->zboziProductDomainFacade = $zboziProductDomainFacade;
-        $this->zboziProductDomainDataFactory = $zboziProductDomainDataFactory;
     }
 
     /**

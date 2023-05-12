@@ -8,21 +8,12 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 
 class ParameterWithValues
 {
-    protected Parameter $parameter;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
-     */
-    protected array $values;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $values
      */
-    public function __construct(Parameter $parameter, array $values)
+    public function __construct(protected readonly Parameter $parameter, protected readonly array $values)
     {
-        $this->parameter = $parameter;
-        $this->values = $values;
     }
 
     /**

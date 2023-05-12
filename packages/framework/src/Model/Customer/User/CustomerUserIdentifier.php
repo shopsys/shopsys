@@ -8,21 +8,17 @@ class CustomerUserIdentifier
 {
     protected string $cartIdentifier = '';
 
-    protected ?CustomerUser $customerUser = null;
-
     /**
      * @param string $cartIdentifier
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      */
-    public function __construct($cartIdentifier, ?CustomerUser $customerUser = null)
+    public function __construct($cartIdentifier, protected readonly ?CustomerUser $customerUser = null)
     {
         if ($cartIdentifier === '' && $customerUser === null) {
             $message = 'Can not be created empty CustomerUserIdentifier';
 
             throw new EmptyCustomerUserIdentifierException($message);
         }
-
-        $this->customerUser = $customerUser;
 
         if ($this->customerUser === null) {
             $this->cartIdentifier = $cartIdentifier;

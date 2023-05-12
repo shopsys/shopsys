@@ -40,58 +40,6 @@ class OrderFacade
     public const VARIABLE_PAYMENT_INSTRUCTIONS = '{payment_instructions}';
     public const VARIABLE_TRANSPORT_INSTRUCTIONS = '{transport_instructions}';
 
-    protected EntityManagerInterface $em;
-
-    protected OrderNumberSequenceRepository $orderNumberSequenceRepository;
-
-    protected OrderRepository $orderRepository;
-
-    protected OrderUrlGenerator $orderUrlGenerator;
-
-    protected OrderStatusRepository $orderStatusRepository;
-
-    protected OrderMailFacade $orderMailFacade;
-
-    protected OrderHashGeneratorRepository $orderHashGeneratorRepository;
-
-    protected Setting $setting;
-
-    protected Localization $localization;
-
-    protected AdministratorFrontSecurityFacade $administratorFrontSecurityFacade;
-
-    protected CurrentPromoCodeFacade $currentPromoCodeFacade;
-
-    protected CartFacade $cartFacade;
-
-    protected CustomerUserFacade $customerUserFacade;
-
-    protected CurrentCustomerUser $currentCustomerUser;
-
-    protected OrderPreviewFactory $orderPreviewFactory;
-
-    protected OrderProductFacade $orderProductFacade;
-
-    protected HeurekaFacade $heurekaFacade;
-
-    protected Domain $domain;
-
-    protected OrderFactoryInterface $orderFactory;
-
-    protected OrderPriceCalculation $orderPriceCalculation;
-
-    protected OrderItemPriceCalculation $orderItemPriceCalculation;
-
-    protected FrontOrderDataMapper $frontOrderDataMapper;
-
-    protected NumberFormatterExtension $numberFormatterExtension;
-
-    protected PaymentPriceCalculation $paymentPriceCalculation;
-
-    protected TransportPriceCalculation $transportPriceCalculation;
-
-    protected OrderItemFactoryInterface $orderItemFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository $orderNumberSequenceRepository
@@ -121,59 +69,33 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface $orderItemFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        OrderNumberSequenceRepository $orderNumberSequenceRepository,
-        OrderRepository $orderRepository,
-        OrderUrlGenerator $orderUrlGenerator,
-        OrderStatusRepository $orderStatusRepository,
-        OrderMailFacade $orderMailFacade,
-        OrderHashGeneratorRepository $orderHashGeneratorRepository,
-        Setting $setting,
-        Localization $localization,
-        AdministratorFrontSecurityFacade $administratorFrontSecurityFacade,
-        CurrentPromoCodeFacade $currentPromoCodeFacade,
-        CartFacade $cartFacade,
-        CustomerUserFacade $customerUserFacade,
-        CurrentCustomerUser $currentCustomerUser,
-        OrderPreviewFactory $orderPreviewFactory,
-        OrderProductFacade $orderProductFacade,
-        HeurekaFacade $heurekaFacade,
-        Domain $domain,
-        OrderFactoryInterface $orderFactory,
-        OrderPriceCalculation $orderPriceCalculation,
-        OrderItemPriceCalculation $orderItemPriceCalculation,
-        FrontOrderDataMapper $frontOrderDataMapper,
-        NumberFormatterExtension $numberFormatterExtension,
-        PaymentPriceCalculation $paymentPriceCalculation,
-        TransportPriceCalculation $transportPriceCalculation,
-        OrderItemFactoryInterface $orderItemFactory
+        protected readonly EntityManagerInterface $em,
+        protected readonly OrderNumberSequenceRepository $orderNumberSequenceRepository,
+        protected readonly OrderRepository $orderRepository,
+        protected readonly OrderUrlGenerator $orderUrlGenerator,
+        protected readonly OrderStatusRepository $orderStatusRepository,
+        protected readonly OrderMailFacade $orderMailFacade,
+        protected readonly OrderHashGeneratorRepository $orderHashGeneratorRepository,
+        protected readonly Setting $setting,
+        protected readonly Localization $localization,
+        protected readonly AdministratorFrontSecurityFacade $administratorFrontSecurityFacade,
+        protected readonly CurrentPromoCodeFacade $currentPromoCodeFacade,
+        protected readonly CartFacade $cartFacade,
+        protected readonly CustomerUserFacade $customerUserFacade,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly OrderPreviewFactory $orderPreviewFactory,
+        protected readonly OrderProductFacade $orderProductFacade,
+        protected readonly HeurekaFacade $heurekaFacade,
+        protected readonly Domain $domain,
+        protected readonly OrderFactoryInterface $orderFactory,
+        protected readonly OrderPriceCalculation $orderPriceCalculation,
+        protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
+        protected readonly FrontOrderDataMapper $frontOrderDataMapper,
+        protected readonly NumberFormatterExtension $numberFormatterExtension,
+        protected readonly PaymentPriceCalculation $paymentPriceCalculation,
+        protected readonly TransportPriceCalculation $transportPriceCalculation,
+        protected readonly OrderItemFactoryInterface $orderItemFactory
     ) {
-        $this->em = $em;
-        $this->orderNumberSequenceRepository = $orderNumberSequenceRepository;
-        $this->orderRepository = $orderRepository;
-        $this->orderStatusRepository = $orderStatusRepository;
-        $this->orderMailFacade = $orderMailFacade;
-        $this->orderHashGeneratorRepository = $orderHashGeneratorRepository;
-        $this->setting = $setting;
-        $this->localization = $localization;
-        $this->administratorFrontSecurityFacade = $administratorFrontSecurityFacade;
-        $this->currentPromoCodeFacade = $currentPromoCodeFacade;
-        $this->cartFacade = $cartFacade;
-        $this->customerUserFacade = $customerUserFacade;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->orderPreviewFactory = $orderPreviewFactory;
-        $this->orderProductFacade = $orderProductFacade;
-        $this->heurekaFacade = $heurekaFacade;
-        $this->domain = $domain;
-        $this->orderFactory = $orderFactory;
-        $this->orderPriceCalculation = $orderPriceCalculation;
-        $this->orderUrlGenerator = $orderUrlGenerator;
-        $this->orderItemPriceCalculation = $orderItemPriceCalculation;
-        $this->frontOrderDataMapper = $frontOrderDataMapper;
-        $this->numberFormatterExtension = $numberFormatterExtension;
-        $this->paymentPriceCalculation = $paymentPriceCalculation;
-        $this->transportPriceCalculation = $transportPriceCalculation;
-        $this->orderItemFactory = $orderItemFactory;
     }
 
     /**

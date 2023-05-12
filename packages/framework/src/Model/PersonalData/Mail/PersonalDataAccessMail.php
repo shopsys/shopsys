@@ -17,25 +17,16 @@ class PersonalDataAccessMail implements MessageFactoryInterface
     public const VARIABLE_URL = '{url}';
     public const VARIABLE_DOMAIN = '{domain}';
 
-    protected Domain $domain;
-
-    protected Setting $setting;
-
-    protected DomainRouterFactory $domainRouterFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      */
     public function __construct(
-        Domain $domain,
-        Setting $setting,
-        DomainRouterFactory $domainRouterFactory
+        protected readonly Domain $domain,
+        protected readonly Setting $setting,
+        protected readonly DomainRouterFactory $domainRouterFactory
     ) {
-        $this->domain = $domain;
-        $this->setting = $setting;
-        $this->domainRouterFactory = $domainRouterFactory;
     }
 
     /**

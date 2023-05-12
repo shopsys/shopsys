@@ -18,8 +18,6 @@ use Symfony\Component\Yaml\Parser;
 
 class ImageConfigLoader
 {
-    protected Filesystem $filesystem;
-
     /**
      * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig[]
      */
@@ -30,16 +28,12 @@ class ImageConfigLoader
      */
     protected array $foundEntityNames;
 
-    protected EntityNameResolver $entityNameResolver;
-
     /**
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
-    public function __construct(Filesystem $filesystem, EntityNameResolver $entityNameResolver)
+    public function __construct(protected readonly Filesystem $filesystem, protected readonly EntityNameResolver $entityNameResolver)
     {
-        $this->filesystem = $filesystem;
-        $this->entityNameResolver = $entityNameResolver;
     }
 
     /**

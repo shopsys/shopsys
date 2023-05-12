@@ -21,16 +21,13 @@ class ComposerJsonFilesProvider
      */
     protected array $packageDirectories;
 
-    protected FinderSanitizer $finderSanitizer;
-
     /**
      * @param string[] $packageDirectories
      * @param \Symplify\SmartFileSystem\Finder\FinderSanitizer $finderSanitizer
      */
-    public function __construct($packageDirectories, FinderSanitizer $finderSanitizer)
+    public function __construct($packageDirectories, protected readonly FinderSanitizer $finderSanitizer)
     {
         $this->packageDirectories = $packageDirectories;
-        $this->finderSanitizer = $finderSanitizer;
     }
 
     /**

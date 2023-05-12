@@ -18,16 +18,12 @@ class CheckRedisCommand extends Command
      */
     protected static $defaultName = 'shopsys:redis:check-availability';
 
-    protected RedisFacade $redisFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Redis\RedisFacade $redisFacade
      */
-    public function __construct(RedisFacade $redisFacade)
+    public function __construct(protected readonly RedisFacade $redisFacade)
     {
         parent::__construct();
-
-        $this->redisFacade = $redisFacade;
     }
 
     protected function configure(): void

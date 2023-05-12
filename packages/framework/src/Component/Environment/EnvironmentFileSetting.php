@@ -18,14 +18,11 @@ class EnvironmentFileSetting
         EnvironmentType::PRODUCTION,
     ];
 
-    protected string $environmentFileDirectory;
-
     /**
      * @param string $environmentFileDirectory
      */
-    public function __construct(string $environmentFileDirectory)
+    public function __construct(protected readonly string $environmentFileDirectory)
     {
-        $this->environmentFileDirectory = $environmentFileDirectory;
     }
 
     /**

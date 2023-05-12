@@ -23,25 +23,16 @@ use Symfony\Component\Validator\Constraints;
 
 class FileUploadType extends AbstractType
 {
-    private UploadedFileFacade $uploadedFileFacade;
-
-    private FilesIdsToFilesTransformer $filesIdsToFilesTransformer;
-
-    private UploadedFileConfig $uploadedFileConfig;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Form\Transformers\FilesIdsToFilesTransformer $filesIdsToFilesTransformer
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
      */
     public function __construct(
-        UploadedFileFacade $uploadedFileFacade,
-        FilesIdsToFilesTransformer $filesIdsToFilesTransformer,
-        UploadedFileConfig $uploadedFileConfig
+        private readonly UploadedFileFacade $uploadedFileFacade,
+        private readonly FilesIdsToFilesTransformer $filesIdsToFilesTransformer,
+        private readonly UploadedFileConfig $uploadedFileConfig
     ) {
-        $this->uploadedFileFacade = $uploadedFileFacade;
-        $this->filesIdsToFilesTransformer = $filesIdsToFilesTransformer;
-        $this->uploadedFileConfig = $uploadedFileConfig;
     }
 
     /**

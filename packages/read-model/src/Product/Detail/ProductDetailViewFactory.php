@@ -23,26 +23,6 @@ use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface;
 
 class ProductDetailViewFactory
 {
-    protected Domain $domain;
-
-    protected SeoSettingFacade $seoSettingFacade;
-
-    protected ImageViewFacadeInterface $imageViewFacade;
-
-    protected ProductActionViewFacadeInterface $productActionViewFacade;
-
-    protected BrandViewFacadeInterface $brandViewFacade;
-
-    protected ParameterViewFacadeInterface $parameterViewFacade;
-
-    protected ProductCachedAttributesFacade $productCachedAttributesFacade;
-
-    protected CategoryFacade $categoryFacade;
-
-    protected ListedProductViewFacadeInterface $listedProductViewFacade;
-
-    protected ListedProductVariantsViewFacadeInterface $listedProductVariantsViewFacade;
-
     /**
      * @param \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface $imageViewFacade
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface $productActionViewFacade
@@ -56,27 +36,17 @@ class ProductDetailViewFactory
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductVariantsViewFacadeInterface $listedProductVariantsViewFacade
      */
     public function __construct(
-        ImageViewFacadeInterface $imageViewFacade,
-        ProductActionViewFacadeInterface $productActionViewFacade,
-        BrandViewFacadeInterface $brandViewFacade,
-        ParameterViewFacadeInterface $parameterViewFacade,
-        Domain $domain,
-        ProductCachedAttributesFacade $productCachedAttributesFacade,
-        CategoryFacade $categoryFacade,
-        SeoSettingFacade $seoSettingFacade,
-        ListedProductViewFacadeInterface $listedProductViewFacade,
-        ListedProductVariantsViewFacadeInterface $listedProductVariantsViewFacade
+        protected readonly ImageViewFacadeInterface $imageViewFacade,
+        protected readonly ProductActionViewFacadeInterface $productActionViewFacade,
+        protected readonly BrandViewFacadeInterface $brandViewFacade,
+        protected readonly ParameterViewFacadeInterface $parameterViewFacade,
+        protected readonly Domain $domain,
+        protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
+        protected readonly CategoryFacade $categoryFacade,
+        protected readonly SeoSettingFacade $seoSettingFacade,
+        protected readonly ListedProductViewFacadeInterface $listedProductViewFacade,
+        protected readonly ListedProductVariantsViewFacadeInterface $listedProductVariantsViewFacade
     ) {
-        $this->imageViewFacade = $imageViewFacade;
-        $this->productActionViewFacade = $productActionViewFacade;
-        $this->brandViewFacade = $brandViewFacade;
-        $this->parameterViewFacade = $parameterViewFacade;
-        $this->domain = $domain;
-        $this->productCachedAttributesFacade = $productCachedAttributesFacade;
-        $this->categoryFacade = $categoryFacade;
-        $this->seoSettingFacade = $seoSettingFacade;
-        $this->listedProductViewFacade = $listedProductViewFacade;
-        $this->listedProductVariantsViewFacade = $listedProductVariantsViewFacade;
     }
 
     /**

@@ -10,8 +10,6 @@ use Doctrine\ORM\Repository\RepositoryFactory;
 
 class EntityManagerDecorator extends BaseEntityManagerDecorator
 {
-    protected EntityNameResolver $entityNameResolver;
-
     protected RepositoryFactory $repositoryFactory;
 
     /**
@@ -22,11 +20,10 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     public function __construct(
         EntityManagerInterface $em,
         Configuration $config,
-        EntityNameResolver $entityNameResolver
+        protected readonly EntityNameResolver $entityNameResolver
     ) {
         parent::__construct($em);
 
-        $this->entityNameResolver = $entityNameResolver;
         $this->repositoryFactory = $config->getRepositoryFactory();
     }
 

@@ -9,25 +9,16 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 class QuantifiedItemPrice
 {
-    protected Price $unitPrice;
-
-    protected Price $totalPrice;
-
-    protected Vat $vat;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $unitPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      */
     public function __construct(
-        Price $unitPrice,
-        Price $totalPrice,
-        Vat $vat
+        protected readonly Price $unitPrice,
+        protected readonly Price $totalPrice,
+        protected readonly Vat $vat
     ) {
-        $this->unitPrice = $unitPrice;
-        $this->totalPrice = $totalPrice;
-        $this->vat = $vat;
     }
 
     /**

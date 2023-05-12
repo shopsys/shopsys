@@ -11,25 +11,16 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
 class CurrencyGridFactory implements GridFactoryInterface
 {
-    protected EntityManagerInterface $em;
-
-    protected GridFactory $gridFactory;
-
-    protected CurrencyFacade $currencyFacade;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
-        EntityManagerInterface $em,
-        GridFactory $gridFactory,
-        CurrencyFacade $currencyFacade
+        protected readonly EntityManagerInterface $em,
+        protected readonly GridFactory $gridFactory,
+        protected readonly CurrencyFacade $currencyFacade
     ) {
-        $this->em = $em;
-        $this->gridFactory = $gridFactory;
-        $this->currencyFacade = $currencyFacade;
     }
 
     /**

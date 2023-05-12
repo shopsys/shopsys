@@ -17,14 +17,6 @@ use Twig\Environment;
 
 final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    private MonorepoUpgradeFileManipulator $monorepoUpgradeFileManipulator;
-
-    private GeneralUpgradeFileManipulator $generalUpgradeFileManipulator;
-
-    private VersionUpgradeFileManipulator $versionUpgradeFileManipulator;
-
-    private Environment $twigEnvironment;
-
     private string $nextDevelopmentVersionString;
 
     /**
@@ -34,15 +26,11 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
      * @param \Twig\Environment $twigEnvironment
      */
     public function __construct(
-        MonorepoUpgradeFileManipulator $monorepoUpgradeFileManipulator,
-        GeneralUpgradeFileManipulator $generalUpgradeFileManipulator,
-        VersionUpgradeFileManipulator $versionUpgradeFileManipulator,
-        Environment $twigEnvironment
+        private readonly MonorepoUpgradeFileManipulator $monorepoUpgradeFileManipulator,
+        private readonly GeneralUpgradeFileManipulator $generalUpgradeFileManipulator,
+        private readonly VersionUpgradeFileManipulator $versionUpgradeFileManipulator,
+        private readonly Environment $twigEnvironment
     ) {
-        $this->monorepoUpgradeFileManipulator = $monorepoUpgradeFileManipulator;
-        $this->generalUpgradeFileManipulator = $generalUpgradeFileManipulator;
-        $this->versionUpgradeFileManipulator = $versionUpgradeFileManipulator;
-        $this->twigEnvironment = $twigEnvironment;
     }
 
     /**

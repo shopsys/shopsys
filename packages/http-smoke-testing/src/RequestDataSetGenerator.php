@@ -7,8 +7,6 @@ use Shopsys\HttpSmokeTesting\Annotation\Skipped;
 
 class RequestDataSetGenerator implements RouteConfig
 {
-    private RouteInfo $routeInfo;
-
     private RequestDataSet $defaultRequestDataSet;
 
     /**
@@ -19,9 +17,8 @@ class RequestDataSetGenerator implements RouteConfig
     /**
      * @param \Shopsys\HttpSmokeTesting\RouteInfo $routeInfo
      */
-    public function __construct(RouteInfo $routeInfo)
+    public function __construct(private readonly RouteInfo $routeInfo)
     {
-        $this->routeInfo = $routeInfo;
         $this->defaultRequestDataSet = new RequestDataSet($this->routeInfo->getRouteName());
         $this->extraRequestDataSets = [];
     }

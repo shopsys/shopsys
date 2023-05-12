@@ -13,10 +13,6 @@ class ParameterRepository
 {
     protected EntityManagerInterface $em;
 
-    protected ParameterValueFactoryInterface $parameterValueFactory;
-
-    protected ParameterValueDataFactoryInterface $parameterValueDataFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactoryInterface $parameterValueFactory
@@ -24,12 +20,10 @@ class ParameterRepository
      */
     public function __construct(
         EntityManagerInterface $entityManager,
-        ParameterValueFactoryInterface $parameterValueFactory,
-        ParameterValueDataFactoryInterface $parameterValueDataFactory
+        protected readonly ParameterValueFactoryInterface $parameterValueFactory,
+        protected readonly ParameterValueDataFactoryInterface $parameterValueDataFactory
     ) {
         $this->em = $entityManager;
-        $this->parameterValueFactory = $parameterValueFactory;
-        $this->parameterValueDataFactory = $parameterValueDataFactory;
     }
 
     /**

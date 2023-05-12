@@ -10,14 +10,11 @@ use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 
 class ArticleRepository
 {
-    protected FrameworkArticleRepository $articleRepository;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
      */
-    public function __construct(FrameworkArticleRepository $articleRepository)
+    public function __construct(protected readonly FrameworkArticleRepository $articleRepository)
     {
-        $this->articleRepository = $articleRepository;
     }
 
     /**

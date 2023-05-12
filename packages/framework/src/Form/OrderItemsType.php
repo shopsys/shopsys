@@ -17,20 +17,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class OrderItemsType extends AbstractType
 {
-    private TransportFacade $transportFacade;
-
-    private PaymentFacade $paymentFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      */
     public function __construct(
-        TransportFacade $transportFacade,
-        PaymentFacade $paymentFacade
+        private readonly TransportFacade $transportFacade,
+        private readonly PaymentFacade $paymentFacade
     ) {
-        $this->transportFacade = $transportFacade;
-        $this->paymentFacade = $paymentFacade;
     }
 
     /**

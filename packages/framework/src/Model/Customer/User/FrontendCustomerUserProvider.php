@@ -13,18 +13,12 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class FrontendCustomerUserProvider implements UserProviderInterface
 {
-    protected CustomerUserRepository $customerUserRepository;
-
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(CustomerUserRepository $customerUserRepository, Domain $domain)
+    public function __construct(protected readonly CustomerUserRepository $customerUserRepository, protected readonly Domain $domain)
     {
-        $this->customerUserRepository = $customerUserRepository;
-        $this->domain = $domain;
     }
 
     /**

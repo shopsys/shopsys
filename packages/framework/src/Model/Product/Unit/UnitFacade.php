@@ -10,16 +10,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class UnitFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected UnitRepository $unitRepository;
-
-    protected Setting $setting;
-
-    protected UnitFactoryInterface $unitFactory;
-
-    protected EventDispatcherInterface $eventDispatcher;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitRepository $unitRepository
@@ -28,17 +18,12 @@ class UnitFacade
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
-        EntityManagerInterface $em,
-        UnitRepository $unitRepository,
-        Setting $setting,
-        UnitFactoryInterface $unitFactory,
-        EventDispatcherInterface $eventDispatcher
+        protected readonly EntityManagerInterface $em,
+        protected readonly UnitRepository $unitRepository,
+        protected readonly Setting $setting,
+        protected readonly UnitFactoryInterface $unitFactory,
+        protected readonly EventDispatcherInterface $eventDispatcher
     ) {
-        $this->em = $em;
-        $this->unitRepository = $unitRepository;
-        $this->setting = $setting;
-        $this->unitFactory = $unitFactory;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**

@@ -9,14 +9,6 @@ use Twig\Environment;
 
 class GridFactory
 {
-    protected RequestStack $requestStack;
-
-    protected RouterInterface $router;
-
-    protected RouteCsrfProtector $routeCsrfProtector;
-
-    protected Environment $twig;
-
     /**
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Symfony\Component\Routing\RouterInterface $router
@@ -24,15 +16,11 @@ class GridFactory
      * @param \Twig\Environment $twig
      */
     public function __construct(
-        RequestStack $requestStack,
-        RouterInterface $router,
-        RouteCsrfProtector $routeCsrfProtector,
-        Environment $twig
+        protected readonly RequestStack $requestStack,
+        protected readonly RouterInterface $router,
+        protected readonly RouteCsrfProtector $routeCsrfProtector,
+        protected readonly Environment $twig
     ) {
-        $this->requestStack = $requestStack;
-        $this->router = $router;
-        $this->routeCsrfProtector = $routeCsrfProtector;
-        $this->twig = $twig;
     }
 
     /**

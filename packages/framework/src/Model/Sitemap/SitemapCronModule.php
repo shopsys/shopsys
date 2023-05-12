@@ -7,14 +7,11 @@ use Symfony\Bridge\Monolog\Logger;
 
 class SitemapCronModule implements SimpleCronModuleInterface
 {
-    protected SitemapFacade $sitemapFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Sitemap\SitemapFacade $sitemapFacade
      */
-    public function __construct(SitemapFacade $sitemapFacade)
+    public function __construct(protected readonly SitemapFacade $sitemapFacade)
     {
-        $this->sitemapFacade = $sitemapFacade;
     }
 
     /**

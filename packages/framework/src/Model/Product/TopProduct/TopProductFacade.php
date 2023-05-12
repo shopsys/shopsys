@@ -6,25 +6,16 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class TopProductFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected TopProductRepository $topProductRepository;
-
-    protected TopProductFactoryInterface $topProductFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductRepository $topProductRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFactoryInterface $topProductFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        TopProductRepository $topProductRepository,
-        TopProductFactoryInterface $topProductFactory
+        protected readonly EntityManagerInterface $em,
+        protected readonly TopProductRepository $topProductRepository,
+        protected readonly TopProductFactoryInterface $topProductFactory
     ) {
-        $this->em = $em;
-        $this->topProductRepository = $topProductRepository;
-        $this->topProductFactory = $topProductFactory;
     }
 
     /**

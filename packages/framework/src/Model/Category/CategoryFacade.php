@@ -18,26 +18,6 @@ class CategoryFacade
 {
     protected const INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY = 1;
 
-    protected EntityManagerInterface $em;
-
-    protected CategoryRepository $categoryRepository;
-
-    protected Domain $domain;
-
-    protected CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler;
-
-    protected FriendlyUrlFacade $friendlyUrlFacade;
-
-    protected ImageFacade $imageFacade;
-
-    protected PluginCrudExtensionFacade $pluginCrudExtensionFacade;
-
-    protected CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory;
-
-    protected CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory;
-
-    protected CategoryFactoryInterface $categoryFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
@@ -51,27 +31,17 @@ class CategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface $categoryFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        CategoryRepository $categoryRepository,
-        Domain $domain,
-        CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler,
-        FriendlyUrlFacade $friendlyUrlFacade,
-        ImageFacade $imageFacade,
-        PluginCrudExtensionFacade $pluginCrudExtensionFacade,
-        CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory,
-        CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory,
-        CategoryFactoryInterface $categoryFactory
+        protected readonly EntityManagerInterface $em,
+        protected readonly CategoryRepository $categoryRepository,
+        protected readonly Domain $domain,
+        protected readonly CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly ImageFacade $imageFacade,
+        protected readonly PluginCrudExtensionFacade $pluginCrudExtensionFacade,
+        protected readonly CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory,
+        protected readonly CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory,
+        protected readonly CategoryFactoryInterface $categoryFactory
     ) {
-        $this->em = $em;
-        $this->categoryRepository = $categoryRepository;
-        $this->domain = $domain;
-        $this->categoryVisibilityRecalculationScheduler = $categoryVisibilityRecalculationScheduler;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->imageFacade = $imageFacade;
-        $this->pluginCrudExtensionFacade = $pluginCrudExtensionFacade;
-        $this->categoryWithPreloadedChildrenFactory = $categoryWithPreloadedChildrenFactory;
-        $this->categoryWithLazyLoadedVisibleChildrenFactory = $categoryWithLazyLoadedVisibleChildrenFactory;
-        $this->categoryFactory = $categoryFactory;
     }
 
     /**

@@ -10,20 +10,14 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 
 class PromoCodeGridFactory implements GridFactoryInterface
 {
-    protected EntityManagerInterface $em;
-
-    protected GridFactory $gridFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        GridFactory $gridFactory
+        protected readonly EntityManagerInterface $em,
+        protected readonly GridFactory $gridFactory
     ) {
-        $this->em = $em;
-        $this->gridFactory = $gridFactory;
     }
 
     /**

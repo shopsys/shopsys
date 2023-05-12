@@ -13,25 +13,16 @@ use Shopsys\FrameworkBundle\Component\DataFixture\Exception\PersistentReferenceN
 
 class PersistentReferenceFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected PersistentReferenceRepository $persistentReferenceRepository;
-
-    protected PersistentReferenceFactoryInterface $persistentReferenceFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceRepository $persistentReferenceRepository
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFactoryInterface $persistentReferenceFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        PersistentReferenceRepository $persistentReferenceRepository,
-        PersistentReferenceFactoryInterface $persistentReferenceFactory
+        protected readonly EntityManagerInterface $em,
+        protected readonly PersistentReferenceRepository $persistentReferenceRepository,
+        protected readonly PersistentReferenceFactoryInterface $persistentReferenceFactory
     ) {
-        $this->em = $em;
-        $this->persistentReferenceRepository = $persistentReferenceRepository;
-        $this->persistentReferenceFactory = $persistentReferenceFactory;
     }
 
     /**

@@ -4,14 +4,11 @@ namespace Shopsys\FrameworkBundle\Model\Statistics;
 
 class StatisticsProcessingFacade
 {
-    protected ValueByDateTimeDataPointFormatter $valueByDateTimeDataPointFormatter;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPointFormatter $valueByDateTimeDataPointFormatter
      */
-    public function __construct(ValueByDateTimeDataPointFormatter $valueByDateTimeDataPointFormatter)
+    public function __construct(protected readonly ValueByDateTimeDataPointFormatter $valueByDateTimeDataPointFormatter)
     {
-        $this->valueByDateTimeDataPointFormatter = $valueByDateTimeDataPointFormatter;
     }
 
     /**

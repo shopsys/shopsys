@@ -8,14 +8,11 @@ use Twig\TwigFunction;
 
 class CookiesExtension extends AbstractExtension
 {
-    protected CookiesFacade $cookiesFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade $cookiesFacade
      */
-    public function __construct(CookiesFacade $cookiesFacade)
+    public function __construct(protected readonly CookiesFacade $cookiesFacade)
     {
-        $this->cookiesFacade = $cookiesFacade;
     }
 
     /**

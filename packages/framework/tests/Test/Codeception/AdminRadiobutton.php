@@ -13,18 +13,12 @@ use PHPUnit\Framework\Assert;
  */
 class AdminRadiobutton
 {
-    protected ActorInterface $tester;
-
-    protected string $cssSelector;
-
     /**
      * @param \Tests\FrameworkBundle\Test\Codeception\ActorInterface $tester
      * @param string $cssSelector
      */
-    protected function __construct(ActorInterface $tester, string $cssSelector)
+    protected function __construct(protected readonly ActorInterface $tester, protected readonly string $cssSelector)
     {
-        $this->tester = $tester;
-        $this->cssSelector = $cssSelector;
     }
 
     /**

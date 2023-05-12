@@ -11,67 +11,6 @@ use Shopsys\ReadModelBundle\Product\Action\ProductActionView;
 
 class ProductDetailView
 {
-    protected int $id;
-
-    protected ?string $name;
-
-    /**
-     * @var int[]
-     */
-    protected array $flagIds;
-
-    protected ?ImageView $mainImageView = null;
-
-    protected ProductActionView $actionView;
-
-    protected ?string $seoPageTitle;
-
-    protected string $availability;
-
-    protected bool $isInStock;
-
-    protected bool $isSellingDenied;
-
-    protected ?ProductPrice $sellingPrice = null;
-
-    protected ?int $mainCategoryId = null;
-
-    protected ?BrandView $brandView = null;
-
-    protected ?string $catnum;
-
-    protected ?string $partno;
-
-    protected ?string $ean;
-
-    protected ?string $description;
-
-    /**
-     * @var \Shopsys\ReadModelBundle\Image\ImageView[]
-     */
-    protected array $galleryImageViews;
-
-    protected ?string $seoMetaDescription;
-
-    protected bool $isMainVariant;
-
-    protected ?int $mainVariantId = null;
-
-    /**
-     * @var \Shopsys\ReadModelBundle\Parameter\ParameterView[]
-     */
-    protected array $parameterViews;
-
-    /**
-     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
-     */
-    protected array $accessories;
-
-    /**
-     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
-     */
-    protected array $variants;
-
     /**
      * @param int $id
      * @param string|null $name
@@ -98,53 +37,30 @@ class ProductDetailView
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[] $variants
      */
     public function __construct(
-        int $id,
-        ?string $name,
-        ?string $description,
-        string $availability,
-        ?ProductPrice $sellingPrice,
-        ?string $catnum,
-        ?string $partno,
-        ?string $ean,
-        ?int $mainCategoryId,
-        bool $isSellingDenied,
-        bool $isInStock,
-        bool $isMainVariant,
-        ?int $mainVariantId,
-        array $flagIds,
-        ?string $seoPageTitle,
-        ?string $seoMetaDescription,
-        ProductActionView $actionView,
-        ?BrandView $brandView,
-        ?ImageView $mainImageView,
-        array $galleryImageViews,
-        array $parameterViews,
-        array $accessories,
-        array $variants
+        protected readonly int $id,
+        protected readonly ?string $name,
+        protected readonly ?string $description,
+        protected readonly string $availability,
+        protected readonly ?ProductPrice $sellingPrice = null,
+        protected readonly ?string $catnum,
+        protected readonly ?string $partno,
+        protected readonly ?string $ean,
+        protected readonly ?int $mainCategoryId = null,
+        protected readonly bool $isSellingDenied,
+        protected readonly bool $isInStock,
+        protected readonly bool $isMainVariant,
+        protected readonly ?int $mainVariantId = null,
+        protected readonly array $flagIds,
+        protected readonly ?string $seoPageTitle,
+        protected readonly ?string $seoMetaDescription,
+        protected readonly ProductActionView $actionView,
+        protected readonly ?BrandView $brandView = null,
+        protected readonly ?ImageView $mainImageView = null,
+        protected readonly array $galleryImageViews,
+        protected readonly array $parameterViews,
+        protected readonly array $accessories,
+        protected readonly array $variants
     ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->description = $description;
-        $this->availability = $availability;
-        $this->sellingPrice = $sellingPrice;
-        $this->catnum = $catnum;
-        $this->partno = $partno;
-        $this->ean = $ean;
-        $this->mainCategoryId = $mainCategoryId;
-        $this->isSellingDenied = $isSellingDenied;
-        $this->isInStock = $isInStock;
-        $this->isMainVariant = $isMainVariant;
-        $this->mainVariantId = $mainVariantId;
-        $this->flagIds = $flagIds;
-        $this->seoPageTitle = $seoPageTitle;
-        $this->seoMetaDescription = $seoMetaDescription;
-        $this->actionView = $actionView;
-        $this->mainImageView = $mainImageView;
-        $this->brandView = $brandView;
-        $this->galleryImageViews = $galleryImageViews;
-        $this->parameterViews = $parameterViews;
-        $this->accessories = $accessories;
-        $this->variants = $variants;
     }
 
     /**

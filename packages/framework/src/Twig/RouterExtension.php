@@ -10,14 +10,11 @@ use Twig\TwigFunction;
 
 class RouterExtension extends AbstractExtension
 {
-    protected DomainRouterFactory $domainRouterFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      */
-    public function __construct(DomainRouterFactory $domainRouterFactory)
+    public function __construct(protected readonly DomainRouterFactory $domainRouterFactory)
     {
-        $this->domainRouterFactory = $domainRouterFactory;
     }
 
     /**

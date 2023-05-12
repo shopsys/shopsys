@@ -10,14 +10,6 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 
 class CustomerMailFacade
 {
-    protected Mailer $mailer;
-
-    protected MailTemplateFacade $mailTemplateFacade;
-
-    protected RegistrationMail $registrationMail;
-
-    protected UploadedFileFacade $uploadedFileFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailer
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
@@ -25,15 +17,11 @@ class CustomerMailFacade
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      */
     public function __construct(
-        Mailer $mailer,
-        MailTemplateFacade $mailTemplateFacade,
-        RegistrationMail $registrationMail,
-        UploadedFileFacade $uploadedFileFacade
+        protected readonly Mailer $mailer,
+        protected readonly MailTemplateFacade $mailTemplateFacade,
+        protected readonly RegistrationMail $registrationMail,
+        protected readonly UploadedFileFacade $uploadedFileFacade
     ) {
-        $this->mailer = $mailer;
-        $this->mailTemplateFacade = $mailTemplateFacade;
-        $this->registrationMail = $registrationMail;
-        $this->uploadedFileFacade = $uploadedFileFacade;
     }
 
     /**

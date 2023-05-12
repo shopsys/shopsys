@@ -24,10 +24,6 @@ class Setting
     public const FEED_DOMAIN_ID_TO_CONTINUE = 'feedDomainIdToContinue';
     public const FEED_ITEM_ID_TO_CONTINUE = 'feedItemIdToContinue';
 
-    protected EntityManagerInterface $em;
-
-    protected SettingValueRepository $settingValueRepository;
-
     /**
      * @var \Shopsys\FrameworkBundle\Component\Setting\SettingValue[][]
      */
@@ -37,10 +33,8 @@ class Setting
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Setting\SettingValueRepository $settingValueRepository
      */
-    public function __construct(EntityManagerInterface $em, SettingValueRepository $settingValueRepository)
+    public function __construct(protected readonly EntityManagerInterface $em, protected readonly SettingValueRepository $settingValueRepository)
     {
-        $this->em = $em;
-        $this->settingValueRepository = $settingValueRepository;
         $this->clearCache();
     }
 

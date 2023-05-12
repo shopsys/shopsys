@@ -17,11 +17,6 @@ class ResizeFormListener implements EventSubscriberInterface
 {
     protected string $type;
 
-    /**
-     * @var mixed[]
-     */
-    protected array $options;
-
     protected bool $allowAdd;
 
     protected bool $allowDelete;
@@ -37,7 +32,7 @@ class ResizeFormListener implements EventSubscriberInterface
      */
     public function __construct(
         $type,
-        array $options = [],
+        protected readonly array $options = [],
         $allowAdd = false,
         $allowDelete = false,
         $deleteEmpty = false
@@ -45,7 +40,6 @@ class ResizeFormListener implements EventSubscriberInterface
         $this->type = $type;
         $this->allowAdd = $allowAdd;
         $this->allowDelete = $allowDelete;
-        $this->options = $options;
         $this->deleteEmpty = $deleteEmpty;
     }
 

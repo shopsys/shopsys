@@ -26,20 +26,6 @@ class SuperadminController extends AdminBaseController
 {
     use SetterInjectionTrait;
 
-    protected ModuleList $moduleList;
-
-    protected ModuleFacade $moduleFacade;
-
-    protected LocalizedRouterFactory $localizedRouterFactory;
-
-    protected GridFactory $gridFactory;
-
-    protected Localization $localization;
-
-    protected PricingSetting $pricingSetting;
-
-    protected DelayedPricingSetting $delayedPricingSetting;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleList $moduleList
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
@@ -53,24 +39,17 @@ class SuperadminController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade|null $adminDomainTabsFacade
      */
     public function __construct(
-        ModuleList $moduleList,
-        ModuleFacade $moduleFacade,
-        PricingSetting $pricingSetting,
-        DelayedPricingSetting $delayedPricingSetting,
-        GridFactory $gridFactory,
-        Localization $localization,
-        LocalizedRouterFactory $localizedRouterFactory,
+        protected readonly ModuleList $moduleList,
+        protected readonly ModuleFacade $moduleFacade,
+        protected readonly PricingSetting $pricingSetting,
+        protected readonly DelayedPricingSetting $delayedPricingSetting,
+        protected readonly GridFactory $gridFactory,
+        protected readonly Localization $localization,
+        protected readonly LocalizedRouterFactory $localizedRouterFactory,
         protected /* readonly */ ?MailSettingFacade $mailSettingFacade = null,
         protected /* readonly */ ?MailerSettingProvider $mailerSettingProvider = null,
         protected /* readonly */ ?AdminDomainTabsFacade $adminDomainTabsFacade = null,
     ) {
-        $this->moduleList = $moduleList;
-        $this->moduleFacade = $moduleFacade;
-        $this->pricingSetting = $pricingSetting;
-        $this->delayedPricingSetting = $delayedPricingSetting;
-        $this->gridFactory = $gridFactory;
-        $this->localization = $localization;
-        $this->localizedRouterFactory = $localizedRouterFactory;
     }
 
     /**

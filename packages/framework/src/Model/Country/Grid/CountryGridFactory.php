@@ -12,14 +12,6 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class CountryGridFactory implements GridFactoryInterface
 {
-    protected GridFactory $gridFactory;
-
-    protected Localization $localization;
-
-    protected CountryRepository $countryRepository;
-
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryRepository $countryRepository
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
@@ -27,15 +19,11 @@ class CountryGridFactory implements GridFactoryInterface
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        CountryRepository $countryRepository,
-        GridFactory $gridFactory,
-        Localization $localization,
-        Domain $domain
+        protected readonly CountryRepository $countryRepository,
+        protected readonly GridFactory $gridFactory,
+        protected readonly Localization $localization,
+        protected readonly Domain $domain
     ) {
-        $this->gridFactory = $gridFactory;
-        $this->localization = $localization;
-        $this->countryRepository = $countryRepository;
-        $this->domain = $domain;
     }
 
     /**

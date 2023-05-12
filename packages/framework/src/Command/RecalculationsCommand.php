@@ -21,18 +21,6 @@ class RecalculationsCommand extends Command
      */
     protected static $defaultName = 'shopsys:recalculations';
 
-    private CategoryVisibilityRepository $categoryVisibilityRepository;
-
-    private ProductHiddenRecalculator $productHiddenRecalculator;
-
-    private ProductPriceRecalculator $productPriceRecalculator;
-
-    private ProductVisibilityFacade $productVisibilityFacade;
-
-    private ProductAvailabilityRecalculator $productAvailabilityRecalculator;
-
-    private ProductSellingDeniedRecalculator $productSellingDeniedRecalculator;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository $categoryVisibilityRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
@@ -42,20 +30,13 @@ class RecalculationsCommand extends Command
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
      */
     public function __construct(
-        CategoryVisibilityRepository $categoryVisibilityRepository,
-        ProductHiddenRecalculator $productHiddenRecalculator,
-        ProductPriceRecalculator $productPriceRecalculator,
-        ProductVisibilityFacade $productVisibilityFacade,
-        ProductAvailabilityRecalculator $productAvailabilityRecalculator,
-        ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
+        private readonly CategoryVisibilityRepository $categoryVisibilityRepository,
+        private readonly ProductHiddenRecalculator $productHiddenRecalculator,
+        private readonly ProductPriceRecalculator $productPriceRecalculator,
+        private readonly ProductVisibilityFacade $productVisibilityFacade,
+        private readonly ProductAvailabilityRecalculator $productAvailabilityRecalculator,
+        private readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
     ) {
-        $this->categoryVisibilityRepository = $categoryVisibilityRepository;
-        $this->productHiddenRecalculator = $productHiddenRecalculator;
-        $this->productPriceRecalculator = $productPriceRecalculator;
-        $this->productVisibilityFacade = $productVisibilityFacade;
-        $this->productAvailabilityRecalculator = $productAvailabilityRecalculator;
-        $this->productSellingDeniedRecalculator = $productSellingDeniedRecalculator;
-
         parent::__construct();
     }
 

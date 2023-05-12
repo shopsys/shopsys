@@ -17,14 +17,11 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
      */
     private const STATUS_SUCCESS = 'success';
 
-    private GithubActionsStatusReporter $githubActionsStatusReporter;
-
     /**
      * @param \Shopsys\Releaser\GithubActions\GithubActionsStatusReporter $githubActionsStatusReporter
      */
-    public function __construct(GithubActionsStatusReporter $githubActionsStatusReporter)
+    public function __construct(private readonly GithubActionsStatusReporter $githubActionsStatusReporter)
     {
-        $this->githubActionsStatusReporter = $githubActionsStatusReporter;
     }
 
     /**

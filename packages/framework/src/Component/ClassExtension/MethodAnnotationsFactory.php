@@ -11,12 +11,6 @@ use Roave\BetterReflection\Reflection\ReflectionMethod;
 
 class MethodAnnotationsFactory
 {
-    protected AnnotationsReplacementsMap $annotationsReplacementsMap;
-
-    protected AnnotationsReplacer $annotationsReplacer;
-
-    protected DocBlockParser $docBlockParser;
-
     /**
      * @var \InvalidArgumentException[]
      */
@@ -28,13 +22,10 @@ class MethodAnnotationsFactory
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\DocBlockParser $docBlockParser
      */
     public function __construct(
-        AnnotationsReplacementsMap $annotationsReplacementsMap,
-        AnnotationsReplacer $annotationsReplacer,
-        DocBlockParser $docBlockParser
+        protected readonly AnnotationsReplacementsMap $annotationsReplacementsMap,
+        protected readonly AnnotationsReplacer $annotationsReplacer,
+        protected readonly DocBlockParser $docBlockParser
     ) {
-        $this->annotationsReplacementsMap = $annotationsReplacementsMap;
-        $this->annotationsReplacer = $annotationsReplacer;
-        $this->docBlockParser = $docBlockParser;
     }
 
     /**

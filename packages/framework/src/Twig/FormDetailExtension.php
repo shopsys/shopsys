@@ -9,14 +9,11 @@ use Twig\TwigFunction;
 
 class FormDetailExtension extends AbstractExtension
 {
-    protected Environment $twigEnvironment;
-
     /**
      * @param \Twig\Environment $twigEnvironment
      */
-    public function __construct(Environment $twigEnvironment)
+    public function __construct(protected readonly Environment $twigEnvironment)
     {
-        $this->twigEnvironment = $twigEnvironment;
     }
 
     /**

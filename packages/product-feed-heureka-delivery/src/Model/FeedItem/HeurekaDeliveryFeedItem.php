@@ -6,18 +6,12 @@ use Shopsys\FrameworkBundle\Model\Feed\FeedItemInterface;
 
 class HeurekaDeliveryFeedItem implements FeedItemInterface
 {
-    protected int $id;
-
-    protected int $stockQuantity;
-
     /**
      * @param int $id
      * @param int $stockQuantity
      */
-    public function __construct(int $id, int $stockQuantity)
+    public function __construct(protected readonly int $id, protected readonly int $stockQuantity)
     {
-        $this->id = $id;
-        $this->stockQuantity = $stockQuantity;
     }
 
     /**

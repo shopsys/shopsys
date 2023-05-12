@@ -6,21 +6,12 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search;
 
 class ProductIdsResult
 {
-    protected int $total;
-
-    /**
-     * @var int[]
-     */
-    protected array $ids;
-
     /**
      * @param int $total
      * @param int[] $ids
      */
-    public function __construct(int $total, array $ids)
+    public function __construct(protected readonly int $total, protected readonly array $ids)
     {
-        $this->total = $total;
-        $this->ids = $ids;
     }
 
     /**

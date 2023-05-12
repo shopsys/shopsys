@@ -6,14 +6,11 @@ use Twig\Environment;
 
 class FeedRendererFactory
 {
-    protected Environment $twig;
-
     /**
      * @param \Twig\Environment $twig
      */
-    public function __construct(Environment $twig)
+    public function __construct(protected readonly Environment $twig)
     {
-        $this->twig = $twig;
     }
 
     /**

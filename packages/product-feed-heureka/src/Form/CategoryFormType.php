@@ -10,20 +10,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CategoryFormType extends AbstractType
 {
-    private TranslatorInterface $translator;
-
-    private HeurekaCategoryFacade $heurekaCategoryFacade;
-
     /**
      * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade $heurekaCategoryFacade
      */
     public function __construct(
-        TranslatorInterface $translator,
-        HeurekaCategoryFacade $heurekaCategoryFacade
+        private readonly TranslatorInterface $translator,
+        private readonly HeurekaCategoryFacade $heurekaCategoryFacade
     ) {
-        $this->translator = $translator;
-        $this->heurekaCategoryFacade = $heurekaCategoryFacade;
     }
 
     /**

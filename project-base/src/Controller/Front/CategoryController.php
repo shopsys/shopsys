@@ -13,16 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CategoryController extends FrontBaseController
 {
-    private CategoryFacade $categoryFacade;
-
-    private Domain $domain;
-
-    private CurrentCategoryResolver $currentCategoryResolver;
-
-    private TopCategoryFacade $topCategoryFacade;
-
-    private CurrentCustomerUser $currentCustomerUser;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
@@ -31,17 +21,12 @@ class CategoryController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      */
     public function __construct(
-        Domain $domain,
-        CategoryFacade $categoryFacade,
-        CurrentCategoryResolver $currentCategoryResolver,
-        TopCategoryFacade $topCategoryFacade,
-        CurrentCustomerUser $currentCustomerUser
+        private readonly Domain $domain,
+        private readonly CategoryFacade $categoryFacade,
+        private readonly CurrentCategoryResolver $currentCategoryResolver,
+        private readonly TopCategoryFacade $topCategoryFacade,
+        private readonly CurrentCustomerUser $currentCustomerUser
     ) {
-        $this->domain = $domain;
-        $this->categoryFacade = $categoryFacade;
-        $this->currentCategoryResolver = $currentCategoryResolver;
-        $this->topCategoryFacade = $topCategoryFacade;
-        $this->currentCustomerUser = $currentCustomerUser;
     }
 
     /**

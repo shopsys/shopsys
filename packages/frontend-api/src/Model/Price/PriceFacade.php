@@ -10,20 +10,14 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 
 class PriceFacade
 {
-    protected PriceFactory $priceFactory;
-
-    protected CurrentCustomerUser $currentCustomerUser;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory $priceFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      */
     public function __construct(
-        PriceFactory $priceFactory,
-        CurrentCustomerUser $currentCustomerUser
+        protected readonly PriceFactory $priceFactory,
+        protected readonly CurrentCustomerUser $currentCustomerUser
     ) {
-        $this->priceFactory = $priceFactory;
-        $this->currentCustomerUser = $currentCustomerUser;
     }
 
     /**

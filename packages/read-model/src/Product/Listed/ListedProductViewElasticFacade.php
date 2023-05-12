@@ -20,26 +20,6 @@ use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory;
 
 class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
 {
-    protected ProductFacade $productFacade;
-
-    protected ProductAccessoryFacade $productAccessoryFacade;
-
-    protected Domain $domain;
-
-    protected CurrentCustomerUser $currentCustomerUser;
-
-    protected TopProductFacade $topProductFacade;
-
-    protected ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade;
-
-    protected ListedProductViewFactory $listedProductViewFactory;
-
-    protected ImageViewFacadeInterface $imageViewFacade;
-
-    protected ProductActionViewFactory $productActionViewFactory;
-
-    protected ProductElasticsearchProvider $productElasticsearchProvider;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
@@ -53,27 +33,17 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      */
     public function __construct(
-        ProductFacade $productFacade,
-        ProductAccessoryFacade $productAccessoryFacade,
-        Domain $domain,
-        CurrentCustomerUser $currentCustomerUser,
-        TopProductFacade $topProductFacade,
-        ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
-        ListedProductViewFactory $listedProductViewFactory,
-        ImageViewFacadeInterface $imageViewFacade,
-        ProductActionViewFactory $productActionViewFactory,
-        ProductElasticsearchProvider $productElasticsearchProvider
+        protected readonly ProductFacade $productFacade,
+        protected readonly ProductAccessoryFacade $productAccessoryFacade,
+        protected readonly Domain $domain,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly TopProductFacade $topProductFacade,
+        protected readonly ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
+        protected readonly ListedProductViewFactory $listedProductViewFactory,
+        protected readonly ImageViewFacadeInterface $imageViewFacade,
+        protected readonly ProductActionViewFactory $productActionViewFactory,
+        protected readonly ProductElasticsearchProvider $productElasticsearchProvider
     ) {
-        $this->productFacade = $productFacade;
-        $this->productAccessoryFacade = $productAccessoryFacade;
-        $this->domain = $domain;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->topProductFacade = $topProductFacade;
-        $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
-        $this->listedProductViewFactory = $listedProductViewFactory;
-        $this->imageViewFacade = $imageViewFacade;
-        $this->productActionViewFactory = $productActionViewFactory;
-        $this->productElasticsearchProvider = $productElasticsearchProvider;
     }
 
     /**

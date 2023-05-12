@@ -13,14 +13,11 @@ class ProductBrandFilter implements AdvancedSearchFilterInterface
 {
     public const NAME = 'productBrand';
 
-    protected BrandFacade $brandFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      */
-    public function __construct(BrandFacade $brandFacade)
+    public function __construct(protected readonly BrandFacade $brandFacade)
     {
-        $this->brandFacade = $brandFacade;
     }
 
     /**

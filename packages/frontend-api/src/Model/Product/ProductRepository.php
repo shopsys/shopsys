@@ -11,14 +11,11 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository as FrameworkProductR
 
 class ProductRepository
 {
-    protected FrameworkProductRepository $productRepository;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      */
-    public function __construct(FrameworkProductRepository $productRepository)
+    public function __construct(protected readonly FrameworkProductRepository $productRepository)
     {
-        $this->productRepository = $productRepository;
     }
 
     /**

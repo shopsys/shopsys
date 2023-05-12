@@ -8,14 +8,6 @@ use Doctrine\ORM\Tools\SchemaTool;
 
 class DatabaseSchemaFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected SchemaDiffFilter $schemaDiffFilter;
-
-    protected Comparator $comparator;
-
-    protected SchemaTool $schemaTool;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\MigrationBundle\Component\Doctrine\SchemaDiffFilter $schemaDiffFilter
@@ -23,15 +15,11 @@ class DatabaseSchemaFacade
      * @param \Doctrine\ORM\Tools\SchemaTool $schemaTool
      */
     public function __construct(
-        EntityManagerInterface $em,
-        SchemaDiffFilter $schemaDiffFilter,
-        Comparator $comparator,
-        SchemaTool $schemaTool
+        protected readonly EntityManagerInterface $em,
+        protected readonly SchemaDiffFilter $schemaDiffFilter,
+        protected readonly Comparator $comparator,
+        protected readonly SchemaTool $schemaTool
     ) {
-        $this->em = $em;
-        $this->schemaDiffFilter = $schemaDiffFilter;
-        $this->comparator = $comparator;
-        $this->schemaTool = $schemaTool;
     }
 
     /**

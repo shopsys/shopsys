@@ -18,20 +18,6 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticse
 
 class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacadeInterface
 {
-    protected ProductRepository $productRepository;
-
-    protected Domain $domain;
-
-    protected CurrentCustomerUser $currentCustomerUser;
-
-    protected ProductAccessoryRepository $productAccessoryRepository;
-
-    protected ProductElasticsearchRepository $productElasticsearchRepository;
-
-    protected ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository;
-
-    protected FilterQueryFactory $filterQueryFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -42,21 +28,14 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory
      */
     public function __construct(
-        ProductRepository $productRepository,
-        Domain $domain,
-        CurrentCustomerUser $currentCustomerUser,
-        ProductAccessoryRepository $productAccessoryRepository,
-        ProductElasticsearchRepository $productElasticsearchRepository,
-        ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository,
-        FilterQueryFactory $filterQueryFactory,
+        protected readonly ProductRepository $productRepository,
+        protected readonly Domain $domain,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly ProductAccessoryRepository $productAccessoryRepository,
+        protected readonly ProductElasticsearchRepository $productElasticsearchRepository,
+        protected readonly ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository,
+        protected readonly FilterQueryFactory $filterQueryFactory,
     ) {
-        $this->productRepository = $productRepository;
-        $this->domain = $domain;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->productAccessoryRepository = $productAccessoryRepository;
-        $this->productElasticsearchRepository = $productElasticsearchRepository;
-        $this->productFilterCountDataElasticsearchRepository = $productFilterCountDataElasticsearchRepository;
-        $this->filterQueryFactory = $filterQueryFactory;
     }
 
     /**

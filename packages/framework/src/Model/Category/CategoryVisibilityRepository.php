@@ -10,25 +10,16 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class CategoryVisibilityRepository
 {
-    protected EntityManagerInterface $em;
-
-    protected Domain $domain;
-
-    protected CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler
      */
     public function __construct(
-        EntityManagerInterface $em,
-        Domain $domain,
-        CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler
+        protected readonly EntityManagerInterface $em,
+        protected readonly Domain $domain,
+        protected readonly CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler
     ) {
-        $this->em = $em;
-        $this->domain = $domain;
-        $this->categoryVisibilityRecalculationScheduler = $categoryVisibilityRecalculationScheduler;
     }
 
     public function refreshCategoriesVisibility()

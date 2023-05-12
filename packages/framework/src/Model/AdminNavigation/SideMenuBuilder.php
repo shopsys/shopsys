@@ -11,14 +11,6 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class SideMenuBuilder
 {
-    protected FactoryInterface $menuFactory;
-
-    protected Domain $domain;
-
-    protected AuthorizationCheckerInterface $authorizationChecker;
-
-    protected EventDispatcherInterface $eventDispatcher;
-
     /**
      * @param \Knp\Menu\FactoryInterface $menuFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -26,15 +18,11 @@ class SideMenuBuilder
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
-        FactoryInterface $menuFactory,
-        Domain $domain,
-        AuthorizationCheckerInterface $authorizationChecker,
-        EventDispatcherInterface $eventDispatcher
+        protected readonly FactoryInterface $menuFactory,
+        protected readonly Domain $domain,
+        protected readonly AuthorizationCheckerInterface $authorizationChecker,
+        protected readonly EventDispatcherInterface $eventDispatcher
     ) {
-        $this->menuFactory = $menuFactory;
-        $this->domain = $domain;
-        $this->authorizationChecker = $authorizationChecker;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**

@@ -9,14 +9,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ParameterFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected ParameterRepository $parameterRepository;
-
-    protected ParameterFactoryInterface $parameterFactory;
-
-    protected EventDispatcherInterface $eventDispatcher;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
@@ -24,15 +16,11 @@ class ParameterFacade
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
-        EntityManagerInterface $em,
-        ParameterRepository $parameterRepository,
-        ParameterFactoryInterface $parameterFactory,
-        EventDispatcherInterface $eventDispatcher
+        protected readonly EntityManagerInterface $em,
+        protected readonly ParameterRepository $parameterRepository,
+        protected readonly ParameterFactoryInterface $parameterFactory,
+        protected readonly EventDispatcherInterface $eventDispatcher
     ) {
-        $this->em = $em;
-        $this->parameterRepository = $parameterRepository;
-        $this->parameterFactory = $parameterFactory;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**

@@ -15,16 +15,6 @@ class InputPriceRecalculator
 {
     protected const BATCH_SIZE = 500;
 
-    protected EntityManagerInterface $em;
-
-    protected InputPriceCalculation $inputPriceCalculation;
-
-    protected PaymentPriceCalculation $paymentPriceCalculation;
-
-    protected TransportPriceCalculation $transportPriceCalculation;
-
-    protected CurrencyFacade $currencyFacade;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Pricing\InputPriceCalculation $inputPriceCalculation
@@ -33,17 +23,12 @@ class InputPriceRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
-        EntityManagerInterface $em,
-        InputPriceCalculation $inputPriceCalculation,
-        PaymentPriceCalculation $paymentPriceCalculation,
-        TransportPriceCalculation $transportPriceCalculation,
-        CurrencyFacade $currencyFacade
+        protected readonly EntityManagerInterface $em,
+        protected readonly InputPriceCalculation $inputPriceCalculation,
+        protected readonly PaymentPriceCalculation $paymentPriceCalculation,
+        protected readonly TransportPriceCalculation $transportPriceCalculation,
+        protected readonly CurrencyFacade $currencyFacade
     ) {
-        $this->em = $em;
-        $this->inputPriceCalculation = $inputPriceCalculation;
-        $this->paymentPriceCalculation = $paymentPriceCalculation;
-        $this->transportPriceCalculation = $transportPriceCalculation;
-        $this->currencyFacade = $currencyFacade;
     }
 
     public function recalculateToInputPricesWithoutVat()

@@ -18,26 +18,16 @@ class ReplaceDomainsUrlsCommand extends Command
      */
     protected static $defaultName = 'shopsys:domains-urls:replace';
 
-    private Domain $domain;
-
-    private DomainUrlReplacer $domainUrlReplacer;
-
-    private Setting $setting;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Domain\DomainUrlReplacer $domainUrlReplacer
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
     public function __construct(
-        Domain $domain,
-        DomainUrlReplacer $domainUrlReplacer,
-        Setting $setting
+        private readonly Domain $domain,
+        private readonly DomainUrlReplacer $domainUrlReplacer,
+        private readonly Setting $setting
     ) {
-        $this->domain = $domain;
-        $this->domainUrlReplacer = $domainUrlReplacer;
-        $this->setting = $setting;
-
         parent::__construct();
     }
 

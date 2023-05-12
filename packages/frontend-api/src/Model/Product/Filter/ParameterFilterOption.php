@@ -8,21 +8,12 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 
 class ParameterFilterOption
 {
-    public Parameter $parameter;
-
-    /**
-     * @var \Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterValueFilterOption[]
-     */
-    public array $values;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterValueFilterOption[] $values
      */
-    public function __construct(Parameter $parameter, array $values)
+    public function __construct(public readonly Parameter $parameter, public readonly array $values)
     {
-        $this->parameter = $parameter;
-        $this->values = $values;
     }
 
     /**

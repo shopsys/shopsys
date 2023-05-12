@@ -8,14 +8,11 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class AdministrationFacade
 {
-    protected RequestStack $requestStack;
-
     /**
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      */
-    public function __construct(RequestStack $requestStack)
+    public function __construct(protected readonly RequestStack $requestStack)
     {
-        $this->requestStack = $requestStack;
     }
 
     /**

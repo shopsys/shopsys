@@ -8,14 +8,11 @@ class CategoryVisibilityRecalculationScheduler
 {
     protected bool $recalculate = false;
 
-    protected ProductVisibilityFacade $productVisibilityFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      */
-    public function __construct(ProductVisibilityFacade $productVisibilityFacade)
+    public function __construct(protected readonly ProductVisibilityFacade $productVisibilityFacade)
     {
-        $this->productVisibilityFacade = $productVisibilityFacade;
     }
 
     /**

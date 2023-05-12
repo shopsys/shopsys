@@ -17,24 +17,6 @@ class DomainDataCreator
 {
     public const TEMPLATE_DOMAIN_ID = 1;
 
-    protected Domain $domain;
-
-    protected Setting $setting;
-
-    protected SettingValueRepository $settingValueRepository;
-
-    protected MultidomainEntityDataCreator $multidomainEntityDataCreator;
-
-    protected TranslatableEntityDataCreator $translatableEntityDataCreator;
-
-    protected PricingGroupDataFactory $pricingGroupDataFactory;
-
-    protected PricingGroupFacade $pricingGroupFacade;
-
-    protected VatDataFactory $vatDataFactory;
-
-    protected VatFacade $vatFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
@@ -47,25 +29,16 @@ class DomainDataCreator
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      */
     public function __construct(
-        Domain $domain,
-        Setting $setting,
-        SettingValueRepository $settingValueRepository,
-        MultidomainEntityDataCreator $multidomainEntityDataCreator,
-        TranslatableEntityDataCreator $translatableEntityDataCreator,
-        PricingGroupDataFactory $pricingGroupDataFactory,
-        PricingGroupFacade $pricingGroupFacade,
-        VatDataFactory $vatDataFactory,
-        VatFacade $vatFacade
+        protected readonly Domain $domain,
+        protected readonly Setting $setting,
+        protected readonly SettingValueRepository $settingValueRepository,
+        protected readonly MultidomainEntityDataCreator $multidomainEntityDataCreator,
+        protected readonly TranslatableEntityDataCreator $translatableEntityDataCreator,
+        protected readonly PricingGroupDataFactory $pricingGroupDataFactory,
+        protected readonly PricingGroupFacade $pricingGroupFacade,
+        protected readonly VatDataFactory $vatDataFactory,
+        protected readonly VatFacade $vatFacade
     ) {
-        $this->domain = $domain;
-        $this->setting = $setting;
-        $this->settingValueRepository = $settingValueRepository;
-        $this->multidomainEntityDataCreator = $multidomainEntityDataCreator;
-        $this->translatableEntityDataCreator = $translatableEntityDataCreator;
-        $this->pricingGroupDataFactory = $pricingGroupDataFactory;
-        $this->pricingGroupFacade = $pricingGroupFacade;
-        $this->vatDataFactory = $vatDataFactory;
-        $this->vatFacade = $vatFacade;
     }
 
     /**

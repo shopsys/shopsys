@@ -37,8 +37,6 @@ class MailTemplateVariables
      */
     public const REQUIRED_BOTH = 3;
 
-    protected string $readableName;
-
     /**
      * @var string[]
      */
@@ -64,16 +62,12 @@ class MailTemplateVariables
      */
     protected array $requiredSubjectVariables = [];
 
-    protected ?string $type = null;
-
     /**
      * @param string $readableName
      * @param string|null $type
      */
-    public function __construct(string $readableName, ?string $type = null)
+    public function __construct(protected string $readableName, protected readonly ?string $type = null)
     {
-        $this->readableName = $readableName;
-        $this->type = $type;
     }
 
     /**

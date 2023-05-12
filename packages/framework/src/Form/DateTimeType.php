@@ -13,14 +13,11 @@ class DateTimeType extends AbstractType
 {
     protected const FORMAT_PHP = 'dd.MM.yyyy HH:mm:ss';
 
-    protected DisplayTimeZoneProviderInterface $displayTimeZoneProvider;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
      */
-    public function __construct(DisplayTimeZoneProviderInterface $displayTimeZoneProvider)
+    public function __construct(protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider)
     {
-        $this->displayTimeZoneProvider = $displayTimeZoneProvider;
     }
 
     /**

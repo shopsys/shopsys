@@ -8,18 +8,12 @@ use Redis;
 
 class RedisVersionsFacade
 {
-    protected Redis $globalClient;
-
-    protected string $currentVersion;
-
     /**
      * @param \Redis $globalClient
      * @param string $currentVersion
      */
-    public function __construct(Redis $globalClient, string $currentVersion)
+    public function __construct(protected readonly Redis $globalClient, protected readonly string $currentVersion)
     {
-        $this->globalClient = $globalClient;
-        $this->currentVersion = $currentVersion;
     }
 
     public function cleanOldCache(): void

@@ -9,20 +9,14 @@ use Roave\BetterReflection\Reflection\ReflectionProperty;
 
 class PropertyAnnotationsFactory
 {
-    protected AnnotationsReplacementsMap $annotationsReplacementsMap;
-
-    protected AnnotationsReplacer $annotationsReplacer;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap $annotationsReplacementsMap
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer $annotationsReplacer
      */
     public function __construct(
-        AnnotationsReplacementsMap $annotationsReplacementsMap,
-        AnnotationsReplacer $annotationsReplacer
+        protected readonly AnnotationsReplacementsMap $annotationsReplacementsMap,
+        protected readonly AnnotationsReplacer $annotationsReplacer
     ) {
-        $this->annotationsReplacementsMap = $annotationsReplacementsMap;
-        $this->annotationsReplacer = $annotationsReplacer;
     }
 
     /**

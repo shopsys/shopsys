@@ -9,16 +9,6 @@ use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 
 class OrderStatusFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected OrderStatusRepository $orderStatusRepository;
-
-    protected OrderRepository $orderRepository;
-
-    protected MailTemplateFacade $mailTemplateFacade;
-
-    protected OrderStatusFactoryInterface $orderStatusFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
@@ -27,17 +17,12 @@ class OrderStatusFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFactoryInterface $orderStatusFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        OrderStatusRepository $orderStatusRepository,
-        OrderRepository $orderRepository,
-        MailTemplateFacade $mailTemplateFacade,
-        OrderStatusFactoryInterface $orderStatusFactory
+        protected readonly EntityManagerInterface $em,
+        protected readonly OrderStatusRepository $orderStatusRepository,
+        protected readonly OrderRepository $orderRepository,
+        protected readonly MailTemplateFacade $mailTemplateFacade,
+        protected readonly OrderStatusFactoryInterface $orderStatusFactory
     ) {
-        $this->em = $em;
-        $this->orderStatusRepository = $orderStatusRepository;
-        $this->orderRepository = $orderRepository;
-        $this->mailTemplateFacade = $mailTemplateFacade;
-        $this->orderStatusFactory = $orderStatusFactory;
     }
 
     /**

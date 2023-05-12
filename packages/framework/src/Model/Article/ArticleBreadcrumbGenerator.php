@@ -7,14 +7,11 @@ use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
 
 class ArticleBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
-    protected ArticleRepository $articleRepository;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
      */
-    public function __construct(ArticleRepository $articleRepository)
+    public function __construct(protected readonly ArticleRepository $articleRepository)
     {
-        $this->articleRepository = $articleRepository;
     }
 
     /**

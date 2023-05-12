@@ -10,20 +10,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CurrentCategoryResolver
 {
-    private CategoryFacade $categoryFacade;
-
-    private ProductFacade $productFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
-        CategoryFacade $categoryFacade,
-        ProductFacade $productFacade
+        private readonly CategoryFacade $categoryFacade,
+        private readonly ProductFacade $productFacade
     ) {
-        $this->categoryFacade = $categoryFacade;
-        $this->productFacade = $productFacade;
     }
 
     /**

@@ -12,14 +12,6 @@ class CartMigrationFacade
 {
     protected const SESSION_PREVIOUS_CART_IDENTIFIER = 'previous_id';
 
-    protected EntityManagerInterface $em;
-
-    protected CustomerUserIdentifierFactory $customerUserIdentifierFactory;
-
-    protected CartItemFactoryInterface $cartItemFactory;
-
-    protected CartFacade $cartFacade;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
@@ -27,15 +19,11 @@ class CartMigrationFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(
-        EntityManagerInterface $em,
-        CustomerUserIdentifierFactory $customerUserIdentifierFactory,
-        CartItemFactoryInterface $cartItemFactory,
-        CartFacade $cartFacade
+        protected readonly EntityManagerInterface $em,
+        protected readonly CustomerUserIdentifierFactory $customerUserIdentifierFactory,
+        protected readonly CartItemFactoryInterface $cartItemFactory,
+        protected readonly CartFacade $cartFacade
     ) {
-        $this->em = $em;
-        $this->customerUserIdentifierFactory = $customerUserIdentifierFactory;
-        $this->cartItemFactory = $cartItemFactory;
-        $this->cartFacade = $cartFacade;
     }
 
     /**

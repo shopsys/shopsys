@@ -13,28 +13,6 @@ class GoogleFeedItem implements FeedItemInterface
     protected const AVAILABILITY_OUT_OF_STOCK = 'out of stock';
     protected const AVAILABILITY_IN_STOCK = 'in stock';
 
-    protected int $id;
-
-    protected string $name;
-
-    protected ?string $brandName;
-
-    protected ?string $description;
-
-    protected ?string $ean = null;
-
-    protected ?string $partno = null;
-
-    protected string $url;
-
-    protected ?string $imgUrl = null;
-
-    protected bool $sellingDenied;
-
-    protected Price $price;
-
-    protected Currency $currency;
-
     /**
      * @param int $id
      * @param string $name
@@ -49,29 +27,18 @@ class GoogleFeedItem implements FeedItemInterface
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      */
     public function __construct(
-        int $id,
-        string $name,
-        ?string $brandName,
-        ?string $description,
-        ?string $ean,
-        ?string $partno,
-        string $url,
-        ?string $imgUrl,
-        bool $sellingDenied,
-        Price $price,
-        Currency $currency
+        protected readonly int $id,
+        protected readonly string $name,
+        protected readonly ?string $brandName,
+        protected readonly ?string $description,
+        protected readonly ?string $ean = null,
+        protected readonly ?string $partno = null,
+        protected readonly string $url,
+        protected readonly ?string $imgUrl = null,
+        protected readonly bool $sellingDenied,
+        protected readonly Price $price,
+        protected readonly Currency $currency
     ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->brandName = $brandName;
-        $this->description = $description;
-        $this->ean = $ean;
-        $this->partno = $partno;
-        $this->url = $url;
-        $this->imgUrl = $imgUrl;
-        $this->sellingDenied = $sellingDenied;
-        $this->price = $price;
-        $this->currency = $currency;
     }
 
     /**

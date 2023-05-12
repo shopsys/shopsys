@@ -9,20 +9,14 @@ use Twig\TwigFunction;
 
 class ShopInfoExtension extends AbstractExtension
 {
-    protected ShopInfoSettingFacade $shopInfoSettingFacade;
-
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\ShopInfo\ShopInfoSettingFacade $shopInfoSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        ShopInfoSettingFacade $shopInfoSettingFacade,
-        Domain $domain
+        protected readonly ShopInfoSettingFacade $shopInfoSettingFacade,
+        protected readonly Domain $domain
     ) {
-        $this->shopInfoSettingFacade = $shopInfoSettingFacade;
-        $this->domain = $domain;
     }
 
     /**

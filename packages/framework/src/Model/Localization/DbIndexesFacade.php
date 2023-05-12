@@ -4,18 +4,12 @@ namespace Shopsys\FrameworkBundle\Model\Localization;
 
 class DbIndexesFacade
 {
-    protected Localization $localization;
-
-    protected DbIndexesRepository $dbIndexesRepository;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param \Shopsys\FrameworkBundle\Model\Localization\DbIndexesRepository $dbIndexesRepository
      */
-    public function __construct(Localization $localization, DbIndexesRepository $dbIndexesRepository)
+    public function __construct(protected readonly Localization $localization, protected readonly DbIndexesRepository $dbIndexesRepository)
     {
-        $this->localization = $localization;
-        $this->dbIndexesRepository = $dbIndexesRepository;
     }
 
     public function updateLocaleSpecificIndexes(): void

@@ -8,20 +8,14 @@ use Shopsys\FrameworkBundle\Component\Image\ImageRepository;
 
 class ImageGeneratorFacade
 {
-    protected ImageRepository $imageRepository;
-
-    protected ImageGenerator $imageGenerator;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageRepository $imageRepository
      * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageGenerator $imageGenerator
      */
     public function __construct(
-        ImageRepository $imageRepository,
-        ImageGenerator $imageGenerator
+        protected readonly ImageRepository $imageRepository,
+        protected readonly ImageGenerator $imageGenerator
     ) {
-        $this->imageRepository = $imageRepository;
-        $this->imageGenerator = $imageGenerator;
     }
 
     /**

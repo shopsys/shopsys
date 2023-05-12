@@ -14,22 +14,13 @@ use Symplify\MonorepoBuilder\Package\PackageNamesProvider;
 
 final class SetMutualDependenciesToVersionReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    private ComposerJsonFilesProvider $composerJsonFilesProvider;
-
-    private DependencyUpdater $dependencyUpdater;
-
-    private PackageNamesProvider $packageNamesProvider;
-
     /**
      * @param \Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider $composerJsonFilesProvider
      * @param \Symplify\MonorepoBuilder\DependencyUpdater $dependencyUpdater
      * @param \Symplify\MonorepoBuilder\Package\PackageNamesProvider $packageNamesProvider
      */
-    public function __construct(ComposerJsonFilesProvider $composerJsonFilesProvider, DependencyUpdater $dependencyUpdater, PackageNamesProvider $packageNamesProvider)
+    public function __construct(private readonly ComposerJsonFilesProvider $composerJsonFilesProvider, private readonly DependencyUpdater $dependencyUpdater, private readonly PackageNamesProvider $packageNamesProvider)
     {
-        $this->composerJsonFilesProvider = $composerJsonFilesProvider;
-        $this->dependencyUpdater = $dependencyUpdater;
-        $this->packageNamesProvider = $packageNamesProvider;
     }
 
     /**

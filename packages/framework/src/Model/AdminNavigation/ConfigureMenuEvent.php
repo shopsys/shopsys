@@ -18,18 +18,12 @@ class ConfigureMenuEvent extends Event
     public const SIDE_MENU_ADMINISTRATORS = 'shopsys.admin_side_menu.configure_administrators';
     public const SIDE_MENU_SETTINGS = 'shopsys.admin_side_menu.configure_settings';
 
-    protected FactoryInterface $menuFactory;
-
-    protected ItemInterface $menu;
-
     /**
      * @param \Knp\Menu\FactoryInterface $menuFactory
      * @param \Knp\Menu\ItemInterface $menu
      */
-    public function __construct(FactoryInterface $menuFactory, ItemInterface $menu)
+    public function __construct(protected readonly FactoryInterface $menuFactory, protected readonly ItemInterface $menu)
     {
-        $this->menuFactory = $menuFactory;
-        $this->menu = $menu;
     }
 
     /**

@@ -10,25 +10,16 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 
 class ProductBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
-    protected ProductRepository $productRepository;
-
-    protected CategoryFacade $categoryFacade;
-
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        ProductRepository $productRepository,
-        CategoryFacade $categoryFacade,
-        Domain $domain
+        protected readonly ProductRepository $productRepository,
+        protected readonly CategoryFacade $categoryFacade,
+        protected readonly Domain $domain
     ) {
-        $this->productRepository = $productRepository;
-        $this->categoryFacade = $categoryFacade;
-        $this->domain = $domain;
     }
 
     /**

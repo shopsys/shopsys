@@ -12,12 +12,6 @@ class DomainExtension extends AbstractExtension
 {
     protected string $domainImagesUrlPrefix;
 
-    protected Packages $assetPackages;
-
-    protected Domain $domain;
-
-    protected DomainFacade $domainFacade;
-
     /**
      * @param mixed $domainImagesUrlPrefix
      * @param \Symfony\Component\Asset\Packages $assetPackages
@@ -26,14 +20,11 @@ class DomainExtension extends AbstractExtension
      */
     public function __construct(
         $domainImagesUrlPrefix,
-        Packages $assetPackages,
-        Domain $domain,
-        DomainFacade $domainFacade
+        protected readonly Packages $assetPackages,
+        protected readonly Domain $domain,
+        protected readonly DomainFacade $domainFacade
     ) {
         $this->domainImagesUrlPrefix = $domainImagesUrlPrefix;
-        $this->assetPackages = $assetPackages;
-        $this->domain = $domain;
-        $this->domainFacade = $domainFacade;
     }
 
     /**

@@ -15,20 +15,14 @@ use Throwable;
 
 class ShopsysFrameworkDataCollector extends DataCollector
 {
-    protected Domain $domain;
-
-    protected DisplayTimeZoneProviderInterface $displayTimeZoneProvider;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
      */
     public function __construct(
-        Domain $domain,
-        DisplayTimeZoneProviderInterface $displayTimeZoneProvider
+        protected readonly Domain $domain,
+        protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider
     ) {
-        $this->domain = $domain;
-        $this->displayTimeZoneProvider = $displayTimeZoneProvider;
     }
 
     /**

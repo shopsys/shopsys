@@ -17,10 +17,6 @@ final class GithubActionsStatusReporter
      */
     private const EXTRA_PACKAGES = [];
 
-    private PackageProvider $packageProvider;
-
-    private ApiCaller $apiCaller;
-
     /**
      * @var string[]
      */
@@ -30,10 +26,8 @@ final class GithubActionsStatusReporter
      * @param \Shopsys\Releaser\Packagist\PackageProvider $packageProvider
      * @param \Shopsys\Releaser\Guzzle\ApiCaller $apiCaller
      */
-    public function __construct(PackageProvider $packageProvider, ApiCaller $apiCaller)
+    public function __construct(private readonly PackageProvider $packageProvider, private readonly ApiCaller $apiCaller)
     {
-        $this->packageProvider = $packageProvider;
-        $this->apiCaller = $apiCaller;
     }
 
     /**

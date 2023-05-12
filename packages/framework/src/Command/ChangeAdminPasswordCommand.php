@@ -22,15 +22,11 @@ class ChangeAdminPasswordCommand extends Command
      */
     protected static $defaultName = 'shopsys:administrator:change-password';
 
-    private AdministratorFacade $administratorFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
      */
-    public function __construct(AdministratorFacade $administratorFacade)
+    public function __construct(private readonly AdministratorFacade $administratorFacade)
     {
-        $this->administratorFacade = $administratorFacade;
-
         parent::__construct();
     }
 

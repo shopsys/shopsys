@@ -10,18 +10,12 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductCalculatedPriceRepository
 {
-    protected EntityManagerInterface $em;
-
-    protected ProductCalculatedPriceFactoryInterface $productCalculatedPriceFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPriceFactoryInterface $productCalculatedPriceFactory
      */
-    public function __construct(EntityManagerInterface $em, ProductCalculatedPriceFactoryInterface $productCalculatedPriceFactory)
+    public function __construct(protected readonly EntityManagerInterface $em, protected readonly ProductCalculatedPriceFactoryInterface $productCalculatedPriceFactory)
     {
-        $this->em = $em;
-        $this->productCalculatedPriceFactory = $productCalculatedPriceFactory;
     }
 
     /**

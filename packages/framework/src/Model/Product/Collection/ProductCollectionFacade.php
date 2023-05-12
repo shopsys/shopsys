@@ -14,18 +14,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductCollectionFacade
 {
-    protected ImageConfig $imageConfig;
-
-    protected ImageRepository $imageRepository;
-
-    protected ImageFacade $imageFacade;
-
-    protected FriendlyUrlRepository $friendlyUrlRepository;
-
-    protected ParameterRepository $parameterRepository;
-
-    protected FriendlyUrlFacade $friendlyUrlFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageRepository $imageRepository
@@ -35,19 +23,13 @@ class ProductCollectionFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
     public function __construct(
-        ImageConfig $imageConfig,
-        ImageRepository $imageRepository,
-        ImageFacade $imageFacade,
-        FriendlyUrlRepository $friendlyUrlRepository,
-        ParameterRepository $parameterRepository,
-        FriendlyUrlFacade $friendlyUrlFacade
+        protected readonly ImageConfig $imageConfig,
+        protected readonly ImageRepository $imageRepository,
+        protected readonly ImageFacade $imageFacade,
+        protected readonly FriendlyUrlRepository $friendlyUrlRepository,
+        protected readonly ParameterRepository $parameterRepository,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade
     ) {
-        $this->imageConfig = $imageConfig;
-        $this->imageRepository = $imageRepository;
-        $this->imageFacade = $imageFacade;
-        $this->friendlyUrlRepository = $friendlyUrlRepository;
-        $this->parameterRepository = $parameterRepository;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
     }
 
     /**

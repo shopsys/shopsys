@@ -16,15 +16,11 @@ class RedisCleanCacheOldCommand extends Command
      */
     protected static $defaultName = 'shopsys:redis:clean-cache-old';
 
-    private RedisVersionsFacade $redisVersionsFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Redis\RedisVersionsFacade $redisVersionsFacade
      */
-    public function __construct(RedisVersionsFacade $redisVersionsFacade)
+    public function __construct(private readonly RedisVersionsFacade $redisVersionsFacade)
     {
-        $this->redisVersionsFacade = $redisVersionsFacade;
-
         parent::__construct();
     }
 

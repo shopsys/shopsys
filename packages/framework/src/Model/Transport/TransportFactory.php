@@ -6,14 +6,11 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class TransportFactory implements TransportFactoryInterface
 {
-    protected EntityNameResolver $entityNameResolver;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
-    public function __construct(EntityNameResolver $entityNameResolver)
+    public function __construct(protected readonly EntityNameResolver $entityNameResolver)
     {
-        $this->entityNameResolver = $entityNameResolver;
     }
 
     /**

@@ -25,14 +25,6 @@ use Symplify\CodingStandard\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector;
  */
 abstract class AbstractMissingAnnotationsFixer implements FixerInterface
 {
-    protected WhitespacesFixerConfig $whitespacesFixerConfig;
-
-    protected FunctionsAnalyzer $functionsAnalyzer;
-
-    private IndentDetector $indentDetector;
-
-    protected PhpToDocTypeTransformer $phpToDocTypeTransformer;
-
     /**
      * @param \PhpCsFixer\WhitespacesFixerConfig $whitespacesFixerConfig
      * @param \PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer $functionsAnalyzer
@@ -40,15 +32,11 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
      * @param \Symplify\CodingStandard\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector $indentDetector
      */
     public function __construct(
-        WhitespacesFixerConfig $whitespacesFixerConfig,
-        FunctionsAnalyzer $functionsAnalyzer,
-        PhpToDocTypeTransformer $phpToDocTypeTransformer,
-        IndentDetector $indentDetector
+        protected readonly WhitespacesFixerConfig $whitespacesFixerConfig,
+        protected readonly FunctionsAnalyzer $functionsAnalyzer,
+        protected readonly PhpToDocTypeTransformer $phpToDocTypeTransformer,
+        private readonly IndentDetector $indentDetector
     ) {
-        $this->whitespacesFixerConfig = $whitespacesFixerConfig;
-        $this->functionsAnalyzer = $functionsAnalyzer;
-        $this->indentDetector = $indentDetector;
-        $this->phpToDocTypeTransformer = $phpToDocTypeTransformer;
     }
 
     /**

@@ -7,14 +7,11 @@ class ImageThumbnailFactory
     protected const THUMBNAIL_WIDTH = 140;
     protected const THUMBNAIL_HEIGHT = 200;
 
-    protected ImageProcessor $imageProcessor;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor $imageProcessor
      */
-    public function __construct(ImageProcessor $imageProcessor)
+    public function __construct(protected readonly ImageProcessor $imageProcessor)
     {
-        $this->imageProcessor = $imageProcessor;
     }
 
     /**

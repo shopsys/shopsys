@@ -14,11 +14,6 @@ class ClassExtensionRegistry
     /**
      * @var string[]
      */
-    protected array $entityExtensionMap = [];
-
-    /**
-     * @var string[]
-     */
     protected array $serviceExtensionMap = [];
 
     /**
@@ -26,16 +21,12 @@ class ClassExtensionRegistry
      */
     protected array $otherClassesExtensionMap = [];
 
-    protected string $frameworkRootDir;
-
     /**
      * @param string[] $entityExtensionMap
      * @param string $frameworkRootDir
      */
-    public function __construct(array $entityExtensionMap, string $frameworkRootDir)
+    public function __construct(protected readonly array $entityExtensionMap = [], protected readonly string $frameworkRootDir)
     {
-        $this->entityExtensionMap = $entityExtensionMap;
-        $this->frameworkRootDir = $frameworkRootDir;
         $this->otherClassesExtensionMap = $this->getOtherClassesExtensionMap();
     }
 

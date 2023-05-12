@@ -6,14 +6,11 @@ namespace Shopsys\FrameworkBundle\Model\ContactForm;
 
 class ContactFormSettingsDataFactory implements ContactFormSettingsDataFactoryInterface
 {
-    protected ContactFormSettingsFacade $contactFormSettingsFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsFacade $contactFormSettingsFacade
      */
-    public function __construct(ContactFormSettingsFacade $contactFormSettingsFacade)
+    public function __construct(protected readonly ContactFormSettingsFacade $contactFormSettingsFacade)
     {
-        $this->contactFormSettingsFacade = $contactFormSettingsFacade;
     }
 
     /**

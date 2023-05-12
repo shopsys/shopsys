@@ -8,16 +8,6 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class MultidomainEntityClassFinderFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected MultidomainEntityClassFinder $multidomainEntityClassFinder;
-
-    protected MultidomainEntityClassProviderInterface $multidomainEntityClassProvider;
-
-    protected NotNullableColumnsFinder $notNullableColumnsFinder;
-
-    protected EntityNameResolver $entityNameResolver;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassFinder $multidomainEntityClassFinder
@@ -26,17 +16,12 @@ class MultidomainEntityClassFinderFacade
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
     public function __construct(
-        EntityManagerInterface $em,
-        MultidomainEntityClassFinder $multidomainEntityClassFinder,
-        MultidomainEntityClassProviderInterface $multidomainEntityClassProvider,
-        NotNullableColumnsFinder $notNullableColumnsFinder,
-        EntityNameResolver $entityNameResolver
+        protected readonly EntityManagerInterface $em,
+        protected readonly MultidomainEntityClassFinder $multidomainEntityClassFinder,
+        protected readonly MultidomainEntityClassProviderInterface $multidomainEntityClassProvider,
+        protected readonly NotNullableColumnsFinder $notNullableColumnsFinder,
+        protected readonly EntityNameResolver $entityNameResolver
     ) {
-        $this->em = $em;
-        $this->multidomainEntityClassFinder = $multidomainEntityClassFinder;
-        $this->multidomainEntityClassProvider = $multidomainEntityClassProvider;
-        $this->notNullableColumnsFinder = $notNullableColumnsFinder;
-        $this->entityNameResolver = $entityNameResolver;
     }
 
     /**

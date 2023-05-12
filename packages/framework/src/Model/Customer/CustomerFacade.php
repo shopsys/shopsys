@@ -8,25 +8,16 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class CustomerFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected CustomerFactoryInterface $customerFactory;
-
-    protected CustomerRepository $customerRepository;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface $customerFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerRepository $customerRepository
      */
     public function __construct(
-        EntityManagerInterface $em,
-        CustomerFactoryInterface $customerFactory,
-        CustomerRepository $customerRepository
+        protected readonly EntityManagerInterface $em,
+        protected readonly CustomerFactoryInterface $customerFactory,
+        protected readonly CustomerRepository $customerRepository
     ) {
-        $this->em = $em;
-        $this->customerFactory = $customerFactory;
-        $this->customerRepository = $customerRepository;
     }
 
     /**

@@ -10,20 +10,11 @@ use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException
 class EnabledOnDomainChecker
 {
     /**
-     * @var int[]
-     */
-    protected array $enabledDomainIds;
-
-    protected Domain $domain;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param int[] $enabledDomainIds
      */
-    public function __construct(Domain $domain, array $enabledDomainIds = [])
+    public function __construct(protected readonly Domain $domain, protected readonly array $enabledDomainIds = [])
     {
-        $this->enabledDomainIds = $enabledDomainIds;
-        $this->domain = $domain;
     }
 
     /**

@@ -15,24 +15,12 @@ use Symfony\Component\Routing\RequestContext;
 
 class DomainRouterFactory
 {
-    protected LocalizedRouterFactory $localizedRouterFactory;
-
-    protected FriendlyUrlRouterFactory $friendlyUrlRouterFactory;
-
-    protected Domain $domain;
-
     protected string $routerConfiguration;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouter[]
      */
     protected array $routersByDomainId = [];
-
-    protected RequestStack $requestStack;
-
-    protected ContainerInterface $container;
-
-    protected string $cacheDir;
 
     /**
      * @param mixed $routerConfiguration
@@ -45,20 +33,14 @@ class DomainRouterFactory
      */
     public function __construct(
         $routerConfiguration,
-        LocalizedRouterFactory $localizedRouterFactory,
-        FriendlyUrlRouterFactory $friendlyUrlRouterFactory,
-        Domain $domain,
-        RequestStack $requestStack,
-        ContainerInterface $container,
-        string $cacheDir
+        protected readonly LocalizedRouterFactory $localizedRouterFactory,
+        protected readonly FriendlyUrlRouterFactory $friendlyUrlRouterFactory,
+        protected readonly Domain $domain,
+        protected readonly RequestStack $requestStack,
+        protected readonly ContainerInterface $container,
+        protected readonly string $cacheDir
     ) {
         $this->routerConfiguration = $routerConfiguration;
-        $this->localizedRouterFactory = $localizedRouterFactory;
-        $this->domain = $domain;
-        $this->friendlyUrlRouterFactory = $friendlyUrlRouterFactory;
-        $this->requestStack = $requestStack;
-        $this->container = $container;
-        $this->cacheDir = $cacheDir;
     }
 
     /**

@@ -6,22 +6,13 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class OrderTotalPrice
 {
-    protected Money $priceWithVat;
-
-    protected Money $priceWithoutVat;
-
-    protected Money $productPriceWithVat;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithoutVat
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $productPriceWithVat
      */
-    public function __construct(Money $priceWithVat, Money $priceWithoutVat, Money $productPriceWithVat)
+    public function __construct(protected readonly Money $priceWithVat, protected readonly Money $priceWithoutVat, protected readonly Money $productPriceWithVat)
     {
-        $this->priceWithVat = $priceWithVat;
-        $this->priceWithoutVat = $priceWithoutVat;
-        $this->productPriceWithVat = $productPriceWithVat;
     }
 
     /**

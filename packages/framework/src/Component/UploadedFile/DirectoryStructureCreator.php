@@ -9,10 +9,6 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 
 class DirectoryStructureCreator
 {
-    protected UploadedFileConfig $uploadedFileConfig;
-
-    protected UploadedFileLocator $uploadedFileLocator;
-
     protected FilesystemOperator $filesysytem;
 
     /**
@@ -21,12 +17,10 @@ class DirectoryStructureCreator
      * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
-        UploadedFileConfig $uploadedFileConfig,
-        UploadedFileLocator $uploadedFileLocator,
+        protected readonly UploadedFileConfig $uploadedFileConfig,
+        protected readonly UploadedFileLocator $uploadedFileLocator,
         FilesystemOperator $filesystem
     ) {
-        $this->uploadedFileConfig = $uploadedFileConfig;
-        $this->uploadedFileLocator = $uploadedFileLocator;
         $this->filesysytem = $filesystem;
     }
 

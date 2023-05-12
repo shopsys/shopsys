@@ -11,14 +11,11 @@ use Throwable;
 
 class ElasticsearchCollector extends DataCollector
 {
-    protected ElasticsearchRequestCollection $elasticsearchRequestCollection;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\ElasticsearchRequestCollection $elasticsearchRequestCollection
      */
-    public function __construct(ElasticsearchRequestCollection $elasticsearchRequestCollection)
+    public function __construct(protected readonly ElasticsearchRequestCollection $elasticsearchRequestCollection)
     {
-        $this->elasticsearchRequestCollection = $elasticsearchRequestCollection;
     }
 
     /**

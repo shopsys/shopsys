@@ -8,35 +8,6 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 class OrderPreview
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[]
-     */
-    protected array $quantifiedProductsByIndex;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[]
-     */
-    protected array $quantifiedItemsPricesByIndex;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price[]
-     */
-    protected array $quantifiedItemsDiscountsByIndex;
-
-    protected ?Transport $transport = null;
-
-    protected ?Price $transportPrice = null;
-
-    protected ?Payment $payment = null;
-
-    protected ?Price $paymentPrice = null;
-
-    protected Price $totalPrice;
-
-    protected Price $productsPrice;
-
-    protected ?Price $roundingPrice = null;
-
     protected ?string $promoCodeDiscountPercent = null;
 
     /**
@@ -53,28 +24,18 @@ class OrderPreview
      * @param string|null $promoCodeDiscountPercent
      */
     public function __construct(
-        array $quantifiedProductsByIndex,
-        array $quantifiedItemsPricesByIndex,
-        array $quantifiedItemsDiscountsByIndex,
-        Price $productsPrice,
-        Price $totalPrice,
-        ?Transport $transport = null,
-        ?Price $transportPrice = null,
-        ?Payment $payment = null,
-        ?Price $paymentPrice = null,
-        ?Price $roundingPrice = null,
+        protected readonly array $quantifiedProductsByIndex,
+        protected readonly array $quantifiedItemsPricesByIndex,
+        protected readonly array $quantifiedItemsDiscountsByIndex,
+        protected readonly Price $productsPrice,
+        protected readonly Price $totalPrice,
+        protected readonly ?Transport $transport = null,
+        protected readonly ?Price $transportPrice = null,
+        protected readonly ?Payment $payment = null,
+        protected readonly ?Price $paymentPrice = null,
+        protected readonly ?Price $roundingPrice = null,
         $promoCodeDiscountPercent = null
     ) {
-        $this->quantifiedProductsByIndex = $quantifiedProductsByIndex;
-        $this->quantifiedItemsPricesByIndex = $quantifiedItemsPricesByIndex;
-        $this->quantifiedItemsDiscountsByIndex = $quantifiedItemsDiscountsByIndex;
-        $this->productsPrice = $productsPrice;
-        $this->totalPrice = $totalPrice;
-        $this->transport = $transport;
-        $this->transportPrice = $transportPrice;
-        $this->payment = $payment;
-        $this->paymentPrice = $paymentPrice;
-        $this->roundingPrice = $roundingPrice;
         $this->promoCodeDiscountPercent = $promoCodeDiscountPercent;
     }
 

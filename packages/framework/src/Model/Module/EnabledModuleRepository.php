@@ -7,20 +7,14 @@ use Shopsys\FrameworkBundle\Model\Module\Exception\UnsupportedModuleException;
 
 class EnabledModuleRepository
 {
-    protected EntityManagerInterface $em;
-
-    protected ModuleList $moduleList;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleList $moduleList
      */
     public function __construct(
-        EntityManagerInterface $em,
-        ModuleList $moduleList
+        protected readonly EntityManagerInterface $em,
+        protected readonly ModuleList $moduleList
     ) {
-        $this->em = $em;
-        $this->moduleList = $moduleList;
     }
 
     /**

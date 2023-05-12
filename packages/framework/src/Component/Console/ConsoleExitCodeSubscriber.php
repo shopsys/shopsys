@@ -18,14 +18,11 @@ class ConsoleExitCodeSubscriber implements EventSubscriberInterface
 {
     protected const LOG_LEVEL = LogLevel::ERROR;
 
-    protected LoggerInterface $logger;
-
     /**
      * @param \Psr\Log\LoggerInterface $logger
      */
-    public function __construct(LoggerInterface $logger)
+    public function __construct(protected readonly LoggerInterface $logger)
     {
-        $this->logger = $logger;
     }
 
     /**

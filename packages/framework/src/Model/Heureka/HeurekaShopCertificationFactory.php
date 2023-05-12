@@ -8,25 +8,16 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class HeurekaShopCertificationFactory
 {
-    protected Domain $domain;
-
-    protected HeurekaSetting $heurekaSetting;
-
-    protected HeurekaShopCertificationLocaleHelper $heurekaShopCertificationLocaleHelper;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting $heurekaSetting
      * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationLocaleHelper $heurekaShopCertificationLocaleHelper
      */
     public function __construct(
-        Domain $domain,
-        HeurekaSetting $heurekaSetting,
-        HeurekaShopCertificationLocaleHelper $heurekaShopCertificationLocaleHelper
+        protected readonly Domain $domain,
+        protected readonly HeurekaSetting $heurekaSetting,
+        protected readonly HeurekaShopCertificationLocaleHelper $heurekaShopCertificationLocaleHelper
     ) {
-        $this->domain = $domain;
-        $this->heurekaSetting = $heurekaSetting;
-        $this->heurekaShopCertificationLocaleHelper = $heurekaShopCertificationLocaleHelper;
     }
 
     /**

@@ -9,12 +9,6 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCust
 
 class ProductCachedAttributesFacade
 {
-    protected ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser;
-
-    protected ParameterRepository $parameterRepository;
-
-    protected Localization $localization;
-
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice[]
      */
@@ -31,13 +25,10 @@ class ProductCachedAttributesFacade
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
-        ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
-        ParameterRepository $parameterRepository,
-        Localization $localization
+        protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
+        protected readonly ParameterRepository $parameterRepository,
+        protected readonly Localization $localization
     ) {
-        $this->productPriceCalculationForCustomerUser = $productPriceCalculationForCustomerUser;
-        $this->parameterRepository = $parameterRepository;
-        $this->localization = $localization;
     }
 
     /**

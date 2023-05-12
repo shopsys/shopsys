@@ -9,18 +9,12 @@ use Symfony\Component\Routing\RouterInterface;
 
 class FrontLogoutHandler
 {
-    protected OrderFlowFacade $orderFlowFacade;
-
-    protected RouterInterface $router;
-
     /**
      * @param \Symfony\Component\Routing\RouterInterface $router
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFlowFacade $orderFlowFacade
      */
-    public function __construct(RouterInterface $router, OrderFlowFacade $orderFlowFacade)
+    public function __construct(protected readonly RouterInterface $router, protected readonly OrderFlowFacade $orderFlowFacade)
     {
-        $this->router = $router;
-        $this->orderFlowFacade = $orderFlowFacade;
     }
 
     /**

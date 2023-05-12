@@ -16,21 +16,14 @@ class ConfigureDomainsUrlsCommand extends Command
      */
     protected static $defaultName = 'shopsys:domains-urls:configure';
 
-    private Filesystem $localFilesystem;
-
-    private string $configFilepath;
-
     /**
      * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
      * @param string $configFilepath
      */
     public function __construct(
-        Filesystem $localFilesystem,
-        string $configFilepath
+        private readonly Filesystem $localFilesystem,
+        private readonly string $configFilepath
     ) {
-        $this->localFilesystem = $localFilesystem;
-        $this->configFilepath = $configFilepath;
-
         parent::__construct();
     }
 

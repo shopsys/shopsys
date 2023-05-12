@@ -17,14 +17,6 @@ class UploadedFileExtension extends AbstractExtension
 {
     protected const FILE_NOT_FOUND_ICON_TYPE = 'not-found';
 
-    protected Domain $domain;
-
-    protected UploadedFileFacade $uploadedFileFacade;
-
-    protected FileThumbnailExtension $fileThumbnailExtension;
-
-    protected UploadedFileLocator $uploadedFileLocator;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
@@ -32,15 +24,11 @@ class UploadedFileExtension extends AbstractExtension
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator $uploadedFileLocator
      */
     public function __construct(
-        Domain $domain,
-        UploadedFileFacade $uploadedFileFacade,
-        FileThumbnailExtension $fileThumbnailExtension,
-        UploadedFileLocator $uploadedFileLocator
+        protected readonly Domain $domain,
+        protected readonly UploadedFileFacade $uploadedFileFacade,
+        protected readonly FileThumbnailExtension $fileThumbnailExtension,
+        protected readonly UploadedFileLocator $uploadedFileLocator
     ) {
-        $this->domain = $domain;
-        $this->uploadedFileFacade = $uploadedFileFacade;
-        $this->fileThumbnailExtension = $fileThumbnailExtension;
-        $this->uploadedFileLocator = $uploadedFileLocator;
     }
 
     /**

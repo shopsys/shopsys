@@ -11,20 +11,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class LegalConditionsController extends AdminBaseController
 {
-    protected AdminDomainTabsFacade $adminDomainTabsFacade;
-
-    protected LegalConditionsFacade $legalConditionsFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
      */
     public function __construct(
-        AdminDomainTabsFacade $adminDomainTabsFacade,
-        LegalConditionsFacade $legalConditionsFacade
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly LegalConditionsFacade $legalConditionsFacade
     ) {
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
-        $this->legalConditionsFacade = $legalConditionsFacade;
     }
 
     /**

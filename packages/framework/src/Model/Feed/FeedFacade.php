@@ -9,16 +9,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class FeedFacade
 {
-    protected FeedRegistry $feedRegistry;
-
-    protected ProductVisibilityFacade $productVisibilityFacade;
-
-    protected FeedExportFactory $feedExportFactory;
-
-    protected FeedPathProvider $feedPathProvider;
-
-    protected FilesystemOperator $filesystem;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedRegistry $feedRegistry
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
@@ -27,17 +17,12 @@ class FeedFacade
      * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
-        FeedRegistry $feedRegistry,
-        ProductVisibilityFacade $productVisibilityFacade,
-        FeedExportFactory $feedExportFactory,
-        FeedPathProvider $feedPathProvider,
-        FilesystemOperator $filesystem
+        protected readonly FeedRegistry $feedRegistry,
+        protected readonly ProductVisibilityFacade $productVisibilityFacade,
+        protected readonly FeedExportFactory $feedExportFactory,
+        protected readonly FeedPathProvider $feedPathProvider,
+        protected readonly FilesystemOperator $filesystem
     ) {
-        $this->feedRegistry = $feedRegistry;
-        $this->productVisibilityFacade = $productVisibilityFacade;
-        $this->feedExportFactory = $feedExportFactory;
-        $this->feedPathProvider = $feedPathProvider;
-        $this->filesystem = $filesystem;
     }
 
     /**

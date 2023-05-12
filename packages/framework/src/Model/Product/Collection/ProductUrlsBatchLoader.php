@@ -9,8 +9,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductUrlsBatchLoader
 {
-    protected ProductCollectionFacade $productCollectionFacade;
-
     /**
      * @var string[]
      */
@@ -24,9 +22,8 @@ class ProductUrlsBatchLoader
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade
      */
-    public function __construct(ProductCollectionFacade $productCollectionFacade)
+    public function __construct(protected readonly ProductCollectionFacade $productCollectionFacade)
     {
-        $this->productCollectionFacade = $productCollectionFacade;
     }
 
     /**

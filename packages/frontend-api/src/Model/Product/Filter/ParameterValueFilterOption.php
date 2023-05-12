@@ -10,20 +10,14 @@ class ParameterValueFilterOption
 {
     public ParameterValue $value;
 
-    public int $count;
-
-    public bool $isAbsolute;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $parameterValue
      * @param int $count
      * @param bool $isAbsolute
      */
-    public function __construct(ParameterValue $parameterValue, int $count, bool $isAbsolute)
+    public function __construct(ParameterValue $parameterValue, public readonly int $count, public readonly bool $isAbsolute)
     {
         $this->value = $parameterValue;
-        $this->count = $count;
-        $this->isAbsolute = $isAbsolute;
     }
 
     /**

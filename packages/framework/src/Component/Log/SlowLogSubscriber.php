@@ -12,16 +12,13 @@ class SlowLogSubscriber implements EventSubscriberInterface
 {
     protected const REQUEST_TIME_LIMIT_SECONDS = 2;
 
-    protected Logger $logger;
-
     protected float $startTime;
 
     /**
      * @param \Symfony\Bridge\Monolog\Logger $logger
      */
-    public function __construct(Logger $logger)
+    public function __construct(protected readonly Logger $logger)
     {
-        $this->logger = $logger;
         $this->startTime = 0;
     }
 

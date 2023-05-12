@@ -13,25 +13,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FeedController extends AdminBaseController
 {
-    protected Domain $domain;
-
-    protected FeedFacade $feedFacade;
-
-    protected GridFactory $gridFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Feed\FeedFacade $feedFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        FeedFacade $feedFacade,
-        GridFactory $gridFactory,
-        Domain $domain
+        protected readonly FeedFacade $feedFacade,
+        protected readonly GridFactory $gridFactory,
+        protected readonly Domain $domain
     ) {
-        $this->feedFacade = $feedFacade;
-        $this->gridFactory = $gridFactory;
-        $this->domain = $domain;
     }
 
     /**

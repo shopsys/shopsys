@@ -9,21 +9,12 @@ use Symfony\Component\Form\FormEvents;
 
 class TimedSpamValidationListener implements EventSubscriberInterface
 {
-    protected FormTimeProvider $formTimeProvider;
-
-    /**
-     * @var string[]
-     */
-    protected array $options;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Form\FormTimeProvider $formTimeProvider
      * @param array $options
      */
-    public function __construct(FormTimeProvider $formTimeProvider, array $options)
+    public function __construct(protected readonly FormTimeProvider $formTimeProvider, protected readonly array $options)
     {
-        $this->formTimeProvider = $formTimeProvider;
-        $this->options = $options;
     }
 
     /**

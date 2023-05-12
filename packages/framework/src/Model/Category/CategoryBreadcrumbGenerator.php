@@ -8,20 +8,14 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class CategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
-    protected CategoryRepository $categoryRepository;
-
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        CategoryRepository $categoryRepository,
-        Domain $domain
+        protected readonly CategoryRepository $categoryRepository,
+        protected readonly Domain $domain
     ) {
-        $this->categoryRepository = $categoryRepository;
-        $this->domain = $domain;
     }
 
     /**

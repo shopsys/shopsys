@@ -7,25 +7,16 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class GoogleProductDomainFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected GoogleProductDomainRepository $googleProductDomainRepository;
-
-    protected ProductRepository $productRepository;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainRepository $googleProductDomainRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      */
     public function __construct(
-        EntityManagerInterface $em,
-        GoogleProductDomainRepository $googleProductDomainRepository,
-        ProductRepository $productRepository
+        protected readonly EntityManagerInterface $em,
+        protected readonly GoogleProductDomainRepository $googleProductDomainRepository,
+        protected readonly ProductRepository $productRepository
     ) {
-        $this->em = $em;
-        $this->googleProductDomainRepository = $googleProductDomainRepository;
-        $this->productRepository = $productRepository;
     }
 
     /**

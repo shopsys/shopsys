@@ -14,20 +14,14 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class ParameterFilterChoiceRepository
 {
-    protected EntityManagerInterface $em;
-
-    protected ProductRepository $productRepository;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      */
     public function __construct(
-        EntityManagerInterface $em,
-        ProductRepository $productRepository
+        protected readonly EntityManagerInterface $em,
+        protected readonly ProductRepository $productRepository
     ) {
-        $this->em = $em;
-        $this->productRepository = $productRepository;
     }
 
     /**

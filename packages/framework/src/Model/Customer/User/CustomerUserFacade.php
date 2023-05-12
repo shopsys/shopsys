@@ -20,30 +20,6 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class CustomerUserFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected CustomerUserRepository $customerUserRepository;
-
-    protected CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory;
-
-    protected CustomerMailFacade $customerMailFacade;
-
-    protected BillingAddressDataFactoryInterface $billingAddressDataFactory;
-
-    protected CustomerUserFactoryInterface $customerUserFactory;
-
-    protected CustomerUserPasswordFacade $customerUserPasswordFacade;
-
-    protected CustomerFacade $customerFacade;
-
-    protected DeliveryAddressFacade $deliveryAddressFacade;
-
-    protected CustomerDataFactoryInterface $customerDataFactory;
-
-    protected BillingAddressFacade $billingAddressFacade;
-
-    protected CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
@@ -59,31 +35,19 @@ class CustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
      */
     public function __construct(
-        EntityManagerInterface $em,
-        CustomerUserRepository $customerUserRepository,
-        CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
-        CustomerMailFacade $customerMailFacade,
-        BillingAddressDataFactoryInterface $billingAddressDataFactory,
-        CustomerUserFactoryInterface $customerUserFactory,
-        CustomerUserPasswordFacade $customerUserPasswordFacade,
-        CustomerFacade $customerFacade,
-        DeliveryAddressFacade $deliveryAddressFacade,
-        CustomerDataFactoryInterface $customerDataFactory,
-        BillingAddressFacade $billingAddressFacade,
-        CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
+        protected readonly EntityManagerInterface $em,
+        protected readonly CustomerUserRepository $customerUserRepository,
+        protected readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
+        protected readonly CustomerMailFacade $customerMailFacade,
+        protected readonly BillingAddressDataFactoryInterface $billingAddressDataFactory,
+        protected readonly CustomerUserFactoryInterface $customerUserFactory,
+        protected readonly CustomerUserPasswordFacade $customerUserPasswordFacade,
+        protected readonly CustomerFacade $customerFacade,
+        protected readonly DeliveryAddressFacade $deliveryAddressFacade,
+        protected readonly CustomerDataFactoryInterface $customerDataFactory,
+        protected readonly BillingAddressFacade $billingAddressFacade,
+        protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
     ) {
-        $this->em = $em;
-        $this->customerUserRepository = $customerUserRepository;
-        $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
-        $this->customerMailFacade = $customerMailFacade;
-        $this->billingAddressDataFactory = $billingAddressDataFactory;
-        $this->customerUserFactory = $customerUserFactory;
-        $this->customerUserPasswordFacade = $customerUserPasswordFacade;
-        $this->customerFacade = $customerFacade;
-        $this->deliveryAddressFacade = $deliveryAddressFacade;
-        $this->customerDataFactory = $customerDataFactory;
-        $this->billingAddressFacade = $billingAddressFacade;
-        $this->customerUserRefreshTokenChainFacade = $customerUserRefreshTokenChainFacade;
     }
 
     /**

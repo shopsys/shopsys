@@ -10,12 +10,6 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 class CurrencyInlineEdit extends AbstractGridInlineEdit
 {
-    protected CurrencyFacade $currencyFacade;
-
-    protected FormFactoryInterface $formFactory;
-
-    protected CurrencyDataFactoryInterface $currencyDataFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Grid\CurrencyGridFactory $currencyGridFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
@@ -24,15 +18,11 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
      */
     public function __construct(
         CurrencyGridFactory $currencyGridFactory,
-        CurrencyFacade $currencyFacade,
-        FormFactoryInterface $formFactory,
-        CurrencyDataFactoryInterface $currencyDataFactory
+        protected readonly CurrencyFacade $currencyFacade,
+        protected readonly FormFactoryInterface $formFactory,
+        protected readonly CurrencyDataFactoryInterface $currencyDataFactory
     ) {
         parent::__construct($currencyGridFactory);
-
-        $this->currencyFacade = $currencyFacade;
-        $this->formFactory = $formFactory;
-        $this->currencyDataFactory = $currencyDataFactory;
     }
 
     /**

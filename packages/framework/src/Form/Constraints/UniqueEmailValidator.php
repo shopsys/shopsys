@@ -10,20 +10,14 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UniqueEmailValidator extends ConstraintValidator
 {
-    protected CustomerUserFacade $customerUserFacade;
-
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        CustomerUserFacade $customerUserFacade,
-        Domain $domain
+        protected readonly CustomerUserFacade $customerUserFacade,
+        protected readonly Domain $domain
     ) {
-        $this->customerUserFacade = $customerUserFacade;
-        $this->domain = $domain;
     }
 
     /**

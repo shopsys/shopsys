@@ -13,14 +13,11 @@ class SqlLoggerFacade
 
     protected bool $isLoggerTemporarilyDisabled;
 
-    protected EntityManagerInterface $em;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(protected readonly EntityManagerInterface $em)
     {
-        $this->em = $em;
         $this->isLoggerTemporarilyDisabled = false;
     }
 

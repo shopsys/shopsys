@@ -15,34 +15,16 @@ class ImageEntityConfig
     protected string $entityClass;
 
     /**
-     * @var array<string, array<string, \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig>>
-     */
-    protected array $sizeConfigsByType;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]
-     */
-    protected array $sizeConfigs;
-
-    /**
-     * @var array<string, bool>
-     */
-    protected array $multipleByType;
-
-    /**
      * @param string $entityName
      * @param string $entityClass
      * @param array $sizeConfigsByType
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] $sizeConfigs
      * @param array $multipleByType
      */
-    public function __construct($entityName, $entityClass, array $sizeConfigsByType, array $sizeConfigs, array $multipleByType)
+    public function __construct($entityName, $entityClass, protected readonly array $sizeConfigsByType, protected readonly array $sizeConfigs, protected readonly array $multipleByType)
     {
         $this->entityName = $entityName;
         $this->entityClass = $entityClass;
-        $this->sizeConfigsByType = $sizeConfigsByType;
-        $this->sizeConfigs = $sizeConfigs;
-        $this->multipleByType = $multipleByType;
     }
 
     /**

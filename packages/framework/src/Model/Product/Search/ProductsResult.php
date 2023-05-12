@@ -6,21 +6,12 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search;
 
 class ProductsResult
 {
-    protected int $total;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Product[]
-     */
-    protected array $hits;
-
     /**
      * @param int $total
      * @param array $hits
      */
-    public function __construct(int $total, array $hits)
+    public function __construct(protected readonly int $total, protected readonly array $hits)
     {
-        $this->total = $total;
-        $this->hits = $hits;
     }
 
     /**

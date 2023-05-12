@@ -9,20 +9,14 @@ use Twig\Environment;
 
 class ConfirmDeleteResponseFactory
 {
-    protected Environment $twigEnvironment;
-
-    protected RouteCsrfProtector $routeCsrfProtector;
-
     /**
      * @param \Twig\Environment $twigEnvironment
      * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
      */
     public function __construct(
-        Environment $twigEnvironment,
-        RouteCsrfProtector $routeCsrfProtector
+        protected readonly Environment $twigEnvironment,
+        protected readonly RouteCsrfProtector $routeCsrfProtector
     ) {
-        $this->twigEnvironment = $twigEnvironment;
-        $this->routeCsrfProtector = $routeCsrfProtector;
     }
 
     /**

@@ -9,10 +9,6 @@ use Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface;
 
 class PerformanceTestSample
 {
-    private FeedInfoInterface $feedInfo;
-
-    private DomainConfig $domainConfig;
-
     private string $generationUri;
 
     private float $duration;
@@ -34,14 +30,12 @@ class PerformanceTestSample
      * @param int $statusCode
      */
     public function __construct(
-        FeedInfoInterface $feedInfo,
-        DomainConfig $domainConfig,
+        private readonly FeedInfoInterface $feedInfo,
+        private readonly DomainConfig $domainConfig,
         $generationUri,
         $duration,
         $statusCode
     ) {
-        $this->feedInfo = $feedInfo;
-        $this->domainConfig = $domainConfig;
         $this->generationUri = $generationUri;
         $this->duration = $duration;
         $this->statusCode = $statusCode;

@@ -11,18 +11,6 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationSched
 
 class VatFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected VatRepository $vatRepository;
-
-    protected Setting $setting;
-
-    protected ProductPriceRecalculationScheduler $productPriceRecalculationScheduler;
-
-    protected VatFactoryInterface $vatFactory;
-
-    protected Domain $domain;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatRepository $vatRepository
@@ -32,19 +20,13 @@ class VatFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        EntityManagerInterface $em,
-        VatRepository $vatRepository,
-        Setting $setting,
-        ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
-        VatFactoryInterface $vatFactory,
-        Domain $domain
+        protected readonly EntityManagerInterface $em,
+        protected readonly VatRepository $vatRepository,
+        protected readonly Setting $setting,
+        protected readonly ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
+        protected readonly VatFactoryInterface $vatFactory,
+        protected readonly Domain $domain
     ) {
-        $this->em = $em;
-        $this->vatRepository = $vatRepository;
-        $this->setting = $setting;
-        $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
-        $this->vatFactory = $vatFactory;
-        $this->domain = $domain;
     }
 
     /**

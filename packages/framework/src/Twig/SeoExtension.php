@@ -9,20 +9,14 @@ use Twig\TwigFunction;
 
 class SeoExtension extends AbstractExtension
 {
-    protected SeoSettingFacade $seoSettingFacade;
-
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        SeoSettingFacade $seoSettingFacade,
-        Domain $domain
+        protected readonly SeoSettingFacade $seoSettingFacade,
+        protected readonly Domain $domain
     ) {
-        $this->seoSettingFacade = $seoSettingFacade;
-        $this->domain = $domain;
     }
 
     /**

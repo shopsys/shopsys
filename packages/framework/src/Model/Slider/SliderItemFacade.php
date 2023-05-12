@@ -8,16 +8,6 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 
 class SliderItemFacade
 {
-    protected EntityManagerInterface $em;
-
-    protected SliderItemRepository $sliderItemRepository;
-
-    protected ImageFacade $imageFacade;
-
-    protected Domain $domain;
-
-    protected SliderItemFactoryInterface $sliderItemFactory;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemRepository $sliderItemRepository
@@ -26,17 +16,12 @@ class SliderItemFacade
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemFactoryInterface $sliderItemFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        SliderItemRepository $sliderItemRepository,
-        ImageFacade $imageFacade,
-        Domain $domain,
-        SliderItemFactoryInterface $sliderItemFactory
+        protected readonly EntityManagerInterface $em,
+        protected readonly SliderItemRepository $sliderItemRepository,
+        protected readonly ImageFacade $imageFacade,
+        protected readonly Domain $domain,
+        protected readonly SliderItemFactoryInterface $sliderItemFactory
     ) {
-        $this->em = $em;
-        $this->sliderItemRepository = $sliderItemRepository;
-        $this->imageFacade = $imageFacade;
-        $this->domain = $domain;
-        $this->sliderItemFactory = $sliderItemFactory;
     }
 
     /**

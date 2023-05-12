@@ -8,16 +8,13 @@ class ValueByDateTimeDataPoint
 {
     protected int $value;
 
-    protected DateTime $dateTime;
-
     /**
      * @param mixed $count
      * @param \DateTime $dateTime
      */
-    public function __construct($count, DateTime $dateTime)
+    public function __construct($count, protected readonly DateTime $dateTime)
     {
         $this->value = (int)$count;
-        $this->dateTime = $dateTime;
     }
 
     /**

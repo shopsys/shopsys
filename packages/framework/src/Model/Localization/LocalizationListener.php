@@ -10,25 +10,16 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class LocalizationListener implements EventSubscriberInterface
 {
-    protected Domain $domain;
-
-    protected Localization $localization;
-
-    protected AdministrationFacade $administrationFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade $administrationFacade
      */
     public function __construct(
-        Domain $domain,
-        Localization $localization,
-        AdministrationFacade $administrationFacade
+        protected readonly Domain $domain,
+        protected readonly Localization $localization,
+        protected readonly AdministrationFacade $administrationFacade
     ) {
-        $this->domain = $domain;
-        $this->localization = $localization;
-        $this->administrationFacade = $administrationFacade;
     }
 
     /**

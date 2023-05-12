@@ -11,20 +11,14 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface
 
 class CustomerUserDataFactory
 {
-    protected CustomerUserDataFactoryInterface $customerUserDataFactory;
-
-    protected Domain $domain;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface $customerUserDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        CustomerUserDataFactoryInterface $customerUserDataFactory,
-        Domain $domain
+        protected readonly CustomerUserDataFactoryInterface $customerUserDataFactory,
+        protected readonly Domain $domain
     ) {
-        $this->customerUserDataFactory = $customerUserDataFactory;
-        $this->domain = $domain;
     }
 
     /**

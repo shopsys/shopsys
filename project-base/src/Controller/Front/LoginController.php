@@ -14,14 +14,11 @@ use Symfony\Component\Security\Core\Exception\TooManyLoginAttemptsAuthentication
 
 class LoginController extends FrontBaseController
 {
-    private Authenticator $authenticator;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
      */
-    public function __construct(Authenticator $authenticator)
+    public function __construct(private readonly Authenticator $authenticator)
     {
-        $this->authenticator = $authenticator;
     }
 
     /**

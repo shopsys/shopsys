@@ -15,20 +15,6 @@ use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
 
 class ListedProductViewFacade implements ListedProductViewFacadeInterface
 {
-    protected ProductFacade $productFacade;
-
-    protected ProductAccessoryFacade $productAccessoryFacade;
-
-    protected Domain $domain;
-
-    protected CurrentCustomerUser $currentCustomerUser;
-
-    protected TopProductFacade $topProductFacade;
-
-    protected ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade;
-
-    protected ListedProductViewFactory $listedProductViewFactory;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
@@ -39,21 +25,14 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory $listedProductViewFactory
      */
     public function __construct(
-        ProductFacade $productFacade,
-        ProductAccessoryFacade $productAccessoryFacade,
-        Domain $domain,
-        CurrentCustomerUser $currentCustomerUser,
-        TopProductFacade $topProductFacade,
-        ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
-        ListedProductViewFactory $listedProductViewFactory
+        protected readonly ProductFacade $productFacade,
+        protected readonly ProductAccessoryFacade $productAccessoryFacade,
+        protected readonly Domain $domain,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly TopProductFacade $topProductFacade,
+        protected readonly ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
+        protected readonly ListedProductViewFactory $listedProductViewFactory
     ) {
-        $this->productFacade = $productFacade;
-        $this->productAccessoryFacade = $productAccessoryFacade;
-        $this->domain = $domain;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->topProductFacade = $topProductFacade;
-        $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
-        $this->listedProductViewFactory = $listedProductViewFactory;
     }
 
     /**

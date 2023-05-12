@@ -14,16 +14,6 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
 
 class PaymentGridFactory implements GridFactoryInterface
 {
-    protected GridFactory $gridFactory;
-
-    protected PaymentRepository $paymentRepository;
-
-    protected Localization $localization;
-
-    protected PaymentFacade $paymentFacade;
-
-    protected AdminDomainTabsFacade $adminDomainTabsFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentRepository $paymentRepository
@@ -32,17 +22,12 @@ class PaymentGridFactory implements GridFactoryInterface
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
-        GridFactory $gridFactory,
-        PaymentRepository $paymentRepository,
-        Localization $localization,
-        PaymentFacade $paymentFacade,
-        AdminDomainTabsFacade $adminDomainTabsFacade
+        protected readonly GridFactory $gridFactory,
+        protected readonly PaymentRepository $paymentRepository,
+        protected readonly Localization $localization,
+        protected readonly PaymentFacade $paymentFacade,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
-        $this->gridFactory = $gridFactory;
-        $this->paymentRepository = $paymentRepository;
-        $this->localization = $localization;
-        $this->paymentFacade = $paymentFacade;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**

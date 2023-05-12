@@ -11,14 +11,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TopProductsFormType extends AbstractType
 {
-    private RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer;
-
     /**
      * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer
      */
-    public function __construct(RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer)
+    public function __construct(private readonly RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer)
     {
-        $this->removeDuplicatesTransformer = $removeDuplicatesTransformer;
     }
 
     /**

@@ -34,31 +34,11 @@ class ProductController extends FrontBaseController
     public const PAGE_QUERY_PARAMETER = 'page';
     public const PRODUCTS_PER_PAGE = 12;
 
-    private ProductFilterConfigFactory $productFilterConfigFactory;
-
-    private CategoryFacade $categoryFacade;
-
-    private Domain $domain;
-
-    private ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade;
-
-    private RequestExtension $requestExtension;
-
     private ProductListOrderingModeForListFacade $productListOrderingModeForListFacade;
 
     private ProductListOrderingModeForBrandFacade $productListOrderingModeForBrandFacade;
 
     private ProductListOrderingModeForSearchFacade $productListOrderingModeForSearchFacade;
-
-    private ModuleFacade $moduleFacade;
-
-    private BrandFacade $brandFacade;
-
-    private ListedProductViewFacadeInterface $listedProductViewFacade;
-
-    protected ListedProductVariantsViewFacadeInterface $listedProductVariantsViewFacade;
-
-    protected ProductDetailViewFacadeInterface $productDetailViewFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
@@ -76,33 +56,23 @@ class ProductController extends FrontBaseController
      * @param \Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFacadeInterface $productDetailViewFacade
      */
     public function __construct(
-        RequestExtension $requestExtension,
-        CategoryFacade $categoryFacade,
-        Domain $domain,
-        ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
-        ProductFilterConfigFactory $productFilterConfigFactory,
+        private readonly RequestExtension $requestExtension,
+        private readonly CategoryFacade $categoryFacade,
+        private readonly Domain $domain,
+        private readonly ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
+        private readonly ProductFilterConfigFactory $productFilterConfigFactory,
         BaseProductListOrderingModeForListFacade $productListOrderingModeForListFacade,
         BaseProductListOrderingModeForBrandFacade $productListOrderingModeForBrandFacade,
         BaseProductListOrderingModeForSearchFacade $productListOrderingModeForSearchFacade,
-        ModuleFacade $moduleFacade,
-        BrandFacade $brandFacade,
-        ListedProductViewFacadeInterface $listedProductViewFacade,
-        ListedProductVariantsViewFacadeInterface $listedProductVariantsViewFacade,
-        ProductDetailViewFacadeInterface $productDetailViewFacade
+        private readonly ModuleFacade $moduleFacade,
+        private readonly BrandFacade $brandFacade,
+        private readonly ListedProductViewFacadeInterface $listedProductViewFacade,
+        protected readonly ListedProductVariantsViewFacadeInterface $listedProductVariantsViewFacade,
+        protected readonly ProductDetailViewFacadeInterface $productDetailViewFacade
     ) {
-        $this->requestExtension = $requestExtension;
-        $this->categoryFacade = $categoryFacade;
-        $this->domain = $domain;
-        $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
-        $this->productFilterConfigFactory = $productFilterConfigFactory;
         $this->productListOrderingModeForListFacade = $productListOrderingModeForListFacade;
         $this->productListOrderingModeForBrandFacade = $productListOrderingModeForBrandFacade;
         $this->productListOrderingModeForSearchFacade = $productListOrderingModeForSearchFacade;
-        $this->moduleFacade = $moduleFacade;
-        $this->brandFacade = $brandFacade;
-        $this->listedProductViewFacade = $listedProductViewFacade;
-        $this->listedProductVariantsViewFacade = $listedProductVariantsViewFacade;
-        $this->productDetailViewFacade = $productDetailViewFacade;
     }
 
     /**

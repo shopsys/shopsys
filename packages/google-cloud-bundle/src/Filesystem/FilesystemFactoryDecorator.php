@@ -10,25 +10,16 @@ use Shopsys\FrameworkBundle\Component\Filesystem\FilesystemFactoryInterface;
 
 class FilesystemFactoryDecorator implements FilesystemFactoryInterface
 {
-    private FilesystemFactoryInterface $inner;
-
-    private string $googleCloudProjectId;
-
-    private string $googleCloudStorageBucketName;
-
     /**
      * @param \Shopsys\FrameworkBundle\Component\Filesystem\FilesystemFactoryInterface $inner
      * @param string $googleCloudProjectId
      * @param string $googleCloudStorageBucketName
      */
     public function __construct(
-        FilesystemFactoryInterface $inner,
-        string $googleCloudProjectId,
-        string $googleCloudStorageBucketName
+        private readonly FilesystemFactoryInterface $inner,
+        private readonly string $googleCloudProjectId,
+        private readonly string $googleCloudStorageBucketName
     ) {
-        $this->inner = $inner;
-        $this->googleCloudProjectId = $googleCloudProjectId;
-        $this->googleCloudStorageBucketName = $googleCloudStorageBucketName;
     }
 
     /**

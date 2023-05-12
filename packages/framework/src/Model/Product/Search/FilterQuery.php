@@ -18,8 +18,6 @@ class FilterQuery
      */
     protected array $filters = [];
 
-    protected string $indexName;
-
     /**
      * @var array<string, mixed>
      */
@@ -39,9 +37,8 @@ class FilterQuery
     /**
      * @param string $indexName
      */
-    public function __construct(string $indexName)
+    public function __construct(protected readonly string $indexName)
     {
-        $this->indexName = $indexName;
         $this->match = $this->matchAll();
     }
 

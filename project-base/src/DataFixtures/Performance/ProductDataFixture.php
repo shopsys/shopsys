@@ -32,18 +32,6 @@ class ProductDataFixture
 
     private int $productTotalCount;
 
-    private EntityManagerInterface $em;
-
-    private ProductFacade $productFacade;
-
-    private SqlLoggerFacade $sqlLoggerFacade;
-
-    private ProductVariantFacade $productVariantFacade;
-
-    private PersistentReferenceFacade $persistentReferenceFacade;
-
-    private CategoryRepository $categoryRepository;
-
     private int $countImported;
 
     private int $demoDataIterationCounter;
@@ -52,14 +40,6 @@ class ProductDataFixture
      * @var \App\Model\Product\Product[]
      */
     private array $productsByCatnum;
-
-    private Faker $faker;
-
-    private ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler;
-
-    private ProductPriceRecalculationScheduler $productPriceRecalculationScheduler;
-
-    private ProgressBarFactory $progressBarFactory;
 
     private ProductDataFactory $productDataFactory;
 
@@ -84,31 +64,21 @@ class ProductDataFixture
      */
     public function __construct(
         $productTotalCount,
-        EntityManagerInterface $em,
-        ProductFacade $productFacade,
-        SqlLoggerFacade $sqlLoggerFacade,
-        ProductVariantFacade $productVariantFacade,
-        PersistentReferenceFacade $persistentReferenceFacade,
-        CategoryRepository $categoryRepository,
-        Faker $faker,
-        ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
-        ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
-        ProgressBarFactory $progressBarFactory,
+        private readonly EntityManagerInterface $em,
+        private readonly ProductFacade $productFacade,
+        private readonly SqlLoggerFacade $sqlLoggerFacade,
+        private readonly ProductVariantFacade $productVariantFacade,
+        private readonly PersistentReferenceFacade $persistentReferenceFacade,
+        private readonly CategoryRepository $categoryRepository,
+        private readonly Faker $faker,
+        private readonly ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
+        private readonly ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
+        private readonly ProgressBarFactory $progressBarFactory,
         ProductDataFactoryInterface $productDataFactory
     ) {
         $this->productTotalCount = $productTotalCount;
-        $this->em = $em;
-        $this->productFacade = $productFacade;
-        $this->sqlLoggerFacade = $sqlLoggerFacade;
-        $this->productVariantFacade = $productVariantFacade;
-        $this->persistentReferenceFacade = $persistentReferenceFacade;
-        $this->categoryRepository = $categoryRepository;
         $this->countImported = 0;
         $this->demoDataIterationCounter = 0;
-        $this->faker = $faker;
-        $this->productAvailabilityRecalculationScheduler = $productAvailabilityRecalculationScheduler;
-        $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
-        $this->progressBarFactory = $progressBarFactory;
         $this->productDataFactory = $productDataFactory;
     }
 

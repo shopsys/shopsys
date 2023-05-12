@@ -10,14 +10,6 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 
 class OrderMailFacade
 {
-    protected Mailer $mailer;
-
-    protected MailTemplateFacade $mailTemplateFacade;
-
-    protected OrderMail $orderMail;
-
-    protected UploadedFileFacade $uploadedFileFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailer
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
@@ -25,15 +17,11 @@ class OrderMailFacade
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      */
     public function __construct(
-        Mailer $mailer,
-        MailTemplateFacade $mailTemplateFacade,
-        OrderMail $orderMail,
-        UploadedFileFacade $uploadedFileFacade
+        protected readonly Mailer $mailer,
+        protected readonly MailTemplateFacade $mailTemplateFacade,
+        protected readonly OrderMail $orderMail,
+        protected readonly UploadedFileFacade $uploadedFileFacade
     ) {
-        $this->mailer = $mailer;
-        $this->mailTemplateFacade = $mailTemplateFacade;
-        $this->orderMail = $orderMail;
-        $this->uploadedFileFacade = $uploadedFileFacade;
     }
 
     /**

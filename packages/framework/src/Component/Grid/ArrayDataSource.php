@@ -8,20 +8,14 @@ use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
 class ArrayDataSource implements DataSourceInterface
 {
-    /**
-     * @var mixed[]
-     */
-    protected array $data;
-
     protected ?string $rowIdSourceColumnName;
 
     /**
      * @param array $data
      * @param string $rowIdSourceColumnName
      */
-    public function __construct(array $data, $rowIdSourceColumnName = null)
+    public function __construct(protected readonly array $data, $rowIdSourceColumnName = null)
     {
-        $this->data = $data;
         $this->rowIdSourceColumnName = $rowIdSourceColumnName;
     }
 

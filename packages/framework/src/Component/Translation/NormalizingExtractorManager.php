@@ -9,8 +9,6 @@ use Psr\Log\LoggerInterface;
 
 class NormalizingExtractorManager extends ExtractorManager
 {
-    protected MessageIdNormalizer $messageIdNormalizer;
-
     /**
      * @param \JMS\TranslationBundle\Translation\Extractor\FileExtractor $extractor
      * @param \Psr\Log\LoggerInterface $logger
@@ -19,11 +17,9 @@ class NormalizingExtractorManager extends ExtractorManager
     public function __construct(
         FileExtractor $extractor,
         LoggerInterface $logger,
-        MessageIdNormalizer $messageIdNormalizer
+        protected readonly MessageIdNormalizer $messageIdNormalizer
     ) {
         parent::__construct($extractor, $logger);
-
-        $this->messageIdNormalizer = $messageIdNormalizer;
     }
 
     /**

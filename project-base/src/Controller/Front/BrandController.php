@@ -8,15 +8,12 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 
 class BrandController extends FrontBaseController
 {
-    private BrandFacade $brandFacade;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      */
     public function __construct(
-        BrandFacade $brandFacade
+        private readonly BrandFacade $brandFacade
     ) {
-        $this->brandFacade = $brandFacade;
     }
 
     public function listAction()

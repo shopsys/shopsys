@@ -12,8 +12,6 @@ use Tests\App\Test\Codeception\Module\StrictWebDriver;
 
 class ProductListPage extends AbstractPage
 {
-    private ProductListComponent $productListComponent;
-
     /**
      * @param \Tests\App\Test\Codeception\Module\StrictWebDriver $strictWebDriver
      * @param \Tests\App\Test\Codeception\AcceptanceTester $tester
@@ -22,10 +20,8 @@ class ProductListPage extends AbstractPage
     public function __construct(
         StrictWebDriver $strictWebDriver,
         AcceptanceTester $tester,
-        ProductListComponent $productListComponent
+        private readonly ProductListComponent $productListComponent
     ) {
-        $this->productListComponent = $productListComponent;
-
         parent::__construct($strictWebDriver, $tester);
     }
 

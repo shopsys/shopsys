@@ -10,42 +10,6 @@ class ZboziFeedItem implements FeedItemInterface
 {
     protected const CATEGORY_PATH_SEPARATOR = ' | ';
 
-    protected int $id;
-
-    protected ?int $mainVariantId = null;
-
-    protected string $name;
-
-    protected ?string $description = null;
-
-    protected string $url;
-
-    protected ?string $imgUrl = null;
-
-    protected ?string $brandName = null;
-
-    protected ?string $ean = null;
-
-    protected ?string $partno = null;
-
-    protected ?int $availabilityDispatchTime = null;
-
-    protected Price $price;
-
-    /**
-     * @var string[]
-     */
-    protected array $pathToMainCategory;
-
-    /**
-     * @var string[]
-     */
-    protected array $parametersByName;
-
-    protected ?Money $cpc = null;
-
-    protected ?Money $cpcSearch = null;
-
     /**
      * @param int $id
      * @param int|null $mainVariantId
@@ -64,37 +28,22 @@ class ZboziFeedItem implements FeedItemInterface
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $cpcSearch
      */
     public function __construct(
-        int $id,
-        ?int $mainVariantId,
-        string $name,
-        ?string $description,
-        string $url,
-        ?string $imgUrl,
-        ?string $brandName,
-        ?string $ean,
-        ?string $partno,
-        ?int $availabilityDispatchTime,
-        Price $price,
-        array $pathToMainCategory,
-        array $parametersByName,
-        ?Money $cpc,
-        ?Money $cpcSearch
+        protected readonly int $id,
+        protected readonly ?int $mainVariantId = null,
+        protected readonly string $name,
+        protected readonly ?string $description = null,
+        protected readonly string $url,
+        protected readonly ?string $imgUrl = null,
+        protected readonly ?string $brandName = null,
+        protected readonly ?string $ean = null,
+        protected readonly ?string $partno = null,
+        protected readonly ?int $availabilityDispatchTime = null,
+        protected readonly Price $price,
+        protected readonly array $pathToMainCategory,
+        protected readonly array $parametersByName,
+        protected readonly ?Money $cpc = null,
+        protected readonly ?Money $cpcSearch = null
     ) {
-        $this->id = $id;
-        $this->mainVariantId = $mainVariantId;
-        $this->name = $name;
-        $this->description = $description;
-        $this->url = $url;
-        $this->imgUrl = $imgUrl;
-        $this->brandName = $brandName;
-        $this->ean = $ean;
-        $this->partno = $partno;
-        $this->availabilityDispatchTime = $availabilityDispatchTime;
-        $this->price = $price;
-        $this->pathToMainCategory = $pathToMainCategory;
-        $this->parametersByName = $parametersByName;
-        $this->cpc = $cpc;
-        $this->cpcSearch = $cpcSearch;
     }
 
     /**
