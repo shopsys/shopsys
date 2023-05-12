@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductData;
+use Tests\FrameworkBundle\Unit\Model\Product\TestProductProvider;
 
 class CartTest extends TestCase
 {
@@ -24,11 +24,11 @@ class CartTest extends TestCase
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 
-        $productData1 = new ProductData();
+        $productData1 = TestProductProvider::getTestProductData();
         $productData1->name = ['cs' => 'Product 1'];
         $product1 = Product::create($productData1);
 
-        $productData2 = new ProductData();
+        $productData2 = TestProductProvider::getTestProductData();
         $productData2->name = ['cs' => 'Product 2'];
         $product2 = Product::create($productData2);
 
@@ -55,7 +55,7 @@ class CartTest extends TestCase
     public function testIsNotEmpty()
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
-        $productData = new ProductData();
+        $productData = TestProductProvider::getTestProductData();
         $productData->name = ['cs' => 'Product 1'];
         $product = Product::create($productData);
 
@@ -70,11 +70,11 @@ class CartTest extends TestCase
     public function testClean()
     {
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
-        $productData1 = new ProductData();
+        $productData1 = TestProductProvider::getTestProductData();
         $productData1->name = ['cs' => 'Product 1'];
         $product1 = Product::create($productData1);
 
-        $productData2 = new ProductData();
+        $productData2 = TestProductProvider::getTestProductData();
         $productData2->name = ['cs' => 'Product 2'];
 
         $product2 = Product::create($productData2);
