@@ -67,6 +67,8 @@ class BasePriceCalculationTest extends TestCase
 
         $currencyData = new CurrencyData();
         $currencyData->roundingType = Currency::ROUNDING_TYPE_INTEGER;
+        $currencyData->name = 'currency name';
+        $currencyData->code = 'currency code';
         $currency = new Currency($currencyData);
 
         $basePrice = $basePriceCalculation->calculateBasePriceRoundedByCurrency(
