@@ -13,14 +13,13 @@ use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductDiscountCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
+use Tests\App\Functional\Model\Pricing\Currency\TestCurrencyProvider;
 use Tests\App\Test\FunctionalTestCase;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
@@ -40,7 +39,7 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
         $quantifiedItemPrice = new QuantifiedItemPrice($unitPrice, $totalPrice, $vat);
         $quantifiedItemsPrices = [$quantifiedItemPrice, $quantifiedItemPrice];
         $quantifiedProductsDiscounts = [null, null];
-        $currency = new Currency(new CurrencyData());
+        $currency = TestCurrencyProvider::getTestCurrency();
 
         $quantifiedProductPriceCalculationMock = $this->getMockBuilder(QuantifiedProductPriceCalculation::class)
             ->setMethods(['calculatePrices', '__construct'])
@@ -134,7 +133,7 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
         $quantifiedItemPrice = new QuantifiedItemPrice($unitPrice, $totalPrice, $vat);
         $quantifiedItemsPrices = [$quantifiedItemPrice, $quantifiedItemPrice];
         $quantifiedProductsDiscounts = [null, null];
-        $currency = new Currency(new CurrencyData());
+        $currency = TestCurrencyProvider::getTestCurrency();
 
         $quantifiedProductPriceCalculationMock = $this->getMockBuilder(QuantifiedProductPriceCalculation::class)
             ->setMethods(['calculatePrices', '__construct'])

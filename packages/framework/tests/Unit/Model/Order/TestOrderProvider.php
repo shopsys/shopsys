@@ -10,10 +10,9 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
+use Tests\App\Functional\Model\Pricing\Currency\TestCurrencyProvider;
 
 class TestOrderProvider
 {
@@ -59,13 +58,7 @@ class TestOrderProvider
         $paymentData->name = ['cs' => 'paymentName'];
         $orderData->payment = new Payment($paymentData);
 
-        $currencyData = new CurrencyData();
-        $currencyData->name = 'currencyName';
-        $currencyData->code = Currency::CODE_CZK;
-        $currencyData->exchangeRate = '1.0';
-        $currencyData->minFractionDigits = 2;
-        $currencyData->roundingType = Currency::ROUNDING_TYPE_INTEGER;
-        $orderData->currency = new Currency($currencyData);
+        $orderData->currency = TestCurrencyProvider::getTestCurrency();
 
         return $orderData;
     }
