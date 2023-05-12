@@ -13,10 +13,10 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductHiddenRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
+use Tests\FrameworkBundle\Unit\Model\Product\TestProductProvider;
 
 final class OrderProductFacadeTest extends TestCase
 {
@@ -108,7 +108,7 @@ final class OrderProductFacadeTest extends TestCase
      */
     private function createProductWithStockQuantity(int $productStockQuantity): Product
     {
-        $productData = new ProductData();
+        $productData = TestProductProvider::getTestProductData();
         $productData->usingStock = true;
         $productData->stockQuantity = $productStockQuantity;
         $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_HIDE;
