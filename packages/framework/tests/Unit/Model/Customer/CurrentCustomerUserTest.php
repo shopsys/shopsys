@@ -3,10 +3,8 @@
 namespace Tests\FrameworkBundle\Unit\Model\Customer;
 
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
@@ -40,10 +38,8 @@ class CurrentCustomerUserTest extends TestCase
 
     public function testGetPricingGroupForRegisteredCustomerReturnsHisPricingGroup()
     {
-        $pricingGroupData = new PricingGroupData();
-        $pricingGroupData->name = 'name';
-        $expectedPricingGroup = new PricingGroup($pricingGroupData, 1);
-        $customerUser = $this->getCustomerUserWithPricingGroup($expectedPricingGroup);
+        $customerUser = TestCustomerProvider::getTestCustomerUser();
+        $expectedPricingGroup = $customerUser->getPricingGroup();
 
         $tokenStorageMock = $this->getTokenStorageMockForCustomerUser($customerUser);
         $pricingGroupFacadeMock = $this->createMock(PricingGroupSettingFacade::class);
@@ -75,20 +71,6 @@ class CurrentCustomerUserTest extends TestCase
             ->willReturn($defaultPricingGroup);
 
         return $pricingGroupSettingFacadeMock;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
-     */
-    private function getCustomerUserWithPricingGroup(PricingGroup $pricingGroup)
-    {
-        $customerUserData = new CustomerUserData();
-        $customerUserData->email = 'no-reply@shopsys.com';
-        $customerUserData->pricingGroup = $pricingGroup;
-        $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
-
-        return new CustomerUser($customerUserData);
     }
 
     /**
