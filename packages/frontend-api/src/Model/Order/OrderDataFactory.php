@@ -70,12 +70,6 @@ class OrderDataFactory
 
         $orderData = $this->orderDataFactory->create();
 
-        foreach ($input as $key => $value) {
-            if (property_exists(get_class($orderData), $key)) {
-                $orderData->{$key} = $value;
-            }
-        }
-
         $orderData->domainId = $this->domain->getId();
         $orderData->origin = static::ORDER_ORIGIN_GRAPHQL;
         $orderData->deliveryAddressSameAsBillingAddress = !$input['differentDeliveryAddress'];
@@ -127,6 +121,14 @@ class OrderDataFactory
 
         if ($input['differentDeliveryAddress']) {
             $cloneOrderData->deliveryCountry = $this->countryFacade->findByCode($input['deliveryCountry']);
+        }
+
+        unset($input['payment'], $input['transport'], $input['currency'], $input['country'], $input['deliveryCountry']);
+
+        foreach ($input as $key => $value) {
+            if (property_exists(get_class($orderData), $key)) {
+                $cloneOrderData->{$key} = $value;
+            }
         }
 
         return $cloneOrderData;
