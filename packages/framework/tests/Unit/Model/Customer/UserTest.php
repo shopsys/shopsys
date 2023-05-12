@@ -3,59 +3,21 @@
 namespace Tests\FrameworkBundle\Unit\Model\Customer;
 
 use DateTime;
-use PHPUnit\Framework\TestCase;
-use ReflectionClass;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
-use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
-use Shopsys\FrameworkBundle\Model\Customer\Customer;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
+use Tests\FrameworkBundle\Unit\TestCase;
 
 class UserTest extends TestCase
 {
     public function testGetFullNameReturnsLastnameAndFirstnameForUser()
     {
-        $customerData = new CustomerData();
-        $customerData->domainId = Domain::FIRST_DOMAIN_ID;
-        $customer = new Customer($customerData);
-
-        $customerUserData = new CustomerUserData();
-        $customerUserData->firstName = 'Firstname';
-        $customerUserData->lastName = 'Lastname';
-        $customerUserData->email = 'no-reply@shopsys.com';
-        $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
-        $customerUserData->customer = $customer;
-
-        $customerData->billingAddress = $this->createBillingAddress();
-        $customer->edit($customerData);
-
-        $customerUser = new CustomerUser($customerUserData);
+        $customerUser = TestCustomerProvider::getTestCustomerUser();
 
         $this->assertSame('Lastname Firstname', $customerUser->getFullName());
     }
 
     public function testGetFullNameReturnsCompanyNameForCompanyUser()
     {
-        $customerData = new CustomerData();
-        $customerData->domainId = Domain::FIRST_DOMAIN_ID;
-        $customer = new Customer($customerData);
-
-        $customerUserData = new CustomerUserData();
-        $customerUserData->firstName = 'Firstname';
-        $customerUserData->lastName = 'Lastname';
-        $customerUserData->email = 'no-reply@shopsys.com';
-        $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
-        $customerUserData->customer = $customer;
-        $billingAddressData = new BillingAddressData();
-        $billingAddressData->companyCustomer = true;
-        $billingAddressData->companyName = 'CompanyName';
-
-        $customerData->billingAddress = new BillingAddress($billingAddressData);
-        $customer->edit($customerData);
-
-        $customerUser = new CustomerUser($customerUserData);
+        $customerUser = TestCustomerProvider::getTestCustomerUser();
 
         $this->assertSame('CompanyName', $customerUser->getFullName());
     }
@@ -109,37 +71,13 @@ class UserTest extends TestCase
         $sentHash,
         $isExpectedValid
     ) {
-        $customerUserData = new CustomerUserData();
-        $customerUserData->email = 'no-reply@shopsys.com';
-        $customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
-        $customerUser = new CustomerUser($customerUserData);
+        $customerUser = TestCustomerProvider::getTestCustomerUser();
 
-        $this->setProperty($customerUser, 'resetPasswordHash', $resetPasswordHash);
-        $this->setProperty($customerUser, 'resetPasswordHashValidThrough', $resetPasswordHashValidThrough);
+        $this->setValueOfProtectedProperty($customerUser, 'resetPasswordHash', $resetPasswordHash);
+        $this->setValueOfProtectedProperty($customerUser, 'resetPasswordHashValidThrough', $resetPasswordHashValidThrough);
 
         $isResetPasswordHashValid = $customerUser->isResetPasswordHashValid($sentHash);
 
         $this->assertSame($isExpectedValid, $isResetPasswordHashValid);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string $propertyName
-     * @param mixed $value
-     */
-    private function setProperty(CustomerUser $customerUser, string $propertyName, $value)
-    {
-        $reflection = new ReflectionClass($customerUser);
-        $property = $reflection->getProperty($propertyName);
-        $property->setAccessible(true);
-        $property->setValue($customerUser, $value);
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddress
-     */
-    private function createBillingAddress()
-    {
-        return new BillingAddress(new BillingAddressData());
     }
 }
