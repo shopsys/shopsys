@@ -3,13 +3,13 @@
 namespace Tests\FrameworkBundle\Unit\Model\Product\Availability;
 
 use Doctrine\ORM\EntityManager;
-use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Tests\FrameworkBundle\Unit\TestCase;
 
 class ProductAvailabilityRecalculatorTest extends TestCase
 {
@@ -19,6 +19,8 @@ class ProductAvailabilityRecalculatorTest extends TestCase
             ->setMethods(null)
             ->disableOriginalConstructor()
             ->getMock();
+
+        $this->setValueOfProtectedProperty($productMock, 'variantType', Product::VARIANT_TYPE_NONE);
 
         $emMock = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
@@ -58,10 +60,15 @@ class ProductAvailabilityRecalculatorTest extends TestCase
             ->disableOriginalConstructor()
             ->setMethods(['isVariant', 'getMainVariant', 'setCalculatedAvailability'])
             ->getMock();
+
+        $this->setValueOfProtectedProperty($variantMock, 'variantType', Product::VARIANT_TYPE_VARIANT);
+
         $mainVariantMock = $this->getMockBuilder(Product::class)
             ->disableOriginalConstructor()
             ->setMethods(['setCalculatedAvailability'])
             ->getMock();
+
+        $this->setValueOfProtectedProperty($mainVariantMock, 'variantType', Product::VARIANT_TYPE_MAIN);
 
         $variantMock->expects($this->once())->method('isVariant')->willReturn(true);
         $variantMock->expects($this->once())->method('getMainVariant')->willReturn($mainVariantMock);
