@@ -9,7 +9,6 @@ use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Country\CountryData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order;
-use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -19,7 +18,7 @@ class OrderTest extends TestCase
     public function testGetProductItems()
     {
         $payment = new Payment(new PaymentData());
-        $orderData = new OrderData();
+        $orderData = TestOrderProvider::getTestOrderData();
         $paymentPrice = Price::zero();
 
         $order = new Order($orderData, 'orderNumber', 'urlHash', null);
@@ -57,7 +56,7 @@ class OrderTest extends TestCase
     {
         $payment = new Payment(new PaymentData());
         $paymentItemPrice = Price::zero();
-        $orderData = new OrderData();
+        $orderData = TestOrderProvider::getTestOrderData();
 
         $order = new Order($orderData, 'orderNumber', 'urlHash', null);
         $productItem = new OrderItem(
@@ -89,7 +88,7 @@ class OrderTest extends TestCase
 
     public function testOrderWithDeliveryAddressSameAsBillingAddress()
     {
-        $orderData = new OrderData();
+        $orderData = TestOrderProvider::getTestOrderData();
         $countryData = new CountryData();
         $countryData->names = ['cs' => 'Slovenská republika'];
         $country = new Country($countryData);
@@ -118,29 +117,7 @@ class OrderTest extends TestCase
 
     public function testOrderWithoutDeliveryAddressSameAsBillingAddress()
     {
-        $orderData = new OrderData();
-        $countryData = new CountryData();
-        $countryData->names = ['cs' => 'Slovenská republika'];
-        $country = new Country($countryData);
-
-        $orderData->companyName = 'companyName';
-        $orderData->telephone = 'telephone';
-        $orderData->firstName = 'firstName';
-        $orderData->lastName = 'lastName';
-        $orderData->street = 'street';
-        $orderData->city = 'city';
-        $orderData->postcode = 'postCode';
-        $orderData->country = $country;
-        $orderData->deliveryAddressSameAsBillingAddress = false;
-        $orderData->deliveryCompanyName = 'deliveryCompanyName';
-        $orderData->deliveryTelephone = 'deliveryTelephone';
-        $orderData->deliveryFirstName = 'deliveryFirstName';
-        $orderData->deliveryLastName = 'deliveryLastName';
-        $orderData->deliveryStreet = 'deliveryStreet';
-        $orderData->deliveryCity = 'deliveryCity';
-        $orderData->deliveryPostcode = 'deliveryPostcode';
-        $orderData->deliveryCountry = $country;
-
+        $orderData = TestOrderProvider::getTestOrderData();
         $order = new Order($orderData, 'orderNumber', 'urlHash', null);
 
         $this->assertSame('deliveryCompanyName', $order->getDeliveryCompanyName());
@@ -150,12 +127,12 @@ class OrderTest extends TestCase
         $this->assertSame('deliveryStreet', $order->getDeliveryStreet());
         $this->assertSame('deliveryCity', $order->getDeliveryCity());
         $this->assertSame('deliveryPostcode', $order->getDeliveryPostCode());
-        $this->assertSame($country, $order->getDeliveryCountry());
+        $this->assertSame($orderData->country, $order->getDeliveryCountry());
     }
 
     public function testOrderCreatedWithEmptyCreatedAtIsCreatedNow()
     {
-        $orderData = new OrderData();
+        $orderData = TestOrderProvider::getTestOrderData();
         $customerUser = null;
 
         $orderData->createdAt = null;
@@ -166,7 +143,7 @@ class OrderTest extends TestCase
 
     public function testOrderCanBeCreatedWithSpecificCreatedAt()
     {
-        $orderData = new OrderData();
+        $orderData = TestOrderProvider::getTestOrderData();
         $customerUser = null;
 
         $createAt = new DateTime('2000-01-01 01:00:00');
