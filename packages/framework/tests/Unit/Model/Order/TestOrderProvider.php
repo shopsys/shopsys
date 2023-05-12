@@ -34,7 +34,7 @@ class TestOrderProvider
         $orderData->lastName = 'lastName';
         $orderData->street = 'street';
         $orderData->city = 'city';
-        $orderData->postcode = 'postCode';
+        $orderData->postcode = 'postcode';
         $orderData->country = $country;
         $orderData->deliveryAddressSameAsBillingAddress = false;
         $orderData->deliveryCompanyName = 'deliveryCompanyName';
