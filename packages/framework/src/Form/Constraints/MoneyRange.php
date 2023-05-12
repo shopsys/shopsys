@@ -21,9 +21,15 @@ class MoneyRange extends Constraint
 
     public string $maxMessage = 'The amount of money should be {{ limit }} or less.';
 
-    public ?Money $min = null;
+    /**
+     * array type is used for validation in JsFormValidator
+     */
+    public Money|array|null $min = null;
 
-    public ?Money $max = null;
+    /**
+     * array type is used for validation in JsFormValidator
+     */
+    public Money|array|null $max = null;
 
     /**
      * @param array $options
