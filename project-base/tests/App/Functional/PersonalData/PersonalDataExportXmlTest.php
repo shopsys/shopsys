@@ -8,7 +8,6 @@ use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\CustomerUserData;
 use App\Model\Order\Item\OrderItem;
 use App\Model\Order\Order;
-use App\Model\Order\OrderData;
 use App\Model\Product\Product;
 use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -25,8 +24,11 @@ use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\FrameworkBundle\Unit\Model\Order\TestOrderProvider;
 use Twig\Environment;
 
 class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
@@ -49,7 +51,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $customer = new Customer($customerData);
 
         $customerData->billingAddress = $this->createBillingAddress($country, $customer);
-        $deliveryAddress = $this->createDeliveryAddress($country);
+        $deliveryAddress = $this->createDeliveryAddress($country, $customer);
         $customerData->deliveryAddresses[] = $deliveryAddress;
 
         $customer->edit($customerData);
@@ -118,9 +120,10 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\Country $country
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      * @return \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress
      */
-    private function createDeliveryAddress(Country $country)
+    private function createDeliveryAddress(Country $country, Customer $customer)
     {
         $deliveryAddressData = new DeliveryAddressData();
         $deliveryAddressData->country = $country;
@@ -131,6 +134,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $deliveryAddressData->city = 'Ostrava';
         $deliveryAddressData->lastName = 'Fero';
         $deliveryAddressData->firstName = 'Mrkva';
+        $deliveryAddressData->customer = $customer;
 
         return new DeliveryAddress($deliveryAddressData);
     }
@@ -141,6 +145,10 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
      */
     private function createCustomerUser(Customer $customer)
     {
+        $pricingGroupData = new PricingGroupData();
+        $pricingGroupData->name = 'name';
+        $pricingGroup = new PricingGroup($pricingGroupData, Domain::FIRST_DOMAIN_ID);
+
         $customerUserData = new CustomerUserData();
         $customerUserData->firstName = 'Jaromír';
         $customerUserData->lastName = 'Jágr';
@@ -149,6 +157,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $customerUserData->email = 'no-reply@shopsys.com';
         $customerUserData->telephone = '+420987654321';
         $customerUserData->customer = $customer;
+        $customerUserData->pricingGroup = $pricingGroup;
 
         return new CustomerUser($customerUserData);
     }
@@ -161,7 +170,8 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
      */
     private function createOrder(Currency $currency, OrderStatus $status, Country $country)
     {
-        $orderData = new OrderData();
+        /** @var \App\Model\Order\OrderData $orderData */
+        $orderData = TestOrderProvider::getTestOrderData();
         $orderData->currency = $currency;
         $orderData->status = $status;
         $orderData->email = 'no-reply@shopsys.com';
