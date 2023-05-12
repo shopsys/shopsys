@@ -2,10 +2,10 @@
 
 namespace Tests\FrameworkBundle\Unit\Component\HttpFoundation;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\Exception\TooManyRedirectResponsesException;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\SubRequestListener;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
@@ -15,16 +15,30 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 class SubRequestListenerTest extends TestCase
 {
     /**
-     * @param bool $redirect
-     * @param bool $send
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getResponseMock(bool $redirect = false, bool $send = false): MockObject|Response
+    public function getResponseMock(): Response
     {
         $responseMock = $this->getMockBuilder(Response::class)
             ->onlyMethods(['isRedirection', 'send'])
             ->getMock();
-        $responseMock->expects($this->once())->method('isRedirection')->willReturn($redirect);
+        $responseMock->expects($this->once())->method('isRedirection')->willReturn(false);
+        $responseMock->expects($this->never())->method('send');
+
+        return $responseMock;
+    }
+
+    /**
+     * @param bool $send
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function getRedirectResponseMock(bool $send = false): RedirectResponse
+    {
+        $responseMock = $this->getMockBuilder(RedirectResponse::class)
+            ->onlyMethods(['isRedirection', 'send'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $responseMock->expects($this->once())->method('isRedirection')->willReturn(true);
         $responseMock->expects($send ? $this->once() : $this->never())->method('send');
 
         return $responseMock;
@@ -49,14 +63,14 @@ class SubRequestListenerTest extends TestCase
             $this->createMock(HttpKernelInterface::class),
             new Request(),
             HttpKernelInterface::SUB_REQUEST,
-            $this->getResponseMock(true)
+            $this->getRedirectResponseMock(),
         );
 
         $event2 = new ResponseEvent(
             $this->createMock(HttpKernelInterface::class),
             new Request(),
             HttpKernelInterface::SUB_REQUEST,
-            $this->getResponseMock()
+            $this->getResponseMock(),
         );
 
         $subRequestListener = new SubRequestListener();
@@ -69,7 +83,7 @@ class SubRequestListenerTest extends TestCase
             $this->createMock(HttpKernelInterface::class),
             new Request(),
             HttpKernelInterface::SUB_REQUEST,
-            $this->getResponseMock(true)
+            $this->getRedirectResponseMock(),
         );
 
         $subRequestListener->onKernelResponse($event3);
@@ -81,14 +95,14 @@ class SubRequestListenerTest extends TestCase
             $this->createMock(HttpKernelInterface::class),
             new Request(),
             HttpKernelInterface::SUB_REQUEST,
-            $this->getResponseMock(true, true)
+            $this->getRedirectResponseMock(true),
         );
 
         $event2 = new ResponseEvent(
             $this->createMock(HttpKernelInterface::class),
             new Request(),
             HttpKernelInterface::SUB_REQUEST,
-            $this->getResponseMock()
+            $this->getResponseMock(),
         );
 
         $event3 = new ResponseEvent(
