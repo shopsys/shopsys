@@ -2,7 +2,6 @@
 
 namespace Tests\FrameworkBundle\Unit\Component\Domain;
 
-use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\DomainDataCreator;
@@ -17,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
+use Tests\FrameworkBundle\Unit\TestCase;
 
 class DomainDataCreatorTest extends TestCase
 {
@@ -103,6 +103,8 @@ class DomainDataCreatorTest extends TestCase
             ->willReturn($pricingGroupData);
 
         $pricingGroup = new PricingGroup($pricingGroupData, 2);
+
+        $this->setValueOfProtectedProperty($pricingGroup, 'id', 1);
 
         $pricingGroupFacadeMock = $this->createMock(PricingGroupFacade::class);
         $pricingGroupFacadeMock
