@@ -81,7 +81,7 @@ class OrderItemPriceCalculationTest extends TestCase
         );
         $orderItem->expects($this->once())->method('getPriceWithVat')->willReturn(Money::create(100));
         $orderItem->expects($this->once())->method('getQuantity')->willReturn(2);
-        $orderItem->expects($this->once())->method('getVatPercent')->willReturn(1);
+        $orderItem->expects($this->once())->method('getVatPercent')->willReturn('1');
         $orderItem->expects($this->once())->method('getOrder')->willReturn($order);
 
         $totalPrice = $orderItemPriceCalculation->calculateTotalPrice($orderItem);
