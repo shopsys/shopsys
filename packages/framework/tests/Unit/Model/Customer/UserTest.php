@@ -10,7 +10,8 @@ class UserTest extends TestCase
 {
     public function testGetFullNameReturnsLastnameAndFirstnameForUser()
     {
-        $customerUser = TestCustomerProvider::getTestCustomerUser();
+        $customerUserData = TestCustomerProvider::getTestCustomerUserData(false);
+        $customerUser = new CustomerUser($customerUserData);
 
         $this->assertSame('Lastname Firstname', $customerUser->getFullName());
     }
@@ -19,7 +20,7 @@ class UserTest extends TestCase
     {
         $customerUser = TestCustomerProvider::getTestCustomerUser();
 
-        $this->assertSame('CompanyName', $customerUser->getFullName());
+        $this->assertSame('companyName', $customerUser->getFullName());
     }
 
     public function isResetPasswordHashValidProvider()
