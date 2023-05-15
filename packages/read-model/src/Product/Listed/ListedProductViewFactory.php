@@ -46,33 +46,33 @@ class ListedProductViewFactory
     /**
      * @param int $id
      * @param string $name
-     * @param string|null $shortDescription
      * @param string $availability
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $sellingPrice
-     * @param array $flagIds
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionView $action
      * @param \Shopsys\ReadModelBundle\Image\ImageView|null $image
+     * @param string|null $shortDescription
+     * @param array $flagIds
      * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView
      */
     protected function create(
         int $id,
         string $name,
-        ?string $shortDescription,
         string $availability,
         ProductPrice $sellingPrice,
-        array $flagIds,
         ProductActionView $action,
-        ?ImageView $image
+        ?ImageView $image,
+        ?string $shortDescription,
+        array $flagIds = [],
     ): ListedProductView {
         return new ListedProductView(
             $id,
             $name,
-            $shortDescription,
             $availability,
             $sellingPrice,
-            $flagIds,
             $action,
-            $image
+            $image,
+            $shortDescription,
+            $flagIds,
         );
     }
 
@@ -87,12 +87,12 @@ class ListedProductViewFactory
         return $this->create(
             $product->getId(),
             $product->isVariant() && $product->getVariantAlias() ? $product->getVariantAlias() : $product->getName(),
-            $product->getShortDescription($this->domain->getId()),
             $product->getCalculatedAvailability()->getName(),
             $this->productCachedAttributesFacade->getProductSellingPrice($product),
-            $this->getFlagIdsForProduct($product),
             $productActionView,
-            $imageView
+            $imageView,
+            $product->getShortDescription($this->domain->getId()),
+            $this->getFlagIdsForProduct($product),
         );
     }
 
@@ -113,12 +113,12 @@ class ListedProductViewFactory
         return $this->create(
             $productArray['id'],
             $productArray['name'],
-            $productArray['short_description'],
             $productArray['availability'],
             $productPrice,
-            $productArray['flags'],
             $productActionView,
-            $imageView
+            $imageView,
+            $productArray['short_description'],
+            $productArray['flags'],
         );
     }
 

@@ -29,17 +29,17 @@ class CustomerUserUpdateData
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData|null $deliveryAddressData
      */
     public function __construct(
         BillingAddressData $billingAddressData,
-        DeliveryAddressData $deliveryAddressData,
         CustomerUserData $customerUserData,
+        ?DeliveryAddressData $deliveryAddressData,
     ) {
         $this->billingAddressData = $billingAddressData;
-        $this->deliveryAddressData = $deliveryAddressData;
         $this->customerUserData = $customerUserData;
+        $this->deliveryAddressData = $deliveryAddressData;
         $this->sendRegistrationMail = false;
     }
 }

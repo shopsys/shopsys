@@ -16,8 +16,8 @@ services:
 
     Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry:
         arguments:
-            - '%shopsys.entity_extension.map%'
-            - '%shopsys.framework.root_dir%'
+            $frameworkRootDir: '%shopsys.framework.root_dir%'
+            $entityExtensionMap: '%shopsys.entity_extension.map%'
 
     Shopsys\FrameworkBundle\Command\ExtendedClassesAnnotationsCommand:
         arguments:

@@ -76,12 +76,12 @@ class ListedProductViewFactoryTest extends TestCase
         $expected = new ListedProductView(
             $id,
             $productName,
-            $shortDescription,
             $availabilityName,
             $this->createProductPrice($priceAmount),
-            $expectedFlags,
             $productActionView,
-            $imageView
+            $imageView,
+            $shortDescription,
+            $expectedFlags,
         );
 
         $this->assertEquals($expected, $listedProductView);

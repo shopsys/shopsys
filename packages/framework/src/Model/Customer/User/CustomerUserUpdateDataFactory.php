@@ -36,7 +36,7 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
         DeliveryAddressData $deliveryAddressData,
         CustomerUserData $customerUserData
     ): CustomerUserUpdateData {
-        return new CustomerUserUpdateData($billingAddressData, $deliveryAddressData, $customerUserData);
+        return new CustomerUserUpdateData($billingAddressData, $customerUserData, $deliveryAddressData);
     }
 
     /**

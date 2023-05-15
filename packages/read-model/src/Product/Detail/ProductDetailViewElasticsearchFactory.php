@@ -91,28 +91,28 @@ class ProductDetailViewElasticsearchFactory
             $productArray['seo_h1'] ?: $productArray['name'],
             $productArray['description'],
             $productArray['availability'],
-            $this->priceFactory->createProductPriceFromArrayByPricingGroup(
-                $productArray['prices'],
-                $this->currentCustomerUser->getPricingGroup()
-            ),
             $productArray['catnum'],
             $productArray['partno'],
             $productArray['ean'],
-            $productArray['main_category_id'],
             $productArray['calculated_selling_denied'],
             $productArray['in_stock'],
             $productArray['is_main_variant'],
-            $productArray['main_variant_id'],
             $productArray['flags'],
             $productArray['seo_title'] ?: $productArray['name'],
             $this->getSeoMetaDescription($productArray),
             $this->productActionViewFactory->createFromArray($productArray),
-            $brandView,
-            $this->getMainImageView($imageViews),
             $imageViews,
             $parameterViews,
             $accessories,
-            $variants
+            $variants,
+            $this->priceFactory->createProductPriceFromArrayByPricingGroup(
+                $productArray['prices'],
+                $this->currentCustomerUser->getPricingGroup()
+            ),
+            $productArray['main_category_id'],
+            $productArray['main_variant_id'],
+            $brandView,
+            $this->getMainImageView($imageViews),
         );
     }
 

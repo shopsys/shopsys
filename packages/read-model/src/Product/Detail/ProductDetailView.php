@@ -16,50 +16,50 @@ class ProductDetailView
      * @param string|null $name
      * @param string|null $description
      * @param string $availability
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null $sellingPrice
      * @param string|null $catnum
      * @param string|null $partno
      * @param string|null $ean
-     * @param int|null $mainCategoryId
      * @param bool $isSellingDenied
      * @param bool $isInStock
      * @param bool $isMainVariant
-     * @param int|null $mainVariantId
      * @param int[] $flagIds
      * @param string|null $seoPageTitle
      * @param string|null $seoMetaDescription
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionView $actionView
-     * @param \Shopsys\ReadModelBundle\Brand\BrandView|null $brandView
-     * @param \Shopsys\ReadModelBundle\Image\ImageView|null $mainImageView
      * @param \Shopsys\ReadModelBundle\Image\ImageView[] $galleryImageViews
      * @param \Shopsys\ReadModelBundle\Parameter\ParameterView[] $parameterViews
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[] $accessories
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[] $variants
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null $sellingPrice
+     * @param int|null $mainCategoryId
+     * @param int|null $mainVariantId
+     * @param \Shopsys\ReadModelBundle\Brand\BrandView|null $brandView
+     * @param \Shopsys\ReadModelBundle\Image\ImageView|null $mainImageView
      */
     public function __construct(
         protected readonly int $id,
         protected readonly ?string $name,
         protected readonly ?string $description,
         protected readonly string $availability,
-        protected readonly ?ProductPrice $sellingPrice = null,
         protected readonly ?string $catnum,
         protected readonly ?string $partno,
         protected readonly ?string $ean,
-        protected readonly ?int $mainCategoryId = null,
         protected readonly bool $isSellingDenied,
         protected readonly bool $isInStock,
         protected readonly bool $isMainVariant,
-        protected readonly ?int $mainVariantId = null,
         protected readonly array $flagIds,
         protected readonly ?string $seoPageTitle,
         protected readonly ?string $seoMetaDescription,
         protected readonly ProductActionView $actionView,
-        protected readonly ?BrandView $brandView = null,
-        protected readonly ?ImageView $mainImageView = null,
         protected readonly array $galleryImageViews,
         protected readonly array $parameterViews,
         protected readonly array $accessories,
-        protected readonly array $variants
+        protected readonly array $variants,
+        protected readonly ?ProductPrice $sellingPrice = null,
+        protected readonly ?int $mainCategoryId = null,
+        protected readonly ?int $mainVariantId = null,
+        protected readonly ?BrandView $brandView = null,
+        protected readonly ?ImageView $mainImageView = null,
     ) {
     }
 

@@ -229,12 +229,12 @@ class ProductDetailViewFactoryTest extends TestCase
         $variant1 = new ListedProductView(
             1,
             'Variant 1',
-            null,
             'available',
             new ProductPrice(Price::zero(), true),
-            [],
             new ProductActionView(1, false, false, '/detail/1'),
-            null
+            null,
+            null,
+            [],
         );
 
         return [

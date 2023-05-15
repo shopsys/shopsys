@@ -22,11 +22,13 @@ class ClassExtensionRegistry
     protected array $otherClassesExtensionMap = [];
 
     /**
-     * @param string[] $entityExtensionMap
      * @param string $frameworkRootDir
+     * @param string[] $entityExtensionMap
      */
-    public function __construct(protected readonly array $entityExtensionMap = [], protected readonly string $frameworkRootDir)
-    {
+    public function __construct(
+        protected readonly string $frameworkRootDir,
+        protected readonly array $entityExtensionMap = []
+    ) {
         $this->otherClassesExtensionMap = $this->getOtherClassesExtensionMap();
     }
 

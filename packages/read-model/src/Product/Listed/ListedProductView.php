@@ -12,26 +12,24 @@ use Webmozart\Assert\Assert;
 class ListedProductView
 {
     /**
-     * ListedProductView constructor.
-     *
      * @param int $id
      * @param string $name
-     * @param string|null $shortDescription
      * @param string $availability
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $sellingPrice
-     * @param int[] $flagIds
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionView $action
      * @param \Shopsys\ReadModelBundle\Image\ImageView|null $image
+     * @param string|null $shortDescription
+     * @param int[] $flagIds
      */
     public function __construct(
         protected readonly int $id,
         protected readonly string $name,
-        protected readonly ?string $shortDescription = null,
         protected readonly string $availability,
         protected readonly ProductPrice $sellingPrice,
-        protected readonly array $flagIds = [],
         protected readonly ProductActionView $action,
-        protected readonly ?ImageView $image = null
+        protected readonly ?ImageView $image = null,
+        protected readonly ?string $shortDescription = null,
+        protected readonly array $flagIds = [],
     ) {
         Assert::allInteger($flagIds);
     }
