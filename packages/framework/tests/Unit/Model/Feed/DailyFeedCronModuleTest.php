@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Model\Feed;
 
 use Monolog\Handler\NullHandler;
-use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
@@ -14,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Feed\FeedExport;
 use Shopsys\FrameworkBundle\Model\Feed\FeedFacade;
 use Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface;
 use Symfony\Bridge\Monolog\Logger;
+use Tests\FrameworkBundle\Unit\TestCase;
 
 class DailyFeedCronModuleTest extends TestCase
 {
@@ -36,6 +36,8 @@ class DailyFeedCronModuleTest extends TestCase
         $feedExportMock->expects($this->any())->method('generateBatch');
         $feedExportMock->expects($this->any())->method('getFeedInfo')->willReturn($feedInfoMock);
         $feedExportMock->expects($this->any())->method('getDomainConfig')->willReturn($domainConfig);
+
+        $this->setValueOfProtectedProperty($feedExportMock, 'lastSeekId', null);
 
         $logger = new Logger('loggerName');
         $logger->setHandlers([new NullHandler()]);
