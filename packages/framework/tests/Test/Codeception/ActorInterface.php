@@ -415,7 +415,7 @@ interface ActorInterface
      * @param string $id
      * @param string $translationDomain
      * @param array $parameters
-     * @param \Tests\FrameworkBundle\Test\Codeception\Tests\FrameworkBundle\Test\Codeception\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null|null $contextSelector
+     * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null|null $contextSelector
      */
     public function clickByTranslationAdmin(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = [], WebDriverBy|WebDriverElement|null $contextSelector = null): void;
 
@@ -423,7 +423,7 @@ interface ActorInterface
      * @param string $id
      * @param string $translationDomain
      * @param array $parameters
-     * @param \Tests\FrameworkBundle\Test\Codeception\Tests\FrameworkBundle\Test\Codeception\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null|null $contextSelector
+     * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null|null $contextSelector
      */
     public function clickByTranslationFrontend(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = [], WebDriverBy|WebDriverElement|null $contextSelector = null);
 
