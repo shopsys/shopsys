@@ -32,26 +32,26 @@ class ListedProductView extends BaseListedProductView
     /**
      * @param int $id
      * @param string $name
-     * @param string|null $shortDescription
      * @param string $availability
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $sellingPrice
-     * @param array $flagIds
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionView $action
      * @param \Shopsys\ReadModelBundle\Image\ImageView|null $image
      * @param string|null $brandName
+     * @param string|null $shortDescription
+     * @param array $flagIds
      */
     public function __construct(
         int $id,
         string $name,
-        ?string $shortDescription,
         string $availability,
         ProductPrice $sellingPrice,
-        array $flagIds,
         ProductActionView $action,
         ?ImageView $image,
-        ?string $brandName
+        ?string $brandName,
+        ?string $shortDescription,
+        array $flagIds = [],
     ) {
-        parent::__construct($id, $name, $shortDescription, $availability, $sellingPrice, $flagIds, $action, $image);
+        parent::__construct($id, $name, $availability, $sellingPrice, $action, $image, $shortDescription, $flagIds);
 
         $this->brandName = $brandName;
     }

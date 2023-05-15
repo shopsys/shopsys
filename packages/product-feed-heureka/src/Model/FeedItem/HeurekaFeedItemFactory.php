@@ -44,17 +44,17 @@ class HeurekaFeedItemFactory
 
         return new HeurekaFeedItem(
             $product->getId(),
-            $mainVariantId,
             $product->getName($domainConfig->getLocale()),
-            $product->getDescription($domainConfig->getId()),
+            $this->productDataBatchLoader->getProductParametersByName($product, $domainConfig),
             $this->productDataBatchLoader->getProductUrl($product, $domainConfig),
+            $this->getPrice($product, $domainConfig),
+            $mainVariantId,
+            $product->getDescription($domainConfig->getId()),
             $this->productDataBatchLoader->getProductImageUrl($product, $domainConfig),
             $this->getBrandName($product),
             $product->getEan(),
             $product->getCalculatedAvailability()->getDispatchTime(),
-            $this->getPrice($product, $domainConfig),
             $this->getHeurekaCategoryFullName($product, $domainConfig),
-            $this->productDataBatchLoader->getProductParametersByName($product, $domainConfig),
             $this->productDataBatchLoader->getProductCpc($product, $domainConfig)
         );
     }

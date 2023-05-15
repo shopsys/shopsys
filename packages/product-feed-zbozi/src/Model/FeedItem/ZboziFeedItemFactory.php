@@ -41,20 +41,20 @@ class ZboziFeedItemFactory
 
         return new ZboziFeedItem(
             $product->getId(),
-            $mainVariantId,
             $product->getName($domainConfig->getLocale()),
-            $product->getDescription($domainConfig->getId()),
             $this->productUrlsBatchLoader->getProductUrl($product, $domainConfig),
+            $this->getPrice($product, $domainConfig),
+            $this->getPathToMainCategory($product, $domainConfig),
+            $this->productParametersBatchLoader->getProductParametersByName($product, $domainConfig),
+            $mainVariantId,
+            $product->getDescription($domainConfig->getId()),
             $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig),
             $this->getBrandName($product),
             $product->getEan(),
             $product->getPartno(),
             $product->getCalculatedAvailability()->getDispatchTime(),
-            $this->getPrice($product, $domainConfig),
-            $this->getPathToMainCategory($product, $domainConfig),
-            $this->productParametersBatchLoader->getProductParametersByName($product, $domainConfig),
             $cpc,
-            $cpcSearch
+            $cpcSearch,
         );
     }
 

@@ -12,35 +12,35 @@ class ZboziFeedItem implements FeedItemInterface
 
     /**
      * @param int $id
-     * @param int|null $mainVariantId
      * @param string $name
-     * @param string|null $description
      * @param string $url
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
+     * @param array $pathToMainCategory
+     * @param array $parametersByName
+     * @param int|null $mainVariantId
+     * @param string|null $description
      * @param string|null $imgUrl
      * @param string|null $brandName
      * @param string|null $ean
      * @param string|null $partno
      * @param int|null $availabilityDispatchTime
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     * @param array $pathToMainCategory
-     * @param array $parametersByName
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $cpc
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $cpcSearch
      */
     public function __construct(
         protected readonly int $id,
-        protected readonly ?int $mainVariantId = null,
         protected readonly string $name,
-        protected readonly ?string $description = null,
         protected readonly string $url,
+        protected readonly Price $price,
+        protected readonly array $pathToMainCategory,
+        protected readonly array $parametersByName,
+        protected readonly ?int $mainVariantId = null,
+        protected readonly ?string $description = null,
         protected readonly ?string $imgUrl = null,
         protected readonly ?string $brandName = null,
         protected readonly ?string $ean = null,
         protected readonly ?string $partno = null,
         protected readonly ?int $availabilityDispatchTime = null,
-        protected readonly Price $price,
-        protected readonly array $pathToMainCategory,
-        protected readonly array $parametersByName,
         protected readonly ?Money $cpc = null,
         protected readonly ?Money $cpcSearch = null
     ) {

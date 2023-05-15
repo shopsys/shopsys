@@ -281,7 +281,6 @@ There you can find links to upgrade notes for other versions too.
                 CurrencyFormatterFactory $currencyFormatterFactory
             ) {
         ```
-
 - add support for CDN ([#2602](https://github.com/shopsys/shopsys/pull/2602))
     - constructor `Shopsys\FrameworkBundle\Form\WysiwygTypeExtension::__construct()` changed its interface
         ```diff
@@ -421,3 +420,144 @@ There you can find links to upgrade notes for other versions too.
         ) {
     ```
     - see #project-base-diff for more details
+- fix deprecated usage of required parameters after optional parameters
+    - `Shopsys\ReadModelBundle\Product\Listed\ListedProductView` class:
+        - method `__construct` changed order of its parameters, new order is like this:
+        ```diff
+            public function __construct(
+                protected readonly int $id,
+                protected readonly string $name,
+                protected readonly string $availability,
+                protected readonly ProductPrice $sellingPrice,
+                protected readonly ProductActionView $action,
+                protected readonly ?ImageView $image = null,
+                protected readonly ?string $shortDescription = null,
+                protected readonly array $flagIds = [],
+            )
+        ```
+    - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory` class:
+        - method `create` changed order of its parameters, new order is like this:
+        ```diff
+            protected function create(
+                int $id,
+                string $name,
+                string $availability,
+                ProductPrice $sellingPrice,
+                ProductActionView $action,
+                ?ImageView $image,
+                ?string $shortDescription,
+                array $flagIds = [],
+            )
+        ```
+    - `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData` class:
+        - method `__construct` changed order of its parameters, new order is like this:
+        ```diff
+            public function __construct(
+                public BillingAddressData $billingAddressData,
+                public CustomerUserData $customerUserData,
+                public ?DeliveryAddressData $deliveryAddressData,
+            )
+        ```
+    - `Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry` class:
+        - method `__construct` changed order of its parameters, new order is like this:
+        ```diff
+            public function __construct(
+                protected readonly string $frameworkRootDir,
+                protected readonly array $entityExtensionMap = []
+            )
+        ```
+    - `Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItem` class:
+        - method `__construct` changed order of its parameters, new order is like this:
+        ```diff
+            public function __construct(
+                protected readonly int $id,
+                protected readonly string $name,
+                protected readonly bool $sellingDenied,
+                protected readonly Price $price,
+                protected readonly Currency $currency,
+                protected readonly string $url,
+                protected readonly ?string $brandName,
+                protected readonly ?string $description,
+                protected readonly ?string $ean = null,
+                protected readonly ?string $partno = null,
+                protected readonly ?string $imgUrl = null,
+            )
+        ```
+    - `Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItem` class:
+        - method `__construct` changed order of its parameters, new order is like this:
+        ```diff
+            public function __construct(
+                protected readonly int $id,
+                protected readonly string $name,
+                protected readonly array $parametersByName,
+                protected readonly string $url,
+                protected readonly Price $price,
+                protected readonly ?int $mainVariantId = null,
+                protected readonly ?string $description = null,
+                protected readonly ?string $imgUrl = null,
+                protected readonly ?string $brandName = null,
+                protected readonly ?string $ean = null,
+                protected readonly ?int $availabilityDispatchTime = null,
+                protected readonly ?string $heurekaCategoryFullName = null,
+                protected readonly ?Money $cpc = null
+            )
+        ```
+    - `Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItem` class:
+        - method `__construct` changed order of its parameters, new order is like this:
+        ```diff
+            public function __construct(
+                protected readonly int $id,
+                protected readonly string $name,
+                protected readonly string $url,
+                protected readonly Price $price,
+                protected readonly array $pathToMainCategory,
+                protected readonly array $parametersByName,
+                protected readonly ?int $mainVariantId = null,
+                protected readonly ?string $description = null,
+                protected readonly ?string $imgUrl = null,
+                protected readonly ?string $brandName = null,
+                protected readonly ?string $ean = null,
+                protected readonly ?string $partno = null,
+                protected readonly ?int $availabilityDispatchTime = null,
+                protected readonly ?Money $cpc = null,
+                protected readonly ?Money $cpcSearch = null
+            )
+        ```
+    - `Shopsys\ReadModelBundle\Product\Detail\ProductDetailView` class:
+        - method `__construct` changed order of its parameters, new order is like this:
+        ```diff
+            public function __construct(
+                protected readonly int $id,
+                protected readonly ?string $name,
+                protected readonly ?string $description,
+                protected readonly string $availability,
+                protected readonly ?string $catnum,
+                protected readonly ?string $partno,
+                protected readonly ?string $ean,
+                protected readonly bool $isSellingDenied,
+                protected readonly bool $isInStock,
+                protected readonly bool $isMainVariant,
+                protected readonly array $flagIds,
+                protected readonly ?string $seoPageTitle,
+                protected readonly ?string $seoMetaDescription,
+                protected readonly ProductActionView $actionView,
+                protected readonly array $galleryImageViews,
+                protected readonly array $parameterViews,
+                protected readonly array $accessories,
+                protected readonly array $variants,
+                protected readonly ?ProductPrice $sellingPrice = null,
+                protected readonly ?int $mainCategoryId = null,
+                protected readonly ?int $mainVariantId = null,
+                protected readonly ?BrandView $brandView = null,
+                protected readonly ?ImageView $mainImageView = null,
+            )
+        ```
+    - `Shopsys\FrameworkBundle\Component\Image\Config\ImageAdditionalSizeConfig` class:
+        - method `__construct` changed order of its parameters, new order is like this:
+        ```diff
+            public function __construct(
+                protected readonly string $media,
+                protected readonly ?int $width = null, 
+                protected readonly ?int $height = null, 
+            )
+        ```

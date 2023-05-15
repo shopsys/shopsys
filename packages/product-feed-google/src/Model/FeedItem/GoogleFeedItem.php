@@ -16,28 +16,28 @@ class GoogleFeedItem implements FeedItemInterface
     /**
      * @param int $id
      * @param string $name
+     * @param bool $sellingDenied
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
+     * @param string $url
      * @param string|null $brandName
      * @param string|null $description
      * @param string|null $ean
      * @param string|null $partno
-     * @param string $url
      * @param string|null $imgUrl
-     * @param bool $sellingDenied
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      */
     public function __construct(
         protected readonly int $id,
         protected readonly string $name,
+        protected readonly bool $sellingDenied,
+        protected readonly Price $price,
+        protected readonly Currency $currency,
+        protected readonly string $url,
         protected readonly ?string $brandName,
         protected readonly ?string $description,
         protected readonly ?string $ean = null,
         protected readonly ?string $partno = null,
-        protected readonly string $url,
         protected readonly ?string $imgUrl = null,
-        protected readonly bool $sellingDenied,
-        protected readonly Price $price,
-        protected readonly Currency $currency
     ) {
     }
 

@@ -170,9 +170,9 @@ class ImageConfigLoader
             $usedMedia[] = $media;
 
             $result[] = new ImageAdditionalSizeConfig(
+                $media,
                 $width,
                 $height,
-                $media
             );
         }
         return $result;
