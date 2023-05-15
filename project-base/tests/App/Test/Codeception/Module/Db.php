@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Test\Codeception\Module;
 
 use Codeception\Module\Db as BaseDb;
+use Codeception\TestInterface;
 use Shopsys\FrameworkBundle\Component\Doctrine\DatabaseSchemaFacade;
 use Tests\App\Test\Codeception\Helper\SymfonyHelper;
 
@@ -12,8 +13,10 @@ class Db extends BaseDb
 {
     /**
      * Revert database to the original state
+     *
+     * @param \Codeception\TestInterface $test
      */
-    public function _afterSuite()
+    public function _after(TestInterface $test): void
     {
         $this->_loadDump();
     }
@@ -30,10 +33,10 @@ class Db extends BaseDb
     /**
      * {@inheritdoc}
      */
-    public function _loadDump($databaseKey = null, $databaseConfig = null)
+    public function _loadDump(?string $databaseKey = null, ?array $databaseConfig = null): void
     {
         $this->cleanup();
 
-        return parent::_loadDump($databaseKey, $databaseConfig);
+        parent::_loadDump($databaseKey, $databaseConfig);
     }
 }

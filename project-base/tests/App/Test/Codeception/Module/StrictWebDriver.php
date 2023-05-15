@@ -487,6 +487,7 @@ class StrictWebDriver extends WebDriver
      */
     public function seeInFieldByElement(string $value, WebDriverElement $element): void
     {
+        // @phpstan-ignore-next-line
         parent::seeInField($element, $value);
     }
 
