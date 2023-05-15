@@ -5,6 +5,7 @@ paths:
     log: ../var/log/codeception
     data: ../tests/App/Acceptance/data
     support: ../tests/App/Test/Codeception
+    output: ../var/log/codeception
 params:
     - ../.env
     - ../.env.acc

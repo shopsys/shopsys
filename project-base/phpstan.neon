@@ -40,6 +40,9 @@ parameters:
             # Annotations in Codeception are not well describing
             message: '#^Parameter \#(\d+) (\$cssOrXPath|\$cssOrXPathOrRegex|\$field|\$selector|\$element) of method (Tests\\(.*)\\Codeception\\(.*)|Codeception\\Module\\WebDriver::moveMouseOver\(\)) expects (.*)#'
             path: %currentWorkingDirectory%/tests/App/*
+    excludePaths:
+        # Exclude coding standards for generated files
+        - %currentWorkingDirectory%/tests/App/Test/Codeception/_generated/*
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon
