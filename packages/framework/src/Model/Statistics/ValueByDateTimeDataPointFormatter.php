@@ -26,7 +26,7 @@ class ValueByDateTimeDataPointFormatter
         array $valueByDateTimeDataPoints,
         DateTime $startDateTime,
         DateTime $endDateTime,
-        DateInterval $interval
+        DateInterval $interval,
     ) {
         $currentProcessedDateTime = $startDateTime;
         $returnStatisticCounts = [];

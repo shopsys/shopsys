@@ -27,7 +27,7 @@ class CronModuleExecutorTest extends TestCase
 
         $this->assertSame(
             CronModuleExecutor::RUN_STATUS_SUSPENDED,
-            $cronModuleExecutor->runModule($cronModuleServiceMock, false)
+            $cronModuleExecutor->runModule($cronModuleServiceMock, false),
         );
     }
 
@@ -43,7 +43,7 @@ class CronModuleExecutorTest extends TestCase
         sleep(1);
         $this->assertSame(
             CronModuleExecutor::RUN_STATUS_TIMEOUT,
-            $cronModuleExecutor->runModule($cronModuleServiceMock, false)
+            $cronModuleExecutor->runModule($cronModuleServiceMock, false),
         );
     }
 
@@ -59,7 +59,7 @@ class CronModuleExecutorTest extends TestCase
 
         $this->assertSame(
             CronModuleExecutor::RUN_STATUS_OK,
-            $cronModuleExecutor->runModule($cronModuleServiceMock, false)
+            $cronModuleExecutor->runModule($cronModuleServiceMock, false),
         );
     }
 

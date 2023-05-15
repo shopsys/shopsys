@@ -23,7 +23,7 @@ class CustomerRegistrationCest
     public function testSuccessfulRegistration(
         RegistrationPage $registrationPage,
         AcceptanceTester $me,
-        LayoutPage $layoutPage
+        LayoutPage $layoutPage,
     ) {
         $me->wantTo('successfully register new customer');
         $me->amOnPage('/');
@@ -36,11 +36,11 @@ class CustomerRegistrationCest
             self::DEFAULT_USER_LAST_NAME,
             self::DEFAULT_USER_EMAIL,
             self::DEFAULT_USER_PASSWORD,
-            self::DEFAULT_USER_PASSWORD
+            self::DEFAULT_USER_PASSWORD,
         );
 
         $registrationPage->checkRegistrationSuccessful(
-            self::DEFAULT_USER_FIRST_NAME . ' ' . self::DEFAULT_USER_LAST_NAME
+            self::DEFAULT_USER_FIRST_NAME . ' ' . self::DEFAULT_USER_LAST_NAME,
         );
     }
 
@@ -57,7 +57,7 @@ class CustomerRegistrationCest
             self::DEFAULT_USER_LAST_NAME,
             'no-reply@shopsys.com',
             self::DEFAULT_USER_PASSWORD,
-            self::DEFAULT_USER_PASSWORD
+            self::DEFAULT_USER_PASSWORD,
         );
         $registrationPage->seeEmailError('This email is already registered');
     }
@@ -75,7 +75,7 @@ class CustomerRegistrationCest
             self::DEFAULT_USER_LAST_NAME,
             self::DEFAULT_USER_EMAIL,
             self::DEFAULT_USER_PASSWORD,
-            'missmatchingPassword'
+            'missmatchingPassword',
         );
         $registrationPage->seePasswordError('Passwords do not match');
     }

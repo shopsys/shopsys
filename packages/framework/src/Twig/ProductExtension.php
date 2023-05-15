@@ -17,7 +17,7 @@ class ProductExtension extends AbstractExtension
      */
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
-        protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade
+        protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
     ) {
     }
 
@@ -40,19 +40,19 @@ class ProductExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'productMainCategory',
-                [$this, 'getProductMainCategory']
+                [$this, 'getProductMainCategory'],
             ),
             new TwigFunction(
                 'findProductMainCategory',
-                [$this, 'findProductMainCategory']
+                [$this, 'findProductMainCategory'],
             ),
             new TwigFunction(
                 'getProductSellingPrice',
-                [$this, 'getProductSellingPrice']
+                [$this, 'getProductSellingPrice'],
             ),
             new TwigFunction(
                 'getProductParameterValues',
-                [$this, 'getProductParameterValues']
+                [$this, 'getProductParameterValues'],
             ),
         ];
     }

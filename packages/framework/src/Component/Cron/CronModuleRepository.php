@@ -56,7 +56,7 @@ class CronModuleRepository
     public function getAllScheduledCronModuleServiceIds()
     {
         $query = $this->em->createQuery(
-            'SELECT cm.serviceId FROM ' . CronModule::class . ' cm WHERE cm.scheduled = TRUE'
+            'SELECT cm.serviceId FROM ' . CronModule::class . ' cm WHERE cm.scheduled = TRUE',
         );
 
         return $query->getSingleColumnResult();
@@ -129,7 +129,7 @@ class CronModuleRepository
             ],
             [
                 'timeLimit' => Types::DATETIME_MUTABLE,
-            ]
+            ],
         );
     }
 }

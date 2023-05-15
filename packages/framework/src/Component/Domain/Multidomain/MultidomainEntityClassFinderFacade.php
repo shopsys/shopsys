@@ -20,7 +20,7 @@ class MultidomainEntityClassFinderFacade
         protected readonly MultidomainEntityClassFinder $multidomainEntityClassFinder,
         protected readonly MultidomainEntityClassProviderInterface $multidomainEntityClassProvider,
         protected readonly NotNullableColumnsFinder $notNullableColumnsFinder,
-        protected readonly EntityNameResolver $entityNameResolver
+        protected readonly EntityNameResolver $entityNameResolver,
     ) {
     }
 
@@ -32,7 +32,7 @@ class MultidomainEntityClassFinderFacade
         return $this->multidomainEntityClassFinder->getMultidomainEntitiesNames(
             $this->em->getMetadataFactory()->getAllMetadata(),
             $this->multidomainEntityClassProvider->getIgnoredMultidomainEntitiesNames(),
-            $this->multidomainEntityClassProvider->getManualMultidomainEntitiesNames()
+            $this->multidomainEntityClassProvider->getManualMultidomainEntitiesNames(),
         );
     }
 
@@ -49,7 +49,7 @@ class MultidomainEntityClassFinderFacade
         }
 
         return $this->notNullableColumnsFinder->getAllNotNullableColumnNamesIndexedByTableName(
-            $multidomainClassesMetadata
+            $multidomainClassesMetadata,
         );
     }
 }

@@ -20,7 +20,7 @@ class ProductListFriendlyUrlDataProvider implements FriendlyUrlDataProviderInter
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory
+        protected readonly FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory,
     ) {
     }
 
@@ -40,7 +40,7 @@ class ProductListFriendlyUrlDataProvider implements FriendlyUrlDataProviderInter
                 FriendlyUrl::class,
                 'f',
                 Join::WITH,
-                'c.id = f.entityId AND f.routeName = :routeName AND f.domainId = :domainId'
+                'c.id = f.entityId AND f.routeName = :routeName AND f.domainId = :domainId',
             )
             ->setParameter('routeName', static::ROUTE_NAME)
             ->setParameter('domainId', $domainConfig->getId())

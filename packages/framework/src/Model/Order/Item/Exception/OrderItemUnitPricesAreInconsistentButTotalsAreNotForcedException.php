@@ -21,7 +21,7 @@ class OrderItemUnitPricesAreInconsistentButTotalsAreNotForcedException extends R
             $orderItem->getId() !== null ? sprintf('with ID %d', $orderItem->getId()) : 'without ID',
             $orderItem->getPriceWithVat()->getAmount(),
             $orderItem->getPriceWithoutVat()->getAmount(),
-            $calculatedPriceWithoutVat->getAmount()
+            $calculatedPriceWithoutVat->getAmount(),
         );
 
         parent::__construct($message, 0, $previous);

@@ -33,7 +33,7 @@ class TimedFormTypeExtension extends AbstractTypeExtension
 
         $builder->addEventSubscriber(new TimedSpamValidationListener(
             $this->formTimeProvider,
-            $options
+            $options,
         ));
     }
 

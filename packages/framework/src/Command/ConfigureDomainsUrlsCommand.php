@@ -22,7 +22,7 @@ class ConfigureDomainsUrlsCommand extends Command
      */
     public function __construct(
         private readonly Filesystem $localFilesystem,
-        private readonly string $configFilepath
+        private readonly string $configFilepath,
     ) {
         parent::__construct();
     }
@@ -43,7 +43,7 @@ class ConfigureDomainsUrlsCommand extends Command
             $output->writeln('URLs for domains were not configured yet.');
             $this->localFilesystem->copy($this->configFilepath . '.dist', $this->configFilepath);
             $output->writeln(
-                sprintf('<fg=green>Copied the default configuration into "%s".</fg=green>', $this->configFilepath)
+                sprintf('<fg=green>Copied the default configuration into "%s".</fg=green>', $this->configFilepath),
             );
         }
 

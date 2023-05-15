@@ -12,7 +12,7 @@ class DelayedPricingSetting
      */
     public function __construct(
         protected readonly PricingSetting $pricingSetting,
-        protected readonly InputPriceRecalculationScheduler $inputPriceRecalculationScheduler
+        protected readonly InputPriceRecalculationScheduler $inputPriceRecalculationScheduler,
     ) {
     }
 

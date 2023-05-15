@@ -23,7 +23,7 @@ class ZboziPluginDataFixture implements PluginDataFixtureInterface
      */
     public function __construct(
         private readonly ZboziProductDomainFacade $zboziProductDomainFacade,
-        private readonly ZboziProductDomainDataFactoryInterface $zboziProductDomainDataFactory
+        private readonly ZboziProductDomainDataFactoryInterface $zboziProductDomainDataFactory,
     ) {
     }
 
@@ -37,7 +37,7 @@ class ZboziPluginDataFixture implements PluginDataFixtureInterface
 
         $this->zboziProductDomainFacade->saveZboziProductDomain(
             static::PRODUCT_ID_FIRST,
-            $firstZboziProductDomainData
+            $firstZboziProductDomainData,
         );
 
         $secondZboziProductDomainData = $this->zboziProductDomainDataFactory->create();
@@ -48,7 +48,7 @@ class ZboziPluginDataFixture implements PluginDataFixtureInterface
 
         $this->zboziProductDomainFacade->saveZboziProductDomain(
             static::PRODUCT_ID_FIRST,
-            $secondZboziProductDomainData
+            $secondZboziProductDomainData,
         );
 
         $thirdZboziProductDomainData = $this->zboziProductDomainDataFactory->create();
@@ -59,7 +59,7 @@ class ZboziPluginDataFixture implements PluginDataFixtureInterface
 
         $this->zboziProductDomainFacade->saveZboziProductDomain(
             static::PRODUCT_ID_SECOND,
-            $thirdZboziProductDomainData
+            $thirdZboziProductDomainData,
         );
 
         $fourthZboziProductDomainData = $this->zboziProductDomainDataFactory->create();
@@ -70,7 +70,7 @@ class ZboziPluginDataFixture implements PluginDataFixtureInterface
 
         $this->zboziProductDomainFacade->saveZboziProductDomain(
             static::PRODUCT_ID_SECOND,
-            $fourthZboziProductDomainData
+            $fourthZboziProductDomainData,
         );
 
         $fifthZboziProductDomainData = $this->zboziProductDomainDataFactory->create();
@@ -81,7 +81,7 @@ class ZboziPluginDataFixture implements PluginDataFixtureInterface
 
         $this->zboziProductDomainFacade->saveZboziProductDomain(
             static::PRODUCT_ID_THIRD,
-            $fifthZboziProductDomainData
+            $fifthZboziProductDomainData,
         );
 
         $sixthZboziProductDomainData = $this->zboziProductDomainDataFactory->create();
@@ -92,7 +92,7 @@ class ZboziPluginDataFixture implements PluginDataFixtureInterface
 
         $this->zboziProductDomainFacade->saveZboziProductDomain(
             static::PRODUCT_ID_THIRD,
-            $sixthZboziProductDomainData
+            $sixthZboziProductDomainData,
         );
 
         $seventhZboziProductDomainData = $this->zboziProductDomainDataFactory->create();
@@ -103,7 +103,7 @@ class ZboziPluginDataFixture implements PluginDataFixtureInterface
 
         $this->zboziProductDomainFacade->saveZboziProductDomain(
             static::PRODUCT_ID_FOURTH,
-            $seventhZboziProductDomainData
+            $seventhZboziProductDomainData,
         );
 
         $eighthZboziProductDomainData = $this->zboziProductDomainDataFactory->create();
@@ -114,7 +114,7 @@ class ZboziPluginDataFixture implements PluginDataFixtureInterface
 
         $this->zboziProductDomainFacade->saveZboziProductDomain(
             static::PRODUCT_ID_FOURTH,
-            $eighthZboziProductDomainData
+            $eighthZboziProductDomainData,
         );
 
         $ninthZboziProductDomainData = $this->zboziProductDomainDataFactory->create();
@@ -125,7 +125,7 @@ class ZboziPluginDataFixture implements PluginDataFixtureInterface
 
         $this->zboziProductDomainFacade->saveZboziProductDomain(
             static::PRODUCT_ID_FIFTH,
-            $ninthZboziProductDomainData
+            $ninthZboziProductDomainData,
         );
 
         $tenthZboziProductDomainData = $this->zboziProductDomainDataFactory->create();
@@ -136,7 +136,7 @@ class ZboziPluginDataFixture implements PluginDataFixtureInterface
 
         $this->zboziProductDomainFacade->saveZboziProductDomain(
             static::PRODUCT_ID_FIFTH,
-            $tenthZboziProductDomainData
+            $tenthZboziProductDomainData,
         );
     }
 }

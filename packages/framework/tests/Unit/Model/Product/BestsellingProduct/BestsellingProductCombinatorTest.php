@@ -37,7 +37,7 @@ class BestsellingProductCombinatorTest extends TestCase
         $combinedProducts = $bestsellingProductCombinator->combineManualAndAutomaticProducts(
             $manualProductsIndexedByPosition,
             $automaticProducts,
-            $maxResults
+            $maxResults,
         );
 
         $combinedProductsExpected = [

@@ -94,7 +94,7 @@ class CategoryDataFactory implements CategoryDataFactoryInterface
             $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
                 $domainId,
                 'front_product_list',
-                $category->getId()
+                $category->getId(),
             );
             $categoryData->urls->mainFriendlyUrlsByDomainId[$domainId] = $mainFriendlyUrl;
         }

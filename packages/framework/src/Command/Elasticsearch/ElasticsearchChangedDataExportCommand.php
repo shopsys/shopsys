@@ -24,7 +24,7 @@ class ElasticsearchChangedDataExportCommand extends ElasticsearchDataExportComma
         $this->indexFacade->exportChanged(
             $this->indexRegistry->getIndexByIndexName($indexDefinition->getIndexName()),
             $indexDefinition,
-            $output
+            $output,
         );
     }
 

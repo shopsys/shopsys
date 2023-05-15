@@ -20,7 +20,7 @@ class FileThumbnailExtensionTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $fileUploadMock->expects($this->any())->method('getTemporaryFilepath')->willReturn(
-            'dir/' . $temporaryFilename
+            'dir/' . $temporaryFilename,
         );
 
         $exception = new FileIsNotSupportedImageException($temporaryFilename);
@@ -29,7 +29,7 @@ class FileThumbnailExtensionTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $imageThumbnailFactoryMock->expects($this->once())->method('getImageThumbnail')->willThrowException(
-            $exception
+            $exception,
         );
 
         $fileThumbnailExtension = new FileThumbnailExtension($fileUploadMock, $imageThumbnailFactoryMock);
@@ -49,7 +49,7 @@ class FileThumbnailExtensionTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $fileUploadMock->expects($this->any())->method('getTemporaryFilepath')->willReturn(
-            'dir/' . $temporaryFilename
+            'dir/' . $temporaryFilename,
         );
 
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Intervention\Image\Image $imageMock */
@@ -82,7 +82,7 @@ class FileThumbnailExtensionTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $fileUploadMock->expects($this->any())->method('getTemporaryFilepath')->willReturn(
-            'dir/' . $temporaryFilename
+            'dir/' . $temporaryFilename,
         );
 
         $exception = new FileIsNotSupportedImageException($temporaryFilename);
@@ -91,7 +91,7 @@ class FileThumbnailExtensionTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $imageThumbnailFactoryMock->expects($this->once())->method('getImageThumbnail')->willThrowException(
-            $exception
+            $exception,
         );
 
         $fileThumbnailExtension = new FileThumbnailExtension($fileUploadMock, $imageThumbnailFactoryMock);

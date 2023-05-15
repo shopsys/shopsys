@@ -23,7 +23,7 @@ class FriendlyUrlRouterFactory
         protected readonly LoaderInterface $configLoader,
         protected readonly FriendlyUrlRepository $friendlyUrlRepository,
         protected readonly FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider,
-        protected readonly CacheInterface $mainFriendlyUrlSlugCache
+        protected readonly CacheInterface $mainFriendlyUrlSlugCache,
     ) {
         $this->friendlyUrlRouterResourceFilepath = $friendlyUrlRouterResourceFilepath;
     }
@@ -42,11 +42,11 @@ class FriendlyUrlRouterFactory
                 $context,
                 $this->friendlyUrlRepository,
                 $this->friendlyUrlCacheKeyProvider,
-                $this->mainFriendlyUrlSlugCache
+                $this->mainFriendlyUrlSlugCache,
             ),
             new FriendlyUrlMatcher($this->friendlyUrlRepository),
             $domainConfig,
-            $this->friendlyUrlRouterResourceFilepath
+            $this->friendlyUrlRouterResourceFilepath,
         );
     }
 }

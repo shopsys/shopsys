@@ -18,7 +18,7 @@ interface DataSourceInterface
         $limit = null,
         $page = 1,
         $orderSourceColumnName = null,
-        $orderDirection = self::ORDER_ASC
+        $orderDirection = self::ORDER_ASC,
     );
 
     /**

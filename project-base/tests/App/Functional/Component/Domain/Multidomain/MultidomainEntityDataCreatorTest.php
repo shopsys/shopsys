@@ -43,7 +43,7 @@ class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
         $multidomainEntityDataCreator = new MultidomainEntityDataCreator(
             $multidomainEntityClassFinderFacadeMock,
             $this->em,
-            $sqlQuoter
+            $sqlQuoter,
         );
 
         $multidomainEntityDataCreator->copyAllMultidomainDataForNewDomain(1, 2);
@@ -100,7 +100,7 @@ class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
         $multidomainEntityDataCreator = new MultidomainEntityDataCreator(
             $multidomainEntityClassFinderFacadeMock,
             $this->em,
-            $sqlQuoter
+            $sqlQuoter,
         );
 
         try {

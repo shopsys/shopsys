@@ -60,7 +60,7 @@ class RouteCsrfProtectorTest extends TestCase
                 RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER => $validCsrfToken,
             ],
             [],
-            ['_route' => 'someRouteName']
+            ['_route' => 'someRouteName'],
         );
         $annotationReader = new AnnotationReader();
         $tokenManagerMock = $this->getMockBuilder(CsrfTokenManager::class)
@@ -113,7 +113,7 @@ class RouteCsrfProtectorTest extends TestCase
                 RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER => $invalidCsrfToken,
             ],
             [],
-            ['_route' => 'someRouteName']
+            ['_route' => 'someRouteName'],
         );
         $annotationReader = new AnnotationReader();
         $tokenManagerMock = $this->getMockBuilder(CsrfTokenManager::class)

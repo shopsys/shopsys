@@ -45,7 +45,7 @@ class ProductDetailViewFactory
         protected readonly CategoryFacade $categoryFacade,
         protected readonly SeoSettingFacade $seoSettingFacade,
         protected readonly ListedProductViewFacadeInterface $listedProductViewFacade,
-        protected readonly ListedProductVariantsViewFacadeInterface $listedProductVariantsViewFacade
+        protected readonly ListedProductVariantsViewFacadeInterface $listedProductVariantsViewFacade,
     ) {
     }
 
@@ -71,7 +71,7 @@ class ProductDetailViewFactory
             $productActionView,
             $parameterViews,
             $accessories,
-            $variants
+            $variants,
         );
     }
 
@@ -96,7 +96,7 @@ class ProductDetailViewFactory
         ProductActionView $productActionView,
         array $parameterViews,
         array $accessories,
-        array $variants
+        array $variants,
     ): ProductDetailView {
         $domainId = $this->domain->getId();
         $locale = $this->domain->getLocale();

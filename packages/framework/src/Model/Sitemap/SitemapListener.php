@@ -23,7 +23,7 @@ class SitemapListener implements EventSubscriberInterface
     public function __construct(
         protected readonly SitemapFacade $sitemapFacade,
         protected readonly Domain $domain,
-        protected readonly DomainRouterFactory $domainRouterFactory
+        protected readonly DomainRouterFactory $domainRouterFactory,
     ) {
     }
 
@@ -62,7 +62,7 @@ class SitemapListener implements EventSubscriberInterface
             $generator,
             $domainConfig,
             $section,
-            static::PRIORITY_NONE
+            static::PRIORITY_NONE,
         );
 
         $categorySitemapItems = $this->sitemapFacade->getSitemapItemsForVisibleCategories($domainConfig);
@@ -71,7 +71,7 @@ class SitemapListener implements EventSubscriberInterface
             $generator,
             $domainConfig,
             $section,
-            static::PRIORITY_NONE
+            static::PRIORITY_NONE,
         );
 
         $articleSitemapItems = $this->sitemapFacade->getSitemapItemsForArticlesOnDomain($domainConfig);
@@ -80,7 +80,7 @@ class SitemapListener implements EventSubscriberInterface
             $generator,
             $domainConfig,
             $section,
-            static::PRIORITY_NONE
+            static::PRIORITY_NONE,
         );
     }
 
@@ -96,7 +96,7 @@ class SitemapListener implements EventSubscriberInterface
         AbstractGenerator $generator,
         DomainConfig $domainConfig,
         $section,
-        $elementPriority
+        $elementPriority,
     ) {
         foreach ($sitemapItems as $sitemapItem) {
             $absoluteUrl = $this->getAbsoluteUrlByDomainConfigAndSlug($domainConfig, $sitemapItem->slug);
@@ -115,7 +115,7 @@ class SitemapListener implements EventSubscriberInterface
         AbstractGenerator $generator,
         DomainConfig $domainConfig,
         $section,
-        $elementPriority
+        $elementPriority,
     ) {
         $domainRouter = $this->domainRouterFactory->getRouter($domainConfig->getId());
         $absoluteUrl = $domainRouter->generate('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL);

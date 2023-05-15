@@ -18,7 +18,7 @@ class CategoryWithPreloadedChildrenFactory
         foreach ($firstLevelCategories as $firstLevelCategory) {
             $categoriesWithPreloadedChildren[] = new CategoryWithPreloadedChildren(
                 $firstLevelCategory,
-                $this->getCategoriesWithPreloadedChildren($firstLevelCategory, $categoriesByParentId)
+                $this->getCategoriesWithPreloadedChildren($firstLevelCategory, $categoriesByParentId),
             );
         }
 
@@ -41,7 +41,7 @@ class CategoryWithPreloadedChildrenFactory
         foreach ($categoriesByParentId[$category->getId()] as $childCategory) {
             $childCategoriesWithPreloadedChildren[] = new CategoryWithPreloadedChildren(
                 $childCategory,
-                $this->getCategoriesWithPreloadedChildren($childCategory, $categoriesByParentId)
+                $this->getCategoriesWithPreloadedChildren($childCategory, $categoriesByParentId),
             );
         }
 

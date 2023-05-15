@@ -39,7 +39,7 @@ class ActionColumn
         $title,
         $route,
         protected readonly array $bindingRouteParams,
-        protected readonly array $additionalRouteParams
+        protected readonly array $additionalRouteParams,
     ) {
         $this->type = $type;
         $this->title = $title;
@@ -133,7 +133,7 @@ class ActionColumn
 
         if ($this->type === self::TYPE_DELETE) {
             $parameters[RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER] = $this->routeCsrfProtector->getCsrfTokenByRoute(
-                $this->route
+                $this->route,
             );
         }
 

@@ -88,7 +88,7 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
             [
                 new FileExtensionMaxLength(['limit' => 5]),
             ],
-            $options['file_constraints']
+            $options['file_constraints'],
         );
 
         $builder->addModelTransformer($this);
@@ -98,7 +98,7 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
                 'allow_add' => true,
                 'constraints' => [
                     new Constraints\Callback(
-                        ['callback' => [$this, 'validateUploadedFiles'], 'payload' => $fileConstraints]
+                        ['callback' => [$this, 'validateUploadedFiles'], 'payload' => $fileConstraints],
                     ),
                 ],
             ])
@@ -109,7 +109,7 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please enter the filename']),
                         new Constraints\Length(
-                            ['max' => 245, 'maxMessage' => 'File name cannot be longer than {{ limit }} characters']
+                            ['max' => 245, 'maxMessage' => 'File name cannot be longer than {{ limit }} characters'],
                         ),
                     ],
                 ],

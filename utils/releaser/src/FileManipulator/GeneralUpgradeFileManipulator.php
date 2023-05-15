@@ -23,7 +23,7 @@ class GeneralUpgradeFileManipulator
         $newLink = sprintf(
             '* ### [From %s to %2$s](/upgrade/UPGRADE-%2$s.md)' . PHP_EOL,
             $version->getOriginalString(),
-            $nextDevelopmentVersionString
+            $nextDevelopmentVersionString,
         );
         $versionString = $version->getOriginalString();
 
@@ -32,7 +32,7 @@ class GeneralUpgradeFileManipulator
             self::FROM_PREVIOUS_TO_NEXT_DEV_LINK_PATTERN,
             function ($match) use ($versionString, $newLink) {
                 return $newLink . str_ireplace($versionString . '-dev', $versionString, $match[0]);
-            }
+            },
         );
     }
 }

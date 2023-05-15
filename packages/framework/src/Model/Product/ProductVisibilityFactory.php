@@ -23,7 +23,7 @@ class ProductVisibilityFactory implements ProductVisibilityFactoryInterface
     public function create(
         Product $product,
         PricingGroup $pricingGroup,
-        int $domainId
+        int $domainId,
     ): ProductVisibility {
         $classData = $this->entityNameResolver->resolve(ProductVisibility::class);
 

@@ -26,7 +26,7 @@ class ProductFilterOptionsFactory
      */
     public function __construct(
         protected readonly ModuleFacade $moduleFacade,
-        ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
+        ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade,
     ) {
         $this->productOnCurrentDomainElasticFacade = $productOnCurrentDomainFacade;
     }
@@ -91,7 +91,7 @@ class ProductFilterOptionsFactory
     protected function createProductFilterOptions(
         ProductFilterConfig $productFilterConfig,
         ProductFilterCountData $productFilterCountData,
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
     ): ProductFilterOptions {
         $productFilterOptions = $this->createProductFilterOptionsInstance();
         $productFilterOptions->minimalPrice = $productFilterConfig->getPriceRange()->getMinimalPrice();
@@ -111,26 +111,26 @@ class ProductFilterOptionsFactory
      */
     public function createProductFilterOptionsForAll(
         ProductFilterConfig $productFilterConfig,
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
     ): ProductFilterOptions {
         if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
             return $this->createProductFilterOptionsInstance();
         }
 
         $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForAll(
-            $productFilterData
+            $productFilterData,
         );
 
         $productFilterOptions = $this->createProductFilterOptions(
             $productFilterConfig,
             $productFilterCountData,
-            $productFilterData
+            $productFilterData,
         );
         $this->fillBrands(
             $productFilterOptions,
             $productFilterConfig,
             $productFilterCountData,
-            $productFilterData
+            $productFilterData,
         );
 
         return $productFilterOptions;
@@ -145,7 +145,7 @@ class ProductFilterOptionsFactory
     public function createProductFilterOptionsForCategory(
         Category $category,
         ProductFilterConfig $productFilterConfig,
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
     ): ProductFilterOptions {
         if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
             return $this->createProductFilterOptionsInstance();
@@ -154,25 +154,25 @@ class ProductFilterOptionsFactory
         $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataInCategory(
             $category->getId(),
             $productFilterConfig,
-            $productFilterData
+            $productFilterData,
         );
 
         $productFilterOptions = $this->createProductFilterOptions(
             $productFilterConfig,
             $productFilterCountData,
-            $productFilterData
+            $productFilterData,
         );
         $this->fillBrands(
             $productFilterOptions,
             $productFilterConfig,
             $productFilterCountData,
-            $productFilterData
+            $productFilterData,
         );
         $this->fillParameters(
             $productFilterOptions,
             $productFilterConfig,
             $productFilterCountData,
-            $productFilterData
+            $productFilterData,
         );
 
         return $productFilterOptions;
@@ -187,7 +187,7 @@ class ProductFilterOptionsFactory
     public function createProductFilterOptionsForBrand(
         Brand $brand,
         ProductFilterConfig $productFilterConfig,
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
     ): ProductFilterOptions {
         if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
             return $this->createProductFilterOptionsInstance();
@@ -195,13 +195,13 @@ class ProductFilterOptionsFactory
 
         $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForBrand(
             $brand->getId(),
-            $productFilterData
+            $productFilterData,
         );
 
         return $this->createProductFilterOptions(
             $productFilterConfig,
             $productFilterCountData,
-            $productFilterData
+            $productFilterData,
         );
     }
 
@@ -215,7 +215,7 @@ class ProductFilterOptionsFactory
         ProductFilterOptions $productFilterOptions,
         ProductFilterConfig $productFilterConfig,
         ProductFilterCountData $productFilterCountData,
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
     ): void {
         $isAbsolute = count($productFilterData->flags) === 0;
 
@@ -223,7 +223,7 @@ class ProductFilterOptionsFactory
             $productFilterOptions->flags[] = $this->createFlagFilterOption(
                 $flag,
                 $productFilterCountData->countByFlagId[$flag->getId()] ?? 0,
-                $isAbsolute
+                $isAbsolute,
             );
         }
     }
@@ -238,7 +238,7 @@ class ProductFilterOptionsFactory
         ProductFilterOptions $productFilterOptions,
         ProductFilterConfig $productFilterConfig,
         ProductFilterCountData $productFilterCountData,
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
     ): void {
         $isAbsolute = count($productFilterData->brands) === 0;
 
@@ -246,7 +246,7 @@ class ProductFilterOptionsFactory
             $productFilterOptions->brands[] = $this->createBrandFilterOption(
                 $brand,
                 $productFilterCountData->countByBrandId[$brand->getId()] ?? 0,
-                $isAbsolute
+                $isAbsolute,
             );
         }
     }
@@ -261,7 +261,7 @@ class ProductFilterOptionsFactory
         ProductFilterOptions $productFilterOptions,
         ProductFilterConfig $productFilterConfig,
         ProductFilterCountData $productFilterCountData,
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
     ): void {
         foreach ($productFilterConfig->getParameterChoices() as $parameterFilterChoice) {
             $isAbsolute = !$this->isParameterFiltered($parameterFilterChoice->getParameter(), $productFilterData);
@@ -274,18 +274,18 @@ class ProductFilterOptionsFactory
                     $parameter,
                     $parameterValue,
                     $productFilterData,
-                    $productFilterCountData
+                    $productFilterCountData,
                 );
                 $parameterValueFilterOptions[] = $this->createParameterValueFilterOption(
                     $parameterValue,
                     $parameterValueCount,
-                    $isAbsolute
+                    $isAbsolute,
                 );
             }
 
             $productFilterOptions->parameters[] = $this->createParameterFilterOption(
                 $parameter,
-                $parameterValueFilterOptions
+                $parameterValueFilterOptions,
             );
         }
     }
@@ -338,7 +338,7 @@ class ProductFilterOptionsFactory
         Parameter $parameter,
         ParameterValue $parameterValue,
         ProductFilterData $productFilterData,
-        ProductFilterCountData $productFilterCountData
+        ProductFilterCountData $productFilterCountData,
     ): int {
         if ($this->isParameterValueFiltered($parameter, $parameterValue, $productFilterData)) {
             return 0;

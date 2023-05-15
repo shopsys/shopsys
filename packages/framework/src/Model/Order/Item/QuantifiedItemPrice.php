@@ -17,7 +17,7 @@ class QuantifiedItemPrice
     public function __construct(
         protected readonly Price $unitPrice,
         protected readonly Price $totalPrice,
-        protected readonly Vat $vat
+        protected readonly Vat $vat,
     ) {
     }
 

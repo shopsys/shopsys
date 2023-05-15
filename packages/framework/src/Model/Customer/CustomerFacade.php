@@ -16,7 +16,7 @@ class CustomerFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly CustomerFactoryInterface $customerFactory,
-        protected readonly CustomerRepository $customerRepository
+        protected readonly CustomerRepository $customerRepository,
     ) {
     }
 

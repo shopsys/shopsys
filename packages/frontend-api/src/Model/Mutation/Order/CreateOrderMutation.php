@@ -27,7 +27,7 @@ class CreateOrderMutation extends AbstractMutation
     public function __construct(
         protected readonly OrderDataFactory $orderDataFactory,
         protected readonly PlaceOrderFacade $placeOrderFacade,
-        protected readonly OrderMailFacade $orderMailFacade
+        protected readonly OrderMailFacade $orderMailFacade,
     ) {
     }
 

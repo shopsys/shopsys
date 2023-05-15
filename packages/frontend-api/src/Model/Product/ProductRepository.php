@@ -34,7 +34,7 @@ class ProductRepository
 
         if ($product === null) {
             throw new ProductNotFoundException(
-                sprintf('Product with UUID "%s" does not exist.', $uuid)
+                sprintf('Product with UUID "%s" does not exist.', $uuid),
             );
         }
 

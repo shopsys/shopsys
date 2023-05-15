@@ -46,7 +46,7 @@ class CustomerUserFacade
         protected readonly DeliveryAddressFacade $deliveryAddressFacade,
         protected readonly CustomerDataFactoryInterface $customerDataFactory,
         protected readonly BillingAddressFacade $billingAddressFacade,
-        protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
+        protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
     ) {
     }
 
@@ -77,7 +77,7 @@ class CustomerUserFacade
     {
         $customer = $this->createCustomerWithBillingAddress(
             $customerUserData->domainId,
-            $this->billingAddressDataFactory->create()
+            $this->billingAddressDataFactory->create(),
         );
 
         $customerUser = $this->createCustomerUser($customer, $customerUserData);
@@ -95,7 +95,7 @@ class CustomerUserFacade
     {
         $customer = $this->createCustomerWithBillingAddress(
             $customerUserUpdateData->customerUserData->domainId,
-            $customerUserUpdateData->billingAddressData
+            $customerUserUpdateData->billingAddressData,
         );
 
         if (
@@ -128,7 +128,7 @@ class CustomerUserFacade
      */
     protected function createCustomerUser(
         Customer $customer,
-        CustomerUserData $customerUserData
+        CustomerUserData $customerUserData,
     ): CustomerUser {
         $customerUserData->customer = $customer;
         $customerUser = $this->customerUserFactory->create($customerUserData);
@@ -149,7 +149,7 @@ class CustomerUserFacade
     protected function edit(
         int $customerUserId,
         CustomerUserUpdateData $customerUserUpdateData,
-        ?DeliveryAddress $deliveryAddress = null
+        ?DeliveryAddress $deliveryAddress = null,
     ) {
         $customerUser = $this->getCustomerUserById($customerUserId);
 
@@ -171,13 +171,13 @@ class CustomerUserFacade
         if ($customerUserUpdateData->customerUserData->password !== null) {
             $this->customerUserPasswordFacade->changePassword(
                 $customerUser,
-                $customerUserUpdateData->customerUserData->password
+                $customerUserUpdateData->customerUserData->password,
             );
         }
 
         $this->billingAddressFacade->edit(
             $customerUser->getCustomer()->getBillingAddress()->getId(),
-            $customerUserUpdateData->billingAddressData
+            $customerUserUpdateData->billingAddressData,
         );
 
         return $customerUser;
@@ -236,7 +236,7 @@ class CustomerUserFacade
         $this->edit(
             $customerUser->getId(),
             $this->customerUserUpdateDataFactory->createAmendedByOrder($customerUser, $order, $deliveryAddress),
-            $deliveryAddress
+            $deliveryAddress,
         );
 
         $this->em->flush();
@@ -250,7 +250,7 @@ class CustomerUserFacade
     {
         $customerUserByEmailAndDomain = $this->findCustomerUserByEmailAndDomain(
             $email,
-            $customerUser->getDomainId()
+            $customerUser->getDomainId(),
         );
 
         if (
@@ -294,7 +294,7 @@ class CustomerUserFacade
             $customerUser,
             $refreshTokenChain,
             $deviceId,
-            $tokenExpiration
+            $tokenExpiration,
         );
         $customerUser->addRefreshTokenChain($refreshTokenChain);
         $this->em->flush();

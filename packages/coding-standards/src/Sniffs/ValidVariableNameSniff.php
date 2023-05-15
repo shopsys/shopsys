@@ -64,7 +64,7 @@ final class ValidVariableNameSniff extends AbstractVariableSniff
 
         $file->addError(sprintf(
             $errorMessageFormat,
-            $variableName
+            $variableName,
         ), $position, self::class);
     }
 }

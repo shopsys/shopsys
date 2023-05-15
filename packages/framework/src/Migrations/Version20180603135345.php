@@ -21,7 +21,7 @@ class Version20180603135345 extends AbstractMigration
         $this->sql('INSERT INTO categories (id, parent_id, level, lft, rgt) VALUES (1, null, 0, 1, 2)');
         $this->sql('ALTER SEQUENCE categories_id_seq RESTART WITH 2');
         $this->sql(
-            'INSERT INTO category_domains (category_id, domain_id, enabled, visible) VALUES (1, 1, true, true)'
+            'INSERT INTO category_domains (category_id, domain_id, enabled, visible) VALUES (1, 1, true, true)',
         );
         $this->sql('ALTER SEQUENCE category_domains_id_seq RESTART WITH 2');
     }

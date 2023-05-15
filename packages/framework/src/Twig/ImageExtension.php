@@ -47,7 +47,7 @@ class ImageExtension extends AbstractExtension
         protected readonly ImageLocator $imageLocator,
         protected readonly ImageFacade $imageFacade,
         protected readonly Environment $twigEnvironment,
-        protected readonly bool $isLazyLoadEnabled = false
+        protected readonly bool $isLazyLoadEnabled = false,
     ) {
         $this->frontDesignImageUrlPrefix = rtrim($frontDesignImageUrlPrefix, '/');
     }
@@ -95,7 +95,7 @@ class ImageExtension extends AbstractExtension
                 $this->domain->getCurrentDomainConfig(),
                 $imageOrEntity,
                 $sizeName,
-                $type
+                $type,
             );
         } catch (ImageNotFoundException $e) {
             return $this->getEmptyImageUrl();
@@ -130,7 +130,7 @@ class ImageExtension extends AbstractExtension
                 $this->domain->getCurrentDomainConfig(),
                 $image,
                 $attributes['size'],
-                $attributes['type']
+                $attributes['type'],
             );
 
             return $this->getImageHtmlByEntityName($attributes, $entityName, $additionalImagesData);

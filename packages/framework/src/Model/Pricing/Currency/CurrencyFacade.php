@@ -150,7 +150,7 @@ class CurrencyFacade
      */
     protected function recalculateExchangeRatesByNewDefaultCurrency(
         Currency $originalDefaultCurrency,
-        Currency $newDefaultCurrency
+        Currency $newDefaultCurrency,
     ): void {
         $coefficient = $this->getExchangeRateForCurrencies($originalDefaultCurrency, $newDefaultCurrency);
 
@@ -173,7 +173,7 @@ class CurrencyFacade
 
         foreach ($this->domain->getAll() as $domainConfig) {
             $notAllowedToDeleteCurrencyIds[] = $this->pricingSetting->getDomainDefaultCurrencyIdByDomainId(
-                $domainConfig->getId()
+                $domainConfig->getId(),
             );
         }
 

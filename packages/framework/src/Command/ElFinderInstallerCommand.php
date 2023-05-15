@@ -57,7 +57,7 @@ Default docroot:
 You can pass docroot:
   <info>Where to install elfinder</info>
   <info>php %command.full_name% --docroot=public_html</info>
-EOF
+EOF,
             );
     }
 

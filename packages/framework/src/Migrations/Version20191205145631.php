@@ -32,7 +32,7 @@ class Version20191205145631 extends AbstractMigration
 
         $this->sql('INSERT INTO customers (id) SELECT id FROM users');
         $this->sql(
-            'SELECT SETVAL(pg_get_serial_sequence(\'customers\', \'id\'), COALESCE((SELECT MAX(id) FROM users) + 1, 1), false)'
+            'SELECT SETVAL(pg_get_serial_sequence(\'customers\', \'id\'), COALESCE((SELECT MAX(id) FROM users) + 1, 1), false)',
         );
 
         $this->sql('UPDATE users SET customer_id=id');
@@ -42,7 +42,7 @@ class Version20191205145631 extends AbstractMigration
         foreach ($users as $user) {
             $this->sql(
                 'UPDATE billing_addresses SET customer_id=? WHERE id=?',
-                [$user['id'], $user['billing_address_id']]
+                [$user['id'], $user['billing_address_id']],
             );
         }
 

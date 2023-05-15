@@ -45,7 +45,7 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         $this->em->flush();
 
         $this->assertTrue(
-            $this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID)
+            $this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID),
         );
     }
 
@@ -70,7 +70,7 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         $this->em->flush();
 
         $this->assertFalse(
-            $this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID)
+            $this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID),
         );
     }
 
@@ -86,7 +86,7 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         $this->em->flush();
 
         $this->assertFalse(
-            $this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID)
+            $this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID),
         );
     }
 
@@ -102,7 +102,7 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         $this->em->flush();
 
         $this->assertFalse(
-            $this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID)
+            $this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID),
         );
     }
 
@@ -118,7 +118,7 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         $this->em->flush();
 
         $this->assertFalse(
-            $this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID)
+            $this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID),
         );
     }
 

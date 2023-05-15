@@ -147,7 +147,7 @@ trait FlashMessageTrait
             return $session;
         } catch (SessionNotFoundException|NotFoundExceptionInterface|ContainerExceptionInterface) {
             throw new LogicException(
-                'You can not work with flash messages if sessions are disabled. Enable them in "config/packages/framework.yaml".'
+                'You can not work with flash messages if sessions are disabled. Enable them in "config/packages/framework.yaml".',
             );
         }
     }

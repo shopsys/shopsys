@@ -19,7 +19,7 @@ class SymfonyRouterAdapterTest extends TestCase
     {
         $router = new Router(
             new AnnotatedRouteControllerLoader(new AnnotationReader()),
-            TestController::class
+            TestController::class,
         );
 
         $adapter = new SymfonyRouterAdapter($router);

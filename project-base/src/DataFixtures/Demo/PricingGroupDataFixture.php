@@ -29,7 +29,7 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
         private readonly PricingGroupFacade $pricingGroupFacade,
         private readonly PricingGroupDataFactoryInterface $pricingGroupDataFactory,
         private readonly Domain $domain,
-        private readonly PricingGroupSettingFacade $pricingGroupSettingFacade
+        private readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
     ) {
     }
 
@@ -64,7 +64,7 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
     private function createPricingGroup(
         PricingGroupData $pricingGroupData,
         int $domainId,
-        ?string $referenceName = null
+        ?string $referenceName = null,
     ): void {
         $pricingGroup = $this->pricingGroupFacade->create($pricingGroupData, $domainId);
 
@@ -85,7 +85,7 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
     private function editDefaultPricingGroupOnDomain(DomainConfig $domainConfig): void
     {
         $defaultPricingGroupOnDomain = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId(
-            $domainConfig->getId()
+            $domainConfig->getId(),
         );
         $pricingGroupData = $this->pricingGroupDataFactory->createFromPricingGroup($defaultPricingGroupOnDomain);
         $pricingGroupData->name = t('Ordinary customer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale());
@@ -93,7 +93,7 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
         $this->addReferenceForDomain(
             self::PRICING_GROUP_ORDINARY,
             $defaultPricingGroupOnDomain,
-            $domainConfig->getId()
+            $domainConfig->getId(),
         );
     }
 }

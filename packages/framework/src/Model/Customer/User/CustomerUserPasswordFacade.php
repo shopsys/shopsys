@@ -29,7 +29,7 @@ class CustomerUserPasswordFacade
         protected readonly PasswordHasherFactoryInterface $passwordHasherFactory,
         protected readonly ResetPasswordMailFacade $resetPasswordMailFacade,
         protected readonly HashGenerator $hashGenerator,
-        protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
+        protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
     ) {
     }
 

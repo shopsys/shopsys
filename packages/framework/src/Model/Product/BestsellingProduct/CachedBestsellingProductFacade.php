@@ -21,7 +21,7 @@ class CachedBestsellingProductFacade
         protected readonly CacheInterface $cache,
         protected readonly BestsellingProductFacade $bestsellingProductFacade,
         protected readonly ProductRepository $productRepository,
-        protected readonly PricingGroupRepository $pricingGroupRepository
+        protected readonly PricingGroupRepository $pricingGroupRepository,
     ) {
     }
 
@@ -41,16 +41,16 @@ class CachedBestsellingProductFacade
                 $bestsellingProducts = $this->bestsellingProductFacade->getAllOfferedBestsellingProducts(
                     $domainId,
                     $category,
-                    $pricingGroup
+                    $pricingGroup,
                 );
 
                 return array_map(
                     static function (Product $product) {
                         return $product->getId();
                     },
-                    $bestsellingProducts
+                    $bestsellingProducts,
                 );
-            }
+            },
         );
 
         return $this->getSortedProducts($domainId, $pricingGroup, $bestsellingProductIds);

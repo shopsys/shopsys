@@ -195,7 +195,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
      */
     public function setPrice(
         Money $price,
-        int $domainId
+        int $domainId,
     ): void {
         foreach ($this->prices as $transportInputPrice) {
             if ($transportInputPrice->getDomainId() === $domainId) {

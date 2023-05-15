@@ -22,7 +22,7 @@ class UnitController extends AdminBaseController
     public function __construct(
         protected readonly UnitFacade $unitFacade,
         protected readonly UnitInlineEdit $unitInlineEdit,
-        protected readonly ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
+        protected readonly ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
     ) {
     }
 
@@ -55,13 +55,13 @@ class UnitController extends AdminBaseController
                     $message = t(
                         'Unit "%name%" set as default. For deleting existing unit you have to choose new default unit. '
                         . 'Which unit you want to set instead?',
-                        ['%name%' => $unit->getName()]
+                        ['%name%' => $unit->getName()],
                     );
                 } else {
                     $message = t(
                         'For deleting unit "%name%" you have to choose other one to be set everywhere where the existing one is used. '
                         . 'Which unit you want to set instead?',
-                        ['%name%' => $unit->getName()]
+                        ['%name%' => $unit->getName()],
                     );
                 }
 
@@ -69,12 +69,12 @@ class UnitController extends AdminBaseController
                     $message,
                     'admin_unit_delete',
                     $id,
-                    $this->unitFacade->getAllExceptId($id)
+                    $this->unitFacade->getAllExceptId($id),
                 );
             }
             $message = t(
                 'Do you really want to remove unit "%name%" permanently? It is not used anywhere.',
-                ['%name%' => $unit->getName()]
+                ['%name%' => $unit->getName()],
             );
 
             return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_unit_delete', $id);
@@ -103,7 +103,7 @@ class UnitController extends AdminBaseController
                     t('Unit <strong>{{ name }}</strong> deleted'),
                     [
                         'name' => $fullName,
-                    ]
+                    ],
                 );
             } else {
                 $newUnit = $this->unitFacade->getById($newId);
@@ -112,7 +112,7 @@ class UnitController extends AdminBaseController
                     [
                         'name' => $fullName,
                         'newName' => $newUnit->getName(),
-                    ]
+                    ],
                 );
             }
         } catch (UnitNotFoundException $ex) {

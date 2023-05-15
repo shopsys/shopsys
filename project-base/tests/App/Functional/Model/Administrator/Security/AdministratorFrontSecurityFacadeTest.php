@@ -44,12 +44,12 @@ class AdministratorFrontSecurityFacadeTest extends TransactionFunctionalTestCase
         $token = new UsernamePasswordToken(
             $administrator,
             AdministratorFrontSecurityFacade::ADMINISTRATION_CONTEXT,
-            $roles
+            $roles,
         );
 
         $this->requestStack->getSession()->set(
             '_security_' . AdministratorFrontSecurityFacade::ADMINISTRATION_CONTEXT,
-            serialize($token)
+            serialize($token),
         );
 
         $this->administratorActivityFacade->create($administrator, '127.0.0.1');

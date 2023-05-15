@@ -28,7 +28,7 @@ class CreateDatabaseCommand extends Command
      * @param \Doctrine\Persistence\ManagerRegistry $managerRegistry
      */
     public function __construct(
-        ManagerRegistry $managerRegistry
+        ManagerRegistry $managerRegistry,
     ) {
         $this->doctrineRegistry = $managerRegistry;
 
@@ -75,12 +75,12 @@ class CreateDatabaseCommand extends Command
             $databaselessConnection->executeStatement(sprintf(
                 'CREATE DATABASE %s WITH OWNER = %s',
                 $databaselessConnection->quoteIdentifier($databaseName),
-                $databaselessConnection->quoteIdentifier($databaseUser)
+                $databaselessConnection->quoteIdentifier($databaseUser),
             ));
 
             $this->getConnection()->executeStatement(sprintf(
                 'ALTER SCHEMA public OWNER TO %s',
-                $databaselessConnection->quoteIdentifier($databaseUser)
+                $databaselessConnection->quoteIdentifier($databaseUser),
             ));
 
             $symfonyStyleIo->success(sprintf('Database "%s" created', $databaseName));
@@ -125,7 +125,7 @@ class CreateDatabaseCommand extends Command
         } else {
             $symfonyStyleIo->caution(
                 'Your database connection configuration contains superadmin credentials. This is not safe for '
-                    . 'production use. We strongly recommend using non-superuser credentials for security reasons.'
+                    . 'production use. We strongly recommend using non-superuser credentials for security reasons.',
             );
         }
     }

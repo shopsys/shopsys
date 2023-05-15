@@ -16,7 +16,7 @@ class LogoutMutation extends BaseTokenMutation
      */
     public function __construct(
         TokenStorageInterface $tokenStorage,
-        protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
+        protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
     ) {
         parent::__construct($tokenStorage);
     }
@@ -29,7 +29,7 @@ class LogoutMutation extends BaseTokenMutation
         $user = $this->runCheckUserIsLogged();
 
         $this->customerUserRefreshTokenChainFacade->removeCustomerUserRefreshTokenChainsByDeviceId(
-            $user->getDeviceId()
+            $user->getDeviceId(),
         );
 
         return [

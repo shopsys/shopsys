@@ -74,7 +74,7 @@ class ProductDataFixture
         private readonly ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
         private readonly ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         private readonly ProgressBarFactory $progressBarFactory,
-        ProductDataFactoryInterface $productDataFactory
+        ProductDataFactoryInterface $productDataFactory,
     ) {
         $this->productTotalCount = $productTotalCount;
         $this->countImported = 0;
@@ -264,7 +264,7 @@ class ProductDataFixture
         $performanceCategoryIds = $this->getPerformanceCategoryIds();
         $randomPerformanceCategoryIds = $this->faker->randomElements(
             $performanceCategoryIds,
-            $this->faker->numberBetween(1, 4)
+            $this->faker->numberBetween(1, 4),
         );
 
         /** @var \App\Model\Category\Category[] $randomPerformanceCategories */
@@ -284,7 +284,7 @@ class ProductDataFixture
     {
         $allCategoryIds = $this->categoryRepository->getAllIds();
         $firstPerformanceCategory = $this->persistentReferenceFacade->getReference(
-            CategoryDataFixture::FIRST_PERFORMANCE_CATEGORY
+            CategoryDataFixture::FIRST_PERFORMANCE_CATEGORY,
         );
         $firstPerformanceCategoryKey = array_search($firstPerformanceCategory->getId(), $allCategoryIds, true);
 
@@ -299,7 +299,7 @@ class ProductDataFixture
     {
         /** @var \App\Model\Category\Category $firstPerformanceCategory */
         $firstPerformanceCategory = $this->persistentReferenceFacade->getReference(
-            CategoryDataFixture::FIRST_PERFORMANCE_CATEGORY
+            CategoryDataFixture::FIRST_PERFORMANCE_CATEGORY,
         );
 
         return $category->getId() >= $firstPerformanceCategory->getId();

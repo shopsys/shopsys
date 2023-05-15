@@ -43,7 +43,7 @@ class UploadedFileLocatorTest extends TestCase
         $uploadedFileLocator = $this->createUploadedFileLocator();
         $this->assertSame(
             $uploadedFileDir . 'entityName',
-            $uploadedFileLocator->getAbsoluteFilePath('entityName')
+            $uploadedFileLocator->getAbsoluteFilePath('entityName'),
         );
     }
 
@@ -60,7 +60,7 @@ class UploadedFileLocatorTest extends TestCase
         $uploadedFileLocator = $this->createUploadedFileLocator();
         $this->assertSame(
             $uploadedFileDir . 'entityName/dummy.txt',
-            $uploadedFileLocator->getAbsoluteUploadedFileFilepath($uploadedFileMock)
+            $uploadedFileLocator->getAbsoluteUploadedFileFilepath($uploadedFileMock),
         );
     }
 
@@ -76,7 +76,7 @@ class UploadedFileLocatorTest extends TestCase
         $uploadedFileLocator = $this->createUploadedFileLocator();
         $this->assertSame(
             'entityName/dummy.txt',
-            $uploadedFileLocator->getRelativeUploadedFileFilepath($uploadedFileMock)
+            $uploadedFileLocator->getRelativeUploadedFileFilepath($uploadedFileMock),
         );
     }
 

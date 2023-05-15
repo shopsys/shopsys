@@ -20,7 +20,7 @@ class HeurekaProductDataNotLoadedException extends Exception
             '%s of product with ID %d on %s have not been loaded via HeurekaProductDataBatchLoader::loadForProducts().',
             ucfirst($attribute),
             $product->getId(),
-            $domainConfig->getId()
+            $domainConfig->getId(),
         );
 
         parent::__construct($message, 0, $previous);

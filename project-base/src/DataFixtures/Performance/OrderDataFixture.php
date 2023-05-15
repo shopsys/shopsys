@@ -76,7 +76,7 @@ class OrderDataFixture
         private readonly ProductFacade $productFacade,
         private readonly CustomerUserFacade $customerUserFacade,
         private readonly ProgressBarFactory $progressBarFactory,
-        OrderDataFactoryInterface $orderDataFactory
+        OrderDataFactoryInterface $orderDataFactory,
     ) {
         $this->orderTotalCount = $orderTotalCount;
         $this->orderItemCountPerOrder = $orderItemCountPerOrder;
@@ -125,7 +125,7 @@ class OrderDataFixture
             $orderData->transport,
             $orderData->payment,
             $customerUser,
-            null
+            null,
         );
 
         $this->orderFacade->createOrder($orderData, $orderPreview, $customerUser);
@@ -210,7 +210,7 @@ class OrderDataFixture
     {
         /** @var \App\Model\Product\Product $firstPerformanceProduct */
         $firstPerformanceProduct = $this->persistentReferenceFacade->getReference(
-            PerformanceProductDataFixture::FIRST_PERFORMANCE_PRODUCT
+            PerformanceProductDataFixture::FIRST_PERFORMANCE_PRODUCT,
         );
 
         $qb = $this->em->createQueryBuilder()
@@ -237,7 +237,7 @@ class OrderDataFixture
     {
         /** @var \App\Model\Customer\User\CustomerUser $firstPerformanceUser */
         $firstPerformanceUser = $this->persistentReferenceFacade->getReference(
-            PerformanceUserDataFixture::FIRST_PERFORMANCE_USER
+            PerformanceUserDataFixture::FIRST_PERFORMANCE_USER,
         );
 
         $qb = $this->em->createQueryBuilder()

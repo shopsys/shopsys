@@ -17,7 +17,7 @@ class ElasticsearchMoreThanOneCurrentIndexException extends RuntimeException imp
     {
         $message = sprintf(
             'There is more than one index aliased "%s". Please delete all non current ones.',
-            $aliasName
+            $aliasName,
         );
 
         parent::__construct($message, 0, $previous);

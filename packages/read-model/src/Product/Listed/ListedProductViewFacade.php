@@ -31,7 +31,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly TopProductFacade $topProductFacade,
         protected readonly ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
-        protected readonly ListedProductViewFactory $listedProductViewFactory
+        protected readonly ListedProductViewFactory $listedProductViewFactory,
     ) {
     }
 
@@ -43,7 +43,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
     {
         $topProducts = $this->topProductFacade->getAllOfferedProducts(
             $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
 
         $topProducts = array_slice($topProducts, 0, $limit);
@@ -58,7 +58,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
     {
         $topProducts = $this->topProductFacade->getAllOfferedProducts(
             $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
 
         return $this->listedProductViewFactory->createFromProducts($topProducts);
@@ -77,7 +77,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
             $product,
             $this->domain->getId(),
             $this->currentCustomerUser->getPricingGroup(),
-            $limit
+            $limit,
         );
 
         return $this->listedProductViewFactory->createFromProducts($accessories);
@@ -95,7 +95,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
             $product,
             $this->domain->getId(),
             $this->currentCustomerUser->getPricingGroup(),
-            null
+            null,
         );
 
         return $this->listedProductViewFactory->createFromProducts($accessories);
@@ -116,7 +116,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
             $orderingModeId,
             $page,
             $limit,
-            $categoryId
+            $categoryId,
         );
 
         return $this->createPaginationResultWithData($paginationResult);
@@ -137,7 +137,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
             $filterData,
             $orderingModeId,
             $page,
-            $limit
+            $limit,
         );
 
         return $this->createPaginationResultWithData($paginationResult);
@@ -156,7 +156,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
             $orderingModeId,
             $page,
             $limit,
-            $brandId
+            $brandId,
         );
 
         return $this->createPaginationResultWithData($paginationResult);
@@ -172,7 +172,7 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
             $paginationResult->getPage(),
             $paginationResult->getPageSize(),
             $paginationResult->getTotalCount(),
-            $this->listedProductViewFactory->createFromProducts($paginationResult->getResults())
+            $this->listedProductViewFactory->createFromProducts($paginationResult->getResults()),
         );
     }
 }

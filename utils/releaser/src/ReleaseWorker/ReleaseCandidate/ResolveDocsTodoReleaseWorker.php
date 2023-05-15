@@ -53,7 +53,7 @@ final class ResolveDocsTodoReleaseWorker extends AbstractShopsysReleaseWorker
                 'File "%s" has %d todo%s to resolve. Fix them manually.',
                 $fileInfo->getPathname(),
                 count($todoFound),
-                count($todoFound) > 1 ? 's' : ''
+                count($todoFound) > 1 ? 's' : '',
             ));
         }
 
@@ -63,8 +63,8 @@ final class ResolveDocsTodoReleaseWorker extends AbstractShopsysReleaseWorker
             $this->confirm(
                 sprintf(
                     'Confirm all todos in .md files are resolved and the changes are committed (you can use "documentation is now updated for %s release" commit message)',
-                    $version->getVersionString()
-                )
+                    $version->getVersionString(),
+                ),
             );
         }
     }

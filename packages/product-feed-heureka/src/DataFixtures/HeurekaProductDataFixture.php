@@ -23,7 +23,7 @@ class HeurekaProductDataFixture implements PluginDataFixtureInterface
      */
     public function __construct(
         private readonly HeurekaProductDomainFacade $heurekaProductDomainFacade,
-        private readonly HeurekaProductDomainDataFactoryInterface $heurekaProductDomainDataFactory
+        private readonly HeurekaProductDomainDataFactoryInterface $heurekaProductDomainDataFactory,
     ) {
     }
 
@@ -35,7 +35,7 @@ class HeurekaProductDataFixture implements PluginDataFixtureInterface
 
         $this->heurekaProductDomainFacade->saveHeurekaProductDomain(
             static::PRODUCT_ID_FIRST,
-            $heurekaProductDomainData
+            $heurekaProductDomainData,
         );
 
         $heurekaProductDomainData = $this->heurekaProductDomainDataFactory->create();
@@ -44,7 +44,7 @@ class HeurekaProductDataFixture implements PluginDataFixtureInterface
 
         $this->heurekaProductDomainFacade->saveHeurekaProductDomain(
             static::PRODUCT_ID_FIRST,
-            $heurekaProductDomainData
+            $heurekaProductDomainData,
         );
 
         $heurekaProductDomainData = $this->heurekaProductDomainDataFactory->create();
@@ -53,7 +53,7 @@ class HeurekaProductDataFixture implements PluginDataFixtureInterface
 
         $this->heurekaProductDomainFacade->saveHeurekaProductDomain(
             static::PRODUCT_ID_SECOND,
-            $heurekaProductDomainData
+            $heurekaProductDomainData,
         );
 
         $heurekaProductDomainData = $this->heurekaProductDomainDataFactory->create();
@@ -62,7 +62,7 @@ class HeurekaProductDataFixture implements PluginDataFixtureInterface
 
         $this->heurekaProductDomainFacade->saveHeurekaProductDomain(
             static::PRODUCT_ID_SECOND,
-            $heurekaProductDomainData
+            $heurekaProductDomainData,
         );
 
         $heurekaProductDomainData = $this->heurekaProductDomainDataFactory->create();
@@ -71,7 +71,7 @@ class HeurekaProductDataFixture implements PluginDataFixtureInterface
 
         $this->heurekaProductDomainFacade->saveHeurekaProductDomain(
             static::PRODUCT_ID_THIRD,
-            $heurekaProductDomainData
+            $heurekaProductDomainData,
         );
 
         $heurekaProductDomainData = $this->heurekaProductDomainDataFactory->create();
@@ -80,7 +80,7 @@ class HeurekaProductDataFixture implements PluginDataFixtureInterface
 
         $this->heurekaProductDomainFacade->saveHeurekaProductDomain(
             static::PRODUCT_ID_THIRD,
-            $heurekaProductDomainData
+            $heurekaProductDomainData,
         );
 
         $heurekaProductDomainData = $this->heurekaProductDomainDataFactory->create();
@@ -89,7 +89,7 @@ class HeurekaProductDataFixture implements PluginDataFixtureInterface
 
         $this->heurekaProductDomainFacade->saveHeurekaProductDomain(
             static::PRODUCT_ID_FOURTH,
-            $heurekaProductDomainData
+            $heurekaProductDomainData,
         );
 
         $heurekaProductDomainData = $this->heurekaProductDomainDataFactory->create();
@@ -98,7 +98,7 @@ class HeurekaProductDataFixture implements PluginDataFixtureInterface
 
         $this->heurekaProductDomainFacade->saveHeurekaProductDomain(
             static::PRODUCT_ID_FOURTH,
-            $heurekaProductDomainData
+            $heurekaProductDomainData,
         );
 
         $heurekaProductDomainData = $this->heurekaProductDomainDataFactory->create();
@@ -107,7 +107,7 @@ class HeurekaProductDataFixture implements PluginDataFixtureInterface
 
         $this->heurekaProductDomainFacade->saveHeurekaProductDomain(
             static::PRODUCT_ID_FIFTH,
-            $heurekaProductDomainData
+            $heurekaProductDomainData,
         );
 
         $heurekaProductDomainData = $this->heurekaProductDomainDataFactory->create();
@@ -116,7 +116,7 @@ class HeurekaProductDataFixture implements PluginDataFixtureInterface
 
         $this->heurekaProductDomainFacade->saveHeurekaProductDomain(
             static::PRODUCT_ID_FIFTH,
-            $heurekaProductDomainData
+            $heurekaProductDomainData,
         );
     }
 }

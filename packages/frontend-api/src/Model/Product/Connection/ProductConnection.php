@@ -25,7 +25,7 @@ class ProductConnection extends Connection
         array $edges,
         ?PageInfoInterface $pageInfo,
         int $totalCount,
-        callable $productFilterOptionsClosure
+        callable $productFilterOptionsClosure,
     ) {
         parent::__construct($edges, $pageInfo);
 

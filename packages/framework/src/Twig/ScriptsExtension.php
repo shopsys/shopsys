@@ -15,7 +15,7 @@ class ScriptsExtension extends AbstractExtension
      * @param \Shopsys\FrameworkBundle\Model\Script\ScriptFacade $scriptFacade
      */
     public function __construct(
-        protected readonly ScriptFacade $scriptFacade
+        protected readonly ScriptFacade $scriptFacade,
     ) {
     }
 

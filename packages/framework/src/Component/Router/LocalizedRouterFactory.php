@@ -27,7 +27,7 @@ class LocalizedRouterFactory
     public function __construct(
         $localeRoutersResourcesFilepathMask,
         protected readonly ContainerInterface $container,
-        protected readonly string $cacheDir
+        protected readonly string $cacheDir,
     ) {
         $this->localeRoutersResourcesFilepathMask = $localeRoutersResourcesFilepathMask;
         $this->routersByLocaleAndHost = [];
@@ -54,7 +54,7 @@ class LocalizedRouterFactory
                 $this->container,
                 $this->getLocaleRouterResourceByLocale($locale),
                 $this->getRouterOptions($locale),
-                $context
+                $context,
             );
         }
 

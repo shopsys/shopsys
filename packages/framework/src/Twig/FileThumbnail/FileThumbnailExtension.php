@@ -48,7 +48,7 @@ class FileThumbnailExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'getFileThumbnailInfoByTemporaryFilename',
-                [$this, 'getFileThumbnailInfoByTemporaryFilename']
+                [$this, 'getFileThumbnailInfoByTemporaryFilename'],
             ),
         ];
     }

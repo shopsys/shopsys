@@ -98,7 +98,7 @@ class Grid
         protected readonly RequestStack $requestStack,
         protected readonly RouterInterface $router,
         protected readonly RouteCsrfProtector $routeCsrfProtector,
-        protected readonly Environment $twig
+        protected readonly Environment $twig,
     ) {
         if ($id === '') {
             $message = 'Grid id cannot be empty.';
@@ -131,7 +131,7 @@ class Grid
     {
         if (array_key_exists($id, $this->columnsById)) {
             throw new DuplicateColumnIdException(
-                'Duplicate column id "' . $id . '" in grid "' . $this->id . '"'
+                'Duplicate column id "' . $id . '" in grid "' . $this->id . '"',
             );
         }
         $column = new Column($id, $sourceColumnName, $title, $sortable);
@@ -153,7 +153,7 @@ class Grid
         $name,
         $route,
         array $bindingRouteParams = [],
-        array $additionalRouteParams = []
+        array $additionalRouteParams = [],
     ) {
         $actionColumn = new ActionColumn(
             $this->router,
@@ -162,7 +162,7 @@ class Grid
             $name,
             $route,
             $bindingRouteParams,
-            $additionalRouteParams
+            $additionalRouteParams,
         );
         $this->actionColumns[] = $actionColumn;
 
@@ -182,7 +182,7 @@ class Grid
             t('Edit'),
             $route,
             $bindingRouteParams,
-            $additionalRouteParams
+            $additionalRouteParams,
         );
     }
 
@@ -199,7 +199,7 @@ class Grid
             t('Delete'),
             $route,
             $bindingRouteParams,
-            $additionalRouteParams
+            $additionalRouteParams,
         );
     }
 
@@ -294,7 +294,7 @@ class Grid
             $this->router,
             $this->twig,
             $this->viewTheme,
-            $this->viewTemplateParameters
+            $this->viewTemplateParameters,
         );
     }
 
@@ -588,7 +588,7 @@ class Grid
     {
         $gridParameters = array_replace_recursive(
             $this->getGridParameters($removeParameters),
-            (array)$parameters
+            (array)$parameters,
         );
 
         return [self::GET_PARAMETER => [$this->getId() => $gridParameters]];
@@ -604,7 +604,7 @@ class Grid
         return array_replace_recursive(
             $this->requestStack->getMainRequest()->query->all(),
             $this->requestStack->getMainRequest()->attributes->get('_route_params'),
-            $this->getUrlGridParameters($parameters, $removeParameters)
+            $this->getUrlGridParameters($parameters, $removeParameters),
         );
     }
 
@@ -629,7 +629,7 @@ class Grid
             $this->enablePaging ? $this->limit : null,
             $this->page,
             $orderSourceColumnName,
-            $orderDirection
+            $orderDirection,
         );
 
         $this->rows = $this->paginationResults->getResults();

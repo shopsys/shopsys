@@ -22,7 +22,7 @@ class MoneyFormatterHelper
             (float)$money->getAmount(),
             static::MAX_FRACTION_DIGITS,
             static::DECIMAL_POINT,
-            static::THOUSANDS_SEPARATOR
+            static::THOUSANDS_SEPARATOR,
         );
     }
 }

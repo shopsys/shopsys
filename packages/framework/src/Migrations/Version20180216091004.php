@@ -33,7 +33,7 @@ class Version20180216091004 extends AbstractMigration
                         'email' => $newsletterSubscriber['email'],
                         'created_at' => $newsletterSubscriber['created_at'],
                         'domainId' => $domainId,
-                    ]
+                    ],
                 );
             }
         }

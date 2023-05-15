@@ -19,7 +19,7 @@ class ProductVisibilityExtension extends AbstractExtension
     public function __construct(
         protected readonly ProductVisibilityRepository $productVisibilityRepository,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -32,7 +32,7 @@ class ProductVisibilityExtension extends AbstractExtension
             new TwigFunction('isVisibleForDefaultPricingGroup', [$this, 'isVisibleForDefaultPricingGroupOnDomain']),
             new TwigFunction(
                 'isVisibleForDefaultPricingGroupOnEachDomain',
-                [$this, 'isVisibleForDefaultPricingGroupOnEachDomain']
+                [$this, 'isVisibleForDefaultPricingGroupOnEachDomain'],
             ),
         ];
     }
@@ -56,7 +56,7 @@ class ProductVisibilityExtension extends AbstractExtension
         $productVisibility = $this->productVisibilityRepository->getProductVisibility(
             $product,
             $pricingGroup,
-            $domainId
+            $domainId,
         );
 
         return $productVisibility->isVisible();

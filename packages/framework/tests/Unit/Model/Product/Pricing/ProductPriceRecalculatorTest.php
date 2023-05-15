@@ -20,13 +20,13 @@ class ProductPriceRecalculatorTest extends TestCase
     public function testRunImmediatelyRecalculations()
     {
         $productMock = $this->getMockBuilder(Product::class)->setMethods(
-            null
+            null,
         )->disableOriginalConstructor()->getMock();
 
         $this->setValueOfProtectedProperty($productMock, 'variantType', Product::VARIANT_TYPE_NONE);
 
         $pricingGroupMock = $this->getMockBuilder(PricingGroup::class)->setMethods(
-            null
+            null,
         )->disableOriginalConstructor()->getMock();
 
         $this->setValueOfProtectedProperty($pricingGroupMock, 'domainId', Domain::FIRST_DOMAIN_ID);
@@ -50,9 +50,9 @@ class ProductPriceRecalculatorTest extends TestCase
             ->setMethods(['getProductsForImmediateRecalculation'])
             ->getMock();
         $productPriceRecalculationSchedulerMock->expects($this->once())->method(
-            'getProductsForImmediateRecalculation'
+            'getProductsForImmediateRecalculation',
         )->willReturn(
-            [$productMock]
+            [$productMock],
         );
         $pricingGroupFacadeMock = $this->getMockBuilder(PricingGroupFacade::class)
             ->disableOriginalConstructor()
@@ -65,7 +65,7 @@ class ProductPriceRecalculatorTest extends TestCase
             $productPriceCalculationMock,
             $productCalculatedPriceRepositoryMock,
             $productPriceRecalculationSchedulerMock,
-            $pricingGroupFacadeMock
+            $pricingGroupFacadeMock,
         );
 
         $productPriceRecalculator->runImmediateRecalculations();

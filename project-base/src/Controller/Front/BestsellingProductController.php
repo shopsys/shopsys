@@ -20,7 +20,7 @@ class BestsellingProductController extends FrontBaseController
     public function __construct(
         private readonly CachedBestsellingProductFacade $cachedBestsellingProductFacade,
         private readonly Domain $domain,
-        private readonly CurrentCustomerUser $currentCustomerUser
+        private readonly CurrentCustomerUser $currentCustomerUser,
     ) {
     }
 
@@ -32,7 +32,7 @@ class BestsellingProductController extends FrontBaseController
         $bestsellingProducts = $this->cachedBestsellingProductFacade->getAllOfferedBestsellingProducts(
             $this->domain->getId(),
             $category,
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
 
         return $this->render('Front/Content/Product/bestsellingProductsList.html.twig', [

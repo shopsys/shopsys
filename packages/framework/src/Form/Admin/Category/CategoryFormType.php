@@ -45,7 +45,7 @@ class CategoryFormType extends AbstractType
         private readonly Domain $domain,
         private readonly SeoSettingFacade $seoSettingFacade,
         private readonly PluginCrudExtensionFacade $pluginCrudExtensionFacade,
-        private readonly Localization $localization
+        private readonly Localization $localization,
     ) {
     }
 
@@ -86,7 +86,7 @@ class CategoryFormType extends AbstractType
         if ($options['category'] !== null) {
             $parentChoices = $this->categoryFacade->getAllTranslatedWithoutBranch(
                 $options['category'],
-                $this->localization->getAdminLocale()
+                $this->localization->getAdminLocale(),
             );
         } else {
             $parentChoices = $this->categoryFacade->getAllTranslated($this->localization->getAdminLocale());
@@ -113,7 +113,7 @@ class CategoryFormType extends AbstractType
                     'required' => false,
                     'constraints' => [
                         new Constraints\Length(
-                            ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']
+                            ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
                         ),
                     ],
                 ],
@@ -165,7 +165,7 @@ class CategoryFormType extends AbstractType
                 'entry_options' => [
                     'constraints' => [
                         new Constraints\Length(
-                            ['max' => 255, 'maxMessage' => 'Heading (H1) cannot be longer than {{ limit }} characters']
+                            ['max' => 255, 'maxMessage' => 'Heading (H1) cannot be longer than {{ limit }} characters'],
                         ),
                     ],
                 ],

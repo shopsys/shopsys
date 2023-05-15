@@ -18,7 +18,7 @@ class PricingGroupSettingFacade
         protected readonly PricingGroupRepository $pricingGroupRepository,
         protected readonly Domain $domain,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
-        protected readonly Setting $setting
+        protected readonly Setting $setting,
     ) {
     }
 
@@ -67,7 +67,7 @@ class PricingGroupSettingFacade
         $this->setting->setForDomain(
             Setting::DEFAULT_PRICING_GROUP,
             $pricingGroup->getId(),
-            $this->adminDomainTabsFacade->getSelectedDomainId()
+            $this->adminDomainTabsFacade->getSelectedDomainId(),
         );
     }
 

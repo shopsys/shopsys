@@ -22,7 +22,7 @@ class DomainExtension extends AbstractExtension
         $domainImagesUrlPrefix,
         protected readonly Packages $assetPackages,
         protected readonly Domain $domain,
-        protected readonly DomainFacade $domainFacade
+        protected readonly DomainFacade $domainFacade,
     ) {
         $this->domainImagesUrlPrefix = $domainImagesUrlPrefix;
     }

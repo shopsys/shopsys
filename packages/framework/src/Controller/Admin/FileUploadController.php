@@ -18,7 +18,7 @@ class FileUploadController extends AdminBaseController
      */
     public function __construct(
         protected readonly FileUpload $fileUpload,
-        protected readonly FileThumbnailExtension $fileThumbnailExtension
+        protected readonly FileThumbnailExtension $fileThumbnailExtension,
     ) {
     }
 
@@ -41,7 +41,7 @@ class FileUploadController extends AdminBaseController
             try {
                 $temporaryFilename = $this->fileUpload->upload($file);
                 $fileThumbnailInfo = $this->fileThumbnailExtension->getFileThumbnailInfoByTemporaryFilename(
-                    $temporaryFilename
+                    $temporaryFilename,
                 );
 
                 $actionResult = [

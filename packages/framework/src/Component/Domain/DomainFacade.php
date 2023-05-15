@@ -23,7 +23,7 @@ class DomainFacade
         protected readonly Domain $domain,
         protected readonly DomainIconResizer $domainIconResizer,
         FilesystemOperator $fileSystem,
-        protected readonly FileUpload $fileUpload
+        protected readonly FileUpload $fileUpload,
     ) {
         $this->domainImagesDirectory = $domainImagesDirectory;
         $this->filesystem = $fileSystem;
@@ -47,7 +47,7 @@ class DomainFacade
         $this->domainIconResizer->convertToDomainIconFormatAndSave(
             $domainId,
             $temporaryFilepath,
-            $this->domainImagesDirectory
+            $this->domainImagesDirectory,
         );
     }
 

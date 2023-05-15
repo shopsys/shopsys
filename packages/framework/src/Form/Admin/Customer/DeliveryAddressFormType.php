@@ -152,7 +152,7 @@ class DeliveryAddressFormType extends AbstractType
                             new Constraints\NotBlank(['message' => 'Please choose country']),
                         ],
                         'label' => t('Country'),
-                    ])
+                    ]),
             );
 
         $builder->add($builderDeliveryAddress);

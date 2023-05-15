@@ -25,7 +25,7 @@ class OrderFacade
     public function getCustomerUserOrderLimitedList(
         CustomerUser $customerUser,
         int $limit,
-        int $offset
+        int $offset,
     ): array {
         return $this->orderRepository->getCustomerUserOrderLimitedList($customerUser, $limit, $offset);
     }

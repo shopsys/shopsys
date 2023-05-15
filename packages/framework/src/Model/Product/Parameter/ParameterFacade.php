@@ -19,7 +19,7 @@ class ParameterFacade
         protected readonly EntityManagerInterface $em,
         protected readonly ParameterRepository $parameterRepository,
         protected readonly ParameterFactoryInterface $parameterFactory,
-        protected readonly EventDispatcherInterface $eventDispatcher
+        protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }
 

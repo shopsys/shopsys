@@ -45,7 +45,7 @@ final class ForbiddenPrivateVisibilityFixer implements ConfigurableFixerInterfac
             new FixerOption(
                 self::OPTION_ANALYZED_NAMESPACE,
                 'Define analyzed namespace.',
-            )
+            ),
         );
     }
 
@@ -62,7 +62,7 @@ final class ForbiddenPrivateVisibilityFixer implements ConfigurableFixerInterfac
         if (!is_array($configuration[self::OPTION_ANALYZED_NAMESPACE])) {
             throw new InvalidFixerConfigurationException(
                 $this->getName(),
-                'Namespace configuration has to be an array'
+                'Namespace configuration has to be an array',
             );
         }
 
@@ -83,7 +83,7 @@ namespace Some\Namespace;
 class SomeClass
 {
 private $property;
-}'
+}',
                 ),
                 new CodeSample(
                     '<?php
@@ -94,9 +94,9 @@ private function method()
 {
     ...
 }
-}'
+}',
                 ),
-            ]
+            ],
         );
     }
 

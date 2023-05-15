@@ -15,7 +15,7 @@ class DatabaseSearching
         $string = str_replace(
             ['%', '_', '*', '?'],
             ['\%', '\_', '%', '_'],
-            $string
+            $string,
         );
 
         return $string;

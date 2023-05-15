@@ -36,7 +36,7 @@ class PriceQuery extends AbstractQuery
         protected readonly Domain $domain,
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly TransportPriceCalculation $transportPriceCalculation,
-        protected readonly PriceFacade $priceFacade
+        protected readonly PriceFacade $priceFacade,
     ) {
     }
 
@@ -62,7 +62,7 @@ class PriceQuery extends AbstractQuery
         return $this->paymentPriceCalculation->calculateIndependentPrice(
             $payment,
             $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId()),
-            $this->domain->getId()
+            $this->domain->getId(),
         );
     }
 
@@ -75,7 +75,7 @@ class PriceQuery extends AbstractQuery
         return $this->transportPriceCalculation->calculateIndependentPrice(
             $transport,
             $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId()),
-            $this->domain->getId()
+            $this->domain->getId(),
         );
     }
 }

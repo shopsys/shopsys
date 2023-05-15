@@ -33,7 +33,7 @@ class AdminCheckbox extends AbstractCheckbox
         $script = sprintf(
             '$("%s").next(".css-checkbox__image").addClass("%s")',
             $this->cssSelector,
-            $imageElementClass
+            $imageElementClass,
         );
         $this->tester->executeJS($script);
 

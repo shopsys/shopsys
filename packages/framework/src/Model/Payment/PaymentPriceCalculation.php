@@ -17,7 +17,7 @@ class PaymentPriceCalculation
      */
     public function __construct(
         protected readonly BasePriceCalculation $basePriceCalculation,
-        protected readonly PricingSetting $pricingSetting
+        protected readonly PricingSetting $pricingSetting,
     ) {
     }
 
@@ -32,7 +32,7 @@ class PaymentPriceCalculation
         Payment $payment,
         Currency $currency,
         Price $productsPrice,
-        int $domainId
+        int $domainId,
     ): Price {
         if ($this->isFree($productsPrice, $domainId)) {
             return Price::zero();
@@ -53,7 +53,7 @@ class PaymentPriceCalculation
             $payment->getPrice($domainId)->getPrice(),
             $this->pricingSetting->getInputPriceType(),
             $payment->getPaymentDomain($domainId)->getVat(),
-            $currency
+            $currency,
         );
     }
 
@@ -84,7 +84,7 @@ class PaymentPriceCalculation
         array $payments,
         Currency $currency,
         Price $productsPrice,
-        int $domainId
+        int $domainId,
     ): array {
         $paymentsPricesByPaymentId = [];
 
@@ -93,7 +93,7 @@ class PaymentPriceCalculation
                 $payment,
                 $currency,
                 $productsPrice,
-                $domainId
+                $domainId,
             );
         }
 

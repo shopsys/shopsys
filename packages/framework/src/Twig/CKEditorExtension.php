@@ -17,7 +17,7 @@ class CKEditorExtension extends AbstractExtension
      */
     public function __construct(
         protected readonly CKEditorConfigurationInterface $configuration,
-        protected readonly BaseCKEditorExtension $ckEditorExtension
+        protected readonly BaseCKEditorExtension $ckEditorExtension,
     ) {
     }
 
@@ -42,7 +42,7 @@ class CKEditorExtension extends AbstractExtension
             </script>
             <script type="text/javascript" src="%s"></script>',
             $this->ckEditorExtension->renderBasePath($this->configuration->getBasePath()),
-            $this->ckEditorExtension->renderJsPath($this->configuration->getJsPath())
+            $this->ckEditorExtension->renderJsPath($this->configuration->getJsPath()),
         );
     }
 }

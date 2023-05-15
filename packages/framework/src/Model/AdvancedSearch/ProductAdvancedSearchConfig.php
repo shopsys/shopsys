@@ -34,7 +34,7 @@ class ProductAdvancedSearchConfig extends AdvancedSearchConfig
         ProductCalculatedSellingDeniedFilter $productCalculatedSellingDeniedFilter,
         ProductAvailabilityFilter $productAvailabilityFilter,
         ProductBrandFilter $productBrandFilter,
-        ProductCategoryFilter $productCategoryFilter
+        ProductCategoryFilter $productCategoryFilter,
     ) {
         parent::__construct();
 

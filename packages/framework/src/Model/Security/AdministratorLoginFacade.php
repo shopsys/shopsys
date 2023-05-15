@@ -31,7 +31,7 @@ class AdministratorLoginFacade
         protected readonly EventDispatcherInterface $eventDispatcher,
         protected readonly AdministratorRepository $administratorRepository,
         protected readonly HashGenerator $hashGenerator,
-        protected readonly EntityManagerInterface $em
+        protected readonly EntityManagerInterface $em,
     ) {
     }
 
@@ -43,11 +43,11 @@ class AdministratorLoginFacade
     {
         $multidomainLoginToken = $this->hashGenerator->generateHash(static::MULTIDOMAIN_LOGIN_TOKEN_LENGTH);
         $multidomainLoginTokenExpirationDateTime = new DateTime(
-            '+' . static::MULTIDOMAIN_LOGIN_TOKEN_VALID_SECONDS . 'seconds'
+            '+' . static::MULTIDOMAIN_LOGIN_TOKEN_VALID_SECONDS . 'seconds',
         );
         $administrator->setMultidomainLoginTokenWithExpiration(
             $multidomainLoginToken,
-            $multidomainLoginTokenExpirationDateTime
+            $multidomainLoginTokenExpirationDateTime,
         );
         $this->em->flush();
 

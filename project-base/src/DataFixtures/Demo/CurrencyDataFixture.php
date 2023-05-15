@@ -22,7 +22,7 @@ class CurrencyDataFixture extends AbstractReferenceFixture
      */
     public function __construct(
         private readonly CurrencyFacade $currencyFacade,
-        private readonly CurrencyDataFactoryInterface $currencyDataFactory
+        private readonly CurrencyDataFactoryInterface $currencyDataFactory,
     ) {
     }
 

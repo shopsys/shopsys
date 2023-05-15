@@ -43,7 +43,7 @@ class CurrentPromoCodeFacadeTest extends TestCase
         $promoCodeFacade = new PromoCodeFacade(
             $emMock,
             $promoCodeRepositoryMock,
-            new PromoCodeFactory(new EntityNameResolver([]))
+            new PromoCodeFactory(new EntityNameResolver([])),
         );
         $currentPromoCodeFacade = new CurrentPromoCodeFacade($promoCodeFacade, $requestStackMock);
 
@@ -76,7 +76,7 @@ class CurrentPromoCodeFacadeTest extends TestCase
         $promoCodeFacade = new PromoCodeFacade(
             $emMock,
             $promoCodeRepositoryMock,
-            new PromoCodeFactory(new EntityNameResolver([]))
+            new PromoCodeFactory(new EntityNameResolver([])),
         );
         $currentPromoCodeFacade = new CurrentPromoCodeFacade($promoCodeFacade, $requestStackMock);
 
@@ -94,7 +94,7 @@ class CurrentPromoCodeFacadeTest extends TestCase
         $sessionMock = $this->getMockForAbstractClass(SessionInterface::class);
         $sessionMock->expects($this->atLeastOnce())->method('set')->with(
             $this->anything(),
-            $this->equalTo($enteredCode)
+            $this->equalTo($enteredCode),
         );
 
         $requestStackMock = $this->getMockBuilder(RequestStack::class)
@@ -113,7 +113,7 @@ class CurrentPromoCodeFacadeTest extends TestCase
         $promoCodeFacade = new PromoCodeFacade(
             $emMock,
             $promoCodeRepositoryMock,
-            new PromoCodeFactory(new EntityNameResolver([]))
+            new PromoCodeFactory(new EntityNameResolver([])),
         );
         $currentPromoCodeFacade = new CurrentPromoCodeFacade($promoCodeFacade, $requestStackMock);
         $currentPromoCodeFacade->setEnteredPromoCode($enteredCode);
@@ -142,7 +142,7 @@ class CurrentPromoCodeFacadeTest extends TestCase
         $promoCodeFacade = new PromoCodeFacade(
             $emMock,
             $promoCodeRepositoryMock,
-            new PromoCodeFactory(new EntityNameResolver([]))
+            new PromoCodeFactory(new EntityNameResolver([])),
         );
         $currentPromoCodeFacade = new CurrentPromoCodeFacade($promoCodeFacade, $requestStackMock);
         $this->expectException(InvalidPromoCodeException::class);

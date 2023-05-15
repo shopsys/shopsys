@@ -20,7 +20,7 @@ class ResetPasswordMailFacade
         protected readonly Mailer $mailer,
         protected readonly MailTemplateFacade $mailTemplateFacade,
         protected readonly ResetPasswordMail $resetPasswordMail,
-        protected readonly UploadedFileFacade $uploadedFileFacade
+        protected readonly UploadedFileFacade $uploadedFileFacade,
     ) {
     }
 
@@ -31,7 +31,7 @@ class ResetPasswordMailFacade
     {
         $mailTemplate = $this->mailTemplateFacade->get(
             MailTemplate::RESET_PASSWORD_NAME,
-            $customerUser->getDomainId()
+            $customerUser->getDomainId(),
         );
         $messageData = $this->resetPasswordMail->createMessage($mailTemplate, $customerUser);
         $messageData->attachments = $this->uploadedFileFacade->getUploadedFilesByEntity($mailTemplate);

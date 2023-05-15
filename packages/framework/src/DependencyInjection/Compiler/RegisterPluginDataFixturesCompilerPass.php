@@ -16,7 +16,7 @@ class RegisterPluginDataFixturesCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         $pluginDataFixtureRegistryDefinition = $container->findDefinition(
-            PluginDataFixtureRegistry::class
+            PluginDataFixtureRegistry::class,
         );
         $taggedServiceIds = $container->findTaggedServiceIds('shopsys.data_fixture');
 

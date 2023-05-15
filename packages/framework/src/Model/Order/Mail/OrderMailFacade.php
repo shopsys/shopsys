@@ -20,7 +20,7 @@ class OrderMailFacade
         protected readonly Mailer $mailer,
         protected readonly MailTemplateFacade $mailTemplateFacade,
         protected readonly OrderMail $orderMail,
-        protected readonly UploadedFileFacade $uploadedFileFacade
+        protected readonly UploadedFileFacade $uploadedFileFacade,
     ) {
     }
 

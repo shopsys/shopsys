@@ -35,7 +35,7 @@ class ProductAvailabilityRecalculatorTest extends TestCase
             ->method('calculateAvailability')
             ->willReturn(new Availability(new AvailabilityData()));
         $productAvailabilityRecalculationSchedulerMock = $this->getMockBuilder(
-            ProductAvailabilityRecalculationScheduler::class
+            ProductAvailabilityRecalculationScheduler::class,
         )
             ->disableOriginalConstructor()
             ->getMock();
@@ -48,7 +48,7 @@ class ProductAvailabilityRecalculatorTest extends TestCase
         $productAvailabilityRecalculator = new ProductAvailabilityRecalculator(
             $emMock,
             $productAvailabilityRecalculationSchedulerMock,
-            $productAvailabilityCalculationMock
+            $productAvailabilityCalculationMock,
         );
 
         $productAvailabilityRecalculator->runImmediateRecalculations();
@@ -79,7 +79,7 @@ class ProductAvailabilityRecalculatorTest extends TestCase
             ->setMethods(['flush'])
             ->getMock();
         $productAvailabilityRecalculationSchedulerMock = $this->getMockBuilder(
-            ProductAvailabilityRecalculationScheduler::class
+            ProductAvailabilityRecalculationScheduler::class,
         )
             ->disableOriginalConstructor()
             ->setMethods(['getProductsForImmediateRecalculation'])
@@ -100,7 +100,7 @@ class ProductAvailabilityRecalculatorTest extends TestCase
         $productAvailabilityRecalculator = new ProductAvailabilityRecalculator(
             $emMock,
             $productAvailabilityRecalculationSchedulerMock,
-            $productAvailabilityCalculationMock
+            $productAvailabilityCalculationMock,
         );
 
         $productAvailabilityRecalculator->runImmediateRecalculations();

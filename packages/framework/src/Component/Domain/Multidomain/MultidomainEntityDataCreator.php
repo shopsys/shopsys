@@ -16,7 +16,7 @@ class MultidomainEntityDataCreator
     public function __construct(
         protected readonly MultidomainEntityClassFinderFacade $multidomainEntityClassFinderFacade,
         protected readonly EntityManagerInterface $em,
-        protected readonly SqlQuoter $sqlQuoter
+        protected readonly SqlQuoter $sqlQuoter,
     ) {
     }
 
@@ -38,7 +38,7 @@ class MultidomainEntityDataCreator
                 $templateDomainId,
                 $newDomainId,
                 $tableName,
-                $columnNamesExcludingDomainId
+                $columnNamesExcludingDomainId,
             );
         }
     }
@@ -66,7 +66,7 @@ class MultidomainEntityDataCreator
             [
                 'newDomainId' => Types::INTEGER,
                 'templateDomainId' => Types::INTEGER,
-            ]
+            ],
         );
     }
 }

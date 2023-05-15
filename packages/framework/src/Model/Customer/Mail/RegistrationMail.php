@@ -41,7 +41,7 @@ class RegistrationMail implements MessageFactoryInterface
             $mailTemplate->getSubject(),
             $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL, $customerUser->getDomainId()),
             $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL_NAME, $customerUser->getDomainId()),
-            $this->getVariablesReplacements($customerUser)
+            $this->getVariablesReplacements($customerUser),
         );
     }
 

@@ -35,7 +35,7 @@ class ImageSitemapFacade
         protected readonly ImageFacade $imageFacade,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ProductRepository $productRepository,
-        protected readonly EntityManagerInterface $entityManager
+        protected readonly EntityManagerInterface $entityManager,
     ) {
     }
 
@@ -49,7 +49,7 @@ class ImageSitemapFacade
             $domainSitemapDumper->dump(
                 $this->sitemapsDir,
                 $domainConfig->getUrl() . $this->sitemapsUrlPrefix . '/',
-                $section
+                $section,
             );
         }
     }

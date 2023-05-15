@@ -23,7 +23,7 @@ class CountryController extends AdminBaseController
         protected readonly CountryGridFactory $countryGridFactory,
         protected readonly CountryDataFactory $countryDataFactory,
         protected readonly CountryFacade $countryFacade,
-        protected readonly BreadcrumbOverrider $breadcrumbOverrider
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider,
     ) {
     }
 
@@ -63,7 +63,7 @@ class CountryController extends AdminBaseController
                     [
                         'name' => $country->getName(),
                         'url' => $this->generateUrl('admin_country_edit', ['id' => $country->getId()]),
-                    ]
+                    ],
                 );
 
             return $this->redirectToRoute('admin_country_list');
@@ -102,7 +102,7 @@ class CountryController extends AdminBaseController
                     [
                         'name' => $country->getName(),
                         'url' => $this->generateUrl('admin_country_edit', ['id' => $country->getId()]),
-                    ]
+                    ],
                 );
 
             return $this->redirectToRoute('admin_country_list');

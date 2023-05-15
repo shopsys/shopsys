@@ -24,7 +24,7 @@ class AvailabilityFacade
         protected readonly Setting $setting,
         protected readonly ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
         protected readonly AvailabilityFactoryInterface $availabilityFactory,
-        protected readonly EventDispatcherInterface $eventDispatcher
+        protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }
 

@@ -43,7 +43,7 @@ class ProductParameterValue
     public function __construct(
         Product $product,
         Parameter $parameter,
-        ParameterValue $value
+        ParameterValue $value,
     ) {
         $this->product = $product;
         $this->parameter = $parameter;

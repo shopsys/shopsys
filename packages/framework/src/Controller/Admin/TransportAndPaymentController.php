@@ -16,7 +16,7 @@ class TransportAndPaymentController extends AdminBaseController
      */
     public function __construct(
         protected readonly Domain $domain,
-        protected readonly PricingSetting $pricingSetting
+        protected readonly PricingSetting $pricingSetting,
     ) {
     }
 
@@ -39,7 +39,7 @@ class TransportAndPaymentController extends AdminBaseController
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
             $freeTransportAndPaymentPriceLimit = $this->pricingSetting->getFreeTransportAndPaymentPriceLimit(
-                $domainId
+                $domainId,
             );
 
             $formData[FreeTransportAndPaymentPriceLimitsFormType::DOMAINS_SUBFORM_NAME][$domainId] = [
@@ -81,7 +81,7 @@ class TransportAndPaymentController extends AdminBaseController
             [
                 'form' => $form->createView(),
                 'domain' => $this->domain,
-            ]
+            ],
         );
     }
 }

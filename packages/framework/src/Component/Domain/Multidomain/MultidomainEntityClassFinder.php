@@ -15,7 +15,7 @@ class MultidomainEntityClassFinder
     public function getMultidomainEntitiesNames(
         array $allClassesMetadata,
         array $ignoredEntitiesNames,
-        array $manualMultidomainEntitiesNames
+        array $manualMultidomainEntitiesNames,
     ) {
         $multidomainEntitiesNames = [];
 

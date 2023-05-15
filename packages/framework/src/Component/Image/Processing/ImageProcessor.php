@@ -32,7 +32,7 @@ class ImageProcessor
      */
     public function __construct(
         protected readonly ImageManager $imageManager,
-        protected readonly FilesystemOperator $filesystem
+        protected readonly FilesystemOperator $filesystem,
     ) {
         $this->supportedImageExtensions = [
             self::EXTENSION_JPEG,
@@ -141,7 +141,7 @@ class ImageProcessor
             $image,
             $additionalSizeConfig->getWidth(),
             $additionalSizeConfig->getHeight(),
-            $sizeConfig->getCrop()
+            $sizeConfig->getCrop(),
         );
     }
 

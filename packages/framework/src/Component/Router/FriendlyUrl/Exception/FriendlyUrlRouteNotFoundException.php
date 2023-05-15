@@ -13,7 +13,7 @@ class FriendlyUrlRouteNotFoundException extends Exception implements FriendlyUrl
     public function __construct($routeName, $routerResourceFilepath)
     {
         parent::__construct(
-            sprintf('Friendly URL route "%s" not found in "%s".', $routeName, realpath($routerResourceFilepath))
+            sprintf('Friendly URL route "%s" not found in "%s".', $routeName, realpath($routerResourceFilepath)),
         );
     }
 }

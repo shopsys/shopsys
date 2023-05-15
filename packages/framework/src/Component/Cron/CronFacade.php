@@ -20,7 +20,7 @@ class CronFacade
         protected readonly Logger $logger,
         protected readonly CronConfig $cronConfig,
         protected readonly CronModuleFacade $cronModuleFacade,
-        protected readonly CronModuleExecutor $cronModuleExecutor
+        protected readonly CronModuleExecutor $cronModuleExecutor,
     ) {
     }
 
@@ -90,7 +90,7 @@ class CronFacade
         try {
             $status = $this->cronModuleExecutor->runModule(
                 $cronModuleService,
-                $this->cronModuleFacade->isModuleSuspended($cronModuleConfig)
+                $this->cronModuleFacade->isModuleSuspended($cronModuleConfig),
             );
         } catch (Throwable $throwable) {
             $this->cronModuleFacade->markCronAsFailed($cronModuleConfig);

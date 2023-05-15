@@ -75,7 +75,7 @@ class PaymentRepository
 
         if ($payment === null) {
             throw new PaymentNotFoundException(
-                'Payment with ID ' . $id . ' not found.'
+                'Payment with ID ' . $id . ' not found.',
             );
         }
 

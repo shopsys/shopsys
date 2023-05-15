@@ -32,17 +32,17 @@ class SettingValueShopInfoDataFixture extends AbstractReferenceFixture
             $this->setting->setForDomain(
                 ShopInfoSettingFacade::SHOP_INFO_PHONE_NUMBER,
                 t('+1-234-567-8989', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                $domainId
+                $domainId,
             );
             $this->setting->setForDomain(
                 ShopInfoSettingFacade::SHOP_INFO_PHONE_HOURS,
                 t('(Mon - Sat: 9 - 10 a.m. to 8 - 10 p.m.)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                $domainId
+                $domainId,
             );
             $this->setting->setForDomain(
                 ShopInfoSettingFacade::SHOP_INFO_EMAIL,
                 t('no-reply@shopsys.com', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                $domainId
+                $domainId,
             );
         }
     }

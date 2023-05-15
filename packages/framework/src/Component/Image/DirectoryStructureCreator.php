@@ -25,7 +25,7 @@ class DirectoryStructureCreator
         $domainImageDir,
         protected readonly ImageConfig $imageConfig,
         protected readonly ImageLocator $imageLocator,
-        protected readonly FilesystemOperator $filesystem
+        protected readonly FilesystemOperator $filesystem,
     ) {
         $this->imageDir = $imageDir;
         $this->domainImageDir = $domainImageDir;
@@ -41,7 +41,7 @@ class DirectoryStructureCreator
             $sizesDirectories = $this->getTargetDirectoriesFromSizeConfigs(
                 $imageEntityConfig->getEntityName(),
                 null,
-                $sizeConfigs
+                $sizeConfigs,
             );
             $directories = array_merge($directories, $sizesDirectories);
 
@@ -50,7 +50,7 @@ class DirectoryStructureCreator
                 $typeSizesDirectories = $this->getTargetDirectoriesFromSizeConfigs(
                     $imageEntityConfig->getEntityName(),
                     $type,
-                    $typeSizes
+                    $typeSizes,
                 );
                 $directories = array_merge($directories, $typeSizesDirectories);
             }

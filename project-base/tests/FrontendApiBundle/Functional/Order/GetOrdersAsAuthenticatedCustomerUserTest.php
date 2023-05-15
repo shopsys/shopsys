@@ -151,7 +151,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         $expectedOrder1 = [
             'status' => t('In Progress', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             'priceWithVat' => AbstractOrderTestCase::getOrderTotalPriceByExpectedOrderItems(
-                $expectedOrderItems1
+                $expectedOrderItems1,
             )->getPriceWithVat()->getAmount(),
         ];
 
@@ -165,7 +165,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         $expectedOrder2 = [
             'status' => t('Done', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             'priceWithVat' => AbstractOrderTestCase::getOrderTotalPriceByExpectedOrderItems(
-                $expectedOrderItems2
+                $expectedOrderItems2,
             )->getPriceWithVat()->getAmount(),
         ];
 
@@ -178,7 +178,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         $expectedOrder3 = [
             'status' => t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             'priceWithVat' => AbstractOrderTestCase::getOrderTotalPriceByExpectedOrderItems(
-                $expectedOrderItems3
+                $expectedOrderItems3,
             )->getPriceWithVat()->getAmount(),
         ];
 
@@ -191,7 +191,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         $expectedOrder4 = [
             'status' => t('Done', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             'priceWithVat' => AbstractOrderTestCase::getOrderTotalPriceByExpectedOrderItems(
-                $expectedOrderItems4
+                $expectedOrderItems4,
             )->getPriceWithVat()->getAmount(),
         ];
 
@@ -206,7 +206,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         $expectedOrder5 = [
             'status' => t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             'priceWithVat' => AbstractOrderTestCase::getOrderTotalPriceByExpectedOrderItems(
-                $expectedOrderItems5
+                $expectedOrderItems5,
             )->getPriceWithVat()->getAmount(),
         ];
 
@@ -223,7 +223,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         $expectedOrder6 = [
             'status' => t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             'priceWithVat' => AbstractOrderTestCase::getOrderTotalPriceByExpectedOrderItems(
-                $expectedOrderItems6
+                $expectedOrderItems6,
             )->getPriceWithVat()->getAmount(),
         ];
 

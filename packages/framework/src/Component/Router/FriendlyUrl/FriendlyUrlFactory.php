@@ -14,7 +14,7 @@ class FriendlyUrlFactory implements FriendlyUrlFactoryInterface
      */
     public function __construct(
         protected readonly Domain $domain,
-        protected readonly EntityNameResolver $entityNameResolver
+        protected readonly EntityNameResolver $entityNameResolver,
     ) {
     }
 
@@ -29,7 +29,7 @@ class FriendlyUrlFactory implements FriendlyUrlFactoryInterface
         string $routeName,
         int $entityId,
         int $domainId,
-        string $slug
+        string $slug,
     ): FriendlyUrl {
         $classData = $this->entityNameResolver->resolve(FriendlyUrl::class);
 
@@ -49,7 +49,7 @@ class FriendlyUrlFactory implements FriendlyUrlFactoryInterface
         int $entityId,
         string $entityName,
         int $domainId,
-        ?int $indexPostfix = null
+        ?int $indexPostfix = null,
     ): ?FriendlyUrl {
         if ($entityName === '') {
             return null;
@@ -70,7 +70,7 @@ class FriendlyUrlFactory implements FriendlyUrlFactoryInterface
     public function createForAllDomains(
         string $routeName,
         int $entityId,
-        array $namesByLocale
+        array $namesByLocale,
     ): array {
         $friendlyUrls = [];
 
@@ -80,7 +80,7 @@ class FriendlyUrlFactory implements FriendlyUrlFactoryInterface
                     $routeName,
                     $entityId,
                     (string)$namesByLocale[$domainConfig->getLocale()],
-                    $domainConfig->getId()
+                    $domainConfig->getId(),
                 );
 
                 if ($friendlyUrl !== null) {

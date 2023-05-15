@@ -29,7 +29,7 @@ class CurrentDomainRouterTest extends TestCase
             ->getMock();
         $routerMock->expects($this->once())->method('generate')->willReturn($generateResult);
         $routerMock->expects($this->once())->method('match')->with($this->equalTo($pathInfo))->willReturn(
-            $matchResult
+            $matchResult,
         );
         $routerMock->expects($this->once())->method('getRouteCollection')->willReturn($getRouteCollectionResult);
 

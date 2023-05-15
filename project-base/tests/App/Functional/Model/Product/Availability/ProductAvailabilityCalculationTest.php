@@ -49,7 +49,7 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
         ?string $availability = null,
         ?string $outOfStockAvailability = null,
         ?string $defaultInStockAvailability = null,
-        ?string $expectedCalculatedAvailability = null
+        ?string $expectedCalculatedAvailability = null,
     ) {
         $productData = $this->productDataFactory->create();
         $productData->usingStock = $usingStock;
@@ -85,7 +85,7 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
             $productSellingDeniedRecalculatorMock,
             $productVisibilityFacadeMock,
             $entityManagerMock,
-            $productRepositoryMock
+            $productRepositoryMock,
         );
 
         $calculatedAvailability = $productAvailabilityCalculation->calculateAvailability($product);
@@ -183,7 +183,7 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
             $productSellingDeniedRecalculatorMock,
             $productVisibilityFacadeMock,
             $entityManagerMock,
-            $productRepositoryMock
+            $productRepositoryMock,
         );
 
         $variant1->setCalculatedAvailability($productAvailabilityCalculation->calculateAvailability($variant1));
@@ -233,7 +233,7 @@ class ProductAvailabilityCalculationTest extends FunctionalTestCase
             $productSellingDeniedRecalculatorMock,
             $productVisibilityFacadeMock,
             $entityManagerMock,
-            $productRepositoryMock
+            $productRepositoryMock,
         );
 
         $variant->setCalculatedAvailability($productAvailabilityCalculation->calculateAvailability($variant));

@@ -20,7 +20,7 @@ class CustomerMailFacade
         protected readonly Mailer $mailer,
         protected readonly MailTemplateFacade $mailTemplateFacade,
         protected readonly RegistrationMail $registrationMail,
-        protected readonly UploadedFileFacade $uploadedFileFacade
+        protected readonly UploadedFileFacade $uploadedFileFacade,
     ) {
     }
 
@@ -31,7 +31,7 @@ class CustomerMailFacade
     {
         $mailTemplate = $this->mailTemplateFacade->get(
             MailTemplate::REGISTRATION_CONFIRM_NAME,
-            $customerUser->getDomainId()
+            $customerUser->getDomainId(),
         );
         $messageData = $this->registrationMail->createMessage($mailTemplate, $customerUser);
         $messageData->attachments = $this->uploadedFileFacade->getUploadedFilesByEntity($mailTemplate);

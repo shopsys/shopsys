@@ -36,7 +36,7 @@ class MigrationsLockTest extends AbstractMigrationLockTestCase
 
         $this->assertGreaterThan(
             $migrationPositionsByClasses[Version20180101000003::class],
-            $migrationPositionsByClasses[Version20180101000001::class]
+            $migrationPositionsByClasses[Version20180101000001::class],
         );
     }
 

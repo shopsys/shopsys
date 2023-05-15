@@ -19,7 +19,7 @@ class UploadedFileLocator
     public function __construct(
         protected readonly string $uploadedFileDir,
         protected readonly FilesystemOperator $filesystem,
-        protected readonly DomainRouterFactory $domainRouterFactory
+        protected readonly DomainRouterFactory $domainRouterFactory,
     ) {
     }
 

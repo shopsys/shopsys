@@ -22,7 +22,7 @@ class AvailabilityController extends AdminBaseController
     public function __construct(
         protected readonly AvailabilityFacade $availabilityFacade,
         protected readonly AvailabilityInlineEdit $availabilityInlineEdit,
-        protected readonly ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
+        protected readonly ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
     ) {
     }
 
@@ -58,7 +58,7 @@ class AvailabilityController extends AdminBaseController
                     t('Availability <strong>{{ name }}</strong> deleted'),
                     [
                         'name' => $fullName,
-                    ]
+                    ],
                 );
             } else {
                 $newAvailability = $this->availabilityFacade->getById($newId);
@@ -67,7 +67,7 @@ class AvailabilityController extends AdminBaseController
                     [
                         'oldName' => $fullName,
                         'newName' => $newAvailability->getName(),
-                    ]
+                    ],
                 );
             }
         } catch (AvailabilityNotFoundException $ex) {
@@ -92,13 +92,13 @@ class AvailabilityController extends AdminBaseController
                     $message = t(
                         'Availability "%name%" set as default. For deleting it you have to choose other one to be set everywhere '
                         . 'where the existing one is used. Which availability you want to set instead?',
-                        ['%name%' => $availability->getName()]
+                        ['%name%' => $availability->getName()],
                     );
                 } else {
                     $message = t(
                         'Because availability "%name%"  is used with other products also, you have to choose a new availability '
                         . 'which will replace the existing one. Which availability you want to set to these products?',
-                        ['%name%' => $availability->getName()]
+                        ['%name%' => $availability->getName()],
                     );
                 }
 
@@ -106,18 +106,18 @@ class AvailabilityController extends AdminBaseController
                     $message,
                     'admin_availability_delete',
                     $id,
-                    $this->availabilityFacade->getAllExceptId($id)
+                    $this->availabilityFacade->getAllExceptId($id),
                 );
             }
             $message = t(
                 'Do you really want to remove availability "%name%" permanently? It is not used anywhere.',
-                ['%name%' => $availability->getName()]
+                ['%name%' => $availability->getName()],
             );
 
             return $this->confirmDeleteResponseFactory->createDeleteResponse(
                 $message,
                 'admin_availability_delete',
-                $id
+                $id,
             );
         } catch (AvailabilityNotFoundException $ex) {
             return new Response(t('Selected availability doesn\'t exist'));
@@ -144,7 +144,7 @@ class AvailabilityController extends AdminBaseController
             $availabilitySettingsFormData = $form->getData();
 
             $this->availabilityFacade->setDefaultInStockAvailability(
-                $availabilitySettingsFormData['defaultInStockAvailability']
+                $availabilitySettingsFormData['defaultInStockAvailability'],
             );
 
             $this->addSuccessFlash(t('Default availability for the stock settings modified'));

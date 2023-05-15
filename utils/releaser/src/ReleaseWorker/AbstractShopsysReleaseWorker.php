@@ -81,7 +81,7 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
         $this->questionHelper->ask(
             new ArgvInput(),
             new ConsoleOutput(),
-            new Question(' <info>' . $message . '</info> [<comment>Enter</comment>]')
+            new Question(' <info>' . $message . '</info> [<comment>Enter</comment>]'),
         );
     }
 
@@ -179,20 +179,20 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 
         $question = new Question(
             'Enter next development version of Shopsys Framework',
-            $suggestedDevelopmentVersion->getOriginalString()
+            $suggestedDevelopmentVersion->getOriginalString(),
         );
         $question->setValidator(static function ($answer) {
             $version = new Version($answer);
 
             if (!str_starts_with($version->getOriginalString(), 'v')) {
                 throw new RuntimeException(
-                    'Development version name must start with \'v\''
+                    'Development version name must start with \'v\'',
                 );
             }
 
             if (!$version->hasPreReleaseSuffix()) {
                 throw new RuntimeException(
-                    'Development version must be suffixed (with \'-dev\', \'-alpha1\', ...)'
+                    'Development version must be suffixed (with \'-dev\', \'-alpha1\', ...)',
                 );
             }
 

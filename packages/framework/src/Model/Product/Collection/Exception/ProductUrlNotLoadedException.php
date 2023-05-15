@@ -18,7 +18,7 @@ class ProductUrlNotLoadedException extends Exception implements ProductCollectio
         $message = sprintf(
             'URL for product with ID %d on %s have not been loaded via ProductUrlsBatchLoader::loadForProducts().',
             $product->getId(),
-            $domainConfig->getName()
+            $domainConfig->getName(),
         );
 
         parent::__construct($message, 0, $previous);

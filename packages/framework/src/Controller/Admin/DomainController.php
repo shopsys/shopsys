@@ -29,7 +29,7 @@ class DomainController extends AdminBaseController
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly GridFactory $gridFactory,
         protected readonly DomainFacade $domainFacade,
-        protected readonly ErrorExtractor $errorExtractor
+        protected readonly ErrorExtractor $errorExtractor,
     ) {
     }
 
@@ -109,7 +109,7 @@ class DomainController extends AdminBaseController
 
                     $this->addSuccessFlashTwig(
                         t('Domain <strong>{{ name }}</strong> modified. Try clearing your browser cache (CTRL+F5) if you can\'t see the new icon.'),
-                        ['name' => $domain->getName()]
+                        ['name' => $domain->getName()],
                     );
                 }
 

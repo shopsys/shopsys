@@ -16,7 +16,7 @@ class BrandFilterChoiceRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      */
     public function __construct(
-        protected readonly ProductRepository $productRepository
+        protected readonly ProductRepository $productRepository,
     ) {
     }
 
@@ -31,7 +31,7 @@ class BrandFilterChoiceRepository
         $productsQueryBuilder = $this->productRepository->getListableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
-            $category
+            $category,
         );
 
         return $this->getBrandsByProductsQueryBuilder($productsQueryBuilder);

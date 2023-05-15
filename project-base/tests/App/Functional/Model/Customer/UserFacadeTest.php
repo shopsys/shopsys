@@ -33,7 +33,7 @@ class UserFacadeTest extends TransactionFunctionalTestCase
     {
         $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
             self::EXISTING_EMAIL_ON_DOMAIN_1,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
         $customerUserUpdateData->customerUserData->email = self::EXISTING_EMAIL_ON_DOMAIN_2;
@@ -48,7 +48,7 @@ class UserFacadeTest extends TransactionFunctionalTestCase
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
         $customerUserUpdateData->customerUserData->pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
         $customerUserUpdateData->customerUserData->domainId = Domain::FIRST_DOMAIN_ID;
         $customerUserUpdateData->customerUserData->email = 'unique-email@shopsys.com';
@@ -65,7 +65,7 @@ class UserFacadeTest extends TransactionFunctionalTestCase
     {
         $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
             self::EXISTING_EMAIL_ON_DOMAIN_1,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
         $customerUserUpdateData->customerUserData->password = 'password';
@@ -78,7 +78,7 @@ class UserFacadeTest extends TransactionFunctionalTestCase
     {
         $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
             self::EXISTING_EMAIL_ON_DOMAIN_1,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
         $customerUserUpdateData->customerUserData->password = 'password';

@@ -16,7 +16,7 @@ class TopCategoryController extends AdminBaseController
      */
     public function __construct(
         protected readonly TopCategoryFacade $topCategoryFacade,
-        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 

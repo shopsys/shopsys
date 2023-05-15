@@ -23,7 +23,7 @@ class OrderStatusFormType extends AbstractType
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please enter order status name in all languages']),
                         new Constraints\Length(
-                            ['max' => 255, 'maxMessage' => 'Status name cannot be longer than {{ limit }} characters']
+                            ['max' => 255, 'maxMessage' => 'Status name cannot be longer than {{ limit }} characters'],
                         ),
                     ],
                 ],

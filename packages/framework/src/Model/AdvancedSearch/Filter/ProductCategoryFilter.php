@@ -24,7 +24,7 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
      */
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
-        Localization $localization
+        Localization $localization,
     ) {
         $this->localization = $localization;
     }

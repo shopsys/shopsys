@@ -22,7 +22,7 @@ class PersonalDataAccessMailFacade
         protected readonly MailTemplateFacade $mailTemplateFacade,
         protected readonly PersonalDataAccessMail $personalDataAccessMail,
         protected readonly PersonalDataExportMail $personalDataExportMail,
-        protected readonly UploadedFileFacade $uploadedFileFacade
+        protected readonly UploadedFileFacade $uploadedFileFacade,
     ) {
     }
 
@@ -34,14 +34,14 @@ class PersonalDataAccessMailFacade
         if ($personalDataAccessRequest->getType() === PersonalDataAccessRequest::TYPE_DISPLAY) {
             $mailTemplate = $this->mailTemplateFacade->get(
                 MailTemplate::PERSONAL_DATA_ACCESS_NAME,
-                $personalDataAccessRequest->getDomainId()
+                $personalDataAccessRequest->getDomainId(),
             );
 
             $messageData = $this->personalDataAccessMail->createMessage($mailTemplate, $personalDataAccessRequest);
         } else {
             $mailTemplate = $this->mailTemplateFacade->get(
                 MailTemplate::PERSONAL_DATA_EXPORT_NAME,
-                $personalDataAccessRequest->getDomainId()
+                $personalDataAccessRequest->getDomainId(),
             );
 
             $messageData = $this->personalDataExportMail->createMessage($mailTemplate, $personalDataAccessRequest);

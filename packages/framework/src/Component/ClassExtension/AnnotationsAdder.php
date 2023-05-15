@@ -33,17 +33,17 @@ class AnnotationsAdder
             $this->fileContentReplacer->replaceInFile(
                 $projectClassFileName,
                 $classKeywordWithName,
-                "/**\n" . $propertyAndMethodAnnotationsLines . " */\n" . $classKeywordWithName
+                "/**\n" . $propertyAndMethodAnnotationsLines . " */\n" . $classKeywordWithName,
             );
         } else {
             $replacedClassDocBlock = $this->replaceInClassDocBlock(
                 $projectClassDocComment,
-                $propertyAndMethodAnnotationsLines
+                $propertyAndMethodAnnotationsLines,
             );
             $this->fileContentReplacer->replaceInFile(
                 $projectClassFileName,
                 $projectClassDocComment,
-                $replacedClassDocBlock
+                $replacedClassDocBlock,
             );
         }
     }

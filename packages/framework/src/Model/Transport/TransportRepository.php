@@ -101,7 +101,7 @@ class TransportRepository
 
         if ($transport === null) {
             throw new TransportNotFoundException(
-                'Transport with ID ' . $id . ' not found.'
+                'Transport with ID ' . $id . ' not found.',
             );
         }
 

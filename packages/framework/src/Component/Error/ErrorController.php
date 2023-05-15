@@ -31,7 +31,7 @@ class ErrorController extends AbstractController
         protected readonly ErrorPagesFacade $errorPagesFacade,
         protected readonly Domain $domain,
         protected readonly string $environment,
-        protected readonly ?string $overwriteDomainUrl = null
+        protected readonly ?string $overwriteDomainUrl = null,
     ) {
     }
 
@@ -52,7 +52,7 @@ class ErrorController extends AbstractController
      */
     public function showAction(
         Request $request,
-        FlattenException $exception
+        FlattenException $exception,
     ): Response {
         if ($this->isUnableToResolveDomainInNotDebug($exception)) {
             return $this->createUnableToResolveDomainResponse($request);
@@ -74,7 +74,7 @@ class ErrorController extends AbstractController
         $errorPageStatusCode = $this->errorPagesFacade->getErrorPageStatusCodeByStatusCode($statusCode);
         $errorPageContent = $this->errorPagesFacade->getErrorPageContentByDomainIdAndStatusCode(
             $this->domain->getId(),
-            $errorPageStatusCode
+            $errorPageStatusCode,
         );
 
         return new Response($errorPageContent, $errorPageStatusCode);
@@ -154,7 +154,7 @@ class ErrorController extends AbstractController
         return sprintf(
             'Front/Content/Error/error%s.%s.twig',
             $format === 'html' ? $code : '',
-            $format
+            $format,
         );
     }
 
@@ -170,7 +170,7 @@ class ErrorController extends AbstractController
             [
                 'status_code' => $code,
                 'status_text' => Response::$statusTexts[$code] ?? '',
-            ]
+            ],
         );
 
         return new Response($content, $code);

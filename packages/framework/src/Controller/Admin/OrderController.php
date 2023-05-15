@@ -44,7 +44,7 @@ class OrderController extends AdminBaseController
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly OrderItemFacade $orderItemFacade,
         protected readonly Domain $domain,
-        protected readonly OrderDataFactoryInterface $orderDataFactory
+        protected readonly OrderDataFactoryInterface $orderDataFactory,
     ) {
     }
 
@@ -71,13 +71,13 @@ class OrderController extends AdminBaseController
                     [
                         'number' => $order->getNumber(),
                         'url' => $this->generateUrl('admin_order_edit', ['id' => $order->getId()]),
-                    ]
+                    ],
                 );
 
                 return $this->redirectToRoute('admin_order_list');
             } catch (CustomerUserNotFoundException $e) {
                 $this->addErrorFlash(
-                    t('Entered customer not found, please check entered data.')
+                    t('Entered customer not found, please check entered data.'),
                 );
             }
         }
@@ -87,7 +87,7 @@ class OrderController extends AdminBaseController
         }
 
         $this->breadcrumbOverrider->overrideLastItem(
-            t('Editing order - Nr. %number%', ['%number%' => $order->getNumber()])
+            t('Editing order - Nr. %number%', ['%number%' => $order->getNumber()]),
         );
 
         return $this->render('@ShopsysFramework/Admin/Content/Order/edit.html.twig', [
@@ -113,7 +113,7 @@ class OrderController extends AdminBaseController
         $form = $this->createForm(OrderFormType::class, $orderData, ['order' => $order]);
 
         $orderItemTotalPricesById = $this->orderItemPriceCalculation->calculateTotalPricesIndexedById(
-            $order->getItems()
+            $order->getItems(),
         );
 
         return $this->render('@ShopsysFramework/Admin/Content/Order/addProduct.html.twig', [
@@ -139,12 +139,12 @@ class OrderController extends AdminBaseController
         $quickSearchForm->handleRequest($request);
 
         $isAdvancedSearchFormSubmitted = $this->advancedSearchOrderFacade->isAdvancedSearchOrderFormSubmitted(
-            $request
+            $request,
         );
 
         if ($isAdvancedSearchFormSubmitted) {
             $queryBuilder = $this->advancedSearchOrderFacade->getQueryBuilderByAdvancedSearchOrderData(
-                $advancedSearchData
+                $advancedSearchData,
             );
         } else {
             $queryBuilder = $this->orderFacade->getOrderListQueryBuilderByQuickSearchData($quickSearchForm->getData());
@@ -155,7 +155,7 @@ class OrderController extends AdminBaseController
             'o.id',
             function ($row) {
                 return $this->addOrderEntityToDataSource($row);
-            }
+            },
         );
 
         $grid = $this->gridFactory->create('orderList', $dataSource);
@@ -188,7 +188,7 @@ class OrderController extends AdminBaseController
             'quickSearchForm' => $quickSearchForm->createView(),
             'advancedSearchForm' => $advancedSearchForm->createView(),
             'isAdvancedSearchFormSubmitted' => $this->advancedSearchOrderFacade->isAdvancedSearchOrderFormSubmitted(
-                $request
+                $request,
             ),
         ]);
     }
@@ -220,7 +220,7 @@ class OrderController extends AdminBaseController
                 t('Order Nr. <strong>{{ number }}</strong> deleted'),
                 [
                     'number' => $orderNumber,
-                ]
+                ],
             );
         } catch (OrderNotFoundException $ex) {
             $this->addErrorFlash(t('Selected order doesn\'t exist.'));
@@ -238,7 +238,7 @@ class OrderController extends AdminBaseController
     {
         $ruleForm = $this->advancedSearchOrderFacade->createRuleForm(
             $request->get('filterName'),
-            $request->get('newIndex')
+            $request->get('newIndex'),
         );
 
         return $this->render('@ShopsysFramework/Admin/Content/Order/AdvancedSearch/ruleForm.html.twig', [

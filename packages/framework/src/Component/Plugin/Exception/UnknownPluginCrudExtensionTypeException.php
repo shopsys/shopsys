@@ -16,7 +16,7 @@ class UnknownPluginCrudExtensionTypeException extends Exception implements Plugi
         $message = sprintf(
             'Trying to register unknown type of plugin CRUD extension "%s". Known types are: %s.',
             $unknownType,
-            implode(', ', $knownTypes)
+            implode(', ', $knownTypes),
         );
 
         parent::__construct($message, 0, $previous);

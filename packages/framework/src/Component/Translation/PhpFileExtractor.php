@@ -102,7 +102,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
 
         return PhpParserNodeHelper::getConcatenatedStringValue(
             $node->args[$messageIdArgumentIndex]->value,
-            $this->file
+            $this->file,
         );
     }
 
@@ -118,7 +118,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         if ($domainArgumentIndex !== null && isset($node->args[$domainArgumentIndex])) {
             return PhpParserNodeHelper::getConcatenatedStringValue(
                 $node->args[$domainArgumentIndex]->value,
-                $this->file
+                $this->file,
             );
         }
 
@@ -172,7 +172,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         if ($docComment !== null) {
             return $this->docParser->parse(
                 $docComment->getText(),
-                'file ' . $this->file . ' near line ' . $node->getLine()
+                'file ' . $this->file . ' near line ' . $node->getLine(),
             );
         }
 

@@ -112,7 +112,7 @@ class ImageConfig
         }
 
         throw new ImageEntityConfigNotFoundException(
-            $entity ? get_class($entity) : null
+            $entity ? get_class($entity) : null,
         );
     }
 

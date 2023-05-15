@@ -37,7 +37,7 @@ class GenerateMigrationCommand extends Command
         protected readonly string $vendorDirectoryPath,
         protected readonly DatabaseSchemaFacade $databaseSchemaFacade,
         protected readonly MigrationsGenerator $migrationsGenerator,
-        DependencyFactory $dependencyFactory
+        DependencyFactory $dependencyFactory,
     ) {
         $this->configuration = $dependencyFactory->getConfiguration();
 
@@ -77,12 +77,12 @@ class GenerateMigrationCommand extends Command
 
         $generatorResult = $this->migrationsGenerator->generate(
             $filteredSchemaDiffSqlCommands,
-            $migrationsLocation
+            $migrationsLocation,
         );
 
         if ($generatorResult->hasError()) {
             $output->writeln(
-                '<error>Migration file "' . realpath($generatorResult->getMigrationFilePath()) . '" could not be saved.</error>'
+                '<error>Migration file "' . realpath($generatorResult->getMigrationFilePath()) . '" could not be saved.</error>',
             );
 
             return static::RETURN_CODE_ERROR;
@@ -92,7 +92,7 @@ class GenerateMigrationCommand extends Command
         $output->writeln(sprintf(
             '<info>Migration file "%s" was saved (%d B).</info>',
             realpath($generatorResult->getMigrationFilePath()),
-            $generatorResult->getWrittenBytes()
+            $generatorResult->getWrittenBytes(),
         ));
 
         return static::RETURN_CODE_OK;
@@ -120,7 +120,7 @@ class GenerateMigrationCommand extends Command
         if (count($availableNamespaces) > 1) {
             $chosenNamespace = $io->choice(
                 'There is more than one namespace available as the destination of generated migrations. Which namespace would you like to choose?',
-                $availableNamespaces
+                $availableNamespaces,
             );
 
             return new MigrationsLocation($migrationDirectoriesIndexedByNamespace[$chosenNamespace], $chosenNamespace);

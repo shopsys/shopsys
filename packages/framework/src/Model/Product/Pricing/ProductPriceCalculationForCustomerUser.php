@@ -20,7 +20,7 @@ class ProductPriceCalculationForCustomerUser
         protected readonly ProductPriceCalculation $productPriceCalculation,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -33,7 +33,7 @@ class ProductPriceCalculationForCustomerUser
         return $this->productPriceCalculation->calculatePrice(
             $product,
             $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
     }
 

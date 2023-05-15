@@ -35,7 +35,7 @@ class MailController extends AdminBaseController
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly MailTemplateGridFactory $mailTemplateGridFactory,
         protected readonly MailTemplateConfiguration $mailTemplateConfiguration,
-        protected readonly MailTemplateDataFactory $mailTemplateDataFactory
+        protected readonly MailTemplateDataFactory $mailTemplateDataFactory,
     ) {
     }
 
@@ -64,7 +64,7 @@ class MailController extends AdminBaseController
         $mailTemplateData = $this->mailTemplateDataFactory->createFromMailTemplate($mailTemplate);
 
         $mailTemplateVariables = $this->mailTemplateConfiguration->getMailTemplateVariablesBySlug(
-            $mailTemplate->getName()
+            $mailTemplate->getName(),
         );
 
         $form = $this->createForm(
@@ -75,7 +75,7 @@ class MailController extends AdminBaseController
                 'entity' => $mailTemplate,
                 'required_subject_variables' => $mailTemplateVariables->getRequiredSubjectVariables(),
                 'required_body_variables' => $mailTemplateVariables->getRequiredBodyVariables(),
-            ]
+            ],
         );
         $form->handleRequest($request);
 
@@ -87,7 +87,7 @@ class MailController extends AdminBaseController
                 [
                     'name' => $mailTemplateVariables->getReadableName(),
                     'url' => $this->generateUrl('admin_mail_edit', ['id' => $mailTemplate->getId()]),
-                ]
+                ],
             );
 
             return $this->redirectToRoute('admin_mail_template');
@@ -98,7 +98,7 @@ class MailController extends AdminBaseController
         }
 
         $this->breadcrumbOverrider->overrideLastItem(
-            t('Editing email template - %name%', ['%name%' => $mailTemplateVariables->getReadableName()])
+            t('Editing email template - %name%', ['%name%' => $mailTemplateVariables->getReadableName()]),
         );
 
         return $this->render('@ShopsysFramework/Admin/Content/Mail/edit.html.twig', [

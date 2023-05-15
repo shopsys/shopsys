@@ -64,7 +64,7 @@ class RoundingTest extends TestCase
         $unroundedPrice,
         $expectedAsPriceWithVat,
         $expectedAsPriceWithoutVat,
-        $expectedAsVatAmount
+        $expectedAsVatAmount,
     ) {
         $rounding = new Rounding();
 
@@ -72,11 +72,11 @@ class RoundingTest extends TestCase
 
         $this->assertThat(
             $rounding->roundPriceWithVatByCurrency($unroundedPrice, $currency),
-            new IsMoneyEqual($expectedAsPriceWithVat)
+            new IsMoneyEqual($expectedAsPriceWithVat),
         );
         $this->assertThat(
             $rounding->roundPriceWithoutVat($unroundedPrice),
-            new IsMoneyEqual($expectedAsPriceWithoutVat)
+            new IsMoneyEqual($expectedAsPriceWithoutVat),
         );
         $this->assertThat($rounding->roundVatAmount($unroundedPrice), new IsMoneyEqual($expectedAsVatAmount));
     }
@@ -141,7 +141,7 @@ class RoundingTest extends TestCase
     public function testRoundingPriceWithVatByCurrency(
         string $roundingType,
         Money $inputPrice,
-        Money $outputPrice
+        Money $outputPrice,
     ) {
         $currency = $this->createCurrency($roundingType);
 

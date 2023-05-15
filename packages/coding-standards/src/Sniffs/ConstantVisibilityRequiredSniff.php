@@ -78,7 +78,7 @@ class ConstantVisibilityRequiredSniff implements Sniff
         $accessModifierStartPosition = $file->findPrevious(
             Tokens::$scopeModifiers,
             $constPosition,
-            $previousTokenEndPosition
+            $previousTokenEndPosition,
         );
 
         return (bool)$accessModifierStartPosition;
@@ -96,7 +96,7 @@ class ConstantVisibilityRequiredSniff implements Sniff
         $phpDocStartPosition = $file->findPrevious(
             T_DOC_COMMENT_OPEN_TAG,
             $constPosition,
-            $previousTokenEndPosition ?: 0
+            $previousTokenEndPosition ?: 0,
         );
 
         if ($phpDocStartPosition === false) {
@@ -124,12 +124,12 @@ class ConstantVisibilityRequiredSniff implements Sniff
                 $possibleAccessModifierPosition = $file->findNext(
                     T_DOC_COMMENT_STRING,
                     $commentTagPosition,
-                    $lastPosition
+                    $lastPosition,
                 );
 
                 if (preg_match(
                     '~(public|protected|private)~',
-                    $tokens[$possibleAccessModifierPosition]['content']
+                    $tokens[$possibleAccessModifierPosition]['content'],
                 ) === 1) {
                     return true;
                 }

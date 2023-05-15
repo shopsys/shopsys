@@ -17,7 +17,7 @@ class ProductManualInputPriceFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ProductManualInputPriceRepository $productManualInputPriceRepository,
-        protected readonly ProductManualInputPriceFactoryInterface $productManualInputPriceFactory
+        protected readonly ProductManualInputPriceFactoryInterface $productManualInputPriceFactory,
     ) {
     }
 
@@ -30,7 +30,7 @@ class ProductManualInputPriceFacade
     {
         $manualInputPrice = $this->productManualInputPriceRepository->findByProductAndPricingGroup(
             $product,
-            $pricingGroup
+            $pricingGroup,
         );
 
         if ($manualInputPrice === null) {

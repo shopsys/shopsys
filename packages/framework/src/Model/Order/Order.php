@@ -285,7 +285,7 @@ class Order
         OrderData $orderData,
         $orderNumber,
         $urlHash,
-        ?CustomerUser $customerUser = null
+        ?CustomerUser $customerUser = null,
     ) {
         $this->fillCommonFields($orderData);
 
@@ -342,7 +342,7 @@ class Order
         $this->setCompanyInfo(
             $orderData->companyName,
             $orderData->companyNumber,
-            $orderData->companyTaxNumber
+            $orderData->companyTaxNumber,
         );
 
         $this->status = $orderData->status;
@@ -692,7 +692,7 @@ class Order
 
         throw new OrderItemNotFoundException(sprintf(
             'Order item id `%d` not found.',
-            $orderItemId
+            $orderItemId,
         ));
     }
 

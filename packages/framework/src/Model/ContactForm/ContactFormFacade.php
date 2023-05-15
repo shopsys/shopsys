@@ -20,7 +20,7 @@ class ContactFormFacade
         protected readonly MailSettingFacade $mailSettingFacade,
         protected readonly Domain $domain,
         protected readonly Mailer $mailer,
-        protected readonly Environment $twig
+        protected readonly Environment $twig,
     ) {
     }
 
@@ -35,7 +35,7 @@ class ContactFormFacade
             $this->getMailBody($contactFormData),
             t('Contact form'),
             $contactFormData->email,
-            $contactFormData->name
+            $contactFormData->name,
         );
         $this->mailer->sendForDomain($messageData, $this->domain->getId());
     }

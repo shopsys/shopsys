@@ -30,7 +30,7 @@ class OrderTest extends TestCase
             1,
             OrderItem::TYPE_PRODUCT,
             null,
-            null
+            null,
         );
         $orderPayment = new OrderItem(
             $order,
@@ -40,7 +40,7 @@ class OrderTest extends TestCase
             1,
             OrderItem::TYPE_PAYMENT,
             null,
-            null
+            null,
         );
         $orderPayment->setPayment($payment);
         $order->addItem($orderProduct);
@@ -67,7 +67,7 @@ class OrderTest extends TestCase
             1,
             OrderItem::TYPE_PRODUCT,
             null,
-            null
+            null,
         );
         $paymentItem = new OrderItem(
             $order,
@@ -77,7 +77,7 @@ class OrderTest extends TestCase
             1,
             OrderItem::TYPE_PAYMENT,
             null,
-            null
+            null,
         );
         $paymentItem->setPayment($payment);
         $order->addItem($productItem);
@@ -170,7 +170,7 @@ class OrderTest extends TestCase
             'Failed asserting that %s is close to %s (delta: %d seconds)',
             $expected->format(DateTime::ISO8601),
             $actual->format(DateTime::ISO8601),
-            $deltaInSeconds
+            $deltaInSeconds,
         );
         $this->fail($message);
     }

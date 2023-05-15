@@ -22,7 +22,7 @@ class OrderStatusController extends AdminBaseController
     public function __construct(
         protected readonly OrderStatusFacade $orderStatusFacade,
         protected readonly OrderStatusInlineEdit $orderStatusInlineEdit,
-        protected readonly ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
+        protected readonly ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
     ) {
     }
 
@@ -57,7 +57,7 @@ class OrderStatusController extends AdminBaseController
                     t('Status of orders <strong>{{ name }}</strong> deleted'),
                     [
                         'name' => $orderStatus->getName(),
-                    ]
+                    ],
                 );
             } else {
                 $newOrderStatus = $this->orderStatusFacade->getById($newId);
@@ -66,7 +66,7 @@ class OrderStatusController extends AdminBaseController
                     [
                         'oldName' => $orderStatus->getName(),
                         'newName' => $newOrderStatus->getName(),
-                    ]
+                    ],
                 );
             }
         } catch (OrderStatusDeletionForbiddenException $e) {
@@ -74,7 +74,7 @@ class OrderStatusController extends AdminBaseController
                 t('Status of orders <strong>{{ name }}</strong> reserved and can\'t be deleted'),
                 [
                     'name' => $e->getOrderStatus()->getName(),
-                ]
+                ],
             );
         } catch (OrderStatusNotFoundException $ex) {
             $this->addErrorFlash(t('Selected order status doesn\'t exist.'));
@@ -97,25 +97,25 @@ class OrderStatusController extends AdminBaseController
                     'Because status "%name%"  is used with other orders also, you have to choose a new status which will replace '
                     . 'the existing one. Which status you want to set to these orders? When changing this, there won\'t be emails '
                     . 'sent to customers.',
-                    ['%name%' => $orderStatus->getName()]
+                    ['%name%' => $orderStatus->getName()],
                 );
 
                 return $this->confirmDeleteResponseFactory->createSetNewAndDeleteResponse(
                     $message,
                     'admin_orderstatus_delete',
                     $id,
-                    $this->orderStatusFacade->getAllExceptId($id)
+                    $this->orderStatusFacade->getAllExceptId($id),
                 );
             }
             $message = t(
                 'Do you really want to remove status of orders "%name%" permanently? It is not used anywhere.',
-                ['%name%' => $orderStatus->getName()]
+                ['%name%' => $orderStatus->getName()],
             );
 
             return $this->confirmDeleteResponseFactory->createDeleteResponse(
                 $message,
                 'admin_orderstatus_delete',
-                $id
+                $id,
             );
         } catch (OrderStatusNotFoundException $ex) {
             return new Response(t('Selected order status doesn\'t exist.'));

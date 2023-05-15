@@ -29,7 +29,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $domain = new Domain($this->getDomainConfigs(), $settingMock);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
-            new FriendlyUrlFactory($domain, new EntityNameResolver([]))
+            new FriendlyUrlFactory($domain, new EntityNameResolver([])),
         );
 
         $attempt = 1;
@@ -39,7 +39,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
             $attempt,
             $friendlyUrl,
             'name',
-            $matchedRouteData
+            $matchedRouteData,
         );
 
         $this->assertTrue($friendlyUrlUniqueResult->isUnique());
@@ -52,7 +52,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $domain = new Domain($this->getDomainConfigs(), $settingMock);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
-            new FriendlyUrlFactory($domain, new EntityNameResolver([]))
+            new FriendlyUrlFactory($domain, new EntityNameResolver([])),
         );
 
         $attempt = 1;
@@ -65,7 +65,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
             $attempt,
             $friendlyUrl,
             'name',
-            $matchedRouteData
+            $matchedRouteData,
         );
 
         $this->assertTrue($friendlyUrlUniqueResult->isUnique());
@@ -78,7 +78,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $domain = new Domain($this->getDomainConfigs(), $settingMock);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
-            new FriendlyUrlFactory($domain, new EntityNameResolver([]))
+            new FriendlyUrlFactory($domain, new EntityNameResolver([])),
         );
 
         $attempt = 3;
@@ -91,7 +91,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
             $attempt,
             $friendlyUrl,
             'name',
-            $matchedRouteData
+            $matchedRouteData,
         );
 
         $friendlyUrlForPersist = $friendlyUrlUniqueResult->getFriendlyUrlForPersist();

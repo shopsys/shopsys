@@ -20,7 +20,7 @@ class BestsellingProductFacade
     public function __construct(
         protected readonly AutomaticBestsellingProductRepository $automaticBestsellingProductRepository,
         protected readonly ManualBestsellingProductRepository $manualBestsellingProductRepository,
-        protected readonly BestsellingProductCombinator $bestsellingProductCombinator
+        protected readonly BestsellingProductCombinator $bestsellingProductCombinator,
     ) {
     }
 
@@ -35,7 +35,7 @@ class BestsellingProductFacade
         $manualBestsellingProducts = $this->manualBestsellingProductRepository->getOfferedByCategory(
             $domainId,
             $category,
-            $pricingGroup
+            $pricingGroup,
         );
 
         $manualProductsIndexedByPosition = [];
@@ -49,13 +49,13 @@ class BestsellingProductFacade
             $category,
             $pricingGroup,
             new DateTime(static::ORDERS_CREATED_AT_LIMIT),
-            static::MAX_RESULTS_ADMIN
+            static::MAX_RESULTS_ADMIN,
         );
 
         return $this->bestsellingProductCombinator->combineManualAndAutomaticProducts(
             $manualProductsIndexedByPosition,
             $automaticProducts,
-            static::MAX_RESULTS_ADMIN
+            static::MAX_RESULTS_ADMIN,
         );
     }
 }

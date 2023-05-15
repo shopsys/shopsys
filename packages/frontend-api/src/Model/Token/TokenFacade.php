@@ -43,7 +43,7 @@ class TokenFacade
     public function __construct(
         protected readonly Domain $domain,
         protected readonly CustomerUserFacade $customerUserFacade,
-        protected readonly Configuration $jwtConfiguration
+        protected readonly Configuration $jwtConfiguration,
     ) {
     }
 
@@ -137,7 +137,7 @@ class TokenFacade
         if (!$validator->validate(
             $token,
             new IssuedBy($this->domain->getUrl()),
-            new PermittedFor($this->domain->getUrl())
+            new PermittedFor($this->domain->getUrl()),
         )
         ) {
             throw new InvalidTokenUserMessageException();
@@ -157,7 +157,7 @@ class TokenFacade
             $customerUser,
             $randomChain,
             $deviceId,
-            DateTime::createFromImmutable($refreshToken->claims()->get('exp'))
+            DateTime::createFromImmutable($refreshToken->claims()->get('exp')),
         );
 
         return $refreshToken->toString();

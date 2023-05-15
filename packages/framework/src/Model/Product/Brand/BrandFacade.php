@@ -28,7 +28,7 @@ class BrandFacade
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly Domain $domain,
         protected readonly BrandFactoryInterface $brandFactory,
-        protected readonly EventDispatcherInterface $eventDispatcher
+        protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }
 
@@ -58,7 +58,7 @@ class BrandFacade
                 'front_brand_detail',
                 $brand->getId(),
                 $brand->getName(),
-                $domain->getId()
+                $domain->getId(),
             );
         }
         $this->em->flush();
@@ -91,7 +91,7 @@ class BrandFacade
                     'front_brand_detail',
                     $brand->getId(),
                     $brand->getName(),
-                    $domain->getId()
+                    $domain->getId(),
                 );
             }
         }

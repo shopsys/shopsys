@@ -25,7 +25,7 @@ class CategoryController extends FrontBaseController
         private readonly CategoryFacade $categoryFacade,
         private readonly CurrentCategoryResolver $currentCategoryResolver,
         private readonly TopCategoryFacade $topCategoryFacade,
-        private readonly CurrentCustomerUser $currentCustomerUser
+        private readonly CurrentCustomerUser $currentCustomerUser,
     ) {
     }
 
@@ -36,17 +36,17 @@ class CategoryController extends FrontBaseController
     {
         $categoriesWithLazyLoadedVisibleChildren = $this->categoryFacade->getCategoriesWithLazyLoadedVisibleChildrenForParent(
             $this->categoryFacade->getRootCategory(),
-            $this->domain->getCurrentDomainConfig()
+            $this->domain->getCurrentDomainConfig(),
         );
         $currentCategory = $this->currentCategoryResolver->findCurrentCategoryByRequest(
             $request,
-            $this->domain->getId()
+            $this->domain->getId(),
         );
 
         if ($currentCategory !== null) {
             $openCategories = $this->categoryFacade->getVisibleCategoriesInPathFromRootOnDomain(
                 $currentCategory,
-                $this->domain->getId()
+                $this->domain->getId(),
             );
         } else {
             $openCategories = [];
@@ -69,7 +69,7 @@ class CategoryController extends FrontBaseController
 
         $categoriesWithLazyLoadedVisibleChildren = $this->categoryFacade->getCategoriesWithLazyLoadedVisibleChildrenForParent(
             $parentCategory,
-            $this->domain->getCurrentDomainConfig()
+            $this->domain->getCurrentDomainConfig(),
         );
 
         return $this->render('Front/Content/Category/panel.html.twig', [

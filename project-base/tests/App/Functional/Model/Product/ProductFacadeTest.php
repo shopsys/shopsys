@@ -56,7 +56,7 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $stockQuantity,
         $outOfStockAction,
         $calculatedHidden,
-        $calculatedSellingDenied
+        $calculatedSellingDenied,
     ) {
         $productData = $this->productDataFactory->create();
         $productData->hidden = $hidden;
@@ -161,7 +161,7 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
 
         $this->assertArrayHasKey(
             $productId,
-            $this->productPriceRecalculationScheduler->getProductsForImmediateRecalculation()
+            $this->productPriceRecalculationScheduler->getProductsForImmediateRecalculation(),
         );
     }
 

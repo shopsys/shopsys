@@ -33,7 +33,7 @@ class FriendlyUrlRepository
             [
                 'domainId' => $domainId,
                 'slug' => $slug,
-            ]
+            ],
         );
     }
 
@@ -95,7 +95,7 @@ class FriendlyUrlRepository
             [
                 'domainId' => 'ASC',
                 'slug' => 'ASC',
-            ]
+            ],
         );
     }
 

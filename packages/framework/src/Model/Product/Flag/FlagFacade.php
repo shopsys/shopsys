@@ -19,7 +19,7 @@ class FlagFacade
         protected readonly EntityManagerInterface $em,
         protected readonly FlagRepository $flagRepository,
         protected readonly FlagFactory $flagFactory,
-        protected readonly EventDispatcherInterface $eventDispatcher
+        protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }
 

@@ -23,7 +23,7 @@ class CurrencyFormType extends AbstractType
      */
     public function __construct(
         private readonly CurrencyRepositoryInterface $intlCurrencyRepository,
-        private readonly Localization $localization
+        private readonly Localization $localization,
     ) {
     }
 
@@ -48,7 +48,7 @@ class CurrencyFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter name']),
                     new Constraints\Length(
-                        ['max' => 50, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']
+                        ['max' => 50, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
                     ),
                 ],
             ])

@@ -28,13 +28,13 @@ class MoneyConvertingDataSourceDecorator implements DataSourceInterface
         $limit = null,
         $page = 1,
         $orderSourceColumnName = null,
-        $orderDirection = self::ORDER_ASC
+        $orderDirection = self::ORDER_ASC,
     ): PaginationResult {
         $paginationResult = $this->innerDataSource->getPaginatedRows(
             $limit,
             $page,
             $orderSourceColumnName,
-            $orderDirection
+            $orderDirection,
         );
 
         $results = $paginationResult->getResults();
@@ -47,7 +47,7 @@ class MoneyConvertingDataSourceDecorator implements DataSourceInterface
             $paginationResult->getPage(),
             $paginationResult->getPageSize(),
             $paginationResult->getTotalCount(),
-            $results
+            $results,
         );
     }
 

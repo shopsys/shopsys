@@ -20,7 +20,7 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
         CurrencyGridFactory $currencyGridFactory,
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly FormFactoryInterface $formFactory,
-        protected readonly CurrencyDataFactoryInterface $currencyDataFactory
+        protected readonly CurrencyDataFactoryInterface $currencyDataFactory,
     ) {
         parent::__construct($currencyGridFactory);
     }

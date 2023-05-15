@@ -30,7 +30,7 @@ class Version20180603135339 extends AbstractMigration
                 'INSERT INTO transport_domains (transport_id, domain_id, enabled) 
                     SELECT id, :domainId, FALSE FROM transports
                     ON CONFLICT DO NOTHING',
-                ['domainId' => $domainId]
+                ['domainId' => $domainId],
             );
         }
     }

@@ -43,7 +43,7 @@ class ProductDetailViewElasticsearchFactory
         protected readonly Domain $domain,
         protected readonly ProductElasticsearchProvider $productElasticsearchProvider,
         protected readonly ListedProductViewFactory $listedProductViewFactory,
-        protected readonly PriceFactory $priceFactory
+        protected readonly PriceFactory $priceFactory,
     ) {
     }
 
@@ -65,7 +65,7 @@ class ProductDetailViewElasticsearchFactory
             $parameterViews,
             $this->brandViewFactory->createFromProductArray($productArray),
             $this->getListedProductViewsByProductIds($productArray['accessories']),
-            $this->getListedProductViewsByProductIds($productArray['variants'])
+            $this->getListedProductViewsByProductIds($productArray['variants']),
         );
     }
 
@@ -84,7 +84,7 @@ class ProductDetailViewElasticsearchFactory
         array $parameterViews,
         BrandView $brandView,
         array $accessories,
-        array $variants
+        array $variants,
     ): ProductDetailView {
         return new ProductDetailView(
             $productArray['id'],
@@ -107,7 +107,7 @@ class ProductDetailViewElasticsearchFactory
             $variants,
             $this->priceFactory->createProductPriceFromArrayByPricingGroup(
                 $productArray['prices'],
-                $this->currentCustomerUser->getPricingGroup()
+                $this->currentCustomerUser->getPricingGroup(),
             ),
             $productArray['main_category_id'],
             $productArray['main_variant_id'],
@@ -151,7 +151,7 @@ class ProductDetailViewElasticsearchFactory
         }
 
         return $this->listedProductViewFactory->createFromProductsArray(
-            $this->productElasticsearchProvider->getSellableProductArrayByIds($productIds)
+            $this->productElasticsearchProvider->getSellableProductArrayByIds($productIds),
         );
     }
 }

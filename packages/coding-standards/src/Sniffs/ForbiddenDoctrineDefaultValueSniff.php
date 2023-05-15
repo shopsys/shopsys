@@ -38,7 +38,7 @@ class ForbiddenDoctrineDefaultValueSniff implements Sniff
                 $file->addError(
                     'Default value of entity properties cannot be used.',
                     $docBlockOpenTagPosition,
-                    self::class
+                    self::class,
                 );
             }
         }
@@ -67,7 +67,7 @@ class ForbiddenDoctrineDefaultValueSniff implements Sniff
             $file,
             [T_DOC_COMMENT_OPEN_TAG],
             $classToken['scope_opener'],
-            $classToken['scope_closer']
+            $classToken['scope_closer'],
         );
     }
 }

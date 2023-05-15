@@ -13,7 +13,7 @@ class RequestToOrderingModeIdConverter
      */
     public function getOrderingModeIdFromRequest(
         Request $request,
-        ProductListOrderingConfig $productListOrderingConfig
+        ProductListOrderingConfig $productListOrderingConfig,
     ) {
         $orderingModeId = $request->cookies->get($productListOrderingConfig->getCookieName());
 

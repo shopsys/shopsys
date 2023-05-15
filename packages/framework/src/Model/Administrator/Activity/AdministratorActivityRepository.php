@@ -48,7 +48,7 @@ class AdministratorActivityRepository
     {
         $currentAdministratorActivity = $this->getLastActivitiesQueryBuilder(
             $administrator,
-            1
+            1,
         )->getQuery()->getSingleResult();
 
         if ($currentAdministratorActivity === null) {

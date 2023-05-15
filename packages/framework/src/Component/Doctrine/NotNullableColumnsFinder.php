@@ -24,7 +24,7 @@ class NotNullableColumnsFinder
             $notNullableColumnNamesIndexedByTableName[$classMetadata->getTableName()] =
                 array_merge(
                     $this->getNotNullableFieldColumnNames($classMetadata),
-                    $this->getNotNullableAssociationColumnNames($classMetadata)
+                    $this->getNotNullableAssociationColumnNames($classMetadata),
                 );
         }
 

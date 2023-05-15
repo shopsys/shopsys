@@ -27,7 +27,7 @@ class CronFilterTest extends TestCase
         $cronFilter = new CronFilter();
         $scheduledCronModuleConfigs = $cronFilter->filterScheduledCronModuleConfigs(
             $cronModuleConfigs,
-            $scheduledCronModuleIds
+            $scheduledCronModuleIds,
         );
 
         $this->assertEquals(
@@ -35,7 +35,7 @@ class CronFilterTest extends TestCase
                 0 => $scheduledCronModuleConfig1,
                 2 => $scheduledCronModuleConfig2,
             ],
-            $scheduledCronModuleConfigs
+            $scheduledCronModuleConfigs,
         );
     }
 }

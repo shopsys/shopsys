@@ -23,7 +23,7 @@ class OrderItemsType extends AbstractType
      */
     public function __construct(
         private readonly TransportFacade $transportFacade,
-        private readonly PaymentFacade $paymentFacade
+        private readonly PaymentFacade $paymentFacade,
     ) {
     }
 
@@ -75,17 +75,17 @@ class OrderItemsType extends AbstractType
         $view->vars['order'] = $order;
         $view->vars['transportPricesWithVatByTransportId'] = $this->transportFacade->getTransportPricesWithVatByCurrencyAndDomainIdIndexedByTransportId(
             $order->getCurrency(),
-            $order->getDomainId()
+            $order->getDomainId(),
         );
         $view->vars['transportVatPercentsByTransportId'] = $this->transportFacade->getTransportVatPercentsByDomainIdIndexedByTransportId(
-            $order->getDomainId()
+            $order->getDomainId(),
         );
         $view->vars['paymentPricesWithVatByPaymentId'] = $this->paymentFacade->getPaymentPricesWithVatByCurrencyAndDomainIdIndexedByPaymentId(
             $order->getCurrency(),
-            $order->getDomainId()
+            $order->getDomainId(),
         );
         $view->vars['paymentVatPercentsByPaymentId'] = $this->paymentFacade->getPaymentVatPercentsByDomainIdIndexedByPaymentId(
-            $order->getDomainId()
+            $order->getDomainId(),
         );
     }
 

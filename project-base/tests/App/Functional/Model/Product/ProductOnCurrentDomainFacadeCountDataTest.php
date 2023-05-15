@@ -68,12 +68,12 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
             $filterConfig = $this->productFilterConfigFactory->createForCategory(
                 $this->domain->getId(),
                 $this->domain->getLocale(),
-                $category
+                $category,
             );
             $countData = $this->productOnCurrentDomainFacade->getProductFilterCountDataInCategory(
                 $category->getId(),
                 $filterConfig,
-                $filterData
+                $filterData,
             );
             $this->assertEquals($expectedCountData, $this->removeEmptyParameters($countData));
         }
@@ -111,12 +111,12 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
             $filterConfig = $this->productFilterConfigFactory->createForSearch(
                 $this->domain->getId(),
                 $this->domain->getLocale(),
-                $searchText
+                $searchText,
             );
             $countData = $this->productOnCurrentDomainFacade->getProductFilterCountDataForSearch(
                 $searchText,
                 $filterConfig,
-                $filterData
+                $filterData,
             );
 
             $this->assertEquals($expectedCountData, $this->removeEmptyParameters($countData));
@@ -383,12 +383,12 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         $filterData->minimalPrice = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
             Money::create(1000),
             $currencyCzk,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
         $filterData->maximalPrice = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
             Money::create(80000),
             $currencyCzk,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         $countData = new ProductFilterCountData();
@@ -512,7 +512,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_NEW_PRODUCT);
         $filterData->parameters[] = $this->createParameterFilterData(
             [$firstDomainLocale => t('Dimensions', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            [[$firstDomainLocale => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]]
+            [[$firstDomainLocale => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]],
         );
         $filterData->parameters[] = $this->createParameterFilterData(
             [$firstDomainLocale => t('Print resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
@@ -520,12 +520,12 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
                 '4800x1200',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $firstDomainLocale
-            )]]
+                $firstDomainLocale,
+            )]],
         );
         $filterData->parameters[] = $this->createParameterFilterData(
             [$firstDomainLocale => t('Weight', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            [[$firstDomainLocale => t('3.5 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]]
+            [[$firstDomainLocale => t('3.5 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]],
         );
 
         $countData = new ProductFilterCountData();
@@ -585,7 +585,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         $filterData = new ProductFilterData();
         $filterData->parameters[] = $this->createParameterFilterData(
             [$firstDomainLocale => t('Dimensions', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            [[$firstDomainLocale => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]]
+            [[$firstDomainLocale => t('449x304x152 mm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]],
         );
         $filterData->parameters[] = $this->createParameterFilterData(
             [$firstDomainLocale => t('Print resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
@@ -593,12 +593,12 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
                 '4800x1200',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $firstDomainLocale
-            )]]
+                $firstDomainLocale,
+            )]],
         );
         $filterData->parameters[] = $this->createParameterFilterData(
             [$firstDomainLocale => t('Weight', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            [[$firstDomainLocale => t('3.5 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]]
+            [[$firstDomainLocale => t('3.5 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]],
         );
 
         $countData = new ProductFilterCountData();
@@ -807,12 +807,12 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         $filterData->minimalPrice = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
             Money::create(5000),
             $currencyCzk,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
         $filterData->maximalPrice = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
             Money::create(50000),
             $currencyCzk,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
         $countData = new ProductFilterCountData();
         $countData->countInStock = 9;
@@ -886,7 +886,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         $filterData->maximalPrice = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
             Money::create(20000),
             $currencyCzk,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         $countData = new ProductFilterCountData();

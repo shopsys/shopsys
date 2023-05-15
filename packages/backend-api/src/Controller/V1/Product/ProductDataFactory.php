@@ -24,7 +24,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
     public function __construct(
         protected readonly BaseProductDataFactoryInterface $productDataFactory,
         protected readonly AvailabilityFacade $availabilityFacade,
-        protected readonly ApiDataSetter $apiDataSetter
+        protected readonly ApiDataSetter $apiDataSetter,
     ) {
     }
 
@@ -75,13 +75,13 @@ class ProductDataFactory implements ProductDataFactoryInterface
             'shortDescription',
             $productApiData,
             $productData,
-            'shortDescriptions'
+            'shortDescriptions',
         );
         $this->apiDataSetter->setMultidomainValueIfExists(
             'longDescription',
             $productApiData,
             $productData,
-            'descriptions'
+            'descriptions',
         );
     }
 }

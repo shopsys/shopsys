@@ -36,7 +36,7 @@ class PricingGroupFacade
         protected readonly ProductCalculatedPriceRepository $productCalculatedPriceRepository,
         protected readonly CustomerUserRepository $customerUserRepository,
         protected readonly PricingGroupFactoryInterface $pricingGroupFactory,
-        protected readonly EventDispatcherInterface $eventDispatcher
+        protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }
 
@@ -64,7 +64,7 @@ class PricingGroupFacade
         $this->productPriceRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
         $this->productVisibilityRepository->createAndRefreshProductVisibilitiesForPricingGroup(
             $pricingGroup,
-            $pricingGroup->getDomainId()
+            $pricingGroup->getDomainId(),
         );
         $this->productCalculatedPriceRepository->createProductCalculatedPricesForPricingGroup($pricingGroup);
 

@@ -55,7 +55,7 @@ class DomainRouterFactoryTest extends TestCase
                     $this->assertSame('example.com', $context->getHost());
 
                     return $friendlyUrlRouterMock;
-                }
+                },
             );
 
         $requestStackMock = $this->createMock(RequestStack::class);
@@ -68,7 +68,7 @@ class DomainRouterFactoryTest extends TestCase
             $domain,
             $requestStackMock,
             $containerMock,
-            __DIR__
+            __DIR__,
         );
 
         $router = $domainRouterFactory->getRouter(Domain::THIRD_DOMAIN_ID);

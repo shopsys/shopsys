@@ -16,7 +16,7 @@ class ZboziProductDomainFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ZboziProductDomainRepository $zboziProductDomainRepository,
-        protected readonly ProductRepository $productRepository
+        protected readonly ProductRepository $productRepository,
     ) {
     }
 
@@ -44,7 +44,7 @@ class ZboziProductDomainFacade
 
         return $this->zboziProductDomainRepository->getZboziProductDomainsByProductsIdsDomainIdIndexedByProductId(
             $productIds,
-            $domain->getId()
+            $domain->getId(),
         );
     }
 
@@ -69,7 +69,7 @@ class ZboziProductDomainFacade
      */
     protected function removeOldZboziProductDomainsForProductId(
         array $existingZboziProductDomains,
-        array $newZboziProductDomainsData
+        array $newZboziProductDomainsData,
     ) {
         $domainsIdsWithNewZboziProductDomains = [];
 
@@ -95,7 +95,7 @@ class ZboziProductDomainFacade
 
         $existingZboziProductDomain = $this->zboziProductDomainRepository->findByProductIdAndDomainId(
             $productId,
-            $zboziProductDomainData->domainId
+            $zboziProductDomainData->domainId,
         );
 
         if ($existingZboziProductDomain !== null) {

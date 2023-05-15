@@ -26,7 +26,7 @@ class Version20170807084807 extends AbstractMigration
         $zboziDataValues = [];
         $productDomainRows = $this->sql(
             'SELECT product_id, domain_id, heureka_cpc, zbozi_cpc, zbozi_cpc_search, show_in_zbozi_feed
-            FROM product_domains'
+            FROM product_domains',
         )->fetchAllAssociative();
 
         foreach ($productDomainRows as $row) {
@@ -39,11 +39,11 @@ class Version20170807084807 extends AbstractMigration
 
         $this->insertPluginDataValues(
             $heurekaDataValues,
-            'Shopsys\\ProductFeed\\HeurekaBundle\\ShopsysProductFeedHeurekaBundle'
+            'Shopsys\\ProductFeed\\HeurekaBundle\\ShopsysProductFeedHeurekaBundle',
         );
         $this->insertPluginDataValues(
             $zboziDataValues,
-            'Shopsys\\ProductFeed\\ZboziBundle\\ShopsysProductFeedZboziBundle'
+            'Shopsys\\ProductFeed\\ZboziBundle\\ShopsysProductFeedZboziBundle',
         );
     }
 
@@ -62,7 +62,7 @@ class Version20170807084807 extends AbstractMigration
                     'context' => 'product',
                     'key' => $key,
                     'jsonValue' => json_encode($value),
-                ]
+                ],
             );
         }
     }

@@ -19,7 +19,7 @@ class GoogleFeedItemFacade
         protected readonly GoogleProductRepository $googleProductRepository,
         protected readonly GoogleFeedItemFactory $feedItemFactory,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
-        protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader
+        protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
     ) {
     }
 
@@ -36,7 +36,7 @@ class GoogleFeedItemFacade
             $domainConfig,
             $pricingGroup,
             $lastSeekId,
-            $maxResults
+            $maxResults,
         );
         $this->productUrlsBatchLoader->loadForProducts($products, $domainConfig);
 

@@ -19,7 +19,7 @@ class GridFactory
         protected readonly RequestStack $requestStack,
         protected readonly RouterInterface $router,
         protected readonly RouteCsrfProtector $routeCsrfProtector,
-        protected readonly Environment $twig
+        protected readonly Environment $twig,
     ) {
     }
 
@@ -36,7 +36,7 @@ class GridFactory
             $this->requestStack,
             $this->router,
             $this->routeCsrfProtector,
-            $this->twig
+            $this->twig,
         );
     }
 }

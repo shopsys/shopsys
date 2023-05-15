@@ -54,7 +54,7 @@ class BasePriceCalculationTest extends TestCase
         $vatPercent,
         Money $basePriceWithoutVat,
         Money $basePriceWithVat,
-        Money $basePriceVatAmount
+        Money $basePriceVatAmount,
     ) {
         $rounding = new Rounding();
         $priceCalculation = new PriceCalculation($rounding);
@@ -75,7 +75,7 @@ class BasePriceCalculationTest extends TestCase
             $inputPrice,
             $inputPriceType,
             $vat,
-            $currency
+            $currency,
         );
 
         $this->assertThat($basePrice->getPriceWithoutVat(), new IsMoneyEqual($basePriceWithoutVat));

@@ -24,7 +24,7 @@ class ValidationRunner
         /** @var \Symfony\Component\Validator\ConstraintViolationList $violations */
         $violations = $validator->validate(
             $apiData,
-            $constraintCollection
+            $constraintCollection,
         );
 
         $errors = [];

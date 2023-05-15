@@ -19,12 +19,12 @@ class Version20180603135346 extends AbstractMigration
         }
 
         $this->sql(
-            'INSERT INTO pricing_groups (id, name, domain_id, coefficient) VALUES (1, \'Ordinary customer\', 1, 1)'
+            'INSERT INTO pricing_groups (id, name, domain_id, coefficient) VALUES (1, \'Ordinary customer\', 1, 1)',
         );
         $this->sql('ALTER SEQUENCE pricing_groups_id_seq RESTART WITH 2');
 
         $defaultPricingGroupId = $this->sql(
-            'SELECT COUNT(*) FROM setting_values WHERE name = \'defaultPricingGroupId\' AND domain_id = 1;'
+            'SELECT COUNT(*) FROM setting_values WHERE name = \'defaultPricingGroupId\' AND domain_id = 1;',
         )->fetchOne();
 
         if ($defaultPricingGroupId > 0) {
@@ -32,7 +32,7 @@ class Version20180603135346 extends AbstractMigration
         }
 
         $this->sql(
-            'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'defaultPricingGroupId\', 1, 1, \'integer\')'
+            'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'defaultPricingGroupId\', 1, 1, \'integer\')',
         );
     }
 

@@ -18,7 +18,7 @@ class NotSupportedTypeNameException extends Exception implements UploadedFileCon
         $message = sprintf(
             'UploadedFile type name "%s" is not supported. For default type name use "%s" as value.',
             $typeName,
-            UploadedFileTypeConfig::DEFAULT_TYPE_NAME
+            UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
         );
 
         parent::__construct($message, 0, $previous);

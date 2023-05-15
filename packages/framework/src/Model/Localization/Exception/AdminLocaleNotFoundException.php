@@ -20,7 +20,7 @@ class AdminLocaleNotFoundException extends RuntimeException implements Localizat
             'You tried to use administration in "%1$s" locale, but you have registered only ["%2$s"].'
             . ' Either register "%1$s" as a locale with some domain or use one of ["%2$s"] as administration locale.',
             $adminLocale,
-            implode('","', $possibleLocales)
+            implode('","', $possibleLocales),
         );
 
         parent::__construct($message, 0, $previous);

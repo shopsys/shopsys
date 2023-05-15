@@ -16,7 +16,7 @@ class ShopInfoController extends AdminBaseController
      */
     public function __construct(
         protected readonly ShopInfoSettingFacade $shopInfoSettingFacade,
-        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 

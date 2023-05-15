@@ -57,7 +57,7 @@ class IndexFacadeTest extends TestCase
             $this->indexRepositoryMock,
             $this->progressBarFactoryMock,
             $this->sqlLoggerFacadeMock,
-            $this->entityManagerMock
+            $this->entityManagerMock,
         );
     }
 
@@ -112,7 +112,7 @@ class IndexFacadeTest extends TestCase
         /** @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex|\PHPUnit\Framework\MockObject\MockObject $indexMock */
         $indexMock = $this->createMock(ProductIndex::class);
         $indexMock->method('getExportDataForIds')->with(Domain::FIRST_DOMAIN_ID, $affectedIds)->willReturn(
-            $exportData
+            $exportData,
         );
         $indexMock->method('getExportBatchSize')->willReturn(100);
 
@@ -131,7 +131,7 @@ class IndexFacadeTest extends TestCase
         } else {
             $this->indexRepositoryMock->expects($this->once())->method('deleteIds')->with(
                 $indexAlias,
-                $expectedIdsToDelete
+                $expectedIdsToDelete,
             );
         }
 

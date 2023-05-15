@@ -37,7 +37,7 @@ class OrderItemFactory implements OrderItemFactoryInterface
         int $quantity,
         ?string $unitName,
         ?string $catnum,
-        ?Product $product = null
+        ?Product $product = null,
     ): OrderItem {
         $classData = $this->entityNameResolver->resolve(OrderItem::class);
 
@@ -49,7 +49,7 @@ class OrderItemFactory implements OrderItemFactoryInterface
             $quantity,
             OrderItem::TYPE_PRODUCT,
             $unitName,
-            $catnum
+            $catnum,
         );
 
         $orderProduct->setProduct($product);
@@ -72,7 +72,7 @@ class OrderItemFactory implements OrderItemFactoryInterface
         Price $price,
         string $vatPercent,
         int $quantity,
-        Payment $payment
+        Payment $payment,
     ): OrderItem {
         $classData = $this->entityNameResolver->resolve(OrderItem::class);
 
@@ -84,7 +84,7 @@ class OrderItemFactory implements OrderItemFactoryInterface
             $quantity,
             OrderItem::TYPE_PAYMENT,
             null,
-            null
+            null,
         );
 
         $orderPayment->setPayment($payment);
@@ -107,7 +107,7 @@ class OrderItemFactory implements OrderItemFactoryInterface
         Price $price,
         string $vatPercent,
         int $quantity,
-        Transport $transport
+        Transport $transport,
     ): OrderItem {
         $classData = $this->entityNameResolver->resolve(OrderItem::class);
 
@@ -119,7 +119,7 @@ class OrderItemFactory implements OrderItemFactoryInterface
             $quantity,
             OrderItem::TYPE_TRANSPORT,
             null,
-            null
+            null,
         );
 
         $orderTransport->setTransport($transport);

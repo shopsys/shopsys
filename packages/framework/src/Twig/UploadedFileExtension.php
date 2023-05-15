@@ -27,7 +27,7 @@ class UploadedFileExtension extends AbstractExtension
         protected readonly Domain $domain,
         protected readonly UploadedFileFacade $uploadedFileFacade,
         protected readonly FileThumbnailExtension $fileThumbnailExtension,
-        protected readonly UploadedFileLocator $uploadedFileLocator
+        protected readonly UploadedFileLocator $uploadedFileLocator,
     ) {
     }
 

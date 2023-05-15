@@ -20,7 +20,7 @@ class Version20161207144725 extends AbstractMigration
             $phoneHours = $this->sql(
                 'SELECT COUNT(*) FROM setting_values WHERE name = \'shopInfoPhoneHours\' AND domain_id = :domainId;
             ',
-                ['domainId' => $domainId]
+                ['domainId' => $domainId],
             )->fetchOne();
 
             if ($phoneHours <= 0) {

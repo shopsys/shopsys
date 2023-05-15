@@ -18,7 +18,7 @@ class ElasticsearchNoAliasException extends ElasticsearchIndexException
         parent::__construct(
             sprintf('Can\'t found any index with alias "%s".', $alias),
             $code,
-            $previous
+            $previous,
         );
     }
 }

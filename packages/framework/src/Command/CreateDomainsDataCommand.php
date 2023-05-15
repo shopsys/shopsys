@@ -30,7 +30,7 @@ class CreateDomainsDataCommand extends Command
         private readonly EntityManagerInterface $em,
         private readonly DomainDataCreator $domainDataCreator,
         private readonly MultidomainEntityClassFinderFacade $multidomainEntityClassFinderFacade,
-        private readonly DbIndexesFacade $dbIndexesFacade
+        private readonly DbIndexesFacade $dbIndexesFacade,
     ) {
         parent::__construct();
     }

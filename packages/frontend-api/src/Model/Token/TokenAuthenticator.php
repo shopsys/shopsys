@@ -58,7 +58,7 @@ class TokenAuthenticator extends AbstractAuthenticator
                 function (string $credentials) {
                     return $this->checkCredentials($credentials);
                 },
-                $credentials
+                $credentials,
             ),
         );
     }
@@ -83,7 +83,7 @@ class TokenAuthenticator extends AbstractAuthenticator
         return $request->headers->has(static::HEADER_AUTHORIZATION) &&
             str_starts_with(
                 $request->headers->get(static::HEADER_AUTHORIZATION),
-                static::BEARER
+                static::BEARER,
             );
     }
 

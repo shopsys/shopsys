@@ -178,12 +178,12 @@ class SettingValue
 
         $message = sprintf(
             'Setting value type of "%s" is unsupported.',
-            is_object($value) ? get_class($value) : gettype($value)
+            is_object($value) ? get_class($value) : gettype($value),
         )
             . sprintf(
                 ' Supported is "%s", "%s", string, integer, float, boolean or null.',
                 DateTime::class,
-                Money::class
+                Money::class,
             );
 
         throw new InvalidArgumentException($message);

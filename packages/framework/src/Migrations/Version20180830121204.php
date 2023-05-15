@@ -24,7 +24,7 @@ class Version20180830121204 extends AbstractMigration
                 [
                     'telephone' => $phoneAndBillingAddressId['telephone'],
                     'billing_address_id' => $phoneAndBillingAddressId['id'],
-                ]
+                ],
             );
         }
         $this->sql('ALTER TABLE billing_addresses DROP COLUMN telephone');

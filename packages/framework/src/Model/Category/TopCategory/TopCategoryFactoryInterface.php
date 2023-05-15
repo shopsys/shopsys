@@ -15,6 +15,6 @@ interface TopCategoryFactoryInterface
     public function create(
         Category $category,
         int $domainId,
-        int $position
+        int $position,
     ): TopCategory;
 }

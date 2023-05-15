@@ -16,7 +16,7 @@ class CurrentCategoryResolver
      */
     public function __construct(
         private readonly CategoryFacade $categoryFacade,
-        private readonly ProductFacade $productFacade
+        private readonly ProductFacade $productFacade,
     ) {
     }
 

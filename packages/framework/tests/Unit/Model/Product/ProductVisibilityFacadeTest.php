@@ -27,7 +27,7 @@ class ProductVisibilityFacadeTest extends TestCase
             $this->createMock(HttpKernelInterface::class),
             new Request(),
             HttpKernelInterface::MASTER_REQUEST,
-            new Response()
+            new Response(),
         );
 
         $productVisibilityFacade->onKernelResponse($responseEvent);
@@ -44,7 +44,7 @@ class ProductVisibilityFacadeTest extends TestCase
             $this->createMock(HttpKernelInterface::class),
             new Request(),
             HttpKernelInterface::MASTER_REQUEST,
-            new Response()
+            new Response(),
         );
 
         $productVisibilityFacade->onKernelResponse($responseEvent);

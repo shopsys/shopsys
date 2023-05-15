@@ -79,7 +79,7 @@ class OrderItemFormType extends AbstractType
             ->add(
                 $builder->create('setPricesManually', CheckboxType::class, [
                     'property_path' => 'usePriceCalculation',
-                ])->addModelTransformer(new InverseTransformer())
+                ])->addModelTransformer(new InverseTransformer()),
             )
             ->add('vatPercent', NumberType::class, [
                 'constraints' => [
@@ -91,7 +91,7 @@ class OrderItemFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter quantity']),
                     new Constraints\GreaterThan(
-                        ['value' => 0, 'message' => 'Quantity must be greater than {{ compared_value }}']
+                        ['value' => 0, 'message' => 'Quantity must be greater than {{ compared_value }}'],
                     ),
                 ],
                 'error_bubbling' => true,

@@ -16,7 +16,7 @@ class Version20200127085928 extends AbstractMigration
     {
         $this->sql('ALTER TABLE delivery_addresses ADD customer_id INT NOT NULL DEFAULT 0');
         $this->sql(
-            'UPDATE delivery_addresses SET customer_id = (SELECT customer_id FROM customer_users WHERE delivery_address_id = delivery_addresses.id)'
+            'UPDATE delivery_addresses SET customer_id = (SELECT customer_id FROM customer_users WHERE delivery_address_id = delivery_addresses.id)',
         );
         $this->sql('
             ALTER TABLE

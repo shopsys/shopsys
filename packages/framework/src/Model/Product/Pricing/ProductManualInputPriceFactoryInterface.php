@@ -17,6 +17,6 @@ interface ProductManualInputPriceFactoryInterface
     public function create(
         Product $product,
         PricingGroup $pricingGroup,
-        ?Money $inputPrice
+        ?Money $inputPrice,
     ): ProductManualInputPrice;
 }

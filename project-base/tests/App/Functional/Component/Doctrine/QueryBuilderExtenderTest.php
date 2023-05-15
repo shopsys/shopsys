@@ -27,7 +27,7 @@ class QueryBuilderExtenderTest extends TransactionFunctionalTestCase
     public function testExtendJoinWithExtendedEntity(
         string $firstJoinedEntity,
         string $secondJoinedEntity,
-        string $expectedJoinedEntity
+        string $expectedJoinedEntity,
     ): void {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
@@ -39,7 +39,7 @@ class QueryBuilderExtenderTest extends TransactionFunctionalTestCase
         $dql = $queryBuilder->getDQL();
         $this->assertSame(
             'SELECT c FROM ' . Category::class . ' c INNER JOIN ' . $expectedJoinedEntity . ' p WITH 0 = 0 WHERE 1 = 1',
-            $dql
+            $dql,
         );
     }
 

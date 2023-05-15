@@ -35,7 +35,7 @@ final class ReleaseCommand extends Command
         private readonly SymfonyStyle $symfonyStyle,
         private readonly ReleaseWorkerProvider $releaseWorkerProvider,
         private readonly ReleaseGuard $releaseGuard,
-        private readonly VersionFactory $versionFactory
+        private readonly VersionFactory $versionFactory,
     ) {
         parent::__construct();
     }
@@ -47,7 +47,7 @@ final class ReleaseCommand extends Command
 
         $description = sprintf(
             'Release version, in format "<major>.<minor>.<patch>" or "v<major>.<minor>.<patch> or one of keywords: "%s"',
-            implode('", "', SemVersion::ALL)
+            implode('", "', SemVersion::ALL),
         );
         $this->addArgument(Option::VERSION, InputArgument::REQUIRED, $description);
 
@@ -55,7 +55,7 @@ final class ReleaseCommand extends Command
             Option::DRY_RUN,
             null,
             InputOption::VALUE_NONE,
-            'Do not perform operations, just their preview'
+            'Do not perform operations, just their preview',
         );
 
         $this->addOption(Option::STAGE, null, InputOption::VALUE_REQUIRED, 'Name of stage to perform');
@@ -102,7 +102,7 @@ final class ReleaseCommand extends Command
             $this->symfonyStyle->success(sprintf('Version "%s" is now released!', $version->getVersionString()));
         } else {
             $this->symfonyStyle->success(
-                sprintf('Stage "%s" for version "%s" is now finished!', $stage, $version->getVersionString())
+                sprintf('Stage "%s" for version "%s" is now finished!', $stage, $version->getVersionString()),
             );
         }
 

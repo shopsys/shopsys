@@ -27,7 +27,7 @@ class CookiesFacade
         protected readonly ArticleFacade $articleFacade,
         protected readonly Setting $setting,
         protected readonly Domain $domain,
-        protected readonly RequestStack $requestStack
+        protected readonly RequestStack $requestStack,
     ) {
         $this->environment = $environment;
     }
@@ -42,7 +42,7 @@ class CookiesFacade
 
         if ($cookiesArticleId !== null) {
             return $this->articleFacade->findById(
-                $this->setting->getForDomain(Setting::COOKIES_ARTICLE_ID, $domainId)
+                $this->setting->getForDomain(Setting::COOKIES_ARTICLE_ID, $domainId),
             );
         }
 
@@ -63,7 +63,7 @@ class CookiesFacade
         $this->setting->setForDomain(
             Setting::COOKIES_ARTICLE_ID,
             $cookiesArticleId,
-            $domainId
+            $domainId,
         );
     }
 

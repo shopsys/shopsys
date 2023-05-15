@@ -14,7 +14,7 @@ class ImageGeneratorFacade
      */
     public function __construct(
         protected readonly ImageRepository $imageRepository,
-        protected readonly ImageGenerator $imageGenerator
+        protected readonly ImageGenerator $imageGenerator,
     ) {
     }
 

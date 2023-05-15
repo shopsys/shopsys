@@ -17,7 +17,7 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly HeurekaProductDomainFacade $heurekaProductDomainFacade,
-        private readonly HeurekaProductDomainDataFactoryInterface $heurekaProductDomainDataFactory
+        private readonly HeurekaProductDomainDataFactoryInterface $heurekaProductDomainDataFactory,
     ) {
     }
 
@@ -75,7 +75,7 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
         }
         $this->heurekaProductDomainFacade->saveHeurekaProductDomainsForProductId(
             $productId,
-            $heurekaProductDomainsData
+            $heurekaProductDomainsData,
         );
     }
 

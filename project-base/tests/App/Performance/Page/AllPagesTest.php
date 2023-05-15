@@ -43,7 +43,7 @@ class AllPagesTest extends KernelTestCase
     public function testAdminPagesWarmup()
     {
         $this->doWarmupPagesWithProgress(
-            $this->getRequestDataSets('~^admin_~')
+            $this->getRequestDataSets('~^admin_~'),
         );
     }
 
@@ -53,7 +53,7 @@ class AllPagesTest extends KernelTestCase
     public function testFrontPagesWarmup()
     {
         $this->doWarmupPagesWithProgress(
-            $this->getRequestDataSets('~^front~')
+            $this->getRequestDataSets('~^front~'),
         );
     }
 
@@ -61,7 +61,7 @@ class AllPagesTest extends KernelTestCase
     {
         $this->doTestPagesWithProgress(
             $this->getRequestDataSets('~^admin_~'),
-            static::$container->getParameter('kernel.project_dir') . '/build/stats/performance-tests-admin.csv'
+            static::$container->getParameter('kernel.project_dir') . '/build/stats/performance-tests-admin.csv',
         );
     }
 
@@ -69,7 +69,7 @@ class AllPagesTest extends KernelTestCase
     {
         $this->doTestPagesWithProgress(
             $this->getRequestDataSets('~^front~'),
-            static::$container->getParameter('kernel.project_dir') . '/build/stats/performance-tests-front.csv'
+            static::$container->getParameter('kernel.project_dir') . '/build/stats/performance-tests-front.csv',
         );
     }
 
@@ -129,7 +129,7 @@ class AllPagesTest extends KernelTestCase
             $progressLine = sprintf(
                 'Warmup: %3d%% (%s)',
                 round($requestDataSetIndex / $requestDataSetCount * 100),
-                $requestDataSet->getRouteName()
+                $requestDataSet->getRouteName(),
             );
             $consoleOutput->write(str_pad($progressLine, 80) . "\r");
 
@@ -160,7 +160,7 @@ class AllPagesTest extends KernelTestCase
                     '%s: %3d%% (%s)',
                     'Pass ' . $pass . '/' . self::PASSES,
                     round($requestDataSetIndex / $requestDataSetCount * 100),
-                    $requestDataSet->getRouteName()
+                    $requestDataSet->getRouteName(),
                 );
                 $consoleOutput->write(str_pad($progressLine, 80) . "\r");
 
@@ -209,7 +209,7 @@ class AllPagesTest extends KernelTestCase
             ($endTime - $startTime) * 1000,
             $queryCount,
             $statusCode,
-            $statusCode === $requestDataSet->getExpectedStatusCode()
+            $statusCode === $requestDataSet->getExpectedStatusCode(),
         );
     }
 
@@ -217,7 +217,7 @@ class AllPagesTest extends KernelTestCase
      * @param \Tests\App\Performance\Page\PerformanceTestSample[] $performanceTestSamples
      */
     private function doAssert(
-        array $performanceTestSamples
+        array $performanceTestSamples,
     ) {
         $performanceTestSampleQualifier = $this->createPerformanceTestSampleQualifier();
 
@@ -315,7 +315,7 @@ class AllPagesTest extends KernelTestCase
             $container->getParameter('shopsys.performance_test.page.duration_milliseconds.warning'),
             $container->getParameter('shopsys.performance_test.page.duration_milliseconds.critical'),
             $container->getParameter('shopsys.performance_test.page.query_count.warning'),
-            $container->getParameter('shopsys.performance_test.page.query_count.critical')
+            $container->getParameter('shopsys.performance_test.page.query_count.critical'),
         );
     }
 }

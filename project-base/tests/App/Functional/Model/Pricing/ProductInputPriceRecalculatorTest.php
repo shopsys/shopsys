@@ -55,7 +55,7 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         $productData = $this->productDataFactory->create();
@@ -68,7 +68,7 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
         $this->productInputPriceRecalculator->recalculateInputPriceForNewVatPercent(
             $productManualInputPrice,
             $inputPriceType,
-            '15'
+            '15',
         );
 
         $this->assertThat($productManualInputPrice->getInputPrice(), new IsMoneyEqual(Money::create('1052.173913')));
@@ -81,7 +81,7 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         $productData = $this->productDataFactory->create();
@@ -95,7 +95,7 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
         $this->productInputPriceRecalculator->recalculateInputPriceForNewVatPercent(
             $productManualInputPrice,
             $inputPriceType,
-            '15'
+            '15',
         );
 
         $this->assertThat($productManualInputPrice->getInputPrice(), new IsMoneyEqual(Money::create(1000)));

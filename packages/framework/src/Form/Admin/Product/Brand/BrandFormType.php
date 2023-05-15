@@ -28,7 +28,7 @@ class BrandFormType extends AbstractType
      */
     public function __construct(
         private readonly Domain $domain,
-        private readonly SeoSettingFacade $seoSettingFacade
+        private readonly SeoSettingFacade $seoSettingFacade,
     ) {
     }
 
@@ -87,7 +87,7 @@ class BrandFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter name']),
                     new Constraints\Length(
-                        ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']
+                        ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
                     ),
                 ],
                 'label' => t('Name'),

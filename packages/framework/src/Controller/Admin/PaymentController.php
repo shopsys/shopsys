@@ -27,7 +27,7 @@ class PaymentController extends AdminBaseController
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly PaymentFacade $paymentFacade,
         protected readonly PaymentGridFactory $paymentGridFactory,
-        protected readonly BreadcrumbOverrider $breadcrumbOverrider
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider,
     ) {
     }
 
@@ -52,7 +52,7 @@ class PaymentController extends AdminBaseController
                 [
                     'name' => $payment->getName(),
                     'url' => $this->generateUrl('admin_payment_edit', ['id' => $payment->getId()]),
-                ]
+                ],
             );
 
             return $this->redirectToRoute('admin_transportandpayment_list');
@@ -91,7 +91,7 @@ class PaymentController extends AdminBaseController
                 [
                     'name' => $payment->getName(),
                     'url' => $this->generateUrl('admin_payment_edit', ['id' => $payment->getId()]),
-                ]
+                ],
             );
 
             return $this->redirectToRoute('admin_transportandpayment_list');
@@ -126,7 +126,7 @@ class PaymentController extends AdminBaseController
                 t('Payment <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $paymentName,
-                ]
+                ],
             );
         } catch (PaymentNotFoundException $ex) {
             $this->addErrorFlash(t('Selected payment doesn\'t exist.'));

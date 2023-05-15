@@ -15,6 +15,6 @@ interface ProductVisibilityFactoryInterface
     public function create(
         Product $product,
         PricingGroup $pricingGroup,
-        int $domainId
+        int $domainId,
     ): ProductVisibility;
 }

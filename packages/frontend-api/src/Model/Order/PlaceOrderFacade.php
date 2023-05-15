@@ -39,7 +39,7 @@ class PlaceOrderFacade
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly Domain $domain,
         protected readonly CurrentCustomerUser $currentCustomerUser,
-        protected readonly CustomerUserFacade $customerUserFacade
+        protected readonly CustomerUserFacade $customerUserFacade,
     ) {
     }
 
@@ -58,7 +58,7 @@ class PlaceOrderFacade
             $quantifiedProducts,
             $orderData->transport,
             $orderData->payment,
-            $customerUser
+            $customerUser,
         );
 
         $order = $this->orderFacade->createOrder($orderData, $orderPreview, $customerUser);
@@ -87,7 +87,7 @@ class PlaceOrderFacade
             $transport,
             $payment,
             $customerUser,
-            null
+            null,
         );
     }
 }

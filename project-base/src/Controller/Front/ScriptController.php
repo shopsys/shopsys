@@ -17,7 +17,7 @@ class ScriptController extends FrontBaseController
      */
     public function __construct(
         private readonly ScriptFacade $scriptFacade,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 

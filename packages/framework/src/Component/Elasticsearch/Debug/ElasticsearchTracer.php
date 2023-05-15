@@ -103,7 +103,7 @@ class ElasticsearchTracer extends AbstractLogger
             $context['uri'],
             $context['HTTP code'] === null ? null : (int)$context['HTTP code'],
             $context['response'],
-            (float)$context['duration']
+            (float)$context['duration'],
         );
     }
 }

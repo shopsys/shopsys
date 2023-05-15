@@ -56,7 +56,7 @@ class CartRepository
             ],
             [
                 'timeLimit' => Types::DATETIME_MUTABLE,
-            ]
+            ],
         );
 
         $this->em->getConnection()->executeStatement(
@@ -66,7 +66,7 @@ class CartRepository
             ],
             [
                 'timeLimit' => Types::DATETIME_MUTABLE,
-            ]
+            ],
         );
     }
 
@@ -85,7 +85,7 @@ class CartRepository
             ],
             [
                 'timeLimit' => Types::DATETIME_MUTABLE,
-            ]
+            ],
         );
 
         $this->em->getConnection()->executeStatement(
@@ -95,7 +95,7 @@ class CartRepository
             ],
             [
                 'timeLimit' => Types::DATETIME_MUTABLE,
-            ]
+            ],
         );
     }
 }

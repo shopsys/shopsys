@@ -37,7 +37,7 @@ class CategoryNestedSetCalculator
         int $lvl,
         ?int $parent,
         array $parentIdByCategoryId,
-        array &$output
+        array &$output,
     ): void {
         $lft = $count++;
 

@@ -78,7 +78,7 @@ class PaymentPriceCalculationTest extends TestCase
         Money $inputPrice,
         string $vatPercent,
         Money $priceWithoutVat,
-        Money $priceWithVat
+        Money $priceWithVat,
     ) {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->setMethods(['getInputPriceType'])
@@ -121,8 +121,8 @@ class PaymentPriceCalculationTest extends TestCase
             (new PaymentPriceFactory(new EntityNameResolver([])))->create(
                 $payment,
                 $inputPrice,
-                Domain::FIRST_DOMAIN_ID
-            )
+                Domain::FIRST_DOMAIN_ID,
+            ),
         );
 
         $price = $paymentPriceCalculation->calculateIndependentPrice($payment, $currency, Domain::FIRST_DOMAIN_ID);
@@ -146,7 +146,7 @@ class PaymentPriceCalculationTest extends TestCase
         string $vatPercent,
         Money $priceWithoutVat,
         Money $priceWithVat,
-        Price $productsPrice
+        Price $productsPrice,
     ) {
         $priceLimit = Money::create(1000);
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
@@ -193,15 +193,15 @@ class PaymentPriceCalculationTest extends TestCase
             (new PaymentPriceFactory(new EntityNameResolver([])))->create(
                 $payment,
                 $inputPrice,
-                Domain::FIRST_DOMAIN_ID
-            )
+                Domain::FIRST_DOMAIN_ID,
+            ),
         );
 
         $price = $paymentPriceCalculation->calculatePrice(
             $payment,
             $currency,
             $productsPrice,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         if ($productsPrice->getPriceWithVat()->isGreaterThan($priceLimit)) {

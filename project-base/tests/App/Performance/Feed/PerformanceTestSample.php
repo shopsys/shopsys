@@ -34,7 +34,7 @@ class PerformanceTestSample
         private readonly DomainConfig $domainConfig,
         $generationUri,
         $duration,
-        $statusCode
+        $statusCode,
     ) {
         $this->generationUri = $generationUri;
         $this->duration = $duration;

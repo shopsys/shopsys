@@ -36,7 +36,7 @@ class TransportFacade
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly TransportPriceCalculation $transportPriceCalculation,
         protected readonly TransportFactoryInterface $transportFactory,
-        protected readonly TransportPriceFactoryInterface $transportPriceFactory
+        protected readonly TransportPriceFactoryInterface $transportPriceFactory,
     ) {
     }
 
@@ -130,7 +130,7 @@ class TransportFacade
             }
 
             $transport->addPrice(
-                $this->transportPriceFactory->create($transport, $pricesIndexedByDomainId[$domainId], $domainId)
+                $this->transportPriceFactory->create($transport, $pricesIndexedByDomainId[$domainId], $domainId),
             );
         }
     }
@@ -162,7 +162,7 @@ class TransportFacade
             $transportPrice = $this->transportPriceCalculation->calculateIndependentPrice(
                 $transport,
                 $currency,
-                $domainId
+                $domainId,
             );
             $transportPricesWithVatByTransportId[$transport->getId()] = $transportPrice->getPriceWithVat();
         }
@@ -181,7 +181,7 @@ class TransportFacade
 
         foreach ($transports as $transport) {
             $transportVatPercentsByTransportId[$transport->getId()] = $transport->getTransportDomain(
-                $domainId
+                $domainId,
             )->getVat()->getPercent();
         }
 
@@ -202,7 +202,7 @@ class TransportFacade
             $prices[$domainId] = $this->transportPriceCalculation->calculateIndependentPrice(
                 $transport,
                 $currency,
-                $domainId
+                $domainId,
             );
         }
 
@@ -229,7 +229,7 @@ class TransportFacade
             $prices[$domainId] = $this->transportPriceCalculation->calculateIndependentPrice(
                 $transport,
                 $currency,
-                $domainId
+                $domainId,
             );
         }
 

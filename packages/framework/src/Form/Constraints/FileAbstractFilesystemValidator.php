@@ -22,7 +22,7 @@ class FileAbstractFilesystemValidator extends FileValidator
     public function __construct(
         protected readonly MountManager $mountManager,
         protected readonly FileUpload $fileUpload,
-        protected readonly ParameterBagInterface $parameterBag
+        protected readonly ParameterBagInterface $parameterBag,
     ) {
     }
 
@@ -39,7 +39,7 @@ class FileAbstractFilesystemValidator extends FileValidator
             $this->mountManager->copy('main://' . $abstractPath, 'local://' . $localPath);
         } catch (UnableToCopyFile $e) {
             $this->context->buildViolation(
-                'This file could not be found. Please remove it and try to upload it again.'
+                'This file could not be found. Please remove it and try to upload it again.',
             )
                 ->setCode((string)UPLOAD_ERR_NO_FILE)
                 ->addViolation();

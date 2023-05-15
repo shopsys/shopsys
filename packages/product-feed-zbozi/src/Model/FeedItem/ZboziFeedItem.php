@@ -42,7 +42,7 @@ class ZboziFeedItem implements FeedItemInterface
         protected readonly ?string $partno = null,
         protected readonly ?int $availabilityDispatchTime = null,
         protected readonly ?Money $cpc = null,
-        protected readonly ?Money $cpcSearch = null
+        protected readonly ?Money $cpcSearch = null,
     ) {
     }
 

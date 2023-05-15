@@ -18,7 +18,7 @@ class FlagInlineEdit extends AbstractGridInlineEdit
         FlagGridFactory $flagGridFactory,
         protected readonly FlagFacade $flagFacade,
         protected readonly FormFactoryInterface $formFactory,
-        protected readonly FlagDataFactoryInterface $flagDataFactory
+        protected readonly FlagDataFactoryInterface $flagDataFactory,
     ) {
         parent::__construct($flagGridFactory);
     }

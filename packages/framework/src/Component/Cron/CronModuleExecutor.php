@@ -104,13 +104,13 @@ class CronModuleExecutor
             func_get_args(),
             0,
             null,
-            true
+            true,
         );
         $cronConfig = $triggerNewArgumentInMethod;
 
         if ($cronConfig !== null) {
             $canRunUntil = $this->startedAt->add(
-                DateInterval::createFromDateString($cronConfig->getTimeoutIteratedCronSec() . ' seconds')
+                DateInterval::createFromDateString($cronConfig->getTimeoutIteratedCronSec() . ' seconds'),
             );
 
             return $canRunUntil > new DateTimeImmutable('now');

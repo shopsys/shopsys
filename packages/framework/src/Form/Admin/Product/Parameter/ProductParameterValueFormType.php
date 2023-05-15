@@ -44,7 +44,7 @@ class ProductParameterValueFormType extends AbstractType
                 'entry_options' => [
                     'constraints' => [
                         new Constraints\Length(
-                            ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']
+                            ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
                         ),
                     ],
                 ],

@@ -25,7 +25,7 @@ class ProductVisibilityRepository
     public function __construct(
         EntityManagerInterface $em,
         protected readonly Domain $domain,
-        protected readonly PricingGroupRepository $pricingGroupRepository
+        protected readonly PricingGroupRepository $pricingGroupRepository,
     ) {
         $this->em = $em;
     }
@@ -89,7 +89,7 @@ class ProductVisibilityRepository
                     WHERE pv.product_id = p.id
                         AND pv.visible = TRUE
                 )
-            ' . $onlyMarkedProductsWhereClause
+            ' . $onlyMarkedProductsWhereClause,
         );
     }
 
@@ -109,7 +109,7 @@ class ProductVisibilityRepository
             [
                 'pricingGroupId' => Types::INTEGER,
                 'domainId' => Types::INTEGER,
-            ]
+            ],
         );
         $this->refreshProductsVisibility();
     }
@@ -131,7 +131,7 @@ class ProductVisibilityRepository
     public function getProductVisibility(
         Product $product,
         PricingGroup $pricingGroup,
-        $domainId
+        $domainId,
     ) {
         $productVisibility = $this->getProductVisibilityRepository()->find([
             'product' => $product->getId(),
@@ -162,7 +162,7 @@ class ProductVisibilityRepository
     protected function markAllProductsVisibilityAsRecalculated()
     {
         $this->em->getConnection()->executeStatement(
-            'UPDATE products SET recalculate_visibility = FALSE WHERE recalculate_visibility = TRUE'
+            'UPDATE products SET recalculate_visibility = FALSE WHERE recalculate_visibility = TRUE',
         );
     }
 
@@ -244,7 +244,7 @@ class ProductVisibilityRepository
                     'domainId' => Types::INTEGER,
                     'pricingGroupId' => Types::INTEGER,
                     'variantTypeMain' => Types::STRING,
-                ]
+                ],
             );
         }
     }
@@ -281,7 +281,7 @@ class ProductVisibilityRepository
             ],
             [
                 'variantTypeVariant' => Types::STRING,
-            ]
+            ],
         );
     }
 
@@ -319,7 +319,7 @@ class ProductVisibilityRepository
             ],
             [
                 'variantTypeMain' => Types::STRING,
-            ]
+            ],
         );
     }
 }

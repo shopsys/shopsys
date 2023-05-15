@@ -21,7 +21,7 @@ class ProductFilterRepository
      */
     public function __construct(
         protected readonly QueryBuilderExtender $queryBuilderExtender,
-        protected readonly ParameterFilterRepository $parameterFilterRepository
+        protected readonly ParameterFilterRepository $parameterFilterRepository,
     ) {
     }
 
@@ -33,29 +33,29 @@ class ProductFilterRepository
     public function applyFiltering(
         QueryBuilder $productsQueryBuilder,
         ProductFilterData $productFilterData,
-        PricingGroup $pricingGroup
+        PricingGroup $pricingGroup,
     ) {
         $this->filterByPrice(
             $productsQueryBuilder,
             $productFilterData->minimalPrice,
             $productFilterData->maximalPrice,
-            $pricingGroup
+            $pricingGroup,
         );
         $this->filterByStock(
             $productsQueryBuilder,
-            $productFilterData->inStock
+            $productFilterData->inStock,
         );
         $this->filterByFlags(
             $productsQueryBuilder,
-            $productFilterData->flags
+            $productFilterData->flags,
         );
         $this->filterByBrands(
             $productsQueryBuilder,
-            $productFilterData->brands
+            $productFilterData->brands,
         );
         $this->parameterFilterRepository->filterByParameters(
             $productsQueryBuilder,
-            $productFilterData->parameters
+            $productFilterData->parameters,
         );
     }
 
@@ -69,7 +69,7 @@ class ProductFilterRepository
         QueryBuilder $productsQueryBuilder,
         ?Money $minimalPrice,
         ?Money $maximalPrice,
-        PricingGroup $pricingGroup
+        PricingGroup $pricingGroup,
     ) {
         if ($maximalPrice !== null || $minimalPrice !== null) {
             $priceLimits = 'pcp.product = p AND pcp.pricingGroup = :pricingGroup';
@@ -87,7 +87,7 @@ class ProductFilterRepository
                 $productsQueryBuilder,
                 ProductCalculatedPrice::class,
                 'pcp',
-                $priceLimits
+                $priceLimits,
             );
             $productsQueryBuilder->setParameter('pricingGroup', $pricingGroup);
         }
@@ -104,7 +104,7 @@ class ProductFilterRepository
                 $productsQueryBuilder,
                 Availability::class,
                 'a',
-                'p.calculatedAvailability = a'
+                'p.calculatedAvailability = a',
             );
             $productsQueryBuilder->andWhere('a.dispatchTime = :dispatchTime');
             $productsQueryBuilder->setParameter('dispatchTime', static::DAYS_FOR_STOCK_FILTER);

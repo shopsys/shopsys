@@ -12,7 +12,7 @@ class ProductSellingDeniedRecalculator
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
     public function __construct(
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
     ) {
         $this->em = $entityManager;
     }
@@ -98,7 +98,7 @@ class ProductSellingDeniedRecalculator
                     FROM ' . Product::class . ' m
                     WHERE m = p.mainVariant
                         AND m.calculatedSellingDenied = TRUE
-                )'
+                )',
             )
             ->setParameter('variantTypeVariant', Product::VARIANT_TYPE_VARIANT);
 
@@ -124,7 +124,7 @@ class ProductSellingDeniedRecalculator
                     FROM ' . Product::class . ' v
                     WHERE v.mainVariant = p
                         AND v.calculatedSellingDenied = FALSE
-                )'
+                )',
             )
             ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN);
 

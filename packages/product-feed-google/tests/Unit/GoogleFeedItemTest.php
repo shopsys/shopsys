@@ -38,7 +38,7 @@ class GoogleFeedItemTest extends TestCase
     protected function setUp(): void
     {
         $this->productPriceCalculationForCustomerUserMock = $this->createMock(
-            ProductPriceCalculationForCustomerUser::class
+            ProductPriceCalculationForCustomerUser::class,
         );
         $this->currencyFacadeMock = $this->createMock(CurrencyFacade::class);
         $this->productUrlsBatchLoaderMock = $this->createMock(ProductUrlsBatchLoader::class);
@@ -46,7 +46,7 @@ class GoogleFeedItemTest extends TestCase
         $this->googleFeedItemFactory = new GoogleFeedItemFactory(
             $this->productPriceCalculationForCustomerUserMock,
             $this->currencyFacadeMock,
-            $this->productUrlsBatchLoaderMock
+            $this->productUrlsBatchLoaderMock,
         );
 
         $this->defaultCurrency = $this->createCurrencyMock(1, 'EUR');
@@ -54,7 +54,7 @@ class GoogleFeedItemTest extends TestCase
             Domain::FIRST_DOMAIN_ID,
             'https://example.com',
             'en',
-            $this->defaultCurrency
+            $this->defaultCurrency,
         );
 
         $this->defaultProduct = $this->createMock(Product::class);

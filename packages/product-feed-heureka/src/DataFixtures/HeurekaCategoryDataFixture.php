@@ -24,7 +24,7 @@ class HeurekaCategoryDataFixture implements PluginDataFixtureInterface
      */
     public function __construct(
         private readonly HeurekaCategoryFacade $heurekaCategoryFacade,
-        private readonly HeurekaCategoryDataFactoryInterface $heurekaCategoryDataFactory
+        private readonly HeurekaCategoryDataFactoryInterface $heurekaCategoryDataFactory,
     ) {
     }
 
@@ -58,27 +58,27 @@ class HeurekaCategoryDataFixture implements PluginDataFixtureInterface
         $heurekaCategoryFirst = $this->heurekaCategoryFacade->getOneById(static::HEUREKA_CATEGORY_ID_FIRST);
         $this->heurekaCategoryFacade->changeHeurekaCategoryForCategoryId(
             static::CATEGORY_ID_FIRST,
-            $heurekaCategoryFirst
+            $heurekaCategoryFirst,
         );
 
         $heurekaCategorySecond = $this->heurekaCategoryFacade->getOneById(static::HEUREKA_CATEGORY_ID_SECOND);
         $this->heurekaCategoryFacade->changeHeurekaCategoryForCategoryId(
             static::CATEGORY_ID_SECOND,
-            $heurekaCategorySecond
+            $heurekaCategorySecond,
         );
         $this->heurekaCategoryFacade->changeHeurekaCategoryForCategoryId(
             static::CATEGORY_ID_THIRD,
-            $heurekaCategorySecond
+            $heurekaCategorySecond,
         );
 
         $heurekaCategoryThird = $this->heurekaCategoryFacade->getOneById(static::HEUREKA_CATEGORY_ID_THIRD);
         $this->heurekaCategoryFacade->changeHeurekaCategoryForCategoryId(
             static::CATEGORY_ID_FOURTH,
-            $heurekaCategoryThird
+            $heurekaCategoryThird,
         );
         $this->heurekaCategoryFacade->changeHeurekaCategoryForCategoryId(
             static::CATEGORY_ID_FIFTH,
-            $heurekaCategoryThird
+            $heurekaCategoryThird,
         );
     }
 }

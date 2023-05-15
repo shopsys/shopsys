@@ -16,7 +16,7 @@ class NewsletterFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly NewsletterRepository $newsletterRepository,
-        protected readonly NewsletterSubscriberFactoryInterface $newsletterSubscriberFactory
+        protected readonly NewsletterSubscriberFactoryInterface $newsletterSubscriberFactory,
     ) {
     }
 
@@ -33,7 +33,7 @@ class NewsletterFacade
         $newsletterSubscriber = $this->newsletterSubscriberFactory->create(
             $email,
             new DateTimeImmutable(),
-            $domainId
+            $domainId,
         );
         $this->em->persist($newsletterSubscriber);
         $this->em->flush();

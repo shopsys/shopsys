@@ -36,7 +36,7 @@ class UploadedFileRepository
             [
                 'entityName' => $entityName,
                 'entityId' => $entityId,
-            ]
+            ],
         );
     }
 
@@ -57,7 +57,7 @@ class UploadedFileRepository
             [
                 'position' => 'asc',
                 'id' => 'asc',
-            ]
+            ],
         );
     }
 
@@ -91,7 +91,7 @@ class UploadedFileRepository
                 'id' => $uploadedFileId,
                 'slug' => $uploadedFileSlug,
                 'extension' => $uploadedFileExtension,
-            ]
+            ],
         );
 
         if ($uploadedFile === null) {
@@ -100,8 +100,8 @@ class UploadedFileRepository
                     'UploadedFile with ID "%s", slug "%s" and extension "%s" does not exist.',
                     $uploadedFileId,
                     $uploadedFileSlug,
-                    $uploadedFileExtension
-                )
+                    $uploadedFileExtension,
+                ),
             );
         }
 

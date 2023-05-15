@@ -33,7 +33,7 @@ class DomainAwareSecurityHeadersSetter
         // - allow data URLs
         $event->getResponse()->headers->set(
             'Content-Security-Policy',
-            "default-src https: 'unsafe-inline' 'unsafe-eval' data:"
+            "default-src https: 'unsafe-inline' 'unsafe-eval' data:",
         );
     }
 }

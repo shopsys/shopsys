@@ -28,7 +28,7 @@ class AdvancedSearchOrderFilterTranslationTest extends FunctionalTestCase
     {
         foreach ($this->advancedSearchConfig->getAllFilters() as $filter) {
             $this->assertNotEmpty(
-                $this->advancedSearchOrderFilterTranslation->translateFilterName($filter->getName())
+                $this->advancedSearchOrderFilterTranslation->translateFilterName($filter->getName()),
             );
         }
     }

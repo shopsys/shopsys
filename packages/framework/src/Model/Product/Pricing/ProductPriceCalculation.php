@@ -26,7 +26,7 @@ class ProductPriceCalculation
         protected readonly PricingSetting $pricingSetting,
         protected readonly ProductManualInputPriceRepository $productManualInputPriceRepository,
         protected readonly ProductRepository $productRepository,
-        protected readonly CurrencyFacade $currencyFacade
+        protected readonly CurrencyFacade $currencyFacade,
     ) {
     }
 
@@ -56,7 +56,7 @@ class ProductPriceCalculation
         $variants = $this->productRepository->getAllSellableVariantsByMainVariant(
             $mainVariant,
             $domainId,
-            $pricingGroup
+            $pricingGroup,
         );
 
         if (count($variants) === 0) {
@@ -86,7 +86,7 @@ class ProductPriceCalculation
     {
         $manualInputPrice = $this->productManualInputPriceRepository->findByProductAndPricingGroup(
             $product,
-            $pricingGroup
+            $pricingGroup,
         );
 
         if ($manualInputPrice !== null) {
@@ -102,7 +102,7 @@ class ProductPriceCalculation
             $inputPrice,
             $this->pricingSetting->getInputPriceType(),
             $product->getVatForDomain($domainId),
-            $defaultCurrency
+            $defaultCurrency,
         );
 
         return new ProductPrice($basePrice, false);

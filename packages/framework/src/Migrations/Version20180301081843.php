@@ -18,7 +18,7 @@ class Version20180301081843 extends AbstractMigration
             $this->sql(
                 'INSERT INTO mail_templates (name, domain_id, bcc_email, subject, body, send_mail) VALUES
                 (\'personal_data_access\', :domainId, null, null, null, false);',
-                ['domainId' => $domainId]
+                ['domainId' => $domainId],
             );
         }
     }

@@ -17,7 +17,7 @@ class PromoCodeController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      */
     public function __construct(
-        private readonly CurrentPromoCodeFacade $currentPromoCodeFacade
+        private readonly CurrentPromoCodeFacade $currentPromoCodeFacade,
     ) {
     }
 

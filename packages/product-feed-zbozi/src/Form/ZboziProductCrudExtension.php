@@ -18,7 +18,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly ZboziProductDomainFacade $zboziProductDomainFacade,
-        private readonly ZboziProductDomainDataFactoryInterface $zboziProductDomainDataFactory
+        private readonly ZboziProductDomainDataFactoryInterface $zboziProductDomainDataFactory,
     ) {
     }
 
@@ -47,9 +47,9 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
         $zboziProductDomains = $this->zboziProductDomainFacade->findByProductId($productId);
 
         return $zboziProductDomains !== null && count(
-            $zboziProductDomains
+            $zboziProductDomains,
         ) > 0 ? $this->getZboziProductDomainsAsPluginDataArray(
-            $zboziProductDomains
+            $zboziProductDomains,
         ) : [];
     }
 
@@ -73,14 +73,14 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
                 $this->setZboziProductDomainDataProperty(
                     $zboziProductDomainsDataIndexedByDomainId[$domainId],
                     $productAttributeName,
-                    $productAttributeValue
+                    $productAttributeValue,
                 );
             }
         }
 
         $this->zboziProductDomainFacade->saveZboziProductDomainsForProductId(
             $productId,
-            $zboziProductDomainsDataIndexedByDomainId
+            $zboziProductDomainsDataIndexedByDomainId,
         );
     }
 
@@ -92,7 +92,7 @@ class ZboziProductCrudExtension implements PluginCrudExtensionInterface
     private function setZboziProductDomainDataProperty(
         ZboziProductDomainData $zboziProductDomainData,
         $propertyName,
-        $propertyValue
+        $propertyValue,
     ) {
         switch ($propertyName) {
             case 'show':

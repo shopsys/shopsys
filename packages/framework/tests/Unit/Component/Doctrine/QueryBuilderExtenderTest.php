@@ -46,7 +46,7 @@ class QueryBuilderExtenderTest extends TestCase
         string $firstJoinedEntity,
         string $secondJoinedEntity,
         string $expectedJoinedEntity,
-        array $extensionMap
+        array $extensionMap,
     ): void {
         /** @var \Doctrine\ORM\EntityManager $entityManager */
         $entityManager = $this->getMockBuilder(EntityManagerInterface::class)
@@ -67,9 +67,9 @@ class QueryBuilderExtenderTest extends TestCase
             sprintf(
                 'SELECT c FROM %s c INNER JOIN %s p WITH 0 = 0 WHERE 1 = 1',
                 Category::class,
-                $expectedJoinedEntity
+                $expectedJoinedEntity,
             ),
-            $dql
+            $dql,
         );
     }
 
@@ -115,7 +115,7 @@ class QueryBuilderExtenderTest extends TestCase
             $queryBuilder,
             Product::class,
             'p2',
-            'p2.id = 2'
+            'p2.id = 2',
         );
 
         $dql = $queryBuilder->getDQL();
@@ -123,7 +123,7 @@ class QueryBuilderExtenderTest extends TestCase
             'SELECT c FROM ' . Category::class . ' c'
             . ' INNER JOIN ' . Product::class . ' p WITH p.id = 1'
             . ' INNER JOIN ' . Product::class . ' p2 WITH p2.id = 2',
-            $dql
+            $dql,
         );
     }
 
@@ -147,13 +147,13 @@ class QueryBuilderExtenderTest extends TestCase
         $this->expectExceptionMessage(
             'You cannot use "Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter" as "p"'
             . ' because this alias is already assigned to'
-            . ' "Tests\FrameworkBundle\Unit\Component\Doctrine\__fixtures\Product" in the same QueryBuilder instance.'
+            . ' "Tests\FrameworkBundle\Unit\Component\Doctrine\__fixtures\Product" in the same QueryBuilder instance.',
         );
         $queryBuilderExtender->addOrExtendJoin(
             $queryBuilder,
             Parameter::class,
             'p',
-            'p.id = 2'
+            'p.id = 2',
         );
     }
 }

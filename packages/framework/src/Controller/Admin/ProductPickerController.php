@@ -28,7 +28,7 @@ class ProductPickerController extends AdminBaseController
         protected readonly GridFactory $gridFactory,
         protected readonly ProductListAdminFacade $productListAdminFacade,
         protected readonly AdvancedSearchProductFacade $advancedSearchProductFacade,
-        protected readonly ProductFacade $productFacade
+        protected readonly ProductFacade $productFacade,
     ) {
     }
 
@@ -43,7 +43,7 @@ class ProductPickerController extends AdminBaseController
         Request $request,
         $jsInstanceId,
         bool $allowMainVariants = true,
-        bool $allowVariants = true
+        bool $allowVariants = true,
     ) {
         return $this->getPickerResponse(
             $request,
@@ -55,7 +55,7 @@ class ProductPickerController extends AdminBaseController
                 'jsInstanceId' => $jsInstanceId,
                 'allowMainVariants' => $allowMainVariants,
                 'allowVariants' => $allowVariants,
-            ]
+            ],
         );
     }
 
@@ -76,7 +76,7 @@ class ProductPickerController extends AdminBaseController
                 'parentInstanceId' => $parentInstanceId,
                 'allowMainVariants' => $request->query->getBoolean('allowMainVariants', true),
                 'allowVariants' => $request->query->getBoolean('allowVariants', true),
-            ]
+            ],
         );
     }
 
@@ -100,7 +100,7 @@ class ProductPickerController extends AdminBaseController
 
         if ($isAdvancedSearchFormSubmitted) {
             $queryBuilder = $this->advancedSearchProductFacade->getQueryBuilderByAdvancedSearchData(
-                $advancedSearchData
+                $advancedSearchData,
             );
         } else {
             $queryBuilder = $this->productListAdminFacade->getQueryBuilderByQuickSearchData($quickSearchData);
@@ -114,7 +114,7 @@ class ProductPickerController extends AdminBaseController
                 $row['product'] = $product;
 
                 return $row;
-            }
+            },
         );
 
         $grid = $this->gridFactory->create('productPicker', $dataSource);
@@ -137,7 +137,7 @@ class ProductPickerController extends AdminBaseController
         $viewParameters['quickSearchForm'] = $quickSearchForm->createView();
         $viewParameters['advancedSearchForm'] = $advancedSearchForm->createView();
         $viewParameters['isAdvancedSearchFormSubmitted'] = $this->advancedSearchProductFacade->isAdvancedSearchFormSubmitted(
-            $request
+            $request,
         );
 
         return $this->render('@ShopsysFramework/Admin/Content/ProductPicker/list.html.twig', $viewParameters);

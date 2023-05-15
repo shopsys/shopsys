@@ -35,7 +35,7 @@ class OrderCest
     public function testFormRemembersPaymentAndTransportWhenClickingBack(
         ProductListPage $productListPage,
         OrderPage $orderPage,
-        AcceptanceTester $me
+        AcceptanceTester $me,
     ) {
         $me->wantTo('have my payment and transport remembered by order');
 
@@ -68,7 +68,7 @@ class OrderCest
     public function testFormRemembersPaymentAndTransportWhenGoingDirectlyToUrl(
         ProductListPage $productListPage,
         OrderPage $orderPage,
-        AcceptanceTester $me
+        AcceptanceTester $me,
     ) {
         $me->wantTo('have my payment and transport remembered by order');
 
@@ -127,7 +127,7 @@ class OrderCest
         ProductListPage $productListPage,
         OrderPage $orderPage,
         AcceptanceTester $me,
-        SymfonyHelper $symfonyHelper
+        SymfonyHelper $symfonyHelper,
     ) {
         $scriptFacade = $symfonyHelper->grabServiceFromContainer(ScriptFacade::class);
         $this->setGoogleAnalyticsTrackingId('GA-test', $scriptFacade);
@@ -154,7 +154,7 @@ class OrderCest
     private function testOrderCanBeCompleted(
         ProductListPage $productListPage,
         OrderPage $orderPage,
-        AcceptanceTester $me
+        AcceptanceTester $me,
     ) {
         // tv-audio
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
@@ -170,7 +170,7 @@ class OrderCest
         $orderPage->fillBillingAddress(
             self::DEFAULT_BILLING_STREET,
             self::DEFAULT_BILLING_CITY,
-            self::DEFAULT_BILLING_POSTCODE
+            self::DEFAULT_BILLING_POSTCODE,
         );
         $orderPage->acceptLegalConditions();
 
@@ -191,7 +191,7 @@ class OrderCest
         OrderPage $orderPage,
         AcceptanceTester $me,
         RegistrationPage $registrationPage,
-        LayoutPage $layoutPage
+        LayoutPage $layoutPage,
     ) {
         $me->wantTo('Send order as logged customer');
 
@@ -202,10 +202,10 @@ class OrderCest
             CustomerRegistrationCest::DEFAULT_USER_LAST_NAME,
             CustomerRegistrationCest::DEFAULT_USER_EMAIL,
             CustomerRegistrationCest::DEFAULT_USER_PASSWORD,
-            CustomerRegistrationCest::DEFAULT_USER_PASSWORD
+            CustomerRegistrationCest::DEFAULT_USER_PASSWORD,
         );
         $registrationPage->checkRegistrationSuccessful(
-            CustomerRegistrationCest::DEFAULT_USER_FIRST_NAME . ' ' . CustomerRegistrationCest::DEFAULT_USER_LAST_NAME
+            CustomerRegistrationCest::DEFAULT_USER_FIRST_NAME . ' ' . CustomerRegistrationCest::DEFAULT_USER_LAST_NAME,
         );
 
         // tv-audio
@@ -224,12 +224,12 @@ class OrderCest
             CustomerRegistrationCest::DEFAULT_USER_FIRST_NAME,
             CustomerRegistrationCest::DEFAULT_USER_LAST_NAME,
             CustomerRegistrationCest::DEFAULT_USER_EMAIL,
-            self::DEFAULT_PHONE
+            self::DEFAULT_PHONE,
         );
         $orderPage->fillBillingAddress(
             self::DEFAULT_BILLING_STREET,
             self::DEFAULT_BILLING_CITY,
-            self::DEFAULT_BILLING_POSTCODE
+            self::DEFAULT_BILLING_POSTCODE,
         );
         $orderPage->acceptLegalConditions();
 

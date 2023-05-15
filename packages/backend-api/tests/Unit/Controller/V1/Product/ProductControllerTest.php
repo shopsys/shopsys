@@ -39,7 +39,7 @@ class ProductControllerTest extends TestCase
             $productTransformer,
             $linksTransformer,
             $productDataFactory,
-            $productApiDataValidator
+            $productApiDataValidator,
         );
     }
 
@@ -57,7 +57,7 @@ class ProductControllerTest extends TestCase
     {
         return new Domain(
             [new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com/', 'czech', 'cs')],
-            $this->createMock(Setting::class)
+            $this->createMock(Setting::class),
         );
     }
 }

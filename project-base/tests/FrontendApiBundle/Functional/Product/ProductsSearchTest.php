@@ -34,7 +34,7 @@ class ProductsSearchTest extends ProductsGraphQlTestCase
                 'Book of procedures for dealing with traffic accidents',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $firstDomainLocale
+                $firstDomainLocale,
             )],
             ['name' => t('Book 55 best programs for burning CDs and DVDs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
         ];

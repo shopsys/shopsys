@@ -25,7 +25,7 @@ class NewsletterController extends AdminBaseController
     public function __construct(
         protected readonly NewsletterFacade $newsletterFacade,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
-        protected readonly GridFactory $gridFactory
+        protected readonly GridFactory $gridFactory,
     ) {
     }
 
@@ -40,7 +40,7 @@ class NewsletterController extends AdminBaseController
 
         $queryBuilder = $this->newsletterFacade->getQueryBuilderForQuickSearch(
             $this->adminDomainTabsFacade->getSelectedDomainId(),
-            $quickSearchForm->getData()
+            $quickSearchForm->getData(),
         );
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'u.id');
@@ -60,7 +60,7 @@ class NewsletterController extends AdminBaseController
             [
                 'quickSearchForm' => $quickSearchForm->createView(),
                 'gridView' => $grid->createView(),
-            ]
+            ],
         );
     }
 
@@ -80,7 +80,7 @@ class NewsletterController extends AdminBaseController
                 t('Subscriber <strong>{{ email }}</strong> deleted'),
                 [
                     'email' => $email,
-                ]
+                ],
             );
         } catch (CustomerUserNotFoundException $ex) {
             $this->addErrorFlash(t('Selected subscriber doesn\'t exist.'));

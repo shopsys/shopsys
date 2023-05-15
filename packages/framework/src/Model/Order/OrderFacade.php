@@ -94,7 +94,7 @@ class OrderFacade
         protected readonly NumberFormatterExtension $numberFormatterExtension,
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
         protected readonly TransportPriceCalculation $transportPriceCalculation,
-        protected readonly OrderItemFactoryInterface $orderItemFactory
+        protected readonly OrderItemFactoryInterface $orderItemFactory,
     ) {
     }
 
@@ -115,7 +115,7 @@ class OrderFacade
             $orderData,
             $orderNumber,
             $orderUrlHash,
-            $customerUser
+            $customerUser,
         );
 
         $this->fillOrderItems($order, $orderPreview);
@@ -125,7 +125,7 @@ class OrderFacade
         }
 
         $order->setTotalPrice(
-            $this->orderPriceCalculation->getOrderTotalPrice($order)
+            $this->orderPriceCalculation->getOrderTotalPrice($order),
         );
 
         $this->em->persist($order);
@@ -195,7 +195,7 @@ class OrderFacade
         $orderEditResult = $order->edit($orderData);
 
         $order->setTotalPrice(
-            $this->orderPriceCalculation->getOrderTotalPrice($order)
+            $this->orderPriceCalculation->getOrderTotalPrice($order),
         );
 
         $this->em->flush();
@@ -315,7 +315,7 @@ class OrderFacade
     {
         return $this->orderRepository->getOrderListQueryBuilderByQuickSearchData(
             $this->localization->getAdminLocale(),
-            $quickSearchData
+            $quickSearchData,
         );
     }
 
@@ -384,7 +384,7 @@ class OrderFacade
                 $quantifiedProduct->getQuantity(),
                 $product->getUnit()->getName($locale),
                 $product->getCatnum(),
-                $product
+                $product,
             );
 
             if ($quantifiedItemDiscount !== null) {
@@ -392,7 +392,7 @@ class OrderFacade
                     $orderItem,
                     $quantifiedItemDiscount,
                     $locale,
-                    (float)$orderPreview->getPromoCodeDiscountPercent()
+                    (float)$orderPreview->getPromoCodeDiscountPercent(),
                 );
             }
         }
@@ -410,7 +410,7 @@ class OrderFacade
             $payment,
             $order->getCurrency(),
             $orderPreview->getProductsPrice(),
-            $order->getDomainId()
+            $order->getDomainId(),
         );
         $orderPayment = $this->orderItemFactory->createPayment(
             $order,
@@ -418,7 +418,7 @@ class OrderFacade
             $paymentPrice,
             $payment->getPaymentDomain($order->getDomainId())->getVat()->getPercent(),
             1,
-            $payment
+            $payment,
         );
         $order->addItem($orderPayment);
     }
@@ -435,7 +435,7 @@ class OrderFacade
             $transport,
             $order->getCurrency(),
             $orderPreview->getProductsPrice(),
-            $order->getDomainId()
+            $order->getDomainId(),
         );
         $orderTransport = $this->orderItemFactory->createTransport(
             $order,
@@ -443,7 +443,7 @@ class OrderFacade
             $transportPrice,
             $transport->getTransportDomain($order->getDomainId())->getVat()->getPercent(),
             1,
-            $transport
+            $transport,
         );
         $order->addItem($orderTransport);
     }
@@ -464,7 +464,7 @@ class OrderFacade
                 1,
                 null,
                 null,
-                null
+                null,
             );
         }
     }
@@ -481,7 +481,7 @@ class OrderFacade
             '%s %s - %s',
             t('Promo code', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale),
             $this->numberFormatterExtension->formatPercent(-$discountPercent, $locale),
-            $orderItem->getName()
+            $orderItem->getName(),
         );
 
         $this->orderItemFactory->createProduct(
@@ -492,7 +492,7 @@ class OrderFacade
             1,
             null,
             null,
-            null
+            null,
         );
     }
 
@@ -522,12 +522,12 @@ class OrderFacade
                 $newOrderItemData->name,
                 new Price(
                     $newOrderItemData->priceWithoutVat,
-                    $newOrderItemData->priceWithVat
+                    $newOrderItemData->priceWithVat,
                 ),
                 $newOrderItemData->vatPercent,
                 $newOrderItemData->quantity,
                 $newOrderItemData->unitName,
-                $newOrderItemData->catnum
+                $newOrderItemData->catnum,
             );
 
             if ($newOrderItemData->usePriceCalculation) {
@@ -535,7 +535,7 @@ class OrderFacade
             }
 
             $newOrderItem->setTotalPrice(
-                new Price($newOrderItemData->totalPriceWithoutVat, $newOrderItemData->totalPriceWithVat)
+                new Price($newOrderItemData->totalPriceWithoutVat, $newOrderItemData->totalPriceWithVat),
             );
         }
     }
@@ -549,14 +549,14 @@ class OrderFacade
         if ($orderItemData->usePriceCalculation) {
             $orderItemData->priceWithoutVat = $this->orderItemPriceCalculation->calculatePriceWithoutVat(
                 $orderItemData,
-                $domainId
+                $domainId,
             );
             $orderItemData->totalPriceWithVat = null;
             $orderItemData->totalPriceWithoutVat = null;
         } else {
             Assert::allNotNull(
                 [$orderItemData->priceWithoutVat, $orderItemData->totalPriceWithVat, $orderItemData->totalPriceWithoutVat],
-                'When not using price calculation for an order item, all prices must be filled.'
+                'When not using price calculation for an order item, all prices must be filled.',
             );
         }
     }

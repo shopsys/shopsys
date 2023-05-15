@@ -29,18 +29,18 @@ class PhingConfigFixerCommand extends Command
     {
         $this
             ->setDescription(
-                'Fixes syntax of Phing configuration automatically (sorts targets alphabetically and normalizes whitespace).'
+                'Fixes syntax of Phing configuration automatically (sorts targets alphabetically and normalizes whitespace).',
             )
             ->addArgument(
                 static::ARG_XML_PATH,
                 InputArgument::REQUIRED | InputArgument::IS_ARRAY,
-                'Path(-s) to the Phing XML configuration'
+                'Path(-s) to the Phing XML configuration',
             )
             ->addOption(
                 static::OPTION_ONLY_CHECK,
                 null,
                 InputOption::VALUE_NONE,
-                'Will not modify the XML, only fails if the output would be different'
+                'Will not modify the XML, only fails if the output would be different',
             );
     }
 
@@ -81,8 +81,8 @@ class PhingConfigFixerCommand extends Command
             $io->comment(
                 sprintf(
                     'Re-run the command without the "%s" option to fix it automatically.',
-                    static::OPTION_ONLY_CHECK
-                )
+                    static::OPTION_ONLY_CHECK,
+                ),
             );
         }
 
@@ -171,7 +171,7 @@ class PhingConfigFixerCommand extends Command
 
             if ($content === $replacedContent) {
                 throw new RuntimeException(
-                    "This block was not found in the XML content and could not be replaced:\n\n" . $targetBlock
+                    "This block was not found in the XML content and could not be replaced:\n\n" . $targetBlock,
                 );
             }
 
@@ -199,8 +199,8 @@ class PhingConfigFixerCommand extends Command
                 throw new RuntimeException(
                     sprintf(
                         'The placeholder for target #%d was not found in the XML content and could not be replaced.',
-                        $position
-                    )
+                        $position,
+                    ),
                 );
             }
 

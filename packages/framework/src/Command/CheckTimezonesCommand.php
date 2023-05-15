@@ -59,7 +59,7 @@ class CheckTimezonesCommand extends Command
                 'Timezones in PHP and database configuration must be identical.'
                 . ' Current settings - PHP:%s, PostgreSQL:%s',
                 $phpTimezone,
-                $postgreSqlTimezone
+                $postgreSqlTimezone,
             );
 
             throw new DifferentTimezonesException($message);

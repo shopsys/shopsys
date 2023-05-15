@@ -41,7 +41,7 @@ class VariantFormType extends AbstractType
                             new Constraints\NotBlank(),
                         ],
                     ])
-                    ->addModelTransformer(new RemoveDuplicatesFromArrayTransformer())
+                    ->addModelTransformer(new RemoveDuplicatesFromArrayTransformer()),
             )
             ->add('save', SubmitType::class, [
                 'label' => t('Create'),

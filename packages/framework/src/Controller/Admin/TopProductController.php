@@ -16,7 +16,7 @@ class TopProductController extends AdminBaseController
      */
     public function __construct(
         protected readonly TopProductFacade $topProductFacade,
-        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 

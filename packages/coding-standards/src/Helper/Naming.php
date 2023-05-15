@@ -87,7 +87,7 @@ class Naming
             $resolvedName = NamespaceHelper::resolveClassName(
                 $file,
                 $referencedName->getNameAsReferencedInFile(),
-                $classTokenPosition
+                $classTokenPosition,
             );
 
             if ($referencedName->getNameAsReferencedInFile() === $className) {

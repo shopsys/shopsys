@@ -33,7 +33,7 @@ final class CreateAndCommitLockFilesReleaseWorker extends AbstractShopsysRelease
 
         $this->symfonyStyle->note(sprintf('Cloning shopsys/%s. This can take a while.', $packageName));
         $this->processRunner->run(
-            sprintf('cd %s && git clone --branch=%s https://github.com/shopsys/%s.git', $tempDirectory, $this->currentBranchName, $packageName)
+            sprintf('cd %s && git clone --branch=%s https://github.com/shopsys/%s.git', $tempDirectory, $this->currentBranchName, $packageName),
         );
 
         $this->symfonyStyle->note('Installing dependencies');
@@ -62,8 +62,8 @@ final class CreateAndCommitLockFilesReleaseWorker extends AbstractShopsysRelease
         $this->symfonyStyle->confirm(
             sprintf(
                 'confirm that composer.lock, symfony.lock, package-lock.json, and migrations-lock.yml are pushed to "%s" branch',
-                $this->currentBranchName
-            )
+                $this->currentBranchName,
+            ),
         );
     }
 

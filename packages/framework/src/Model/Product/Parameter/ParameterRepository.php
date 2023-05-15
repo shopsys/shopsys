@@ -21,7 +21,7 @@ class ParameterRepository
     public function __construct(
         EntityManagerInterface $entityManager,
         protected readonly ParameterValueFactoryInterface $parameterValueFactory,
-        protected readonly ParameterValueDataFactoryInterface $parameterValueDataFactory
+        protected readonly ParameterValueDataFactoryInterface $parameterValueDataFactory,
     ) {
         $this->em = $entityManager;
     }
@@ -273,7 +273,7 @@ class ParameterRepository
                 Join::WITH,
                 'p = ' . $alias . '.translatable
                     AND ' . $alias . '.locale = :' . $localeParameterName . '
-                    AND ' . $alias . '.name = :' . $nameParameterName
+                    AND ' . $alias . '.name = :' . $nameParameterName,
             );
             $queryBuilder->setParameter($localeParameterName, $locale);
             $queryBuilder->setParameter($nameParameterName, $name);

@@ -26,7 +26,7 @@ class OrderProductFacade
         protected readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
         protected readonly ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
-        protected readonly ModuleFacade $moduleFacade
+        protected readonly ModuleFacade $moduleFacade,
     ) {
     }
 
@@ -80,7 +80,7 @@ class OrderProductFacade
             $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($relevantProduct);
             $this->productHiddenRecalculator->calculateHiddenForProduct($relevantProduct);
             $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation(
-                $relevantProduct
+                $relevantProduct,
             );
             $relevantProduct->markForVisibilityRecalculation();
         }

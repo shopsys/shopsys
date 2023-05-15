@@ -21,7 +21,7 @@ class Authenticator
      */
     public function __construct(
         protected readonly TokenStorageInterface $tokenStorage,
-        protected readonly EventDispatcherInterface $eventDispatcher
+        protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }
 
@@ -44,7 +44,7 @@ class Authenticator
         if ($error !== null) {
             throw new LoginFailedException(
                 'Log in failed.',
-                $error instanceof Exception ? $error : null
+                $error instanceof Exception ? $error : null,
             );
         }
 
@@ -60,7 +60,7 @@ class Authenticator
         $token = new UsernamePasswordToken(
             $customerUser,
             'frontend',
-            $customerUser->getRoles()
+            $customerUser->getRoles(),
         );
         $this->tokenStorage->setToken($token);
 

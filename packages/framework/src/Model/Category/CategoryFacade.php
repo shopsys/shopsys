@@ -40,7 +40,7 @@ class CategoryFacade
         protected readonly PluginCrudExtensionFacade $pluginCrudExtensionFacade,
         protected readonly CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory,
         protected readonly CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory,
-        protected readonly CategoryFactoryInterface $categoryFactory
+        protected readonly CategoryFactoryInterface $categoryFactory,
     ) {
     }
 
@@ -82,7 +82,7 @@ class CategoryFacade
 
         if (!$category->isVisible($domainId)) {
             throw new CategoryNotFoundException(
-                sprintf('Category with UUID "%s" is not visible on domain ID "%s"', $categoryUuid, $domainId)
+                sprintf('Category with UUID "%s" is not visible on domain ID "%s"', $categoryUuid, $domainId),
             );
         }
 
@@ -247,7 +247,7 @@ class CategoryFacade
     {
         $categories = $this->categoryRepository->getPreOrderTreeTraversalForVisibleCategoriesByDomain(
             $domainId,
-            $locale
+            $locale,
         );
 
         return $this->categoryWithPreloadedChildrenFactory->createCategoriesWithPreloadedChildren($categories);
@@ -272,7 +272,7 @@ class CategoryFacade
     {
         $categories = $this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain(
             $parentCategory,
-            $domainConfig
+            $domainConfig,
         );
 
         return $this->categoryWithLazyLoadedVisibleChildrenFactory
@@ -290,7 +290,7 @@ class CategoryFacade
         return $this->categoryRepository->getVisibleByDomainIdAndSearchText(
             $domainId,
             $locale,
-            $searchText
+            $searchText,
         );
     }
 
@@ -328,7 +328,7 @@ class CategoryFacade
             $this->domain->getId(),
             $this->domain->getLocale(),
             $page,
-            $limit
+            $limit,
         );
     }
 
@@ -343,7 +343,7 @@ class CategoryFacade
         foreach ($this->domain->getAll() as $domainConfig) {
             $mainCategoriesIndexedByDomainId[$domainConfig->getId()] = $this->categoryRepository->findProductMainCategoryOnDomain(
                 $product,
-                $domainConfig->getId()
+                $domainConfig->getId(),
             );
         }
 
@@ -379,7 +379,7 @@ class CategoryFacade
     {
         return $this->categoryRepository->getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(
             $product,
-            $domainConfig
+            $domainConfig,
         );
     }
 
@@ -418,12 +418,12 @@ class CategoryFacade
     public function getListableProductCountsIndexedByCategoryId(
         array $categories,
         PricingGroup $pricingGroup,
-        $domainId
+        $domainId,
     ) {
         return $this->categoryRepository->getListableProductCountsIndexedByCategoryId(
             $categories,
             $pricingGroup,
-            $domainId
+            $domainId,
         );
     }
 
@@ -442,7 +442,7 @@ class CategoryFacade
         $this->friendlyUrlFacade->createFriendlyUrls(
             'front_product_list',
             $category->getId(),
-            $changedNames
+            $changedNames,
         );
     }
 

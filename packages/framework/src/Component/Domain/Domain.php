@@ -26,7 +26,7 @@ class Domain implements DomainIdsProviderInterface
      */
     public function __construct(
         protected array $domainConfigs,
-        protected Setting $setting
+        protected Setting $setting,
     ) {
     }
 

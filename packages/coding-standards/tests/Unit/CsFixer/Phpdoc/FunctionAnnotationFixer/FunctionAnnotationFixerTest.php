@@ -42,8 +42,8 @@ final class FunctionAnnotationFixerTest extends AbstractFixerTestCase
                 $whitespacesFixerConfig,
                 $functionsAnalyzer,
                 $phpToDocTypeTransformer,
-                $indentDetector
-            )
+                $indentDetector,
+            ),
         );
 
         $fixer->registerFixer(
@@ -51,12 +51,12 @@ final class FunctionAnnotationFixerTest extends AbstractFixerTestCase
                 $whitespacesFixerConfig,
                 $functionsAnalyzer,
                 $phpToDocTypeTransformer,
-                $indentDetector
-            )
+                $indentDetector,
+            ),
         );
 
         $fixer->registerFixer(
-            new OrderedParamAnnotationsFixer($functionsAnalyzer)
+            new OrderedParamAnnotationsFixer($functionsAnalyzer),
         );
 
         return $fixer;

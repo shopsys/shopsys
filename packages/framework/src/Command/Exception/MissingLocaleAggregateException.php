@@ -20,7 +20,7 @@ class MissingLocaleAggregateException extends Exception
         $message = sprintf(
             'It looks like your operating system does not support these locales: %s. '
                 . 'Please visit docs/installation/native-installation-troubleshooting.md for more details.',
-            '"' . implode('", "', $missingLocales) . '"'
+            '"' . implode('", "', $missingLocales) . '"',
         );
 
         parent::__construct($message, $missingLocaleExceptions[0]->getCode(), $missingLocaleExceptions[0]);

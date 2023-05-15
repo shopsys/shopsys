@@ -22,7 +22,7 @@ class DenyScriptNameInRequestPathListener implements EventSubscriberInterface
                     'Requested URL contains script file name (/index.php). Access to an URL with script file is denied '
                         . 'to avoid duplicate content (even to /index.php/_wdt/* which is why web debug toolbar does '
                         . 'not work). Having script file in URL is used in Symfony to change front controller (and '
-                        . 'therefore the environment) but we do not need this.'
+                        . 'therefore the environment) but we do not need this.',
                 );
             }
         }

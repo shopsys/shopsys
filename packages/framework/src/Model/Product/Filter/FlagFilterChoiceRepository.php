@@ -18,7 +18,7 @@ class FlagFilterChoiceRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      */
     public function __construct(
-        protected readonly ProductRepository $productRepository
+        protected readonly ProductRepository $productRepository,
     ) {
     }
 
@@ -34,7 +34,7 @@ class FlagFilterChoiceRepository
         $productsQueryBuilder = $this->productRepository->getListableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
-            $category
+            $category,
         );
 
         return $this->getVisibleFlagsByProductsQueryBuilder($productsQueryBuilder, $locale);
@@ -52,7 +52,7 @@ class FlagFilterChoiceRepository
         $productsQueryBuilder = $this->productRepository->getListableForBrandQueryBuilder(
             $domainId,
             $pricingGroup,
-            $brand
+            $brand,
         );
 
         return $this->getVisibleFlagsByProductsQueryBuilder($productsQueryBuilder, $locale);
@@ -68,7 +68,7 @@ class FlagFilterChoiceRepository
     {
         $productsQueryBuilder = $this->productRepository->getAllListableQueryBuilder(
             $domainId,
-            $pricingGroup
+            $pricingGroup,
         );
 
         return $this->getVisibleFlagsByProductsQueryBuilder($productsQueryBuilder, $locale);

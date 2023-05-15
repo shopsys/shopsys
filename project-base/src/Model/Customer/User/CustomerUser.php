@@ -26,7 +26,7 @@ class CustomerUser extends BaseUser
      * @param \App\Model\Customer\User\CustomerUserData $customerUserData
      */
     public function __construct(
-        BaseUserData $customerUserData
+        BaseUserData $customerUserData,
     ) {
         parent::__construct($customerUserData);
     }

@@ -38,13 +38,13 @@ class ProductDetailViewFactoryTest extends TestCase
     public function testGetName(
         ?string $seoH1,
         ?string $name,
-        ?string $expected
+        ?string $expected,
     ): void {
         $productDetailView = $this->createProductDetailView(
             [
                 'getSeoH1' => $seoH1,
                 'getName' => $name,
-            ]
+            ],
         );
 
         self::assertSame($expected, $productDetailView->getName());
@@ -95,7 +95,7 @@ class ProductDetailViewFactoryTest extends TestCase
      */
     public function testNullableArguments(
         ?string $input,
-        ?string $expected
+        ?string $expected,
     ): void {
         $productDetailView = $this->createProductDetailView(
             [
@@ -103,7 +103,7 @@ class ProductDetailViewFactoryTest extends TestCase
                 'getCatnum' => $input,
                 'getEan' => $input,
                 'getPartno' => $input,
-            ]
+            ],
         );
 
         self::assertSame($expected, $productDetailView->getDescription());
@@ -139,7 +139,7 @@ class ProductDetailViewFactoryTest extends TestCase
         string $availabilityString,
         ?int $dispatchTime,
         string $expectedAvailabilityString,
-        bool $expectedInStockStatus
+        bool $expectedInStockStatus,
     ): void {
         $productAvailabilityMock = $this->createMock(Availability::class);
         $productAvailabilityMock->method('getName')->willReturn($availabilityString);
@@ -148,7 +148,7 @@ class ProductDetailViewFactoryTest extends TestCase
         $productDetailView = $this->createProductDetailView(
             [
                 'getCalculatedAvailability' => $productAvailabilityMock,
-            ]
+            ],
         );
 
         self::assertSame($expectedAvailabilityString, $productDetailView->getAvailability());
@@ -193,7 +193,7 @@ class ProductDetailViewFactoryTest extends TestCase
         bool $isVariant,
         ?Product $mainVariantMock,
         ?int $expectedMainVariantId,
-        array $expectedVariants = []
+        array $expectedVariants = [],
     ): void {
         $productDetailView = $this->createProductDetailView(
             [
@@ -203,7 +203,7 @@ class ProductDetailViewFactoryTest extends TestCase
             ],
             [],
             [],
-            $expectedVariants
+            $expectedVariants,
         );
 
         self::assertSame($isMainVariant, $productDetailView->isMainVariant());
@@ -265,12 +265,12 @@ class ProductDetailViewFactoryTest extends TestCase
      */
     public function testGetSeoMetaDescription(
         ?string $input,
-        ?string $expected
+        ?string $expected,
     ): void {
         $productDetailView = $this->createProductDetailView(
             [
                 'getSeoMetaDescription' => $input,
-            ]
+            ],
         );
 
         self::assertSame($expected, $productDetailView->getSeoMetaDescription());
@@ -302,7 +302,7 @@ class ProductDetailViewFactoryTest extends TestCase
             [],
             [],
             [],
-            null
+            null,
         );
 
         self::assertNull($productDetailView->getSellingPrice());
@@ -315,11 +315,11 @@ class ProductDetailViewFactoryTest extends TestCase
      */
     public function testGetMainImageView(
         array $imageViews,
-        ?ImageView $expectedMainImageView
+        ?ImageView $expectedMainImageView,
     ): void {
         $productDetailView = $this->createProductDetailView(
             [],
-            $imageViews
+            $imageViews,
         );
 
         self::assertSame($expectedMainImageView, $productDetailView->getMainImageView());
@@ -366,7 +366,7 @@ class ProductDetailViewFactoryTest extends TestCase
         array $imageViews = [],
         array $accessories = [],
         array $variants = [],
-        ?int $priceAmount = 10
+        ?int $priceAmount = 10,
     ): ProductDetailView {
         $imageViewFacadeMock = $this->createImageViewFacadeMock($imageViews);
         $productActionViewFacadeMock = $this->createProductActionViewFacadeMock();
@@ -389,7 +389,7 @@ class ProductDetailViewFactoryTest extends TestCase
             $categoryFacadeMock,
             $seoSettingFacadeMock,
             $listedProductViewFacadeMock,
-            $listedProductVariantsViewFacadeMock
+            $listedProductVariantsViewFacadeMock,
         );
 
         return $productDetailViewFactory->createFromProduct($this->createProductMock($productData));
@@ -523,7 +523,7 @@ class ProductDetailViewFactoryTest extends TestCase
         $productCachedAttributesFacadeMock = $this->createMock(ProductCachedAttributesFacade::class);
         $getProductSellingPriceMethod = $productCachedAttributesFacadeMock->method('getProductSellingPrice');
         $getProductSellingPriceMethod->willReturn(
-            $priceAmount === null ? null : $this->createProductPrice($priceAmount)
+            $priceAmount === null ? null : $this->createProductPrice($priceAmount),
         );
 
         return $productCachedAttributesFacadeMock;

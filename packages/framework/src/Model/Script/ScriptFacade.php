@@ -24,7 +24,7 @@ class ScriptFacade
         protected readonly ScriptRepository $scriptRepository,
         protected readonly Setting $setting,
         protected readonly ScriptFactoryInterface $scriptFactory,
-        protected readonly MoneyExtension $moneyExtension
+        protected readonly MoneyExtension $moneyExtension,
     ) {
     }
 

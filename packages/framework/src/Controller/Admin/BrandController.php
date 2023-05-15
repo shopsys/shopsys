@@ -35,7 +35,7 @@ class BrandController extends AdminBaseController
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly Domain $domain,
         protected readonly BrandDataFactoryInterface $brandDataFactory,
-        protected readonly EntityManagerInterface $entityManager
+        protected readonly EntityManagerInterface $entityManager,
     ) {
     }
 
@@ -61,7 +61,7 @@ class BrandController extends AdminBaseController
                     [
                         'name' => $brand->getName(),
                         'url' => $this->generateUrl('admin_brand_edit', ['id' => $brand->getId()]),
-                    ]
+                    ],
                 );
 
             return $this->redirectToRoute('admin_brand_list');
@@ -101,7 +101,7 @@ class BrandController extends AdminBaseController
         $grid->addEditActionColumn('admin_brand_edit', ['id' => 'b.id']);
         $grid->addDeleteActionColumn('admin_brand_delete', ['id' => 'b.id'])
             ->setConfirmMessage(
-                t('Do you really want to remove this brand? If it is used anywhere it will be unset.')
+                t('Do you really want to remove this brand? If it is used anywhere it will be unset.'),
             );
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Brand/listGrid.html.twig');
@@ -134,7 +134,7 @@ class BrandController extends AdminBaseController
                     [
                         'name' => $brand->getName(),
                         'url' => $this->generateUrl('admin_brand_edit', ['id' => $brand->getId()]),
-                    ]
+                    ],
                 );
 
             return $this->redirectToRoute('admin_brand_list');
@@ -166,7 +166,7 @@ class BrandController extends AdminBaseController
                 t('Brand <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $fullName,
-                ]
+                ],
             );
         } catch (BrandNotFoundException $ex) {
             $this->addErrorFlash(t('Selected brand doesn\'t exist.'));

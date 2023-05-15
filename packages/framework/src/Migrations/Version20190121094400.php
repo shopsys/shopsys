@@ -66,7 +66,7 @@ class Version20190121094400 extends AbstractMigration
                         'newCountryId' => $newId,
                         'originalCountryId' => $oldId,
                         'domainId' => $domainId,
-                    ]
+                    ],
                 );
 
                 $this->sql(
@@ -75,7 +75,7 @@ class Version20190121094400 extends AbstractMigration
                         'newCountryId' => $newId,
                         'originalCountryId' => $oldId,
                         'domainId' => $domainId,
-                    ]
+                    ],
                 );
 
                 $this->sql(
@@ -83,7 +83,7 @@ class Version20190121094400 extends AbstractMigration
                     [
                         'newCountryId' => $newId,
                         'originalCountryId' => $oldId,
-                    ]
+                    ],
                 );
 
                 $this->sql(
@@ -91,7 +91,7 @@ class Version20190121094400 extends AbstractMigration
                     [
                         'newCountryId' => $newId,
                         'originalCountryId' => $oldId,
-                    ]
+                    ],
                 );
             }
 
@@ -99,15 +99,15 @@ class Version20190121094400 extends AbstractMigration
                 $domainData = $transformer->getDomainDataForCountry($domainId, $code);
                 $this->sql(
                     'INSERT INTO country_domains (country_id, domain_id, enabled) VALUES (:countryId, :domainId, :enabled)',
-                    [$domainData['country_id'], $domainData['domain_id'], (int)$domainData['enabled']]
+                    [$domainData['country_id'], $domainData['domain_id'], (int)$domainData['enabled']],
                 );
 
                 $translatableData = $transformer->getTranslatableDataForCountry($domainId, $code);
                 $this->sql(
                     'INSERT INTO country_translations (translatable_id, name, locale) VALUES (:translatableId, :name, :locale)',
                     [$translatableData['translatable_id'], $translatableData['name'], $this->getDomainLocale(
-                        $domainId
-                    )]
+                        $domainId,
+                    )],
                 );
             }
         }
@@ -115,7 +115,7 @@ class Version20190121094400 extends AbstractMigration
         $this->sql(
             'DELETE FROM countries WHERE id IN (:ids)',
             ['ids' => $transformer->getObsoleteCountryIds()],
-            ['ids' => Connection::PARAM_INT_ARRAY]
+            ['ids' => Connection::PARAM_INT_ARRAY],
         );
 
         $this->sql('ALTER TABLE countries DROP COLUMN name');

@@ -17,7 +17,7 @@ class ProductMassActionFacade
     public function __construct(
         protected readonly ProductMassActionRepository $productMassActionRepository,
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
-        protected readonly ProductHiddenRecalculator $productHiddenRecalculator
+        protected readonly ProductHiddenRecalculator $productHiddenRecalculator,
     ) {
     }
 
@@ -29,12 +29,12 @@ class ProductMassActionFacade
     public function doMassAction(
         ProductMassActionData $productMassActionData,
         QueryBuilder $selectQueryBuilder,
-        array $checkedProductIds
+        array $checkedProductIds,
     ) {
         $selectedProductIds = $this->getSelectedProductIds(
             $productMassActionData,
             $selectQueryBuilder,
-            $checkedProductIds
+            $checkedProductIds,
         );
 
         if ($productMassActionData->action !== ProductMassActionData::ACTION_SET) {
@@ -47,7 +47,7 @@ class ProductMassActionFacade
 
         $this->productMassActionRepository->setHidden(
             $selectedProductIds,
-            $productMassActionData->value === ProductMassActionData::VALUE_PRODUCT_HIDE
+            $productMassActionData->value === ProductMassActionData::VALUE_PRODUCT_HIDE,
         );
         $this->productHiddenRecalculator->calculateHiddenForAll();
         $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
@@ -62,7 +62,7 @@ class ProductMassActionFacade
     protected function getSelectedProductIds(
         ProductMassActionData $productMassActionData,
         QueryBuilder $selectQueryBuilder,
-        array $checkedProductIds
+        array $checkedProductIds,
     ) {
         $selectedProductIds = [];
 

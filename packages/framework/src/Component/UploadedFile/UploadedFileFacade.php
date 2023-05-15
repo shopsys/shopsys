@@ -27,7 +27,7 @@ class UploadedFileFacade
         protected readonly UploadedFileRepository $uploadedFileRepository,
         protected readonly FilesystemOperator $filesystem,
         protected readonly UploadedFileLocator $uploadedFileLocator,
-        protected readonly UploadedFileFactoryInterface $uploadedFileFactory
+        protected readonly UploadedFileFactoryInterface $uploadedFileFactory,
     ) {
     }
 
@@ -55,7 +55,7 @@ class UploadedFileFacade
                 $type,
                 $uploadedFiles,
                 $uploadedFilenames,
-                count($orderedFiles)
+                count($orderedFiles),
             );
         } else {
             if (count($orderedFiles) > 1) {
@@ -70,7 +70,7 @@ class UploadedFileFacade
                 $uploadedFileEntityConfig->getEntityName(),
                 $type,
                 array_pop($uploadedFiles),
-                array_pop($uploadedFilenames)
+                array_pop($uploadedFilenames),
             );
         }
 
@@ -93,7 +93,7 @@ class UploadedFileFacade
             $entityId,
             $type,
             $temporaryFilename,
-            $uploadedFilename
+            $uploadedFilename,
         );
 
         $this->em->persist($newUploadedFile);
@@ -118,7 +118,7 @@ class UploadedFileFacade
                 $type,
                 $temporaryFilenames,
                 $uploadedFilenames,
-                $existingFilesCount
+                $existingFilesCount,
             );
 
             foreach ($files as $file) {
@@ -168,7 +168,7 @@ class UploadedFileFacade
     {
         $uploadedFiles = $this->uploadedFileRepository->getAllUploadedFilesByEntity(
             $this->uploadedFileConfig->getEntityName($entity),
-            $this->getEntityId($entity)
+            $this->getEntityId($entity),
         );
 
         $this->deleteFiles($entity, $uploadedFiles);
@@ -184,7 +184,7 @@ class UploadedFileFacade
         return $this->uploadedFileRepository->getUploadedFilesByEntity(
             $this->uploadedFileConfig->getEntityName($entity),
             $this->getEntityId($entity),
-            $type
+            $type,
         );
     }
 
@@ -273,7 +273,7 @@ class UploadedFileFacade
         return $this->uploadedFileRepository->getByIdSlugAndExtension(
             $uploadedFileId,
             $uploadedFileSlug,
-            $uploadedFileExtension
+            $uploadedFileExtension,
         );
     }
 }

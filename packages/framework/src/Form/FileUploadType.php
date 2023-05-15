@@ -31,7 +31,7 @@ class FileUploadType extends AbstractType
     public function __construct(
         private readonly UploadedFileFacade $uploadedFileFacade,
         private readonly FilesIdsToFilesTransformer $filesIdsToFilesTransformer,
-        private readonly UploadedFileConfig $uploadedFileConfig
+        private readonly UploadedFileConfig $uploadedFileConfig,
     ) {
     }
 
@@ -76,7 +76,7 @@ class FileUploadType extends AbstractType
                 $builder->create('orderedFiles', CollectionType::class, [
                     'required' => false,
                     'entry_type' => HiddenType::class,
-                ])->addModelTransformer($this->filesIdsToFilesTransformer)
+                ])->addModelTransformer($this->filesIdsToFilesTransformer),
             )
             ->add(
                 $builder->create('currentFilenamesIndexedById', CollectionType::class, [
@@ -86,11 +86,11 @@ class FileUploadType extends AbstractType
                         'constraints' => [
                             new Constraints\NotBlank(['message' => 'Please enter the filename']),
                             new Constraints\Length(
-                                ['max' => 245, 'maxMessage' => 'File name cannot be longer than {{ limit }} characters']
+                                ['max' => 245, 'maxMessage' => 'File name cannot be longer than {{ limit }} characters'],
                             ),
                         ],
                     ],
-                ])
+                ]),
             )
             ->add('filesToDelete', ChoiceType::class, [
                 'required' => false,
@@ -118,7 +118,7 @@ class FileUploadType extends AbstractType
 
         $uploadedFiles = $this->uploadedFileFacade->getUploadedFilesByEntity(
             $options['entity'],
-            $options['file_type']
+            $options['file_type'],
         );
 
         $uploadedFilesIndexedById = [];
@@ -141,7 +141,7 @@ class FileUploadType extends AbstractType
         }
 
         $fileEntityConfig = $this->uploadedFileConfig->getUploadedFileEntityConfigByClass(
-            $options['file_entity_class']
+            $options['file_entity_class'],
         );
         $fileTypeConfig = $fileEntityConfig->getTypeByName($options['file_type']);
 

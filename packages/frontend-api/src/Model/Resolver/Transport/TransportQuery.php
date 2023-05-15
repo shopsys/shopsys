@@ -19,7 +19,7 @@ class TransportQuery extends AbstractQuery
      */
     public function __construct(
         protected readonly TransportFacade $transportFacade,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 

@@ -68,7 +68,7 @@ class OrderProductFilter implements AdvancedSearchFilterInterface
                 $tableAlias = 'oi_' . $index;
                 $queryBuilder->andWhere(
                     $dqlOperator . ' (SELECT 1 FROM ' . OrderItem::class . ' ' . $tableAlias . ' ' .
-                        'WHERE ' . $tableAlias . '.order = o AND ' . $tableAlias . '.product = :' . $parameterName . ')'
+                        'WHERE ' . $tableAlias . '.order = o AND ' . $tableAlias . '.product = :' . $parameterName . ')',
                 );
                 $queryBuilder->setParameter($parameterName, $searchValue);
             }

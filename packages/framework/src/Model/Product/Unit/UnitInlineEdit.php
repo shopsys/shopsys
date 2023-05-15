@@ -18,7 +18,7 @@ class UnitInlineEdit extends AbstractGridInlineEdit
         UnitGridFactory $unitGridFactory,
         protected readonly UnitFacade $unitFacade,
         protected readonly FormFactoryInterface $formFactory,
-        protected readonly UnitDataFactoryInterface $unitDataFactory
+        protected readonly UnitDataFactoryInterface $unitDataFactory,
     ) {
         parent::__construct($unitGridFactory);
     }

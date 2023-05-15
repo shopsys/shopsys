@@ -25,7 +25,7 @@ class MailTemplateGridFactory implements GridFactoryInterface
         protected readonly MailTemplateRepository $mailTemplateRepository,
         protected readonly GridFactory $gridFactory,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
-        protected readonly MailTemplateConfiguration $mailTemplateConfiguration
+        protected readonly MailTemplateConfiguration $mailTemplateConfiguration,
     ) {
     }
 
@@ -48,7 +48,7 @@ class MailTemplateGridFactory implements GridFactoryInterface
             '@ShopsysFramework/Admin/Content/Mail/listGrid.html.twig',
             [
                 'readableNames' => $this->mailTemplateConfiguration->getReadableNamesIndexedBySlug(),
-            ]
+            ],
         );
 
         return $grid;
@@ -60,7 +60,7 @@ class MailTemplateGridFactory implements GridFactoryInterface
     protected function createDataSource(): DataSourceInterface
     {
         $queryBuilder = $this->mailTemplateRepository->createQueryBuilder(
-            $this->adminDomainTabsFacade->getSelectedDomainId()
+            $this->adminDomainTabsFacade->getSelectedDomainId(),
         );
 
         return new QueryBuilderDataSource($queryBuilder, 'mt.id');

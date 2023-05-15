@@ -94,15 +94,15 @@ class DefaultController extends AdminBaseController
     {
         $registeredInLastTwoWeeks = $this->statisticsFacade->getCustomersRegistrationsCountByDayInLastTwoWeeks();
         $registeredInLastTwoWeeksDates = $this->statisticsProcessingFacade->getDateTimesFormattedToLocaleFormat(
-            $registeredInLastTwoWeeks
+            $registeredInLastTwoWeeks,
         );
         $registeredInLastTwoWeeksCounts = $this->statisticsProcessingFacade->getCounts($registeredInLastTwoWeeks);
         $newOrdersCountByDayInLastTwoWeeks = $this->statisticsFacade->getNewOrdersCountByDayInLastTwoWeeks();
         $newOrdersInLastTwoWeeksDates = $this->statisticsProcessingFacade->getDateTimesFormattedToLocaleFormat(
-            $newOrdersCountByDayInLastTwoWeeks
+            $newOrdersCountByDayInLastTwoWeeks,
         );
         $newOrdersInLastTwoWeeksCounts = $this->statisticsProcessingFacade->getCounts(
-            $newOrdersCountByDayInLastTwoWeeks
+            $newOrdersCountByDayInLastTwoWeeks,
         );
 
         $quickProductSearchData = new QuickSearchFormData();
@@ -113,17 +113,17 @@ class DefaultController extends AdminBaseController
         $currentCountOfOrders = $this->statisticsFacade->getOrdersCount(static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR);
         $previousCountOfOrders = $this->statisticsFacade->getOrdersCount(
             static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR * 2,
-            static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR
+            static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR,
         );
 
         $ordersTrend = $this->getTrendDifference($previousCountOfOrders, $currentCountOfOrders);
 
         $currentCountOfNewCustomers = $this->statisticsFacade->getNewCustomersCount(
-            static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR
+            static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR,
         );
         $previousCountOfNewCustomers = $this->statisticsFacade->getNewCustomersCount(
             static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR * 2,
-            static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR
+            static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR,
         );
 
         $newCustomersTrend = $this->getTrendDifference($previousCountOfNewCustomers, $currentCountOfNewCustomers);
@@ -131,7 +131,7 @@ class DefaultController extends AdminBaseController
         $currentValueOfOrders = $this->statisticsFacade->getOrdersValue(static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR);
         $previousValueOfOrders = $this->statisticsFacade->getOrdersValue(
             static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR * 2,
-            static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR
+            static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR,
         );
 
         $ordersValueTrend = $this->getTrendDifference($previousValueOfOrders, $currentValueOfOrders);
@@ -153,7 +153,7 @@ class DefaultController extends AdminBaseController
                 'ordersValue' => $currentValueOfOrders,
                 'ordersValueTrend' => $ordersValueTrend,
                 'cronGridViews' => $this->getCronGridViews(),
-            ]
+            ],
         );
     }
 
@@ -164,7 +164,7 @@ class DefaultController extends AdminBaseController
                 t('<a href="{{ url }}">Some required email templates are not fully set.</a>'),
                 [
                     'url' => $this->generateUrl('admin_mail_template'),
-                ]
+                ],
             );
         }
 
@@ -173,7 +173,7 @@ class DefaultController extends AdminBaseController
                 t('<a href="{{ url }}">There are no units, you need to create some.</a>'),
                 [
                     'url' => $this->generateUrl('admin_unit_list'),
-                ]
+                ],
             );
         }
 
@@ -182,7 +182,7 @@ class DefaultController extends AdminBaseController
                 t('<a href="{{ url }}">Default unit is not set.</a>'),
                 [
                     'url' => $this->generateUrl('admin_unit_list'),
-                ]
+                ],
             );
         }
 
@@ -191,7 +191,7 @@ class DefaultController extends AdminBaseController
                 t('<a href="{{ url }}">There are no availabilities, you need to create some.</a>'),
                 [
                     'url' => $this->generateUrl('admin_availability_list'),
-                ]
+                ],
             );
         }
 
@@ -200,7 +200,7 @@ class DefaultController extends AdminBaseController
                 t('<a href="{{ url }}">Default product in stock availability is not set.</a>'),
                 [
                     'url' => $this->generateUrl('admin_availability_list'),
-                ]
+                ],
             );
         }
     }
@@ -297,23 +297,23 @@ class DefaultController extends AdminBaseController
         $cronListGrid->addColumn('lastStartedAt', 'lastStartedAt', t('Last started at'), false);
         $cronListGrid->addColumn('lastFinishedAt', 'lastFinishedAt', t('Last finished at'), false);
         $cronListGrid->addColumn('lastDuration', 'lastDuration', t('Last duration (mm:ss)'), false)->setClassAttribute(
-            'table-col'
+            'table-col',
         );
         $cronListGrid->addColumn('minimalDuration', 'minimalDuration', t('Min duration (mm:ss)'), false)->setClassAttribute(
-            'table-col'
+            'table-col',
         );
         $cronListGrid->addColumn('averageDuration', 'averageDuration', t('Avg duration (mm:ss)'), false)->setClassAttribute(
-            'table-col'
+            'table-col',
         );
 
         $cronListGrid->addColumn('maximalDuration', 'maximalDuration', t('Max duration (mm:ss)'), false)->setClassAttribute(
-            'table-col'
+            'table-col',
         );
         $cronListGrid->addColumn('status', 'status', t('Status'), false)->setClassAttribute('table-col');
 
         if ($this->isGranted(Roles::ROLE_SUPER_ADMIN)) {
             $cronListGrid->addColumn('actions', 'actions', t('Modifications'))->setClassAttribute(
-                'table-grid__cell--actions column--superadmin'
+                'table-grid__cell--actions column--superadmin',
             );
         }
 
@@ -331,7 +331,7 @@ class DefaultController extends AdminBaseController
     {
         $this->cronModuleFacade->schedule($serviceId);
         $this->addSuccessFlash(
-            t('Cron with serviceID `%serviceId%` was scheduled', ['%serviceId%' => $serviceId])
+            t('Cron with serviceID `%serviceId%` was scheduled', ['%serviceId%' => $serviceId]),
         );
 
         return $this->redirectToRoute('admin_default_dashboard');
@@ -346,7 +346,7 @@ class DefaultController extends AdminBaseController
     {
         $this->cronModuleFacade->disableCronModuleByServiceId($serviceId);
         $this->addSuccessFlash(
-            t('Cron with serviceID `%serviceId%` was disabled', ['%serviceId%' => $serviceId])
+            t('Cron with serviceID `%serviceId%` was disabled', ['%serviceId%' => $serviceId]),
         );
 
         return $this->redirectToRoute('admin_default_dashboard');
@@ -361,7 +361,7 @@ class DefaultController extends AdminBaseController
     {
         $this->cronModuleFacade->enableCronModuleByServiceId($serviceId);
         $this->addSuccessFlash(
-            t('Cron with serviceID `%serviceId%` was enabled', ['%serviceId%' => $serviceId])
+            t('Cron with serviceID `%serviceId%` was enabled', ['%serviceId%' => $serviceId]),
         );
 
         return $this->redirectToRoute('admin_default_dashboard');
@@ -413,7 +413,7 @@ class DefaultController extends AdminBaseController
         $cronRunsListGrid->addColumn('startedAt', 'cmr.startedAt', t('Started at'), false);
         $cronRunsListGrid->addColumn('finishedAt', 'cmr.finishedAt', t('Finished at'), false);
         $cronRunsListGrid->addColumn('duration', 'cmr.duration', t('Duration (mm:ss)'), false)->setClassAttribute(
-            'table-col table-col-10'
+            'table-col table-col-10',
         );
         $cronRunsListGrid->addColumn('status', 'cmr.status', t('Status'), false)->setClassAttribute('table-col table-col-10');
         $cronRunsListGrid->setTheme(
@@ -426,7 +426,7 @@ class DefaultController extends AdminBaseController
         $cronRunsListGrid->setDefaultLimit(100);
 
         $this->breadcrumbOverrider->overrideLastItem(
-            t('Cron detail - %name%', ['%name%' => $cronConfig->getReadableName() ?? $cronModule->getServiceId()])
+            t('Cron detail - %name%', ['%name%' => $cronConfig->getReadableName() ?? $cronModule->getServiceId()]),
         );
 
         return $this->render(
@@ -438,11 +438,11 @@ class DefaultController extends AdminBaseController
                     function ($data) {
                         return $this->dateTimeFormatterExtension->formatDate($data['startedAt']);
                     },
-                    $data
+                    $data,
                 ),
                 'cronName' => $cronConfig->getReadableName() ?? $cronModule->getServiceId(),
                 'cronTimeoutSecs' => $cronConfig->getTimeoutIteratedCronSec(),
-            ]
+            ],
         );
     }
 }

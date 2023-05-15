@@ -32,7 +32,7 @@ class LocalizedType extends AbstractType
 
         $defaultLocaleOptions['constraints'] = array_merge(
             $defaultLocaleOptions['constraints'],
-            $options['main_constraints']
+            $options['main_constraints'],
         );
 
         $defaultLocaleOptions['required'] = $options['required'];

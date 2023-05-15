@@ -21,7 +21,7 @@ class LocalizedRouterFactoryTest extends TestCase
         $localizedRouterFactory = new LocalizedRouterFactory(
             static::LOCALE_ROUTERS_CONFIGURATION_MASK,
             $containerMock,
-            __DIR__
+            __DIR__,
         );
         $this->expectException(LocalizedRoutingConfigFileNotFoundException::class);
         $localizedRouterFactory->getRouter('ru', $context);
@@ -38,7 +38,7 @@ class LocalizedRouterFactoryTest extends TestCase
         $localizedRouterFactory = new LocalizedRouterFactory(
             static::LOCALE_ROUTERS_CONFIGURATION_MASK,
             $containerMock,
-            __DIR__
+            __DIR__,
         );
 
         $router1 = $localizedRouterFactory->getRouter('en', $context1);

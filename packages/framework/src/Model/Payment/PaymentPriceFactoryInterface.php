@@ -15,6 +15,6 @@ interface PaymentPriceFactoryInterface
     public function create(
         Payment $payment,
         Money $price,
-        int $domainId
+        int $domainId,
     ): PaymentPrice;
 }

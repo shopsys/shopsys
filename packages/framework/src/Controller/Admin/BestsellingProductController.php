@@ -22,7 +22,7 @@ class BestsellingProductController extends AdminBaseController
         protected readonly ManualBestsellingProductFacade $manualBestsellingProductFacade,
         protected readonly CategoryFacade $categoryFacade,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
-        protected readonly BreadcrumbOverrider $breadcrumbOverrider
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider,
     ) {
     }
 
@@ -36,11 +36,11 @@ class BestsellingProductController extends AdminBaseController
 
         $categoriesWithPreloadedChildren = $this->categoryFacade->getVisibleCategoriesWithPreloadedChildrenForDomain(
             $domainId,
-            $request->getLocale()
+            $request->getLocale(),
         );
 
         $bestsellingProductsInCategories = $this->manualBestsellingProductFacade->getCountsIndexedByCategoryId(
-            $domainId
+            $domainId,
         );
 
         return $this->render('@ShopsysFramework/Admin/Content/BestsellingProduct/list.html.twig', [
@@ -61,7 +61,7 @@ class BestsellingProductController extends AdminBaseController
 
         $products = $this->manualBestsellingProductFacade->getProductsIndexedByPosition(
             $category,
-            $domainId
+            $domainId,
         );
 
         $form = $this->createForm(BestsellingProductFormType::class, ['products' => $products]);
@@ -79,9 +79,9 @@ class BestsellingProductController extends AdminBaseController
                         'name' => $category->getName(),
                         'url' => $this->generateUrl(
                             'admin_bestsellingproduct_detail',
-                            ['domainId' => $domainId, 'categoryId' => $category->getId()]
+                            ['domainId' => $domainId, 'categoryId' => $category->getId()],
                         ),
-                    ]
+                    ],
                 );
 
             return $this->redirectToRoute('admin_bestsellingproduct_list');

@@ -113,9 +113,9 @@ class PersonalInfoFormTypeTest extends TypeTestCase
                     $this->countryFacade,
                     $this->heurekaFacade,
                     $this->domain,
-                    $this->currentCustomerUser
+                    $this->currentCustomerUser,
                 )],
-                []
+                [],
             ),
         ];
     }

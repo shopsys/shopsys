@@ -196,7 +196,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
      */
     public function setPrice(
         Money $price,
-        int $domainId
+        int $domainId,
     ): void {
         foreach ($this->prices as $paymentInputPrice) {
             if ($paymentInputPrice->getDomainId() === $domainId) {

@@ -19,7 +19,7 @@ class ProductFilterCountDataElasticsearchRepository
     public function __construct(
         protected readonly Client $client,
         protected readonly ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer,
-        protected readonly AggregationResultToProductFilterCountDataTransformer $aggregationResultToCountDataTransformer
+        protected readonly AggregationResultToProductFilterCountDataTransformer $aggregationResultToCountDataTransformer,
     ) {
     }
 
@@ -32,11 +32,11 @@ class ProductFilterCountDataElasticsearchRepository
     {
         $absoluteNumbersFilterQuery = $this->productFilterDataToQueryTransformer->addFlagsToQuery(
             $productFilterData,
-            $baseFilterQuery
+            $baseFilterQuery,
         );
         $absoluteNumbersFilterQuery = $this->productFilterDataToQueryTransformer->addBrandsToQuery(
             $productFilterData,
-            $absoluteNumbersFilterQuery
+            $absoluteNumbersFilterQuery,
         );
 
         $aggregationResult = $this->client->search($absoluteNumbersFilterQuery->getAbsoluteNumbersAggregationQuery());
@@ -45,7 +45,7 @@ class ProductFilterCountDataElasticsearchRepository
         if (count($productFilterData->flags) > 0) {
             $plusFlagsQuery = $this->productFilterDataToQueryTransformer->addBrandsToQuery(
                 $productFilterData,
-                $baseFilterQuery
+                $baseFilterQuery,
             );
             $countData->countByFlagId = $this->calculateFlagsPlusNumbers($productFilterData, $plusFlagsQuery);
         }
@@ -53,7 +53,7 @@ class ProductFilterCountDataElasticsearchRepository
         if (count($productFilterData->brands) > 0) {
             $plusBrandsQuery = $this->productFilterDataToQueryTransformer->addFlagsToQuery(
                 $productFilterData,
-                $baseFilterQuery
+                $baseFilterQuery,
             );
             $countData->countByBrandId = $this->calculateBrandsPlusNumbers($productFilterData, $plusBrandsQuery);
         }
@@ -70,32 +70,32 @@ class ProductFilterCountDataElasticsearchRepository
     {
         $absoluteNumbersFilterQuery = $this->productFilterDataToQueryTransformer->addFlagsToQuery(
             $productFilterData,
-            $baseFilterQuery
+            $baseFilterQuery,
         );
         $absoluteNumbersFilterQuery = $this->productFilterDataToQueryTransformer->addBrandsToQuery(
             $productFilterData,
-            $absoluteNumbersFilterQuery
+            $absoluteNumbersFilterQuery,
         );
         $absoluteNumbersFilterQuery = $this->productFilterDataToQueryTransformer->addParametersToQuery(
             $productFilterData,
-            $absoluteNumbersFilterQuery
+            $absoluteNumbersFilterQuery,
         );
 
         $aggregationResult = $this->client->search(
-            $absoluteNumbersFilterQuery->getAbsoluteNumbersWithParametersQuery()
+            $absoluteNumbersFilterQuery->getAbsoluteNumbersWithParametersQuery(),
         );
         $countData = $this->aggregationResultToCountDataTransformer->translateAbsoluteNumbersWithParameters(
-            $aggregationResult
+            $aggregationResult,
         );
 
         if (count($productFilterData->flags) > 0) {
             $plusFlagsQuery = $this->productFilterDataToQueryTransformer->addBrandsToQuery(
                 $productFilterData,
-                $baseFilterQuery
+                $baseFilterQuery,
             );
             $plusFlagsQuery = $this->productFilterDataToQueryTransformer->addParametersToQuery(
                 $productFilterData,
-                $plusFlagsQuery
+                $plusFlagsQuery,
             );
             $countData->countByFlagId = $this->calculateFlagsPlusNumbers($productFilterData, $plusFlagsQuery);
         }
@@ -103,11 +103,11 @@ class ProductFilterCountDataElasticsearchRepository
         if (count($productFilterData->brands) > 0) {
             $plusBrandsQuery = $this->productFilterDataToQueryTransformer->addFlagsToQuery(
                 $productFilterData,
-                $baseFilterQuery
+                $baseFilterQuery,
             );
             $plusBrandsQuery = $this->productFilterDataToQueryTransformer->addParametersToQuery(
                 $productFilterData,
-                $plusBrandsQuery
+                $plusBrandsQuery,
             );
             $countData->countByBrandId = $this->calculateBrandsPlusNumbers($productFilterData, $plusBrandsQuery);
         }
@@ -115,11 +115,11 @@ class ProductFilterCountDataElasticsearchRepository
         if (count($productFilterData->parameters) > 0) {
             $plusParametersQuery = $this->productFilterDataToQueryTransformer->addFlagsToQuery(
                 $productFilterData,
-                $baseFilterQuery
+                $baseFilterQuery,
             );
             $plusParametersQuery = $this->productFilterDataToQueryTransformer->addBrandsToQuery(
                 $productFilterData,
-                $plusParametersQuery
+                $plusParametersQuery,
             );
 
             $this->replaceParametersPlusNumbers($productFilterData, $countData, $plusParametersQuery);
@@ -178,14 +178,14 @@ class ProductFilterCountDataElasticsearchRepository
 
             $currentQuery = $this->productFilterDataToQueryTransformer->addParametersToQuery(
                 $currentFilterData,
-                $plusParametersQuery
+                $plusParametersQuery,
             );
 
             $plusParameterNumbers = $this->calculateParameterPlusNumbers($currentParameterFilterData, $currentQuery);
             $this->mergeParameterCountData(
                 $countData,
                 $plusParameterNumbers,
-                $currentParameterFilterData->parameter->getId()
+                $currentParameterFilterData->parameter->getId(),
             );
         }
     }
@@ -197,7 +197,7 @@ class ProductFilterCountDataElasticsearchRepository
      */
     protected function calculateParameterPlusNumbers(
         ParameterFilterData $parameterFilterData,
-        FilterQuery $parameterFilterQuery
+        FilterQuery $parameterFilterQuery,
     ): array {
         $parameterId = $parameterFilterData->parameter->getId();
         $valuesIds = [];
@@ -207,11 +207,11 @@ class ProductFilterCountDataElasticsearchRepository
         }
 
         $currentQueryResult = $this->client->search(
-            $parameterFilterQuery->getParametersPlusNumbersQuery($parameterId, $valuesIds)
+            $parameterFilterQuery->getParametersPlusNumbersQuery($parameterId, $valuesIds),
         );
 
         return $this->aggregationResultToCountDataTransformer->translateParameterValuesPlusNumbers(
-            $currentQueryResult
+            $currentQueryResult,
         );
     }
 

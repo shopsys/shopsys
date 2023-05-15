@@ -59,7 +59,7 @@ class BrandTest extends GraphQlTestCase
             'This is description of brand Canon.',
             [],
             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-            $this->getFirstDomainLocale()
+            $this->getFirstDomainLocale(),
         ) . '",
             "link": "' . $this->getFullUrlPath('/canon/') . '",
             "seoTitle": "' . t('Canon SEO Title', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
@@ -67,7 +67,7 @@ class BrandTest extends GraphQlTestCase
             'This is SEO meta description of brand Canon.',
             [],
             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-            $this->getFirstDomainLocale()
+            $this->getFirstDomainLocale(),
         ) . '",
             "seoH1": "' . t('Canon SEO H1', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
             "products": {

@@ -39,7 +39,7 @@ class ImageRepository
             [
                 'position' => 'asc',
                 'id' => 'asc',
-            ]
+            ],
         );
     }
 

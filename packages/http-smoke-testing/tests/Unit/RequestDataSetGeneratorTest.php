@@ -66,12 +66,12 @@ class RequestDataSetGeneratorTest extends TestCase
     public function testGeneratorGenerateRequestDataSetFromDataSetAnnotation(
         DataSet $dataSet,
         int $statusCode,
-        array $parameters
+        array $parameters,
     ) {
         $requestDataSetGenerator = $this->createRequestDataSetGenerator(
             'test_route_path',
             'test_route_name',
-            [$dataSet]
+            [$dataSet],
         );
         $requestDataSets = $requestDataSetGenerator->generateRequestDataSets();
 
@@ -105,7 +105,7 @@ class RequestDataSetGeneratorTest extends TestCase
         $requestDataSetGenerator = $this->createRequestDataSetGenerator(
             'test_route_path',
             'test_route_name',
-            $annotations
+            $annotations,
         );
 
         $requestDataSets = $requestDataSetGenerator->generateRequestDataSets();

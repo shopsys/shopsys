@@ -32,25 +32,25 @@ class TranslationReplaceSourceCommand extends Command
     {
         $this
             ->setDescription(
-                'Replace translation sources to translated texts in target locale. To be used after translation:extract.'
+                'Replace translation sources to translated texts in target locale. To be used after translation:extract.',
             )
             ->setHelp(
-                'Translation messages from whole project should be extracted first as this tool depends on dumped references.'
+                'Translation messages from whole project should be extracted first as this tool depends on dumped references.',
             )
             ->addArgument(
                 self::ARG_TRANSLATIONS_DIR,
                 InputArgument::REQUIRED,
-                'Directory of extracted translations in .po format'
+                'Directory of extracted translations in .po format',
             )
             ->addArgument(
                 self::ARG_SOURCE_CODE_DIR,
                 InputArgument::REQUIRED,
-                'Directory searched for replacements in source code'
+                'Directory searched for replacements in source code',
             )
             ->addArgument(
                 self::ARG_TARGET_LOCALE,
                 InputArgument::REQUIRED,
-                'Locale of translations to replace original sources'
+                'Locale of translations to replace original sources',
             )
             ->addUsage('./src/Resources/translations ./src en');
     }
@@ -153,8 +153,8 @@ class TranslationReplaceSourceCommand extends Command
                     throw new TranslationReplaceSourceCommandException(
                         sprintf(
                             'Parse error: Message ID "%s" must be separated from previous IDs by an empty line.',
-                            substr($line, 7, -1)
-                        )
+                            substr($line, 7, -1),
+                        ),
                     );
                 }
                 $item['ids']['singular'] = substr($line, 7, -1);
@@ -204,7 +204,7 @@ class TranslationReplaceSourceCommand extends Command
                 stripcslashes($item['ids']['singular']),
                 stripcslashes($item['translated'][0]),
                 $item['domain'],
-                $sourceFileReferences
+                $sourceFileReferences,
             );
 
             if (isset($item['ids']['plural'])) {
@@ -222,7 +222,7 @@ class TranslationReplaceSourceCommand extends Command
                     stripcslashes($item['ids']['plural']),
                     stripcslashes(implode('|', $plurals)),
                     $item['domain'],
-                    $sourceFileReferences
+                    $sourceFileReferences,
                 );
             }
         } elseif (array_key_exists('singular', $item['ids']) && count($item['ids']['singular']) > 0) {
@@ -230,7 +230,7 @@ class TranslationReplaceSourceCommand extends Command
                 stripcslashes($item['ids']['singular']),
                 stripcslashes($item['translated']),
                 $item['domain'],
-                $sourceFileReferences
+                $sourceFileReferences,
             );
         }
     }
@@ -267,7 +267,7 @@ class TranslationReplaceSourceCommand extends Command
                 $output->writeln(sprintf(
                     'Translation for source "<fg=yellow>%s</fg=yellow>" is defined in multiple domains (%s) and will not be replaced',
                     $oldSource,
-                    implode(', ', $domains)
+                    implode(', ', $domains),
                 ));
             }
         }
@@ -286,7 +286,7 @@ class TranslationReplaceSourceCommand extends Command
             if ($replacement->getNewSource() === '') {
                 $output->writeln(sprintf(
                     'Translation for source "<fg=yellow>%s</fg=yellow>" is empty and will not be replaced',
-                    $replacement->getOldSource()
+                    $replacement->getOldSource(),
                 ));
 
                 unset($replacements[$index]);
@@ -329,7 +329,7 @@ class TranslationReplaceSourceCommand extends Command
                     'There are %d different sources for translation "<fg=yellow>%s</fg=yellow>" (%s) and they will not be replaced.',
                     $newSourceUsageCount,
                     $newSource,
-                    implode(', ', $oldSources)
+                    implode(', ', $oldSources),
                 ));
             }
         }
@@ -348,7 +348,7 @@ class TranslationReplaceSourceCommand extends Command
             if ($replacement->getOldSource() === $replacement->getNewSource()) {
                 $output->writeln(sprintf(
                     'Translation of source "<fg=yellow>%s</fg=yellow>" is not changed in any way and will not be replaced.',
-                    $replacement->getOldSource()
+                    $replacement->getOldSource(),
                 ));
 
                 unset($replacements[$index]);
@@ -379,7 +379,7 @@ class TranslationReplaceSourceCommand extends Command
                 }
 
                 return -1;
-            }
+            },
         );
 
         return $replacements;
@@ -413,7 +413,7 @@ class TranslationReplaceSourceCommand extends Command
         if (file_exists(self::FILE_NAME_REPLACEMENT_ERRORS)) {
             rename(
                 self::FILE_NAME_REPLACEMENT_ERRORS,
-                sprintf('%s.%d.bak', self::FILE_NAME_REPLACEMENT_ERRORS, time())
+                sprintf('%s.%d.bak', self::FILE_NAME_REPLACEMENT_ERRORS, time()),
             );
         }
 
@@ -435,7 +435,7 @@ class TranslationReplaceSourceCommand extends Command
                         $realCount,
                         $expectedCount,
                         $isExpectedCountExact,
-                        $output
+                        $output,
                     );
                 }
                 $totalCount++;
@@ -447,7 +447,7 @@ class TranslationReplaceSourceCommand extends Command
         } else {
             $output->writeln('');
             $output->writeln(
-                sprintf('Replacement success rate: <fg=cyan>%.2f%%</fg=cyan>', 100 * $successfulCount / $totalCount)
+                sprintf('Replacement success rate: <fg=cyan>%.2f%%</fg=cyan>', 100 * $successfulCount / $totalCount),
             );
         }
 
@@ -456,7 +456,7 @@ class TranslationReplaceSourceCommand extends Command
         }
 
         $output->writeln(
-            sprintf('Error report logged in <fg=cyan>%s</fg=cyan>', self::FILE_NAME_REPLACEMENT_ERRORS)
+            sprintf('Error report logged in <fg=cyan>%s</fg=cyan>', self::FILE_NAME_REPLACEMENT_ERRORS),
         );
     }
 
@@ -474,7 +474,7 @@ class TranslationReplaceSourceCommand extends Command
             $searchedPathNames,
             function ($pathName) use ($sourceFilePath) {
                 return substr($pathName, -strlen($sourceFilePath)) === $sourceFilePath;
-            }
+            },
         );
 
         foreach ($matchingPathNames as $matchingPathName) {
@@ -576,29 +576,29 @@ class TranslationReplaceSourceCommand extends Command
         $realCount,
         $expectedCount,
         $isExpectedCountExact,
-        OutputInterface $output
+        OutputInterface $output,
     ) {
         if ($realCount === null) {
             $output->writeln(
                 sprintf(
                     'No file "<fg=red>%s</fg=red>" found for source "<fg=red>%s</fg=red>"!',
                     $filePath,
-                    $replacement->getOldSource()
-                )
+                    $replacement->getOldSource(),
+                ),
             );
         } elseif ($realCount === 0) {
             $message = $isExpectedCountExact
                 ? 'Source "<fg=red>%s</fg=red>" not found in "<fg=red>%s</fg=red>", expected %d matches.'
                 : 'Source "<fg=red>%s</fg=red>" not found in "<fg=red>%s</fg=red>", expected at least %d matches.';
             $output->writeln(
-                sprintf($message, $replacement->getOldSource(), $filePath, $expectedCount)
+                sprintf($message, $replacement->getOldSource(), $filePath, $expectedCount),
             );
         } else {
             $message = $isExpectedCountExact
                 ? 'Source "<fg=red>%s</fg=red>" was replaced in "<fg=red>%s</fg=red>" %d times, expected %d matches.'
                 : 'Source "<fg=red>%s</fg=red>" was replaced in "<fg=red>%s</fg=red>" only %d times, expected at least %d matches.';
             $output->writeln(
-                sprintf($message, $replacement->getOldSource(), $filePath, $realCount, $expectedCount)
+                sprintf($message, $replacement->getOldSource(), $filePath, $realCount, $expectedCount),
             );
         }
 

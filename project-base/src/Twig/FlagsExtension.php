@@ -17,7 +17,7 @@ class FlagsExtension extends AbstractExtension
      */
     public function __construct(
         private readonly FlagsProvider $flagsProvider,
-        private readonly Environment $twigEnvironment
+        private readonly Environment $twigEnvironment,
     ) {
     }
 
@@ -43,7 +43,7 @@ class FlagsExtension extends AbstractExtension
             [
                 'flags' => $this->flagsProvider->getFlagsByIds($flagIds),
                 'classAddition' => $classAddition,
-            ]
+            ],
         );
     }
 }

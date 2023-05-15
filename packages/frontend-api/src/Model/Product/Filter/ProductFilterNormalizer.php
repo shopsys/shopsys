@@ -65,7 +65,7 @@ class ProductFilterNormalizer
     {
         $parameters = $this->getAllParametersFromParameterFilterData($productFilterData->parameters);
         $parametersFromFilterConfig = $this->getAllParametersFromParameterFilterChoices(
-            $productFilterConfig->getParameterChoices()
+            $productFilterConfig->getParameterChoices(),
         );
 
         foreach ($parameters as $key => $parameter) {
@@ -82,10 +82,10 @@ class ProductFilterNormalizer
     protected function removeExcessiveParameterValues(ProductFilterData $productFilterData, ProductFilterConfig $productFilterConfig): void
     {
         $parameterValuesByParameterId = $this->getAllParameterValuesByParameterIdFromParameterFilterData(
-            $productFilterData->parameters
+            $productFilterData->parameters,
         );
         $parameterValuesByParameterIdFromFilterConfig = $this->getAllParameterValuesByParameterIdFromParameterFilterChoices(
-            $productFilterConfig->getParameterChoices()
+            $productFilterConfig->getParameterChoices(),
         );
 
         foreach ($parameterValuesByParameterId as $parameterId => $parameterValues) {

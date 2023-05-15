@@ -26,7 +26,7 @@ class ProductEntityFieldMapper
         protected readonly ProductCollectionFacade $productCollectionFacade,
         protected readonly ProductAccessoryFacade $productAccessoryFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
-        protected readonly ParameterWithValuesFactory $parameterWithValuesFactory
+        protected readonly ParameterWithValuesFactory $parameterWithValuesFactory,
     ) {
     }
 
@@ -47,7 +47,7 @@ class ProductEntityFieldMapper
     {
         $absoluteUrlsIndexedByProductId = $this->productCollectionFacade->getAbsoluteUrlsIndexedByProductId(
             [$product->getId()],
-            $this->domain->getCurrentDomainConfig()
+            $this->domain->getCurrentDomainConfig(),
         );
 
         return $absoluteUrlsIndexedByProductId[$product->getId()];
@@ -89,7 +89,7 @@ class ProductEntityFieldMapper
         return $this->productAccessoryFacade->getAllAccessories(
             $product,
             $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
     }
 

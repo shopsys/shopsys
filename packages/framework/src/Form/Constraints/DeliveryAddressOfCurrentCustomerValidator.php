@@ -15,7 +15,7 @@ class DeliveryAddressOfCurrentCustomerValidator extends ConstraintValidator
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      */
     public function __construct(
-        protected readonly CurrentCustomerUser $currentCustomerUser
+        protected readonly CurrentCustomerUser $currentCustomerUser,
     ) {
     }
 

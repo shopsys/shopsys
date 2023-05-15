@@ -18,7 +18,7 @@ class TranslatableEntityDataCreator
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly NotNullableColumnsFinder $notNullableColumnsFinder,
-        protected readonly SqlQuoter $sqlQuoter
+        protected readonly SqlQuoter $sqlQuoter,
     ) {
     }
 
@@ -29,7 +29,7 @@ class TranslatableEntityDataCreator
     public function copyAllTranslatableDataForNewLocale($templateLocale, $newLocale)
     {
         $notNullableColumns = $this->notNullableColumnsFinder->getAllNotNullableColumnNamesIndexedByTableName(
-            $this->getAllTranslatableEntitiesMetadata()
+            $this->getAllTranslatableEntitiesMetadata(),
         );
 
         foreach ($notNullableColumns as $tableName => $columnNames) {
@@ -41,7 +41,7 @@ class TranslatableEntityDataCreator
                 $templateLocale,
                 $newLocale,
                 $tableName,
-                $columnNamesExcludingIdAndLocale
+                $columnNamesExcludingIdAndLocale,
             );
         }
     }
@@ -88,7 +88,7 @@ class TranslatableEntityDataCreator
             [
                 'newLocale' => Types::STRING,
                 'templateLocale' => Types::STRING,
-            ]
+            ],
         );
     }
 }

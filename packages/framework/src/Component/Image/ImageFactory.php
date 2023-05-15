@@ -18,7 +18,7 @@ class ImageFactory implements ImageFactoryInterface
     public function __construct(
         protected readonly ImageProcessor $imageProcessor,
         protected readonly FileUpload $fileUpload,
-        protected readonly EntityNameResolver $entityNameResolver
+        protected readonly EntityNameResolver $entityNameResolver,
     ) {
     }
 

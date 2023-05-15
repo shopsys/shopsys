@@ -37,7 +37,7 @@ class HeurekaShopCertificationFormType extends AbstractType
                 'attr' => [
                     'icon' => true,
                     'iconTitle' => t(
-                        'Enter 32-digit code which will be sent to server'
+                        'Enter 32-digit code which will be sent to server',
                     ) . ' ' . $options['server_name'],
                 ],
             ])

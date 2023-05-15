@@ -16,7 +16,7 @@ class UnknownFeedTypeException extends Exception implements FeedException
         $message = sprintf(
             'Trying to register or access a feed of an unknown type "%s". Allowed types are: %s.',
             $type,
-            implode(', ', $knownTypes)
+            implode(', ', $knownTypes),
         );
 
         parent::__construct($message, 0, $previous);

@@ -24,7 +24,7 @@ trait SetterInjectionTrait
 
         if ($this->{$propertyName} !== null && $argument !== $this->{$propertyName}) {
             throw new BadMethodCallException(
-                sprintf('Method "%s()" has been already called and cannot be called multiple times.', $methodName)
+                sprintf('Method "%s()" has been already called and cannot be called multiple times.', $methodName),
             );
         }
 

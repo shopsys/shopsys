@@ -48,7 +48,7 @@ class PriceCalculationTest extends TestCase
     public function testApplyVatPercent(
         Money $priceWithoutVat,
         string $vatPercent,
-        Money $expectedPriceWithVat
+        Money $expectedPriceWithVat,
     ) {
         $rounding = new Rounding();
         $priceCalculation = new PriceCalculation($rounding);
@@ -92,7 +92,7 @@ class PriceCalculationTest extends TestCase
     public function testGetVatAmountByPriceWithVat(
         Money $priceWithVat,
         string $vatPercent,
-        Money $expectedVatAmount
+        Money $expectedVatAmount,
     ) {
         $rounding = new Rounding();
         $priceCalculation = new PriceCalculation($rounding);

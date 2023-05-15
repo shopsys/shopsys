@@ -14,7 +14,7 @@ class TopCategoryFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly TopCategoryRepository $topCategoryRepository,
-        protected readonly TopCategoryFactoryInterface $topCategoryFactory
+        protected readonly TopCategoryFactoryInterface $topCategoryFactory,
     ) {
     }
 

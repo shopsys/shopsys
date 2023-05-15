@@ -87,7 +87,7 @@ class ArticleRepository
     {
         $queryBuilder = $this->getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder(
             $domainId,
-            $placement
+            $placement,
         );
 
         return $queryBuilder->getQuery()->execute();
@@ -159,7 +159,7 @@ class ArticleRepository
      */
     public function getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder(
         int $domainId,
-        string $placement
+        string $placement,
     ): QueryBuilder {
         return $this->getVisibleArticlesByDomainIdQueryBuilder($domainId)
             ->andWhere('a.placement = :placement')->setParameter('placement', $placement)

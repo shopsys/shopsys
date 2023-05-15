@@ -42,7 +42,7 @@ class ProductExportRepository
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly CategoryFacade $categoryFacade,
         protected readonly ProductAccessoryFacade $productAccessoryFacade,
-        protected readonly BrandCachedFacade $brandCachedFacade
+        protected readonly BrandCachedFacade $brandCachedFacade,
     ) {
     }
 
@@ -172,7 +172,7 @@ class ProductExportRepository
             'categories' => $categoryIds,
             'main_category_id' => $this->categoryFacade->getProductMainCategoryByDomainId(
                 $product,
-                $domainId
+                $domainId,
             )->getId(),
             'in_stock' => $product->getCalculatedAvailability()->getDispatchTime() === 0,
             'prices' => $prices,
@@ -224,7 +224,7 @@ class ProductExportRepository
         $friendlyUrl = $this->friendlyUrlRepository->getMainFriendlyUrl(
             $domainId,
             'front_product_detail',
-            $product->getId()
+            $product->getId(),
         );
 
         return $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl);
@@ -294,7 +294,7 @@ class ProductExportRepository
         $parameters = [];
         $productParameterValues = $this->parameterRepository->getProductParameterValuesByProductSortedByName(
             $product,
-            $locale
+            $locale,
         );
 
         foreach ($productParameterValues as $productParameterValue) {
@@ -360,7 +360,7 @@ class ProductExportRepository
 
         foreach ($this->productVisibilityRepository->findProductVisibilitiesByDomainIdAndProduct(
             $domainId,
-            $product
+            $product,
         ) as $productVisibility) {
             $visibility[] = [
                 'pricing_group_id' => $productVisibility->getPricingGroup()->getId(),

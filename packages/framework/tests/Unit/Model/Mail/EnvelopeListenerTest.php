@@ -31,12 +31,12 @@ class EnvelopeListenerTest extends TestCase
         array $mailsTo,
         ?Address $mailCc,
         ?Address $mailBcc,
-        array $expectedRecipients
+        array $expectedRecipients,
     ): void {
         $mailerSettingProvider = new MailerSettingProvider(
             $deliveryWhitelist,
             $masterMail !== null ? $masterMail->getAddress() : '',
-            'dsn'
+            'dsn',
         );
         $envelopeListener = new EnvelopeListener($mailerSettingProvider);
         $messageEvent = $this->getMessageEvent($mailsTo, $mailCc, $mailBcc);
@@ -54,7 +54,7 @@ class EnvelopeListenerTest extends TestCase
     protected function getMessageEvent(
         array $mailsTo,
         ?Address $mailCc,
-        ?Address $mailBcc
+        ?Address $mailBcc,
     ): MessageEvent {
         $sender = new Address('no-reply@shopsys.com');
         $headers = new Headers(new MailboxListHeader('To', $mailsTo));

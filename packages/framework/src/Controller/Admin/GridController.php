@@ -17,7 +17,7 @@ class GridController extends AdminBaseController
      */
     public function __construct(
         protected readonly GridOrderingFacade $gridOrderingFacade,
-        protected readonly InlineEditFacade $inlineEditFacade
+        protected readonly InlineEditFacade $inlineEditFacade,
     ) {
     }
 
@@ -29,7 +29,7 @@ class GridController extends AdminBaseController
     {
         $renderedFormRow = $this->inlineEditFacade->getRenderedFormRow(
             $request->get('serviceName'),
-            json_decode($request->get('rowId'))
+            json_decode($request->get('rowId')),
         );
 
         return new JsonResponse($renderedFormRow);
@@ -50,7 +50,7 @@ class GridController extends AdminBaseController
             $responseData['success'] = true;
             $responseData['rowHtml'] = $this->inlineEditFacade->getRenderedRowHtml(
                 $request->get('serviceName'),
-                $rowId
+                $rowId,
             );
         } catch (InvalidFormDataException $e) {
             $responseData['success'] = false;
@@ -69,7 +69,7 @@ class GridController extends AdminBaseController
     {
         $this->gridOrderingFacade->saveOrdering(
             $request->get('entityClass'),
-            array_map('json_decode', $request->get('rowIds'))
+            array_map('json_decode', $request->get('rowIds')),
         );
         $responseData = ['success' => true];
 

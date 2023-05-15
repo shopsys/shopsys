@@ -27,7 +27,7 @@ class PromoCodeController extends AdminBaseController
         protected readonly AdministratorGridFacade $administratorGridFacade,
         protected readonly PromoCodeDataFactoryInterface $promoCodeDataFactory,
         protected readonly PromoCodeGridFactory $promoCodeGridFactory,
-        protected readonly BreadcrumbOverrider $breadcrumbOverrider
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider,
     ) {
     }
 
@@ -66,7 +66,7 @@ class PromoCodeController extends AdminBaseController
                 t('Promo code <strong>{{ code }}</strong> deleted.'),
                 [
                     'code' => $code,
-                ]
+                ],
             );
         } catch (PromoCodeNotFoundException $ex) {
             $this->addErrorFlash(t('Selected promo code doesn\'t exist.'));
@@ -96,7 +96,7 @@ class PromoCodeController extends AdminBaseController
                 [
                     'code' => $promoCode->getCode(),
                     'url' => $this->generateUrl('admin_promocode_edit', ['id' => $promoCode->getId()]),
-                ]
+                ],
             );
 
             return $this->redirectToRoute('admin_promocode_list');
@@ -134,7 +134,7 @@ class PromoCodeController extends AdminBaseController
                 [
                     'code' => $promoCode->getCode(),
                     'url' => $this->generateUrl('admin_promocode_edit', ['id' => $promoCode->getId()]),
-                ]
+                ],
             );
 
             return $this->redirectToRoute('admin_promocode_list');
@@ -145,7 +145,7 @@ class PromoCodeController extends AdminBaseController
         }
 
         $this->breadcrumbOverrider->overrideLastItem(
-            t('Editing promo code - %code%', ['%code%' => $promoCode->getCode()])
+            t('Editing promo code - %code%', ['%code%' => $promoCode->getCode()]),
         );
 
         return $this->render('@ShopsysFramework/Admin/Content/PromoCode/edit.html.twig', [

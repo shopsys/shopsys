@@ -39,7 +39,7 @@ class HourlyFeedCronModule implements SimpleCronModuleInterface
                     $feedInfo->getName(),
                     $domainConfig->getName(),
                     $this->feedFacade->getFeedFilepath($feedInfo, $domainConfig),
-                    $endTime - $startTime
+                    $endTime - $startTime,
                 ));
             }
         }

@@ -36,7 +36,7 @@ class HeurekaFeedItem implements FeedItemInterface
         protected readonly ?string $ean = null,
         protected readonly ?int $availabilityDispatchTime = null,
         protected readonly ?string $heurekaCategoryFullName = null,
-        protected readonly ?Money $cpc = null
+        protected readonly ?Money $cpc = null,
     ) {
     }
 

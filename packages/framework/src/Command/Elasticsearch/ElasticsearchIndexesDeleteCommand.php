@@ -39,7 +39,7 @@ class ElasticsearchIndexesDeleteCommand extends AbstractElasticsearchIndexComman
     {
         return sprintf(
             'Which index should be deleted? Available indexes: "%s"',
-            implode(', ', $this->indexRegistry->getRegisteredIndexNames())
+            implode(', ', $this->indexRegistry->getRegisteredIndexNames()),
         );
     }
 

@@ -25,7 +25,7 @@ class FilesystemLoaderTest extends FunctionalTestCase
             'domain1',
             'en',
             'sa',
-            ''
+            '',
         );
 
         $domainConfigWithCustomDesignId = new DomainConfig(
@@ -34,7 +34,7 @@ class FilesystemLoaderTest extends FunctionalTestCase
             'domain2',
             'en',
             'sa',
-            'custom'
+            'custom',
         );
 
         $domain = new Domain([$domainConfigWithoutCustomDesignId, $domainConfigWithCustomDesignId], $setting);

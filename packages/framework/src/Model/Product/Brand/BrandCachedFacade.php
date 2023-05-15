@@ -34,7 +34,7 @@ class BrandCachedFacade
             $this->brandUrlsIndexedByBrandIdAndDomainId[$brandId][$domainId] = $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId(
                 $domainId,
                 'front_brand_detail',
-                $brandId
+                $brandId,
             );
         }
 

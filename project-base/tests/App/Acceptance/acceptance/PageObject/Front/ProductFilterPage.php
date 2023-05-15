@@ -54,7 +54,7 @@ class ProductFilterPage extends AbstractPage
     {
         $frontCheckboxClicker = FrontCheckbox::createByCss(
             $this->tester,
-            '#product_filter_form_brands_' . $brandPosition
+            '#product_filter_form_brands_' . $brandPosition,
         );
         $frontCheckboxClicker->check();
         $this->waitForFilter();
@@ -86,7 +86,7 @@ class ProductFilterPage extends AbstractPage
     {
         $translatedParameterLabel = t($parameterLabel, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $parameterItems = $this->webDriver->findElements(
-            WebDriverBy::cssSelector('#product_filter_form_parameters .test-product-filter-parameter')
+            WebDriverBy::cssSelector('#product_filter_form_parameters .test-product-filter-parameter'),
         );
 
         foreach ($parameterItems as $item) {
@@ -104,7 +104,7 @@ class ProductFilterPage extends AbstractPage
         $message = sprintf(
             'Unable to find parameter with label "%s" (translated to "%s") in product filter.',
             $parameterLabel,
-            $translatedParameterLabel
+            $translatedParameterLabel,
         );
 
         throw new NoSuchElementException($message);
@@ -119,7 +119,7 @@ class ProductFilterPage extends AbstractPage
     {
         $translatedParameterValueText = t($parameterValueText, [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
         $parameterValueDivs = $parameterElement->findElements(
-            WebDriverBy::cssSelector('.test-product-filter-parameter-value')
+            WebDriverBy::cssSelector('.test-product-filter-parameter-value'),
         );
 
         foreach ($parameterValueDivs as $parameterValueDiv) {
@@ -137,7 +137,7 @@ class ProductFilterPage extends AbstractPage
         $message = sprintf(
             'Unable to find parameter value with label "%s" (translated to %s) in product filter.',
             $parameterValueText,
-            $translatedParameterValueText
+            $translatedParameterValueText,
         );
 
         throw new NoSuchElementException($message);

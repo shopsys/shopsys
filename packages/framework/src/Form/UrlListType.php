@@ -28,7 +28,7 @@ class UrlListType extends AbstractType
     public function __construct(
         private readonly FriendlyUrlFacade $friendlyUrlFacade,
         private readonly DomainRouterFactory $domainRouterFactory,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 
@@ -56,7 +56,7 @@ class UrlListType extends AbstractType
 
         $friendlyUrlsByDomain = $this->getFriendlyUrlsIndexedByDomain(
             $options['route_name'],
-            (int)$options['entity_id']
+            (int)$options['entity_id'],
         );
 
         foreach ($friendlyUrlsByDomain as $domainId => $friendlyUrls) {
@@ -89,11 +89,11 @@ class UrlListType extends AbstractType
     {
         $absoluteUrlsByDomainIdAndSlug = $this->getAbsoluteUrlsIndexedByDomainIdAndSlug(
             $options['route_name'],
-            (int)$options['entity_id']
+            (int)$options['entity_id'],
         );
         $mainUrlsSlugsOnDomains = $this->getMainFriendlyUrlSlugsIndexedByDomainId(
             $options['route_name'],
-            $options['entity_id']
+            $options['entity_id'],
         );
 
         $view->vars['absoluteUrlsByDomainIdAndSlug'] = $absoluteUrlsByDomainIdAndSlug;
@@ -155,7 +155,7 @@ class UrlListType extends AbstractType
                     $domainRouter->generateByFriendlyUrl(
                         $friendlyUrl,
                         [],
-                        UrlGeneratorInterface::ABSOLUTE_URL
+                        UrlGeneratorInterface::ABSOLUTE_URL,
                     );
             }
         }
@@ -177,7 +177,7 @@ class UrlListType extends AbstractType
             $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
                 $domainId,
                 $routeName,
-                $entityId
+                $entityId,
             );
 
             if ($mainFriendlyUrl !== null) {

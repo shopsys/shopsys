@@ -18,6 +18,6 @@ interface ManualBestsellingProductFactoryInterface
         int $domainId,
         Category $category,
         Product $product,
-        int $position
+        int $position,
     ): ManualBestsellingProduct;
 }

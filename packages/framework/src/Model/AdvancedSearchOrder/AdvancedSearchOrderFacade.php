@@ -23,7 +23,7 @@ class AdvancedSearchOrderFacade
         protected readonly OrderAdvancedSearchFormFactory $orderAdvancedSearchFormFactory,
         protected readonly AdvancedSearchQueryBuilderExtender $advancedSearchQueryBuilderExtender,
         protected readonly OrderListAdminFacade $orderListAdminFacade,
-        protected readonly RuleFormViewDataFactory $ruleFormViewDataFactory
+        protected readonly RuleFormViewDataFactory $ruleFormViewDataFactory,
     ) {
     }
 
@@ -37,7 +37,7 @@ class AdvancedSearchOrderFacade
         $rulesData = is_array($rawRulesData) ? $rawRulesData : [];
         $rulesFormData = $this->ruleFormViewDataFactory->createFromRequestData(
             OrderPriceFilterWithVatFilter::NAME,
-            $rulesData
+            $rulesData,
         );
 
         return $this->orderAdvancedSearchFormFactory->createRulesForm(static::RULES_FORM_NAME, $rulesFormData);

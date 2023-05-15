@@ -27,7 +27,7 @@ class ProductActionViewFacade implements ProductActionViewFacadeInterface
     {
         $absoluteUrlsIndexedByProductId = $this->productCollectionFacade->getAbsoluteUrlsIndexedByProductId(
             $products,
-            $this->domain->getCurrentDomainConfig()
+            $this->domain->getCurrentDomainConfig(),
         );
 
         $productActionViews = [];
@@ -37,7 +37,7 @@ class ProductActionViewFacade implements ProductActionViewFacadeInterface
 
             $productActionViews[$productId] = $this->productActionViewFactory->createFromProduct(
                 $product,
-                $absoluteUrlsIndexedByProductId[$productId]
+                $absoluteUrlsIndexedByProductId[$productId],
             );
         }
 

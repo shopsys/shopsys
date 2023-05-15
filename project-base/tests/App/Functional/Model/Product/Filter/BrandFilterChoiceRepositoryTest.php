@@ -38,7 +38,7 @@ class BrandFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
             static function (Brand $brand) {
                 return $brand->getId();
             },
-            $brandFilterChoices
+            $brandFilterChoices,
         );
 
         $this->assertContains(4, $ids);
@@ -59,7 +59,7 @@ class BrandFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
             static function (Brand $brand) {
                 return $brand->getId();
             },
-            $brandFilterChoices
+            $brandFilterChoices,
         );
 
         $this->assertContains(1, $ids);
@@ -89,7 +89,7 @@ class BrandFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         /** @var \App\Model\Category\Category $category */
@@ -98,7 +98,7 @@ class BrandFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
         $brands = $this->brandFilterChoiceRepository->getBrandFilterChoicesInCategory(
             Domain::FIRST_DOMAIN_ID,
             $pricingGroup,
-            $category
+            $category,
         );
 
         return $brands;
@@ -113,7 +113,7 @@ class BrandFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
         $domainConfig1 = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
 
@@ -122,7 +122,7 @@ class BrandFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
             $domainConfig1->getId(),
             $pricingGroup,
             $domainConfig1->getLocale(),
-            $searchText
+            $searchText,
         );
 
         return $brands;

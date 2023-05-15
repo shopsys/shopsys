@@ -34,7 +34,7 @@ class PaymentImageUploadCest
             [
                 '{{ url }}' => '',
                 '{{ name }}' => t('Credit card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $me->getAdminLocale()),
-            ]
+            ],
         );
     }
 }

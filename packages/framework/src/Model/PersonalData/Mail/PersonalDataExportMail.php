@@ -25,7 +25,7 @@ class PersonalDataExportMail implements MessageFactoryInterface
     public function __construct(
         protected readonly Domain $domain,
         protected readonly Setting $setting,
-        protected readonly DomainRouterFactory $domainRouterFactory
+        protected readonly DomainRouterFactory $domainRouterFactory,
     ) {
     }
 
@@ -45,12 +45,12 @@ class PersonalDataExportMail implements MessageFactoryInterface
             $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL_NAME, $this->domain->getId()),
             $this->getBodyValuesIndexedByVariableName(
                 $this->getVariablePersonalDataAccessUrl(
-                    $personalDataAccessRequest->getHash()
+                    $personalDataAccessRequest->getHash(),
                 ),
                 $personalDataAccessRequest->getEmail(),
-                $this->domain->getName()
+                $this->domain->getName(),
             ),
-            $this->getSubjectValuesIndexedByVariableName($this->domain->getName())
+            $this->getSubjectValuesIndexedByVariableName($this->domain->getName()),
         );
     }
 
@@ -95,7 +95,7 @@ class PersonalDataExportMail implements MessageFactoryInterface
         return $router->generate(
             'front_personal_data_access_export',
             $routeParameters,
-            UrlGeneratorInterface::ABSOLUTE_URL
+            UrlGeneratorInterface::ABSOLUTE_URL,
         );
     }
 }

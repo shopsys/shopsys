@@ -74,7 +74,7 @@ class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
             null,
             1,
             'p.id',
-            QueryBuilderDataSource::ORDER_ASC
+            QueryBuilderDataSource::ORDER_ASC,
         )->getResults();
         $this->assertCount(10, $rows);
 
@@ -102,7 +102,7 @@ class QueryBuilderDataSourceTest extends TransactionFunctionalTestCase
             null,
             1,
             'p.id',
-            QueryBuilderDataSource::ORDER_DESC
+            QueryBuilderDataSource::ORDER_DESC,
         )->getResults();
         $this->assertCount(10, $rows);
 

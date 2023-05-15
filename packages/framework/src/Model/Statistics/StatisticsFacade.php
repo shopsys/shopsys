@@ -16,7 +16,7 @@ class StatisticsFacade
      */
     public function __construct(
         protected readonly StatisticsRepository $statisticsRepository,
-        protected readonly ValueByDateTimeDataPointFormatter $valueByDateTimeDataPointFormatter
+        protected readonly ValueByDateTimeDataPointFormatter $valueByDateTimeDataPointFormatter,
     ) {
     }
 
@@ -30,14 +30,14 @@ class StatisticsFacade
 
         $valueByDateTimeDataPoints = $this->statisticsRepository->getCustomersRegistrationsCountByDayBetweenTwoDateTimes(
             $startDataTime,
-            $tomorrowDateTime
+            $tomorrowDateTime,
         );
 
         $valueByDateTimeDataPoints = $this->valueByDateTimeDataPointFormatter->normalizeDataPointsByDateTimeIntervals(
             $valueByDateTimeDataPoints,
             $startDataTime,
             $tomorrowDateTime,
-            DateInterval::createFromDateString('+ 1 day')
+            DateInterval::createFromDateString('+ 1 day'),
         );
 
         return $valueByDateTimeDataPoints;
@@ -53,14 +53,14 @@ class StatisticsFacade
 
         $valueByDateTimeDataPoints = $this->statisticsRepository->getNewOrdersCountByDayBetweenTwoDateTimes(
             $startDataTime,
-            $tomorrowDateTime
+            $tomorrowDateTime,
         );
 
         $valueByDateTimeDataPoints = $this->valueByDateTimeDataPointFormatter->normalizeDataPointsByDateTimeIntervals(
             $valueByDateTimeDataPoints,
             $startDataTime,
             $tomorrowDateTime,
-            DateInterval::createFromDateString('+ 1 day')
+            DateInterval::createFromDateString('+ 1 day'),
         );
 
         return $valueByDateTimeDataPoints;

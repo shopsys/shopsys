@@ -37,7 +37,7 @@ class Version20180702111020 extends AbstractMigration
     private function setInputPriceType()
     {
         $inputPriceTypeSettingCount = $this->sql(
-            'SELECT COUNT(*) FROM setting_values WHERE name = \'inputPriceType\' AND domain_id = 0;'
+            'SELECT COUNT(*) FROM setting_values WHERE name = \'inputPriceType\' AND domain_id = 0;',
         )->fetchOne();
 
         if ($inputPriceTypeSettingCount <= 0) {
@@ -47,7 +47,7 @@ class Version20180702111020 extends AbstractMigration
              * @see \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting
              */
             $this->sql(
-                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'inputPriceType\', 0, 2, \'integer\')'
+                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'inputPriceType\', 0, 2, \'integer\')',
             );
         }
     }
@@ -55,7 +55,7 @@ class Version20180702111020 extends AbstractMigration
     private function setRoundingType()
     {
         $roundingTypeSettingCount = $this->sql(
-            'SELECT COUNT(*) FROM setting_values WHERE name = \'roundingType\' AND domain_id = 0;'
+            'SELECT COUNT(*) FROM setting_values WHERE name = \'roundingType\' AND domain_id = 0;',
         )->fetchOne();
 
         if ($roundingTypeSettingCount <= 0) {
@@ -65,7 +65,7 @@ class Version20180702111020 extends AbstractMigration
              * @see \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting
              */
             $this->sql(
-                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'roundingType\', 0, 1, \'integer\')'
+                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'roundingType\', 0, 1, \'integer\')',
             );
         }
     }
@@ -73,7 +73,7 @@ class Version20180702111020 extends AbstractMigration
     private function setOrderSubmittedText()
     {
         $orderSubmittedTextSettingCount = $this->sql(
-            'SELECT COUNT(*) FROM setting_values WHERE name = \'orderSubmittedText\' AND domain_id = 1;'
+            'SELECT COUNT(*) FROM setting_values WHERE name = \'orderSubmittedText\' AND domain_id = 1;',
         )->fetchOne();
 
         if ($orderSubmittedTextSettingCount > 0) {
@@ -93,19 +93,19 @@ class Version20180702111020 extends AbstractMigration
             'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'orderSubmittedText\', 1, :text, \'string\')',
             [
                 'text' => $orderSubmittedText,
-            ]
+            ],
         );
     }
 
     private function setMainAdminMail()
     {
         $mailAdminMailSettingCount = $this->sql(
-            'SELECT COUNT(*) FROM setting_values WHERE name = \'mainAdminMail\' AND domain_id = 1;'
+            'SELECT COUNT(*) FROM setting_values WHERE name = \'mainAdminMail\' AND domain_id = 1;',
         )->fetchOne();
 
         if ($mailAdminMailSettingCount <= 0) {
             $this->sql(
-                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'mainAdminMail\', 1, \'no-reply@shopsys.com\', \'string\')'
+                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'mainAdminMail\', 1, \'no-reply@shopsys.com\', \'string\')',
             );
         }
     }
@@ -113,12 +113,12 @@ class Version20180702111020 extends AbstractMigration
     private function setMainAdminMailName()
     {
         $mainAdminMailNameSettingCount = $this->sql(
-            'SELECT COUNT(*) FROM setting_values WHERE name = \'mainAdminMailName\' AND domain_id = 1;'
+            'SELECT COUNT(*) FROM setting_values WHERE name = \'mainAdminMailName\' AND domain_id = 1;',
         )->fetchOne();
 
         if ($mainAdminMailNameSettingCount <= 0) {
             $this->sql(
-                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'mainAdminMailName\', 1, \'Shopsys\', \'string\')'
+                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'mainAdminMailName\', 1, \'Shopsys\', \'string\')',
             );
         }
     }
@@ -126,12 +126,12 @@ class Version20180702111020 extends AbstractMigration
     private function setFreeTransportAndPaymentPriceLimit(): void
     {
         $freeTransportAndPaymentPriceLimitSettingCount = $this->sql(
-            'SELECT COUNT(*) FROM setting_values WHERE name = \'freeTransportAndPaymentPriceLimit\' AND domain_id = 1;'
+            'SELECT COUNT(*) FROM setting_values WHERE name = \'freeTransportAndPaymentPriceLimit\' AND domain_id = 1;',
         )->fetchOne();
 
         if ($freeTransportAndPaymentPriceLimitSettingCount <= 0) {
             $this->sql(
-                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'freeTransportAndPaymentPriceLimit\', 1, null, \'none\')'
+                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'freeTransportAndPaymentPriceLimit\', 1, null, \'none\')',
             );
         }
     }
@@ -139,7 +139,7 @@ class Version20180702111020 extends AbstractMigration
     private function setSeoMetaDescriptionMainPage()
     {
         $seoMetaDescriptionMainPageSettingCount = $this->sql(
-            'SELECT COUNT(*) FROM setting_values WHERE name = \'seoMetaDescriptionMainPage\' AND domain_id = 1;'
+            'SELECT COUNT(*) FROM setting_values WHERE name = \'seoMetaDescriptionMainPage\' AND domain_id = 1;',
         )->fetchOne();
 
         if ($seoMetaDescriptionMainPageSettingCount <= 0) {
@@ -147,7 +147,7 @@ class Version20180702111020 extends AbstractMigration
                 'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'seoMetaDescriptionMainPage\', 1, :text, \'string\')',
                 [
                     'text' => 'Shopsys Framework - the best solution for your eshop.',
-                ]
+                ],
             );
         }
     }
@@ -155,7 +155,7 @@ class Version20180702111020 extends AbstractMigration
     private function setSeoTitleMainPage()
     {
         $seoTitleMainPageSettingCount = $this->sql(
-            'SELECT COUNT(*) FROM setting_values WHERE name = \'seoTitleMainPage\' AND domain_id = 1;'
+            'SELECT COUNT(*) FROM setting_values WHERE name = \'seoTitleMainPage\' AND domain_id = 1;',
         )->fetchOne();
 
         if ($seoTitleMainPageSettingCount <= 0) {
@@ -163,7 +163,7 @@ class Version20180702111020 extends AbstractMigration
                 'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'seoTitleMainPage\', 1, :text, \'string\')',
                 [
                     'text' => 'Shopsys Framework - Title page',
-                ]
+                ],
             );
         }
     }
@@ -171,7 +171,7 @@ class Version20180702111020 extends AbstractMigration
     private function setSeoTitleAddOn()
     {
         $seoTitleAddOnSettingCount = $this->sql(
-            'SELECT COUNT(*) FROM setting_values WHERE name = \'seoTitleAddOn\' AND domain_id = 1;'
+            'SELECT COUNT(*) FROM setting_values WHERE name = \'seoTitleAddOn\' AND domain_id = 1;',
         )->fetchOne();
 
         if ($seoTitleAddOnSettingCount <= 0) {
@@ -179,7 +179,7 @@ class Version20180702111020 extends AbstractMigration
                 'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'seoTitleAddOn\', 1, :text, \'string\')',
                 [
                     'text' => '| Demo eshop',
-                ]
+                ],
             );
         }
     }
@@ -187,12 +187,12 @@ class Version20180702111020 extends AbstractMigration
     private function setTermsAndConditionsArticleId()
     {
         $termsAndConditionsArticleIdSettingCount = $this->sql(
-            'SELECT COUNT(*) FROM setting_values WHERE name = \'termsAndConditionsArticleId\' AND domain_id = 1;'
+            'SELECT COUNT(*) FROM setting_values WHERE name = \'termsAndConditionsArticleId\' AND domain_id = 1;',
         )->fetchOne();
 
         if ($termsAndConditionsArticleIdSettingCount <= 0) {
             $this->sql(
-                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'termsAndConditionsArticleId\', 1, null, \'integer\')'
+                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'termsAndConditionsArticleId\', 1, null, \'integer\')',
             );
         }
     }
@@ -200,12 +200,12 @@ class Version20180702111020 extends AbstractMigration
     private function setCookiesArticleId()
     {
         $cookiesArticleIdSettingCount = $this->sql(
-            'SELECT COUNT(*) FROM setting_values WHERE name = \'cookiesArticleId\' AND domain_id = 1;'
+            'SELECT COUNT(*) FROM setting_values WHERE name = \'cookiesArticleId\' AND domain_id = 1;',
         )->fetchOne();
 
         if ($cookiesArticleIdSettingCount <= 0) {
             $this->sql(
-                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'cookiesArticleId\', 1, null, \'integer\')'
+                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'cookiesArticleId\', 1, null, \'integer\')',
             );
         }
     }
@@ -213,12 +213,12 @@ class Version20180702111020 extends AbstractMigration
     private function setDomainDataCreated()
     {
         $domainDataCreatedSettingCount = $this->sql(
-            'SELECT COUNT(*) FROM setting_values WHERE name = \'domainDataCreated\' AND domain_id = 1;'
+            'SELECT COUNT(*) FROM setting_values WHERE name = \'domainDataCreated\' AND domain_id = 1;',
         )->fetchOne();
 
         if ($domainDataCreatedSettingCount <= 0) {
             $this->sql(
-                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'domainDataCreated\', 1, \'true\', \'boolean\')'
+                'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'domainDataCreated\', 1, \'true\', \'boolean\')',
             );
         }
     }
@@ -226,7 +226,7 @@ class Version20180702111020 extends AbstractMigration
     private function setFeedHash()
     {
         $feedHashSettingCount = $this->sql(
-            'SELECT COUNT(*) FROM setting_values WHERE name = \'feedHash\' AND domain_id = 0;'
+            'SELECT COUNT(*) FROM setting_values WHERE name = \'feedHash\' AND domain_id = 0;',
         )->fetchOne();
 
         if ($feedHashSettingCount <= 0) {
@@ -234,7 +234,7 @@ class Version20180702111020 extends AbstractMigration
                 'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'feedHash\', 0, :hash, \'string\')',
                 [
                     'hash' => $this->generateTenCharactersHash(),
-                ]
+                ],
             );
         }
     }

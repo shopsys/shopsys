@@ -15,7 +15,7 @@ class TypeNotImplementedException extends RuntimeException
     {
         parent::__construct(sprintf(
             'Advert type "%s" has not been implemented yet.',
-            $type
+            $type,
         ));
     }
 }

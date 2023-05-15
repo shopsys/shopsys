@@ -18,7 +18,7 @@ class FriendlyUrlCacheKeyProvider
             '%s_%s_%s',
             $routeName,
             $domainId,
-            $entityId
+            $entityId,
         );
     }
 }

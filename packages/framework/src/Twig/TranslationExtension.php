@@ -47,7 +47,7 @@ class TranslationExtension extends AbstractExtension
         string $message,
         array $arguments = [],
         ?string $translationDomain = null,
-        ?string $locale = null
+        ?string $locale = null,
     ): string {
         $defaultTransCallable = $twig->getFilter('trans')->getCallable();
         $escapedArguments = $this->getEscapedElements($twig, $arguments);

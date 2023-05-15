@@ -34,7 +34,7 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
             'Check the release date of "%s" version is "%s" in CHANGELOG.md. If necessary, the date is updated and the change is committed to "%s" branch',
             $version->getVersionString(),
             $this->getTodayAsString(),
-            $this->createBranchName($version)
+            $this->createBranchName($version),
         );
     }
 
@@ -58,7 +58,7 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
 
         if ($match === null) {
             $this->symfonyStyle->error(
-                'Unable to find current release headline. You need to check the release date in CHANGELOG.md manually.'
+                'Unable to find current release headline. You need to check the release date in CHANGELOG.md manually.',
             );
             $this->confirm('Confirm you have manually checked the release date in CHANGELOG.md');
         }
@@ -67,14 +67,14 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
             $newChangelogContent = $this->changelogFileManipulator->updateReleaseDateOfCurrentReleaseToToday(
                 $fileContent,
                 $pattern,
-                $todayInString
+                $todayInString,
             );
             FileSystem::write($changelogFilePath, $newChangelogContent);
 
             $infoMessage = sprintf(
                 'CHANGELOG.md date for "%s" version was updated to "%s".',
                 $version->getVersionString(),
-                $todayInString
+                $todayInString,
             );
             $this->symfonyStyle->note($infoMessage);
 

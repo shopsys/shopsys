@@ -16,7 +16,7 @@ class ProductElasticsearchProvider
      */
     public function __construct(
         protected readonly ProductElasticsearchRepository $productElasticsearchRepository,
-        protected readonly FilterQueryFactory $filterQueryFactory
+        protected readonly FilterQueryFactory $filterQueryFactory,
     ) {
     }
 
@@ -27,7 +27,7 @@ class ProductElasticsearchProvider
     public function getVisibleProductArrayById(int $productId): array
     {
         $products = $this->productElasticsearchRepository->getProductsByFilterQuery(
-            $this->filterQueryFactory->createVisibleProductsByProductIdsFilter([$productId])
+            $this->filterQueryFactory->createVisibleProductsByProductIdsFilter([$productId]),
         );
 
         if (count($products) === 0) {
@@ -45,7 +45,7 @@ class ProductElasticsearchProvider
     public function getSellableProductArrayByIds(array $productIds, ?int $limit = null): array
     {
         return $this->productElasticsearchRepository->getProductsByFilterQuery(
-            $this->filterQueryFactory->createSellableProductsByProductIdsFilter($productIds, $limit)
+            $this->filterQueryFactory->createSellableProductsByProductIdsFilter($productIds, $limit),
         );
     }
 
@@ -56,7 +56,7 @@ class ProductElasticsearchProvider
     public function getVisibleProductArrayByUuid(string $productUuid): array
     {
         $products = $this->productElasticsearchRepository->getProductsByFilterQuery(
-            $this->filterQueryFactory->createVisibleProductsByProductUuidsFilter([$productUuid])
+            $this->filterQueryFactory->createVisibleProductsByProductUuidsFilter([$productUuid]),
         );
 
         if (count($products) === 0) {
@@ -73,7 +73,7 @@ class ProductElasticsearchProvider
     public function getSellableProductArrayByUuids(array $productUuids): array
     {
         return $this->productElasticsearchRepository->getProductsByFilterQuery(
-            $this->filterQueryFactory->createSellableProductsByProductUuidsFilter($productUuids)
+            $this->filterQueryFactory->createSellableProductsByProductUuidsFilter($productUuids),
         );
     }
 }

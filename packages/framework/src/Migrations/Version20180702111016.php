@@ -21,7 +21,7 @@ class Version20180702111016 extends AbstractMigration
         $this->sql(
             'INSERT INTO "enabled_modules" ("name") VALUES '
             . '(\'productFilterCounts\'),'
-            . '(\'productStockCalculations\')'
+            . '(\'productStockCalculations\')',
         );
     }
 

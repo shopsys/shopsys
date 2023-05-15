@@ -39,7 +39,7 @@ class RegisterExtendedEntitiesCompilerPass implements CompilerPassInterface
         $currentEntityExtensionMap = $container->getParameter('shopsys.entity_extension.map');
         $container->setParameter(
             'shopsys.entity_extension.map',
-            array_merge($entityExtensionMap, $currentEntityExtensionMap)
+            array_merge($entityExtensionMap, $currentEntityExtensionMap),
         );
     }
 }

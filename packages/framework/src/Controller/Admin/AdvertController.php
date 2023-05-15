@@ -41,7 +41,7 @@ class AdvertController extends AdminBaseController
         protected readonly ImageExtension $imageExtension,
         protected readonly AdvertDataFactoryInterface $advertDataFactory,
         protected readonly AdvertPositionRegistry $advertPositionRegistry,
-        protected readonly EntityManagerInterface $entityManager
+        protected readonly EntityManagerInterface $entityManager,
     ) {
     }
 
@@ -71,7 +71,7 @@ class AdvertController extends AdminBaseController
                 [
                     'name' => $advert->getName(),
                     'url' => $this->generateUrl('admin_advert_edit', ['id' => $advert->getId()]),
-                ]
+                ],
             );
 
             return $this->redirectToRoute('admin_advert_list');
@@ -82,7 +82,7 @@ class AdvertController extends AdminBaseController
         }
 
         $this->breadcrumbOverrider->overrideLastItem(
-            t('Editing advertising - %name%', ['%name%' => $advert->getName()])
+            t('Editing advertising - %name%', ['%name%' => $advert->getName()]),
         );
 
         return $this->render('@ShopsysFramework/Admin/Content/Advert/edit.html.twig', [
@@ -112,7 +112,7 @@ class AdvertController extends AdminBaseController
                 $row['advert'] = $advert;
 
                 return $row;
-            }
+            },
         );
 
         $grid = $this->gridFactory->create('advertList', $dataSource);
@@ -167,7 +167,7 @@ class AdvertController extends AdminBaseController
                     [
                         'name' => $advert->getName(),
                         'url' => $this->generateUrl('admin_advert_edit', ['id' => $advert->getId()]),
-                    ]
+                    ],
                 );
 
             return $this->redirectToRoute('admin_advert_list');
@@ -198,7 +198,7 @@ class AdvertController extends AdminBaseController
                 t('Advertising <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $fullName,
-                ]
+                ],
             );
         } catch (AdvertNotFoundException $ex) {
             $this->addErrorFlash(t('Selected advertisement doesn\'t exist.'));

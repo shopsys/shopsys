@@ -21,7 +21,7 @@ class OrderItemPriceCalculation
     public function __construct(
         protected readonly PriceCalculation $priceCalculation,
         protected readonly VatFactoryInterface $vatFactory,
-        protected readonly VatDataFactoryInterface $vatDataFactory
+        protected readonly VatDataFactoryInterface $vatDataFactory,
     ) {
     }
 

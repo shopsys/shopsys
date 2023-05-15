@@ -39,7 +39,7 @@ class ListedProductViewFactory
         protected readonly ProductActionViewFacadeInterface $productActionViewFacade,
         protected readonly ProductActionViewFactory $productActionViewFactory,
         protected readonly CurrentCustomerUser $currentCustomerUser,
-        protected readonly PriceFactory $priceFactory
+        protected readonly PriceFactory $priceFactory,
     ) {
     }
 
@@ -107,7 +107,7 @@ class ListedProductViewFactory
     {
         $productPrice = $this->priceFactory->createProductPriceFromArrayByPricingGroup(
             $productArray['prices'],
-            $pricingGroup
+            $pricingGroup,
         );
 
         return $this->create(
@@ -130,7 +130,7 @@ class ListedProductViewFactory
     {
         $imageViews = $this->imageViewFacade->getMainImagesByEntityIds(
             Product::class,
-            $this->getIdsForProducts($products)
+            $this->getIdsForProducts($products),
         );
         $productActionViews = $this->productActionViewFacade->getForProducts($products);
 
@@ -141,7 +141,7 @@ class ListedProductViewFactory
             $listedProductViews[$productId] = $this->createFromProduct(
                 $product,
                 $imageViews[$productId],
-                $productActionViews[$productId]
+                $productActionViews[$productId],
             );
         }
 
@@ -156,7 +156,7 @@ class ListedProductViewFactory
     {
         $imageViews = $this->imageViewFacade->getMainImagesByEntityIds(
             Product::class,
-            array_column($productsArray, 'id')
+            array_column($productsArray, 'id'),
         );
 
         $listedProductViews = [];
@@ -169,7 +169,7 @@ class ListedProductViewFactory
                     $productArray,
                     $imageViews[$productId],
                     $this->productActionViewFactory->createFromArray($productArray),
-                    $this->currentCustomerUser->getPricingGroup()
+                    $this->currentCustomerUser->getPricingGroup(),
                 );
             } catch (NoProductPriceForPricingGroupException $exception) {
                 continue;

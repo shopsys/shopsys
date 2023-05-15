@@ -16,7 +16,7 @@ class TransportsQuery extends AbstractQuery
      */
     public function __construct(
         protected readonly TransportFacade $transportFacade,
-        protected readonly PaymentFacade $paymentFacade
+        protected readonly PaymentFacade $paymentFacade,
     ) {
     }
 

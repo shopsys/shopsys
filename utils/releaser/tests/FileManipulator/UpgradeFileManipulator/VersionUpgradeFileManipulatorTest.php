@@ -21,7 +21,7 @@ class VersionUpgradeFileManipulatorTest extends TestCase
         $changedContent = $this->versionUpgradeFileManipulator->processFileToString(
             new SmartFileInfo(__DIR__ . '/Source/UPGRADE-version-before.md'),
             new Version('v7.0.0-beta5'),
-            '7.0'
+            '7.0',
         );
 
         $this->assertStringMatchesFormatFile(__DIR__ . '/Source/UPGRADE-version-after.md', $changedContent);

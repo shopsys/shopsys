@@ -21,7 +21,7 @@ class ContactFormSettingsController extends AdminBaseController
     public function __construct(
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly ContactFormSettingsDataFactoryInterface $contactFormSettingsDataFactory,
-        protected readonly ContactFormSettingsFacade $contactFormSettingsFacade
+        protected readonly ContactFormSettingsFacade $contactFormSettingsFacade,
     ) {
     }
 

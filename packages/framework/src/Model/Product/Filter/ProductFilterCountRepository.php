@@ -17,7 +17,7 @@ class ProductFilterCountRepository
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly ProductFilterRepository $productFilterRepository
+        protected readonly ProductFilterRepository $productFilterRepository,
     ) {
     }
 
@@ -34,32 +34,32 @@ class ProductFilterCountRepository
         $locale,
         ProductFilterConfig $productFilterConfig,
         ProductFilterData $productFilterData,
-        PricingGroup $pricingGroup
+        PricingGroup $pricingGroup,
     ) {
         $productFilterCountData = new ProductFilterCountData();
         $productFilterCountData->countInStock = $this->getCountInStock(
             $productsQueryBuilder,
             $productFilterData,
-            $pricingGroup
+            $pricingGroup,
         );
         $productFilterCountData->countByBrandId = $this->getCountIndexedByBrandId(
             $productsQueryBuilder,
             $productFilterConfig->getBrandChoices(),
             $productFilterData,
-            $pricingGroup
+            $pricingGroup,
         );
         $productFilterCountData->countByFlagId = $this->getCountIndexedByFlagId(
             $productsQueryBuilder,
             $productFilterConfig->getFlagChoices(),
             $productFilterData,
-            $pricingGroup
+            $pricingGroup,
         );
         $productFilterCountData->countByParameterIdAndValueId = $this->getCountIndexedByParameterIdAndValueId(
             $productsQueryBuilder,
             $productFilterConfig->getParameterChoices(),
             $productFilterData,
             $pricingGroup,
-            $locale
+            $locale,
         );
 
         return $productFilterCountData;
@@ -74,7 +74,7 @@ class ProductFilterCountRepository
     protected function getCountInStock(
         QueryBuilder $productsQueryBuilder,
         ProductFilterData $productFilterData,
-        PricingGroup $pricingGroup
+        PricingGroup $pricingGroup,
     ) {
         $productsInStockQueryBuilder = clone $productsQueryBuilder;
         $productInStockFilterData = clone $productFilterData;
@@ -84,7 +84,7 @@ class ProductFilterCountRepository
         $this->productFilterRepository->applyFiltering(
             $productsInStockQueryBuilder,
             $productInStockFilterData,
-            $pricingGroup
+            $pricingGroup,
         );
 
         $productsInStockQueryBuilder
@@ -105,7 +105,7 @@ class ProductFilterCountRepository
         QueryBuilder $productsQueryBuilder,
         array $brandFilterChoices,
         ProductFilterData $productFilterData,
-        PricingGroup $pricingGroup
+        PricingGroup $pricingGroup,
     ) {
         if (count($brandFilterChoices) === 0) {
             return [];
@@ -119,7 +119,7 @@ class ProductFilterCountRepository
         $this->productFilterRepository->applyFiltering(
             $productsFilteredExceptBrandsQueryBuilder,
             $productFilterDataExceptBrands,
-            $pricingGroup
+            $pricingGroup,
         );
 
         $productsFilteredExceptBrandsQueryBuilder
@@ -159,7 +159,7 @@ class ProductFilterCountRepository
         QueryBuilder $productsQueryBuilder,
         array $flagFilterChoices,
         ProductFilterData $productFilterData,
-        PricingGroup $pricingGroup
+        PricingGroup $pricingGroup,
     ) {
         if (count($flagFilterChoices) === 0) {
             return [];
@@ -173,7 +173,7 @@ class ProductFilterCountRepository
         $this->productFilterRepository->applyFiltering(
             $productsFilteredExceptFlagsQueryBuilder,
             $productFilterDataExceptFlags,
-            $pricingGroup
+            $pricingGroup,
         );
 
         $productsFilteredExceptFlagsQueryBuilder
@@ -191,8 +191,8 @@ class ProductFilterCountRepository
                             ->from(Product::class, '_p')
                             ->join('_p.flags', '_f')
                             ->where('_f IN (:activeFlags)')
-                            ->getDQL()
-                    )
+                            ->getDQL(),
+                    ),
                 )
                 ->setParameter('activeFlags', $productFilterData->flags);
         }
@@ -225,7 +225,7 @@ class ProductFilterCountRepository
         array $parameterFilterChoices,
         ProductFilterData $productFilterData,
         PricingGroup $pricingGroup,
-        $locale
+        $locale,
     ) {
         $countByParameterIdAndValueId = [];
 
@@ -245,7 +245,7 @@ class ProductFilterCountRepository
             $this->productFilterRepository->applyFiltering(
                 $productsFilteredExceptCurrentParameterQueryBuilder,
                 $productFilterDataExceptCurrentParameter,
-                $pricingGroup
+                $pricingGroup,
             );
 
             $productsFilteredExceptCurrentParameterQueryBuilder

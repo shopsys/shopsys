@@ -17,7 +17,7 @@ class CategoryDomainNotFoundException extends Exception implements CategoryExcep
         $message = sprintf(
             'CategoryDomain for category %s and domain ID %d not found.',
             $categoryDescription,
-            $domainId
+            $domainId,
         );
 
         parent::__construct($message, 0, $previous);

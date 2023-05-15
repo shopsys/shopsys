@@ -35,7 +35,7 @@ class ProductListAdminRepository
                 ProductManualInputPrice::class,
                 'pmip',
                 Join::WITH,
-                'pmip.product = p.id AND pmip.pricingGroup = :pricingGroupId'
+                'pmip.product = p.id AND pmip.pricingGroup = :pricingGroupId',
             )
             ->leftJoin('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
             ->setParameters([
@@ -52,7 +52,7 @@ class ProductListAdminRepository
      */
     public function extendQueryBuilderByQuickSearchData(
         QueryBuilder $queryBuilder,
-        QuickSearchFormData $quickSearchData
+        QuickSearchFormData $quickSearchData,
     ) {
         if ($quickSearchData->text !== null && $quickSearchData->text !== '') {
             $queryBuilder->andWhere('

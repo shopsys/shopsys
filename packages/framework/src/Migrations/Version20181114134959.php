@@ -33,7 +33,7 @@ class Version20181114134959 extends AbstractMigration
                     JOIN currencies c ON c.id = s.value::integer
                     WHERE s.name = \'defaultDomainCurrencyId\'
                 ) t
-                WHERE p.price_calculation_type = \'auto\''
+                WHERE p.price_calculation_type = \'auto\'',
         );
         $this->sql('UPDATE products SET price_calculation_type = \'manual\' WHERE price_calculation_type = \'auto\'');
     }

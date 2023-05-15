@@ -61,7 +61,7 @@ class OrderNameFilter implements AdvancedSearchFilterInterface
             $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
             $parameterName = 'name_' . $index;
             $queryBuilder->andWhere(
-                'NORMALIZE(o.firstName) ' . $dqlOperator . ' NORMALIZE(:' . $parameterName . ') OR NORMALIZE(o.deliveryFirstName) ' . $dqlOperator . ' NORMALIZE(:' . $parameterName . ')'
+                'NORMALIZE(o.firstName) ' . $dqlOperator . ' NORMALIZE(:' . $parameterName . ') OR NORMALIZE(o.deliveryFirstName) ' . $dqlOperator . ' NORMALIZE(:' . $parameterName . ')',
             );
             $queryBuilder->setParameter($parameterName, $searchValue);
         }

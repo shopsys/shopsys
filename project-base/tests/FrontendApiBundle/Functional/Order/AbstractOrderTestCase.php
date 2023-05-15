@@ -84,10 +84,10 @@ class AbstractOrderTestCase extends GraphQlTestCase
         foreach ($expectedOrderItems as $expectedOrderItem) {
             $expectedOrderItemTotalPrice = $expectedOrderItem['totalPrice'];
             $totalPriceWithVat = $totalPriceWithVat->add(
-                Money::create($expectedOrderItemTotalPrice['priceWithVat'])
+                Money::create($expectedOrderItemTotalPrice['priceWithVat']),
             );
             $totalPriceWithoutVat = $totalPriceWithoutVat->add(
-                Money::create($expectedOrderItemTotalPrice['priceWithoutVat'])
+                Money::create($expectedOrderItemTotalPrice['priceWithoutVat']),
             );
         }
 

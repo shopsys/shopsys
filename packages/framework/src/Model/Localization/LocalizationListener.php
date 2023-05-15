@@ -18,7 +18,7 @@ class LocalizationListener implements EventSubscriberInterface
     public function __construct(
         protected readonly Domain $domain,
         protected readonly Localization $localization,
-        protected readonly AdministrationFacade $administrationFacade
+        protected readonly AdministrationFacade $administrationFacade,
     ) {
     }
 

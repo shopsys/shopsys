@@ -34,7 +34,7 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
     protected function createInstance(
         BillingAddressData $billingAddressData,
         DeliveryAddressData $deliveryAddressData,
-        CustomerUserData $customerUserData
+        CustomerUserData $customerUserData,
     ): CustomerUserUpdateData {
         return new CustomerUserUpdateData($billingAddressData, $customerUserData, $deliveryAddressData);
     }
@@ -47,7 +47,7 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
         return $this->createInstance(
             $this->billingAddressDataFactory->create(),
             $this->deliveryAddressDataFactory->create(),
-            $this->customerUserDataFactory->create()
+            $this->customerUserDataFactory->create(),
         );
     }
 
@@ -59,10 +59,10 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
     {
         return $this->createInstance(
             $this->billingAddressDataFactory->createFromBillingAddress(
-                $customerUser->getCustomer()->getBillingAddress()
+                $customerUser->getCustomer()->getBillingAddress(),
             ),
             $this->getDeliveryAddressDataFromCustomerUser($customerUser),
-            $this->customerUserDataFactory->createFromCustomerUser($customerUser)
+            $this->customerUserDataFactory->createFromCustomerUser($customerUser),
         );
     }
 
@@ -74,7 +74,7 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
     {
         if ($customerUser->getDefaultDeliveryAddress() !== null) {
             return $this->deliveryAddressDataFactory->createFromDeliveryAddress(
-                $customerUser->getDefaultDeliveryAddress()
+                $customerUser->getDefaultDeliveryAddress(),
             );
         }
 
@@ -95,19 +95,19 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
 
         $customerUserUpdateData->customerUserData->firstName = Utils::ifNull(
             $customerUser->getFirstName(),
-            $order->getFirstName()
+            $order->getFirstName(),
         );
         $customerUserUpdateData->customerUserData->lastName = Utils::ifNull(
             $customerUser->getLastName(),
-            $order->getLastName()
+            $order->getLastName(),
         );
         $customerUserUpdateData->billingAddressData = $this->getAmendedBillingAddressDataByOrder(
             $order,
-            $billingAddress
+            $billingAddress,
         );
         $customerUserUpdateData->deliveryAddressData = $this->getAmendedDeliveryAddressDataByOrder(
             $order,
-            $deliveryAddress
+            $deliveryAddress,
         );
 
         return $customerUserUpdateData;

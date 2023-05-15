@@ -38,7 +38,7 @@ class UniqueProductParametersValidator extends ConstraintValidator
                 $constraint->message,
                 [
                     '{{ parameterName }}' => $violation,
-                ]
+                ],
             );
         }
     }

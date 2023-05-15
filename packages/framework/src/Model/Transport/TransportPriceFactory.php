@@ -23,7 +23,7 @@ class TransportPriceFactory implements TransportPriceFactoryInterface
     public function create(
         Transport $transport,
         Money $price,
-        int $domainId
+        int $domainId,
     ): TransportPrice {
         $classData = $this->entityNameResolver->resolve(TransportPrice::class);
 

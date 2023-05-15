@@ -42,7 +42,7 @@ class ProductController extends AbstractFOSRestController
         protected readonly ApiProductTransformer $productTransformer,
         protected readonly HeaderLinksTransformer $linksTransformer,
         protected readonly ProductDataFactoryInterface $productDataFactory,
-        protected readonly ProductApiDataValidatorInterface $productApiDataValidator
+        protected readonly ProductApiDataValidatorInterface $productApiDataValidator,
     ) {
     }
 
@@ -195,7 +195,7 @@ class ProductController extends AbstractFOSRestController
     {
         if ($product->isVariant() || $product->isMainVariant()) {
             throw new BadRequestHttpException(
-                'cannot update/delete variant/main variant, this functionality is not supported yet'
+                'cannot update/delete variant/main variant, this functionality is not supported yet',
             );
         }
     }

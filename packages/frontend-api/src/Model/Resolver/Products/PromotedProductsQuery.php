@@ -19,7 +19,7 @@ class PromotedProductsQuery extends AbstractQuery
     public function __construct(
         protected readonly TopProductFacade $topProductFacade,
         protected readonly Domain $domain,
-        protected readonly CurrentCustomerUser $currentCustomerUser
+        protected readonly CurrentCustomerUser $currentCustomerUser,
     ) {
     }
 
@@ -30,7 +30,7 @@ class PromotedProductsQuery extends AbstractQuery
     {
         return $this->topProductFacade->getAllOfferedProducts(
             $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
     }
 }

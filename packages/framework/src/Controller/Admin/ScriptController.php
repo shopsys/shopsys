@@ -26,7 +26,7 @@ class ScriptController extends AdminBaseController
         protected readonly ScriptFacade $scriptFacade,
         protected readonly GridFactory $gridFactory,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
-        protected readonly ScriptDataFactoryInterface $scriptDataFactory
+        protected readonly ScriptDataFactoryInterface $scriptDataFactory,
     ) {
     }
 
@@ -49,7 +49,7 @@ class ScriptController extends AdminBaseController
                     [
                         'name' => $script->getName(),
                         'url' => $this->generateUrl('admin_script_edit', ['scriptId' => $script->getId()]),
-                    ]
+                    ],
                 );
 
             return $this->redirectToRoute('admin_script_list');
@@ -83,7 +83,7 @@ class ScriptController extends AdminBaseController
                     [
                         'name' => $script->getName(),
                         'url' => $this->generateUrl('admin_script_edit', ['scriptId' => $scriptId]),
-                    ]
+                    ],
                 );
 
             return $this->redirectToRoute('admin_script_list');
@@ -137,7 +137,7 @@ class ScriptController extends AdminBaseController
                 t('Script <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $script->getName(),
-                ]
+                ],
             );
         } catch (ScriptNotFoundException $ex) {
             $this->addErrorFlash(t('Selected script doesn\'t exist.'));

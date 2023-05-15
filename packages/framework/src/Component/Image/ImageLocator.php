@@ -63,7 +63,7 @@ class ImageLocator
         string $entityName,
         ?string $type,
         ?string $sizeName = null,
-        ?int $additionalIndex = null
+        ?int $additionalIndex = null,
     ): string {
         $path = $this->getRelativeImagePath($entityName, $type, $sizeName);
 
@@ -146,7 +146,7 @@ class ImageLocator
         return str_replace(
             ['{index}', '{filename}'],
             [$additionalIndex, $filename],
-            static::ADDITIONAL_IMAGE_MASK
+            static::ADDITIONAL_IMAGE_MASK,
         );
     }
 }

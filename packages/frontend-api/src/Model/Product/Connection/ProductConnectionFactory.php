@@ -20,7 +20,7 @@ class ProductConnectionFactory
      */
     public function __construct(
         protected readonly ProductFilterOptionsFactory $productFilterOptionsFactory,
-        protected readonly ProductFilterFacade $productFilterFacade
+        protected readonly ProductFilterFacade $productFilterFacade,
     ) {
     }
 
@@ -35,7 +35,7 @@ class ProductConnectionFactory
         callable $retrieveProductClosure,
         int $countOfProducts,
         Argument $argument,
-        callable $getProductFilterConfigClosure
+        callable $getProductFilterConfigClosure,
     ): ProductConnection {
         $paginator = new Paginator($retrieveProductClosure);
         $connection = $paginator->auto($argument, $countOfProducts);
@@ -44,7 +44,7 @@ class ProductConnectionFactory
             $connection->getEdges(),
             $connection->getPageInfo(),
             $connection->getTotalCount(),
-            $getProductFilterConfigClosure
+            $getProductFilterConfigClosure,
         );
     }
 
@@ -59,12 +59,12 @@ class ProductConnectionFactory
         callable $retrieveProductClosure,
         int $countOfProducts,
         Argument $argument,
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
     ): ProductConnection {
         $productFilterOptionsClosure = function () use ($productFilterData) {
             return $this->productFilterOptionsFactory->createProductFilterOptionsForAll(
                 $this->productFilterFacade->getProductFilterConfigForAll(),
-                $productFilterData
+                $productFilterData,
             );
         };
 
@@ -72,7 +72,7 @@ class ProductConnectionFactory
             $retrieveProductClosure,
             $countOfProducts,
             $argument,
-            $productFilterOptionsClosure
+            $productFilterOptionsClosure,
         );
     }
 
@@ -89,13 +89,13 @@ class ProductConnectionFactory
         callable $retrieveProductClosure,
         int $countOfProducts,
         Argument $argument,
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
     ): ProductConnection {
         $productFilterOptionsClosure = function () use ($brand, $productFilterData) {
             return $this->productFilterOptionsFactory->createProductFilterOptionsForBrand(
                 $brand,
                 $this->productFilterFacade->getProductFilterConfigForBrand($brand),
-                $productFilterData
+                $productFilterData,
             );
         };
 
@@ -103,7 +103,7 @@ class ProductConnectionFactory
             $retrieveProductClosure,
             $countOfProducts,
             $argument,
-            $productFilterOptionsClosure
+            $productFilterOptionsClosure,
         );
     }
 
@@ -120,13 +120,13 @@ class ProductConnectionFactory
         callable $retrieveProductClosure,
         int $countOfProducts,
         Argument $argument,
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
     ): ProductConnection {
         $productFilterOptionsClosure = function () use ($category, $productFilterData) {
             return $this->productFilterOptionsFactory->createProductFilterOptionsForCategory(
                 $category,
                 $this->productFilterFacade->getProductFilterConfigForCategory($category),
-                $productFilterData
+                $productFilterData,
             );
         };
 
@@ -134,7 +134,7 @@ class ProductConnectionFactory
             $retrieveProductClosure,
             $countOfProducts,
             $argument,
-            $productFilterOptionsClosure
+            $productFilterOptionsClosure,
         );
     }
 }

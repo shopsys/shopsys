@@ -48,7 +48,7 @@ docker rm $(docker ps -a -q)
 docker rmi --force $(docker images -q)
 
 # install the application following the corresponding installation guide',
-            $version->getVersionString()
+            $version->getVersionString(),
         ));
 
         parent::work($version);

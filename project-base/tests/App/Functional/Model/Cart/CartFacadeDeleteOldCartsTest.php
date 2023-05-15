@@ -182,7 +182,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
             $this->productPriceCalculationForCustomerUser,
             $this->cartItemFactoryInterface,
             $this->cartRepository,
-            $this->cartWatcherFacade
+            $this->cartWatcherFacade,
         );
     }
 

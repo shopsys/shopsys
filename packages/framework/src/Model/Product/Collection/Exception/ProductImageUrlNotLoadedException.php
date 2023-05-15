@@ -18,7 +18,7 @@ class ProductImageUrlNotLoadedException extends Exception implements ProductColl
         $message = sprintf(
             'URL for image of product with ID %d on %s have not been loaded via ProductUrlsBatchLoader::loadForProducts().',
             $product->getId(),
-            $domainConfig->getName()
+            $domainConfig->getName(),
         );
 
         parent::__construct($message, 0, $previous);

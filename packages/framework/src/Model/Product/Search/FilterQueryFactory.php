@@ -22,7 +22,7 @@ class FilterQueryFactory
         protected readonly ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly IndexDefinitionLoader $indexDefinitionLoader,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -48,7 +48,7 @@ class FilterQueryFactory
         string $orderingModeId,
         int $page,
         int $limit,
-        int $categoryId
+        int $categoryId,
     ): FilterQuery {
         return $this->createWithProductFilterData($productFilterData, $orderingModeId, $page, $limit)
             ->filterByCategory([$categoryId]);
@@ -65,7 +65,7 @@ class FilterQueryFactory
         ProductFilterData $productFilterData,
         string $orderingModeId,
         int $page,
-        int $limit
+        int $limit,
     ): FilterQuery {
         return $this->createListableWithProductFilter($productFilterData)
             ->setPage($page)
@@ -86,7 +86,7 @@ class FilterQueryFactory
         string $orderingModeId,
         int $page,
         int $limit,
-        int $brandId
+        int $brandId,
     ): FilterQuery {
         return $this->createWithProductFilterData($productFilterData, $orderingModeId, $page, $limit)
             ->filterByBrands([$brandId]);
@@ -105,7 +105,7 @@ class FilterQueryFactory
         string $orderingModeId,
         int $page,
         int $limit,
-        string $searchText
+        string $searchText,
     ): FilterQuery {
         return $this->createWithProductFilterData($productFilterData, $orderingModeId, $page, $limit)
             ->search($searchText);
@@ -119,7 +119,7 @@ class FilterQueryFactory
     {
         return $this->indexDefinitionLoader->getIndexDefinition(
             ProductIndex::getName(),
-            $this->domain->getId()
+            $this->domain->getId(),
         )->getIndexAlias();
     }
 
@@ -206,7 +206,7 @@ class FilterQueryFactory
         $filterQuery = $this->productFilterDataToQueryTransformer->addPricesToQuery(
             $productFilterData,
             $filterQuery,
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
         $filterQuery = $this->productFilterDataToQueryTransformer->addStockToQuery($productFilterData, $filterQuery);
 
@@ -273,13 +273,13 @@ class FilterQueryFactory
         $filterQuery = $this->productFilterDataToQueryTransformer->addFlagsToQuery($productFilterData, $filterQuery);
         $filterQuery = $this->productFilterDataToQueryTransformer->addParametersToQuery(
             $productFilterData,
-            $filterQuery
+            $filterQuery,
         );
         $filterQuery = $this->productFilterDataToQueryTransformer->addStockToQuery($productFilterData, $filterQuery);
         $filterQuery = $this->productFilterDataToQueryTransformer->addPricesToQuery(
             $productFilterData,
             $filterQuery,
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
 
         return $filterQuery;

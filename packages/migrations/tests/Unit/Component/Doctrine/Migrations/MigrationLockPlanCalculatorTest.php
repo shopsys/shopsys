@@ -77,7 +77,7 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
         array $orderedMigrationClassesFromLock,
         array $executedMigrationClasses,
         Version $toVersion,
-        array $expectedMigrationClasses
+        array $expectedMigrationClasses,
     ): void {
         $migrationLockPlanCalculator = $this->getMigrationLockPlanCalculator($availableMigrationClasses, $orderedMigrationClassesFromLock, $executedMigrationClasses);
 
@@ -161,7 +161,7 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
     private function getMigrationLockPlanCalculator(
         array $availableMigrationClasses,
         array $orderedMigrationClassesFromLock,
-        array $executedMigrationClasses = []
+        array $executedMigrationClasses = [],
     ): MigrationLockPlanCalculator {
         $availableMigrationsSet = $this->getAvailableMigrationsSet($availableMigrationClasses);
         $migrationsLockRepositoryMock = $this->createMock(MigrationsLockRepository::class);

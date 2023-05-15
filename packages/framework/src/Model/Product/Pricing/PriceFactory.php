@@ -18,7 +18,7 @@ class PriceFactory
      */
     public function createProductPriceFromArrayByPricingGroup(
         array $pricesArray,
-        PricingGroup $pricingGroup
+        PricingGroup $pricingGroup,
     ): ProductPrice {
         foreach ($pricesArray as $priceArray) {
             if ($priceArray['pricing_group_id'] === $pricingGroup->getId()) {

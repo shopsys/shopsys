@@ -18,7 +18,7 @@ class OrderItemHasOnlyOneTotalPriceException extends RuntimeException implements
         $message = sprintf(
             'Order item has only one of its total prices set: %s with VAT / %s without VAT',
             $totalPriceWithVat !== null ? $totalPriceWithVat->getAmount() : 'NULL',
-            $totalPriceWithoutVat !== null ? $totalPriceWithoutVat->getAmount() : 'NULL'
+            $totalPriceWithoutVat !== null ? $totalPriceWithoutVat->getAmount() : 'NULL',
         );
 
         parent::__construct($message, 0, $previous);

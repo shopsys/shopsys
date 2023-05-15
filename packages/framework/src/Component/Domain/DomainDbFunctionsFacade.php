@@ -47,7 +47,7 @@ class DomainDbFunctionsFacade
                     ELSE RETURN;
                 END CASE;
             END
-            $$ LANGUAGE plpgsql IMMUTABLE;'
+            $$ LANGUAGE plpgsql IMMUTABLE;',
         );
     }
 
@@ -69,7 +69,7 @@ class DomainDbFunctionsFacade
                     ELSE RAISE EXCEPTION \'Domain with ID % does not exists\', domain_id;
                 END CASE;
             END
-            $$ LANGUAGE plpgsql IMMUTABLE;'
+            $$ LANGUAGE plpgsql IMMUTABLE;',
         );
     }
 }

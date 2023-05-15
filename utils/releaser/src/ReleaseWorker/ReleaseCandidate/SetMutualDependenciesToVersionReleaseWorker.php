@@ -42,12 +42,12 @@ final class SetMutualDependenciesToVersionReleaseWorker extends AbstractShopsysR
         $this->dependencyUpdater->updateFileInfosWithPackagesAndVersion(
             $this->composerJsonFilesProvider->provideExcludingMonorepoComposerJson(),
             $this->packageNamesProvider->provide(),
-            $version->getVersionString()
+            $version->getVersionString(),
         );
 
         $this->commit(sprintf(
             'all Shopsys packages are now dependent on "%s" version of all other Shopsys packages',
-            $version->getVersionString()
+            $version->getVersionString(),
         ));
 
         $this->symfonyStyle->success(Message::SUCCESS);

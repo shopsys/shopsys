@@ -25,13 +25,13 @@ class BrandBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 
         $breadcrumbItems[] = new BreadcrumbItem(
             t('Brand overview'),
-            $isBrandDetail ? 'front_brand_list' : null
+            $isBrandDetail ? 'front_brand_list' : null,
         );
 
         if ($isBrandDetail) {
             $brand = $this->brandRepository->getById($routeParameters['id']);
             $breadcrumbItems[] = new BreadcrumbItem(
-                $brand->getName()
+                $brand->getName(),
             );
         }
 

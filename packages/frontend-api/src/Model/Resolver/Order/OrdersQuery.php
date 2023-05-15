@@ -21,7 +21,7 @@ class OrdersQuery extends AbstractQuery
      */
     public function __construct(
         protected readonly CurrentCustomerUser $currentCustomerUser,
-        protected readonly OrderFacade $orderFacade
+        protected readonly OrderFacade $orderFacade,
     ) {
     }
 

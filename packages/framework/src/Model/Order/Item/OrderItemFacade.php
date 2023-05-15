@@ -29,7 +29,7 @@ class OrderItemFacade
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly Domain $domain,
         protected readonly OrderPriceCalculation $orderPriceCalculation,
-        protected readonly OrderItemFactoryInterface $orderItemFactory
+        protected readonly OrderItemFactoryInterface $orderItemFactory,
     ) {
     }
 
@@ -47,7 +47,7 @@ class OrderItemFacade
         $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
             $product,
             $order->getDomainId(),
-            $order->getCustomerUser()
+            $order->getCustomerUser(),
         );
 
         $orderProduct = $this->orderItemFactory->createProduct(
@@ -58,12 +58,12 @@ class OrderItemFacade
             static::DEFAULT_PRODUCT_QUANTITY,
             $product->getUnit()->getName($orderDomainConfig->getLocale()),
             $product->getCatnum(),
-            $product
+            $product,
         );
 
         $order->addItem($orderProduct);
         $order->setTotalPrice(
-            $this->orderPriceCalculation->getOrderTotalPrice($order)
+            $this->orderPriceCalculation->getOrderTotalPrice($order),
         );
 
         $this->em->flush();

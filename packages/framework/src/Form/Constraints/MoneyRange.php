@@ -65,7 +65,7 @@ class MoneyRange extends Constraint
                 'The "%s" constraint requires the "%s" options to be either "%s" or null',
                 self::class,
                 $optionName,
-                Money::class
+                Money::class,
             );
             $message .= sprintf(', "%s" given.', is_object($value) ? get_class($value) : gettype($value));
 

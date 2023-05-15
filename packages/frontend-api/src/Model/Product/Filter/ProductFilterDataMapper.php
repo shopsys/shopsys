@@ -30,7 +30,7 @@ class ProductFilterDataMapper
     public function __construct(
         protected readonly FlagFacade $flagFacade,
         protected readonly BrandFacade $brandFacade,
-        protected readonly ParameterFacade $parameterFacade
+        protected readonly ParameterFacade $parameterFacade,
     ) {
     }
 

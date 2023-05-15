@@ -82,8 +82,8 @@ class EntityExtensionSubscriber implements EventSubscriber
                     sprintf(
                         'Invalid entity extension mapping. Entity "%s" is not a child of "%s"',
                         $extendedEntity,
-                        $parentEntity
-                    )
+                        $parentEntity,
+                    ),
                 );
             }
 
@@ -143,7 +143,7 @@ class EntityExtensionSubscriber implements EventSubscriber
 
                 $parentEntityAssociationMapping['targetEntity'] = $this->ensureAbsoluteClassName(
                     $parentEntityAssociationMapping['targetEntity'],
-                    $parentClass
+                    $parentClass,
                 );
 
                 $isDifferenceBetweenChildAssociationMappingAndParentAssociationMapping = !isset($classMetadata->associationMappings[$associationName]) || $classMetadata->associationMappings[$associationName] !== $parentEntityAssociationMapping;
@@ -171,7 +171,7 @@ class EntityExtensionSubscriber implements EventSubscriber
     protected function checkIsOverriddenPropertyInChildClass(
         array $overridingClassProperties,
         string $parentClassPropertyName,
-        string $overridingClassName
+        string $overridingClassName,
     ): bool {
         foreach ($overridingClassProperties as $overridingClassProperty) {
             if ($overridingClassProperty->name === $parentClassPropertyName && $overridingClassProperty->class === $overridingClassName) {
@@ -245,7 +245,7 @@ class EntityExtensionSubscriber implements EventSubscriber
     {
         $classMetadata = new ClassMetadata(
             $entityClass,
-            $this->configuration->getNamingStrategy()
+            $this->configuration->getNamingStrategy(),
         );
 
         $metadataDriver = $this->configuration->getMetadataDriverImpl();
@@ -320,8 +320,8 @@ class EntityExtensionSubscriber implements EventSubscriber
             sprintf(
                 'Invalid entity mapping. Class "%s" set as target entity for "%s" (or any child class) not found.',
                 $classNameCandidate,
-                $parentClass
-            )
+                $parentClass,
+            ),
         );
     }
 }

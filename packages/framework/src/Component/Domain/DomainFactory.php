@@ -24,7 +24,7 @@ class DomainFactory
     {
         $domainConfigs = $this->domainsConfigLoader->loadDomainConfigsFromYaml(
             $domainsConfigFilepath,
-            $domainsUrlsConfigFilepath
+            $domainsUrlsConfigFilepath,
         );
         $domain = new Domain($domainConfigs, $this->setting);
 

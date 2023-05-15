@@ -39,7 +39,7 @@ class FileUpload
         protected readonly FileNamingConvention $fileNamingConvention,
         protected readonly MountManager $mountManager,
         protected readonly FilesystemOperator $filesystem,
-        protected readonly ParameterBagInterface $parameterBag
+        protected readonly ParameterBagInterface $parameterBag,
     ) {
         $this->temporaryDir = $temporaryDir;
         $this->uploadedFileDir = $uploadedFileDir;
@@ -59,7 +59,7 @@ class FileUpload
         $temporaryFilename = $this->getTemporaryFilename($file->getClientOriginalName());
         $this->mountManager->move(
             'local://' . $file->getRealPath(),
-            'main://' . $this->getTemporaryDirectory() . '/' . $temporaryFilename
+            'main://' . $this->getTemporaryDirectory() . '/' . $temporaryFilename,
         );
 
         return $temporaryFilename;
@@ -109,9 +109,9 @@ class FileUpload
     public function getAbsoluteTemporaryFilepath($temporaryFilename)
     {
         return $this->parameterBag->get(
-            'kernel.project_dir'
+            'kernel.project_dir',
         ) . $this->getTemporaryDirectory() . '/' . TransformString::safeFilename(
-            $temporaryFilename
+            $temporaryFilename,
         );
     }
 
@@ -186,18 +186,18 @@ class FileUpload
         /** @var \Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload $fileForUpload */
         foreach ($filesForUpload as $fileForUpload) {
             $sourceFilepath = TransformString::removeDriveLetterFromPath(
-                $this->getTemporaryFilepath($fileForUpload->getTemporaryFilename())
+                $this->getTemporaryFilepath($fileForUpload->getTemporaryFilename()),
             );
             $originalFilename = $this->fileNamingConvention->getFilenameByNamingConvention(
                 $fileForUpload->getNameConventionType(),
                 $fileForUpload->getTemporaryFilename(),
-                $entity->getId()
+                $entity->getId(),
             );
             $targetFilename = $this->getTargetFilepath(
                 $originalFilename,
                 $fileForUpload->isImage(),
                 $fileForUpload->getCategory(),
-                $fileForUpload->getTargetDirectory()
+                $fileForUpload->getTargetDirectory(),
             );
 
             try {

@@ -22,7 +22,7 @@ class DomainIconResizer
     public function __construct(
         protected readonly Logger $logger,
         protected readonly ImageProcessor $imageProcessor,
-        protected readonly FilesystemOperator $filesystem
+        protected readonly FilesystemOperator $filesystem,
     ) {
     }
 
@@ -37,7 +37,7 @@ class DomainIconResizer
             $this->imageProcessor->createInterventionImage($filepath),
             static::DOMAIN_ICON_WIDTH,
             static::DOMAIN_ICON_HEIGHT,
-            static::DOMAIN_ICON_CROP
+            static::DOMAIN_ICON_CROP,
         );
         $resizedImage->encode(ImageProcessor::EXTENSION_PNG);
 
@@ -50,7 +50,7 @@ class DomainIconResizer
             $message = 'Move file from temporary directory to domain directory failed';
             $moveToFolderFailedException = new MoveToFolderFailedException(
                 $message,
-                $ex
+                $ex,
             );
             $this->logger->error($message, ['exception' => $moveToFolderFailedException]);
 

@@ -75,14 +75,14 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
 
         $inputPriceRecalculationScheduler = new InputPriceRecalculationScheduler(
             $inputPriceRecalculatorMock,
-            $this->setting
+            $this->setting,
         );
 
         $responseEvent = new ResponseEvent(
             self::$kernel,
             new Request(),
             HttpKernelInterface::MASTER_REQUEST,
-            new Response()
+            new Response(),
         );
 
         $inputPriceRecalculationScheduler->onKernelResponse($responseEvent);
@@ -113,7 +113,7 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
     public function testOnKernelResponseRecalculateInputPricesWithoutVat(
         Money $inputPriceWithoutVat,
         Money $inputPriceWithVat,
-        $vatPercent
+        $vatPercent,
     ) {
         $this->setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::INPUT_PRICE_TYPE_WITH_VAT);
 
@@ -121,7 +121,7 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
             $inputPriceWithVat,
             $inputPriceWithoutVat,
             $vatPercent,
-            self::METHOD_WITHOUT_VAT
+            self::METHOD_WITHOUT_VAT,
         );
     }
 
@@ -134,7 +134,7 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
     public function testOnKernelResponseRecalculateInputPricesWithVat(
         Money $inputPriceWithoutVat,
         Money $inputPriceWithVat,
-        $vatPercent
+        $vatPercent,
     ) {
         $this->setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT);
 
@@ -142,7 +142,7 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
             $inputPriceWithoutVat,
             $inputPriceWithVat,
             $vatPercent,
-            self::METHOD_WITH_VAT
+            self::METHOD_WITH_VAT,
         );
     }
 
@@ -156,7 +156,7 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         Money $inputPrice,
         Money $expectedPrice,
         $vatPercent,
-        string $scheduleSetInputPricesMethod
+        string $scheduleSetInputPricesMethod,
     ): void {
         $paymentData = $this->paymentDataFactory->create();
         $transportData = $this->transportDataFactory->create();
@@ -196,7 +196,7 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
             self::$kernel,
             new Request(),
             HttpKernelInterface::MASTER_REQUEST,
-            new Response()
+            new Response(),
         );
 
         $this->inputPriceRecalculationScheduler->onKernelResponse($responseEvent);

@@ -30,7 +30,7 @@ class AvailabilityDataFixture extends AbstractReferenceFixture
         private readonly AvailabilityFacade $availabilityFacade,
         private readonly AvailabilityDataFactoryInterface $availabilityDataFactory,
         private readonly Setting $setting,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 

@@ -31,7 +31,7 @@ class CartPage extends AbstractPage
     {
         $convertedPrice = $this->tester->getPriceWithVatConvertedToDomainDefaultCurrency($price);
         $formattedPriceWithCurrency = $this->tester->getFormattedPriceWithCurrencySymbolRoundedByCurrencyOnFrontend(
-            Money::create($convertedPrice)
+            Money::create($convertedPrice),
         );
         $productPriceCell = $this->getProductTotalPriceCellByName($productName);
         $this->tester->seeInElement($formattedPriceWithCurrency, $productPriceCell);
@@ -43,7 +43,7 @@ class CartPage extends AbstractPage
     public function assertTotalPriceWithVatRoundedByCurrency($price)
     {
         $formattedPriceWithCurrency = $this->tester->getFormattedPriceWithCurrencySymbolRoundedByCurrencyOnFrontend(
-            Money::create($price)
+            Money::create($price),
         );
         $orderPriceCell = $this->getTotalProductsPriceCell();
         $message = t('Total price including VAT', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->tester->getFrontendLocale());
@@ -125,7 +125,7 @@ class CartPage extends AbstractPage
         $message = sprintf(
             'Unable to find row containing product "%s" (translated to "%s") in cart.',
             $productName,
-            $translatedProductName
+            $translatedProductName,
         );
 
         throw new NoSuchElementException($message);
@@ -175,7 +175,7 @@ class CartPage extends AbstractPage
     public function removePromoCode()
     {
         $removePromoCodeButton = $this->webDriver->findElement(
-            WebDriverBy::cssSelector('#js-promo-code-remove-button')
+            WebDriverBy::cssSelector('#js-promo-code-remove-button'),
         );
         $this->tester->clickByElement($removePromoCodeButton);
         $this->tester->waitForAjax();
@@ -204,7 +204,7 @@ class CartPage extends AbstractPage
                 Money::create($this->getProductTotalPriceByName($productName))
                     ->divide(100, 6)
                     ->multiply(100 - $discount)
-                    ->multiply($count)
+                    ->multiply($count),
             );
         }
 
@@ -224,7 +224,7 @@ class CartPage extends AbstractPage
 
         return $this->tester->getNumberFromLocalizedFormat(
             $productPriceWithoutCurrencySymbol,
-            $this->tester->getFrontendLocale()
+            $this->tester->getFrontendLocale(),
         );
     }
 
@@ -234,7 +234,7 @@ class CartPage extends AbstractPage
             'Go to cart',
             Translator::DEFAULT_TRANSLATION_DOMAIN,
             [],
-            WebDriverBy::cssSelector('#window-main-container')
+            WebDriverBy::cssSelector('#window-main-container'),
         );
     }
 
@@ -252,7 +252,7 @@ class CartPage extends AbstractPage
                 '{{ name }}' => $productName,
                 '{{ quantity|formatNumber }}' => $quantity,
                 '{{ unitName }}' => $this->tester->getDefaultUnitName(),
-            ]
+            ],
         );
     }
 }

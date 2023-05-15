@@ -41,7 +41,7 @@ class ZboziFeedItemTest extends TestCase
     protected function setUp(): void
     {
         $this->productPriceCalculationForCustomerUserMock = $this->createMock(
-            ProductPriceCalculationForCustomerUser::class
+            ProductPriceCalculationForCustomerUser::class,
         );
         $this->productUrlsBatchLoaderMock = $this->createMock(ProductUrlsBatchLoader::class);
         $this->productParametersBatchLoaderMock = $this->createMock(ProductParametersBatchLoader::class);
@@ -51,7 +51,7 @@ class ZboziFeedItemTest extends TestCase
             $this->productPriceCalculationForCustomerUserMock,
             $this->productUrlsBatchLoaderMock,
             $this->productParametersBatchLoaderMock,
-            $this->categoryFacadeMock
+            $this->categoryFacadeMock,
         );
 
         $this->defaultDomain = $this->createDomainConfigMock(Domain::FIRST_DOMAIN_ID, 'https://example.cz', 'cs');
@@ -74,7 +74,7 @@ class ZboziFeedItemTest extends TestCase
 
         $this->categoryFacadeMock->method('getCategoryNamesInPathFromRootToProductMainCategoryOnDomain')
             ->with($this->defaultProduct, $this->defaultDomain)->willReturn(
-                ['category A', 'category B', 'category C']
+                ['category A', 'category B', 'category C'],
             );
     }
 
@@ -202,7 +202,7 @@ class ZboziFeedItemTest extends TestCase
         $zboziFeedItem = $this->zboziFeedItemFactory->create(
             $this->defaultProduct,
             $zboziProductDomain,
-            $this->defaultDomain
+            $this->defaultDomain,
         );
 
         self::assertThat($zboziFeedItem->getMaxCpc(), new IsMoneyEqual(Money::create(5)));
@@ -219,7 +219,7 @@ class ZboziFeedItemTest extends TestCase
         $zboziFeedItem = $this->zboziFeedItemFactory->create(
             $this->defaultProduct,
             $zboziProductDomain,
-            $this->defaultDomain
+            $this->defaultDomain,
         );
 
         self::assertNull($zboziFeedItem->getMaxCpc());

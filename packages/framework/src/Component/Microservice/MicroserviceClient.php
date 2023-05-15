@@ -23,7 +23,7 @@ class MicroserviceClient
     {
         $options = array_merge(
             $this->createDefaultOptions(),
-            [RequestOptions::QUERY => $parameters]
+            [RequestOptions::QUERY => $parameters],
         );
 
         $response = $this->guzzleClient->get($resource, $options);
@@ -90,7 +90,7 @@ class MicroserviceClient
     {
         return array_merge(
             $this->createDefaultOptions(),
-            [RequestOptions::JSON => $jsonData]
+            [RequestOptions::JSON => $jsonData],
         );
     }
 }

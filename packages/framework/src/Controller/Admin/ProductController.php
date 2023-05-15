@@ -64,7 +64,7 @@ class ProductController extends AdminBaseController
         protected readonly Domain $domain,
         protected readonly UnitFacade $unitFacade,
         protected readonly Setting $setting,
-        protected readonly AvailabilityFacade $availabilityFacade
+        protected readonly AvailabilityFacade $availabilityFacade,
     ) {
     }
 
@@ -91,7 +91,7 @@ class ProductController extends AdminBaseController
                     [
                         'product' => $product,
                         'url' => $this->generateUrl('admin_product_edit', ['id' => $product->getId()]),
-                    ]
+                    ],
                 );
 
             return $this->redirectToRoute('admin_product_list');
@@ -102,7 +102,7 @@ class ProductController extends AdminBaseController
         }
 
         $this->breadcrumbOverrider->overrideLastItem(
-            t('Editing product - %name%', ['%name%' => $this->productExtension->getProductDisplayName($product)])
+            t('Editing product - %name%', ['%name%' => $this->productExtension->getProductDisplayName($product)]),
         );
 
         $viewParameters = [
@@ -141,7 +141,7 @@ class ProductController extends AdminBaseController
                     [
                         'product' => $product,
                         'url' => $this->generateUrl('admin_product_edit', ['id' => $product->getId()]),
-                    ]
+                    ],
                 );
 
             return $this->redirectToRoute('admin_product_list', ['id' => $product->getId()]);
@@ -181,7 +181,7 @@ class ProductController extends AdminBaseController
 
         if ($isAdvancedSearchFormSubmitted) {
             $queryBuilder = $this->advancedSearchProductFacade->getQueryBuilderByAdvancedSearchData(
-                $advancedSearchData
+                $advancedSearchData,
             );
         } else {
             $queryBuilder = $this->productListAdminFacade->getQueryBuilderByQuickSearchData($quickSearchData);
@@ -196,7 +196,7 @@ class ProductController extends AdminBaseController
             $this->productMassActionFacade->doMassAction(
                 $massActionForm->getData(),
                 $queryBuilder,
-                array_map('intval', $grid->getSelectedRowIds())
+                array_map('intval', $grid->getSelectedRowIds()),
             );
 
             $this->addSuccessFlash(t('Bulk editing done'));
@@ -214,7 +214,7 @@ class ProductController extends AdminBaseController
             'advancedSearchForm' => $advancedSearchForm->createView(),
             'massActionForm' => $massActionForm->createView(),
             'isAdvancedSearchFormSubmitted' => $this->advancedSearchProductFacade->isAdvancedSearchFormSubmitted(
-                $request
+                $request,
             ),
             'productCanBeCreated' => $productCanBeCreated,
         ]);
@@ -236,7 +236,7 @@ class ProductController extends AdminBaseController
                 t('Product <strong>{{ product|productDisplayName }}</strong> deleted'),
                 [
                     'product' => $product,
-                ]
+                ],
             );
         } catch (ProductNotFoundException $ex) {
             $this->addErrorFlash(t('Selected product doesn\'t exist.'));
@@ -253,7 +253,7 @@ class ProductController extends AdminBaseController
     {
         $ruleForm = $this->advancedSearchProductFacade->createRuleForm(
             $request->get('filterName'),
-            $request->get('newIndex')
+            $request->get('newIndex'),
         );
 
         return $this->render('@ShopsysFramework/Admin/Content/Product/AdvancedSearch/ruleForm.html.twig', [
@@ -277,7 +277,7 @@ class ProductController extends AdminBaseController
             try {
                 $newMainVariant = $this->productVariantFacade->createVariant(
                     $mainVariant,
-                    $formData[VariantFormType::VARIANTS]
+                    $formData[VariantFormType::VARIANTS],
                 );
 
                 $this->addSuccessFlashTwig(
@@ -285,13 +285,13 @@ class ProductController extends AdminBaseController
                     [
                         'productVariant' => $newMainVariant,
                         'url' => $this->generateUrl('admin_product_edit', ['id' => $newMainVariant->getId()]),
-                    ]
+                    ],
                 );
 
                 return $this->redirectToRoute('admin_product_list');
             } catch (VariantException $ex) {
                 $this->addErrorFlash(
-                    t('Not possible to create variations of products that are already variant or main variant.')
+                    t('Not possible to create variations of products that are already variant or main variant.'),
                 );
             }
         }
@@ -315,7 +315,7 @@ class ProductController extends AdminBaseController
                 $row['product'] = $product;
 
                 return $row;
-            }
+            },
         );
 
         $grid = $this->gridFactory->create('productList', $dataSource);

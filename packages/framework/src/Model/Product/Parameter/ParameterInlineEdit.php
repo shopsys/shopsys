@@ -18,7 +18,7 @@ class ParameterInlineEdit extends AbstractGridInlineEdit
         ParameterGridFactory $parameterGridFactory,
         protected readonly ParameterFacade $parameterFacade,
         protected readonly FormFactoryInterface $formFactory,
-        protected readonly ParameterDataFactoryInterface $parameterDataFactory
+        protected readonly ParameterDataFactoryInterface $parameterDataFactory,
     ) {
         parent::__construct($parameterGridFactory);
     }

@@ -40,7 +40,7 @@ class PersonalInfoFormType extends AbstractType
         private readonly CountryFacade $countryFacade,
         private readonly HeurekaFacade $heurekaFacade,
         private readonly Domain $domain,
-        private readonly CurrentCustomerUser $currentCustomerUser
+        private readonly CurrentCustomerUser $currentCustomerUser,
     ) {
     }
 
@@ -57,7 +57,7 @@ class PersonalInfoFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter first name']),
                     new Constraints\Length(
-                        ['max' => 100, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters']
+                        ['max' => 100, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters'],
                     ),
                 ],
             ])
@@ -65,7 +65,7 @@ class PersonalInfoFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter last name']),
                     new Constraints\Length(
-                        ['max' => 100, 'maxMessage' => 'Last name cannot be longer than {{ limit }} characters']
+                        ['max' => 100, 'maxMessage' => 'Last name cannot be longer than {{ limit }} characters'],
                     ),
                 ],
             ])
@@ -74,7 +74,7 @@ class PersonalInfoFormType extends AbstractType
                     new Constraints\NotBlank(['message' => 'Please enter email']),
                     new Email(['message' => 'Please enter valid email']),
                     new Constraints\Length(
-                        ['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']
+                        ['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters'],
                     ),
                 ],
             ])
@@ -82,7 +82,7 @@ class PersonalInfoFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter telephone number']),
                     new Constraints\Length(
-                        ['max' => 30, 'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters']
+                        ['max' => 30, 'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters'],
                     ),
                 ],
             ])
@@ -128,7 +128,7 @@ class PersonalInfoFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter street']),
                     new Constraints\Length(
-                        ['max' => 100, 'maxMessage' => 'Street name cannot be longer than {{ limit }} characters']
+                        ['max' => 100, 'maxMessage' => 'Street name cannot be longer than {{ limit }} characters'],
                     ),
                 ],
             ])
@@ -136,7 +136,7 @@ class PersonalInfoFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter city']),
                     new Constraints\Length(
-                        ['max' => 100, 'maxMessage' => 'City name cannot be longer than {{ limit }} characters']
+                        ['max' => 100, 'maxMessage' => 'City name cannot be longer than {{ limit }} characters'],
                     ),
                 ],
             ])
@@ -144,7 +144,7 @@ class PersonalInfoFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter zip code']),
                     new Constraints\Length(
-                        ['max' => 30, 'maxMessage' => 'Zip code cannot be longer than {{ limit }} characters']
+                        ['max' => 30, 'maxMessage' => 'Zip code cannot be longer than {{ limit }} characters'],
                     ),
                 ],
             ])

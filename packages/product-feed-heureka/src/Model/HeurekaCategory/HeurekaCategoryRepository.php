@@ -65,7 +65,7 @@ class HeurekaCategoryRepository
 
         if ($heurekaCategory === null) {
             throw new HeurekaCategoryNotFoundException(
-                'Heureka category with ID ' . $id . ' does not exist.'
+                'Heureka category with ID ' . $id . ' does not exist.',
             );
         }
 

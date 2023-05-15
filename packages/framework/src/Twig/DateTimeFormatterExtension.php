@@ -21,7 +21,7 @@ class DateTimeFormatterExtension extends AbstractExtension
      */
     public function __construct(
         protected readonly DateTimeFormatterInterface $dateTimeFormatter,
-        protected readonly Localization $localization
+        protected readonly Localization $localization,
     ) {
     }
 
@@ -33,19 +33,19 @@ class DateTimeFormatterExtension extends AbstractExtension
         return [
             new TwigFilter(
                 'formatDate',
-                [$this, 'formatDate']
+                [$this, 'formatDate'],
             ),
             new TwigFilter(
                 'formatTime',
-                [$this, 'formatTime']
+                [$this, 'formatTime'],
             ),
             new TwigFilter(
                 'formatDateTime',
-                [$this, 'formatDateTime']
+                [$this, 'formatDateTime'],
             ),
             new TwigFilter(
                 'formatDurationInSeconds',
-                [$this, 'formatDurationInSeconds']
+                [$this, 'formatDurationInSeconds'],
             ),
         ];
     }
@@ -58,7 +58,7 @@ class DateTimeFormatterExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'dateOfCreation',
-                [$this, 'dateOfCreation']
+                [$this, 'dateOfCreation'],
             ),
         ];
     }
@@ -74,7 +74,7 @@ class DateTimeFormatterExtension extends AbstractExtension
             $dateTime,
             IntlDateFormatter::MEDIUM,
             IntlDateFormatter::NONE,
-            $locale
+            $locale,
         );
     }
 
@@ -89,7 +89,7 @@ class DateTimeFormatterExtension extends AbstractExtension
             $dateTime,
             IntlDateFormatter::NONE,
             IntlDateFormatter::MEDIUM,
-            $locale
+            $locale,
         );
     }
 
@@ -104,7 +104,7 @@ class DateTimeFormatterExtension extends AbstractExtension
             $dateTime,
             IntlDateFormatter::MEDIUM,
             IntlDateFormatter::MEDIUM,
-            $locale
+            $locale,
         );
     }
 
@@ -125,7 +125,7 @@ class DateTimeFormatterExtension extends AbstractExtension
             $this->convertToDateTime($dateTime),
             $dateType,
             $timeType,
-            $this->getLocale($locale)
+            $this->getLocale($locale),
         );
     }
 

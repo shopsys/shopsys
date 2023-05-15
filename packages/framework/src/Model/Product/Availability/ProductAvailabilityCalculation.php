@@ -22,7 +22,7 @@ class ProductAvailabilityCalculation
         protected readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly EntityManagerInterface $em,
-        protected readonly ProductRepository $productRepository
+        protected readonly ProductRepository $productRepository,
     ) {
     }
 

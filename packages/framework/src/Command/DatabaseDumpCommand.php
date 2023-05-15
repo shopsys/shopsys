@@ -52,7 +52,7 @@ class DatabaseDumpCommand extends Command
             escapeshellcmd($input->getOption(self::OPT_PGDUMP_BIN)),
             escapeshellarg($this->databaseConnectionCredentialsProvider->getDatabaseHost()),
             escapeshellarg($this->databaseConnectionCredentialsProvider->getDatabaseName()),
-            escapeshellarg($this->databaseConnectionCredentialsProvider->getDatabaseUsername())
+            escapeshellarg($this->databaseConnectionCredentialsProvider->getDatabaseUsername()),
         );
 
         putenv('PGPASSWORD=' . $this->databaseConnectionCredentialsProvider->getDatabasePassword());
@@ -61,7 +61,7 @@ class DatabaseDumpCommand extends Command
         $process = proc_open(
             $command,
             $this->getDescriptorSpec(),
-            $pipes
+            $pipes,
         );
 
         [$stdin, $stdout, $stderr] = $pipes;
@@ -82,7 +82,7 @@ class DatabaseDumpCommand extends Command
             $output->writeln(sprintf(
                 'Database "%s" dumped into file: %s',
                 $this->databaseConnectionCredentialsProvider->getDatabaseName(),
-                $outputFile
+                $outputFile,
             ));
         }
 

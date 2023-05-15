@@ -16,7 +16,7 @@ class Version20170801093853 extends AbstractMigration
         $this->sql('ALTER SEQUENCE parameter_titles_id_seq RENAME TO parameters_id_seq');
         $this->sql('ALTER TABLE parameters RENAME CONSTRAINT parameter_titles_pkey TO parameters_pkey');
         $this->sql(
-            'ALTER TABLE parameter_translations RENAME CONSTRAINT parameter_titles_translations_pkey TO parameters_translations_pkey'
+            'ALTER TABLE parameter_translations RENAME CONSTRAINT parameter_titles_translations_pkey TO parameters_translations_pkey',
         );
     }
 

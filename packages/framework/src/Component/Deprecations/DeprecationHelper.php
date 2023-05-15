@@ -16,7 +16,7 @@ final class DeprecationHelper
     {
         @trigger_error(
             vsprintf($message, $arguments),
-            E_USER_DEPRECATED
+            E_USER_DEPRECATED,
         );
     }
 
@@ -27,7 +27,7 @@ final class DeprecationHelper
     {
         self::trigger(
             'The "%s()" method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-            $methodName
+            $methodName,
         );
     }
 
@@ -39,7 +39,7 @@ final class DeprecationHelper
     {
         $message = sprintf(
             'The "%s" class is deprecated and will be removed in the next major.',
-            $className
+            $className,
         );
 
         if ($replacement !== null) {
@@ -59,7 +59,7 @@ final class DeprecationHelper
     {
         $message = sprintf(
             'The "%s()" method is deprecated and will be removed in the next major.',
-            $methodName
+            $methodName,
         );
 
         if ($replacement !== null) {
@@ -78,7 +78,7 @@ final class DeprecationHelper
     {
         self::trigger(
             'Class "%s" will be changed to abstract class in next major version. Extend this class to your project and implement corresponding methods instead.',
-            $className
+            $className,
         );
     }
 
@@ -89,7 +89,7 @@ final class DeprecationHelper
     {
         self::trigger(
             'Method "%s()" will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.',
-            $methodName
+            $methodName,
         );
     }
 

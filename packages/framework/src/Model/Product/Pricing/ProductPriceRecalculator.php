@@ -35,7 +35,7 @@ class ProductPriceRecalculator
         protected readonly ProductPriceCalculation $productPriceCalculation,
         protected readonly ProductCalculatedPriceRepository $productCalculatedPriceRepository,
         protected readonly ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
-        protected readonly PricingGroupFacade $pricingGroupFacade
+        protected readonly PricingGroupFacade $pricingGroupFacade,
     ) {
     }
 
@@ -113,7 +113,7 @@ class ProductPriceRecalculator
                 $price = $this->productPriceCalculation->calculatePrice(
                     $product,
                     $pricingGroup->getDomainId(),
-                    $pricingGroup
+                    $pricingGroup,
                 );
                 $priceWithVat = $price->getPriceWithVat();
             } catch (MainVariantPriceCalculationException $e) {

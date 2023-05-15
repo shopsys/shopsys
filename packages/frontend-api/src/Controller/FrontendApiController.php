@@ -21,7 +21,7 @@ class FrontendApiController
     public function __construct(
         protected readonly GraphController $graphController,
         protected readonly EnabledOnDomainChecker $enabledOnDomainChecker,
-        protected readonly GraphqlConfigurator $graphqlConfigurator
+        protected readonly GraphqlConfigurator $graphqlConfigurator,
     ) {
     }
 

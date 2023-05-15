@@ -31,7 +31,7 @@ class TopProductsFormType extends AbstractType
                         'required' => false,
                         'sortable' => true,
                     ])
-                    ->addViewTransformer($this->removeDuplicatesTransformer)
+                    ->addViewTransformer($this->removeDuplicatesTransformer),
             )
             ->add('save', SubmitType::class);
     }

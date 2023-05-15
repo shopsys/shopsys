@@ -21,7 +21,7 @@ class ProductFilterCest
     public function testAllProductFilters(
         AcceptanceTester $me,
         ProductFilterPage $productFilterPage,
-        ProductListPage $productListPage
+        ProductListPage $productListPage,
     ) {
         $me->wantTo('test all product filters');
         // tv-audio

@@ -20,7 +20,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     public function __construct(
         EntityManagerInterface $em,
         Configuration $config,
-        protected readonly EntityNameResolver $entityNameResolver
+        protected readonly EntityNameResolver $entityNameResolver,
     ) {
         parent::__construct($em);
 

@@ -13,7 +13,7 @@ class DeleteOldCronModuleRunsCronModule implements SimpleCronModuleInterface
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFacade $cronModuleFacade
      */
     public function __construct(
-        protected readonly CronModuleFacade $cronModuleFacade
+        protected readonly CronModuleFacade $cronModuleFacade,
     ) {
     }
 

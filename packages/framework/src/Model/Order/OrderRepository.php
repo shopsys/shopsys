@@ -21,7 +21,7 @@ class OrderRepository
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly OrderListAdminRepository $orderListAdminRepository
+        protected readonly OrderListAdminRepository $orderListAdminRepository,
     ) {
     }
 
@@ -119,7 +119,7 @@ class OrderRepository
      */
     public function getOrderListQueryBuilderByQuickSearchData(
         $locale,
-        QuickSearchFormData $quickSearchData
+        QuickSearchFormData $quickSearchData,
     ) {
         $queryBuilder = $this->orderListAdminRepository->getOrderListQueryBuilder($locale);
 
@@ -195,7 +195,7 @@ class OrderRepository
         if ($order === null) {
             throw new OrderNotFoundException(sprintf(
                 'Order with urlHash "%s" was not found.',
-                $urlHash
+                $urlHash,
             ));
         }
 

@@ -18,7 +18,7 @@ class DatabaseConnectionCredentialsProvider
         protected readonly string $databasePort,
         protected readonly string $databaseName,
         protected readonly string $databaseUsername,
-        protected readonly string $databasePassword
+        protected readonly string $databasePassword,
     ) {
     }
 

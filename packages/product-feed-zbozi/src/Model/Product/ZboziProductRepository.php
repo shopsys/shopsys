@@ -31,7 +31,7 @@ class ZboziProductRepository
             ->leftJoin(ZboziProductDomain::class, 'zpd', Join::WITH, 'zpd.product = p AND zpd.domainId = :domainId')
             ->andWhere('p.variantType != :variantTypeMain')->setParameter(
                 'variantTypeMain',
-                Product::VARIANT_TYPE_MAIN
+                Product::VARIANT_TYPE_MAIN,
             )
             ->andWhere('p.calculatedSellingDenied = FALSE')
             ->andWhere('zpd IS NULL OR zpd.show = TRUE')

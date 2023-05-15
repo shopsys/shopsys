@@ -40,7 +40,7 @@ class PersonalDataController extends FrontBaseController
         private readonly PersonalDataAccessMailFacade $personalDataAccessMailFacade,
         private readonly PersonalDataAccessRequestFacade $personalDataAccessRequestFacade,
         private readonly PersonalDataAccessRequestDataFactoryInterface $personalDataAccessRequestDataFactory,
-        private readonly XmlResponse $xmlResponse
+        private readonly XmlResponse $xmlResponse,
     ) {
     }
 
@@ -51,7 +51,7 @@ class PersonalDataController extends FrontBaseController
     {
         $form = $this->createForm(
             PersonalDataFormType::class,
-            $this->personalDataAccessRequestDataFactory->createForDisplay()
+            $this->personalDataAccessRequestDataFactory->createForDisplay(),
         );
 
         $form->handleRequest($request);
@@ -59,11 +59,11 @@ class PersonalDataController extends FrontBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $personalData = $this->personalDataAccessRequestFacade->createPersonalDataAccessRequest(
                 $form->getData(),
-                $this->domain->getId()
+                $this->domain->getId(),
             );
             $this->personalDataAccessMailFacade->sendMail($personalData);
             $this->addSuccessFlash(
-                t('Email with a link to the page with your personal data was sent to your email address.')
+                t('Email with a link to the page with your personal data was sent to your email address.'),
             );
         }
 
@@ -83,7 +83,7 @@ class PersonalDataController extends FrontBaseController
     {
         $form = $this->createForm(
             PersonalDataFormType::class,
-            $this->personalDataAccessRequestDataFactory->createForExport()
+            $this->personalDataAccessRequestDataFactory->createForExport(),
         );
 
         $form->handleRequest($request);
@@ -91,11 +91,11 @@ class PersonalDataController extends FrontBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $personalData = $this->personalDataAccessRequestFacade->createPersonalDataAccessRequest(
                 $form->getData(),
-                $this->domain->getId()
+                $this->domain->getId(),
             );
             $this->personalDataAccessMailFacade->sendMail($personalData);
             $this->addSuccessFlash(
-                t('Email with a link to the export of your personal data was sent to your email address.')
+                t('Email with a link to the export of your personal data was sent to your email address.'),
             );
         }
 
@@ -115,7 +115,7 @@ class PersonalDataController extends FrontBaseController
     {
         $personalDataAccessRequest = $this->personalDataAccessRequestFacade->findByHashAndDomainId(
             $hash,
-            $this->domain->getId()
+            $this->domain->getId(),
         );
 
         if (
@@ -124,15 +124,15 @@ class PersonalDataController extends FrontBaseController
         ) {
             $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
                 $personalDataAccessRequest->getEmail(),
-                $this->domain->getId()
+                $this->domain->getId(),
             );
             $orders = $this->orderFacade->getOrderListForEmailByDomainId(
                 $personalDataAccessRequest->getEmail(),
-                $this->domain->getId()
+                $this->domain->getId(),
             );
             $newsletterSubscriber = $this->newsletterFacade->findNewsletterSubscriberByEmailAndDomainId(
                 $personalDataAccessRequest->getEmail(),
-                $this->domain->getId()
+                $this->domain->getId(),
             );
 
             return $this->render('Front/Content/PersonalData/detail.html.twig', [
@@ -153,7 +153,7 @@ class PersonalDataController extends FrontBaseController
     {
         $personalDataAccessRequest = $this->personalDataAccessRequestFacade->findByHashAndDomainId(
             $hash,
-            $this->domain->getId()
+            $this->domain->getId(),
         );
 
         if (
@@ -162,17 +162,17 @@ class PersonalDataController extends FrontBaseController
         ) {
             $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
                 $personalDataAccessRequest->getEmail(),
-                $this->domain->getId()
+                $this->domain->getId(),
             );
 
             $newsletterSubscriber = $this->newsletterFacade->findNewsletterSubscriberByEmailAndDomainId(
                 $personalDataAccessRequest->getEmail(),
-                $this->domain->getId()
+                $this->domain->getId(),
             );
 
             $ordersCount = $this->orderFacade->getOrdersCountByEmailAndDomainId(
                 $personalDataAccessRequest->getEmail(),
-                $this->domain->getId()
+                $this->domain->getId(),
             );
 
             return $this->render('Front/Content/PersonalData/export.html.twig', [
@@ -195,7 +195,7 @@ class PersonalDataController extends FrontBaseController
     {
         $personalDataAccessRequest = $this->personalDataAccessRequestFacade->findByHashAndDomainId(
             $hash,
-            $this->domain->getId()
+            $this->domain->getId(),
         );
 
         if (
@@ -204,17 +204,17 @@ class PersonalDataController extends FrontBaseController
         ) {
             $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
                 $personalDataAccessRequest->getEmail(),
-                $this->domain->getId()
+                $this->domain->getId(),
             );
 
             $orders = $this->orderFacade->getOrderListForEmailByDomainId(
                 $personalDataAccessRequest->getEmail(),
-                $this->domain->getId()
+                $this->domain->getId(),
             );
 
             $newsletterSubscriber = $this->newsletterFacade->findNewsletterSubscriberByEmailAndDomainId(
                 $personalDataAccessRequest->getEmail(),
-                $this->domain->getId()
+                $this->domain->getId(),
             );
 
             $xmlContent = $this->render('Front/Content/PersonalData/export.xml.twig', [

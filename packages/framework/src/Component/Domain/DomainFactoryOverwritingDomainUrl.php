@@ -29,7 +29,7 @@ class DomainFactoryOverwritingDomainUrl
     {
         $domainConfigs = $this->domainsConfigLoader->loadDomainConfigsFromYaml(
             $domainsConfigFilepath,
-            $domainsUrlsConfigFilepath
+            $domainsUrlsConfigFilepath,
         );
 
         if ($this->overwriteDomainUrl !== null) {
@@ -61,7 +61,7 @@ class DomainFactoryOverwritingDomainUrl
                 $this->overwriteDomainUrl,
                 $domainConfig->getName(),
                 $domainConfig->getLocale(),
-                $domainConfig->getStylesDirectory()
+                $domainConfig->getStylesDirectory(),
             );
         }
 

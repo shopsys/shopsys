@@ -38,7 +38,7 @@ class RegisterTest extends GraphQlTestCase
             'This email is already registered',
             [],
             Translator::VALIDATOR_TRANSLATION_DOMAIN,
-            $firstDomainLocale
+            $firstDomainLocale,
         );
 
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
@@ -59,8 +59,8 @@ class RegisterTest extends GraphQlTestCase
                 'no-replyshopsys.com',
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit ultrices molestie. Donec s',
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit ultrices molestie. Donec s',
-                '123'
-            )
+                '123',
+            ),
         );
 
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
@@ -72,25 +72,25 @@ class RegisterTest extends GraphQlTestCase
                 'First name cannot be longer than {{ limit }} characters',
                 ['{{ limit }}' => 100],
                 Translator::VALIDATOR_TRANSLATION_DOMAIN,
-                $firstDomainLocale
+                $firstDomainLocale,
             ),
             1 => t(
                 'Last name cannot be longer than {{ limit }} characters',
                 ['{{ limit }}' => 100],
                 Translator::VALIDATOR_TRANSLATION_DOMAIN,
-                $firstDomainLocale
+                $firstDomainLocale,
             ),
             2 => t(
                 'Please enter valid email',
                 [],
                 Translator::VALIDATOR_TRANSLATION_DOMAIN,
-                $firstDomainLocale
+                $firstDomainLocale,
             ),
             3 => t(
                 'Password must be at least {{ limit }} characters long',
                 ['{{ limit }}' => 6],
                 Translator::VALIDATOR_TRANSLATION_DOMAIN,
-                $firstDomainLocale
+                $firstDomainLocale,
             ),
         ];
 
@@ -116,7 +116,7 @@ class RegisterTest extends GraphQlTestCase
         string $email = self::DEFAULT_USER_EMAIL,
         string $firstName = self::DEFAULT_USER_FIRST_NAME,
         string $lastName = self::DEFAULT_USER_LAST_NAME,
-        string $password = self::DEFAULT_USER_PASSWORD
+        string $password = self::DEFAULT_USER_PASSWORD,
     ): string {
         return
             'mutation {

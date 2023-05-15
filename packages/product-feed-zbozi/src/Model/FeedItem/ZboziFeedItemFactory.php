@@ -23,7 +23,7 @@ class ZboziFeedItemFactory
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
         protected readonly ProductParametersBatchLoader $productParametersBatchLoader,
-        protected readonly CategoryFacade $categoryFacade
+        protected readonly CategoryFacade $categoryFacade,
     ) {
     }
 
@@ -79,7 +79,7 @@ class ZboziFeedItemFactory
         return $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
             $product,
             $domainConfig->getId(),
-            null
+            null,
         );
     }
 
@@ -92,7 +92,7 @@ class ZboziFeedItemFactory
     {
         return $this->categoryFacade->getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(
             $product,
-            $domainConfig
+            $domainConfig,
         );
     }
 }

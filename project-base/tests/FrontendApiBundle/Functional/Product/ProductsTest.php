@@ -120,7 +120,7 @@ class ProductsTest extends ProductsGraphQlTestCase
                     'Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768',
                     [],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $firstDomainLocale
+                    $firstDomainLocale,
                 ),
                 'link' => $this->getLocalizedPathOnFirstDomainByRouteName('front_product_detail', ['id' => 77]),
                 'unit' => [
@@ -146,7 +146,7 @@ class ProductsTest extends ProductsGraphQlTestCase
                     'Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768, DVB-T/C, HDMI, SCART, D-Sub, USB, speakers, Energ. Class A',
                     [],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $firstDomainLocale
+                    $firstDomainLocale,
                 ),
                 'orderingPriority' => 1,
                 'parameters' => [
@@ -231,7 +231,7 @@ class ProductsTest extends ProductsGraphQlTestCase
             'Reflective tape for safe movement on the road',
             [],
             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-            $firstDomainLocale
+            $firstDomainLocale,
         ) . '"
                     }
                 }

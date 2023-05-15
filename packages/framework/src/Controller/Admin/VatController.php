@@ -25,7 +25,7 @@ class VatController extends AdminBaseController
         protected readonly VatFacade $vatFacade,
         protected readonly VatInlineEdit $vatInlineEdit,
         protected readonly ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
-        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 
@@ -55,19 +55,19 @@ class VatController extends AdminBaseController
                     'For deleting rate  "%name%" you have to choose other one to be set everywhere where the existing one is used. '
                     . 'After changing the VAT rate products prices will be recalculated - base price with VAT will remain same. '
                     . 'Which unit you want to set instead?',
-                    ['%name%' => $vat->getName()]
+                    ['%name%' => $vat->getName()],
                 );
 
                 return $this->confirmDeleteResponseFactory->createSetNewAndDeleteResponse(
                     $message,
                     'admin_vat_delete',
                     $id,
-                    $this->vatFacade->getAllForDomainExceptId($this->adminDomainTabsFacade->getSelectedDomainId(), $id)
+                    $this->vatFacade->getAllForDomainExceptId($this->adminDomainTabsFacade->getSelectedDomainId(), $id),
                 );
             }
             $message = t(
                 'Do you really want to remove rate "%name%" permanently? It is not used anywhere.',
-                ['%name%' => $vat->getName()]
+                ['%name%' => $vat->getName()],
             );
 
             return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_vat_delete', $id);
@@ -96,7 +96,7 @@ class VatController extends AdminBaseController
                     t('VAT <strong>{{ name }}</strong> deleted'),
                     [
                         'name' => $fullName,
-                    ]
+                    ],
                 );
             } else {
                 $newVat = $this->vatFacade->getById($newId);
@@ -105,7 +105,7 @@ class VatController extends AdminBaseController
                     [
                         'name' => $fullName,
                         'newName' => $newVat->getName(),
-                    ]
+                    ],
                 );
             }
         } catch (VatNotFoundException $ex) {
@@ -122,7 +122,7 @@ class VatController extends AdminBaseController
     {
         $vatSettingsFormData = [
             'defaultVat' => $this->vatFacade->getDefaultVatForDomain(
-                $this->adminDomainTabsFacade->getSelectedDomainId()
+                $this->adminDomainTabsFacade->getSelectedDomainId(),
             ),
         ];
 
@@ -134,7 +134,7 @@ class VatController extends AdminBaseController
 
             $this->vatFacade->setDefaultVatForDomain(
                 $vatSettingsFormData['defaultVat'],
-                $this->adminDomainTabsFacade->getSelectedDomainId()
+                $this->adminDomainTabsFacade->getSelectedDomainId(),
             );
 
             $this->addSuccessFlash(t('VAT settings modified'));

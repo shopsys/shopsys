@@ -54,7 +54,7 @@ class ImageViewFacadeTest extends FunctionalTestCase
     {
         $imageViews = $this->imageViewFacade->getMainImagesByEntityIds(
             Product::class,
-            [self::PRODUCT_ID_1, self::PRODUCT_ID_2, self::PRODUCT_ID_3]
+            [self::PRODUCT_ID_1, self::PRODUCT_ID_2, self::PRODUCT_ID_3],
         );
 
         $expected = [

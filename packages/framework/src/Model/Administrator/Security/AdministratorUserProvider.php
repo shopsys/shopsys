@@ -24,7 +24,7 @@ class AdministratorUserProvider implements UserProviderInterface
     public function __construct(
         protected readonly AdministratorRepository $administratorRepository,
         protected readonly AdministratorActivityFacade $administratorActivityFacade,
-        protected readonly AdministratorRolesChangedSubscriber $administratorRolesChangedSubscriber
+        protected readonly AdministratorRolesChangedSubscriber $administratorRolesChangedSubscriber,
     ) {
     }
 
@@ -39,7 +39,7 @@ class AdministratorUserProvider implements UserProviderInterface
         if ($administrator === null) {
             $message = sprintf(
                 'Unable to find an active admin Shopsys\FrameworkBundle\Model\Administrator\Administrator object identified by "%s".',
-                $username
+                $username,
             );
 
             throw new UserNotFoundException($message, 0);

@@ -20,7 +20,7 @@ class CategoriesSearchQuery extends AbstractQuery
      */
     public function __construct(
         protected readonly Domain $domain,
-        protected readonly CategoryFacade $categoryFacade
+        protected readonly CategoryFacade $categoryFacade,
     ) {
     }
 
@@ -40,7 +40,7 @@ class CategoriesSearchQuery extends AbstractQuery
                 $this->domain->getLocale(),
                 $this->domain->getId(),
                 $offset,
-                $limit
+                $limit,
             );
         });
 
@@ -49,8 +49,8 @@ class CategoriesSearchQuery extends AbstractQuery
             $this->categoryFacade->getVisibleCategoriesBySearchTextCount(
                 $searchText,
                 $this->domain->getLocale(),
-                $this->domain->getId()
-            )
+                $this->domain->getId(),
+            ),
         );
     }
 

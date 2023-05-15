@@ -23,7 +23,7 @@ class PricingGroupInlineEdit extends AbstractGridInlineEdit
         protected readonly PricingGroupFacade $pricingGroupFacade,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly FormFactoryInterface $formFactory,
-        protected readonly PricingGroupDataFactoryInterface $pricingGroupDataFactory
+        protected readonly PricingGroupDataFactoryInterface $pricingGroupDataFactory,
     ) {
         parent::__construct($pricingGroupGridFactory);
     }
@@ -36,7 +36,7 @@ class PricingGroupInlineEdit extends AbstractGridInlineEdit
     {
         $pricingGroup = $this->pricingGroupFacade->create(
             $pricingGroupData,
-            $this->adminDomainTabsFacade->getSelectedDomainId()
+            $this->adminDomainTabsFacade->getSelectedDomainId(),
         );
 
         return $pricingGroup->getId();

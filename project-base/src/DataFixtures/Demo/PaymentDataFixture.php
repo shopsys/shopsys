@@ -34,7 +34,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         private readonly PaymentFacade $paymentFacade,
         PaymentDataFactoryInterface $paymentDataFactory,
         private readonly Domain $domain,
-        private readonly PriceConverter $priceConverter
+        private readonly PriceConverter $priceConverter,
     ) {
         $this->paymentDataFactory = $paymentDataFactory;
     }
@@ -53,7 +53,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
                 '<b>You have chosen payment by credit card. Please finish it in two business days.</b>',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale
+                $locale,
             );
         }
 
@@ -74,7 +74,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->createPayment(
             self::PAYMENT_CASH_ON_DELIVERY,
             $paymentData,
-            [TransportDataFixture::TRANSPORT_CZECH_POST]
+            [TransportDataFixture::TRANSPORT_CZECH_POST],
         );
 
         $paymentData = $this->paymentDataFactory->create();
@@ -97,7 +97,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     private function createPayment(
         $referenceName,
         PaymentData $paymentData,
-        array $transportsReferenceNames
+        array $transportsReferenceNames,
     ) {
         $paymentData->transports = [];
 
@@ -141,7 +141,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
                 $price,
                 $currencyCzk,
                 $vat->getPercent(),
-                $domain->getId()
+                $domain->getId(),
             );
 
             $paymentData->pricesIndexedByDomainId[$domain->getId()] = $convertedPrice;

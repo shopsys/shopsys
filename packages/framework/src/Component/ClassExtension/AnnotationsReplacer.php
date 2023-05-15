@@ -27,7 +27,7 @@ class AnnotationsReplacer
         return preg_replace(
             $this->annotationsReplacementsMap->getPatterns(),
             $this->annotationsReplacementsMap->getReplacements(),
-            $string
+            $string,
         );
     }
 

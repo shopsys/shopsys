@@ -17,7 +17,7 @@ class TransportPriceCalculation
      */
     public function __construct(
         protected readonly BasePriceCalculation $basePriceCalculation,
-        protected readonly PricingSetting $pricingSetting
+        protected readonly PricingSetting $pricingSetting,
     ) {
     }
 
@@ -32,7 +32,7 @@ class TransportPriceCalculation
         Transport $transport,
         Currency $currency,
         Price $productsPrice,
-        int $domainId
+        int $domainId,
     ): Price {
         if ($this->isFree($productsPrice, $domainId)) {
             return Price::zero();
@@ -53,7 +53,7 @@ class TransportPriceCalculation
             $transport->getPrice($domainId)->getPrice(),
             $this->pricingSetting->getInputPriceType(),
             $transport->getTransportDomain($domainId)->getVat(),
-            $currency
+            $currency,
         );
     }
 
@@ -84,7 +84,7 @@ class TransportPriceCalculation
         array $transports,
         Currency $currency,
         Price $productsPrice,
-        int $domainId
+        int $domainId,
     ): array {
         $transportsPricesByTransportId = [];
 
@@ -93,7 +93,7 @@ class TransportPriceCalculation
                 $transport,
                 $currency,
                 $productsPrice,
-                $domainId
+                $domainId,
             );
         }
 

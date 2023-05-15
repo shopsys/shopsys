@@ -15,7 +15,7 @@ class DatabaseSchemaFacade
      */
     public function __construct(
         $defaultSchemaFilepath,
-        protected readonly EntityManagerInterface $em
+        protected readonly EntityManagerInterface $em,
     ) {
         $this->defaultSchemaFilepath = $defaultSchemaFilepath;
     }

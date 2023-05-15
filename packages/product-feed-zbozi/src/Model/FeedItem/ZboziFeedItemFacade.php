@@ -25,7 +25,7 @@ class ZboziFeedItemFacade
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
         protected readonly ProductParametersBatchLoader $productParametersBatchLoader,
-        protected readonly ZboziProductDomainFacade $zboziProductDomainFacade
+        protected readonly ZboziProductDomainFacade $zboziProductDomainFacade,
     ) {
     }
 
@@ -44,7 +44,7 @@ class ZboziFeedItemFacade
 
         $zboziProductDomains = $this->zboziProductDomainFacade->getZboziProductDomainsByProductsAndDomainIndexedByProductId(
             $products,
-            $domainConfig
+            $domainConfig,
         );
 
         foreach ($products as $product) {

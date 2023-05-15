@@ -14,7 +14,7 @@ class CategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
      */
     public function __construct(
         protected readonly CategoryRepository $categoryRepository,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -27,7 +27,7 @@ class CategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 
         $categoriesInPath = $this->categoryRepository->getVisibleCategoriesInPathFromRootOnDomain(
             $category,
-            $this->domain->getId()
+            $this->domain->getId(),
         );
 
         $breadcrumbItems = [];
@@ -37,11 +37,11 @@ class CategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
                 $breadcrumbItems[] = new BreadcrumbItem(
                     $categoryInPath->getName(),
                     $routeName,
-                    ['id' => $categoryInPath->getId()]
+                    ['id' => $categoryInPath->getId()],
                 );
             } else {
                 $breadcrumbItems[] = new BreadcrumbItem(
-                    $categoryInPath->getName()
+                    $categoryInPath->getName(),
                 );
             }
         }

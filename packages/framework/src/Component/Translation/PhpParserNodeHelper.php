@@ -27,7 +27,7 @@ class PhpParserNodeHelper
         if ($node instanceof Concat) {
             return self::getConcatenatedStringValue($node->left, $fileInfo) . self::getConcatenatedStringValue(
                 $node->right,
-                $fileInfo
+                $fileInfo,
             );
         }
 
@@ -42,8 +42,8 @@ class PhpParserNodeHelper
                 static::TRANSLATOR_CLASS_FQN,
                 get_class($node),
                 $fileInfo,
-                $node->getLine()
-            )
+                $node->getLine(),
+            ),
         );
     }
 }

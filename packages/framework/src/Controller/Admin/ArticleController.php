@@ -39,7 +39,7 @@ class ArticleController extends AdminBaseController
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
         protected readonly LegalConditionsFacade $legalConditionsFacade,
-        protected readonly CookiesFacade $cookiesFacade
+        protected readonly CookiesFacade $cookiesFacade,
     ) {
     }
 
@@ -68,7 +68,7 @@ class ArticleController extends AdminBaseController
                     [
                         'name' => $article->getName(),
                         'url' => $this->generateUrl('admin_article_edit', ['id' => $article->getId()]),
-                    ]
+                    ],
                 );
 
             return $this->redirectToRoute('admin_article_list');
@@ -95,7 +95,7 @@ class ArticleController extends AdminBaseController
         $gridFooter = $this->getGrid(Article::PLACEMENT_FOOTER);
         $gridNone = $this->getGrid(Article::PLACEMENT_NONE);
         $articlesCountOnSelectedDomain = $this->articleFacade->getAllArticlesCountByDomainId(
-            $this->adminDomainTabsFacade->getSelectedDomainId()
+            $this->adminDomainTabsFacade->getSelectedDomainId(),
         );
 
         return $this->render('@ShopsysFramework/Admin/Content/Article/list.html.twig', [
@@ -129,7 +129,7 @@ class ArticleController extends AdminBaseController
                     [
                         'name' => $article->getName(),
                         'url' => $this->generateUrl('admin_article_edit', ['id' => $article->getId()]),
-                    ]
+                    ],
                 );
 
             return $this->redirectToRoute('admin_article_list');
@@ -160,7 +160,7 @@ class ArticleController extends AdminBaseController
                 t('Article <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $fullName,
-                ]
+                ],
             );
         } catch (ArticleNotFoundException $ex) {
             $this->addErrorFlash(t('Selected article doesn\'t exist.'));
@@ -180,12 +180,12 @@ class ArticleController extends AdminBaseController
         if ($this->legalConditionsFacade->isArticleUsedAsLegalConditions($article)) {
             $message = t(
                 'Article "%name%" set for displaying legal conditions. This setting will be lost. Do you really want to delete it?',
-                ['%name%' => $article->getName()]
+                ['%name%' => $article->getName()],
             );
         } elseif ($this->cookiesFacade->isArticleUsedAsCookiesInfo($article)) {
             $message = t(
                 'Article "%name%" set for displaying cookies information. This setting will be lost. Do you really want to delete it?',
-                ['%name%' => $article->getName()]
+                ['%name%' => $article->getName()],
             );
         } else {
             $message = t('Do you really want to remove this article?');
@@ -216,7 +216,7 @@ class ArticleController extends AdminBaseController
     {
         $queryBuilder = $this->articleFacade->getOrderedArticlesByDomainIdAndPlacementQueryBuilder(
             $this->adminDomainTabsFacade->getSelectedDomainId(),
-            $articlePlacement
+            $articlePlacement,
         );
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'a.id');

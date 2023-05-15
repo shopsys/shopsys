@@ -29,7 +29,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         private readonly MonorepoUpgradeFileManipulator $monorepoUpgradeFileManipulator,
         private readonly GeneralUpgradeFileManipulator $generalUpgradeFileManipulator,
         private readonly VersionUpgradeFileManipulator $versionUpgradeFileManipulator,
-        private readonly Environment $twigEnvironment
+        private readonly Environment $twigEnvironment,
     ) {
     }
 
@@ -58,7 +58,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
 
         $this->symfonyStyle->success(Message::SUCCESS);
         $this->symfonyStyle->note(
-            'Review all the upgrading files whether they satisfy our rules and guidelines, see https://docs.shopsys.com/en/latest/contributing/guidelines-for-writing-upgrade/.'
+            'Review all the upgrading files whether they satisfy our rules and guidelines, see https://docs.shopsys.com/en/latest/contributing/guidelines-for-writing-upgrade/.',
         );
         $versionString = $version->getOriginalString();
         $this->symfonyStyle->note(sprintf(
@@ -68,7 +68,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
             - change the links from master to the %1$s version in UPGRADE-%1$s.md file
             - make sure, that every subsection of UPGRADE notes has link to correct pull request
             - replace all occurrences of #project-base-diff with link to project-base commit of the change',
-            $versionString
+            $versionString,
         ));
 
         $this->confirm('Confirm that all subsections of UPGRADE notes has their links to correct pull request.');
@@ -98,7 +98,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
             $upgradeFileInfo,
             $version,
             $this->currentBranchName,
-            $this->nextDevelopmentVersionString
+            $this->nextDevelopmentVersionString,
         );
 
         FileSystem::write($upgradeFilePath, $newUpgradeContent);
@@ -116,7 +116,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         $newUpgradeContent = $this->versionUpgradeFileManipulator->processFileToString(
             $upgradeFileInfo,
             $version,
-            $initialBranchName
+            $initialBranchName,
         );
 
         FileSystem::write($upgradeFilePath, $newUpgradeContent);
@@ -136,7 +136,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         $newUpgradeContent = $this->generalUpgradeFileManipulator->updateLinks(
             $upgradeFileInfo,
             $version,
-            $this->nextDevelopmentVersionString
+            $this->nextDevelopmentVersionString,
         );
 
         FileSystem::write($upgradeFilePath, $newUpgradeContent);
@@ -154,7 +154,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
                 'versionString' => $version->getOriginalString(),
                 'initialBranchName' => $initialBranchName,
                 'nextDevelopmentVersion' => $this->nextDevelopmentVersionString,
-            ]
+            ],
         );
         FileSystem::write(getcwd() . '/upgrade/UPGRADE-' . $this->nextDevelopmentVersionString . '.md', $content);
     }

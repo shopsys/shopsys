@@ -36,7 +36,7 @@ class DeliveryAddressRepository
 
         if ($deliveryAddress === null) {
             throw new DeliveryAddressNotFoundException(
-                'Delivery address with ID ' . $deliveryAddressId . ' not found.'
+                'Delivery address with ID ' . $deliveryAddressId . ' not found.',
             );
         }
 

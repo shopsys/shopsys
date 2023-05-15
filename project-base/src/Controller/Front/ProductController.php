@@ -68,7 +68,7 @@ class ProductController extends FrontBaseController
         private readonly BrandFacade $brandFacade,
         private readonly ListedProductViewFacadeInterface $listedProductViewFacade,
         protected readonly ListedProductVariantsViewFacadeInterface $listedProductVariantsViewFacade,
-        protected readonly ProductDetailViewFacadeInterface $productDetailViewFacade
+        protected readonly ProductDetailViewFacadeInterface $productDetailViewFacade,
     ) {
         $this->productListOrderingModeForListFacade = $productListOrderingModeForListFacade;
         $this->productListOrderingModeForBrandFacade = $productListOrderingModeForBrandFacade;
@@ -108,7 +108,7 @@ class ProductController extends FrontBaseController
         $page = $requestPage === null ? 1 : (int)$requestPage;
 
         $orderingModeId = $this->productListOrderingModeForListFacade->getOrderingModeIdFromRequest(
-            $request
+            $request,
         );
 
         $productFilterData = new ProductFilterData();
@@ -124,7 +124,7 @@ class ProductController extends FrontBaseController
             $productFilterData,
             $orderingModeId,
             $page,
-            self::PRODUCTS_PER_PAGE
+            self::PRODUCTS_PER_PAGE,
         );
 
         $productFilterCountData = null;
@@ -133,7 +133,7 @@ class ProductController extends FrontBaseController
             $productFilterCountData = $this->productOnCurrentDomainFacade->getProductFilterCountDataInCategory(
                 $id,
                 $productFilterConfig,
-                $productFilterData
+                $productFilterData,
             );
         }
 
@@ -145,7 +145,7 @@ class ProductController extends FrontBaseController
             'filterFormSubmitted' => $filterForm->isSubmitted(),
             'visibleChildren' => $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId(
                 $category,
-                $this->domain->getId()
+                $this->domain->getId(),
             ),
             'priceRange' => $productFilterConfig->getPriceRange(),
         ];
@@ -171,14 +171,14 @@ class ProductController extends FrontBaseController
         $page = $requestPage === null ? 1 : (int)$requestPage;
 
         $orderingModeId = $this->productListOrderingModeForBrandFacade->getOrderingModeIdFromRequest(
-            $request
+            $request,
         );
 
         $paginationResult = $this->listedProductViewFacade->getPaginatedForBrand(
             $id,
             $orderingModeId,
             $page,
-            self::PRODUCTS_PER_PAGE
+            self::PRODUCTS_PER_PAGE,
         );
 
         $brand = $this->brandFacade->getById($id);
@@ -201,7 +201,7 @@ class ProductController extends FrontBaseController
     public function searchAction(Request $request)
     {
         $searchText = TransformString::replaceInvalidUtf8CharactersByQuestionMark(
-            trim((string)$request->query->get(self::SEARCH_TEXT_PARAMETER, self::SEARCH_TEXT_DEFAULT_VALUE))
+            trim((string)$request->query->get(self::SEARCH_TEXT_PARAMETER, self::SEARCH_TEXT_DEFAULT_VALUE)),
         );
 
         $requestPage = $request->get(self::PAGE_QUERY_PARAMETER);
@@ -212,7 +212,7 @@ class ProductController extends FrontBaseController
         $page = $requestPage === null ? 1 : (int)$requestPage;
 
         $orderingModeId = $this->productListOrderingModeForSearchFacade->getOrderingModeIdFromRequest(
-            $request
+            $request,
         );
 
         $productFilterData = new ProductFilterData();
@@ -228,7 +228,7 @@ class ProductController extends FrontBaseController
             $productFilterData,
             $orderingModeId,
             $page,
-            self::PRODUCTS_PER_PAGE
+            self::PRODUCTS_PER_PAGE,
         );
 
         $productFilterCountData = null;
@@ -237,7 +237,7 @@ class ProductController extends FrontBaseController
             $productFilterCountData = $this->productOnCurrentDomainFacade->getProductFilterCountDataForSearch(
                 $searchText,
                 $productFilterConfig,
-                $productFilterData
+                $productFilterData,
             );
         }
 
@@ -268,7 +268,7 @@ class ProductController extends FrontBaseController
         return $this->productFilterConfigFactory->createForCategory(
             $this->domain->getId(),
             $this->domain->getLocale(),
-            $category
+            $category,
         );
     }
 
@@ -281,7 +281,7 @@ class ProductController extends FrontBaseController
         return $this->productFilterConfigFactory->createForSearch(
             $this->domain->getId(),
             $this->domain->getLocale(),
-            $searchText
+            $searchText,
         );
     }
 
@@ -295,7 +295,7 @@ class ProductController extends FrontBaseController
         $categories = $this->categoryFacade->getVisibleByDomainAndSearchText(
             $this->domain->getId(),
             $this->domain->getLocale(),
-            $searchText
+            $searchText,
         );
 
         return $categories;
@@ -309,7 +309,7 @@ class ProductController extends FrontBaseController
         $productListOrderingConfig = $this->productListOrderingModeForListFacade->getProductListOrderingConfig();
 
         $orderingModeId = $this->productListOrderingModeForListFacade->getOrderingModeIdFromRequest(
-            $request
+            $request,
         );
 
         return $this->render('Front/Content/Product/orderingSetting.html.twig', [
@@ -327,7 +327,7 @@ class ProductController extends FrontBaseController
         $productListOrderingConfig = $this->productListOrderingModeForBrandFacade->getProductListOrderingConfig();
 
         $orderingModeId = $this->productListOrderingModeForBrandFacade->getOrderingModeIdFromRequest(
-            $request
+            $request,
         );
 
         return $this->render('Front/Content/Product/orderingSetting.html.twig', [
@@ -345,7 +345,7 @@ class ProductController extends FrontBaseController
         $productListOrderingConfig = $this->productListOrderingModeForSearchFacade->getProductListOrderingConfig();
 
         $orderingModeId = $this->productListOrderingModeForSearchFacade->getOrderingModeIdFromRequest(
-            $request
+            $request,
         );
 
         return $this->render('Front/Content/Product/orderingSetting.html.twig', [

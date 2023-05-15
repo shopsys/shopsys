@@ -43,7 +43,7 @@ class OrderFormType extends AbstractType
         private readonly CountryFacade $countryFacade,
         private readonly OrderStatusFacade $orderStatusFacade,
         private readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 
@@ -465,7 +465,7 @@ class OrderFormType extends AbstractType
                         'constraints' => [
                             new Constraints\NotBlank(['message' => 'Please choose country']),
                         ],
-                    ])
+                    ]),
             );
 
         return $builderShippingAddressGroup;

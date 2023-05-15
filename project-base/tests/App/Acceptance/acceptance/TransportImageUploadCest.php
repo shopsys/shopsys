@@ -34,7 +34,7 @@ class TransportImageUploadCest
             [
                 '{{ url }}' => '',
                 '{{ name }}' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $me->getAdminLocale()),
-            ]
+            ],
         );
     }
 }

@@ -34,7 +34,7 @@ class TimedSpamValidationListener implements EventSubscriberInterface
                 [
                     '%seconds%' => $this->options[TimedFormTypeExtension::OPTION_MINIMUM_SECONDS],
                     '%count%' => (int)$this->options[TimedFormTypeExtension::OPTION_MINIMUM_SECONDS],
-                ]
+                ],
             );
             $form->addError(new FormError($message));
         }

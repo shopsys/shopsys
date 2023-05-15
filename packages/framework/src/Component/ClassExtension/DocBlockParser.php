@@ -85,7 +85,7 @@ class DocBlockParser
             $filePath = sprintf(
                 '%s::$%s',
                 $reflectionProperty->getImplementingClass()->getName(),
-                $reflectionProperty->getName()
+                $reflectionProperty->getName(),
             );
 
             throw new DocBlockParserAmbiguousTagException('@var', $filePath);

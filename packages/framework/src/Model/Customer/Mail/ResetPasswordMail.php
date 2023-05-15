@@ -22,7 +22,7 @@ class ResetPasswordMail implements MessageFactoryInterface
      */
     public function __construct(
         protected readonly Setting $setting,
-        protected readonly DomainRouterFactory $domainRouterFactory
+        protected readonly DomainRouterFactory $domainRouterFactory,
     ) {
     }
 
@@ -41,7 +41,7 @@ class ResetPasswordMail implements MessageFactoryInterface
             $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL, $customerUser->getDomainId()),
             $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL_NAME, $customerUser->getDomainId()),
             $this->getBodyValuesIndexedByVariableName($customerUser),
-            $this->getSubjectValuesIndexedByVariableName($customerUser)
+            $this->getSubjectValuesIndexedByVariableName($customerUser),
         );
     }
 
@@ -73,7 +73,7 @@ class ResetPasswordMail implements MessageFactoryInterface
         return $router->generate(
             'front_registration_set_new_password',
             $routeParameters,
-            UrlGeneratorInterface::ABSOLUTE_URL
+            UrlGeneratorInterface::ABSOLUTE_URL,
         );
     }
 

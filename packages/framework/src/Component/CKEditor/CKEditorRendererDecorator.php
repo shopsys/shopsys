@@ -48,7 +48,7 @@ class CKEditorRendererDecorator implements CKEditorRendererInterface
             });',
             $id,
             $this->baseCkEditorRenderer->renderWidget($id, $config, $options),
-            $this->renderJsValidation($id)
+            $this->renderJsValidation($id),
         );
     }
 
@@ -62,7 +62,7 @@ class CKEditorRendererDecorator implements CKEditorRendererInterface
             'CKEDITOR.instances["%1$s"].on("change", function () {
                 $("#%1$s").jsFormValidator("validate");
             });',
-            $id
+            $id,
         );
     }
 

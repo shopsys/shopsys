@@ -36,7 +36,7 @@ class PropertyAnnotationsFactoryTest extends TestCase
 
         $this->propertyAnnotationsFactory = new PropertyAnnotationsFactory(
             $replacementMap,
-            new AnnotationsReplacer($replacementMap, new DocBlockParser())
+            new AnnotationsReplacer($replacementMap, new DocBlockParser()),
         );
     }
 
@@ -47,19 +47,19 @@ class PropertyAnnotationsFactoryTest extends TestCase
     {
         return [
             'property redeclared in the child using annotation' => [ReflectionObject::createFromName(
-                BaseClass::class
+                BaseClass::class,
             ), ReflectionObject::createFromName(
-                ChildClass::class
+                ChildClass::class,
             )],
             'property not included in the extension map' => [ReflectionObject::createFromName(
-                BaseClass2::class
+                BaseClass2::class,
             ), ReflectionObject::createFromName(
-                ChildClass2::class
+                ChildClass2::class,
             )],
             'property redeclared in the child\'s source code' => [ReflectionObject::createFromName(
-                BaseClass3::class
+                BaseClass3::class,
             ), ReflectionObject::createFromName(
-                ChildClass3::class
+                ChildClass3::class,
             )],
         ];
     }
@@ -71,11 +71,11 @@ class PropertyAnnotationsFactoryTest extends TestCase
      */
     public function testGetProjectClassNecessaryPropertyAnnotationsLinesEmptyResult(
         ReflectionClass $frameworkReflectionClass,
-        ReflectionClass $projectReflectionClass
+        ReflectionClass $projectReflectionClass,
     ): void {
         $annotationLines = $this->propertyAnnotationsFactory->getProjectClassNecessaryPropertyAnnotationsLines(
             $frameworkReflectionClass,
-            $projectReflectionClass
+            $projectReflectionClass,
         );
 
         $this->assertEmpty($annotationLines);
@@ -85,12 +85,12 @@ class PropertyAnnotationsFactoryTest extends TestCase
     {
         $annotationLines = $this->propertyAnnotationsFactory->getProjectClassNecessaryPropertyAnnotationsLines(
             ReflectionObject::createFromName(BaseClass4::class),
-            ReflectionObject::createFromName(ChildClass4::class)
+            ReflectionObject::createFromName(ChildClass4::class),
         );
 
         $this->assertStringContainsString(
             '@property \App\Model\Category\CategoryFacade $categoryFacade',
-            $annotationLines
+            $annotationLines,
         );
     }
 }

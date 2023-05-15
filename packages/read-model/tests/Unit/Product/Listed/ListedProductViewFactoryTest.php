@@ -45,7 +45,7 @@ class ListedProductViewFactoryTest extends TestCase
         ImageView $imageView,
         ProductActionView $productActionView,
         $flags,
-        $expectedFlags
+        $expectedFlags,
     ): void {
         $domainMock = $this->createDomainMock();
         $productCachedAttributesFacadeMock = $this->createProductCachedAttributesFacadeMock($priceAmount);
@@ -62,7 +62,7 @@ class ListedProductViewFactoryTest extends TestCase
             $productActionViewFacade,
             $productActionViewFactory,
             $currentCustomerUser,
-            $priceFactory
+            $priceFactory,
         );
 
         $productMock = $this->createProductMock($id, $productName, $shortDescription, $availabilityName, $flags);
@@ -70,7 +70,7 @@ class ListedProductViewFactoryTest extends TestCase
         $listedProductView = $listedProductViewFactory->createFromProduct(
             $productMock,
             $imageView,
-            $productActionView
+            $productActionView,
         );
 
         $expected = new ListedProductView(
@@ -180,7 +180,7 @@ class ListedProductViewFactoryTest extends TestCase
     {
         $productCachedAttributesFacadeMock = $this->createMock(ProductCachedAttributesFacade::class);
         $productCachedAttributesFacadeMock->method('getProductSellingPrice')->willReturn(
-            $this->createProductPrice($priceAmount)
+            $this->createProductPrice($priceAmount),
         );
 
         return $productCachedAttributesFacadeMock;

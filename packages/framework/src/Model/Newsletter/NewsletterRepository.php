@@ -35,7 +35,7 @@ class NewsletterRepository
             [
                 'email' => $email,
                 'domainId' => $domainId,
-            ]
+            ],
         ) !== null;
     }
 

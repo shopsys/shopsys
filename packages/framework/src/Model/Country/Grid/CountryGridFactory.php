@@ -22,7 +22,7 @@ class CountryGridFactory implements GridFactoryInterface
         protected readonly CountryRepository $countryRepository,
         protected readonly GridFactory $gridFactory,
         protected readonly Localization $localization,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 

@@ -34,7 +34,7 @@ class FriendlyUrlFacade
         protected readonly Domain $domain,
         protected readonly FriendlyUrlFactoryInterface $friendlyUrlFactory,
         protected readonly FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider,
-        protected readonly CacheInterface $mainFriendlyUrlSlugCache
+        protected readonly CacheInterface $mainFriendlyUrlSlugCache,
     ) {
     }
 
@@ -82,7 +82,7 @@ class FriendlyUrlFacade
             if ($attempt > static::MAX_URL_UNIQUE_RESOLVE_ATTEMPT) {
                 throw new ReachMaxUrlUniqueResolveAttemptException(
                     $friendlyUrl,
-                    $attempt
+                    $attempt,
                 );
             }
 
@@ -98,7 +98,7 @@ class FriendlyUrlFacade
                 $attempt,
                 $friendlyUrl,
                 (string)$entityName,
-                $matchedRouteData
+                $matchedRouteData,
             );
             $friendlyUrl = $friendlyUrlUniqueResult->getFriendlyUrlForPersist();
         } while (!$friendlyUrlUniqueResult->isUnique());
@@ -206,7 +206,7 @@ class FriendlyUrlFacade
         $friendlyUrls = $this->friendlyUrlRepository->getAllByRouteNameAndEntityIdAndDomainId(
             $mainFriendlyUrl->getRouteName(),
             $mainFriendlyUrl->getEntityId(),
-            $mainFriendlyUrl->getDomainId()
+            $mainFriendlyUrl->getDomainId(),
         );
 
         foreach ($friendlyUrls as $friendlyUrl) {
@@ -250,7 +250,7 @@ class FriendlyUrlFacade
         $cacheKey = $this->friendlyUrlCacheKeyProvider->getMainFriendlyUrlSlugCacheKey(
             $mainFriendlyUrl->getRouteName(),
             $mainFriendlyUrl->getDomainId(),
-            $mainFriendlyUrl->getEntityId()
+            $mainFriendlyUrl->getEntityId(),
         );
         $this->mainFriendlyUrlSlugCache->delete($cacheKey);
         $this->mainFriendlyUrlSlugCache->get($cacheKey, function () use ($mainFriendlyUrl) {

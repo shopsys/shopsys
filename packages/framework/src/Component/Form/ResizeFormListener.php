@@ -35,7 +35,7 @@ class ResizeFormListener implements EventSubscriberInterface
         protected readonly array $options = [],
         $allowAdd = false,
         $allowDelete = false,
-        $deleteEmpty = false
+        $deleteEmpty = false,
     ) {
         $this->type = $type;
         $this->allowAdd = $allowAdd;
@@ -74,7 +74,7 @@ class ResizeFormListener implements EventSubscriberInterface
         if (!is_array($data) && !($data instanceof Traversable && $data instanceof ArrayAccess)) {
             throw new UnexpectedTypeException(
                 $data,
-                'array or (\Traversable and \ArrayAccess)'
+                'array or (\Traversable and \ArrayAccess)',
             );
         }
     }
@@ -97,7 +97,7 @@ class ResizeFormListener implements EventSubscriberInterface
         if (!is_array($viewData) && !($viewData instanceof Traversable && $viewData instanceof ArrayAccess)) {
             throw new UnexpectedTypeException(
                 $viewData,
-                'array or (\Traversable and \ArrayAccess)'
+                'array or (\Traversable and \ArrayAccess)',
             );
         }
 
@@ -132,7 +132,7 @@ class ResizeFormListener implements EventSubscriberInterface
         if (!is_array($data) && !($data instanceof Traversable && $data instanceof ArrayAccess)) {
             throw new UnexpectedTypeException(
                 $data,
-                'array or (\Traversable and \ArrayAccess)'
+                'array or (\Traversable and \ArrayAccess)',
             );
         }
 
@@ -182,7 +182,7 @@ class ResizeFormListener implements EventSubscriberInterface
         if (!is_array($normData) && !($normData instanceof Traversable && $normData instanceof ArrayAccess)) {
             throw new UnexpectedTypeException(
                 $normData,
-                'array or (\Traversable and \ArrayAccess)'
+                'array or (\Traversable and \ArrayAccess)',
             );
         }
 
@@ -199,7 +199,7 @@ class ResizeFormListener implements EventSubscriberInterface
         ) {
             throw new UnexpectedTypeException(
                 $previousViewData,
-                'array or (\Traversable and \ArrayAccess)'
+                'array or (\Traversable and \ArrayAccess)',
             );
         }
 

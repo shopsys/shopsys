@@ -22,7 +22,7 @@ final class RedundantMarkDownTrailingSpacesFixer implements FixerInterface
             'Removes redundant trailing spaces in markdown files',
             [
                 new CodeSample('last work.___'),
-            ]
+            ],
         );
     }
 
@@ -51,7 +51,7 @@ final class RedundantMarkDownTrailingSpacesFixer implements FixerInterface
         return preg_replace(
             '/(?:^|(  )?) *$/m',
             '$1',
-            $code
+            $code,
         );
     }
 

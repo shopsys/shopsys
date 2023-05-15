@@ -34,11 +34,11 @@ class JsFileExtractor implements FileVisitorInterface
         foreach ($translationsDump as $translation) {
             $message = new Message(
                 $translation['id'],
-                $translation['domain'] ?? Translator::DEFAULT_TRANSLATION_DOMAIN
+                $translation['domain'] ?? Translator::DEFAULT_TRANSLATION_DOMAIN,
             );
             $message->addSource(new FileSource(
                 $translation['source'],
-                $translation['line']
+                $translation['line'],
             ));
 
             $catalogue->add($message);

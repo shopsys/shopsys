@@ -23,7 +23,7 @@ abstract class ProductListOrderingModeForBrandFacade
         return new ProductListOrderingConfig(
             $this->getSupportedOrderingModesNamesById(),
             $this->getDefaultOrderingModeId(),
-            static::COOKIE_NAME
+            static::COOKIE_NAME,
         );
     }
 
@@ -35,7 +35,7 @@ abstract class ProductListOrderingModeForBrandFacade
     {
         return $this->requestToOrderingModeIdConverter->getOrderingModeIdFromRequest(
             $request,
-            $this->getProductListOrderingConfig()
+            $this->getProductListOrderingConfig(),
         );
     }
 

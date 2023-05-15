@@ -26,7 +26,7 @@ class ProductElasticsearchRepository
         protected readonly Client $client,
         protected readonly ProductElasticsearchConverter $productElasticsearchConverter,
         protected readonly FilterQueryFactory $filterQueryFactory,
-        protected readonly IndexDefinitionLoader $indexDefinitionLoader
+        protected readonly IndexDefinitionLoader $indexDefinitionLoader,
     ) {
     }
 

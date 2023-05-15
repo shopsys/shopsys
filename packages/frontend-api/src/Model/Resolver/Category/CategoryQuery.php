@@ -24,7 +24,7 @@ class CategoryQuery extends AbstractQuery
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
         protected readonly Domain $domain,
-        protected readonly FriendlyUrlFacade $friendlyUrlFacade
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
     }
 
@@ -69,7 +69,7 @@ class CategoryQuery extends AbstractQuery
             $friendlyUrl = $this->friendlyUrlFacade->getFriendlyUrlByRouteNameAndSlug(
                 $this->domain->getId(),
                 'front_product_list',
-                $urlSlug
+                $urlSlug,
             );
 
             return $this->categoryFacade->getVisibleOnDomainById($this->domain->getId(), $friendlyUrl->getEntityId());

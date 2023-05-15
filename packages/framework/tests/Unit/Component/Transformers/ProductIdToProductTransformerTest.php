@@ -39,7 +39,7 @@ class ProductIdToProductTransformerTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $productRepository->expects($this->atLeastOnce())->method('getById')->willReturnMap(
-            $productsRepositoryGetByIdValues
+            $productsRepositoryGetByIdValues,
         );
 
         $productIdToProductTransformer = new ProductIdToProductTransformer($productRepository);

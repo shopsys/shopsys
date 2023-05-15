@@ -69,7 +69,7 @@ class CartItem
         Cart $cart,
         Product $product,
         int $quantity,
-        ?Money $watchedPrice
+        ?Money $watchedPrice,
     ) {
         $this->cart = $cart;
         $this->product = $product;

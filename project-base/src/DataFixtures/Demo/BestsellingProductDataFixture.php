@@ -18,7 +18,7 @@ class BestsellingProductDataFixture extends AbstractReferenceFixture implements 
      */
     public function __construct(
         private readonly ManualBestsellingProductFacade $manualBestsellingProductFacade,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 
@@ -42,7 +42,7 @@ class BestsellingProductDataFixture extends AbstractReferenceFixture implements 
             $this->manualBestsellingProductFacade->edit(
                 $this->getReference(CategoryDataFixture::CATEGORY_PHOTO),
                 $domainId,
-                $productsIndexedByPosition
+                $productsIndexedByPosition,
             );
         }
     }

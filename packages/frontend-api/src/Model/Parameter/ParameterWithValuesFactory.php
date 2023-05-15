@@ -14,7 +14,7 @@ class ParameterWithValuesFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      */
     public function __construct(
-        protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade
+        protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
     ) {
     }
 

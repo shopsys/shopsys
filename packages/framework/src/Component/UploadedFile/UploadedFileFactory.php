@@ -13,7 +13,7 @@ class UploadedFileFactory implements UploadedFileFactoryInterface
      */
     public function __construct(
         protected readonly FileUpload $fileUpload,
-        protected readonly EntityNameResolver $entityNameResolver
+        protected readonly EntityNameResolver $entityNameResolver,
     ) {
     }
 
@@ -32,7 +32,7 @@ class UploadedFileFactory implements UploadedFileFactoryInterface
         string $type,
         string $temporaryFilename,
         string $uploadedFilename,
-        int $position = 0
+        int $position = 0,
     ): UploadedFile {
         $temporaryFilepath = $this->fileUpload->getTemporaryFilepath($temporaryFilename);
 
@@ -40,7 +40,7 @@ class UploadedFileFactory implements UploadedFileFactoryInterface
 
         return new $classData($entityName, $entityId, $type, pathinfo(
             $temporaryFilepath,
-            PATHINFO_BASENAME
+            PATHINFO_BASENAME,
         ), $uploadedFilename, $position);
     }
 
@@ -59,7 +59,7 @@ class UploadedFileFactory implements UploadedFileFactoryInterface
         string $type,
         array $temporaryFilenames,
         array $uploadedFilenames,
-        int $existingFilesCount
+        int $existingFilesCount,
     ): array {
         $files = [];
 
@@ -70,7 +70,7 @@ class UploadedFileFactory implements UploadedFileFactoryInterface
                 $type,
                 $temporaryFilename,
                 $uploadedFilenames[$key],
-                $existingFilesCount++
+                $existingFilesCount++,
             );
         }
 

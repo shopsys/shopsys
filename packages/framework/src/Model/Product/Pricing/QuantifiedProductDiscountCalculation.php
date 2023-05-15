@@ -18,7 +18,7 @@ class QuantifiedProductDiscountCalculation
      */
     public function __construct(
         protected readonly PriceCalculation $priceCalculation,
-        protected readonly Rounding $rounding
+        protected readonly Rounding $rounding,
     ) {
     }
 
@@ -31,13 +31,13 @@ class QuantifiedProductDiscountCalculation
     protected function calculateDiscountRoundedByCurrency(
         QuantifiedItemPrice $quantifiedItemPrice,
         string $discountPercent,
-        Currency $currency
+        Currency $currency,
     ): ?Price {
         $vat = $quantifiedItemPrice->getVat();
         $multiplier = (string)((float)$discountPercent / 100);
         $priceWithVat = $this->rounding->roundPriceWithVatByCurrency(
             $quantifiedItemPrice->getTotalPrice()->getPriceWithVat()->multiply($multiplier),
-            $currency
+            $currency,
         );
 
         if ($priceWithVat->isZero()) {
@@ -67,7 +67,7 @@ class QuantifiedProductDiscountCalculation
                 $quantifiedItemsDiscounts[$quantifiedItemIndex] = $this->calculateDiscountRoundedByCurrency(
                     $quantifiedItemPrice,
                     $discountPercent,
-                    $currency
+                    $currency,
                 );
             }
         }

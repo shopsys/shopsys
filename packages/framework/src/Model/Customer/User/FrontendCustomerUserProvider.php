@@ -29,13 +29,13 @@ class FrontendCustomerUserProvider implements UserProviderInterface
     {
         $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain(
             mb_strtolower($email),
-            $this->domain->getId()
+            $this->domain->getId(),
         );
 
         if ($customerUser === null) {
             $message = sprintf(
                 'Unable to find an active CustomerUser entity identified by email "%s".',
-                $email
+                $email,
             );
 
             throw new UserNotFoundException($message, 0);
@@ -80,7 +80,7 @@ class FrontendCustomerUserProvider implements UserProviderInterface
         if ($customerUser instanceof UniqueLoginInterface) {
             $freshCustomerUser = $this->customerUserRepository->findByIdAndLoginToken(
                 $customerUser->getId(),
-                $customerUser->getLoginToken()
+                $customerUser->getLoginToken(),
             );
         } else {
             $freshCustomerUser = $this->customerUserRepository->findById($customerUser->getId());

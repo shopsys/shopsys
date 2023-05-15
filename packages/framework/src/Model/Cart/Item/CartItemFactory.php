@@ -27,7 +27,7 @@ class CartItemFactory implements CartItemFactoryInterface
         Cart $cart,
         Product $product,
         int $quantity,
-        ?Money $watchedPrice
+        ?Money $watchedPrice,
     ): CartItem {
         $classData = $this->entityNameResolver->resolve(CartItem::class);
 

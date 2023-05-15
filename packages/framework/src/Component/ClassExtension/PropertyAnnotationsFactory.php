@@ -15,7 +15,7 @@ class PropertyAnnotationsFactory
      */
     public function __construct(
         protected readonly AnnotationsReplacementsMap $annotationsReplacementsMap,
-        protected readonly AnnotationsReplacer $annotationsReplacer
+        protected readonly AnnotationsReplacer $annotationsReplacer,
     ) {
     }
 
@@ -26,7 +26,7 @@ class PropertyAnnotationsFactory
      */
     public function getProjectClassNecessaryPropertyAnnotationsLines(
         ReflectionClass $frameworkClassBetterReflection,
-        ReflectionClass $projectClassBetterReflection
+        ReflectionClass $projectClassBetterReflection,
     ): string {
         $projectClassDocBlock = $projectClassBetterReflection->getDocComment();
         $propertyAnnotationsLines = '';
@@ -49,27 +49,27 @@ class PropertyAnnotationsFactory
      */
     protected function getPropertyAnnotationLine(
         ReflectionProperty $reflectionPropertyFromFrameworkClass,
-        ReflectionClass $projectClassBetterReflection
+        ReflectionClass $projectClassBetterReflection,
     ): string {
         foreach ($this->annotationsReplacementsMap->getPatterns() as $frameworkClassPattern) {
             if (!$this->isPropertyDeclaredInClass(
                 $reflectionPropertyFromFrameworkClass->getName(),
-                $projectClassBetterReflection
+                $projectClassBetterReflection,
             )
                 && $this->isPropertyOfTypeThatIsExtendedInProject(
                     $reflectionPropertyFromFrameworkClass,
-                    $frameworkClassPattern
+                    $frameworkClassPattern,
                 )
             ) {
                 $replacedTypeForProperty = $this->annotationsReplacer->replaceInPropertyType(
-                    $reflectionPropertyFromFrameworkClass
+                    $reflectionPropertyFromFrameworkClass,
                 );
 
                 return sprintf(
                     " * @property %s%s $%s\n",
                     $reflectionPropertyFromFrameworkClass->isStatic() ? 'static ' : '',
                     $replacedTypeForProperty,
-                    $reflectionPropertyFromFrameworkClass->getName()
+                    $reflectionPropertyFromFrameworkClass->getName(),
                 );
             }
         }
@@ -102,7 +102,7 @@ class PropertyAnnotationsFactory
     {
         return (bool)preg_match(
             $frameworkClassPattern,
-            $reflectionProperty->getDocComment()
+            $reflectionProperty->getDocComment(),
         );
     }
 }

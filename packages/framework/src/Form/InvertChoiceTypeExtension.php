@@ -30,7 +30,7 @@ class InvertChoiceTypeExtension extends AbstractTypeExtension
 
         if ($options[static::INVERT_OPTION] && !$options['multiple']) {
             throw new InvertedChoiceNotMultipleException(
-                'The "invert" option can be enabled only with "multiple" set to true.'
+                'The "invert" option can be enabled only with "multiple" set to true.',
             );
         }
 

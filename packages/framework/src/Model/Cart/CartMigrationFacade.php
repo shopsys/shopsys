@@ -22,7 +22,7 @@ class CartMigrationFacade
         protected readonly EntityManagerInterface $em,
         protected readonly CustomerUserIdentifierFactory $customerUserIdentifierFactory,
         protected readonly CartItemFactoryInterface $cartItemFactory,
-        protected readonly CartFacade $cartFacade
+        protected readonly CartFacade $cartFacade,
     ) {
     }
 
@@ -44,7 +44,7 @@ class CartMigrationFacade
                     $currentCart,
                     $itemToMerge->getProduct(),
                     $itemToMerge->getQuantity(),
-                    $itemToMerge->getWatchedPrice()
+                    $itemToMerge->getWatchedPrice(),
                 );
                 $currentCart->addItem($newCartItem);
             }
@@ -75,7 +75,7 @@ class CartMigrationFacade
             && $previousCartIdentifier !== $session->getId()
         ) {
             $previousCustomerUserIdentifier = $this->customerUserIdentifierFactory->getOnlyWithCartIdentifier(
-                $previousCartIdentifier
+                $previousCartIdentifier,
             );
             $cart = $this->cartFacade->findCartByCustomerUserIdentifier($previousCustomerUserIdentifier);
 

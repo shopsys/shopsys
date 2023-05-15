@@ -29,7 +29,7 @@ class ProductFilterFacade
         protected readonly Domain $domain,
         protected readonly ProductFilterDataMapper $productFilterDataMapper,
         protected readonly ProductFilterNormalizer $productFilterNormalizer,
-        protected readonly ProductFilterConfigFactory $productFilterConfigFactory
+        protected readonly ProductFilterConfigFactory $productFilterConfigFactory,
     ) {
     }
 
@@ -43,7 +43,7 @@ class ProductFilterFacade
         if (!array_key_exists($cacheKey, $this->productFilterConfigCache)) {
             $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForAll(
                 $this->domain->getId(),
-                $this->domain->getLocale()
+                $this->domain->getLocale(),
             );
         }
 
@@ -62,7 +62,7 @@ class ProductFilterFacade
             $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForBrand(
                 $this->domain->getId(),
                 $this->domain->getLocale(),
-                $brand
+                $brand,
             );
         }
 
@@ -81,7 +81,7 @@ class ProductFilterFacade
             $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForCategory(
                 $this->domain->getId(),
                 $this->domain->getLocale(),
-                $category
+                $category,
             );
         }
 
@@ -96,7 +96,7 @@ class ProductFilterFacade
     protected function getValidatedProductFilterData(Argument $argument, ProductFilterConfig $productFilterConfig): ProductFilterData
     {
         $productFilterData = $this->productFilterDataMapper->mapFrontendApiFilterToProductFilterData(
-            $argument['filter']
+            $argument['filter'],
         );
 
         $this->productFilterNormalizer->removeExcessiveFilters($productFilterData, $productFilterConfig);

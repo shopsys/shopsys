@@ -15,6 +15,6 @@ interface TransportPriceFactoryInterface
     public function create(
         Transport $transport,
         Money $price,
-        int $domainId
+        int $domainId,
     ): TransportPrice;
 }

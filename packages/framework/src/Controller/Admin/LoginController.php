@@ -32,7 +32,7 @@ class LoginController extends AdminBaseController
         protected readonly Authenticator $authenticator,
         protected readonly Domain $domain,
         protected readonly DomainRouterFactory $domainRouterFactory,
-        protected readonly AdministratorLoginFacade $administratorLoginFacade
+        protected readonly AdministratorLoginFacade $administratorLoginFacade,
     ) {
     }
 
@@ -54,7 +54,7 @@ class LoginController extends AdminBaseController
                     self::ORIGINAL_DOMAIN_ID_PARAMETER_NAME => $currentDomainId,
                     self::ORIGINAL_REFERER_PARAMETER_NAME => $request->server->get('HTTP_REFERER'),
                 ],
-                UrlGeneratorInterface::ABSOLUTE_URL
+                UrlGeneratorInterface::ABSOLUTE_URL,
             );
 
             return $this->redirect($redirectTo);
@@ -77,7 +77,7 @@ class LoginController extends AdminBaseController
                 $error = t(
                     'Oh, you just tried to log in using default credentials. We do not allow that on production'
                         . ' environment. If you are random hacker, please go somewhere else. If you are authorized user,'
-                        . ' please use another account or contact developers and change password during deployment.'
+                        . ' please use another account or contact developers and change password during deployment.',
                 );
             } elseif ($e->getPrevious() instanceof TooManyLoginAttemptsAuthenticationException) {
                 $error = t('Too many login attempts. Please try again later.');
@@ -102,7 +102,7 @@ class LoginController extends AdminBaseController
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
         $multidomainToken = $this->administratorLoginFacade->generateMultidomainLoginTokenWithExpiration(
-            $administrator
+            $administrator,
         );
         $originalDomainRouter = $this->domainRouterFactory->getRouter((int)$originalDomainId);
         $redirectTo = $originalDomainRouter->generate(
@@ -111,7 +111,7 @@ class LoginController extends AdminBaseController
                 static::MULTIDOMAIN_LOGIN_TOKEN_PARAMETER_NAME => $multidomainToken,
                 self::ORIGINAL_REFERER_PARAMETER_NAME => $request->get(self::ORIGINAL_REFERER_PARAMETER_NAME),
             ],
-            UrlGeneratorInterface::ABSOLUTE_URL
+            UrlGeneratorInterface::ABSOLUTE_URL,
         );
 
         return $this->redirect($redirectTo);

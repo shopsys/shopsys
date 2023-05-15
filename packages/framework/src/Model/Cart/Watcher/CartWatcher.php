@@ -20,7 +20,7 @@ class CartWatcher
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly ProductVisibilityRepository $productVisibilityRepository,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -34,7 +34,7 @@ class CartWatcher
 
         foreach ($cart->getItems() as $cartItem) {
             $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCurrentUser(
-                $cartItem->getProduct()
+                $cartItem->getProduct(),
             );
 
             if (!$productPrice->getPriceWithVat()->equals($cartItem->getWatchedPrice())) {
@@ -62,7 +62,7 @@ class CartWatcher
                     ->getProductVisibility(
                         $product,
                         $currentCustomerUser->getPricingGroup(),
-                        $this->domain->getId()
+                        $this->domain->getId(),
                     );
 
                 if (!$productVisibility->isVisible() || $product->getCalculatedSellingDenied()) {
@@ -72,7 +72,7 @@ class CartWatcher
                 }
 
                 $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCurrentUser(
-                    $product
+                    $product,
                 );
 
                 if ($productPrice->getPriceWithVat()->equals(Money::zero())) {

@@ -46,7 +46,7 @@ final class ObjectIsCreatedByFactorySniff implements Sniff
         $file->addError(
             sprintf('For creation of "%s" class use its factory "%s"', $instantiatedClassName, $factoryClassName),
             $position,
-            self::class
+            self::class,
         );
     }
 

@@ -42,7 +42,7 @@ class UploadedFileDataFactory implements UploadedFileDataFactoryInterface
 
         $this->fillByUploadedFiles(
             $uploadedFileData,
-            $this->uploadedFileFacade->getUploadedFilesByEntity($entity, $type)
+            $this->uploadedFileFacade->getUploadedFilesByEntity($entity, $type),
         );
 
         return $uploadedFileData;

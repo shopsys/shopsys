@@ -17,10 +17,10 @@ class CartBoxPage extends AbstractPage
     public function seeCountAndPriceRoundedByCurrencyInCartBox(int $expectedCount, string $expectedPrice): void
     {
         $convertedPrice = Money::create(
-            $this->tester->getPriceWithVatConvertedToDomainDefaultCurrency($expectedPrice)
+            $this->tester->getPriceWithVatConvertedToDomainDefaultCurrency($expectedPrice),
         );
         $expectedFormattedPriceWithCurrency = $this->tester->getFormattedPriceWithCurrencySymbolRoundedByCurrencyOnFrontend(
-            $convertedPrice
+            $convertedPrice,
         );
         $messageId = '{1} <strong class="cart__state">%count%</strong> item for <strong class="cart__state">%priceWithVat%</strong>|[2,Inf] <strong class="cart__state">%count%</strong> items for <strong class="cart__state">%priceWithVat%</strong>';
         $translatedMessageWithTags = t(
@@ -30,7 +30,7 @@ class CartBoxPage extends AbstractPage
                 '%priceWithVat%' => $expectedFormattedPriceWithCurrency,
             ],
             Translator::DEFAULT_TRANSLATION_DOMAIN,
-            $this->tester->getFrontendLocale()
+            $this->tester->getFrontendLocale(),
         );
 
         $this->tester->seeInCss(strip_tags($translatedMessageWithTags), '.test-cart-info');

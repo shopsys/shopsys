@@ -24,7 +24,7 @@ abstract class AbstractExportChangedCronModule implements SimpleCronModuleInterf
         protected readonly IndexFacade $indexFacade,
         protected readonly IndexDefinitionLoader $indexDefinitionLoader,
         protected readonly Domain $domain,
-        protected readonly EventDispatcherInterface $eventDispatcher
+        protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }
 

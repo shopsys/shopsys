@@ -16,7 +16,7 @@ class UploadedFileController
      */
     public function __construct(
         private readonly UploadedFileFacade $uploadedFileFacade,
-        private readonly FilesystemOperator $filesystem
+        private readonly FilesystemOperator $filesystem,
     ) {
     }
 
@@ -33,14 +33,14 @@ class UploadedFileController
         $uploadedFile = $this->uploadedFileFacade->getByIdSlugAndExtension(
             $uploadedFileId,
             $uploadedFileSlug,
-            $uploadedFileExtension
+            $uploadedFileExtension,
         );
         $filePath = $this->uploadedFileFacade->getAbsoluteUploadedFileFilepath($uploadedFile);
 
         return new DownloadFileResponse(
             $uploadedFile->getNameWithExtension(),
             $this->filesystem->read($filePath),
-            $this->filesystem->mimeType($filePath)
+            $this->filesystem->mimeType($filePath),
         );
     }
 }

@@ -42,13 +42,13 @@ class InputPriceRecalculationScheduler
             $this->inputPriceRecalculator->recalculateToInputPricesWithoutVat();
             $this->setting->set(
                 PricingSetting::INPUT_PRICE_TYPE,
-                PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT
+                PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,
             );
         } elseif ($this->recalculateInputPricesWithVat) {
             $this->inputPriceRecalculator->recalculateToInputPricesWithVat();
             $this->setting->set(
                 PricingSetting::INPUT_PRICE_TYPE,
-                PricingSetting::INPUT_PRICE_TYPE_WITH_VAT
+                PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,
             );
         }
     }

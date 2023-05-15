@@ -302,7 +302,7 @@ class Product extends AbstractTranslatableEntity
      */
     public function edit(
         array $productCategoryDomains,
-        ProductData $productData
+        ProductData $productData,
     ) {
         $this->editFlags($productData->flags);
         $this->setDomains($productData);
@@ -624,7 +624,7 @@ class Product extends AbstractTranslatableEntity
         foreach ($productCategoryDomains as $productCategoryDomain) {
             if ($this->isProductCategoryDomainInArray(
                 $productCategoryDomain,
-                $this->productCategoryDomains->getValues()
+                $this->productCategoryDomains->getValues(),
             ) === false) {
                 $this->productCategoryDomains->add($productCategoryDomain);
             }
@@ -805,7 +805,7 @@ class Product extends AbstractTranslatableEntity
         if (!$this->isMainVariant()) {
             throw new VariantCanBeAddedOnlyToMainVariantException(
                 $this->getId(),
-                $variant->getId()
+                $variant->getId(),
             );
         }
 

@@ -25,7 +25,7 @@ class OrderUrlGenerator
         return $this->domainRouterFactory->getRouter($order->getDomainId())->generate(
             'front_customer_order_detail_unregistered',
             ['urlHash' => $order->getUrlHash()],
-            UrlGeneratorInterface::ABSOLUTE_URL
+            UrlGeneratorInterface::ABSOLUTE_URL,
         );
     }
 }

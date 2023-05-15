@@ -70,7 +70,7 @@ class CategoryRepositoryTest extends TransactionFunctionalTestCase
 
         $categoriesWithVisibleChildren = $this->categoryRepository->getCategoriesWithVisibleChildren(
             [$parentCategory],
-            self::FIRST_DOMAIN_ID
+            self::FIRST_DOMAIN_ID,
         );
         $this->assertCount(0, $categoriesWithVisibleChildren);
     }
@@ -98,7 +98,7 @@ class CategoryRepositoryTest extends TransactionFunctionalTestCase
 
         $categoriesWithVisibleChildren = $this->categoryRepository->getCategoriesWithVisibleChildren(
             [$parentCategory],
-            self::FIRST_DOMAIN_ID
+            self::FIRST_DOMAIN_ID,
         );
         $this->assertCount(1, $categoriesWithVisibleChildren);
     }

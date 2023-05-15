@@ -21,7 +21,7 @@ interface UploadedFileFactoryInterface
         string $type,
         string $temporaryFilename,
         string $uploadedFilename,
-        int $position = 0
+        int $position = 0,
     ): UploadedFile;
 
     /**
@@ -39,6 +39,6 @@ interface UploadedFileFactoryInterface
         string $type,
         array $temporaryFilenames,
         array $uploadedFilenames,
-        int $existingFilesCount
+        int $existingFilesCount,
     ): array;
 }

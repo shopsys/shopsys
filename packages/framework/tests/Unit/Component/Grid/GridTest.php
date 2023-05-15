@@ -43,7 +43,7 @@ class GridTest extends TestCase
             $requestStack,
             $routerMock,
             $routeCsrfProtectorMock,
-            $twigMock
+            $twigMock,
         );
 
         $this->assertSame('gridId', $grid->getId());
@@ -70,7 +70,7 @@ class GridTest extends TestCase
             $requestStack,
             $routerMock,
             $routeCsrfProtectorMock,
-            $twigMock
+            $twigMock,
         );
         $grid->addColumn('columnId1', 'sourceColumnName1', 'title1', true)->setClassAttribute('classAttribute');
         $grid->addColumn('columnId2', 'sourceColumnName2', 'title2', false);
@@ -111,7 +111,7 @@ class GridTest extends TestCase
             $requestStack,
             $routerMock,
             $routeCsrfProtectorMock,
-            $twigMock
+            $twigMock,
         );
         $grid->addColumn('columnId1', 'sourceColumnName1', 'title1');
 
@@ -136,7 +136,7 @@ class GridTest extends TestCase
             $requestStack,
             $routerMock,
             $routeCsrfProtectorMock,
-            $twigMock
+            $twigMock,
         );
         $grid->enablePaging();
         $this->assertTrue($grid->isEnabledPaging());
@@ -159,7 +159,7 @@ class GridTest extends TestCase
             $requestStack,
             $routerMock,
             $routeCsrfProtectorMock,
-            $twigMock
+            $twigMock,
         );
         $this->assertFalse($grid->isEnabledPaging());
     }
@@ -181,7 +181,7 @@ class GridTest extends TestCase
             $requestStack,
             $routerMock,
             $routeCsrfProtectorMock,
-            $twigMock
+            $twigMock,
         );
 
         $grid->setDefaultOrder('columnId1', DataSourceInterface::ORDER_DESC);
@@ -216,7 +216,7 @@ class GridTest extends TestCase
             $requestStack,
             $routerMock,
             $routeCsrfProtectorMock,
-            $twigMock
+            $twigMock,
         );
 
         $grid->setDefaultOrder('default', DataSourceInterface::ORDER_ASC);
@@ -245,7 +245,7 @@ class GridTest extends TestCase
             $requestStack,
             $routerMock,
             $routeCsrfProtectorMock,
-            $twigMock
+            $twigMock,
         );
         $gridView = $grid->createView();
 
@@ -274,7 +274,7 @@ class GridTest extends TestCase
             $requestStack,
             $routerMock,
             $routeCsrfProtectorMock,
-            $twigMock
+            $twigMock,
         );
         $grid->enablePaging();
         $gridView = $grid->createView();
@@ -301,7 +301,7 @@ class GridTest extends TestCase
             $requestStack,
             $routerMock,
             $routeCsrfProtectorMock,
-            $twigMock
+            $twigMock,
         );
 
         $this->assertFalse($grid->isDragAndDrop());
@@ -326,7 +326,7 @@ class GridTest extends TestCase
             $requestStack,
             $routerMock,
             $routeCsrfProtectorMock,
-            $twigMock
+            $twigMock,
         );
 
         $column1 = $grid->addColumn('columnId1', 'sourceColumnName1', 'title1');

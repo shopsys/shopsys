@@ -38,7 +38,7 @@ class AdministratorController extends AdminBaseController
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly AdministratorActivityFacade $administratorActivityFacade,
         protected readonly AdministratorDataFactoryInterface $administratorDataFactory,
-        protected readonly AdministratorRolesChangedFacade $administratorRolesChangedFacade
+        protected readonly AdministratorRolesChangedFacade $administratorRolesChangedFacade,
     ) {
     }
 
@@ -82,7 +82,7 @@ class AdministratorController extends AdminBaseController
         if (!$loggedUser instanceof Administrator) {
             throw new AccessDeniedException(sprintf(
                 'Logged user is not instance of "%s". That should not happen due to security.yaml configuration.',
-                Administrator::class
+                Administrator::class,
             ));
         }
 
@@ -113,7 +113,7 @@ class AdministratorController extends AdminBaseController
                     [
                         'name' => $administratorData->realName,
                         'url' => $this->generateUrl('admin_administrator_edit', ['id' => $administrator->getId()]),
-                    ]
+                    ],
                 );
 
                 return $this->redirectToRoute('admin_administrator_list');
@@ -122,7 +122,7 @@ class AdministratorController extends AdminBaseController
                     t('Login name <strong>{{ name }}</strong> is already used'),
                     [
                         'name' => $administratorData->username,
-                    ]
+                    ],
                 );
             }
         }
@@ -132,12 +132,12 @@ class AdministratorController extends AdminBaseController
         }
 
         $this->breadcrumbOverrider->overrideLastItem(
-            t('Editing administrator - %name%', ['%name%' => $administrator->getRealName()])
+            t('Editing administrator - %name%', ['%name%' => $administrator->getRealName()]),
         );
 
         $lastAdminActivities = $this->administratorActivityFacade->getLastAdministratorActivities(
             $administrator,
-            static::MAX_ADMINISTRATOR_ACTIVITIES_COUNT
+            static::MAX_ADMINISTRATOR_ACTIVITIES_COUNT,
         );
 
         return $this->render('@ShopsysFramework/Admin/Content/Administrator/edit.html.twig', [
@@ -183,7 +183,7 @@ class AdministratorController extends AdminBaseController
                     [
                         'name' => $administrator->getRealName(),
                         'url' => $this->generateUrl('admin_administrator_edit', ['id' => $administrator->getId()]),
-                    ]
+                    ],
                 );
 
                 return $this->redirectToRoute('admin_administrator_list');
@@ -192,7 +192,7 @@ class AdministratorController extends AdminBaseController
                     t('Login name <strong>{{ name }}</strong> is already used'),
                     [
                         'name' => $administratorData->username,
-                    ]
+                    ],
                 );
             }
         }
@@ -221,7 +221,7 @@ class AdministratorController extends AdminBaseController
                 t('Administrator <strong>{{ name }}</strong> deleted.'),
                 [
                     'name' => $realName,
-                ]
+                ],
             );
         } catch (DeletingSelfException $ex) {
             $this->addErrorFlash(t('You can\'t delete yourself.'));
@@ -230,7 +230,7 @@ class AdministratorController extends AdminBaseController
                 t('Administrator <strong>{{ name }}</strong> is the only one and can\'t be deleted.'),
                 [
                     'name' => $this->administratorFacade->getById($id)->getRealName(),
-                ]
+                ],
             );
         } catch (AdministratorNotFoundException $ex) {
             $this->addErrorFlash(t('Selected administrated doesn\'t exist.'));

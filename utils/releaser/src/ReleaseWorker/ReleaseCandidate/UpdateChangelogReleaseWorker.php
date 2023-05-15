@@ -32,7 +32,7 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
                 $version->getOriginalString(),
                 $this->currentBranchName,
                 $version->getOriginalString() . ' - ' . date('Y-m-d'),
-            )
+            ),
         );
 
         $this->symfonyStyle->note('Choose previous highest tag as Previous tag and then click on Generate release notes.');
@@ -43,7 +43,7 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
             sprintf(
                 'Save release as draft and commit new CHANGELOG.md with message "changelog is now updated for %s release"',
                 $version->getOriginalString(),
-            )
+            ),
         );
 
         $this->confirm('Confirm you have checked CHANGELOG.md and the changes are committed. Also confirm that release is saved as draft.');

@@ -28,7 +28,7 @@ class CategoryFacade
             $locale,
             $domainId,
             $offset,
-            $limit
+            $limit,
         );
     }
 

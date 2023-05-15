@@ -70,7 +70,7 @@ class ImageFactoryTest extends TestCase
             ->setMethods(['convertToShopFormatAndGetNewFilename'])
             ->getMock();
         $imageProcessorMock->expects($this->any())->method('convertToShopFormatAndGetNewFilename')->willReturn(
-            $filename
+            $filename,
         );
 
         $imageFactory = new ImageFactory($imageProcessorMock, $this->getFileUpload(), new EntityNameResolver([]));
@@ -99,7 +99,7 @@ class ImageFactoryTest extends TestCase
             $fileNamingConvention,
             $mountManager,
             $abstractFilesystem,
-            $parameterBag
+            $parameterBag,
         );
     }
 }

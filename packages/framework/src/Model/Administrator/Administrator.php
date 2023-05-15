@@ -312,7 +312,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      */
     public function setMultidomainLoginTokenWithExpiration(
         $multidomainLoginToken,
-        DateTime $multidomainLoginTokenExpiration
+        DateTime $multidomainLoginTokenExpiration,
     ) {
         $this->multidomainLoginToken = $multidomainLoginToken;
         $this->multidomainLoginTokenExpiration = $multidomainLoginTokenExpiration;
@@ -439,7 +439,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         $message = sprintf(
             'There is no mandatory role for administrator with ID `%s`. One of this role is expected: %s.',
             $this->id,
-            implode(', ', Roles::getMandatoryAdministratorRoles())
+            implode(', ', Roles::getMandatoryAdministratorRoles()),
         );
 
         throw new MandatoryAdministratorRoleIsMissingException($message);

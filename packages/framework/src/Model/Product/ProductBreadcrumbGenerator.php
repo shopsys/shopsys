@@ -18,7 +18,7 @@ class ProductBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     public function __construct(
         protected readonly ProductRepository $productRepository,
         protected readonly CategoryFacade $categoryFacade,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -31,13 +31,13 @@ class ProductBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 
         $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId(
             $product,
-            $this->domain->getId()
+            $this->domain->getId(),
         );
 
         $breadcrumbItems = $this->getCategoryBreadcrumbItems($productMainCategory);
 
         $breadcrumbItems[] = new BreadcrumbItem(
-            $product->getName()
+            $product->getName(),
         );
 
         return $breadcrumbItems;
@@ -51,7 +51,7 @@ class ProductBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     {
         $categoriesInPath = $this->categoryFacade->getVisibleCategoriesInPathFromRootOnDomain(
             $category,
-            $this->domain->getId()
+            $this->domain->getId(),
         );
 
         $breadcrumbItems = [];
@@ -60,7 +60,7 @@ class ProductBreadcrumbGenerator implements BreadcrumbGeneratorInterface
             $breadcrumbItems[] = new BreadcrumbItem(
                 $categoryInPath->getName(),
                 'front_product_list',
-                ['id' => $categoryInPath->getId()]
+                ['id' => $categoryInPath->getId()],
             );
         }
 

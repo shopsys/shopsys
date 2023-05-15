@@ -69,7 +69,7 @@ class FriendlyUrlRouter implements RouterInterface
             $this->domainConfig,
             $routeName,
             $parameters,
-            $referenceType
+            $referenceType,
         );
     }
 
@@ -87,7 +87,7 @@ class FriendlyUrlRouter implements RouterInterface
         if ($route === null) {
             throw new FriendlyUrlRouteNotFoundException(
                 $routeName,
-                $this->friendlyUrlRouterResourceFilepath
+                $this->friendlyUrlRouterResourceFilepath,
             );
         }
 
@@ -96,7 +96,7 @@ class FriendlyUrlRouter implements RouterInterface
             $route,
             $friendlyUrl,
             $parameters,
-            $referenceType
+            $referenceType,
         );
     }
 

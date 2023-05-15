@@ -26,7 +26,7 @@ class ParameterTransactionFunctionalTestCase extends TransactionFunctionalTestCa
 
         return $this->parameterFacade->getParameterValueByValueTextAndLocale(
             $parameterValueTranslatedName,
-            $firstDomainLocale
+            $firstDomainLocale,
         )->getId();
     }
 }

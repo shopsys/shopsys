@@ -26,7 +26,7 @@ class CurrencyController extends AdminBaseController
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly CurrencyInlineEdit $currencyInlineEdit,
         protected readonly ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -52,7 +52,7 @@ class CurrencyController extends AdminBaseController
             $currency = $this->currencyFacade->getById($id);
             $message = t(
                 'Do you really want to remove currency "%name%" permanently?',
-                ['%name%' => $currency->getName()]
+                ['%name%' => $currency->getName()],
             );
 
             return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_currency_delete', $id);
@@ -76,11 +76,11 @@ class CurrencyController extends AdminBaseController
                 t('Currency <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $fullName,
-                ]
+                ],
             );
         } catch (DeletingNotAllowedToDeleteCurrencyException $ex) {
             $this->addErrorFlash(
-                t('This currency can\'t be deleted, it is set as default or is saved with order.')
+                t('This currency can\'t be deleted, it is set as default or is saved with order.'),
             );
         } catch (CurrencyNotFoundException $ex) {
             $this->addErrorFlash(t('Selected currency doesn\'t exist.'));
@@ -119,7 +119,7 @@ class CurrencyController extends AdminBaseController
                 $domainId = $domainConfig->getId();
                 $this->currencyFacade->setDomainDefaultCurrency(
                     $currencySettingsFormData['domainDefaultCurrencies'][$domainId],
-                    $domainId
+                    $domainId,
                 );
             }
 

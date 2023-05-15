@@ -43,7 +43,7 @@ class Version20180603135347 extends AbstractMigration
                 [
                     'mailTemplateName' => $mailTemplateName,
                     'sendMail' => $sendMail,
-                ]
+                ],
             );
         }
     }

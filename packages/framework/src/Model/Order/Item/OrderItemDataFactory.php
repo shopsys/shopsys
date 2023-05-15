@@ -90,13 +90,13 @@ class OrderItemDataFactory implements OrderItemDataFactoryInterface
 
         $calculatedPriceWithoutVat = $this->orderItemPriceCalculation->calculatePriceWithoutVat(
             $orderItemData,
-            $orderItem->getOrder()->getDomainId()
+            $orderItem->getOrder()->getDomainId(),
         );
 
         if (!$orderItemData->priceWithoutVat->equals($calculatedPriceWithoutVat)) {
             throw new OrderItemUnitPricesAreInconsistentButTotalsAreNotForcedException(
                 $orderItem,
-                $calculatedPriceWithoutVat
+                $calculatedPriceWithoutVat,
             );
         }
 

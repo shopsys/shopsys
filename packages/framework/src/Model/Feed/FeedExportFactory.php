@@ -24,7 +24,7 @@ class FeedExportFactory
         protected readonly EntityManagerInterface $em,
         protected readonly FeedPathProvider $feedPathProvider,
         protected readonly Filesystem $localFilesystem,
-        protected readonly MountManager $mountManager
+        protected readonly MountManager $mountManager,
     ) {
     }
 
@@ -51,7 +51,7 @@ class FeedExportFactory
             $this->em,
             $feedFilepath,
             $feedLocalFilepath,
-            $lastSeekId
+            $lastSeekId,
         );
     }
 }

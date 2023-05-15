@@ -36,13 +36,13 @@ class ExtendedClassesAnnotationsCommand extends Command
     {
         $this
             ->setDescription(
-                'Fixes and adds annotations (or just checks them in dry-run mode) in project classes to improve static analysis and DX with extended classes. See "help" for more information'
+                'Fixes and adds annotations (or just checks them in dry-run mode) in project classes to improve static analysis and DX with extended classes. See "help" for more information',
             )
             ->addOption(
                 static::DRY_RUN,
                 null,
                 InputOption::VALUE_NONE,
-                'By default, the command fixes and adds all the relevant annotations for extended classes. When using this option, it just reports files that need to be fixed.'
+                'By default, the command fixes and adds all the relevant annotations for extended classes. When using this option, it just reports files that need to be fixed.',
             )
             ->setHelp('What does the command do exactly?
 - Replaces the framework with the project annotations in all project files when there exists a project extension of a given framework class.
@@ -66,7 +66,7 @@ class ExtendedClassesAnnotationsCommand extends Command
         protected readonly MethodAnnotationsFactory $methodAnnotationsAdder,
         protected readonly AnnotationsReplacer $annotationsReplacer,
         protected readonly AnnotationsReplacementsMap $annotationsReplacementsMap,
-        protected readonly AnnotationsAdder $annotationsAdder
+        protected readonly AnnotationsAdder $annotationsAdder,
     ) {
         parent::__construct();
     }
@@ -86,7 +86,7 @@ class ExtendedClassesAnnotationsCommand extends Command
                 $symfonyStyle->listing($filesForReplacingAnnotations);
             } else {
                 $symfonyStyle->note(
-                    ['Annotations were fixed in the following files:'] + $filesForReplacingAnnotations
+                    ['Annotations were fixed in the following files:'] + $filesForReplacingAnnotations,
                 );
             }
         }
@@ -104,7 +104,7 @@ class ExtendedClassesAnnotationsCommand extends Command
                 $symfonyStyle->listing($filesForAddingPropertyOrMethodAnnotations);
             } else {
                 $symfonyStyle->note(
-                    array_merge(['@method or @property annotations were added to the following files:'], $filesForAddingPropertyOrMethodAnnotations)
+                    array_merge(['@method or @property annotations were added to the following files:'], $filesForAddingPropertyOrMethodAnnotations),
                 );
             }
         }
@@ -179,17 +179,17 @@ class ExtendedClassesAnnotationsCommand extends Command
 
             $projectClassNecessaryPropertyAnnotationsLines = $this->propertyAnnotationsFactory->getProjectClassNecessaryPropertyAnnotationsLines(
                 $frameworkClassBetterReflection,
-                $projectClassBetterReflection
+                $projectClassBetterReflection,
             );
             $projectClassNecessaryMethodAnnotationsLines = $this->methodAnnotationsAdder->getProjectClassNecessaryMethodAnnotationsLines(
                 $frameworkClassBetterReflection,
-                $projectClassBetterReflection
+                $projectClassBetterReflection,
             );
 
             if (!$isDryRun) {
                 $this->annotationsAdder->addAnnotationToClass(
                     $projectClassBetterReflection,
-                    $projectClassNecessaryPropertyAnnotationsLines . $projectClassNecessaryMethodAnnotationsLines
+                    $projectClassNecessaryPropertyAnnotationsLines . $projectClassNecessaryMethodAnnotationsLines,
                 );
             }
 

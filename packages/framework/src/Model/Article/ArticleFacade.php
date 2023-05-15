@@ -20,7 +20,7 @@ class ArticleFacade
         protected readonly ArticleRepository $articleRepository,
         protected readonly Domain $domain,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
-        protected readonly ArticleFactoryInterface $articleFactory
+        protected readonly ArticleFactoryInterface $articleFactory,
     ) {
     }
 
@@ -93,7 +93,7 @@ class ArticleFacade
             'front_article_detail',
             $article->getId(),
             $article->getName(),
-            $article->getDomainId()
+            $article->getDomainId(),
         );
         $this->em->flush();
 
@@ -118,7 +118,7 @@ class ArticleFacade
                 'front_article_detail',
                 $article->getId(),
                 $article->getName(),
-                $article->getDomainId()
+                $article->getDomainId(),
             );
         }
         $this->em->flush();

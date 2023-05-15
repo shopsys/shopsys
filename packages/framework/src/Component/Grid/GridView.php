@@ -40,7 +40,7 @@ class GridView
         protected readonly RouterInterface $router,
         protected readonly Environment $twig,
         $theme,
-        array $templateParameters = []
+        array $templateParameters = [],
     ) {
         $this->setTheme($theme, $templateParameters);
     }
@@ -76,7 +76,7 @@ class GridView
                     [
                         'gridView' => $this,
                         'grid' => $this->grid,
-                    ]
+                    ],
                 );
 
                 $templateParameters = $this->twig->mergeGlobals($parameters);
@@ -92,7 +92,7 @@ class GridView
         }
 
         throw new InvalidArgumentException(
-            sprintf('Block "%s" doesn\'t exist in grid template "%s".', $name, $this->theme)
+            sprintf('Block "%s" doesn\'t exist in grid template "%s".', $name, $this->theme),
         );
     }
 
@@ -191,7 +191,7 @@ class GridView
         return $this->router->generate(
             $masterRequest->attributes->get('_route'),
             $routeParameters,
-            UrlGeneratorInterface::ABSOLUTE_URL
+            UrlGeneratorInterface::ABSOLUTE_URL,
         );
     }
 

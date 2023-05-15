@@ -74,7 +74,7 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         $this->assertQueryWithExpectedArray(
             $query,
             Json::decode($jsonExpected, Json::FORCE_ARRAY),
-            Json::decode($jsonVariables, Json::FORCE_ARRAY)
+            Json::decode($jsonVariables, Json::FORCE_ARRAY),
         );
     }
 
@@ -177,7 +177,7 @@ abstract class GraphQlTestCase extends ApplicationTestCase
 
         if ($response['data'][$graphQlType] === null) {
             $this->fail(
-                "Query returned null. If it's an expected state, don't use `getResponseDataForGraphQlType` method for parsing response"
+                "Query returned null. If it's an expected state, don't use `getResponseDataForGraphQlType` method for parsing response",
             );
         }
 
@@ -227,7 +227,7 @@ abstract class GraphQlTestCase extends ApplicationTestCase
     private function getConvertedPriceToDomainDefaultCurrency(
         string $priceWithoutVat,
         Vat $vat,
-        int $quantity = 1
+        int $quantity = 1,
     ): Price {
         $domainId = $this->domain->getId();
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
@@ -238,18 +238,18 @@ abstract class GraphQlTestCase extends ApplicationTestCase
             $this->priceConverter->convertPriceWithoutVatToDomainDefaultCurrencyPrice(
                 Money::create($priceWithoutVat),
                 $currencyCzk,
-                $domainId
+                $domainId,
             ),
             PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,
             $vat,
-            $currency
+            $currency,
         );
 
         return $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
             $basePrice->getPriceWithVat()->multiply($quantity),
             PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,
             $vat,
-            $currency
+            $currency,
         );
     }
 
@@ -262,7 +262,7 @@ abstract class GraphQlTestCase extends ApplicationTestCase
     protected function getSerializedPriceConvertedToDomainDefaultCurrency(
         string $priceWithoutVat,
         Vat $vat,
-        int $quantity = 1
+        int $quantity = 1,
     ): array {
         $price = $this->getConvertedPriceToDomainDefaultCurrency($priceWithoutVat, $vat, $quantity);
 
@@ -282,7 +282,7 @@ abstract class GraphQlTestCase extends ApplicationTestCase
     protected function getMutationPriceConvertedToDomainDefaultCurrency(
         string $priceWithoutVat,
         Vat $vat,
-        int $quantity = 1
+        int $quantity = 1,
     ): string {
         $price = $this->getConvertedPriceToDomainDefaultCurrency($priceWithoutVat, $vat, $quantity);
 
@@ -304,7 +304,7 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         $money = $this->priceConverter->convertPriceWithoutVatToDomainDefaultCurrencyPrice(
             Money::create($price),
             $currencyCzk,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         return MoneyFormatterHelper::formatWithMaxFractionDigits($money);

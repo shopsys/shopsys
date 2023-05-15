@@ -28,7 +28,7 @@ class PricingGroupController extends AdminBaseController
         protected readonly PricingGroupFacade $pricingGroupFacade,
         protected readonly PricingGroupInlineEdit $pricingGroupInlineEdit,
         protected readonly ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
-        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 
@@ -65,7 +65,7 @@ class PricingGroupController extends AdminBaseController
                     t('Pricing group <strong>{{ name }}</strong> deleted'),
                     [
                         'name' => $name,
-                    ]
+                    ],
                 );
             } else {
                 $newPricingGroup = $this->pricingGroupFacade->getById($newId);
@@ -74,7 +74,7 @@ class PricingGroupController extends AdminBaseController
                     [
                         'name' => $name,
                         'newName' => $newPricingGroup->getName(),
-                    ]
+                    ],
                 );
             }
         } catch (PricingGroupNotFoundException $ex) {
@@ -97,14 +97,14 @@ class PricingGroupController extends AdminBaseController
                 $message = t(
                     'For removing pricing group "%name%" you have to choose other one to be set everywhere where the existing one is used. '
                     . 'Which pricing group you want to set instead?',
-                    ['%name%' => $pricingGroup->getName()]
+                    ['%name%' => $pricingGroup->getName()],
                 );
 
                 if ($this->pricingGroupSettingFacade->isPricingGroupDefaultOnSelectedDomain($pricingGroup)) {
                     $message = t(
                         'Pricing group "%name%" set as default. For deleting it you have to choose other one to be set everywhere '
                         . 'where the existing one is used. Which pricing group you want to set instead?',
-                        ['%name%' => $pricingGroup->getName()]
+                        ['%name%' => $pricingGroup->getName()],
                     );
                 }
 
@@ -112,18 +112,18 @@ class PricingGroupController extends AdminBaseController
                     $message,
                     'admin_pricinggroup_delete',
                     $id,
-                    $this->pricingGroupFacade->getAllExceptIdByDomainId($id, $pricingGroup->getDomainId())
+                    $this->pricingGroupFacade->getAllExceptIdByDomainId($id, $pricingGroup->getDomainId()),
                 );
             }
             $message = t(
                 'Do you really want to remove pricing group "%name%" permanently? It is not used anywhere.',
-                ['%name%' => $pricingGroup->getName()]
+                ['%name%' => $pricingGroup->getName()],
             );
 
             return $this->confirmDeleteResponseFactory->createDeleteResponse(
                 $message,
                 'admin_pricinggroup_delete',
-                $id
+                $id,
             );
         } catch (PricingGroupNotFoundException $ex) {
             return new Response(t('Selected pricing group doesn\'t exist.'));
@@ -149,7 +149,7 @@ class PricingGroupController extends AdminBaseController
             $pricingGroupSettingsFormData = $form->getData();
 
             $this->pricingGroupSettingFacade->setDefaultPricingGroupForSelectedDomain(
-                $pricingGroupSettingsFormData['defaultPricingGroup']
+                $pricingGroupSettingsFormData['defaultPricingGroup'],
             );
 
             $this->addSuccessFlash(t('Default pricing group settings modified'));

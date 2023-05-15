@@ -18,7 +18,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly GoogleProductDomainFacade $googleProductDomainFacade,
-        private readonly GoogleProductDomainDataFactoryInterface $googleProductDomainDataFactory
+        private readonly GoogleProductDomainDataFactoryInterface $googleProductDomainDataFactory,
     ) {
     }
 
@@ -77,14 +77,14 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
                 $this->setGoogleProductDomainDataProperty(
                     $googleProductDomainsDataIndexedByDomainId[$domainId],
                     $productAttributeName,
-                    $productAttributeValue
+                    $productAttributeValue,
                 );
             }
         }
 
         $this->googleProductDomainFacade->saveGoogleProductDomainsForProductId(
             $productId,
-            $googleProductDomainsDataIndexedByDomainId
+            $googleProductDomainsDataIndexedByDomainId,
         );
     }
 
@@ -96,7 +96,7 @@ class GoogleProductCrudExtension implements PluginCrudExtensionInterface
     private function setGoogleProductDomainDataProperty(
         GoogleProductDomainData $googleProductDomainData,
         $propertyName,
-        $propertyValue
+        $propertyValue,
     ) {
         switch ($propertyName) {
             case 'show':

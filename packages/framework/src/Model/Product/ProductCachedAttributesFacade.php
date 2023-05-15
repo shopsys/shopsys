@@ -27,7 +27,7 @@ class ProductCachedAttributesFacade
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly ParameterRepository $parameterRepository,
-        protected readonly Localization $localization
+        protected readonly Localization $localization,
     ) {
     }
 
@@ -64,7 +64,7 @@ class ProductCachedAttributesFacade
 
         $productParameterValues = $this->parameterRepository->getProductParameterValuesByProductSortedByName(
             $product,
-            $locale
+            $locale,
         );
 
         foreach ($productParameterValues as $index => $productParameterValue) {

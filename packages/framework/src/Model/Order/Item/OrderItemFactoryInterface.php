@@ -29,7 +29,7 @@ interface OrderItemFactoryInterface
         int $quantity,
         ?string $unitName,
         ?string $catnum,
-        ?Product $product = null
+        ?Product $product = null,
     ): OrderItem;
 
     /**
@@ -47,7 +47,7 @@ interface OrderItemFactoryInterface
         Price $price,
         string $vatPercent,
         int $quantity,
-        Payment $payment
+        Payment $payment,
     ): OrderItem;
 
     /**
@@ -65,6 +65,6 @@ interface OrderItemFactoryInterface
         Price $price,
         string $vatPercent,
         int $quantity,
-        Transport $transport
+        Transport $transport,
     ): OrderItem;
 }

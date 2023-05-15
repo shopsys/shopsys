@@ -25,7 +25,7 @@ class ProductsQuery extends AbstractQuery
     public function __construct(
         protected readonly ProductFacade $productFacade,
         protected readonly ProductFilterFacade $productFilterFacade,
-        protected readonly ProductConnectionFactory $productConnectionFactory
+        protected readonly ProductConnectionFactory $productConnectionFactory,
     ) {
     }
 
@@ -40,7 +40,7 @@ class ProductsQuery extends AbstractQuery
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForAll(
-            $argument
+            $argument,
         );
 
         return $this->productConnectionFactory->createConnectionForAll(
@@ -50,12 +50,12 @@ class ProductsQuery extends AbstractQuery
                     $offset,
                     $this->getOrderingModeFromArgument($argument),
                     $productFilterData,
-                    $search
+                    $search,
                 );
             },
             $this->productFacade->getFilteredProductsCountOnCurrentDomain($productFilterData, $search),
             $argument,
-            $productFilterData
+            $productFilterData,
         );
     }
 
@@ -72,7 +72,7 @@ class ProductsQuery extends AbstractQuery
 
         $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForCategory(
             $argument,
-            $category
+            $category,
         );
 
         return $this->productConnectionFactory->createConnectionForCategory(
@@ -84,12 +84,12 @@ class ProductsQuery extends AbstractQuery
                     $offset,
                     $this->getOrderingModeFromArgument($argument),
                     $productFilterData,
-                    $search
+                    $search,
                 );
             },
             $this->productFacade->getFilteredProductsByCategoryCount($category, $productFilterData, $search),
             $argument,
-            $productFilterData
+            $productFilterData,
         );
     }
 
@@ -106,7 +106,7 @@ class ProductsQuery extends AbstractQuery
 
         $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForBrand(
             $argument,
-            $brand
+            $brand,
         );
 
         return $this->productConnectionFactory->createConnectionForBrand(
@@ -118,12 +118,12 @@ class ProductsQuery extends AbstractQuery
                     $offset,
                     $this->getOrderingModeFromArgument($argument),
                     $productFilterData,
-                    $search
+                    $search,
                 );
             },
             $this->productFacade->getFilteredProductsByBrandCount($brand, $productFilterData, $search),
             $argument,
-            $productFilterData
+            $productFilterData,
         );
     }
 

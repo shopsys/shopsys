@@ -42,7 +42,7 @@ class TransportAndPaymentWatcher
         OrderData $orderData,
         OrderPreview $orderPreview,
         array $transports,
-        array $payments
+        array $payments,
     ): TransportAndPaymentCheckResult {
         $transport = $orderData->transport;
         $payment = $orderData->payment;
@@ -54,7 +54,7 @@ class TransportAndPaymentWatcher
                 $transport,
                 $orderData->currency,
                 $orderPreview,
-                $orderData->domainId
+                $orderData->domainId,
             );
         }
 
@@ -65,7 +65,7 @@ class TransportAndPaymentWatcher
                 $payment,
                 $orderData->currency,
                 $orderPreview,
-                $orderData->domainId
+                $orderData->domainId,
             );
         }
 
@@ -74,7 +74,7 @@ class TransportAndPaymentWatcher
             $payments,
             $orderData->currency,
             $orderPreview,
-            $orderData->domainId
+            $orderData->domainId,
         );
 
         return new TransportAndPaymentCheckResult($transportPriceChanged, $paymentPriceChanged);
@@ -91,7 +91,7 @@ class TransportAndPaymentWatcher
         Transport $transport,
         Currency $currency,
         OrderPreview $orderPreview,
-        int $domainId
+        int $domainId,
     ): bool {
         $transportPrices = $this->getRememberedTransportPrices();
 
@@ -102,7 +102,7 @@ class TransportAndPaymentWatcher
                 $transport,
                 $currency,
                 $orderPreview->getProductsPrice(),
-                $domainId
+                $domainId,
             );
 
             if (!$transportPrice->getPriceWithVat()->equals($rememberedTransportPriceValue)) {
@@ -124,7 +124,7 @@ class TransportAndPaymentWatcher
         Payment $payment,
         Currency $currency,
         OrderPreview $orderPreview,
-        int $domainId
+        int $domainId,
     ): bool {
         $paymentPrices = $this->getRememberedPaymentPrices();
 
@@ -135,7 +135,7 @@ class TransportAndPaymentWatcher
                 $payment,
                 $currency,
                 $orderPreview->getProductsPrice(),
-                $domainId
+                $domainId,
             );
 
             if (!$paymentPrice->getPriceWithVat()->equals($rememberedPaymentPriceValue)) {
@@ -157,7 +157,7 @@ class TransportAndPaymentWatcher
         array $transports,
         Currency $currency,
         OrderPreview $orderPreview,
-        int $domainId
+        int $domainId,
     ): array {
         $transportPriceValues = [];
 
@@ -166,7 +166,7 @@ class TransportAndPaymentWatcher
                 $transport,
                 $currency,
                 $orderPreview->getProductsPrice(),
-                $domainId
+                $domainId,
             );
             $transportPriceValues[$transport->getId()] = $transportPrice->getPriceWithVat();
         }
@@ -185,7 +185,7 @@ class TransportAndPaymentWatcher
         array $payments,
         Currency $currency,
         OrderPreview $orderPreview,
-        int $domainId
+        int $domainId,
     ): array {
         $paymentPriceValues = [];
 
@@ -194,7 +194,7 @@ class TransportAndPaymentWatcher
                 $payment,
                 $currency,
                 $orderPreview->getProductsPrice(),
-                $domainId
+                $domainId,
             );
             $paymentPriceValues[$payment->getId()] = $paymentPrice->getPriceWithVat();
         }
@@ -214,20 +214,20 @@ class TransportAndPaymentWatcher
         array $payments,
         Currency $currency,
         OrderPreview $orderPreview,
-        int $domainId
+        int $domainId,
     ): void {
         $this->requestStack->getSession()->set(static::SESSION_ROOT, [
             static::SESSION_TRANSPORT_PRICES => $this->getTransportPrices(
                 $transports,
                 $currency,
                 $orderPreview,
-                $domainId
+                $domainId,
             ),
             static::SESSION_PAYMENT_PRICES => $this->getPaymentPrices(
                 $payments,
                 $currency,
                 $orderPreview,
-                $domainId
+                $domainId,
             ),
         ]);
     }

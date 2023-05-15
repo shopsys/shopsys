@@ -17,7 +17,7 @@ class NoProductPriceForPricingGroupException extends Exception implements Pricin
         $message = sprintf(
             'There is no price for product ID "%d" and pricing group ID "%d".',
             $productId,
-            $pricingGroupId
+            $pricingGroupId,
         );
 
         parent::__construct($message);

@@ -68,7 +68,7 @@ Or of a whole directory:
   <info>php %command.full_name% dirname</info>
   <info>php %command.full_name% dirname --format=json</info>
 
-EOF
+EOF,
             );
     }
 
@@ -178,8 +178,8 @@ EOF
                 sprintf(
                     '%d YAML files have valid syntax and %d contain errors.',
                     $countFiles - $erroredFiles,
-                    $erroredFiles
-                )
+                    $erroredFiles,
+                ),
             );
         }
 
@@ -287,9 +287,9 @@ EOF
             return new RecursiveIteratorIterator(
                 new RecursiveDirectoryIterator(
                     $directory,
-                    FilesystemIterator::SKIP_DOTS | FilesystemIterator::FOLLOW_SYMLINKS
+                    FilesystemIterator::SKIP_DOTS | FilesystemIterator::FOLLOW_SYMLINKS,
                 ),
-                RecursiveIteratorIterator::LEAVES_ONLY
+                RecursiveIteratorIterator::LEAVES_ONLY,
             );
         };
 

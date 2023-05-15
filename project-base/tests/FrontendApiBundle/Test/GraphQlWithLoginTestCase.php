@@ -17,8 +17,8 @@ abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
         $responseData = $this->getResponseContentForQuery(
             self::getLoginQuery(
                 static::DEFAULT_USER_EMAIL,
-                static::DEFAULT_USER_PASSWORD
-            )
+                static::DEFAULT_USER_PASSWORD,
+            ),
         );
         $accessToken = $responseData['data']['Login']['accessToken'];
 
@@ -28,7 +28,7 @@ abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
             [
                 'CONTENT_TYPE' => 'application/graphql',
                 'HTTP_Authorization' => sprintf('Bearer %s', $accessToken),
-            ]
+            ],
         );
     }
 
@@ -39,7 +39,7 @@ abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
      */
     private static function getLoginQuery(
         ?string $customerUserEmail = null,
-        ?string $customerUserPassword = null
+        ?string $customerUserPassword = null,
     ): string {
         $customerUserEmail = $customerUserEmail ?? self::DEFAULT_USER_EMAIL;
         $customerUserPassword = $customerUserPassword ?? self::DEFAULT_USER_PASSWORD;

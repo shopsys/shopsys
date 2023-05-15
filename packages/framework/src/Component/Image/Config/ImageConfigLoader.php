@@ -46,7 +46,7 @@ class ImageConfigLoader
 
         if (!$this->filesystem->exists($filename)) {
             throw new FileNotFoundException(
-                'File ' . $filename . ' does not exist'
+                'File ' . $filename . ' does not exist',
             );
         }
 
@@ -76,7 +76,7 @@ class ImageConfigLoader
             } catch (ImageConfigException $e) {
                 throw new EntityParseException(
                     $entityConfig[ImageConfigDefinition::CONFIG_CLASS],
-                    $e
+                    $e,
                 );
             }
         }
@@ -120,7 +120,7 @@ class ImageConfigLoader
             $key = Utils::ifNull($sizeName, ImageEntityConfig::WITHOUT_NAME_KEY);
             $additionalSizes = $this->prepareAdditionalSizes(
                 $sizeName ?: '~',
-                $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_ADDITIONAL_SIZES]
+                $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_ADDITIONAL_SIZES],
             );
 
             if (array_key_exists($key, $result)) {
@@ -133,7 +133,7 @@ class ImageConfigLoader
                 $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_HEIGHT],
                 $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_CROP],
                 $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_OCCURRENCE],
-                $additionalSizes
+                $additionalSizes,
             );
         }
 
@@ -144,7 +144,7 @@ class ImageConfigLoader
                 null,
                 false,
                 null,
-                []
+                [],
             );
         }
 

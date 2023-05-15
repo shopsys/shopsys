@@ -14,7 +14,7 @@ class ProductDetailViewFacade implements ProductDetailViewFacadeInterface
      */
     public function __construct(
         protected readonly ProductDetailViewFactory $productDetailViewFactory,
-        protected readonly ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
+        protected readonly ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
     ) {
     }
 

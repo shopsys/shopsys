@@ -42,7 +42,7 @@ interface ProductOnCurrentDomainFacadeInterface
         string $orderingModeId,
         int $page,
         int $limit,
-        int $categoryId
+        int $categoryId,
     ): PaginationResult;
 
     /**
@@ -56,7 +56,7 @@ interface ProductOnCurrentDomainFacadeInterface
         string $orderingModeId,
         int $page,
         int $limit,
-        int $brandId
+        int $brandId,
     ): PaginationResult;
 
     /**
@@ -72,7 +72,7 @@ interface ProductOnCurrentDomainFacadeInterface
         ProductFilterData $productFilterData,
         string $orderingModeId,
         int $page,
-        int $limit
+        int $limit,
     ): PaginationResult;
 
     /**
@@ -91,7 +91,7 @@ interface ProductOnCurrentDomainFacadeInterface
     public function getProductFilterCountDataInCategory(
         int $categoryId,
         ProductFilterConfig $productFilterConfig,
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
     ): ProductFilterCountData;
 
     /**
@@ -103,6 +103,6 @@ interface ProductOnCurrentDomainFacadeInterface
     public function getProductFilterCountDataForSearch(
         ?string $searchText,
         ProductFilterConfig $productFilterConfig,
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
     ): ProductFilterCountData;
 }

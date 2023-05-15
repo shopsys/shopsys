@@ -16,7 +16,7 @@ class ParameterView
         protected readonly int $id,
         protected readonly string $name,
         protected readonly int $valueId,
-        protected readonly string $valueText
+        protected readonly string $valueText,
     ) {
     }
 

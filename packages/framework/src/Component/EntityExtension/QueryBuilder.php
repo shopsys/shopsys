@@ -13,7 +13,7 @@ class QueryBuilder extends BaseQueryBuilder
      */
     public function __construct(
         EntityManagerInterface $em,
-        protected readonly EntityNameResolver $entityNameResolver
+        protected readonly EntityNameResolver $entityNameResolver,
     ) {
         parent::__construct($em);
     }

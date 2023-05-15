@@ -21,7 +21,7 @@ class ProductFactoryTest extends TestCase
     {
         $this->productFactory = new ProductFactory(
             new EntityNameResolver([]),
-            $this->getProductAvailabilityCalculationMock()
+            $this->getProductAvailabilityCalculationMock(),
         );
 
         parent::setUp();

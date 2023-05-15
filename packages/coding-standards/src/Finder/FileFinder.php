@@ -27,7 +27,7 @@ final class FileFinder
                 $files[$fileInfo->getPath()] = new SymfonySplFileInfo(
                     $singleSource,
                     $fileInfo->getPath(),
-                    $fileInfo->getPathname()
+                    $fileInfo->getPathname(),
                 );
             } else {
                 $directories[] = $singleSource;

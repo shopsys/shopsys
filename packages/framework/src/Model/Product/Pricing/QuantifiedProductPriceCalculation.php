@@ -20,7 +20,7 @@ class QuantifiedProductPriceCalculation
      */
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
-        protected readonly PriceCalculation $priceCalculation
+        protected readonly PriceCalculation $priceCalculation,
     ) {
     }
 
@@ -37,7 +37,7 @@ class QuantifiedProductPriceCalculation
         $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
             $product,
             $domainId,
-            $customerUser
+            $customerUser,
         );
 
         $totalPriceWithVat = $this->getTotalPriceWithVat($quantifiedProduct, $productPrice);
@@ -93,7 +93,7 @@ class QuantifiedProductPriceCalculation
             $quantifiedItemsPrices[$quantifiedItemIndex] = $this->calculatePrice(
                 $quantifiedProduct,
                 $domainId,
-                $customerUser
+                $customerUser,
             );
         }
 

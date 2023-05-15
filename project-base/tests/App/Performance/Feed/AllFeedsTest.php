@@ -42,7 +42,7 @@ class AllFeedsTest extends KernelTestCase
 
         $this->maxDuration = $container->getParameter('shopsys.performance_test.feed.max_duration_seconds');
         $this->deliveryMaxDuration = $container->getParameter(
-            'shopsys.performance_test.feed.delivery.max_duration_seconds'
+            'shopsys.performance_test.feed.delivery.max_duration_seconds',
         );
         $this->minDuration = $container->getParameter('shopsys.performance_test.feed.min_duration_seconds');
     }
@@ -71,8 +71,8 @@ class AllFeedsTest extends KernelTestCase
                     $feedInfo->getLabel(),
                     $feedInfo->getName(),
                     $domainConfig->getName(),
-                    $domainConfig->getId()
-                )
+                    $domainConfig->getId(),
+                ),
             );
 
             $performanceTestSample = $this->doTestFeedGeneration($feedInfo, $domainConfig, $maxDuration);
@@ -83,7 +83,7 @@ class AllFeedsTest extends KernelTestCase
 
         $this->exportJmeterCsvReport(
             $performanceTestSamples,
-            static::$container->getParameter('kernel.project_dir') . '/build/stats/performance-tests-feeds.csv'
+            static::$container->getParameter('kernel.project_dir') . '/build/stats/performance-tests-feeds.csv',
         );
 
         $this->assertSamplesAreSuccessful($performanceTestSamples);
@@ -101,7 +101,7 @@ class AllFeedsTest extends KernelTestCase
         $this->setPerformanceTestSampleMessage(
             $performanceTestSample,
             $maxDuration,
-            $performanceTestSample->getDuration()
+            $performanceTestSample->getDuration(),
         );
 
         return $performanceTestSample;
@@ -119,12 +119,12 @@ class AllFeedsTest extends KernelTestCase
         $dailyFeedGenerationData = $this->getFeedGenerationData(
             $feedRegistry->getFeeds('daily'),
             $domain->getAll(),
-            $this->maxDuration
+            $this->maxDuration,
         );
         $hourlyFeedGenerationData = $this->getFeedGenerationData(
             $feedRegistry->getFeeds('hourly'),
             $domain->getAll(),
-            $this->deliveryMaxDuration
+            $this->deliveryMaxDuration,
         );
 
         return array_merge($dailyFeedGenerationData, $hourlyFeedGenerationData);
@@ -161,11 +161,11 @@ class AllFeedsTest extends KernelTestCase
         if ($realDuration < $minDuration) {
             $message = sprintf(
                 '<fg=yellow>Feed generated in %.2F s, which is suspiciously fast.</fg=yellow>',
-                $realDuration
+                $realDuration,
             );
             $failMessage = sprintf(
                 'Feed was generated faster than in %d s, which is suspicious and should be checked.',
-                $minDuration
+                $minDuration,
             );
             $performanceTestSample->addFailMessage($failMessage);
         } elseif ($realDuration <= $maxDuration) {
@@ -174,7 +174,7 @@ class AllFeedsTest extends KernelTestCase
             $message = sprintf(
                 '<fg=red>Feed generated in %.2F s, exceeding limit of %d s.</fg=red>',
                 $realDuration,
-                $maxDuration
+                $maxDuration,
             );
             $failMessage = sprintf('Feed generation exceeded limit of %d s.', $maxDuration);
             $performanceTestSample->addFailMessage($failMessage);
@@ -200,7 +200,7 @@ class AllFeedsTest extends KernelTestCase
             [
                 'feedName' => $feed->getName(),
                 'domainId' => $domainConfig->getId(),
-            ]
+            ],
         );
         $request = Request::create($uri);
         $auth = new BasicHttpAuth(self::ADMIN_USERNAME, self::ADMIN_PASSWORD);
@@ -227,7 +227,7 @@ class AllFeedsTest extends KernelTestCase
                 'Admin request on %s ended with status code %d, expected %d.',
                 $uri,
                 $statusCode,
-                $expectedStatusCode
+                $expectedStatusCode,
             );
             $performanceTestSample->addFailMessage($failMessage);
         }
@@ -248,7 +248,7 @@ class AllFeedsTest extends KernelTestCase
                     'Generation of feed "%s" on domain with ID %d failed: %s',
                     $performanceTestSample->getFeedName(),
                     $performanceTestSample->getDomainConfig()->getId(),
-                    implode(' ', $performanceTestSample->getFailMessages())
+                    implode(' ', $performanceTestSample->getFailMessages()),
                 );
             }
             $this->addToAssertionCount(1);

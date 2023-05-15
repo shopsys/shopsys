@@ -83,7 +83,7 @@ class CartMigrationFacadeTest extends TransactionFunctionalTestCase
             $entityManagerMock,
             $customerUserIdentifierFactory,
             $this->cartItemFactory,
-            $cartFacadeMock
+            $cartFacadeMock,
         );
 
         $cartMigrationFacade->mergeCurrentCartWithCart($mergingCart);

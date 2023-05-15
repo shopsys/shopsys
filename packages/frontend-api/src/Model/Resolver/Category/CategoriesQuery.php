@@ -16,7 +16,7 @@ class CategoriesQuery extends AbstractQuery
      */
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -27,7 +27,7 @@ class CategoriesQuery extends AbstractQuery
     {
         return $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId(
             $this->categoryFacade->getRootCategory(),
-            $this->domain->getId()
+            $this->domain->getId(),
         );
     }
 }

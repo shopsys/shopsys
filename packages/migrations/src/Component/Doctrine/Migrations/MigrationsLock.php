@@ -117,7 +117,7 @@ class MigrationsLock
             if (!array_key_exists($migrationClass, $availableMigrations)) {
                 $message = sprintf(
                     'Migration version "%s" marked as installed in migration lock file was not found!',
-                    $migrationClass
+                    $migrationClass,
                 );
                 $this->logger->log(LogLevel::WARNING, $message);
             }
@@ -136,7 +136,7 @@ class MigrationsLock
             } else {
                 $message = sprintf(
                     'Migration version "%s" marked as skipped in migration lock file was not found!',
-                    $skippedMigrationClass
+                    $skippedMigrationClass,
                 );
                 $this->logger->log(LogLevel::WARNING, $message);
             }

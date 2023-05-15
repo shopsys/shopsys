@@ -13,7 +13,7 @@ class EnabledModuleRepository
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly ModuleList $moduleList
+        protected readonly ModuleList $moduleList,
     ) {
     }
 

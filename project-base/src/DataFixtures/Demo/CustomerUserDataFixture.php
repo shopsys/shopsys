@@ -66,7 +66,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
         private readonly HashGenerator $hashGenerator,
         private readonly Domain $domain,
         private readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
-        CustomerUserDataFactoryInterface $customerUserDataFactory
+        CustomerUserDataFactoryInterface $customerUserDataFactory,
     ) {
         $this->em = $em;
         $this->customerUserDataFactory = $customerUserDataFactory;
@@ -442,7 +442,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     private function resetPassword(CustomerUser $customer)
     {
         $resetPasswordHash = $this->hashGenerator->generateHash(
-            CustomerUserPasswordFacade::RESET_PASSWORD_HASH_LENGTH
+            CustomerUserPasswordFacade::RESET_PASSWORD_HASH_LENGTH,
         );
         $customer->setResetPasswordHash($resetPasswordHash);
         $this->em->flush();

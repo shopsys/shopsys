@@ -19,7 +19,7 @@ class FriendlyUrlGeneratorFacade
         protected readonly Domain $domain,
         protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
-        protected readonly FriendlyUrlDataProviderRegistry $friendlyUrlDataProviderConfig
+        protected readonly FriendlyUrlDataProviderRegistry $friendlyUrlDataProviderConfig,
     ) {
     }
 
@@ -36,7 +36,7 @@ class FriendlyUrlGeneratorFacade
             $output->writeln(sprintf(
                 ' End of generating friendly urls for domain %s (%d).',
                 $domainConfig->getUrl(),
-                $countOfCreatedUrls
+                $countOfCreatedUrls,
             ));
         }
     }
@@ -59,7 +59,7 @@ class FriendlyUrlGeneratorFacade
                 '   -> route %s in %s (%d)',
                 $routeName,
                 $route->getDefault('_controller'),
-                $countOfCreatedUrls
+                $countOfCreatedUrls,
             ));
         }
 
@@ -77,7 +77,7 @@ class FriendlyUrlGeneratorFacade
 
         $friendlyUrlsData = $this->friendlyUrlDataProviderConfig->getFriendlyUrlDataByRouteAndDomain(
             $routeName,
-            $domainConfig
+            $domainConfig,
         );
 
         foreach ($friendlyUrlsData as $friendlyUrlData) {
@@ -85,7 +85,7 @@ class FriendlyUrlGeneratorFacade
                 $routeName,
                 $friendlyUrlData->id,
                 $friendlyUrlData->name,
-                $domainConfig->getId()
+                $domainConfig->getId(),
             );
             $countOfCreatedUrls++;
         }

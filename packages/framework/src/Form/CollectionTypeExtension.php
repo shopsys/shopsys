@@ -27,7 +27,7 @@ class CollectionTypeExtension extends AbstractTypeExtension
             $options['entry_options'],
             $options['allow_add'],
             $options['allow_delete'],
-            $options['delete_empty']
+            $options['delete_empty'],
         );
 
         $builder->addEventSubscriber($resizeListener);

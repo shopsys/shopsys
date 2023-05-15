@@ -19,7 +19,7 @@ class DirectoryStructureCreator
     public function __construct(
         protected readonly UploadedFileConfig $uploadedFileConfig,
         protected readonly UploadedFileLocator $uploadedFileLocator,
-        FilesystemOperator $filesystem
+        FilesystemOperator $filesystem,
     ) {
         $this->filesysytem = $filesystem;
     }
@@ -31,7 +31,7 @@ class DirectoryStructureCreator
 
         foreach ($uploadedFileEntityConfigs as $uploadedFileEntityConfig) {
             $directories[] = $this->uploadedFileLocator->getAbsoluteFilePath(
-                $uploadedFileEntityConfig->getEntityName()
+                $uploadedFileEntityConfig->getEntityName(),
             );
         }
 

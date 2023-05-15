@@ -43,7 +43,7 @@ class CronFacadeTest extends TestCase
                 $iterations--;
 
                 return $iterations > 0;
-            }
+            },
         );
 
         $serviceId = get_class($cronModuleServiceMock);
@@ -66,7 +66,7 @@ class CronFacadeTest extends TestCase
         $cronTimeResolverMock->method('isValidAtTime')->willReturnCallback(
             function (CronModuleConfig $cronModuleConfig) use ($validServiceId) {
                 return $cronModuleConfig->getServiceId() === $validServiceId;
-            }
+            },
         );
 
         $cronModuleFacadeMock->expects($this->atLeastOnce())
@@ -104,7 +104,7 @@ class CronFacadeTest extends TestCase
             });
 
         $this->createCronFacade($cronConfig, $cronModuleFacadeMock)->runScheduledModulesForInstance(
-            CronModuleConfig::DEFAULT_INSTANCE_NAME
+            CronModuleConfig::DEFAULT_INSTANCE_NAME,
         );
     }
 

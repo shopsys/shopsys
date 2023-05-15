@@ -20,7 +20,7 @@ class FilemanagerAccess
     public function __construct(
         $filamanagerUploadDir,
         protected readonly ElFinderConfigurationReader $elFinderConfigurationReader,
-        protected readonly FilepathComparator $filepathComparator
+        protected readonly FilepathComparator $filepathComparator,
     ) {
         $this->filemanagerUploadDir = realpath($filamanagerUploadDir);
     }

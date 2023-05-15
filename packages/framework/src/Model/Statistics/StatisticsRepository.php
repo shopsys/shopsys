@@ -40,7 +40,7 @@ class StatisticsRepository
             WHERE u.created_at BETWEEN :start_date AND :end_date
             GROUP BY date
             ORDER BY date ASC',
-            $resultSetMapping
+            $resultSetMapping,
         );
 
         $query->setParameter('start_date', $start);
@@ -50,7 +50,7 @@ class StatisticsRepository
             function (array $item) {
                 return new ValueByDateTimeDataPoint($item['count'], $item['date']);
             },
-            $query->getResult()
+            $query->getResult(),
         );
     }
 
@@ -71,7 +71,7 @@ class StatisticsRepository
             WHERE o.created_at BETWEEN :start_date AND :end_date AND o.status_id != :canceled AND o.deleted = FALSE
             GROUP BY date
             ORDER BY date ASC',
-            $resultSetMapping
+            $resultSetMapping,
         );
 
         $query->setParameter('start_date', $start);
@@ -82,7 +82,7 @@ class StatisticsRepository
             function (array $item) {
                 return new ValueByDateTimeDataPoint($item['count'], $item['date']);
             },
-            $query->getResult()
+            $query->getResult(),
         );
     }
 
@@ -100,7 +100,7 @@ class StatisticsRepository
             'SELECT COUNT(u.created_at) AS count
             FROM customer_users u
             WHERE u.created_at BETWEEN :start_date AND :end_date',
-            $resultSetMapping
+            $resultSetMapping,
         );
 
         $query->setParameter('start_date', $startDateTime);
@@ -123,7 +123,7 @@ class StatisticsRepository
             'SELECT COUNT(o.created_at) AS count
             FROM orders o
             WHERE o.created_at BETWEEN :start_date AND :end_date AND o.status_id != :canceled AND o.deleted = FALSE',
-            $resultSetMapping
+            $resultSetMapping,
         );
 
         $query->setParameter('start_date', $startDateTime);
@@ -148,7 +148,7 @@ class StatisticsRepository
             FROM orders o, currencies c
             WHERE o.created_at BETWEEN :start_date AND :end_date AND o.status_id != :canceled AND o.deleted = FALSE
             AND o.currency_id = c.id',
-            $resultSetMapping
+            $resultSetMapping,
         );
 
         $query->setParameter('start_date', $startDateTime);

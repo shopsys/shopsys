@@ -39,7 +39,7 @@ class RouterDebugCommandForDomain extends Command
     public function __construct(
         private readonly DomainChoiceHandler $domainChoiceHelper,
         private readonly RouterDebugCommand $routerDebugCommand,
-        private readonly KernelInterface $kernel
+        private readonly KernelInterface $kernel,
     ) {
         parent::__construct();
     }
@@ -63,7 +63,7 @@ The <info>%command.name%</info> displays the configured routes:
 
   <info>php %command.full_name%</info>
 
-EOF
+EOF,
             )
         ;
     }

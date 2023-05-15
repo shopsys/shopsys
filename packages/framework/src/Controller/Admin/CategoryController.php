@@ -61,7 +61,7 @@ class CategoryController extends AdminBaseController
                 [
                     'name' => $category->getName(),
                     'url' => $this->generateUrl('admin_category_edit', ['id' => $category->getId()]),
-                ]
+                ],
             );
 
             return $this->redirectToRoute('admin_category_list');
@@ -72,7 +72,7 @@ class CategoryController extends AdminBaseController
         }
 
         $this->breadcrumbOverrider->overrideLastItem(
-            t('Editing category - %name%', ['%name%' => $category->getName()])
+            t('Editing category - %name%', ['%name%' => $category->getName()]),
         );
 
         return $this->render('@ShopsysFramework/Admin/Content/Category/edit.html.twig', [
@@ -104,7 +104,7 @@ class CategoryController extends AdminBaseController
                 [
                     'name' => $category->getName(),
                     'url' => $this->generateUrl('admin_category_edit', ['id' => $category->getId()]),
-                ]
+                ],
             );
 
             return $this->redirectToRoute('admin_category_list');
@@ -148,12 +148,12 @@ class CategoryController extends AdminBaseController
 
         if ($domainId === static::ALL_DOMAINS) {
             $categoriesWithPreloadedChildren = $this->categoryFacade->getAllCategoriesWithPreloadedChildren(
-                $request->getLocale()
+                $request->getLocale(),
             );
         } else {
             $categoriesWithPreloadedChildren = $this->categoryFacade->getVisibleCategoriesWithPreloadedChildrenForDomain(
                 $domainId,
-                $request->getLocale()
+                $request->getLocale(),
             );
         }
 
@@ -196,7 +196,7 @@ class CategoryController extends AdminBaseController
                 t('Category <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $fullName,
-                ]
+                ],
             );
         } catch (CategoryNotFoundException $ex) {
             $this->addErrorFlash(t('Selected category doesn\'t exist.'));

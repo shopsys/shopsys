@@ -22,7 +22,7 @@ class CategoryWithLazyLoadedVisibleChildrenFactory
     {
         $categoriesWithVisibleChildren = $this->categoryRepository->getCategoriesWithVisibleChildren(
             $categories,
-            $domainConfig->getId()
+            $domainConfig->getId(),
         );
 
         $categoriesWithLazyLoadedVisibleChildren = [];
@@ -33,13 +33,13 @@ class CategoryWithLazyLoadedVisibleChildrenFactory
                 function () use ($category, $domainConfig) {
                     $categories = $this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain(
                         $category,
-                        $domainConfig
+                        $domainConfig,
                     );
 
                     return $this->createCategoriesWithLazyLoadedVisibleChildren($categories, $domainConfig);
                 },
                 $category,
-                $hasChildren
+                $hasChildren,
             );
         }
 

@@ -15,6 +15,6 @@ interface ProductAccessoryFactoryInterface
     public function create(
         Product $product,
         Product $accessory,
-        int $position
+        int $position,
     ): ProductAccessory;
 }

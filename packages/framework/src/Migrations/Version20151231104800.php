@@ -13,7 +13,7 @@ class Version20151231104800 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $this->sql(
-            'ALTER TABLE cron_modules ADD suspended BOOLEAN NOT NULL DEFAULT FALSE;'
+            'ALTER TABLE cron_modules ADD suspended BOOLEAN NOT NULL DEFAULT FALSE;',
         );
     }
 

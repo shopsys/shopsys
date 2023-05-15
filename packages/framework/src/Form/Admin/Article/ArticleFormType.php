@@ -33,7 +33,7 @@ class ArticleFormType extends AbstractType
     public function __construct(
         private readonly SeoSettingFacade $seoSettingFacade,
         private readonly Domain $domain,
-        private readonly ArticleFacade $articleFacade
+        private readonly ArticleFacade $articleFacade,
     ) {
     }
 
@@ -179,7 +179,7 @@ class ArticleFormType extends AbstractType
         $descriptionsMainPageByDomainIds = $this->seoSettingFacade
             ->getDescriptionsMainPageIndexedByDomainIds($this->domain->getAll());
         $seoMetaDescriptionAttributes['placeholder'] = $this->seoSettingFacade->getDescriptionMainPage(
-            $options['domain_id']
+            $options['domain_id'],
         );
 
         foreach ($descriptionsMainPageByDomainIds as $domainId => $description) {

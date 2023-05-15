@@ -18,7 +18,7 @@ class ProductInputPriceRecalculator
     public function __construct(
         protected readonly BasePriceCalculation $basePriceCalculation,
         protected readonly InputPriceCalculation $inputPriceCalculation,
-        protected readonly CurrencyFacade $currencyFacade
+        protected readonly CurrencyFacade $currencyFacade,
     ) {
     }
 
@@ -30,7 +30,7 @@ class ProductInputPriceRecalculator
     public function recalculateInputPriceForNewVatPercent(
         ProductManualInputPrice $productManualInputPrice,
         int $inputPriceType,
-        string $newVatPercent
+        string $newVatPercent,
     ): void {
         if ($productManualInputPrice->getInputPrice() !== null) {
             $domainId = $productManualInputPrice->getPricingGroup()->getDomainId();
@@ -40,12 +40,12 @@ class ProductInputPriceRecalculator
                 $productManualInputPrice->getInputPrice(),
                 $inputPriceType,
                 $productManualInputPrice->getProduct()->getVatForDomain($domainId),
-                $defaultCurrency
+                $defaultCurrency,
             );
             $inputPriceForPricingGroup = $this->inputPriceCalculation->getInputPrice(
                 $inputPriceType,
                 $basePriceForPricingGroup->getPriceWithVat(),
-                $newVatPercent
+                $newVatPercent,
             );
             $productManualInputPrice->setInputPrice($inputPriceForPricingGroup);
         }

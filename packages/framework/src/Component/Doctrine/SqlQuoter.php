@@ -23,7 +23,7 @@ class SqlQuoter
             function ($identifier) {
                 return $this->quoteIdentifier($identifier);
             },
-            $identifiers
+            $identifiers,
         );
     }
 

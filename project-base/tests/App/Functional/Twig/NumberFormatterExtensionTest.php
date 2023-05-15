@@ -61,7 +61,7 @@ class NumberFormatterExtensionTest extends FunctionalTestCase
         $numberFormatterExtension = new NumberFormatterExtension(
             $localizationMock,
             new NumberFormatRepository(),
-            $this->administrationFacade
+            $this->administrationFacade,
         );
 
         $this->assertSame($result, $numberFormatterExtension->formatNumber($input, $locale));

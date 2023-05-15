@@ -29,7 +29,7 @@ class ProductVariantFacade
         protected readonly ProductFactoryInterface $productFactory,
         protected readonly ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         protected readonly ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
-        protected readonly ProductExportScheduler $productExportScheduler
+        protected readonly ProductExportScheduler $productExportScheduler,
     ) {
     }
 

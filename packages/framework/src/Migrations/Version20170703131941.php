@@ -35,7 +35,7 @@ class Version20170703131941 extends AbstractMigration
         foreach ($allDomainIds as $domainId) {
             $this->sql(
                 'INSERT INTO brand_domains (brand_id, domain_id)
-				SELECT id AS brand_id, ' . $domainId . ' AS domain_id FROM brands'
+				SELECT id AS brand_id, ' . $domainId . ' AS domain_id FROM brands',
             );
         }
     }

@@ -27,7 +27,7 @@ class MailTemplateFacade
         protected readonly UploadedFileFacade $uploadedFileFacade,
         protected readonly MailTemplateFactoryInterface $mailTemplateFactory,
         protected readonly MailTemplateDataFactoryInterface $mailTemplateDataFactory,
-        protected readonly MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider
+        protected readonly MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider,
     ) {
     }
 

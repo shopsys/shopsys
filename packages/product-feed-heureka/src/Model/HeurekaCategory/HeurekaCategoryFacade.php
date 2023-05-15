@@ -15,7 +15,7 @@ class HeurekaCategoryFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly HeurekaCategoryRepository $heurekaCategoryRepository,
-        protected readonly CategoryRepository $categoryRepository
+        protected readonly CategoryRepository $categoryRepository,
     ) {
     }
 
@@ -48,7 +48,7 @@ class HeurekaCategoryFacade
      */
     protected function removeOldHeurekaCategories(
         array $newHeurekaCategoriesData,
-        array $existingHeurekaCategoriesIndexedByIds
+        array $existingHeurekaCategoriesIndexedByIds,
     ) {
         $existingHeurekaCategoriesIds = array_keys($existingHeurekaCategoriesIndexedByIds);
 

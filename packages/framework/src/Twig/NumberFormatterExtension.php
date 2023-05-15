@@ -22,7 +22,7 @@ class NumberFormatterExtension extends AbstractExtension
     public function __construct(
         protected readonly Localization $localization,
         protected readonly NumberFormatRepositoryInterface $numberFormatRepository,
-        protected readonly AdministrationFacade $administrationFacade
+        protected readonly AdministrationFacade $administrationFacade,
     ) {
     }
 
@@ -34,19 +34,19 @@ class NumberFormatterExtension extends AbstractExtension
         return [
             new TwigFilter(
                 'formatNumber',
-                [$this, 'formatNumber']
+                [$this, 'formatNumber'],
             ),
             new TwigFilter(
                 'formatDecimalNumber',
-                [$this, 'formatDecimalNumber']
+                [$this, 'formatDecimalNumber'],
             ),
             new TwigFilter(
                 'formatPercent',
-                [$this, 'formatPercent']
+                [$this, 'formatPercent'],
             ),
             new TwigFilter(
                 'isInteger',
-                [$this, 'isInteger']
+                [$this, 'isInteger'],
             ),
         ];
     }

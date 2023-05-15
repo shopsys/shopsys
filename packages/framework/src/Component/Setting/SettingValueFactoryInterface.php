@@ -13,6 +13,6 @@ interface SettingValueFactoryInterface
     public function create(
         string $name,
         $value,
-        int $domainId
+        int $domainId,
     ): SettingValue;
 }

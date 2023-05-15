@@ -20,7 +20,7 @@ class SearchController extends FrontBaseController
      */
     public function __construct(
         private readonly CategoryFacade $categoryFacade,
-        private readonly ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
+        private readonly ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
     ) {
     }
 
@@ -32,7 +32,7 @@ class SearchController extends FrontBaseController
         $searchText = trim($request->get('searchText'));
         $searchUrl = $this->generateUrl(
             'front_product_search',
-            [ProductController::SEARCH_TEXT_PARAMETER => $searchText]
+            [ProductController::SEARCH_TEXT_PARAMETER => $searchText],
         );
 
         $categoriesPaginationResult = $this->categoryFacade
@@ -54,7 +54,7 @@ class SearchController extends FrontBaseController
     public function boxAction(Request $request)
     {
         $searchText = TransformString::replaceInvalidUtf8CharactersByQuestionMark(
-            trim((string)$request->query->get(ProductController::SEARCH_TEXT_PARAMETER))
+            trim((string)$request->query->get(ProductController::SEARCH_TEXT_PARAMETER)),
         );
 
         return $this->render('Front/Content/Search/searchBox.html.twig', [

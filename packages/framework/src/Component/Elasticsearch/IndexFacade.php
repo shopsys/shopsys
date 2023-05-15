@@ -24,7 +24,7 @@ class IndexFacade
         protected readonly IndexRepository $indexRepository,
         protected readonly ProgressBarFactory $progressBarFactory,
         protected readonly SqlLoggerFacade $sqlLoggerFacade,
-        protected readonly EntityManagerInterface $entityManager
+        protected readonly EntityManagerInterface $entityManager,
     ) {
     }
 
@@ -37,7 +37,7 @@ class IndexFacade
         $output->writeln(sprintf(
             'Creating index "%s" on domain "%s"',
             $indexDefinition->getIndexName(),
-            $indexDefinition->getDomainId()
+            $indexDefinition->getDomainId(),
         ));
 
         $alias = $indexDefinition->getIndexAlias();
@@ -46,7 +46,7 @@ class IndexFacade
             if (!$this->isIndexUpToDate($indexDefinition)) {
                 throw new ElasticsearchIndexException(sprintf(
                     'There is an index for alias "%s" already. You have to migrate it first due to different definition.',
-                    $alias
+                    $alias,
                 ));
             }
         } catch (ElasticsearchNoAliasException $exception) {
@@ -66,7 +66,7 @@ class IndexFacade
         $output->writeln(sprintf(
             'Deleting index "%s" on domain "%s"',
             $indexDefinition->getIndexName(),
-            $indexDefinition->getDomainId()
+            $indexDefinition->getDomainId(),
         ));
 
         $this->indexRepository->deleteIndexByIndexDefinition($indexDefinition);
@@ -82,7 +82,7 @@ class IndexFacade
         $output->writeln(sprintf(
             'Exporting data of "%s" on domain "%s"',
             $indexDefinition->getIndexName(),
-            $indexDefinition->getDomainId()
+            $indexDefinition->getDomainId(),
         ));
 
         $this->createIndexWhenNoAliasFound($indexDefinition, $output);
@@ -96,7 +96,7 @@ class IndexFacade
         $domainId = $indexDefinition->getDomainId();
         $progressBar = $this->progressBarFactory->create(
             $output,
-            $index->getTotalCount($indexDefinition->getDomainId())
+            $index->getTotalCount($indexDefinition->getDomainId()),
         );
 
         $exportedIds = [];
@@ -108,7 +108,7 @@ class IndexFacade
             $currentBatchData = $index->getExportDataForBatch(
                 $domainId,
                 $lastProcessedId,
-                $index->getExportBatchSize()
+                $index->getExportBatchSize(),
             );
             $currentBatchSize = count($currentBatchData);
 
@@ -142,8 +142,8 @@ class IndexFacade
             $output->writeln(
                 sprintf(
                     'Index "%s" does not support export of only changed rows. Skipping.',
-                    $indexDefinition->getIndexName()
-                )
+                    $indexDefinition->getIndexName(),
+                ),
             );
 
             return;
@@ -154,19 +154,19 @@ class IndexFacade
         } catch (ElasticsearchNoAliasException $exception) {
             throw new ElasticsearchIndexException(sprintf(
                 'Can\'t found any index with alias "%s". You have to migrate elasticsearch structure first.',
-                $indexDefinition->getIndexAlias()
+                $indexDefinition->getIndexAlias(),
             ));
         }
 
         $output->writeln(sprintf(
             'Exporting changed data of "%s" on domain "%s"',
             $indexDefinition->getIndexName(),
-            $indexDefinition->getDomainId()
+            $indexDefinition->getDomainId(),
         ));
 
         $progressBar = $this->progressBarFactory->create(
             $output,
-            $index->getChangedCount($indexDefinition->getDomainId())
+            $index->getChangedCount($indexDefinition->getDomainId()),
         );
 
         $lastProcessedId = 0;
@@ -175,7 +175,7 @@ class IndexFacade
             $changedIdsBatch = $index->getChangedIdsForBatch(
                 $indexDefinition->getDomainId(),
                 $lastProcessedId,
-                $index->getExportBatchSize()
+                $index->getExportBatchSize(),
             );
 
             if ($changedIdsBatch === []) {
@@ -269,7 +269,7 @@ class IndexFacade
             $output->writeln(sprintf(
                 'Index "%s" does not exist on domain "%s"',
                 $indexDefinition->getIndexName(),
-                $indexDefinition->getDomainId()
+                $indexDefinition->getDomainId(),
             ));
             $this->create($indexDefinition, $output);
         }
@@ -287,7 +287,7 @@ class IndexFacade
             $output->writeln(sprintf(
                 'Index "%s" was not created on domain "%s" because it already exists',
                 $indexDefinition->getIndexName(),
-                $indexDefinition->getDomainId()
+                $indexDefinition->getDomainId(),
             ));
         }
     }
@@ -299,7 +299,7 @@ class IndexFacade
     protected function resolveExistingIndexName(IndexDefinition $indexDefinition): string
     {
         return $this->indexRepository->findCurrentIndexNameForAlias(
-            $indexDefinition->getIndexAlias()
+            $indexDefinition->getIndexAlias(),
         );
     }
 
@@ -312,7 +312,7 @@ class IndexFacade
         $output->writeln(sprintf(
             'Creating alias for index "%s" on domain "%s"',
             $indexDefinition->getIndexName(),
-            $indexDefinition->getDomainId()
+            $indexDefinition->getDomainId(),
         ));
 
         $this->indexRepository->createAlias($indexDefinition);

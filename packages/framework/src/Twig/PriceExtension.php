@@ -30,7 +30,7 @@ class PriceExtension extends AbstractExtension
         protected readonly Domain $domain,
         protected readonly Localization $localization,
         protected readonly CurrencyRepositoryInterface $intlCurrencyRepository,
-        protected readonly CurrencyFormatterFactory $currencyFormatterFactory
+        protected readonly CurrencyFormatterFactory $currencyFormatterFactory,
     ) {
     }
 
@@ -42,37 +42,37 @@ class PriceExtension extends AbstractExtension
         return [
             new TwigFilter(
                 'price',
-                [$this, 'priceFilter']
+                [$this, 'priceFilter'],
             ),
             new TwigFilter(
                 'priceText',
                 [$this, 'priceTextFilter'],
-                ['is_safe' => ['html']]
+                ['is_safe' => ['html']],
             ),
             new TwigFilter(
                 'priceTextWithCurrencyByCurrencyIdAndLocale',
                 [$this, 'priceTextWithCurrencyByCurrencyIdAndLocaleFilter'],
-                ['is_safe' => ['html']]
+                ['is_safe' => ['html']],
             ),
             new TwigFilter(
                 'priceWithCurrency',
                 [$this, 'priceWithCurrencyFilter'],
-                ['is_safe' => ['html']]
+                ['is_safe' => ['html']],
             ),
             new TwigFilter(
                 'priceWithCurrencyAdmin',
                 [$this, 'priceWithCurrencyAdminFilter'],
-                ['is_safe' => ['html']]
+                ['is_safe' => ['html']],
             ),
             new TwigFilter(
                 'priceWithCurrencyByDomainId',
                 [$this, 'priceWithCurrencyByDomainIdFilter'],
-                ['is_safe' => ['html']]
+                ['is_safe' => ['html']],
             ),
             new TwigFilter(
                 'priceWithCurrencyByCurrencyId',
                 [$this, 'priceWithCurrencyByCurrencyIdFilter'],
-                ['is_safe' => ['html']]
+                ['is_safe' => ['html']],
             ),
         ];
     }
@@ -86,21 +86,21 @@ class PriceExtension extends AbstractExtension
             new TwigFunction(
                 'currencySymbolByDomainId',
                 [$this, 'getCurrencySymbolByDomainId'],
-                ['is_safe' => ['html']]
+                ['is_safe' => ['html']],
             ),
             new TwigFunction(
                 'currencySymbolDefault',
                 [$this, 'getDefaultCurrencySymbol'],
-                ['is_safe' => ['html']]
+                ['is_safe' => ['html']],
             ),
             new TwigFunction(
                 'currencySymbolByCurrencyId',
                 [$this, 'getCurrencySymbolByCurrencyId'],
-                ['is_safe' => ['html']]
+                ['is_safe' => ['html']],
             ),
             new TwigFunction(
                 'currencyCode',
-                [$this, 'getCurrencyCodeByDomainId']
+                [$this, 'getCurrencyCodeByDomainId'],
             ),
         ];
     }
@@ -205,7 +205,7 @@ class PriceExtension extends AbstractExtension
         $currencyFormatter = $this->currencyFormatterFactory->createByLocaleAndCurrency($locale, $currency);
         $intlCurrency = $this->intlCurrencyRepository->get(
             $currency->getCode(),
-            $locale
+            $locale,
         );
 
         return $currencyFormatter->format($price->getAmount(), $intlCurrency->getCurrencyCode());

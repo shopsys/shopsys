@@ -74,7 +74,7 @@ final class MonorepoUpgradeFileManipulator
             self::FROM_TO_NEXT_DEV_PATTERN,
             function ($match) use ($version, $newHeadline) {
                 return $newHeadline . $match['start'] . $version->getOriginalString() . $match['end'];
-            }
+            },
         );
     }
 
@@ -106,7 +106,7 @@ final class MonorepoUpgradeFileManipulator
             self::FROM_TO_NEXT_DEV_LINK_PATTERN,
             function (array $match) use ($newFooterLink, $version) {
                 return $newFooterLink . $match['start'] . $version->getOriginalString() . $match['middle'] . $version->getOriginalString() . PHP_EOL;
-            }
+            },
         );
     }
 
@@ -120,7 +120,7 @@ final class MonorepoUpgradeFileManipulator
         return sprintf(
             '## [From %s to %s]' . PHP_EOL . PHP_EOL,
             $version->getOriginalString(),
-            $nextDevelopmentVersionString
+            $nextDevelopmentVersionString,
         );
     }
 
@@ -138,7 +138,7 @@ final class MonorepoUpgradeFileManipulator
             $nextDevelopmentVersionString,
             $this->monorepoPackageName,
             $version->getOriginalString(),
-            $initialBranchName
+            $initialBranchName,
         );
     }
 }

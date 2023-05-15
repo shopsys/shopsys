@@ -38,7 +38,7 @@ class FeedExport
         protected readonly EntityManagerInterface $em,
         protected readonly string $feedFilepath,
         protected readonly string $feedLocalFilepath,
-        protected ?int $lastSeekId = null
+        protected ?int $lastSeekId = null,
     ) {
     }
 
@@ -47,7 +47,7 @@ class FeedExport
         if ($this->filesystem->has($this->getTemporaryFilepath())) {
             $this->mountManager->move(
                 'main://' . $this->getTemporaryFilepath(),
-                'local://' . TransformString::removeDriveLetterFromPath($this->getTemporaryLocalFilepath())
+                'local://' . TransformString::removeDriveLetterFromPath($this->getTemporaryLocalFilepath()),
             );
         } else {
             $this->localFilesystem->touch($this->getTemporaryLocalFilepath());
@@ -58,7 +58,7 @@ class FeedExport
     {
         $this->mountManager->move(
             'local://' . TransformString::removeDriveLetterFromPath($this->getTemporaryLocalFilepath()),
-            'main://' . $this->getTemporaryFilepath()
+            'main://' . $this->getTemporaryFilepath(),
         );
     }
 
@@ -130,7 +130,7 @@ class FeedExport
 
         $this->mountManager->move(
             'local://' . TransformString::removeDriveLetterFromPath($this->getTemporaryLocalFilepath()),
-            'main://' . $this->feedFilepath
+            'main://' . $this->feedFilepath,
         );
 
         $this->finished = true;

@@ -42,7 +42,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
         protected readonly ListedProductViewFactory $listedProductViewFactory,
         protected readonly ImageViewFacadeInterface $imageViewFacade,
         protected readonly ProductActionViewFactory $productActionViewFactory,
-        protected readonly ProductElasticsearchProvider $productElasticsearchProvider
+        protected readonly ProductElasticsearchProvider $productElasticsearchProvider,
     ) {
     }
 
@@ -54,7 +54,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
     {
         $topProducts = $this->topProductFacade->getAllOfferedProducts(
             $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
 
         $topProducts = array_slice($topProducts, 0, $limit);
@@ -69,7 +69,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
     {
         $topProducts = $this->topProductFacade->getAllOfferedProducts(
             $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
 
         return $this->listedProductViewFactory->createFromProducts($topProducts);
@@ -89,7 +89,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
         }
 
         return $this->listedProductViewFactory->createFromProductsArray(
-            $this->productElasticsearchProvider->getSellableProductArrayByIds($productArray['accessories'], $limit)
+            $this->productElasticsearchProvider->getSellableProductArrayByIds($productArray['accessories'], $limit),
         );
     }
 
@@ -106,7 +106,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
         }
 
         return $this->listedProductViewFactory->createFromProductsArray(
-            $this->productElasticsearchProvider->getSellableProductArrayByIds($productArray['accessories'])
+            $this->productElasticsearchProvider->getSellableProductArrayByIds($productArray['accessories']),
         );
     }
 
@@ -125,7 +125,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
             $orderingModeId,
             $page,
             $limit,
-            $categoryId
+            $categoryId,
         );
 
         return $this->createPaginationResultWithArray($paginationResult);
@@ -146,7 +146,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
             $filterData,
             $orderingModeId,
             $page,
-            $limit
+            $limit,
         );
 
         return $this->createPaginationResultWithArray($paginationResult);
@@ -165,7 +165,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
             $orderingModeId,
             $page,
             $limit,
-            $brandId
+            $brandId,
         );
 
         return $this->createPaginationResultWithArray($paginationResult);
@@ -181,7 +181,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
             $paginationResult->getPage(),
             $paginationResult->getPageSize(),
             $paginationResult->getTotalCount(),
-            $this->createFromArray($paginationResult->getResults())
+            $this->createFromArray($paginationResult->getResults()),
         );
     }
 
@@ -193,7 +193,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
     {
         $imageViews = $this->imageViewFacade->getMainImagesByEntityIds(
             Product::class,
-            array_column($productsArray, 'id')
+            array_column($productsArray, 'id'),
         );
 
         $listedProductViews = [];
@@ -206,7 +206,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
                     $productArray,
                     $imageViews[$productId],
                     $this->productActionViewFactory->createFromArray($productArray),
-                    $this->currentCustomerUser->getPricingGroup()
+                    $this->currentCustomerUser->getPricingGroup(),
                 );
             } catch (NoProductPriceForPricingGroupException $exception) {
                 continue;

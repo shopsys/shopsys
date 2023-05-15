@@ -41,7 +41,7 @@ final class GenerateApiaryBlueprintReleaseWorker extends AbstractShopsysReleaseW
             $this->commit('generated Apiary.io blueprint');
 
             $this->confirm(
-                'Confirm that you checked generated blueprint and the changes are committed'
+                'Confirm that you checked generated blueprint and the changes are committed',
             );
         } else {
             $this->symfonyStyle->success('There are no changes in blueprint');

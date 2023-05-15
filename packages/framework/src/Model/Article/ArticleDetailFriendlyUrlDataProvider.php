@@ -19,7 +19,7 @@ class ArticleDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInt
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory
+        protected readonly FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory,
     ) {
     }
 
@@ -37,7 +37,7 @@ class ArticleDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInt
                 FriendlyUrl::class,
                 'f',
                 Join::WITH,
-                'a.id = f.entityId AND f.routeName = :routeName AND f.domainId = a.domainId'
+                'a.id = f.entityId AND f.routeName = :routeName AND f.domainId = a.domainId',
             )
             ->setParameter('routeName', static::ROUTE_NAME)
             ->where('f.entityId IS NULL AND a.domainId = :domainId')

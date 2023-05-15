@@ -55,7 +55,7 @@ abstract class AbstractTranslatableEntity extends AbstractTranslatable
         if (!$locale) {
             throw new ImplicitLocaleNotSetException(
                 $this,
-                $this->id
+                $this->id,
             );
         }
 

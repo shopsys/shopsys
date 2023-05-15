@@ -21,7 +21,7 @@ class OrderStatusFacade
         protected readonly OrderStatusRepository $orderStatusRepository,
         protected readonly OrderRepository $orderRepository,
         protected readonly MailTemplateFacade $mailTemplateFacade,
-        protected readonly OrderStatusFactoryInterface $orderStatusFactory
+        protected readonly OrderStatusFactoryInterface $orderStatusFactory,
     ) {
     }
 
@@ -36,7 +36,7 @@ class OrderStatusFacade
         $this->em->flush();
 
         $this->mailTemplateFacade->createMailTemplateForAllDomains(
-            OrderMail::getMailTemplateNameByStatus($orderStatus)
+            OrderMail::getMailTemplateNameByStatus($orderStatus),
         );
 
         return $orderStatus;

@@ -23,14 +23,14 @@ class DirectoryStructureCreatorTest extends TestCase
                 'entityClass1',
                 [],
                 ['sizeName1_1' => new ImageSizeConfig('sizeName1_1', null, null, false, null, [])],
-                []
+                [],
             ),
             new ImageEntityConfig(
                 'entityName2',
                 'entityClass2',
                 ['type' => ['sizeName2_1' => new ImageSizeConfig('sizeName2_1', null, null, false, null, [])]],
                 [],
-                []
+                [],
             ),
         ];
         $imageConfig = new ImageConfig($imageEntityConfigByClass, new EntityNameResolver([]));
@@ -39,7 +39,7 @@ class DirectoryStructureCreatorTest extends TestCase
             ->method('createDirectory')
             ->withConsecutive(
                 ['imageDir/entityName1/sizeName1_1/'],
-                ['imageDir/entityName2/type/sizeName2_1/']
+                ['imageDir/entityName2/type/sizeName2_1/'],
             );
         $imageLocator = new ImageLocator($imageDir, $imageConfig, $filesystemMock);
         $creator = new DirectoryStructureCreator(
@@ -47,7 +47,7 @@ class DirectoryStructureCreatorTest extends TestCase
             $domainImageDir,
             $imageConfig,
             $imageLocator,
-            $filesystemMock
+            $filesystemMock,
         );
         $creator->makeImageDirectories();
     }

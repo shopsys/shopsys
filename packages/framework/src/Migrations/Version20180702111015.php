@@ -24,7 +24,7 @@ class Version20180702111015 extends AbstractMigration
         $this->sql(
             'INSERT INTO administrators (id, username, real_name, password, login_token, email, superadmin) VALUES '
             . '(1, \'superadmin\', \'superadmin\', \'$2y$12$ppwYj/By0pDkiLlE.ssf6uuwCvtfdDfsJJNr84fU59HmxSfj0luSC\', \'\', \'no-reply@shopsys.com\', true),'
-            . '(2, \'admin\', \'admin\', \'$2y$12$tRU86hi0UxWEMQzP08nl..hKiClF.Pj3D1oIcKDL.aA7ph2Vomwh2\', \'\', \'no-reply@shopsys.com\', false)'
+            . '(2, \'admin\', \'admin\', \'$2y$12$tRU86hi0UxWEMQzP08nl..hKiClF.Pj3D1oIcKDL.aA7ph2Vomwh2\', \'\', \'no-reply@shopsys.com\', false)',
         );
 
         $this->sql('ALTER SEQUENCE administrators_id_seq RESTART WITH 3');

@@ -77,7 +77,7 @@ class TransportsTest extends GraphQlTestCase
                             'You will be welcomed by friendly staff!',
                             [],
                             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                            $this->getLocaleForFirstDomain()
+                            $this->getLocaleForFirstDomain(),
                         ),
                         'instruction' => null,
                         'position' => 2,

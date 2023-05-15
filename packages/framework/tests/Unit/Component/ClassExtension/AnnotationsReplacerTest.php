@@ -98,7 +98,7 @@ class AnnotationsReplacerTest extends TestCase
         return [
             [$reflectionClass->getMethod('returnsFrameworkCategoryFacade'), '\App\Model\Category\CategoryFacade'],
             [$reflectionClass->getMethod(
-                'returnsFrameworkCategoryFacadeOrNull'
+                'returnsFrameworkCategoryFacadeOrNull',
             ), '\App\Model\Category\CategoryFacade|null'],
             [$reflectionClass->getMethod('returnsFrameworkArticleDataArray'), '\App\Model\Article\ArticleData[]'],
             [$reflectionClass->getMethod('returnsInt'), 'int'],

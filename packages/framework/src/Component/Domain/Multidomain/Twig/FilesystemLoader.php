@@ -18,7 +18,7 @@ class FilesystemLoader extends BaseFilesystemLoader
     public function __construct(
         array $paths = [],
         ?string $rootPath = null,
-        protected readonly ?Domain $domain = null
+        protected readonly ?Domain $domain = null,
     ) {
         parent::__construct($paths, $rootPath);
 
@@ -69,7 +69,7 @@ class FilesystemLoader extends BaseFilesystemLoader
                 $multidesignTemplateName = preg_replace(
                     '/^(.*)(\.[^\.]*\.twig)$/',
                     '$1.' . $designId . '$2',
-                    $templateName
+                    $templateName,
                 );
 
                 try {
@@ -78,7 +78,7 @@ class FilesystemLoader extends BaseFilesystemLoader
                     if (strpos($loaderException->getMessage(), 'Unable to find template') !== 0) {
                         $message = sprintf(
                             'Unexpected exception when trying to load multidesign template `%s`',
-                            $multidesignTemplateName
+                            $multidesignTemplateName,
                         );
 
                         throw new LoaderError($message, -1, null, $loaderException);

@@ -22,7 +22,7 @@ class SitemapRepository
     public function __construct(
         protected readonly ProductRepository $productRepository,
         protected readonly CategoryRepository $categoryRepository,
-        protected readonly ArticleRepository $articleRepository
+        protected readonly ArticleRepository $articleRepository,
     ) {
     }
 
@@ -43,7 +43,7 @@ class SitemapRepository
                 'fu.routeName = :productDetailRouteName
                 AND fu.entityId = p.id
                 AND fu.domainId = :domainId
-                AND fu.main = TRUE'
+                AND fu.main = TRUE',
             )
             ->setParameter('productDetailRouteName', 'front_product_detail')
             ->setParameter('domainId', $domainConfig->getId());
@@ -67,7 +67,7 @@ class SitemapRepository
                 'fu.routeName = :productListRouteName
                 AND fu.entityId = c.id
                 AND fu.domainId = :domainId
-                AND fu.main = TRUE'
+                AND fu.main = TRUE',
             )
             ->setParameter('productListRouteName', 'front_product_list')
             ->setParameter('domainId', $domainConfig->getId());
@@ -91,7 +91,7 @@ class SitemapRepository
                 'fu.routeName = :articleDetailRouteName
                 AND fu.entityId = a.id
                 AND fu.domainId = :domainId
-                AND fu.main = TRUE'
+                AND fu.main = TRUE',
             )
             ->setParameter('articleDetailRouteName', 'front_article_detail')
             ->setParameter('domainId', $domainConfig->getId());

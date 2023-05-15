@@ -30,7 +30,7 @@ final class OrmJoinColumnRequireNullableFixer implements FixerInterface
  * @ORM\ManyToOne(targetEntity="StdObject")
  */
 private $foo;
-SAMPLE
+SAMPLE,
             ), new CodeSample(
                 <<<'SAMPLE'
 /**
@@ -38,8 +38,8 @@ SAMPLE
  * @ORM\OneToOne(targetEntity="StdObject")
  */
 private $foo;
-SAMPLE
-            )]
+SAMPLE,
+            )],
         );
     }
 
@@ -164,14 +164,14 @@ SAMPLE
             $firstLine->setContent(preg_replace(
                 '~(@ORM\\\JoinColumn\\()~',
                 '$1nullable=false, ',
-                $firstLine->getContent()
+                $firstLine->getContent(),
             ));
         } else {
             $matches = null;
             preg_match_all('~\\s*\*~', $joinColumnAnnotation->getContent(), $matches);
             $newText = "\n" . $matches[0][0] . '     nullable=false,';
             $firstLine->setContent(
-                preg_replace('~(@ORM\\\JoinColumn\\()~', '$1' . $newText, $firstLine->getContent())
+                preg_replace('~(@ORM\\\JoinColumn\\()~', '$1' . $newText, $firstLine->getContent()),
             );
         }
     }

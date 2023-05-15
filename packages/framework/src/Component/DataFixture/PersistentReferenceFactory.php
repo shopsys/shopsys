@@ -22,7 +22,7 @@ class PersistentReferenceFactory implements PersistentReferenceFactoryInterface
     public function create(
         string $referenceName,
         string $entityName,
-        int $entityId
+        int $entityId,
     ): PersistentReference {
         $classData = $this->entityNameResolver->resolve(PersistentReference::class);
 

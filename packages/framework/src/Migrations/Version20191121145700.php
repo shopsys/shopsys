@@ -21,7 +21,7 @@ class Version20191121145700 extends AbstractMigration
                 'SELECT COUNT(*) FROM setting_values WHERE name = \'contactFormMainText\' AND domain_id = :domainId;',
                 [
                     'domainId' => $domainId,
-                ]
+                ],
             )->fetchOne();
 
             if ($contactFormMainTextCount > 0) {
@@ -33,7 +33,7 @@ class Version20191121145700 extends AbstractMigration
                 [
                     'domainId' => $domainId,
                     'text' => 'Hi there, our team is happy and ready to answer your question. Please fill out the form below and we will get in touch as soon as possible.',
-                ]
+                ],
             );
         }
     }

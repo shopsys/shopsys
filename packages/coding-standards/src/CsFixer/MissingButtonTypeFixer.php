@@ -24,7 +24,7 @@ final class MissingButtonTypeFixer implements FixerInterface
                 new CodeSample('<button/>'),
                 new CodeSample('<button>label</button>'),
                 new CodeSample("<button\n    class=\"btn\"\n/>"),
-            ]
+            ],
         );
     }
 
@@ -62,7 +62,7 @@ final class MissingButtonTypeFixer implements FixerInterface
 
                 return $beginning . $attributes . $end;
             },
-            $tokens->generateCode()
+            $tokens->generateCode(),
         );
 
         $tokens->setCode($code);

@@ -39,7 +39,7 @@ class ProductRenameRedirectPreviousUrlTest extends ApplicationTestCase
         $previousFriendlyUrlSlug = $this->friendlyUrlFacade->findMainFriendlyUrl(
             Domain::FIRST_DOMAIN_ID,
             'front_product_detail',
-            self::TESTED_PRODUCT_ID
+            self::TESTED_PRODUCT_ID,
         )->getSlug();
 
         $productData = $this->productDataFactory->createFromProduct($product);
@@ -54,7 +54,7 @@ class ProductRenameRedirectPreviousUrlTest extends ApplicationTestCase
         $firstDomainUrl = preg_replace(
             '#^https?://#',
             '',
-            $firstDomainUrl
+            $firstDomainUrl,
         );
 
         $client = self::getCurrentClient();

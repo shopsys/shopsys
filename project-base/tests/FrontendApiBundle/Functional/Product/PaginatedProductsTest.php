@@ -56,7 +56,7 @@ class PaginatedProductsTest extends GraphQlTestCase
                         'ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue',
                         [],
                         Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                        $firstDomainLocale
+                        $firstDomainLocale,
                     )],
                     ['name' => t('YENKEE YSP 1005WH white', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
                     ['name' => t('Xtreamer SW5', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
@@ -73,7 +73,7 @@ class PaginatedProductsTest extends GraphQlTestCase
                         'Aquila Aquagym non-carbonated spring water',
                         [],
                         Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                        $firstDomainLocale
+                        $firstDomainLocale,
                     )],
                     ['name' => t('Fluorescent laces, green', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
                     ['name' => t('PRIMECOOLER PC-AD2 3D glasses', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],

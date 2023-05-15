@@ -111,7 +111,7 @@ class UploadedFile implements EntityFileUploadInterface
                 false,
                 $this->entityName,
                 null,
-                FileNamingConvention::TYPE_ID
+                FileNamingConvention::TYPE_ID,
             ),
         ];
     }
@@ -255,8 +255,8 @@ class UploadedFile implements EntityFileUploadInterface
                     'Entity "%s" with ID "%s" does not own file with ID "%s"',
                     $entityName,
                     $entityId,
-                    $this->id
-                )
+                    $this->id,
+                ),
             );
         }
     }

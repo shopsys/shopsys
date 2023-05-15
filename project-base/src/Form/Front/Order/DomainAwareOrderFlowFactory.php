@@ -25,7 +25,7 @@ class DomainAwareOrderFlowFactory implements OrderFlowFactoryInterface
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly RequestStack $requestStack,
         private readonly FormFactoryInterface $formFactory,
-        private readonly DataManager $dataManager
+        private readonly DataManager $dataManager,
     ) {
     }
 

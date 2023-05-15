@@ -35,7 +35,7 @@ class OrderDataFactory
         protected readonly TransportFacade $transportFacade,
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly CountryFacade $countryFacade,
-        protected readonly ProductFacade $productFacade
+        protected readonly ProductFacade $productFacade,
     ) {
     }
 
@@ -86,12 +86,12 @@ class OrderDataFactory
 
         $cloneOrderData->payment = $this->paymentFacade->getEnabledOnDomainByUuid(
             $input['payment']['uuid'],
-            $this->domain->getId()
+            $this->domain->getId(),
         );
 
         $cloneOrderData->transport = $this->transportFacade->getEnabledOnDomainByUuid(
             $input['transport']['uuid'],
-            $this->domain->getId()
+            $this->domain->getId(),
         );
 
         $cloneOrderData->currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());

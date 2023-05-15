@@ -30,7 +30,7 @@ abstract class AbstractElasticsearchIndexCommand extends Command
         protected readonly IndexRegistry $indexRegistry,
         protected readonly IndexFacade $indexFacade,
         protected readonly IndexDefinitionLoader $indexDefinitionLoader,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
         parent::__construct();
     }
@@ -41,7 +41,7 @@ abstract class AbstractElasticsearchIndexCommand extends Command
             ->addArgument(
                 self::ARGUMENT_INDEX_NAME,
                 InputArgument::OPTIONAL,
-                $this->getArgumentNameDescription()
+                $this->getArgumentNameDescription(),
             )
             ->setDescription($this->getCommandDescription());
     }
@@ -88,7 +88,7 @@ abstract class AbstractElasticsearchIndexCommand extends Command
         foreach ($this->domain->getAll() as $domainConfig) {
             $this->executeCommand(
                 $this->indexDefinitionLoader->getIndexDefinition($index::getName(), $domainConfig->getId()),
-                $output
+                $output,
             );
         }
     }

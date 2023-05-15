@@ -57,7 +57,7 @@ class OrderPaymentFormType extends AbstractType
             ->add(
                 $builder->create('setPricesManually', CheckboxType::class, [
                     'property_path' => 'usePriceCalculation',
-                ])->addModelTransformer(new InverseTransformer())
+                ])->addModelTransformer(new InverseTransformer()),
             )
             ->addModelTransformer(new CopyTotalPricesOfOrderItemTransformer());
     }

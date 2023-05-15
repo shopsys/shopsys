@@ -20,7 +20,7 @@ class LoginListener
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly OrderFlowFacade $orderFlowFacade,
-        protected readonly AdministratorActivityFacade $administratorActivityFacade
+        protected readonly AdministratorActivityFacade $administratorActivityFacade,
     ) {
     }
 
@@ -48,7 +48,7 @@ class LoginListener
         if ($user instanceof Administrator) {
             $this->administratorActivityFacade->create(
                 $user,
-                $event->getRequest()->getClientIp()
+                $event->getRequest()->getClientIp(),
             );
         }
 

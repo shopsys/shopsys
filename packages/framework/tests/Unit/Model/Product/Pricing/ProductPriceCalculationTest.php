@@ -65,7 +65,7 @@ class ProductPriceCalculationTest extends TestCase
             $pricingSettingMock,
             $productManualInputPriceRepositoryMock,
             $productRepositoryMock,
-            $currencyFacadeMock
+            $currencyFacadeMock,
         );
     }
 
@@ -73,7 +73,7 @@ class ProductPriceCalculationTest extends TestCase
     {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
             PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,
-            []
+            [],
         );
 
         $pricingGroupData = new PricingGroupData();
@@ -92,7 +92,7 @@ class ProductPriceCalculationTest extends TestCase
     {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
             PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,
-            []
+            [],
         );
 
         $this->expectException(InvalidArgumentException::class);
@@ -108,7 +108,7 @@ class ProductPriceCalculationTest extends TestCase
     {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
             PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,
-            []
+            [],
         );
 
         $this->assertEquals($minimumPrice, $productPriceCalculation->getMinimumPriceByPriceWithoutVat($prices));
@@ -150,7 +150,7 @@ class ProductPriceCalculationTest extends TestCase
     {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
             PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,
-            []
+            [],
         );
 
         $this->assertSame($arePricesDifferent, $productPriceCalculation->arePricesDifferent($prices));
@@ -186,7 +186,7 @@ class ProductPriceCalculationTest extends TestCase
     {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
             PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,
-            []
+            [],
         );
 
         $this->expectException(InvalidArgumentException::class);

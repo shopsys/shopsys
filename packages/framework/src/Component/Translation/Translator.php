@@ -32,7 +32,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
         protected readonly TranslatorInterface|LocaleAwareInterface|DataCollectorTranslator $originalTranslator,
         protected readonly TranslatorBagInterface|DataCollectorTranslator $originalTranslatorBag,
         protected readonly TranslatorInterface|LocaleAwareInterface|IdentityTranslator $identityTranslator,
-        protected readonly MessageIdNormalizer $messageIdNormalizer
+        protected readonly MessageIdNormalizer $messageIdNormalizer,
     ) {
     }
 
@@ -54,14 +54,14 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
                     $normalizedId,
                     $parameters,
                     $resolvedDomain,
-                    $resolvedLocale
+                    $resolvedLocale,
                 );
             } else {
                 $message = $this->identityTranslator->trans(
                     $normalizedId,
                     $parameters,
                     $resolvedDomain,
-                    $resolvedLocale
+                    $resolvedLocale,
                 );
             }
         } else {
@@ -133,7 +133,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface, LocaleA
         string $id,
         array $parameters = [],
         ?string $domain = null,
-        ?string $locale = null
+        ?string $locale = null,
     ): string {
         if (self::$self === null) {
             throw new InstanceNotInjectedException();

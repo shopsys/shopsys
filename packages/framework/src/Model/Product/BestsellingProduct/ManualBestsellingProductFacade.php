@@ -17,7 +17,7 @@ class ManualBestsellingProductFacade
         protected readonly EntityManagerInterface $em,
         protected readonly ManualBestsellingProductRepository $manualBestsellingProductRepository,
         protected readonly CachedBestsellingProductFacade $cachedBestsellingProductFacade,
-        protected readonly ManualBestsellingProductFactoryInterface $manualBestsellingProductFactory
+        protected readonly ManualBestsellingProductFactoryInterface $manualBestsellingProductFactory,
     ) {
     }
 
@@ -41,7 +41,7 @@ class ManualBestsellingProductFacade
                     $domainId,
                     $category,
                     $product,
-                    $position
+                    $position,
                 );
                 $this->em->persist($manualBestsellingProduct);
             }

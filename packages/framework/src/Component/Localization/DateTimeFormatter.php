@@ -13,7 +13,7 @@ class DateTimeFormatter implements DateTimeFormatterInterface
      */
     public function __construct(
         protected readonly DateTimeFormatPatternRepository $customDateTimeFormatPatternRepository,
-        protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider
+        protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
     ) {
     }
 
@@ -32,7 +32,7 @@ class DateTimeFormatter implements DateTimeFormatterInterface
             $timeType,
             $this->displayTimeZoneProvider->getDisplayTimeZone(),
             null,
-            $this->getCustomPattern($locale, $dateType, $timeType)
+            $this->getCustomPattern($locale, $dateType, $timeType),
         );
 
         return $intlDateFormatter->format($value);
@@ -49,7 +49,7 @@ class DateTimeFormatter implements DateTimeFormatterInterface
         $dateTimePattern = $this->customDateTimeFormatPatternRepository->findDateTimePattern(
             $locale,
             $dateType,
-            $timeType
+            $timeType,
         );
 
         if ($dateTimePattern !== null) {

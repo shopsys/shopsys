@@ -22,7 +22,7 @@ class ProductFacade
     public function __construct(
         protected readonly ProductRepository $productRepository,
         protected readonly FilterQueryFactory $filterQueryFactory,
-        protected readonly ProductElasticsearchRepository $productElasticsearchRepository
+        protected readonly ProductElasticsearchRepository $productElasticsearchRepository,
     ) {
     }
 
@@ -66,13 +66,13 @@ class ProductFacade
         int $offset,
         string $orderingModeId,
         ProductFilterData $productFilterData,
-        string $search
+        string $search,
     ): array {
         $filterQuery = $this->filterQueryFactory->createWithProductFilterData(
             $productFilterData,
             $orderingModeId,
             1,
-            $limit
+            $limit,
         )->setFrom($offset);
 
         if ($search !== '') {
@@ -99,14 +99,14 @@ class ProductFacade
         int $offset,
         string $orderingModeId,
         ProductFilterData $productFilterData,
-        string $search
+        string $search,
     ): array {
         $filterQuery = $this->filterQueryFactory->createListableProductsByCategoryId(
             $productFilterData,
             $orderingModeId,
             1,
             $limit,
-            $category->getId()
+            $category->getId(),
         )->setFrom($offset);
 
         if ($search !== '') {
@@ -127,7 +127,7 @@ class ProductFacade
     public function getFilteredProductsByCategoryCount(
         Category $category,
         ProductFilterData $productFilterData,
-        string $search
+        string $search,
     ): int {
         $filterQuery = $this->filterQueryFactory->createListableWithProductFilter($productFilterData)
             ->filterByCategory([$category->getId()]);
@@ -154,14 +154,14 @@ class ProductFacade
         int $offset,
         string $orderingModeId,
         ProductFilterData $productFilterData,
-        string $search
+        string $search,
     ): array {
         $filterQuery = $this->filterQueryFactory->createListableProductsByBrandId(
             $productFilterData,
             $orderingModeId,
             1,
             $limit,
-            $brand->getId()
+            $brand->getId(),
         )->setFrom($offset);
 
         if ($search !== '') {
@@ -182,7 +182,7 @@ class ProductFacade
     public function getFilteredProductsByBrandCount(
         Brand $brand,
         ProductFilterData $productFilterData,
-        string $search
+        string $search,
     ): int {
         $filterQuery = $this->filterQueryFactory->createListableWithProductFilter($productFilterData)
             ->filterByBrands([$brand->getId()]);

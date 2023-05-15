@@ -28,7 +28,7 @@ class HeurekaFeedItemFactory
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         HeurekaProductDataBatchLoader $heurekaProductDataBatchLoader,
         protected readonly HeurekaCategoryFacade $heurekaCategoryFacade,
-        protected readonly CategoryFacade $categoryFacade
+        protected readonly CategoryFacade $categoryFacade,
     ) {
         $this->productDataBatchLoader = $heurekaProductDataBatchLoader;
     }
@@ -55,7 +55,7 @@ class HeurekaFeedItemFactory
             $product->getEan(),
             $product->getCalculatedAvailability()->getDispatchTime(),
             $this->getHeurekaCategoryFullName($product, $domainConfig),
-            $this->productDataBatchLoader->getProductCpc($product, $domainConfig)
+            $this->productDataBatchLoader->getProductCpc($product, $domainConfig),
         );
     }
 
@@ -80,7 +80,7 @@ class HeurekaFeedItemFactory
         return $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
             $product,
             $domainConfig->getId(),
-            null
+            null,
         );
     }
 
@@ -108,7 +108,7 @@ class HeurekaFeedItemFactory
     {
         if (!array_key_exists($categoryId, $this->heurekaCategoryFullNamesCache)) {
             $this->heurekaCategoryFullNamesCache[$categoryId] = $this->findHeurekaCategoryFullNameByCategoryId(
-                $categoryId
+                $categoryId,
             );
         }
 

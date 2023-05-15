@@ -39,7 +39,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         private readonly OrderPreviewFactory $orderPreviewFactory,
         OrderDataFactoryInterface $orderDataFactory,
         private readonly Domain $domain,
-        private readonly CurrencyFacade $currencyFacade
+        private readonly CurrencyFacade $currencyFacade,
     ) {
         $this->orderDataFactory = $orderDataFactory;
     }
@@ -70,7 +70,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain(
             'no-reply@shopsys.com',
-            $domainId
+            $domainId,
         );
         $orderData = $this->orderDataFactory->create();
         $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
@@ -94,7 +94,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
                 ProductDataFixture::PRODUCT_PREFIX . '9' => 2,
                 ProductDataFixture::PRODUCT_PREFIX . '10' => 3,
             ],
-            $customerUser
+            $customerUser,
         );
 
         $orderData = $this->orderDataFactory->create();
@@ -122,7 +122,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
                 ProductDataFixture::PRODUCT_PREFIX . '20' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '15' => 5,
             ],
-            $customerUser
+            $customerUser,
         );
 
         $orderData = $this->orderDataFactory->create();
@@ -147,7 +147,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
                 ProductDataFixture::PRODUCT_PREFIX . '4' => 6,
                 ProductDataFixture::PRODUCT_PREFIX . '11' => 1,
             ],
-            $customerUser
+            $customerUser,
         );
 
         $orderData = $this->orderDataFactory->create();
@@ -171,7 +171,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             [
                 ProductDataFixture::PRODUCT_PREFIX . '1' => 1,
             ],
-            $customerUser
+            $customerUser,
         );
 
         $orderData = $this->orderDataFactory->create();
@@ -198,7 +198,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
                 ProductDataFixture::PRODUCT_PREFIX . '3' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '1' => 2,
             ],
-            $customerUser
+            $customerUser,
         );
 
         $orderData = $this->orderDataFactory->create();
@@ -227,7 +227,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
                 ProductDataFixture::PRODUCT_PREFIX . '17' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '18' => 1,
             ],
-            $customerUser
+            $customerUser,
         );
 
         $orderData = $this->orderDataFactory->create();
@@ -252,7 +252,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
                 ProductDataFixture::PRODUCT_PREFIX . '7' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '8' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '12' => 2,
-            ]
+            ],
         );
 
         $orderData = $this->orderDataFactory->create();
@@ -278,7 +278,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
                 ProductDataFixture::PRODUCT_PREFIX . '1' => 6,
                 ProductDataFixture::PRODUCT_PREFIX . '2' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '12' => 1,
-            ]
+            ],
         );
 
         $orderData = $this->orderDataFactory->create();
@@ -302,7 +302,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             [
                 ProductDataFixture::PRODUCT_PREFIX . '9' => 3,
                 ProductDataFixture::PRODUCT_PREFIX . '13' => 2,
-            ]
+            ],
         );
 
         $orderData = $this->orderDataFactory->create();
@@ -325,7 +325,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             $orderData,
             [
                 ProductDataFixture::PRODUCT_PREFIX . '3' => 1,
-            ]
+            ],
         );
 
         $orderData = $this->orderDataFactory->create();
@@ -350,7 +350,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
                 ProductDataFixture::PRODUCT_PREFIX . '1' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '2' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '3' => 1,
-            ]
+            ],
         );
 
         $orderData = $this->orderDataFactory->create();
@@ -374,7 +374,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             [
                 ProductDataFixture::PRODUCT_PREFIX . '4' => 2,
                 ProductDataFixture::PRODUCT_PREFIX . '3' => 1,
-            ]
+            ],
         );
 
         $orderData = $this->orderDataFactory->create();
@@ -399,7 +399,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             [
                 ProductDataFixture::PRODUCT_PREFIX . '10' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '20' => 4,
-            ]
+            ],
         );
 
         $orderData = $this->orderDataFactory->create();
@@ -425,7 +425,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
                 ProductDataFixture::PRODUCT_PREFIX . '18' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '19' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '3' => 1,
-            ]
+            ],
         );
 
         $orderData = $this->orderDataFactory->create();
@@ -450,7 +450,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
                 ProductDataFixture::PRODUCT_PREFIX . '9' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '19' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '6' => 1,
-            ]
+            ],
         );
 
         $orderData = $this->orderDataFactory->create();
@@ -480,7 +480,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
                 ProductDataFixture::PRODUCT_PREFIX . '9' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '14' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '10' => 2,
-            ]
+            ],
         );
 
         $orderData = $this->orderDataFactory->create();
@@ -519,13 +519,13 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
                 ProductDataFixture::PRODUCT_PREFIX . '9' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '14' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '10' => 2,
-            ]
+            ],
         );
 
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain(
             'vitek@shopsys.com',
-            $domainId
+            $domainId,
         );
         $orderData = $this->orderDataFactory->create();
         $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
@@ -563,7 +563,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
                 ProductDataFixture::PRODUCT_PREFIX . '14' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '10' => 2,
             ],
-            $customerUser
+            $customerUser,
         );
     }
 
@@ -594,13 +594,13 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             $orderData,
             [
                 ProductDataFixture::PRODUCT_PREFIX . '14' => 1,
-            ]
+            ],
         );
 
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain(
             'no-reply.2@shopsys.com',
-            $domainId
+            $domainId,
         );
         $orderData = $this->orderDataFactory->create();
         $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
@@ -636,13 +636,13 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
                 ProductDataFixture::PRODUCT_PREFIX . '1' => 2,
                 ProductDataFixture::PRODUCT_PREFIX . '3' => 1,
             ],
-            $customerUser
+            $customerUser,
         );
 
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = $this->customerUserRepository->findCustomerUserByEmailAndDomain(
             'no-reply.7@shopsys.com',
-            $domainId
+            $domainId,
         );
         $orderData = $this->orderDataFactory->create();
         $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST);
@@ -666,7 +666,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
                 ProductDataFixture::PRODUCT_PREFIX . '2' => 2,
                 ProductDataFixture::PRODUCT_PREFIX . '4' => 4,
             ],
-            $customerUser
+            $customerUser,
         );
 
         $orderData = $this->orderDataFactory->create();
@@ -689,7 +689,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             $orderData,
             [
                 ProductDataFixture::PRODUCT_PREFIX . '3' => 10,
-            ]
+            ],
         );
     }
 
@@ -701,7 +701,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     private function createOrder(
         OrderData $orderData,
         array $products,
-        ?CustomerUser $customerUser = null
+        ?CustomerUser $customerUser = null,
     ) {
         $quantifiedProducts = [];
 
@@ -716,7 +716,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             $orderData->transport,
             $orderData->payment,
             $customerUser,
-            null
+            null,
         );
 
         /** @var \App\Model\Order\Order $order */

@@ -57,7 +57,7 @@ class SettingValueRepository
                 'toDomainId' => Types::INTEGER,
                 'fromDomainId' => Types::INTEGER,
                 'commonDomainId' => Types::INTEGER,
-            ]
+            ],
         );
     }
 }

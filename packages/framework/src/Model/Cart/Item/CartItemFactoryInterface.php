@@ -19,6 +19,6 @@ interface CartItemFactoryInterface
         Cart $cart,
         Product $product,
         int $quantity,
-        ?Money $watchedPrice
+        ?Money $watchedPrice,
     ): CartItem;
 }

@@ -10,7 +10,7 @@ class MailSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
     public function __construct(
-        protected readonly Setting $setting
+        protected readonly Setting $setting,
     ) {
     }
 

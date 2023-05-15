@@ -52,7 +52,7 @@ class DomainDataCreatorTest extends TestCase
             $pricingGroupDataFactoryMock,
             $pricingGroupFacadeMock,
             $vatDataFactoryMock,
-            $vatFacadeMock
+            $vatFacadeMock,
         );
         $newDomainsDataCreated = $domainDataCreator->createNewDomainsData();
 
@@ -124,7 +124,7 @@ class DomainDataCreatorTest extends TestCase
             $pricingGroupDataFactoryMock,
             $pricingGroupFacadeMock,
             $vatDataFactoryMock,
-            $vatFacadeMock
+            $vatFacadeMock,
         );
         $newDomainsDataCreated = $domainDataCreator->createNewDomainsData();
 
@@ -137,13 +137,13 @@ class DomainDataCreatorTest extends TestCase
             Domain::FIRST_DOMAIN_ID,
             'http://example.com:8080',
             'example',
-            'cs'
+            'cs',
         );
         $domainConfigWithNewLocale = new DomainConfig(
             Domain::SECOND_DOMAIN_ID,
             'http://example.com:8080',
             'example',
-            'en'
+            'en',
         );
         $domainConfigs = [
             $domainConfigWithDataCreated,
@@ -200,7 +200,7 @@ class DomainDataCreatorTest extends TestCase
             $pricingGroupDataFactoryMock,
             $pricingGroupFacadeMock,
             $vatDataFactoryMock,
-            $vatFacadeMock
+            $vatFacadeMock,
         );
 
         $domainDataCreator->createNewDomainsData();

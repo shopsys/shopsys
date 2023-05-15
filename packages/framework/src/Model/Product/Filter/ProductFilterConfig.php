@@ -14,7 +14,7 @@ class ProductFilterConfig
         protected readonly array $parameterChoices,
         protected readonly array $flagChoices,
         protected readonly array $brandChoices,
-        protected readonly PriceRange $priceRange
+        protected readonly PriceRange $priceRange,
     ) {
     }
 

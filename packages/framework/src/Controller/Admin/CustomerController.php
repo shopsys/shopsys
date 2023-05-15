@@ -58,7 +58,7 @@ class CustomerController extends AdminBaseController
         protected readonly LoginAsUserFacade $loginAsUserFacade,
         protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -86,7 +86,7 @@ class CustomerController extends AdminBaseController
                 [
                     'name' => $customerUser->getFullName(),
                     'url' => $this->generateUrl('admin_customer_edit', ['id' => $customerUser->getId()]),
-                ]
+                ],
             );
 
             return $this->redirectToRoute('admin_customer_list');
@@ -97,7 +97,7 @@ class CustomerController extends AdminBaseController
         }
 
         $this->breadcrumbOverrider->overrideLastItem(
-            t('Editing customer - %name%', ['%name%' => $customerUser->getFullName()])
+            t('Editing customer - %name%', ['%name%' => $customerUser->getFullName()]),
         );
 
         $orders = $this->orderFacade->getCustomerUserOrderList($customerUser);
@@ -124,7 +124,7 @@ class CustomerController extends AdminBaseController
 
         $queryBuilder = $this->customerUserListAdminFacade->getCustomerUserListQueryBuilderByQuickSearchData(
             $this->adminDomainTabsFacade->getSelectedDomainId(),
-            $quickSearchForm->getData()
+            $quickSearchForm->getData(),
         );
 
         $innerDataSource = new QueryBuilderDataSource($queryBuilder, 'u.id');
@@ -185,7 +185,7 @@ class CustomerController extends AdminBaseController
                 [
                     'name' => $customerUser->getFullName(),
                     'url' => $this->generateUrl('admin_customer_edit', ['id' => $customerUser->getId()]),
-                ]
+                ],
             );
 
             return $this->redirectToRoute('admin_customer_list');
@@ -216,7 +216,7 @@ class CustomerController extends AdminBaseController
                 t('Customer <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $fullName,
-                ]
+                ],
             );
         } catch (CustomerUserNotFoundException $ex) {
             $this->addErrorFlash(t('Selected customer doesn\'t exist.'));
@@ -254,7 +254,7 @@ class CustomerController extends AdminBaseController
             [
                 'customerUserId' => $customerUser->getId(),
             ],
-            UrlGeneratorInterface::ABSOLUTE_URL
+            UrlGeneratorInterface::ABSOLUTE_URL,
         );
 
         $mainAdminDomainRouter = $this->domainRouterFactory->getRouter(Domain::MAIN_ADMIN_DOMAIN_ID);
@@ -265,7 +265,7 @@ class CustomerController extends AdminBaseController
                 LoginController::ORIGINAL_DOMAIN_ID_PARAMETER_NAME => $customerUser->getDomainId(),
                 LoginController::ORIGINAL_REFERER_PARAMETER_NAME => $loginAsUserUrl,
             ],
-            UrlGeneratorInterface::ABSOLUTE_URL
+            UrlGeneratorInterface::ABSOLUTE_URL,
         );
     }
 }

@@ -18,7 +18,7 @@ class Version20180216091409 extends AbstractMigration
             $this->sql(
                 'INSERT INTO setting_values (name, domain_id, value, type) 
                 VALUES (\'personalDataSiteContent\', :domainId, \'\', \'string\')',
-                ['domainId' => $domainId]
+                ['domainId' => $domainId],
             );
         }
     }

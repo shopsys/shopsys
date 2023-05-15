@@ -51,7 +51,7 @@ class CountryFormType extends AbstractType
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please enter country name']),
                         new Constraints\Length(
-                            ['max' => 255, 'maxMessage' => 'Country name cannot be longer than {{ limit }} characters']
+                            ['max' => 255, 'maxMessage' => 'Country name cannot be longer than {{ limit }} characters'],
                         ),
                     ],
                 ],
@@ -62,7 +62,7 @@ class CountryFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter country code']),
                     new Constraints\Length(
-                        ['max' => 2, 'maxMessage' => 'Country code cannot be longer than {{ limit }} characters']
+                        ['max' => 2, 'maxMessage' => 'Country code cannot be longer than {{ limit }} characters'],
                     ),
                     new NotInArray([
                         'array' => $this->getOtherCountryCodes(),
@@ -85,7 +85,7 @@ class CountryFormType extends AbstractType
                     'attr' => [
                         'icon' => true,
                         'iconTitle' => t(
-                            'The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically.'
+                            'The higher the priority, the higher the country will be shown in the listings. Countries with the same priority will be sorted alphabetically.',
                         ),
                     ],
                     'required' => false,

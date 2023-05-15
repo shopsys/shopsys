@@ -23,7 +23,7 @@ class DomainsConfigLoaderTest extends FunctionalTestCase
         $domainsUrlsConfigFilepath = self::getContainer()->getParameter('shopsys.domain_urls_config_filepath');
         $domainConfigs = $this->domainsConfigLoader->loadDomainConfigsFromYaml(
             $domainsConfigFilepath,
-            $domainsUrlsConfigFilepath
+            $domainsUrlsConfigFilepath,
         );
 
         $this->assertGreaterThan(0, count($domainConfigs));
