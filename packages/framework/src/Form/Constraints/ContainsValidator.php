@@ -24,7 +24,7 @@ class ContainsValidator extends ConstraintValidator
                 [
                     '{{ value }}' => $this->formatValue($value),
                     '{{ needle }}' => $this->formatValue($constraint->needle),
-                ]
+                ],
             );
         }
     }

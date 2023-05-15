@@ -18,7 +18,7 @@ class PersonalDataAccessRequestFacade
         protected readonly EntityManagerInterface $em,
         protected readonly HashGenerator $hashGenerator,
         protected readonly PersonalDataAccessRequestRepository $personalDataAccessRequestRepository,
-        protected readonly PersonalDataAccessRequestFactoryInterface $personalDataAccessRequestFactory
+        protected readonly PersonalDataAccessRequestFactoryInterface $personalDataAccessRequestFactory,
     ) {
     }
 
@@ -29,7 +29,7 @@ class PersonalDataAccessRequestFacade
      */
     public function createPersonalDataAccessRequest(
         PersonalDataAccessRequestData $personalDataAccessRequestData,
-        $domainId
+        $domainId,
     ) {
         $hash = $this->getUniqueHash();
 

@@ -38,7 +38,7 @@ class OrderPage extends AbstractPage
     {
         $frontCheckboxClicker = FrontCheckbox::createByCss(
             $this->tester,
-            '#transport_and_payment_form_transport_' . $transportPosition
+            '#transport_and_payment_form_transport_' . $transportPosition,
         );
         $frontCheckboxClicker->check();
         $this->tester->waitForAjax();
@@ -72,7 +72,7 @@ class OrderPage extends AbstractPage
         $this->scrollToPaymentForm();
         $frontCheckboxClicker = FrontCheckbox::createByCss(
             $this->tester,
-            '#transport_and_payment_form_payment_' . $paymentPosition
+            '#transport_and_payment_form_payment_' . $paymentPosition,
         );
         $frontCheckboxClicker->check();
         $this->tester->waitForAjax();
@@ -148,7 +148,7 @@ class OrderPage extends AbstractPage
             'Go to cart',
             Translator::DEFAULT_TRANSLATION_DOMAIN,
             [],
-            WebDriverBy::cssSelector('#window-main-container')
+            WebDriverBy::cssSelector('#window-main-container'),
         );
     }
 

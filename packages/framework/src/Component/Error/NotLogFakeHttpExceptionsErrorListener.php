@@ -21,7 +21,7 @@ class NotLogFakeHttpExceptionsErrorListener extends ErrorListener
         $controller,
         protected readonly ErrorIdProvider $errorIdProvider,
         ?LoggerInterface $logger = null,
-        bool $debug = false
+        bool $debug = false,
     ) {
         parent::__construct($controller, $logger, $debug);
     }

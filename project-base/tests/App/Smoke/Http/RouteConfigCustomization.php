@@ -77,14 +77,14 @@ class RouteConfigCustomization
             ->customizeByRouteName(['admin_login_check', 'front_login_check'], function (RouteConfig $config) {
                 $config->skipRoute(
                     'Used by firewall to catch login requests. '
-                    . 'See http://symfony.com/doc/current/reference/configuration/security.html#check-path'
+                    . 'See http://symfony.com/doc/current/reference/configuration/security.html#check-path',
                 );
             })
             ->customizeByRouteName(
                 ['front_image', 'front_image_without_type', 'front_additional_image', 'front_additional_image_without_type'],
                 function (RouteConfig $config) {
                     $config->skipRoute('There are no images in the shop when the tests are processed.');
-                }
+                },
             )
             ->customizeByRouteName('admin_domain_selectdomain', function (RouteConfig $config) {
                 $config->skipRoute('Used only for internal setting of selected domain by tab control in admin.');
@@ -105,7 +105,7 @@ class RouteConfigCustomization
             })
             ->customizeByRouteName('admin_access_denied', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet(
-                    'This route serves as "access_denied_url" (see security.yaml) and always redirects to a referer (or dashboard).'
+                    'This route serves as "access_denied_url" (see security.yaml) and always redirects to a referer (or dashboard).',
                 )
                     ->setExpectedStatusCode(302);
             });
@@ -144,7 +144,7 @@ class RouteConfigCustomization
 
                                 $parameterName = RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER;
                                 $requestDataSet->setParameter($parameterName, $token->getValue());
-                            }
+                            },
                         );
                     $config->changeDefaultRequestDataSet('Expect redirect by 302 for any delete action.')
                         ->setExpectedStatusCode(302);
@@ -177,7 +177,7 @@ class RouteConfigCustomization
                 $config->changeDefaultRequestDataSet('Admin login should redirect by 302.')
                     ->setExpectedStatusCode(302);
                 $config->addExtraRequestDataSet(
-                    'Admin login should not redirect for users that are not logged in yet.'
+                    'Admin login should not redirect for users that are not logged in yet.',
                 )
                     ->setAuth(new NoAuth())
                     ->setExpectedStatusCode(200);
@@ -188,7 +188,7 @@ class RouteConfigCustomization
                     $debugNote = sprintf('Route "%s" should always just redirect.', $info->getRouteName());
                     $config->changeDefaultRequestDataSet($debugNote)
                         ->setExpectedStatusCode(302);
-                }
+                },
             )
             ->customizeByRouteName('admin_default_schedulecron', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Standard admin is not allowed to schedule cron')
@@ -240,7 +240,7 @@ class RouteConfigCustomization
                 /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
                 $pricingGroup = $this->getPersistentReference(
                     PricingGroupDataFixture::PRICING_GROUP_PARTNER,
-                    Domain::FIRST_DOMAIN_ID
+                    Domain::FIRST_DOMAIN_ID,
                 );
 
                 $debugNote = sprintf('Delete pricing group "%s".', $pricingGroup->getName());
@@ -262,7 +262,7 @@ class RouteConfigCustomization
                 $debugNote = sprintf(
                     'Delete unit "%s" and replace it by "%s".',
                     $unit->getName('en'),
-                    $newUnit->getName('en')
+                    $newUnit->getName('en'),
                 );
                 $config->changeDefaultRequestDataSet($debugNote)
                     ->setParameter('id', $unit->getId())
@@ -314,7 +314,7 @@ class RouteConfigCustomization
                     $debugNote = sprintf('Route "%s" should always just redirect.', $info->getRouteName());
                     $config->changeDefaultRequestDataSet($debugNote)
                         ->setExpectedStatusCode(302);
-                }
+                },
             )
             ->customizeByRouteName('front_login', function (RouteConfig $config) {
                 $config->addExtraRequestDataSet('Logged user on login page is redirected onto homepage')
@@ -337,7 +337,7 @@ class RouteConfigCustomization
                             $token = $csrfTokenManager->getToken('frontend_logout');
 
                             $requestDataSet->setParameter('_csrf_token', $token->getValue());
-                        }
+                        },
                     );
                 $config->changeDefaultRequestDataSet('Logout action should redirect by 302')
                     ->setExpectedStatusCode(302);
@@ -364,7 +364,7 @@ class RouteConfigCustomization
 
                 $debugNote = sprintf(
                     'Log as demo user "Jaromír Jágr" on front-end to access order n. %s.',
-                    $order->getNumber()
+                    $order->getNumber(),
                 );
                 $config->changeDefaultRequestDataSet($debugNote)
                     ->setAuth(new BasicHttpAuth('no-reply@shopsys.com', 'user123'))
@@ -432,7 +432,7 @@ class RouteConfigCustomization
             ->customizeByRouteName('front_personal_data_access', function (RouteConfig $config) {
                 /** @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest $personalDataAccessRequest */
                 $personalDataAccessRequest = $this->getPersistentReference(
-                    PersonalDataAccessRequestDataFixture::REFERENCE_ACCESS_DISPLAY_REQUEST
+                    PersonalDataAccessRequestDataFixture::REFERENCE_ACCESS_DISPLAY_REQUEST,
                 );
 
                 $config->changeDefaultRequestDataSet('Check personal data site with wrong hash')
@@ -445,7 +445,7 @@ class RouteConfigCustomization
             ->customizeByRouteName('front_personal_data_access_export', function (RouteConfig $config) {
                 /** @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest $personalDataAccessRequest */
                 $personalDataAccessRequest = $this->getPersistentReference(
-                    PersonalDataAccessRequestDataFixture::REFERENCE_ACCESS_EXPORT_REQUEST
+                    PersonalDataAccessRequestDataFixture::REFERENCE_ACCESS_EXPORT_REQUEST,
                 );
 
                 $config->changeDefaultRequestDataSet('Check personal data export site with wrong hash')
@@ -458,7 +458,7 @@ class RouteConfigCustomization
             ->customizeByRouteName('front_export_personal_data', function (RouteConfig $config) {
                 /** @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest $personalDataAccessRequest */
                 $personalDataAccessRequest = $this->getPersistentReference(
-                    PersonalDataAccessRequestDataFixture::REFERENCE_ACCESS_EXPORT_REQUEST
+                    PersonalDataAccessRequestDataFixture::REFERENCE_ACCESS_EXPORT_REQUEST,
                 );
 
                 $config->changeDefaultRequestDataSet('Check personal data XML export with wrong hash')

@@ -14,7 +14,7 @@ class ProductListAdminFacade
      */
     public function __construct(
         protected readonly ProductListAdminRepository $productListAdminRepository,
-        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade
+        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
     ) {
     }
 
@@ -28,7 +28,7 @@ class ProductListAdminFacade
          * when product price type calculation is set to manual, price for first domain is shown in admin product list
          */
         $defaultPricingGroupId = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId(
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         )->getId();
 
         return $this->productListAdminRepository->getProductListQueryBuilder($defaultPricingGroupId);

@@ -59,7 +59,7 @@ class CreateApplicationDirectoriesCommand extends Command
         private readonly FilesystemOperator $filesystem,
         private readonly Filesystem $localFilesystem,
         private readonly ImageDirectoryStructureCreator $imageDirectoryStructureCreator,
-        private readonly UploadedFileDirectoryStructureCreator $uploadedFileDirectoryStructureCreator
+        private readonly UploadedFileDirectoryStructureCreator $uploadedFileDirectoryStructureCreator,
     ) {
         $this->defaultInternalDirectories = $defaultInternalDirectories;
         $this->defaultPublicDirectories = $defaultPublicDirectories;

@@ -30,7 +30,7 @@ class VatDataFixture extends AbstractReferenceFixture
         private readonly VatFacade $vatFacade,
         private readonly VatDataFactoryInterface $vatDataFactory,
         private readonly Setting $setting,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 

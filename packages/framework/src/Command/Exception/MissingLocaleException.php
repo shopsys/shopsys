@@ -18,7 +18,7 @@ class MissingLocaleException extends Exception
         $message = sprintf(
             'It looks like your operating system does not support locale "%s". '
                 . 'Please visit docs/installation/native-installation-troubleshooting.md for more details.',
-            $missingLocale
+            $missingLocale,
         );
 
         $this->locale = $missingLocale;

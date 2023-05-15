@@ -25,7 +25,7 @@ class FragmentHandlerTest extends TestCase
                 $this->anything(),
                 $this->callback(function ($options) {
                     return array_key_exists('ignore_errors', $options) && $options['ignore_errors'] === false;
-                })
+                }),
             )
             ->willThrowException(new Exception());
 

@@ -16,7 +16,7 @@ class PromoCodeGridFactory implements GridFactoryInterface
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly GridFactory $gridFactory
+        protected readonly GridFactory $gridFactory,
     ) {
     }
 

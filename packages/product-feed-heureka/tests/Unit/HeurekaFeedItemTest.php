@@ -41,7 +41,7 @@ class HeurekaFeedItemTest extends TestCase
     protected function setUp(): void
     {
         $this->productPriceCalculationForCustomerUserMock = $this->createMock(
-            ProductPriceCalculationForCustomerUser::class
+            ProductPriceCalculationForCustomerUser::class,
         );
         $this->heurekaProductDataBatchLoaderMock = $this->createMock(HeurekaProductDataBatchLoader::class);
         $this->heurekaCategoryFacadeMock = $this->createMock(HeurekaCategoryFacade::class);
@@ -51,7 +51,7 @@ class HeurekaFeedItemTest extends TestCase
             $this->productPriceCalculationForCustomerUserMock,
             $this->heurekaProductDataBatchLoaderMock,
             $this->heurekaCategoryFacadeMock,
-            $this->categoryFacadeMock
+            $this->categoryFacadeMock,
         );
 
         $this->defaultDomain = $this->createDomainConfigMock(Domain::FIRST_DOMAIN_ID, 'https://example.cz', 'cs');

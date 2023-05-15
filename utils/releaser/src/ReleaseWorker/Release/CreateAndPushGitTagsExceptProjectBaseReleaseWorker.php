@@ -57,12 +57,12 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         $this->symfonyStyle->note(sprintf(
             'In case you do not have saved GIT credentials you may want to cache them temporarily so you do not need to fill them for each repository.'
             . ' This can be done by using following command `%s`',
-            'git config --global credential.helper "cache --timeout=3600"'
+            'git config --global credential.helper "cache --timeout=3600"',
         ));
 
         $gitCredentialsResponse = $this->symfonyStyle->ask(
             'Do you want to enable saving GIT credentials for one hour?',
-            'yes'
+            'yes',
         );
 
         if ($gitCredentialsResponse === 'yes') {
@@ -72,14 +72,14 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         $this->symfonyStyle->note(
             'You will be asked for your Github credentials if you have not saved them yet.
             As we require two factor authentication, you will need to provide repo scope token instead of password.
-            Token can be generated here: https://github.com/settings/tokens/new'
+            Token can be generated here: https://github.com/settings/tokens/new',
         );
 
         $this->symfonyStyle->note('Cloning all packages. Please wait.');
         foreach ($packageNames as $packageName) {
             $this->symfonyStyle->note(sprintf('Cloning shopsys/%s. This can take a while.', $packageName));
             $this->processRunner->run(
-                sprintf('cd %s && git clone https://github.com/shopsys/%s.git', $tempDirectory, $packageName)
+                sprintf('cd %s && git clone https://github.com/shopsys/%s.git', $tempDirectory, $packageName),
             );
             $this->processRunner->run(
                 sprintf(
@@ -87,8 +87,8 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
                     $tempDirectory,
                     $packageName,
                     $this->currentBranchName,
-                    $versionString
-                )
+                    $versionString,
+                ),
             );
         }
 
@@ -97,15 +97,15 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
                 sprintf(
                     'cd %s/%s && git log --graph --oneline --decorate=short --color | head',
                     $tempDirectory,
-                    $packageName
-                )
+                    $packageName,
+                ),
             );
 
             $this->symfonyStyle->writeln(trim($output));
 
             $pushTag = $this->symfonyStyle->ask(
                 sprintf('Package shopsys/%s: Is the tag on right commit and should be pushed?', $packageName),
-                'yes'
+                'yes',
             );
 
             if ($pushTag !== 'yes') {
@@ -116,26 +116,26 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
         if (count($packageNamesWithProblems) === 0) {
             foreach ($packageNames as $packageName) {
                 $this->processRunner->run(
-                    sprintf('cd %s/%s && git push origin %s', $tempDirectory, $packageName, $versionString)
+                    sprintf('cd %s/%s && git push origin %s', $tempDirectory, $packageName, $versionString),
                 );
             }
 
             $this->processRunner->run('rm -r ' . $tempDirectory);
             $this->symfonyStyle->note(
-                'Wait for packagist to get new versions of all packages excluding monorepo and project-base'
+                'Wait for packagist to get new versions of all packages excluding monorepo and project-base',
             );
             $this->confirm('Confirm that there are new versions of all packages excluding monorepo and project-base');
         } else {
             $packageNamesWithProblemsMessage = sprintf(
                 'package%s %s',
                 count($packageNamesWithProblems) === 1 ? '' : 's',
-                implode(', ', $packageNamesWithProblems)
+                implode(', ', $packageNamesWithProblems),
             );
             $this->confirm(
                 sprintf(
                     'Please fix the problem in %s and split the monorepo again. This step will be repeated after you confirm.',
-                    $packageNamesWithProblemsMessage
-                )
+                    $packageNamesWithProblemsMessage,
+                ),
             );
             $this->processRunner->run('rm -r ' . $tempDirectory);
             $this->work($version);

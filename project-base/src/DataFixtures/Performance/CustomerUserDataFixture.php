@@ -50,7 +50,7 @@ class CustomerUserDataFixture
         private readonly PersistentReferenceFacade $persistentReferenceFacade,
         private readonly ProgressBarFactory $progressBarFactory,
         private readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
-        private readonly DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
+        private readonly DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory,
     ) {
         $this->customerUserDataFactory = $customerUserDataFactory;
         $this->userCountPerDomain = $userCountPerDomain;

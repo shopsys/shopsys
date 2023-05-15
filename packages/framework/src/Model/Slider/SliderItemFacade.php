@@ -20,7 +20,7 @@ class SliderItemFacade
         protected readonly SliderItemRepository $sliderItemRepository,
         protected readonly ImageFacade $imageFacade,
         protected readonly Domain $domain,
-        protected readonly SliderItemFactoryInterface $sliderItemFactory
+        protected readonly SliderItemFactoryInterface $sliderItemFactory,
     ) {
     }
 

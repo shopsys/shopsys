@@ -143,7 +143,7 @@ class OrderItem
         $quantity,
         $type,
         $unitName,
-        $catnum
+        $catnum,
     ) {
         $this->order = $order; // Must be One-To-Many Bidirectional because of unnecessary join table
         $this->name = $name;
@@ -211,7 +211,7 @@ class OrderItem
     public function getTotalPriceWithVat(): Money
     {
         return $this->hasForcedTotalPrice() ? $this->totalPriceWithVat : $this->priceWithVat->multiply(
-            $this->quantity
+            $this->quantity,
         );
     }
 

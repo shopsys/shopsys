@@ -28,7 +28,7 @@ class OrderPreviewFactory
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CartFacade $cartFacade,
-        protected readonly CurrentPromoCodeFacade $currentPromoCodeFacade
+        protected readonly CurrentPromoCodeFacade $currentPromoCodeFacade,
     ) {
     }
 
@@ -53,7 +53,7 @@ class OrderPreviewFactory
             $transport,
             $payment,
             $this->currentCustomerUser->findCurrentCustomerUser(),
-            $validEnteredPromoCodePercent
+            $validEnteredPromoCodePercent,
         );
     }
 
@@ -74,7 +74,7 @@ class OrderPreviewFactory
         ?Transport $transport = null,
         ?Payment $payment = null,
         ?CustomerUser $customerUser = null,
-        ?string $promoCodeDiscountPercent = null
+        ?string $promoCodeDiscountPercent = null,
     ) {
         return $this->orderPreviewCalculation->calculatePreview(
             $currency,
@@ -83,7 +83,7 @@ class OrderPreviewFactory
             $transport,
             $payment,
             $customerUser,
-            $promoCodeDiscountPercent
+            $promoCodeDiscountPercent,
         );
     }
 }

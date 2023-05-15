@@ -18,7 +18,7 @@ class ProductCalculatedPricesType extends AbstractType
      */
     public function __construct(
         private readonly PricingGroupFacade $pricingGroupFacade,
-        private readonly ProductFacade $productFacade
+        private readonly ProductFacade $productFacade,
     ) {
     }
 
@@ -41,7 +41,7 @@ class ProductCalculatedPricesType extends AbstractType
 
         if ($product !== null) {
             $productSellingPricesIndexedByDomainId = $this->productFacade->getAllProductSellingPricesIndexedByDomainId(
-                $product
+                $product,
             );
             $view->vars['productSellingPricesIndexedByDomainId'] = $productSellingPricesIndexedByDomainId;
         } else {

@@ -40,7 +40,7 @@ class GetArticlesTest extends GraphQlTestCase
                         'seoMetaDescription',
                     ],
                     $edge['node'],
-                    array_shift($expectedArticlesData)
+                    array_shift($expectedArticlesData),
                 );
             }
         }
@@ -212,7 +212,7 @@ class GetArticlesTest extends GraphQlTestCase
                     'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
                     [],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $firstDomainLocale
+                    $firstDomainLocale,
                 ),
                 'seoH1' => null,
                 'seoTitle' => null,
@@ -225,7 +225,7 @@ class GetArticlesTest extends GraphQlTestCase
                     'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
                     [],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $firstDomainLocale
+                    $firstDomainLocale,
                 ),
                 'seoH1' => null,
                 'seoTitle' => null,
@@ -238,7 +238,7 @@ class GetArticlesTest extends GraphQlTestCase
                     'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
                     [],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $firstDomainLocale
+                    $firstDomainLocale,
                 ),
                 'seoH1' => null,
                 'seoTitle' => null,
@@ -251,7 +251,7 @@ class GetArticlesTest extends GraphQlTestCase
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue.',
                     [],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $firstDomainLocale
+                    $firstDomainLocale,
                 ),
                 'seoH1' => null,
                 'seoTitle' => null,
@@ -264,20 +264,20 @@ class GetArticlesTest extends GraphQlTestCase
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue.',
                     [],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $firstDomainLocale
+                    $firstDomainLocale,
                 ),
                 'seoH1' => t(
                     'Shopping guide to improve your shopping experience',
                     [],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $firstDomainLocale
+                    $firstDomainLocale,
                 ),
                 'seoTitle' => t('Shopping guide for quick shopping', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'seoMetaDescription' => t(
                     'Shopping guide - Tips and tricks how to quickly find what you are looking for',
                     [],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $firstDomainLocale
+                    $firstDomainLocale,
                 ),
             ],
         ];

@@ -26,13 +26,13 @@ class AnnotationsAdderTest extends TestCase
         $fileContentsReplacerMock->expects($this->once())->method('replaceInFile')->with(
             $betterReflectionClass->getFileName(),
             $classKeywordWithName,
-            "/**\n" . $propertyAndMethodAnnotationsLines . " */\n" . $classKeywordWithName
+            "/**\n" . $propertyAndMethodAnnotationsLines . " */\n" . $classKeywordWithName,
         );
 
         $annotationsAdder = new AnnotationsAdder($fileContentsReplacerMock);
         $annotationsAdder->addAnnotationToClass(
             $betterReflectionClass,
-            $propertyAndMethodAnnotationsLines
+            $propertyAndMethodAnnotationsLines,
         );
     }
 
@@ -48,13 +48,13 @@ class AnnotationsAdderTest extends TestCase
         $fileContentsReplacerMock->expects($this->once())->method('replaceInFile')->with(
             $betterReflectionClass->getFileName(),
             $docComment,
-            str_replace(' */', $propertyAndMethodAnnotationsLines . ' */', $docComment)
+            str_replace(' */', $propertyAndMethodAnnotationsLines . ' */', $docComment),
         );
 
         $annotationsAdder = new AnnotationsAdder($fileContentsReplacerMock);
         $annotationsAdder->addAnnotationToClass(
             $betterReflectionClass,
-            $propertyAndMethodAnnotationsLines
+            $propertyAndMethodAnnotationsLines,
         );
     }
 
@@ -78,13 +78,13 @@ class AnnotationsAdderTest extends TestCase
         $fileContentsReplacerMock->expects($this->once())->method('replaceInFile')->with(
             $betterReflectionClass->getFileName(),
             "/**\n * @method void setCategory(\\Shopsys\\FrameworkBundle\\Model\\Category\\Category \$category)\n */",
-            "/**\n * @method void setCategory(\\App\\Model\\Category\\Category \$category)\n */"
+            "/**\n * @method void setCategory(\\App\\Model\\Category\\Category \$category)\n */",
         );
 
         $annotationsAdder = new AnnotationsAdder($fileContentsReplacerMock);
         $annotationsAdder->addAnnotationToClass(
             $betterReflectionClass,
-            " * @method void setCategory(\\App\\Model\\Category\\Category \$category)\n"
+            " * @method void setCategory(\\App\\Model\\Category\\Category \$category)\n",
         );
     }
 

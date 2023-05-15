@@ -25,7 +25,7 @@ class ParameterFilterRepository
             $parameterQueryBuilder = $this->getParameterQueryBuilder(
                 $parameterFilterData,
                 $productsQueryBuilder->getEntityManager(),
-                $parameterIndex
+                $parameterIndex,
             );
 
             $productsQueryBuilder->andWhere($productsQueryBuilder->expr()->exists($parameterQueryBuilder));
@@ -46,7 +46,7 @@ class ParameterFilterRepository
     protected function getParameterQueryBuilder(
         ParameterFilterData $parameterFilterData,
         EntityManagerInterface $em,
-        $parameterIndex
+        $parameterIndex,
     ) {
         $ppvAlias = 'ppv' . $parameterIndex;
         $parameterPlaceholder = ':parameter' . $parameterIndex;
@@ -57,7 +57,7 @@ class ParameterFilterRepository
             $parameterFilterData->values,
             $parameterQueryBuilder,
             $ppvAlias,
-            $parameterIndex
+            $parameterIndex,
         );
 
         $parameterQueryBuilder
@@ -86,7 +86,7 @@ class ParameterFilterRepository
         array $parameterValues,
         QueryBuilder $parameterQueryBuilder,
         $ppvAlias,
-        $parameterIndex
+        $parameterIndex,
     ) {
         $valuesExpr = $parameterQueryBuilder->expr()->orX();
 

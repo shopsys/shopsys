@@ -30,7 +30,7 @@ class BrandResolverMap extends ResolverMap
                     return $this->urlGenerator->generate(
                         'front_brand_detail',
                         ['id' => $brand->getId()],
-                        UrlGeneratorInterface::ABSOLUTE_URL
+                        UrlGeneratorInterface::ABSOLUTE_URL,
                     );
                 },
                 'seoTitle' => function (Brand $brand) {

@@ -39,7 +39,7 @@ class AdministratorRoleDataFactory implements AdministratorRoleDataFactoryInterf
      */
     protected function fillFromAdministratorRole(
         AdministratorRoleData $administratorRoleData,
-        AdministratorRole $administratorRole
+        AdministratorRole $administratorRole,
     ): void {
         $administratorRoleData->administrator = $administratorRole->getAdministrator();
         $administratorRoleData->role = $administratorRole->getRole();

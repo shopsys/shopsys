@@ -56,14 +56,14 @@ class ProductApiDataValidator implements ProductApiDataValidatorInterface
                     new Constraints\Type([
                         'type' => 'string',
                         'message' => 'The value {{ value }} is not a valid {{ type }}.',
-                    ])
+                    ]),
                 ),
                 'name' => new Constraints\Optional(
                     new Constraints\Collection([
                         'fields' => $nameFields,
                         'allowMissingFields' => true,
                         'allowExtraFields' => false,
-                    ])
+                    ]),
                 ),
                 'hidden' => new Constraints\Optional([
                     new Constraints\Type([
@@ -83,45 +83,45 @@ class ProductApiDataValidator implements ProductApiDataValidatorInterface
                     new Constraints\DateTime([
                         'format' => DateTime::ATOM,
                         'message' => 'The value {{ value }} is not a valid DateTime::ATOM format.',
-                    ])
+                    ]),
                 ),
                 'sellingTo' => new Constraints\Optional(
                     new Constraints\DateTime([
                         'format' => DateTime::ATOM,
                         'message' => 'The value {{ value }} is not a valid DateTime::ATOM format.',
-                    ])
+                    ]),
                 ),
                 'catnum' => new Constraints\Optional(
                     new Constraints\Length([
                         'max' => 100,
                         'maxMessage' => 'The value {{ value }} cannot be longer then {{ limit }} characters',
-                    ])
+                    ]),
                 ),
                 'ean' => new Constraints\Optional(
                     new Constraints\Length([
                         'max' => 100,
                         'maxMessage' => 'The value {{ value }} cannot be longer then {{ limit }} characters',
-                    ])
+                    ]),
                 ),
                 'partno' => new Constraints\Optional(
                     new Constraints\Length([
                         'max' => 100,
                         'maxMessage' => 'The value {{ value }} cannot be longer then {{ limit }} characters',
-                    ])
+                    ]),
                 ),
                 'shortDescription' => new Constraints\Optional(
                     new Constraints\Collection([
                         'fields' => $descriptionFields,
                         'allowMissingFields' => true,
                         'allowExtraFields' => false,
-                    ])
+                    ]),
                 ),
                 'longDescription' => new Constraints\Optional(
                     new Constraints\Collection([
                         'fields' => $descriptionFields,
                         'allowMissingFields' => true,
                         'allowExtraFields' => false,
-                    ])
+                    ]),
                 ),
             ],
             'allowExtraFields' => false,

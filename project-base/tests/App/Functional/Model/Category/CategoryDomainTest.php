@@ -97,7 +97,7 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
         $this->assertNull($refreshedCategory->getSeoTitle(self::SECOND_DOMAIN_ID));
         $this->assertSame(
             self::DEMONSTRATIVE_SEO_META_DESCRIPTION,
-            $refreshedCategory->getSeoMetaDescription(self::SECOND_DOMAIN_ID)
+            $refreshedCategory->getSeoMetaDescription(self::SECOND_DOMAIN_ID),
         );
         $this->assertNull($refreshedCategory->getSeoMetaDescription(self::FIRST_DOMAIN_ID));
         $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedCategory->getSeoH1(self::FIRST_DOMAIN_ID));
@@ -123,7 +123,7 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
         $this->assertSame(self::DEMONSTRATIVE_SEO_TITLE, $refreshedCategory->getSeoTitle(self::FIRST_DOMAIN_ID));
         $this->assertSame(
             self::DEMONSTRATIVE_SEO_META_DESCRIPTION,
-            $refreshedCategory->getSeoMetaDescription(self::FIRST_DOMAIN_ID)
+            $refreshedCategory->getSeoMetaDescription(self::FIRST_DOMAIN_ID),
         );
         $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedCategory->getSeoH1(self::FIRST_DOMAIN_ID));
     }

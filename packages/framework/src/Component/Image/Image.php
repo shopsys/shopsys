@@ -158,7 +158,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
                 true,
                 $this->entityName,
                 $this->type . '/' . ImageConfig::ORIGINAL_SIZE_NAME,
-                FileNamingConvention::TYPE_ID
+                FileNamingConvention::TYPE_ID,
             );
         }
         return $files;
@@ -271,8 +271,8 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
                     'Entity %s with ID %s does not own image with ID %s',
                     $entityName,
                     $entityId,
-                    $this->id
-                )
+                    $this->id,
+                ),
             );
         }
     }

@@ -27,7 +27,7 @@ class ProductExportSubscriber extends AbstractExportSubscriber
         IndexFacade $indexFacade,
         IndexDefinitionLoader $indexDefinitionLoader,
         ProductIndex $index,
-        Domain $domain
+        Domain $domain,
     ) {
         parent::__construct(
             $productExportScheduler,
@@ -35,7 +35,7 @@ class ProductExportSubscriber extends AbstractExportSubscriber
             $indexFacade,
             $indexDefinitionLoader,
             $index,
-            $domain
+            $domain,
         );
     }
 

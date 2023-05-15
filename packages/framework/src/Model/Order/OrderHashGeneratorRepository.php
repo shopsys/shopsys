@@ -16,7 +16,7 @@ class OrderHashGeneratorRepository
      */
     public function __construct(
         protected readonly OrderRepository $orderRepository,
-        protected readonly HashGenerator $hashGenerator
+        protected readonly HashGenerator $hashGenerator,
     ) {
     }
 

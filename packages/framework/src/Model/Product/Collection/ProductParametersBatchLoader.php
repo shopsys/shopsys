@@ -28,7 +28,7 @@ class ProductParametersBatchLoader
     {
         $parametersByProductIdAndName = $this->productCollectionFacade->getProductParameterValuesIndexedByProductIdAndParameterName(
             $products,
-            $domainConfig
+            $domainConfig,
         );
 
         foreach ($products as $product) {

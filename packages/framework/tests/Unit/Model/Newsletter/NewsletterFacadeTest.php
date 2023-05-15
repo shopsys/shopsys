@@ -28,7 +28,7 @@ class NewsletterFacadeTest extends TestCase
         $this->newsletterFacade = new NewsletterFacade(
             $this->em,
             $this->newsletterRepository,
-            new NewsletterSubscriberFactory(new EntityNameResolver([]))
+            new NewsletterSubscriberFactory(new EntityNameResolver([])),
         );
     }
 

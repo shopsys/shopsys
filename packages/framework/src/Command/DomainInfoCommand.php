@@ -50,19 +50,19 @@ class DomainInfoCommand extends Command
             ->addArgument(
                 static::ARG_ID,
                 InputArgument::OPTIONAL,
-                'Domain ID (if omitted, the command will output all values)'
+                'Domain ID (if omitted, the command will output all values)',
             )
             ->addOption(
                 static::OPTION_DEDUPLICATE,
                 'd',
                 InputOption::VALUE_NONE,
-                'Return only unique property values (sorted alphabetically)'
+                'Return only unique property values (sorted alphabetically)',
             )
             ->addOption(
                 static::OPTION_ONELINE,
                 'o',
                 InputOption::VALUE_NONE,
-                'Return property values on one line separated by tabs'
+                'Return property values on one line separated by tabs',
             );
     }
 

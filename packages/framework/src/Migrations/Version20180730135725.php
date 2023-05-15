@@ -18,7 +18,7 @@ class Version20180730135725 extends AbstractMigration
             $$
             SELECT COALESCE(( SELECT i FROM generate_subscripts($2, 1) gs(i) WHERE $2[i] = $1 ), 0)
             $$
-            LANGUAGE SQL STABLE'
+            LANGUAGE SQL STABLE',
         );
     }
 

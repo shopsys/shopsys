@@ -49,7 +49,7 @@ class ImageSitemapDumperFactory extends SitemapDumperFactory
             $this->mountManager,
             $this->urlGenerator,
             $this->imageSitemapFilePrefixer->getSitemapFilePrefixForDomain($domainId),
-            static::MAX_ITEMS_IN_FILE
+            static::MAX_ITEMS_IN_FILE,
         );
     }
 }

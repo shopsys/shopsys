@@ -33,7 +33,7 @@ class DomainsConfigDefinition implements ConfigurationInterface
                             ->scalarNode(self::CONFIG_NAME)->isRequired()->cannotBeEmpty()->end()
                             ->scalarNode(self::CONFIG_LOCALE)->isRequired()->cannotBeEmpty()->end()
                             ->scalarNode(self::CONFIG_STYLES_DIRECTORY)->defaultValue(
-                                DomainConfig::STYLES_DIRECTORY_DEFAULT
+                                DomainConfig::STYLES_DIRECTORY_DEFAULT,
                             )->end()
                             ->scalarNode(self::CONFIG_DESIGN_ID)->defaultNull()->end()
                         ->end()

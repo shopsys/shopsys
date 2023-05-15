@@ -21,7 +21,7 @@ final class ChangelogFileManipulator
             $currentReleaseHeadlinePattern,
             function ($match) use ($todayInString) {
                 return str_replace($match[1], $todayInString, $match[0]);
-            }
+            },
         );
     }
 }

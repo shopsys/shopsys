@@ -64,8 +64,8 @@ class LogoutExceptionSubscriber implements EventSubscriberInterface
                         'There was an error during logout attempt. If you really want to sign out, please try it again.',
                         [],
                         Translator::DEFAULT_TRANSLATION_DOMAIN,
-                        $locale
-                    )
+                        $locale,
+                    ),
                 );
             }
 

@@ -45,7 +45,7 @@ class ConsoleExitCodeSubscriber implements EventSubscriberInterface
         $this->logger->log(static::LOG_LEVEL, sprintf(
             'Command `%s` exited with status code %d',
             $command->getName(),
-            $statusCode
+            $statusCode,
         ));
     }
 

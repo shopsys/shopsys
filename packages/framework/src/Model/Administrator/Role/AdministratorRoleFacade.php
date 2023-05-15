@@ -18,7 +18,7 @@ class AdministratorRoleFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly AdministratorRoleFactoryInterface $administratorRoleFactory,
-        protected readonly AdministratorRoleDataFactoryInterface $administratorRoleDataFactory
+        protected readonly AdministratorRoleDataFactoryInterface $administratorRoleDataFactory,
     ) {
     }
 

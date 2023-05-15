@@ -27,7 +27,7 @@ class ClassExtensionRegistry
      */
     public function __construct(
         protected readonly string $frameworkRootDir,
-        protected readonly array $entityExtensionMap = []
+        protected readonly array $entityExtensionMap = [],
     ) {
         $this->otherClassesExtensionMap = $this->getOtherClassesExtensionMap();
     }

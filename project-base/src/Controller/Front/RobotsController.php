@@ -59,7 +59,7 @@ class RobotsController extends FrontBaseController
                 'imageSitemapUrl' => $imageSitemapUrl,
                 'customContent' => $customContent,
             ],
-            $response
+            $response,
         );
     }
 }

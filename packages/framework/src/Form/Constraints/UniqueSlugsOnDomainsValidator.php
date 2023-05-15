@@ -49,7 +49,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
                         $constraint->messageDuplicate,
                         [
                             '{{ url }}' => $domainConfig->getUrl() . '/' . $slug,
-                        ]
+                        ],
                     );
                 }
             }
@@ -78,7 +78,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
                 $constraint->message,
                 [
                     '{{ url }}' => $domainConfig->getUrl() . '/' . $slug,
-                ]
+                ],
             );
         }
     }

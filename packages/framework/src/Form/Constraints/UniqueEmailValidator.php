@@ -16,7 +16,7 @@ class UniqueEmailValidator extends ConstraintValidator
      */
     public function __construct(
         protected readonly CustomerUserFacade $customerUserFacade,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -41,7 +41,7 @@ class UniqueEmailValidator extends ConstraintValidator
                 $constraint->message,
                 [
                     '{{ email }}' => $email,
-                ]
+                ],
             );
         }
     }

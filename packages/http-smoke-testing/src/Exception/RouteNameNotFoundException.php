@@ -14,7 +14,7 @@ class RouteNameNotFoundException extends Exception
         $routeNames = (array)$routeName;
 
         parent::__construct(
-            'Route name' . (count($routeNames) !== 1 ? 's' : '') . ' "' . implode('", "', $routeNames) . '" not found!'
+            'Route name' . (count($routeNames) !== 1 ? 's' : '') . ' "' . implode('", "', $routeNames) . '" not found!',
         );
     }
 }

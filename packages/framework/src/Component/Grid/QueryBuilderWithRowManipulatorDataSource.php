@@ -50,7 +50,7 @@ class QueryBuilderWithRowManipulatorDataSource extends QueryBuilderDataSource
             $originalPaginationResult->getPage(),
             $originalPaginationResult->getPageSize(),
             $originalPaginationResult->getTotalCount(),
-            $results
+            $results,
         );
     }
 }

@@ -15,7 +15,7 @@ interface FriendlyUrlFactoryInterface
         string $routeName,
         int $entityId,
         int $domainId,
-        string $slug
+        string $slug,
     ): FriendlyUrl;
 
     /**
@@ -31,7 +31,7 @@ interface FriendlyUrlFactoryInterface
         int $entityId,
         string $entityName,
         int $domainId,
-        ?int $indexPostfix = null
+        ?int $indexPostfix = null,
     ): ?FriendlyUrl;
 
     /**
@@ -43,6 +43,6 @@ interface FriendlyUrlFactoryInterface
     public function createForAllDomains(
         string $routeName,
         int $entityId,
-        array $namesByLocale
+        array $namesByLocale,
     ): array;
 }

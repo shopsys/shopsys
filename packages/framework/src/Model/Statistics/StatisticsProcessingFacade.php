@@ -18,7 +18,7 @@ class StatisticsProcessingFacade
     public function getDateTimesFormattedToLocaleFormat(array $valueByDateTimeDataPoints)
     {
         return $this->valueByDateTimeDataPointFormatter->getDateTimesFormattedToLocaleFormat(
-            $valueByDateTimeDataPoints
+            $valueByDateTimeDataPoints,
         );
     }
 

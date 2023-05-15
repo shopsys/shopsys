@@ -14,7 +14,7 @@ class ListedProductVariantsViewFacade implements ListedProductVariantsViewFacade
      */
     public function __construct(
         protected readonly ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
-        protected readonly ListedProductViewFactory $listedProductViewFactory
+        protected readonly ListedProductViewFactory $listedProductViewFactory,
     ) {
     }
 
@@ -31,7 +31,7 @@ class ListedProductVariantsViewFacade implements ListedProductVariantsViewFacade
         }
 
         return $this->listedProductViewFactory->createFromProducts(
-            $this->productOnCurrentDomainFacade->getVariantsForProduct($product)
+            $this->productOnCurrentDomainFacade->getVariantsForProduct($product),
         );
     }
 }

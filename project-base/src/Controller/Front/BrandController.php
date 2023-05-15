@@ -12,7 +12,7 @@ class BrandController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      */
     public function __construct(
-        private readonly BrandFacade $brandFacade
+        private readonly BrandFacade $brandFacade,
     ) {
     }
 

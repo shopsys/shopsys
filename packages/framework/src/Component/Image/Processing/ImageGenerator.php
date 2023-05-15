@@ -20,7 +20,7 @@ class ImageGenerator
         protected readonly ImageProcessor $imageProcessor,
         protected readonly ImageLocator $imageLocator,
         protected readonly ImageConfig $imageConfig,
-        protected readonly FilesystemOperator $filesystem
+        protected readonly FilesystemOperator $filesystem,
     ) {
     }
 
@@ -62,7 +62,7 @@ class ImageGenerator
         $targetImageFilepath = $this->imageLocator->getAbsoluteAdditionalImageFilepath(
             $image,
             $additionalIndex,
-            $sizeName
+            $sizeName,
         );
         $sizeConfig = $this->imageConfig->getImageSizeConfigByImage($image, $sizeName);
         $additionalSizeConfig = $sizeConfig->getAdditionalSize($additionalIndex);

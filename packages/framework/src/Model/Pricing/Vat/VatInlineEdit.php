@@ -21,7 +21,7 @@ class VatInlineEdit extends AbstractGridInlineEdit
         protected readonly VatFacade $vatFacade,
         protected readonly FormFactoryInterface $formFactory,
         protected readonly VatDataFactoryInterface $vatDataFactory,
-        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
         parent::__construct($vatGridFactory);
     }

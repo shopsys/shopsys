@@ -70,7 +70,7 @@ class UserTest extends TestCase
         $resetPasswordHash,
         $resetPasswordHashValidThrough,
         $sentHash,
-        $isExpectedValid
+        $isExpectedValid,
     ) {
         $customerUser = TestCustomerProvider::getTestCustomerUser();
 

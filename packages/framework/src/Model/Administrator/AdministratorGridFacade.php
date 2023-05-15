@@ -20,7 +20,7 @@ class AdministratorGridFacade
      */
     public function __construct(
         EntityManagerInterface $em,
-        protected readonly AdministratorGridLimitFactoryInterface $administratorGridLimitFactory
+        protected readonly AdministratorGridLimitFactoryInterface $administratorGridLimitFactory,
     ) {
         $this->em = $em;
     }
@@ -54,7 +54,7 @@ class AdministratorGridFacade
             $gridLimit = $this->administratorGridLimitFactory->create(
                 $administrator,
                 $grid->getId(),
-                $grid->getLimit()
+                $grid->getLimit(),
             );
             $administrator->addGridLimit($gridLimit);
         } else {

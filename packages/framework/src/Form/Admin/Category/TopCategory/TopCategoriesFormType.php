@@ -21,7 +21,7 @@ class TopCategoriesFormType extends AbstractType
     public function __construct(
         private readonly CategoryFacade $categoryFacade,
         private readonly RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer,
-        private readonly CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer
+        private readonly CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer,
     ) {
     }
 
@@ -33,7 +33,7 @@ class TopCategoriesFormType extends AbstractType
     {
         $categoryPaths = $this->categoryFacade->getFullPathsIndexedByIdsForDomain(
             $options['domain_id'],
-            $options['locale']
+            $options['locale'],
         );
 
         $builder
@@ -44,7 +44,7 @@ class TopCategoriesFormType extends AbstractType
                         'required' => false,
                     ])
                     ->addViewTransformer($this->removeDuplicatesTransformer)
-                    ->addModelTransformer($this->categoriesIdsToCategoriesTransformer)
+                    ->addModelTransformer($this->categoriesIdsToCategoriesTransformer),
             )
             ->add('save', SubmitType::class);
     }

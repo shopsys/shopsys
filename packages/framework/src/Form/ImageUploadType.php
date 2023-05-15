@@ -31,7 +31,7 @@ class ImageUploadType extends AbstractType
     public function __construct(
         private readonly ImageFacade $imageFacade,
         private readonly ImagesIdsToImagesTransformer $imagesIdsToImagesTransformer,
-        private readonly ImageConfig $imageConfig
+        private readonly ImageConfig $imageConfig,
     ) {
     }
 
@@ -60,9 +60,9 @@ class ImageUploadType extends AbstractType
                     [
                         new FileAllowedExtension(['extensions' => $options['extensions']]),
                     ],
-                    $fileConstraints
+                    $fileConstraints,
                 );
-            }
+            },
         );
     }
 
@@ -91,7 +91,7 @@ class ImageUploadType extends AbstractType
             $builder->create('orderedImages', CollectionType::class, [
                 'required' => false,
                 'entry_type' => HiddenType::class,
-            ])->addModelTransformer($this->imagesIdsToImagesTransformer)
+            ])->addModelTransformer($this->imagesIdsToImagesTransformer),
         );
         $builder->add('imagesToDelete', ChoiceType::class, [
             'required' => false,
@@ -139,7 +139,7 @@ class ImageUploadType extends AbstractType
                             ],
                         ],
                     ],
-                ])
+                ]),
             );
     }
 

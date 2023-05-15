@@ -27,7 +27,7 @@ class CartCest
         ProductDetailPage $productDetailPage,
         CartBoxPage $cartBoxPage,
         AcceptanceTester $me,
-        FloatingWindowPage $floatingWindowPage
+        FloatingWindowPage $floatingWindowPage,
     ) {
         $me->wantTo('have more pieces of the same product as one item in cart');
         // 22-sencor-sle-22f46dm4-hello-kitty
@@ -58,7 +58,7 @@ class CartCest
         ProductListPage $productListPage,
         CartBoxPage $cartBoxPage,
         AcceptanceTester $me,
-        FloatingWindowPage $floatingWindowPage
+        FloatingWindowPage $floatingWindowPage,
     ) {
         $me->wantTo('add product to cart from product list');
         // tv-audio
@@ -86,7 +86,7 @@ class CartCest
         HomepagePage $homepagePage,
         CartBoxPage $cartBoxPage,
         AcceptanceTester $me,
-        FloatingWindowPage $floatingWindowPage
+        FloatingWindowPage $floatingWindowPage,
     ) {
         $me->wantTo('add product to cart from homepage');
         $me->amOnPage('/');
@@ -113,7 +113,7 @@ class CartCest
         CartBoxPage $cartBoxPage,
         AcceptanceTester $me,
         FloatingWindowPage $floatingWindowPage,
-        CartPage $cartPage
+        CartPage $cartPage,
     ) {
         $me->wantTo('add product to cart from product detail');
         // 22-sencor-sle-22f46dm4-hello-kitty
@@ -138,7 +138,7 @@ class CartCest
     public function testChangeCartItemAndRecalculatePrice(
         CartPage $cartPage,
         ProductDetailPage $productDetailPage,
-        AcceptanceTester $me
+        AcceptanceTester $me,
     ) {
         $me->wantTo('change items in cart and recalculate price');
 
@@ -166,7 +166,7 @@ class CartCest
     public function testRemovingItemsFromCart(
         CartPage $cartPage,
         ProductDetailPage $productDetailPage,
-        AcceptanceTester $me
+        AcceptanceTester $me,
     ) {
         $me->wantTo('add some items to cart and remove them');
 
@@ -190,7 +190,7 @@ class CartCest
             Translator::DEFAULT_TRANSLATION_DOMAIN,
             [
                 '%url%' => '',
-            ]
+            ],
         );
     }
 
@@ -206,7 +206,7 @@ class CartCest
         CartBoxPage $cartBoxPage,
         ProductDetailPage $productDetailPage,
         AcceptanceTester $me,
-        FloatingWindowPage $floatingWindowPage
+        FloatingWindowPage $floatingWindowPage,
     ) {
         $me->wantTo('add distinct products to cart');
 
@@ -235,7 +235,7 @@ class CartCest
     public function testPricingInCart(
         CartPage $cartPage,
         ProductDetailPage $productDetailPage,
-        AcceptanceTester $me
+        AcceptanceTester $me,
     ) {
         $me->wantTo('see that prices of products in cart are calculated well');
 
@@ -268,7 +268,7 @@ class CartCest
     public function testPromoCodeFlowInCart(
         CartPage $cartPage,
         ProductDetailPage $productDetailPage,
-        AcceptanceTester $me
+        AcceptanceTester $me,
     ) {
         $me->wantTo('see that flow of promocode in cart is correct');
 

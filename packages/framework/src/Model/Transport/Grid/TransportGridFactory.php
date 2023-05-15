@@ -26,7 +26,7 @@ class TransportGridFactory implements GridFactoryInterface
         protected readonly TransportRepository $transportRepository,
         protected readonly Localization $localization,
         protected readonly TransportFacade $transportFacade,
-        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 
@@ -46,7 +46,7 @@ class TransportGridFactory implements GridFactoryInterface
                 $transport = $this->transportRepository->findById($row['t']['id']);
                 $row['displayPrice'] = $this->getDisplayPrice($transport);
                 return $row;
-            }
+            },
         );
 
         $grid = $this->gridFactory->create('transportList', $dataSource);
@@ -72,7 +72,7 @@ class TransportGridFactory implements GridFactoryInterface
     protected function getDisplayPrice(Transport $transport)
     {
         $transportBasePricesIndexedByDomainId = $this->transportFacade->getIndependentBasePricesIndexedByDomainId(
-            $transport
+            $transport,
         );
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         return $transportBasePricesIndexedByDomainId[$domainId]->getPriceWithVat();

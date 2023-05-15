@@ -27,7 +27,7 @@ class HeurekaProductDataBatchLoader
     public function __construct(
         protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
         protected readonly ProductParametersBatchLoader $productParametersBatchLoader,
-        protected readonly HeurekaProductDomainFacade $heurekaProductDomainFacade
+        protected readonly HeurekaProductDomainFacade $heurekaProductDomainFacade,
     ) {
     }
 
@@ -42,7 +42,7 @@ class HeurekaProductDataBatchLoader
 
         $heurekaProductDomainByProductId = $this->heurekaProductDomainFacade->getHeurekaProductDomainsByProductsAndDomainIndexedByProductId(
             $products,
-            $domainConfig
+            $domainConfig,
         );
 
         foreach ($products as $product) {

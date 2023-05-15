@@ -43,7 +43,7 @@ class Version20190611114955 extends AbstractMigration
     {
         $this->sql('UPDATE order_items SET total_price_with_vat = price_with_vat * quantity');
         $this->sql(
-            'UPDATE order_items SET total_price_without_vat = total_price_with_vat - ROUND(total_price_with_vat * ROUND(vat_percent / (100 + vat_percent), 4), 2)'
+            'UPDATE order_items SET total_price_without_vat = total_price_with_vat - ROUND(total_price_with_vat * ROUND(vat_percent / (100 + vat_percent), 4), 2)',
         );
     }
 
@@ -61,7 +61,7 @@ class Version20190611114955 extends AbstractMigration
                 GROUP BY order_id
             ) order_item_total_prices ON order_item_total_prices.order_id = o.id
             WHERE o.total_price_with_vat != order_item_total_prices.with_vat OR o.total_price_without_vat != order_item_total_prices.without_vat
-            ORDER BY o.id'
+            ORDER BY o.id',
         );
         $incorrectOrderCount = $result->rowCount();
 
@@ -71,7 +71,7 @@ class Version20190611114955 extends AbstractMigration
 
         $message = sprintf(
             'There are %d orders in your DB where the order item total prices do not add up to the total price of the order:',
-            $incorrectOrderCount
+            $incorrectOrderCount,
         );
 
         for ($i = 0; $i < min($incorrectOrderCount, static::MAX_LISTED_ORDERS); $i++) {
@@ -79,7 +79,7 @@ class Version20190611114955 extends AbstractMigration
 
             $message .= sprintf(
                 "\n  - ID %d: order total %s, sum %s (with VAT); order total %s, sum %s (without VAT)",
-                ...$incorrectOrder
+                ...$incorrectOrder,
             );
         }
 

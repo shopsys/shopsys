@@ -25,7 +25,7 @@ class InputPriceCalculation
             $inputPrice = $basePriceWithVat->round(static::INPUT_PRICE_SCALE);
         } else {
             throw new InvalidInputPriceTypeException(
-                sprintf('Input price type "%s" is not valid', $inputPriceType)
+                sprintf('Input price type "%s" is not valid', $inputPriceType),
             );
         }
 

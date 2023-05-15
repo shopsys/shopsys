@@ -18,7 +18,7 @@ class DomainSubscriberTest extends TestCase
         $event = new RequestEvent(
             $this->createMock(HttpKernelInterface::class),
             new Request(),
-            HttpKernelInterface::SUB_REQUEST
+            HttpKernelInterface::SUB_REQUEST,
         );
 
         $settingMock = $this->createMock(Setting::class);
@@ -34,7 +34,7 @@ class DomainSubscriberTest extends TestCase
         $event = new RequestEvent(
             $this->createMock(HttpKernelInterface::class),
             new Request(),
-            HttpKernelInterface::MASTER_REQUEST
+            HttpKernelInterface::MASTER_REQUEST,
         );
 
         $domainMock = $this->getMockBuilder(Domain::class)
@@ -52,7 +52,7 @@ class DomainSubscriberTest extends TestCase
         $event = new RequestEvent(
             $this->createMock(HttpKernelInterface::class),
             new Request(),
-            HttpKernelInterface::MASTER_REQUEST
+            HttpKernelInterface::MASTER_REQUEST,
         );
 
         $exception = new NoDomainSelectedException();

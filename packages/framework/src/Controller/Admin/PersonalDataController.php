@@ -16,7 +16,7 @@ class PersonalDataController extends AdminBaseController
      */
     public function __construct(
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
-        protected readonly Setting $setting
+        protected readonly Setting $setting,
     ) {
     }
 
@@ -29,11 +29,11 @@ class PersonalDataController extends AdminBaseController
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $personalDataDisplaySiteContent = $this->setting->getForDomain(
             Setting::PERSONAL_DATA_DISPLAY_SITE_CONTENT,
-            $domainId
+            $domainId,
         );
         $personalDataExportSiteContent = $this->setting->getForDomain(
             Setting::PERSONAL_DATA_EXPORT_SITE_CONTENT,
-            $domainId
+            $domainId,
         );
 
         $form = $this->createForm(
@@ -41,7 +41,7 @@ class PersonalDataController extends AdminBaseController
             [
                 'personalDataDisplaySiteContent' => $personalDataDisplaySiteContent,
                 'personalDataExportSiteContent' => $personalDataExportSiteContent,
-            ]
+            ],
         );
         $form->handleRequest($request);
 
@@ -49,12 +49,12 @@ class PersonalDataController extends AdminBaseController
             $this->setting->setForDomain(
                 Setting::PERSONAL_DATA_DISPLAY_SITE_CONTENT,
                 $form->getData()['personalDataDisplaySiteContent'],
-                $domainId
+                $domainId,
             );
             $this->setting->setForDomain(
                 Setting::PERSONAL_DATA_EXPORT_SITE_CONTENT,
                 $form->getData()['personalDataExportSiteContent'],
-                $domainId
+                $domainId,
             );
             $this->addSuccessFlash(t('Personal data site content updated successfully'));
         }

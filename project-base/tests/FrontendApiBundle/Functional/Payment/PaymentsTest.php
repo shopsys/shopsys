@@ -46,7 +46,7 @@ class PaymentsTest extends GraphQlTestCase
                             'Quick, cheap and reliable!',
                             [],
                             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                            $this->getLocaleForFirstDomain()
+                            $this->getLocaleForFirstDomain(),
                         ),
                         'instruction' => null,
                         'position' => 0,

@@ -18,7 +18,7 @@ class ScriptDataFixture extends AbstractReferenceFixture
      */
     public function __construct(
         private readonly ScriptFacade $scriptFacade,
-        private readonly ScriptDataFactoryInterface $scriptDataFactory
+        private readonly ScriptDataFactoryInterface $scriptDataFactory,
     ) {
     }
 

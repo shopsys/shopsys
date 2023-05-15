@@ -13,7 +13,7 @@ class InputPriceLabelExtension extends AbstractExtension
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      */
     public function __construct(
-        protected readonly PricingSetting $pricingSetting
+        protected readonly PricingSetting $pricingSetting,
     ) {
     }
 
@@ -43,7 +43,7 @@ class InputPriceLabelExtension extends AbstractExtension
 
             default:
                 throw new InvalidInputPriceTypeException(
-                    'Invalid input price type: ' . $inputPriceType
+                    'Invalid input price type: ' . $inputPriceType,
                 );
         }
     }

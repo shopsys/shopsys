@@ -23,7 +23,7 @@ final class MissingParamAnnotationsFixer extends AbstractMissingAnnotationsFixer
     {
         return new FixerDefinition(
             'Methods and functions have to have @param annotation for all params',
-            [new CodeSample('function someFunction(int $value) {}')]
+            [new CodeSample('function someFunction(int $value) {}')],
         );
     }
 
@@ -42,7 +42,7 @@ final class MissingParamAnnotationsFixer extends AbstractMissingAnnotationsFixer
         if ($docToken !== null) {
             $argumentAnalyses = $this->filterArgumentAnalysesFromExistingParamAnnotations(
                 $argumentAnalyses,
-                $docToken
+                $docToken,
             );
         }
 
@@ -96,7 +96,7 @@ final class MissingParamAnnotationsFixer extends AbstractMissingAnnotationsFixer
             $type = $this->phpToDocTypeTransformer->transform(
                 $tokens,
                 $argumentAnalysis->getTypeAnalysis(),
-                $argumentAnalysis->getDefault()
+                $argumentAnalysis->getDefault(),
             );
 
             $lines[] = new Line(sprintf(
@@ -104,7 +104,7 @@ final class MissingParamAnnotationsFixer extends AbstractMissingAnnotationsFixer
                 $indent,
                 $type ?: 'mixed',
                 $argumentAnalysis->getName(),
-                $this->whitespacesFixerConfig->getLineEnding()
+                $this->whitespacesFixerConfig->getLineEnding(),
             ));
         }
 

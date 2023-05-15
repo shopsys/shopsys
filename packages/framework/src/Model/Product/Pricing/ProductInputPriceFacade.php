@@ -32,7 +32,7 @@ class ProductInputPriceFacade
         protected readonly PricingSetting $pricingSetting,
         protected readonly ProductManualInputPriceRepository $productManualInputPriceRepository,
         protected readonly ProductRepository $productRepository,
-        protected readonly ProductInputPriceRecalculator $productInputPriceRecalculator
+        protected readonly ProductInputPriceRecalculator $productInputPriceRecalculator,
     ) {
     }
 
@@ -88,7 +88,7 @@ class ProductInputPriceFacade
                 $this->productInputPriceRecalculator->recalculateInputPriceForNewVatPercent(
                     $productManualInputPrice,
                     $inputPriceType,
-                    $newVat->getPercent()
+                    $newVat->getPercent(),
                 );
 
                 $product->changeVatForDomain($newVat, $domainId);

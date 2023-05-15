@@ -73,7 +73,7 @@ class OrderRepository
         if ($order === null) {
             throw new OrderNotFoundException(sprintf(
                 'Order with UUID \'%s\' not found.',
-                $uuid
+                $uuid,
             ));
         }
 

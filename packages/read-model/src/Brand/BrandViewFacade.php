@@ -17,7 +17,7 @@ class BrandViewFacade implements BrandViewFacadeInterface
     public function __construct(
         protected readonly ProductFacade $productFacade,
         protected readonly BrandViewFactory $brandViewFactory,
-        protected readonly FriendlyUrlFacade $friendlyUrlFacade
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
     }
 
@@ -39,8 +39,8 @@ class BrandViewFacade implements BrandViewFacadeInterface
             $brand,
             $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityIdOnCurrentDomain(
                 'front_brand_detail',
-                $brand->getId()
-            )
+                $brand->getId(),
+            ),
         );
     }
 }

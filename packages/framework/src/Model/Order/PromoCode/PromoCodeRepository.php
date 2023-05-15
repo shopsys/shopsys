@@ -50,7 +50,7 @@ class PromoCodeRepository
 
         if ($promoCode === null) {
             throw new PromoCodeNotFoundException(
-                'Promo code with ID ' . $promoCodeId . ' not found.'
+                'Promo code with ID ' . $promoCodeId . ' not found.',
             );
         }
 

@@ -26,7 +26,7 @@ class HeaderLinksTransformer
             $previousUrl = $this->createUrlWithParameter(
                 $baseUrl,
                 'page',
-                (string)$paginationResult->getPreviousPage()
+                (string)$paginationResult->getPreviousPage(),
             );
 
             $links = $links

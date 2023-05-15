@@ -18,7 +18,7 @@ class ParameterViewFactory
             $productParameterValue->getParameter()->getId(),
             $productParameterValue->getParameter()->getName(),
             $productParameterValue->getValue()->getId(),
-            $productParameterValue->getValue()->getText()
+            $productParameterValue->getValue()->getText(),
         );
     }
 
@@ -32,7 +32,7 @@ class ParameterViewFactory
             $parameterArray['parameter_id'],
             $parameterArray['parameter_name'],
             $parameterArray['parameter_value_id'],
-            $parameterArray['parameter_value_text']
+            $parameterArray['parameter_value_text'],
         );
     }
 }

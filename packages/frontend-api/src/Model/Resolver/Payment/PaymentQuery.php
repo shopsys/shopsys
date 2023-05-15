@@ -19,7 +19,7 @@ class PaymentQuery extends AbstractQuery
      */
     public function __construct(
         protected readonly PaymentFacade $paymentFacade,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 

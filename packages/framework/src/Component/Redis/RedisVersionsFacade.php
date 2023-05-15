@@ -39,7 +39,7 @@ class RedisVersionsFacade
                 if (strpos($key, $currentVersionPrefix) === false) {
                     $keyWithoutPrefix = substr(
                         $key,
-                        strlen($prefix)
+                        strlen($prefix),
                     ); // redis returns keys including prefix but needs them without prefix during removing
                     $toRemove[] = $keyWithoutPrefix;
                 }

@@ -44,7 +44,7 @@ class MigrationsExecutor implements Executor
     public function __construct(
         DependencyFactory $dependencyFactory,
         protected readonly LoggerInterface $logger,
-        protected readonly Stopwatch $stopwatch
+        protected readonly Stopwatch $stopwatch,
     ) {
         $this->schemaDiffProvider = $dependencyFactory->getSchemaDiffProvider();
         $this->metadataStorage = $dependencyFactory->getMetadataStorage();
@@ -69,7 +69,7 @@ class MigrationsExecutor implements Executor
         $this->dispatcher->dispatchVersionEvent(
             Events::onMigrationsVersionExecuting,
             $plan,
-            $migratorConfiguration
+            $migratorConfiguration,
         );
 
         $result = new ExecutionResult($plan->getVersion(), $plan->getDirection(), new DateTimeImmutable());
@@ -87,7 +87,7 @@ class MigrationsExecutor implements Executor
     protected function executeMigration(
         MigrationPlan $plan,
         ExecutionResult $result,
-        MigratorConfiguration $configuration
+        MigratorConfiguration $configuration,
     ): void {
         $stopwatchEvent = $this->stopwatch->start('execute');
 
@@ -131,7 +131,7 @@ class MigrationsExecutor implements Executor
         $this->dispatcher->dispatchVersionEvent(
             Events::onMigrationsVersionExecuted,
             $plan,
-            $configuration
+            $configuration,
         );
     }
 }

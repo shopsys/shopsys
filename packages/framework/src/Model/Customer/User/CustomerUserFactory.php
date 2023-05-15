@@ -12,7 +12,7 @@ class CustomerUserFactory implements CustomerUserFactoryInterface
      */
     public function __construct(
         protected readonly EntityNameResolver $entityNameResolver,
-        protected readonly CustomerUserPasswordFacade $customerUserPasswordFacade
+        protected readonly CustomerUserPasswordFacade $customerUserPasswordFacade,
     ) {
     }
 

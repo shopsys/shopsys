@@ -18,7 +18,7 @@ class DatabaseSchemaFacade
         protected readonly EntityManagerInterface $em,
         protected readonly SchemaDiffFilter $schemaDiffFilter,
         protected readonly Comparator $comparator,
-        protected readonly SchemaTool $schemaTool
+        protected readonly SchemaTool $schemaTool,
     ) {
     }
 

@@ -39,7 +39,7 @@ class RouterMatchCommandForDomain extends Command
     public function __construct(
         private readonly DomainChoiceHandler $domainChoiceHelper,
         private readonly RouterMatchCommand $routerMatchCommand,
-        private readonly KernelInterface $kernel
+        private readonly KernelInterface $kernel,
     ) {
         parent::__construct();
     }
@@ -67,7 +67,7 @@ or
 
   <info>php %command.full_name% /foo --method POST --scheme https --host symfony.com --verbose</info>
 
-EOF
+EOF,
             )
         ;
     }

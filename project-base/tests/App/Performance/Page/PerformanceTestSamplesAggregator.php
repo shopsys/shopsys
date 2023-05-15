@@ -11,7 +11,7 @@ class PerformanceTestSamplesAggregator
      * @return \Tests\App\Performance\Page\PerformanceTestSample[]
      */
     public function getPerformanceTestSamplesAggregatedByUrl(
-        array $performanceTestSamples
+        array $performanceTestSamples,
     ) {
         $aggregatedPerformanceTestSamples = [];
 
@@ -49,7 +49,7 @@ class PerformanceTestSamplesAggregator
                 $totalDuration / $samplesCount,
                 $maxQueryCount,
                 $worstStatusCode,
-                $isSuccessful
+                $isSuccessful,
             );
         }
 

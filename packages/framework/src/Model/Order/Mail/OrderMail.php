@@ -53,7 +53,7 @@ class OrderMail implements MessageFactoryInterface
         protected readonly Domain $domain,
         protected readonly PriceExtension $priceExtension,
         protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
-        protected readonly OrderUrlGenerator $orderUrlGenerator
+        protected readonly OrderUrlGenerator $orderUrlGenerator,
     ) {
     }
 
@@ -72,7 +72,7 @@ class OrderMail implements MessageFactoryInterface
             $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL, $order->getDomainId()),
             $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL_NAME, $order->getDomainId()),
             $this->getVariablesReplacementsForBody($order),
-            $this->getVariablesReplacementsForSubject($order)
+            $this->getVariablesReplacementsForSubject($order),
         );
     }
 
@@ -154,7 +154,7 @@ class OrderMail implements MessageFactoryInterface
         return $this->priceExtension->priceTextWithCurrencyByCurrencyIdAndLocaleFilter(
             $order->getTotalPriceWithVat(),
             $order->getCurrency()->getId(),
-            $this->getDomainLocaleByOrder($order)
+            $this->getDomainLocaleByOrder($order),
         );
     }
 
@@ -166,7 +166,7 @@ class OrderMail implements MessageFactoryInterface
     {
         return $this->dateTimeFormatterExtension->formatDateTime(
             $order->getCreatedAt(),
-            $this->getDomainLocaleByOrder($order)
+            $this->getDomainLocaleByOrder($order),
         );
     }
 
@@ -201,7 +201,7 @@ class OrderMail implements MessageFactoryInterface
     protected function getProductsHtmlTable(Order $order)
     {
         $orderItemTotalPricesById = $this->orderItemPriceCalculation->calculateTotalPricesIndexedById(
-            $order->getItems()
+            $order->getItems(),
         );
 
         return $this->twig->render('@ShopsysFramework/Mail/Order/products.html.twig', [

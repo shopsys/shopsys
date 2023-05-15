@@ -24,7 +24,7 @@ class MethodAnnotationsFactory
     public function __construct(
         protected readonly AnnotationsReplacementsMap $annotationsReplacementsMap,
         protected readonly AnnotationsReplacer $annotationsReplacer,
-        protected readonly DocBlockParser $docBlockParser
+        protected readonly DocBlockParser $docBlockParser,
     ) {
     }
 
@@ -43,7 +43,7 @@ class MethodAnnotationsFactory
      */
     public function getProjectClassNecessaryMethodAnnotationsLines(
         ReflectionClass $frameworkClassBetterReflection,
-        ReflectionClass $projectClassBetterReflection
+        ReflectionClass $projectClassBetterReflection,
     ): string {
         $projectClassDocBlock = $projectClassBetterReflection->getDocComment();
         $methodAnnotationsLines = '';
@@ -64,7 +64,7 @@ class MethodAnnotationsFactory
      */
     public function getMethodAnnotationLine(
         ReflectionMethod $reflectionMethodFromFrameworkClass,
-        ReflectionClass $projectClassBetterReflection
+        ReflectionClass $projectClassBetterReflection,
     ): string {
         foreach ($this->annotationsReplacementsMap->getPatterns() as $frameworkClassPattern) {
             $methodName = $reflectionMethodFromFrameworkClass->getName();
@@ -83,24 +83,24 @@ class MethodAnnotationsFactory
 
             $methodReturnTypeIsExtended = $this->methodReturningTypeIsExtendedInProject(
                 $frameworkClassPattern,
-                $docBlockReturnTypes
+                $docBlockReturnTypes,
             );
 
             $methodParameterTypeIsExtended = $this->methodParameterTypeIsExtendedInProject(
                 $frameworkClassPattern,
-                $reflectionMethodFromFrameworkClass->getParameters()
+                $reflectionMethodFromFrameworkClass->getParameters(),
             );
 
             if ($methodReturnTypeIsExtended || $methodParameterTypeIsExtended) {
                 $optionalStaticKeyword = $reflectionMethodFromFrameworkClass->isStatic() ? 'static ' : '';
 
                 $replaceReturnType = $this->annotationsReplacer->replaceInMethodReturnType(
-                    $reflectionMethodFromFrameworkClass
+                    $reflectionMethodFromFrameworkClass,
                 );
 
                 $returnType = $replaceReturnType !== '' ? $replaceReturnType . ' ' : '';
                 $parameterNamesWithTypes = $this->getMethodParameterNamesWithTypes(
-                    $reflectionMethodFromFrameworkClass
+                    $reflectionMethodFromFrameworkClass,
                 );
 
                 return sprintf(
@@ -108,7 +108,7 @@ class MethodAnnotationsFactory
                     $optionalStaticKeyword,
                     $returnType,
                     $methodName,
-                    $parameterNamesWithTypes
+                    $parameterNamesWithTypes,
                 );
             }
         }
@@ -165,7 +165,7 @@ class MethodAnnotationsFactory
      */
     protected function methodReturningTypeIsExtendedInProject(
         string $frameworkClassPattern,
-        array $docBlockReturnTypes
+        array $docBlockReturnTypes,
     ): bool {
         foreach ($docBlockReturnTypes as $docBlockReturnType) {
             if (preg_match($frameworkClassPattern, (string)$docBlockReturnType)) {
@@ -183,7 +183,7 @@ class MethodAnnotationsFactory
      */
     protected function methodParameterTypeIsExtendedInProject(
         string $frameworkClassPattern,
-        array $methodParameters
+        array $methodParameters,
     ): bool {
         foreach ($methodParameters as $methodParameter) {
             $type = $this->docBlockParser->getParameterType($methodParameter);

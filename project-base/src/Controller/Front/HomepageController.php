@@ -21,7 +21,7 @@ class HomepageController extends FrontBaseController
         private readonly SliderItemFacade $sliderItemFacade,
         private readonly SeoSettingFacade $seoSettingFacade,
         private readonly Domain $domain,
-        private readonly ListedProductViewFacadeInterface $listedProductViewFacade
+        private readonly ListedProductViewFacadeInterface $listedProductViewFacade,
     ) {
     }
 

@@ -29,7 +29,7 @@ class NotInArrayValidator extends ConstraintValidator
         ) {
             throw new UnexpectedTypeException(
                 $constraint->array,
-                'array or Traversable and ArrayAccess'
+                'array or Traversable and ArrayAccess',
             );
         }
 
@@ -38,7 +38,7 @@ class NotInArrayValidator extends ConstraintValidator
                 $constraint->message,
                 [
                     '{{ array }}' => implode(', ', $constraint->array),
-                ]
+                ],
             );
         }
     }

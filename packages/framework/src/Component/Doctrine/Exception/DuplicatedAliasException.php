@@ -19,19 +19,19 @@ class DuplicatedAliasException extends LogicException
         string $alias,
         string $aliasingClass,
         string $aliasedClass,
-        ?Throwable $previous = null
+        ?Throwable $previous = null,
     ) {
         $message = sprintf(
             'You cannot use "%s" as "%s" because this alias is already assigned to "%s" in the same QueryBuilder instance.',
             $aliasingClass,
             $alias,
-            $aliasedClass
+            $aliasedClass,
         );
 
         parent::__construct(
             $message,
             0,
-            $previous
+            $previous,
         );
     }
 }

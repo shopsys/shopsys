@@ -148,7 +148,7 @@ class ErrorPagesFacade
             throw new BadErrorPageStatusCodeException(
                 $errorPageUrl,
                 $expectedStatusCode,
-                $errorPageResponse->getStatusCode()
+                $errorPageResponse->getStatusCode(),
             );
         }
 

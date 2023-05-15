@@ -13,7 +13,7 @@ class PaymentsQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      */
     public function __construct(
-        protected readonly PaymentFacade $paymentFacade
+        protected readonly PaymentFacade $paymentFacade,
     ) {
     }
 

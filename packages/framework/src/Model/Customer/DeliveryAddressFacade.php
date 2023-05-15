@@ -16,7 +16,7 @@ class DeliveryAddressFacade
     public function __construct(
         protected readonly DeliveryAddressFactory $deliveryAddressFactory,
         protected readonly DeliveryAddressRepository $deliveryAddressRepository,
-        protected readonly EntityManagerInterface $em
+        protected readonly EntityManagerInterface $em,
     ) {
     }
 

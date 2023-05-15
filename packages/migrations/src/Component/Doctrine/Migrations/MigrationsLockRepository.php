@@ -46,7 +46,7 @@ class MigrationsLockRepository implements MigrationsRepository
      */
     public function __construct(
         protected readonly MigrationsLock $migrationsLock,
-        DependencyFactory $dependencyFactory
+        DependencyFactory $dependencyFactory,
     ) {
         $configuration = $dependencyFactory->getConfiguration();
         $this->migrationDirectories = $configuration->getMigrationDirectories();
@@ -98,7 +98,7 @@ class MigrationsLockRepository implements MigrationsRepository
         if (array_key_exists((string)$version, $this->availableMigrations)) {
             throw DuplicateMigrationVersion::new(
                 (string)$version,
-                get_class($migration)
+                get_class($migration),
             );
         }
 
@@ -150,7 +150,7 @@ class MigrationsLockRepository implements MigrationsRepository
         foreach ($this->migrationDirectories as $namespace => $path) {
             $migrations = $this->migrationFinder->findMigrations(
                 $path,
-                $namespace
+                $namespace,
             );
             $this->registerMigrations($migrations);
         }

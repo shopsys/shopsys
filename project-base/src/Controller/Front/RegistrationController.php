@@ -34,7 +34,7 @@ class RegistrationController extends FrontBaseController
         CustomerUserDataFactoryInterface $customerUserDataFactory,
         private readonly CustomerUserFacade $customerUserFacade,
         private readonly Authenticator $authenticator,
-        BaseLegalConditionsFacade $legalConditionsFacade
+        BaseLegalConditionsFacade $legalConditionsFacade,
     ) {
         $this->customerUserDataFactory = $customerUserDataFactory;
         $this->legalConditionsFacade = $legalConditionsFacade;

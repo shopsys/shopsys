@@ -43,7 +43,7 @@ class DocBlockParserTest extends TestCase
      */
     public function testGetMethodParamTypeFromPhpDoc(
         ReflectionParameter $reflectionParameter,
-        string $paramTypeString
+        string $paramTypeString,
     ): void {
         $this->assertEquals($this->docBlockParser->getParameterType($reflectionParameter), $paramTypeString);
     }
@@ -55,7 +55,7 @@ class DocBlockParserTest extends TestCase
      */
     public function testGetPropertyTypeFromPhpDoc(
         ReflectionProperty $reflectionProperty,
-        string $paramTypeString
+        string $paramTypeString,
     ): void {
         $this->assertEquals($this->docBlockParser->getPropertyType($reflectionProperty), $paramTypeString);
     }

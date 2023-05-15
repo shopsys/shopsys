@@ -25,7 +25,7 @@ class TransportCanBeUsedValidator extends ConstraintValidator
         protected readonly TransportFacade $transportFacade,
         protected readonly Domain $domain,
         protected readonly TransportPriceCalculation $transportPriceCalculation,
-        protected readonly CurrencyFacade $currencyFacade
+        protected readonly CurrencyFacade $currencyFacade,
     ) {
     }
 
@@ -38,7 +38,7 @@ class TransportCanBeUsedValidator extends ConstraintValidator
         if (!$constraint instanceof TransportCanBeUsed) {
             throw new UnexpectedTypeException(
                 $constraint,
-                TransportCanBeUsed::class
+                TransportCanBeUsed::class,
             );
         }
         // Field types and content is assured by GraphQL type definition
@@ -56,7 +56,7 @@ class TransportCanBeUsedValidator extends ConstraintValidator
             $this->addViolationWithCodeToContext(
                 $constraint->transportNotFoundMessage,
                 TransportCanBeUsed::TRANSPORT_NOT_FOUND_ERROR,
-                $uuid
+                $uuid,
             );
             return;
         }
@@ -64,7 +64,7 @@ class TransportCanBeUsedValidator extends ConstraintValidator
         $transportPrice = $this->transportPriceCalculation->calculateIndependentPrice(
             $transportEntity,
             $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId()),
-            $this->domain->getId()
+            $this->domain->getId(),
         );
 
         if ($transportPrice->getPriceWithoutVat()->equals($priceWithoutVat) &&
@@ -77,7 +77,7 @@ class TransportCanBeUsedValidator extends ConstraintValidator
         $this->addViolationWithCodeToContext(
             $constraint->pricesDoesNotMatchMessage,
             TransportCanBeUsed::PRICES_DOES_NOT_MATCH_ERROR,
-            $uuid
+            $uuid,
         );
     }
 

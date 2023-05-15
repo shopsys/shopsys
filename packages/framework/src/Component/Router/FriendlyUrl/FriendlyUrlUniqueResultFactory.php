@@ -22,7 +22,7 @@ class FriendlyUrlUniqueResultFactory
         int $attempt,
         FriendlyUrl $friendlyUrl,
         string $entityName,
-        ?array $matchedRouteData = null
+        ?array $matchedRouteData = null,
     ) {
         if ($matchedRouteData === null) {
             return new FriendlyUrlUniqueResult(true, $friendlyUrl);
@@ -39,7 +39,7 @@ class FriendlyUrlUniqueResultFactory
             $friendlyUrl->getEntityId(),
             (string)$entityName,
             $friendlyUrl->getDomainId(),
-            $attempt + 1 // if URL is duplicate, try again with "url-2", "url-3" and so on
+            $attempt + 1, // if URL is duplicate, try again with "url-2", "url-3" and so on
         );
 
         return new FriendlyUrlUniqueResult(false, $newIndexedFriendlyUrl);

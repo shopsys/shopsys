@@ -31,7 +31,7 @@ class CustomerUserFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter first name']),
                     new Constraints\Length(
-                        ['max' => 100, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters']
+                        ['max' => 100, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters'],
                     ),
                 ],
             ])
@@ -39,7 +39,7 @@ class CustomerUserFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter last name']),
                     new Constraints\Length(
-                        ['max' => 100, 'maxMessage' => 'Last name cannot be longer than {{ limit }} characters']
+                        ['max' => 100, 'maxMessage' => 'Last name cannot be longer than {{ limit }} characters'],
                     ),
                 ],
             ])
@@ -65,7 +65,7 @@ class CustomerUserFormType extends AbstractType
                 'first_options' => [
                     'constraints' => [
                         new Constraints\Length(
-                            ['min' => CustomerUserPasswordFacade::MINIMUM_PASSWORD_LENGTH, 'minMessage' => 'Password must be at least {{ limit }} characters long']
+                            ['min' => CustomerUserPasswordFacade::MINIMUM_PASSWORD_LENGTH, 'minMessage' => 'Password must be at least {{ limit }} characters long'],
                         ),
                     ],
                 ],

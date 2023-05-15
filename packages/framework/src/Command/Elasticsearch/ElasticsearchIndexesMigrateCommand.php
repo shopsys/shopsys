@@ -39,7 +39,7 @@ class ElasticsearchIndexesMigrateCommand extends AbstractElasticsearchIndexComma
     {
         return sprintf(
             'Which index should be migrated? Available indexes: "%s"',
-            implode(', ', $this->indexRegistry->getRegisteredIndexNames())
+            implode(', ', $this->indexRegistry->getRegisteredIndexNames()),
         );
     }
 

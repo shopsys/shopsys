@@ -163,7 +163,7 @@ class CountryFormTypeTest extends TypeTestCase
                     new DomainsType($this->domain),
                     new MultidomainType($this->domain),
                 ],
-                []
+                [],
             ),
         ];
     }

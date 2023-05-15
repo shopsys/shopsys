@@ -37,7 +37,7 @@ class BaseClass5
         bool $true = true,
         bool $false = false,
         ?string $null = null,
-        array $emptyArray = []
+        array $emptyArray = [],
     ) {
     }
 }

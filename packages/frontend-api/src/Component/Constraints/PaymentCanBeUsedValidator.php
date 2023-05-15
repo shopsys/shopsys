@@ -25,7 +25,7 @@ class PaymentCanBeUsedValidator extends ConstraintValidator
         protected readonly PaymentFacade $paymentFacade,
         protected readonly Domain $domain,
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
-        protected readonly CurrencyFacade $currencyFacade
+        protected readonly CurrencyFacade $currencyFacade,
     ) {
     }
 
@@ -53,7 +53,7 @@ class PaymentCanBeUsedValidator extends ConstraintValidator
             $this->addViolationWithCodeToContext(
                 $constraint->paymentNotFoundMessage,
                 PaymentCanBeUsed::PAYMENT_NOT_FOUND_ERROR,
-                $uuid
+                $uuid,
             );
             return;
         }
@@ -61,7 +61,7 @@ class PaymentCanBeUsedValidator extends ConstraintValidator
         $paymentPrice = $this->paymentPriceCalculation->calculateIndependentPrice(
             $paymentEntity,
             $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId()),
-            $this->domain->getId()
+            $this->domain->getId(),
         );
 
         if ($paymentPrice->getPriceWithoutVat()->equals($priceWithoutVat) &&
@@ -74,7 +74,7 @@ class PaymentCanBeUsedValidator extends ConstraintValidator
         $this->addViolationWithCodeToContext(
             $constraint->pricesDoesNotMatchMessage,
             PaymentCanBeUsed::PRICES_DOES_NOT_MATCH_ERROR,
-            $uuid
+            $uuid,
         );
     }
 

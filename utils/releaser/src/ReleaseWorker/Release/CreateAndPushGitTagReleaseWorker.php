@@ -29,23 +29,23 @@ final class CreateAndPushGitTagReleaseWorker extends AbstractShopsysReleaseWorke
         $versionString = $version->getOriginalString();
         $this->processRunner->run('git tag ' . $versionString);
         $this->symfonyStyle->note(
-            sprintf('You need to push tag manually using "git push origin %s" command.', $versionString)
+            sprintf('You need to push tag manually using "git push origin %s" command.', $versionString),
         );
 
         $this->confirm(sprintf('Confirm that tag "%s" is pushed', $versionString));
         if ($this->currentBranchName === AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME) {
             $this->symfonyStyle->note(
-                'Rest assured, after you push the tagged master branch, the new tag will be propagated to packagist once the project is built and split on Heimdall automatically.'
+                'Rest assured, after you push the tagged master branch, the new tag will be propagated to packagist once the project is built and split on Heimdall automatically.',
             );
         } else {
             $this->symfonyStyle->note(
                 sprintf(
                     'After you push the tag, you need use to split the "%s" branch using "tool-monorepo-split" on Heimdall (http://heimdall:8080/view/Tools/job/tool-monorepo-split/)',
-                    $this->currentBranchName
-                )
+                    $this->currentBranchName,
+                ),
             );
             $this->symfonyStyle->note(
-                'Rest assured, after you split the branch, the new tag will be propagated to packagist automatically.'
+                'Rest assured, after you split the branch, the new tag will be propagated to packagist automatically.',
             );
             $this->confirm('Confirm the branch is split.');
         }

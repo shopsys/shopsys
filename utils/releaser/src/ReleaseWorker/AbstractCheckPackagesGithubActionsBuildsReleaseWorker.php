@@ -47,12 +47,12 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
     {
         $this->symfonyStyle->note('It is necessary to set Github token before checking Github Actions builds');
         $githubToken = $this->symfonyStyle->ask(
-            'Please enter no-scope Github token (https://github.com/settings/tokens/new)'
+            'Please enter no-scope Github token (https://github.com/settings/tokens/new)',
         );
         $statusForPackages = $this->githubActionsStatusReporter->getStatusForPackagesByOrganizationAndBranch(
             'shopsys',
             $initialBranchName,
-            $githubToken
+            $githubToken,
         );
 
         $isPassing = true;
@@ -66,7 +66,7 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
                     '"%s" package is failing. Go check why:%s%s',
                     $package,
                     PHP_EOL,
-                    sprintf('https://github.com/%s/actions', $package)
+                    sprintf('https://github.com/%s/actions', $package),
                 ));
             }
         }

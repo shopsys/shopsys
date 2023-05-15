@@ -15,7 +15,7 @@ class GoogleProductDomainFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly GoogleProductDomainRepository $googleProductDomainRepository,
-        protected readonly ProductRepository $productRepository
+        protected readonly ProductRepository $productRepository,
     ) {
     }
 
@@ -49,7 +49,7 @@ class GoogleProductDomainFacade
      */
     protected function removeOldGoogleProductDomains(
         array $existingGoogleProductDomains,
-        array $newGoogleProductDomainsData
+        array $newGoogleProductDomainsData,
     ) {
         $domainsIdsWithNewGoogleProductDomains = [];
         foreach ($newGoogleProductDomainsData as $newGoogleProductDomainData) {
@@ -76,7 +76,7 @@ class GoogleProductDomainFacade
 
         $existingGoogleProductDomain = $this->googleProductDomainRepository->findByProductIdAndDomainId(
             $productId,
-            $googleProductDomainData->domainId
+            $googleProductDomainData->domainId,
         );
 
         if ($existingGoogleProductDomain !== null) {

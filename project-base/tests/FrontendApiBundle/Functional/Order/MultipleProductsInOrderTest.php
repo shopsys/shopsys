@@ -27,7 +27,7 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
                     ],
                     'status' => t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'totalPrice' => AbstractOrderTestCase::getSerializedOrderTotalPriceByExpectedOrderItems(
-                        $expectedOrderItems
+                        $expectedOrderItems,
                     ),
                     'items' => $expectedOrderItems,
                     'firstName' => 'firstName',

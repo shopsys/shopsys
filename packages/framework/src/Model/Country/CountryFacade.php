@@ -17,7 +17,7 @@ class CountryFacade
         protected readonly EntityManagerInterface $em,
         protected readonly CountryRepository $countryRepository,
         protected readonly Domain $domain,
-        protected readonly CountryFactoryInterface $countryFactory
+        protected readonly CountryFactoryInterface $countryFactory,
     ) {
     }
 
@@ -94,7 +94,7 @@ class CountryFacade
     {
         return $this->countryRepository->getAllEnabledByDomainIdWithLocale(
             $this->domain->getId(),
-            $this->domain->getLocale()
+            $this->domain->getLocale(),
         );
     }
 

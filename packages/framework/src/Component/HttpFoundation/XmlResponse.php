@@ -20,7 +20,7 @@ class XmlResponse extends Response
 
         $disposition = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            $fileName
+            $fileName,
         );
 
         $response->headers->set('Content-Type', 'xml');

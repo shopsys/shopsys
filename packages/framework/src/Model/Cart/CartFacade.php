@@ -44,7 +44,7 @@ class CartFacade
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculation,
         protected readonly CartItemFactoryInterface $cartItemFactory,
         protected readonly CartRepository $cartRepository,
-        protected readonly CartWatcherFacade $cartWatcherFacade
+        protected readonly CartWatcherFacade $cartWatcherFacade,
     ) {
     }
 
@@ -58,7 +58,7 @@ class CartFacade
         $product = $this->productRepository->getSellableById(
             $productId,
             $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
         $cart = $this->getCartOfCurrentCustomerUserCreateIfNotExists();
 

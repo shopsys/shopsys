@@ -50,7 +50,7 @@ class Version20191108140919 extends AbstractMigration
                             [
                                 'tmpOriginalId' => $currentProductIdWithVat['vat_id'],
                                 'domainId' => $domainId,
-                            ]
+                            ],
                         )
                         ->fetchOne();
                 }
@@ -61,7 +61,7 @@ class Version20191108140919 extends AbstractMigration
                         'vatId' => $newVatId,
                         'productId' => $currentProductIdWithVat['id'],
                         'domainId' => $domainId,
-                    ]
+                    ],
                 );
             }
         }

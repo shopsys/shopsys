@@ -28,11 +28,11 @@ class ArticleRepository
         int $domainId,
         string $placement,
         int $limit,
-        int $offset
+        int $offset,
     ): array {
         $queryBuilder = $this->articleRepository->getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder(
             $domainId,
-            $placement
+            $placement,
         )
             ->setFirstResult($offset)
             ->setMaxResults($limit);
@@ -78,7 +78,7 @@ class ArticleRepository
     public function getVisibleListByDomainId(
         int $domainId,
         int $limit,
-        int $offset
+        int $offset,
     ): array {
         $queryBuilder = $this->articleRepository->getAllVisibleQueryBuilder()
             ->andWhere('a.domainId = :domainId')

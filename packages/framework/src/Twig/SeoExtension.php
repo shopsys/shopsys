@@ -15,7 +15,7 @@ class SeoExtension extends AbstractExtension
      */
     public function __construct(
         protected readonly SeoSettingFacade $seoSettingFacade,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 

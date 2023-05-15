@@ -20,11 +20,11 @@ class CustomerUserListAdminFacade
      */
     public function getCustomerUserListQueryBuilderByQuickSearchData(
         $domainId,
-        QuickSearchFormData $quickSearchData
+        QuickSearchFormData $quickSearchData,
     ) {
         return $this->customerUserRepository->getCustomerUserListQueryBuilderByQuickSearchData(
             $domainId,
-            $quickSearchData
+            $quickSearchData,
         );
     }
 }

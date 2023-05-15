@@ -49,7 +49,7 @@ class Order extends BaseOrder
         BaseOrderData $orderData,
         string $orderNumber,
         string $urlHash,
-        ?CustomerUser $customerUser = null
+        ?CustomerUser $customerUser = null,
     ) {
         parent::__construct($orderData, $orderNumber, $urlHash, $customerUser);
     }

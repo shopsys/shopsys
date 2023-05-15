@@ -29,7 +29,7 @@ class ProductFilterDataToQueryTransformer
             static function (Brand $brand) {
                 return $brand->getId();
             },
-            $productFilterData->brands
+            $productFilterData->brands,
         );
 
         return $filterQuery->filterByBrands($brandIds);
@@ -50,7 +50,7 @@ class ProductFilterDataToQueryTransformer
             static function (Flag $flag) {
                 return $flag->getId();
             },
-            $productFilterData->flags
+            $productFilterData->flags,
         );
 
         return $filterQuery->filterByFlags($flagIds);
@@ -90,7 +90,7 @@ class ProductFilterDataToQueryTransformer
                     static function (ParameterValue $item) {
                         return $item->getId();
                     },
-                    $parameterFilterData->values
+                    $parameterFilterData->values,
                 );
         }
 
@@ -126,7 +126,7 @@ class ProductFilterDataToQueryTransformer
         return $filterQuery->filterByPrices(
             $pricingGroup,
             $productFilterData->minimalPrice,
-            $productFilterData->maximalPrice
+            $productFilterData->maximalPrice,
         );
     }
 }

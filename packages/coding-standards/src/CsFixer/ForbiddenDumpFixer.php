@@ -23,7 +23,7 @@ final class ForbiddenDumpFixer implements FixerInterface
             [
                 new CodeSample('{{ d(123) }}'),
                 new CodeSample('{{ dump(1234) }}'),
-            ]
+            ],
         );
     }
 
@@ -53,7 +53,7 @@ final class ForbiddenDumpFixer implements FixerInterface
             function ($matches) {
                 return '';
             },
-            $tokens->generateCode()
+            $tokens->generateCode(),
         );
 
         $tokens->setCode($code);

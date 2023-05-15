@@ -99,7 +99,7 @@ class TokenFacadeTest extends TestCase
         return new TokenFacade(
             $domain,
             $customerUserFacade,
-            $jwtConfiguration
+            $jwtConfiguration,
         );
     }
 

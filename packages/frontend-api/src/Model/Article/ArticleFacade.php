@@ -43,12 +43,12 @@ class ArticleFacade
     public function getVisibleArticlesListByDomainId(
         int $domainId,
         int $limit,
-        int $offset
+        int $offset,
     ): array {
         return $this->articleRepository->getVisibleListByDomainId(
             $domainId,
             $limit,
-            $offset
+            $offset,
         );
     }
 
@@ -63,13 +63,13 @@ class ArticleFacade
         int $domainId,
         string $placement,
         int $limit,
-        int $offset
+        int $offset,
     ): array {
         return $this->articleRepository->getVisibleListByDomainIdAndPlacement(
             $domainId,
             $placement,
             $limit,
-            $offset
+            $offset,
         );
     }
 

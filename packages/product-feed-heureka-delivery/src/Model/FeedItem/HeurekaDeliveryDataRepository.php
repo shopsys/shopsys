@@ -26,7 +26,7 @@ class HeurekaDeliveryDataRepository
     {
         $queryBuilder = $this->productRepository->getAllSellableUsingStockInStockQueryBuilder(
             $domainConfig->getId(),
-            $pricingGroup
+            $pricingGroup,
         );
         $queryBuilder->select('p.id, p.stockQuantity')
             ->orderBy('p.id', 'asc')

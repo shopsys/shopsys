@@ -41,7 +41,7 @@ final class SetFrameworkBundleVersionToDevReleaseWorker extends AbstractShopsysR
 
         $this->commit(sprintf(
             'ShopsysFrameworkBundle: version updated to "%s"',
-            $developmentVersion->getVersionString()
+            $developmentVersion->getVersionString(),
         ));
 
         $this->symfonyStyle->note(sprintf('You need to push the "%s" branch manually', $this->currentBranchName));
@@ -66,7 +66,7 @@ final class SetFrameworkBundleVersionToDevReleaseWorker extends AbstractShopsysR
 
         $newUpgradeContent = $this->frameworkBundleVersionFileManipulator->updateFrameworkBundleVersion(
             $upgradeFileInfo,
-            $version
+            $version,
         );
 
         FileSystem::write($upgradeFilePath, $newUpgradeContent);

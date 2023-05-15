@@ -37,7 +37,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
     public function __construct(
         private readonly CategoryFacade $categoryFacade,
         CategoryDataFactoryInterface $categoryDataFactory,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
         $this->categoryDataFactory = $categoryDataFactory;
     }
@@ -65,25 +65,25 @@ class CategoryDataFixture extends AbstractReferenceFixture
                     . 'and home office activities (e.g., desktop computers, printers, paper shredders, etc.).',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale
+                $locale,
             );
             $categoryData->seoH1s[$domainConfig->getId()] = t(
                 'Electronic devices',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale
+                $locale,
             );
             $categoryData->seoTitles[$domainConfig->getId()] = t(
                 'Electronic stuff',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale
+                $locale,
             );
             $categoryData->seoMetaDescriptions[$domainConfig->getId()] = t(
                 'All kind of electronic devices.',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale
+                $locale,
             );
         }
         $categoryData->parent = $rootCategory;
@@ -99,7 +99,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
                     . '(black-and-white), or in color, and in two or three dimensions',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale
+                $locale,
             );
         }
         $categoryElectronics = $this->getReference(self::CATEGORY_ELECTRONICS);
@@ -114,7 +114,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
                     . 'transmitted to another location, or both.',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale
+                $locale,
             );
         }
         $this->createCategory($categoryData, self::CATEGORY_PHOTO);
@@ -127,7 +127,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
                     . 'or similar physical media.',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale
+                $locale,
             );
         }
         $this->createCategory($categoryData, self::CATEGORY_PRINTERS);
@@ -142,7 +142,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
                     . 'usually at the same time.',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale
+                $locale,
             );
         }
         $this->createCategory($categoryData, self::CATEGORY_PC);
@@ -157,7 +157,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
                     . 'and replays such signals simultaneously in audible form to its user.',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale
+                $locale,
             );
         }
         $this->createCategory($categoryData, self::CATEGORY_PHONES);
@@ -173,7 +173,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
                     . 'boiling point, and directed into the funnel.',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale
+                $locale,
             );
         }
         $this->createCategory($categoryData, self::CATEGORY_COFFEE);
@@ -188,7 +188,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
                     . 'or e-book.',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale
+                $locale,
             );
         }
         $categoryData->parent = $rootCategory;
@@ -203,7 +203,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
                     . 'used to make toys enjoyable to all ages.',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale
+                $locale,
             );
         }
         $this->createCategory($categoryData, self::CATEGORY_TOYS);
@@ -216,7 +216,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
                     . 'made for agriculture and horticulture. Garden tools can also be hand tools and power tools.',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale
+                $locale,
             );
         }
         $this->createCategory($categoryData, self::CATEGORY_GARDEN_TOOLS);
@@ -231,7 +231,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
                     . 'or stimulate growth.',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale
+                $locale,
             );
         }
         $this->createCategory($categoryData, self::CATEGORY_FOOD);

@@ -18,7 +18,7 @@ class ProductParametersNotLoadedException extends Exception implements ProductCo
         $message = sprintf(
             'Parameters for product with ID %d on %s have not been loaded via ProductParametersBatchLoader::loadForProducts().',
             $product->getId(),
-            $domainConfig->getName()
+            $domainConfig->getName(),
         );
 
         parent::__construct($message, 0, $previous);

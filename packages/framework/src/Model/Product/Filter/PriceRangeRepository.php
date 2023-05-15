@@ -34,7 +34,7 @@ class PriceRangeRepository
         $productsQueryBuilder = $this->productRepository->getListableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
-            $category
+            $category,
         );
 
         return $this->getPriceRangeByProductsQueryBuilder($productsQueryBuilder, $pricingGroup);
@@ -51,7 +51,7 @@ class PriceRangeRepository
         $productsQueryBuilder = $this->productRepository->getListableForBrandQueryBuilder(
             $domainId,
             $pricingGroup,
-            $brand
+            $brand,
         );
 
         return $this->getPriceRangeByProductsQueryBuilder($productsQueryBuilder, $pricingGroup);
@@ -66,7 +66,7 @@ class PriceRangeRepository
     {
         $productsQueryBuilder = $this->productRepository->getAllListableQueryBuilder(
             $domainId,
-            $pricingGroup
+            $pricingGroup,
         );
 
         return $this->getPriceRangeByProductsQueryBuilder($productsQueryBuilder, $pricingGroup);
@@ -109,7 +109,7 @@ class PriceRangeRepository
 
         return new PriceRange(
             Money::create($priceRangeDataRow['minimalPrice'] ?? 0),
-            Money::create($priceRangeDataRow['maximalPrice'] ?? 0)
+            Money::create($priceRangeDataRow['maximalPrice'] ?? 0),
         );
     }
 }

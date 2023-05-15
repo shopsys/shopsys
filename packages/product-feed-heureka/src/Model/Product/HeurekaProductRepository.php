@@ -29,7 +29,7 @@ class HeurekaProductRepository
             ->addSelect('b')->leftJoin('p.brand', 'b')
             ->andWhere('p.variantType != :variantTypeMain')->setParameter(
                 'variantTypeMain',
-                Product::VARIANT_TYPE_MAIN
+                Product::VARIANT_TYPE_MAIN,
             )
             ->andWhere('p.calculatedSellingDenied = FALSE')
             ->orderBy('p.id', 'asc')

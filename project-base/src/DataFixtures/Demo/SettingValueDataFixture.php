@@ -35,12 +35,12 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
             /** @var \App\Model\Article\Article $termsAndConditions */
             $termsAndConditions = $this->getReferenceForDomain(
                 ArticleDataFixture::ARTICLE_TERMS_AND_CONDITIONS,
-                $domainId
+                $domainId,
             );
             $this->setting->setForDomain(
                 Setting::TERMS_AND_CONDITIONS_ARTICLE_ID,
                 $termsAndConditions->getId(),
-                $domainId
+                $domainId,
             );
 
             /** @var \App\Model\Article\Article $privacyPolicy */
@@ -57,12 +57,12 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
                 Clicking on the link will take you to a page listing all the personal details we have connected to your email address.',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale
+                $locale,
             );
             $this->setting->setForDomain(
                 Setting::PERSONAL_DATA_DISPLAY_SITE_CONTENT,
                 $personalDataDisplaySiteContent,
-                $domainId
+                $domainId,
             );
 
             $personalDataExportSiteContent = t(
@@ -72,12 +72,12 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
                 registered to given email address on this online store domain.',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale
+                $locale,
             );
             $this->setting->setForDomain(
                 Setting::PERSONAL_DATA_EXPORT_SITE_CONTENT,
                 $personalDataExportSiteContent,
-                $domainId
+                $domainId,
             );
 
             $orderSentText = t('
@@ -98,22 +98,22 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
             $this->setting->setForDomain(
                 SeoSettingFacade::SEO_META_DESCRIPTION_MAIN_PAGE,
                 t('Shopsys Framework - the best solution for your eshop.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                $domainId
+                $domainId,
             );
             $this->setting->setForDomain(
                 SeoSettingFacade::SEO_TITLE_MAIN_PAGE,
                 t('Shopsys Framework - Title page', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                $domainId
+                $domainId,
             );
             $this->setting->setForDomain(
                 SeoSettingFacade::SEO_TITLE_ADD_ON,
                 t('| Demo eshop', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                $domainId
+                $domainId,
             );
             $this->setting->setForDomain(
                 SeoSettingFacade::SEO_ROBOTS_TXT_CONTENT,
                 'Disallow: /admin',
-                $domainId
+                $domainId,
             );
 
             $this->setDomainDefaultCurrency($domainId);

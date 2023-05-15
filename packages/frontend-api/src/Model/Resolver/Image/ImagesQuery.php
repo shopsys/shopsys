@@ -34,7 +34,7 @@ class ImagesQuery extends AbstractQuery
         protected readonly ImageFacade $imageFacade,
         protected readonly ImageConfig $imageConfig,
         protected readonly Domain $domain,
-        protected readonly FrontendApiImageFacade $frontendApiImageFacade
+        protected readonly FrontendApiImageFacade $frontendApiImageFacade,
     ) {
     }
 
@@ -78,9 +78,9 @@ class ImagesQuery extends AbstractQuery
             $this->frontendApiImageFacade->getImagesByEntityIdAndNameIndexedById(
                 $advert->getId(),
                 $entityName,
-                $type
+                $type,
             ),
-            $this->getSizeConfigsForAdvert($advert, $type, $size)
+            $this->getSizeConfigsForAdvert($advert, $type, $size),
         );
     }
 
@@ -172,7 +172,7 @@ class ImagesQuery extends AbstractQuery
                 $this->domain->getCurrentDomainConfig(),
                 $image,
                 $sizeConfig->getName(),
-                $image->getType()
+                $image->getType(),
             ),
         ];
     }
@@ -189,7 +189,7 @@ class ImagesQuery extends AbstractQuery
         if ($size === null) {
             return array_merge(
                 $this->getSizeConfigs($type, $advert->getPositionName(), $entityName),
-                $this->getSizeConfigs($type, ImageConfig::ORIGINAL_SIZE_NAME, $entityName)
+                $this->getSizeConfigs($type, ImageConfig::ORIGINAL_SIZE_NAME, $entityName),
             );
         }
 

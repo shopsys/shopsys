@@ -56,9 +56,9 @@ final class VersionUpgradeFileManipulator
                 return str_replace(
                     [$versionString . '-dev', '...' . $initialBranchName],
                     [$versionString, '...' . $versionString],
-                    $match[0]
+                    $match[0],
                 );
-            }
+            },
         );
     }
 
@@ -81,7 +81,7 @@ final class VersionUpgradeFileManipulator
             self::FILE_CONTENT_INFORMATION_PATTERN,
             function ($match) use ($versionString) {
                 return str_replace($versionString . '-dev', $versionString, $match[0]);
-            }
+            },
         );
     }
 }

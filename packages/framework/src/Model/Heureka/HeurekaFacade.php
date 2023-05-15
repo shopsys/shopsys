@@ -20,7 +20,7 @@ class HeurekaFacade
         protected readonly Logger $logger,
         protected readonly HeurekaShopCertificationFactory $heurekaShopCertificationFactory,
         protected readonly HeurekaShopCertificationLocaleHelper $heurekaShopCertificationLocaleHelper,
-        protected readonly HeurekaSetting $heurekaSetting
+        protected readonly HeurekaSetting $heurekaSetting,
     ) {
     }
 
@@ -82,7 +82,7 @@ class HeurekaFacade
     protected function logError(Exception $ex, Order $order)
     {
         $message = 'Sending order (ID = "' . $order->getId() . '") to Heureka failed - ' . get_class(
-            $ex
+            $ex,
         ) . ': ' . $ex->getMessage();
         $this->logger->error($message, ['exceptionFullInfo' => (string)$ex]);
     }

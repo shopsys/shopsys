@@ -94,7 +94,7 @@ class MailTemplateVariables
     {
         if (array_key_exists($variable, $this->variables)) {
             throw new InvalidMailTemplateVariablesConfigurationException(
-                sprintf('Variable "%s" is already registered.', $variable)
+                sprintf('Variable "%s" is already registered.', $variable),
             );
         }
 
@@ -124,7 +124,7 @@ class MailTemplateVariables
                 break;
             default:
                 throw new InvalidMailTemplateVariablesConfigurationException(
-                    'Variable can be used only in body or subject'
+                    'Variable can be used only in body or subject',
                 );
         }
     }
@@ -142,7 +142,7 @@ class MailTemplateVariables
             case self::REQUIRED_BOTH:
                 if ($context !== self::CONTEXT_BOTH) {
                     throw new InvalidMailTemplateVariablesConfigurationException(
-                        'Variable have to be in body and subject to make it required in both'
+                        'Variable have to be in body and subject to make it required in both',
                     );
                 }
 
@@ -152,7 +152,7 @@ class MailTemplateVariables
             case self::REQUIRED_BODY:
                 if ($context === self::CONTEXT_SUBJECT) {
                     throw new InvalidMailTemplateVariablesConfigurationException(
-                        'Variable have to be present in body to make it required there'
+                        'Variable have to be present in body to make it required there',
                     );
                 }
 
@@ -161,14 +161,14 @@ class MailTemplateVariables
             case self::REQUIRED_SUBJECT:
                 if ($context === self::CONTEXT_BODY) {
                     throw new InvalidMailTemplateVariablesConfigurationException(
-                        'Variable have to be present in subject to make it required there'
+                        'Variable have to be present in subject to make it required there',
                     );
                 }
                 $this->requiredSubjectVariables[] = $variable;
                 break;
             default:
                 throw new InvalidMailTemplateVariablesConfigurationException(
-                    'Variable can be required only in body, subject or nowhere'
+                    'Variable can be required only in body, subject or nowhere',
                 );
         }
     }

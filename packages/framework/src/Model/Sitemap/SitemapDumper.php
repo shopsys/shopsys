@@ -30,7 +30,7 @@ class SitemapDumper extends Dumper
         protected readonly MountManager $mountManager,
         UrlGeneratorInterface $urlGenerator,
         string $sitemapFilePrefix = Configuration::DEFAULT_FILENAME,
-        ?int $itemsBySet = null
+        ?int $itemsBySet = null,
     ) {
         parent::__construct($dispatcher, $filesystem, $sitemapFilePrefix, $itemsBySet, $urlGenerator);
     }
@@ -54,7 +54,7 @@ class SitemapDumper extends Dumper
         foreach ($sitemapFileFinder->getIterator() as $file) {
             $this->mountManager->move(
                 'local://' . TransformString::removeDriveLetterFromPath($file->getPathname()),
-                'main://' . $targetDir . '/' . $file->getBasename()
+                'main://' . $targetDir . '/' . $file->getBasename(),
             );
         }
 

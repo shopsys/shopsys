@@ -44,7 +44,7 @@ class CategoryDataFixture
         private readonly SqlLoggerFacade $sqlLoggerFacade,
         private readonly PersistentReferenceFacade $persistentReferenceFacade,
         private readonly Faker $faker,
-        private readonly ProgressBarFactory $progressBarFactory
+        private readonly ProgressBarFactory $progressBarFactory,
     ) {
         $this->categoryCountsByLevel = $categoryCountsByLevel;
         $this->categoryDataFactory = $categoryDataFactory;

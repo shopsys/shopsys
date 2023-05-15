@@ -31,7 +31,7 @@ class ProductActionViewFacadeTest extends TestCase
         $productActionViewFacade = new ProductActionViewFacade(
             $productCollectionFacade,
             $domain,
-            $productActionViewFactory
+            $productActionViewFactory,
         );
 
         $productActionViews = $productActionViewFacade->getForProducts([

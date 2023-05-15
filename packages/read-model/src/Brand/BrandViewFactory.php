@@ -18,7 +18,7 @@ class BrandViewFactory
         return new BrandView(
             $brand->getId(),
             $brand->getName(),
-            $brandMainUrl
+            $brandMainUrl,
         );
     }
 

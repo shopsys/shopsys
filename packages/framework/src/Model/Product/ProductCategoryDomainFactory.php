@@ -23,7 +23,7 @@ class ProductCategoryDomainFactory implements ProductCategoryDomainFactoryInterf
     public function create(
         Product $product,
         Category $category,
-        int $domainId
+        int $domainId,
     ): ProductCategoryDomain {
         $classData = $this->entityNameResolver->resolve(ProductCategoryDomain::class);
 
@@ -37,7 +37,7 @@ class ProductCategoryDomainFactory implements ProductCategoryDomainFactoryInterf
      */
     public function createMultiple(
         Product $product,
-        array $categoriesIndexedByDomainId
+        array $categoriesIndexedByDomainId,
     ): array {
         $productCategoryDomains = [];
         foreach ($categoriesIndexedByDomainId as $domainId => $categoriesOnDomain) {
@@ -45,7 +45,7 @@ class ProductCategoryDomainFactory implements ProductCategoryDomainFactoryInterf
                 $productCategoryDomains[] = $this->create(
                     $product,
                     $category,
-                    $domainId
+                    $domainId,
                 );
             }
         }

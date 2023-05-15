@@ -52,13 +52,13 @@ class SchemaDiffFilterTest extends TestCase
             $this->assertSame($tableDiff->addedColumns, $filteredSchemaDiff->changedTables[$index]->addedColumns);
             $this->assertSame(
                 $tableDiff->addedForeignKeys,
-                $filteredSchemaDiff->changedTables[$index]->addedForeignKeys
+                $filteredSchemaDiff->changedTables[$index]->addedForeignKeys,
             );
             $this->assertSame($tableDiff->addedIndexes, $filteredSchemaDiff->changedTables[$index]->addedIndexes);
             $this->assertSame($tableDiff->changedColumns, $filteredSchemaDiff->changedTables[$index]->changedColumns);
             $this->assertSame(
                 $tableDiff->changedForeignKeys,
-                $filteredSchemaDiff->changedTables[$index]->changedForeignKeys
+                $filteredSchemaDiff->changedTables[$index]->changedForeignKeys,
             );
             $this->assertSame($tableDiff->changedIndexes, $filteredSchemaDiff->changedTables[$index]->changedIndexes);
             $this->assertSame($tableDiff->newName, $filteredSchemaDiff->changedTables[$index]->newName);

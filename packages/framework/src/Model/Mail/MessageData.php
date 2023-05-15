@@ -33,7 +33,7 @@ class MessageData
         public array $variablesReplacementsForBody = [],
         array $variablesReplacementsForSubject = [],
         public array $attachments = [],
-        public ?string $replyTo = null
+        public ?string $replyTo = null,
     ) {
         if (count($variablesReplacementsForSubject) > 0) {
             $this->variablesReplacementsForSubject = $variablesReplacementsForSubject;

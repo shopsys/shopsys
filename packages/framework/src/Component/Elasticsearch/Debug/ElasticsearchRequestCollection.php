@@ -59,7 +59,7 @@ class ElasticsearchRequestCollection
         string $uri,
         ?int $statusCode,
         $response,
-        float $duration
+        float $duration,
     ): void {
         $this->collectedData[] = [
             'requestCurl' => $requestCurl,

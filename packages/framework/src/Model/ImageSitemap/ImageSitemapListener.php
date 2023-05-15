@@ -19,7 +19,7 @@ class ImageSitemapListener implements EventSubscriberInterface
      */
     public function __construct(
         protected readonly Domain $domain,
-        protected readonly ImageSitemapFacade $sitemapFacade
+        protected readonly ImageSitemapFacade $sitemapFacade,
     ) {
     }
 
@@ -70,7 +70,7 @@ class ImageSitemapListener implements EventSubscriberInterface
                     $imageSitemapItemImage->caption,
                     $imageSitemapItemImage->geoLocation,
                     $imageSitemapItemImage->title,
-                    $imageSitemapItemImage->license
+                    $imageSitemapItemImage->license,
                 );
                 $decoratedUrl->addImage($googleImage);
             }

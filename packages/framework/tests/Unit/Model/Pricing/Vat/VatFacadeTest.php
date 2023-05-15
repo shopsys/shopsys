@@ -60,7 +60,7 @@ class VatFacadeTest extends TestCase
             $settingMock,
             $productPriceRecalculationSchedulerMock,
             new VatFactory(new EntityNameResolver([])),
-            $domainMock
+            $domainMock,
         );
 
         $defaultVat = $vatFacade->getDefaultVatForDomain(Domain::FIRST_DOMAIN_ID);
@@ -102,7 +102,7 @@ class VatFacadeTest extends TestCase
             $settingMock,
             $productPriceRecalculationSchedulerMock,
             new VatFactory(new EntityNameResolver([])),
-            $domainMock
+            $domainMock,
         );
         $vatFacade->setDefaultVatForDomain($vatMock, Domain::FIRST_DOMAIN_ID);
     }

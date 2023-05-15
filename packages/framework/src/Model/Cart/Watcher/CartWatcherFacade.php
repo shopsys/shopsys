@@ -45,7 +45,7 @@ abstract class CartWatcherFacade
         $modifiedItems = $this->cartWatcher->getModifiedPriceItemsAndUpdatePrices($cart);
 
         $messageTemplate = $this->twigEnvironment->createTemplate(
-            $this->getMessageForChangedProduct()
+            $this->getMessageForChangedProduct(),
         );
 
         /** @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag */
@@ -70,7 +70,7 @@ abstract class CartWatcherFacade
         $toFlush = [];
 
         $messageTemplate = $this->twigEnvironment->createTemplate(
-            $this->getMessageForNoLongerAvailableExistingProduct()
+            $this->getMessageForNoLongerAvailableExistingProduct(),
         );
 
         /** @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag */
@@ -83,7 +83,7 @@ abstract class CartWatcherFacade
             } catch (ProductNotFoundException $e) {
                 $flashBag->add(
                     FlashMessage::KEY_ERROR,
-                    $this->getMessageForNoLongerAvailableProduct()
+                    $this->getMessageForNoLongerAvailableProduct(),
                 );
             }
 

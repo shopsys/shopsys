@@ -18,7 +18,7 @@ class Version20191112122617 extends AbstractMigration
     {
         $this->sql('ALTER TABLE payment_domains ADD vat_id INT NOT NULL DEFAULT 1');
         $this->sql(
-            'ALTER TABLE payment_domains ADD CONSTRAINT FK_9532B177B5B63A6B FOREIGN KEY (vat_id) REFERENCES vats (id) NOT DEFERRABLE INITIALLY IMMEDIATE'
+            'ALTER TABLE payment_domains ADD CONSTRAINT FK_9532B177B5B63A6B FOREIGN KEY (vat_id) REFERENCES vats (id) NOT DEFERRABLE INITIALLY IMMEDIATE',
         );
         $this->sql('CREATE INDEX IDX_9532B177B5B63A6B ON payment_domains (vat_id)');
         $this->sql('ALTER TABLE payment_domains ALTER vat_id DROP DEFAULT');
@@ -29,7 +29,7 @@ class Version20191112122617 extends AbstractMigration
 
         $this->sql('ALTER TABLE transport_domains ADD vat_id INT NOT NULL DEFAULT 1');
         $this->sql(
-            'ALTER TABLE transport_domains ADD CONSTRAINT FK_18AC7F6CB5B63A6B FOREIGN KEY (vat_id) REFERENCES vats (id) NOT DEFERRABLE INITIALLY IMMEDIATE'
+            'ALTER TABLE transport_domains ADD CONSTRAINT FK_18AC7F6CB5B63A6B FOREIGN KEY (vat_id) REFERENCES vats (id) NOT DEFERRABLE INITIALLY IMMEDIATE',
         );
         $this->sql('ALTER TABLE transport_domains ALTER vat_id DROP DEFAULT');
 
@@ -68,7 +68,7 @@ class Version20191112122617 extends AbstractMigration
         foreach ($payments as $payment) {
             $paymentDomains = $this->sql(
                 'SELECT id, domain_id FROM payment_domains where payment_id = :paymentId',
-                ['paymentId' => $payment['id']]
+                ['paymentId' => $payment['id']],
             )->fetchAllAssociative();
 
             foreach ($paymentDomains as $paymentDomain) {
@@ -80,7 +80,7 @@ class Version20191112122617 extends AbstractMigration
                             [
                                 'tmpOriginalId' => $payment['vat_id'],
                                 'domainId' => $paymentDomain['domain_id'],
-                            ]
+                            ],
                         )
                         ->fetchOne();
                 }
@@ -100,14 +100,14 @@ class Version20191112122617 extends AbstractMigration
 
             $defaultCurrencyForDomain = $this->sql(
                 'SELECT value from setting_values where name = \'defaultDomainCurrencyId\' AND domain_id = :domainId',
-                ['domainId' => $domainId]
+                ['domainId' => $domainId],
             )->fetchOne();
 
             $paymentPricesByCurrency = $this->sql(
                 'SELECT payment_id, price, domain_id FROM payment_prices WHERE currency_id = :currencyId',
                 [
                     'currencyId' => $defaultCurrencyForDomain,
-                ]
+                ],
             )->fetchAllAssociative();
 
             foreach ($paymentPricesByCurrency as $paymentPrice) {
@@ -118,7 +118,7 @@ class Version20191112122617 extends AbstractMigration
                             'domainId' => $domainId,
                             'paymentId' => $paymentPrice['payment_id'],
                             'currencyId' => $defaultCurrencyForDomain,
-                        ]
+                        ],
                     );
                 } else {
                     if (array_key_exists($paymentPrice['payment_id'], $priceCreated) === true) {
@@ -132,7 +132,7 @@ class Version20191112122617 extends AbstractMigration
                             'price' => $paymentPrice['price'],
                             'domainId' => $domainId,
                             'currencyId' => $defaultCurrencyForDomain,
-                        ]
+                        ],
                     );
                     $priceCreated[$paymentPrice['payment_id']] = true;
                 }
@@ -147,7 +147,7 @@ class Version20191112122617 extends AbstractMigration
         foreach ($transports as $transport) {
             $transportDomains = $this->sql(
                 'SELECT id, domain_id FROM transport_domains where transport_id = :transportId',
-                ['transportId' => $transport['id']]
+                ['transportId' => $transport['id']],
             )->fetchAllAssociative();
 
             foreach ($transportDomains as $transportDomain) {
@@ -159,7 +159,7 @@ class Version20191112122617 extends AbstractMigration
                             [
                                 'tmpOriginalId' => $transport['vat_id'],
                                 'domainId' => $transportDomain['domain_id'],
-                            ]
+                            ],
                         )
                         ->fetchOne();
                 }
@@ -179,14 +179,14 @@ class Version20191112122617 extends AbstractMigration
 
             $defaultCurrencyForDomain = $this->sql(
                 'SELECT value from setting_values where name = \'defaultDomainCurrencyId\' AND domain_id = :domainId',
-                ['domainId' => $domainId]
+                ['domainId' => $domainId],
             )->fetchOne();
 
             $transportPricesByCurrency = $this->sql(
                 'SELECT transport_id, price, domain_id FROM transport_prices WHERE currency_id = :currencyId',
                 [
                     'currencyId' => $defaultCurrencyForDomain,
-                ]
+                ],
             )->fetchAllAssociative();
 
             foreach ($transportPricesByCurrency as $transportPrice) {
@@ -197,7 +197,7 @@ class Version20191112122617 extends AbstractMigration
                             'domainId' => $domainId,
                             'transportId' => $transportPrice['transport_id'],
                             'currencyId' => $defaultCurrencyForDomain,
-                        ]
+                        ],
                     );
                 } else {
                     if (array_key_exists($transportPrice['transport_id'], $priceCreated) === true) {
@@ -211,7 +211,7 @@ class Version20191112122617 extends AbstractMigration
                             'price' => $transportPrice['price'],
                             'domainId' => $domainId,
                             'currencyId' => $defaultCurrencyForDomain,
-                        ]
+                        ],
                     );
 
                     $priceCreated[$transportPrice['transport_id']] = true;

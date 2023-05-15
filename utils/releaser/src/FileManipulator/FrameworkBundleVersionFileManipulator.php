@@ -32,7 +32,7 @@ final class FrameworkBundleVersionFileManipulator
             self::FRAMEWORK_BUNDLE_VERSION_PATTERN,
             function ($match) use ($version) {
                 return str_replace($match[1], $version->getVersionString(), $match[0]);
-            }
+            },
         );
     }
 }

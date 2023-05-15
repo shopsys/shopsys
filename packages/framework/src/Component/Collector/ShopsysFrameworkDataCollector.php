@@ -21,7 +21,7 @@ class ShopsysFrameworkDataCollector extends DataCollector
      */
     public function __construct(
         protected readonly Domain $domain,
-        protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider
+        protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
     ) {
     }
 

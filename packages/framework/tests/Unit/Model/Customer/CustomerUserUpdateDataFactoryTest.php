@@ -34,18 +34,18 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $order = new Order(
             $orderData,
             '123456',
-            '7ebafe9fe'
+            '7ebafe9fe',
         );
         $order->setCompanyInfo(
             'companyName',
             'companyNumber',
-            'companyTaxNumber'
+            'companyTaxNumber',
         );
 
         $customerUserUpdateData = $customerUserUpdateUpdateDataFactory->createAmendedByOrder(
             $customerUser,
             $order,
-            $deliveryAddress
+            $deliveryAddress,
         );
 
         $this->assertEquals($customerUserData, $customerUserUpdateData->customerUserData);
@@ -71,12 +71,12 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $order = new Order(
             $orderData,
             '123456',
-            '7eba123456fe9fe'
+            '7eba123456fe9fe',
         );
         $order->setCompanyInfo(
             'companyName',
             'companyNumber',
-            'companyTaxNumber'
+            'companyTaxNumber',
         );
 
         $deliveryAddressData = new DeliveryAddressData();
@@ -99,7 +99,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         $this->assertSame($order->getCompanyNumber(), $customerUserUpdateData->billingAddressData->companyNumber);
         $this->assertSame(
             $order->getCompanyTaxNumber(),
-            $customerUserUpdateData->billingAddressData->companyTaxNumber
+            $customerUserUpdateData->billingAddressData->companyTaxNumber,
         );
         $this->assertSame($order->getStreet(), $customerUserUpdateData->billingAddressData->street);
         $this->assertSame($order->getCity(), $customerUserUpdateData->billingAddressData->city);
@@ -116,7 +116,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
         return new CustomerUserUpdateDataFactory(
             new BillingAddressDataFactory(),
             new DeliveryAddressDataFactory(),
-            new CustomerUserDataFactory($this->createMock(PricingGroupSettingFacade::class))
+            new CustomerUserDataFactory($this->createMock(PricingGroupSettingFacade::class)),
         );
     }
 }

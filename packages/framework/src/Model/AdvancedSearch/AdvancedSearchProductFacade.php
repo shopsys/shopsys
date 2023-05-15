@@ -20,7 +20,7 @@ class AdvancedSearchProductFacade
         protected readonly ProductAdvancedSearchFormFactory $advancedSearchFormFactory,
         protected readonly AdvancedSearchQueryBuilderExtender $advancedSearchQueryBuilderExtender,
         protected readonly ProductListAdminFacade $productListAdminFacade,
-        protected readonly RuleFormViewDataFactory $ruleFormViewDataFactory
+        protected readonly RuleFormViewDataFactory $ruleFormViewDataFactory,
     ) {
     }
 

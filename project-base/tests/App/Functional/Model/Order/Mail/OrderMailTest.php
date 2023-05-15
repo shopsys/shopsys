@@ -52,7 +52,7 @@ class OrderMailTest extends FunctionalTestCase
     public function testGetMessageByOrder()
     {
         $routerMock = $this->getMockBuilder(RouterInterface::class)->setMethods(
-            ['generate']
+            ['generate'],
         )->getMockForAbstractClass();
         $routerMock->expects($this->any())->method('generate')->willReturn('generatedUrl');
 
@@ -64,16 +64,16 @@ class OrderMailTest extends FunctionalTestCase
 
         $twigMock = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock();
         $orderItemPriceCalculationMock = $this->getMockBuilder(
-            OrderItemPriceCalculation::class
+            OrderItemPriceCalculation::class,
         )->disableOriginalConstructor()->getMock();
         $settingMock = $this->getMockBuilder(Setting::class)->disableOriginalConstructor()->getMock();
         $settingMock->expects($this->any())->method('getForDomain')->willReturn('no-reply@shopsys.com');
         $priceExtensionMock = $this->getMockBuilder(PriceExtension::class)->disableOriginalConstructor()->getMock();
         $dateTimeFormatterExtensionMock = $this->getMockBuilder(
-            DateTimeFormatterExtension::class
+            DateTimeFormatterExtension::class,
         )->disableOriginalConstructor()->getMock();
         $orderUrlGeneratorMock = $this->getMockBuilder(
-            OrderUrlGenerator::class
+            OrderUrlGenerator::class,
         )->disableOriginalConstructor()->getMock();
 
         $domainConfig = new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs');
@@ -87,7 +87,7 @@ class OrderMailTest extends FunctionalTestCase
             $domain,
             $priceExtensionMock,
             $dateTimeFormatterExtensionMock,
-            $orderUrlGeneratorMock
+            $orderUrlGeneratorMock,
         );
 
         $order = $this->getReference('order_1');

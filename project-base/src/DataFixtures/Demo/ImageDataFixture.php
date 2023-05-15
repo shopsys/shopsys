@@ -58,11 +58,11 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
 
         $this->moveFilesFromLocalFilesystemToFilesystem(
             $this->dataFixturesImagesDirectory . 'domain/',
-            $this->targetDomainImagesDirectory . '/'
+            $this->targetDomainImagesDirectory . '/',
         );
         $this->moveFilesFromLocalFilesystemToFilesystem(
             $this->dataFixturesImagesDirectory,
-            $this->targetImagesDirectory
+            $this->targetImagesDirectory,
         );
         $this->processDbImagesChanges();
     }
@@ -268,7 +268,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
                 'entity_id' => Types::INTEGER,
                 'extension' => Types::STRING,
                 'modified_at' => Types::DATETIME_IMMUTABLE,
-            ]
+            ],
         );
         foreach ($this->domain->getAllLocales() as $locale) {
             $this->em->getConnection()->executeStatement(
@@ -283,7 +283,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
                     'translatable_id' => Types::INTEGER,
                     'name' => Types::STRING,
                     'locale' => Types::STRING,
-                ]
+                ],
             );
         }
     }
@@ -315,14 +315,14 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
     private function truncateImagesFromDb()
     {
         $this->em->getConnection()->executeStatement(
-            'TRUNCATE TABLE ' . self::IMAGES_TABLE_NAME . ', ' . self::IMAGES_TRANSLATIONS_TABLE_NAME
+            'TRUNCATE TABLE ' . self::IMAGES_TABLE_NAME . ', ' . self::IMAGES_TRANSLATIONS_TABLE_NAME,
         );
     }
 
     private function restartImagesIdsDbSequence()
     {
         $this->em->getConnection()->executeStatement(
-            'SELECT SETVAL(pg_get_serial_sequence(\'images\', \'id\'), COALESCE((SELECT MAX(id) FROM images) + 1, 1), false)'
+            'SELECT SETVAL(pg_get_serial_sequence(\'images\', \'id\'), COALESCE((SELECT MAX(id) FROM images) + 1, 1), false)',
         );
     }
 

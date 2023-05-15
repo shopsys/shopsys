@@ -28,7 +28,7 @@ class DbIndexesRepository
             ],
             [
                 'locale' => Types::STRING,
-            ]
+            ],
         );
     }
 }

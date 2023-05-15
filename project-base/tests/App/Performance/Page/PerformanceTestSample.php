@@ -32,7 +32,7 @@ class PerformanceTestSample
         $duration,
         $queryCount,
         $statusCode,
-        $isSuccessful
+        $isSuccessful,
     ) {
         $this->routeName = $routeName;
         $this->url = $url;

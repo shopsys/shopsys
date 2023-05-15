@@ -66,7 +66,7 @@ class BrandDataFixture extends AbstractReferenceFixture
                     'This is description of brand %brandName%.',
                     ['%brandName%' => $brandData->name],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $locale
+                    $locale,
                 );
             }
 
@@ -75,19 +75,19 @@ class BrandDataFixture extends AbstractReferenceFixture
                     '%brandName% SEO H1',
                     ['%brandName%' => $brandData->name],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $domain->getLocale()
+                    $domain->getLocale(),
                 );
                 $brandData->seoTitles[$domain->getId()] = t(
                     '%brandName% SEO Title',
                     ['%brandName%' => $brandData->name],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $domain->getLocale()
+                    $domain->getLocale(),
                 );
                 $brandData->seoMetaDescriptions[$domain->getId()] = t(
                     'This is SEO meta description of brand %brandName%.',
                     ['%brandName%' => $brandData->name],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $domain->getLocale()
+                    $domain->getLocale(),
                 );
             }
 

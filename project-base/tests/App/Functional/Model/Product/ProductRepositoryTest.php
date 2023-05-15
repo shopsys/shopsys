@@ -66,7 +66,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         /** @var \App\Model\Product\Product $product */
@@ -110,7 +110,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         /** @var \App\Model\Product\Product $product */
@@ -154,7 +154,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         /** @var \App\Model\Product\Product $product */
@@ -214,7 +214,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         /** @var \App\Model\Product\Product $product1 */
@@ -265,7 +265,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         $paginationResult = $this->productRepository->getPaginationResultForSearchListable(
@@ -276,7 +276,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
             ProductListOrderingConfig::ORDER_BY_PRIORITY,
             $pricingGroup,
             1,
-            PHP_INT_MAX
+            PHP_INT_MAX,
         );
 
         return $paginationResult->getResults();
@@ -291,7 +291,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         $paginationResult = $this->productRepository->getPaginationResultForListableInCategory(
@@ -302,7 +302,7 @@ class ProductRepositoryTest extends TransactionFunctionalTestCase
             ProductListOrderingConfig::ORDER_BY_PRIORITY,
             $pricingGroup,
             1,
-            PHP_INT_MAX
+            PHP_INT_MAX,
         );
 
         return $paginationResult->getResults();

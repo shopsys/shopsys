@@ -30,7 +30,7 @@ class Version20180531231229 extends AbstractMigration
                 'INSERT INTO payment_domains (payment_id, domain_id, enabled)
                     SELECT id, :domainId, FALSE FROM payments
                     ON CONFLICT DO NOTHING',
-                ['domainId' => $domainId]
+                ['domainId' => $domainId],
             );
         }
     }

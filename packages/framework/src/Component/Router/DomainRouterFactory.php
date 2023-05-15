@@ -38,7 +38,7 @@ class DomainRouterFactory
         protected readonly Domain $domain,
         protected readonly RequestStack $requestStack,
         protected readonly ContainerInterface $container,
-        protected readonly string $cacheDir
+        protected readonly string $cacheDir,
     ) {
         $this->routerConfiguration = $routerConfiguration;
     }
@@ -63,7 +63,7 @@ class DomainRouterFactory
                 $context,
                 $basicRouter,
                 $localizedRouter,
-                $friendlyUrlRouter
+                $friendlyUrlRouter,
             );
         }
 
@@ -80,7 +80,7 @@ class DomainRouterFactory
             $this->container,
             $this->routerConfiguration,
             $this->getRouterOptions(),
-            $this->getRequestContextByDomainConfig($domainConfig)
+            $this->getRequestContextByDomainConfig($domainConfig),
         );
     }
 

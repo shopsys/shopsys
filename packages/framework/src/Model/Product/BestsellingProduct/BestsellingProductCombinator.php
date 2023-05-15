@@ -13,16 +13,16 @@ class BestsellingProductCombinator
     public function combineManualAndAutomaticProducts(
         array $manualProductsIndexedByPosition,
         array $automaticProducts,
-        $maxResults
+        $maxResults,
     ) {
         $automaticProductsExcludingManual = $this->getAutomaticProductsExcludingManual(
             $automaticProducts,
-            $manualProductsIndexedByPosition
+            $manualProductsIndexedByPosition,
         );
         return $this->getCombinedProducts(
             $manualProductsIndexedByPosition,
             $automaticProductsExcludingManual,
-            $maxResults
+            $maxResults,
         );
     }
 
@@ -33,7 +33,7 @@ class BestsellingProductCombinator
      */
     protected function getAutomaticProductsExcludingManual(
         array $automaticProducts,
-        array $manualProducts
+        array $manualProducts,
     ) {
         foreach ($manualProducts as $manualProduct) {
             $automaticProductKey = array_search($manualProduct, $automaticProducts, true);
@@ -54,7 +54,7 @@ class BestsellingProductCombinator
     protected function getCombinedProducts(
         array $manualProductsIndexedByPosition,
         array $automaticProductsExcludingManual,
-        $maxResults
+        $maxResults,
     ) {
         $combinedProducts = [];
         for ($position = 0; $position < $maxResults; $position++) {

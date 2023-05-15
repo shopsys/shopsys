@@ -17,7 +17,7 @@ class LegalConditionsController extends AdminBaseController
      */
     public function __construct(
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
-        protected readonly LegalConditionsFacade $legalConditionsFacade
+        protected readonly LegalConditionsFacade $legalConditionsFacade,
     ) {
     }
 

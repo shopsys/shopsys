@@ -35,7 +35,7 @@ class PersonalDataAccessRequestDataFixture extends AbstractReferenceFixture
 
         $personalDataAccessRequest = $this->personalDataFacade->createPersonalDataAccessRequest(
             $personalDataAccessRequestData,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         $this->addReference(self::REFERENCE_ACCESS_DISPLAY_REQUEST, $personalDataAccessRequest);
@@ -47,7 +47,7 @@ class PersonalDataAccessRequestDataFixture extends AbstractReferenceFixture
 
         $personalDataAccessRequest = $this->personalDataFacade->createPersonalDataAccessRequest(
             $personalDataAccessRequestData,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         $this->addReference(self::REFERENCE_ACCESS_EXPORT_REQUEST, $personalDataAccessRequest);

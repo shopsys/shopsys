@@ -28,7 +28,7 @@ class UnitDataFixture extends AbstractReferenceFixture
         private readonly UnitFacade $unitFacade,
         private readonly UnitDataFactoryInterface $unitDataFactory,
         private readonly Setting $setting,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 

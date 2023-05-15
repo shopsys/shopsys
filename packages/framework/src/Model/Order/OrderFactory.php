@@ -25,7 +25,7 @@ class OrderFactory implements OrderFactoryInterface
         OrderData $orderData,
         string $orderNumber,
         string $urlHash,
-        ?CustomerUser $customerUser
+        ?CustomerUser $customerUser,
     ): Order {
         $classData = $this->entityNameResolver->resolve(Order::class);
 

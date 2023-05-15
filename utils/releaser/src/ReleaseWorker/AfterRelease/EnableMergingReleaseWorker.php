@@ -29,8 +29,8 @@ final class EnableMergingReleaseWorker extends AbstractShopsysReleaseWorker
         $this->symfonyStyle->note(
             sprintf(
                 'Enable merging to "%s" - let your colleagues know in "team_ssfw_devs" Slack channel, and erase the red cross from the "merge" column on the whiteboard in the office.',
-                $this->currentBranchName
-            )
+                $this->currentBranchName,
+            ),
         );
         $this->confirm(sprintf('Confirm merging to "%s" is enabled.', $this->currentBranchName));
     }

@@ -50,11 +50,11 @@ abstract class AbstractFixerTestCase extends TestCase
 
             static::assertThat(
                 $tokens->generateCode(),
-                new IsIdenticalString($expected)
+                new IsIdenticalString($expected),
             );
             static::assertTrue(
                 $tokens->isChanged(),
-                'Tokens collection built on input code must be marked as changed after fixing.'
+                'Tokens collection built on input code must be marked as changed after fixing.',
             );
 
             $tokens->clearEmptyTokens();
@@ -76,11 +76,11 @@ abstract class AbstractFixerTestCase extends TestCase
 
         static::assertThat(
             $tokens->generateCode(),
-            new IsIdenticalString($expected)
+            new IsIdenticalString($expected),
         );
         static::assertFalse(
             $tokens->isChanged(),
-            'Tokens collection built on expected code must not be marked as changed after fixing.'
+            'Tokens collection built on expected code must not be marked as changed after fixing.',
         );
     }
 
@@ -96,8 +96,8 @@ abstract class AbstractFixerTestCase extends TestCase
                     sprintf(
                         "The token at index %d must be:\n%s, but is not set in the input collection.",
                         $index,
-                        $expectedToken->toJson()
-                    )
+                        $expectedToken->toJson(),
+                    ),
                 );
             }
 
@@ -109,8 +109,8 @@ abstract class AbstractFixerTestCase extends TestCase
                     "The token at index %d must be:\n%s,\ngot:\n%s.",
                     $index,
                     $expectedToken->toJson(),
-                    $inputToken->toJson()
-                )
+                    $inputToken->toJson(),
+                ),
             );
 
             $expectedTokenKind = $expectedToken->isArray() ? $expectedToken->getId() : $expectedToken->getContent();
@@ -119,15 +119,15 @@ abstract class AbstractFixerTestCase extends TestCase
                 sprintf(
                     'The token kind %s (%s) must be found in tokens collection.',
                     $expectedTokenKind,
-                    is_string($expectedTokenKind) ? $expectedTokenKind : Token::getNameForId($expectedTokenKind)
-                )
+                    is_string($expectedTokenKind) ? $expectedTokenKind : Token::getNameForId($expectedTokenKind),
+                ),
             );
         }
 
         static::assertSame(
             $expectedTokens->count(),
             $inputTokens->count(),
-            'Both collections must have the same length.'
+            'Both collections must have the same length.',
         );
     }
 }

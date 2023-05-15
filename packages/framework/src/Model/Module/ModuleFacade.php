@@ -14,7 +14,7 @@ class ModuleFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly EnabledModuleRepository $enabledModuleRepository,
-        protected readonly EnabledModuleFactoryInterface $enabledModuleFactory
+        protected readonly EnabledModuleFactoryInterface $enabledModuleFactory,
     ) {
     }
 

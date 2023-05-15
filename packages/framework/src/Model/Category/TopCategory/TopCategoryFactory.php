@@ -23,7 +23,7 @@ class TopCategoryFactory implements TopCategoryFactoryInterface
     public function create(
         Category $category,
         int $domainId,
-        int $position
+        int $position,
     ): TopCategory {
         $classData = $this->entityNameResolver->resolve(TopCategory::class);
 

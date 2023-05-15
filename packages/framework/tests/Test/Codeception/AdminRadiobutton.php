@@ -60,7 +60,7 @@ class AdminRadiobutton
         $message = sprintf(
             'Admin radiobutton "%s" should have value "%s" checked but it\'s unchecked.',
             $this->cssSelector,
-            $radioValue
+            $radioValue,
         );
         Assert::assertTrue($checked, $message);
     }
@@ -81,7 +81,7 @@ class AdminRadiobutton
             '$(%s).filterAllNodes(%s).next(".css-radio__image").addClass("%s")',
             $selector,
             $valueSelector,
-            $imageElementClass
+            $imageElementClass,
         );
         $this->tester->executeJS($script);
 

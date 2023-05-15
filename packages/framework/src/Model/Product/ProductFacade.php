@@ -78,7 +78,7 @@ class ProductFacade
         protected readonly ProductParameterValueFactoryInterface $productParameterValueFactory,
         protected readonly ProductVisibilityFactoryInterface $productVisibilityFactory,
         protected readonly ProductPriceCalculation $productPriceCalculation,
-        protected readonly ProductExportScheduler $productExportScheduler
+        protected readonly ProductExportScheduler $productExportScheduler,
     ) {
     }
 
@@ -129,7 +129,7 @@ class ProductFacade
         // @see https://github.com/doctrine/doctrine2/issues/4869
         $productCategoryDomains = $this->productCategoryDomainFactory->createMultiple(
             $product,
-            $productData->categoriesByDomainId
+            $productData->categoriesByDomainId,
         );
         $product->setProductCategoryDomains($productCategoryDomains);
         $this->em->flush();
@@ -161,7 +161,7 @@ class ProductFacade
 
         $productCategoryDomains = $this->productCategoryDomainFactory->createMultiple(
             $product,
-            $productData->categoriesByDomainId
+            $productData->categoriesByDomainId,
         );
         $product->edit($productCategoryDomains, $productData);
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
@@ -202,11 +202,11 @@ class ProductFacade
         $productsForRecalculations = $productDeleteResult->getProductsForRecalculations();
         foreach ($productsForRecalculations as $productForRecalculations) {
             $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation(
-                $productForRecalculations
+                $productForRecalculations,
             );
             $productForRecalculations->markForVisibilityRecalculation();
             $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation(
-                $productForRecalculations
+                $productForRecalculations,
             );
             $this->productExportScheduler->scheduleRowIdForImmediateExport($productForRecalculations->getId());
         }
@@ -242,8 +242,8 @@ class ProductFacade
                 $productParameterValueData->parameter,
                 $this->parameterRepository->findOrCreateParameterValueByValueTextAndLocale(
                     $productParameterValueData->parameterValueData->text,
-                    $productParameterValueData->parameterValueData->locale
-                )
+                    $productParameterValueData->parameterValueData->locale,
+                ),
             );
             $this->em->persist($productParameterValue);
             $toFlush[] = $productParameterValue;
@@ -300,7 +300,7 @@ class ProductFacade
             $this->productManualInputPriceFacade->refresh(
                 $product,
                 $pricingGroup,
-                $manualInputPrices[$pricingGroup->getId()]
+                $manualInputPrices[$pricingGroup->getId()],
             );
         }
     }
@@ -444,7 +444,7 @@ class ProductFacade
         $this->friendlyUrlFacade->createFriendlyUrls(
             'front_product_detail',
             $product->getId(),
-            $changedNames
+            $changedNames,
         );
     }
 

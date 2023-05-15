@@ -25,7 +25,7 @@ class RouterExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'findUrlByDomainId',
-                [$this, 'findUrlByDomainId']
+                [$this, 'findUrlByDomainId'],
             ),
         ];
     }

@@ -20,7 +20,7 @@ class OrderStatusInlineEdit extends AbstractGridInlineEdit
         OrderStatusGridFactory $orderStatusGridFactory,
         protected readonly OrderStatusFacade $orderStatusFacade,
         protected readonly FormFactoryInterface $formFactory,
-        protected readonly OrderStatusDataFactoryInterface $orderStatusDataFactory
+        protected readonly OrderStatusDataFactoryInterface $orderStatusDataFactory,
     ) {
         parent::__construct($orderStatusGridFactory);
     }

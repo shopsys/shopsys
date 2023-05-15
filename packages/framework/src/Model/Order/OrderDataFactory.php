@@ -10,7 +10,7 @@ class OrderDataFactory implements OrderDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface $orderItemDataFactory
      */
     public function __construct(
-        protected readonly OrderItemDataFactoryInterface $orderItemDataFactory
+        protected readonly OrderItemDataFactoryInterface $orderItemDataFactory,
     ) {
     }
 

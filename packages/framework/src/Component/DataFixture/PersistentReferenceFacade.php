@@ -21,7 +21,7 @@ class PersistentReferenceFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly PersistentReferenceRepository $persistentReferenceRepository,
-        protected readonly PersistentReferenceFactoryInterface $persistentReferenceFactory
+        protected readonly PersistentReferenceFactoryInterface $persistentReferenceFactory,
     ) {
     }
 

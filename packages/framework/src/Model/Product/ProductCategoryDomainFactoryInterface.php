@@ -15,7 +15,7 @@ interface ProductCategoryDomainFactoryInterface
     public function create(
         Product $product,
         Category $category,
-        int $domainId
+        int $domainId,
     ): ProductCategoryDomain;
 
     /**
@@ -25,6 +25,6 @@ interface ProductCategoryDomainFactoryInterface
      */
     public function createMultiple(
         Product $product,
-        array $categoriesIndexedByDomainId
+        array $categoriesIndexedByDomainId,
     ): array;
 }

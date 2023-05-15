@@ -31,7 +31,7 @@ final class ValidateConflictsInComposerJsonReleaseWorker extends AbstractShopsys
     public function __construct(
         private readonly ComposerJsonFilesProvider $composerJsonFilesProvider,
         private readonly JsonFileManager $jsonFileManager,
-        private readonly IntervalEvaluator $intervalEvaluator
+        private readonly IntervalEvaluator $intervalEvaluator,
     ) {
     }
 
@@ -77,7 +77,7 @@ final class ValidateConflictsInComposerJsonReleaseWorker extends AbstractShopsys
                     $fileInfo->getPathname(),
                     $packageName,
                     $version,
-                    PHP_EOL
+                    PHP_EOL,
                 ));
 
                 $isPassing = false;

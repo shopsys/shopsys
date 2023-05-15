@@ -46,7 +46,7 @@ class OrderAdvancedSearchConfig extends AdvancedSearchConfig
         OrderLastNameFilter $orderLastNameFilter,
         OrderEmailFilter $orderEmailFilter,
         OrderCityFilter $orderCityFilter,
-        Domain $domain
+        Domain $domain,
     ) {
         parent::__construct();
 

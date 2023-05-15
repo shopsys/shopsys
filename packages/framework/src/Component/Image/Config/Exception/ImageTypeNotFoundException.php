@@ -23,7 +23,7 @@ class ImageTypeNotFoundException extends Exception implements ImageConfigExcepti
         parent::__construct(
             'Image type "' . $imageType . '" not found for entity "' . $entityClass . '".',
             0,
-            $previous
+            $previous,
         );
     }
 

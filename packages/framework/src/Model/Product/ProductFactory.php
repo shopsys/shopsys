@@ -13,7 +13,7 @@ class ProductFactory implements ProductFactoryInterface
      */
     public function __construct(
         protected readonly EntityNameResolver $entityNameResolver,
-        protected readonly ProductAvailabilityCalculation $productAvailabilityCalculation
+        protected readonly ProductAvailabilityCalculation $productAvailabilityCalculation,
     ) {
     }
 

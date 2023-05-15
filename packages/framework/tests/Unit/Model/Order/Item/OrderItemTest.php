@@ -174,7 +174,7 @@ class OrderItemTest extends TestCase
             1,
             OrderItem::TYPE_PAYMENT,
             null,
-            null
+            null,
         );
 
         $paymentMock = $this->createPaymentMock();
@@ -195,7 +195,7 @@ class OrderItemTest extends TestCase
             1,
             OrderItem::TYPE_TRANSPORT,
             null,
-            null
+            null,
         );
         $orderTransport->setTransport($this->createTransportMock());
         return $orderTransport;
@@ -215,7 +215,7 @@ class OrderItemTest extends TestCase
             1,
             OrderItem::TYPE_PRODUCT,
             null,
-            null
+            null,
         );
         $orderProduct->setProduct($product);
 

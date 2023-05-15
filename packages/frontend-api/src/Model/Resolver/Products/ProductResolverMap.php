@@ -22,7 +22,7 @@ class ProductResolverMap extends ResolverMap
      */
     public function __construct(
         protected readonly ProductEntityFieldMapper $productEntityFieldMapper,
-        protected readonly ProductArrayFieldMapper $productArrayFieldMapper
+        protected readonly ProductArrayFieldMapper $productArrayFieldMapper,
     ) {
     }
 

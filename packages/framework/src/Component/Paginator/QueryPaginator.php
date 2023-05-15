@@ -92,7 +92,7 @@ class QueryPaginator implements PaginatorInterface
 
         $flattenedParameters = SqlParametersFlattener::flattenArrayParameters(
             $query->getDQL(),
-            $parametersAssoc
+            $parametersAssoc,
         );
 
         // COUNT() returns BIGINT which is hydrated into string on 32-bit architecture

@@ -21,7 +21,7 @@ class PerformanceResultsCsvExporter
      */
     public function exportJmeterCsvReport(
         array $performanceTestSamples,
-        $outputFilename
+        $outputFilename,
     ) {
         $handle = fopen($outputFilename, 'w');
 
@@ -35,7 +35,7 @@ class PerformanceResultsCsvExporter
                 $performanceTestSample->getStatusCode(),
                 $performanceTestSample->isSuccessful(),
                 $performanceTestSample->getUrl(),
-                $performanceTestSample->getQueryCount()
+                $performanceTestSample->getQueryCount(),
             );
         }
 

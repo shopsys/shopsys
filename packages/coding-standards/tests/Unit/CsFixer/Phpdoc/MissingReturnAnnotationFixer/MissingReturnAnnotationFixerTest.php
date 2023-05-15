@@ -34,7 +34,7 @@ final class MissingReturnAnnotationFixerTest extends AbstractFixerTestCase
             $whitespacesFixerConfig,
             $functionsAnalyzer,
             $phpToDocTypeTransformer,
-            $indentDetector
+            $indentDetector,
         );
     }
 

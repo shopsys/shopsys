@@ -21,7 +21,7 @@ class ProductAccessoriesDataFixture extends AbstractReferenceFixture implements 
      */
     public function __construct(
         ProductDataFactoryInterface $productDataFactory,
-        private readonly ProductFacade $productFacade
+        private readonly ProductFacade $productFacade,
     ) {
         $this->productDataFactory = $productDataFactory;
     }

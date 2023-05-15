@@ -20,7 +20,7 @@ class AdministratorRolesChangedSubscriber implements EventSubscriberInterface
      */
     public function __construct(
         protected readonly TokenStorageInterface $tokenStorage,
-        protected readonly AdministratorRolesChangedFacade $administratorRolesChangedFacade
+        protected readonly AdministratorRolesChangedFacade $administratorRolesChangedFacade,
     ) {
     }
 

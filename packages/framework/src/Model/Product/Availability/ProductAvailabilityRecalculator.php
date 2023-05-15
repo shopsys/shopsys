@@ -24,7 +24,7 @@ class ProductAvailabilityRecalculator
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
-        protected readonly ProductAvailabilityCalculation $productAvailabilityCalculation
+        protected readonly ProductAvailabilityCalculation $productAvailabilityCalculation,
     ) {
     }
 

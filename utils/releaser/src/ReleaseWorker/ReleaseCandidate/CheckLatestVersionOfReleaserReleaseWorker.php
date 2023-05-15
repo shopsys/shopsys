@@ -36,12 +36,12 @@ final class CheckLatestVersionOfReleaserReleaseWorker extends AbstractShopsysRel
     {
         $this->symfonyStyle->note(
             'It is possible, that in current master branch there is improved version of Releaser.
-            Check that and update releaser in version branch by replacing Releaser directory with one from master branch.'
+            Check that and update releaser in version branch by replacing Releaser directory with one from master branch.',
         );
 
         $this->symfonyStyle->warning(
             'Make sure, that you have checked \Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker::EXCLUDED_PACKAGES constant, after updating releaser.
-            It should contain all packages that are no currently maintained packages by monorepo.'
+            It should contain all packages that are no currently maintained packages by monorepo.',
         );
 
         $this->confirm('Confirm that there is no newer version of Releaser or that you updated Releaser in version branch.');

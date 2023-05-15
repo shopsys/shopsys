@@ -16,7 +16,7 @@ class PriceFacade
      */
     public function __construct(
         protected readonly PriceFactory $priceFactory,
-        protected readonly CurrentCustomerUser $currentCustomerUser
+        protected readonly CurrentCustomerUser $currentCustomerUser,
     ) {
     }
 
@@ -28,7 +28,7 @@ class PriceFacade
     {
         return $this->priceFactory->createProductPriceFromArrayByPricingGroup(
             $pricesArray,
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
     }
 }

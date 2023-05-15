@@ -113,7 +113,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
                 'Reflective tape for safe movement on the road',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $this->firstDomainLocale
+                $this->firstDomainLocale,
             )],
         ];
 
@@ -146,7 +146,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
                 'Reflective tape for safe movement on the road',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $this->firstDomainLocale
+                $this->firstDomainLocale,
             )],
         ];
 
@@ -162,7 +162,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
 
         $parameterValue = $parameterFacade->getParameterValueByValueTextAndLocale(
             t('5', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-            $this->firstDomainLocale
+            $this->firstDomainLocale,
         );
 
         $query = '
@@ -196,7 +196,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
                 'A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $this->firstDomainLocale
+                $this->firstDomainLocale,
             )],
         ];
 

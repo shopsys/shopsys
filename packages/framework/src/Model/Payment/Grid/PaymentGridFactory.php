@@ -46,7 +46,7 @@ class PaymentGridFactory implements GridFactoryInterface
                 $payment = $this->paymentRepository->findById($row['p']['id']);
                 $row['displayPrice'] = $this->getDisplayPrice($payment);
                 return $row;
-            }
+            },
         );
 
         $grid = $this->gridFactory->create('paymentList', $dataSource);
@@ -72,7 +72,7 @@ class PaymentGridFactory implements GridFactoryInterface
     protected function getDisplayPrice(Payment $payment)
     {
         $transportBasePricesIndexedByDomainId = $this->paymentFacade->getIndependentBasePricesIndexedByDomainId(
-            $payment
+            $payment,
         );
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
 

@@ -17,7 +17,7 @@ class ParameterViewFacade implements ParameterViewFacadeInterface
     public function __construct(
         protected readonly ProductFacade $productFacade,
         protected readonly ParameterViewFactory $parameterViewFactory,
-        protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade
+        protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
     ) {
     }
 

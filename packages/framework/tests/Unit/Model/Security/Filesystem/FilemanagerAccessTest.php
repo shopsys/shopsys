@@ -74,7 +74,7 @@ class FilemanagerAccessTest extends TestCase
         $filemanagerAccess = new FilemanagerAccess(
             $fileuploadDir,
             $elFinderConfigurationReaderMock,
-            new FilepathComparator()
+            new FilepathComparator(),
         );
 
         $this->assertSame($filemanagerAccess->isPathAccessible($attr, $testPath, null, null), $isAccessible);
@@ -96,7 +96,7 @@ class FilemanagerAccessTest extends TestCase
         $filemanagerAccess = new FilemanagerAccess(
             $fileuploadDir,
             $elFinderConfigurationReaderMock,
-            new FilepathComparator()
+            new FilepathComparator(),
         );
         FilemanagerAccess::injectSelf($filemanagerAccess);
 

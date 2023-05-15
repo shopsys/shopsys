@@ -90,19 +90,19 @@ mutation {
                 'First name cannot be longer than {{ limit }} characters',
                 ['{{ limit }}' => 100],
                 Translator::VALIDATOR_TRANSLATION_DOMAIN,
-                $firstDomainLocale
+                $firstDomainLocale,
             ),
             1 => t(
                 'Last name cannot be longer than {{ limit }} characters',
                 ['{{ limit }}' => 100],
                 Translator::VALIDATOR_TRANSLATION_DOMAIN,
-                $firstDomainLocale
+                $firstDomainLocale,
             ),
             2 => t(
                 'Telephone number cannot be longer than {{ limit }} characters',
                 ['{{ limit }}' => 30],
                 Translator::VALIDATOR_TRANSLATION_DOMAIN,
-                $firstDomainLocale
+                $firstDomainLocale,
             ),
         ];
 

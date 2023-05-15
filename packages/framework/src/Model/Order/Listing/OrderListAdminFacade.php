@@ -12,7 +12,7 @@ class OrderListAdminFacade
      */
     public function __construct(
         protected readonly OrderListAdminRepository $orderListAdminRepository,
-        protected readonly Localization $localization
+        protected readonly Localization $localization,
     ) {
     }
 

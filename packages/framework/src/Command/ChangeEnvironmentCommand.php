@@ -54,7 +54,7 @@ class ChangeEnvironmentCommand extends Command
 
         if ($targetEnvironment === null) {
             throw new Exception(
-                'The target environment cannot be empty. Please run this command in interactive mode or set it via an argument.'
+                'The target environment cannot be empty. Please run this command in interactive mode or set it via an argument.',
             );
         }
 

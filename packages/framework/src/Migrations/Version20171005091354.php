@@ -23,7 +23,7 @@ class Version20171005091354 extends AbstractMigration
     {
         $heurekaCategoryDataValues = [];
         $heurekaCategoryRows = $this->sql(
-            'SELECT ext_id, name, full_name FROM feed_categories'
+            'SELECT ext_id, name, full_name FROM feed_categories',
         )->fetchAllAssociative();
         foreach ($heurekaCategoryRows as $row) {
             $heurekaCategoryDataValues[$row['ext_id']] = [
@@ -42,7 +42,7 @@ class Version20171005091354 extends AbstractMigration
         $categoryRows = $this->sql(
             'SELECT categories.id, feed_categories.ext_id FROM categories
               JOIN feed_categories ON feed_categories.id = categories.heureka_cz_feed_category_id
-              WHERE categories.heureka_cz_feed_category_id IS NOT NULL'
+              WHERE categories.heureka_cz_feed_category_id IS NOT NULL',
         )->fetchAllAssociative();
         foreach ($categoryRows as $row) {
             $categoryDataValues[$row['id']] = [
@@ -68,7 +68,7 @@ class Version20171005091354 extends AbstractMigration
                     'context' => $context,
                     'key' => $key,
                     'jsonValue' => json_encode($value),
-                ]
+                ],
             );
         }
     }

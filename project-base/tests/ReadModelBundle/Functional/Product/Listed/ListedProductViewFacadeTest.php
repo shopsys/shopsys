@@ -43,13 +43,13 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
                 'Kabel HDMI A - HDMI A M/M 2m gold-plated connectors High Speed HD',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $firstDomainLocale
+                $firstDomainLocale,
             ),
-            $listedProductViews[$productId1]->getName()
+            $listedProductViews[$productId1]->getName(),
         );
         $this->assertEquals(
             t('Defender 2.0 SPK-480', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            $listedProductViews[$productId2]->getName()
+            $listedProductViews[$productId2]->getName(),
         );
     }
 
@@ -62,7 +62,7 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
             $brandId,
             ProductListOrderingConfig::ORDER_BY_NAME_ASC,
             1,
-            10
+            10,
         );
         $listedProductViews = $paginationResults->getResults();
 
@@ -81,7 +81,7 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
             $emptyFilterData,
             ProductListOrderingConfig::ORDER_BY_NAME_ASC,
             1,
-            10
+            10,
         );
         $listedProductViews = $paginationResults->getResults();
 
@@ -89,7 +89,7 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
         $this->assertInstanceOf(ListedProductView::class, $listedProductViews[1]);
         $this->assertEquals(
             t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            $listedProductViews[1]->getName()
+            $listedProductViews[1]->getName(),
         );
     }
 
@@ -106,7 +106,7 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
         $this->assertInstanceOf(ListedProductView::class, $listedProductViews[$firstTopProductId]);
         $this->assertEquals(
             t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            $listedProductViews[$firstTopProductId]->getName()
+            $listedProductViews[$firstTopProductId]->getName(),
         );
     }
 
@@ -121,7 +121,7 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
             $emptyFilterData,
             ProductListOrderingConfig::ORDER_BY_NAME_ASC,
             1,
-            5
+            5,
         );
         $listedProductViews = $paginationResults->getResults();
 

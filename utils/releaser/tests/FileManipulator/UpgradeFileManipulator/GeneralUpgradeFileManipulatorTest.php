@@ -21,7 +21,7 @@ class GeneralUpgradeFileManipulatorTest extends TestCase
         $changedContent = $this->generalUpgradeFileManipulator->updateLinks(
             new SmartFileInfo(__DIR__ . '/Source/UPGRADE-general-before.md'),
             new Version('v7.0.0-beta5'),
-            'v7.0.0-dev'
+            'v7.0.0-dev',
         );
 
         $this->assertStringMatchesFormatFile(__DIR__ . '/Source/UPGRADE-general-after.md', $changedContent);

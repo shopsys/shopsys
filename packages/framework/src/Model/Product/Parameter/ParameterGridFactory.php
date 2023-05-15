@@ -19,7 +19,7 @@ class ParameterGridFactory implements GridFactoryInterface
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly GridFactory $gridFactory,
-        protected readonly Localization $localization
+        protected readonly Localization $localization,
     ) {
     }
 
@@ -38,7 +38,7 @@ class ParameterGridFactory implements GridFactoryInterface
                 'name',
                 'pt.name',
                 t('Name %locale%', ['%locale%' => $this->localization->getLanguageName($adminLocale)]),
-                true
+                true,
             );
             foreach ($locales as $locale) {
                 if ($locale !== $adminLocale) {
@@ -46,7 +46,7 @@ class ParameterGridFactory implements GridFactoryInterface
                         'name_' . $locale,
                         'pt_' . $locale . '.name',
                         t('Name %locale%', ['%locale%' => $this->localization->getLanguageName($locale)]),
-                        true
+                        true,
                     );
                 }
             }
@@ -55,7 +55,7 @@ class ParameterGridFactory implements GridFactoryInterface
                 'name',
                 'pt.name',
                 t('Name'),
-                true
+                true,
             );
         }
         $grid->addColumn('visible', 'p.visible', t('Filter by'), true);
@@ -91,7 +91,7 @@ class ParameterGridFactory implements GridFactoryInterface
                         'p.translations',
                         'pt_' . $locale,
                         Join::WITH,
-                        'pt_' . $locale . '.locale = :locale_' . $locale
+                        'pt_' . $locale . '.locale = :locale_' . $locale,
                     )
                     ->setParameter('locale_' . $locale, $locale);
             }

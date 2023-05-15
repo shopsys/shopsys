@@ -21,7 +21,7 @@ final class MissingReturnAnnotationFixer extends AbstractMissingAnnotationsFixer
     {
         return new FixerDefinition(
             'Methods and functions have to have @return annotation',
-            [new CodeSample('function someFunction(): int {}')]
+            [new CodeSample('function someFunction(): int {}')],
         );
     }
 
@@ -44,7 +44,7 @@ final class MissingReturnAnnotationFixer extends AbstractMissingAnnotationsFixer
             '%s * @return %s%s',
             $indent,
             $type,
-            $this->whitespacesFixerConfig->getLineEnding()
+            $this->whitespacesFixerConfig->getLineEnding(),
         ));
 
         if ($docToken !== null) {

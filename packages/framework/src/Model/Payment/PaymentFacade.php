@@ -36,7 +36,7 @@ class PaymentFacade
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
         protected readonly PaymentFactoryInterface $paymentFactory,
-        protected readonly PaymentPriceFactoryInterface $paymentPriceFactory
+        protected readonly PaymentPriceFactoryInterface $paymentPriceFactory,
     ) {
     }
 
@@ -52,7 +52,7 @@ class PaymentFacade
         $this->updatePaymentPrices(
             $payment,
             $paymentData->pricesIndexedByDomainId,
-            $paymentData->vatsIndexedByDomainId
+            $paymentData->vatsIndexedByDomainId,
         );
         $this->setAdditionalDataAndFlush($payment, $paymentData);
 
@@ -69,7 +69,7 @@ class PaymentFacade
         $this->updatePaymentPrices(
             $payment,
             $paymentData->pricesIndexedByDomainId,
-            $paymentData->vatsIndexedByDomainId
+            $paymentData->vatsIndexedByDomainId,
         );
         $this->setAdditionalDataAndFlush($payment, $paymentData);
     }
@@ -140,7 +140,7 @@ class PaymentFacade
             }
 
             $payment->addPrice(
-                $this->paymentPriceFactory->create($payment, $pricesIndexedByDomainId[$domainId], $domainId)
+                $this->paymentPriceFactory->create($payment, $pricesIndexedByDomainId[$domainId], $domainId),
             );
         }
     }
@@ -180,7 +180,7 @@ class PaymentFacade
         $payments = $this->getAllIncludingDeleted();
         foreach ($payments as $payment) {
             $paymentVatPercentsByPaymentId[$payment->getId()] = $payment->getPaymentDomain(
-                $domainId
+                $domainId,
             )->getVat()->getPercent();
         }
 
@@ -208,7 +208,7 @@ class PaymentFacade
             $prices[$domainId] = $this->paymentPriceCalculation->calculateIndependentPrice(
                 $payment,
                 $currency,
-                $domainId
+                $domainId,
             );
         }
         return $prices;
@@ -232,7 +232,7 @@ class PaymentFacade
             $prices[$domainId] = $this->paymentPriceCalculation->calculateIndependentPrice(
                 $payment,
                 $currency,
-                $domainId
+                $domainId,
             );
         }
 

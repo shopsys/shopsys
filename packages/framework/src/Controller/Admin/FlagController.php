@@ -16,7 +16,7 @@ class FlagController extends AdminBaseController
      */
     public function __construct(
         protected readonly FlagFacade $flagFacade,
-        protected readonly FlagInlineEdit $flagInlineEdit
+        protected readonly FlagInlineEdit $flagInlineEdit,
     ) {
     }
 
@@ -50,7 +50,7 @@ class FlagController extends AdminBaseController
                 t('Flag <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $fullName,
-                ]
+                ],
             );
         } catch (FlagNotFoundException $ex) {
             $this->addErrorFlash(t('Selected flag doesn\'t exist.'));

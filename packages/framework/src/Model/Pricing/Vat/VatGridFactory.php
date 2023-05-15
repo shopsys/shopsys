@@ -21,7 +21,7 @@ class VatGridFactory implements GridFactoryInterface
         protected readonly EntityManagerInterface $em,
         protected readonly GridFactory $gridFactory,
         protected readonly VatFacade $vatFacade,
-        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 

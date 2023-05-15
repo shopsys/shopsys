@@ -20,7 +20,7 @@ class OrderStatusGridFactory implements GridFactoryInterface
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly GridFactory $gridFactory,
-        protected readonly Localization $localization
+        protected readonly Localization $localization,
     ) {
     }
 

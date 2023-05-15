@@ -86,7 +86,7 @@ class AdministratorRepository
         $administrator = $this->findByUserName($administratorUserName);
         if ($administrator === null) {
             throw new AdministratorNotFoundException(
-                'Administrator with username "' . $administratorUserName . '" not found.'
+                'Administrator with username "' . $administratorUserName . '" not found.',
             );
         }
 

@@ -21,7 +21,7 @@ class PerformanceTestSummaryPrinter
      */
     public function printSummary(
         array $performanceTestSamples,
-        ConsoleOutput $consoleOutput
+        ConsoleOutput $consoleOutput,
     ) {
         foreach ($performanceTestSamples as $performanceTestSample) {
             $sampleStatus = $this->performanceTestSampleQualifier->getSampleStatus($performanceTestSample);
@@ -41,7 +41,7 @@ class PerformanceTestSummaryPrinter
                 return;
             case PerformanceTestSampleQualifier::STATUS_WARNING:
                 $consoleOutput->write(
-                    '<' . $resultTag . '>Test passed, but contains some warnings</' . $resultTag . '>'
+                    '<' . $resultTag . '>Test passed, but contains some warnings</' . $resultTag . '>',
                 );
                 return;
             case PerformanceTestSampleQualifier::STATUS_CRITICAL:
@@ -57,21 +57,21 @@ class PerformanceTestSummaryPrinter
      */
     private function printSample(
         PerformanceTestSample $performanceTestSample,
-        ConsoleOutput $consoleOutput
+        ConsoleOutput $consoleOutput,
     ) {
         $consoleOutput->writeln('');
         $consoleOutput->writeln(
-            'Route name: ' . $performanceTestSample->getRouteName() . ' (' . $performanceTestSample->getUrl() . ')'
+            'Route name: ' . $performanceTestSample->getRouteName() . ' (' . $performanceTestSample->getUrl() . ')',
         );
 
         $tag = $this->getFormatterTagForDuration($performanceTestSample->getDuration());
         $consoleOutput->writeln(
-            '<' . $tag . '>Average duration: ' . round($performanceTestSample->getDuration()) . 'ms</' . $tag . '>'
+            '<' . $tag . '>Average duration: ' . round($performanceTestSample->getDuration()) . 'ms</' . $tag . '>',
         );
 
         $tag = $this->getFormatterTagForQueryCount($performanceTestSample->getQueryCount());
         $consoleOutput->writeln(
-            '<' . $tag . '>Max query count: ' . $performanceTestSample->getQueryCount() . '</' . $tag . '>'
+            '<' . $tag . '>Max query count: ' . $performanceTestSample->getQueryCount() . '</' . $tag . '>',
         );
 
         if ($performanceTestSample->isSuccessful()) {

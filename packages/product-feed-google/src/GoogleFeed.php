@@ -15,7 +15,7 @@ class GoogleFeed implements FeedInterface
      */
     public function __construct(
         protected readonly GoogleFeedInfo $feedInfo,
-        protected readonly GoogleFeedItemFacade $feedItemFacade
+        protected readonly GoogleFeedItemFacade $feedItemFacade,
     ) {
     }
 

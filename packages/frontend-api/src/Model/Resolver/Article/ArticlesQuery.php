@@ -20,7 +20,7 @@ class ArticlesQuery extends AbstractQuery
      */
     public function __construct(
         protected readonly ArticleFacade $articleFacade,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -64,13 +64,13 @@ class ArticlesQuery extends AbstractQuery
         int $domainId,
         int $limit,
         int $offset,
-        ?string $placement
+        ?string $placement,
     ): array {
         if ($placement === null) {
             return $this->articleFacade->getVisibleArticlesListByDomainId(
                 $domainId,
                 $limit,
-                $offset
+                $offset,
             );
         }
 
@@ -78,7 +78,7 @@ class ArticlesQuery extends AbstractQuery
             $domainId,
             $placement,
             $limit,
-            $offset
+            $offset,
         );
     }
 

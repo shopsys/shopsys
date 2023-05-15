@@ -27,7 +27,7 @@ class ContactFormController extends FrontBaseController
         private readonly ContactFormFacade $contactFormFacade,
         BaseLegalConditionsFacade $legalConditionsFacade,
         private readonly Domain $domain,
-        private readonly ContactFormSettingsFacade $contactFormSettingsFacade
+        private readonly ContactFormSettingsFacade $contactFormSettingsFacade,
     ) {
         $this->legalConditionsFacade = $legalConditionsFacade;
     }

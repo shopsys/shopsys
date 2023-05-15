@@ -18,7 +18,7 @@ class CategoryWithPreloadedChildren
      */
     public function __construct(
         protected readonly Category $category,
-        protected readonly array $children
+        protected readonly array $children,
     ) {
     }
 

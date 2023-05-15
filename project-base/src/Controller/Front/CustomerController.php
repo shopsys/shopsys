@@ -37,7 +37,7 @@ class CustomerController extends FrontBaseController
         private readonly OrderItemPriceCalculation $orderItemPriceCalculation,
         private readonly LoginAsUserFacade $loginAsUserFacade,
         private readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
-        private readonly DeliveryAddressFacade $deliveryAddressFacade
+        private readonly DeliveryAddressFacade $deliveryAddressFacade,
     ) {
     }
 
@@ -137,7 +137,7 @@ class CustomerController extends FrontBaseController
         }
 
         $orderItemTotalPricesById = $this->orderItemPriceCalculation->calculateTotalPricesIndexedById(
-            $order->getItems()
+            $order->getItems(),
         );
 
         return $this->render('Front/Content/Customer/orderDetail.html.twig', [

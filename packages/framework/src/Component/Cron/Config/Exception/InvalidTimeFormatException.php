@@ -18,7 +18,7 @@ class InvalidTimeFormatException extends Exception implements CronConfigExceptio
             'Time configuration "' . $timeString . '" is invalid. '
             . 'Must by divisible by ' . $divisibleBy . ' and less or equal than ' . $maxValue,
             0,
-            $previous
+            $previous,
         );
     }
 }

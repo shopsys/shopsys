@@ -64,19 +64,19 @@ class NumberFormatHelper extends Module
     public function getFormattedPriceWithCurrencySymbolRoundedByCurrencyOnFrontend(Money $price): string
     {
         $firstDomainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
         $firstDomainLocale = $this->localizationHelper->getFrontendLocale();
         $currencyFormatter = $this->currencyFormatterFactory->createByLocaleAndCurrency(
             $firstDomainLocale,
-            $firstDomainDefaultCurrency
+            $firstDomainDefaultCurrency,
         );
 
         $intlCurrency = $this->intlCurrencyRepository->get($firstDomainDefaultCurrency->getCode(), $firstDomainLocale);
 
         $formattedPriceWithCurrencySymbol = $currencyFormatter->format(
             $this->rounding->roundPriceWithVatByCurrency($price, $firstDomainDefaultCurrency)->getAmount(),
-            $intlCurrency->getCurrencyCode()
+            $intlCurrency->getCurrencyCode(),
         );
 
         return $this->normalizeSpaces($formattedPriceWithCurrencySymbol);
@@ -91,19 +91,19 @@ class NumberFormatHelper extends Module
     public function getFormattedPriceRoundedByCurrencyOnFrontend(Money $price): string
     {
         $firstDomainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
         $firstDomainLocale = $this->localizationHelper->getFrontendLocale();
         $currencyFormatter = $this->currencyFormatterFactory->createByLocaleAndCurrency(
             $firstDomainLocale,
-            $firstDomainDefaultCurrency
+            $firstDomainDefaultCurrency,
         );
 
         $intlCurrency = $this->intlCurrencyRepository->get($firstDomainDefaultCurrency->getCode(), $firstDomainLocale);
 
         $formattedPriceWithCurrencySymbol = $currencyFormatter->format(
             $this->rounding->roundPriceWithVatByCurrency($price, $firstDomainDefaultCurrency)->getAmount(),
-            $intlCurrency->getCurrencyCode()
+            $intlCurrency->getCurrencyCode(),
         );
 
         return $this->normalizeSpaces($formattedPriceWithCurrencySymbol);
@@ -121,7 +121,7 @@ class NumberFormatHelper extends Module
         $money = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
             Money::create($price),
             $currency,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         return $money->getAmount();
@@ -145,7 +145,7 @@ class NumberFormatHelper extends Module
     {
         $formattedNumberWithPercentSymbol = $this->numberFormatterExtension->formatPercent(
             $number,
-            $this->localizationHelper->getAdminLocale()
+            $this->localizationHelper->getAdminLocale(),
         );
 
         return $this->normalizeSpaces($formattedNumberWithPercentSymbol);

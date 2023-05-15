@@ -18,7 +18,7 @@ class CountryValidator extends ConstraintValidator
      */
     public function __construct(
         protected readonly CountryFacade $countryFacade,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 

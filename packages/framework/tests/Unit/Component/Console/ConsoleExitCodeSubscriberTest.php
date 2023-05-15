@@ -30,7 +30,7 @@ class ConsoleExitCodeSubscriberTest extends TestCase
             ->method('log')
             ->with(LogLevel::ERROR, $this->logicalAnd(
                 $this->stringContains($commandName),
-                $this->stringContains((string)$exitCode)
+                $this->stringContains((string)$exitCode),
             ));
 
         $command = new Command($commandName);
@@ -53,7 +53,7 @@ class ConsoleExitCodeSubscriberTest extends TestCase
             ->method('log')
             ->with(LogLevel::ERROR, $this->logicalAnd(
                 $this->stringContains($commandName),
-                $this->stringContains('255')
+                $this->stringContains('255'),
             ));
 
         $command = new Command($commandName);

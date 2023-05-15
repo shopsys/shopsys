@@ -17,7 +17,7 @@ class FriendlyUrlRepository
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly FrameworkFriendlyUrlRepository $friendlyUrlRepository
+        protected readonly FrameworkFriendlyUrlRepository $friendlyUrlRepository,
     ) {
     }
 

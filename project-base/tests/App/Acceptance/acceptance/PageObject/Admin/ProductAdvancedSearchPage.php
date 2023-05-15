@@ -30,7 +30,7 @@ class ProductAdvancedSearchPage extends AbstractPage
             'Search [verb]',
             Translator::DEFAULT_TRANSLATION_DOMAIN,
             [],
-            WebDriverBy::cssSelector('#js-advanced-search-rules-box')
+            WebDriverBy::cssSelector('#js-advanced-search-rules-box'),
         );
     }
 

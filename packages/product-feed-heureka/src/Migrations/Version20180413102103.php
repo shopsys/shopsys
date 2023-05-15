@@ -13,7 +13,7 @@ class Version20180413102103 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $oldTableExists = $this->sql(
-            'SELECT COUNT(*) > 0 FROM information_schema.tables WHERE table_name=\'plugin_data_values\''
+            'SELECT COUNT(*) > 0 FROM information_schema.tables WHERE table_name=\'plugin_data_values\'',
         )->fetchOne();
 
         if (!$oldTableExists) {
@@ -41,7 +41,7 @@ class Version20180413102103 extends AbstractMigration
             [
                 'plugin_name' => 'Shopsys\\ProductFeed\\HeurekaBundle\\ShopsysProductFeedHeurekaBundle',
                 'context' => 'product',
-            ]
+            ],
         )->fetchAllAssociative();
         foreach ($rows as $row) {
             $jsonData = json_decode($row['json_value'], true);
@@ -53,7 +53,7 @@ class Version20180413102103 extends AbstractMigration
                         'product_id' => $row['key'],
                         'domain_id' => $domainId,
                         'cpc' => $cpc,
-                    ]
+                    ],
                 );
             }
         }
@@ -68,14 +68,14 @@ class Version20180413102103 extends AbstractMigration
             [
                 'plugin_name' => 'Shopsys\\ProductFeed\\HeurekaBundle\\ShopsysProductFeedHeurekaBundle',
                 'context' => 'heureka_category',
-            ]
+            ],
         )->fetchAllAssociative();
         foreach ($rows as $row) {
             $jsonData = json_decode($row['json_value'], true);
             $this->sql(
                 'INSERT INTO heureka_category (id, name, full_name)
                     VALUES (:id, :name, :full_name)',
-                $jsonData
+                $jsonData,
             );
         }
     }
@@ -89,7 +89,7 @@ class Version20180413102103 extends AbstractMigration
             [
                 'plugin_name' => 'Shopsys\\ProductFeed\\HeurekaBundle\\ShopsysProductFeedHeurekaBundle',
                 'context' => 'category',
-            ]
+            ],
         )->fetchAllAssociative();
         foreach ($rows as $row) {
             $jsonData = json_decode($row['json_value'], true);
@@ -103,7 +103,7 @@ class Version20180413102103 extends AbstractMigration
                 [
                     'heureka_category_id' => $jsonData['heureka_category'],
                     'category_id' => $row['key'],
-                ]
+                ],
             );
         }
     }

@@ -17,7 +17,7 @@ class ProgressBarFactory
         $bar = new ProgressBar($output, $max);
         $this->initializeCustomPlaceholderFormatters();
         $bar->setFormat(
-            '%current%/%max% [%bar%] %percent:3s%, Elapsed: %elapsed_hms%, Remaining: %remaining_hms%, MEM:%memory:9s%'
+            '%current%/%max% [%bar%] %percent:3s%, Elapsed: %elapsed_hms%, Remaining: %remaining_hms%, MEM:%memory:9s%',
         );
         $bar->setRedrawFrequency(10);
         $bar->start();
@@ -55,7 +55,7 @@ class ProgressBarFactory
             '%dh %02dm %02ds',
             floor($timeInSeconds / 3600),
             floor(intdiv($timeInSeconds, 60) % 60),
-            floor($timeInSeconds % 60)
+            floor($timeInSeconds % 60),
         );
     }
 }

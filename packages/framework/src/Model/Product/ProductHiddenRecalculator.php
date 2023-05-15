@@ -12,7 +12,7 @@ class ProductHiddenRecalculator
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
     public function __construct(
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
     ) {
         $this->em = $entityManager;
     }

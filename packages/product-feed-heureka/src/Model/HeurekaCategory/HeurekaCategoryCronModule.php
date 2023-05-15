@@ -15,7 +15,7 @@ class HeurekaCategoryCronModule implements SimpleCronModuleInterface
      */
     public function __construct(
         protected readonly HeurekaCategoryDownloader $heurekaCategoryDownloader,
-        protected readonly HeurekaCategoryFacade $heurekaCategoryFacade
+        protected readonly HeurekaCategoryFacade $heurekaCategoryFacade,
     ) {
     }
 

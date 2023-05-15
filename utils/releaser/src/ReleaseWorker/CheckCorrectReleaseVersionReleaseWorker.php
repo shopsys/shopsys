@@ -36,13 +36,13 @@ final class CheckCorrectReleaseVersionReleaseWorker extends AbstractShopsysRelea
     {
         if (!str_starts_with($version->getOriginalString(), 'v')) {
             throw new RuntimeException(
-                'Name of released version must start with \'v\''
+                'Name of released version must start with \'v\'',
             );
         }
 
         if ($version->getOriginalString() !== 'v' . $version->getVersionString()) {
             throw new RuntimeException(
-                'Version string needs to follow SemVer format (e.g. v11.0.0)'
+                'Version string needs to follow SemVer format (e.g. v11.0.0)',
             );
         }
     }

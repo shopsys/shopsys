@@ -74,7 +74,7 @@ class ManualBestsellingProductRepository
                 ManualBestsellingProduct::class,
                 'mbp',
                 Join::WITH,
-                'mbp.category = c AND mbp.domainId = :domainId'
+                'mbp.category = c AND mbp.domainId = :domainId',
             )
             ->setParameter('domainId', $domainId)
             ->groupBy('c.id');

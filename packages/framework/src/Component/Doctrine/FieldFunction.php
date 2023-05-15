@@ -46,7 +46,7 @@ class FieldFunction extends FunctionNode
         }, $this->nextArgumentExpressions);
         return 'FIELD(' . $this->firstArgumentExpression->dispatch($sqlWalker) . ',ARRAY[' . implode(
             ',',
-            $values
+            $values,
         ) . '])';
     }
 }

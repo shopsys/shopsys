@@ -32,7 +32,7 @@ class MailTemplateVariablesTest extends TestCase
                 '{variable2}' => 'Variable 2',
                 '{variable3}' => 'Variable 3',
             ],
-            $mailTemplateConfiguration->getLabeledVariables()
+            $mailTemplateConfiguration->getLabeledVariables(),
         );
     }
 
@@ -54,7 +54,7 @@ class MailTemplateVariablesTest extends TestCase
             '{variable1}',
             'Variable',
             MailTemplateVariables::CONTEXT_SUBJECT,
-            MailTemplateVariables::REQUIRED_SUBJECT
+            MailTemplateVariables::REQUIRED_SUBJECT,
         );
 
         $this->assertEquals(['{variable1}'], $mailTemplateConfiguration->getRequiredSubjectVariables());
@@ -65,19 +65,19 @@ class MailTemplateVariablesTest extends TestCase
             '{variable2}',
             'Variable',
             MailTemplateVariables::CONTEXT_SUBJECT,
-            MailTemplateVariables::REQUIRED_BODY
+            MailTemplateVariables::REQUIRED_BODY,
         );
         $mailTemplateConfiguration->addVariable(
             '{variable3}',
             'Variable',
             MailTemplateVariables::CONTEXT_SUBJECT,
-            MailTemplateVariables::REQUIRED_BOTH
+            MailTemplateVariables::REQUIRED_BOTH,
         );
         $mailTemplateConfiguration->addVariable(
             '{variable4}',
             'Variable',
             MailTemplateVariables::CONTEXT_SUBJECT,
-            self::INVALID_VALUE
+            self::INVALID_VALUE,
         );
     }
 
@@ -89,7 +89,7 @@ class MailTemplateVariablesTest extends TestCase
             '{variable1}',
             'Variable',
             MailTemplateVariables::CONTEXT_BODY,
-            MailTemplateVariables::REQUIRED_BODY
+            MailTemplateVariables::REQUIRED_BODY,
         );
         $this->assertEquals(['{variable1}'], $mailTemplateConfiguration->getRequiredBodyVariables());
         $this->assertEquals([], $mailTemplateConfiguration->getRequiredSubjectVariables());
@@ -99,19 +99,19 @@ class MailTemplateVariablesTest extends TestCase
             '{variable2}',
             'Variable',
             MailTemplateVariables::CONTEXT_BODY,
-            MailTemplateVariables::REQUIRED_SUBJECT
+            MailTemplateVariables::REQUIRED_SUBJECT,
         );
         $mailTemplateConfiguration->addVariable(
             '{variable3}',
             'Variable',
             MailTemplateVariables::CONTEXT_BODY,
-            MailTemplateVariables::REQUIRED_BOTH
+            MailTemplateVariables::REQUIRED_BOTH,
         );
         $mailTemplateConfiguration->addVariable(
             '{variable4}',
             'Variable',
             MailTemplateVariables::CONTEXT_BODY,
-            self::INVALID_VALUE
+            self::INVALID_VALUE,
         );
     }
 
@@ -123,19 +123,19 @@ class MailTemplateVariablesTest extends TestCase
             '{variable1}',
             'Variable',
             MailTemplateVariables::CONTEXT_BOTH,
-            MailTemplateVariables::REQUIRED_BOTH
+            MailTemplateVariables::REQUIRED_BOTH,
         );
         $mailTemplateConfiguration->addVariable(
             '{variable2}',
             'Variable',
             MailTemplateVariables::CONTEXT_BOTH,
-            MailTemplateVariables::REQUIRED_BODY
+            MailTemplateVariables::REQUIRED_BODY,
         );
         $mailTemplateConfiguration->addVariable(
             '{variable3}',
             'Variable',
             MailTemplateVariables::CONTEXT_BOTH,
-            MailTemplateVariables::REQUIRED_SUBJECT
+            MailTemplateVariables::REQUIRED_SUBJECT,
         );
 
         $this->assertEquals(['{variable1}', '{variable2}'], $mailTemplateConfiguration->getRequiredBodyVariables());
@@ -146,7 +146,7 @@ class MailTemplateVariablesTest extends TestCase
             '{variable4}',
             'Variable',
             MailTemplateVariables::CONTEXT_BOTH,
-            self::INVALID_VALUE
+            self::INVALID_VALUE,
         );
     }
 }

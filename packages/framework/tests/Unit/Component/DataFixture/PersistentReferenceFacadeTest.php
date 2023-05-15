@@ -35,7 +35,7 @@ class PersistentReferenceFacadeTest extends TestCase
         $persistentReferenceFacade = new PersistentReferenceFacade(
             $emMock,
             $persistentReferenceRepositoryMock,
-            new PersistentReferenceFactory(new EntityNameResolver([]))
+            new PersistentReferenceFactory(new EntityNameResolver([])),
         );
         $this->expectException(MethodGetIdDoesNotExistException::class);
         $persistentReferenceFacade->persistReference('referenceName', new stdClass());
@@ -68,7 +68,7 @@ class PersistentReferenceFacadeTest extends TestCase
         $persistentReferenceFacade = new PersistentReferenceFacade(
             $emMock,
             $persistentReferenceRepositoryMock,
-            new PersistentReferenceFactory(new EntityNameResolver([]))
+            new PersistentReferenceFactory(new EntityNameResolver([])),
         );
         $persistentReferenceFacade->persistReference('newReferenceName', $productMock);
     }
@@ -96,7 +96,7 @@ class PersistentReferenceFacadeTest extends TestCase
         $persistentReferenceFacade = new PersistentReferenceFacade(
             $emMock,
             $persistentReferenceRepositoryMock,
-            new PersistentReferenceFactory(new EntityNameResolver([]))
+            new PersistentReferenceFactory(new EntityNameResolver([])),
         );
 
         $this->assertSame($expectedObject, $persistentReferenceFacade->getReference('referenceName'));
@@ -124,7 +124,7 @@ class PersistentReferenceFacadeTest extends TestCase
         $persistentReferenceFacade = new PersistentReferenceFacade(
             $emMock,
             $persistentReferenceRepositoryMock,
-            new PersistentReferenceFactory(new EntityNameResolver([]))
+            new PersistentReferenceFactory(new EntityNameResolver([])),
         );
 
         $this->expectException(EntityNotFoundException::class);

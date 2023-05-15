@@ -42,8 +42,8 @@ final class OrderedParamAnnotationsFixer implements FixerInterface
 function someFunction($value, $value2)
 {
 }
-SAMPLE
-            )]
+SAMPLE,
+            )],
         );
     }
 

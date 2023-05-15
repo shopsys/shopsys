@@ -27,7 +27,7 @@ class OrderQuery extends AbstractQuery
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly OrderFacade $orderFacade,
         protected readonly Domain $domain,
-        protected readonly FrontendApiOrderFacade $frontendApiOrderFacade
+        protected readonly FrontendApiOrderFacade $frontendApiOrderFacade,
     ) {
     }
 
@@ -62,7 +62,7 @@ class OrderQuery extends AbstractQuery
      */
     protected function getOrderForCustomerUserByUuid(
         CustomerUser $customerUser,
-        string $uuid
+        string $uuid,
     ): Order {
         return $this->frontendApiOrderFacade->getByUuidAndCustomerUser($uuid, $customerUser);
     }

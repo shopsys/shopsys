@@ -22,7 +22,7 @@ class SettingValueFactory implements SettingValueFactoryInterface
     public function create(
         string $name,
         $value,
-        int $domainId
+        int $domainId,
     ): SettingValue {
         $classData = $this->entityNameResolver->resolve(SettingValue::class);
 

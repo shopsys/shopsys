@@ -173,7 +173,7 @@ class PriceExtensionTest extends FunctionalTestCase
             $this->domain,
             $localization,
             $this->intlCurrencyRepository,
-            $this->currencyFormatterFactory
+            $this->currencyFormatterFactory,
         );
     }
 }

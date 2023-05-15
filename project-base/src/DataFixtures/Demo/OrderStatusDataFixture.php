@@ -27,7 +27,7 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
     public function __construct(
         private readonly OrderStatusFacade $orderStatusFacade,
         private readonly Domain $domain,
-        private readonly OrderStatusDataFactoryInterface $orderStatusDataFactory
+        private readonly OrderStatusDataFactoryInterface $orderStatusDataFactory,
     ) {
     }
 
@@ -51,7 +51,7 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
      */
     private function createOrderStatusReference(
         $orderStatusId,
-        $referenceName
+        $referenceName,
     ) {
         $orderStatus = $this->orderStatusFacade->getById($orderStatusId);
         $orderStatusData = $this->orderStatusDataFactory->createFromOrderStatus($orderStatus);

@@ -13,7 +13,7 @@ class ImageSitemapCronModule implements SimpleCronModuleInterface
      * @param \Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapFacade $imageSitemapFacade
      */
     public function __construct(
-        private readonly ImageSitemapFacade $imageSitemapFacade
+        private readonly ImageSitemapFacade $imageSitemapFacade,
     ) {
     }
 

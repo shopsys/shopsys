@@ -27,7 +27,7 @@ class UploadedFileConfigTest extends TestCase
         $uploadedFileConfig = new UploadedFileConfig($fileEntityConfigsByClass);
 
         $this->expectException(
-            UploadedFileEntityConfigNotFoundException::class
+            UploadedFileEntityConfigNotFoundException::class,
         );
         $uploadedFileConfig->getEntityName($entity);
     }
@@ -47,7 +47,7 @@ class UploadedFileConfigTest extends TestCase
         $uploadedFileConfig = new UploadedFileConfig($fileEntityConfigsByClass);
 
         $this->expectException(
-            UploadedFileEntityConfigNotFoundException::class
+            UploadedFileEntityConfigNotFoundException::class,
         );
         $uploadedFileConfig->getUploadedFileEntityConfig($entity);
     }
@@ -76,7 +76,7 @@ class UploadedFileConfigTest extends TestCase
         $uploadedFileEntityConfig = $uploadedFileConfig->getUploadedFileEntityConfig($entity);
 
         $this->expectException(
-            UploadedFileTypeConfigNotFoundException::class
+            UploadedFileTypeConfigNotFoundException::class,
         );
 
         $uploadedFileEntityConfig->getTypeByName('test');

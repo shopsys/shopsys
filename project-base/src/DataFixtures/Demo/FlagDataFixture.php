@@ -26,7 +26,7 @@ class FlagDataFixture extends AbstractReferenceFixture
     public function __construct(
         private readonly FlagFacade $flagFacade,
         private readonly FlagDataFactoryInterface $flagDataFactory,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 

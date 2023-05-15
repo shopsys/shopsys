@@ -35,7 +35,7 @@ class ProductUrlsBatchLoader
         $productUrlsById = $this->productCollectionFacade->getAbsoluteUrlsIndexedByProductId($products, $domainConfig);
         $productImageUrlsById = $this->productCollectionFacade->getImagesUrlsIndexedByProductId(
             $products,
-            $domainConfig
+            $domainConfig,
         );
 
         foreach ($products as $product) {

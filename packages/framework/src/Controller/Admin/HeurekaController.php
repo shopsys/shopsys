@@ -49,7 +49,7 @@ class HeurekaController extends AdminBaseController
                 $this->heurekaSetting->setApiKeyForDomain($heurekaShopCertificationData['heurekaApiKey'], $domainId);
                 $this->heurekaSetting->setHeurekaShopCertificationWidgetForDomain(
                     $heurekaShopCertificationData['heurekaWidgetCode'],
-                    $domainId
+                    $domainId,
                 );
 
                 $this->addSuccessFlash(t('Settings modified.'));

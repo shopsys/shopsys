@@ -23,7 +23,7 @@ class TopProductFactory implements TopProductFactoryInterface
     public function create(
         Product $product,
         int $domainId,
-        int $position
+        int $position,
     ): TopProduct {
         $classData = $this->entityNameResolver->resolve(TopProduct::class);
 

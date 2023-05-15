@@ -16,7 +16,7 @@ class Version20200225102504 extends AbstractMigration
     {
         $this->sql('ALTER TABLE customers ADD domain_id INT NOT NULL DEFAULT 1');
         $this->sql(
-            'UPDATE customers SET domain_id = (SELECT cu.domain_id FROM customer_users AS cu WHERE cu.customer_id = customers.id)'
+            'UPDATE customers SET domain_id = (SELECT cu.domain_id FROM customer_users AS cu WHERE cu.customer_id = customers.id)',
         );
         $this->sql('ALTER TABLE customers ALTER domain_id DROP DEFAULT');
     }

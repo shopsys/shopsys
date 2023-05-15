@@ -27,7 +27,7 @@ class TransportController extends AdminBaseController
         protected readonly TransportGridFactory $transportGridFactory,
         protected readonly TransportDataFactoryInterface $transportDataFactory,
         protected readonly CurrencyFacade $currencyFacade,
-        protected readonly BreadcrumbOverrider $breadcrumbOverrider
+        protected readonly BreadcrumbOverrider $breadcrumbOverrider,
     ) {
     }
 
@@ -52,7 +52,7 @@ class TransportController extends AdminBaseController
                 [
                     'name' => $transport->getName(),
                     'url' => $this->generateUrl('admin_transport_edit', ['id' => $transport->getId()]),
-                ]
+                ],
             );
             return $this->redirectToRoute('admin_transportandpayment_list');
         }
@@ -90,7 +90,7 @@ class TransportController extends AdminBaseController
                 [
                     'name' => $transport->getName(),
                     'url' => $this->generateUrl('admin_transport_edit', ['id' => $transport->getId()]),
-                ]
+                ],
             );
             return $this->redirectToRoute('admin_transportandpayment_list');
         }
@@ -100,7 +100,7 @@ class TransportController extends AdminBaseController
         }
 
         $this->breadcrumbOverrider->overrideLastItem(
-            t('Editing shipping - %name%', ['%name%' => $transport->getName()])
+            t('Editing shipping - %name%', ['%name%' => $transport->getName()]),
         );
 
         return $this->render('@ShopsysFramework/Admin/Content/Transport/edit.html.twig', [
@@ -126,7 +126,7 @@ class TransportController extends AdminBaseController
                 t('Shipping <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $transportName,
-                ]
+                ],
             );
         } catch (TransportNotFoundException $ex) {
             $this->addErrorFlash(t('Selected shipping doesn\'t exist.'));

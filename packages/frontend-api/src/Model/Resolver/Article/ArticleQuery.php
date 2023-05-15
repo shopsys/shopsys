@@ -30,7 +30,7 @@ class ArticleQuery extends AbstractQuery
         protected readonly Domain $domain,
         protected readonly LegalConditionsFacade $legalConditionsFacade,
         protected readonly CookiesFacade $cookiesFacade,
-        protected readonly FriendlyUrlFacade $friendlyUrlFacade
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
     }
 
@@ -117,12 +117,12 @@ class ArticleQuery extends AbstractQuery
             $friendlyUrl = $this->friendlyUrlFacade->getFriendlyUrlByRouteNameAndSlug(
                 $this->domain->getId(),
                 'front_article_detail',
-                $urlSlug
+                $urlSlug,
             );
 
             return $this->articleFacade->getVisibleByDomainIdAndId(
                 $this->domain->getId(),
-                $friendlyUrl->getEntityId()
+                $friendlyUrl->getEntityId(),
             );
         } catch (FriendlyUrlNotFoundException | ArticleNotFoundException $articleNotFoundException) {
             throw new ArticleNotFoundUserError('Article with URL slug `' . $urlSlug . '` does not exist.');

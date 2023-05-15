@@ -166,7 +166,7 @@ class CronModuleFacade
                 'serviceId' => $cronModuleConfig->getServiceId(),
                 'now' => (new DateTime())->format('Y-m-d H:i:s'),
                 'lastDuration' => $lastCronDuration,
-            ]
+            ],
         );
 
         $connection->executeStatement(
@@ -178,7 +178,7 @@ class CronModuleFacade
                 'startedAt' => $cronModule->getLastStartedAt()->format('Y-m-d H:i:s'),
                 'finishedAt' => (new DateTime())->format('Y-m-d H:i:s'),
                 'duration' => $lastCronDuration,
-            ]
+            ],
         );
     }
 

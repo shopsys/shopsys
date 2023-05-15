@@ -22,7 +22,7 @@ class UnitFacade
         protected readonly UnitRepository $unitRepository,
         protected readonly Setting $setting,
         protected readonly UnitFactoryInterface $unitFactory,
-        protected readonly EventDispatcherInterface $eventDispatcher
+        protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }
 

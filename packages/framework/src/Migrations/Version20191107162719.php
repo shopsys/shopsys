@@ -37,7 +37,7 @@ class Version20191107162719 extends AbstractMigration
     private function migrateCurrentVats(): void
     {
         $currentVats = $this->sql(
-            'SELECT id, name, percent, replace_with_id FROM vats WHERE domain_id = 1'
+            'SELECT id, name, percent, replace_with_id FROM vats WHERE domain_id = 1',
         )->fetchAllAssociative();
 
         foreach ($this->getAllDomainIds() as $domainId) {
@@ -48,7 +48,7 @@ class Version20191107162719 extends AbstractMigration
                         [
                             'id' => $currentVat['id'],
                             'tmpOriginalId' => $currentVat['id'],
-                        ]
+                        ],
                     );
                 } else {
                     $this->sql(
@@ -60,7 +60,7 @@ class Version20191107162719 extends AbstractMigration
                             'percent' => $currentVat['percent'],
                             'domainId' => $domainId,
                             'tmpOriginalId' => $currentVat['id'],
-                        ]
+                        ],
                     );
                 }
             }
@@ -70,7 +70,7 @@ class Version20191107162719 extends AbstractMigration
     private function migrateReplaceWithColumnData(): void
     {
         $vatsForMigrateReplaceWithColumn = $this->sql(
-            'SELECT id, replace_with_id, domain_id FROM vats WHERE replace_with_id is not null and domain_id > 1'
+            'SELECT id, replace_with_id, domain_id FROM vats WHERE replace_with_id is not null and domain_id > 1',
         )->fetchAllAssociative();
 
         foreach ($vatsForMigrateReplaceWithColumn as $vatForMigrateReplaceWithColumn) {
@@ -91,7 +91,7 @@ class Version20191107162719 extends AbstractMigration
     private function migrateCurrentVatSetting(): void
     {
         $currentDefaultVat = $this->sql(
-            'SELECT value FROM setting_values WHERE name = \'defaultVatId\' AND domain_id = 0;'
+            'SELECT value FROM setting_values WHERE name = \'defaultVatId\' AND domain_id = 0;',
         )->fetchOne();
 
         foreach ($this->getAllDomainIds() as $domainId) {
@@ -107,7 +107,7 @@ class Version20191107162719 extends AbstractMigration
                 [
                     'domainId' => $domainId,
                     'vatId' => $newVatId,
-                ]
+                ],
             );
         }
     }

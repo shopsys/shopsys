@@ -31,7 +31,7 @@ class SettingTest extends TestCase
             ->setMethods(['getAllByDomainId'])
             ->getMock();
         $settingValueRepositoryMock->expects($this->atLeastOnce())->method('getAllByDomainId')->willReturnMap(
-            $settingValueArray
+            $settingValueArray,
         );
 
         $setting = new Setting($entityManagerMock, $settingValueRepositoryMock);
@@ -62,7 +62,7 @@ class SettingTest extends TestCase
             ->setMethods(['getAllByDomainId'])
             ->getMock();
         $settingValueRepositoryMock->expects($this->atLeastOnce())->method('getAllByDomainId')->willReturnMap(
-            $settingValueArray
+            $settingValueArray,
         );
 
         $setting = new Setting($entityManagerMock, $settingValueRepositoryMock);
@@ -107,7 +107,7 @@ class SettingTest extends TestCase
             ->setMethods(['getAllByDomainId'])
             ->getMock();
         $settingValueRepositoryMock->expects($this->atLeastOnce())->method('getAllByDomainId')->willReturn(
-            $settingValueArray
+            $settingValueArray,
         );
 
         $setting = new Setting($entityManagerMock, $settingValueRepositoryMock);

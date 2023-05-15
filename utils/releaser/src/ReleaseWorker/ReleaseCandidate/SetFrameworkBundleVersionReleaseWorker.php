@@ -18,7 +18,7 @@ final class SetFrameworkBundleVersionReleaseWorker extends AbstractShopsysReleas
      * @param \Shopsys\Releaser\FileManipulator\FrameworkBundleVersionFileManipulator $frameworkBundleVersionFileManipulator
      */
     public function __construct(
-        private readonly FrameworkBundleVersionFileManipulator $frameworkBundleVersionFileManipulator
+        private readonly FrameworkBundleVersionFileManipulator $frameworkBundleVersionFileManipulator,
     ) {
     }
 
@@ -42,7 +42,7 @@ final class SetFrameworkBundleVersionReleaseWorker extends AbstractShopsysReleas
 
         $this->commit(sprintf(
             'ShopsysFrameworkBundle: version updated to "%s"',
-            $version->getVersionString()
+            $version->getVersionString(),
         ));
 
         $this->symfonyStyle->success(Message::SUCCESS);
@@ -66,7 +66,7 @@ final class SetFrameworkBundleVersionReleaseWorker extends AbstractShopsysReleas
 
         $newUpgradeContent = $this->frameworkBundleVersionFileManipulator->updateFrameworkBundleVersion(
             $upgradeFileInfo,
-            $version
+            $version,
         );
 
         FileSystem::write($upgradeFilePath, $newUpgradeContent);

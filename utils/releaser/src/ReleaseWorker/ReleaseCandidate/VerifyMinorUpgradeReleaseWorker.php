@@ -32,7 +32,7 @@ final class VerifyMinorUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
             - in demoshop composer.json, change a version of all shopsys/* packages to "dev-%s",
             - build the demoshop application using "php phing build-demo-dev, 
             - run acceptance tests using "php phing tests-acceptance"',
-            $this->createBranchName($version)
+            $this->createBranchName($version),
         ));
         $this->confirm('Confirm the minor version does not contain any BC-breaks.');
     }

@@ -26,7 +26,7 @@ class SitemapFacade
         protected readonly Domain $domain,
         protected readonly SitemapDumperFactory $domainSitemapDumperFactory,
         protected readonly SitemapRepository $sitemapRepository,
-        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade
+        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
     ) {
         $this->sitemapsDir = $sitemapsDir;
         $this->sitemapsUrlPrefix = $sitemapsUrlPrefix;
@@ -41,7 +41,7 @@ class SitemapFacade
             $domainSitemapDumper->dump(
                 $this->sitemapsDir,
                 $domainConfig->getUrl() . $this->sitemapsUrlPrefix . '/',
-                $section
+                $section,
             );
         }
     }

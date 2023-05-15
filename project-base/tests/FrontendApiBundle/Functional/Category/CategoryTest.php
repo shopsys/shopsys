@@ -44,7 +44,7 @@ class CategoryTest extends GraphQlTestCase
                         'All kind of electronic devices.',
                         [],
                         Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                        $this->getLocaleForFirstDomain()
+                        $this->getLocaleForFirstDomain(),
                     ),
                 ],
             ],
@@ -130,7 +130,7 @@ class CategoryTest extends GraphQlTestCase
                                     'A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,',
                                     [],
                                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                                    $locale
+                                    $locale,
                                 ),
                             ]],
                         ],

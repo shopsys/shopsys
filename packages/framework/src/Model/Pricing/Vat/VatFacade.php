@@ -25,7 +25,7 @@ class VatFacade
         protected readonly Setting $setting,
         protected readonly ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         protected readonly VatFactoryInterface $vatFactory,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 

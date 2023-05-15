@@ -10,7 +10,7 @@ class EntityNameResolver
      * @param string[] $entityExtensionMap
      */
     public function __construct(
-        protected array $entityExtensionMap
+        protected array $entityExtensionMap,
     ) {
     }
 

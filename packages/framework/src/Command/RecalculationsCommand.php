@@ -35,7 +35,7 @@ class RecalculationsCommand extends Command
         private readonly ProductPriceRecalculator $productPriceRecalculator,
         private readonly ProductVisibilityFacade $productVisibilityFacade,
         private readonly ProductAvailabilityRecalculator $productAvailabilityRecalculator,
-        private readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
+        private readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
     ) {
         parent::__construct();
     }

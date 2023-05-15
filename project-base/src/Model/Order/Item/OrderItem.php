@@ -45,7 +45,7 @@ class OrderItem extends BaseOrderItem
         int $quantity,
         string $type,
         ?string $unitName,
-        ?string $catnum
+        ?string $catnum,
     ) {
         parent::__construct(
             $order,
@@ -55,7 +55,7 @@ class OrderItem extends BaseOrderItem
             $quantity,
             $type,
             $unitName,
-            $catnum
+            $catnum,
         );
     }
 }

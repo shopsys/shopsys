@@ -38,7 +38,7 @@ class GoogleFeedInfo implements FeedInfoInterface
         return $this->translator->trans(
             'Google Shopping product feed is not optimized for selling to Australia,
             Czechia, France, Germany, Italy, Netherlands, Spain, Switzerland, the UK,
-            and the US. It is caused by missing \'shipping\' attribute.'
+            and the US. It is caused by missing \'shipping\' attribute.',
         );
     }
 }

@@ -14,7 +14,7 @@ class IconExtension extends AbstractExtension
      * @param \Twig\Environment $twigEnvironment
      */
     public function __construct(
-        protected readonly Environment $twigEnvironment
+        protected readonly Environment $twigEnvironment,
     ) {
     }
 
@@ -46,7 +46,7 @@ class IconExtension extends AbstractExtension
                 'name' => $iconName,
                 'attr' => $attributes,
                 'type' => $iconType,
-            ]
+            ],
         );
     }
 }

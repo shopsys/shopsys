@@ -21,7 +21,7 @@ class EntityExtensionTestHelper
     public function __construct(
         private readonly EntityManagerDecorator $em,
         private readonly OverwritableEntityNameResolver $overwritableEntityNameResolver,
-        private readonly OverwritableEntityExtensionSubscriber $overwritableEntityExtensionSubscriber
+        private readonly OverwritableEntityExtensionSubscriber $overwritableEntityExtensionSubscriber,
     ) {
     }
 

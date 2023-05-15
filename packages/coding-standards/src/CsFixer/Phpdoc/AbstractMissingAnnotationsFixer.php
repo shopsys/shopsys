@@ -35,7 +35,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
         protected readonly WhitespacesFixerConfig $whitespacesFixerConfig,
         protected readonly FunctionsAnalyzer $functionsAnalyzer,
         protected readonly PhpToDocTypeTransformer $phpToDocTypeTransformer,
-        private readonly IndentDetector $indentDetector
+        private readonly IndentDetector $indentDetector,
     ) {
     }
 
@@ -151,7 +151,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
     {
         return str_repeat(
             $this->whitespacesFixerConfig->getIndent(),
-            $this->indentDetector->detectOnPosition($tokens, $index)
+            $this->indentDetector->detectOnPosition($tokens, $index),
         );
     }
 
@@ -165,7 +165,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
         do {
             $index = $tokens->getPrevNonWhitespace($index);
         } while ($tokens[$index]->isGivenKind(
-            [T_STATIC, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_FINAL, T_ABSTRACT, T_COMMENT]
+            [T_STATIC, T_PUBLIC, T_PROTECTED, T_PRIVATE, T_FINAL, T_ABSTRACT, T_COMMENT],
         ));
 
         return $index;
@@ -201,7 +201,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
             $lines,
             $this->resolveOffset($docToken, $newLines),
             0,
-            $newLines
+            $newLines,
         );
 
         return implode('', $lines);

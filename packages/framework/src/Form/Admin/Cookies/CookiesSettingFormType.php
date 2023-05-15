@@ -42,7 +42,7 @@ class CookiesSettingFormType extends AbstractType
                 'attr' => [
                     'icon' => true,
                     'iconTitle' => t(
-                        'Choose article, which will provide information about how this pages uses cookies.'
+                        'Choose article, which will provide information about how this pages uses cookies.',
                     ),
                 ],
             ]);

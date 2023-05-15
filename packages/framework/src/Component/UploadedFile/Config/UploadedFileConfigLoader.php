@@ -43,7 +43,7 @@ class UploadedFileConfigLoader
 
         if (!$this->filesystem->exists($filename)) {
             throw new FileNotFoundException(
-                'File ' . $filename . ' does not exist'
+                'File ' . $filename . ' does not exist',
             );
         }
 
@@ -73,7 +73,7 @@ class UploadedFileConfigLoader
             } catch (UploadedFileConfigException $e) {
                 throw new UploadedFileConfigurationParseException(
                     $entityConfig[UploadedFileConfigDefinition::CONFIG_CLASS],
-                    $e
+                    $e,
                 );
             }
         }

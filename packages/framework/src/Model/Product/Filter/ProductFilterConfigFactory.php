@@ -22,7 +22,7 @@ class ProductFilterConfigFactory
         protected readonly FlagFilterChoiceRepository $flagFilterChoiceRepository,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly BrandFilterChoiceRepository $brandFilterChoiceRepository,
-        protected readonly PriceRangeRepository $priceRangeRepository
+        protected readonly PriceRangeRepository $priceRangeRepository,
     ) {
     }
 
@@ -64,7 +64,7 @@ class ProductFilterConfigFactory
             $domainId,
             $pricingGroup,
             $locale,
-            $searchText
+            $searchText,
         );
 
         return new ProductFilterConfig($parameterFilterChoices, $flagFilterChoices, $brandFilterChoices, $priceRange);

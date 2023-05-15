@@ -51,7 +51,7 @@ class CartController extends FrontBaseController
         private readonly ErrorExtractor $errorExtractor,
         private readonly ListedProductViewFacadeInterface $listedProductViewFacade,
         private readonly RequestStack $requestStack,
-        private readonly ModuleFacade $moduleFacade
+        private readonly ModuleFacade $moduleFacade,
     ) {
     }
 
@@ -88,7 +88,7 @@ class CartController extends FrontBaseController
 
         if ($invalidCart) {
             $this->addErrorFlash(
-                t('Please make sure that you entered right quantity of all items in cart.')
+                t('Please make sure that you entered right quantity of all items in cart.'),
             );
         }
 
@@ -98,7 +98,7 @@ class CartController extends FrontBaseController
         $productsPrice = $orderPreview->getProductsPrice();
         $remainingPriceWithVat = $this->freeTransportAndPaymentFacade->getRemainingPriceWithVat(
             $productsPrice->getPriceWithVat(),
-            $domainId
+            $domainId,
         );
 
         return $this->render('Front/Content/Cart/index.html.twig', [
@@ -109,7 +109,7 @@ class CartController extends FrontBaseController
             'isFreeTransportAndPaymentActive' => $this->freeTransportAndPaymentFacade->isActive($domainId),
             'isPaymentAndTransportFree' => $this->freeTransportAndPaymentFacade->isFree(
                 $productsPrice->getPriceWithVat(),
-                $domainId
+                $domainId,
             ),
             'remainingPriceWithVat' => $remainingPriceWithVat,
             'cartItemDiscounts' => $orderPreview->getQuantifiedItemsDiscounts(),
@@ -198,7 +198,7 @@ class CartController extends FrontBaseController
 
                 $addProductResult = $this->cartFacade->addProductToCart(
                     $formData['productId'],
-                    (int)$formData['quantity']
+                    (int)$formData['quantity'],
                 );
 
                 $this->sendAddProductResultFlashMessage($addProductResult);
@@ -217,7 +217,7 @@ class CartController extends FrontBaseController
                 t('Unable to add product to cart:<br/><ul><li>{{ errors|raw }}</li></ul>'),
                 [
                     'errors' => implode('</li><li>', $formErrors),
-                ]
+                ],
             );
         }
 
@@ -244,7 +244,7 @@ class CartController extends FrontBaseController
 
                 $addProductResult = $this->cartFacade->addProductToCart(
                     $formData['productId'],
-                    (int)$formData['quantity']
+                    (int)$formData['quantity'],
                 );
 
                 $this->sendAddProductResultFlashMessage($addProductResult);
@@ -253,7 +253,7 @@ class CartController extends FrontBaseController
                 if ($this->moduleFacade->isEnabled(ModuleList::ACCESSORIES_ON_BUY)) {
                     $accessories = $this->listedProductViewFacade->getAccessories(
                         $addProductResult->getCartItem()->getProduct()->getId(),
-                        self::AFTER_ADD_WINDOW_ACCESSORIES_LIMIT
+                        self::AFTER_ADD_WINDOW_ACCESSORIES_LIMIT,
                     );
                 }
 
@@ -275,7 +275,7 @@ class CartController extends FrontBaseController
                 t('Unable to add product to cart:<br/><ul><li>{{ errors|raw }}</li></ul>'),
                 [
                     'errors' => implode('</li><li>', $formErrors),
-                ]
+                ],
             );
         }
 
@@ -286,7 +286,7 @@ class CartController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Cart\AddProductResult $addProductResult
      */
     private function sendAddProductResultFlashMessage(
-        AddProductResult $addProductResult
+        AddProductResult $addProductResult,
     ) {
         if ($addProductResult->getIsNew()) {
             $this->addSuccessFlashTwig(
@@ -295,7 +295,7 @@ class CartController extends FrontBaseController
                     'name' => $addProductResult->getCartItem()->getName(),
                     'quantity' => $addProductResult->getAddedQuantity(),
                     'unitName' => $addProductResult->getCartItem()->getProduct()->getUnit()->getName(),
-                ]
+                ],
             );
         } else {
             $this->addSuccessFlashTwig(
@@ -304,7 +304,7 @@ class CartController extends FrontBaseController
                     'name' => $addProductResult->getCartItem()->getName(),
                     'quantity' => $addProductResult->getCartItem()->getQuantity(),
                     'unitName' => $addProductResult->getCartItem()->getProduct()->getUnit()->getName(),
-                ]
+                ],
             );
         }
     }
@@ -326,14 +326,14 @@ class CartController extends FrontBaseController
 
                 $this->addSuccessFlashTwig(
                     t('Product {{ name }} removed from cart'),
-                    ['name' => $productName]
+                    ['name' => $productName],
                 );
             } catch (InvalidCartItemException $ex) {
                 $this->addErrorFlash(t('Unable to remove item from cart. The item is probably already removed.'));
             }
         } else {
             $this->addErrorFlash(
-                t('Unable to remove item from cart. The link for removing it probably expired, try it again.')
+                t('Unable to remove item from cart. The link for removing it probably expired, try it again.'),
             );
         }
 
@@ -353,7 +353,7 @@ class CartController extends FrontBaseController
             return $this->json([
                 'success' => false,
                 'errorMessage' => t(
-                    'Unable to remove item from cart. The link for removing it probably expired, try it again.'
+                    'Unable to remove item from cart. The link for removing it probably expired, try it again.',
                 ),
             ]);
         }

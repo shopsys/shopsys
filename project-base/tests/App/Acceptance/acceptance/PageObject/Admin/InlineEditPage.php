@@ -50,7 +50,7 @@ class InlineEditPage extends AbstractPage
         $this->tester->scrollTo(['css' => $class]);
         $this->tester->fillFieldByCss(
             $class,
-            $value
+            $value,
         );
     }
 
@@ -78,7 +78,7 @@ class InlineEditPage extends AbstractPage
                     highestId = $row.data("inline-edit-row-id");
                 }
             });
-            return highestId;'
+            return highestId;',
         );
 
         return is_numeric($highestId) ? (int)$highestId : null;

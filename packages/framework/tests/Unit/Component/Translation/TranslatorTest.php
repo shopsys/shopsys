@@ -40,7 +40,7 @@ class TranslatorTest extends TestCase
             $this->originalTranslatorMock,
             $this->originalTranslatorBagMock,
             $this->identityTranslator,
-            $this->messageIdNormalizerMock
+            $this->messageIdNormalizerMock,
         );
     }
 
@@ -59,7 +59,7 @@ class TranslatorTest extends TestCase
             'source message %parameter%',
             ['%parameter%' => 'parameter value'],
             null,
-            Translator::SOURCE_LOCALE
+            Translator::SOURCE_LOCALE,
         );
 
         $this->assertSame('normalized source message parameter value', $translatedMessage);
@@ -70,7 +70,7 @@ class TranslatorTest extends TestCase
         $this->originalTranslatorMock->method('trans')
             ->with(
                 $this->identicalTo('normalized source message %parameter%'),
-                $this->identicalTo(['%parameter%' => 'parameter value'])
+                $this->identicalTo(['%parameter%' => 'parameter value']),
             )
             ->willReturn('translated message parameter value');
 
@@ -78,7 +78,7 @@ class TranslatorTest extends TestCase
             Translator::SOURCE_LOCALE,
             [
                 'translationDomain' => ['normalized source message %parameter%' => 'translated message %parameter%'],
-            ]
+            ],
         );
 
         $this->originalTranslatorBagMock->method('getCatalogue')
@@ -94,7 +94,7 @@ class TranslatorTest extends TestCase
             'source message %parameter%',
             ['%parameter%' => 'parameter value'],
             'translationDomain',
-            Translator::SOURCE_LOCALE
+            Translator::SOURCE_LOCALE,
         );
 
         $this->assertSame('translated message parameter value', $translatedMessage);
@@ -116,7 +116,7 @@ class TranslatorTest extends TestCase
 
         $translatedMessage = $this->translator->trans(
             'source message %parameter%',
-            ['%parameter%' => 'parameter value']
+            ['%parameter%' => 'parameter value'],
         );
 
         $this->assertSame('normalized source message parameter value', $translatedMessage);
@@ -127,7 +127,7 @@ class TranslatorTest extends TestCase
         $this->originalTranslatorMock->method('trans')
             ->with(
                 $this->identicalTo('normalized source message %parameter%'),
-                $this->identicalTo(['%parameter%' => 'parameter value'])
+                $this->identicalTo(['%parameter%' => 'parameter value']),
             )
             ->willReturn('source message parameter value');
 
@@ -144,7 +144,7 @@ class TranslatorTest extends TestCase
             'source message %parameter%',
             ['%parameter%' => 'parameter value'],
             null,
-            'nonSourceLocale'
+            'nonSourceLocale',
         );
 
         $this->assertSame('source message parameter value', $translatedMessage);
@@ -155,7 +155,7 @@ class TranslatorTest extends TestCase
         $this->originalTranslatorMock->method('trans')
             ->with(
                 $this->identicalTo('normalized source message %parameter%'),
-                $this->identicalTo(['%parameter%' => 'parameter value'])
+                $this->identicalTo(['%parameter%' => 'parameter value']),
             )
             ->willReturn('translated message parameter value');
 
@@ -163,7 +163,7 @@ class TranslatorTest extends TestCase
             'nonSourceLocale',
             [
                 'translationDomain' => ['normalized source message %parameter%' => 'translated message %parameter%'],
-            ]
+            ],
         );
 
         $this->originalTranslatorBagMock->method('getCatalogue')
@@ -179,7 +179,7 @@ class TranslatorTest extends TestCase
             'source message %parameter%',
             ['%parameter%' => 'parameter value'],
             'translationDomain',
-            'nonSourceLocale'
+            'nonSourceLocale',
         );
 
         $this->assertSame('translated message parameter value', $translatedMessage);
@@ -203,7 +203,7 @@ class TranslatorTest extends TestCase
                 '%count%' => 1,
             ],
             null,
-            Translator::SOURCE_LOCALE
+            Translator::SOURCE_LOCALE,
         );
 
         $this->assertSame('normalized source message parameter value', $translatedMessage);
@@ -217,7 +217,7 @@ class TranslatorTest extends TestCase
                 $this->identicalTo([
                     '%parameter%' => 'parameter value',
                     '%count%' => 1,
-                ])
+                ]),
             )
             ->willReturn('translated message parameter value');
 
@@ -225,7 +225,7 @@ class TranslatorTest extends TestCase
             Translator::SOURCE_LOCALE,
             [
                 'translationDomain' => ['{0}zero|{1}normalized source message %parameter%' => '{0}zero|{1}translated message %parameter%'],
-            ]
+            ],
         );
 
         $this->originalTranslatorBagMock->method('getCatalogue')
@@ -244,7 +244,7 @@ class TranslatorTest extends TestCase
                 '%count%' => 1,
             ],
             'translationDomain',
-            Translator::SOURCE_LOCALE
+            Translator::SOURCE_LOCALE,
         );
 
         $this->assertSame('translated message parameter value', $translatedMessage);
@@ -269,7 +269,7 @@ class TranslatorTest extends TestCase
             [
                 '%parameter%' => 'parameter value',
                 '%count%' => 1,
-            ]
+            ],
         );
 
         $this->assertSame('normalized source message parameter value', $translatedMessage);
@@ -283,7 +283,7 @@ class TranslatorTest extends TestCase
                 $this->identicalTo([
                     '%parameter%' => 'parameter value',
                     '%count%' => 1,
-                ])
+                ]),
             )
             ->willReturn('source message parameter value');
 
@@ -303,7 +303,7 @@ class TranslatorTest extends TestCase
                 '%count%' => 1,
             ],
             null,
-            'nonSourceLocale'
+            'nonSourceLocale',
         );
 
         $this->assertSame('source message parameter value', $translatedMessage);
@@ -317,7 +317,7 @@ class TranslatorTest extends TestCase
                 $this->identicalTo([
                     '%parameter%' => 'parameter value',
                     '%count%' => 1,
-                ])
+                ]),
             )
             ->willReturn('translated message parameter value');
 
@@ -325,7 +325,7 @@ class TranslatorTest extends TestCase
             'nonSourceLocale',
             [
                 'translationDomain' => ['{0}zero|{1}normalized source message %parameter%' => '{0}zero|{1}translated message %parameter%'],
-            ]
+            ],
         );
 
         $this->originalTranslatorBagMock->method('getCatalogue')
@@ -344,7 +344,7 @@ class TranslatorTest extends TestCase
                 '%count%' => 1,
             ],
             'translationDomain',
-            'nonSourceLocale'
+            'nonSourceLocale',
         );
 
         $this->assertSame('translated message parameter value', $translatedMessage);

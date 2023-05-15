@@ -14,7 +14,7 @@ class ImageDeleteDoctrineListener
      */
     public function __construct(
         protected readonly ImageConfig $imageConfig,
-        protected readonly ImageFacade $imageFacade
+        protected readonly ImageFacade $imageFacade,
     ) {
     }
 

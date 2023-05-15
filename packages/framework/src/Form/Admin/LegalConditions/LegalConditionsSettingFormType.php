@@ -42,7 +42,7 @@ class LegalConditionsSettingFormType extends AbstractType
                 'attr' => [
                     'icon' => true,
                     'iconTitle' => t(
-                        'Choose article, which will serve as terms and conditions with which the customer has to agree when creating order.'
+                        'Choose article, which will serve as terms and conditions with which the customer has to agree when creating order.',
                     ),
                 ],
             ])
@@ -56,7 +56,7 @@ class LegalConditionsSettingFormType extends AbstractType
                 'attr' => [
                     'icon' => true,
                     'iconTitle' => t(
-                        'Choose article, which will serve as privacy policy with which the customer has to agree when creating order or registering user.'
+                        'Choose article, which will serve as privacy policy with which the customer has to agree when creating order or registering user.',
                     ),
                 ],
             ]);

@@ -20,7 +20,7 @@ class ParameterFilterChoiceRepository
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly ProductRepository $productRepository
+        protected readonly ProductRepository $productRepository,
     ) {
     }
 
@@ -35,12 +35,12 @@ class ParameterFilterChoiceRepository
         $domainId,
         PricingGroup $pricingGroup,
         $locale,
-        Category $category
+        Category $category,
     ) {
         $productsQueryBuilder = $this->productRepository->getListableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
-            $category
+            $category,
         );
 
         $productsQueryBuilder
@@ -57,7 +57,7 @@ class ParameterFilterChoiceRepository
         $visibleParametersIndexedById = $this->getVisibleParametersIndexedByIdOrderedByName($rows, $locale);
         $parameterValuesIndexedByParameterId = $this->getParameterValuesIndexedByParameterIdOrderedByValueText(
             $rows,
-            $locale
+            $locale,
         );
         $parameterFilterChoices = [];
 
@@ -65,7 +65,7 @@ class ParameterFilterChoiceRepository
             if (array_key_exists($parameterId, $parameterValuesIndexedByParameterId)) {
                 $parameterFilterChoices[] = new ParameterFilterChoice(
                     $parameter,
-                    $parameterValuesIndexedByParameterId[$parameterId]
+                    $parameterValuesIndexedByParameterId[$parameterId],
                 );
             }
         }

@@ -19,7 +19,7 @@ class CurrencyGridFactory implements GridFactoryInterface
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly GridFactory $gridFactory,
-        protected readonly CurrencyFacade $currencyFacade
+        protected readonly CurrencyFacade $currencyFacade,
     ) {
     }
 
@@ -50,7 +50,7 @@ class CurrencyGridFactory implements GridFactoryInterface
             [
                 'defaultCurrency' => $this->currencyFacade->getDefaultCurrency(),
                 'notAllowedToDeleteCurrencyIds' => $this->currencyFacade->getNotAllowedToDeleteCurrencyIds(),
-            ]
+            ],
         );
 
         return $grid;

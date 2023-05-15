@@ -16,7 +16,7 @@ class AdvertPositionNotKnownException extends Exception implements AdvertExcepti
         $message = sprintf(
             'Unknown advert position name "%s". Known names are %s.',
             $positionName,
-            implode('", "', $knownPositionsNames)
+            implode('", "', $knownPositionsNames),
         );
 
         parent::__construct($message, 0, $previous);

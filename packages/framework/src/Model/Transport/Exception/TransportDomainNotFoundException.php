@@ -17,7 +17,7 @@ class TransportDomainNotFoundException extends Exception implements TransportExc
         $message = sprintf(
             'TransportDomain for transport %s and domain ID %d not found.',
             $transportDescription,
-            $domainId
+            $domainId,
         );
 
         parent::__construct($message, 0, $previous);

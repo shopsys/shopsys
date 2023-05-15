@@ -46,7 +46,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         return $this->productRepository->getVisible(
             $productId,
             $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
     }
 
@@ -58,7 +58,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         return $this->productAccessoryRepository->getAllOfferedAccessoriesByProduct(
             $product,
             $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
     }
 
@@ -70,7 +70,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         return $this->productRepository->getAllSellableVariantsByMainVariant(
             $product,
             $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
     }
 
@@ -82,14 +82,14 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         string $orderingModeId,
         int $page,
         int $limit,
-        int $categoryId
+        int $categoryId,
     ): PaginationResult {
         $filterQuery = $this->filterQueryFactory->createListableProductsByCategoryId(
             $productFilterData,
             $orderingModeId,
             $page,
             $limit,
-            $categoryId
+            $categoryId,
         );
 
         $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
@@ -104,7 +104,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         string $orderingModeId,
         int $page,
         int $limit,
-        int $brandId
+        int $brandId,
     ): PaginationResult {
         $emptyProductFilterData = new ProductFilterData();
 
@@ -113,7 +113,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
             $orderingModeId,
             $page,
             $limit,
-            $brandId
+            $brandId,
         );
 
         $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
@@ -129,14 +129,14 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         ProductFilterData $productFilterData,
         string $orderingModeId,
         int $page,
-        int $limit
+        int $limit,
     ): PaginationResult {
         $filterQuery = $this->filterQueryFactory->createListableProductsBySearchText(
             $productFilterData,
             $orderingModeId,
             $page,
             $limit,
-            $searchText
+            $searchText,
         );
 
         $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
@@ -159,7 +159,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
             ProductListOrderingConfig::ORDER_BY_RELEVANCE,
             $page,
             $limit,
-            $searchText
+            $searchText,
         );
 
         $productIds = $this->productElasticsearchRepository->getSortedProductIdsByFilterQuery($filterQuery);
@@ -167,7 +167,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         $listableProductsByIds = $this->productRepository->getListableByIds(
             $this->domain->getId(),
             $this->currentCustomerUser->getPricingGroup(),
-            $productIds->getIds()
+            $productIds->getIds(),
         );
 
         return new PaginationResult($page, $limit, $productIds->getTotal(), $listableProductsByIds);
@@ -179,14 +179,14 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     public function getProductFilterCountDataInCategory(
         int $categoryId,
         ProductFilterConfig $productFilterConfig,
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
     ): ProductFilterCountData {
         return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInCategory(
             $productFilterData,
             $this->filterQueryFactory->createListableProductsByCategoryIdWithPriceAndStockFilter(
                 $categoryId,
-                $productFilterData
-            )
+                $productFilterData,
+            ),
         );
     }
 
@@ -197,14 +197,14 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
      */
     public function getProductFilterCountDataForBrand(
         int $brandId,
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
     ): ProductFilterCountData {
         return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInCategory(
             $productFilterData,
             $this->filterQueryFactory->createListableProductsByBrandIdWithPriceAndStockFilter(
                 $brandId,
-                $productFilterData
-            )
+                $productFilterData,
+            ),
         );
     }
 
@@ -214,7 +214,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     public function getProductFilterCountDataForSearch(
         ?string $searchText,
         ProductFilterConfig $productFilterConfig,
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
     ): ProductFilterCountData {
         $searchText = $searchText ?? '';
 
@@ -222,8 +222,8 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
             $productFilterData,
             $this->filterQueryFactory->createListableProductsBySearchTextWithPriceAndStockFilter(
                 $searchText,
-                $productFilterData
-            )
+                $productFilterData,
+            ),
         );
     }
 
@@ -232,11 +232,11 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
      */
     public function getProductFilterCountDataForAll(
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
     ): ProductFilterCountData {
         return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInSearch(
             $productFilterData,
-            $this->filterQueryFactory->createListableProductsWithPriceAndStockFilter($productFilterData)
+            $this->filterQueryFactory->createListableProductsWithPriceAndStockFilter($productFilterData),
         );
     }
 }

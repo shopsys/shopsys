@@ -17,7 +17,7 @@ class NewsletterSubscriberPersistenceTest extends TransactionFunctionalTestCase
         $newsletterSubscriber = new NewsletterSubscriber(
             'no-reply@shopsys.com',
             new DateTimeImmutable('2018-02-06 15:15:48'),
-            1
+            1,
         );
 
         $this->em->persist($newsletterSubscriber);

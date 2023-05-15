@@ -27,7 +27,7 @@ class Version20170530101845 extends AbstractMigration
                 [
                     'name' => $name,
                     'demoValue' => $demoValue,
-                ]
+                ],
             );
         }
     }

@@ -74,7 +74,7 @@ class PriceConverter
         Money $price,
         Currency $currency,
         string $vatPercent,
-        int $domainId
+        int $domainId,
     ): Money {
         if ($this->setting->get(PricingSetting::INPUT_PRICE_TYPE) === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT) {
             $multiplier = (string)(100 + (float)$vatPercent);

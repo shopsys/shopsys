@@ -32,7 +32,7 @@ class SliderController extends AdminBaseController
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly SliderItemDataFactoryInterface $sliderItemDataFactory,
-        protected readonly EntityManagerInterface $entityManager
+        protected readonly EntityManagerInterface $entityManager,
     ) {
     }
 
@@ -89,7 +89,7 @@ class SliderController extends AdminBaseController
                 [
                     'name' => $sliderItem->getName(),
                     'url' => $this->generateUrl('admin_slider_edit', ['id' => $sliderItem->getId()]),
-                ]
+                ],
             );
             return $this->redirectToRoute('admin_slider_list');
         }
@@ -128,7 +128,7 @@ class SliderController extends AdminBaseController
                 [
                     'name' => $sliderItem->getName(),
                     'url' => $this->generateUrl('admin_slider_edit', ['id' => $sliderItem->getId()]),
-                ]
+                ],
             );
 
             return $this->redirectToRoute('admin_slider_list');
@@ -139,7 +139,7 @@ class SliderController extends AdminBaseController
         }
 
         $this->breadcrumbOverrider->overrideLastItem(
-            t('Editing slider page - %name%', ['%name%' => $sliderItem->getName()])
+            t('Editing slider page - %name%', ['%name%' => $sliderItem->getName()]),
         );
 
         return $this->render('@ShopsysFramework/Admin/Content/Slider/edit.html.twig', [
@@ -164,7 +164,7 @@ class SliderController extends AdminBaseController
                 t('Page <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $name,
-                ]
+                ],
             );
         } catch (SliderItemNotFoundException $ex) {
             $this->addErrorFlash(t('Selected page doesn\'t exist.'));

@@ -18,7 +18,7 @@ class SliderItemDataFixture extends AbstractReferenceFixture
      */
     public function __construct(
         private readonly SliderItemFacade $sliderItemFacade,
-        private readonly SliderItemDataFactoryInterface $sliderItemDataFactory
+        private readonly SliderItemDataFactoryInterface $sliderItemDataFactory,
     ) {
     }
 

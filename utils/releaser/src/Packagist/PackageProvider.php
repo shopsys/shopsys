@@ -58,7 +58,7 @@ final class PackageProvider
         }
 
         throw new ShouldNotHappenException(
-            'Packagist API failed to list package names for url request:' . PHP_EOL . $url
+            'Packagist API failed to list package names for url request:' . PHP_EOL . $url,
         );
     }
 

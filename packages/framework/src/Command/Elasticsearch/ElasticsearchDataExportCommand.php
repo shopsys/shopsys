@@ -44,7 +44,7 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
 
         $this->eventDispatcher->dispatch(
             new IndexExportedEvent($index),
-            IndexExportedEvent::INDEX_EXPORTED
+            IndexExportedEvent::INDEX_EXPORTED,
         );
     }
 
@@ -56,7 +56,7 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
         $this->indexFacade->export(
             $this->indexRegistry->getIndexByIndexName($indexDefinition->getIndexName()),
             $indexDefinition,
-            $output
+            $output,
         );
     }
 
@@ -75,7 +75,7 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
     {
         return sprintf(
             'Which index data should be exported? Available indexes: "%s"',
-            implode(', ', $this->indexRegistry->getRegisteredIndexNames())
+            implode(', ', $this->indexRegistry->getRegisteredIndexNames()),
         );
     }
 

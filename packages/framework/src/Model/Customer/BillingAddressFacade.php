@@ -16,7 +16,7 @@ class BillingAddressFacade
     public function __construct(
         protected readonly BillingAddressFactory $billingAddressFactory,
         protected readonly BillingAddressRepository $billingAddressRepository,
-        protected readonly EntityManagerInterface $em
+        protected readonly EntityManagerInterface $em,
     ) {
     }
 

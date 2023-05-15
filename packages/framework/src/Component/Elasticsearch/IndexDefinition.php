@@ -29,7 +29,7 @@ class IndexDefinition
         if ($decodedDefinition === null) {
             throw ElasticsearchIndexException::invalidJsonInDefinitionFile(
                 $this->getIndexName(),
-                $this->getDefinitionFilepath()
+                $this->getDefinitionFilepath(),
             );
         }
 

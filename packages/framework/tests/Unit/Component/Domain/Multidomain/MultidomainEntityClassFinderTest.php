@@ -39,7 +39,7 @@ class MultidomainEntityClassFinderTest extends TestCase
         $multidomainEntitiesNames = $multidomainEntityClassFinder->getMultidomainEntitiesNames(
             $allClassesMetadata,
             [],
-            []
+            [],
         );
 
         $this->assertSame(['MultidomainClass'], $multidomainEntitiesNames);

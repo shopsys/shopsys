@@ -16,7 +16,7 @@ class ProductIndex extends AbstractIndex implements IndexSupportChangesOnlyInter
      */
     public function __construct(
         protected readonly Domain $domain,
-        protected readonly ProductExportRepository $productExportRepository
+        protected readonly ProductExportRepository $productExportRepository,
     ) {
     }
 
@@ -52,7 +52,7 @@ class ProductIndex extends AbstractIndex implements IndexSupportChangesOnlyInter
         return $this->productExportRepository->getProductsDataForIds(
             $domainId,
             $this->domain->getDomainConfigById($domainId)->getLocale(),
-            $restrictToIds
+            $restrictToIds,
         );
     }
 
@@ -65,7 +65,7 @@ class ProductIndex extends AbstractIndex implements IndexSupportChangesOnlyInter
             $domainId,
             $this->domain->getDomainConfigById($domainId)->getLocale(),
             $lastProcessedId,
-            $batchSize
+            $batchSize,
         );
     }
 

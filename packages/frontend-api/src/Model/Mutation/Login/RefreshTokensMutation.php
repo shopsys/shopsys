@@ -23,7 +23,7 @@ class RefreshTokensMutation extends AbstractMutation
     public function __construct(
         protected readonly TokenFacade $tokenFacade,
         protected readonly CustomerUserFacade $customerUserFacade,
-        protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
+        protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
     ) {
     }
 
@@ -49,7 +49,7 @@ class RefreshTokensMutation extends AbstractMutation
         $tokenSecretChain = $token->claims()->get('secretChain');
         $customerUserValidRefreshTokenChain = $this->customerUserRefreshTokenChainFacade->findCustomersTokenChainByCustomerUserAndSecretChain(
             $customerUser,
-            $tokenSecretChain
+            $tokenSecretChain,
         );
 
         if ($customerUserValidRefreshTokenChain === null) {
@@ -59,11 +59,11 @@ class RefreshTokensMutation extends AbstractMutation
         return [
             'accessToken' => $this->tokenFacade->createAccessTokenAsString(
                 $customerUser,
-                $customerUserValidRefreshTokenChain->getDeviceId()
+                $customerUserValidRefreshTokenChain->getDeviceId(),
             ),
             'refreshToken' => $this->tokenFacade->createRefreshTokenAsString(
                 $customerUser,
-                $customerUserValidRefreshTokenChain->getDeviceId()
+                $customerUserValidRefreshTokenChain->getDeviceId(),
             ),
         ];
     }

@@ -13,7 +13,7 @@ class AdvertPositionsQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry $advertPositionRegistry
      */
     public function __construct(
-        protected readonly AdvertPositionRegistry $advertPositionRegistry
+        protected readonly AdvertPositionRegistry $advertPositionRegistry,
     ) {
     }
 

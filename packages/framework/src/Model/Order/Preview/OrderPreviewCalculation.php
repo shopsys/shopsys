@@ -29,7 +29,7 @@ class OrderPreviewCalculation
         protected readonly QuantifiedProductDiscountCalculation $quantifiedProductDiscountCalculation,
         protected readonly TransportPriceCalculation $transportPriceCalculation,
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
-        protected readonly OrderPriceCalculation $orderPriceCalculation
+        protected readonly OrderPriceCalculation $orderPriceCalculation,
     ) {
     }
 
@@ -50,17 +50,17 @@ class OrderPreviewCalculation
         ?Transport $transport = null,
         ?Payment $payment = null,
         ?CustomerUser $customerUser = null,
-        ?string $promoCodeDiscountPercent = null
+        ?string $promoCodeDiscountPercent = null,
     ): OrderPreview {
         $quantifiedItemsPrices = $this->quantifiedProductPriceCalculation->calculatePrices(
             $quantifiedProducts,
             $domainId,
-            $customerUser
+            $customerUser,
         );
         $quantifiedItemsDiscounts = $this->quantifiedProductDiscountCalculation->calculateDiscountsRoundedByCurrency(
             $quantifiedItemsPrices,
             $promoCodeDiscountPercent,
-            $currency
+            $currency,
         );
 
         $productsPrice = $this->getProductsPrice($quantifiedItemsPrices, $quantifiedItemsDiscounts);
@@ -70,7 +70,7 @@ class OrderPreviewCalculation
                 $transport,
                 $currency,
                 $productsPrice,
-                $domainId
+                $domainId,
             );
         } else {
             $transportPrice = null;
@@ -81,14 +81,14 @@ class OrderPreviewCalculation
                 $payment,
                 $currency,
                 $productsPrice,
-                $domainId
+                $domainId,
             );
             $roundingPrice = $this->calculateRoundingPrice(
                 $payment,
                 $currency,
                 $productsPrice,
                 $transportPrice,
-                $paymentPrice
+                $paymentPrice,
             );
         } else {
             $paymentPrice = null;
@@ -99,7 +99,7 @@ class OrderPreviewCalculation
             $productsPrice,
             $transportPrice,
             $paymentPrice,
-            $roundingPrice
+            $roundingPrice,
         );
 
         return new OrderPreview(
@@ -113,7 +113,7 @@ class OrderPreviewCalculation
             $payment,
             $paymentPrice,
             $roundingPrice,
-            $promoCodeDiscountPercent
+            $promoCodeDiscountPercent,
         );
     }
 
@@ -130,13 +130,13 @@ class OrderPreviewCalculation
         Currency $currency,
         Price $productsPrice,
         ?Price $transportPrice = null,
-        ?Price $paymentPrice = null
+        ?Price $paymentPrice = null,
     ): ?Price {
         $totalPrice = $this->calculateTotalPrice(
             $productsPrice,
             $transportPrice,
             $paymentPrice,
-            null
+            null,
         );
 
         return $this->orderPriceCalculation->calculateOrderRoundingPrice($payment, $currency, $totalPrice);
@@ -153,7 +153,7 @@ class OrderPreviewCalculation
         Price $productsPrice,
         ?Price $transportPrice = null,
         ?Price $paymentPrice = null,
-        ?Price $roundingPrice = null
+        ?Price $roundingPrice = null,
     ): Price {
         $totalPrice = Price::zero();
 

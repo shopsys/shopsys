@@ -47,7 +47,7 @@ class ProductParameterValueDataFactory implements ProductParameterValueDataFacto
     {
         $productParameterValueData->parameter = $productParameterValue->getParameter();
         $productParameterValueData->parameterValueData = $this->parameterValueDataFactory->createFromParameterValue(
-            $productParameterValue->getValue()
+            $productParameterValue->getValue(),
         );
     }
 }

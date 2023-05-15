@@ -18,7 +18,7 @@ class NewsletterMutation extends AbstractMutation
      */
     public function __construct(
         protected readonly NewsletterFacade $newsletterFacade,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 

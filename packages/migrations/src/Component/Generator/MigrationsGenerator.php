@@ -20,7 +20,7 @@ class MigrationsGenerator
      */
     public function __construct(
         protected readonly Environment $twigEnvironment,
-        protected readonly Filesystem $filesystem
+        protected readonly Filesystem $filesystem,
     ) {
     }
 

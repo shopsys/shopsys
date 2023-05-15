@@ -57,7 +57,7 @@ class DailyFeedCronModule implements IteratedCronModuleInterface
                 'Feed "%s" generated on domain "%s" into "%s".',
                 $feedInfo->getName(),
                 $domainConfig->getName(),
-                $this->feedFacade->getFeedFilepath($feedInfo, $domainConfig)
+                $this->feedFacade->getFeedFilepath($feedInfo, $domainConfig),
             ));
 
             $this->currentFeedExport = null;
@@ -95,7 +95,7 @@ class DailyFeedCronModule implements IteratedCronModuleInterface
             'Going to sleep... Will continue with feed "%s" on "%s", processing from ID %d.',
             $currentFeedName,
             $currentDomain->getName(),
-            $lastSeekId
+            $lastSeekId,
         ));
     }
 
@@ -124,7 +124,7 @@ class DailyFeedCronModule implements IteratedCronModuleInterface
             'Waking up... Continuing with feed "%s" on "%s", processing from ID %d.',
             $this->getFeedExportCreationDataQueue()->getCurrentFeedName(),
             $this->getFeedExportCreationDataQueue()->getCurrentDomain()->getName(),
-            $this->currentFeedExport->getLastSeekId()
+            $this->currentFeedExport->getLastSeekId(),
         ));
     }
 
@@ -137,7 +137,7 @@ class DailyFeedCronModule implements IteratedCronModuleInterface
         return $this->feedFacade->createFeedExport(
             $this->getFeedExportCreationDataQueue()->getCurrentFeedName(),
             $this->getFeedExportCreationDataQueue()->getCurrentDomain(),
-            $lastSeekId
+            $lastSeekId,
         );
     }
 
@@ -149,7 +149,7 @@ class DailyFeedCronModule implements IteratedCronModuleInterface
         if ($this->feedExportCreationDataQueue === null) {
             $this->feedExportCreationDataQueue = new FeedExportCreationDataQueue(
                 $this->feedFacade->getFeedNames('daily'),
-                $this->domain->getAll()
+                $this->domain->getAll(),
             );
         }
 

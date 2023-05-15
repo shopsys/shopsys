@@ -49,7 +49,7 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $productPriceCalculationMock->expects($this->once())->method('calculatePrice')->willReturn(
-            $expectedProductPrice
+            $expectedProductPrice,
         );
 
         $domainMock = $this->createMock(Domain::class);
@@ -58,13 +58,13 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
             $productPriceCalculationMock,
             $currentCustomerUserMock,
             $pricingGroupSettingFacadeMock,
-            $domainMock
+            $domainMock,
         );
 
         $productPrice = $productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
             $product,
             Domain::FIRST_DOMAIN_ID,
-            $customerUser
+            $customerUser,
         );
         $this->assertSame($expectedProductPrice, $productPrice);
     }
@@ -95,7 +95,7 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $productPriceCalculationMock->expects($this->once())->method('calculatePrice')->willReturn(
-            $expectedProductPrice
+            $expectedProductPrice,
         );
 
         $domainMock = $this->createMock(Domain::class);
@@ -104,13 +104,13 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
             $productPriceCalculationMock,
             $currentCustomerUserMock,
             $pricingGroupFacadeMock,
-            $domainMock
+            $domainMock,
         );
 
         $productPrice = $productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
             $product,
             $domainId,
-            null
+            null,
         );
         $this->assertSame($expectedProductPrice, $productPrice);
     }

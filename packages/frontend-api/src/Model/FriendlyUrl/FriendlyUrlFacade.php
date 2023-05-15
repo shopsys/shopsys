@@ -32,7 +32,7 @@ class FriendlyUrlFacade
             $friendlyUrl = $this->friendlyUrlRepository->findFriendlyUrlBySlugAndRouteName(
                 $domainId,
                 $routeName,
-                $modifiedSlug
+                $modifiedSlug,
             );
         }
 
@@ -41,7 +41,7 @@ class FriendlyUrlFacade
                 'Friendly url not found for route `%s` by slug `%s` on domain `%s`',
                 $routeName,
                 $slug,
-                $domainId
+                $domainId,
             );
 
             throw new FriendlyUrlNotFoundException($message);

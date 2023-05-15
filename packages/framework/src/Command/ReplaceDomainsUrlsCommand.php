@@ -26,7 +26,7 @@ class ReplaceDomainsUrlsCommand extends Command
     public function __construct(
         private readonly Domain $domain,
         private readonly DomainUrlReplacer $domainUrlReplacer,
-        private readonly Setting $setting
+        private readonly Setting $setting,
     ) {
         parent::__construct();
     }
@@ -48,7 +48,7 @@ class ReplaceDomainsUrlsCommand extends Command
 
             if ($domainConfigUrl !== $domainSettingUrl) {
                 $output->writeln(
-                    'Domain ' . $domainConfig->getId() . ' URL is not matching URL stored in database.'
+                    'Domain ' . $domainConfig->getId() . ' URL is not matching URL stored in database.',
                 );
                 $output->writeln('Replacing domain URL in all string columns...');
                 $this->domainUrlReplacer->replaceUrlInStringColumns($domainConfigUrl, $domainSettingUrl);

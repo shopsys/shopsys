@@ -30,7 +30,7 @@ class BasePriceCalculation
         Money $inputPrice,
         int $inputPriceType,
         Vat $vat,
-        Currency $currency
+        Currency $currency,
     ): Price {
         $basePriceWithVat = $this->getBasePriceWithVatRoundedByCurrency($inputPrice, $inputPriceType, $vat, $currency);
         $vatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($basePriceWithVat, $vat);
@@ -50,7 +50,7 @@ class BasePriceCalculation
         Money $inputPrice,
         int $inputPriceType,
         Vat $vat,
-        Currency $currency
+        Currency $currency,
     ): Money {
         switch ($inputPriceType) {
             case PricingSetting::INPUT_PRICE_TYPE_WITH_VAT:
@@ -59,7 +59,7 @@ class BasePriceCalculation
             case PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT:
                 return $this->rounding->roundPriceWithVatByCurrency(
                     $this->priceCalculation->applyVatPercent($inputPrice, $vat),
-                    $currency
+                    $currency,
                 );
 
             default:

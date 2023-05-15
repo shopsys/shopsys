@@ -23,7 +23,7 @@ class FrontendApiUserFactory implements FrontendApiUserFactoryInterface
             $token->claims()->get(FrontendApiUser::CLAIM_FULL_NAME),
             $token->claims()->get(FrontendApiUser::CLAIM_EMAIL),
             $token->claims()->get(FrontendApiUser::CLAIM_DEVICE_ID),
-            $token->claims()->get(FrontendApiUser::CLAIM_ROLES)
+            $token->claims()->get(FrontendApiUser::CLAIM_ROLES),
         );
     }
 

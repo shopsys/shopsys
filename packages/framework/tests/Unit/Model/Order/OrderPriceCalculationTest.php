@@ -123,11 +123,11 @@ class OrderPriceCalculationTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $roundingMock->expects($this->any())->method(
-            'roundPriceWithVatByCurrency'
+            'roundPriceWithVatByCurrency',
         )->willReturnCallback(
             function (Money $value) {
                 return $value->round(2);
-            }
+            },
         );
 
         $orderItemPriceCalculationMock = $this->createMock(OrderItemPriceCalculation::class);
@@ -136,7 +136,7 @@ class OrderPriceCalculationTest extends TestCase
         $roundingPrice = $priceCalculation->calculateOrderRoundingPrice(
             $payment,
             $currency,
-            $orderTotalPrice
+            $orderTotalPrice,
         )->getPriceWithVat();
 
         $this->assertThat($roundingPrice, new IsMoneyEqual(Money::create('-0.3')));
@@ -160,11 +160,11 @@ class OrderPriceCalculationTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $roundingMock->expects($this->any())->method(
-            'roundPriceWithVatByCurrency'
+            'roundPriceWithVatByCurrency',
         )->willReturnCallback(
             function (Money $value) {
                 return $value->round(2);
-            }
+            },
         );
 
         $orderItemPriceCalculationMock = $this->createMock(OrderItemPriceCalculation::class);
@@ -173,7 +173,7 @@ class OrderPriceCalculationTest extends TestCase
         $roundingPrice = $priceCalculation->calculateOrderRoundingPrice(
             $payment,
             $currency,
-            $orderTotalPrice
+            $orderTotalPrice,
         )->getPriceWithVat();
 
         $this->assertThat($roundingPrice, new IsMoneyEqual(Money::create('0.1')));

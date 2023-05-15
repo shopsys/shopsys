@@ -26,10 +26,10 @@ final class UpdateDemoProjectBaseReleaseWorker extends AbstractShopsysReleaseWor
     {
         $this->symfonyStyle->note(
             'If you are releasing new highest version yet, you need to update https://gitlab.shopsys.cz/ss6-projects/demo-project-base repository with new project-base.
-            The best way is to add a new upstream remote and merge with git merge <released-version-commit-hash>.'
+            The best way is to add a new upstream remote and merge with git merge <released-version-commit-hash>.',
         );
         $this->confirm(
-            'Confirm that demo project-base has been updated.'
+            'Confirm that demo project-base has been updated.',
         );
     }
 

@@ -42,7 +42,7 @@ class RegistrationPage extends AbstractPage
 
         $frontCheckboxClicker = FrontCheckbox::createByCss(
             $this->tester,
-            '#registration_form_privacyPolicy'
+            '#registration_form_privacyPolicy',
         );
         $frontCheckboxClicker->check();
 

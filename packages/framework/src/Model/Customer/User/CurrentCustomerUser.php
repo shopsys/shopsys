@@ -21,7 +21,7 @@ class CurrentCustomerUser
     public function __construct(
         protected readonly TokenStorageInterface $tokenStorage,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
-        protected readonly CustomerUserFacade $customerUserFacade
+        protected readonly CustomerUserFacade $customerUserFacade,
     ) {
     }
 

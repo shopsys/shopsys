@@ -23,14 +23,14 @@ class UniqueCollectionValidator extends ConstraintValidator
         if ($constraint->fields !== null && !is_array($constraint->fields)) {
             throw new InvalidOptionsException(
                 'Option "fields" must be array or null',
-                ['fields']
+                ['fields'],
             );
         }
 
         if (!is_bool($constraint->allowEmpty)) {
             throw new InvalidOptionsException(
                 'Option "allowEmpty" must be boolean',
-                ['allowEmpty']
+                ['allowEmpty'],
             );
         }
 

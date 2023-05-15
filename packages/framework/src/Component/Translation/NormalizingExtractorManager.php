@@ -17,7 +17,7 @@ class NormalizingExtractorManager extends ExtractorManager
     public function __construct(
         FileExtractor $extractor,
         LoggerInterface $logger,
-        protected readonly MessageIdNormalizer $messageIdNormalizer
+        protected readonly MessageIdNormalizer $messageIdNormalizer,
     ) {
         parent::__construct($extractor, $logger);
     }

@@ -24,7 +24,7 @@ class ProductExportChangedCronModule extends AbstractExportChangedCronModule
         IndexFacade $indexFacade,
         IndexDefinitionLoader $indexDefinitionLoader,
         Domain $domain,
-        ?EventDispatcherInterface $eventDispatcher = null
+        ?EventDispatcherInterface $eventDispatcher = null,
     ) {
         parent::__construct($index, $indexFacade, $indexDefinitionLoader, $domain, $eventDispatcher);
     }

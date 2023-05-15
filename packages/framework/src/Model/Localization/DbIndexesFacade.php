@@ -18,7 +18,7 @@ class DbIndexesFacade
             $domainCollation = $this->localization->getCollationByLocale($locale);
             $this->dbIndexesRepository->updateProductTranslationNameIndexForLocaleAndCollation(
                 $locale,
-                $domainCollation
+                $domainCollation,
             );
         }
     }

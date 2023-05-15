@@ -18,7 +18,7 @@ class AvailabilityInlineEdit extends AbstractGridInlineEdit
         AvailabilityGridFactory $availabilityGridFactory,
         protected readonly AvailabilityFacade $availabilityFacade,
         protected readonly FormFactoryInterface $formFactory,
-        protected readonly AvailabilityDataFactoryInterface $availabilityDataFactory
+        protected readonly AvailabilityDataFactoryInterface $availabilityDataFactory,
     ) {
         parent::__construct($availabilityGridFactory);
     }

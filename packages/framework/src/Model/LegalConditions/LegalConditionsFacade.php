@@ -17,7 +17,7 @@ abstract class LegalConditionsFacade
     public function __construct(
         protected readonly ArticleFacade $articleFacade,
         protected readonly Setting $setting,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 

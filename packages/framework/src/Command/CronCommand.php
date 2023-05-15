@@ -167,7 +167,7 @@ class CronCommand extends Command
         $mutex = $mutexFactory->getPrefixedCronMutex($instanceName);
         if (!$mutex->acquireLock(0)) {
             throw new CronCommandException(
-                'Cron is locked. Another cron module is already running.'
+                'Cron is locked. Another cron module is already running.',
             );
         }
 

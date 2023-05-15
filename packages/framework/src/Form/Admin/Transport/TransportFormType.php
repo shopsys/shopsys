@@ -30,7 +30,7 @@ class TransportFormType extends AbstractType
      */
     public function __construct(
         private readonly PaymentFacade $paymentFacade,
-        private readonly TransportFacade $transportFacade
+        private readonly TransportFacade $transportFacade,
     ) {
     }
 
@@ -61,7 +61,7 @@ class TransportFormType extends AbstractType
                     'required' => false,
                     'constraints' => [
                         new Constraints\Length(
-                            ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']
+                            ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
                         ),
                     ],
                 ],

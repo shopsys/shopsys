@@ -33,7 +33,7 @@ class NewPasswordFormType extends AbstractType
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please enter password']),
                         new Constraints\Length(
-                            ['min' => CustomerUserPasswordFacade::MINIMUM_PASSWORD_LENGTH, 'minMessage' => 'Password must be at least {{ limit }} characters long']
+                            ['min' => CustomerUserPasswordFacade::MINIMUM_PASSWORD_LENGTH, 'minMessage' => 'Password must be at least {{ limit }} characters long'],
                         ),
                     ],
                 ],

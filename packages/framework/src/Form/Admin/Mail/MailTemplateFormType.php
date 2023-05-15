@@ -42,7 +42,7 @@ class MailTemplateFormType extends AbstractType
                 'constraints' => [
                     new Email(),
                     new Constraints\Length(
-                        ['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']
+                        ['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters'],
                     ),
                 ],
             ])
@@ -54,7 +54,7 @@ class MailTemplateFormType extends AbstractType
                         'config_name' => 'email',
                         'constraints' => $this->getBodyConstraints($options),
                     ])
-                    ->addModelTransformer(new EmptyWysiwygTransformer())
+                    ->addModelTransformer(new EmptyWysiwygTransformer()),
             )
             ->add('attachments', FileUploadType::class, [
                 'label' => t('Upload attachment'),

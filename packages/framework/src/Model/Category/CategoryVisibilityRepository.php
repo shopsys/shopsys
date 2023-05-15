@@ -18,7 +18,7 @@ class CategoryVisibilityRepository
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly Domain $domain,
-        protected readonly CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler
+        protected readonly CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler,
     ) {
     }
 
@@ -60,7 +60,7 @@ class CategoryVisibilityRepository
             ',
             [
                 'domainId' => $domainConfig->getId(),
-            ]
+            ],
         );
     }
 
@@ -77,7 +77,7 @@ class CategoryVisibilityRepository
             ',
             [
                 'domainId' => $domainConfig->getId(),
-            ]
+            ],
         );
     }
 
@@ -108,7 +108,7 @@ class CategoryVisibilityRepository
                 'domainId' => $domainConfig->getId(),
                 'locale' => $domainConfig->getLocale(),
                 'level' => $level,
-            ]
+            ],
         );
     }
 

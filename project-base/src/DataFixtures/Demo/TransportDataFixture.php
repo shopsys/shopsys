@@ -34,7 +34,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         private readonly TransportFacade $transportFacade,
         TransportDataFactoryInterface $transportDataFactory,
         private readonly Domain $domain,
-        private readonly PriceConverter $priceConverter
+        private readonly PriceConverter $priceConverter,
     ) {
         $this->transportDataFactory = $transportDataFactory;
     }
@@ -70,13 +70,13 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
                 'You will be welcomed by friendly staff!',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale
+                $locale,
             );
             $transportData->instructions[$locale] = t(
                 'We are looking forward to your visit.',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale
+                $locale,
             );
         }
 
@@ -111,7 +111,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
                 $price,
                 $currencyCzk,
                 $vat->getPercent(),
-                $domain->getId()
+                $domain->getId(),
             );
 
             $transportData->vatsIndexedByDomainId[$domain->getId()] = $vat;

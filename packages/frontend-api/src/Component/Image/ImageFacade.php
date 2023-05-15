@@ -26,7 +26,7 @@ class ImageFacade
         return $this->imageRepository->getImagesByEntityIndexedById(
             $entityName,
             $entityId,
-            $type
+            $type,
         );
     }
 }

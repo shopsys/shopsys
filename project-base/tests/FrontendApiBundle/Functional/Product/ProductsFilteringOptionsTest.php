@@ -94,7 +94,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             'Right-handed',
             [],
             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-            $this->firstDomainLocale
+            $this->firstDomainLocale,
         ) . '",
                                     "count": 1,
                                     "isAbsolute": true
@@ -144,7 +144,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             '1920×1080 (Full HD)',
             [],
             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-            $this->firstDomainLocale
+            $this->firstDomainLocale,
         ) . '",
                                     "count": 3,
                                     "isAbsolute": true
@@ -179,7 +179,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             'Windows 2000/XP/Vista/7',
             [],
             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-            $this->firstDomainLocale
+            $this->firstDomainLocale,
         ) . '",
                                     "count": 1,
                                     "isAbsolute": true
@@ -294,7 +294,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
         $parameterValue = $parameterFacade->getParameterValueByValueTextAndLocale(
             t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale),
-            $this->firstDomainLocale
+            $this->firstDomainLocale,
         );
 
         $query = $this->getElectronicsQuery('{ 
@@ -313,7 +313,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             'Right-handed',
             [],
             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-            $this->firstDomainLocale
+            $this->firstDomainLocale,
         ) . '",
                 "count": 0,
                 "isAbsolute": true
@@ -363,7 +363,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             '1920×1080 (Full HD)',
             [],
             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-            $this->firstDomainLocale
+            $this->firstDomainLocale,
         ) . '",
                 "count": 2,
                 "isAbsolute": true
@@ -398,7 +398,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             'Windows 2000/XP/Vista/7',
             [],
             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-            $this->firstDomainLocale
+            $this->firstDomainLocale,
         ) . '",
                 "count": 0,
                 "isAbsolute": true

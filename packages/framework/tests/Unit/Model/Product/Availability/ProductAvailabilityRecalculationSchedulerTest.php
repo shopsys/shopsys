@@ -21,7 +21,7 @@ class ProductAvailabilityRecalculationSchedulerTest extends TestCase
             ->getMock();
 
         $productAvailabilityRecalculationScheduler = new ProductAvailabilityRecalculationScheduler(
-            $productRepositoryMock
+            $productRepositoryMock,
         );
         $productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($productMock);
         $products = $productAvailabilityRecalculationScheduler->getProductsForImmediateRecalculation();
@@ -42,7 +42,7 @@ class ProductAvailabilityRecalculationSchedulerTest extends TestCase
             ->getMock();
 
         $productAvailabilityRecalculationScheduler = new ProductAvailabilityRecalculationScheduler(
-            $productRepositoryMock
+            $productRepositoryMock,
         );
         $productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($productMock);
         $productAvailabilityRecalculationScheduler->cleanScheduleForImmediateRecalculation();
@@ -60,7 +60,7 @@ class ProductAvailabilityRecalculationSchedulerTest extends TestCase
         $expectedProductsIterator = [$productMock];
         $productRepositoryMock = $this->getMockBuilder(ProductRepository::class)
             ->setMethods(
-                ['markAllProductsForAvailabilityRecalculation', 'getProductsForAvailabilityRecalculationIterator']
+                ['markAllProductsForAvailabilityRecalculation', 'getProductsForAvailabilityRecalculationIterator'],
             )
             ->disableOriginalConstructor()
             ->getMock();
@@ -71,7 +71,7 @@ class ProductAvailabilityRecalculationSchedulerTest extends TestCase
             ->willReturn($expectedProductsIterator);
 
         $productAvailabilityRecalculationScheduler = new ProductAvailabilityRecalculationScheduler(
-            $productRepositoryMock
+            $productRepositoryMock,
         );
         $productAvailabilityRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
 

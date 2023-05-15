@@ -29,7 +29,7 @@ class AdvertPositionRegistry
         if (!in_array($positionName, $knownPositionsNames, true)) {
             throw new AdvertPositionNotKnownException(
                 $positionName,
-                $knownPositionsNames
+                $knownPositionsNames,
             );
         }
     }

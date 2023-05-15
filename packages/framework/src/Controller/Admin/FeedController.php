@@ -21,7 +21,7 @@ class FeedController extends AdminBaseController
     public function __construct(
         protected readonly FeedFacade $feedFacade,
         protected readonly GridFactory $gridFactory,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -41,14 +41,14 @@ class FeedController extends AdminBaseController
                 t('Feed "{{ feedName }}" successfully generated.'),
                 [
                     'feedName' => $feedName,
-                ]
+                ],
             );
         } catch (FeedNotFoundException $ex) {
             $this->addErrorFlashTwig(
                 t('Feed "{{ feedName }}" not found.'),
                 [
                     'feedName' => $feedName,
-                ]
+                ],
             );
         }
 

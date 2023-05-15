@@ -28,7 +28,7 @@ class MailTemplateAttachmentFilepathProvider
     public function getTemporaryFilepath(UploadedFile $uploadedFile): string
     {
         $temporaryFilepath = TransformString::removeDriveLetterFromPath(
-            $this->fileUpload->getAbsoluteTemporaryFilepath($uploadedFile->getFilename())
+            $this->fileUpload->getAbsoluteTemporaryFilepath($uploadedFile->getFilename()),
         );
 
         if (!$this->mountManager->has('local://' . $temporaryFilepath)) {

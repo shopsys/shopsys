@@ -113,6 +113,7 @@ use Shopsys\CodingStandards\Sniffs\ForbiddenExitSniff;
 use Shopsys\CodingStandards\Sniffs\ForbiddenSuperGlobalSniff;
 use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
 use Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff;
+use SlevomatCodingStandard\Sniffs\Arrays\TrailingArrayCommaSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ClassLengthSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ParentCallSpacingSniff;
 use SlevomatCodingStandard\Sniffs\Classes\RequireConstructorPropertyPromotionSniff;
@@ -123,6 +124,9 @@ use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\EarlyExitSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\UselessIfConditionWithReturnSniff;
 use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
+use SlevomatCodingStandard\Sniffs\Functions\RequireTrailingCommaInCallSniff;
+use SlevomatCodingStandard\Sniffs\Functions\RequireTrailingCommaInClosureUseSniff;
+use SlevomatCodingStandard\Sniffs\Functions\RequireTrailingCommaInDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\FullyQualifiedClassNameInAnnotationSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\ReferenceUsedNamesOnlySniff;
 use SlevomatCodingStandard\Sniffs\Operators\DisallowEqualOperatorsSniff;
@@ -306,6 +310,10 @@ return static function (ECSConfig $ecsConfig): void {
     ]);
 
     // Slevomat Coding Standards
+    $ecsConfig->rule(RequireTrailingCommaInDeclarationSniff::class);
+    $ecsConfig->rule(RequireTrailingCommaInClosureUseSniff::class);
+    $ecsConfig->rule(RequireTrailingCommaInCallSniff::class);
+    $ecsConfig->rule(TrailingArrayCommaSniff::class);
     $ecsConfig->rule(RequireConstructorPropertyPromotionSniff::class);
     $ecsConfig->rule(PropertyTypeHintSniff::class);
     $ecsConfig->rule(DisallowEqualOperatorsSniff::class);

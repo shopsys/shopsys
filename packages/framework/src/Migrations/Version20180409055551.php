@@ -15,20 +15,20 @@ class Version20180409055551 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $this->sql(
-            'UPDATE setting_values SET name = \'personalDataDisplaySiteContent\' WHERE name = \'personalDataSiteContent\''
+            'UPDATE setting_values SET name = \'personalDataDisplaySiteContent\' WHERE name = \'personalDataSiteContent\'',
         );
 
         foreach ($this->getAllDomainIds() as $domainId) {
             $this->sql(
                 'INSERT INTO mail_templates (name, domain_id, bcc_email, subject, body, send_mail) VALUES
                 (\'personal_data_export\', :domainId, null, null, null, false);',
-                ['domainId' => $domainId]
+                ['domainId' => $domainId],
             );
 
             $this->sql(
                 'INSERT INTO setting_values (name, domain_id, value, type) 
                 VALUES (\'personalDataExportSiteContent\', :domainId, \'\', \'string\')',
-                ['domainId' => $domainId]
+                ['domainId' => $domainId],
             );
         }
     }

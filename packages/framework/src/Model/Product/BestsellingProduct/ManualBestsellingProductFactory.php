@@ -26,7 +26,7 @@ class ManualBestsellingProductFactory implements ManualBestsellingProductFactory
         int $domainId,
         Category $category,
         Product $product,
-        int $position
+        int $position,
     ): ManualBestsellingProduct {
         $classData = $this->entityNameResolver->resolve(ManualBestsellingProduct::class);
 

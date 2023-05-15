@@ -16,7 +16,7 @@ class CannotParseDateTimeException extends Exception
         $message = sprintf(
             'Cannot parse string %s using format %s as DateTime.',
             var_export($time, true),
-            var_export($format, true)
+            var_export($format, true),
         );
 
         parent::__construct($message, 0, $previous);

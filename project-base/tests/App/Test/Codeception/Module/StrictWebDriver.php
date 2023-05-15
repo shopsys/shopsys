@@ -27,7 +27,7 @@ class StrictWebDriver extends WebDriver
 
         return sprintf(
             $messageWithAlternativesPlaceholder,
-            implode(', ', $alternatives)
+            implode(', ', $alternatives),
         );
     }
 
@@ -107,7 +107,7 @@ class StrictWebDriver extends WebDriver
             ".//a[normalize-space(.)=${locator}]",
             ".//button[normalize-space(.)=${locator}]",
             ".//a/img[normalize-space(@alt)=${locator}]/ancestor::a",
-            ".//input[./@type = 'submit' or ./@type = 'image' or ./@type = 'button'][normalize-space(@value)=${locator}]"
+            ".//input[./@type = 'submit' or ./@type = 'image' or ./@type = 'button'][normalize-space(@value)=${locator}]",
         );
 
         return WebDriverBy::xpath($xpath);
@@ -296,7 +296,7 @@ class StrictWebDriver extends WebDriver
          */
         $xpath = Locator::combine(
             './/*[self::input[@type="checkbox"]][./@id = //label[contains(normalize-space(string(.)), "' . $label . '")]/@for]',
-            './/label[contains(normalize-space(string(.)), "' . $label . '")]//.//*[self::input[@type="checkbox"]]'
+            './/label[contains(normalize-space(string(.)), "' . $label . '")]//.//*[self::input[@type="checkbox"]]',
         );
 
         $element = $this->webDriver->findElement(WebDriverBy::xpath($xpath));
@@ -345,7 +345,7 @@ class StrictWebDriver extends WebDriver
          */
         $xpath = Locator::combine(
             './/*[self::input[@type="checkbox"]][./@id = //label[contains(normalize-space(string(.)), "' . $label . '")]/@for]',
-            './/label[contains(normalize-space(string(.)), "' . $label . '")]//.//*[self::input[@type="checkbox"]]'
+            './/label[contains(normalize-space(string(.)), "' . $label . '")]//.//*[self::input[@type="checkbox"]]',
         );
 
         $element = $this->webDriver->findElement(WebDriverBy::xpath($xpath));
@@ -407,7 +407,7 @@ class StrictWebDriver extends WebDriver
          */
         $xpath = Locator::combine(
             './/*[self::input[@type="checkbox"]][./@id = //label[contains(normalize-space(string(.)), "' . $label . '")]/@for]',
-            './/label[contains(normalize-space(string(.)), "' . $label . '")]//.//*[self::input[@type="checkbox"]]'
+            './/label[contains(normalize-space(string(.)), "' . $label . '")]//.//*[self::input[@type="checkbox"]]',
         );
 
         $element = $this->webDriver->findElement(WebDriverBy::xpath($xpath));

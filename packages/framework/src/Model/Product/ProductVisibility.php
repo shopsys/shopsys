@@ -48,7 +48,7 @@ class ProductVisibility
     public function __construct(
         Product $product,
         PricingGroup $pricingGroup,
-        $domainId
+        $domainId,
     ) {
         $this->product = $product;
         $this->pricingGroup = $pricingGroup;

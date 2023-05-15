@@ -23,7 +23,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture
     public function __construct(
         private readonly MailTemplateFactoryInterface $mailTemplateFactory,
         private readonly MailTemplateDataFactoryInterface $mailTemplateDataFactory,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 
@@ -42,7 +42,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture
                 'Thank you for your order no. {number} placed at {date}',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale
+                $locale,
             );
             $mailTemplateData->body = t('Dear customer,<br /><br />'
                 . 'Your order has been placed successfully.<br /><br />'
@@ -136,7 +136,7 @@ team of {domain}
         ObjectManager $manager,
         $name,
         MailTemplateData $mailTemplateData,
-        int $domainId
+        int $domainId,
     ) {
         $repository = $manager->getRepository(MailTemplate::class);
 

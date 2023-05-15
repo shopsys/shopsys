@@ -39,7 +39,7 @@ class CustomerUserFormType extends AbstractType
     public function __construct(
         private readonly PricingGroupFacade $pricingGroupFacade,
         private readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
-        private readonly CustomerUserFacade $customerUserFacade
+        private readonly CustomerUserFacade $customerUserFacade,
     ) {
     }
 
@@ -172,9 +172,9 @@ class CustomerUserFormType extends AbstractType
             $builderRegisteredCustomerGroup->add('lastLogin', DisplayOnlyType::class, [
                 'label' => t('Last login'),
                 'data' => $this->customerUser->getLastLogin() !== null ? $this->dateTimeFormatterExtension->formatDateTime(
-                    $this->customerUser->getLastLogin()
+                    $this->customerUser->getLastLogin(),
                 ) : t(
-                    'never'
+                    'never',
                 ),
             ]);
         }
@@ -216,7 +216,7 @@ class CustomerUserFormType extends AbstractType
     {
         $constraints = [
             new Constraints\Length(
-                ['min' => CustomerUserPasswordFacade::MINIMUM_PASSWORD_LENGTH, 'minMessage' => 'Password must be at least {{ limit }} characters long']
+                ['min' => CustomerUserPasswordFacade::MINIMUM_PASSWORD_LENGTH, 'minMessage' => 'Password must be at least {{ limit }} characters long'],
             ),
         ];
 

@@ -22,14 +22,14 @@ class CurrentCustomerUserTest extends TestCase
 
         $tokenStorageMock = $this->createMock(TokenStorage::class);
         $pricingGroupSettingFacadeMock = $this->getPricingGroupSettingFacadeMockReturningDefaultPricingGroup(
-            $expectedPricingGroup
+            $expectedPricingGroup,
         );
         $customerUserFacadeMock = $this->createMock(CustomerUserFacade::class);
 
         $currentCustomerUser = new CurrentCustomerUser(
             $tokenStorageMock,
             $pricingGroupSettingFacadeMock,
-            $customerUserFacadeMock
+            $customerUserFacadeMock,
         );
 
         $pricingGroup = $currentCustomerUser->getPricingGroup();
@@ -48,7 +48,7 @@ class CurrentCustomerUserTest extends TestCase
         $currentCustomerUser = new CurrentCustomerUser(
             $tokenStorageMock,
             $pricingGroupFacadeMock,
-            $customerUserFacadeMock
+            $customerUserFacadeMock,
         );
 
         $pricingGroup = $currentCustomerUser->getPricingGroup();

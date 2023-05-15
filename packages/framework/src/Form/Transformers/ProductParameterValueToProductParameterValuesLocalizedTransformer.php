@@ -16,7 +16,7 @@ class ProductParameterValueToProductParameterValuesLocalizedTransformer implemen
      */
     public function __construct(
         protected readonly ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
-        protected readonly ParameterValueDataFactoryInterface $parameterValueDataFactory
+        protected readonly ParameterValueDataFactoryInterface $parameterValueDataFactory,
     ) {
     }
 

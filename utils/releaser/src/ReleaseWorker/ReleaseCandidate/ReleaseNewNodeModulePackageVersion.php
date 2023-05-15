@@ -19,7 +19,7 @@ class ReleaseNewNodeModulePackageVersion extends AbstractShopsysReleaseWorker
     {
         return sprintf(
             '[Manually] Release and set new node module package version to "%s"',
-            $version->getVersionString()
+            $version->getVersionString(),
         );
     }
 
@@ -47,7 +47,7 @@ npm publish
 ',
             $version->getVersionString(),
             $version->getVersionString(),
-            $version->getVersionString()
+            $version->getVersionString(),
         ));
         $this->confirm('Confirm the new version of NPM package is published');
         $this->confirm('Confirm that you have updated version of @shopsys/framework in project-base/package.json and committed changes');

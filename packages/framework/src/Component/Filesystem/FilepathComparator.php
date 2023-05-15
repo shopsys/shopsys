@@ -16,7 +16,7 @@ class FilepathComparator
         $directoryPathRealpath = realpath($directoryPath);
         if ($directoryPathRealpath === false) {
             throw new DirectoryDoesNotExistException(
-                $directoryPath
+                $directoryPath,
             );
         }
 

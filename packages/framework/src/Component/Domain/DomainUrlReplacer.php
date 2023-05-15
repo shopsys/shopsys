@@ -16,7 +16,7 @@ class DomainUrlReplacer
     public function __construct(
         protected readonly StringColumnsFinder $stringColumnsFinder,
         protected readonly EntityManagerInterface $em,
-        protected readonly SqlQuoter $sqlQuoter
+        protected readonly SqlQuoter $sqlQuoter,
     ) {
     }
 
@@ -32,7 +32,7 @@ class DomainUrlReplacer
                 $tableName,
                 $columnNames,
                 $domainSettingUrl,
-                $domainConfigUrl
+                $domainConfigUrl,
             );
 
             $this->em->getConnection()->executeStatement($urlReplacementSql);

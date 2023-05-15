@@ -41,7 +41,7 @@ class ProductRepository
         protected readonly ProductFilterRepository $productFilterRepository,
         protected readonly QueryBuilderExtender $queryBuilderExtender,
         protected readonly Localization $localization,
-        protected readonly ProductElasticsearchRepository $productElasticsearchRepository
+        protected readonly ProductElasticsearchRepository $productElasticsearchRepository,
     ) {
     }
 
@@ -158,7 +158,7 @@ class ProductRepository
     public function getListableInCategoryQueryBuilder(
         $domainId,
         PricingGroup $pricingGroup,
-        Category $category
+        Category $category,
     ) {
         $queryBuilder = $this->getAllListableQueryBuilder($domainId, $pricingGroup);
         $this->filterByCategory($queryBuilder, $category, $domainId);
@@ -174,7 +174,7 @@ class ProductRepository
     public function getListableForBrandQueryBuilder(
         $domainId,
         PricingGroup $pricingGroup,
-        Brand $brand
+        Brand $brand,
     ) {
         $queryBuilder = $this->getAllListableQueryBuilder($domainId, $pricingGroup);
         $this->filterByBrand($queryBuilder, $brand);
@@ -190,7 +190,7 @@ class ProductRepository
     public function getSellableInCategoryQueryBuilder(
         $domainId,
         PricingGroup $pricingGroup,
-        Category $category
+        Category $category,
     ) {
         $queryBuilder = $this->getAllSellableQueryBuilder($domainId, $pricingGroup);
         $this->filterByCategory($queryBuilder, $category, $domainId);
@@ -206,7 +206,7 @@ class ProductRepository
     public function getOfferedInCategoryQueryBuilder(
         $domainId,
         PricingGroup $pricingGroup,
-        Category $category
+        Category $category,
     ) {
         $queryBuilder = $this->getAllOfferedQueryBuilder($domainId, $pricingGroup);
         $this->filterByCategory($queryBuilder, $category, $domainId);
@@ -225,7 +225,7 @@ class ProductRepository
         $domainId,
         PricingGroup $pricingGroup,
         $locale,
-        $searchText
+        $searchText,
     ) {
         $queryBuilder = $this->getAllListableQueryBuilder($domainId, $pricingGroup);
 
@@ -248,7 +248,7 @@ class ProductRepository
             'p.productCategoryDomains',
             'pcd',
             Join::WITH,
-            'pcd.category = :category AND pcd.domainId = :domainId'
+            'pcd.category = :category AND pcd.domainId = :domainId',
         );
         $queryBuilder->setParameter('category', $category);
         $queryBuilder->setParameter('domainId', $domainId);
@@ -283,14 +283,14 @@ class ProductRepository
         $orderingModeId,
         PricingGroup $pricingGroup,
         $page,
-        $limit
+        $limit,
     ) {
         $queryBuilder = $this->getFilteredListableInCategoryQueryBuilder(
             $category,
             $domainId,
             $locale,
             $productFilterData,
-            $pricingGroup
+            $pricingGroup,
         );
 
         $this->applyOrdering($queryBuilder, $orderingModeId, $pricingGroup, $locale);
@@ -311,11 +311,11 @@ class ProductRepository
         int $domainId,
         string $locale,
         string $orderingModeId,
-        PricingGroup $pricingGroup
+        PricingGroup $pricingGroup,
     ): QueryBuilder {
         $queryBuilder = $this->getAllListableQueryBuilder(
             $domainId,
-            $pricingGroup
+            $pricingGroup,
         );
 
         $this->addTranslation($queryBuilder, $locale);
@@ -337,12 +337,12 @@ class ProductRepository
         string $locale,
         string $orderingModeId,
         PricingGroup $pricingGroup,
-        Category $category
+        Category $category,
     ): QueryBuilder {
         $queryBuilder = $this->getListableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
-            $category
+            $category,
         );
 
         $this->addTranslation($queryBuilder, $locale);
@@ -368,12 +368,12 @@ class ProductRepository
         $orderingModeId,
         PricingGroup $pricingGroup,
         $page,
-        $limit
+        $limit,
     ) {
         $queryBuilder = $this->getListableForBrandQueryBuilder(
             $domainId,
             $pricingGroup,
-            $brand
+            $brand,
         );
 
         $this->addTranslation($queryBuilder, $locale);
@@ -398,12 +398,12 @@ class ProductRepository
         $domainId,
         $locale,
         ProductFilterData $productFilterData,
-        PricingGroup $pricingGroup
+        PricingGroup $pricingGroup,
     ) {
         $queryBuilder = $this->getListableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
-            $category
+            $category,
         );
 
         $this->addTranslation($queryBuilder, $locale);
@@ -411,7 +411,7 @@ class ProductRepository
         $this->productFilterRepository->applyFiltering(
             $queryBuilder,
             $productFilterData,
-            $pricingGroup
+            $pricingGroup,
         );
 
         return $queryBuilder;
@@ -436,14 +436,14 @@ class ProductRepository
         $orderingModeId,
         PricingGroup $pricingGroup,
         $page,
-        $limit
+        $limit,
     ) {
         $queryBuilder = $this->getFilteredListableForSearchQueryBuilder(
             $searchText,
             $domainId,
             $locale,
             $productFilterData,
-            $pricingGroup
+            $pricingGroup,
         );
 
         $this->productElasticsearchRepository->addRelevance($queryBuilder, $searchText);
@@ -467,19 +467,19 @@ class ProductRepository
         $domainId,
         $locale,
         ProductFilterData $productFilterData,
-        PricingGroup $pricingGroup
+        PricingGroup $pricingGroup,
     ) {
         $queryBuilder = $this->getListableBySearchTextQueryBuilder(
             $domainId,
             $pricingGroup,
             $locale,
-            $searchText
+            $searchText,
         );
 
         $this->productFilterRepository->applyFiltering(
             $queryBuilder,
             $productFilterData,
-            $pricingGroup
+            $pricingGroup,
         );
 
         return $queryBuilder;
@@ -495,7 +495,7 @@ class ProductRepository
         QueryBuilder $queryBuilder,
         $orderingModeId,
         PricingGroup $pricingGroup,
-        $locale
+        $locale,
     ) {
         if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_RELEVANCE) {
             $queryBuilder->addOrderBy('relevance', 'asc');
@@ -525,7 +525,7 @@ class ProductRepository
                     $queryBuilder,
                     ProductCalculatedPrice::class,
                     'pcp',
-                    'pcp.product = p AND pcp.pricingGroup = :pricingGroup'
+                    'pcp.product = p AND pcp.pricingGroup = :pricingGroup',
                 );
                 $queryBuilder->addOrderBy('pcp.priceWithVat', 'asc');
                 $queryBuilder->setParameter('pricingGroup', $pricingGroup);
@@ -536,7 +536,7 @@ class ProductRepository
                     $queryBuilder,
                     ProductCalculatedPrice::class,
                     'pcp',
-                    'pcp.product = p AND pcp.pricingGroup = :pricingGroup'
+                    'pcp.product = p AND pcp.pricingGroup = :pricingGroup',
                 );
                 $queryBuilder->addOrderBy('pcp.priceWithVat', 'desc');
                 $queryBuilder->setParameter('pricingGroup', $pricingGroup);
@@ -727,7 +727,7 @@ class ProductRepository
             ->andWhere('p.calculatedSellingDenied = FALSE')
             ->andWhere('p.variantType = :variantTypeVariant')->setParameter(
                 'variantTypeVariant',
-                Product::VARIANT_TYPE_VARIANT
+                Product::VARIANT_TYPE_VARIANT,
             )
             ->andWhere('p.mainVariant = :mainVariant')->setParameter('mainVariant', $mainVariant);
 
@@ -793,7 +793,7 @@ class ProductRepository
 
         if ($product === null) {
             throw new ProductNotFoundException(
-                'Product with catnum ' . $productCatnum . ' does not exist.'
+                'Product with catnum ' . $productCatnum . ' does not exist.',
             );
         }
 

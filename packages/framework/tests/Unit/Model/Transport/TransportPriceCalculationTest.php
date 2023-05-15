@@ -55,7 +55,7 @@ class TransportPriceCalculationTest extends TestCase
         Money $inputPrice,
         string $vatPercent,
         Money $priceWithoutVat,
-        Money $priceWithVat
+        Money $priceWithVat,
     ) {
         $pricingSettingMock = $this->getMockBuilder(PricingSetting::class)
             ->setMethods(['getInputPriceType'])
@@ -95,8 +95,8 @@ class TransportPriceCalculationTest extends TestCase
             (new TransportPriceFactory(new EntityNameResolver([])))->create(
                 $transport,
                 $inputPrice,
-                Domain::FIRST_DOMAIN_ID
-            )
+                Domain::FIRST_DOMAIN_ID,
+            ),
         );
 
         $price = $transportPriceCalculation->calculateIndependentPrice($transport, $currency, Domain::FIRST_DOMAIN_ID);

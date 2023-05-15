@@ -17,7 +17,7 @@ class HoneyPotRenderedBeforePasswordException extends Error implements TwigExcep
             '%s was rendered before password field.'
             . ' Render honeypot after password field to overcome issues when Firefox prefills input'
             . ' before password with saved username.',
-            HoneyPotType::class
+            HoneyPotType::class,
         );
 
         // let the parent exception guess lineno and filename

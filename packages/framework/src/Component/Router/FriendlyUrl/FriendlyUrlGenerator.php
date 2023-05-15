@@ -26,7 +26,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
         RequestContext $context,
         protected readonly FriendlyUrlRepository $friendlyUrlRepository,
         protected readonly FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider,
-        protected readonly CacheInterface $mainFriendlyUrlSlugCache
+        protected readonly CacheInterface $mainFriendlyUrlSlugCache,
     ) {
         parent::__construct(new RouteCollection(), $context, null);
     }
@@ -44,7 +44,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
         DomainConfig $domainConfig,
         $routeName,
         array $parameters = [],
-        $referenceType = self::ABSOLUTE_PATH
+        $referenceType = self::ABSOLUTE_PATH,
     ) {
         $route = $routeCollection->get($routeName);
         if ($route === null) {
@@ -64,11 +64,11 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
             $this->friendlyUrlCacheKeyProvider->getMainFriendlyUrlSlugCacheKey(
                 $routeName,
                 $domainId,
-                (int)$entityId
+                (int)$entityId,
             ),
             function () use ($domainId, $routeName, $entityId) {
                 return $this->getSlug($domainId, $routeName, $entityId);
-            }
+            },
         );
 
         return $this->getGeneratedUrlBySlug($routeName, $route, $slug, $parameters, $referenceType);
@@ -102,7 +102,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
             $routeName,
             $referenceType,
             $compiledRoute->getHostTokens(),
-            $route->getSchemes()
+            $route->getSchemes(),
         );
     }
 
@@ -119,7 +119,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
         Route $route,
         string $slug,
         array $parameters,
-        int $referenceType
+        int $referenceType,
     ): string {
         $compiledRoute = RouteCompiler::compile($route);
 
@@ -139,7 +139,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
             $routeName,
             $referenceType,
             $compiledRoute->getHostTokens(),
-            $route->getSchemes()
+            $route->getSchemes(),
         );
     }
 
@@ -168,7 +168,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
             $friendlyUrl = $this->friendlyUrlRepository->getMainFriendlyUrl(
                 $domainId,
                 $routeName,
-                $entityId
+                $entityId,
             );
             return $friendlyUrl->getSlug();
         } catch (FriendlyUrlNotFoundException $e) {

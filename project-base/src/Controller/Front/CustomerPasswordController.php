@@ -23,7 +23,7 @@ class CustomerPasswordController extends FrontBaseController
     public function __construct(
         private readonly Domain $domain,
         private readonly CustomerUserPasswordFacade $customerUserPasswordFacade,
-        private readonly Authenticator $authenticator
+        private readonly Authenticator $authenticator,
     ) {
     }
 
@@ -46,7 +46,7 @@ class CustomerPasswordController extends FrontBaseController
                     t('Link to password reset sent to email <strong>{{ email }}</strong>.'),
                     [
                         'email' => $email,
-                    ]
+                    ],
                 );
                 return $this->redirectToRoute('front_registration_reset_password');
             } catch (CustomerUserNotFoundByEmailAndDomainException $ex) {
@@ -56,7 +56,7 @@ class CustomerPasswordController extends FrontBaseController
                     [
                         'email' => $ex->getEmail(),
                         'registrationLink' => $this->generateUrl('front_registration_register'),
-                    ]
+                    ],
                 );
             }
         }
@@ -92,7 +92,7 @@ class CustomerPasswordController extends FrontBaseController
                     $email,
                     $this->domain->getId(),
                     $hash,
-                    $newPassword
+                    $newPassword,
                 );
 
                 $this->authenticator->loginUser($customerUser, $request);
@@ -103,7 +103,7 @@ class CustomerPasswordController extends FrontBaseController
                     [
                         'email' => $ex->getEmail(),
                         'registrationLink' => $this->generateUrl('front_registration_register'),
-                    ]
+                    ],
                 );
             } catch (InvalidResetPasswordHashUserException $ex) {
                 $this->addErrorFlash(t('The link to change your password expired.'));

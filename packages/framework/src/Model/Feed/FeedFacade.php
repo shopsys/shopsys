@@ -21,7 +21,7 @@ class FeedFacade
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly FeedExportFactory $feedExportFactory,
         protected readonly FeedPathProvider $feedPathProvider,
-        protected readonly FilesystemOperator $filesystem
+        protected readonly FilesystemOperator $filesystem,
     ) {
     }
 

@@ -18,7 +18,7 @@ class CustomerLoginCest
     public function testLoginAsCustomerFromMainPage(
         LoginPage $loginPage,
         AcceptanceTester $me,
-        LayoutPage $layoutPage
+        LayoutPage $layoutPage,
     ) {
         $me->wantTo('login as a customer from main page');
         $me->amOnPage('/');
@@ -37,7 +37,7 @@ class CustomerLoginCest
     public function testLoginAsCustomerFromCategoryPage(
         LoginPage $loginPage,
         AcceptanceTester $me,
-        LayoutPage $layoutPage
+        LayoutPage $layoutPage,
     ) {
         $me->wantTo('login as a customer from category page');
         // personal-computers-accessories
@@ -57,7 +57,7 @@ class CustomerLoginCest
     public function testLoginAsCustomerFromLoginPage(
         LoginPage $loginPage,
         AcceptanceTester $me,
-        LayoutPage $layoutPage
+        LayoutPage $layoutPage,
     ) {
         $me->wantTo('login as a customer from login page');
         $me->amOnLocalizedRoute('front_login');

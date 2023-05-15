@@ -44,7 +44,7 @@ final class ForbiddenSuperGlobalSniff implements Sniff
         $file->addError(
             sprintf('Super global "%s" is forbidden', $currentToken['content']),
             $position,
-            self::class
+            self::class,
         );
     }
 }

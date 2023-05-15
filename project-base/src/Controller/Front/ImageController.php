@@ -38,7 +38,7 @@ class ImageController extends FrontBaseController
                 $entityName,
                 $imageId,
                 $type,
-                $sizeName
+                $sizeName,
             );
         } catch (ImageException $e) {
             $message = sprintf(
@@ -46,7 +46,7 @@ class ImageController extends FrontBaseController
                 $entityName,
                 $type,
                 $sizeName,
-                $imageId
+                $imageId,
             );
             throw $this->createNotFoundException($message, $e);
         }
@@ -73,7 +73,7 @@ class ImageController extends FrontBaseController
                 $imageId,
                 $additionalIndex,
                 $type,
-                $sizeName
+                $sizeName,
             );
         } catch (ImageException $e) {
             $message = sprintf(
@@ -82,7 +82,7 @@ class ImageController extends FrontBaseController
                 $type,
                 $sizeName,
                 $imageId,
-                $additionalIndex
+                $additionalIndex,
             );
             throw $this->createNotFoundException($message, $e);
         }

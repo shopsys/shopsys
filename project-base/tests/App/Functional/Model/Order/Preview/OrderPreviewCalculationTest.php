@@ -53,7 +53,7 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
             ->disableOriginalConstructor()
             ->getMock();
         $quantifiedProductDiscountCalculationMock->expects($this->once())->method(
-            'calculateDiscountsRoundedByCurrency'
+            'calculateDiscountsRoundedByCurrency',
         )
             ->willReturn($quantifiedProductsDiscounts);
 
@@ -80,7 +80,7 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
             $quantifiedProductDiscountCalculationMock,
             $transportPriceCalculationMock,
             $paymentPriceCalculationMock,
-            $orderPriceCalculationMock
+            $orderPriceCalculationMock,
         );
 
         $quantifiedProductMock = $this->createMock(QuantifiedProduct::class);
@@ -98,7 +98,7 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
             $quantifiedProducts,
             $transport,
             $payment,
-            null
+            null,
         );
 
         $this->assertSame($quantifiedProducts, $orderPreview->getQuantifiedProducts());
@@ -107,15 +107,15 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
         $this->assertSame($paymentPrice, $orderPreview->getPaymentPrice());
         $this->assertThat(
             $orderPreview->getTotalPrice()->getVatAmount(),
-            new IsMoneyEqual(Money::create(2 + 20 + 400 * 2))
+            new IsMoneyEqual(Money::create(2 + 20 + 400 * 2)),
         );
         $this->assertThat(
             $orderPreview->getTotalPrice()->getPriceWithVat(),
-            new IsMoneyEqual(Money::create(12 + 120 + 2400 * 2))
+            new IsMoneyEqual(Money::create(12 + 120 + 2400 * 2)),
         );
         $this->assertThat(
             $orderPreview->getTotalPrice()->getPriceWithoutVat(),
-            new IsMoneyEqual(Money::create(10 + 100 + 2000 * 2))
+            new IsMoneyEqual(Money::create(10 + 100 + 2000 * 2)),
         );
         $this->assertSame($transport, $orderPreview->getTransport());
         $this->assertSame($transportPrice, $orderPreview->getTransportPrice());
@@ -147,7 +147,7 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
             ->disableOriginalConstructor()
             ->getMock();
         $quantifiedProductDiscountCalculationMock->expects($this->once())->method(
-            'calculateDiscountsRoundedByCurrency'
+            'calculateDiscountsRoundedByCurrency',
         )
             ->willReturn($quantifiedProductsDiscounts);
 
@@ -170,7 +170,7 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
             $quantifiedProductDiscountCalculationMock,
             $transportPriceCalculationMock,
             $paymentPriceCalculationMock,
-            $orderPriceCalculationMock
+            $orderPriceCalculationMock,
         );
 
         $quantifiedProductMock = $this->createMock(QuantifiedProduct::class);
@@ -185,7 +185,7 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
             $quantifiedProducts,
             null,
             null,
-            null
+            null,
         );
 
         $this->assertSame($quantifiedProducts, $orderPreview->getQuantifiedProducts());
@@ -195,11 +195,11 @@ class OrderPreviewCalculationTest extends FunctionalTestCase
         $this->assertThat($orderPreview->getTotalPrice()->getVatAmount(), new IsMoneyEqual(Money::create(400 * 2)));
         $this->assertThat(
             $orderPreview->getTotalPrice()->getPriceWithVat(),
-            new IsMoneyEqual(Money::create(2400 * 2))
+            new IsMoneyEqual(Money::create(2400 * 2)),
         );
         $this->assertThat(
             $orderPreview->getTotalPrice()->getPriceWithoutVat(),
-            new IsMoneyEqual(Money::create(2000 * 2))
+            new IsMoneyEqual(Money::create(2000 * 2)),
         );
         $this->assertNull($orderPreview->getTransport());
         $this->assertNull($orderPreview->getTransportPrice());

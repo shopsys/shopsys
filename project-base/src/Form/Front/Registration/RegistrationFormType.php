@@ -36,7 +36,7 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter first name']),
                     new Constraints\Length(
-                        ['max' => 100, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters']
+                        ['max' => 100, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters'],
                     ),
                 ],
             ])
@@ -44,7 +44,7 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter last name']),
                     new Constraints\Length(
-                        ['max' => 100, 'maxMessage' => 'Last name cannot be longer than {{ limit }} characters']
+                        ['max' => 100, 'maxMessage' => 'Last name cannot be longer than {{ limit }} characters'],
                     ),
                 ],
             ])
@@ -53,7 +53,7 @@ class RegistrationFormType extends AbstractType
                     new Constraints\NotBlank(['message' => 'Please enter email']),
                     new Email(['message' => 'Please enter valid email']),
                     new Constraints\Length(
-                        ['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']
+                        ['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters'],
                     ),
                     new UniqueEmail(['message' => 'This email is already registered']),
                 ],
@@ -67,7 +67,7 @@ class RegistrationFormType extends AbstractType
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please enter password']),
                         new Constraints\Length(
-                            ['min' => CustomerUserPasswordFacade::MINIMUM_PASSWORD_LENGTH, 'minMessage' => 'Password must be at least {{ limit }} characters long']
+                            ['min' => CustomerUserPasswordFacade::MINIMUM_PASSWORD_LENGTH, 'minMessage' => 'Password must be at least {{ limit }} characters long'],
                         ),
                     ],
                 ],

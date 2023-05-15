@@ -33,12 +33,12 @@ class AutomaticBestsellingProductRepository
         Category $category,
         PricingGroup $pricingGroup,
         DateTime $ordersCreatedAtLimit,
-        $maxResults
+        $maxResults,
     ) {
         $queryBuilder = $this->productRepository->getOfferedInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
-            $category
+            $category,
         );
 
         $queryBuilder

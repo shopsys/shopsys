@@ -12,7 +12,7 @@ class PaymentVisibilityCalculation
      */
     public function __construct(
         protected readonly IndependentPaymentVisibilityCalculation $independentPaymentVisibilityCalculation,
-        protected readonly IndependentTransportVisibilityCalculation $independentTransportVisibilityCalculation
+        protected readonly IndependentTransportVisibilityCalculation $independentTransportVisibilityCalculation,
     ) {
     }
 

@@ -56,7 +56,7 @@ class CustomerUserRepository
         if ($customerUser === null) {
             throw new CustomerUserNotFoundByEmailAndDomainException(
                 $email,
-                $domainId
+                $domainId,
             );
         }
 
@@ -105,7 +105,7 @@ class CustomerUserRepository
      */
     public function getCustomerUserListQueryBuilderByQuickSearchData(
         $domainId,
-        QuickSearchFormData $quickSearchData
+        QuickSearchFormData $quickSearchData,
     ) {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('

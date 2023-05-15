@@ -18,7 +18,7 @@ class AdminProductAdvancedSearchCest
     public function testSearchByCatnum(
         AcceptanceTester $me,
         LoginPage $loginPage,
-        ProductAdvancedSearchPage $productAdvancedSearchPage
+        ProductAdvancedSearchPage $productAdvancedSearchPage,
     ) {
         $me->wantTo('search for product by catnum');
         $loginPage->loginAsAdmin();

@@ -28,7 +28,7 @@ class AdministratorFacade
         protected readonly AdministratorFactoryInterface $administratorFactory,
         protected readonly AdministratorRoleFacade $administratorRoleFacade,
         protected readonly PasswordHasherFactoryInterface $passwordHasherFactory,
-        protected readonly TokenStorageInterface $tokenStorage
+        protected readonly TokenStorageInterface $tokenStorage,
     ) {
     }
 

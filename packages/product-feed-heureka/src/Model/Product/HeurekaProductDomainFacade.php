@@ -16,7 +16,7 @@ class HeurekaProductDomainFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly HeurekaProductDomainRepository $heurekaProductDomainRepository,
-        protected readonly ProductRepository $productRepository
+        protected readonly ProductRepository $productRepository,
     ) {
     }
 
@@ -43,7 +43,7 @@ class HeurekaProductDomainFacade
 
         return $this->heurekaProductDomainRepository->getHeurekaProductDomainsByProductsIdsDomainIdIndexedByProductId(
             $productIds,
-            $domain->getId()
+            $domain->getId(),
         );
     }
 
@@ -86,7 +86,7 @@ class HeurekaProductDomainFacade
 
         $existingHeurekaProductDomain = $this->heurekaProductDomainRepository->findByProductIdAndDomainId(
             $productId,
-            $heurekaProductDomainData->domainId
+            $heurekaProductDomainData->domainId,
         );
 
         if ($existingHeurekaProductDomain !== null) {
@@ -105,7 +105,7 @@ class HeurekaProductDomainFacade
      */
     protected function removeOldHeurekaProductDomainsForProductId(
         array $existingHeurekaProductDomains,
-        array $newHeurekaProductDomainsData
+        array $newHeurekaProductDomainsData,
     ) {
         $domainsIdsWithNewHeurekaProductDomains = [];
         foreach ($newHeurekaProductDomainsData as $newHeurekaProductDomainData) {
@@ -115,7 +115,7 @@ class HeurekaProductDomainFacade
         foreach ($existingHeurekaProductDomains as $existingHeurekaProductDomain) {
             if (!array_key_exists(
                 $existingHeurekaProductDomain->getDomainId(),
-                $domainsIdsWithNewHeurekaProductDomains
+                $domainsIdsWithNewHeurekaProductDomains,
             )) {
                 $this->em->remove($existingHeurekaProductDomain);
             }

@@ -16,7 +16,7 @@ class ParameterController extends AdminBaseController
      */
     public function __construct(
         protected readonly ParameterFacade $parameterFacade,
-        protected readonly ParameterInlineEdit $parameterInlineEdit
+        protected readonly ParameterInlineEdit $parameterInlineEdit,
     ) {
     }
 
@@ -48,7 +48,7 @@ class ParameterController extends AdminBaseController
                 t('Parameter <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $fullName,
-                ]
+                ],
             );
         } catch (ParameterNotFoundException $ex) {
             $this->addErrorFlash(t('Selected parameter doesn\'t exist.'));

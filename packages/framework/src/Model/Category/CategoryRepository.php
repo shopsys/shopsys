@@ -31,7 +31,7 @@ class CategoryRepository extends NestedTreeRepository
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ProductRepository $productRepository,
-        EntityNameResolver $entityNameResolver
+        EntityNameResolver $entityNameResolver,
     ) {
         $resolvedClassName = $entityNameResolver->resolve(Category::class);
         $classMetadata = $this->em->getClassMetadata($resolvedClassName);
@@ -304,7 +304,7 @@ class CategoryRepository extends NestedTreeRepository
         $domainId,
         $locale,
         $page,
-        $limit
+        $limit,
     ) {
         $queryBuilder = $this->getVisibleByDomainIdAndSearchTextQueryBuilder($domainId, $locale, $searchText);
         $queryBuilder->orderBy('ct.name');
@@ -325,7 +325,7 @@ class CategoryRepository extends NestedTreeRepository
         $queryBuilder = $this->getVisibleByDomainIdAndSearchTextQueryBuilder(
             $domainId,
             $locale,
-            $searchText
+            $searchText,
         );
 
         return $queryBuilder->getQuery()->execute();
@@ -340,7 +340,7 @@ class CategoryRepository extends NestedTreeRepository
     protected function getVisibleByDomainIdAndSearchTextQueryBuilder(
         $domainId,
         $locale,
-        $searchText
+        $searchText,
     ) {
         $queryBuilder = $this->getAllVisibleByDomainIdQueryBuilder($domainId);
         $this->addTranslation($queryBuilder, $locale);
@@ -388,7 +388,7 @@ class CategoryRepository extends NestedTreeRepository
     public function getListableProductCountsIndexedByCategoryId(
         array $categories,
         PricingGroup $pricingGroup,
-        $domainId
+        $domainId,
     ) {
         if (count($categories) === 0) {
             return [];
@@ -406,7 +406,7 @@ class CategoryRepository extends NestedTreeRepository
                 Join::WITH,
                 'pcd.product = p
                  AND pcd.category IN (:categories)
-                 AND pcd.domainId = :domainId'
+                 AND pcd.domainId = :domainId',
             )
             ->select('IDENTITY(pcd.category) AS categoryId, COUNT(p) AS productCount')
             ->setParameter('categories', $categories)
@@ -428,7 +428,7 @@ class CategoryRepository extends NestedTreeRepository
     public function filterBySearchText(QueryBuilder $queryBuilder, $searchText)
     {
         $queryBuilder->andWhere(
-            'NORMALIZE(ct.name) LIKE NORMALIZE(:searchText)'
+            'NORMALIZE(ct.name) LIKE NORMALIZE(:searchText)',
         );
         $queryBuilder->setParameter('searchText', DatabaseSearching::getFullTextLikeSearchString($searchText));
     }
@@ -447,7 +447,7 @@ class CategoryRepository extends NestedTreeRepository
                 Join::WITH,
                 'pcd.product = :product
                     AND pcd.category = c
-                    AND pcd.domainId = :domainId'
+                    AND pcd.domainId = :domainId',
             )
             ->orderBy('c.level DESC, c.lft')
             ->setMaxResults(1);
@@ -473,8 +473,8 @@ class CategoryRepository extends NestedTreeRepository
                 sprintf(
                     'Main category for product id `%d` and domain id `%d` was not found',
                     $product->getId(),
-                    $domainId
-                )
+                    $domainId,
+                ),
             );
         }
 

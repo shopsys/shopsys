@@ -28,7 +28,7 @@ class DomainsConfigLoader
         $processedConfig = $this->getProcessedConfig($domainsConfigFilepath, $this->getDomainsConfigDefinition());
         $processedUrlsConfig = $this->getProcessedConfig(
             $domainsUrlsConfigFilepath,
-            $this->getDomainsUrlsConfigDefinition()
+            $this->getDomainsUrlsConfigDefinition(),
         );
         $domainConfigsByDomainId = $processedConfig[DomainsConfigDefinition::CONFIG_DOMAINS];
         $domainUrlsConfigsByDomainId = $processedUrlsConfig[DomainsUrlsConfigDefinition::CONFIG_DOMAINS_URLS];
@@ -40,7 +40,7 @@ class DomainsConfigLoader
         }
         $processedConfigsWithUrlsByDomainId = $this->addUrlsToProcessedConfig(
             $domainConfigsByDomainId,
-            $domainUrlsConfigsByDomainId
+            $domainUrlsConfigsByDomainId,
         );
 
         return $this->loadDomainConfigsFromArray($processedConfigsWithUrlsByDomainId);
@@ -89,7 +89,7 @@ class DomainsConfigLoader
             $domainConfig[DomainsConfigDefinition::CONFIG_NAME],
             $domainConfig[DomainsConfigDefinition::CONFIG_LOCALE],
             $domainConfig[DomainsConfigDefinition::CONFIG_STYLES_DIRECTORY],
-            $domainConfig[DomainsConfigDefinition::CONFIG_DESIGN_ID]
+            $domainConfig[DomainsConfigDefinition::CONFIG_DESIGN_ID],
         );
     }
 
@@ -121,7 +121,7 @@ class DomainsConfigLoader
 
         if (!$this->filesystem->exists($filepath)) {
             throw new FileNotFoundException(
-                'File ' . $filepath . ' does not exist'
+                'File ' . $filepath . ' does not exist',
             );
         }
 

@@ -17,7 +17,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture
      */
     public function __construct(
         private readonly PromoCodeFacade $promoCodeFacade,
-        private readonly PromoCodeDataFactoryInterface $promoCodeDataFactory
+        private readonly PromoCodeDataFactoryInterface $promoCodeDataFactory,
     ) {
     }
 

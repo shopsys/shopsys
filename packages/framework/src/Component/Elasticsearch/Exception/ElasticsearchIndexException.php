@@ -18,7 +18,7 @@ class ElasticsearchIndexException extends Exception
         return new static(sprintf(
             'Invalid JSON in "%s" definition file "%s"',
             $indexName,
-            $definitionFilepath
+            $definitionFilepath,
         ));
     }
 
@@ -30,7 +30,7 @@ class ElasticsearchIndexException extends Exception
     {
         return new static(sprintf(
             'Can\'t read definition file at path "%s". Please check that file exists and has permissions for reading.',
-            $definitionFilepath
+            $definitionFilepath,
         ));
     }
 
@@ -44,7 +44,7 @@ class ElasticsearchIndexException extends Exception
         return new static(sprintf(
             'Error when creating index "%s":' . PHP_EOL . '"%s"',
             $indexName,
-            json_encode($error)
+            json_encode($error),
         ));
     }
 
@@ -58,7 +58,7 @@ class ElasticsearchIndexException extends Exception
         return new static(sprintf(
             'Error when creating alias "%s":' . PHP_EOL . '"%s"',
             $alias,
-            json_encode($error)
+            json_encode($error),
         ));
     }
 
@@ -72,7 +72,7 @@ class ElasticsearchIndexException extends Exception
         return new static(sprintf(
             'Error when deleting index "%s":' . PHP_EOL . '"%s"',
             $indexName,
-            json_encode($error)
+            json_encode($error),
         ));
     }
 
@@ -84,7 +84,7 @@ class ElasticsearchIndexException extends Exception
     {
         return new static(sprintf(
             'There is no index "%s" registered',
-            $indexName
+            $indexName,
         ));
     }
 
@@ -98,7 +98,7 @@ class ElasticsearchIndexException extends Exception
         return new static(sprintf(
             'One or more items return error when updating "%s":' . PHP_EOL . '"%s"',
             $indexName,
-            json_encode($errors)
+            json_encode($errors),
         ));
     }
 
@@ -110,7 +110,7 @@ class ElasticsearchIndexException extends Exception
     {
         return new static(sprintf(
             'Can\'t resolve index name, there aren\'t any indexes with alias "%s".',
-            $alias
+            $alias,
         ));
     }
 
@@ -124,7 +124,7 @@ class ElasticsearchIndexException extends Exception
         return new static(sprintf(
             'Can\'t resolve index name for alias "%s". More than one index found ("%s").',
             $alias,
-            implode('", "', $indexesFound)
+            implode('", "', $indexesFound),
         ));
     }
 }

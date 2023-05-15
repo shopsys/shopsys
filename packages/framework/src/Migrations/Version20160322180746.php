@@ -21,11 +21,11 @@ class Version20160322180746 extends AbstractMigration
         $this->sql('ALTER INDEX flags_translations_uniq_trans RENAME TO flag_translations_uniq_trans;');
         $this->sql('ALTER INDEX idx_16f42d262c2ac5d3 RENAME TO IDX_77C2A7492C2AC5D3;');
         $this->sql(
-            'ALTER INDEX parameter_titles_translations_uniq_trans RENAME TO parameter_translations_uniq_trans;'
+            'ALTER INDEX parameter_titles_translations_uniq_trans RENAME TO parameter_translations_uniq_trans;',
         );
         $this->sql('ALTER INDEX idx_80d708562c2ac5d3 RENAME TO IDX_670A3D112C2AC5D3;');
         $this->sql(
-            'ALTER INDEX availabilities_translations_uniq_trans RENAME TO availability_translations_uniq_trans;'
+            'ALTER INDEX availabilities_translations_uniq_trans RENAME TO availability_translations_uniq_trans;',
         );
         $this->sql('ALTER INDEX idx_15c4c1de2c2ac5d3 RENAME TO IDX_142138102C2AC5D3;');
         $this->sql('ALTER INDEX units_translations_uniq_trans RENAME TO unit_translations_uniq_trans;');

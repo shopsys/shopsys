@@ -20,7 +20,7 @@ abstract class AbstractAdvancedSearchFormFactory
         protected readonly AdvancedSearchConfig $advancedSearchConfig,
         protected readonly AdvancedSearchFilterTranslation $advancedSearchFilterTranslation,
         protected readonly FormFactoryInterface $formFactory,
-        protected readonly AdvancedSearchOperatorTranslation $advancedSearchOperatorTranslation
+        protected readonly AdvancedSearchOperatorTranslation $advancedSearchOperatorTranslation,
     ) {
     }
 
@@ -96,7 +96,7 @@ abstract class AbstractAdvancedSearchFormFactory
         $choices = [];
         foreach ($this->advancedSearchConfig->getAllFilters() as $filter) {
             $choices[$this->advancedSearchFilterTranslation->translateFilterName(
-                $filter->getName()
+                $filter->getName(),
             )] = $filter->getName();
         }
 

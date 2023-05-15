@@ -18,7 +18,7 @@ class HeurekaFeedItemFacade
         protected readonly HeurekaProductRepository $heurekaProductRepository,
         protected readonly HeurekaFeedItemFactory $feedItemFactory,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
-        protected readonly HeurekaProductDataBatchLoader $productDataBatchLoader
+        protected readonly HeurekaProductDataBatchLoader $productDataBatchLoader,
     ) {
     }
 
@@ -35,7 +35,7 @@ class HeurekaFeedItemFacade
             $domainConfig,
             $pricingGroup,
             $lastSeekId,
-            $maxResults
+            $maxResults,
         );
         $this->productDataBatchLoader->loadForProducts($products, $domainConfig);
 

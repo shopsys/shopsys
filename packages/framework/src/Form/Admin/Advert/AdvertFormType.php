@@ -36,7 +36,7 @@ class AdvertFormType extends AbstractType
      */
     public function __construct(
         private readonly Domain $domain,
-        private readonly AdvertPositionRegistry $advertPositionRegistry
+        private readonly AdvertPositionRegistry $advertPositionRegistry,
     ) {
     }
 

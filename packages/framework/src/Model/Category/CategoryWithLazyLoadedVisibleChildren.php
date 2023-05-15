@@ -28,7 +28,7 @@ class CategoryWithLazyLoadedVisibleChildren
     public function __construct(
         protected readonly Closure $lazyLoadChildrenCallback,
         protected readonly Category $category,
-        $hasChildren
+        $hasChildren,
     ) {
         $this->hasChildren = $hasChildren;
     }

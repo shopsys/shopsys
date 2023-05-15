@@ -29,8 +29,8 @@ final class InheritDocFormatFixer implements FixerInterface
  * {@inheritdoc}
  */
 public function transform($value): ?array
-SAMPLE
-            )]
+SAMPLE,
+            )],
         );
     }
 

@@ -17,7 +17,7 @@ class AddConstraintValidatorsPass implements CompilerPassInterface
      */
     public function __construct(
         private readonly string $validatorFactoryServiceId = 'validator.validator_factory',
-        private readonly string $constraintValidatorTag = 'validator.constraint_validator'
+        private readonly string $constraintValidatorTag = 'validator.constraint_validator',
     ) {
     }
 

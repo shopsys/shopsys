@@ -18,7 +18,7 @@ class GetOrdersAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
         $this->assertArrayHasKey('message', $errors[0]);
         $this->assertSame(
             'Token is not valid.',
-            $errors[0]['message']
+            $errors[0]['message'],
         );
     }
 

@@ -38,7 +38,7 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
             static function (Flag $flag) {
                 return $flag->getId();
             },
-            $flagFilterChoices
+            $flagFilterChoices,
         );
 
         $this->assertContains(2, $ids);
@@ -57,7 +57,7 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
             static function (Flag $flag) {
                 return $flag->getId();
             },
-            $flagFilterChoices
+            $flagFilterChoices,
         );
 
         $this->assertContains(1, $ids);
@@ -77,7 +77,7 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
             static function (Flag $flag) {
                 return $flag->getId();
             },
-            $flagFilterChoices
+            $flagFilterChoices,
         );
 
         $this->assertContains(1, $ids);
@@ -93,7 +93,7 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         /** @var \App\Model\Category\Category $category */
@@ -105,7 +105,7 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
             $domainConfig1->getId(),
             $pricingGroup,
             $domainConfig1->getLocale(),
-            $category
+            $category,
         );
     }
 
@@ -118,7 +118,7 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         $domainConfig1 = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
@@ -127,7 +127,7 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
             $domainConfig1->getId(),
             $pricingGroup,
             $domainConfig1->getLocale(),
-            $searchText
+            $searchText,
         );
     }
 }

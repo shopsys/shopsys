@@ -15,7 +15,7 @@ class AdministratorActivityFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly AdministratorActivityRepository $administratorActivityRepository,
-        protected readonly AdministratorActivityFactoryInterface $administratorActivityFactory
+        protected readonly AdministratorActivityFactoryInterface $administratorActivityFactory,
     ) {
     }
 
@@ -26,7 +26,7 @@ class AdministratorActivityFacade
      */
     public function create(
         Administrator $administrator,
-        $ipAddress
+        $ipAddress,
     ) {
         $administratorActivity = $this->administratorActivityFactory->create($administrator, $ipAddress);
 

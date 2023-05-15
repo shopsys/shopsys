@@ -29,7 +29,7 @@ class NewsletterController extends FrontBaseController
         private readonly NewsletterFacade $newsletterFacade,
         BaseLegalConditionsFacade $legalConditionsFacade,
         private readonly Domain $domain,
-        private readonly FormTimeProvider $formTimeProvider
+        private readonly FormTimeProvider $formTimeProvider,
     ) {
         $this->legalConditionsFacade = $legalConditionsFacade;
     }

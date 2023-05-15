@@ -23,7 +23,7 @@ class ProductDetailQuery extends AbstractQuery
     public function __construct(
         protected readonly ProductElasticsearchProvider $productElasticsearchProvider,
         protected readonly Domain $domain,
-        protected readonly FriendlyUrlFacade $friendlyUrlFacade
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
     }
 
@@ -68,7 +68,7 @@ class ProductDetailQuery extends AbstractQuery
             $friendlyUrl = $this->friendlyUrlFacade->getFriendlyUrlByRouteNameAndSlug(
                 $this->domain->getId(),
                 'front_product_detail',
-                $urlSlug
+                $urlSlug,
             );
 
             return $this->productElasticsearchProvider->getVisibleProductArrayById($friendlyUrl->getEntityId());

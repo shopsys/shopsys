@@ -16,7 +16,7 @@ class ArticleDataFactory implements ArticleDataFactoryInterface
     public function __construct(
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly Domain $domain,
-        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 
@@ -72,7 +72,7 @@ class ArticleDataFactory implements ArticleDataFactoryInterface
                 $this->friendlyUrlFacade->findMainFriendlyUrl(
                     $domainConfig->getId(),
                     'front_article_detail',
-                    $article->getId()
+                    $article->getId(),
                 );
         }
     }

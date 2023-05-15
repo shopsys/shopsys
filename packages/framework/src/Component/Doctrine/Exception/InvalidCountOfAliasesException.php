@@ -16,7 +16,7 @@ class InvalidCountOfAliasesException extends Exception
         parent::__construct(
             'Query builder has invalid count of root aliases ' . Debug::export($rootAliases),
             0,
-            $previous
+            $previous,
         );
     }
 }

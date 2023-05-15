@@ -28,7 +28,7 @@ class MigrationLockPlanCalculator implements MigrationPlanCalculator
     public function __construct(
         protected readonly MigrationsLockRepository $migrationsLockRepository,
         protected readonly MigrationsLockComparator $migrationsLockComparator,
-        DependencyFactory $dependencyFactory
+        DependencyFactory $dependencyFactory,
     ) {
         $this->metadataStorage = $dependencyFactory->getMetadataStorage();
     }

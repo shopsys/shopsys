@@ -68,7 +68,7 @@ class OrderController extends FrontBaseController
         private readonly TransportAndPaymentWatcher $transportAndPaymentWatcher,
         private readonly OrderMailFacade $orderMailFacade,
         BaseLegalConditionsFacade $legalConditionsFacade,
-        private readonly NewsletterFacade $newsletterFacade
+        private readonly NewsletterFacade $newsletterFacade,
     ) {
         $this->legalConditionsFacade = $legalConditionsFacade;
     }
@@ -131,7 +131,7 @@ class OrderController extends FrontBaseController
                 $order = $this->orderFacade->createOrderFromFront($orderData, $deliveryAddress);
                 $this->orderFacade->sendHeurekaOrderInfo(
                     $order,
-                    $frontOrderFormData->disallowHeurekaVerifiedByCustomers
+                    $frontOrderFormData->disallowHeurekaVerifiedByCustomers,
                 );
 
                 if ($frontOrderFormData->newsletterSubscription) {
@@ -162,16 +162,16 @@ class OrderController extends FrontBaseController
                 $transports,
                 $currency,
                 $orderPreview->getProductsPrice(),
-                $domainId
+                $domainId,
             ),
             'paymentsPrices' => $this->paymentPriceCalculation->getCalculatedPricesIndexedByPaymentId(
                 $payments,
                 $currency,
                 $orderPreview->getProductsPrice(),
-                $domainId
+                $domainId,
             ),
             'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions(
-                $this->domain->getId()
+                $this->domain->getId(),
             ),
             'privacyPolicyArticle' => $this->legalConditionsFacade->findPrivacyPolicy($this->domain->getId()),
             'paymentTransportRelations' => $this->getPaymentTransportRelations($payments),
@@ -235,13 +235,13 @@ class OrderController extends FrontBaseController
         OrderData $orderData,
         OrderPreview $orderPreview,
         array $transports,
-        array $payments
+        array $payments,
     ): void {
         $transportAndPaymentCheckResult = $this->transportAndPaymentWatcher->checkTransportAndPayment(
             $orderData,
             $orderPreview,
             $transports,
-            $payments
+            $payments,
         );
 
         if ($transportAndPaymentCheckResult->isTransportPriceChanged()) {
@@ -249,7 +249,7 @@ class OrderController extends FrontBaseController
                 t('The price of shipping {{ transportName }} changed during ordering process. Check your order, please.'),
                 [
                     'transportName' => $orderData->transport->getName(),
-                ]
+                ],
             );
         }
 
@@ -258,7 +258,7 @@ class OrderController extends FrontBaseController
                 t('The price of payment {{ paymentName }} changed during ordering process. Check your order, please.'),
                 [
                     'paymentName' => $orderData->payment->getName(),
-                ]
+                ],
             );
         }
     }
@@ -313,7 +313,7 @@ class OrderController extends FrontBaseController
         return new DownloadFileResponse(
             $this->legalConditionsFacade->getTermsAndConditionsDownloadFilename(),
             $response->getContent(),
-            'text/html'
+            'text/html',
         );
     }
 
@@ -324,7 +324,7 @@ class OrderController extends FrontBaseController
     {
         return $this->render('Front/Content/Order/legalConditions.html.twig', [
             'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions(
-                $this->domain->getId()
+                $this->domain->getId(),
             ),
         ]);
     }

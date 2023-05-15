@@ -30,7 +30,7 @@ class PaymentFormType extends AbstractType
      */
     public function __construct(
         private readonly TransportFacade $transportFacade,
-        private readonly PaymentFacade $paymentFacade
+        private readonly PaymentFacade $paymentFacade,
     ) {
     }
 
@@ -61,7 +61,7 @@ class PaymentFormType extends AbstractType
                 'entry_options' => [
                     'constraints' => [
                         new Constraints\Length(
-                            ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']
+                            ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
                         ),
                     ],
                 ],
@@ -96,7 +96,7 @@ class PaymentFormType extends AbstractType
                 'attr' => [
                     'icon' => true,
                     'iconTitle' => t(
-                        'Rounding item with 0 % VAT will be added to your order. It is used for payment in cash.'
+                        'Rounding item with 0 % VAT will be added to your order. It is used for payment in cash.',
                     ),
                 ],
             ])

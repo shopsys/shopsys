@@ -42,7 +42,7 @@ class ProductTest extends GraphQlTestCase
                         '22" Sencor SLE 22F46DM4 HELLO KITTY',
                         [],
                         Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                        $this->getLocaleForFirstDomain()
+                        $this->getLocaleForFirstDomain(),
                     ),
                 ],
             ],
@@ -118,7 +118,7 @@ class ProductTest extends GraphQlTestCase
             'Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback',
             [],
             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-            $firstDomainLocale
+            $firstDomainLocale,
         );
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
@@ -133,19 +133,19 @@ class ProductTest extends GraphQlTestCase
                         'Hello Kitty Television',
                         [],
                         Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                        $firstDomainLocale
+                        $firstDomainLocale,
                     ),
                     'seoTitle' => t(
                         'Hello Kitty TV',
                         [],
                         Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                        $firstDomainLocale
+                        $firstDomainLocale,
                     ),
                     'seoMetaDescription' => t(
                         'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
                         [],
                         Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                        $firstDomainLocale
+                        $firstDomainLocale,
                     ),
                     'link' => $this->getLocalizedPathOnFirstDomainByRouteName('front_product_detail', ['id' => 1]),
                     'unit' => [
@@ -183,7 +183,7 @@ class ProductTest extends GraphQlTestCase
                                 'Kabel HDMI A - HDMI A M/M 2m gold-plated connectors High Speed HD',
                                 [],
                                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                                $firstDomainLocale
+                                $firstDomainLocale,
                             ),
                         ],
                         [
@@ -195,7 +195,7 @@ class ProductTest extends GraphQlTestCase
                         'Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback (DivX, XviD, MP3, WMA, JPEG), HDMI, SCART, VGA, pink execution, energ. Class B',
                         [],
                         Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                        $firstDomainLocale
+                        $firstDomainLocale,
                     ),
                     'orderingPriority' => 1,
                     'parameters' => [

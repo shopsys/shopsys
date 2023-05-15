@@ -14,7 +14,7 @@ class ProductDetailViewElasticsearchFacade implements ProductDetailViewFacadeInt
      */
     public function __construct(
         protected readonly ProductDetailViewElasticsearchFactory $productDetailViewElasticsearchFactory,
-        protected readonly ProductElasticsearchProvider $productElasticsearchProvider
+        protected readonly ProductElasticsearchProvider $productElasticsearchProvider,
     ) {
     }
 
@@ -25,7 +25,7 @@ class ProductDetailViewElasticsearchFacade implements ProductDetailViewFacadeInt
     public function getVisibleProductDetail(int $productId): ProductDetailView
     {
         return $this->productDetailViewElasticsearchFactory->createFromProductArray(
-            $this->productElasticsearchProvider->getVisibleProductArrayById($productId)
+            $this->productElasticsearchProvider->getVisibleProductArrayById($productId),
         );
     }
 }

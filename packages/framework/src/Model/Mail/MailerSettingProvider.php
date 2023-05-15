@@ -25,7 +25,7 @@ class MailerSettingProvider
     public function __construct(
         string $mailerWhitelist,
         string $mailerMasterEmailAddress,
-        string $mailerDsn
+        string $mailerDsn,
     ) {
         $this->mailerWhitelistExpressions = $mailerWhitelist !== '' ? explode(',', $mailerWhitelist) : [];
         $this->mailerMasterEmailAddress = $mailerMasterEmailAddress !== '' ? $mailerMasterEmailAddress : null;

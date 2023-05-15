@@ -31,7 +31,7 @@ class Client extends KernelBrowser
         array $files = [],
         array $server = [],
         ?string $content = null,
-        bool $changeHistory = true
+        bool $changeHistory = true,
     ): Crawler {
         return parent::request(
             $method,
@@ -40,7 +40,7 @@ class Client extends KernelBrowser
             $files,
             array_merge(self::DEFAULT_HEADERS, $server),
             $content,
-            $changeHistory
+            $changeHistory,
         );
     }
 

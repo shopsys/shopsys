@@ -31,7 +31,7 @@ class ImageExtension extends BaseImageExtension
                 $imageView->getExtension(),
                 $entityName,
                 $imageView->getType(),
-                $attributes['size']
+                $attributes['size'],
             );
 
             $additionalImagesData = $this->imageFacade->getAdditionalImagesDataFromAttributes(
@@ -40,7 +40,7 @@ class ImageExtension extends BaseImageExtension
                 $imageView->getExtension(),
                 $entityName,
                 $imageView->getType(),
-                $attributes['size']
+                $attributes['size'],
             );
 
             $attributes['alt'] = $imageView->getName();
@@ -68,7 +68,7 @@ class ImageExtension extends BaseImageExtension
                 $imageView->getExtension(),
                 $entityName,
                 $type,
-                $sizeName
+                $sizeName,
             );
         }
 

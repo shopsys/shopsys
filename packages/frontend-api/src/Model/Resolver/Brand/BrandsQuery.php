@@ -16,7 +16,7 @@ class BrandsQuery extends AbstractQuery
      */
     public function __construct(
         protected readonly BrandFacade $brandFacade,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 

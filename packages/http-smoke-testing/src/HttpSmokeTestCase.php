@@ -85,7 +85,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
             function (RequestDataSet $requestDataSet) {
                 return [$requestDataSet];
             },
-            $requestDataSets
+            $requestDataSets,
         );
     }
 
@@ -141,12 +141,12 @@ abstract class HttpSmokeTestCase extends KernelTestCase
             'Failed asserting that status code %d for route "%s" is identical to expected %d',
             $response->getStatusCode(),
             $requestDataSet->getRouteName(),
-            $requestDataSet->getExpectedStatusCode()
+            $requestDataSet->getExpectedStatusCode(),
         );
         $this->assertSame(
             $requestDataSet->getExpectedStatusCode(),
             $response->getStatusCode(),
-            $this->getMessageWithDebugNotes($requestDataSet, $failMessage)
+            $this->getMessageWithDebugNotes($requestDataSet, $failMessage),
         );
     }
 

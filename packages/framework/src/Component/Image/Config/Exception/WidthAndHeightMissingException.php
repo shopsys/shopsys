@@ -17,7 +17,7 @@ class WidthAndHeightMissingException extends Exception implements ImageConfigExc
             'You have to specify at least one of "%s" or "%s" for additional size "%s"',
             ImageConfigDefinition::CONFIG_SIZE_WIDTH,
             ImageConfigDefinition::CONFIG_SIZE_HEIGHT,
-            $additionalSizeName
+            $additionalSizeName,
         );
 
         parent::__construct($message, 0, $previous);

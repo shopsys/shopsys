@@ -19,7 +19,7 @@ class OrderPriceCalculation
      */
     public function __construct(
         protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
-        protected readonly Rounding $rounding
+        protected readonly Rounding $rounding,
     ) {
     }
 
@@ -56,7 +56,7 @@ class OrderPriceCalculation
     public function calculateOrderRoundingPrice(
         Payment $payment,
         Currency $currency,
-        Price $orderTotalPrice
+        Price $orderTotalPrice,
     ): ?Price {
         if (!$payment->isCzkRounding() || $currency->getCode() !== Currency::CODE_CZK) {
             return null;
@@ -67,7 +67,7 @@ class OrderPriceCalculation
 
         $roundingPrice = $this->rounding->roundPriceWithVatByCurrency(
             $roundedPriceWithVat->subtract($priceWithVat),
-            $currency
+            $currency,
         );
 
         if ($roundingPrice->isZero()) {

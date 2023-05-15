@@ -24,7 +24,7 @@ class BrandQuery extends AbstractQuery
     public function __construct(
         protected readonly BrandFacade $brandFacade,
         protected readonly Domain $domain,
-        protected readonly FriendlyUrlFacade $friendlyUrlFacade
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
     }
 
@@ -69,7 +69,7 @@ class BrandQuery extends AbstractQuery
             $friendlyUrl = $this->friendlyUrlFacade->getFriendlyUrlByRouteNameAndSlug(
                 $this->domain->getId(),
                 'front_brand_detail',
-                $urlSlug
+                $urlSlug,
             );
 
             return $this->brandFacade->getById($friendlyUrl->getEntityId());

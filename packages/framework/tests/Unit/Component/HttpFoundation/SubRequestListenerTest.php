@@ -50,7 +50,7 @@ class SubRequestListenerTest extends TestCase
             $this->createMock(HttpKernelInterface::class),
             new Request(),
             HttpKernelInterface::MASTER_REQUEST,
-            new Response()
+            new Response(),
         );
 
         $subRequestListener = new SubRequestListener();
@@ -109,7 +109,7 @@ class SubRequestListenerTest extends TestCase
             $this->createMock(HttpKernelInterface::class),
             new Request(),
             HttpKernelInterface::MASTER_REQUEST,
-            new Response()
+            new Response(),
         );
 
         $subRequestListener = new SubRequestListener();

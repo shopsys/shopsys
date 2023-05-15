@@ -23,7 +23,7 @@ class ProductAccessoryFactory implements ProductAccessoryFactoryInterface
     public function create(
         Product $product,
         Product $accessory,
-        int $position
+        int $position,
     ): ProductAccessory {
         $classData = $this->entityNameResolver->resolve(ProductAccessory::class);
 

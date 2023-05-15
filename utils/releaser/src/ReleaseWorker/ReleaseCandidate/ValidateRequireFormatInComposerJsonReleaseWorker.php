@@ -26,7 +26,7 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
     public function __construct(
         private readonly ComposerJsonFilesProvider $composerJsonFilesProvider,
         private readonly JsonFileManager $jsonFileManager,
-        private readonly PackageNamesProvider $packageNamesProvider
+        private readonly PackageNamesProvider $packageNamesProvider,
     ) {
     }
 
@@ -80,7 +80,7 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
                 '"%s" file has invalid version format for "%s": "%s"',
                 $splFileInfo->getPathname(),
                 $packageName,
-                $version
+                $version,
             ));
 
             $this->isSuccessful = false;

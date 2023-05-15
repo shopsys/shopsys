@@ -49,7 +49,7 @@ class QueryBuilderExtender
                 $resolvedClass,
                 $alias,
                 Join::WITH,
-                $condition
+                $condition,
             );
         } else {
             $queryBuilder->andWhere($condition);

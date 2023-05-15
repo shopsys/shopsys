@@ -34,7 +34,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
         protected readonly CategoryRepository $categoryRepository,
         protected readonly ProductFilterCountRepository $productFilterCountRepository,
         protected readonly ProductAccessoryRepository $productAccessoryRepository,
-        protected readonly BrandRepository $brandRepository
+        protected readonly BrandRepository $brandRepository,
     ) {
     }
 
@@ -47,7 +47,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
         return $this->productRepository->getVisible(
             $productId,
             $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
     }
 
@@ -60,7 +60,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
         return $this->productAccessoryRepository->getAllOfferedAccessoriesByProduct(
             $product,
             $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
     }
 
@@ -73,7 +73,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
         return $this->productRepository->getAllSellableVariantsByMainVariant(
             $product,
             $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
     }
 
@@ -90,7 +90,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
         string $orderingModeId,
         int $page,
         int $limit,
-        int $categoryId
+        int $categoryId,
     ): PaginationResult {
         $category = $this->categoryRepository->getById($categoryId);
 
@@ -102,7 +102,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
             $orderingModeId,
             $this->currentCustomerUser->getPricingGroup(),
             $page,
-            $limit
+            $limit,
         );
     }
 
@@ -117,7 +117,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
         string $orderingModeId,
         int $page,
         int $limit,
-        int $brandId
+        int $brandId,
     ): PaginationResult {
         $brand = $this->brandRepository->getById($brandId);
 
@@ -128,7 +128,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
             $orderingModeId,
             $this->currentCustomerUser->getPricingGroup(),
             $page,
-            $limit
+            $limit,
         );
     }
 
@@ -145,7 +145,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
         ProductFilterData $productFilterData,
         string $orderingModeId,
         int $page,
-        int $limit
+        int $limit,
     ): PaginationResult {
         return $this->productRepository->getPaginationResultForSearchListable(
             $searchText,
@@ -155,7 +155,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
             $orderingModeId,
             $this->currentCustomerUser->getPricingGroup(),
             $page,
-            $limit
+            $limit,
         );
     }
 
@@ -178,7 +178,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
             ProductListOrderingConfig::ORDER_BY_RELEVANCE,
             $this->currentCustomerUser->getPricingGroup(),
             $page,
-            $limit
+            $limit,
         );
     }
 
@@ -191,12 +191,12 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
     public function getProductFilterCountDataInCategory(
         int $categoryId,
         ProductFilterConfig $productFilterConfig,
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
     ): ProductFilterCountData {
         $productsQueryBuilder = $this->productRepository->getListableInCategoryQueryBuilder(
             $this->domain->getId(),
             $this->currentCustomerUser->getPricingGroup(),
-            $this->categoryRepository->getById($categoryId)
+            $this->categoryRepository->getById($categoryId),
         );
 
         return $this->productFilterCountRepository->getProductFilterCountData(
@@ -204,7 +204,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
             $this->domain->getLocale(),
             $productFilterConfig,
             $productFilterData,
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
     }
 
@@ -217,13 +217,13 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
     public function getProductFilterCountDataForSearch(
         ?string $searchText,
         ProductFilterConfig $productFilterConfig,
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
     ): ProductFilterCountData {
         $productsQueryBuilder = $this->productRepository->getListableBySearchTextQueryBuilder(
             $this->domain->getId(),
             $this->currentCustomerUser->getPricingGroup(),
             $this->domain->getLocale(),
-            $searchText
+            $searchText,
         );
 
         return $this->productFilterCountRepository->getProductFilterCountData(
@@ -231,7 +231,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
             $this->domain->getLocale(),
             $productFilterConfig,
             $productFilterData,
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
     }
 
@@ -242,7 +242,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
     {
         return $this->productRepository->getAllOfferedProducts(
             $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
     }
 }

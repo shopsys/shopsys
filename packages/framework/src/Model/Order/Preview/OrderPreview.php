@@ -34,7 +34,7 @@ class OrderPreview
         protected readonly ?Payment $payment = null,
         protected readonly ?Price $paymentPrice = null,
         protected readonly ?Price $roundingPrice = null,
-        $promoCodeDiscountPercent = null
+        $promoCodeDiscountPercent = null,
     ) {
         $this->promoCodeDiscountPercent = $promoCodeDiscountPercent;
     }

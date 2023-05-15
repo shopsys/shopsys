@@ -45,7 +45,7 @@ class SeoSettingFacade
         $descriptionsMainPageByDomainIds = [];
         foreach ($domainConfigs as $domainConfig) {
             $descriptionsMainPageByDomainIds[$domainConfig->getId()] = $this->getDescriptionMainPage(
-                $domainConfig->getId()
+                $domainConfig->getId(),
             );
         }
 

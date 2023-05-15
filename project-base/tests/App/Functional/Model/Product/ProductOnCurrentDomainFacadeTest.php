@@ -48,7 +48,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $productFilterData->minimalPrice = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
             Money::create(1000),
             $currencyCzk,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
@@ -65,7 +65,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $productFilterData->maximalPrice = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
             Money::create(10000),
             $currencyCzk,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
@@ -146,7 +146,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $firstDomainLocale = $this->getFirstDomainLocale();
         $parameterFilterData = $this->createParameterFilterData(
             [$firstDomainLocale => t('Print resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            [[$firstDomainLocale => t('4800x1200', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]]
+            [[$firstDomainLocale => t('4800x1200', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]],
         );
 
         $productFilterData = new ProductFilterData();
@@ -167,7 +167,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
             [
                 [$firstDomainLocale => t('4800x1200', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
                 [$firstDomainLocale => t('2400x600', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            ]
+            ],
         );
         $productFilterData = new ProductFilterData();
         $productFilterData->parameters = [$parameterFilterData];
@@ -186,11 +186,11 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
             [
                 [$firstDomainLocale => t('4800x1200', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
                 [$firstDomainLocale => t('2400x600', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            ]
+            ],
         );
         $parameterFilterData2 = $this->createParameterFilterData(
             [$firstDomainLocale => t('LCD', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            []
+            [],
         );
 
         $productFilterData = new ProductFilterData();
@@ -207,11 +207,11 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $firstDomainLocale = $this->getFirstDomainLocale();
         $parameterFilterData1 = $this->createParameterFilterData(
             [$firstDomainLocale => t('Print resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            [[$firstDomainLocale => t('2400x600', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]]
+            [[$firstDomainLocale => t('2400x600', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]],
         );
         $parameterFilterData2 = $this->createParameterFilterData(
             [$firstDomainLocale => t('LCD', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            [[$firstDomainLocale => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]]
+            [[$firstDomainLocale => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)]],
         );
         $productFilterData = new ProductFilterData();
         $productFilterData->parameters = [$parameterFilterData1, $parameterFilterData2];
@@ -269,7 +269,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $productFilterData->minimalPrice = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
             Money::create(1000),
             $currencyCzk,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         $paginationResult = $this->getPaginationResultInCategoryWithPageAndLimit($productFilterData, $category, 1, 10);
@@ -318,7 +318,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
             ProductListOrderingConfig::ORDER_BY_NAME_ASC,
             $page,
             $limit,
-            $brand->getId()
+            $brand->getId(),
         );
     }
 
@@ -355,7 +355,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
             $productFilterData,
             ProductListOrderingConfig::ORDER_BY_NAME_ASC,
             $page,
-            $limit
+            $limit,
         );
     }
 
@@ -382,7 +382,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
             ProductListOrderingConfig::ORDER_BY_NAME_ASC,
             $page,
             $limit,
-            $category->getId()
+            $category->getId(),
         );
     }
 
@@ -397,7 +397,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
 
         return $productOnCurrentDomainFacade->getSearchAutocompleteProducts(
             $searchText,
-            $limit
+            $limit,
         );
     }
 

@@ -28,7 +28,7 @@ class ProductAccessoryFacade
         return $this->productAccessoryRepository->getAllOfferedAccessoriesByProduct(
             $product,
             $domainId,
-            $pricingGroup
+            $pricingGroup,
         );
     }
 }

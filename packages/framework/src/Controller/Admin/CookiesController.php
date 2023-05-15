@@ -16,7 +16,7 @@ class CookiesController extends AdminBaseController
      */
     public function __construct(
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
-        protected readonly CookiesFacade $cookiesFacade
+        protected readonly CookiesFacade $cookiesFacade,
     ) {
     }
 
@@ -39,7 +39,7 @@ class CookiesController extends AdminBaseController
 
             $this->cookiesFacade->setCookiesArticleOnDomain(
                 $cookiesArticle,
-                $selectedDomainId
+                $selectedDomainId,
             );
 
             $this->addSuccessFlashTwig(t('Cookies information settings modified.'));

@@ -61,7 +61,7 @@ class OrderStreetFilter implements AdvancedSearchFilterInterface
             $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
             $parameterName = 'city_' . $index;
             $queryBuilder->andWhere(
-                'NORMALIZE(o.street) ' . $dqlOperator . ' NORMALIZE(:' . $parameterName . ') OR NORMALIZE(o.deliveryStreet) ' . $dqlOperator . ' NORMALIZE(:' . $parameterName . ')'
+                'NORMALIZE(o.street) ' . $dqlOperator . ' NORMALIZE(:' . $parameterName . ') OR NORMALIZE(o.deliveryStreet) ' . $dqlOperator . ' NORMALIZE(:' . $parameterName . ')',
             );
             $queryBuilder->setParameter($parameterName, $searchValue);
         }

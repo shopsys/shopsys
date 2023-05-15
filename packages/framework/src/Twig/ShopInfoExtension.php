@@ -15,7 +15,7 @@ class ShopInfoExtension extends AbstractExtension
      */
     public function __construct(
         protected readonly ShopInfoSettingFacade $shopInfoSettingFacade,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 

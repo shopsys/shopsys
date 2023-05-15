@@ -19,7 +19,7 @@ class Version20170802141735 extends AbstractMigration
                 key VARCHAR(255) NOT NULL,
                 json_value TEXT NOT NULL,
                 PRIMARY KEY(plugin_name, context, key)
-            )'
+            )',
         );
     }
 

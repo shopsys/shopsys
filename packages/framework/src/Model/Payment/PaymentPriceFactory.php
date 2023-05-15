@@ -23,7 +23,7 @@ class PaymentPriceFactory implements PaymentPriceFactoryInterface
     public function create(
         Payment $payment,
         Money $price,
-        int $domainId
+        int $domainId,
     ): PaymentPrice {
         $classData = $this->entityNameResolver->resolve(PaymentPrice::class);
 

@@ -14,7 +14,7 @@ class PromoCodeFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly PromoCodeRepository $promoCodeRepository,
-        protected readonly PromoCodeFactoryInterface $promoCodeFactory
+        protected readonly PromoCodeFactoryInterface $promoCodeFactory,
     ) {
     }
 

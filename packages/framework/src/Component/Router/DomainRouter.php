@@ -26,7 +26,7 @@ class DomainRouter extends ChainRouter
         RouterInterface $basicRouter,
         RouterInterface $localizedRouter,
         protected readonly FriendlyUrlRouter $friendlyUrlRouter,
-        ?LoggerInterface $logger = null
+        ?LoggerInterface $logger = null,
     ) {
         parent::__construct($logger);
 

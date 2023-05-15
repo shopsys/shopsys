@@ -15,7 +15,7 @@ class ConfirmDeleteResponseFactory
      */
     public function __construct(
         protected readonly Environment $twigEnvironment,
-        protected readonly RouteCsrfProtector $routeCsrfProtector
+        protected readonly RouteCsrfProtector $routeCsrfProtector,
     ) {
     }
 
@@ -35,10 +35,10 @@ class ConfirmDeleteResponseFactory
                 'routeParams' => [
                     'id' => $entityId,
                     RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER => $this->routeCsrfProtector->getCsrfTokenByRoute(
-                        $route
+                        $route,
                     ),
                 ],
-            ]
+            ],
         );
 
         return new Response($renderedTemplate);
@@ -70,7 +70,7 @@ class ConfirmDeleteResponseFactory
                 'routeCsrfToken' => $this->routeCsrfProtector->getCsrfTokenByRoute($route),
                 'possibleReplacements' => $possibleReplacements,
                 'CSRF_TOKEN_REQUEST_PARAMETER' => RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER,
-            ]
+            ],
         );
 
         return new Response($renderedResponse);

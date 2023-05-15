@@ -18,7 +18,7 @@ class ProductAccessoryRepository
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ProductRepository $productRepository,
-        protected readonly QueryBuilderExtender $queryBuilderExtender
+        protected readonly QueryBuilderExtender $queryBuilderExtender,
     ) {
     }
 
@@ -80,7 +80,7 @@ class ProductAccessoryRepository
             $queryBuilder,
             ProductAccessory::class,
             'pa',
-            'pa.accessory = p AND pa.product = :product'
+            'pa.accessory = p AND pa.product = :product',
         );
         $queryBuilder
             ->setParameter('product', $product)

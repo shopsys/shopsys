@@ -35,7 +35,7 @@ class ForbiddenDoctrineInheritanceSniff implements Sniff
                 $file->addError(
                     $message,
                     $position,
-                    self::class
+                    self::class,
                 );
             }
         }

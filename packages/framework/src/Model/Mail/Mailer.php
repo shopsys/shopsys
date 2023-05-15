@@ -23,7 +23,7 @@ class Mailer
     public function __construct(
         protected readonly MailerInterface $symfonyMailer,
         protected readonly MailTemplateFacade $mailTemplateFacade,
-        protected readonly LoggerInterface $logger
+        protected readonly LoggerInterface $logger,
     ) {
     }
 
@@ -51,11 +51,11 @@ class Mailer
     {
         $body = $this->replaceVariables(
             $messageData->body,
-            $messageData->variablesReplacementsForBody
+            $messageData->variablesReplacementsForBody,
         );
         $subject = $this->replaceVariables(
             $messageData->subject,
-            $messageData->variablesReplacementsForSubject
+            $messageData->variablesReplacementsForSubject,
         );
 
         $email = new Email();
@@ -76,7 +76,7 @@ class Mailer
             try {
                 $email->attachFromPath(
                     $this->mailTemplateFacade->getMailTemplateAttachmentFilepath($attachment),
-                    $attachment->getNameWithExtension()
+                    $attachment->getNameWithExtension(),
                 );
             } catch (FilesystemOperationFailed $exception) {
                 $this->logger->error('Attachment could not be added because file was not found.', [$exception]);

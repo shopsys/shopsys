@@ -65,7 +65,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         $this->assertNull($refreshedProduct->getSeoTitle(self::SECOND_DOMAIN_ID));
         $this->assertSame(
             self::DEMONSTRATIVE_SEO_META_DESCRIPTION,
-            $refreshedProduct->getSeoMetaDescription(self::SECOND_DOMAIN_ID)
+            $refreshedProduct->getSeoMetaDescription(self::SECOND_DOMAIN_ID),
         );
         $this->assertNull($refreshedProduct->getSeoMetaDescription(self::FIRST_DOMAIN_ID));
         $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedProduct->getSeoH1(self::FIRST_DOMAIN_ID));
@@ -74,7 +74,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         $this->assertNull($refreshedProduct->getDescription(self::FIRST_DOMAIN_ID));
         $this->assertSame(
             self::DEMONSTRATIVE_SHORT_DESCRIPTION,
-            $refreshedProduct->getShortDescription(self::FIRST_DOMAIN_ID)
+            $refreshedProduct->getShortDescription(self::FIRST_DOMAIN_ID),
         );
         $this->assertNull($refreshedProduct->getShortDescription(self::SECOND_DOMAIN_ID));
     }
@@ -103,13 +103,13 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         $this->assertSame(self::DEMONSTRATIVE_SEO_TITLE, $refreshedProduct->getSeoTitle(self::FIRST_DOMAIN_ID));
         $this->assertSame(
             self::DEMONSTRATIVE_SEO_META_DESCRIPTION,
-            $refreshedProduct->getSeoMetaDescription(self::FIRST_DOMAIN_ID)
+            $refreshedProduct->getSeoMetaDescription(self::FIRST_DOMAIN_ID),
         );
         $this->assertSame(self::DEMONSTRATIVE_SEO_H1, $refreshedProduct->getSeoH1(self::FIRST_DOMAIN_ID));
         $this->assertSame(self::DEMONSTRATIVE_DESCRIPTION, $refreshedProduct->getDescription(self::FIRST_DOMAIN_ID));
         $this->assertSame(
             self::DEMONSTRATIVE_SHORT_DESCRIPTION,
-            $refreshedProduct->getShortDescription(self::FIRST_DOMAIN_ID)
+            $refreshedProduct->getShortDescription(self::FIRST_DOMAIN_ID),
         );
     }
 

@@ -34,7 +34,7 @@ class BrandViewFacadeTest extends TestCase
 
         self::assertEquals(
             new BrandView($id, $name, $mainUrl),
-            $brandViewFacade->findByProductId($id)
+            $brandViewFacade->findByProductId($id),
         );
     }
 
@@ -48,7 +48,7 @@ class BrandViewFacadeTest extends TestCase
 
         self::assertEquals(
             null,
-            $brandViewFacade->findByProductId(1)
+            $brandViewFacade->findByProductId(1),
         );
     }
 

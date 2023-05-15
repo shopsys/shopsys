@@ -28,7 +28,7 @@ class ProductCollectionFacade
         protected readonly ImageFacade $imageFacade,
         protected readonly FriendlyUrlRepository $friendlyUrlRepository,
         protected readonly ParameterRepository $parameterRepository,
-        protected readonly FriendlyUrlFacade $friendlyUrlFacade
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
     }
 
@@ -49,7 +49,7 @@ class ProductCollectionFacade
                     $imagesUrlsByProductId[$productId] = $this->imageFacade->getImageUrl(
                         $domainConfig,
                         $image,
-                        $sizeName
+                        $sizeName,
                     );
                 } catch (ImageNotFoundException $e) {
                     $imagesUrlsByProductId[$productId] = null;
@@ -69,7 +69,7 @@ class ProductCollectionFacade
         $productEntityName = $this->imageConfig->getImageEntityConfigByClass(Product::class)->getEntityName();
         $imagesByProductId = $this->imageRepository->getMainImagesByEntitiesIndexedByEntityId(
             $products,
-            $productEntityName
+            $productEntityName,
         );
 
         $imagesOrNullByProductId = [];
@@ -95,7 +95,7 @@ class ProductCollectionFacade
         $mainFriendlyUrlsByProductId = $this->friendlyUrlRepository->getMainFriendlyUrlsByEntitiesIndexedByEntityId(
             $productsOrProductIds,
             'front_product_detail',
-            $domainConfig->getId()
+            $domainConfig->getId(),
         );
 
         $absoluteUrlsByProductId = [];
@@ -117,7 +117,7 @@ class ProductCollectionFacade
 
         return $this->parameterRepository->getParameterValuesIndexedByProductIdAndParameterNameForProducts(
             $products,
-            $locale
+            $locale,
         );
     }
 }

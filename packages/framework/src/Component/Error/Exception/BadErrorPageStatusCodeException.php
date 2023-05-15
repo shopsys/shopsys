@@ -18,7 +18,7 @@ class BadErrorPageStatusCodeException extends Exception implements ErrorExceptio
             'Error page "%s" has "%s" status code, expects "%s".',
             $url,
             $actualStatusCode,
-            $expectedStatusCode
+            $expectedStatusCode,
         );
 
         parent::__construct($message, 0, $previous);

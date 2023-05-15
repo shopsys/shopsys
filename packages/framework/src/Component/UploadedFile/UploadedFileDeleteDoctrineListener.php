@@ -15,7 +15,7 @@ class UploadedFileDeleteDoctrineListener
      */
     public function __construct(
         protected readonly UploadedFileConfig $uploadedFileConfig,
-        protected readonly UploadedFileFacade $uploadedFileFacade
+        protected readonly UploadedFileFacade $uploadedFileFacade,
     ) {
     }
 

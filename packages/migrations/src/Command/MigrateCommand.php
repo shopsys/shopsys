@@ -30,7 +30,7 @@ class MigrateCommand extends Command
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly MigrationsLock $migrationsLock,
-        protected readonly MigrationLockPlanCalculator $migrationLockPlanCalculator
+        protected readonly MigrationLockPlanCalculator $migrationLockPlanCalculator,
     ) {
         parent::__construct();
     }
@@ -39,7 +39,7 @@ class MigrateCommand extends Command
     {
         $this
             ->setDescription(
-                'Execute all database migrations and check if database schema is satisfying ORM, all in one transaction.'
+                'Execute all database migrations and check if database schema is satisfying ORM, all in one transaction.',
             );
     }
 

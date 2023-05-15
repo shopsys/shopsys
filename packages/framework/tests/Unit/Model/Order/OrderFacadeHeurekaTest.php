@@ -111,7 +111,7 @@ class OrderFacadeHeurekaTest extends TestCase
             $this->createMock(NumberFormatterExtension::class),
             $this->createMock(PaymentPriceCalculation::class),
             $this->createMock(TransportPriceCalculation::class),
-            $this->createMock(OrderItemFactoryInterface::class)
+            $this->createMock(OrderItemFactoryInterface::class),
         );
     }
 

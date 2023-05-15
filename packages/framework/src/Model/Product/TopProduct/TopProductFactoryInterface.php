@@ -15,6 +15,6 @@ interface TopProductFactoryInterface
     public function create(
         Product $product,
         int $domainId,
-        int $position
+        int $position,
     ): TopProduct;
 }

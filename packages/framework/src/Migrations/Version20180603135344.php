@@ -13,14 +13,14 @@ class Version20180603135344 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $defaultUnitId = $this->sql(
-            'SELECT COUNT(*) FROM setting_values WHERE name = \'defaultUnitId\' AND domain_id = 0;'
+            'SELECT COUNT(*) FROM setting_values WHERE name = \'defaultUnitId\' AND domain_id = 0;',
         )->fetchOne();
         if ($defaultUnitId > 0) {
             return;
         }
 
         $this->sql(
-            'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'defaultUnitId\', 0, null, \'integer\')'
+            'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'defaultUnitId\', 0, null, \'integer\')',
         );
     }
 

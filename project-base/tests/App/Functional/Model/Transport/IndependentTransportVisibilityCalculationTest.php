@@ -46,8 +46,8 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         $this->assertTrue(
             $this->independentTransportVisibilityCalculation->isIndependentlyVisible(
                 $transport,
-                Domain::FIRST_DOMAIN_ID
-            )
+                Domain::FIRST_DOMAIN_ID,
+            ),
         );
     }
 
@@ -73,8 +73,8 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         $this->assertFalse(
             $this->independentTransportVisibilityCalculation->isIndependentlyVisible(
                 $transport,
-                Domain::FIRST_DOMAIN_ID
-            )
+                Domain::FIRST_DOMAIN_ID,
+            ),
         );
     }
 
@@ -93,8 +93,8 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         $this->assertFalse(
             $this->independentTransportVisibilityCalculation->isIndependentlyVisible(
                 $transport,
-                Domain::FIRST_DOMAIN_ID
-            )
+                Domain::FIRST_DOMAIN_ID,
+            ),
         );
     }
 
@@ -113,8 +113,8 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         $this->assertFalse(
             $this->independentTransportVisibilityCalculation->isIndependentlyVisible(
                 $transport,
-                Domain::FIRST_DOMAIN_ID
-            )
+                Domain::FIRST_DOMAIN_ID,
+            ),
         );
     }
 
@@ -133,8 +133,8 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         $this->assertFalse(
             $this->independentTransportVisibilityCalculation->isIndependentlyVisible(
                 $transport,
-                Domain::FIRST_DOMAIN_ID
-            )
+                Domain::FIRST_DOMAIN_ID,
+            ),
         );
     }
 

@@ -17,6 +17,6 @@ interface OrderFactoryInterface
         OrderData $orderData,
         string $orderNumber,
         string $urlHash,
-        ?CustomerUser $customerUser
+        ?CustomerUser $customerUser,
     ): Order;
 }

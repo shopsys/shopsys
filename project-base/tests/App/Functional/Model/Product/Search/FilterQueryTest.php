@@ -84,7 +84,7 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         $filter = $this->createFilter()
@@ -97,8 +97,8 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
                 $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
                     Money::create(20),
                     $currencyCzk,
-                    Domain::FIRST_DOMAIN_ID
-                )
+                    Domain::FIRST_DOMAIN_ID,
+                ),
             );
 
         $this->assertIdWithFilter($filter, [50]);
@@ -109,15 +109,15 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
         $this->skipTestIfFirstDomainIsNotInEnglish();
 
         $parameters = [51 => [$this->getParameterValueIdForFirstDomain(
-            'hardcover'
+            'hardcover',
         ), $this->getParameterValueIdForFirstDomain(
-            'paper'
+            'paper',
         )], 50 => [$this->getParameterValueIdForFirstDomain(
-            '55'
+            '55',
         ), $this->getParameterValueIdForFirstDomain(
-            '48'
+            '48',
         )], 10 => [$this->getParameterValueIdForFirstDomain(
-            '50 g'
+            '50 g',
         )]];
 
         $filter = $this->createFilter()
@@ -133,7 +133,7 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         $filter = $this->createFilter()
@@ -232,7 +232,7 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
     {
         $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(
             ProductIndex::getName(),
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
         $filter = $this->filterQueryFactory->create($indexDefinition->getIndexAlias());
 

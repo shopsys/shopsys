@@ -18,7 +18,7 @@ class FilesystemFactoryDecorator implements FilesystemFactoryInterface
     public function __construct(
         private readonly FilesystemFactoryInterface $inner,
         private readonly string $googleCloudProjectId,
-        private readonly string $googleCloudStorageBucketName
+        private readonly string $googleCloudStorageBucketName,
     ) {
     }
 

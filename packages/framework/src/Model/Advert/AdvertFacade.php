@@ -22,7 +22,7 @@ class AdvertFacade
         protected readonly ImageFacade $imageFacade,
         protected readonly Domain $domain,
         protected readonly AdvertFactoryInterface $advertFactory,
-        protected readonly AdvertPositionRegistry $advertPositionRegistry
+        protected readonly AdvertPositionRegistry $advertPositionRegistry,
     ) {
     }
 

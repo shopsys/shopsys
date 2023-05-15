@@ -17,7 +17,7 @@ class CustomerCommunicationController extends AdminBaseController
      */
     public function __construct(
         protected readonly Setting $setting,
-        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 

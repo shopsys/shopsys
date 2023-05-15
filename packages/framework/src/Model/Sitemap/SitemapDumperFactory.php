@@ -26,7 +26,7 @@ class SitemapDumperFactory
         protected readonly FilesystemOperator $filesystem,
         protected readonly MountManager $mountManager,
         protected readonly SitemapFilePrefixer $sitemapFilePrefixer,
-        protected readonly UrlGeneratorInterface $urlGenerator
+        protected readonly UrlGeneratorInterface $urlGenerator,
     ) {
     }
 
@@ -43,7 +43,7 @@ class SitemapDumperFactory
             $this->mountManager,
             $this->urlGenerator,
             $this->sitemapFilePrefixer->getSitemapFilePrefixForDomain($domainId),
-            static::MAX_ITEMS_IN_FILE
+            static::MAX_ITEMS_IN_FILE,
         );
     }
 }

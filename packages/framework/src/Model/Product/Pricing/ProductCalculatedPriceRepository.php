@@ -43,7 +43,7 @@ class ProductCalculatedPriceRepository
             $productCalculatedPrice = $this->productCalculatedPriceFactory->create(
                 $product,
                 $pricingGroup,
-                $priceWithVat
+                $priceWithVat,
             );
             $this->em->persist($productCalculatedPrice);
         } else {
@@ -66,7 +66,7 @@ class ProductCalculatedPriceRepository
             ],
             [
                 'pricingGroupId' => Types::INTEGER,
-            ]
+            ],
         );
     }
 }

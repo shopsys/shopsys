@@ -23,7 +23,7 @@ class ParameterFilterChoiceRepositoryTest extends ParameterTransactionFunctional
     public function testParameterFilterChoicesFromCategoryWithNoParameters(): void
     {
         $parameterFilterChoices = $this->getParameterValueIdsForCategoryReferenceIndexedByParameterId(
-            CategoryDataFixture::CATEGORY_GARDEN_TOOLS
+            CategoryDataFixture::CATEGORY_GARDEN_TOOLS,
         );
 
         $this->assertCount(0, $parameterFilterChoices);
@@ -32,7 +32,7 @@ class ParameterFilterChoiceRepositoryTest extends ParameterTransactionFunctional
     public function testParameterFilterChoicesFromCategory(): void
     {
         $parameterFilterChoices = $this->getParameterValueIdsForCategoryReferenceIndexedByParameterId(
-            CategoryDataFixture::CATEGORY_BOOKS
+            CategoryDataFixture::CATEGORY_BOOKS,
         );
 
         $this->assertCount(3, $parameterFilterChoices);
@@ -45,19 +45,19 @@ class ParameterFilterChoiceRepositoryTest extends ParameterTransactionFunctional
 
         $parameterParameterValuePair = [
             51 => [$this->getParameterValueIdForFirstDomain('hardcover'), $this->getParameterValueIdForFirstDomain(
-                'paper'
+                'paper',
             )],
             50 => [$this->getParameterValueIdForFirstDomain('250'), $this->getParameterValueIdForFirstDomain(
-                '48'
+                '48',
             ), $this->getParameterValueIdForFirstDomain(
-                '50'
+                '50',
             ), $this->getParameterValueIdForFirstDomain(
-                '55'
+                '55',
             )],
             10 => [$this->getParameterValueIdForFirstDomain('150 g'), $this->getParameterValueIdForFirstDomain(
-                '250 g'
+                '250 g',
             ), $this->getParameterValueIdForFirstDomain(
-                '50 g'
+                '50 g',
             )],
         ];
 
@@ -77,7 +77,7 @@ class ParameterFilterChoiceRepositoryTest extends ParameterTransactionFunctional
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         /** @var \App\Model\Category\Category $category */
@@ -89,7 +89,7 @@ class ParameterFilterChoiceRepositoryTest extends ParameterTransactionFunctional
             $domainConfig1->getId(),
             $pricingGroup,
             $domainConfig1->getLocale(),
-            $category
+            $category,
         );
 
         $parameterValuesByParameterId = [];
@@ -99,7 +99,7 @@ class ParameterFilterChoiceRepositoryTest extends ParameterTransactionFunctional
                 function ($parameterValue) {
                     return $parameterValue->getId();
                 },
-                $parameterFilterChoice->getValues()
+                $parameterFilterChoice->getValues(),
             );
         }
 

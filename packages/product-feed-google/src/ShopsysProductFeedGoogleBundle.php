@@ -18,8 +18,8 @@ class ShopsysProductFeedGoogleBundle extends Bundle
         $container->addCompilerPass(
             DoctrineOrmMappingsPass::createAnnotationMappingDriver(
                 [$this->getNamespace() . '\Model'],
-                [$this->getPath() . '/Model']
-            )
+                [$this->getPath() . '/Model'],
+            ),
         );
     }
 }

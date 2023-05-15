@@ -19,7 +19,7 @@ class HomepagePage extends AbstractPage
     public function __construct(
         StrictWebDriver $strictWebDriver,
         AcceptanceTester $tester,
-        private readonly ProductListComponent $productListComponent
+        private readonly ProductListComponent $productListComponent,
     ) {
         parent::__construct($strictWebDriver, $tester);
     }

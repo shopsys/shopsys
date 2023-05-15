@@ -37,7 +37,7 @@ class DomainDataCreator
         protected readonly PricingGroupDataFactory $pricingGroupDataFactory,
         protected readonly PricingGroupFacade $pricingGroupFacade,
         protected readonly VatDataFactory $vatDataFactory,
-        protected readonly VatFacade $vatFacade
+        protected readonly VatFacade $vatFacade,
     ) {
     }
 
@@ -63,12 +63,12 @@ class DomainDataCreator
 
                 $this->multidomainEntityDataCreator->copyAllMultidomainDataForNewDomain(
                     self::TEMPLATE_DOMAIN_ID,
-                    $domainId
+                    $domainId,
                 );
                 if ($isNewLocale) {
                     $this->translatableEntityDataCreator->copyAllTranslatableDataForNewLocale(
                         $this->getTemplateLocale(),
-                        $locale
+                        $locale,
                     );
                 }
                 $newDomainsCount++;

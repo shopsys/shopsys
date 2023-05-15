@@ -19,7 +19,7 @@ class PerformanceResultsCsvExporterTest extends TestCase
 
         $performanceResultsCsvExporter->exportJmeterCsvReport(
             $this->getPerformanceTestSamples(),
-            $outputFilename
+            $outputFilename,
         );
 
         $expectedLine = [
@@ -43,7 +43,7 @@ class PerformanceResultsCsvExporterTest extends TestCase
 
         $performanceResultsCsvExporter->exportJmeterCsvReport(
             $this->getPerformanceTestSamples(),
-            $outputFilename
+            $outputFilename,
         );
 
         $line = $this->getCsvLine($outputFilename, 1);
@@ -72,7 +72,7 @@ class PerformanceResultsCsvExporterTest extends TestCase
             1000.1,
             10,
             200,
-            true
+            true,
         );
         $performanceTestSamples[] = new PerformanceTestSample(
             'routeName2',
@@ -80,7 +80,7 @@ class PerformanceResultsCsvExporterTest extends TestCase
             2000,
             20,
             301,
-            true
+            true,
         );
 
         return $performanceTestSamples;

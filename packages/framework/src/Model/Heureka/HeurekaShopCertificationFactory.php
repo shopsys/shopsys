@@ -16,7 +16,7 @@ class HeurekaShopCertificationFactory
     public function __construct(
         protected readonly Domain $domain,
         protected readonly HeurekaSetting $heurekaSetting,
-        protected readonly HeurekaShopCertificationLocaleHelper $heurekaShopCertificationLocaleHelper
+        protected readonly HeurekaShopCertificationLocaleHelper $heurekaShopCertificationLocaleHelper,
     ) {
     }
 

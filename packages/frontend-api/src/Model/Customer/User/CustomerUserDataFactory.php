@@ -17,7 +17,7 @@ class CustomerUserDataFactory
      */
     public function __construct(
         protected readonly CustomerUserDataFactoryInterface $customerUserDataFactory,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 

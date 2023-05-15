@@ -46,7 +46,7 @@ class IsIdenticalString extends Constraint
             throw new ExpectationFailedException(
                 $message,
                 $exception->getComparisonFailure(),
-                $exception
+                $exception,
             );
         }
     }

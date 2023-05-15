@@ -34,7 +34,7 @@ class SuperadminController extends AdminBaseController
         protected readonly DelayedPricingSetting $delayedPricingSetting,
         protected readonly GridFactory $gridFactory,
         protected readonly Localization $localization,
-        protected readonly LocalizedRouterFactory $localizedRouterFactory
+        protected readonly LocalizedRouterFactory $localizedRouterFactory,
     ) {
     }
 

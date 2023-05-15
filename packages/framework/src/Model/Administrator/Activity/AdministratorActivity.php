@@ -51,7 +51,7 @@ class AdministratorActivity
      */
     public function __construct(
         Administrator $administrator,
-        $ipAddress
+        $ipAddress,
     ) {
         $this->administrator = $administrator;
         $this->ipAddress = $ipAddress;

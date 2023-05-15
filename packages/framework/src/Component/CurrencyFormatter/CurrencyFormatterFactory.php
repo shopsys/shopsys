@@ -36,7 +36,7 @@ class CurrencyFormatterFactory
                 'style' => 'standard',
                 'minimum_fraction_digits' => $currency->getMinFractionDigits(),
                 'maximum_fraction_digits' => static::MAXIMUM_FRACTION_DIGITS,
-            ]
+            ],
         );
     }
 }

@@ -20,7 +20,7 @@ class JwtConfigurationFactory
      */
     public function __construct(
         protected readonly ParameterBagInterface $parameterBag,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -36,7 +36,7 @@ class JwtConfigurationFactory
         return Configuration::forAsymmetricSigner(
             $this->getSigner(),
             $this->getPrivateKey(),
-            $this->getPublicKey()
+            $this->getPublicKey(),
         );
     }
 

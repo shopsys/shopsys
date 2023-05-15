@@ -22,11 +22,11 @@ final class CheckRedisCommandTest extends TestCase
         yield [true, new RedisFacade([])];
         yield [true, new RedisFacade([$this->createRedisMockExpectingPing()])];
         yield [true, new RedisFacade(
-            [$this->createRedisMockExpectingPing(), $this->createRedisMockExpectingPing(), $this->createRedisMockExpectingPing()]
+            [$this->createRedisMockExpectingPing(), $this->createRedisMockExpectingPing(), $this->createRedisMockExpectingPing()],
         )];
         yield [false, new RedisFacade([$this->createRedisMockThrowingException()])];
         yield [false, new RedisFacade(
-            [$this->createRedisMockExpectingPing(), $this->createRedisMockThrowingException()]
+            [$this->createRedisMockExpectingPing(), $this->createRedisMockThrowingException()],
         )];
     }
 
@@ -45,7 +45,7 @@ final class CheckRedisCommandTest extends TestCase
         $this->assertSame($expectSuccess ? 0 : 1, $returnCode);
         $this->assertStringContainsString(
             $expectSuccess ? 'Redis is available' : 'Redis is not available',
-            $output->fetch()
+            $output->fetch(),
         );
     }
 

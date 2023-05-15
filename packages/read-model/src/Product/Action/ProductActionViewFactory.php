@@ -21,7 +21,7 @@ class ProductActionViewFactory
             $id,
             $sellingDenied,
             $isMainVariant,
-            $detailUrl
+            $detailUrl,
         );
     }
 
@@ -36,7 +36,7 @@ class ProductActionViewFactory
             $product->getId(),
             $product->getCalculatedSellingDenied(),
             $product->isMainVariant(),
-            $absoluteUrl
+            $absoluteUrl,
         );
     }
 
@@ -50,7 +50,7 @@ class ProductActionViewFactory
             $productArray['id'],
             $productArray['calculated_selling_denied'],
             $productArray['is_main_variant'],
-            $productArray['detail_url']
+            $productArray['detail_url'],
         );
     }
 }

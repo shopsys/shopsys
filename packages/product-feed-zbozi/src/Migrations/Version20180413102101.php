@@ -13,7 +13,7 @@ class Version20180413102101 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $oldTableExists = $this->sql(
-            'SELECT COUNT(*) > 0 FROM information_schema.tables WHERE table_name=\'plugin_data_values\''
+            'SELECT COUNT(*) > 0 FROM information_schema.tables WHERE table_name=\'plugin_data_values\'',
         )->fetchOne();
 
         if ($oldTableExists) {
@@ -37,7 +37,7 @@ class Version20180413102101 extends AbstractMigration
             [
                 'plugin_name' => 'Shopsys\\ProductFeed\\ZboziBundle\\ShopsysProductFeedZboziBundle',
                 'context' => 'product',
-            ]
+            ],
         )->fetchAllAssociative();
         foreach ($rows as $row) {
             $jsonData = json_decode($row['json_value'], true);
@@ -52,7 +52,7 @@ class Version20180413102101 extends AbstractMigration
                         'show' => $jsonData['show'][$domainId] ? 'true' : 'false',
                         'cpc' => $jsonData['cpc'][$domainId],
                         'cpc_search' => $jsonData['cpc_search'][$domainId],
-                    ]
+                    ],
                 );
             }
         }

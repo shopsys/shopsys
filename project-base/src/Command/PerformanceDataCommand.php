@@ -31,7 +31,7 @@ class PerformanceDataCommand extends Command
         private readonly CategoryDataFixture $categoryDataFixture,
         private readonly ProductDataFixture $productDataFixture,
         private readonly CustomerUserDataFixture $customerUserDataFixture,
-        private readonly OrderDataFixture $orderDataFixture
+        private readonly OrderDataFixture $orderDataFixture,
     ) {
         parent::__construct();
     }
@@ -40,7 +40,7 @@ class PerformanceDataCommand extends Command
     {
         $this
             ->setDescription(
-                'Import performance data to test db. Demo and base data fixtures must be imported first.'
+                'Import performance data to test db. Demo and base data fixtures must be imported first.',
             );
     }
 

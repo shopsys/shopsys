@@ -85,7 +85,7 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
     {
         if ($this->getFirstDomainLocale() !== 'en') {
             $this->markTestSkipped(
-                'Tests for product searching are run only when the first domain has English locale'
+                'Tests for product searching are run only when the first domain has English locale',
             );
         }
     }

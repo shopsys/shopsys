@@ -68,7 +68,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
 
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
 
         $this->manualInputPriceFacade->refresh($product, $pricingGroup, Money::create(10));
@@ -91,7 +91,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
 
         $expectedPricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
         $currentCustomerUserMock = $this->getMockBuilder(CurrentCustomerUser::class)
             ->disableOriginalConstructor()
@@ -130,7 +130,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
 
         $expectedPricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
         $currentCustomerUserMock = $this->getMockBuilder(CurrentCustomerUser::class)
             ->disableOriginalConstructor()
@@ -162,7 +162,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         $cartWatcher = new CartWatcher(
             $this->productPriceCalculationForCustomerUser,
             $productVisibilityRepositoryMock,
-            $this->domain
+            $this->domain,
         );
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier());

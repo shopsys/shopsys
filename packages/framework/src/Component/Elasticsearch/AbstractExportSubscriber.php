@@ -24,7 +24,7 @@ abstract class AbstractExportSubscriber implements EventSubscriberInterface
         protected readonly IndexFacade $indexFacade,
         protected readonly IndexDefinitionLoader $indexDefinitionLoader,
         protected readonly AbstractIndex $index,
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -44,7 +44,7 @@ abstract class AbstractExportSubscriber implements EventSubscriberInterface
             foreach ($this->domain->getAllIds() as $domainId) {
                 $indexDefinition = $this->indexDefinitionLoader->getIndexDefinition(
                     $this->index::getName(),
-                    $domainId
+                    $domainId,
                 );
                 $this->indexFacade->exportIds($this->index, $indexDefinition, $productIds);
             }

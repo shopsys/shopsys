@@ -127,7 +127,7 @@ class GetAdvertsTest extends GraphQlTestCase
         $query = $this->getAllAdvertsQuery('footer');
         $expectedAdvertsData = array_merge(
             array_slice($this->getExpectedAdverts(), 0, 1),
-            array_slice($this->getExpectedAdverts(), 2, 1)
+            array_slice($this->getExpectedAdverts(), 2, 1),
         );
 
         $this->assetAdvertsAreAsExpected($query, $expectedAdvertsData);
@@ -137,7 +137,7 @@ class GetAdvertsTest extends GraphQlTestCase
     {
         $query = $this->getAllAdvertsQuery(
             'productList',
-            $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS)
+            $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS),
         );
 
         $this->assetAdvertsAreAsExpected($query, array_slice($this->getExpectedAdverts(), 1, 1));
@@ -266,7 +266,7 @@ class GetAdvertsTest extends GraphQlTestCase
                         'url' => sprintf(
                             '%s/content-test/images/noticer/header/%s.png',
                             $this->firstDomainUrl,
-                            $testImage->getId()
+                            $testImage->getId(),
                         ),
                         'type' => null,
                         'size' => 'header',
@@ -278,7 +278,7 @@ class GetAdvertsTest extends GraphQlTestCase
                         'url' => sprintf(
                             '%s/content-test/images/noticer/original/%s.png',
                             $this->firstDomainUrl,
-                            $testImage->getId()
+                            $testImage->getId(),
                         ),
                         'type' => null,
                         'size' => 'original',

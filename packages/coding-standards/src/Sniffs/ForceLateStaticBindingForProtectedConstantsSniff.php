@@ -48,7 +48,7 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
             $file->addFixableError(
                 'For better extensibility use late static binding.',
                 $selfPosition,
-                self::class
+                self::class,
             );
 
             $file->fixer->beginChangeset();

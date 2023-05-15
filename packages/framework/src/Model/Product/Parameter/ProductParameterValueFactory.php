@@ -23,7 +23,7 @@ class ProductParameterValueFactory implements ProductParameterValueFactoryInterf
     public function create(
         Product $product,
         Parameter $parameter,
-        ParameterValue $value
+        ParameterValue $value,
     ): ProductParameterValue {
         $classData = $this->entityNameResolver->resolve(ProductParameterValue::class);
 

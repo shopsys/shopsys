@@ -35,7 +35,7 @@ class FileExtensionMaxLengthValidator extends ConstraintValidator
                 [
                     '{{ value }}' => $this->formatValue($value->getExtension()),
                     '{{ limit }}' => $this->formatValue($constraint->limit),
-                ]
+                ],
             );
         }
     }

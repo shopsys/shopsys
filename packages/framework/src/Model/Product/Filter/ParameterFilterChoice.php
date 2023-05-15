@@ -14,7 +14,7 @@ class ParameterFilterChoice
      */
     public function __construct(
         ?Parameter $parameter = null,
-        protected readonly array $values = []
+        protected readonly array $values = [],
     ) {
         $this->parameter = $parameter;
     }

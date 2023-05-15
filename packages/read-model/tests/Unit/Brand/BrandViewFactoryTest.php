@@ -27,7 +27,7 @@ class BrandViewFactoryTest extends TestCase
 
         self::assertEquals(
             new BrandView($id, $name, $mainUrl),
-            $brandView
+            $brandView,
         );
     }
 }

@@ -15,7 +15,7 @@ class HeurekaCategoryDownloader
      */
     public function __construct(
         $heurekaCategoryFeedUrl,
-        protected readonly HeurekaCategoryDataFactoryInterface $heurekaCategoryDataFactory
+        protected readonly HeurekaCategoryDataFactoryInterface $heurekaCategoryDataFactory,
     ) {
         $this->heurekaCategoryFeedUrl = $heurekaCategoryFeedUrl;
     }

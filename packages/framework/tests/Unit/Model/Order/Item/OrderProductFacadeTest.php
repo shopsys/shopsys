@@ -38,7 +38,7 @@ final class OrderProductFacadeTest extends TestCase
             $this->createMock(ProductSellingDeniedRecalculator::class),
             $this->createMock(ProductAvailabilityRecalculationScheduler::class),
             $this->createMock(ProductVisibilityFacade::class),
-            $moduleFacadeMock
+            $moduleFacadeMock,
         );
     }
 
@@ -125,7 +125,7 @@ final class OrderProductFacadeTest extends TestCase
             $orderProductQuantity,
             OrderItem::TYPE_PRODUCT,
             null,
-            null
+            null,
         );
         $orderProduct->setProduct($product);
 

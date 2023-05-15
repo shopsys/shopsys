@@ -25,7 +25,7 @@ class ProductCanBeOrderedValidator extends ConstraintValidator
         protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
         protected readonly Domain $domain,
         protected readonly CurrentCustomerUser $currentCustomerUser,
-        protected readonly FrontendApiProductFacade $frontendApiProductFacade
+        protected readonly FrontendApiProductFacade $frontendApiProductFacade,
     ) {
     }
 
@@ -49,13 +49,13 @@ class ProductCanBeOrderedValidator extends ConstraintValidator
             $productEntity = $this->frontendApiProductFacade->getSellableByUuid(
                 $uuid,
                 $this->domain->getId(),
-                $this->currentCustomerUser->getPricingGroup()
+                $this->currentCustomerUser->getPricingGroup(),
             );
         } catch (ProductNotFoundException $exception) {
             $this->addViolationWithCodeToContext(
                 $constraint->productNotFoundMessage,
                 ProductCanBeOrdered::PRODUCT_NOT_FOUND_ERROR,
-                $uuid
+                $uuid,
             );
             return;
         }
@@ -66,7 +66,7 @@ class ProductCanBeOrderedValidator extends ConstraintValidator
             $this->addViolationWithCodeToContext(
                 $constraint->noSellingPriceMessage,
                 ProductCanBeOrdered::NO_SELLING_PRICE_ERROR,
-                $uuid
+                $uuid,
             );
             return;
         }
@@ -81,7 +81,7 @@ class ProductCanBeOrderedValidator extends ConstraintValidator
         $this->addViolationWithCodeToContext(
             $constraint->pricesDoesNotMatchMessage,
             ProductCanBeOrdered::PRICES_DOES_NOT_MATCH_ERROR,
-            $uuid
+            $uuid,
         );
     }
 

@@ -15,7 +15,7 @@ class HeurekaDeliveryFeedItemFacade
     public function __construct(
         protected readonly HeurekaDeliveryDataRepository $heurekaDeliveryDataRepository,
         protected readonly HeurekaDeliveryFeedItemFactory $feedItemFactory,
-        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade
+        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
     ) {
     }
 
@@ -32,7 +32,7 @@ class HeurekaDeliveryFeedItemFacade
             $domainConfig,
             $pricingGroup,
             $lastSeekId,
-            $maxResults
+            $maxResults,
         );
 
         foreach ($dataRows as $dataRow) {

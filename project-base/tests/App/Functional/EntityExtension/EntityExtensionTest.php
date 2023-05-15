@@ -133,7 +133,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         $this->doTestExtendedEntityInstantiation(
             ProductTranslation::class,
             ExtendedProductTranslation::class,
-            self::MAIN_PRODUCT_ID
+            self::MAIN_PRODUCT_ID,
         );
     }
 
@@ -163,7 +163,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         $product->addOneToManyBidirectionalEntity($oneToManyBidirectionalEntity);
 
         $oneToManyUnidirectionalWithJoinTableEntity = new UnidirectionalEntity(
-            'one-to-many unidirectional with join table'
+            'one-to-many unidirectional with join table',
         );
         $this->em->persist($oneToManyUnidirectionalWithJoinTableEntity);
         $product->addOneToManyUnidirectionalWithJoinTableEntity($oneToManyUnidirectionalWithJoinTableEntity);
@@ -216,7 +216,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         $foundOneToManyUnidirectionalWithJoinTableEntity = reset($foundOneToManyUnidirectionalWithJoinTableEntities);
         $this->assertSame(
             'one-to-many unidirectional with join table',
-            $foundOneToManyUnidirectionalWithJoinTableEntity->getName()
+            $foundOneToManyUnidirectionalWithJoinTableEntity->getName(),
         );
 
         $foundOneToManySelfReferencingEntities = $foundProduct->getOneToManySelfReferencingEntities();
@@ -225,11 +225,11 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         $this->assertInstanceOf(ExtendedProduct::class, $foundOneToManySelfReferencingEntity);
         $this->assertSame(
             self::ONE_TO_MANY_SELF_REFERENCING_PRODUCT_ID,
-            $foundOneToManySelfReferencingEntity->getId()
+            $foundOneToManySelfReferencingEntity->getId(),
         );
         $this->assertSame(
             $foundProduct,
-            $foundOneToManySelfReferencingEntity->getOneToManySelfReferencingInverseEntity()
+            $foundOneToManySelfReferencingEntity->getOneToManySelfReferencingInverseEntity(),
         );
 
         $foundManyToManyUnidirectionalEntities = $foundProduct->getManyToManyUnidirectionalEntities();
@@ -250,7 +250,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         $this->assertInstanceOf(ExtendedProduct::class, $foundManyToManySelfReferencingEntity);
         $this->assertSame(
             self::MANY_TO_MANY_SELF_REFERENCING_PRODUCT_ID,
-            $foundManyToManySelfReferencingEntity->getId()
+            $foundManyToManySelfReferencingEntity->getId(),
         );
         $foundManyToManySelfReferencingInverseEntities = $foundManyToManySelfReferencingEntity->getManyToManySelfReferencingInverseEntities();
         $this->assertCount(1, $foundManyToManySelfReferencingInverseEntities);
@@ -302,7 +302,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         $category->addOneToManyBidirectionalEntity($oneToManyBidirectionalEntity);
 
         $oneToManyUnidirectionalWithJoinTableEntity = new UnidirectionalEntity(
-            'one-to-many unidirectional with join table'
+            'one-to-many unidirectional with join table',
         );
         $this->em->persist($oneToManyUnidirectionalWithJoinTableEntity);
         $category->addOneToManyUnidirectionalWithJoinTableEntity($oneToManyUnidirectionalWithJoinTableEntity);
@@ -355,7 +355,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         $foundOneToManyUnidirectionalWithJoinTableEntity = reset($foundOneToManyUnidirectionalWithJoinTableEntities);
         $this->assertSame(
             'one-to-many unidirectional with join table',
-            $foundOneToManyUnidirectionalWithJoinTableEntity->getName()
+            $foundOneToManyUnidirectionalWithJoinTableEntity->getName(),
         );
 
         $foundOneToManySelfReferencingEntities = $foundCategory->getOneToManySelfReferencingEntities();
@@ -364,11 +364,11 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         $this->assertInstanceOf(ExtendedCategory::class, $foundOneToManySelfReferencingEntity);
         $this->assertSame(
             self::ONE_TO_MANY_SELF_REFERENCING_CATEGORY_ID,
-            $foundOneToManySelfReferencingEntity->getId()
+            $foundOneToManySelfReferencingEntity->getId(),
         );
         $this->assertSame(
             $foundCategory,
-            $foundOneToManySelfReferencingEntity->getOneToManySelfReferencingInverseEntity()
+            $foundOneToManySelfReferencingEntity->getOneToManySelfReferencingInverseEntity(),
         );
 
         $foundManyToManyUnidirectionalEntities = $foundCategory->getManyToManyUnidirectionalEntities();
@@ -389,7 +389,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
         $this->assertInstanceOf(ExtendedCategory::class, $foundManyToManySelfReferencingEntity);
         $this->assertSame(
             self::MANY_TO_MANY_SELF_REFERENCING_CATEGORY_ID,
-            $foundManyToManySelfReferencingEntity->getId()
+            $foundManyToManySelfReferencingEntity->getId(),
         );
         $foundManyToManySelfReferencingInverseEntities = $foundManyToManySelfReferencingEntity->getManyToManySelfReferencingInverseEntities();
         $this->assertCount(1, $foundManyToManySelfReferencingInverseEntities);
@@ -452,7 +452,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
     private function doTestExtendedEntityInstantiation(
         string $parentEntityName,
         string $extendedEntityName,
-        int $entityId
+        int $entityId,
     ): void {
         $repository = $this->em->getRepository($parentEntityName);
         $this->assertInstanceOf($extendedEntityName, $repository->find($entityId));

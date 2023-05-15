@@ -25,7 +25,7 @@ class ProductArrayFieldMapper
         protected readonly FlagFacade $flagFacade,
         protected readonly BrandFacade $brandFacade,
         protected readonly ProductElasticsearchProvider $productElasticsearchProvider,
-        protected readonly ParameterWithValuesFactory $parameterWithValuesFactory
+        protected readonly ParameterWithValuesFactory $parameterWithValuesFactory,
     ) {
     }
 

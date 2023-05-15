@@ -58,7 +58,7 @@ class VatInlineEditCest
             Translator::DEFAULT_TRANSLATION_DOMAIN,
             [
                 '%name%' => 'test created',
-            ]
+            ],
         );
     }
 }

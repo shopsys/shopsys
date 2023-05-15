@@ -13,7 +13,7 @@ class Version20180413102102 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $oldTableExists = $this->sql(
-            'SELECT COUNT(*) > 0 FROM information_schema.tables WHERE table_name=\'plugin_data_values\''
+            'SELECT COUNT(*) > 0 FROM information_schema.tables WHERE table_name=\'plugin_data_values\'',
         )->fetchOne();
 
         if ($oldTableExists) {
@@ -37,7 +37,7 @@ class Version20180413102102 extends AbstractMigration
             [
                 'plugin_name' => 'Shopsys\\ProductFeed\\GoogleBundle\\ShopsysProductFeedGoogleBundle',
                 'context' => 'product',
-            ]
+            ],
         )->fetchAllAssociative();
         foreach ($rows as $row) {
             $jsonData = json_decode($row['json_value'], true);
@@ -49,7 +49,7 @@ class Version20180413102102 extends AbstractMigration
                         'product_id' => $row['key'],
                         'domain_id' => $domainId,
                         'show' => $show ? 'true' : 'false',
-                    ]
+                    ],
                 );
             }
         }

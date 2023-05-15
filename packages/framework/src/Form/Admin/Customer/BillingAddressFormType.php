@@ -100,7 +100,7 @@ class BillingAddressFormType extends AbstractType
                             ]),
                         ],
                         'label' => t('Tax number'),
-                    ])
+                    ]),
             );
 
         $builderAddressGroup = $builder->create('address', GroupType::class, [

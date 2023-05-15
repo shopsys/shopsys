@@ -17,6 +17,6 @@ interface ProductCalculatedPriceFactoryInterface
     public function create(
         Product $product,
         PricingGroup $pricingGroup,
-        ?Money $priceWithVat
+        ?Money $priceWithVat,
     ): ProductCalculatedPrice;
 }

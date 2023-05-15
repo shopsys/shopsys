@@ -19,7 +19,7 @@ class CustomerUserRefreshTokenChainFacade
         protected readonly CustomerUserRefreshTokenChainDataFactoryInterface $customerUserRefreshTokenChainDataFactory,
         protected readonly CustomerUserRefreshTokenChainFactoryInterface $customerUserRefreshTokenChainFactory,
         protected readonly PasswordHasherFactoryInterface $passwordHasherFactory,
-        protected readonly CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository
+        protected readonly CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository,
     ) {
     }
 
@@ -52,7 +52,7 @@ class CustomerUserRefreshTokenChainFacade
     {
         $passwordHasher = $this->passwordHasherFactory->getPasswordHasher($customerUser);
         $customersTokenChains = $this->customerUserRefreshTokenChainRepository->findCustomersTokenChains(
-            $customerUser
+            $customerUser,
         );
 
         foreach ($customersTokenChains as $customersTokenChain) {

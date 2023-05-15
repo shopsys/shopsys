@@ -14,7 +14,7 @@ class TransportAndPaymentCheckResult
      */
     public function __construct(
         $transportPriceChanged,
-        $paymentPriceChanged
+        $paymentPriceChanged,
     ) {
         $this->transportPriceChanged = $transportPriceChanged;
         $this->paymentPriceChanged = $paymentPriceChanged;

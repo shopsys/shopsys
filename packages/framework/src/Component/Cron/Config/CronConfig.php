@@ -60,7 +60,7 @@ class CronConfig
             func_get_args(),
             6,
             CronModuleConfig::RUN_EVERY_MIN_DEFAULT,
-            true
+            true,
         );
 
         $timeoutIteratedCronSec = DeprecationHelper::triggerNewArgumentInMethod(
@@ -70,7 +70,7 @@ class CronConfig
             func_get_args(),
             7,
             CronModuleConfig::TIMEOUT_ITERATED_CRON_SEC_DEFAULT,
-            true
+            true,
         );
 
         $this->cronTimeResolver->validateTimeString($timeHours, 23, 1);

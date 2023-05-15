@@ -72,7 +72,7 @@ abstract class ApplicationTestCase extends WebTestCase
         ?string $username = null,
         ?string $password = null,
         array $kernelOptions = [],
-        array $clientOptions = []
+        array $clientOptions = [],
     ): Client {
         self::ensureKernelShutdown();
         $client = self::createClient($kernelOptions);
@@ -100,7 +100,7 @@ abstract class ApplicationTestCase extends WebTestCase
     protected function configureCurrentClient(
         ?string $username,
         ?string $password,
-        array $clientOptions = []
+        array $clientOptions = [],
     ): Client {
         $client = self::getCurrentClient();
 
@@ -119,7 +119,7 @@ abstract class ApplicationTestCase extends WebTestCase
     private function getClientServerParameters(
         ?string $username,
         ?string $password,
-        array $clientOptions
+        array $clientOptions,
     ): array {
         $currentDomainUrl = $this->domain->getCurrentDomainConfig()->getUrl();
 
@@ -128,7 +128,7 @@ abstract class ApplicationTestCase extends WebTestCase
                 'HTTP_HOST' => preg_replace('#^https?://#', '', $currentDomainUrl),
                 'HTTPS' => parse_url($currentDomainUrl, PHP_URL_SCHEME) === 'https',
             ],
-            $clientOptions
+            $clientOptions,
         );
 
         if ($username !== null) {

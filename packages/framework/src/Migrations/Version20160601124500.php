@@ -20,7 +20,7 @@ class Version20160601124500 extends AbstractMigration
 
         $this->sql('CREATE INDEX IDX_B018D342C2AC5D3 ON brand_translations (translatable_id)');
         $this->sql(
-            'CREATE UNIQUE INDEX brand_translations_uniq_trans ON brand_translations (translatable_id, locale)'
+            'CREATE UNIQUE INDEX brand_translations_uniq_trans ON brand_translations (translatable_id, locale)',
         );
 
         $this->sql('ALTER TABLE brand_translations ADD CONSTRAINT FK_B018D342C2AC5D3 FOREIGN KEY (translatable_id) 

@@ -13,6 +13,6 @@ interface PersistentReferenceFactoryInterface
     public function create(
         string $referenceName,
         string $entityName,
-        int $entityId
+        int $entityId,
     ): PersistentReference;
 }

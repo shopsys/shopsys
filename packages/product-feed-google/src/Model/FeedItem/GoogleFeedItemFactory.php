@@ -20,7 +20,7 @@ class GoogleFeedItemFactory
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly CurrencyFacade $currencyFacade,
-        protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader
+        protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
     ) {
     }
 
@@ -67,7 +67,7 @@ class GoogleFeedItemFactory
         return $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
             $product,
             $domainConfig->getId(),
-            null
+            null,
         );
     }
 
