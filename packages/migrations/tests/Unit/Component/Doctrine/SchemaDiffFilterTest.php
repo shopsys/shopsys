@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\MigrationBundle\Unit\Component\Doctrine;
 
 use Doctrine\DBAL\Schema\Column;

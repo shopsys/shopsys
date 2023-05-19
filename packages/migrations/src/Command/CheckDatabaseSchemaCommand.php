@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\MigrationBundle\Command;
 
 use Shopsys\MigrationBundle\Component\Doctrine\DatabaseSchemaFacade;

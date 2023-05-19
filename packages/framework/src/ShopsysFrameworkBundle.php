@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle;
 
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Form\Admin\Pricing\Currency;
 
 use CommerceGuys\Intl\Currency\CurrencyRepositoryInterface;

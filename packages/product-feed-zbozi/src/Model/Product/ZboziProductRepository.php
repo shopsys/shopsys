@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\ProductFeed\ZboziBundle\Model\Product;
 
 use Doctrine\ORM\Query\Expr\Join;

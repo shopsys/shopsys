@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\ShopInfo;
 
 use Shopsys\FrameworkBundle\Component\Setting\Setting;

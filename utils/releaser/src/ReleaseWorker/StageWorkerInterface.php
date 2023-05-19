@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\Releaser\ReleaseWorker;
 
 use PharIo\Version\Version;

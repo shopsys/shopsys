@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\AdminNavigation;
 
 use Knp\Menu\Factory\ExtensionInterface;

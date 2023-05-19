@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\MigrationBundle\Unit\Component\Doctrine\Migrations;
 
 use Doctrine\Migrations\Metadata\AvailableMigrationsList;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\FrameworkBundle\Unit\Component\Filesystem;
 
 use PHPUnit\Framework\TestCase;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\ProductFeed\HeurekaBundle;
 
 use Shopsys\FrameworkBundle\Model\Feed\FeedInfoInterface;

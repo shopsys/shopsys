@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory;
 
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;

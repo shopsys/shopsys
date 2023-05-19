@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\Plugin\Cron;
 
 use Symfony\Bridge\Monolog\Logger;
