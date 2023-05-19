@@ -29,19 +29,19 @@ class PhpFileExtractorTest extends TestCase
         $expected = new MessageCatalogue();
 
         $message = new Message('trans test', Translator::DEFAULT_TRANSLATION_DOMAIN);
-        $message->addSource(new FileSource($fileName, 16));
+        $message->addSource(new FileSource($fileName, 18));
         $expected->add($message);
 
         $message = new Message('trans test with domain', 'testDomain');
-        $message->addSource(new FileSource($fileName, 17));
-        $expected->add($message);
-
-        $message = new Message('t test', Translator::DEFAULT_TRANSLATION_DOMAIN);
         $message->addSource(new FileSource($fileName, 19));
         $expected->add($message);
 
+        $message = new Message('t test', Translator::DEFAULT_TRANSLATION_DOMAIN);
+        $message->addSource(new FileSource($fileName, 21));
+        $expected->add($message);
+
         $message = new Message('t test with domain', 'testDomain');
-        $message->addSource(new FileSource($fileName, 20));
+        $message->addSource(new FileSource($fileName, 22));
         $expected->add($message);
 
         $this->assertEquals($expected, $catalogue);
