@@ -20,14 +20,14 @@ class DirectoryStructureCreatorTest extends TestCase
         $imageDir = 'imageDir/';
         $domainImageDir = 'domainImageDir';
         $imageEntityConfigByClass = [
-            new ImageEntityConfig(
+            'entityClass1' => new ImageEntityConfig(
                 'entityName1',
                 'entityClass1',
                 [],
                 ['sizeName1_1' => new ImageSizeConfig('sizeName1_1', null, null, false, null, [])],
                 [],
             ),
-            new ImageEntityConfig(
+            'entityClass2' => new ImageEntityConfig(
                 'entityName2',
                 'entityClass2',
                 ['type' => ['sizeName2_1' => new ImageSizeConfig('sizeName2_1', null, null, false, null, [])]],
