@@ -119,7 +119,7 @@ class ConstraintMessagePropertyExtractor implements FileVisitorInterface, NodeVi
      */
     protected function isMessagePropertyProperty(PropertyProperty $node)
     {
-        return strtolower(substr($node->name, -7)) === 'message';
+        return strtolower(substr($node->name->toString(), -7)) === 'message';
     }
 
     /**
