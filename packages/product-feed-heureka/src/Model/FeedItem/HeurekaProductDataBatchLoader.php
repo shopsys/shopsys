@@ -80,6 +80,7 @@ class HeurekaProductDataBatchLoader
     public function getProductCpc(Product $product, DomainConfig $domainConfig): ?Money
     {
         $key = $this->getKey($product, $domainConfig);
+
         if (!array_key_exists($key, $this->loadedProductCpcs)) {
             throw new HeurekaProductDataNotLoadedException($product, $domainConfig, 'CPC');
         }

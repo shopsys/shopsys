@@ -42,6 +42,7 @@ class DomainsConfigLoader
         if (!$this->isConfigMatchingUrlsConfig($domainConfigsByDomainId, $domainUrlsConfigsByDomainId)) {
             $message =
                 'File ' . $domainsUrlsConfigFilepath . ' does not contain urls for all domains listed in ' . $domainsConfigFilepath;
+
             throw new DomainConfigsDoNotMatchException($message);
         }
         $processedConfigsWithUrlsByDomainId = $this->addUrlsToProcessedConfig(

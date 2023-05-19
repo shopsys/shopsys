@@ -73,8 +73,10 @@ class MailTemplateDataFactory implements MailTemplateDataFactoryInterface
     public function createFromOrderStatuses(array $orderStatuses, array $mailTemplates): array
     {
         $orderStatusMailTemplatesData = [];
+
         foreach ($orderStatuses as $orderStatus) {
             $mailTemplate = OrderMail::findMailTemplateForOrderStatus($mailTemplates, $orderStatus);
+
             if ($mailTemplate !== null) {
                 $orderStatusMailTemplateData = $this->createFromMailTemplate($mailTemplate);
             } else {

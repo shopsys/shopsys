@@ -33,6 +33,7 @@ class Version20161207135225 extends AbstractMigration
                     (\'shopInfoPhoneNumber\', :domainId, \'+420123456789\', \'string\');
                 ', ['domainId' => $domainId]);
             }
+
             if ($infoMail <= 0) {
                 $this->sql('INSERT INTO setting_values (name, domain_id, value, type) VALUES
                 (\'shopInfoEmail\', :domainId, \'no-reply@shopsys.com\', \'string\');

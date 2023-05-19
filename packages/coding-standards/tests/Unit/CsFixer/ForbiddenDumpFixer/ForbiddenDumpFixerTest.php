@@ -23,6 +23,7 @@ final class ForbiddenDumpFixerTest extends AbstractFixerTestCase
     public function getTestingFiles(): iterable
     {
         yield [__DIR__ . '/fixed/fixed.html.twig', __DIR__ . '/wrong/wrong.html.twig'];
+
         yield [__DIR__ . '/correct/correct.html.twig'];
     }
 }

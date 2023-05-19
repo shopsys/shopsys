@@ -50,6 +50,7 @@ class ImageConfigLoaderTest extends TestCase
         ];
 
         $previousException = null;
+
         try {
             $this->imageConfigLoader->loadFromArray($inputConfig);
         } catch (EntityParseException $exception) {
@@ -79,6 +80,7 @@ class ImageConfigLoaderTest extends TestCase
         ];
 
         $previousException = null;
+
         try {
             $this->imageConfigLoader->loadFromArray($inputConfig);
         } catch (EntityParseException $exception) {
@@ -118,6 +120,7 @@ class ImageConfigLoaderTest extends TestCase
         ];
 
         $previousException = null;
+
         try {
             $this->imageConfigLoader->loadFromArray($inputConfig);
         } catch (EntityParseException $exception) {
@@ -150,6 +153,7 @@ class ImageConfigLoaderTest extends TestCase
         ];
 
         $previousException = null;
+
         try {
             $this->imageConfigLoader->loadFromArray($inputConfig);
         } catch (EntityParseException $exception) {
@@ -193,6 +197,7 @@ class ImageConfigLoaderTest extends TestCase
         ];
 
         $previousException = null;
+
         try {
             $this->imageConfigLoader->loadFromArray($inputConfig);
         } catch (EntityParseException $exception) {
@@ -241,6 +246,7 @@ class ImageConfigLoaderTest extends TestCase
         ];
 
         $previousException = null;
+
         try {
             $this->imageConfigLoader->loadFromArray($inputConfig);
         } catch (EntityParseException $exception) {

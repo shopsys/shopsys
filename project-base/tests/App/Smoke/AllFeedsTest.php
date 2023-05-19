@@ -33,6 +33,7 @@ class AllFeedsTest extends FunctionalTestCase
         $this->setUp();
 
         $data = [];
+
         foreach ($this->feedFacade->getFeedsInfo() as $feedInfo) {
             foreach ($this->domain->getAll() as $domainConfig) {
                 $key = sprintf('feed "%s" on domain "%s"', $feedInfo->getName(), $domainConfig->getName());

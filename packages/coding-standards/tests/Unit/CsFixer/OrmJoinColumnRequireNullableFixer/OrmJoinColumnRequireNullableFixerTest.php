@@ -23,13 +23,21 @@ final class OrmJoinColumnRequireNullableFixerTest extends AbstractFixerTestCase
     public function getTestingFiles(): iterable
     {
         yield [__DIR__ . '/fixed/many_to_one_missing_join_column.php', __DIR__ . '/wrong/many_to_one_missing_join_column.php'];
+
         yield [__DIR__ . '/fixed/many_to_one_missing_nullable_param.php', __DIR__ . '/wrong/many_to_one_missing_nullable_param.php'];
+
         yield [__DIR__ . '/fixed/one_to_one_missing_join_column.php', __DIR__ . '/wrong/one_to_one_missing_join_column.php'];
+
         yield [__DIR__ . '/fixed/one_to_one_missing_nullable_param.php', __DIR__ . '/wrong/one_to_one_missing_nullable_param.php'];
+
         yield [__DIR__ . '/fixed/one_to_one_multiline_missing_nullable_param.php', __DIR__ . '/wrong/one_to_one_multiline_missing_nullable_param.php'];
+
         yield [__DIR__ . '/correct/one_to_many.php'];
+
         yield [__DIR__ . '/correct/many_to_one_missing_join_column.php'];
+
         yield [__DIR__ . '/correct/many_to_one_missing_nullable_param.php'];
+
         yield [__DIR__ . '/correct/one_to_one_missing_nullable_param.php'];
     }
 }

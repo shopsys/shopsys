@@ -97,6 +97,7 @@ class FeedFacade
         $feeds = $feedType === null ? $this->feedRegistry->getAllFeeds() : $this->feedRegistry->getFeeds($feedType);
 
         $feedsInfo = [];
+
         foreach ($feeds as $feed) {
             $feedsInfo[] = $feed->getInfo();
         }
@@ -111,6 +112,7 @@ class FeedFacade
     public function getFeedNames(?string $feedType = null): array
     {
         $feedNames = [];
+
         foreach ($this->getFeedsInfo($feedType) as $feedInfo) {
             $feedNames[] = $feedInfo->getName();
         }

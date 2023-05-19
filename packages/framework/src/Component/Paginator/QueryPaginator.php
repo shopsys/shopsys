@@ -47,6 +47,7 @@ class QueryPaginator implements PaginatorInterface
 
         if ($pageSize !== null) {
             $maxPage = (int)ceil($totalCount / $pageSize);
+
             if ($maxPage < 1) {
                 $maxPage = 1;
             }
@@ -95,6 +96,7 @@ class QueryPaginator implements PaginatorInterface
         $query = $totalQueryBuilder->getQuery();
 
         $parametersAssoc = [];
+
         foreach ($query->getParameters() as $parameter) {
             $parametersAssoc[$parameter->getName()] = $parameter->getValue();
         }
@@ -109,6 +111,7 @@ class QueryPaginator implements PaginatorInterface
 
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('total_count', 'totalCount');
+
         return $em->createNativeQuery($sql, $rsm)
             ->setParameters($flattenedParameters);
     }

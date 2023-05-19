@@ -84,6 +84,7 @@ class ErrorPagesFacade
     public function getErrorPageContentByDomainIdAndStatusCode($domainId, $statusCode)
     {
         $errorPageContent = file_get_contents($this->getErrorPageFilename($domainId, $statusCode));
+
         if ($errorPageContent === false) {
             throw new ErrorPageNotFoundException($domainId, $statusCode);
         }

@@ -25,6 +25,7 @@ class ModuleList
     {
         $labelsIndexedByNames = $this->getLabelsIndexedByName();
         $namesIndexedByLabel = array_flip($labelsIndexedByNames);
+
         if (count($labelsIndexedByNames) !== count($namesIndexedByLabel)) {
             throw new NotUniqueModuleLabelException($labelsIndexedByNames);
         }

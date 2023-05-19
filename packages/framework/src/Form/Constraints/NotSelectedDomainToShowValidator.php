@@ -36,6 +36,7 @@ class NotSelectedDomainToShowValidator extends ConstraintValidator
 
         if (count($allDomains) === count($values)) {
             $this->context->addViolation($constraint->message);
+
             return;
         }
     }

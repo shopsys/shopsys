@@ -33,6 +33,7 @@ class Db extends BaseDb
     public function _loadDump($databaseKey = null, $databaseConfig = null)
     {
         $this->cleanup();
+
         return parent::_loadDump($databaseKey, $databaseConfig);
     }
 }

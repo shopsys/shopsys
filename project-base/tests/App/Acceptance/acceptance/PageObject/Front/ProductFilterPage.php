@@ -106,6 +106,7 @@ class ProductFilterPage extends AbstractPage
             $parameterLabel,
             $translatedParameterLabel
         );
+
         throw new NoSuchElementException($message);
     }
 
@@ -124,6 +125,7 @@ class ProductFilterPage extends AbstractPage
         foreach ($parameterValueDivs as $parameterValueDiv) {
             try {
                 $labelElement = $parameterValueDiv->findElement(WebDriverBy::cssSelector('label'));
+
                 if (mb_stripos($labelElement->getText(), $translatedParameterValueText) !== false) {
                     return $labelElement;
                 }
@@ -137,6 +139,7 @@ class ProductFilterPage extends AbstractPage
             $parameterValueText,
             $translatedParameterValueText
         );
+
         throw new NoSuchElementException($message);
     }
 }

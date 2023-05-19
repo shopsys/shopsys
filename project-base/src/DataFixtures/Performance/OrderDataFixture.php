@@ -257,6 +257,7 @@ class OrderDataFixture
         $quantifiedProducts = [];
 
         $randomProductIds = $this->getRandomPerformanceProductIds($this->orderItemCountPerOrder);
+
         foreach ($randomProductIds as $randomProductId) {
             $product = $this->productFacade->getById($randomProductId);
             $quantity = $this->faker->numberBetween(1, 10);
@@ -343,6 +344,7 @@ class OrderDataFixture
 
         /** @var \App\Model\Transport\Transport $randomTransport */
         $randomTransport = $this->persistentReferenceFacade->getReference($randomTransportReferenceName);
+
         return $randomTransport;
     }
 
@@ -359,6 +361,7 @@ class OrderDataFixture
 
         /** @var \App\Model\Payment\Payment $randomPayment */
         $randomPayment = $this->persistentReferenceFacade->getReference($randomPaymentReferenceName);
+
         return $randomPayment;
     }
 
@@ -374,6 +377,7 @@ class OrderDataFixture
 
         /** @var \Shopsys\FrameworkBundle\Model\Country\Country $randomCountry */
         $randomCountry = $this->persistentReferenceFacade->getReference($randomCountryReferenceName);
+
         return $randomCountry;
     }
 }

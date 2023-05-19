@@ -56,6 +56,7 @@ class CategoryCrudExtension implements PluginCrudExtensionInterface
         $heurekaCategory = $this->heurekaCategoryFacade->findByCategoryId($categoryId);
 
         $pluginData = [];
+
         if ($heurekaCategory !== null) {
             $pluginData['heureka_category'] = $heurekaCategory;
         }

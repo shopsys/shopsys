@@ -59,6 +59,7 @@ class OrderProductFilter implements AdvancedSearchFilterInterface
             ) {
                 /** @var \Shopsys\FrameworkBundle\Model\Product\Product|null $searchValue */
                 $searchValue = $ruleData->value;
+
                 if ($searchValue === null) {
                     continue;
                 }

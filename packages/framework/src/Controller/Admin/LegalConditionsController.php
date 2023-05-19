@@ -57,6 +57,7 @@ class LegalConditionsController extends AdminBaseController
             $this->legalConditionsFacade->setPrivacyPolicy($domainId, $formData['privacyPolicyArticle']);
 
             $this->addSuccessFlashTwig(t('Legal conditions settings modified.'));
+
             return $this->redirectToRoute('admin_legalconditions_setting');
         }
 

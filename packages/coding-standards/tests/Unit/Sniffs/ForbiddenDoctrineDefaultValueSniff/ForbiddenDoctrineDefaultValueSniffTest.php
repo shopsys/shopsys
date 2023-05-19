@@ -23,9 +23,13 @@ class ForbiddenDoctrineDefaultValueSniffTest extends AbstractSniffTestCase
     public function getWrongFiles(): iterable
     {
         yield [__DIR__ . '/wrong/default_value_annotation.php'];
+
         yield [__DIR__ . '/wrong/different_order_annotation.php'];
+
         yield [__DIR__ . '/wrong/multiline_annotation.php'];
+
         yield [__DIR__ . '/wrong/spaces_around_annotation.php'];
+
         yield [__DIR__ . '/wrong/split_annotation.php'];
     }
 
@@ -35,6 +39,7 @@ class ForbiddenDoctrineDefaultValueSniffTest extends AbstractSniffTestCase
     public function getCorrectFiles(): iterable
     {
         yield [__DIR__ . '/correct/missing_default_value_annotation.php'];
+
         yield [__DIR__ . '/correct/invalid_docblock_annotation.php'];
     }
 }

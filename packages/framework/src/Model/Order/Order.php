@@ -298,6 +298,7 @@ class Order
 
         $this->customerUser = $customerUser;
         $this->deleted = false;
+
         if ($orderData->createdAt === null) {
             $this->createdAt = new DateTime();
         } else {
@@ -375,6 +376,7 @@ class Order
     protected function setDeliveryAddress(OrderData $orderData)
     {
         $this->deliveryAddressSameAsBillingAddress = $orderData->deliveryAddressSameAsBillingAddress;
+
         if ($orderData->deliveryAddressSameAsBillingAddress) {
             $this->deliveryFirstName = $orderData->firstName;
             $this->deliveryLastName = $orderData->lastName;
@@ -414,6 +416,7 @@ class Order
         if ($item->isTypeTransport()) {
             $this->transport = null;
         }
+
         if ($item->isTypePayment()) {
             $this->payment = null;
         }
@@ -633,6 +636,7 @@ class Order
     public function getItemsWithoutTransportAndPayment()
     {
         $itemsWithoutTransportAndPayment = [];
+
         foreach ($this->getItems() as $orderItem) {
             if (!($orderItem->isTypeTransport() || $orderItem->isTypePayment())) {
                 $itemsWithoutTransportAndPayment[] = $orderItem;
@@ -648,6 +652,7 @@ class Order
     protected function getTransportAndPaymentItems()
     {
         $transportAndPaymentItems = [];
+
         foreach ($this->getItems() as $orderItem) {
             if ($orderItem->isTypeTransport() || $orderItem->isTypePayment()) {
                 $transportAndPaymentItems[] = $orderItem;
@@ -684,6 +689,7 @@ class Order
                 return $orderItem;
             }
         }
+
         throw new OrderItemNotFoundException(sprintf(
             'Order item id `%d` not found.',
             $orderItemId
@@ -888,6 +894,7 @@ class Order
     public function getProductItems()
     {
         $productItems = [];
+
         foreach ($this->items as $item) {
             if ($item->isTypeProduct()) {
                 $productItems[] = $item;

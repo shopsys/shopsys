@@ -112,6 +112,7 @@ class CartController extends FrontBaseController
         $cartItems = $cart === null ? [] : $cart->getItems();
 
         $cartFormData = ['quantities' => []];
+
         foreach ($cartItems as $cartItem) {
             $cartFormData['quantities'][$cartItem->getId()] = $cartItem->getQuantity();
         }
@@ -120,6 +121,7 @@ class CartController extends FrontBaseController
         $form->handleRequest($request);
 
         $invalidCart = false;
+
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $this->cartFacade->changeQuantities($form->getData()['quantities']);
@@ -298,6 +300,7 @@ class CartController extends FrontBaseController
                 $this->sendAddProductResultFlashMessage($addProductResult);
 
                 $accessories = [];
+
                 if ($this->moduleFacade->isEnabled(ModuleList::ACCESSORIES_ON_BUY)) {
                     $accessories = $this->listedProductViewFacade->getAccessories(
                         $addProductResult->getCartItem()->getProduct()->getId(),
@@ -426,6 +429,7 @@ class CartController extends FrontBaseController
     private function isCartHoverEnable(): bool
     {
         $masterRequest = $this->requestStack->getMainRequest();
+
         if ($masterRequest === null) {
             return false;
         }

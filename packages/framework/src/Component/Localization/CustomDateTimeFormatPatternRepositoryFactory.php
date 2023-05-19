@@ -20,6 +20,7 @@ class CustomDateTimeFormatPatternRepositoryFactory
         $customDateTimeFormatPatternRepository->add(
             new DateTimeFormatPattern('y-MM-dd, h:mm:ss a', 'en', IntlDateFormatter::MEDIUM, IntlDateFormatter::MEDIUM)
         );
+
         return $customDateTimeFormatPatternRepository;
     }
 }

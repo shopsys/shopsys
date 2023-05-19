@@ -16,9 +16,11 @@ class RegisterProjectFrameworkClassExtensionsCompilerPass implements CompilerPas
     public function process(ContainerBuilder $container): void
     {
         $classExtensionRegistryDefinition = $container->findDefinition(ClassExtensionRegistry::class);
+
         foreach ($container->getServiceIds() as $serviceId) {
             if ($this->isFrameworkClassWithAlias($container, $serviceId)) {
                 $aliasId = (string)$container->getAlias($serviceId);
+
                 if ($this->isProjectClass($aliasId)) {
                     $classExtensionRegistryDefinition->addMethodCall('addExtendedService', [$serviceId, $aliasId]);
                 }

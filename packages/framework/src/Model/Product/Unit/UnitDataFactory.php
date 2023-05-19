@@ -34,6 +34,7 @@ class UnitDataFactory implements UnitDataFactoryInterface
     {
         $unitData = $this->createInstance();
         $this->fillNew($unitData);
+
         return $unitData;
     }
 
@@ -68,6 +69,7 @@ class UnitDataFactory implements UnitDataFactoryInterface
         /** @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitTranslation[] $translations */
         $translations = $unit->getTranslations();
         $names = [];
+
         foreach ($translations as $translate) {
             $names[$translate->getLocale()] = $translate->getName();
         }

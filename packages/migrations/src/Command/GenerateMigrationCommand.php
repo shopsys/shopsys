@@ -77,6 +77,7 @@ class GenerateMigrationCommand extends Command
         $output->writeln('Checking database schema...');
 
         $filteredSchemaDiffSqlCommands = $this->databaseSchemaFacade->getFilteredSchemaDiffSqlCommands();
+
         if (count($filteredSchemaDiffSqlCommands) === 0) {
             $output->writeln('<info>Database schema is satisfying ORM, no migrations were generated.</info>');
 
@@ -124,6 +125,7 @@ class GenerateMigrationCommand extends Command
     {
         $migrationDirectoriesIndexedByNamespace = $this->configuration->getMigrationDirectories();
         $availableNamespaces = [];
+
         foreach ($migrationDirectoriesIndexedByNamespace as $namespace => $migrationDirectory) {
             if (str_contains(realpath($migrationDirectory), realpath($this->vendorDirectoryPath)) === false) {
                 $availableNamespaces[] = $namespace;

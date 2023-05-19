@@ -36,6 +36,7 @@ class AdvancedSearchFilterTranslation
         }
 
         $message = 'Filter "' . $filterName . '" translation not found.';
+
         throw new AdvancedSearchTranslationNotFoundException($message);
     }
 }

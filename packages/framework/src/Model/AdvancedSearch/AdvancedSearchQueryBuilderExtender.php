@@ -28,6 +28,7 @@ class AdvancedSearchQueryBuilderExtender
     public function extendByAdvancedSearchData(QueryBuilder $queryBuilder, array $advancedSearchData)
     {
         $rulesDataByFilterName = [];
+
         foreach ($advancedSearchData as $key => $ruleData) {
             if ($key === RuleFormViewDataFactory::TEMPLATE_RULE_FORM_KEY || $ruleData->operator === null) {
                 continue;

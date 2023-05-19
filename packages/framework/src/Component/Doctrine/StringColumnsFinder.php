@@ -14,12 +14,15 @@ class StringColumnsFinder
     public function getAllStringColumnNamesIndexedByTableName(array $classesMetadata)
     {
         $stringColumnNamesIndexedByTableName = [];
+
         foreach ($classesMetadata as $classMetadata) {
             if (!($classMetadata instanceof ClassMetadataInfo)) {
                 $message = 'Instance of ' . ClassMetadataInfo::class . ' is required.';
+
                 throw new UnexpectedTypeException($message);
             }
             $stringColumnNames = $this->getStringColumnNames($classMetadata);
+
             if (count($stringColumnNames) > 0) {
                 $stringColumnNamesIndexedByTableName[$classMetadata->getTableName()] = $stringColumnNames;
             }
@@ -35,6 +38,7 @@ class StringColumnsFinder
     protected function getStringColumnNames(ClassMetadataInfo $classMetadataInfo)
     {
         $stringColumnNames = [];
+
         foreach ($classMetadataInfo->getFieldNames() as $fieldName) {
             if (in_array($classMetadataInfo->getTypeOfField($fieldName), $this->getDoctrineStringTypes(), true)) {
                 $stringColumnNames[] = $classMetadataInfo->getColumnName($fieldName);

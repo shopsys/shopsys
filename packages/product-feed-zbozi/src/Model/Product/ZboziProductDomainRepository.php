@@ -72,6 +72,7 @@ class ZboziProductDomainRepository
         $result = $queryBuilder->getQuery()->execute();
 
         $indexedResult = [];
+
         foreach ($result as $zboziProductDomain) {
             $productId = $zboziProductDomain->getProduct()->getId();
             $indexedResult[$productId] = $zboziProductDomain;

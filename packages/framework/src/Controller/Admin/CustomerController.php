@@ -330,6 +330,7 @@ class CustomerController extends AdminBaseController
         );
 
         $mainAdminDomainRouter = $this->domainRouterFactory->getRouter(Domain::MAIN_ADMIN_DOMAIN_ID);
+
         return $mainAdminDomainRouter->generate(
             'admin_login_sso',
             [

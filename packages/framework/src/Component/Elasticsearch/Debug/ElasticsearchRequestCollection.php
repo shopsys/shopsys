@@ -34,6 +34,7 @@ class ElasticsearchRequestCollection
     {
         $totalRequestsTime = 0;
         $collectedData = $this->getCollectedData();
+
         foreach ($collectedData as $requestData) {
             $totalRequestsTime += $requestData['duration'];
         }

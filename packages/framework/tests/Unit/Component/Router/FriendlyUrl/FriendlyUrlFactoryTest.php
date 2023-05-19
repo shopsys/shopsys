@@ -33,9 +33,11 @@ class FriendlyUrlFactoryTest extends TestCase
 
         $friendlyUrls = $friendlyUrlFactory->createForAllDomains($routeName, $entityId, $namesByLocale);
         $this->assertCount(2, $friendlyUrls);
+
         foreach ($friendlyUrls as $friendlyUrl) {
             $this->assertSame($entityId, $friendlyUrl->getEntityId());
             $this->assertSame($routeName, $friendlyUrl->getRouteName());
+
             if ($friendlyUrl->getDomainId() === 1) {
                 $this->assertSame($namesByLocale['cs'] . '/', $friendlyUrl->getSlug());
             } elseif ($friendlyUrl->getDomainId() === 2) {

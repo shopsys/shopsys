@@ -61,6 +61,7 @@ class ValueByDateTimeDataPointFormatter
     public function getDateTimesFormattedToLocaleFormat(array $valueByDateTimeDataPoints)
     {
         $returnDates = [];
+
         foreach ($valueByDateTimeDataPoints as $valueByDateTimeDataPoint) {
             $returnDates[] = $this->dateTimeFormatterExtension->formatDate($valueByDateTimeDataPoint->getDateTime());
         }

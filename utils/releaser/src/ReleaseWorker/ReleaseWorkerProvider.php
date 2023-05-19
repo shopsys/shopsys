@@ -37,6 +37,7 @@ class ReleaseWorkerProvider
     public function provideByStage(?string $stage, int $step): array
     {
         $activeReleaseWorkers = [];
+
         foreach ($this->releaseWorkers as $releaseWorker) {
             if (!$releaseWorker instanceof StageAwareInterface) {
                 continue;

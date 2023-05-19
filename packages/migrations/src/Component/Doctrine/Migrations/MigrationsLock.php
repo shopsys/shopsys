@@ -40,6 +40,7 @@ class MigrationsLock
     public function getOrderedInstalledMigrationClasses(): array
     {
         $orderedInstalledMigrationClasses = [];
+
         foreach ($this->load() as $class => $item) {
             if ($item['skip'] === false) {
                 $orderedInstalledMigrationClasses[] = $class;
@@ -66,6 +67,7 @@ class MigrationsLock
     public function getSkippedMigrationClasses(): array
     {
         $skippedMigrationClasses = [];
+
         foreach ($this->load() as $class => $item) {
             if ($item['skip'] === true) {
                 $skippedMigrationClasses[] = $class;
@@ -84,6 +86,7 @@ class MigrationsLock
 
         foreach ($availableMigrationsList->getItems() as $availableMigration) {
             $version = (string)$availableMigration->getVersion();
+
             if (!array_key_exists($version, $this->parsedMigrationsLock)) {
                 $this->parsedMigrationsLock[$version] = [
                     'skip' => false,

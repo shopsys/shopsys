@@ -23,6 +23,7 @@ class IntlCurrencyRepositoryTest extends TestCase
     public function getSupportedCurrencyCodes()
     {
         $data = [];
+
         foreach (IntlCurrencyRepository::SUPPORTED_CURRENCY_CODES as $currencyCode) {
             $data[] = ['currencyCode' => $currencyCode];
         }

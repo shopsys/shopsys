@@ -92,6 +92,7 @@ class DomainInfoCommand extends Command
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
         $propertyName = $input->getArgument(static::ARG_PROPERTY_NAME);
         $propertyValues = [];
+
         foreach ($domainConfigs as $domainConfig) {
             if (!$propertyAccessor->isReadable($domainConfig, $propertyName)) {
                 $this->outputPropertyNotAccessible($io, $domainConfig, $propertyName);
@@ -116,6 +117,7 @@ class DomainInfoCommand extends Command
         $domainConfigs = $this->domain->getAllIncludingDomainConfigsWithoutDataCreated();
 
         $domainId = $input->getArgument(static::ARG_ID);
+
         if ($domainId !== null) {
             foreach ($domainConfigs as $domainConfig) {
                 if ($domainId === (string)$domainConfig->getId()) {
@@ -156,6 +158,7 @@ class DomainInfoCommand extends Command
         }
 
         $output = $this->formatPropertyValues($propertyValues);
+
         if ($input->getOption(static::OPTION_ONELINE)) {
             $output = implode("\t", $output);
         }
@@ -181,6 +184,7 @@ class DomainInfoCommand extends Command
             if ($propertyValue === false) {
                 return '<options=bold;fg=red>NO</options=bold;fg=red>';
             }
+
             return $propertyValue;
         }, $propertyValues);
     }

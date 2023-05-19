@@ -45,6 +45,7 @@ class ArrayDataSource implements DataSourceInterface
         if ($this->rowIdSourceColumnName === null) {
             return $this->data[$rowId];
         }
+
         foreach ($this->data as $item) {
             if ($item[$this->rowIdSourceColumnName] === $rowId) {
                 return $item;
@@ -63,11 +64,13 @@ class ArrayDataSource implements DataSourceInterface
     {
         if ($limit !== null) {
             $message = 'Pagination not supported in ArrayDataSource';
+
             throw new PaginationNotSupportedException($message);
         }
 
         if ($orderSourceColumnName !== null) {
             $message = 'Ordering not supported in ArrayDataSource';
+
             throw new OrderingNotSupportedException($message);
         }
 

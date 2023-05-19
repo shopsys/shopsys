@@ -78,6 +78,7 @@ class AdministratorFrontSecurityFacade
             return $user;
         }
         $message = 'Administrator is not logged.';
+
         throw new AdministratorIsNotLoggedException($message);
     }
 
@@ -95,12 +96,15 @@ class AdministratorFrontSecurityFacade
 
         if ($serializedToken === null) {
             $message = 'Token not found.';
+
             throw new InvalidTokenException($message);
         }
 
         $token = unserialize($serializedToken);
+
         if (!$token instanceof TokenInterface) {
             $message = 'Token has invalid interface.';
+
             throw new InvalidTokenException($message);
         }
         $this->refreshUserInToken($token);
@@ -116,8 +120,10 @@ class AdministratorFrontSecurityFacade
     protected function refreshUserInToken(TokenInterface $token): void
     {
         $user = $token->getUser();
+
         if (!$user instanceof UserInterface) {
             $message = 'User in token must implement UserInterface.';
+
             throw new InvalidTokenException($message);
         }
 
@@ -125,9 +131,11 @@ class AdministratorFrontSecurityFacade
             $freshUser = $this->administratorUserProvider->refreshUser($user);
         } catch (UnsupportedUserException $e) {
             $message = 'AdministratorUserProvider does not support user in this token.';
+
             throw new InvalidTokenException($message, $e);
         } catch (UserNotFoundException $e) {
             $message = 'Username not found.';
+
             throw new InvalidTokenException($message, $e);
         }
 

@@ -53,6 +53,7 @@ class ProductParametersBatchLoader
     public function getProductParametersByName(Product $product, DomainConfig $domainConfig): array
     {
         $key = $this->getKey($product, $domainConfig);
+
         if (!array_key_exists($key, $this->loadedProductParametersByName)) {
             throw new ProductParametersNotLoadedException($product, $domainConfig);
         }

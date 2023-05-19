@@ -56,6 +56,7 @@ class PaginatorArgumentsBuilder implements MappingInterface
                 self::class,
                 static::CONFIG_ORDER_TYPE_KEY
             );
+
             throw new MandatoryArgumentMissingException($message);
         }
     }

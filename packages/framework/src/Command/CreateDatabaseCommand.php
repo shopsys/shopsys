@@ -153,6 +153,7 @@ class CreateDatabaseCommand extends Command
 
         /** @var \Doctrine\DBAL\Connection $connection */
         $connection = $this->doctrineRegistry->getConnection($defaultConnectionName);
+
         return $connection;
     }
 

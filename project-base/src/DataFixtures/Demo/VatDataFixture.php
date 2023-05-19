@@ -105,6 +105,7 @@ class VatDataFixture extends AbstractReferenceFixture
     private function createVat(VatData $vatData, int $domainId, $referenceName = null)
     {
         $vat = $this->vatFacade->create($vatData, $domainId);
+
         if ($referenceName !== null) {
             $this->addReferenceForDomain($referenceName, $vat, $domainId);
         }

@@ -58,8 +58,10 @@ class EntityExtensionTestHelper
 
         $configuration = $this->em->getConfiguration();
         $mappingDriver = $configuration->getMetadataDriverImpl();
+
         if ($mappingDriver instanceof MappingDriver) {
             $metadataDriverChain = $mappingDriver->getDriver();
+
             if ($metadataDriverChain instanceof MappingDriverChain) {
                 $metadataDriverChain->addDriver($driver, 'Tests\\App\\Functional\\EntityExtension');
             } else {

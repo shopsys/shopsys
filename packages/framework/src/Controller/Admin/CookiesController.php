@@ -55,6 +55,7 @@ class CookiesController extends AdminBaseController
             );
 
             $this->addSuccessFlashTwig(t('Cookies information settings modified.'));
+
             return $this->redirectToRoute('admin_cookies_setting');
         }
 

@@ -53,8 +53,10 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
     protected function validateDuplication(array $values, UniqueSlugsOnDomains $constraint)
     {
         $slugsCountByDomainId = $this->getSlugsCountIndexedByDomainId($values);
+
         foreach ($slugsCountByDomainId as $domainId => $countBySlug) {
             $domainConfig = $this->domain->getDomainConfigById($domainId);
+
             foreach ($countBySlug as $slug => $count) {
                 if ($count > 1) {
                     $this->context->addViolation(
@@ -80,6 +82,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
             $slug = $urlData[UrlListData::FIELD_SLUG];
 
             $domainRouter = $this->domainRouterFactory->getRouter($domainId);
+
             try {
                 $domainRouter->match('/' . $slug);
             } catch (ResourceNotFoundException $e) {
@@ -102,12 +105,15 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
     protected function getSlugsCountIndexedByDomainId(array $values)
     {
         $slugsCountByDomainId = [];
+
         foreach ($values as $urlData) {
             $domainId = $urlData[UrlListData::FIELD_DOMAIN];
             $slug = $urlData[UrlListData::FIELD_SLUG];
+
             if (!array_key_exists($domainId, $slugsCountByDomainId)) {
                 $slugsCountByDomainId[$domainId] = [];
             }
+
             if (!array_key_exists($slug, $slugsCountByDomainId[$domainId])) {
                 $slugsCountByDomainId[$domainId][$slug] = 0;
             }

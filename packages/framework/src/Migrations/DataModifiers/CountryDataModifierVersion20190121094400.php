@@ -31,6 +31,7 @@ class CountryDataModifierVersion20190121094400
     public function getGroupedByCode(): array
     {
         $tmp = [];
+
         foreach ($this->data as $row) {
             $tmp[$row['code']][] = $row;
         }
@@ -46,6 +47,7 @@ class CountryDataModifierVersion20190121094400
         $data = $this->groupDataIntoDomains($this->data);
 
         $tmp = [];
+
         foreach ($data as $domainId => $domainData) {
             foreach ($domainData as $row) {
                 if ($domainId === 1 || !array_key_exists($row['code'], $tmp)) {
@@ -71,6 +73,7 @@ class CountryDataModifierVersion20190121094400
     public function getAllIds(): array
     {
         $tmp = [];
+
         foreach ($this->data as $row) {
             $tmp[$row['id']] = $row['id'];
         }
@@ -170,6 +173,7 @@ class CountryDataModifierVersion20190121094400
     public function getObsoleteCountryIds(): array
     {
         $obsoleteIds = [];
+
         foreach ($this->data as $row) {
             $obsoleteIds[] = $row['id'];
         }
@@ -186,6 +190,7 @@ class CountryDataModifierVersion20190121094400
     private function groupDataIntoDomains(array $data): array
     {
         $tmp = [];
+
         foreach ($data as $row) {
             $tmp[$row['domain_id']][] = $row;
         }

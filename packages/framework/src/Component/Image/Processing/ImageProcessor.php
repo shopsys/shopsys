@@ -66,12 +66,14 @@ class ImageProcessor
         if (!in_array($extension, $this->supportedImageExtensions, true)) {
             throw new FileIsNotSupportedImageException($filepath);
         }
+
         try {
             if ($this->filesystem->has($filepath)) {
                 $file = $this->filesystem->read($filepath);
 
                 return $this->imageManager->make($file);
             }
+
             throw new ImageNotFoundException('File ' . $filepath . ' not found.');
         } catch (NotReadableException $ex) {
             throw new FileIsNotSupportedImageException($filepath, $ex);

@@ -138,6 +138,7 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
 
             $validator = $context->getValidator();
             $violations = $validator->validate($file, $fileConstraints);
+
             foreach ($violations as $violation) {
                 $context->addViolation($violation->getMessageTemplate(), $violation->getParameters());
             }
@@ -150,11 +151,13 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
     public function onPreSubmit(FormEvent $event)
     {
         $data = $event->getData();
+
         if (!is_array($data) || !array_key_exists('file', $data) || !is_array($data['file'])) {
             return;
         }
 
         $fallbackFiles = $data['file'];
+
         foreach ($fallbackFiles as $file) {
             if ($file instanceof UploadedFile) {
                 try {

@@ -39,6 +39,7 @@ class ImageViewFacade implements ImageViewFacadeInterface
         $imagesIndexedByEntityIds = $this->imageFacade->getImagesByEntitiesIndexedByEntityId($entityIds, $entityClass);
 
         $imageViewsOrNullsIndexedByEntityIds = [];
+
         foreach ($entityIds as $entityId) {
             $imageOrNull = $this->getImageOrNullFromArray($imagesIndexedByEntityIds, $entityId);
 
@@ -58,6 +59,7 @@ class ImageViewFacade implements ImageViewFacadeInterface
         $images = $this->imageFacade->getImagesByEntityId($entityId, $entityClass);
 
         $imageViews = [];
+
         foreach ($images as $image) {
             $imageViews[] = $this->createImageViewOrNullFromImage($image);
         }

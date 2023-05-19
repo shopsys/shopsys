@@ -20,6 +20,7 @@ final class FileFinder
     {
         $directories = [];
         $files = [];
+
         foreach ($source as $singleSource) {
             if (is_file($singleSource)) {
                 $fileInfo = new SplFileInfo($singleSource);

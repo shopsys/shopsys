@@ -30,6 +30,7 @@ class CronTimeResolver
     {
         $timeValues = explode(',', $timeString);
         $matches = null;
+
         foreach ($timeValues as $timeValue) {
             if (
                 $timeValue === '*'
@@ -53,6 +54,7 @@ class CronTimeResolver
     {
         $timeValues = explode(',', $timeString);
         $matches = null;
+
         foreach ($timeValues as $timeValue) {
             // syntax */[int]
             if (preg_match('@^\*/(\d+)$@', $timeValue, $matches)) {

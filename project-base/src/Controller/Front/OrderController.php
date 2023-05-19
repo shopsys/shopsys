@@ -166,6 +166,7 @@ class OrderController extends FrontBaseController
     public function indexAction(RequestStack $requestStack): Response
     {
         $cart = $this->cartFacade->findCartOfCurrentCustomerUser();
+
         if ($cart === null) {
             return $this->redirectToRoute('front_cart');
         }
@@ -174,6 +175,7 @@ class OrderController extends FrontBaseController
 
         $frontOrderFormData = new FrontOrderData();
         $frontOrderFormData->deliveryAddressSameAsBillingAddress = true;
+
         if ($customerUser instanceof CustomerUser) {
             $this->orderFacade->prefillFrontOrderData($frontOrderFormData, $customerUser);
         }
@@ -184,6 +186,7 @@ class OrderController extends FrontBaseController
         $frontOrderFormData->currency = $currency;
 
         $orderFlow = $this->domainAwareOrderFlowFactory->create();
+
         if ($orderFlow->isBackToCartTransition()) {
             return $this->redirectToRoute('front_cart');
         }
@@ -271,6 +274,7 @@ class OrderController extends FrontBaseController
     private function getPaymentTransportRelations(array $payments): string
     {
         $relations = [];
+
         foreach ($payments as $payment) {
             foreach ($payment->getTransports() as $transport) {
                 $relations[] = [

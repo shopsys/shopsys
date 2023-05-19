@@ -222,6 +222,7 @@ class PaymentFacade
     {
         $paymentPricesWithVatByPaymentId = [];
         $payments = $this->getAllIncludingDeleted();
+
         foreach ($payments as $payment) {
             $paymentPrice = $this->paymentPriceCalculation->calculateIndependentPrice($payment, $currency, $domainId);
             $paymentPricesWithVatByPaymentId[$payment->getId()] = $paymentPrice->getPriceWithVat();
@@ -238,6 +239,7 @@ class PaymentFacade
     {
         $paymentVatPercentsByPaymentId = [];
         $payments = $this->getAllIncludingDeleted();
+
         foreach ($payments as $payment) {
             $paymentVatPercentsByPaymentId[$payment->getId()] = $payment->getPaymentDomain(
                 $domainId
@@ -262,6 +264,7 @@ class PaymentFacade
     public function getIndependentBasePricesIndexedByDomainId(Payment $payment): array
     {
         $prices = [];
+
         foreach ($payment->getPrices() as $paymentInputPrice) {
             $domainId = $paymentInputPrice->getDomainId();
             $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
@@ -271,6 +274,7 @@ class PaymentFacade
                 $domainId
             );
         }
+
         return $prices;
     }
 
@@ -284,8 +288,10 @@ class PaymentFacade
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+
             if ($payment === null) {
                 $prices[$domainId] = Price::zero();
+
                 continue;
             }
 

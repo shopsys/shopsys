@@ -45,9 +45,11 @@ class AdminDomainTabsFacade
     {
         try {
             $domainId = $this->requestStack->getSession()->get(static::SESSION_SELECTED_DOMAIN);
+
             return $this->domain->getDomainConfigById($domainId);
         } catch (InvalidDomainIdException | SessionNotFoundException) {
             $allDomains = $this->domain->getAll();
+
             return reset($allDomains);
         }
     }

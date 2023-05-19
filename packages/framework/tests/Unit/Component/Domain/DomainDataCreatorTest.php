@@ -71,9 +71,11 @@ class DomainDataCreatorTest extends TestCase
             ->method('getForDomain')
             ->willReturnCallback(function ($key, $domainId) {
                 $this->assertEquals(Setting::DOMAIN_DATA_CREATED, $key);
+
                 if ($domainId === Domain::FIRST_DOMAIN_ID) {
                     return true;
                 }
+
                 throw new SettingValueNotFoundException();
             });
 
@@ -151,9 +153,11 @@ class DomainDataCreatorTest extends TestCase
             ->method('get')
             ->willReturnCallback(function ($key, $domainId) {
                 $this->assertEquals(Setting::DOMAIN_DATA_CREATED, $key);
+
                 if ($domainId === Domain::FIRST_DOMAIN_ID) {
                     return true;
                 }
+
                 throw new SettingValueNotFoundException();
             });
 

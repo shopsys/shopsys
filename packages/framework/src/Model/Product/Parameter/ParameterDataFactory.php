@@ -34,6 +34,7 @@ class ParameterDataFactory implements ParameterDataFactoryInterface
     {
         $parameterData = $this->createInstance();
         $this->fillNew($parameterData);
+
         return $parameterData;
     }
 
@@ -68,6 +69,7 @@ class ParameterDataFactory implements ParameterDataFactoryInterface
         /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation[] $translations */
         $translations = $parameter->getTranslations();
         $names = [];
+
         foreach ($translations as $translate) {
             $names[$translate->getLocale()] = $translate->getName();
         }

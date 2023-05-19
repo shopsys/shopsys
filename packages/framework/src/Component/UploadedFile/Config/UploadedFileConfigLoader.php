@@ -92,6 +92,7 @@ class UploadedFileConfigLoader
     protected function prepareTypes(array $typesConfig): array
     {
         $result = [];
+
         foreach ($typesConfig as $typeConfig) {
             $typeName = $typeConfig[UploadedFileConfigDefinition::CONFIG_TYPE_NAME];
             $typeMultiple = $typeConfig[UploadedFileConfigDefinition::CONFIG_TYPE_MULTIPLE];

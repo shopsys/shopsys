@@ -66,9 +66,11 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
         $pluginData = [
             'cpc' => [],
         ];
+
         foreach ($heurekaProductDomains as $heurekaProductDomain) {
             $pluginData['cpc'][$heurekaProductDomain->getDomainId()] = $heurekaProductDomain->getCpc();
         }
+
         return $pluginData;
     }
 
@@ -79,6 +81,7 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
     public function saveData($productId, $data)
     {
         $heurekaProductDomainsData = [];
+
         if (array_key_exists('cpc', $data)) {
             foreach ($data['cpc'] as $domainId => $cpc) {
                 $heurekaProductDomainData = $this->heurekaProductDomainDataFactory->create();

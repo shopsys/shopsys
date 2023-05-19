@@ -195,6 +195,7 @@ class ProductDetailViewFactory
     protected function getFlagIdsForProduct(Product $product): array
     {
         $flagIds = [];
+
         foreach ($product->getFlags() as $flag) {
             $flagIds[] = $flag->getId();
         }

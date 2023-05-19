@@ -83,6 +83,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
+
             if ($domainId === Domain::SECOND_DOMAIN_ID) {
                 $this->loadDistinct($domainId);
             } else {
@@ -735,6 +736,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         ?CustomerUser $customerUser = null
     ) {
         $quantifiedProducts = [];
+
         foreach ($products as $productReferenceName => $quantity) {
             $product = $this->getReference($productReferenceName);
             $quantifiedProducts[] = new QuantifiedProduct($product, $quantity);

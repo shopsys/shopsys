@@ -46,6 +46,7 @@ class DomainFactoryOverwritingDomainUrl
             $domainsConfigFilepath,
             $domainsUrlsConfigFilepath
         );
+
         if ($this->overwriteDomainUrl !== null) {
             $domainConfigs = $this->overwriteDomainUrl($domainConfigs);
         }
@@ -53,6 +54,7 @@ class DomainFactoryOverwritingDomainUrl
         $domain = new Domain($domainConfigs, $this->setting);
 
         $domainId = getenv('DOMAIN');
+
         if ($domainId !== false) {
             $domain->switchDomainById((int)$domainId);
         }
@@ -67,6 +69,7 @@ class DomainFactoryOverwritingDomainUrl
     public function overwriteDomainUrl(array $domainConfigs)
     {
         $mockedDomainConfigs = [];
+
         foreach ($domainConfigs as $domainConfig) {
             $mockedDomainConfigs[] = new DomainConfig(
                 $domainConfig->getId(),

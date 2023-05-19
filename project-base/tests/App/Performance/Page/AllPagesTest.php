@@ -82,6 +82,7 @@ class AllPagesTest extends KernelTestCase
         $requestDataSetGenerators = [];
         $allRouteInfo = $this->getRouterAdapter()->getAllRouteInfo();
         $requestDataSetGeneratorFactory = new RequestDataSetGeneratorFactory();
+
         foreach ($allRouteInfo as $routeInfo) {
             $requestDataSetGenerators[] = $requestDataSetGeneratorFactory->create($routeInfo);
         }
@@ -97,6 +98,7 @@ class AllPagesTest extends KernelTestCase
         });
 
         $allRequestDataSets = [];
+
         foreach ($requestDataSetGenerators as $requestDataSetGenerator) {
             $requestDataSets = $requestDataSetGenerator->generateRequestDataSets();
 
@@ -120,6 +122,7 @@ class AllPagesTest extends KernelTestCase
 
         $requestDataSetCount = count($requestDataSets);
         $requestDataSetIndex = 0;
+
         foreach ($requestDataSets as $requestDataSet) {
             $requestDataSetIndex++;
 
@@ -146,8 +149,10 @@ class AllPagesTest extends KernelTestCase
         $performanceTestSamples = [];
 
         $requestDataSetCount = count($requestDataSets);
+
         for ($pass = 1; $pass <= self::PASSES; $pass++) {
             $requestDataSetIndex = 0;
+
             foreach ($requestDataSets as $requestDataSet) {
                 $requestDataSetIndex++;
 
@@ -222,6 +227,7 @@ class AllPagesTest extends KernelTestCase
             case PerformanceTestSampleQualifier::STATUS_OK:
             case PerformanceTestSampleQualifier::STATUS_WARNING:
                 $this->assertTrue(true);
+
                 return;
             case PerformanceTestSampleQualifier::STATUS_CRITICAL:
             default:
@@ -270,6 +276,7 @@ class AllPagesTest extends KernelTestCase
     private function getRouterAdapter()
     {
         $router = static::$container->get('router');
+
         return new SymfonyRouterAdapter($router);
     }
 
@@ -283,6 +290,7 @@ class AllPagesTest extends KernelTestCase
 
         $currentLogger = $connectionConfiguration->getSQLLogger();
         $loggers = [];
+
         if ($currentLogger !== null) {
             $loggers[] = $currentLogger;
         }

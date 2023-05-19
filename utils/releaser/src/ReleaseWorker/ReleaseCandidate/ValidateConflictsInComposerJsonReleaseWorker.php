@@ -73,6 +73,7 @@ final class ValidateConflictsInComposerJsonReleaseWorker extends AbstractShopsys
 
         foreach ($this->composerJsonFilesProvider->provideAll() as $fileInfo) {
             $jsonContent = $this->jsonFileManager->loadFromFileInfo($fileInfo);
+
             if (!isset($jsonContent[self::CONFLICT_SECTION])) {
                 continue;
             }

@@ -30,6 +30,7 @@ class SliderItemFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $imageConstraints = [];
+
         if ($options['scenario'] === self::SCENARIO_CREATE) {
             $imageConstraints[] = new Constraints\NotBlank(['message' => 'Please choose image']);
         }

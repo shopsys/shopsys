@@ -43,6 +43,7 @@ class Version20191108140919 extends AbstractMigration
         foreach ($this->getAllDomainIds() as $domainId) {
             foreach ($currentProductsIdWithVat as $currentProductIdWithVat) {
                 $newVatId = $currentProductIdWithVat['vat_id'];
+
                 if ($domainId > 1) {
                     $newVatId = $this
                         ->sql(

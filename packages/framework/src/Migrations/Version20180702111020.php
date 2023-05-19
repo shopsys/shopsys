@@ -39,6 +39,7 @@ class Version20180702111020 extends AbstractMigration
         $inputPriceTypeSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'inputPriceType\' AND domain_id = 0;'
         )->fetchOne();
+
         if ($inputPriceTypeSettingCount <= 0) {
             /**
              * value 2 stands for INPUT_PRICE_TYPE_WITHOUT_VAT
@@ -56,6 +57,7 @@ class Version20180702111020 extends AbstractMigration
         $roundingTypeSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'roundingType\' AND domain_id = 0;'
         )->fetchOne();
+
         if ($roundingTypeSettingCount <= 0) {
             /**
              * value 3 stands for ROUNDING_TYPE_HUNDREDTHS
@@ -73,6 +75,7 @@ class Version20180702111020 extends AbstractMigration
         $orderSubmittedTextSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'orderSubmittedText\' AND domain_id = 1;'
         )->fetchOne();
+
         if ($orderSubmittedTextSettingCount > 0) {
             return;
         }
@@ -99,6 +102,7 @@ class Version20180702111020 extends AbstractMigration
         $mailAdminMailSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'mainAdminMail\' AND domain_id = 1;'
         )->fetchOne();
+
         if ($mailAdminMailSettingCount <= 0) {
             $this->sql(
                 'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'mainAdminMail\', 1, \'no-reply@shopsys.com\', \'string\')'
@@ -111,6 +115,7 @@ class Version20180702111020 extends AbstractMigration
         $mainAdminMailNameSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'mainAdminMailName\' AND domain_id = 1;'
         )->fetchOne();
+
         if ($mainAdminMailNameSettingCount <= 0) {
             $this->sql(
                 'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'mainAdminMailName\', 1, \'Shopsys\', \'string\')'
@@ -123,6 +128,7 @@ class Version20180702111020 extends AbstractMigration
         $freeTransportAndPaymentPriceLimitSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'freeTransportAndPaymentPriceLimit\' AND domain_id = 1;'
         )->fetchOne();
+
         if ($freeTransportAndPaymentPriceLimitSettingCount <= 0) {
             $this->sql(
                 'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'freeTransportAndPaymentPriceLimit\', 1, null, \'none\')'
@@ -135,6 +141,7 @@ class Version20180702111020 extends AbstractMigration
         $seoMetaDescriptionMainPageSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'seoMetaDescriptionMainPage\' AND domain_id = 1;'
         )->fetchOne();
+
         if ($seoMetaDescriptionMainPageSettingCount <= 0) {
             $this->sql(
                 'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'seoMetaDescriptionMainPage\', 1, :text, \'string\')',
@@ -150,6 +157,7 @@ class Version20180702111020 extends AbstractMigration
         $seoTitleMainPageSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'seoTitleMainPage\' AND domain_id = 1;'
         )->fetchOne();
+
         if ($seoTitleMainPageSettingCount <= 0) {
             $this->sql(
                 'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'seoTitleMainPage\', 1, :text, \'string\')',
@@ -165,6 +173,7 @@ class Version20180702111020 extends AbstractMigration
         $seoTitleAddOnSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'seoTitleAddOn\' AND domain_id = 1;'
         )->fetchOne();
+
         if ($seoTitleAddOnSettingCount <= 0) {
             $this->sql(
                 'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'seoTitleAddOn\', 1, :text, \'string\')',
@@ -180,6 +189,7 @@ class Version20180702111020 extends AbstractMigration
         $termsAndConditionsArticleIdSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'termsAndConditionsArticleId\' AND domain_id = 1;'
         )->fetchOne();
+
         if ($termsAndConditionsArticleIdSettingCount <= 0) {
             $this->sql(
                 'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'termsAndConditionsArticleId\', 1, null, \'integer\')'
@@ -192,6 +202,7 @@ class Version20180702111020 extends AbstractMigration
         $cookiesArticleIdSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'cookiesArticleId\' AND domain_id = 1;'
         )->fetchOne();
+
         if ($cookiesArticleIdSettingCount <= 0) {
             $this->sql(
                 'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'cookiesArticleId\', 1, null, \'integer\')'
@@ -204,6 +215,7 @@ class Version20180702111020 extends AbstractMigration
         $domainDataCreatedSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'domainDataCreated\' AND domain_id = 1;'
         )->fetchOne();
+
         if ($domainDataCreatedSettingCount <= 0) {
             $this->sql(
                 'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'domainDataCreated\', 1, \'true\', \'boolean\')'
@@ -216,6 +228,7 @@ class Version20180702111020 extends AbstractMigration
         $feedHashSettingCount = $this->sql(
             'SELECT COUNT(*) FROM setting_values WHERE name = \'feedHash\' AND domain_id = 0;'
         )->fetchOne();
+
         if ($feedHashSettingCount <= 0) {
             $this->sql(
                 'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'feedHash\', 0, :hash, \'string\')',
@@ -237,6 +250,7 @@ class Version20180702111020 extends AbstractMigration
         $numberOfChars = strlen($characters);
 
         $hash = '';
+
         for ($i = 1; $i <= 10; $i++) {
             $randomIndex = random_int(0, $numberOfChars - 1);
             $hash .= $characters[$randomIndex];

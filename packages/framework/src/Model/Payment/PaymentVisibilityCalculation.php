@@ -36,6 +36,7 @@ class PaymentVisibilityCalculation
     public function filterVisible(array $payments, $domainId)
     {
         $visiblePayments = [];
+
         foreach ($payments as $payment) {
             if ($this->isVisible($payment, $domainId)) {
                 $visiblePayments[] = $payment;

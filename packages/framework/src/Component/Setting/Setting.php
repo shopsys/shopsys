@@ -65,6 +65,7 @@ class Setting
         }
 
         $message = 'Common setting value with name "' . $key . '" not found.';
+
         throw new SettingValueNotFoundException($message);
     }
 
@@ -84,6 +85,7 @@ class Setting
         }
 
         $message = 'Setting value with name "' . $key . '" for domain with ID "' . $domainId . '" not found.';
+
         throw new SettingValueNotFoundException($message);
     }
 
@@ -97,6 +99,7 @@ class Setting
 
         if (!array_key_exists($key, $this->values[SettingValue::DOMAIN_ID_COMMON])) {
             $message = 'Common setting value with name "' . $key . '" not found.';
+
             throw new SettingValueNotFoundException($message);
         }
 
@@ -117,6 +120,7 @@ class Setting
 
         if (!array_key_exists($key, $this->values[$domainId])) {
             $message = 'Setting value with name "' . $key . '" for domain ID "' . $domainId . '" not found.';
+
             throw new SettingValueNotFoundException($message);
         }
 
@@ -133,6 +137,7 @@ class Setting
     {
         if ($domainId === null) {
             $message = 'Cannot load setting value for null domain ID';
+
             throw new InvalidArgumentException($message);
         }
 
@@ -141,6 +146,7 @@ class Setting
         }
 
         $this->values[$domainId] = [];
+
         foreach ($this->settingValueRepository->getAllByDomainId($domainId) as $settingValue) {
             $this->values[$domainId][$settingValue->getName()] = $settingValue;
         }

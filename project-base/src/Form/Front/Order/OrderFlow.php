@@ -89,6 +89,7 @@ class OrderFlow extends FormFlow
 
         foreach ($this->getSteps() as $step) {
             $stepForm = $this->createFormForStep($step->getNumber());
+
             if ($this->getRequest()->request->has($stepForm->getName())) {
                 $stepData[$step->getNumber()] = $this->getRequest()->request->all($stepForm->getName());
             }
@@ -114,6 +115,7 @@ class OrderFlow extends FormFlow
         parent::bind($formData); // load current step number
 
         $firstInvalidStep = $this->getFirstInvalidStep();
+
         if ($firstInvalidStep === null || $this->getCurrentStepNumber() <= $firstInvalidStep->getNumber()) {
             return;
         }
@@ -145,9 +147,11 @@ class OrderFlow extends FormFlow
     {
         $stepNumber = $step->getNumber();
         $stepsData = $this->retrieveStepData();
+
         if (array_key_exists($stepNumber, $stepsData)) {
             $stepForm = $this->createFormForStep($stepNumber);
             $stepForm->submit($stepsData[$stepNumber]); // the form is validated here
+
             return $stepForm->isValid();
         }
 
@@ -160,6 +164,7 @@ class OrderFlow extends FormFlow
     private function changeRequestToStep(StepInterface $step)
     {
         $stepsData = $this->retrieveStepData();
+
         if (array_key_exists($step->getNumber(), $stepsData)) {
             $stepData = $stepsData[$step->getNumber()];
         } else {

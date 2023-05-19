@@ -15,6 +15,7 @@ class HashGenerator
         $numberOfChars = strlen($this->characters);
 
         $hash = '';
+
         for ($i = 1; $i <= $length; $i++) {
             $randomIndex = random_int(0, $numberOfChars - 1);
             $hash .= $this->characters[$randomIndex];

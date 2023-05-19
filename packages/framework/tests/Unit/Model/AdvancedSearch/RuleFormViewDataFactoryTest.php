@@ -27,6 +27,7 @@ class RuleFormViewDataFactoryTest extends TestCase
 
         $this->assertArrayHasKey(RuleFormViewDataFactory::TEMPLATE_RULE_FORM_KEY, $rulesFormViewData);
         $this->assertCount(2, $rulesFormViewData);
+
         foreach ($rulesFormViewData as $ruleFormData) {
             $this->assertArrayHasKey('subject', $ruleFormData);
             $this->assertArrayHasKey('operator', $ruleFormData);
@@ -49,6 +50,7 @@ class RuleFormViewDataFactoryTest extends TestCase
 
         $this->assertArrayHasKey(RuleFormViewDataFactory::TEMPLATE_RULE_FORM_KEY, $rulesFormViewData);
         $this->assertCount(2, $rulesFormViewData);
+
         foreach ($rulesFormViewData as $key => $ruleFormData) {
             if ($key !== RuleFormViewDataFactory::TEMPLATE_RULE_FORM_KEY) {
                 $this->assertSame($requestData[0], $ruleFormData);

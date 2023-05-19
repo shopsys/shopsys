@@ -60,6 +60,7 @@ class ImageController extends FrontBaseController
                 $sizeName,
                 $imageId
             );
+
             throw $this->createNotFoundException($message, $e);
         }
 
@@ -96,6 +97,7 @@ class ImageController extends FrontBaseController
                 $imageId,
                 $additionalIndex
             );
+
             throw $this->createNotFoundException($message, $e);
         }
 
@@ -123,6 +125,7 @@ class ImageController extends FrontBaseController
             return new StreamedResponse($callback, 200, $headers);
         } catch (Exception $e) {
             $message = 'Response with file "' . $imageFilepath . '" failed.';
+
             throw $this->createNotFoundException($message, $e);
         }
     }

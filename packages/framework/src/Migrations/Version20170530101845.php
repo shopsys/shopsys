@@ -19,6 +19,7 @@ class Version20170530101845 extends AbstractMigration
             'shopInfoEmail' => 'no-reply@shopsys.com',
             'shopInfoPhoneHours' => '(po-pá, 10:00 - 16:00)',
         ];
+
         foreach ($demoSettingValues as $name => $demoValue) {
             // Migration Version20161207144725 added demo setting values that should be set in data fixtures.
             // Therefore we clear it because default values should be empty.

@@ -70,6 +70,7 @@ class TranslationSourceReplacement
     public function getSourceFilePaths()
     {
         $sourceFilePaths = [];
+
         foreach ($this->sourceFileReferences as $sourceFileReference) {
             $sourceFilePaths[] = $this->extractSourceFilePathFromReference($sourceFileReference);
         }
@@ -84,6 +85,7 @@ class TranslationSourceReplacement
     public function getExpectedReplacementsCountForSourceFilePath($sourceFilePath)
     {
         $expectedReplacementsCount = 0;
+
         foreach ($this->sourceFileReferences as $sourceFileReference) {
             if ($this->extractSourceFilePathFromReference($sourceFileReference) === $sourceFilePath) {
                 $expectedReplacementsCount++;

@@ -113,6 +113,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
+
             if ($domainId === Domain::SECOND_DOMAIN_ID) {
                 $customersDataProvider = $this->getDistinctCustomerUsersDataProvider();
             } else {
@@ -125,6 +126,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
 
                 /** @var \App\Model\Customer\User\CustomerUser $customerUser */
                 $customerUser = $this->customerUserFacade->create($customerUserUpdateData);
+
                 if ($customerUser->getId() !== 1) {
                     continue;
                 }

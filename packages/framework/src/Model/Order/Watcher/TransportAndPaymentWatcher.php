@@ -48,6 +48,7 @@ class TransportAndPaymentWatcher
         $payment = $orderData->payment;
 
         $transportPriceChanged = false;
+
         if ($transport !== null) {
             $transportPriceChanged = $this->checkTransportPrice(
                 $transport,
@@ -58,6 +59,7 @@ class TransportAndPaymentWatcher
         }
 
         $paymentPriceChanged = false;
+
         if ($payment !== null) {
             $paymentPriceChanged = $this->checkPaymentPrice(
                 $payment,
@@ -158,6 +160,7 @@ class TransportAndPaymentWatcher
         int $domainId
     ): array {
         $transportPriceValues = [];
+
         foreach ($transports as $transport) {
             $transportPrice = $this->transportPriceCalculation->calculatePrice(
                 $transport,
@@ -185,6 +188,7 @@ class TransportAndPaymentWatcher
         int $domainId
     ): array {
         $paymentPriceValues = [];
+
         foreach ($payments as $payment) {
             $paymentPrice = $this->paymentPriceCalculation->calculatePrice(
                 $payment,

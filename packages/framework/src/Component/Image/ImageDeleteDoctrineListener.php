@@ -61,6 +61,7 @@ class ImageDeleteDoctrineListener
     protected function deleteEntityImages($entity, EntityManagerInterface $em)
     {
         $images = $this->getImageFacade()->getAllImagesByEntity($entity);
+
         foreach ($images as $image) {
             $em->remove($image);
         }

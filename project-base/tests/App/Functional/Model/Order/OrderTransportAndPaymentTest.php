@@ -312,6 +312,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
         $paymentData = $paymentDataFactory->create();
         $names = [];
+
         foreach ($this->domain->getAllLocales() as $locale) {
             $names[$locale] = 'paymentName';
         }
@@ -333,6 +334,7 @@ class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
 
         $transportData = $transportDataFactory->create();
         $names = [];
+
         foreach ($this->domain->getAllLocales() as $locale) {
             $names[$locale] = 'transportName';
         }

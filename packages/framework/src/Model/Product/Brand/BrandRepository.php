@@ -38,6 +38,7 @@ class BrandRepository
 
         if ($brand === null) {
             $message = 'Brand with ID ' . $brandId . ' not found.';
+
             throw new BrandNotFoundException($message);
         }
 

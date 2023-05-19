@@ -37,6 +37,7 @@ class FreeTransportAndPaymentFacade
     public function isFree(Money $productsPriceWithVat, $domainId)
     {
         $freeTransportAndPaymentPriceLimit = $this->getFreeTransportAndPaymentPriceLimitOnDomain($domainId);
+
         if ($freeTransportAndPaymentPriceLimit === null) {
             return false;
         }

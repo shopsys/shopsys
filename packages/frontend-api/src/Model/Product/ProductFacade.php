@@ -187,6 +187,7 @@ class ProductFacade
         }
 
         $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
+
         return $productsResult->getHits();
     }
 

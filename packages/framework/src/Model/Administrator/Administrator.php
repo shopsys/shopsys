@@ -150,6 +150,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
                 return $gridLimit;
             }
         }
+
         return null;
     }
 
@@ -394,6 +395,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     public function restoreGridLimit(Grid $grid)
     {
         $gridLimit = $this->getGridLimit($grid->getId());
+
         if ($gridLimit !== null) {
             $grid->setDefaultLimit($gridLimit->getLimit());
         }
@@ -434,6 +436,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
             $this->id,
             implode(', ', Roles::getMandatoryAdministratorRoles())
         );
+
         throw new MandatoryAdministratorRoleIsMissingException($message);
     }
 }

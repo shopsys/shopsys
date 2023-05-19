@@ -72,6 +72,7 @@ SAMPLE
 
         for ($index = $limit; $index > 0; --$index) {
             $token = $tokens[$index];
+
             if (!$token->isGivenKind(T_DOC_COMMENT)) {
                 continue;
             }
@@ -81,11 +82,13 @@ SAMPLE
             }
 
             $functionTokenPosition = $tokens->getNextTokenOfKind($index, [new Token([T_FUNCTION, 'function'])]);
+
             if ($functionTokenPosition === null) {
                 continue;
             }
 
             $argumentAnalyses = $this->functionsAnalyzer->getFunctionArguments($tokens, $functionTokenPosition);
+
             if (count($argumentAnalyses) === 0) {
                 continue;
             }
@@ -147,6 +150,7 @@ SAMPLE
         }
 
         $paramAnnotations = Strings::matchAll($docToken->getContent(), '#@param#m');
+
         if (count($paramAnnotations) < 2) {
             return true;
         }
@@ -166,6 +170,7 @@ SAMPLE
 
         foreach ($lines as $key => $line) {
             $paramName = $this->getParamNameFromLine($line);
+
             if ($paramName === null || !isset($argumentAnalyses[$paramName])) {
                 continue;
             }
@@ -182,8 +187,10 @@ SAMPLE
         $properParamOrder = array_merge($docParamNamesToKeys, $argumentNamesToKeys);
 
         $newLines = [];
+
         foreach ($lines as $position => $line) {
             $paramName = $this->getParamNameFromLine($line);
+
             if ($paramName !== null && isset($properParamOrder[$paramName])) {
                 $newPosition = $properParamOrder[$paramName];
                 $newLines[$newPosition] = $line;
@@ -204,6 +211,7 @@ SAMPLE
     private function getParamNameFromLine(Line $line): ?string
     {
         $matches = Strings::match($line->getContent(), PhpdocRegex::ARGUMENT_NAME_PATTERN);
+
         if (isset($matches[1]) && $matches[1] !== '') {
             return $matches[1];
         }

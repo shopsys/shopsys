@@ -47,6 +47,7 @@ class OrderNumberSequenceRepository
                 static::ID,
                 LockMode::PESSIMISTIC_WRITE
             );
+
             if ($orderNumberSequence === null) {
                 throw new OrderNumberSequenceNotFoundException(
                     'Order number sequence ID ' . static::ID . ' not found.'
@@ -65,6 +66,7 @@ class OrderNumberSequenceRepository
             $this->em->commit();
         } catch (Exception $e) {
             $this->em->rollback();
+
             throw $e;
         }
 

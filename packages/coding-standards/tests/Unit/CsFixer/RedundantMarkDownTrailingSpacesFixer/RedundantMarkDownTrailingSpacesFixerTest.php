@@ -23,6 +23,7 @@ final class RedundantMarkDownTrailingSpacesFixerTest extends AbstractFixerTestCa
     public function getTestingFiles(): iterable
     {
         yield [__DIR__ . '/fixed/fixed.md', __DIR__ . '/wrong/wrong.md'];
+
         yield [__DIR__ . '/correct/correct.md'];
     }
 }

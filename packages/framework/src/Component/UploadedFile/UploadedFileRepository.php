@@ -77,6 +77,7 @@ class UploadedFileRepository
 
         if ($uploadedFile === null) {
             $message = 'UploadedFile with ID ' . $uploadedFileId . ' does not exist.';
+
             throw new FileNotFoundException($message);
         }
 

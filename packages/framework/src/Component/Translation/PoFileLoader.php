@@ -21,6 +21,7 @@ class PoFileLoader extends BasePoFileLoader
         $messages = $catalogue->all($domain);
 
         $filteredMessages = [];
+
         foreach ($messages as $key => $message) {
             if ($message !== '') {
                 $filteredMessages[$key] = $message;

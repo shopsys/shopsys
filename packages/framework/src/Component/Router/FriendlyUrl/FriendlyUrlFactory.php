@@ -85,6 +85,7 @@ class FriendlyUrlFactory implements FriendlyUrlFactoryInterface
         array $namesByLocale
     ): array {
         $friendlyUrls = [];
+
         foreach ($this->domain->getAll() as $domainConfig) {
             if (array_key_exists($domainConfig->getLocale(), $namesByLocale)) {
                 $friendlyUrl = $this->createIfValid(

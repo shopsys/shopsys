@@ -41,18 +41,22 @@ class PerformanceTestSummaryPrinter
         $resultColor = $this->getStatusConsoleTextColor($resultStatus);
         $resultTag = 'fg=' . $resultColor;
         $consoleOutput->writeln('');
+
         switch ($resultStatus) {
             case PerformanceTestSampleQualifier::STATUS_OK:
                 $consoleOutput->write('<' . $resultTag . '>Test passed</' . $resultTag . '>');
+
                 return;
             case PerformanceTestSampleQualifier::STATUS_WARNING:
                 $consoleOutput->write(
                     '<' . $resultTag . '>Test passed, but contains some warnings</' . $resultTag . '>'
                 );
+
                 return;
             case PerformanceTestSampleQualifier::STATUS_CRITICAL:
             default:
                 $consoleOutput->write('<' . $resultTag . '>Test failed</' . $resultTag . '>');
+
                 return;
         }
     }
@@ -95,6 +99,7 @@ class PerformanceTestSummaryPrinter
     private function getFormatterTagForDuration($duration)
     {
         $status = $this->performanceTestSampleQualifier->getStatusForDuration($duration);
+
         return 'fg=' . $this->getStatusConsoleTextColor($status);
     }
 
@@ -105,6 +110,7 @@ class PerformanceTestSummaryPrinter
     private function getFormatterTagForQueryCount($queryCount)
     {
         $status = $this->performanceTestSampleQualifier->getStatusForQueryCount($queryCount);
+
         return 'fg=' . $this->getStatusConsoleTextColor($status);
     }
 

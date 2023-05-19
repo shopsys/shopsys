@@ -24,11 +24,13 @@ class ForbiddenDoctrineInheritanceSniff implements Sniff
     public function process(File $file, $classPosition)
     {
         $phpDocStartPosition = $file->findPrevious(T_DOC_COMMENT_OPEN_TAG, $classPosition);
+
         if ($phpDocStartPosition === false) {
             return;
         }
 
         $phpDocTags = $this->findPhpDocTags($file, $classPosition, $phpDocStartPosition);
+
         foreach ($phpDocTags as $position => $token) {
             if ($this->isDoctrineInheritanceAnnotation($token)) {
                 $message = 'It is forbidden to use Doctrine inheritance mapping because it causes problems during entity extension. Such problem with `OrderItem` was resolved during making OrderItem extendable #715.';
@@ -53,6 +55,7 @@ class ForbiddenDoctrineInheritanceSniff implements Sniff
 
         $result = [];
         $tokens = $file->getTokens();
+
         for ($i = $phpDocStartPosition; $i < $phpDocEndPosition; $i++) {
             if ($tokens[$i]['code'] === T_DOC_COMMENT_TAG) {
                 $result[$i] = $tokens[$i];
@@ -68,6 +71,7 @@ class ForbiddenDoctrineInheritanceSniff implements Sniff
     private function isDoctrineInheritanceAnnotation(array $token)
     {
         $content = $token['content'];
+
         return preg_match('~^.*ORM.*InheritanceType~', $content) === 1;
     }
 }

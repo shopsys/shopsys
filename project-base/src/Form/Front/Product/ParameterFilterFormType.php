@@ -29,6 +29,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
         $config = $options['product_filter_config'];
 
         $this->parameterChoicesIndexedByParameterId = [];
+
         foreach ($config->getParameterChoices() as $parameterChoice) {
             $parameter = $parameterChoice->getParameter();
             $parameterValues = $parameterChoice->getValues();
@@ -73,6 +74,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
         }
 
         $parametersFilterData = [];
+
         foreach ($value as $parameterId => $parameterValues) {
             if (!array_key_exists($parameterId, $this->parameterChoicesIndexedByParameterId)) {
                 continue; // invalid parameter IDs are ignored
@@ -98,6 +100,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
         }
 
         $parameterValuesIndexedByParameterId = [];
+
         foreach ($value as $parameterFilterData) {
             $parameterId = $parameterFilterData->parameter->getId();
             $parameterValuesIndexedByParameterId[$parameterId] = $parameterFilterData->values;

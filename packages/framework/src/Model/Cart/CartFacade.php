@@ -224,6 +224,7 @@ class CartFacade
 
         if ($cart === null) {
             $message = 'CartItem with id = ' . $cartItemId . ' not found in cart.';
+
             throw new InvalidCartItemException($message);
         }
 

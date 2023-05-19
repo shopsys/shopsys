@@ -116,6 +116,7 @@ class ProductController extends AbstractFOSRestController
         $query = new ProductQueryParams($this->pageSize, $page);
 
         $filterUuids = $paramFetcher->get('uuids');
+
         if (is_array($filterUuids)) {
             HttpUuidValidator::validateUuids($filterUuids);
 
@@ -151,6 +152,7 @@ class ProductController extends AbstractFOSRestController
     {
         $productApiData = $request->request->all();
         $uuid = $productApiData['uuid'] ?? null;
+
         if ($uuid) {
             $this->validateCreatingProductWithDefinedUuid((string)$uuid);
         }
@@ -209,6 +211,7 @@ class ProductController extends AbstractFOSRestController
     protected function validateCreatingProductWithDefinedUuid(string $uuid): void
     {
         HttpUuidValidator::validateUuids([$uuid]);
+
         try {
             $this->productFacade->getByUuid($uuid);
 
@@ -243,6 +246,7 @@ class ProductController extends AbstractFOSRestController
         HttpUuidValidator::validateUuids([$uuid]);
         $productApiData = $request->request->all();
         $errors = $this->productApiDataValidator->validateUpdate($productApiData);
+
         if (count($errors)) {
             return $this->handleView($this->createValidationView($errors));
         }

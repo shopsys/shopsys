@@ -63,6 +63,7 @@ mutation {
         $responseData = $this->getErrorsExtensionValidationFromResponse($response);
 
         $i = 0;
+
         foreach ($responseData as $responseRow) {
             foreach ($responseRow as $validationError) {
                 $this->assertArrayHasKey('message', $validationError);

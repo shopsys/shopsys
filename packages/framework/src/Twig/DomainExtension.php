@@ -94,6 +94,7 @@ class DomainExtension extends AbstractExtension
     public function getDomainIconHtml($domainId, $size = 'normal')
     {
         $domainName = $this->getDomain()->getDomainConfigById($domainId)->getName();
+
         if ($this->domainFacade->existsDomainIcon($domainId)) {
             $src = $this->assetPackages->getUrl(sprintf('%s/%u.png', $this->domainImagesUrlPrefix, $domainId));
 
@@ -108,6 +109,7 @@ class DomainExtension extends AbstractExtension
                     </span>
                 </span>';
         }
+
         return '
                 <span class="in-image in-image--' . $size . '">
                     <span

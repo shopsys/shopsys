@@ -77,6 +77,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $names = [];
+
         foreach ($this->localization->getLocalesOfAllDomains() as $locale) {
             $names[$locale] = 'Name';
         }
@@ -96,6 +97,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
     private function setVatsForAllDomains(ProductData $productData): void
     {
         $productVats = [];
+
         foreach ($this->domain->getAllIds() as $domainId) {
             $vatData = new VatData();
             $vatData->name = 'vat';
@@ -428,6 +430,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productData = $this->getDefaultProductData();
 
         $allPricingGroups = $this->pricingGroupFacade->getAll();
+
         foreach ($allPricingGroups as $pricingGroup) {
             $productData->manualInputPricesByPricingGroupId[$pricingGroup->getId()] = Money::create(10);
         }

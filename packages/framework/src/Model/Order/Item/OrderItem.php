@@ -315,6 +315,7 @@ class OrderItem
     public function getTransport(): Transport
     {
         $this->checkTypeTransport();
+
         return $this->transport;
     }
 
@@ -333,6 +334,7 @@ class OrderItem
     public function getPayment(): Payment
     {
         $this->checkTypePayment();
+
         return $this->payment;
     }
 
@@ -342,6 +344,7 @@ class OrderItem
     public function getProduct(): ?Product
     {
         $this->checkTypeProduct();
+
         return $this->product;
     }
 
@@ -351,6 +354,7 @@ class OrderItem
     public function hasProduct()
     {
         $this->checkTypeProduct();
+
         return $this->product !== null;
     }
 

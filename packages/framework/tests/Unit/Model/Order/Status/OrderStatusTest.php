@@ -29,6 +29,7 @@ class OrderStatusTest extends TestCase
         $orderStatusData = new OrderStatusData();
         $orderStatusData->name = ['en' => 'orderStatusName'];
         $orderStatus = new OrderStatus($orderStatusData, $statusType);
+
         if ($expectedException !== null) {
             $this->expectException($expectedException);
         }

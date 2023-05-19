@@ -26,6 +26,7 @@ class DoctrineListener
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
+
         if ($entity instanceof EntityFileUploadInterface) {
             $this->fileUpload->preFlushEntity($entity);
         }
@@ -37,6 +38,7 @@ class DoctrineListener
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $entity = $args->getEntity();
+
         if ($entity instanceof EntityFileUploadInterface) {
             $this->fileUpload->preFlushEntity($entity);
         }
@@ -48,6 +50,7 @@ class DoctrineListener
     public function postPersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
+
         if ($entity instanceof EntityFileUploadInterface) {
             $this->fileUpload->postFlushEntity($entity);
         }
@@ -59,6 +62,7 @@ class DoctrineListener
     public function postUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
+
         if ($entity instanceof EntityFileUploadInterface) {
             $this->fileUpload->postFlushEntity($entity);
         }

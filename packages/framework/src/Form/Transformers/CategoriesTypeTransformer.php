@@ -30,6 +30,7 @@ class CategoriesTypeTransformer implements DataTransformerInterface
         $allCategories = $this->categoryFacade->getAllCategoriesOfCollapsedTree($categories);
 
         $isCheckedIndexedByCategoryId = [];
+
         foreach ($allCategories as $category) {
             $isChecked = in_array($category, $categories, true);
             $isCheckedIndexedByCategoryId[$category->getId()] = $isChecked;
@@ -45,6 +46,7 @@ class CategoriesTypeTransformer implements DataTransformerInterface
     public function reverseTransform($isCheckedIndexedByCategoryId): array
     {
         $categories = [];
+
         foreach ($isCheckedIndexedByCategoryId ?? [] as $categoryId => $isChecked) {
             if ($isChecked) {
                 $categories[] = $this->categoryFacade->getById($categoryId);

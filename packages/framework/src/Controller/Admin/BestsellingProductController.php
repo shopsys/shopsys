@@ -107,6 +107,7 @@ class BestsellingProductController extends AdminBaseController
                         ),
                     ]
                 );
+
             return $this->redirectToRoute('admin_bestsellingproduct_list');
         }
 

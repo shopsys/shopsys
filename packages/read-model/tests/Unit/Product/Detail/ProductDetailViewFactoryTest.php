@@ -210,6 +210,7 @@ class ProductDetailViewFactoryTest extends TestCase
         self::assertSame($isVariant, $productDetailView->isVariant());
         self::assertSame($expectedMainVariantId, $productDetailView->getMainVariantId());
         self::assertCount(count($expectedVariants), $productDetailView->getVariants());
+
         foreach ($productDetailView->getVariants() as $variant) {
             self::assertInstanceOf(ListedProductView::class, $variant);
         }
@@ -497,6 +498,7 @@ class ProductDetailViewFactoryTest extends TestCase
     {
         $domainMock = $this->createMock(Domain::class);
         $domainMock->method('getId')->willReturn(1);
+
         return $domainMock;
     }
 
@@ -547,6 +549,7 @@ class ProductDetailViewFactoryTest extends TestCase
             ->method('getAllAccessories')
             ->withAnyParameters()
             ->willReturn($accessories);
+
         return $listedProductViewFacadeMock;
     }
 
@@ -561,6 +564,7 @@ class ProductDetailViewFactoryTest extends TestCase
             ->method('getAllVariants')
             ->withAnyParameters()
             ->willReturn($variants);
+
         return $listedProductVariantsViewFacadeMock;
     }
 }

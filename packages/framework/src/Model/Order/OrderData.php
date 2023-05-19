@@ -193,6 +193,7 @@ class OrderData
     public function getNewItemsWithoutTransportAndPayment()
     {
         $newItemsWithoutTransportAndPayment = [];
+
         foreach ($this->itemsWithoutTransportAndPayment as $index => $item) {
             if (strpos($index, self::NEW_ITEM_PREFIX) === 0) {
                 $newItemsWithoutTransportAndPayment[] = $item;

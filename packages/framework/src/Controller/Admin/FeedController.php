@@ -81,6 +81,7 @@ class FeedController extends AdminBaseController
         $feedsData = [];
 
         $feedsInfo = $this->feedFacade->getFeedsInfo();
+
         foreach ($feedsInfo as $feedInfo) {
             foreach ($this->domain->getAll() as $domainConfig) {
                 $feedTimestamp = $this->feedFacade->getFeedTimestamp($feedInfo, $domainConfig);
@@ -103,6 +104,7 @@ class FeedController extends AdminBaseController
         $grid->addColumn('label', 'feedLabel', t('Feed'));
         $grid->addColumn('created', 'created', t('Generated'));
         $grid->addColumn('url', 'url', t('Url address'));
+
         if ($this->isGranted(Roles::ROLE_SUPER_ADMIN)) {
             $grid->addColumn('actions', 'actions', t('Action'));
         }

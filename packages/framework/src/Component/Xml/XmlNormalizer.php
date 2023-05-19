@@ -17,6 +17,7 @@ class XmlNormalizer
         $document->formatOutput = true;
 
         $document->loadXML($content);
+
         return $document->saveXML();
     }
 }

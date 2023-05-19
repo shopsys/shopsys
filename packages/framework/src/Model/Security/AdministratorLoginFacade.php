@@ -103,6 +103,7 @@ class AdministratorLoginFacade
     public function invalidateCurrentAdministratorLoginToken()
     {
         $token = $this->tokenStorage->getToken();
+
         if ($token === null) {
             return;
         }

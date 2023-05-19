@@ -123,9 +123,11 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         foreach ($transportData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
         }
+
         foreach ($transportData->description as $locale => $description) {
             $this->translation($locale)->setDescription($description);
         }
+
         foreach ($transportData->instructions as $locale => $instructions) {
             $this->translation($locale)->setInstructions($instructions);
         }
@@ -194,6 +196,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         foreach ($this->prices as $transportInputPrice) {
             if ($transportInputPrice->getDomainId() === $domainId) {
                 $transportInputPrice->setPrice($price);
+
                 return;
             }
         }
@@ -368,6 +371,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         }
 
         $message = 'Transport price with domain ID ' . $domainId . ' and transport ID ' . $this->getId() . ' not found.';
+
         throw new PaymentPriceNotFoundException($message);
     }
 

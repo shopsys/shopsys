@@ -149,6 +149,7 @@ class Category extends AbstractTranslatableEntity
     public function getNames()
     {
         $namesByLocale = [];
+
         foreach ($this->translations as $translation) {
             $namesByLocale[$translation->getLocale()] = $translation->getName();
         }

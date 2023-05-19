@@ -90,6 +90,7 @@ class TranslationReplaceSourceCommand extends Command
     private function getAllReplacements(DirectoryIterator $translationsDirectory, $targetLocale)
     {
         $allReplacements = [];
+
         foreach ($translationsDirectory as $translationsDirectoryItem) {
             if ($this->isTranslationFileInLocale($translationsDirectoryItem, $targetLocale)) {
                 $newReplacements = $this->extractReplacementsFromPoFile($translationsDirectoryItem->getFileInfo());
@@ -133,6 +134,7 @@ class TranslationReplaceSourceCommand extends Command
 
         while (true) {
             $line = fgets($stream);
+
             if ($line === false) {
                 break;
             }
@@ -188,6 +190,7 @@ class TranslationReplaceSourceCommand extends Command
     private function parsePoFileItem(array &$translationSourceReplacements, array $item)
     {
         $sourceFileReferences = [];
+
         foreach ($item['comments'] as $comment) {
             $sourceFileReferences = array_merge($sourceFileReferences, explode(' ', $comment));
         }
@@ -201,6 +204,7 @@ class TranslationReplaceSourceCommand extends Command
                 $item['domain'],
                 $sourceFileReferences
             );
+
             if (isset($item['ids']['plural'])) {
                 $plurals = $item['translated'];
                 // PO are by definition indexed so sort by index.
@@ -237,6 +241,7 @@ class TranslationReplaceSourceCommand extends Command
     private function filterReplacementsWithUniqueOldSource(array $replacements, OutputInterface $output)
     {
         $oldSourceUsageCounts = [];
+
         foreach ($replacements as $replacement) {
             if (array_key_exists($replacement->getOldSource(), $oldSourceUsageCounts)) {
                 $oldSourceUsageCounts[$replacement->getOldSource()]++;
@@ -248,6 +253,7 @@ class TranslationReplaceSourceCommand extends Command
         foreach ($oldSourceUsageCounts as $oldSource => $oldSourceUsageCount) {
             if ($oldSourceUsageCount > 1) {
                 $domains = [];
+
                 foreach ($replacements as $index => $replacement) {
                     if ($replacement->getOldSource() === $oldSource) {
                         $domains[] = '"<fg=yellow>' . $replacement->getDomain() . '</fg=yellow>"';
@@ -296,6 +302,7 @@ class TranslationReplaceSourceCommand extends Command
     private function filterReplacementsWithUniqueNewSource(array $replacements, OutputInterface $output)
     {
         $newSourceUsageCounts = [];
+
         foreach ($replacements as $replacement) {
             if (array_key_exists($replacement->getNewSource(), $newSourceUsageCounts)) {
                 $newSourceUsageCounts[$replacement->getNewSource()]++;
@@ -307,6 +314,7 @@ class TranslationReplaceSourceCommand extends Command
         foreach ($newSourceUsageCounts as $newSource => $newSourceUsageCount) {
             if ($newSourceUsageCount > 1) {
                 $oldSources = [];
+
                 foreach ($replacements as $index => $replacement) {
                     if ($replacement->getNewSource() === $newSource) {
                         $oldSources[] = '"<fg=yellow>' . $replacement->getOldSource() . '</fg=yellow>"';
@@ -367,6 +375,7 @@ class TranslationReplaceSourceCommand extends Command
                 if ($lengthLeft < $lengthRight) {
                     return 1;
                 }
+
                 return -1;
             }
         );
@@ -382,6 +391,7 @@ class TranslationReplaceSourceCommand extends Command
     {
         $recursiveIterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($searchedDirectoryPath));
         $pathNames = [];
+
         foreach ($recursiveIterator as $pathName => $recursiveIteratorItem) {
             if ($recursiveIteratorItem->isFile()) {
                 $pathNames[] = str_replace('\\', '/', $pathName);
@@ -407,6 +417,7 @@ class TranslationReplaceSourceCommand extends Command
 
         $totalCount = 0;
         $successfulCount = 0;
+
         foreach ($replacements as $replacement) {
             foreach ($replacement->getSourceFilePaths() as $sourceFilePath) {
                 $realCount = $this->makeReplacements($replacement, $searchedPathNames, '/' . $sourceFilePath);

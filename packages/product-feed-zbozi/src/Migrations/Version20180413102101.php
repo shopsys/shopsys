@@ -39,9 +39,11 @@ class Version20180413102101 extends AbstractMigration
                 'context' => 'product',
             ]
         )->fetchAllAssociative();
+
         foreach ($rows as $row) {
             $jsonData = json_decode($row['json_value'], true);
             $domainIds = count($jsonData) > 0 ? array_keys($jsonData['cpc']) : [];
+
             foreach ($domainIds as $domainId) {
                 $this->sql(
                     'INSERT INTO zbozi_product_domains (product_id, domain_id, show, cpc, cpc_search) 

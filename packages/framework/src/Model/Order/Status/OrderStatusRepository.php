@@ -48,6 +48,7 @@ class OrderStatusRepository
 
         if ($orderStatus === null) {
             $message = 'Order status with ID ' . $orderStatusId . ' not found.';
+
             throw new OrderStatusNotFoundException($message);
         }
 
@@ -63,6 +64,7 @@ class OrderStatusRepository
 
         if ($orderStatus === null) {
             $message = 'Default order status not found.';
+
             throw new OrderStatusNotFoundException($message);
         }
 

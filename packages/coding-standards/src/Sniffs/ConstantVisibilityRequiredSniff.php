@@ -55,6 +55,7 @@ class ConstantVisibilityRequiredSniff implements Sniff
     private function isConstInsideClass(File $file, int $constPosition): bool
     {
         $classStartPosition = $file->findPrevious(T_CLASS, $constPosition);
+
         if ($classStartPosition === false) {
             return false;
         }
@@ -101,6 +102,7 @@ class ConstantVisibilityRequiredSniff implements Sniff
         if ($phpDocStartPosition === false) {
             return false;
         }
+
         return $this->phpDocContainsAccessTag($file, $phpDocStartPosition);
     }
 

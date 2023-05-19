@@ -49,6 +49,7 @@ class TranslatableEntityDataCreator
         $notNullableColumns = $this->notNullableColumnsFinder->getAllNotNullableColumnNamesIndexedByTableName(
             $this->getAllTranslatableEntitiesMetadata()
         );
+
         foreach ($notNullableColumns as $tableName => $columnNames) {
             $columnNamesExcludingIdAndLocale = array_filter($columnNames, function ($columnName) {
                 return $columnName !== 'id' && $columnName !== 'locale';
@@ -71,6 +72,7 @@ class TranslatableEntityDataCreator
         $translatableEntitiesMetadata = [];
         /** @var \Doctrine\ORM\Mapping\ClassMetadata[] $allClassesMetadata */
         $allClassesMetadata = $this->em->getMetadataFactory()->getAllMetadata();
+
         foreach ($allClassesMetadata as $classMetadata) {
             if (is_subclass_of($classMetadata->getName(), TranslationInterface::class)) {
                 $translatableEntitiesMetadata[] = $classMetadata;

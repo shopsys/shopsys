@@ -72,6 +72,7 @@ final class GithubActionsStatusReporter
     private function createApiUrls(array $packages, string $branch): array
     {
         $apiUrls = [];
+
         foreach ($packages as $package) {
             $apiUrls[] = sprintf('https://api.github.com/repos/%s/actions/workflows/run-checks-tests.yaml/runs?per_page=1&status=completed&branch=%s', $package, $branch);
         }

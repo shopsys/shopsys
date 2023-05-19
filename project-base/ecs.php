@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff;
-use ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff;
 use PhpCsFixer\Fixer\FunctionNotation\PhpdocToPropertyTypeFixer;
 use PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer;
@@ -11,6 +9,8 @@ use Shopsys\CodingStandards\Sniffs\ForbiddenDoctrineInheritanceSniff;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff;
 use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
 use Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff;
+use SlevomatCodingStandard\Sniffs\Classes\ClassLengthSniff;
+use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 /**
@@ -64,7 +64,7 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/tests/FrontendApiBundle/Functional/Brand/BrandsTest.php',
             __DIR__ . '/tests/FrontendApiBundle/Functional/Product/ProductsFilteringOptionsTest.php',
         ],
-        ClassTraitAndInterfaceLengthSniff::class => [
+        ClassLengthSniff::class => [
             __DIR__ . '/tests/App/Functional/Model/Product/ProductVisibilityRepositoryTest.php',
             __DIR__ . '/src/DataFixtures/Demo/OrderDataFixture.php',
             __DIR__ . '/src/DataFixtures/Demo/ProductDataFixture.php',

@@ -52,6 +52,7 @@ class RequestDataSetGenerator implements RouteConfig
         if ($index === 0) {
             return $this->defaultRequestDataSet;
         }
+
         return $this->addExtraRequestDataSet();
     }
 
@@ -84,6 +85,7 @@ class RequestDataSetGenerator implements RouteConfig
     public function generateRequestDataSets()
     {
         $requestDataSets = [clone $this->defaultRequestDataSet];
+
         foreach ($this->extraRequestDataSets as $extraRequestDataSet) {
             $defaultRequestDataSetClone = clone $this->defaultRequestDataSet;
             $requestDataSets[] = $defaultRequestDataSetClone->mergeExtraValuesFrom($extraRequestDataSet);

@@ -32,6 +32,7 @@ class MigrationsLockComparatorTest extends TestCase
         if ($expectedResult === self::EXPECTED_RESULT_LESS_THAN_ZERO) {
             $this->assertLessThan(0, $actualResult);
         }
+
         if ($expectedResult === self::EXPECTED_RESULT_GREATER_THAN_ZERO) {
             $this->assertGreaterThan(0, $actualResult);
         }
@@ -48,60 +49,70 @@ class MigrationsLockComparatorTest extends TestCase
             'versionB' => new Version('Version2'),
             'expectedResult' => self::EXPECTED_RESULT_LESS_THAN_ZERO,
         ];
+
         yield [
             'orderedMigrationClassesFromLock' => ['Version2', 'Version1'],
             'versionA' => new Version('Version1'),
             'versionB' => new Version('Version2'),
             'expectedResult' => self::EXPECTED_RESULT_GREATER_THAN_ZERO,
         ];
+
         yield [
             'orderedMigrationClassesFromLock' => [],
             'versionA' => new Version('Version1'),
             'versionB' => new Version('Version2'),
             'expectedResult' => self::EXPECTED_RESULT_LESS_THAN_ZERO,
         ];
+
         yield [
             'orderedMigrationClassesFromLock' => [],
             'versionA' => new Version('Version2'),
             'versionB' => new Version('Version1'),
             'expectedResult' => self::EXPECTED_RESULT_GREATER_THAN_ZERO,
         ];
+
         yield [
             'orderedMigrationClassesFromLock' => [],
             'versionA' => new Version('Namespace2\Version1'),
             'versionB' => new Version('Namespace1\Version2'),
             'expectedResult' => self::EXPECTED_RESULT_LESS_THAN_ZERO,
         ];
+
         yield [
             'orderedMigrationClassesFromLock' => [],
             'versionA' => new Version('Namespace2\Version2'),
             'versionB' => new Version('Namespace1\Version1'),
             'expectedResult' => self::EXPECTED_RESULT_GREATER_THAN_ZERO,
         ];
+
         yield [
             'orderedMigrationClassesFromLock' => ['Namespace2\Version2', 'Namespace1\Version1'],
             'versionA' => new Version('Namespace2\Version2'),
             'versionB' => new Version('Namespace1\Version1'),
             'expectedResult' => self::EXPECTED_RESULT_LESS_THAN_ZERO,
         ];
+
         yield [
             'orderedMigrationClassesFromLock' => ['Namespace1\Version1', 'Namespace2\Version2'],
             'versionA' => new Version('Namespace2\Version2'),
             'versionB' => new Version('Namespace1\Version1'),
             'expectedResult' => self::EXPECTED_RESULT_GREATER_THAN_ZERO,
         ];
+
         yield [
             'orderedMigrationClassesFromLock' => ['Namespace2\Version2', 'Namespace1\Version1'],
             'versionA' => new Version('Namespace1\Version1'),
             'versionB' => new Version('Namespace2\Version2'),
             'expectedResult' => self::EXPECTED_RESULT_GREATER_THAN_ZERO,
         ];
+
         yield [
             'orderedMigrationClassesFromLock' => ['Namespace1\Version1'],
             'versionA' => new Version('Namespace2\Version2'),
             'versionB' => new Version('Namespace1\Version1'),
             'expectedResult' => self::EXPECTED_RESULT_GREATER_THAN_ZERO,
         ];
+
         yield [
             'orderedMigrationClassesFromLock' => ['Namespace2\Version2'],
             'versionA' => new Version('Namespace2\Version2'),

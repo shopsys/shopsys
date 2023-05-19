@@ -43,6 +43,7 @@ class CategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
         );
 
         $breadcrumbItems = [];
+
         foreach ($categoriesInPath as $categoryInPath) {
             if ($categoryInPath !== $category) {
                 $breadcrumbItems[] = new BreadcrumbItem(

@@ -168,6 +168,7 @@ class ListedProductViewFactoryTest extends TestCase
     {
         $domainMock = $this->createMock(Domain::class);
         $domainMock->method('getId')->willReturn(1);
+
         return $domainMock;
     }
 
@@ -181,6 +182,7 @@ class ListedProductViewFactoryTest extends TestCase
         $productCachedAttributesFacadeMock->method('getProductSellingPrice')->willReturn(
             $this->createProductPrice($priceAmount)
         );
+
         return $productCachedAttributesFacadeMock;
     }
 

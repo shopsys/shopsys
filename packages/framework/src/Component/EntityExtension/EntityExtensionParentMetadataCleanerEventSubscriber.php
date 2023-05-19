@@ -38,6 +38,7 @@ class EntityExtensionParentMetadataCleanerEventSubscriber implements EventSubscr
     {
         $meta = $eventArgs->getClassMetadata();
         $entityName = $meta->getName();
+
         if (!$this->mustClean($entityName)) {
             return;
         }

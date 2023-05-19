@@ -34,6 +34,7 @@ class OrderStatusDataFactory implements OrderStatusDataFactoryInterface
     {
         $orderStatusData = $this->createInstance();
         $this->fillNew($orderStatusData);
+
         return $orderStatusData;
     }
 
@@ -68,6 +69,7 @@ class OrderStatusDataFactory implements OrderStatusDataFactoryInterface
         /** @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTranslation[] $translations */
         $translations = $orderStatus->getTranslations();
         $names = [];
+
         foreach ($translations as $translate) {
             $names[$translate->getLocale()] = $translate->getName();
         }

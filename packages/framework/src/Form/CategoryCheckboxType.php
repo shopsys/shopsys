@@ -32,6 +32,7 @@ class CategoryCheckboxType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $categoryId = $form->getName();
+
         if (is_numeric($categoryId)) {
             $category = $this->categoryFacade->getById((int)$categoryId);
 

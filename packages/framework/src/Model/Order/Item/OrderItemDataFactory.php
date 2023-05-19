@@ -98,6 +98,7 @@ class OrderItemDataFactory implements OrderItemDataFactoryInterface
             $orderItemData,
             $orderItem->getOrder()->getDomainId()
         );
+
         if (!$orderItemData->priceWithoutVat->equals($calculatedPriceWithoutVat)) {
             throw new OrderItemUnitPricesAreInconsistentButTotalsAreNotForcedException(
                 $orderItem,

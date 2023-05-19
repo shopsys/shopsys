@@ -30,6 +30,7 @@ class CronModuleRepositoryTest extends TestCase
     {
         $em = $this->createMock(EntityManagerInterface::class);
         $em->method('getRepository')->willReturn($entityRepository);
+
         return $em;
     }
 
@@ -40,6 +41,7 @@ class CronModuleRepositoryTest extends TestCase
     {
         $repository = $this->createMock(EntityRepository::class);
         $repository->method('find')->willReturn(null);
+
         return $repository;
     }
 }

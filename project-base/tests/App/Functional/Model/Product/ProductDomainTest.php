@@ -138,6 +138,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
     private function setVats(BaseProductData $productData): void
     {
         $productVatsIndexedByDomainId = [];
+
         foreach ($this->domain->getAllIds() as $domainId) {
             $productVatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
         }

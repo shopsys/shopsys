@@ -95,6 +95,7 @@ class ProductCollectionFacade
     public function getImagesUrlsIndexedByProductId(array $products, DomainConfig $domainConfig, $sizeName = null)
     {
         $imagesUrlsByProductId = [];
+
         foreach ($this->getMainImagesIndexedByProductId($products) as $productId => $image) {
             if ($image === null) {
                 $imagesUrlsByProductId[$productId] = null;
@@ -153,6 +154,7 @@ class ProductCollectionFacade
         );
 
         $absoluteUrlsByProductId = [];
+
         foreach ($mainFriendlyUrlsByProductId as $productId => $friendlyUrl) {
             $absoluteUrlsByProductId[$productId] = $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl);
         }

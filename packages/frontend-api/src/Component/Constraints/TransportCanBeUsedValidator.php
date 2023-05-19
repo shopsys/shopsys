@@ -73,6 +73,7 @@ class TransportCanBeUsedValidator extends ConstraintValidator
 
         try {
             $transportEntity = $this->transportFacade->getByUuid($uuid);
+
             if ($transportEntity->isDeleted() || !$transportEntity->isEnabled($this->domain->getId())) {
                 throw new TransportNotFoundException('Transport is disabled on domain');
             }
@@ -82,6 +83,7 @@ class TransportCanBeUsedValidator extends ConstraintValidator
                 TransportCanBeUsed::TRANSPORT_NOT_FOUND_ERROR,
                 $uuid
             );
+
             return;
         }
 

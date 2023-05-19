@@ -183,6 +183,7 @@ class CustomerUserDataFixture
 
         $billingAddressData = $customerUserUpdateData->billingAddressData;
         $billingAddressData->companyCustomer = $this->faker->boolean();
+
         if ($billingAddressData->companyCustomer === true) {
             $billingAddressData->companyName = $this->faker->company;
             $billingAddressData->companyNumber = (string)$this->faker->randomNumber(6);

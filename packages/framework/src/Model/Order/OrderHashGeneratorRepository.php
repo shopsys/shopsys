@@ -38,14 +38,17 @@ class OrderHashGeneratorRepository
     public function getUniqueHash()
     {
         $triesCount = 0;
+
         do {
             $hash = $this->hashGenerator->generateHash(static::HASH_LENGTH);
             $order = $this->orderRepository->findByUrlHashIncludingDeletedOrders($hash);
             $triesCount++;
+
             if ($triesCount > static::MAX_GENERATE_TRIES) {
                 throw new OrderHashGenerateException('Trying generate hash reached the limit.');
             }
         } while ($order !== null);
+
         return $hash;
     }
 }

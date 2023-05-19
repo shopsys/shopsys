@@ -114,6 +114,7 @@ class AdministratorController extends AdminBaseController
         $administrator = $this->administratorFacade->getById($id);
 
         $loggedUser = $this->getUser();
+
         if (!$loggedUser instanceof Administrator) {
             throw new AccessDeniedException(sprintf(
                 'Logged user is not instance of "%s". That should not happen due to security.yaml configuration.',
@@ -123,6 +124,7 @@ class AdministratorController extends AdminBaseController
 
         if ($administrator->isSuperadmin() && !$loggedUser->isSuperadmin()) {
             $message = 'Superadmin can only be edited by superadmin.';
+
             throw new AccessDeniedException($message);
         }
 
@@ -149,6 +151,7 @@ class AdministratorController extends AdminBaseController
                         'url' => $this->generateUrl('admin_administrator_edit', ['id' => $administrator->getId()]),
                     ]
                 );
+
                 return $this->redirectToRoute('admin_administrator_list');
             } catch (DuplicateUserNameException $ex) {
                 $this->addErrorFlashTwig(
@@ -218,6 +221,7 @@ class AdministratorController extends AdminBaseController
                         'url' => $this->generateUrl('admin_administrator_edit', ['id' => $administrator->getId()]),
                     ]
                 );
+
                 return $this->redirectToRoute('admin_administrator_list');
             } catch (DuplicateUserNameException $ex) {
                 $this->addErrorFlashTwig(

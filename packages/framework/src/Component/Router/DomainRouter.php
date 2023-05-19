@@ -65,6 +65,7 @@ class DomainRouter extends ChainRouter
     {
         if ($this->freeze) {
             $message = 'Set context is not supported in chain DomainRouter';
+
             throw new NotSupportedException($message);
         }
 

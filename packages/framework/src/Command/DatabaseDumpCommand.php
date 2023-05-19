@@ -80,6 +80,7 @@ class DatabaseDumpCommand extends Command
         }
 
         $errorMessage = stream_get_contents($stderr);
+
         if (strlen($errorMessage) > 0) {
             $output->writeln('<error>' . $errorMessage . '</error>');
         } else {

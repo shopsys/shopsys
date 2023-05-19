@@ -139,6 +139,7 @@ class CategoryFacade
     public function getVisibleOnDomainByUuid(int $domainId, string $categoryUuid): Category
     {
         $category = $this->getByUuid($categoryUuid);
+
         if (!$category->isVisible($domainId)) {
             throw new CategoryNotFoundException(
                 sprintf('Category with UUID "%s" is not visible on domain ID "%s"', $categoryUuid, $domainId)
@@ -180,6 +181,7 @@ class CategoryFacade
         $originalNames = $category->getNames();
 
         $category->edit($categoryData);
+
         if ($category->getParent() === null) {
             $category->setParent($rootCategory);
         }
@@ -292,6 +294,7 @@ class CategoryFacade
     public function getAllCategoriesWithPreloadedChildren($locale)
     {
         $categories = $this->categoryRepository->getPreOrderTreeTraversalForAllCategories($locale);
+
         return $this->categoryWithPreloadedChildrenFactory->createCategoriesWithPreloadedChildren($categories);
     }
 
@@ -396,6 +399,7 @@ class CategoryFacade
     public function getProductMainCategoriesIndexedByDomainId(Product $product)
     {
         $mainCategoriesIndexedByDomainId = [];
+
         foreach ($this->domain->getAll() as $domainConfig) {
             $mainCategoriesIndexedByDomainId[$domainConfig->getId()] = $this->categoryRepository->findProductMainCategoryOnDomain(
                 $product,
@@ -455,8 +459,10 @@ class CategoryFacade
     public function getVisibleOnDomainById($domainId, $categoryId)
     {
         $category = $this->getById($categoryId);
+
         if (!$category->isVisible($domainId)) {
             $message = 'Category ID ' . $categoryId . ' is not visible on domain ID ' . $domainId;
+
             throw new CategoryNotFoundException($message);
         }
 
@@ -488,6 +494,7 @@ class CategoryFacade
     protected function createFriendlyUrlsWhenRenamed(Category $category, array $originalNames): void
     {
         $changedNames = $this->getChangedNamesByLocale($category, $originalNames);
+
         if (count($changedNames) === 0) {
             return;
         }
@@ -507,11 +514,13 @@ class CategoryFacade
     protected function getChangedNamesByLocale(Category $category, array $originalNames): array
     {
         $changedCategoryNames = [];
+
         foreach ($category->getNames() as $locale => $name) {
             if ($name !== $originalNames[$locale]) {
                 $changedCategoryNames[$locale] = $name;
             }
         }
+
         return $changedCategoryNames;
     }
 

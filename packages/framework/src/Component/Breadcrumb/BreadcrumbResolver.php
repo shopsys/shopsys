@@ -28,6 +28,7 @@ class BreadcrumbResolver
     protected function registerGenerators(iterable $breadcrumbGenerators)
     {
         Assert::allIsInstanceOf($breadcrumbGenerators, BreadcrumbGeneratorInterface::class);
+
         foreach ($breadcrumbGenerators as $breadcrumbGenerator) {
             foreach ($breadcrumbGenerator->getRouteNames() as $routeName) {
                 $this->breadcrumbGeneratorsByRouteName[$routeName] = $breadcrumbGenerator;

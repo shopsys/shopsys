@@ -46,6 +46,7 @@ class MultidomainEntityDataCreator
     {
         $columnNamesIndexedByTableName = $this->multidomainEntityClassFinderFacade
             ->getAllNotNullableColumnNamesIndexedByTableName();
+
         foreach ($columnNamesIndexedByTableName as $tableName => $columnNames) {
             $columnNamesExcludingDomainId = array_filter($columnNames, function ($columnName) {
                 return $columnName !== 'id' && $columnName !== 'domain_id';

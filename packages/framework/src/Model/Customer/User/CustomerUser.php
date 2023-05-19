@@ -138,6 +138,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
         $this->customer = $customerUserData->customer;
         $this->uuid = $customerUserData->uuid ?: Uuid::uuid4()->toString();
         $this->refreshTokenChain = new ArrayCollection();
+
         if ($customerUserData->createdAt !== null) {
             $this->createdAt = $customerUserData->createdAt;
         } else {

@@ -57,6 +57,7 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
     {
         $data = [];
         $orderIds = [7, 8, 9];
+
         foreach ($orderIds as $orderId) {
             $order = $this->orderFacade->getById($orderId);
             $data[] = [
@@ -69,6 +70,7 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
                 ],
             ];
         }
+
         return $data;
     }
 

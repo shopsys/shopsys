@@ -13,6 +13,7 @@ class Version20180603135341 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $orderStatusesCount = $this->sql('SELECT count(*) FROM order_statuses')->fetchOne();
+
         if ($orderStatusesCount > 0) {
             return;
         }

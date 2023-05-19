@@ -88,6 +88,7 @@ class CategoryFormType extends AbstractType
         $seoTitlesOptionsByDomainId = [];
         $seoMetaDescriptionsOptionsByDomainId = [];
         $seoH1OptionsByDomainId = [];
+
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
 
@@ -153,6 +154,7 @@ class CategoryFormType extends AbstractType
                 'choices' => $parentChoices,
                 'choice_label' => function (Category $category) {
                     $padding = str_repeat("\u{00a0}", ($category->getLevel() - 1) * 2);
+
                     return $padding . $category->getName();
                 },
                 'choice_value' => 'id',

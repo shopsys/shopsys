@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-use ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff;
-use ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff;
-use ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\EmptyStatementSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunctionNameSniff;
@@ -15,8 +12,10 @@ use Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff;
 use Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff;
 use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
 use Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff;
+use SlevomatCodingStandard\Sniffs\Classes\ClassLengthSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ParentCallSpacingSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff;
+use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
 use SlevomatCodingStandard\Sniffs\Variables\UnusedVariableSniff;
 use Symplify\CodingStandard\Fixer\Commenting\RemoveUselessDefaultCommentFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
@@ -67,13 +66,7 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/src/Form/Constraints/FileAbstractFilesystemValidator.php',
             __DIR__ . '/tests/Unit/Model/Mail/EnvelopeListenerTest.php',
         ],
-        PropertyPerClassLimitSniff::class => [
-            __DIR__ . '/src/Model/Order/Order.php',
-            __DIR__ . '/src/Model/Order/OrderData.php',
-            __DIR__ . '/src/Model/Product/Product.php',
-            __DIR__ . '/src/Model/Product/ProductData.php',
-        ],
-        ClassTraitAndInterfaceLengthSniff::class => [
+        ClassLengthSniff::class => [
             __DIR__ . '/src/Form/Admin/Product/ProductFormType.php',
             __DIR__ . '/src/Command/TranslationReplaceSourceCommand.php',
             __DIR__ . '/src/Component/Grid/Grid.php',

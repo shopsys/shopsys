@@ -37,6 +37,7 @@ class FriendlyUrlMatcher
         }
 
         $route = $routeCollection->get($friendlyUrl->getRouteName());
+
         if ($route === null) {
             throw new ResourceNotFoundException();
         }

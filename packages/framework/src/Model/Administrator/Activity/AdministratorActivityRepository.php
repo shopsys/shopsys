@@ -56,6 +56,7 @@ class AdministratorActivityRepository
             $administrator,
             1
         )->getQuery()->getSingleResult();
+
         if ($currentAdministratorActivity === null) {
             throw new CurrentAdministratorActivityNotFoundException();
         }

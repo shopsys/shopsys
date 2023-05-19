@@ -159,6 +159,7 @@ class PricingGroupFacade
     public function delete($oldPricingGroupId, $newPricingGroupId = null)
     {
         $oldPricingGroup = $this->pricingGroupRepository->getById($oldPricingGroupId);
+
         if ($newPricingGroupId !== null) {
             $newPricingGroup = $this->pricingGroupRepository->getById($newPricingGroupId);
             $this->customerUserRepository->replaceCustomerUsersPricingGroup($oldPricingGroup, $newPricingGroup);
@@ -213,6 +214,7 @@ class PricingGroupFacade
     public function getAllIndexedByDomainId()
     {
         $pricingGroupsByDomainId = [];
+
         foreach ($this->domain->getAll() as $domain) {
             $domainId = $domain->getId();
             $pricingGroupsByDomainId[$domainId] = $this->pricingGroupRepository->getPricingGroupsByDomainId($domainId);

@@ -15,6 +15,7 @@ class HeurekaShopCertificationLocaleHelper
     {
         try {
             $this->getLanguageIdByLocale($locale);
+
             return true;
         } catch (LocaleNotSupportedException $ex) {
             return false;
@@ -37,6 +38,7 @@ class HeurekaShopCertificationLocaleHelper
         }
 
         $message = 'Locale "' . $locale . '" is not supported.';
+
         throw new LocaleNotSupportedException($message);
     }
 

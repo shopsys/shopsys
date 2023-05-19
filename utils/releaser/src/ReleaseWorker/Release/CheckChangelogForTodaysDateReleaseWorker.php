@@ -61,12 +61,14 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
          */
         $pattern = '#\#\# \[' . preg_quote($version->getOriginalString()) . '\]\(.*\) \((\d+-\d+-\d+)\)#';
         $match = Strings::match($fileContent, $pattern);
+
         if ($match === null) {
             $this->symfonyStyle->error(
                 'Unable to find current release headline. You need to check the release date in CHANGELOG.md manually.'
             );
             $this->confirm('Confirm you have manually checked the release date in CHANGELOG.md');
         }
+
         if ($todayInString !== $match[1]) {
             $newChangelogContent = $this->changelogFileManipulator->updateReleaseDateOfCurrentReleaseToToday(
                 $fileContent,

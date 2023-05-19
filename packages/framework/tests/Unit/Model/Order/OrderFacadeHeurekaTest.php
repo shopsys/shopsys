@@ -132,6 +132,7 @@ class OrderFacadeHeurekaTest extends TestCase
     private function createDomain(): Domain
     {
         $domainConfig = new DomainConfig(Domain::FIRST_DOMAIN_ID, '', '', 'cs');
+
         return new Domain([$domainConfig], $this->createMock(Setting::class));
     }
 

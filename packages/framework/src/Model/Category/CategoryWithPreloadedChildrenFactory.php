@@ -14,6 +14,7 @@ class CategoryWithPreloadedChildrenFactory
         $categoriesByParentId = $this->getCategoriesIndexedByParentId($categories);
 
         $categoriesWithPreloadedChildren = [];
+
         foreach ($firstLevelCategories as $firstLevelCategory) {
             $categoriesWithPreloadedChildren[] = new CategoryWithPreloadedChildren(
                 $firstLevelCategory,
@@ -74,6 +75,7 @@ class CategoryWithPreloadedChildrenFactory
 
         foreach ($categories as $category) {
             $parentId = $category->getParent()->getId();
+
             if (!isset($categoriesIndexedByParentId[$parentId])) {
                 $categoriesIndexedByParentId[$parentId] = [];
             }

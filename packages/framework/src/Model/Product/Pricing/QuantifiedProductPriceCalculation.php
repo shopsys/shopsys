@@ -100,6 +100,7 @@ class QuantifiedProductPriceCalculation
     public function calculatePrices(array $quantifiedProducts, int $domainId, ?CustomerUser $customerUser = null): array
     {
         $quantifiedItemsPrices = [];
+
         foreach ($quantifiedProducts as $quantifiedItemIndex => $quantifiedProduct) {
             $quantifiedItemsPrices[$quantifiedItemIndex] = $this->calculatePrice(
                 $quantifiedProduct,

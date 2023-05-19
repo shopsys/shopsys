@@ -32,12 +32,15 @@ class MigrationsLockComparator implements Comparator
         $installedMigrationsAccordingToLock = $this->migrationsLock->getOrderedInstalledMigrationClasses();
         $aIndex = array_search((string)$a, $installedMigrationsAccordingToLock, true);
         $bIndex = array_search((string)$b, $installedMigrationsAccordingToLock, true);
+
         if (count($installedMigrationsAccordingToLock) === 0 || $aIndex === false && $bIndex === false) {
             return $this->compareVersionsAlphabetically($a, $b);
         }
+
         if ($aIndex === false && $bIndex !== false) {
             return 1;
         }
+
         if ($aIndex !== false && $bIndex === false) {
             return -1;
         }
@@ -64,6 +67,7 @@ class MigrationsLockComparator implements Comparator
         $versionString = (string)$version;
 
         $lastBackslashPosition = strrpos($versionString, '\\');
+
         if ($lastBackslashPosition === false) {
             return $versionString;
         }

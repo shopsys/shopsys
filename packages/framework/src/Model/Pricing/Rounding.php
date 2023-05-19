@@ -31,6 +31,7 @@ class Rounding
     public function roundPriceWithVatByCurrency(Money $priceWithVat, Currency $currency): Money
     {
         $roundingType = $currency->getRoundingType();
+
         switch ($roundingType) {
             case Currency::ROUNDING_TYPE_HUNDREDTHS:
                 return $priceWithVat->round(2);

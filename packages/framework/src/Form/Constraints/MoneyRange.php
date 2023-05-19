@@ -65,6 +65,7 @@ class MoneyRange extends Constraint
         }
 
         $value = $options[$optionName];
+
         if ($value !== null && !($value instanceof Money)) {
             $message = sprintf(
                 'The "%s" constraint requires the "%s" options to be either "%s" or null',

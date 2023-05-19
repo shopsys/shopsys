@@ -67,11 +67,13 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
         $tokens = $file->getTokens();
 
         $doubleColonPosition = TokenHelper::findNextEffective($file, $selfPosition + 1);
+
         if ($tokens[$doubleColonPosition]['code'] !== T_DOUBLE_COLON) {
             return null;
         }
 
         $stringPosition = TokenHelper::findNextEffective($file, $doubleColonPosition + 1);
+
         if ($tokens[$stringPosition]['code'] !== T_STRING) {
             return null;
         }
@@ -81,6 +83,7 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
         }
 
         $positionAfterString = TokenHelper::findNextEffective($file, $stringPosition + 1);
+
         if ($tokens[$positionAfterString]['code'] === T_OPEN_PARENTHESIS) {
             return null;
         }
@@ -135,6 +138,7 @@ class ForceLateStaticBindingForProtectedConstantsSniff implements Sniff
     private function hasProtectedAccess(File $file, int $constPosition): bool
     {
         $accessAnnotations = AnnotationHelper::getAnnotationsByName($file, $constPosition, '@access');
+
         foreach ($accessAnnotations as $accessAnnotation) {
             if ($accessAnnotation->getContent() === 'protected') {
                 return true;

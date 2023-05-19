@@ -101,6 +101,7 @@ abstract class AbstractElasticsearchIndexCommand extends Command
         if ($indexName) {
             return [$this->indexRegistry->getIndexByIndexName($indexName)];
         }
+
         return $this->indexRegistry->getRegisteredIndexes();
     }
 

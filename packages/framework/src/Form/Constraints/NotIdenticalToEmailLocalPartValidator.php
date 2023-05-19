@@ -27,6 +27,7 @@ class NotIdenticalToEmailLocalPartValidator extends ConstraintValidator
             $this->context->buildViolation($constraint->message)
                 ->atPath($constraint->errorPath)
                 ->addViolation();
+
             return;
         }
     }

@@ -24,6 +24,7 @@ class PaginatedProductsTest extends GraphQlTestCase
             $this->assertArrayHasKey('edges', $responseData);
 
             $queryResult = [];
+
             foreach ($responseData['edges'] as $edge) {
                 $this->assertArrayHasKey('node', $edge);
                 $queryResult[] = $edge['node'];
@@ -36,6 +37,7 @@ class PaginatedProductsTest extends GraphQlTestCase
     private function getPaginatedProductsDataProvider()
     {
         $firstDomainLocale = $this->getFirstDomainLocale();
+
         return [
             [
                 'orderingMode' => 'NAME_ASC',

@@ -71,6 +71,7 @@ class QuantifiedProductDiscountCalculation
     public function calculateDiscountsRoundedByCurrency(array $quantifiedItemsPrices, ?string $discountPercent, Currency $currency): array
     {
         $quantifiedItemsDiscounts = [];
+
         foreach ($quantifiedItemsPrices as $quantifiedItemIndex => $quantifiedItemPrice) {
             if ($discountPercent === null) {
                 $quantifiedItemsDiscounts[$quantifiedItemIndex] = null;

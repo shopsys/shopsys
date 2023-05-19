@@ -59,6 +59,7 @@ class AdministratorUserProvider implements UserProviderInterface
                 'Unable to find an active admin Shopsys\FrameworkBundle\Model\Administrator\Administrator object identified by "%s".',
                 $username
             );
+
             throw new UserNotFoundException($message, 0);
         }
 
@@ -81,8 +82,10 @@ class AdministratorUserProvider implements UserProviderInterface
     public function refreshUser(UserInterface $userInterface)
     {
         $class = get_class($userInterface);
+
         if (!$this->supportsClass($class)) {
             $message = sprintf('Instances of "%s" are not supported.', $class);
+
             throw new UnsupportedUserException($message);
         }
 
@@ -102,6 +105,7 @@ class AdministratorUserProvider implements UserProviderInterface
             if (time() - $administrator->getLastActivity()->getTimestamp() > 3600 * 5) {
                 throw new AuthenticationExpiredException('Admin was too long inactive.');
             }
+
             if ($freshAdministrator !== null) {
                 $freshAdministrator->setLastActivity(new DateTime());
             }

@@ -90,6 +90,7 @@ class CustomerController extends FrontBaseController
     {
         if (!$this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
             $this->addErrorFlash(t('You have to be logged in to enter this page'));
+
             return $this->redirectToRoute('front_login');
         }
 
@@ -109,6 +110,7 @@ class CustomerController extends FrontBaseController
             $this->customerUserFacade->editByCustomerUser($customerUser->getId(), $customerUserUpdateData);
 
             $this->addSuccessFlash(t('Your data had been successfully updated'));
+
             return $this->redirectToRoute('front_customer_edit');
         }
 
@@ -125,6 +127,7 @@ class CustomerController extends FrontBaseController
     {
         if (!$this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
             $this->addErrorFlash(t('You have to be logged in to enter this page'));
+
             return $this->redirectToRoute('front_login');
         }
 
@@ -132,6 +135,7 @@ class CustomerController extends FrontBaseController
         $customerUser = $this->getUser();
 
         $orders = $this->orderFacade->getCustomerUserOrderList($customerUser);
+
         return $this->render('Front/Content/Customer/orders.html.twig', [
             'orders' => $orders,
         ]);
@@ -162,15 +166,18 @@ class CustomerController extends FrontBaseController
         if ($orderNumber !== null) {
             if (!$this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
                 $this->addErrorFlash(t('You have to be logged in to enter this page'));
+
                 return $this->redirectToRoute('front_login');
             }
 
             $customerUser = $this->getUser();
+
             try {
                 /** @var \App\Model\Order\Order $order */
                 $order = $this->orderFacade->getByOrderNumberAndUser($orderNumber, $customerUser);
             } catch (OrderNotFoundException $ex) {
                 $this->addErrorFlash(t('Order not found'));
+
                 return $this->redirectToRoute('front_customer_orders');
             }
         } else {

@@ -75,6 +75,7 @@ class TransportGridFactory implements GridFactoryInterface
             function ($row) {
                 $transport = $this->transportRepository->findById($row['t']['id']);
                 $row['displayPrice'] = $this->getDisplayPrice($transport);
+
                 return $row;
             }
         );
@@ -105,6 +106,7 @@ class TransportGridFactory implements GridFactoryInterface
             $transport
         );
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
+
         return $transportBasePricesIndexedByDomainId[$domainId]->getPriceWithVat();
     }
 }

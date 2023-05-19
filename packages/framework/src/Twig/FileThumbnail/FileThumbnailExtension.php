@@ -115,6 +115,7 @@ class FileThumbnailExtension extends AbstractExtension
     protected function getIconTypeByFilename($filepath)
     {
         $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
+
         if (array_key_exists($extension, $this->iconsByExtension)) {
             return $this->iconsByExtension[$extension];
         }

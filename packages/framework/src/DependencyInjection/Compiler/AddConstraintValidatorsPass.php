@@ -37,6 +37,7 @@ class AddConstraintValidatorsPass implements CompilerPassInterface
         }
 
         $validators = [];
+
         foreach ($container->findTaggedServiceIds($this->constraintValidatorTag, true) as $id => $attributes) {
             $definition = $container->getDefinition($id);
 

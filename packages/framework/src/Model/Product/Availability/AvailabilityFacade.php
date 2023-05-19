@@ -116,6 +116,7 @@ class AvailabilityFacade
             $newAvailability = $this->availabilityRepository->getById($newAvailabilityId);
 
             $this->availabilityRepository->replaceAvailability($availability, $newAvailability);
+
             if ($this->isAvailabilityDefault($availability)) {
                 $this->setDefaultInStockAvailability($newAvailability);
             }

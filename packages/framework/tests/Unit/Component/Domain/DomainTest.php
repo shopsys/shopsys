@@ -93,9 +93,11 @@ class DomainTest extends TestCase
             ->method('getForDomain')
             ->willReturnCallback(function ($key, $domainId) use ($domainConfigWithDataCreated) {
                 $this->assertEquals(Setting::DOMAIN_DATA_CREATED, $key);
+
                 if ($domainId === $domainConfigWithDataCreated->getId()) {
                     return true;
                 }
+
                 throw new SettingValueNotFoundException();
             });
 

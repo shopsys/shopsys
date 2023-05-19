@@ -125,6 +125,7 @@ class SitemapRepository
     {
         $rows = $queryBuilder->getQuery()->execute(null, AbstractQuery::HYDRATE_SCALAR);
         $sitemapItems = [];
+
         foreach ($rows as $row) {
             $sitemapItem = new SitemapItem();
             $sitemapItem->slug = $row['slug'];

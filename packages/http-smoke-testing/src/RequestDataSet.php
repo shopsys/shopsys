@@ -210,15 +210,19 @@ class RequestDataSet implements RequestDataSetConfig
         if ($requestDataSet->auth !== null) {
             $this->setAuth($requestDataSet->getAuth());
         }
+
         if ($requestDataSet->expectedStatusCode !== null) {
             $this->setExpectedStatusCode($requestDataSet->getExpectedStatusCode());
         }
+
         foreach ($requestDataSet->getParameters() as $name => $value) {
             $this->setParameter($name, $value);
         }
+
         foreach ($requestDataSet->getDebugNotes() as $debugNote) {
             $this->addDebugNote($debugNote);
         }
+
         foreach ($requestDataSet->callsDuringTestExecution as $callback) {
             $this->addCallDuringTestExecution($callback);
         }

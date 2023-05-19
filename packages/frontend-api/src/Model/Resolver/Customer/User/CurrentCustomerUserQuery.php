@@ -25,6 +25,7 @@ class CurrentCustomerUserQuery extends AbstractQuery
     public function currentCustomerUserQuery(): CustomerUser
     {
         $currentCustomerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+
         if ($currentCustomerUser === null) {
             throw new UserWarning('No customer user is currently logged in.');
         }

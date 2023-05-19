@@ -60,6 +60,7 @@ class CartMigrationFacade
 
         foreach ($cart->getItems() as $itemToMerge) {
             $similarItem = $currentCart->findSimilarItemByItem($itemToMerge);
+
             if ($similarItem instanceof CartItem) {
                 $similarItem->changeQuantity($similarItem->getQuantity() + $itemToMerge->getQuantity());
             } else {
@@ -91,6 +92,7 @@ class CartMigrationFacade
         $session = $event->getRequest()->getSession();
 
         $previousCartIdentifier = $session->get(static::SESSION_PREVIOUS_CART_IDENTIFIER);
+
         if (
             $previousCartIdentifier !== null
             && $previousCartIdentifier !== ''

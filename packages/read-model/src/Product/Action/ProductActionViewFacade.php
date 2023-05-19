@@ -49,6 +49,7 @@ class ProductActionViewFacade implements ProductActionViewFacadeInterface
         );
 
         $productActionViews = [];
+
         foreach ($products as $product) {
             $productId = $product->getId();
 

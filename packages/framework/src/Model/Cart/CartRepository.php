@@ -37,6 +37,7 @@ class CartRepository
     public function findByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier)
     {
         $criteria = [];
+
         if ($customerUserIdentifier->getCustomerUser() !== null) {
             $criteria['customerUser'] = $customerUserIdentifier->getCustomerUser()->getId();
         } else {

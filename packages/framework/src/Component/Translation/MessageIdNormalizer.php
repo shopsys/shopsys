@@ -49,6 +49,7 @@ class MessageIdNormalizer
         $normalizedMessage->setLocaleString($message->getLocaleString());
         $normalizedMessage->setMeaning($message->getMeaning());
         $normalizedMessage->setNew($message->isNew());
+
         foreach ($message->getSources() as $source) {
             $normalizedMessage->addSource($source);
         }

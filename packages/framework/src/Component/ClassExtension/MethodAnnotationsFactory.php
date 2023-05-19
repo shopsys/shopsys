@@ -65,8 +65,10 @@ class MethodAnnotationsFactory
     ): string {
         $projectClassDocBlock = $projectClassBetterReflection->getDocComment();
         $methodAnnotationsLines = '';
+
         foreach ($frameworkClassBetterReflection->getMethods() as $method) {
             $methodAnnotationLine = $this->getMethodAnnotationLine($method, $projectClassBetterReflection);
+
             if ($methodAnnotationLine !== '' && strpos($projectClassDocBlock, $methodAnnotationLine) === false) {
                 $methodAnnotationsLines .= $methodAnnotationLine;
             }
@@ -96,6 +98,7 @@ class MethodAnnotationsFactory
                     ->getReturnTypes($reflectionMethodFromFrameworkClass->getDocComment());
             } catch (InvalidArgumentException $exception) {
                 $this->warningBag[] = $exception;
+
                 continue;
             }
 
@@ -143,6 +146,7 @@ class MethodAnnotationsFactory
     {
         try {
             $reflectionMethod = $reflectionClass->getMethod($methodName);
+
             return $reflectionMethod->getDeclaringClass()->getName() === $reflectionClass->getName();
         } catch (OutOfBoundsException $ex) {
             return false;
@@ -156,6 +160,7 @@ class MethodAnnotationsFactory
     protected function getMethodParameterNamesWithTypes(ReflectionMethod $reflectionMethod): string
     {
         $methodParameterNamesWithTypes = [];
+
         foreach ($reflectionMethod->getParameters() as $methodParameter) {
             $defaultValue = '';
 

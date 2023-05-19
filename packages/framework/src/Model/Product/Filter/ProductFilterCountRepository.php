@@ -152,6 +152,7 @@ class ProductFilterCountRepository
         $rows = $productsFilteredExceptBrandsQueryBuilder->getQuery()->execute();
 
         $countByBrandId = [];
+
         foreach ($rows as $row) {
             $countByBrandId[$row['id']] = $row['cnt'];
         }
@@ -215,6 +216,7 @@ class ProductFilterCountRepository
         $rows = $productsFilteredExceptFlagsQueryBuilder->getQuery()->execute();
 
         $countByFlagId = [];
+
         foreach ($rows as $row) {
             $countByFlagId[$row['id']] = $row['cnt'];
         }
@@ -243,6 +245,7 @@ class ProductFilterCountRepository
             $currentParameter = $parameterFilterChoice->getParameter();
 
             $productFilterDataExceptCurrentParameter = clone $productFilterData;
+
             foreach ($productFilterDataExceptCurrentParameter->parameters as $index => $parameterFilterData) {
                 if ($parameterFilterData->parameter->getId() === $currentParameter->getId()) {
                     unset($productFilterDataExceptCurrentParameter->parameters[$index]);
@@ -270,6 +273,7 @@ class ProductFilterCountRepository
             $rows = $productsFilteredExceptCurrentParameterQueryBuilder->getQuery()->execute();
 
             $countByParameterIdAndValueId[$currentParameter->getId()] = [];
+
             foreach ($rows as $row) {
                 $countByParameterIdAndValueId[$currentParameter->getId()][$row['id']] = $row['cnt'];
             }

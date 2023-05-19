@@ -37,6 +37,7 @@ class SqlParametersFlattenerTest extends TestCase
             ],
             'expectedFlattenedParameters' => [1, 'name'],
         ];
+
         yield [
             'dql' => 'SELECT a FROM Article WHERE id = :id AND name = :name',
             'parameters' => [

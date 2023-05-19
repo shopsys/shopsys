@@ -23,6 +23,7 @@ final class ForbiddenDoctrineInheritanceSniffTest extends AbstractSniffTestCase
     public function getWrongFiles(): iterable
     {
         yield [__DIR__ . '/Wrong/ClassWithFullNamespaceInheritanceMapping.php'];
+
         yield [__DIR__ . '/Wrong/EntityWithOrmInheritanceMapping.php'];
     }
 
@@ -32,6 +33,7 @@ final class ForbiddenDoctrineInheritanceSniffTest extends AbstractSniffTestCase
     public function getCorrectFiles(): iterable
     {
         yield [__DIR__ . '/Correct/fileWithoutClass.php'];
+
         yield [__DIR__ . '/Correct/EntityWithoutInheritanceMapping.php'];
     }
 }

@@ -166,6 +166,7 @@ class FilterQuery
 
         $orderIndexedByIds = [];
         $order = 0;
+
         foreach ($ids as $id) {
             $orderIndexedByIds[$id] = $order;
             $order++;
@@ -237,9 +238,11 @@ class FilterQuery
         $clone = clone $this;
 
         $prices = [];
+
         if ($minimalPrice !== null) {
             $prices['gte'] = (float)$minimalPrice->getAmount();
         }
+
         if ($maximalPrice !== null) {
             $prices['lte'] = (float)$maximalPrice->getAmount();
         }

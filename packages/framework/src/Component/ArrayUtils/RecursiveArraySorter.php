@@ -13,11 +13,13 @@ class RecursiveArraySorter
     public function recursiveArrayKsort(array &$array): bool
     {
         $return = true;
+
         foreach ($array as &$value) {
             if (is_array($value)) {
                 $return = $this->recursiveArrayKsort($value) && $return;
             }
         }
+
         return ksort($array) && $return;
     }
 }

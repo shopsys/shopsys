@@ -92,6 +92,7 @@ class OrderItemPriceCalculation
         foreach ($orderItems as $orderItem) {
             if ($orderItem->getId() === null) {
                 $message = 'OrderItem must have ID filled';
+
                 throw new OrderItemHasNoIdException($message);
             }
             $prices[$orderItem->getId()] = $this->calculateTotalPrice($orderItem);

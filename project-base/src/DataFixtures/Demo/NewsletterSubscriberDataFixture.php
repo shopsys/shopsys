@@ -44,6 +44,7 @@ class NewsletterSubscriberDataFixture extends AbstractReferenceFixture
             } else {
                 $newsletterSubscribersData = $this->getDefaultEmailData();
             }
+
             foreach ($newsletterSubscribersData as $email) {
                 $this->newsletterFacade->addSubscribedEmail($email, $domainId);
             }

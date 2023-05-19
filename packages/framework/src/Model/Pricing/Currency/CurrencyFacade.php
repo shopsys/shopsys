@@ -159,6 +159,7 @@ class CurrencyFacade
     {
         $currency = $this->currencyRepository->getById($currencyId);
         $currency->edit($currencyData);
+
         if ($this->isDefaultCurrency($currency)) {
             $currency->setExchangeRate(Currency::DEFAULT_EXCHANGE_RATE);
         } else {
@@ -239,6 +240,7 @@ class CurrencyFacade
         Currency $newDefaultCurrency
     ): void {
         $coefficient = $this->getExchangeRateForCurrencies($originalDefaultCurrency, $newDefaultCurrency);
+
         foreach ($this->getAll() as $currency) {
             if ($currency->getId() === $newDefaultCurrency->getId()) {
                 $newExchangeRate = Currency::DEFAULT_EXCHANGE_RATE;
@@ -255,11 +257,13 @@ class CurrencyFacade
     public function getNotAllowedToDeleteCurrencyIds()
     {
         $notAllowedToDeleteCurrencyIds = [$this->getDefaultCurrency()->getId()];
+
         foreach ($this->domain->getAll() as $domainConfig) {
             $notAllowedToDeleteCurrencyIds[] = $this->pricingSetting->getDomainDefaultCurrencyIdByDomainId(
                 $domainConfig->getId()
             );
         }
+
         foreach ($this->getCurrenciesUsedInOrders() as $currency) {
             $notAllowedToDeleteCurrencyIds[] = $currency->getId();
         }
@@ -290,6 +294,7 @@ class CurrencyFacade
     public function getAllIndexedById()
     {
         $currenciesIndexedById = [];
+
         foreach ($this->getAll() as $currency) {
             $currenciesIndexedById[$currency->getId()] = $currency;
         }

@@ -41,6 +41,7 @@ class FilesystemLoader extends BaseFilesystemLoader
     {
         $templateName = (string)$template;
         $multidesignTemplate = null;
+
         if (strpos($templateName, 'Front/') === 0) {
             $multidesignTemplate = $this->findMultidesignTemplate($templateName);
         }
@@ -56,6 +57,7 @@ class FilesystemLoader extends BaseFilesystemLoader
     {
         if (!($this->domain instanceof Domain)) {
             $message = sprintf('Template loader needs an instance of %s class', Domain::class);
+
             throw new MissingDependencyException($message);
         }
     }
@@ -68,12 +70,14 @@ class FilesystemLoader extends BaseFilesystemLoader
     {
         try {
             $designId = $this->domain->getDesignId();
+
             if ($designId !== null) {
                 $multidesignTemplateName = preg_replace(
                     '/^(.*)(\.[^\.]*\.twig)$/',
                     '$1.' . $designId . '$2',
                     $templateName
                 );
+
                 try {
                     return parent::findTemplate($multidesignTemplateName);
                 } catch (LoaderError $loaderException) {
@@ -82,6 +86,7 @@ class FilesystemLoader extends BaseFilesystemLoader
                             'Unexpected exception when trying to load multidesign template `%s`',
                             $multidesignTemplateName
                         );
+
                         throw new LoaderError($message, -1, null, $loaderException);
                     }
                 }

@@ -31,6 +31,7 @@ class Version20170703131941 extends AbstractMigration
                 CONSTRAINT FK_6B401AE644F5D008 FOREIGN KEY (brand_id) REFERENCES brands (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
 
         $allDomainIds = $this->getAllDomainIds();
+
         foreach ($allDomainIds as $domainId) {
             $this->sql(
                 'INSERT INTO brand_domains (brand_id, domain_id)

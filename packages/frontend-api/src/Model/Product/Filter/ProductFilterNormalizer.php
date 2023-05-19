@@ -175,6 +175,7 @@ class ProductFilterNormalizer
                 foreach ($parameterFilterData->values as $key => $filterParameterValue) {
                     if ($filterParameterValue === $parameterValue) {
                         unset($parameterFilterData->values[$key]);
+
                         break;
                     }
                 }

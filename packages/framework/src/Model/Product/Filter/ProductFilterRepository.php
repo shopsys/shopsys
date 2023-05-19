@@ -85,10 +85,12 @@ class ProductFilterRepository
     ) {
         if ($maximalPrice !== null || $minimalPrice !== null) {
             $priceLimits = 'pcp.product = p AND pcp.pricingGroup = :pricingGroup';
+
             if ($minimalPrice !== null) {
                 $priceLimits .= ' AND pcp.priceWithVat >= :minimalPrice';
                 $productsQueryBuilder->setParameter('minimalPrice', $minimalPrice->getAmount());
             }
+
             if ($maximalPrice !== null) {
                 $priceLimits .= ' AND pcp.priceWithVat <= :maximalPrice';
                 $productsQueryBuilder->setParameter('maximalPrice', $maximalPrice->getAmount());
@@ -128,6 +130,7 @@ class ProductFilterRepository
     protected function filterByFlags(QueryBuilder $productsQueryBuilder, array $flags)
     {
         $flagsCount = count($flags);
+
         if ($flagsCount === 0) {
             return;
         }
@@ -135,6 +138,7 @@ class ProductFilterRepository
         $flagsQueryBuilder = $this->getFlagsQueryBuilder($flags, $productsQueryBuilder->getEntityManager());
 
         $productsQueryBuilder->andWhere($productsQueryBuilder->expr()->exists($flagsQueryBuilder));
+
         foreach ($flagsQueryBuilder->getParameters() as $parameter) {
             $productsQueryBuilder->setParameter($parameter->getName(), $parameter->getValue());
         }
@@ -147,6 +151,7 @@ class ProductFilterRepository
     protected function filterByBrands(QueryBuilder $productsQueryBuilder, array $brands)
     {
         $brandsCount = count($brands);
+
         if ($brandsCount === 0) {
             return;
         }
@@ -154,6 +159,7 @@ class ProductFilterRepository
         $brandsQueryBuilder = $this->getBrandsQueryBuilder($brands, $productsQueryBuilder->getEntityManager());
 
         $productsQueryBuilder->andWhere($productsQueryBuilder->expr()->exists($brandsQueryBuilder));
+
         foreach ($brandsQueryBuilder->getParameters() as $parameter) {
             $productsQueryBuilder->setParameter($parameter->getName(), $parameter->getValue());
         }

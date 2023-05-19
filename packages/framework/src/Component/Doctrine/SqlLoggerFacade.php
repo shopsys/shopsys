@@ -36,6 +36,7 @@ class SqlLoggerFacade
     {
         if ($this->isLoggerTemporarilyDisabled) {
             $message = 'Trying to disable already disabled SQL logger.';
+
             throw new SqlLoggerAlreadyDisabledException($message);
         }
         $this->sqlLogger = $this->em->getConnection()->getConfiguration()->getSQLLogger();
@@ -47,6 +48,7 @@ class SqlLoggerFacade
     {
         if (!$this->isLoggerTemporarilyDisabled) {
             $message = 'Trying to reenable already enabled SQL logger.';
+
             throw new SqlLoggerAlreadyEnabledException($message);
         }
         $this->em->getConnection()->getConfiguration()->setSQLLogger($this->sqlLogger);

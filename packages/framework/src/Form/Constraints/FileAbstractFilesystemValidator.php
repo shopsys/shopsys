@@ -61,6 +61,7 @@ class FileAbstractFilesystemValidator extends FileValidator
             )
                 ->setCode((string)UPLOAD_ERR_NO_FILE)
                 ->addViolation();
+
             return;
         }
 

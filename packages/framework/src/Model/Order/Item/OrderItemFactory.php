@@ -94,6 +94,7 @@ class OrderItemFactory implements OrderItemFactoryInterface
         );
 
         $orderPayment->setPayment($payment);
+
         return $orderPayment;
     }
 
@@ -128,6 +129,7 @@ class OrderItemFactory implements OrderItemFactoryInterface
         );
 
         $orderTransport->setTransport($transport);
+
         return $orderTransport;
     }
 }

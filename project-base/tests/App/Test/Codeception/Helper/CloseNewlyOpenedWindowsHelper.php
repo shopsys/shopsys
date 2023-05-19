@@ -37,6 +37,7 @@ class CloseNewlyOpenedWindowsHelper extends Module
     {
         $handles = $webDriver->getWindowHandles();
         $firstHandle = array_shift($handles);
+
         foreach ($handles as $handle) {
             $webDriver->switchTo()->window($handle);
             $webDriver->execute(DriverCommand::CLOSE, []);

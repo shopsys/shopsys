@@ -53,6 +53,7 @@ class ManualBestsellingProductFacade
     public function edit(Category $category, $domainId, array $productsIndexedByPosition)
     {
         $toDelete = $this->manualBestsellingProductRepository->getByCategory($domainId, $category);
+
         foreach ($toDelete as $item) {
             $this->em->remove($item);
         }
@@ -83,6 +84,7 @@ class ManualBestsellingProductFacade
         $bestsellingProducts = $this->manualBestsellingProductRepository->getByCategory($domainId, $category);
 
         $products = [];
+
         foreach ($bestsellingProducts as $key => $bestsellingProduct) {
             $products[$key] = $bestsellingProduct->getProduct();
         }

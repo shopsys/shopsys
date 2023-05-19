@@ -105,6 +105,7 @@ abstract class AbstractAdvancedSearchFormFactory
     protected function getFilterOperatorChoices(AdvancedSearchFilterInterface $filter)
     {
         $choices = [];
+
         foreach ($filter->getAllowedOperators() as $operator) {
             $choices[$this->advancedSearchOperatorTranslation->translateOperator($operator)] = $operator;
         }
@@ -118,6 +119,7 @@ abstract class AbstractAdvancedSearchFormFactory
     protected function getSubjectChoices()
     {
         $choices = [];
+
         foreach ($this->advancedSearchConfig->getAllFilters() as $filter) {
             $choices[$this->advancedSearchFilterTranslation->translateFilterName(
                 $filter->getName()

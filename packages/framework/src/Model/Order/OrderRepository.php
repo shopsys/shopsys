@@ -229,6 +229,7 @@ class OrderRepository
 
         if ($order === null) {
             $message = 'Order with number "' . $orderNumber . '" and customerUserId "' . $customerUser->getId() . '" not found.';
+
             throw new OrderNotFoundException($message);
         }
 

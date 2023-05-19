@@ -83,6 +83,7 @@ class CookiesFacade
     public function setCookiesArticleOnDomain(?Article $cookiesArticle, $domainId)
     {
         $cookiesArticleId = null;
+
         if ($cookiesArticle !== null) {
             $cookiesArticleId = $cookiesArticle->getId();
         }

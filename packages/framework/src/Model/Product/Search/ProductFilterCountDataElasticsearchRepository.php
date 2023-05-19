@@ -154,6 +154,7 @@ class ProductFilterCountDataElasticsearchRepository
     protected function calculateFlagsPlusNumbers(ProductFilterData $productFilterData, FilterQuery $plusFlagsQuery): array
     {
         $flagIds = [];
+
         foreach ($productFilterData->flags as $flag) {
             $flagIds[] = $flag->getId();
         }
@@ -171,6 +172,7 @@ class ProductFilterCountDataElasticsearchRepository
     protected function calculateBrandsPlusNumbers(ProductFilterData $productFilterData, FilterQuery $plusFlagsQuery): array
     {
         $brandsIds = [];
+
         foreach ($productFilterData->brands as $brand) {
             $brandsIds[] = $brand->getId();
         }
@@ -217,6 +219,7 @@ class ProductFilterCountDataElasticsearchRepository
     ): array {
         $parameterId = $parameterFilterData->parameter->getId();
         $valuesIds = [];
+
         foreach ($parameterFilterData->values as $parameterValue) {
             $valuesIds[] = $parameterValue->getId();
         }

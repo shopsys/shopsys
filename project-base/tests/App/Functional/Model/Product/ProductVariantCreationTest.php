@@ -112,6 +112,7 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
         $productData->stockQuantity = $quantity;
         $productData->outOfStockAction = $outOfStockAction;
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
+
         if ($outOfStockAvailabilityReference !== null) {
             $productData->outOfStockAvailability = $this->getReference($outOfStockAvailabilityReference);
         }
@@ -138,9 +139,11 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
     {
         $actualVariants = $mainVariant->getVariants();
         $this->assertCount(count($expectedVariants), $actualVariants);
+
         foreach ($expectedVariants as $expectedVariant) {
             $this->assertContains($expectedVariant, $actualVariants);
         }
+
         foreach ($actualVariants as $actualVariant) {
             $this->assertTrue($actualVariant->isVariant());
         }
@@ -152,6 +155,7 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
     private function setVats(ProductData $productData): void
     {
         $productVatsIndexedByDomainId = [];
+
         foreach ($this->domain->getAllIds() as $domainId) {
             $productVatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
         }

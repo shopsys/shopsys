@@ -42,6 +42,7 @@ class QueryBuilderDataSource implements DataSourceInterface
         $orderDirection = self::ORDER_ASC
     ) {
         $queryBuilder = clone $this->queryBuilder;
+
         if ($orderSourceColumnName !== null) {
             $this->addQueryOrder($queryBuilder, $orderSourceColumnName, $orderDirection);
         }
@@ -69,6 +70,7 @@ class QueryBuilderDataSource implements DataSourceInterface
     public function getTotalRowsCount()
     {
         $queryPaginator = new QueryPaginator($this->queryBuilder, GroupedScalarHydrator::HYDRATION_MODE);
+
         return $queryPaginator->getTotalCount();
     }
 

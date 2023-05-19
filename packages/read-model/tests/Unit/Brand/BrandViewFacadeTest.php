@@ -63,6 +63,7 @@ class BrandViewFacadeTest extends TestCase
 
         $productFacadeMock = $this->createMock(ProductFacade::class);
         $productFacadeMock->method('getById')->willReturn($productMock);
+
         return $productFacadeMock;
     }
 }

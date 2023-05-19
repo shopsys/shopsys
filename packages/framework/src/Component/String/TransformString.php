@@ -72,6 +72,7 @@ class TransformString
         if (substr($string, -1) === '/') {
             return rtrim($string, '/');
         }
+
         return $string . '/';
     }
 

@@ -25,6 +25,7 @@ class AnnotationsReplacementsMap
     public function getPatterns(): array
     {
         $patterns = [];
+
         foreach (array_keys($this->classExtensionMap) as $frameworkClass) {
             $patterns[] = '/\\\\' . preg_quote(ltrim($frameworkClass, '\\'), '/') . '(?!\w)/';
         }
@@ -38,6 +39,7 @@ class AnnotationsReplacementsMap
     public function getReplacements(): array
     {
         $replacements = [];
+
         foreach (array_values($this->classExtensionMap) as $projectClass) {
             $replacements[] = '\\' . ltrim($projectClass, '\\');
         }
@@ -53,6 +55,7 @@ class AnnotationsReplacementsMap
     public function getPatternForAny(): string
     {
         $patternsWithoutDelimiters = [];
+
         foreach ($this->getPatterns() as $pattern) {
             $patternsWithoutDelimiters[] = substr($pattern, 1, -1);
         }

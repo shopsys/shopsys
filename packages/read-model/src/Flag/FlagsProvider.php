@@ -37,6 +37,7 @@ class FlagsProvider
         }
 
         $flags = [];
+
         foreach ($this->allFlags as $flag) {
             if (in_array($flag->getId(), $flagIds, true)) {
                 $flags[] = $flag;

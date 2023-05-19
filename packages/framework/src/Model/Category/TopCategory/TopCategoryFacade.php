@@ -80,6 +80,7 @@ class TopCategoryFacade
     public function saveTopCategoriesForDomain($domainId, array $categories)
     {
         $oldTopCategories = $this->topCategoryRepository->getAllByDomainId($domainId);
+
         foreach ($oldTopCategories as $oldTopCategory) {
             $this->em->remove($oldTopCategory);
         }
@@ -87,6 +88,7 @@ class TopCategoryFacade
 
         $topCategories = [];
         $position = 1;
+
         foreach ($categories as $category) {
             $topCategory = $this->topCategoryFactory->create($category, $domainId, $position++);
             $this->em->persist($topCategory);

@@ -12,6 +12,7 @@ class MissingLocaleAggregateException extends Exception
     public function __construct(array $missingLocaleExceptions)
     {
         $missingLocales = [];
+
         foreach ($missingLocaleExceptions as $missingLocaleException) {
             $missingLocales[] = $missingLocaleException->getLocale();
         }

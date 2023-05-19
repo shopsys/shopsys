@@ -28,6 +28,7 @@ class ProductsGraphQlTestCase extends GraphQlTestCase
         $this->assertArrayHasKey('edges', $responseData);
 
         $queryResult = [];
+
         foreach ($responseData['edges'] as $edge) {
             $this->assertArrayHasKey('node', $edge);
             $queryResult[] = $edge['node'];

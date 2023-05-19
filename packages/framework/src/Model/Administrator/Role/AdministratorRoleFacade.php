@@ -51,6 +51,7 @@ class AdministratorRoleFacade
         $this->removeAllByAdministrator($administrator);
 
         $newRoles = [];
+
         foreach ($roles as $role) {
             $newRoles[] = $this->createNewRole($administrator, $role);
         }
@@ -67,6 +68,7 @@ class AdministratorRoleFacade
     protected function addAdminRoleIfMissing(Administrator $administrator, array $roles): array
     {
         $adminRole = Roles::ROLE_ADMIN;
+
         if ($administrator->isSuperadmin()) {
             $adminRole = Roles::ROLE_SUPER_ADMIN;
         }
@@ -84,6 +86,7 @@ class AdministratorRoleFacade
     protected function removeAllByAdministrator(Administrator $administrator): void
     {
         $oldAdministratorRoles = $administrator->getAdministratorRoles();
+
         foreach ($oldAdministratorRoles as $oldAdministratorRole) {
             $this->em->remove($oldAdministratorRole);
         }

@@ -140,6 +140,7 @@ class FileUploadType extends AbstractType
         );
 
         $uploadedFilesIndexedById = [];
+
         foreach ($uploadedFiles as $uploadedFile) {
             $uploadedFilesIndexedById[$uploadedFile->getId()] = $uploadedFile;
         }

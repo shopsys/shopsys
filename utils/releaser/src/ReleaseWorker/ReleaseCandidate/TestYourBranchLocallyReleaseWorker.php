@@ -36,6 +36,7 @@ final class TestYourBranchLocallyReleaseWorker extends AbstractShopsysReleaseWor
             $this->symfonyStyle->caution($ex->getProcess()->getOutput());
             $this->symfonyStyle->note('A problem occurred, check the output and fix it please.');
             $runChecksAgain = $this->symfonyStyle->ask('Run the checks again?', 'yes');
+
             if ($runChecksAgain === 'yes') {
                 $this->work($version);
             }

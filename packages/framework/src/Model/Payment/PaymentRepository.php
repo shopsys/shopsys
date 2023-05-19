@@ -78,6 +78,7 @@ class PaymentRepository
     public function getById($id)
     {
         $payment = $this->findById($id);
+
         if ($payment === null) {
             throw new PaymentNotFoundException(
                 'Payment with ID ' . $id . ' not found.'

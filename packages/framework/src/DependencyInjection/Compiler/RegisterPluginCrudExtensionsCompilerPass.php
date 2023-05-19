@@ -20,6 +20,7 @@ class RegisterPluginCrudExtensionsCompilerPass implements CompilerPassInterface
         );
 
         $taggedServiceIds = $container->findTaggedServiceIds('shopsys.crud_extension');
+
         foreach ($taggedServiceIds as $serviceId => $tags) {
             foreach ($tags as $tag) {
                 $this->registerPluginCrudExtension($pluginCrudExtensionRegistryDefinition, $serviceId, $tag['type']);

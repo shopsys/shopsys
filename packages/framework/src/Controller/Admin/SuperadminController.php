@@ -107,6 +107,7 @@ class SuperadminController extends AdminBaseController
             $this->delayedPricingSetting->scheduleSetInputPriceType($pricingSettingData['type']);
 
             $this->addSuccessFlash(t('Pricing settings modified'));
+
             return $this->redirectToRoute('admin_superadmin_pricing');
         }
 
@@ -142,11 +143,13 @@ class SuperadminController extends AdminBaseController
     {
         $data = [];
         $requestContext = new RequestContext();
+
         foreach ($locales as $locale) {
             $rowIndex = 0;
             $allRoutes = $this->localizedRouterFactory->getRouter($locale, $requestContext)
                 ->getRouteCollection()
                 ->all();
+
             foreach ($allRoutes as $route) {
                 $data[$rowIndex][$locale] = $route->getPath();
                 $rowIndex++;
@@ -163,6 +166,7 @@ class SuperadminController extends AdminBaseController
     public function modulesAction(Request $request)
     {
         $formData = [];
+
         foreach ($this->moduleList->getNames() as $moduleName) {
             $formData['modules'][$moduleName] = $this->moduleFacade->isEnabled($moduleName);
         }
@@ -178,6 +182,7 @@ class SuperadminController extends AdminBaseController
             }
 
             $this->addSuccessFlash(t('Modules configuration modified'));
+
             return $this->redirectToRoute('admin_superadmin_modules');
         }
 

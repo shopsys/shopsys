@@ -176,9 +176,11 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         foreach ($paymentData->name as $locale => $name) {
             $this->translation($locale)->setName($name);
         }
+
         foreach ($paymentData->description as $locale => $description) {
             $this->translation($locale)->setDescription($description);
         }
+
         foreach ($paymentData->instructions as $locale => $instructions) {
             $this->translation($locale)->setInstructions($instructions);
         }
@@ -195,6 +197,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         foreach ($this->prices as $paymentInputPrice) {
             if ($paymentInputPrice->getDomainId() === $domainId) {
                 $paymentInputPrice->setPrice($price);
+
                 return;
             }
         }
@@ -384,6 +387,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         }
 
         $message = 'Payment price for domain ID ' . $domainId . ' and payment ID ' . $this->getId() . 'not found.';
+
         throw new PaymentPriceNotFoundException($message);
     }
 

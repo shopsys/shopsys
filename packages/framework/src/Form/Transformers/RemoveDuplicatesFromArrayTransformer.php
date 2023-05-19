@@ -23,6 +23,7 @@ class RemoveDuplicatesFromArrayTransformer implements DataTransformerInterface
     {
         if (is_array($array)) {
             $result = [];
+
             foreach ($array as $key => $value) {
                 if (!in_array($value, $result, true)) {
                     $result[$key] = $value;

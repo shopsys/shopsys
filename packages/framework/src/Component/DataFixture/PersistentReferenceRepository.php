@@ -44,9 +44,11 @@ class PersistentReferenceRepository
     public function getByReferenceName($referenceName)
     {
         $reference = $this->findByReferenceName($referenceName);
+
         if ($reference === null) {
             throw new PersistentReferenceNotFoundException($referenceName);
         }
+
         return $reference;
     }
 }

@@ -19,6 +19,7 @@ class GetAdvertPositionsTest extends GraphQlTestCase
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
         self::assertCount(count($expectedAdvertsData), $responseData);
+
         foreach ($responseData as $advertPositionData) {
             self::assertSame(array_shift($expectedAdvertsData), $advertPositionData);
         }
@@ -45,6 +46,7 @@ class GetAdvertPositionsTest extends GraphQlTestCase
     private function getExpectedAdvertPositions(): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
+
         return [
             [
                 'description' => t('under heading', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),

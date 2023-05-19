@@ -81,10 +81,12 @@ class ImageFactory implements ImageFactoryInterface
         if (!$imageEntityConfig->isMultiple($type)) {
             $message = 'Entity ' . $imageEntityConfig->getEntityClass()
                 . ' is not allowed to have multiple images for type ' . ($type ?: 'NULL');
+
             throw new EntityMultipleImageException($message);
         }
 
         $images = [];
+
         foreach ($temporaryFilenames as $key => $temporaryFilename) {
             $images[] = $this->create($imageEntityConfig->getEntityName(), $entityId, $names[$key] ?? [], $temporaryFilename, $type);
         }

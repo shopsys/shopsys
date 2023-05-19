@@ -113,9 +113,11 @@ class CategoryDataFixture
             $newCategory = $this->categoryFacade->create($categoryData);
             $progressBar->advance();
             $this->categoriesCreated++;
+
             if ($this->categoriesCreated === 1) {
                 $this->persistentReferenceFacade->persistReference(self::FIRST_PERFORMANCE_CATEGORY, $newCategory);
             }
+
             if (array_key_exists($categoryLevel + 1, $this->categoryCountsByLevel)) {
                 $this->recursivelyCreateCategoryTree($newCategory, $progressBar, $categoryLevel + 1);
             }
@@ -129,8 +131,10 @@ class CategoryDataFixture
     private function recursivelyCountCategoriesInCategoryTree($categoryLevel = 0)
     {
         $count = 0;
+
         for ($i = 0; $i < $this->categoryCountsByLevel[$categoryLevel]; $i++) {
             $count++;
+
             if (array_key_exists($categoryLevel + 1, $this->categoryCountsByLevel)) {
                 $count += $this->recursivelyCountCategoriesInCategoryTree($categoryLevel + 1);
             }

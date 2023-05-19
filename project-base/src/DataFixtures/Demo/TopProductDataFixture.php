@@ -47,6 +47,7 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
             ProductDataFixture::PRODUCT_PREFIX . '10',
             ProductDataFixture::PRODUCT_PREFIX . '7',
         ];
+
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
 
@@ -65,6 +66,7 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
     private function createTopProductsForDomain(array $productReferenceNames, int $domainId): void
     {
         $products = [];
+
         foreach ($productReferenceNames as $productReferenceName) {
             $products[] = $this->getReference($productReferenceName);
         }

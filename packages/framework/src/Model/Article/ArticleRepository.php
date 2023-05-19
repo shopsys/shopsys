@@ -106,10 +106,13 @@ class ArticleRepository
     public function getById($articleId)
     {
         $article = $this->getArticleRepository()->find($articleId);
+
         if ($article === null) {
             $message = 'Article with ID ' . $articleId . ' not found';
+
             throw new ArticleNotFoundException($message);
         }
+
         return $article;
     }
 
@@ -126,8 +129,10 @@ class ArticleRepository
 
         if ($article === null) {
             $message = 'Article with ID ' . $articleId . ' not found';
+
             throw new ArticleNotFoundException($message);
         }
+
         return $article;
     }
 

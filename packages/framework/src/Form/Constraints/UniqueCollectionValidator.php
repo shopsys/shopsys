@@ -39,6 +39,7 @@ class UniqueCollectionValidator extends ConstraintValidator
                 if ($index1 !== $index2) {
                     if ($this->areValuesEqual($constraint, $value1, $value2)) {
                         $this->context->addViolation($constraint->message);
+
                         return;
                     }
                 }
@@ -63,6 +64,7 @@ class UniqueCollectionValidator extends ConstraintValidator
         if ($constraint->fields === null) {
             return $value1 === $value2;
         }
+
         return $this->areValuesEqualInFields($constraint->fields, $value1, $value2);
     }
 

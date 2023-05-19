@@ -39,6 +39,7 @@ class Naming
         // is class <name>
         if ($this->isClassName($file, $classNameStartPosition)) {
             $namespace = NamespaceHelper::findCurrentNamespaceName($file, $classNameStartPosition);
+
             if ($namespace) {
                 return $namespace . self::NAMESPACE_SEPARATOR . $firstNamePart;
             }
@@ -50,6 +51,7 @@ class Naming
         $classNameParts[] = $firstNamePart;
 
         $nextTokenPointer = $classNameStartPosition + 1;
+
         while ($tokens[$nextTokenPointer]['code'] === T_NS_SEPARATOR) {
             ++$nextTokenPointer;
             $classNameParts[] = $tokens[$nextTokenPointer]['content'];
@@ -59,6 +61,7 @@ class Naming
         $completeClassName = implode(self::NAMESPACE_SEPARATOR, $classNameParts);
 
         $fqnClassName = $this->getFqnClassName($file, $completeClassName, $classNameStartPosition);
+
         if ($fqnClassName !== '') {
             return ltrim($fqnClassName, self::NAMESPACE_SEPARATOR);
         }

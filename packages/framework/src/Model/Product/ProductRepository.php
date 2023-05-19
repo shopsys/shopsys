@@ -192,6 +192,7 @@ class ProductRepository
     ) {
         $queryBuilder = $this->getAllListableQueryBuilder($domainId, $pricingGroup);
         $this->filterByCategory($queryBuilder, $category, $domainId);
+
         return $queryBuilder;
     }
 
@@ -208,6 +209,7 @@ class ProductRepository
     ) {
         $queryBuilder = $this->getAllListableQueryBuilder($domainId, $pricingGroup);
         $this->filterByBrand($queryBuilder, $brand);
+
         return $queryBuilder;
     }
 
@@ -224,6 +226,7 @@ class ProductRepository
     ) {
         $queryBuilder = $this->getAllSellableQueryBuilder($domainId, $pricingGroup);
         $this->filterByCategory($queryBuilder, $category, $domainId);
+
         return $queryBuilder;
     }
 
@@ -543,11 +546,13 @@ class ProductRepository
             case ProductListOrderingConfig::ORDER_BY_NAME_ASC:
                 $collation = $this->localization->getCollationByLocale($locale);
                 $queryBuilder->addOrderBy("COLLATE(pt.name, '" . $collation . "')", 'asc');
+
                 break;
 
             case ProductListOrderingConfig::ORDER_BY_NAME_DESC:
                 $collation = $this->localization->getCollationByLocale($locale);
                 $queryBuilder->addOrderBy("COLLATE(pt.name, '" . $collation . "')", 'desc');
+
                 break;
 
             case ProductListOrderingConfig::ORDER_BY_PRICE_ASC:
@@ -559,6 +564,7 @@ class ProductRepository
                 );
                 $queryBuilder->addOrderBy('pcp.priceWithVat', 'asc');
                 $queryBuilder->setParameter('pricingGroup', $pricingGroup);
+
                 break;
 
             case ProductListOrderingConfig::ORDER_BY_PRICE_DESC:
@@ -570,16 +576,19 @@ class ProductRepository
                 );
                 $queryBuilder->addOrderBy('pcp.priceWithVat', 'desc');
                 $queryBuilder->setParameter('pricingGroup', $pricingGroup);
+
                 break;
 
             case ProductListOrderingConfig::ORDER_BY_PRIORITY:
                 $queryBuilder->addOrderBy('p.orderingPriority', 'desc');
                 $collation = $this->localization->getCollationByLocale($locale);
                 $queryBuilder->addOrderBy("COLLATE(pt.name, '" . $collation . "')", 'asc');
+
                 break;
 
             default:
                 $message = 'Product list ordering mode "' . $orderingModeId . '" is not supported.';
+
                 throw new InvalidOrderingModeException($message);
         }
 
@@ -853,12 +862,14 @@ class ProductRepository
     {
         $queryBuilder = $this->getProductRepository()->createQueryBuilder('p');
         $queryBuilder->orderBy('p.id');
+
         if ($query->getUuids()) {
             $queryBuilder->andWhere('p.uuid IN (:uuids)');
             $queryBuilder->setParameter(':uuids', $query->getUuids());
         }
 
         $queryPaginator = new QueryPaginator($queryBuilder);
+
         return $queryPaginator->getResult($query->getPage(), $query->getPageSize());
     }
 

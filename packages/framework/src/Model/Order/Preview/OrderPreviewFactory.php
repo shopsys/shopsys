@@ -78,6 +78,7 @@ class OrderPreviewFactory
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
         $validEnteredPromoCode = $this->currentPromoCodeFacade->getValidEnteredPromoCodeOrNull();
         $validEnteredPromoCodePercent = null;
+
         if ($validEnteredPromoCode !== null) {
             $validEnteredPromoCodePercent = $validEnteredPromoCode->getPercent();
         }

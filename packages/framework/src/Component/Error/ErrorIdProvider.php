@@ -34,6 +34,7 @@ class ErrorIdProvider
         if (!$this->errorId) {
             $this->errorId = $this->hashGenerator->generateHash(10);
         }
+
         return $this->errorId;
     }
 }

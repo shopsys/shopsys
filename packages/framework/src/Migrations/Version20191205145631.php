@@ -38,6 +38,7 @@ class Version20191205145631 extends AbstractMigration
         $this->sql('UPDATE users SET customer_id=id');
 
         $users = $this->sql('SELECT id, billing_address_id FROM users')->fetchAllAssociative();
+
         foreach ($users as $user) {
             $this->sql(
                 'UPDATE billing_addresses SET customer_id=? WHERE id=?',

@@ -62,6 +62,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         $this->traverser->addVisitor($this);
 
         $this->transMethodSpecifications = [];
+
         foreach ($transMethodSpecifications as $transMethodSpecification) {
             $methodName = $this->getNormalizedMethodName($transMethodSpecification->getMethodName());
             $this->transMethodSpecifications[$methodName] = $transMethodSpecification;
@@ -138,6 +139,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
                 $this->file
             );
         }
+
         return Translator::DEFAULT_TRANSLATION_DOMAIN;
     }
 
@@ -234,6 +236,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         if ($node instanceof FuncCall && $node->name instanceof Name) {
             return (string)$node->name;
         }
+
         throw new ExtractionException('Unable to resolve node name');
     }
 

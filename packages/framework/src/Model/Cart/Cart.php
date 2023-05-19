@@ -85,10 +85,12 @@ class Cart
             if ($item->getId() === $itemId) {
                 $this->items->removeElement($item);
                 $this->setModifiedNow();
+
                 return;
             }
         }
         $message = 'Cart item with ID = ' . $itemId . ' is not in cart for remove.';
+
         throw new InvalidCartItemException($message);
     }
 
@@ -147,6 +149,7 @@ class Cart
             }
         }
         $message = 'CartItem with id = ' . $itemId . ' not found in cart.';
+
         throw new InvalidCartItemException($message);
     }
 
@@ -156,6 +159,7 @@ class Cart
     public function getQuantifiedProducts()
     {
         $quantifiedProducts = [];
+
         foreach ($this->items as $item) {
             $quantifiedProducts[] = new QuantifiedProduct($item->getProduct(), $item->getQuantity());
         }

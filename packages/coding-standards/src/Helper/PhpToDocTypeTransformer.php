@@ -36,6 +36,7 @@ final class PhpToDocTypeTransformer
             $isNullable = false;
         } else {
             $type = $typeAnalysis->getName();
+
             if (method_exists($typeAnalysis, 'isNullable')) {
                 $isNullable = $typeAnalysis->isNullable();
             } else {

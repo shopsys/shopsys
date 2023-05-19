@@ -224,6 +224,7 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
     protected function suggestDevelopmentVersion(Version $version, bool $suggestWithVprefix = false): Version
     {
         $newVersionString = $version->getMajor()->getValue() . '.' . ($version->getMinor()->getValue() + 1) . '.0-dev';
+
         if ($suggestWithVprefix) {
             $newVersionString = 'v' . $newVersionString;
         }

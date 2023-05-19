@@ -24,6 +24,7 @@ class ModulesFormType extends AbstractType
 
         /** @var \Shopsys\FrameworkBundle\Model\Module\ModuleList $moduleList */
         $moduleList = $options['module_list'];
+
         foreach ($moduleList->getNamesIndexedByLabel() as $moduleLabel => $moduleName) {
             $builder->get('modules')
                 ->add($moduleName, YesNoType::class, [

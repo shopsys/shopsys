@@ -53,6 +53,7 @@ class IndexDefinition
     public function getDefinition(): array
     {
         $decodedDefinition = json_decode($this->getDefinitionFileContent(), true);
+
         if ($decodedDefinition === null) {
             throw ElasticsearchIndexException::invalidJsonInDefinitionFile(
                 $this->getIndexName(),
@@ -77,6 +78,7 @@ class IndexDefinition
     protected function getDefinitionFileContent(): string
     {
         $definitionFilepath = $this->getDefinitionFilepath();
+
         if (!is_readable($definitionFilepath)) {
             throw ElasticsearchIndexException::cantReadDefinitionFile($definitionFilepath);
         }
@@ -108,6 +110,7 @@ class IndexDefinition
         if ($this->indexPrefix === '') {
             return sprintf('%s_%s', $this->getIndexName(), $this->getDomainId());
         }
+
         return sprintf('%s_%s_%s', $this->indexPrefix, $this->getIndexName(), $this->getDomainId());
     }
 

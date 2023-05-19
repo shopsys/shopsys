@@ -51,6 +51,7 @@ class JsFormValidatorFactory extends BaseJsFormValidatorFactory
                 : ['name' => $namespace . 'ChoiceToBooleanArrayTransformer'];
 
             $transformer['choiceList'] = [];
+
             foreach ($config->getOption('choices') as $formOptionChoiceItem) {
                 if ($formOptionChoiceItem instanceof ParameterValue) {
                     $optionItemId = $formOptionChoiceItem->getId();
@@ -74,6 +75,7 @@ class JsFormValidatorFactory extends BaseJsFormValidatorFactory
     {
         /** @var \Symfony\Component\Form\Form|null $prototype */
         $prototype = $form->getConfig()->getAttribute('prototype');
+
         if ($prototype !== null && $prototype->getParent() === null) {
             $prototype->setParent($form);
         }
@@ -95,6 +97,7 @@ class JsFormValidatorFactory extends BaseJsFormValidatorFactory
     {
         if ($route === 'fp_js_form_validator.check_unique_entity') {
             $message = 'Unable to generate a URL for the named route "' . $route . '" as such route was removed as unsafe.';
+
             throw new RouteNotFoundException($message);
         }
 

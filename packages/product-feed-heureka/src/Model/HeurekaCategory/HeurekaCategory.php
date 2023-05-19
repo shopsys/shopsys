@@ -78,6 +78,7 @@ class HeurekaCategory
     protected function editCategories(array $categories)
     {
         $this->categories->clear();
+
         foreach ($categories as $category) {
             $this->categories->add($category);
         }

@@ -37,10 +37,13 @@ class PricingGroupRepository
     public function getById($pricingGroupId)
     {
         $pricingGroup = $this->getPricingGroupRepository()->find($pricingGroupId);
+
         if ($pricingGroup === null) {
             $message = 'Pricing group with ID ' . $pricingGroupId . ' not found.';
+
             throw new PricingGroupNotFoundException($message);
         }
+
         return $pricingGroup;
     }
 
@@ -96,6 +99,7 @@ class PricingGroupRepository
             FROM ' . CustomerUser::class . ' u
             WHERE u.pricingGroup = :pricingGroup')
             ->setParameter('pricingGroup', $pricingGroup);
+
         return $query->getOneOrNullResult(AbstractQuery::HYDRATE_SINGLE_SCALAR) > 0;
     }
 }

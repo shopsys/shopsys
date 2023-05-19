@@ -54,6 +54,7 @@ class CountryValidator extends ConstraintValidator
 
         $availableCountryCodes = [];
         $countriesOnDomain = $this->countryFacade->getAllEnabledOnDomain($domainId);
+
         foreach ($countriesOnDomain as $countryOnDomain) {
             $availableCountryCodes[] = $countryOnDomain->getCode();
         }

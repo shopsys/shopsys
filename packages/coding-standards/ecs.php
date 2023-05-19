@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-use ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff;
-use ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff;
-use ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\AssignmentInConditionSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\EmptyStatementSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\ForLoopShouldBeWhileLoopSniff;
@@ -94,6 +91,7 @@ use PhpCsFixer\Fixer\Semicolon\SemicolonAfterInstructionFixer;
 use PhpCsFixer\Fixer\Semicolon\SpaceAfterSemicolonFixer;
 use PhpCsFixer\Fixer\Strict\StrictParamFixer;
 use PhpCsFixer\Fixer\StringNotation\SingleQuoteFixer;
+use PhpCsFixer\Fixer\Whitespace\BlankLineBeforeStatementFixer;
 use PhpCsFixer\Fixer\Whitespace\NoSpacesAroundOffsetFixer;
 use PhpCsFixer\Fixer\Whitespace\NoWhitespaceInBlankLineFixer;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
@@ -115,14 +113,15 @@ use Shopsys\CodingStandards\Sniffs\ForbiddenExitSniff;
 use Shopsys\CodingStandards\Sniffs\ForbiddenSuperGlobalSniff;
 use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
 use Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff;
+use SlevomatCodingStandard\Sniffs\Classes\ClassLengthSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ParentCallSpacingSniff;
-use SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\DisallowCommentAfterCodeSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\InlineDocCommentDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\EarlyExitSniff;
 use SlevomatCodingStandard\Sniffs\ControlStructures\UselessIfConditionWithReturnSniff;
+use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\FullyQualifiedClassNameInAnnotationSniff;
 use SlevomatCodingStandard\Sniffs\Namespaces\ReferenceUsedNamesOnlySniff;
 use SlevomatCodingStandard\Sniffs\Operators\DisallowEqualOperatorsSniff;
@@ -163,7 +162,6 @@ return static function (ECSConfig $ecsConfig): void {
     $services->set(FileFinder::class);
 
     // Slevomat Checkers
-    $ecsConfig->rule(UnusedPrivateElementsSniff::class);
     $ecsConfig->rule(InlineDocCommentDeclarationSniff::class);
     $ecsConfig->rule(NullableTypeForNullDefaultValueSniff::class);
     $ecsConfig->rule(ReturnTypeHintSpacingSniff::class);
@@ -303,6 +301,25 @@ return static function (ECSConfig $ecsConfig): void {
             'method' => ClassAttributesSeparationFixer::SPACING_ONE,
         ],
     ]);
+
+    // Slevomat standards
+    $ecsConfig->ruleWithConfiguration(BlankLineBeforeStatementFixer::class, [
+        'statements' => [
+            'break',
+            'continue',
+            'declare',
+            'do',
+            'for',
+            'foreach',
+            'if',
+            'return',
+            'switch',
+            'throw',
+            'try',
+            'while',
+            'yield',
+        ],
+    ]);
     $ecsConfig->rule(DisallowEqualOperatorsSniff::class);
     $ecsConfig->rule(ValidClassNameSniff::class);
     $ecsConfig->rule(NoUselessElseFixer::class);
@@ -313,10 +330,7 @@ return static function (ECSConfig $ecsConfig): void {
         'ignoreOneLineTrailingIf' => true,
         'ignoreTrailingIfWithOneInstruction' => true,
     ]);
-    $ecsConfig->ruleWithConfiguration(ParentCallSpacingSniff::class, [
-        'linesCountBeforeParentCall' => 1,
-        'linesCountAfterParentCall' => 1,
-    ]);
+    $ecsConfig->rule(ParentCallSpacingSniff::class);
     $ecsConfig->ruleWithConfiguration(ReferenceUsedNamesOnlySniff::class, [
         'allowPartialUses' => true,
     ]);
@@ -326,14 +340,11 @@ return static function (ECSConfig $ecsConfig): void {
     $ecsConfig->rule(UselessIfConditionWithReturnSniff::class);
 
     // Code Metrics
-    $ecsConfig->ruleWithConfiguration(ClassTraitAndInterfaceLengthSniff::class, [
-        'maxLength' => 550,
+    $ecsConfig->ruleWithConfiguration(ClassLengthSniff::class, [
+        'maxLinesLength' => 550,
     ]);
     $ecsConfig->ruleWithConfiguration(FunctionLengthSniff::class, [
-        'maxLength' => 60,
-    ]);
-    $ecsConfig->ruleWithConfiguration(PropertyPerClassLimitSniff::class, [
-        'maxCount' => 30,
+        'maxLinesLength' => 60,
     ]);
 
     $ecsConfig->skip([

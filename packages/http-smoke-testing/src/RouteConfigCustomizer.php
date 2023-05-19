@@ -49,8 +49,10 @@ class RouteConfigCustomizer
     {
         $routeNames = (array)$routeName;
         $foundRouteNames = [];
+
         foreach ($this->requestDataSetGenerators as $requestDataSetGenerator) {
             $routeInfo = $requestDataSetGenerator->getRouteInfo();
+
             if (!in_array($routeInfo->getRouteName(), $routeNames, true)) {
                 continue;
             }
@@ -60,6 +62,7 @@ class RouteConfigCustomizer
         }
 
         $notFoundRouteNames = array_diff($routeNames, $foundRouteNames);
+
         if (count($notFoundRouteNames) > 0) {
             throw new RouteNameNotFoundException($notFoundRouteNames);
         }

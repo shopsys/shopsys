@@ -65,7 +65,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
          * Root category is created in database migration.
          *
          * @see \Shopsys\FrameworkBundle\Migrations\Version20180603135345
-         * @var \App\Model\Category\Category
+         * @var \App\Model\Category\Category $rootCategory
          */
         $rootCategory = $this->categoryFacade->getRootCategory();
         $categoryData = $this->categoryDataFactory->create();
@@ -260,6 +260,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
     {
         /** @var \App\Model\Category\Category $category */
         $category = $this->categoryFacade->create($categoryData);
+
         if ($referenceName !== null) {
             $this->addReference($referenceName, $category);
         }

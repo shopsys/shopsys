@@ -29,6 +29,7 @@ class IndependentPaymentVisibilityCalculation
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
         $paymentName = $payment->getName($locale);
+
         if ($paymentName === '' || $paymentName === null) {
             return false;
         }
@@ -36,6 +37,7 @@ class IndependentPaymentVisibilityCalculation
         if ($payment->isHidden() || $payment->isDeleted()) {
             return false;
         }
+
         return $payment->isEnabled($domainId);
     }
 }

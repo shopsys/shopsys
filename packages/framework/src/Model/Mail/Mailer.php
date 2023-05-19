@@ -83,9 +83,11 @@ class Mailer
             ->to($messageData->toEmail)
             ->text(htmlspecialchars_decode(strip_tags($body)))
             ->html($body);
+
         if ($messageData->bccEmail !== null) {
             $email->addBcc($messageData->bccEmail);
         }
+
         if ($messageData->replyTo !== null) {
             $email->addReplyTo($messageData->replyTo);
         }
@@ -98,6 +100,7 @@ class Mailer
                 );
             } catch (FilesystemOperationFailed $exception) {
                 $this->logger->error('Attachment could not be added because file was not found.', [$exception]);
+
                 continue;
             }
         }

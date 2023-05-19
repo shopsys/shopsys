@@ -132,6 +132,7 @@ class DomainRouterFactory
         $urlComponents = parse_url($domainConfig->getUrl());
         $requestContext = new RequestContext();
         $request = $this->requestStack->getCurrentRequest();
+
         if ($request !== null) {
             $requestContext->fromRequest($request);
         }

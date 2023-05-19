@@ -37,6 +37,7 @@ class EnvironmentFileSetting
     public function getEnvironment(): string
     {
         $environments = static::ENVIRONMENTS_DEFAULT;
+
         foreach ($environments as $environment) {
             if (is_file($this->getEnvironmentFilePath($environment))) {
                 return $environment;

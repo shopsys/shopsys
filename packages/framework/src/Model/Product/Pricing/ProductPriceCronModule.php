@@ -48,9 +48,11 @@ class ProductPriceCronModule implements IteratedCronModuleInterface
     {
         if ($this->productPriceRecalculator->runBatchOfScheduledDelayedRecalculations()) {
             $this->logger->debug('Batch is recalculated.');
+
             return true;
         }
         $this->logger->debug('All prices are recalculated.');
+
         return false;
     }
 }

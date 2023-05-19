@@ -29,6 +29,7 @@ class ParameterFilterRepository
             );
 
             $productsQueryBuilder->andWhere($productsQueryBuilder->expr()->exists($parameterQueryBuilder));
+
             foreach ($parameterQueryBuilder->getParameters() as $parameter) {
                 $productsQueryBuilder->setParameter($parameter->getName(), $parameter->getValue());
             }
@@ -91,6 +92,7 @@ class ParameterFilterRepository
         $valuesExpr = $parameterQueryBuilder->expr()->orX();
 
         $valueIndex = 1;
+
         foreach ($parameterValues as $parameterValue) {
             $valuePlaceholder = ':parameterValue' . $parameterIndex . '_' . $valueIndex;
 

@@ -168,6 +168,7 @@ class ProductFormType extends AbstractType
         /** @var \Shopsys\FrameworkBundle\Model\Product\Product|null $product */
         $product = $options['product'];
         $disabledItemInMainVariantAttr = [];
+
         if ($this->isProductMainVariant($product)) {
             $disabledItemInMainVariantAttr = [
                 'disabledField' => true,
@@ -222,8 +223,10 @@ class ProductFormType extends AbstractType
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
                     /** @var \Shopsys\FrameworkBundle\Model\Product\ProductData $productData */
                     $productData = $form->getData();
+
                     if ($productData->usingStock) {
                         $validationGroups[] = static::VALIDATION_GROUP_USING_STOCK;
+
                         if ($productData->outOfStockAction === Product::OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY) {
                             $validationGroups[] = static::VALIDATION_GROUP_USING_STOCK_AND_ALTERNATE_AVAILABILITY;
                         }
@@ -391,6 +394,7 @@ class ProductFormType extends AbstractType
     private function createDisplayAvailabilityGroup(FormBuilderInterface $builder, ?Product $product, $disabledItemInMainVariantAttr = [])
     {
         $productMainCategoriesIndexedByDomainId = [];
+
         if ($product !== null) {
             $productMainCategoriesIndexedByDomainId = $this->categoryFacade->getProductMainCategoriesIndexedByDomainId(
                 $product
@@ -398,6 +402,7 @@ class ProductFormType extends AbstractType
         }
 
         $mainCategoriesOptionsByDomainId = [];
+
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
 
@@ -421,6 +426,7 @@ class ProductFormType extends AbstractType
         }
 
         $categoriesOptionsByDomainId = [];
+
         foreach ($this->domain->getAllIds() as $domainId) {
             $categoriesOptionsByDomainId[$domainId] = [
                 'domain_id' => $domainId,
@@ -716,6 +722,7 @@ class ProductFormType extends AbstractType
         $seoTitlesOptionsByDomainId = [];
         $seoMetaDescriptionsOptionsByDomainId = [];
         $seoH1OptionsByDomainId = [];
+
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
             $locale = $domainConfig->getLocale();
