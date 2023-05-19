@@ -68,7 +68,7 @@ class PhpFileExtractorTest extends TestCase
 
         $lexer = new Lexer();
         $parser = new Multiple([new Php7($lexer), new Php5($lexer)]);
-        $ast = $parser->parse(file_get_contents($file));
+        $ast = $parser->parse(file_get_contents($file->getPathname()));
 
         $catalogue = new MessageCatalogue();
         $extractor->visitPhpFile($file, $catalogue, $ast);

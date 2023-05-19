@@ -25,7 +25,7 @@ class JsFileExtractor implements FileVisitorInterface
             return;
         }
 
-        $translationDumpContent = file_get_contents($file);
+        $translationDumpContent = file_get_contents($file->getPathname());
 
         if ($translationDumpContent === false) {
             return;
