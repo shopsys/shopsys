@@ -197,7 +197,7 @@ class OrderData
         $newItemsWithoutTransportAndPayment = [];
 
         foreach ($this->itemsWithoutTransportAndPayment as $index => $item) {
-            if (strpos($index, self::NEW_ITEM_PREFIX) === 0) {
+            if (str_starts_with((string)$index, self::NEW_ITEM_PREFIX)) {
                 $newItemsWithoutTransportAndPayment[] = $item;
             }
         }
