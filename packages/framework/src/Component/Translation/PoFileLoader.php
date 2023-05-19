@@ -5,19 +5,24 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Translation;
 
 use Symfony\Component\Config\Resource\FileResource;
+use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Translation\Loader\PoFileLoader as BasePoFileLoader;
 use Symfony\Component\Translation\MessageCatalogue;
 
 class PoFileLoader extends BasePoFileLoader
 {
     /**
-     * @param string $resource
+     * @param \Symfony\Component\Finder\SplFileInfo|string $resource
      * @param string $locale
      * @param string $domain
      * @return \Symfony\Component\Translation\MessageCatalogue
      */
-    public function load($resource, string $locale, string $domain = Translator::DEFAULT_TRANSLATION_DOMAIN): MessageCatalogue
+    public function load(mixed $resource, string $locale, string $domain = Translator::DEFAULT_TRANSLATION_DOMAIN): MessageCatalogue
     {
+        if ($resource instanceof SplFileInfo) {
+            $resource = $resource->getPathname();
+        }
+
         $catalogue = $this->loadIncludingEmpty($resource, $locale, $domain);
 
         $messages = $catalogue->all($domain);

@@ -648,7 +648,7 @@ class Grid
     protected function executeTotalQuery()
     {
         $this->totalCount = $this->dataSource->getTotalRowsCount();
-        $this->pageCount = max(ceil($this->totalCount / $this->limit), 1);
+        $this->pageCount = (int)max(ceil($this->totalCount / $this->limit), 1);
         $this->page = min($this->page, $this->pageCount);
     }
 

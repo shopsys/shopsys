@@ -141,6 +141,7 @@ class ResizeFormListener implements EventSubscriberInterface
         // Remove all empty rows
         if ($this->allowDelete) {
             foreach ($form as $name => $child) {
+                $name = (string)$name;
                 if (!isset($data[$name])) {
                     $form->remove($name);
                 }
@@ -155,10 +156,13 @@ class ResizeFormListener implements EventSubscriberInterface
         $childOptions = $this->options;
 
         foreach (array_keys($data) as $name) {
-            if (!$form->has($name)) {
-                $childOptions['property_path'] = '[' . $name . ']';
-                $form->add($name, $this->type, $childOptions);
+            $name = (string)$name;
+            if ($form->has($name)) {
+                continue;
             }
+
+            $childOptions['property_path'] = '[' . $name . ']';
+            $form->add($name, $this->type, $childOptions);
         }
     }
 
@@ -256,6 +260,7 @@ class ResizeFormListener implements EventSubscriberInterface
         $toDelete = [];
 
         foreach (array_keys($viewData) as $name) {
+            $name = (string)$name;
             if (!$form->has($name)) {
                 $toDelete[] = $name;
             }

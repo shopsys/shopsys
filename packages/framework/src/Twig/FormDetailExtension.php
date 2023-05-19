@@ -45,7 +45,7 @@ class FormDetailExtension extends AbstractExtension
                             <div class="form-line__item">
                                 <input
                                     type="text"
-                                    value="' . htmlspecialchars($object->getId(), ENT_QUOTES) . '"
+                                    value="' . htmlspecialchars((string)$object->getId(), ENT_QUOTES) . '"
                                     class="input"
                                     readonly="readonly"
                                 >

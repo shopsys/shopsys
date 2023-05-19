@@ -60,7 +60,7 @@ abstract class AbstractAdvancedSearchFormFactory
      */
     protected function createRuleFormBuilder($name, AdvancedSearchFilterInterface $ruleFilter)
     {
-        return $this->formFactory->createNamedBuilder($name, FormType::class, null, [
+        return $this->formFactory->createNamedBuilder((string)$name, FormType::class, null, [
             'data_class' => AdvancedSearchRuleData::class,
         ])
             ->add('subject', ChoiceType::class, [

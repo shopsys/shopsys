@@ -213,7 +213,7 @@ class AdministratorController extends AdminBaseController
      * @CsrfProtection
      * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $realName = $this->administratorFacade->getById($id)->getRealName();
