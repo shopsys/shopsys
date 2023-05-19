@@ -56,7 +56,7 @@ class ProgressBarFactory
         return sprintf(
             '%dh %02dm %02ds',
             floor($timeInSeconds / 3600),
-            floor(intdiv($timeInSeconds, 60) % 60),
+            floor(intdiv((int)$timeInSeconds, 60) % 60),
             floor($timeInSeconds % 60),
         );
     }
