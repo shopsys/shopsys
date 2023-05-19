@@ -47,7 +47,7 @@ class DomainIconResizer
 
         try {
             $this->filesystem->delete($targetFilePath);
-            $this->filesystem->write($targetFilePath, $resizedImage);
+            $this->filesystem->write($targetFilePath, $resizedImage->getEncoded());
         } catch (Exception $ex) {
             $message = 'Move file from temporary directory to domain directory failed';
             $moveToFolderFailedException = new MoveToFolderFailedException(

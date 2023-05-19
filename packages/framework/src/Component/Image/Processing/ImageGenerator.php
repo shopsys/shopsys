@@ -45,7 +45,7 @@ class ImageGenerator
         $interventionImage->encode();
 
         $this->filesystem->delete($targetImageFilepath);
-        $this->filesystem->write($targetImageFilepath, $interventionImage);
+        $this->filesystem->write($targetImageFilepath, $interventionImage->getEncoded());
 
         return $targetImageFilepath;
     }
@@ -75,7 +75,7 @@ class ImageGenerator
         $interventionImage->encode();
 
         $this->filesystem->delete($targetImageFilepath);
-        $this->filesystem->write($targetImageFilepath, $interventionImage);
+        $this->filesystem->write($targetImageFilepath, $interventionImage->getEncoded());
 
         return $targetImageFilepath;
     }

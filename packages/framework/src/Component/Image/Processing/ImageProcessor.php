@@ -89,7 +89,7 @@ class ImageProcessor
         $newFilepath .= $extension;
 
         $image = $this->createInterventionImage($filepath);
-        $data = $image->encode($extension);
+        $data = $image->encode($extension)->getEncoded();
 
         $this->filesystem->delete($filepath);
         $this->filesystem->write($newFilepath, $data);
