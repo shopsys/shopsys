@@ -47,7 +47,7 @@ class VatController extends AdminBaseController
      * @Route("/vat/delete-confirm/{id}", requirements={"id" = "\d+"})
      * @param int $id
      */
-    public function deleteConfirmAction($id)
+    public function deleteConfirmAction(int $id)
     {
         try {
             $vat = $this->vatFacade->getById($id);

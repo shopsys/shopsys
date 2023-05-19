@@ -155,7 +155,7 @@ class BrandController extends AdminBaseController
      * @CsrfProtection
      * @param int $id
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         try {
             $fullName = $this->brandFacade->getById($id)->getName();

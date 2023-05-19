@@ -15,16 +15,20 @@ class FilemanagerAccess
     protected string $filemanagerUploadDir;
 
     /**
-     * @param mixed $filamanagerUploadDir
+     * @param mixed $filemanagerUploadDir
      * @param \FM\ElfinderBundle\Configuration\ElFinderConfigurationReader $elFinderConfigurationReader
      * @param \Shopsys\FrameworkBundle\Component\Filesystem\FilepathComparator $filepathComparator
      */
     public function __construct(
-        $filamanagerUploadDir,
+        $filemanagerUploadDir,
         protected readonly ElFinderConfigurationReader $elFinderConfigurationReader,
         protected readonly FilepathComparator $filepathComparator,
     ) {
-        $this->filemanagerUploadDir = realpath($filamanagerUploadDir);
+        $filemanagerUploadDir = realpath($filemanagerUploadDir);
+
+        if ($filemanagerUploadDir !== false) {
+            $this->filemanagerUploadDir = $filemanagerUploadDir;
+        }
     }
 
     /**

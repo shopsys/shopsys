@@ -73,9 +73,9 @@ class ProductController extends AdminBaseController
     /**
      * @Route("/product/edit/{id}", requirements={"id" = "\d+"})
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param mixed $id
+     * @param int $id
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id)
     {
         $product = $this->productFacade->getById($id);
         $productData = $this->productDataFactory->createFromProduct($product);
