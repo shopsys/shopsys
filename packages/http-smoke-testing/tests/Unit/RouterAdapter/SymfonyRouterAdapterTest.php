@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\HttpSmokeTesting\Unit\RouterAdapter;
 
 use Doctrine\Common\Annotations\AnnotationReader;

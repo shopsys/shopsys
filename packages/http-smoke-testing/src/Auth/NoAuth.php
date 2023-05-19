@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\HttpSmokeTesting\Auth;
 
 use Symfony\Component\HttpFoundation\Request;

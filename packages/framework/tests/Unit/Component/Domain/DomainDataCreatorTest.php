@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\FrameworkBundle\Unit\Component\Domain;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;

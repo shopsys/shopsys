@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Form\Admin\CustomerCommunication;
 
 use FOS\CKEditorBundle\Form\Type\CKEditorType;

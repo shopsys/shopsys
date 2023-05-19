@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Form\Admin\Superadmin;
 
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;

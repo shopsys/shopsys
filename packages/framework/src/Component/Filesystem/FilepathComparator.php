@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Component\Filesystem;
 
 use Shopsys\FrameworkBundle\Component\Filesystem\Exception\DirectoryDoesNotExistException;

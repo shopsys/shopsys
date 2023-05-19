@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\HttpSmokeTesting;
 
 use Symfony\Component\Routing\Route;

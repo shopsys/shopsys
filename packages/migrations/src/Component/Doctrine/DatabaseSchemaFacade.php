@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\MigrationBundle\Component\Doctrine;
 
 use Doctrine\DBAL\Schema\Comparator;

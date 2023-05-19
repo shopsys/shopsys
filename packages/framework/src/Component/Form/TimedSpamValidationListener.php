@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Component\Form;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

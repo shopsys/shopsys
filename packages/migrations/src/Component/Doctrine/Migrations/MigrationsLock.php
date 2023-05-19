@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\MigrationBundle\Component\Doctrine\Migrations;
 
 use Doctrine\Migrations\Metadata\AvailableMigrationsList;

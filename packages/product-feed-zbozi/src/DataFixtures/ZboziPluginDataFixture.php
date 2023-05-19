@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\ProductFeed\ZboziBundle\DataFixtures;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Doctrine\Common\Annotations\AnnotationRegistry;
 
 /** @var \Composer\Autoload\ClassLoader $loader */

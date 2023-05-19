@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\FrameworkBundle\Unit\Model\Order\Status;
 
 use PHPUnit\Framework\TestCase;

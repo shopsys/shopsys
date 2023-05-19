@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Form\Admin\Vat;
 
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;

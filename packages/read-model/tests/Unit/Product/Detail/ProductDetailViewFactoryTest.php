@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\ReadModelBundle\Unit\Product\Detail;
 
 use PHPUnit\Framework\TestCase;

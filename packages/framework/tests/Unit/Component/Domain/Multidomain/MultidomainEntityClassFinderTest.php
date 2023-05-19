@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\FrameworkBundle\Unit\Component\Domain\Multidomain;
 
 use Doctrine\ORM\Mapping\ClassMetadata;

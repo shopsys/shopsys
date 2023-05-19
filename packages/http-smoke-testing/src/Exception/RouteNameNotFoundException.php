@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\HttpSmokeTesting\Exception;
 
 use Exception;

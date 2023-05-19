@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\Country;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;

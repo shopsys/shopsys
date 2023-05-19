@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\ProductFeed\HeurekaBundle\Unit;
 
 use PHPUnit\Framework\MockObject\MockObject;

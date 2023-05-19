@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\FrameworkBundle\Test\Codeception;
 
 use PHPUnit\Framework\Assert;

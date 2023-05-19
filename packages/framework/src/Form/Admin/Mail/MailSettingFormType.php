@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Form\Admin\Mail;
 
 use Shopsys\FrameworkBundle\Form\Constraints\Email;

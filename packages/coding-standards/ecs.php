@@ -89,6 +89,7 @@ use PhpCsFixer\Fixer\ReturnNotation\ReturnAssignmentFixer;
 use PhpCsFixer\Fixer\Semicolon\NoEmptyStatementFixer;
 use PhpCsFixer\Fixer\Semicolon\SemicolonAfterInstructionFixer;
 use PhpCsFixer\Fixer\Semicolon\SpaceAfterSemicolonFixer;
+use PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer;
 use PhpCsFixer\Fixer\Strict\StrictParamFixer;
 use PhpCsFixer\Fixer\StringNotation\SingleQuoteFixer;
 use PhpCsFixer\Fixer\Whitespace\NoSpacesAroundOffsetFixer;
@@ -131,6 +132,7 @@ use SlevomatCodingStandard\Sniffs\Namespaces\FullyQualifiedClassNameInAnnotation
 use SlevomatCodingStandard\Sniffs\Namespaces\ReferenceUsedNamesOnlySniff;
 use SlevomatCodingStandard\Sniffs\Operators\DisallowEqualOperatorsSniff;
 use SlevomatCodingStandard\Sniffs\PHP\ForbiddenClassesSniff;
+use SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\NullableTypeForNullDefaultValueSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\PropertyTypeHintSniff;
 use SlevomatCodingStandard\Sniffs\TypeHints\ReturnTypeHintSpacingSniff;
@@ -310,6 +312,9 @@ return static function (ECSConfig $ecsConfig): void {
     ]);
 
     // Slevomat Coding Standards
+    $ecsConfig->ruleWithConfiguration(DeclareStrictTypesSniff::class, [
+        'spacesCountAroundEqualsSign' => 0,
+    ]);
     $ecsConfig->rule(RequireTrailingCommaInDeclarationSniff::class);
     $ecsConfig->rule(RequireTrailingCommaInClosureUseSniff::class);
     $ecsConfig->rule(RequireTrailingCommaInCallSniff::class);

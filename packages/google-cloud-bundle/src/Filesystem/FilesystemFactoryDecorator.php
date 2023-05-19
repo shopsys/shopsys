@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\GoogleCloudBundle\Filesystem;
 
 use Google\Cloud\Storage\StorageClient;

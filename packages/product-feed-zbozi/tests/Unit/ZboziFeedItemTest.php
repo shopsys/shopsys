@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\ProductFeed\ZboziBundle\Unit;
 
 use PHPUnit\Framework\MockObject\MockObject;

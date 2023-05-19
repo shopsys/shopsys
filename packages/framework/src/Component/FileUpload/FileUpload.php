@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Component\FileUpload;
 
 use League\Flysystem\FilesystemOperator;

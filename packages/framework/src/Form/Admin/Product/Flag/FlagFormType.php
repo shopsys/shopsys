@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Form\Admin\Product\Flag;
 
 use Shopsys\FrameworkBundle\Form\ColorPickerType;
