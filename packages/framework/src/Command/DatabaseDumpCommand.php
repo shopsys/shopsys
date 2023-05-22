@@ -73,7 +73,10 @@ class DatabaseDumpCommand extends Command
 
         while (!feof($stdout)) {
             $line = fgets($stdout);
-            fwrite($outputFileHandle, $line);
+
+            if ($line !== false) {
+                fwrite($outputFileHandle, $line);
+            }
         }
 
         $errorMessage = stream_get_contents($stderr);

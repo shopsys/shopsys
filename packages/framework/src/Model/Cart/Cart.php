@@ -132,7 +132,7 @@ class Cart
     {
         foreach ($this->items as $item) {
             if (array_key_exists($item->getId(), $quantitiesByItemId)) {
-                $item->changeQuantity($quantitiesByItemId[$item->getId()]);
+                $item->changeQuantity((int)$quantitiesByItemId[$item->getId()]);
             }
         }
 
