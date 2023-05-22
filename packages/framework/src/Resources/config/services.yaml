@@ -120,6 +120,10 @@ services:
         arguments:
             - '@annotation_reader'
 
+    Shopsys\FrameworkBundle\Command\EntitiesDumpCommand:
+        arguments:
+            $cacheDir: '%kernel.project_dir%/var/cache'
+
     Shopsys\FrameworkBundle\Command\RouterDebugCommandForDomain:
         arguments:
             $routerDebugCommand: '@console.command.router_debug'
