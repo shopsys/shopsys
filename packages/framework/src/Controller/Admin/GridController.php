@@ -29,9 +29,11 @@ class GridController extends AdminBaseController
      */
     public function getFormAction(Request $request)
     {
+        $rowId = $request->get('rowId') !== null ? json_decode($request->get('rowId')) : null;
+
         $renderedFormRow = $this->inlineEditFacade->getRenderedFormRow(
             $request->get('serviceName'),
-            json_decode($request->get('rowId')),
+            $rowId,
         );
 
         return new JsonResponse($renderedFormRow);
@@ -44,7 +46,7 @@ class GridController extends AdminBaseController
     public function saveFormAction(Request $request)
     {
         $responseData = [];
-        $rowId = json_decode($request->get('rowId'));
+        $rowId = $request->get('rowId') !== null ? json_decode($request->get('rowId')) : null;
 
         try {
             $rowId = $this->inlineEditFacade->saveFormData($request->get('serviceName'), $request, $rowId);
