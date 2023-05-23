@@ -166,8 +166,9 @@ class ExtendedProduct extends Product
     /**
      * @param \Tests\App\Functional\EntityExtension\Model\ProductOneToOneBidirectionalEntity $oneToOneBidirectionalEntity
      */
-    public function setOneToOneBidirectionalEntity(ProductOneToOneBidirectionalEntity $oneToOneBidirectionalEntity): void
-    {
+    public function setOneToOneBidirectionalEntity(
+        ProductOneToOneBidirectionalEntity $oneToOneBidirectionalEntity,
+    ): void {
         $oneToOneBidirectionalEntity->setProduct($this);
         $this->oneToOneBidirectionalEntity = $oneToOneBidirectionalEntity;
     }
@@ -199,8 +200,9 @@ class ExtendedProduct extends Product
     /**
      * @param \Tests\App\Functional\EntityExtension\Model\ProductOneToManyBidirectionalEntity $oneToManyBidirectionalEntity
      */
-    public function addOneToManyBidirectionalEntity(ProductOneToManyBidirectionalEntity $oneToManyBidirectionalEntity): void
-    {
+    public function addOneToManyBidirectionalEntity(
+        ProductOneToManyBidirectionalEntity $oneToManyBidirectionalEntity,
+    ): void {
         $oneToManyBidirectionalEntity->setProduct($this);
         $this->oneToManyBidirectionalEntities->add($oneToManyBidirectionalEntity);
     }
@@ -216,8 +218,9 @@ class ExtendedProduct extends Product
     /**
      * @param \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity $oneToManyUnidirectionalWithJoinTableEntity
      */
-    public function addOneToManyUnidirectionalWithJoinTableEntity(UnidirectionalEntity $oneToManyUnidirectionalWithJoinTableEntity): void
-    {
+    public function addOneToManyUnidirectionalWithJoinTableEntity(
+        UnidirectionalEntity $oneToManyUnidirectionalWithJoinTableEntity,
+    ): void {
         $this->oneToManyUnidirectionalWithJoinTableEntities->add($oneToManyUnidirectionalWithJoinTableEntity);
     }
 
@@ -273,8 +276,9 @@ class ExtendedProduct extends Product
     /**
      * @param \Tests\App\Functional\EntityExtension\Model\ProductManyToManyBidirectionalEntity $manyToManyBidirectionalEntity
      */
-    public function addManyToManyBidirectionalEntity(ProductManyToManyBidirectionalEntity $manyToManyBidirectionalEntity): void
-    {
+    public function addManyToManyBidirectionalEntity(
+        ProductManyToManyBidirectionalEntity $manyToManyBidirectionalEntity,
+    ): void {
         $manyToManyBidirectionalEntity->addProduct($this);
         $this->manyToManyBidirectionalEntities->add($manyToManyBidirectionalEntity);
     }

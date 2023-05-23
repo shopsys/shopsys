@@ -22,8 +22,13 @@ class FrontendApiUser implements UserInterface
      * @param string $deviceId
      * @param string[] $roles
      */
-    public function __construct(protected readonly string $uuid, protected readonly string $fullName, protected readonly string $email, protected readonly string $deviceId, protected readonly array $roles)
-    {
+    public function __construct(
+        protected readonly string $uuid,
+        protected readonly string $fullName,
+        protected readonly string $email,
+        protected readonly string $deviceId,
+        protected readonly array $roles,
+    ) {
     }
 
     /**

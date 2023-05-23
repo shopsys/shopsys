@@ -216,7 +216,11 @@ interface ActorInterface
      * @param string $translationDomain
      * @param array $parameters
      */
-    public function canSeeTranslationAdmin(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = []): void;
+    public function canSeeTranslationAdmin(
+        string $id,
+        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
+        array $parameters = [],
+    ): void;
 
     /**
      * @param string $id
@@ -224,14 +228,23 @@ interface ActorInterface
      * @param string $translationDomain
      * @param array $parameters
      */
-    public function canSeeTranslationAdminInCss(string $id, string $css, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = []): void;
+    public function canSeeTranslationAdminInCss(
+        string $id,
+        string $css,
+        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
+        array $parameters = [],
+    ): void;
 
     /**
      * @param string $id
      * @param string $translationDomain
      * @param array $parameters
      */
-    public function canSeeTranslationFrontend(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = []): void;
+    public function canSeeTranslationFrontend(
+        string $id,
+        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
+        array $parameters = [],
+    ): void;
 
     public function cancelPopup(): void;
 
@@ -345,7 +358,11 @@ interface ActorInterface
      * @param string $translationDomain
      * @param array $parameters
      */
-    public function cantSeeTranslationFrontend(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = []): void;
+    public function cantSeeTranslationFrontend(
+        string $id,
+        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
+        array $parameters = [],
+    ): void;
 
     /**
      * @param \Facebook\WebDriver\WebDriverElement $element
@@ -372,7 +389,11 @@ interface ActorInterface
      * @param string $translationDomain
      * @param array $parameters
      */
-    public function checkOptionByLabelTranslationFrontend(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = []): void;
+    public function checkOptionByLabelTranslationFrontend(
+        string $id,
+        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
+        array $parameters = [],
+    ): void;
 
     public function cleanup();
 
@@ -417,7 +438,12 @@ interface ActorInterface
      * @param array $parameters
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null|null $contextSelector
      */
-    public function clickByTranslationAdmin(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = [], WebDriverBy|WebDriverElement|null $contextSelector = null): void;
+    public function clickByTranslationAdmin(
+        string $id,
+        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
+        array $parameters = [],
+        WebDriverBy|WebDriverElement|null $contextSelector = null,
+    ): void;
 
     /**
      * @param string $id
@@ -425,7 +451,12 @@ interface ActorInterface
      * @param array $parameters
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null|null $contextSelector
      */
-    public function clickByTranslationFrontend(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = [], WebDriverBy|WebDriverElement|null $contextSelector = null);
+    public function clickByTranslationFrontend(
+        string $id,
+        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
+        array $parameters = [],
+        WebDriverBy|WebDriverElement|null $contextSelector = null,
+    );
 
     /**
      * @param mixed|null $cssOrXPath
@@ -569,7 +600,11 @@ interface ActorInterface
      * @param string $translationDomain
      * @param array $parameters
      */
-    public function dontSeeTranslationFrontend(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = []): void;
+    public function dontSeeTranslationFrontend(
+        string $id,
+        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
+        array $parameters = [],
+    ): void;
 
     /**
      * @param mixed $cssOrXPath
@@ -1022,7 +1057,11 @@ interface ActorInterface
      * @param string $translationDomain
      * @param array $parameters
      */
-    public function seeTranslationAdmin(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = []): void;
+    public function seeTranslationAdmin(
+        string $id,
+        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
+        array $parameters = [],
+    ): void;
 
     /**
      * @param string $id
@@ -1030,14 +1069,23 @@ interface ActorInterface
      * @param string $translationDomain
      * @param array $parameters
      */
-    public function seeTranslationAdminInCss(string $id, string $css, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = []): void;
+    public function seeTranslationAdminInCss(
+        string $id,
+        string $css,
+        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
+        array $parameters = [],
+    ): void;
 
     /**
      * @param string $id
      * @param string $translationDomain
      * @param array $parameters
      */
-    public function seeTranslationFrontend(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = []): void;
+    public function seeTranslationFrontend(
+        string $id,
+        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
+        array $parameters = [],
+    ): void;
 
     /**
      * @param mixed $select

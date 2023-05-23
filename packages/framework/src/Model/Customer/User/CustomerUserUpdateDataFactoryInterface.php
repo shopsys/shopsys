@@ -26,5 +26,9 @@ interface CustomerUserUpdateDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
      */
-    public function createAmendedByOrder(CustomerUser $customerUser, Order $order, ?DeliveryAddress $deliveryAddress): CustomerUserUpdateData;
+    public function createAmendedByOrder(
+        CustomerUser $customerUser,
+        Order $order,
+        ?DeliveryAddress $deliveryAddress,
+    ): CustomerUserUpdateData;
 }

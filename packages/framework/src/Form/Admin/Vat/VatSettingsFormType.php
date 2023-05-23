@@ -20,8 +20,10 @@ class VatSettingsFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
-    public function __construct(private readonly VatFacade $vatFacade, private readonly AdminDomainTabsFacade $adminDomainTabsFacade)
-    {
+    public function __construct(
+        private readonly VatFacade $vatFacade,
+        private readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+    ) {
     }
 
     /**

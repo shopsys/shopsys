@@ -35,8 +35,10 @@ class Setting
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Setting\SettingValueRepository $settingValueRepository
      */
-    public function __construct(protected readonly EntityManagerInterface $em, protected readonly SettingValueRepository $settingValueRepository)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly SettingValueRepository $settingValueRepository,
+    ) {
         $this->clearCache();
     }
 

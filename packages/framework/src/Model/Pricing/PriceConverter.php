@@ -18,8 +18,11 @@ class PriceConverter
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
-    public function __construct(protected readonly CurrencyFacade $currencyFacade, protected readonly Rounding $rounding, protected readonly Setting $setting)
-    {
+    public function __construct(
+        protected readonly CurrencyFacade $currencyFacade,
+        protected readonly Rounding $rounding,
+        protected readonly Setting $setting,
+    ) {
     }
 
     /**
@@ -28,8 +31,11 @@ class PriceConverter
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function convertPriceWithoutVatToDomainDefaultCurrencyPrice(Money $price, Currency $priceCurrency, int $domainId): Money
-    {
+    public function convertPriceWithoutVatToDomainDefaultCurrencyPrice(
+        Money $price,
+        Currency $priceCurrency,
+        int $domainId,
+    ): Money {
         $domainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
         $price = $this->convertPriceToPriceInDomainDefaultCurrency($price, $priceCurrency, $domainDefaultCurrency);
 
@@ -42,8 +48,11 @@ class PriceConverter
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function convertPriceWithVatToDomainDefaultCurrencyPrice(Money $price, Currency $priceCurrency, int $domainId): Money
-    {
+    public function convertPriceWithVatToDomainDefaultCurrencyPrice(
+        Money $price,
+        Currency $priceCurrency,
+        int $domainId,
+    ): Money {
         $domainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
         $price = $this->convertPriceToPriceInDomainDefaultCurrency($price, $priceCurrency, $domainDefaultCurrency);
 
@@ -56,8 +65,11 @@ class PriceConverter
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $domainDefaultCurrency
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    protected function convertPriceToPriceInDomainDefaultCurrency(Money $price, Currency $priceCurrency, Currency $domainDefaultCurrency): Money
-    {
+    protected function convertPriceToPriceInDomainDefaultCurrency(
+        Money $price,
+        Currency $priceCurrency,
+        Currency $domainDefaultCurrency,
+    ): Money {
         $coefficient = $this->currencyFacade->getExchangeRateForCurrencies($priceCurrency, $domainDefaultCurrency);
 
         return $price->multiply((string)$coefficient);

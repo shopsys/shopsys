@@ -16,8 +16,12 @@ class IndexDefinition
      * @param string $indexPrefix
      * @param int $domainId
      */
-    public function __construct(protected readonly string $indexName, protected readonly string $definitionsDirectory, protected readonly string $indexPrefix, protected readonly int $domainId)
-    {
+    public function __construct(
+        protected readonly string $indexName,
+        protected readonly string $definitionsDirectory,
+        protected readonly string $indexPrefix,
+        protected readonly int $domainId,
+    ) {
     }
 
     /**

@@ -59,8 +59,11 @@ class ImageSitemapListener implements EventSubscriberInterface
      * @param \Presta\SitemapBundle\Service\UrlContainerInterface $generator
      * @param string $section
      */
-    protected function addUrlsBySitemapItems(array $imageSitemapItems, UrlContainerInterface $generator, string $section): void
-    {
+    protected function addUrlsBySitemapItems(
+        array $imageSitemapItems,
+        UrlContainerInterface $generator,
+        string $section,
+    ): void {
         foreach ($imageSitemapItems as $imageSitemapItem) {
             $urlConcrete = new UrlConcrete($imageSitemapItem->loc);
             $decoratedUrl = new GoogleImageUrlDecorator($urlConcrete);

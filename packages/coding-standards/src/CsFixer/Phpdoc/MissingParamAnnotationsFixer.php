@@ -68,8 +68,10 @@ final class MissingParamAnnotationsFixer extends AbstractMissingAnnotationsFixer
      * @param \PhpCsFixer\Tokenizer\Token $docToken
      * @return array
      */
-    private function filterArgumentAnalysesFromExistingParamAnnotations(array $argumentAnalyses, Token $docToken): array
-    {
+    private function filterArgumentAnalysesFromExistingParamAnnotations(
+        array $argumentAnalyses,
+        Token $docToken,
+    ): array {
         $doc = new DocBlock($docToken->getContent());
 
         foreach ($doc->getAnnotationsOfType('param') as $annotation) {
@@ -88,8 +90,11 @@ final class MissingParamAnnotationsFixer extends AbstractMissingAnnotationsFixer
      * @param string $indent
      * @return \PhpCsFixer\DocBlock\Line[]
      */
-    private function createParamLinesFromArgumentAnalyses(Tokens $tokens, array $argumentAnalyses, string $indent): array
-    {
+    private function createParamLinesFromArgumentAnalyses(
+        Tokens $tokens,
+        array $argumentAnalyses,
+        string $indent,
+    ): array {
         $lines = [];
 
         foreach ($argumentAnalyses as $argumentAnalysis) {

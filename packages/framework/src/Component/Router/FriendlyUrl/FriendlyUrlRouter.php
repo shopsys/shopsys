@@ -64,8 +64,11 @@ class FriendlyUrlRouter implements RouterInterface
     /**
      * {@inheritdoc}
      */
-    public function generate(string $routeName, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
-    {
+    public function generate(
+        string $routeName,
+        array $parameters = [],
+        int $referenceType = self::ABSOLUTE_PATH,
+    ): string {
         return $this->friendlyUrlGenerator->generateFromRouteCollection(
             $this->getRouteCollection(),
             $this->domainConfig,
@@ -81,8 +84,11 @@ class FriendlyUrlRouter implements RouterInterface
      * @param int $referenceType
      * @return string
      */
-    public function generateByFriendlyUrl(FriendlyUrl $friendlyUrl, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
-    {
+    public function generateByFriendlyUrl(
+        FriendlyUrl $friendlyUrl,
+        array $parameters = [],
+        int $referenceType = self::ABSOLUTE_PATH,
+    ): string {
         $routeName = $friendlyUrl->getRouteName();
         $route = $this->getRouteCollection()->get($routeName);
 

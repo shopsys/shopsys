@@ -312,6 +312,9 @@ return static function (ECSConfig $ecsConfig): void {
     ]);
 
     // Slevomat Coding Standards
+    $ecsConfig->ruleWithConfiguration(\SlevomatCodingStandard\Sniffs\Classes\RequireMultiLineMethodSignatureSniff::class, [
+        'minLineLength' => 120,
+    ]);
     $ecsConfig->ruleWithConfiguration(DeclareStrictTypesSniff::class, [
         'spacesCountAroundEqualsSign' => 0,
     ]);

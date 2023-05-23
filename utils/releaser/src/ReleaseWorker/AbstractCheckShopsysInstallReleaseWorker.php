@@ -13,8 +13,10 @@ abstract class AbstractCheckShopsysInstallReleaseWorker extends AbstractShopsysR
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
-    {
+    public function getDescription(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): string {
         return '[Manually] Install Shopsys Framework (project-base) using installation guides on all supported operating systems.';
     }
 
@@ -22,8 +24,10 @@ abstract class AbstractCheckShopsysInstallReleaseWorker extends AbstractShopsysR
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
-    {
+    public function work(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): void {
         $this->confirm('Confirm Shopsys project-base installation works');
     }
 }

@@ -101,8 +101,11 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
      * @param string $outOfStockAction
      * @param string|null $outOfStockAvailabilityReference
      */
-    public function testVariantsWithStockCanBeCreated(int $quantity, string $outOfStockAction, ?string $outOfStockAvailabilityReference): void
-    {
+    public function testVariantsWithStockCanBeCreated(
+        int $quantity,
+        string $outOfStockAction,
+        ?string $outOfStockAvailabilityReference,
+    ): void {
         $productData = $this->productDataFactory->create();
         $productData->usingStock = true;
         $productData->stockQuantity = $quantity;

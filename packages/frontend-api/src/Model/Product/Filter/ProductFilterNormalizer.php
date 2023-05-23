@@ -14,8 +14,10 @@ class ProductFilterNormalizer
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
      */
-    public function removeExcessiveFilters(ProductFilterData $productFilterData, ProductFilterConfig $productFilterConfig): void
-    {
+    public function removeExcessiveFilters(
+        ProductFilterData $productFilterData,
+        ProductFilterConfig $productFilterConfig,
+    ): void {
         $this->removeExcessiveBrands($productFilterData, $productFilterConfig);
         $this->removeExcessiveFlags($productFilterData, $productFilterConfig);
         $this->removeExcessiveParametersAndValues($productFilterData, $productFilterConfig);
@@ -25,8 +27,10 @@ class ProductFilterNormalizer
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
      */
-    protected function removeExcessiveBrands(ProductFilterData $productFilterData, ProductFilterConfig $productFilterConfig): void
-    {
+    protected function removeExcessiveBrands(
+        ProductFilterData $productFilterData,
+        ProductFilterConfig $productFilterConfig,
+    ): void {
         foreach ($productFilterData->brands as $key => $brand) {
             if (!in_array($brand, $productFilterConfig->getBrandChoices(), true)) {
                 unset($productFilterData->brands[$key]);
@@ -38,8 +42,10 @@ class ProductFilterNormalizer
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
      */
-    protected function removeExcessiveFlags(ProductFilterData $productFilterData, ProductFilterConfig $productFilterConfig): void
-    {
+    protected function removeExcessiveFlags(
+        ProductFilterData $productFilterData,
+        ProductFilterConfig $productFilterConfig,
+    ): void {
         foreach ($productFilterData->flags as $key => $flag) {
             if (!in_array($flag, $productFilterConfig->getFlagChoices(), true)) {
                 unset($productFilterData->flags[$key]);
@@ -51,8 +57,10 @@ class ProductFilterNormalizer
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
      */
-    protected function removeExcessiveParametersAndValues(ProductFilterData $productFilterData, ProductFilterConfig $productFilterConfig): void
-    {
+    protected function removeExcessiveParametersAndValues(
+        ProductFilterData $productFilterData,
+        ProductFilterConfig $productFilterConfig,
+    ): void {
         $this->removeExcessiveParameters($productFilterData, $productFilterConfig);
         $this->removeExcessiveParameterValues($productFilterData, $productFilterConfig);
     }
@@ -61,8 +69,10 @@ class ProductFilterNormalizer
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
      */
-    protected function removeExcessiveParameters(ProductFilterData $productFilterData, ProductFilterConfig $productFilterConfig): void
-    {
+    protected function removeExcessiveParameters(
+        ProductFilterData $productFilterData,
+        ProductFilterConfig $productFilterConfig,
+    ): void {
         $parameters = $this->getAllParametersFromParameterFilterData($productFilterData->parameters);
         $parametersFromFilterConfig = $this->getAllParametersFromParameterFilterChoices(
             $productFilterConfig->getParameterChoices(),
@@ -79,8 +89,10 @@ class ProductFilterNormalizer
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
      */
-    protected function removeExcessiveParameterValues(ProductFilterData $productFilterData, ProductFilterConfig $productFilterConfig): void
-    {
+    protected function removeExcessiveParameterValues(
+        ProductFilterData $productFilterData,
+        ProductFilterConfig $productFilterConfig,
+    ): void {
         $parameterValuesByParameterId = $this->getAllParameterValuesByParameterIdFromParameterFilterData(
             $productFilterData->parameters,
         );
@@ -150,8 +162,9 @@ class ProductFilterNormalizer
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[] $parameterFilterChoices
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[][]
      */
-    protected function getAllParameterValuesByParameterIdFromParameterFilterChoices(array $parameterFilterChoices): array
-    {
+    protected function getAllParameterValuesByParameterIdFromParameterFilterChoices(
+        array $parameterFilterChoices,
+    ): array {
         $parameterValues = [];
 
         foreach ($parameterFilterChoices as $parameterFilterChoice) {
@@ -168,8 +181,11 @@ class ProductFilterNormalizer
      * @param int $parameterId
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $parameterValue
      */
-    protected function removeParameterValue(ProductFilterData $productFilterData, int $parameterId, ParameterValue $parameterValue): void
-    {
+    protected function removeParameterValue(
+        ProductFilterData $productFilterData,
+        int $parameterId,
+        ParameterValue $parameterValue,
+    ): void {
         foreach ($productFilterData->parameters as $parameterFilterData) {
             if ($parameterFilterData->parameter->getId() === $parameterId) {
                 foreach ($parameterFilterData->values as $key => $filterParameterValue) {

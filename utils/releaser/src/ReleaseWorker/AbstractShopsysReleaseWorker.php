@@ -63,8 +63,11 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
      * @param \Symplify\MonorepoBuilder\Release\Process\ProcessRunner $processRunner
      * @param \Symfony\Component\Console\Helper\QuestionHelper $questionHelper
      */
-    public function setup(SymfonyStyle $symfonyStyle, ProcessRunner $processRunner, QuestionHelper $questionHelper): void
-    {
+    public function setup(
+        SymfonyStyle $symfonyStyle,
+        ProcessRunner $processRunner,
+        QuestionHelper $questionHelper,
+    ): void {
         $this->symfonyStyle = $symfonyStyle;
         $this->processRunner = $processRunner;
         $this->questionHelper = $questionHelper;

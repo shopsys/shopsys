@@ -28,8 +28,14 @@ class DomainConfig
      * @param string $stylesDirectory
      * @param string|null $designId
      */
-    public function __construct($id, $url, $name, $locale, $stylesDirectory = self::STYLES_DIRECTORY_DEFAULT, $designId = null)
-    {
+    public function __construct(
+        $id,
+        $url,
+        $name,
+        $locale,
+        $stylesDirectory = self::STYLES_DIRECTORY_DEFAULT,
+        $designId = null,
+    ) {
         $this->id = $id;
         $this->url = $url;
         $this->name = $name;

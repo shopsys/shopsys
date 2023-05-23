@@ -17,8 +17,10 @@ class InputPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculator $inputPriceRecalculator
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
-    public function __construct(protected readonly InputPriceRecalculator $inputPriceRecalculator, protected readonly Setting $setting)
-    {
+    public function __construct(
+        protected readonly InputPriceRecalculator $inputPriceRecalculator,
+        protected readonly Setting $setting,
+    ) {
     }
 
     public function scheduleSetInputPricesWithoutVat()

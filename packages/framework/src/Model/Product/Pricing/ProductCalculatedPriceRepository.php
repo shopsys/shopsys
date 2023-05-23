@@ -16,8 +16,10 @@ class ProductCalculatedPriceRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPriceFactoryInterface $productCalculatedPriceFactory
      */
-    public function __construct(protected readonly EntityManagerInterface $em, protected readonly ProductCalculatedPriceFactoryInterface $productCalculatedPriceFactory)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly ProductCalculatedPriceFactoryInterface $productCalculatedPriceFactory,
+    ) {
     }
 
     /**

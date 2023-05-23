@@ -90,8 +90,12 @@ class MailTemplateVariables
      * @param int $required one of REQUIRED_* constants
      * @return $this
      */
-    public function addVariable(string $variable, string $label, int $context = self::CONTEXT_BOTH, int $required = self::REQUIRED_NOWHERE): self
-    {
+    public function addVariable(
+        string $variable,
+        string $label,
+        int $context = self::CONTEXT_BOTH,
+        int $required = self::REQUIRED_NOWHERE,
+    ): self {
         if (array_key_exists($variable, $this->variables)) {
             throw new InvalidMailTemplateVariablesConfigurationException(
                 sprintf('Variable "%s" is already registered.', $variable),

@@ -152,8 +152,11 @@ class AllFeedsTest extends KernelTestCase
      * @param int $maxDuration
      * @param float $realDuration
      */
-    private function setPerformanceTestSampleMessage(PerformanceTestSample $performanceTestSample, $maxDuration, $realDuration)
-    {
+    private function setPerformanceTestSampleMessage(
+        PerformanceTestSample $performanceTestSample,
+        $maxDuration,
+        $realDuration,
+    ) {
         $minDuration = $this->minDuration;
 
         if ($realDuration < $minDuration) {

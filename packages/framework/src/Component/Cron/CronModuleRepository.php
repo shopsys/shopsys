@@ -15,8 +15,10 @@ class CronModuleRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronModuleFactoryInterface $cronModuleFactory
      */
-    public function __construct(protected readonly EntityManagerInterface $em, protected readonly CronModuleFactoryInterface $cronModuleFactory)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly CronModuleFactoryInterface $cronModuleFactory,
+    ) {
     }
 
     /**

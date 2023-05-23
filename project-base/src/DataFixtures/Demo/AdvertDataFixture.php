@@ -19,8 +19,10 @@ class AdvertDataFixture extends AbstractReferenceFixture implements DependentFix
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertFacade $advertFacade
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactoryInterface $advertDataFactory
      */
-    public function __construct(private readonly AdvertFacade $advertFacade, private readonly AdvertDataFactoryInterface $advertDataFactory)
-    {
+    public function __construct(
+        private readonly AdvertFacade $advertFacade,
+        private readonly AdvertDataFactoryInterface $advertDataFactory,
+    ) {
     }
 
     /**

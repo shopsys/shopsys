@@ -14,8 +14,9 @@ class CustomerUserUpdateDataFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      */
-    public function __construct(protected readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory)
-    {
+    public function __construct(
+        protected readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
+    ) {
     }
 
     /**
@@ -23,8 +24,10 @@ class CustomerUserUpdateDataFactory
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
      */
-    public function createFromCustomerUserWithArgument(CustomerUser $customerUser, Argument $argument): CustomerUserUpdateData
-    {
+    public function createFromCustomerUserWithArgument(
+        CustomerUser $customerUser,
+        Argument $argument,
+    ): CustomerUserUpdateData {
         $input = $argument['input'];
 
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);

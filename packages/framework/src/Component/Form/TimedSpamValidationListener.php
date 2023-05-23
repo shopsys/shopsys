@@ -15,8 +15,10 @@ class TimedSpamValidationListener implements EventSubscriberInterface
      * @param \Shopsys\FrameworkBundle\Component\Form\FormTimeProvider $formTimeProvider
      * @param array $options
      */
-    public function __construct(protected readonly FormTimeProvider $formTimeProvider, protected readonly array $options)
-    {
+    public function __construct(
+        protected readonly FormTimeProvider $formTimeProvider,
+        protected readonly array $options,
+    ) {
     }
 
     /**

@@ -15,8 +15,10 @@ final class RemoveLockFilesReleaseWorker extends AbstractShopsysReleaseWorker
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
-    {
+    public function getDescription(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): string {
         return 'Remove lock files from the repository, commit the change, and [Manually] push';
     }
 
@@ -24,8 +26,10 @@ final class RemoveLockFilesReleaseWorker extends AbstractShopsysReleaseWorker
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
-    {
+    public function work(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): void {
         $this->processRunner->run('git rm project-base/composer.lock --ignore-unmatch');
         $this->processRunner->run('git rm project-base/package-lock.json --ignore-unmatch');
         $this->processRunner->run('git rm project-base/migrations-lock.yml --ignore-unmatch');

@@ -22,8 +22,12 @@ class MigrationsLockComparatorTest extends TestCase
      * @param \Doctrine\Migrations\Version\Version $versionB
      * @param string $expectedResult
      */
-    public function testCompare(array $orderedMigrationClassesFromLock, Version $versionA, Version $versionB, string $expectedResult): void
-    {
+    public function testCompare(
+        array $orderedMigrationClassesFromLock,
+        Version $versionA,
+        Version $versionB,
+        string $expectedResult,
+    ): void {
         $migrationsLockMock = $this->createMock(MigrationsLock::class);
         $migrationsLockMock->method('getOrderedInstalledMigrationClasses')->willReturn($orderedMigrationClassesFromLock);
         $migrationsLockComparator = new MigrationsLockComparator($migrationsLockMock);

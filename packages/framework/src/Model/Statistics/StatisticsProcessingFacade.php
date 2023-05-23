@@ -9,8 +9,9 @@ class StatisticsProcessingFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPointFormatter $valueByDateTimeDataPointFormatter
      */
-    public function __construct(protected readonly ValueByDateTimeDataPointFormatter $valueByDateTimeDataPointFormatter)
-    {
+    public function __construct(
+        protected readonly ValueByDateTimeDataPointFormatter $valueByDateTimeDataPointFormatter,
+    ) {
     }
 
     /**

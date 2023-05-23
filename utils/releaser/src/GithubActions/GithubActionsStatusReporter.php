@@ -26,8 +26,10 @@ final class GithubActionsStatusReporter
      * @param \Shopsys\Releaser\Packagist\PackageProvider $packageProvider
      * @param \Shopsys\Releaser\Guzzle\ApiCaller $apiCaller
      */
-    public function __construct(private readonly PackageProvider $packageProvider, private readonly ApiCaller $apiCaller)
-    {
+    public function __construct(
+        private readonly PackageProvider $packageProvider,
+        private readonly ApiCaller $apiCaller,
+    ) {
     }
 
     /**
@@ -36,8 +38,11 @@ final class GithubActionsStatusReporter
      * @param string $githubToken
      * @return string[]
      */
-    public function getStatusForPackagesByOrganizationAndBranch(string $organization, string $branch, string $githubToken): array
-    {
+    public function getStatusForPackagesByOrganizationAndBranch(
+        string $organization,
+        string $branch,
+        string $githubToken,
+    ): array {
         $packages = $this->packageProvider->getPackagesByOrganization($organization, AbstractShopsysReleaseWorker::EXCLUDED_PACKAGES);
         $packages = array_merge($packages, self::EXTRA_PACKAGES);
 

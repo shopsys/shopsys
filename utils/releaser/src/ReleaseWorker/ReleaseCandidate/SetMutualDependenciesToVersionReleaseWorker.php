@@ -19,8 +19,11 @@ final class SetMutualDependenciesToVersionReleaseWorker extends AbstractShopsysR
      * @param \Symplify\MonorepoBuilder\DependencyUpdater $dependencyUpdater
      * @param \Symplify\MonorepoBuilder\Package\PackageNamesProvider $packageNamesProvider
      */
-    public function __construct(private readonly ComposerJsonFilesProvider $composerJsonFilesProvider, private readonly DependencyUpdater $dependencyUpdater, private readonly PackageNamesProvider $packageNamesProvider)
-    {
+    public function __construct(
+        private readonly ComposerJsonFilesProvider $composerJsonFilesProvider,
+        private readonly DependencyUpdater $dependencyUpdater,
+        private readonly PackageNamesProvider $packageNamesProvider,
+    ) {
     }
 
     /**
@@ -28,8 +31,10 @@ final class SetMutualDependenciesToVersionReleaseWorker extends AbstractShopsysR
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
-    {
+    public function getDescription(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): string {
         return sprintf('Set mutual package dependencies to "%s" version', $version->getVersionString());
     }
 
@@ -37,8 +42,10 @@ final class SetMutualDependenciesToVersionReleaseWorker extends AbstractShopsysR
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
-    {
+    public function work(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): void {
         $this->dependencyUpdater->updateFileInfosWithPackagesAndVersion(
             $this->composerJsonFilesProvider->provideExcludingMonorepoComposerJson(),
             $this->packageNamesProvider->provide(),

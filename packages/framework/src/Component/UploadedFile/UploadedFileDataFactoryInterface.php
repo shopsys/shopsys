@@ -18,5 +18,8 @@ interface UploadedFileDataFactoryInterface
      * @param string $type
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData
      */
-    public function createByEntity(object $entity, string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME): UploadedFileData;
+    public function createByEntity(
+        object $entity,
+        string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
+    ): UploadedFileData;
 }

@@ -21,8 +21,11 @@ class PaymentImageUploadCest
      * @param \Tests\App\Acceptance\acceptance\PageObject\Admin\EntityEditPage $entityEditPage
      * @param \Tests\App\Acceptance\acceptance\PageObject\Admin\LoginPage $loginPage
      */
-    public function testSuccessfulImageUpload(AcceptanceTester $me, EntityEditPage $entityEditPage, LoginPage $loginPage)
-    {
+    public function testSuccessfulImageUpload(
+        AcceptanceTester $me,
+        EntityEditPage $entityEditPage,
+        LoginPage $loginPage,
+    ) {
         $me->wantTo('Upload an image in admin payment edit page');
         $loginPage->loginAsAdmin();
         $me->amOnPage('/admin/payment/edit/1');

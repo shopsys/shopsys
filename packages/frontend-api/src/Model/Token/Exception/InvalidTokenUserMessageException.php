@@ -14,8 +14,12 @@ class InvalidTokenUserMessageException extends TokenUserMessageException
      * @param int $code
      * @param \Throwable|null $previous
      */
-    public function __construct(string $message = 'Token is not valid.', array $messageData = [], int $code = 0, ?Throwable $previous = null)
-    {
+    public function __construct(
+        string $message = 'Token is not valid.',
+        array $messageData = [],
+        int $code = 0,
+        ?Throwable $previous = null,
+    ) {
         parent::__construct($message, $messageData, $code, $previous);
     }
 }

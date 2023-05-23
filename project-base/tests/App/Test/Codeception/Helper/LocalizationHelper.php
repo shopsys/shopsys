@@ -48,8 +48,11 @@ class LocalizationHelper extends Module
      * @param string $translationDomain
      * @param array $parameters
      */
-    public function seeTranslationFrontend(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = []): void
-    {
+    public function seeTranslationFrontend(
+        string $id,
+        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
+        array $parameters = [],
+    ): void {
         $translatedMessage = t($id, $parameters, $translationDomain, $this->getFrontendLocale());
         $this->webDriver->see(strip_tags($translatedMessage));
     }
@@ -59,8 +62,11 @@ class LocalizationHelper extends Module
      * @param string $translationDomain
      * @param array $parameters
      */
-    public function dontSeeTranslationFrontend(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = []): void
-    {
+    public function dontSeeTranslationFrontend(
+        string $id,
+        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
+        array $parameters = [],
+    ): void {
         $translatedMessage = t($id, $parameters, $translationDomain, $this->getFrontendLocale());
         $this->webDriver->dontSee(strip_tags($translatedMessage));
     }
@@ -70,8 +76,11 @@ class LocalizationHelper extends Module
      * @param string $translationDomain
      * @param array $parameters
      */
-    public function seeTranslationAdmin(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = []): void
-    {
+    public function seeTranslationAdmin(
+        string $id,
+        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
+        array $parameters = [],
+    ): void {
         $translatedMessage = t($id, $parameters, $translationDomain, $this->getAdminLocale());
         $this->webDriver->see(strip_tags($translatedMessage));
     }
@@ -82,8 +91,12 @@ class LocalizationHelper extends Module
      * @param string $translationDomain
      * @param array $parameters
      */
-    public function seeTranslationAdminInCss(string $id, string $css, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = []): void
-    {
+    public function seeTranslationAdminInCss(
+        string $id,
+        string $css,
+        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
+        array $parameters = [],
+    ): void {
         $translatedMessage = t($id, $parameters, $translationDomain, $this->getAdminLocale());
         $this->webDriver->seeInCss(strip_tags($translatedMessage), $css);
     }
@@ -94,8 +107,12 @@ class LocalizationHelper extends Module
      * @param array $parameters
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      */
-    public function clickByTranslationAdmin(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = [], WebDriverBy|WebDriverElement|null $contextSelector = null): void
-    {
+    public function clickByTranslationAdmin(
+        string $id,
+        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
+        array $parameters = [],
+        WebDriverBy|WebDriverElement|null $contextSelector = null,
+    ): void {
         $translatedMessage = t($id, $parameters, $translationDomain, $this->getAdminLocale());
         $this->webDriver->clickByText(strip_tags($translatedMessage), $contextSelector);
     }
@@ -106,8 +123,12 @@ class LocalizationHelper extends Module
      * @param array $parameters
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      */
-    public function clickByTranslationFrontend(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = [], WebDriverBy|WebDriverElement|null $contextSelector = null)
-    {
+    public function clickByTranslationFrontend(
+        string $id,
+        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
+        array $parameters = [],
+        WebDriverBy|WebDriverElement|null $contextSelector = null,
+    ) {
         $translatedMessage = t($id, $parameters, $translationDomain, $this->getFrontendLocale());
         $this->webDriver->clickByText(strip_tags($translatedMessage), $contextSelector);
     }
@@ -117,8 +138,11 @@ class LocalizationHelper extends Module
      * @param string $translationDomain
      * @param array $parameters
      */
-    public function checkOptionByLabelTranslationFrontend(string $id, string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN, array $parameters = []): void
-    {
+    public function checkOptionByLabelTranslationFrontend(
+        string $id,
+        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
+        array $parameters = [],
+    ): void {
         $translatedMessage = t($id, $parameters, $translationDomain, $this->getFrontendLocale());
         $this->webDriver->checkOptionByLabel($translatedMessage);
     }

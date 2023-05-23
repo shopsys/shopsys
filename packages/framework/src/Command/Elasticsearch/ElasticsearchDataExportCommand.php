@@ -30,8 +30,13 @@ class ElasticsearchDataExportCommand extends AbstractElasticsearchIndexCommand
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(IndexRegistry $indexRegistry, IndexFacade $indexFacade, IndexDefinitionLoader $indexDefinitionLoader, Domain $domain, protected readonly EventDispatcherInterface $eventDispatcher)
-    {
+    public function __construct(
+        IndexRegistry $indexRegistry,
+        IndexFacade $indexFacade,
+        IndexDefinitionLoader $indexDefinitionLoader,
+        Domain $domain,
+        protected readonly EventDispatcherInterface $eventDispatcher,
+    ) {
         parent::__construct($indexRegistry, $indexFacade, $indexDefinitionLoader, $domain);
     }
 

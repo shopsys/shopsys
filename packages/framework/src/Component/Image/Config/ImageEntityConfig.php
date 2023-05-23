@@ -23,8 +23,13 @@ class ImageEntityConfig
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] $sizeConfigs
      * @param array $multipleByType
      */
-    public function __construct($entityName, $entityClass, protected readonly array $sizeConfigsByType, protected readonly array $sizeConfigs, protected readonly array $multipleByType)
-    {
+    public function __construct(
+        $entityName,
+        $entityClass,
+        protected readonly array $sizeConfigsByType,
+        protected readonly array $sizeConfigs,
+        protected readonly array $multipleByType,
+    ) {
         $this->entityName = $entityName;
         $this->entityClass = $entityClass;
     }

@@ -61,8 +61,10 @@ class MailTemplateConfiguration
      * @param string $mailTemplateSlug
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables $mailTemplateVariables
      */
-    public function addMailTemplateVariables(string $mailTemplateSlug, MailTemplateVariables $mailTemplateVariables): void
-    {
+    public function addMailTemplateVariables(
+        string $mailTemplateSlug,
+        MailTemplateVariables $mailTemplateVariables,
+    ): void {
         if (array_key_exists($mailTemplateSlug, $this->mailTemplateVariables)) {
             throw new InvalidMailTemplateVariablesConfigurationException(
                 sprintf('Template variables for mail template "%s" are already registered.', $mailTemplateSlug),

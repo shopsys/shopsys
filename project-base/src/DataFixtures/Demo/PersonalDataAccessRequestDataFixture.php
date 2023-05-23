@@ -19,8 +19,10 @@ class PersonalDataAccessRequestDataFixture extends AbstractReferenceFixture
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade $personalDataFacade
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory $personalDataFactory
      */
-    public function __construct(private readonly PersonalDataAccessRequestFacade $personalDataFacade, private readonly PersonalDataAccessRequestDataFactory $personalDataFactory)
-    {
+    public function __construct(
+        private readonly PersonalDataAccessRequestFacade $personalDataFacade,
+        private readonly PersonalDataAccessRequestDataFactory $personalDataFactory,
+    ) {
     }
 
     /**

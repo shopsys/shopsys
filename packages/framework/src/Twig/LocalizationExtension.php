@@ -16,8 +16,11 @@ class LocalizationExtension extends AbstractExtension
      * @param \Symfony\Component\Asset\Packages $assetPackages
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
-    public function __construct(protected readonly string $webDir, protected readonly Packages $assetPackages, protected readonly Localization $localization)
-    {
+    public function __construct(
+        protected readonly string $webDir,
+        protected readonly Packages $assetPackages,
+        protected readonly Localization $localization,
+    ) {
     }
 
     /**

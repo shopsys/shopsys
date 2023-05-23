@@ -23,8 +23,10 @@ class TransportAndPaymentFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      */
-    public function __construct(private readonly TransportFacade $transportFacade, private readonly PaymentFacade $paymentFacade)
-    {
+    public function __construct(
+        private readonly TransportFacade $transportFacade,
+        private readonly PaymentFacade $paymentFacade,
+    ) {
     }
 
     /**

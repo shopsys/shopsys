@@ -19,8 +19,9 @@ class CustomerUserRefreshTokenChainFactory implements CustomerUserRefreshTokenCh
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainData $customerUserRefreshTokenChainData
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChain
      */
-    public function create(CustomerUserRefreshTokenChainData $customerUserRefreshTokenChainData): CustomerUserRefreshTokenChain
-    {
+    public function create(
+        CustomerUserRefreshTokenChainData $customerUserRefreshTokenChainData,
+    ): CustomerUserRefreshTokenChain {
         $classData = $this->entityNameResolver->resolve(CustomerUserRefreshTokenChain::class);
 
         return new $classData($customerUserRefreshTokenChainData);

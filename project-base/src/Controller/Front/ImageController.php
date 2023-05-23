@@ -17,8 +17,10 @@ class ImageController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageGeneratorFacade $imageGeneratorFacade
      * @param \League\Flysystem\FilesystemOperator $filesystem
      */
-    public function __construct(private readonly ImageGeneratorFacade $imageGeneratorFacade, private readonly FilesystemOperator $filesystem)
-    {
+    public function __construct(
+        private readonly ImageGeneratorFacade $imageGeneratorFacade,
+        private readonly FilesystemOperator $filesystem,
+    ) {
     }
 
     /**

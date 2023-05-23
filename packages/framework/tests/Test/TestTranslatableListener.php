@@ -17,8 +17,12 @@ class TestTranslatableListener extends TranslatableListener
      * @param \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade $administrationFacade
      * @param string $adminLocale
      */
-    public function __construct(MetadataFactory $factory, protected readonly Domain $domain, protected readonly AdministrationFacade $administrationFacade, protected readonly string $adminLocale)
-    {
+    public function __construct(
+        MetadataFactory $factory,
+        protected readonly Domain $domain,
+        protected readonly AdministrationFacade $administrationFacade,
+        protected readonly string $adminLocale,
+    ) {
         parent::__construct($factory);
     }
 

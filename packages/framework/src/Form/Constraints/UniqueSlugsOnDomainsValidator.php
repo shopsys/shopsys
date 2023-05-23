@@ -18,8 +18,10 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      */
-    public function __construct(protected readonly Domain $domain, protected readonly DomainRouterFactory $domainRouterFactory)
-    {
+    public function __construct(
+        protected readonly Domain $domain,
+        protected readonly DomainRouterFactory $domainRouterFactory,
+    ) {
     }
 
     /**

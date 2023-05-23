@@ -29,8 +29,11 @@ class MigrationLockPlanCalculatorTest extends AbstractMigrationTestCase
      * @param string[] $orderedMigrationClassesFromLock
      * @param string[] $expectedMigrationClasses
      */
-    public function testGetMigrations(array $availableMigrationClasses, array $orderedMigrationClassesFromLock, array $expectedMigrationClasses): void
-    {
+    public function testGetMigrations(
+        array $availableMigrationClasses,
+        array $orderedMigrationClassesFromLock,
+        array $expectedMigrationClasses,
+    ): void {
         $migrationLockPlanCalculator = $this->getMigrationLockPlanCalculator($availableMigrationClasses, $orderedMigrationClassesFromLock);
         $actualMigrations = $migrationLockPlanCalculator->getMigrations()->getItems();
 

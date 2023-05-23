@@ -267,8 +267,10 @@ class CategoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildren[]
      */
-    public function getCategoriesWithLazyLoadedVisibleChildrenForParent(Category $parentCategory, DomainConfig $domainConfig)
-    {
+    public function getCategoriesWithLazyLoadedVisibleChildrenForParent(
+        Category $parentCategory,
+        DomainConfig $domainConfig,
+    ) {
         $categories = $this->categoryRepository->getTranslatedVisibleSubcategoriesByDomain(
             $parentCategory,
             $domainConfig,
@@ -373,8 +375,10 @@ class CategoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string[]
      */
-    public function getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(Product $product, DomainConfig $domainConfig)
-    {
+    public function getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(
+        Product $product,
+        DomainConfig $domainConfig,
+    ) {
         return $this->categoryRepository->getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(
             $product,
             $domainConfig,

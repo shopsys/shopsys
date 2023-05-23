@@ -15,8 +15,10 @@ class BrandResolverMap extends ResolverMap
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(protected readonly UrlGeneratorInterface $urlGenerator, protected readonly Domain $domain)
-    {
+    public function __construct(
+        protected readonly UrlGeneratorInterface $urlGenerator,
+        protected readonly Domain $domain,
+    ) {
     }
 
     /**

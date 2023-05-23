@@ -12,8 +12,12 @@ class ProductActionView
      * @param bool $isMainVariant
      * @param string $detailUrl
      */
-    public function __construct(protected readonly int $id, protected readonly bool $sellingDenied, protected readonly bool $isMainVariant, protected readonly string $detailUrl)
-    {
+    public function __construct(
+        protected readonly int $id,
+        protected readonly bool $sellingDenied,
+        protected readonly bool $isMainVariant,
+        protected readonly string $detailUrl,
+    ) {
     }
 
     /**

@@ -17,8 +17,10 @@ class CurrencyFormatterFactory
      * @param \CommerceGuys\Intl\NumberFormat\NumberFormatRepositoryInterface $numberFormatRepository
      * @param \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface $intlCurrencyRepository
      */
-    public function __construct(protected readonly NumberFormatRepositoryInterface $numberFormatRepository, protected readonly CurrencyRepositoryInterface $intlCurrencyRepository)
-    {
+    public function __construct(
+        protected readonly NumberFormatRepositoryInterface $numberFormatRepository,
+        protected readonly CurrencyRepositoryInterface $intlCurrencyRepository,
+    ) {
     }
 
     /**

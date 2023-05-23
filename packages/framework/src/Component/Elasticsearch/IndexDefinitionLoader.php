@@ -10,8 +10,10 @@ class IndexDefinitionLoader
      * @param string $indexDefinitionsDirectory
      * @param string $indexPrefix
      */
-    public function __construct(protected readonly string $indexDefinitionsDirectory, protected readonly string $indexPrefix)
-    {
+    public function __construct(
+        protected readonly string $indexDefinitionsDirectory,
+        protected readonly string $indexPrefix,
+    ) {
     }
 
     /**

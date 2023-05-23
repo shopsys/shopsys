@@ -19,8 +19,10 @@ class PriceRangeRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
      */
-    public function __construct(protected readonly ProductRepository $productRepository, protected readonly QueryBuilderExtender $queryBuilderExtender)
-    {
+    public function __construct(
+        protected readonly ProductRepository $productRepository,
+        protected readonly QueryBuilderExtender $queryBuilderExtender,
+    ) {
     }
 
     /**
@@ -92,8 +94,10 @@ class PriceRangeRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
      */
-    protected function getPriceRangeByProductsQueryBuilder(QueryBuilder $productsQueryBuilder, PricingGroup $pricingGroup)
-    {
+    protected function getPriceRangeByProductsQueryBuilder(
+        QueryBuilder $productsQueryBuilder,
+        PricingGroup $pricingGroup,
+    ) {
         $queryBuilder = clone $productsQueryBuilder;
 
         $this->queryBuilderExtender

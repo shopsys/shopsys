@@ -68,8 +68,12 @@ class CustomerUserPasswordFacade
      * @param string $newPassword
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function setNewPassword(string $email, int $domainId, ?string $resetPasswordHash, string $newPassword): CustomerUser
-    {
+    public function setNewPassword(
+        string $email,
+        int $domainId,
+        ?string $resetPasswordHash,
+        string $newPassword,
+    ): CustomerUser {
         $customerUser = $this->customerUserRepository->getCustomerUserByEmailAndDomain($email, $domainId);
 
         if (!$customerUser->isResetPasswordHashValid($resetPasswordHash)) {

@@ -26,8 +26,12 @@ class ApiDataSetter
      * @param object $entityData
      * @param string|null $entityDataKey
      */
-    public function setValueIfExists(string $arrayKey, array $apiData, object $entityData, ?string $entityDataKey = null): void
-    {
+    public function setValueIfExists(
+        string $arrayKey,
+        array $apiData,
+        object $entityData,
+        ?string $entityDataKey = null,
+    ): void {
         $entityDataKey = $entityDataKey ?: $arrayKey;
 
         if (array_key_exists($arrayKey, $apiData)) {
@@ -41,8 +45,12 @@ class ApiDataSetter
      * @param object $entityData
      * @param string|null $entityDataKey
      */
-    public function setDateTimeValueIfExists(string $arrayKey, array $apiData, object $entityData, ?string $entityDataKey = null): void
-    {
+    public function setDateTimeValueIfExists(
+        string $arrayKey,
+        array $apiData,
+        object $entityData,
+        ?string $entityDataKey = null,
+    ): void {
         $entityDataKey = $entityDataKey ?: $arrayKey;
 
         if (array_key_exists($arrayKey, $apiData)) {
@@ -56,8 +64,12 @@ class ApiDataSetter
      * @param object $entityData
      * @param string|null $entityDataKey
      */
-    public function setMultidomainValueIfExists(string $arrayKey, array $apiData, object $entityData, ?string $entityDataKey = null): void
-    {
+    public function setMultidomainValueIfExists(
+        string $arrayKey,
+        array $apiData,
+        object $entityData,
+        ?string $entityDataKey = null,
+    ): void {
         $entityDataKey = $entityDataKey ?: $arrayKey;
 
         if (!array_key_exists($arrayKey, $apiData)) {
@@ -77,8 +89,12 @@ class ApiDataSetter
      * @param object $entityData
      * @param string|null $entityDataKey
      */
-    public function setMultilanguageValueIfExists(string $arrayKey, array $apiData, object $entityData, ?string $entityDataKey = null): void
-    {
+    public function setMultilanguageValueIfExists(
+        string $arrayKey,
+        array $apiData,
+        object $entityData,
+        ?string $entityDataKey = null,
+    ): void {
         $entityDataKey = $entityDataKey ?: $arrayKey;
 
         if (!array_key_exists($arrayKey, $apiData)) {

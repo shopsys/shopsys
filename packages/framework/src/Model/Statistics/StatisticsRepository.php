@@ -91,8 +91,10 @@ class StatisticsRepository
      * @param \DateTimeImmutable $endDateTime
      * @return int
      */
-    public function getNewCustomersCountBetweenDates(DateTimeImmutable $startDateTime, DateTimeImmutable $endDateTime): int
-    {
+    public function getNewCustomersCountBetweenDates(
+        DateTimeImmutable $startDateTime,
+        DateTimeImmutable $endDateTime,
+    ): int {
         $resultSetMapping = new ResultSetMapping();
         $resultSetMapping->addScalarResult('count', 'count');
 

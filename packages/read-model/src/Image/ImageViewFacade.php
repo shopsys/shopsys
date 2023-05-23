@@ -13,8 +13,10 @@ class ImageViewFacade implements ImageViewFacadeInterface
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\ReadModelBundle\Image\ImageViewFactory $imageViewFactory
      */
-    public function __construct(protected readonly ImageFacade $imageFacade, protected readonly ImageViewFactory $imageViewFactory)
-    {
+    public function __construct(
+        protected readonly ImageFacade $imageFacade,
+        protected readonly ImageViewFactory $imageViewFactory,
+    ) {
     }
 
     /**

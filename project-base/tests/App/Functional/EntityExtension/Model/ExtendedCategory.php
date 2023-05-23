@@ -165,8 +165,9 @@ class ExtendedCategory extends Category
     /**
      * @param \Tests\App\Functional\EntityExtension\Model\CategoryOneToOneBidirectionalEntity $oneToOneBidirectionalEntity
      */
-    public function setOneToOneBidirectionalEntity(CategoryOneToOneBidirectionalEntity $oneToOneBidirectionalEntity): void
-    {
+    public function setOneToOneBidirectionalEntity(
+        CategoryOneToOneBidirectionalEntity $oneToOneBidirectionalEntity,
+    ): void {
         $oneToOneBidirectionalEntity->setCategory($this);
         $this->oneToOneBidirectionalEntity = $oneToOneBidirectionalEntity;
     }
@@ -198,8 +199,9 @@ class ExtendedCategory extends Category
     /**
      * @param \Tests\App\Functional\EntityExtension\Model\CategoryOneToManyBidirectionalEntity $oneToManyBidirectionalEntity
      */
-    public function addOneToManyBidirectionalEntity(CategoryOneToManyBidirectionalEntity $oneToManyBidirectionalEntity): void
-    {
+    public function addOneToManyBidirectionalEntity(
+        CategoryOneToManyBidirectionalEntity $oneToManyBidirectionalEntity,
+    ): void {
         $oneToManyBidirectionalEntity->setCategory($this);
         $this->oneToManyBidirectionalEntities->add($oneToManyBidirectionalEntity);
     }
@@ -215,8 +217,9 @@ class ExtendedCategory extends Category
     /**
      * @param \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity $oneToManyUnidirectionalWithJoinTableEntity
      */
-    public function addOneToManyUnidirectionalWithJoinTableEntity(UnidirectionalEntity $oneToManyUnidirectionalWithJoinTableEntity): void
-    {
+    public function addOneToManyUnidirectionalWithJoinTableEntity(
+        UnidirectionalEntity $oneToManyUnidirectionalWithJoinTableEntity,
+    ): void {
         $this->oneToManyUnidirectionalWithJoinTableEntities->add($oneToManyUnidirectionalWithJoinTableEntity);
     }
 
@@ -272,8 +275,9 @@ class ExtendedCategory extends Category
     /**
      * @param \Tests\App\Functional\EntityExtension\Model\CategoryManyToManyBidirectionalEntity $manyToManyBidirectionalEntity
      */
-    public function addManyToManyBidirectionalEntity(CategoryManyToManyBidirectionalEntity $manyToManyBidirectionalEntity): void
-    {
+    public function addManyToManyBidirectionalEntity(
+        CategoryManyToManyBidirectionalEntity $manyToManyBidirectionalEntity,
+    ): void {
         $manyToManyBidirectionalEntity->addCategory($this);
         $this->manyToManyBidirectionalEntities->add($manyToManyBidirectionalEntity);
     }

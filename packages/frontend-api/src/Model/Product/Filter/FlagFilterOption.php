@@ -13,7 +13,10 @@ class FlagFilterOption
      * @param int $count
      * @param bool $isAbsolute
      */
-    public function __construct(public readonly Flag $flag, public readonly int $count, public readonly bool $isAbsolute)
-    {
+    public function __construct(
+        public readonly Flag $flag,
+        public readonly int $count,
+        public readonly bool $isAbsolute,
+    ) {
     }
 }

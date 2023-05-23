@@ -35,8 +35,11 @@ class ZboziFeedItemFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\ProductFeed\ZboziBundle\Model\FeedItem\ZboziFeedItem
      */
-    public function create(Product $product, ?ZboziProductDomain $zboziProductDomain, DomainConfig $domainConfig): ZboziFeedItem
-    {
+    public function create(
+        Product $product,
+        ?ZboziProductDomain $zboziProductDomain,
+        DomainConfig $domainConfig,
+    ): ZboziFeedItem {
         $mainVariantId = $product->isVariant() ? $product->getMainVariant()->getId() : null;
         $cpc = $zboziProductDomain !== null ? $zboziProductDomain->getCpc() : null;
         $cpcSearch = $zboziProductDomain !== null ? $zboziProductDomain->getCpcSearch() : null;

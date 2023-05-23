@@ -46,8 +46,11 @@ class BrandDataFixture extends AbstractReferenceFixture
      * @param \App\Model\Product\Brand\BrandDataFactory $brandDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(private readonly BrandFacade $brandFacade, BrandDataFactoryInterface $brandDataFactory, private readonly Domain $domain)
-    {
+    public function __construct(
+        private readonly BrandFacade $brandFacade,
+        BrandDataFactoryInterface $brandDataFactory,
+        private readonly Domain $domain,
+    ) {
         $this->brandDataFactory = $brandDataFactory;
     }
 

@@ -41,7 +41,13 @@ interface ListedProductViewFacadeInterface
      * @param int $limit Number of products per page (must be greater than 0)
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
-    public function getFilteredPaginatedInCategory(int $categoryId, ProductFilterData $filterData, string $orderingModeId, int $page, int $limit): PaginationResult;
+    public function getFilteredPaginatedInCategory(
+        int $categoryId,
+        ProductFilterData $filterData,
+        string $orderingModeId,
+        int $page,
+        int $limit,
+    ): PaginationResult;
 
     /**
      * @param string $searchText
@@ -51,7 +57,13 @@ interface ListedProductViewFacadeInterface
      * @param int $limit Number of products per page (must be greater than 0)
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
-    public function getFilteredPaginatedForSearch(string $searchText, ProductFilterData $filterData, string $orderingModeId, int $page, int $limit): PaginationResult;
+    public function getFilteredPaginatedForSearch(
+        string $searchText,
+        ProductFilterData $filterData,
+        string $orderingModeId,
+        int $page,
+        int $limit,
+    ): PaginationResult;
 
     /**
      * @param int $brandId
@@ -60,5 +72,10 @@ interface ListedProductViewFacadeInterface
      * @param int $limit Number of products per page (must be greater than 0)
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
-    public function getPaginatedForBrand(int $brandId, string $orderingModeId, int $page, int $limit): PaginationResult;
+    public function getPaginatedForBrand(
+        int $brandId,
+        string $orderingModeId,
+        int $page,
+        int $limit,
+    ): PaginationResult;
 }

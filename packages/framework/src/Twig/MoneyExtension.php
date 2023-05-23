@@ -30,8 +30,12 @@ class MoneyExtension extends AbstractExtension
      * @param string $thousandsSeparator
      * @return string
      */
-    public function moneyFormatFilter(Money $money, ?int $decimal = null, string $decimalPoint = '.', string $thousandsSeparator = '')
-    {
+    public function moneyFormatFilter(
+        Money $money,
+        ?int $decimal = null,
+        string $decimalPoint = '.',
+        string $thousandsSeparator = '',
+    ) {
         $moneyString = $money->getAmount();
 
         if ($decimal === null) {

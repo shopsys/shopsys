@@ -15,8 +15,11 @@ class ProductActionViewFacade implements ProductActionViewFacadeInterface
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory $productActionViewFactory
      */
-    public function __construct(protected readonly ProductCollectionFacade $productCollectionFacade, protected readonly Domain $domain, protected readonly ProductActionViewFactory $productActionViewFactory)
-    {
+    public function __construct(
+        protected readonly ProductCollectionFacade $productCollectionFacade,
+        protected readonly Domain $domain,
+        protected readonly ProductActionViewFactory $productActionViewFactory,
+    ) {
     }
 
     /**

@@ -290,8 +290,10 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
      * @param \App\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
-    public function getPaginationResultInCategory(ProductFilterData $productFilterData, Category $category): PaginationResult
-    {
+    public function getPaginationResultInCategory(
+        ProductFilterData $productFilterData,
+        Category $category,
+    ): PaginationResult {
         return $this->getPaginationResultInCategoryWithPageAndLimit($productFilterData, $category, 1, 1000);
     }
 
@@ -344,8 +346,10 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
      * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
-    public function getPaginationResultInSearch(ProductFilterData $productFilterData, string $searchText): PaginationResult
-    {
+    public function getPaginationResultInSearch(
+        ProductFilterData $productFilterData,
+        string $searchText,
+    ): PaginationResult {
         $productOnCurrentDomainFacade = $this->getProductOnCurrentDomainFacade();
         $page = 1;
         $limit = 1000;
@@ -373,8 +377,12 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
      * @param int $limit
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
-    public function getPaginationResultInCategoryWithPageAndLimit(ProductFilterData $productFilterData, Category $category, int $page, int $limit): PaginationResult
-    {
+    public function getPaginationResultInCategoryWithPageAndLimit(
+        ProductFilterData $productFilterData,
+        Category $category,
+        int $page,
+        int $limit,
+    ): PaginationResult {
         $productOnCurrentDomainFacade = $this->getProductOnCurrentDomainFacade();
 
         return $productOnCurrentDomainFacade->getPaginatedProductsInCategory(

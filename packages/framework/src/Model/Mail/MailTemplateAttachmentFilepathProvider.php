@@ -17,8 +17,11 @@ class MailTemplateAttachmentFilepathProvider
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      */
-    public function __construct(protected readonly FileUpload $fileUpload, protected readonly MountManager $mountManager, protected readonly UploadedFileFacade $uploadedFileFacade)
-    {
+    public function __construct(
+        protected readonly FileUpload $fileUpload,
+        protected readonly MountManager $mountManager,
+        protected readonly UploadedFileFacade $uploadedFileFacade,
+    ) {
     }
 
     /**

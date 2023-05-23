@@ -66,8 +66,10 @@ class ProductFilterOptionsFactory
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterValueFilterOption[] $parameterValueFilterOptions
      * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterFilterOption
      */
-    protected function createParameterFilterOption(Parameter $parameter, array $parameterValueFilterOptions): ParameterFilterOption
-    {
+    protected function createParameterFilterOption(
+        Parameter $parameter,
+        array $parameterValueFilterOptions,
+    ): ParameterFilterOption {
         return new ParameterFilterOption($parameter, $parameterValueFilterOptions);
     }
 
@@ -77,8 +79,11 @@ class ProductFilterOptionsFactory
      * @param bool $isAbsolute
      * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterValueFilterOption
      */
-    protected function createParameterValueFilterOption(ParameterValue $brand, int $count, bool $isAbsolute): ParameterValueFilterOption
-    {
+    protected function createParameterValueFilterOption(
+        ParameterValue $brand,
+        int $count,
+        bool $isAbsolute,
+    ): ParameterValueFilterOption {
         return new ParameterValueFilterOption($brand, $count, $isAbsolute);
     }
 
@@ -312,8 +317,11 @@ class ProductFilterOptionsFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return bool
      */
-    protected function isParameterValueFiltered(Parameter $parameter, ParameterValue $parameterValue, ProductFilterData $productFilterData): bool
-    {
+    protected function isParameterValueFiltered(
+        Parameter $parameter,
+        ParameterValue $parameterValue,
+        ProductFilterData $productFilterData,
+    ): bool {
         foreach ($productFilterData->parameters as $parameterFilterData) {
             if ($parameterFilterData->parameter === $parameter) {
                 foreach ($parameterFilterData->values as $filteredParameterValue) {

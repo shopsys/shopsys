@@ -15,8 +15,10 @@ class AdministratorRolesChangedFacade
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
      */
-    public function __construct(protected readonly TokenStorageInterface $tokenStorage, protected readonly AdministratorFacade $administratorFacade)
-    {
+    public function __construct(
+        protected readonly TokenStorageInterface $tokenStorage,
+        protected readonly AdministratorFacade $administratorFacade,
+    ) {
     }
 
     /**

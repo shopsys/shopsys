@@ -47,8 +47,12 @@ class FlagFilterChoiceRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
-    public function getFlagFilterChoicesForBrand(int $domainId, PricingGroup $pricingGroup, string $locale, Brand $brand): array
-    {
+    public function getFlagFilterChoicesForBrand(
+        int $domainId,
+        PricingGroup $pricingGroup,
+        string $locale,
+        Brand $brand,
+    ): array {
         $productsQueryBuilder = $this->productRepository->getListableForBrandQueryBuilder(
             $domainId,
             $pricingGroup,

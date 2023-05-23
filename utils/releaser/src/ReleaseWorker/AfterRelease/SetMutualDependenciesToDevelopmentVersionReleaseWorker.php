@@ -18,8 +18,11 @@ final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends Abstr
      * @param \Symplify\MonorepoBuilder\DependencyUpdater $dependencyUpdater
      * @param \Symplify\MonorepoBuilder\Package\PackageNamesProvider $packageNamesProvider
      */
-    public function __construct(private readonly ComposerJsonFilesProvider $composerJsonFilesProvider, private readonly DependencyUpdater $dependencyUpdater, private readonly PackageNamesProvider $packageNamesProvider)
-    {
+    public function __construct(
+        private readonly ComposerJsonFilesProvider $composerJsonFilesProvider,
+        private readonly DependencyUpdater $dependencyUpdater,
+        private readonly PackageNamesProvider $packageNamesProvider,
+    ) {
     }
 
     /**
@@ -27,8 +30,10 @@ final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends Abstr
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
-    {
+    public function getDescription(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): string {
         return sprintf(
             'Set mutual package dependencies to "%s" version',
             $this->getDevelopmentVersionString($version),
@@ -39,8 +44,10 @@ final class SetMutualDependenciesToDevelopmentVersionReleaseWorker extends Abstr
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
-    {
+    public function work(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): void {
         $developmentVersion = $this->getDevelopmentVersionString($version);
         $this->dependencyUpdater->updateFileInfosWithPackagesAndVersion(
             $this->composerJsonFilesProvider->provideExcludingMonorepoComposerJson(),

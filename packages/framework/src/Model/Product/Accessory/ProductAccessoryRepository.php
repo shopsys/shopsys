@@ -75,8 +75,11 @@ class ProductAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getAllOfferedAccessoriesByProductQueryBuilder(Product $product, $domainId, PricingGroup $pricingGroup)
-    {
+    protected function getAllOfferedAccessoriesByProductQueryBuilder(
+        Product $product,
+        $domainId,
+        PricingGroup $pricingGroup,
+    ) {
         $queryBuilder = $this->productRepository->getAllOfferedQueryBuilder($domainId, $pricingGroup);
         $this->queryBuilderExtender->addOrExtendJoin(
             $queryBuilder,

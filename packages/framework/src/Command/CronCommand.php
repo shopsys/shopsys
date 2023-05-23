@@ -91,8 +91,11 @@ class CronCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
      */
-    private function listAllCronModulesSortedByServiceId(InputInterface $input, OutputInterface $output, CronFacade $cronFacade)
-    {
+    private function listAllCronModulesSortedByServiceId(
+        InputInterface $input,
+        OutputInterface $output,
+        CronFacade $cronFacade,
+    ) {
         $instanceNames = $cronFacade->getInstanceNames();
         $io = new SymfonyStyle($input, $output);
 
@@ -151,8 +154,12 @@ class CronCommand extends Command
      * @param \Shopsys\FrameworkBundle\Component\Cron\MutexFactory $mutexFactory
      * @param string $instanceName
      */
-    private function runCron(InputInterface $input, CronFacade $cronFacade, MutexFactory $mutexFactory, string $instanceName)
-    {
+    private function runCron(
+        InputInterface $input,
+        CronFacade $cronFacade,
+        MutexFactory $mutexFactory,
+        string $instanceName,
+    ) {
         $requestedModuleServiceId = $input->getOption(self::OPTION_MODULE);
         $runAllModules = $requestedModuleServiceId === null;
         $cronInstances = $this->parameterBag->get('cron_instances');

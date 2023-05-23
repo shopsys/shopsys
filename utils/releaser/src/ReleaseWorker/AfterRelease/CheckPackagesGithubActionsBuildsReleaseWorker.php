@@ -33,8 +33,10 @@ final class CheckPackagesGithubActionsBuildsReleaseWorker extends AbstractCheckP
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
-    {
+    public function work(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): void {
         $this->releasingBranchName = $version->getOriginalString();
 
         parent::work($version);

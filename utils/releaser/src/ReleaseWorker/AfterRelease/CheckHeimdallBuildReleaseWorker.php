@@ -15,8 +15,10 @@ final class CheckHeimdallBuildReleaseWorker extends AbstractShopsysReleaseWorker
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
-    {
+    public function getDescription(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): string {
         return '[Manually] Check builds on Heimdall';
     }
 
@@ -32,8 +34,10 @@ final class CheckHeimdallBuildReleaseWorker extends AbstractShopsysReleaseWorker
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
-    {
+    public function work(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): void {
         $this->symfonyStyle->note(
             sprintf(
                 'You should discard the deletion of the application in Kubernetes for the new tag, ie. in the job configuration (http://heimdall:8080/job/%s/configure), remove "kubectl delete namespace ${JOB_NAME} || true" from post-build tasks) so the e-shop instance is available.',

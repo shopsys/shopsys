@@ -21,8 +21,11 @@ class ProductImageUploadCest
      * @param \Tests\App\Acceptance\acceptance\PageObject\Admin\EntityEditPage $entityEditPage
      * @param \Tests\App\Acceptance\acceptance\PageObject\Admin\LoginPage $loginPage
      */
-    public function testSuccessfulImageUpload(AcceptanceTester $me, EntityEditPage $entityEditPage, LoginPage $loginPage)
-    {
+    public function testSuccessfulImageUpload(
+        AcceptanceTester $me,
+        EntityEditPage $entityEditPage,
+        LoginPage $loginPage,
+    ) {
         $me->wantTo('upload image in admin product edit page');
         $loginPage->loginAsAdmin();
         $me->amOnPage('/admin/product/edit/1');

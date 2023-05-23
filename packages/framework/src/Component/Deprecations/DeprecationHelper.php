@@ -103,8 +103,15 @@ final class DeprecationHelper
      * @param bool $required
      * @return mixed
      */
-    public static function triggerNewArgumentInMethod(string $methodName, string $argumentName, string $argumentType, array $functionArguments, int $positionOfArgument, mixed $defaultValue, bool $required): mixed
-    {
+    public static function triggerNewArgumentInMethod(
+        string $methodName,
+        string $argumentName,
+        string $argumentType,
+        array $functionArguments,
+        int $positionOfArgument,
+        mixed $defaultValue,
+        bool $required,
+    ): mixed {
         if (count($functionArguments) < $positionOfArgument + 1) {
             if ($required) {
                 self::trigger(

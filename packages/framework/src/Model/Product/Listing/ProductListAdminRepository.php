@@ -19,8 +19,10 @@ class ProductListAdminRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
-    public function __construct(protected readonly EntityManagerInterface $em, protected readonly Localization $localization)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly Localization $localization,
+    ) {
     }
 
     /**

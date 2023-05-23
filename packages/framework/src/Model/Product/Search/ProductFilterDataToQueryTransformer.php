@@ -117,8 +117,11 @@ class ProductFilterDataToQueryTransformer
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
-    public function addPricesToQuery(ProductFilterData $productFilterData, FilterQuery $filterQuery, PricingGroup $pricingGroup): FilterQuery
-    {
+    public function addPricesToQuery(
+        ProductFilterData $productFilterData,
+        FilterQuery $filterQuery,
+        PricingGroup $pricingGroup,
+    ): FilterQuery {
         if ($productFilterData->maximalPrice === null && $productFilterData->minimalPrice === null) {
             return $filterQuery;
         }

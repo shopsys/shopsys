@@ -147,8 +147,10 @@ class FilterQueryFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
-    public function createListableProductsByCategoryIdWithPriceAndStockFilter(int $categoryId, ProductFilterData $productFilterData): FilterQuery
-    {
+    public function createListableProductsByCategoryIdWithPriceAndStockFilter(
+        int $categoryId,
+        ProductFilterData $productFilterData,
+    ): FilterQuery {
         $filterQuery = $this->createListable()
             ->filterByCategory([$categoryId]);
         $filterQuery = $this->addPricesAndStockFromFilterDataToQuery($productFilterData, $filterQuery);
@@ -161,8 +163,10 @@ class FilterQueryFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
-    public function createListableProductsByBrandIdWithPriceAndStockFilter(int $brandId, ProductFilterData $productFilterData): FilterQuery
-    {
+    public function createListableProductsByBrandIdWithPriceAndStockFilter(
+        int $brandId,
+        ProductFilterData $productFilterData,
+    ): FilterQuery {
         $filterQuery = $this->createListable()
             ->filterByBrands([$brandId]);
         $filterQuery = $this->addPricesAndStockFromFilterDataToQuery($productFilterData, $filterQuery);
@@ -187,8 +191,10 @@ class FilterQueryFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
-    public function createListableProductsBySearchTextWithPriceAndStockFilter(string $searchText, ProductFilterData $productFilterData): FilterQuery
-    {
+    public function createListableProductsBySearchTextWithPriceAndStockFilter(
+        string $searchText,
+        ProductFilterData $productFilterData,
+    ): FilterQuery {
         $filterQuery = $this->createListable()
             ->search($searchText);
         $filterQuery = $this->addPricesAndStockFromFilterDataToQuery($productFilterData, $filterQuery);
@@ -201,8 +207,10 @@ class FilterQueryFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
-    public function addPricesAndStockFromFilterDataToQuery(ProductFilterData $productFilterData, FilterQuery $filterQuery): FilterQuery
-    {
+    public function addPricesAndStockFromFilterDataToQuery(
+        ProductFilterData $productFilterData,
+        FilterQuery $filterQuery,
+    ): FilterQuery {
         $filterQuery = $this->productFilterDataToQueryTransformer->addPricesToQuery(
             $productFilterData,
             $filterQuery,
