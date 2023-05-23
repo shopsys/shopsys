@@ -16,7 +16,7 @@ class ApiDataSetter
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        protected readonly Domain $domain
+        protected readonly Domain $domain,
     ) {
     }
 
