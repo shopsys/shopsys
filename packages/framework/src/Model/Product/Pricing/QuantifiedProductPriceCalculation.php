@@ -30,8 +30,11 @@ class QuantifiedProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice
      */
-    public function calculatePrice(QuantifiedProduct $quantifiedProduct, int $domainId, ?CustomerUser $customerUser = null): QuantifiedItemPrice
-    {
+    public function calculatePrice(
+        QuantifiedProduct $quantifiedProduct,
+        int $domainId,
+        ?CustomerUser $customerUser = null,
+    ): QuantifiedItemPrice {
         $product = $quantifiedProduct->getProduct();
 
         $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
@@ -85,8 +88,11 @@ class QuantifiedProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[]
      */
-    public function calculatePrices(array $quantifiedProducts, int $domainId, ?CustomerUser $customerUser = null): array
-    {
+    public function calculatePrices(
+        array $quantifiedProducts,
+        int $domainId,
+        ?CustomerUser $customerUser = null,
+    ): array {
         $quantifiedItemsPrices = [];
 
         foreach ($quantifiedProducts as $quantifiedItemIndex => $quantifiedProduct) {

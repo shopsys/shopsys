@@ -16,8 +16,10 @@ class TopProductRepository
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      */
-    public function __construct(EntityManagerInterface $entityManager, protected readonly ProductRepository $productRepository)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        protected readonly ProductRepository $productRepository,
+    ) {
         $this->em = $entityManager;
     }
 

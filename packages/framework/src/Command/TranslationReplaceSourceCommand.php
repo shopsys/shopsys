@@ -468,8 +468,11 @@ class TranslationReplaceSourceCommand extends Command
      * @param string $sourceFilePath
      * @return int|null
      */
-    private function makeReplacements(TranslationSourceReplacement $replacement, array $searchedPathNames, $sourceFilePath)
-    {
+    private function makeReplacements(
+        TranslationSourceReplacement $replacement,
+        array $searchedPathNames,
+        $sourceFilePath,
+    ) {
         $fileFound = false;
         $totalCount = 0;
         $matchingPathNames = array_filter(

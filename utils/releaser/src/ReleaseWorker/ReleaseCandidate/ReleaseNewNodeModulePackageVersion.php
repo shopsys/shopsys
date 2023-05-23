@@ -15,8 +15,10 @@ class ReleaseNewNodeModulePackageVersion extends AbstractShopsysReleaseWorker
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
-    {
+    public function getDescription(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): string {
         return sprintf(
             '[Manually] Release and set new node module package version to "%s"',
             $version->getVersionString(),
@@ -27,8 +29,10 @@ class ReleaseNewNodeModulePackageVersion extends AbstractShopsysReleaseWorker
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
-    {
+    public function work(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): void {
         $this->symfonyStyle->note(sprintf(
             'Instructions for release new node module:
 

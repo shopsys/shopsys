@@ -13,8 +13,11 @@ class UploadedFileEntityConfig
      * @param string $entityClass
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig[] $types
      */
-    public function __construct(protected readonly string $entityName, protected readonly string $entityClass, protected readonly array $types)
-    {
+    public function __construct(
+        protected readonly string $entityName,
+        protected readonly string $entityClass,
+        protected readonly array $types,
+    ) {
     }
 
     /**

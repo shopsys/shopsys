@@ -39,8 +39,12 @@ final class MonorepoUpgradeFileManipulator
      * @param string $nextDevelopmentVersionString
      * @return string
      */
-    public function processFileToString(SplFileInfo $splFileInfo, Version $version, string $initialBranchName, string $nextDevelopmentVersionString): string
-    {
+    public function processFileToString(
+        SplFileInfo $splFileInfo,
+        Version $version,
+        string $initialBranchName,
+        string $nextDevelopmentVersionString,
+    ): string {
         $content = $this->updateHeadlines($version, $splFileInfo->getContents(), $nextDevelopmentVersionString);
 
         return $this->updateFooterLinks($version, $content, $initialBranchName, $nextDevelopmentVersionString);
@@ -92,8 +96,12 @@ final class MonorepoUpgradeFileManipulator
      * @param string $nextDevelopmentVersionString
      * @return string
      */
-    private function updateFooterLinks(Version $version, string $content, string $initialBranchName, string $nextDevelopmentVersionString): string
-    {
+    private function updateFooterLinks(
+        Version $version,
+        string $content,
+        string $initialBranchName,
+        string $nextDevelopmentVersionString,
+    ): string {
         $newFooterLink = $this->createNewFooterLink($version, $initialBranchName, $nextDevelopmentVersionString);
 
         // already done
@@ -130,8 +138,11 @@ final class MonorepoUpgradeFileManipulator
      * @param string $nextDevelopmentVersionString
      * @return string
      */
-    private function createNewFooterLink(Version $version, string $initialBranchName, string $nextDevelopmentVersionString): string
-    {
+    private function createNewFooterLink(
+        Version $version,
+        string $initialBranchName,
+        string $nextDevelopmentVersionString,
+    ): string {
         return sprintf(
             '[From %s to %s]: https://github.com/%s/compare/%s...%s' . PHP_EOL,
             $version->getOriginalString(),

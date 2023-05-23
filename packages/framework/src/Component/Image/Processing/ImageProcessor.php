@@ -137,8 +137,11 @@ class ImageProcessor
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig $sizeConfig
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageAdditionalSizeConfig $additionalSizeConfig
      */
-    public function resizeByAdditionalSizeConfig(Image $image, ImageSizeConfig $sizeConfig, ImageAdditionalSizeConfig $additionalSizeConfig)
-    {
+    public function resizeByAdditionalSizeConfig(
+        Image $image,
+        ImageSizeConfig $sizeConfig,
+        ImageAdditionalSizeConfig $additionalSizeConfig,
+    ) {
         $this->resize(
             $image,
             $additionalSizeConfig->getWidth(),

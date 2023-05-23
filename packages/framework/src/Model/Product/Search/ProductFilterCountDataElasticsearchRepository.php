@@ -28,8 +28,10 @@ class ProductFilterCountDataElasticsearchRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $baseFilterQuery
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
      */
-    public function getProductFilterCountDataInSearch(ProductFilterData $productFilterData, FilterQuery $baseFilterQuery): ProductFilterCountData
-    {
+    public function getProductFilterCountDataInSearch(
+        ProductFilterData $productFilterData,
+        FilterQuery $baseFilterQuery,
+    ): ProductFilterCountData {
         $absoluteNumbersFilterQuery = $this->productFilterDataToQueryTransformer->addFlagsToQuery(
             $productFilterData,
             $baseFilterQuery,
@@ -66,8 +68,10 @@ class ProductFilterCountDataElasticsearchRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $baseFilterQuery
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
      */
-    public function getProductFilterCountDataInCategory(ProductFilterData $productFilterData, FilterQuery $baseFilterQuery): ProductFilterCountData
-    {
+    public function getProductFilterCountDataInCategory(
+        ProductFilterData $productFilterData,
+        FilterQuery $baseFilterQuery,
+    ): ProductFilterCountData {
         $absoluteNumbersFilterQuery = $this->productFilterDataToQueryTransformer->addFlagsToQuery(
             $productFilterData,
             $baseFilterQuery,
@@ -133,8 +137,10 @@ class ProductFilterCountDataElasticsearchRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $plusFlagsQuery
      * @return int[]
      */
-    protected function calculateFlagsPlusNumbers(ProductFilterData $productFilterData, FilterQuery $plusFlagsQuery): array
-    {
+    protected function calculateFlagsPlusNumbers(
+        ProductFilterData $productFilterData,
+        FilterQuery $plusFlagsQuery,
+    ): array {
         $flagIds = [];
 
         foreach ($productFilterData->flags as $flag) {
@@ -151,8 +157,10 @@ class ProductFilterCountDataElasticsearchRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $plusFlagsQuery
      * @return int[]
      */
-    protected function calculateBrandsPlusNumbers(ProductFilterData $productFilterData, FilterQuery $plusFlagsQuery): array
-    {
+    protected function calculateBrandsPlusNumbers(
+        ProductFilterData $productFilterData,
+        FilterQuery $plusFlagsQuery,
+    ): array {
         $brandsIds = [];
 
         foreach ($productFilterData->brands as $brand) {
@@ -170,8 +178,11 @@ class ProductFilterCountDataElasticsearchRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $countData
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $plusParametersQuery
      */
-    protected function replaceParametersPlusNumbers(ProductFilterData $productFilterData, ProductFilterCountData $countData, FilterQuery $plusParametersQuery): void
-    {
+    protected function replaceParametersPlusNumbers(
+        ProductFilterData $productFilterData,
+        ProductFilterCountData $countData,
+        FilterQuery $plusParametersQuery,
+    ): void {
         foreach ($productFilterData->parameters as $key => $currentParameterFilterData) {
             $currentFilterData = clone $productFilterData;
             unset($currentFilterData->parameters[$key]);
@@ -222,8 +233,11 @@ class ProductFilterCountDataElasticsearchRepository
      * @param array $plusParameterNumbers
      * @param int $parameterId
      */
-    protected function mergeParameterCountData(ProductFilterCountData $countData, array $plusParameterNumbers, int $parameterId): void
-    {
+    protected function mergeParameterCountData(
+        ProductFilterCountData $countData,
+        array $plusParameterNumbers,
+        int $parameterId,
+    ): void {
         if (isset($countData->countByParameterIdAndValueId[$parameterId])) {
             $countData->countByParameterIdAndValueId[$parameterId] += $plusParameterNumbers;
         } else {

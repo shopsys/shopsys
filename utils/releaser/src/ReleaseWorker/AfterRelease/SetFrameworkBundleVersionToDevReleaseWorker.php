@@ -16,8 +16,9 @@ final class SetFrameworkBundleVersionToDevReleaseWorker extends AbstractShopsysR
     /**
      * @param \Shopsys\Releaser\FileManipulator\FrameworkBundleVersionFileManipulator $frameworkBundleVersionFileManipulator
      */
-    public function __construct(private readonly FrameworkBundleVersionFileManipulator $frameworkBundleVersionFileManipulator)
-    {
+    public function __construct(
+        private readonly FrameworkBundleVersionFileManipulator $frameworkBundleVersionFileManipulator,
+    ) {
     }
 
     /**
@@ -25,8 +26,10 @@ final class SetFrameworkBundleVersionToDevReleaseWorker extends AbstractShopsysR
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
-    {
+    public function getDescription(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): string {
         return 'Set ShopsysFrameworkBundle version to next dev version and commit it.';
     }
 
@@ -34,8 +37,10 @@ final class SetFrameworkBundleVersionToDevReleaseWorker extends AbstractShopsysR
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
-    {
+    public function work(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): void {
         $developmentVersion = $this->askForNextDevelopmentVersion($version, true);
         $this->updateFrameworkBundleVersion($developmentVersion);
 

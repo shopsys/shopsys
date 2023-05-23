@@ -136,8 +136,11 @@ class IndexFacade
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    public function exportChanged(AbstractIndex $index, IndexDefinition $indexDefinition, OutputInterface $output): void
-    {
+    public function exportChanged(
+        AbstractIndex $index,
+        IndexDefinition $indexDefinition,
+        OutputInterface $output,
+    ): void {
         if (!$index instanceof IndexSupportChangesOnlyInterface) {
             $output->writeln(
                 sprintf(

@@ -28,8 +28,10 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
-    {
+    public function getDescription(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): string {
         return sprintf(
             'Check the release date of "%s" version is "%s" in CHANGELOG.md. If necessary, the date is updated and the change is committed to "%s" branch',
             $version->getVersionString(),
@@ -42,8 +44,10 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
-    {
+    public function work(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): void {
         $changelogFilePath = getcwd() . '/CHANGELOG.md';
         $smartFileInfo = new SmartFileInfo($changelogFilePath);
         $fileContent = $smartFileInfo->getContents();

@@ -507,8 +507,10 @@ class CategoryRepository extends NestedTreeRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string[]
      */
-    public function getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(Product $product, DomainConfig $domainConfig)
-    {
+    public function getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(
+        Product $product,
+        DomainConfig $domainConfig,
+    ) {
         $queryBuilder = $this->getAllQueryBuilder();
         $domainId = $domainConfig->getId();
         $locale = $domainConfig->getLocale();

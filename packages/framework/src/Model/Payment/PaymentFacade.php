@@ -129,8 +129,11 @@ class PaymentFacade
      * @param \Shopsys\FrameworkBundle\Component\Money\Money[] $pricesIndexedByDomainId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[] $vatsIndexedByDomainId
      */
-    protected function updatePaymentPrices(Payment $payment, array $pricesIndexedByDomainId, array $vatsIndexedByDomainId): void
-    {
+    protected function updatePaymentPrices(
+        Payment $payment,
+        array $pricesIndexedByDomainId,
+        array $vatsIndexedByDomainId,
+    ): void {
         foreach ($this->domain->getAllIds() as $domainId) {
             $existPriceForDomain = $payment->hasPriceForDomain($domainId);
             $payment->setPrice($pricesIndexedByDomainId[$domainId], $domainId);
@@ -158,8 +161,10 @@ class PaymentFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Money\Money[]
      */
-    public function getPaymentPricesWithVatByCurrencyAndDomainIdIndexedByPaymentId(Currency $currency, int $domainId): array
-    {
+    public function getPaymentPricesWithVatByCurrencyAndDomainIdIndexedByPaymentId(
+        Currency $currency,
+        int $domainId,
+    ): array {
         $paymentPricesWithVatByPaymentId = [];
         $payments = $this->getAllIncludingDeleted();
 

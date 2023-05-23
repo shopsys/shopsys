@@ -15,8 +15,10 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
-    {
+    public function getDescription(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): string {
         return 'Dump new features to CHANGELOG.md, save new release as draft and [Manually] check everything is ok';
     }
 
@@ -24,8 +26,10 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
-    {
+    public function work(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): void {
         $this->symfonyStyle->note(
             sprintf(
                 'In order to generate new changelog entries you need to go to https://github.com/shopsys/shopsys/releases/new?tag=%s&target=%s&title=%s',

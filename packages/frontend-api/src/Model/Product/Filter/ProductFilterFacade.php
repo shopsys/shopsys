@@ -93,8 +93,10 @@ class ProductFilterFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData
      */
-    protected function getValidatedProductFilterData(Argument $argument, ProductFilterConfig $productFilterConfig): ProductFilterData
-    {
+    protected function getValidatedProductFilterData(
+        Argument $argument,
+        ProductFilterConfig $productFilterConfig,
+    ): ProductFilterData {
         $productFilterData = $this->productFilterDataMapper->mapFrontendApiFilterToProductFilterData(
             $argument['filter'],
         );

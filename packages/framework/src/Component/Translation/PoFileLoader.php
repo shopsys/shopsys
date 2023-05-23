@@ -17,8 +17,11 @@ class PoFileLoader extends BasePoFileLoader
      * @param string $domain
      * @return \Symfony\Component\Translation\MessageCatalogue
      */
-    public function load(mixed $resource, string $locale, string $domain = Translator::DEFAULT_TRANSLATION_DOMAIN): MessageCatalogue
-    {
+    public function load(
+        mixed $resource,
+        string $locale,
+        string $domain = Translator::DEFAULT_TRANSLATION_DOMAIN,
+    ): MessageCatalogue {
         if ($resource instanceof SplFileInfo) {
             $resource = $resource->getPathname();
         }
@@ -48,8 +51,11 @@ class PoFileLoader extends BasePoFileLoader
      * @param string $domain
      * @return \Symfony\Component\Translation\MessageCatalogue
      */
-    public function loadIncludingEmpty(string $resource, string $locale, string $domain = Translator::DEFAULT_TRANSLATION_DOMAIN): MessageCatalogue
-    {
+    public function loadIncludingEmpty(
+        string $resource,
+        string $locale,
+        string $domain = Translator::DEFAULT_TRANSLATION_DOMAIN,
+    ): MessageCatalogue {
         return parent::load($resource, $locale, $domain);
     }
 }

@@ -20,8 +20,11 @@ class RegistrationPage extends AbstractPage
      * @param \Tests\App\Test\Codeception\AcceptanceTester $tester
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\LoginPage $loginPage
      */
-    public function __construct(StrictWebDriver $strictWebDriver, AcceptanceTester $tester, private readonly LoginPage $loginPage)
-    {
+    public function __construct(
+        StrictWebDriver $strictWebDriver,
+        AcceptanceTester $tester,
+        private readonly LoginPage $loginPage,
+    ) {
         parent::__construct($strictWebDriver, $tester);
     }
 

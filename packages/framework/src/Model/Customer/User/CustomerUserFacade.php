@@ -231,8 +231,11 @@ class CustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      */
-    public function amendCustomerUserDataFromOrder(CustomerUser $customerUser, Order $order, ?DeliveryAddress $deliveryAddress)
-    {
+    public function amendCustomerUserDataFromOrder(
+        CustomerUser $customerUser,
+        Order $order,
+        ?DeliveryAddress $deliveryAddress,
+    ) {
         $this->edit(
             $customerUser->getId(),
             $this->customerUserUpdateDataFactory->createAmendedByOrder($customerUser, $order, $deliveryAddress),
@@ -268,8 +271,10 @@ class CustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
      * @return \Shopsys\FrameworkBundle\Model\Customer\Customer
      */
-    protected function createCustomerWithBillingAddress(int $domainId, BillingAddressData $billingAddressData): Customer
-    {
+    protected function createCustomerWithBillingAddress(
+        int $domainId,
+        BillingAddressData $billingAddressData,
+    ): Customer {
         $customerData = $this->customerDataFactory->createForDomain($domainId);
         $customer = $this->customerFacade->create($customerData);
 
@@ -288,8 +293,12 @@ class CustomerUserFacade
      * @param string $deviceId
      * @param \DateTime $tokenExpiration
      */
-    public function addRefreshTokenChain(CustomerUser $customerUser, string $refreshTokenChain, string $deviceId, DateTime $tokenExpiration): void
-    {
+    public function addRefreshTokenChain(
+        CustomerUser $customerUser,
+        string $refreshTokenChain,
+        string $deviceId,
+        DateTime $tokenExpiration,
+    ): void {
         $refreshTokenChain = $this->customerUserRefreshTokenChainFacade->createCustomerUserRefreshTokenChain(
             $customerUser,
             $refreshTokenChain,

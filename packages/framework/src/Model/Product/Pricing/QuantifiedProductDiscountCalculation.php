@@ -56,8 +56,11 @@ class QuantifiedProductDiscountCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
      */
-    public function calculateDiscountsRoundedByCurrency(array $quantifiedItemsPrices, ?string $discountPercent, Currency $currency): array
-    {
+    public function calculateDiscountsRoundedByCurrency(
+        array $quantifiedItemsPrices,
+        ?string $discountPercent,
+        Currency $currency,
+    ): array {
         $quantifiedItemsDiscounts = [];
 
         foreach ($quantifiedItemsPrices as $quantifiedItemIndex => $quantifiedItemPrice) {

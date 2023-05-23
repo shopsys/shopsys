@@ -14,8 +14,10 @@ class AnnotationsReplacer
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap $annotationsReplacementsMap
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\DocBlockParser $docBlockParser
      */
-    public function __construct(protected readonly AnnotationsReplacementsMap $annotationsReplacementsMap, protected readonly DocBlockParser $docBlockParser)
-    {
+    public function __construct(
+        protected readonly AnnotationsReplacementsMap $annotationsReplacementsMap,
+        protected readonly DocBlockParser $docBlockParser,
+    ) {
     }
 
     /**

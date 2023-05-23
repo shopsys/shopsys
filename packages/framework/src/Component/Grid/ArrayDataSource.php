@@ -53,8 +53,12 @@ class ArrayDataSource implements DataSourceInterface
      * @param string $orderDirection
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
-    public function getPaginatedRows($limit = null, $page = 1, $orderSourceColumnName = null, $orderDirection = self::ORDER_ASC)
-    {
+    public function getPaginatedRows(
+        $limit = null,
+        $page = 1,
+        $orderSourceColumnName = null,
+        $orderDirection = self::ORDER_ASC,
+    ) {
         if ($limit !== null) {
             $message = 'Pagination not supported in ArrayDataSource';
 

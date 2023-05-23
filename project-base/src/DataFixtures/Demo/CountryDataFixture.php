@@ -22,8 +22,11 @@ class CountryDataFixture extends AbstractReferenceFixture
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryDataFactory $countryDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(private readonly CountryFacade $countryFacade, private readonly CountryDataFactoryInterface $countryDataFactory, private readonly Domain $domain)
-    {
+    public function __construct(
+        private readonly CountryFacade $countryFacade,
+        private readonly CountryDataFactoryInterface $countryDataFactory,
+        private readonly Domain $domain,
+    ) {
     }
 
     /**

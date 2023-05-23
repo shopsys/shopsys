@@ -115,8 +115,10 @@ class ProductCollectionFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string[][]
      */
-    public function getProductParameterValuesIndexedByProductIdAndParameterName(array $products, DomainConfig $domainConfig)
-    {
+    public function getProductParameterValuesIndexedByProductIdAndParameterName(
+        array $products,
+        DomainConfig $domainConfig,
+    ) {
         $locale = $domainConfig->getLocale();
 
         return $this->parameterRepository->getParameterValuesIndexedByProductIdAndParameterNameForProducts(

@@ -15,8 +15,10 @@ class FrontLogoutHandler
      * @param \Symfony\Component\Routing\RouterInterface $router
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFlowFacade $orderFlowFacade
      */
-    public function __construct(protected readonly RouterInterface $router, protected readonly OrderFlowFacade $orderFlowFacade)
-    {
+    public function __construct(
+        protected readonly RouterInterface $router,
+        protected readonly OrderFlowFacade $orderFlowFacade,
+    ) {
     }
 
     /**

@@ -218,8 +218,11 @@ class FilterQuery
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $maximalPrice
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
-    public function filterByPrices(PricingGroup $pricingGroup, ?Money $minimalPrice = null, ?Money $maximalPrice = null): self
-    {
+    public function filterByPrices(
+        PricingGroup $pricingGroup,
+        ?Money $minimalPrice = null,
+        ?Money $maximalPrice = null,
+    ): self {
         $clone = clone $this;
 
         $prices = [];

@@ -62,8 +62,11 @@ final class OrderProductFacadeTest extends TestCase
      * @param int $orderedQuantity
      * @param int $expectedStockQuantity
      */
-    public function testSubtractOrderProductsFromStockUsingStock(int $stockQuantity, int $orderedQuantity, int $expectedStockQuantity): void
-    {
+    public function testSubtractOrderProductsFromStockUsingStock(
+        int $stockQuantity,
+        int $orderedQuantity,
+        int $expectedStockQuantity,
+    ): void {
         $product = $this->createProductWithStockQuantity($stockQuantity);
         $orderProduct = $this->createOrderItem($product, $orderedQuantity);
 
@@ -92,8 +95,11 @@ final class OrderProductFacadeTest extends TestCase
      * @param int $orderedQuantity
      * @param int $expectedStockQuantity
      */
-    public function testAddOrderProductsToStockUsingStock(int $stockQuantity, int $orderedQuantity, int $expectedStockQuantity): void
-    {
+    public function testAddOrderProductsToStockUsingStock(
+        int $stockQuantity,
+        int $orderedQuantity,
+        int $expectedStockQuantity,
+    ): void {
         $product = $this->createProductWithStockQuantity($stockQuantity);
         $orderProduct = $this->createOrderItem($product, $orderedQuantity);
 

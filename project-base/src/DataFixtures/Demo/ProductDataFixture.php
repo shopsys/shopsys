@@ -9269,8 +9269,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param string $locale
      * @param int $i
      */
-    private function addParameterTranslations(array &$parameterTranslations, string $parameterName, string $parameterValue, string $locale, int &$i): void
-    {
+    private function addParameterTranslations(
+        array &$parameterTranslations,
+        string $parameterName,
+        string $parameterValue,
+        string $locale,
+        int &$i,
+    ): void {
         $parameterTranslations[$i]['names'][$locale] = $parameterName;
         $parameterTranslations[$i]['values'][$locale] = $parameterValue;
 

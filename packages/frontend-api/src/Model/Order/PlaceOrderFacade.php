@@ -78,8 +78,12 @@ class PlaceOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview
      */
-    protected function createOrderPreview(array $quantifiedProducts, ?Transport $transport, ?Payment $payment, ?CustomerUser $customerUser): OrderPreview
-    {
+    protected function createOrderPreview(
+        array $quantifiedProducts,
+        ?Transport $transport,
+        ?Payment $payment,
+        ?CustomerUser $customerUser,
+    ): OrderPreview {
         return $this->orderPreviewFactory->create(
             $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId()),
             $this->domain->getId(),

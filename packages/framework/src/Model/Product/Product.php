@@ -646,8 +646,10 @@ class Product extends AbstractTranslatableEntity
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
      * @return bool
      */
-    protected function isProductCategoryDomainInArray(ProductCategoryDomain $searchProductCategoryDomain, array $productCategoryDomains): bool
-    {
+    protected function isProductCategoryDomainInArray(
+        ProductCategoryDomain $searchProductCategoryDomain,
+        array $productCategoryDomains,
+    ): bool {
         foreach ($productCategoryDomains as $productCategoryDomain) {
             if ($productCategoryDomain->getCategory() === $searchProductCategoryDomain->getCategory()
                 && $productCategoryDomain->getDomainId() === $searchProductCategoryDomain->getDomainId()

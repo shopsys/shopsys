@@ -45,8 +45,12 @@ class QueryBuilderWithRowManipulatorDataSource extends QueryBuilderDataSource
      * @param string $orderDirection
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
-    public function getPaginatedRows($limit = null, $page = 1, $orderSourceColumnName = null, $orderDirection = self::ORDER_ASC)
-    {
+    public function getPaginatedRows(
+        $limit = null,
+        $page = 1,
+        $orderSourceColumnName = null,
+        $orderDirection = self::ORDER_ASC,
+    ) {
         $originalPaginationResult = parent::getPaginatedRows($limit, $page, $orderSourceColumnName, $orderDirection);
         $results = array_map($this->manipulateRowCallback, $originalPaginationResult->getResults());
 

@@ -128,8 +128,11 @@ class DomainInfoCommand extends Command
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param string $propertyName
      */
-    protected function outputPropertyNotAccessible(SymfonyStyle $io, DomainConfig $domainConfig, string $propertyName): void
-    {
+    protected function outputPropertyNotAccessible(
+        SymfonyStyle $io,
+        DomainConfig $domainConfig,
+        string $propertyName,
+    ): void {
         $io->error(sprintf('Property "%s" of DomainConfig is not accessible.', $propertyName));
 
         $propertyExtractor = new ReflectionExtractor();

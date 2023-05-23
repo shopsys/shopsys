@@ -82,8 +82,11 @@ class ListedProductViewFactory
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionView $productActionView
      * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView
      */
-    public function createFromProduct(Product $product, ?ImageView $imageView, ProductActionView $productActionView): ListedProductView
-    {
+    public function createFromProduct(
+        Product $product,
+        ?ImageView $imageView,
+        ProductActionView $productActionView,
+    ): ListedProductView {
         return $this->create(
             $product->getId(),
             $product->isVariant() && $product->getVariantAlias() ? $product->getVariantAlias() : $product->getName(),
@@ -103,8 +106,12 @@ class ListedProductViewFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView
      */
-    public function createFromArray(array $productArray, ?ImageView $imageView, ProductActionView $productActionView, PricingGroup $pricingGroup): ListedProductView
-    {
+    public function createFromArray(
+        array $productArray,
+        ?ImageView $imageView,
+        ProductActionView $productActionView,
+        PricingGroup $pricingGroup,
+    ): ListedProductView {
         $productPrice = $this->priceFactory->createProductPriceFromArrayByPricingGroup(
             $productArray['prices'],
             $pricingGroup,

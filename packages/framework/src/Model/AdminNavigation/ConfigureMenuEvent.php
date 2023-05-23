@@ -24,8 +24,10 @@ class ConfigureMenuEvent extends Event
      * @param \Knp\Menu\FactoryInterface $menuFactory
      * @param \Knp\Menu\ItemInterface $menu
      */
-    public function __construct(protected readonly FactoryInterface $menuFactory, protected readonly ItemInterface $menu)
-    {
+    public function __construct(
+        protected readonly FactoryInterface $menuFactory,
+        protected readonly ItemInterface $menu,
+    ) {
     }
 
     /**

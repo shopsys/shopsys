@@ -14,8 +14,11 @@ final class ChangelogFileManipulator
      * @param string $todayInString
      * @return string
      */
-    public function updateReleaseDateOfCurrentReleaseToToday(string $fileContent, string $currentReleaseHeadlinePattern, string $todayInString): string
-    {
+    public function updateReleaseDateOfCurrentReleaseToToday(
+        string $fileContent,
+        string $currentReleaseHeadlinePattern,
+        string $todayInString,
+    ): string {
         return Strings::replace(
             $fileContent,
             $currentReleaseHeadlinePattern,

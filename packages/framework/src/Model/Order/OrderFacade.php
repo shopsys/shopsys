@@ -477,8 +477,12 @@ class OrderFacade
      * @param string $locale
      * @param float $discountPercent
      */
-    protected function addOrderItemDiscount(OrderItem $orderItem, Price $quantifiedItemDiscount, string $locale, float $discountPercent): void
-    {
+    protected function addOrderItemDiscount(
+        OrderItem $orderItem,
+        Price $quantifiedItemDiscount,
+        string $locale,
+        float $discountPercent,
+    ): void {
         $name = sprintf(
             '%s %s - %s',
             t('Promo code', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale),

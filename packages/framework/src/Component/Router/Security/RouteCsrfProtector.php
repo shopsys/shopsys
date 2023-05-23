@@ -23,8 +23,10 @@ class RouteCsrfProtector implements EventSubscriberInterface
      * @param \Doctrine\Common\Annotations\Reader $annotationReader
      * @param \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface $tokenManager
      */
-    public function __construct(protected readonly Reader $annotationReader, protected readonly CsrfTokenManagerInterface $tokenManager)
-    {
+    public function __construct(
+        protected readonly Reader $annotationReader,
+        protected readonly CsrfTokenManagerInterface $tokenManager,
+    ) {
     }
 
     /**

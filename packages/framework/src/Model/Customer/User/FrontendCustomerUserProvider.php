@@ -19,8 +19,10 @@ class FrontendCustomerUserProvider implements UserProviderInterface
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(protected readonly CustomerUserRepository $customerUserRepository, protected readonly Domain $domain)
-    {
+    public function __construct(
+        protected readonly CustomerUserRepository $customerUserRepository,
+        protected readonly Domain $domain,
+    ) {
     }
 
     /**

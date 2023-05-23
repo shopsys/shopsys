@@ -14,8 +14,10 @@ class AdminLogoutHandler
      * @param \Symfony\Component\Routing\RouterInterface $router
      * @param \Shopsys\FrameworkBundle\Model\Security\AdministratorLoginFacade $administratorLoginFacade
      */
-    public function __construct(protected readonly RouterInterface $router, protected readonly AdministratorLoginFacade $administratorLoginFacade)
-    {
+    public function __construct(
+        protected readonly RouterInterface $router,
+        protected readonly AdministratorLoginFacade $administratorLoginFacade,
+    ) {
     }
 
     /**

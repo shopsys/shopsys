@@ -153,8 +153,10 @@ class TransportFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Money\Money[]
      */
-    public function getTransportPricesWithVatByCurrencyAndDomainIdIndexedByTransportId(Currency $currency, int $domainId): array
-    {
+    public function getTransportPricesWithVatByCurrencyAndDomainIdIndexedByTransportId(
+        Currency $currency,
+        int $domainId,
+    ): array {
         $transportPricesWithVatByTransportId = [];
         $transports = $this->getAllIncludingDeleted();
 

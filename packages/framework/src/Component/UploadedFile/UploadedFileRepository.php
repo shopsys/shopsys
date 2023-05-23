@@ -84,8 +84,11 @@ class UploadedFileRepository
      * @param string $uploadedFileExtension
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
      */
-    public function getByIdSlugAndExtension(int $uploadedFileId, string $uploadedFileSlug, string $uploadedFileExtension): UploadedFile
-    {
+    public function getByIdSlugAndExtension(
+        int $uploadedFileId,
+        string $uploadedFileSlug,
+        string $uploadedFileExtension,
+    ): UploadedFile {
         $uploadedFile = $this->getUploadedFileRepository()->findOneBy(
             [
                 'id' => $uploadedFileId,

@@ -88,8 +88,13 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
      * @param int $referenceType
      * @return string
      */
-    public function getGeneratedUrl($routeName, Route $route, FriendlyUrl $friendlyUrl, array $parameters, $referenceType)
-    {
+    public function getGeneratedUrl(
+        $routeName,
+        Route $route,
+        FriendlyUrl $friendlyUrl,
+        array $parameters,
+        $referenceType,
+    ) {
         $compiledRoute = RouteCompiler::compile($route);
 
         $tokens = [

@@ -35,8 +35,10 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
-    {
+    public function getDescription(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): string {
         return 'Validate "require" and "require-dev" version format for all packages';
     }
 
@@ -44,8 +46,10 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
-    {
+    public function work(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): void {
         foreach ($this->composerJsonFilesProvider->provideAll() as $smartFileInfo) {
             $jsonContent = $this->jsonFileManager->loadFromFileInfo($smartFileInfo);
 

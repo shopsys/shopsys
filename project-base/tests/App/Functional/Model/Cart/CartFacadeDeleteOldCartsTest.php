@@ -206,8 +206,11 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
      * @param string $message
      */
-    private function assertCartIsDeleted(CartFacade $cartFacade, CustomerUserIdentifier $customerUserIdentifier, $message)
-    {
+    private function assertCartIsDeleted(
+        CartFacade $cartFacade,
+        CustomerUserIdentifier $customerUserIdentifier,
+        $message,
+    ) {
         $cart = $cartFacade->findCartByCustomerUserIdentifier($customerUserIdentifier);
         $this->assertNull($cart, $message);
     }
@@ -217,8 +220,11 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
      * @param string $message
      */
-    private function assertCartIsNotDeleted(CartFacade $cartFacade, CustomerUserIdentifier $customerUserIdentifier, $message)
-    {
+    private function assertCartIsNotDeleted(
+        CartFacade $cartFacade,
+        CustomerUserIdentifier $customerUserIdentifier,
+        $message,
+    ) {
         $cart = $cartFacade->findCartByCustomerUserIdentifier($customerUserIdentifier);
         $this->assertNotNull($cart, $message);
     }

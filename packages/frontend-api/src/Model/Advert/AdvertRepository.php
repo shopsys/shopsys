@@ -24,8 +24,11 @@ class AdvertRepository
      * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $category
      * @return \Shopsys\FrameworkBundle\Model\Advert\Advert[]
      */
-    public function getVisibleAdvertsByPositionNameAndDomainId(int $domainId, string $positionName, ?Category $category = null): array
-    {
+    public function getVisibleAdvertsByPositionNameAndDomainId(
+        int $domainId,
+        string $positionName,
+        ?Category $category = null,
+    ): array {
         return $this->getVisibleAdvertsByPositionNameQueryBuilder($domainId, $positionName, $category)->getQuery()->execute();
     }
 
@@ -52,8 +55,11 @@ class AdvertRepository
      * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $category
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getVisibleAdvertsByPositionNameQueryBuilder(int $domainId, string $positionName, ?Category $category = null)
-    {
+    protected function getVisibleAdvertsByPositionNameQueryBuilder(
+        int $domainId,
+        string $positionName,
+        ?Category $category = null,
+    ) {
         $queryBuilder = $this->getVisibleAdvertsQueryBuilder($domainId)
             ->andWhere('a.positionName = :positionName')
             ->setParameter('positionName', $positionName);

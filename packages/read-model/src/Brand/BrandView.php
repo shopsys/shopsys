@@ -11,8 +11,11 @@ class BrandView
      * @param string $name
      * @param string $mainUrl
      */
-    public function __construct(protected readonly int $id, protected readonly string $name, protected readonly string $mainUrl)
-    {
+    public function __construct(
+        protected readonly int $id,
+        protected readonly string $name,
+        protected readonly string $mainUrl,
+    ) {
     }
 
     /**

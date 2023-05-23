@@ -22,8 +22,11 @@ class DailyFeedCronModule implements IteratedCronModuleInterface
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
-    public function __construct(protected readonly FeedFacade $feedFacade, protected readonly Domain $domain, protected readonly Setting $setting)
-    {
+    public function __construct(
+        protected readonly FeedFacade $feedFacade,
+        protected readonly Domain $domain,
+        protected readonly Setting $setting,
+    ) {
     }
 
     /**

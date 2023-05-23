@@ -15,8 +15,10 @@ final class CheckCorrectReleaseVersionReleaseWorker extends AbstractShopsysRelea
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
-    {
+    public function getDescription(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): string {
         return 'Check that correct version string has been entered.';
     }
 
@@ -32,8 +34,10 @@ final class CheckCorrectReleaseVersionReleaseWorker extends AbstractShopsysRelea
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
-    {
+    public function work(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): void {
         if (!str_starts_with($version->getOriginalString(), 'v')) {
             throw new RuntimeException(
                 'Name of released version must start with \'v\'',

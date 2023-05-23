@@ -18,8 +18,11 @@ class ImageLocator
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \League\Flysystem\FilesystemOperator $filesystem
      */
-    public function __construct($imageDir, protected readonly ImageConfig $imageConfig, protected readonly FilesystemOperator $filesystem)
-    {
+    public function __construct(
+        $imageDir,
+        protected readonly ImageConfig $imageConfig,
+        protected readonly FilesystemOperator $filesystem,
+    ) {
         $this->imageDir = $imageDir;
     }
 

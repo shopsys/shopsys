@@ -23,8 +23,14 @@ class ElfinderController extends BaseElFinderController
      * @param string $homeFolder
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function load(SessionInterface $session, HttpKernelInterface $httpKernel, EventDispatcherInterface $eventDispatcher, Request $request, string $instance, string $homeFolder): JsonResponse
-    {
+    public function load(
+        SessionInterface $session,
+        HttpKernelInterface $httpKernel,
+        EventDispatcherInterface $eventDispatcher,
+        Request $request,
+        string $instance,
+        string $homeFolder,
+    ): JsonResponse {
         try {
             return parent::load($session, $httpKernel, $eventDispatcher, $request, $instance, $homeFolder);
         } catch (elFinderAbortException $ex) {

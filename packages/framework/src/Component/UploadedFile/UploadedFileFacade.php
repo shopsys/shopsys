@@ -36,8 +36,11 @@ class UploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $uploadedFileData
      * @param string $type
      */
-    public function manageFiles(object $entity, UploadedFileData $uploadedFileData, string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME): void
-    {
+    public function manageFiles(
+        object $entity,
+        UploadedFileData $uploadedFileData,
+        string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
+    ): void {
         $uploadedFileEntityConfig = $this->uploadedFileConfig->getUploadedFileEntityConfig($entity);
         $uploadedFileTypeConfig = $uploadedFileEntityConfig->getTypeByName($type);
 
@@ -84,8 +87,13 @@ class UploadedFileFacade
      * @param string $temporaryFilename
      * @param string $uploadedFilename
      */
-    protected function uploadFile(object $entity, string $entityName, string $type, string $temporaryFilename, string $uploadedFilename): void
-    {
+    protected function uploadFile(
+        object $entity,
+        string $entityName,
+        string $type,
+        string $temporaryFilename,
+        string $uploadedFilename,
+    ): void {
         $entityId = $this->getEntityId($entity);
 
         $newUploadedFile = $this->uploadedFileFactory->create(
@@ -108,8 +116,14 @@ class UploadedFileFacade
      * @param array $uploadedFilenames
      * @param int $existingFilesCount
      */
-    protected function uploadFiles(object $entity, string $entityName, string $type, array $temporaryFilenames, array $uploadedFilenames, int $existingFilesCount): void
-    {
+    protected function uploadFiles(
+        object $entity,
+        string $entityName,
+        string $type,
+        array $temporaryFilenames,
+        array $uploadedFilenames,
+        int $existingFilesCount,
+    ): void {
         if (count($temporaryFilenames) > 0) {
             $entityId = $this->getEntityId($entity);
             $files = $this->uploadedFileFactory->createMultiple(
@@ -179,8 +193,10 @@ class UploadedFileFacade
      * @param string $type
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
-    public function getUploadedFilesByEntity(object $entity, string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME): array
-    {
+    public function getUploadedFilesByEntity(
+        object $entity,
+        string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
+    ): array {
         return $this->uploadedFileRepository->getUploadedFilesByEntity(
             $this->uploadedFileConfig->getEntityName($entity),
             $this->getEntityId($entity),
@@ -268,8 +284,11 @@ class UploadedFileFacade
      * @param string $uploadedFileExtension
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
      */
-    public function getByIdSlugAndExtension(int $uploadedFileId, string $uploadedFileSlug, string $uploadedFileExtension): UploadedFile
-    {
+    public function getByIdSlugAndExtension(
+        int $uploadedFileId,
+        string $uploadedFileSlug,
+        string $uploadedFileExtension,
+    ): UploadedFile {
         return $this->uploadedFileRepository->getByIdSlugAndExtension(
             $uploadedFileId,
             $uploadedFileSlug,

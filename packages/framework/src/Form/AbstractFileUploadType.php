@@ -124,8 +124,11 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      * @param \Symfony\Component\Validator\Constraint[] $fileConstraints
      */
-    public function validateUploadedFiles(?array $uploadedFiles, ExecutionContextInterface $context, array $fileConstraints): void
-    {
+    public function validateUploadedFiles(
+        ?array $uploadedFiles,
+        ExecutionContextInterface $context,
+        array $fileConstraints,
+    ): void {
         foreach ($uploadedFiles as $uploadedFile) {
             $filepath = $this->fileUpload->getTemporaryFilepath($uploadedFile);
             $file = new File($filepath, false);

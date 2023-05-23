@@ -175,8 +175,11 @@ class ProductFormType extends AbstractType
      * @param array $disabledItemInMainVariantAttr
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createBasicInformationGroup(FormBuilderInterface $builder, ?Product $product, $disabledItemInMainVariantAttr = [])
-    {
+    private function createBasicInformationGroup(
+        FormBuilderInterface $builder,
+        ?Product $product,
+        $disabledItemInMainVariantAttr = [],
+    ) {
         $builderBasicInformationGroup = $builder->create('basicInformationGroup', GroupType::class, [
             'label' => t('Basic information'),
         ]);
@@ -321,8 +324,11 @@ class ProductFormType extends AbstractType
      * @param array $disabledItemInMainVariantAttr
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createDisplayAvailabilityGroup(FormBuilderInterface $builder, ?Product $product, $disabledItemInMainVariantAttr = [])
-    {
+    private function createDisplayAvailabilityGroup(
+        FormBuilderInterface $builder,
+        ?Product $product,
+        $disabledItemInMainVariantAttr = [],
+    ) {
         $productMainCategoriesIndexedByDomainId = [];
 
         if ($product !== null) {

@@ -21,8 +21,13 @@ class CategoryFacade
      * @param int $limit
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
-    public function getVisibleCategoriesBySearchText(string $search, string $locale, int $domainId, int $offset, int $limit): array
-    {
+    public function getVisibleCategoriesBySearchText(
+        string $search,
+        string $locale,
+        int $domainId,
+        int $offset,
+        int $limit,
+    ): array {
         return $this->categoryRepository->getVisibleCategoriesBySearchText(
             $search,
             $locale,

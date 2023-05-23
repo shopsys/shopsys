@@ -17,8 +17,10 @@ class CategoryRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
      */
-    public function __construct(protected readonly EntityManagerInterface $em, protected readonly FrameworkCategoryRepository $categoryRepository)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly FrameworkCategoryRepository $categoryRepository,
+    ) {
     }
 
     /**
@@ -29,8 +31,13 @@ class CategoryRepository
      * @param int $limit
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
-    public function getVisibleCategoriesBySearchText(string $searchText, string $locale, int $domainId, int $offset, int $limit): array
-    {
+    public function getVisibleCategoriesBySearchText(
+        string $searchText,
+        string $locale,
+        int $domainId,
+        int $offset,
+        int $limit,
+    ): array {
         $queryBuilder = $this->getVisibleCategoriesBySearchTextQueryBuilder($searchText, $locale, $domainId);
 
         $queryBuilder
@@ -47,8 +54,11 @@ class CategoryRepository
      * @param int $domainId
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getVisibleCategoriesBySearchTextQueryBuilder(string $searchText, string $locale, int $domainId): QueryBuilder
-    {
+    protected function getVisibleCategoriesBySearchTextQueryBuilder(
+        string $searchText,
+        string $locale,
+        int $domainId,
+    ): QueryBuilder {
         $queryBuilder = $this->getAllVisibleByDomainIdQueryBuilder($domainId);
 
         $this->categoryRepository->addTranslation($queryBuilder, $locale);

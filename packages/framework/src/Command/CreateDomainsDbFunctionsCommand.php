@@ -23,8 +23,10 @@ class CreateDomainsDbFunctionsCommand extends Command
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\DomainDbFunctionsFacade $domainDbFunctionsFacade
      */
-    public function __construct(private readonly EntityManagerInterface $em, private readonly DomainDbFunctionsFacade $domainDbFunctionsFacade)
-    {
+    public function __construct(
+        private readonly EntityManagerInterface $em,
+        private readonly DomainDbFunctionsFacade $domainDbFunctionsFacade,
+    ) {
         parent::__construct();
     }
 

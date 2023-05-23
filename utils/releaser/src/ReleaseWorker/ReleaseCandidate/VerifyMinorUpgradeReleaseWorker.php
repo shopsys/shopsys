@@ -15,8 +15,10 @@ final class VerifyMinorUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
-    {
+    public function getDescription(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): string {
         return '[Manually] Verify there are no BC-breaks when releasing a minor version';
     }
 
@@ -24,8 +26,10 @@ final class VerifyMinorUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
-    {
+    public function work(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): void {
         $this->symfonyStyle->note(sprintf(
             'When releasing a minor version, you need to verify there are no BC-breaks. Suggested steps:
             - install demoshop project,

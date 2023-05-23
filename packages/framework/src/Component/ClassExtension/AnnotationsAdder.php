@@ -19,8 +19,10 @@ class AnnotationsAdder
      * @param \Roave\BetterReflection\Reflection\ReflectionClass $betterReflectionClass
      * @param string $propertyAndMethodAnnotationsLines
      */
-    public function addAnnotationToClass(ReflectionClass $betterReflectionClass, string $propertyAndMethodAnnotationsLines): void
-    {
+    public function addAnnotationToClass(
+        ReflectionClass $betterReflectionClass,
+        string $propertyAndMethodAnnotationsLines,
+    ): void {
         $projectClassDocComment = $betterReflectionClass->getDocComment();
         $projectClassFileName = $betterReflectionClass->getFileName();
 

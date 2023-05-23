@@ -34,8 +34,10 @@ class ImageConfigLoader
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
-    public function __construct(protected readonly Filesystem $filesystem, protected readonly EntityNameResolver $entityNameResolver)
-    {
+    public function __construct(
+        protected readonly Filesystem $filesystem,
+        protected readonly EntityNameResolver $entityNameResolver,
+    ) {
     }
 
     /**

@@ -16,8 +16,11 @@ class HeurekaController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting $heurekaSetting
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(private readonly HeurekaFacade $heurekaFacade, private readonly HeurekaSetting $heurekaSetting, private readonly Domain $domain)
-    {
+    public function __construct(
+        private readonly HeurekaFacade $heurekaFacade,
+        private readonly HeurekaSetting $heurekaSetting,
+        private readonly Domain $domain,
+    ) {
     }
 
     public function embedWidgetAction()

@@ -134,8 +134,10 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
      * @param array $billingAddressInputData
      */
-    private function setBillingAddressData(CustomerUserUpdateData $customerUserUpdateData, array $billingAddressInputData): void
-    {
+    private function setBillingAddressData(
+        CustomerUserUpdateData $customerUserUpdateData,
+        array $billingAddressInputData,
+    ): void {
         $billingAddressData = $customerUserUpdateData->billingAddressData;
         $billingAddressData->companyCustomer = $billingAddressInputData[self::KEY_ADDRESS_COMPANY_CUSTOMER];
         $billingAddressData->companyName = $billingAddressInputData[self::KEY_ADDRESS_COMPANY_NAME] ?? null;
@@ -150,8 +152,10 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
      * @param array $deliveryAddressInputData
      */
-    private function setDeliveryAddressData(CustomerUserUpdateData $customerUserUpdateData, array $deliveryAddressInputData): void
-    {
+    private function setDeliveryAddressData(
+        CustomerUserUpdateData $customerUserUpdateData,
+        array $deliveryAddressInputData,
+    ): void {
         $deliveryAddressData = $customerUserUpdateData->deliveryAddressData;
         $deliveryAddressData->addressFilled = $deliveryAddressInputData[self::KEY_ADDRESS_ADDRESS_FILLED] ?? false;
         $deliveryAddressData->companyName = $deliveryAddressInputData[self::KEY_ADDRESS_COMPANY_NAME] ?? null;

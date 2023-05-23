@@ -25,8 +25,10 @@ class RegistrationMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      */
-    public function __construct(protected readonly Setting $setting, protected readonly DomainRouterFactory $domainRouterFactory)
-    {
+    public function __construct(
+        protected readonly Setting $setting,
+        protected readonly DomainRouterFactory $domainRouterFactory,
+    ) {
     }
 
     /**

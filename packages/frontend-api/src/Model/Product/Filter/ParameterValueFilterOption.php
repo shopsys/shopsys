@@ -15,8 +15,11 @@ class ParameterValueFilterOption
      * @param int $count
      * @param bool $isAbsolute
      */
-    public function __construct(ParameterValue $parameterValue, public readonly int $count, public readonly bool $isAbsolute)
-    {
+    public function __construct(
+        ParameterValue $parameterValue,
+        public readonly int $count,
+        public readonly bool $isAbsolute,
+    ) {
         $this->value = $parameterValue;
     }
 

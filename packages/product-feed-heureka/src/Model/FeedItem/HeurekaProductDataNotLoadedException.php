@@ -16,8 +16,12 @@ class HeurekaProductDataNotLoadedException extends Exception
      * @param string $attribute
      * @param \Exception|null $previous
      */
-    public function __construct(Product $product, DomainConfig $domainConfig, string $attribute, ?Exception $previous = null)
-    {
+    public function __construct(
+        Product $product,
+        DomainConfig $domainConfig,
+        string $attribute,
+        ?Exception $previous = null,
+    ) {
         $message = sprintf(
             '%s of product with ID %d on %s have not been loaded via HeurekaProductDataBatchLoader::loadForProducts().',
             ucfirst($attribute),

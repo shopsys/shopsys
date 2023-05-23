@@ -15,8 +15,10 @@ class BasePriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
      */
-    public function __construct(protected readonly PriceCalculation $priceCalculation, protected readonly Rounding $rounding)
-    {
+    public function __construct(
+        protected readonly PriceCalculation $priceCalculation,
+        protected readonly Rounding $rounding,
+    ) {
     }
 
     /**

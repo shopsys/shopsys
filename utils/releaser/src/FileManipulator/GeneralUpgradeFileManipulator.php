@@ -18,8 +18,11 @@ class GeneralUpgradeFileManipulator
      * @param string $nextDevelopmentVersionString
      * @return string
      */
-    public function updateLinks(SplFileInfo $splFileInfo, Version $version, string $nextDevelopmentVersionString): string
-    {
+    public function updateLinks(
+        SplFileInfo $splFileInfo,
+        Version $version,
+        string $nextDevelopmentVersionString,
+    ): string {
         $newLink = sprintf(
             '* ### [From %s to %2$s](/upgrade/UPGRADE-%2$s.md)' . PHP_EOL,
             $version->getOriginalString(),

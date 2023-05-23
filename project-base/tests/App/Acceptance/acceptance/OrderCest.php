@@ -94,8 +94,11 @@ class OrderCest
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\OrderPage $orderPage
      * @param \Tests\App\Test\Codeception\AcceptanceTester $me
      */
-    public function testFormRemembersFirstName(ProductListPage $productListPage, OrderPage $orderPage, AcceptanceTester $me)
-    {
+    public function testFormRemembersFirstName(
+        ProductListPage $productListPage,
+        OrderPage $orderPage,
+        AcceptanceTester $me,
+    ) {
         $me->wantTo('have my first name remembered by order');
 
         // tv-audio

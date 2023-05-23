@@ -135,8 +135,11 @@ class PriceExtension extends AbstractExtension
      * @param string $locale
      * @return string
      */
-    public function priceTextWithCurrencyByCurrencyIdAndLocaleFilter(Money $price, int $currencyId, string $locale): string
-    {
+    public function priceTextWithCurrencyByCurrencyIdAndLocaleFilter(
+        Money $price,
+        int $currencyId,
+        string $locale,
+    ): string {
         if ($price->isZero()) {
             return t('Free', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale);
         }

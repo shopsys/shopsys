@@ -26,8 +26,9 @@ class DatabaseDumpCommand extends Command
     /**
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\DatabaseConnectionCredentialsProvider $databaseConnectionCredentialsProvider
      */
-    public function __construct(protected readonly DatabaseConnectionCredentialsProvider $databaseConnectionCredentialsProvider)
-    {
+    public function __construct(
+        protected readonly DatabaseConnectionCredentialsProvider $databaseConnectionCredentialsProvider,
+    ) {
         parent::__construct();
     }
 

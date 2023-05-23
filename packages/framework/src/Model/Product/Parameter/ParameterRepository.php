@@ -289,8 +289,9 @@ class ParameterRepository
      * @param array $productIdsAndParameterNamesAndValues
      * @return string[][]
      */
-    protected function getParameterValuesIndexedByProductIdAndParameterName(array $productIdsAndParameterNamesAndValues)
-    {
+    protected function getParameterValuesIndexedByProductIdAndParameterName(
+        array $productIdsAndParameterNamesAndValues,
+    ) {
         $productParameterValuesIndexedByProductIdAndParameterName = [];
 
         foreach ($productIdsAndParameterNamesAndValues as $productIdAndParameterNameAndValue) {

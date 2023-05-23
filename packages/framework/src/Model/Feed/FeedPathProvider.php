@@ -15,8 +15,12 @@ class FeedPathProvider
      * @param string $projectDir
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
-    public function __construct(protected readonly string $feedUrlPrefix, protected readonly string $feedDir, protected readonly string $projectDir, protected readonly Setting $setting)
-    {
+    public function __construct(
+        protected readonly string $feedUrlPrefix,
+        protected readonly string $feedDir,
+        protected readonly string $projectDir,
+        protected readonly Setting $setting,
+    ) {
     }
 
     /**

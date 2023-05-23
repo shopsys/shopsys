@@ -13,8 +13,13 @@ class ImageView
      * @param string|null $type
      * @param string|null $name
      */
-    public function __construct(protected readonly int $id, protected readonly string $extension, protected readonly string $entityName, protected readonly ?string $type = null, protected readonly ?string $name = null)
-    {
+    public function __construct(
+        protected readonly int $id,
+        protected readonly string $extension,
+        protected readonly string $entityName,
+        protected readonly ?string $type = null,
+        protected readonly ?string $name = null,
+    ) {
     }
 
     /**

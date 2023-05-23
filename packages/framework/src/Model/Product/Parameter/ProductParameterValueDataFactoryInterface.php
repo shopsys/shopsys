@@ -15,5 +15,7 @@ interface ProductParameterValueDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue $productParameterValue
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData
      */
-    public function createFromProductParameterValue(ProductParameterValue $productParameterValue): ProductParameterValueData;
+    public function createFromProductParameterValue(
+        ProductParameterValue $productParameterValue,
+    ): ProductParameterValueData;
 }

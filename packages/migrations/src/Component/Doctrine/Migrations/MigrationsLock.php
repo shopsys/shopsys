@@ -20,8 +20,10 @@ class MigrationsLock
      * @param string $migrationsLockFilePath
      * @param \Psr\Log\LoggerInterface $logger
      */
-    public function __construct(protected readonly string $migrationsLockFilePath, protected readonly LoggerInterface $logger)
-    {
+    public function __construct(
+        protected readonly string $migrationsLockFilePath,
+        protected readonly LoggerInterface $logger,
+    ) {
     }
 
     /**

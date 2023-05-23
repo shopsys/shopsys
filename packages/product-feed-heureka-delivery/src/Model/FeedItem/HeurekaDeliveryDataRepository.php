@@ -24,8 +24,12 @@ class HeurekaDeliveryDataRepository
      * @param int $maxResults
      * @return array[]
      */
-    public function getDataRows(DomainConfig $domainConfig, PricingGroup $pricingGroup, ?int $lastSeekId, int $maxResults): array
-    {
+    public function getDataRows(
+        DomainConfig $domainConfig,
+        PricingGroup $pricingGroup,
+        ?int $lastSeekId,
+        int $maxResults,
+    ): array {
         $queryBuilder = $this->productRepository->getAllSellableUsingStockInStockQueryBuilder(
             $domainConfig->getId(),
             $pricingGroup,

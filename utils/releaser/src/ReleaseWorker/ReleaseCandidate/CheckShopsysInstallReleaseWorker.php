@@ -16,8 +16,10 @@ final class CheckShopsysInstallReleaseWorker extends AbstractCheckShopsysInstall
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
-    {
+    public function getDescription(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): string {
         return '[Manually] Install Shopsys Framework (project-base) using installation guides on all supported operating systems.';
     }
 
@@ -33,8 +35,10 @@ final class CheckShopsysInstallReleaseWorker extends AbstractCheckShopsysInstall
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
-    {
+    public function work(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): void {
         $branchName = $this->createBranchName($version);
 
         $this->symfonyStyle->note(sprintf(

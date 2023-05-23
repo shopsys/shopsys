@@ -23,8 +23,10 @@ final class ResolveDocsTodoReleaseWorker extends AbstractShopsysReleaseWorker
      * @param string $initialBranchName
      * @return string
      */
-    public function getDescription(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): string
-    {
+    public function getDescription(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): string {
         return '[Manually] Resolve TODO comments in *.md files';
     }
 
@@ -32,8 +34,10 @@ final class ResolveDocsTodoReleaseWorker extends AbstractShopsysReleaseWorker
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
-    public function work(Version $version, string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME): void
-    {
+    public function work(
+        Version $version,
+        string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
+    ): void {
         $fileInfos = $this->findMdFileInfos();
 
         $this->symfonyStyle->section(sprintf('Checking %d files for "%s"', count($fileInfos), self::TODO_PLACEHOLDER));

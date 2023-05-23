@@ -325,8 +325,12 @@ class ImageFacade
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\AdditionalImageData[]
      */
-    public function getAdditionalImagesData(DomainConfig $domainConfig, object $imageOrEntity, ?string $sizeName, ?string $type): array
-    {
+    public function getAdditionalImagesData(
+        DomainConfig $domainConfig,
+        object $imageOrEntity,
+        ?string $sizeName,
+        ?string $type,
+    ) {
         $image = $this->getImageByObject($imageOrEntity, $type);
 
         $entityConfig = $this->imageConfig->getEntityConfigByEntityName($image->getEntityName());

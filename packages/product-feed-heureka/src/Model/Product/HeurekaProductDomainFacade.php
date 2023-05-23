@@ -36,8 +36,10 @@ class HeurekaProductDomainFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domain
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomain[]
      */
-    public function getHeurekaProductDomainsByProductsAndDomainIndexedByProductId(array $products, DomainConfig $domain)
-    {
+    public function getHeurekaProductDomainsByProductsAndDomainIndexedByProductId(
+        array $products,
+        DomainConfig $domain,
+    ) {
         $productIds = [];
 
         foreach ($products as $product) {

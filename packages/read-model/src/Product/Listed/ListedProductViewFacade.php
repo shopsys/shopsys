@@ -109,8 +109,13 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
      * @param int $limit
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
-    public function getFilteredPaginatedInCategory(int $categoryId, ProductFilterData $filterData, string $orderingModeId, int $page, int $limit): PaginationResult
-    {
+    public function getFilteredPaginatedInCategory(
+        int $categoryId,
+        ProductFilterData $filterData,
+        string $orderingModeId,
+        int $page,
+        int $limit,
+    ): PaginationResult {
         $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsInCategory(
             $filterData,
             $orderingModeId,
@@ -130,8 +135,13 @@ class ListedProductViewFacade implements ListedProductViewFacadeInterface
      * @param int $limit
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
-    public function getFilteredPaginatedForSearch(string $searchText, ProductFilterData $filterData, string $orderingModeId, int $page, int $limit): PaginationResult
-    {
+    public function getFilteredPaginatedForSearch(
+        string $searchText,
+        ProductFilterData $filterData,
+        string $orderingModeId,
+        int $page,
+        int $limit,
+    ): PaginationResult {
         $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsForSearch(
             $searchText,
             $filterData,

@@ -72,8 +72,9 @@ class ParameterFilterChoiceRepositoryTest extends ParameterTransactionFunctional
      * @param string $categoryReferenceName
      * @return array
      */
-    protected function getParameterValueIdsForCategoryReferenceIndexedByParameterId(string $categoryReferenceName): array
-    {
+    protected function getParameterValueIdsForCategoryReferenceIndexedByParameterId(
+        string $categoryReferenceName,
+    ): array {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,

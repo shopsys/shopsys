@@ -26,8 +26,12 @@ class GoogleProductRepository
      * @param int $maxResults
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getProducts(DomainConfig $domainConfig, PricingGroup $pricingGroup, ?int $lastSeekId, int $maxResults): iterable
-    {
+    public function getProducts(
+        DomainConfig $domainConfig,
+        PricingGroup $pricingGroup,
+        ?int $lastSeekId,
+        int $maxResults,
+    ): iterable {
         $queryBuilder = $this->productRepository->getAllVisibleQueryBuilder($domainConfig->getId(), $pricingGroup)
             ->addSelect('b')->leftJoin('p.brand', 'b')
             ->leftJoin(GoogleProductDomain::class, 'gpd', Join::WITH, 'gpd.product = p AND gpd.domainId = :domainId')

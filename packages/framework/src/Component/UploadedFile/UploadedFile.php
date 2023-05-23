@@ -90,8 +90,14 @@ class UploadedFile implements EntityFileUploadInterface
      * @param string $uploadedFilename
      * @param int $position
      */
-    public function __construct(string $entityName, int $entityId, string $type, string $temporaryFilename, string $uploadedFilename, int $position)
-    {
+    public function __construct(
+        string $entityName,
+        int $entityId,
+        string $type,
+        string $temporaryFilename,
+        string $uploadedFilename,
+        int $position,
+    ) {
         $this->entityName = $entityName;
         $this->entityId = $entityId;
         $this->type = $type;

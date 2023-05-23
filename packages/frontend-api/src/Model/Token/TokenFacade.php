@@ -72,8 +72,10 @@ class TokenFacade
      * @param string $secretChain
      * @return \Lcobucci\JWT\UnencryptedToken
      */
-    public function generateRefreshTokenByCustomerUserAndSecretChain(CustomerUser $customerUser, string $secretChain): UnencryptedToken
-    {
+    public function generateRefreshTokenByCustomerUserAndSecretChain(
+        CustomerUser $customerUser,
+        string $secretChain,
+    ): UnencryptedToken {
         $tokenBuilder = $this->getTokenBuilderWithExpiration(static::REFRESH_TOKEN_EXPIRATION);
         $tokenBuilder->withClaim(FrontendApiUser::CLAIM_UUID, $customerUser->getUuid());
         $tokenBuilder->withClaim(FrontendApiUser::CLAIM_SECRET_CHAIN, $secretChain);

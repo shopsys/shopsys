@@ -18,8 +18,10 @@ class ProductApiDataValidator implements ProductApiDataValidatorInterface
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\BackendApiBundle\Component\Validation\ValidationRunner $validationRunner
      */
-    public function __construct(protected readonly Domain $domain, protected readonly ValidationRunner $validationRunner)
-    {
+    public function __construct(
+        protected readonly Domain $domain,
+        protected readonly ValidationRunner $validationRunner,
+    ) {
     }
 
     /**

@@ -25,8 +25,12 @@ class HeurekaProductRepository
      * @param int $maxResults
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    public function getProducts(DomainConfig $domainConfig, PricingGroup $pricingGroup, ?int $lastSeekId, int $maxResults): iterable
-    {
+    public function getProducts(
+        DomainConfig $domainConfig,
+        PricingGroup $pricingGroup,
+        ?int $lastSeekId,
+        int $maxResults,
+    ): iterable {
         $queryBuilder = $this->productRepository->getAllVisibleQueryBuilder($domainConfig->getId(), $pricingGroup)
             ->addSelect('b')->leftJoin('p.brand', 'b')
             ->andWhere('p.variantType != :variantTypeMain')->setParameter(
