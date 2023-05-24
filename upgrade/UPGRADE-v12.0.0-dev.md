@@ -333,3 +333,37 @@ There you can find links to upgrade notes for other versions too.
                 ) {
             ```
     - see #project-base-diff to update your project
+- added typehints and return types to `Shopsys\FrameworkBundle\Component\Image\ImageFacade` ([#1935](https://github.com/shopsys/shopsys/pull/1935))
+    - parameter `$orderedImages` of `saveImageOrdering()` changed from no type to `array`
+    - parameter `$entity` of `deleteImages()` changed from no type to `object`
+    - return type of `getImageByEntity()` changed from no type to `Shopsys\FrameworkBundle\Component\Image\Image`
+    - parameter `$entity` of `getImageByEntity()` changed from no type to `object`
+    - parameter `$type` of `getImageByEntity()` changed from no type to `string|null`
+    - return type of `getImagesByEntityIndexedById()` changed from no type to `array`
+    - parameter `$entity` of `getImagesByEntityIndexedById()` changed from no type to `object`
+    - parameter `$type` of `getImagesByEntityIndexedById()` changed from no type to `string|null`
+    - return type of `getImagesByEntityIdAndNameIndexedById()` changed from no type to `array`
+    - parameter `$type` of `getImagesByEntityIdAndNameIndexedById()` changed from no type to `string|null`
+    - return type of `getAllImagesByEntity()` changed from no type to `array`
+    - parameter `$entity` of `getAllImagesByEntity()` changed from no type to `object`
+    - return type of `deleteImageFiles()` changed from no type to `void`
+    - return type of `getEntityId()` changed from no type to `int`
+    - parameter `$entity` of `getEntityId()` changed from no type to `object`
+    - return type of `getAllImageEntityConfigsByClass()` changed from no type to `array`
+    - return type of `getImageUrl()` changed from no type to `string`
+    - parameter `$imageOrEntity` of `getImageUrl()` changed from no type to `object`
+    - parameter `$sizeName` of `getImageUrl()` changed from no type to `string|null`
+    - parameter `$type` of `getImageUrl()` changed from no type to `string|null`
+    - return type of `getAdditionalImagesData()` changed from no type to `array`
+    - parameter `$imageOrEntity` of `getAdditionalImagesData()` changed from no type to `object`
+    - return type of `getAdditionalImageUrl()` changed from no type to `string`
+    - return type of `getImageByObject()` changed from no type to `Shopsys\FrameworkBundle\Component\Image\Image`
+    - parameter `$imageOrEntity` of `getImageByObject()` changed from no type to `object`
+    - parameter `$type` of `getImageByObject()` changed from no type to `string|null`
+    - return type of `getById()` changed from no type to `Shopsys\FrameworkBundle\Component\Image\Image`
+    - parameter `$imageId` of `getById()` changed from no type to `int`
+    - return type of `copyImages()` changed from no type to `void`
+    - parameter `$sourceEntity` of `copyImages()` changed from no type to `object`
+    - parameter `$targetEntity` of `copyImages()` changed from no type to `object`
+    - return type of `setImagePositionsByOrder()` changed from no type to `void`
+    - parameter `$orderedImages` of `setImagePositionsByOrder()` changed from no type to `array`
