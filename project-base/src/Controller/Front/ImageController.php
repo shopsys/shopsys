@@ -115,6 +115,7 @@ class ImageController extends FrontBaseController
             $headers = [
                 'content-type' => $this->filesystem->mimeType($imageFilepath),
                 'content-size' => $this->filesystem->fileSize($imageFilepath),
+                'Access-Control-Allow-Origin' => '*',
             ];
 
             $callback = function () use ($fileStream) {

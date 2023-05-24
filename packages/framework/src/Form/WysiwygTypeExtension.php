@@ -4,8 +4,10 @@ namespace Shopsys\FrameworkBundle\Form;
 
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Form\Transformers\WysiwygCdnDataTransformer;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class WysiwygTypeExtension extends AbstractTypeExtension
@@ -17,36 +19,23 @@ class WysiwygTypeExtension extends AbstractTypeExtension
     protected const FRONTEND_WYSIWYG_ENTRY_PREFIX = 'frontend-wysiwyg-';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
-    private $localization;
-
-    /**
-     * @var string
-     */
-    private $entrypointsPath;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param string $entrypointsPath
+     * @param \Shopsys\FrameworkBundle\Form\Transformers\WysiwygCdnDataTransformer $wysiwygCdnDataTransformer
      */
-    public function __construct(Domain $domain, Localization $localization, string $entrypointsPath)
-    {
-        $this->domain = $domain;
-        $this->localization = $localization;
-        $this->entrypointsPath = $entrypointsPath;
+    public function __construct(
+        private readonly Domain $domain,
+        private readonly Localization $localization,
+        private readonly string $entrypointsPath,
+        private readonly WysiwygCdnDataTransformer $wysiwygCdnDataTransformer,
+    ) {
     }
 
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'config' => [
@@ -55,6 +44,14 @@ class WysiwygTypeExtension extends AbstractTypeExtension
                 'format_tags' => static::ALLOWED_FORMAT_TAGS,
             ],
         ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder->addModelTransformer($this->wysiwygCdnDataTransformer);
     }
 
     /**

@@ -281,3 +281,55 @@ There you can find links to upgrade notes for other versions too.
                 CurrencyFormatterFactory $currencyFormatterFactory
             ) {
         ```
+
+- add support for CDN ([#2602](https://github.com/shopsys/shopsys/pull/2602))
+    - constructor `Shopsys\FrameworkBundle\Form\WysiwygTypeExtension::__construct()` changed its interface
+        ```diff
+            public function __construct(
+        -       Domain $domain,
+        +       private readonly Domain $domain,
+        -       Localization $localization,
+        +       private readonly Localization $localization,
+        -       string $entrypointsPath
+        +       private readonly string $entrypointsPath,
+        +       private readonly WysiwygCdnDataTransformer $wysiwygCdnDataTransformer,
+            ) {
+        ```
+    - return type of `Shopsys\FrameworkBundle\Form\WysiwygTypeExtension::configureOptions()` changed from no type to `void`
+    - `Shopsys\FrameworkBundle\Component\Image\ImageFacade`
+        - type of property `$em` changed from having no type to `Doctrine\ORM\EntityManagerInterface`
+        - type of property `$imageConfig` changed from having no type to `Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig`
+        - type of property `$imageRepository` changed from having no type to `Shopsys\FrameworkBundle\Component\Image\ImageRepository`
+        - type of property `$filesystem` changed from having no type to `League\Flysystem\FilesystemOperator`
+        - type of property `$mountManager` changed from having no type to `League\Flysystem\MountManager`
+        - type of property `$fileUpload` changed from having no type to `Shopsys\FrameworkBundle\Component\FileUpload\FileUpload`
+        - type of property `$imageLocator` changed from having no type to `Shopsys\FrameworkBundle\Component\Image\ImageLocator`
+        - type of property `$imageUrlPrefix` changed from having no type to `string`
+        - type of property `$imageFactory` changed from having no type to `Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface`
+        - method `__construct()` changed its interface
+            ```diff
+                public function __construct(
+            -       $imageUrlPrefix,
+            +       protected readonly string $imageUrlPrefix,
+            -       EntityManagerInterface $em,
+            +       protected readonly EntityManagerInterface $em,
+            -       ImageConfig $imageConfig,
+            +       protected readonly ImageConfig $imageConfig,
+            -       ImageRepository $imageRepository,
+            +       protected readonly ImageRepository $imageRepository,
+            -       FilesystemOperator $filesystem,
+            +       protected readonly FilesystemOperator $filesystem,
+            -       FileUpload $fileUpload,
+            +       protected readonly FileUpload $fileUpload,
+            -       ImageLocator $imageLocator,
+            +       protected readonly ImageLocator $imageLocator,
+            -       ImageFactoryInterface $imageFactory,
+            +       protected readonly ImageFactoryInterface $imageFactory,
+            -       MountManager $mountManager,
+            +       protected readonly MountManager $mountManager,
+            -       LoggerInterface $logger
+            +       protected readonly LoggerInterface $logger,
+            +       protected readonly CdnFacade $cdnFacade,
+                ) {
+            ```
+    - see #project-base-diff to update your project
