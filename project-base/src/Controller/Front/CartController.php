@@ -59,7 +59,7 @@ class CartController extends FrontBaseController
     private $errorExtractor;
 
     /**
-     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface
+     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade
      */
     private $listedProductViewFacade;
 
@@ -79,7 +79,7 @@ class CartController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor $errorExtractor
-     * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
+     * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade $listedProductViewFacade
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      */

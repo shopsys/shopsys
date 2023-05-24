@@ -30,14 +30,14 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
     private $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactory
      */
     private $orderStatusDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactoryInterface $orderStatusDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactory $orderStatusDataFactory
      */
     public function __construct(
         OrderStatusFacade $orderStatusFacade,

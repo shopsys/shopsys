@@ -48,7 +48,9 @@ class ClassExtensionRegistry
      */
     public function addExtendedService(string $parentClassName, string $childClassName): void
     {
-        $this->serviceExtensionMap[$parentClassName] = $childClassName;
+        if (!array_key_exists($parentClassName, $this->serviceExtensionMap)) {
+            $this->serviceExtensionMap[$parentClassName] = $childClassName;
+        }
     }
 
     /**

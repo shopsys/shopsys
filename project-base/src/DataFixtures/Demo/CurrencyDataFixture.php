@@ -22,13 +22,13 @@ class CurrencyDataFixture extends AbstractReferenceFixture
     private $currencyFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactory
      */
     private $currencyDataFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface $currencyDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactory $currencyDataFactory
      */
     public function __construct(
         CurrencyFacade $currencyFacade,

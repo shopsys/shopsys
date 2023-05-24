@@ -27,7 +27,7 @@ class HomepageController extends FrontBaseController
     private $domain;
 
     /**
-     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface
+     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade
      */
     private $listedProductViewFacade;
 
@@ -35,7 +35,7 @@ class HomepageController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade $sliderItemFacade
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
+     * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade $listedProductViewFacade
      */
     public function __construct(
         SliderItemFacade $sliderItemFacade,

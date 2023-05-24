@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory as BaseArticleDataF
 /**
  * @method \App\Model\Article\ArticleData create()
  * @method \App\Model\Article\ArticleData createFromArticle(\App\Model\Article\Article $article)
+ * @method fillNew(\App\Model\Article\ArticleData $articleData)
  */
 class ArticleDataFactory extends BaseArticleDataFactory
 {
