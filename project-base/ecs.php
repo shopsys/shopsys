@@ -9,6 +9,7 @@ use PhpCsFixer\Fixer\FunctionNotation\PhpdocToPropertyTypeFixer;
 use PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDoctrineInheritanceSniff;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff;
+use Shopsys\CodingStandards\Sniffs\ForbiddenSuperGlobalSniff;
 use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
 use Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
@@ -79,6 +80,7 @@ return static function (ECSConfig $ecsConfig): void {
         ValidVariableNameSniff::class => [
             __DIR__ . '/tests/App/Functional/EntityExtension/EntityExtensionTest.php',
             __DIR__ . '/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php',
+            __DIR__ . '/tests/App/Functional/Controller/CdnTest.php',
         ],
         ObjectIsCreatedByFactorySniff::class => [
             __DIR__ . '/tests/*',
@@ -98,6 +100,9 @@ return static function (ECSConfig $ecsConfig): void {
             __DIR__ . '/tests/App/Test/Codeception/Helper/NumberFormatHelper.php',
             __DIR__ . '/tests/App/Test/Codeception/Helper/SymfonyHelper.php',
             __DIR__ . '/tests/App/Test/Codeception/Module/Db.php',
+        ],
+        ForbiddenSuperGlobalSniff::class => [
+            __DIR__ . '/tests/App/Functional/Controller/CdnTest.php',
         ],
     ]);
 

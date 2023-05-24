@@ -9,6 +9,7 @@ use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use League\Flysystem\UnableToDeleteFile;
 use Psr\Log\LoggerInterface;
+use Shopsys\FrameworkBundle\Component\Cdn\CdnFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
@@ -20,57 +21,7 @@ use Shopsys\FrameworkBundle\Component\String\TransformString;
 class ImageFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
-     */
-    protected $imageConfig;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageRepository
-     */
-    protected $imageRepository;
-
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    protected $filesystem;
-
-    /**
-     * @var \League\Flysystem\MountManager
-     */
-    protected $mountManager;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload
-     */
-    protected $fileUpload;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageLocator
-     */
-    protected $imageLocator;
-
-    /**
-     * @var string
-     */
-    protected $imageUrlPrefix;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface
-     */
-    protected $imageFactory;
-
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    protected LoggerInterface $logger;
-
-    /**
-     * @param mixed $imageUrlPrefix
+     * @param string $imageUrlPrefix
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageRepository $imageRepository
@@ -80,29 +31,21 @@ class ImageFacade
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface $imageFactory
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Shopsys\FrameworkBundle\Component\Cdn\CdnFacade $cdnFacade
      */
     public function __construct(
-        $imageUrlPrefix,
-        EntityManagerInterface $em,
-        ImageConfig $imageConfig,
-        ImageRepository $imageRepository,
-        FilesystemOperator $filesystem,
-        FileUpload $fileUpload,
-        ImageLocator $imageLocator,
-        ImageFactoryInterface $imageFactory,
-        MountManager $mountManager,
-        LoggerInterface $logger
+        protected readonly string $imageUrlPrefix,
+        protected readonly EntityManagerInterface $em,
+        protected readonly ImageConfig $imageConfig,
+        protected readonly ImageRepository $imageRepository,
+        protected readonly FilesystemOperator $filesystem,
+        protected readonly FileUpload $fileUpload,
+        protected readonly ImageLocator $imageLocator,
+        protected readonly ImageFactoryInterface $imageFactory,
+        protected readonly MountManager $mountManager,
+        protected readonly LoggerInterface $logger,
+        protected readonly CdnFacade $cdnFacade,
     ) {
-        $this->imageUrlPrefix = $imageUrlPrefix;
-        $this->em = $em;
-        $this->imageConfig = $imageConfig;
-        $this->imageRepository = $imageRepository;
-        $this->filesystem = $filesystem;
-        $this->fileUpload = $fileUpload;
-        $this->imageLocator = $imageLocator;
-        $this->imageFactory = $imageFactory;
-        $this->mountManager = $mountManager;
-        $this->logger = $logger;
     }
 
     /**
@@ -144,7 +87,7 @@ class ImageFacade
         object $entity,
         array $namesIndexedByImageIdAndLocale,
         array $temporaryFilenamesIndexedByImageId,
-        ?string $type
+        ?string $type,
     ): void {
         if (count($temporaryFilenamesIndexedByImageId) > 0) {
             $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
@@ -152,7 +95,7 @@ class ImageFacade
             $oldImage = $this->imageRepository->findImageByEntity(
                 $imageEntityConfig->getEntityName(),
                 $entityId,
-                $type
+                $type,
             );
 
             if ($oldImage !== null) {
@@ -191,7 +134,7 @@ class ImageFacade
         object $entity,
         array $namesIndexedByImageIdAndLocale,
         ?array $temporaryFilenamesIndexedByImageId,
-        ?string $type
+        ?string $type,
     ): void {
         if ($temporaryFilenamesIndexedByImageId !== null && count($temporaryFilenamesIndexedByImageId) > 0) {
             $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
@@ -234,7 +177,7 @@ class ImageFacade
         return $this->imageRepository->getImageByEntity(
             $this->imageConfig->getEntityName($entity),
             $this->getEntityId($entity),
-            $type
+            $type,
         );
     }
 
@@ -248,7 +191,7 @@ class ImageFacade
         return $this->imageRepository->getImagesByEntityIndexedById(
             $this->imageConfig->getEntityName($entity),
             $this->getEntityId($entity),
-            $type
+            $type,
         );
     }
 
@@ -263,7 +206,7 @@ class ImageFacade
         return $this->imageRepository->getImagesByEntityIndexedById(
             $entityName,
             $entityId,
-            $type
+            $type,
         );
     }
 
@@ -275,7 +218,7 @@ class ImageFacade
     {
         return $this->imageRepository->getAllImagesByEntity(
             $this->imageConfig->getEntityName($entity),
-            $this->getEntityId($entity)
+            $this->getEntityId($entity),
         );
     }
 
@@ -287,7 +230,7 @@ class ImageFacade
         $entityName = $image->getEntityName();
         $imageConfig = $this->imageConfig->getEntityConfigByEntityName($entityName);
         $sizeConfigs = $image->getType() === null ? $imageConfig->getSizeConfigs() : $imageConfig->getSizeConfigsByType(
-            $image->getType()
+            $image->getType(),
         );
         foreach ($sizeConfigs as $sizeConfig) {
             $filepath = $this->imageLocator->getAbsoluteImageFilepath($image, $sizeConfig->getName());
@@ -332,13 +275,14 @@ class ImageFacade
     public function getImageUrl(DomainConfig $domainConfig, $imageOrEntity, $sizeName = null, $type = null)
     {
         $image = $this->getImageByObject($imageOrEntity, $type);
-        if ($this->imageLocator->imageExists($image)) {
-            return $domainConfig->getUrl()
-                . $this->imageUrlPrefix
-                . $this->imageLocator->getRelativeImageFilepath($image, $sizeName);
+
+        if (!$this->imageLocator->imageExists($image)) {
+            throw new ImageNotFoundException();
         }
 
-        throw new ImageNotFoundException();
+        return $this->cdnFacade->resolveDomainUrlForAssets($domainConfig)
+            . $this->imageUrlPrefix
+            . $this->imageLocator->getRelativeImageFilepath($image, $sizeName);
     }
 
     /**
@@ -356,17 +300,17 @@ class ImageFacade
         string $extension,
         string $entityName,
         ?string $type,
-        ?string $sizeName = null
+        ?string $sizeName = null,
     ): string {
         $imageFilepath = $this->imageLocator->getRelativeImageFilepathFromAttributes(
             $id,
             $extension,
             $entityName,
             $type,
-            $sizeName
+            $sizeName,
         );
 
-        return $domainConfig->getUrl() . $this->imageUrlPrefix . $imageFilepath;
+        return $this->cdnFacade->resolveDomainUrlForAssets($domainConfig) . $this->imageUrlPrefix . $imageFilepath;
     }
 
     /**
@@ -406,10 +350,12 @@ class ImageFacade
         string $extension,
         string $entityName,
         ?string $type,
-        ?string $sizeName = null
+        ?string $sizeName = null,
     ): array {
         $entityConfig = $this->imageConfig->getEntityConfigByEntityName($entityName);
         $sizeConfig = $entityConfig->getSizeConfigByType($type, $sizeName);
+
+        $resolvedImageUrl = $this->cdnFacade->resolveDomainUrlForAssets($domainConfig);
 
         $result = [];
         foreach ($sizeConfig->getAdditionalSizes() as $additionalSizeIndex => $additionalSizeConfig) {
@@ -419,9 +365,9 @@ class ImageFacade
                 $entityName,
                 $type,
                 $sizeName,
-                $additionalSizeIndex
+                $additionalSizeIndex,
             );
-            $url = $domainConfig->getUrl() . $this->imageUrlPrefix . $imageFilepath;
+            $url = $resolvedImageUrl . $this->imageUrlPrefix . $imageFilepath;
 
             $result[] = new AdditionalImageData($additionalSizeConfig->getMedia(), $url);
         }
@@ -438,13 +384,13 @@ class ImageFacade
      */
     protected function getAdditionalImageUrl(DomainConfig $domainConfig, int $additionalSizeIndex, Image $image, ?string $sizeName)
     {
-        if ($this->imageLocator->imageExists($image)) {
-            return $domainConfig->getUrl()
-                . $this->imageUrlPrefix
-                . $this->imageLocator->getRelativeAdditionalImageFilepath($image, $additionalSizeIndex, $sizeName);
+        if (!$this->imageLocator->imageExists($image)) {
+            throw new ImageNotFoundException();
         }
 
-        throw new ImageNotFoundException();
+        return $this->cdnFacade->resolveDomainUrlForAssets($domainConfig)
+            . $this->imageUrlPrefix
+            . $this->imageLocator->getRelativeAdditionalImageFilepath($image, $additionalSizeIndex, $sizeName);
     }
 
     /**
@@ -476,17 +422,16 @@ class ImageFacade
     public function copyImages($sourceEntity, $targetEntity)
     {
         $sourceImages = $this->getAllImagesByEntity($sourceEntity);
-        $targetImages = [];
         foreach ($sourceImages as $sourceImage) {
             try {
                 $this->mountManager->copy(
                     'main://' . $this->imageLocator->getAbsoluteImageFilepath(
                         $sourceImage,
-                        ImageConfig::ORIGINAL_SIZE_NAME
+                        ImageConfig::ORIGINAL_SIZE_NAME,
                     ),
                     'main://' . TransformString::removeDriveLetterFromPath(
-                        $this->fileUpload->getTemporaryFilepath($sourceImage->getFilename())
-                    )
+                        $this->fileUpload->getTemporaryFilepath($sourceImage->getFilename()),
+                    ),
                 );
             } catch (UnableToDeleteFile $exception) {
                 $this->logger->error('Image could not be copied because file was not found', [$exception]);
@@ -498,11 +443,10 @@ class ImageFacade
                 $this->getEntityId($targetEntity),
                 $sourceImage->getNames(),
                 $sourceImage->getType(),
-                $sourceImage->getFilename()
+                $sourceImage->getFilename(),
             );
 
             $this->em->persist($targetImage);
-            $targetImages[] = $targetImage;
         }
         $this->em->flush();
     }
