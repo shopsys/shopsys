@@ -1,0 +1,32 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'E-mail whitelist settings'|trans }}{% endblock %}
+{% block h1 %}{{ 'E-mail whitelist settings'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    <div class="in-message in-message--info margin-bottom-30">
+        {{ 'E-mails are sent to addresses which comply with at least one regular expression. You can use <a href="https://regex101.com">https://regex101.com</a> for validating regular expressions.'|trans|raw }}
+    </div>
+
+    {% if isWhitelistForced %}
+        <div class="in-message in-message--warning margin-bottom-30">
+            {{ 'E-mail whitelist is currently forced by MAILER_FORCE_WHITELIST environment variable. Whitelist is always active.'|trans }}
+        </div>
+    {% endif %}
+
+    {% if isOverridden %}
+        <div class="in-message in-message--warning margin-bottom-30">
+            {{ 'Currently the ENV variable MAILER_DELIVERY_WHITELIST is set and overrides this setting.'|trans }}
+        </div>
+    {% endif %}
+
+    {{ form_start(form) }}
+    {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+        {% block fixed_bar_content %}
+            {{ form_widget(form.save, { label: 'Save changes'|trans}) }}
+        {% endblock %}
+    {% endembed %}
+    {{ form_end(form) }}
+{% endblock %}

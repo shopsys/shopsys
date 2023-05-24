@@ -16,6 +16,7 @@ twig:
         - '@ShopsysFramework/Admin/Form/warningMessage.html.twig'
         - '@ShopsysFramework/Admin/Form/displayOnlyUrl.html.twig'
         - '@ShopsysFramework/Admin/Form/localizedFullWidth.html.twig'
+        - '@ShopsysFramework/Admin/Form/mailWhitelistFormTheme.html.twig'
         - '@ShopsysFramework/Admin/Form/productParameterValue.html.twig'
         - '@ShopsysFramework/Admin/Form/productCalculatedPrices.html.twig'
         - '@ShopsysFramework/Front/Form/deliveryAddressChoiceFields.html.twig'

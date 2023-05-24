@@ -6,29 +6,15 @@ namespace Shopsys\FrameworkBundle\Model\Mail;
 
 use League\Flysystem\FilesystemOperationFailed;
 use Psr\Log\LoggerInterface;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
-use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Email as BaseEmail;
 
 class Mailer
 {
     public const DISABLED_MAILER_DSN = 'null://null';
-
-    /**
-     * @var \Symfony\Component\Mailer\MailerInterface
-     */
-    protected MailerInterface $symfonyMailer;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade
-     */
-    protected MailTemplateFacade $mailTemplateFacade;
-
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    protected LoggerInterface $logger;
 
     /**
      * @param \Symfony\Component\Mailer\MailerInterface $symfonyMailer
@@ -36,20 +22,20 @@ class Mailer
      * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
-        MailerInterface $symfonyMailer,
-        MailTemplateFacade $mailTemplateFacade,
-        LoggerInterface $logger
+        protected /* readonly */ MailerInterface $symfonyMailer,
+        protected /* readonly */ MailTemplateFacade $mailTemplateFacade,
+        protected /* readonly */ LoggerInterface $logger,
     ) {
-        $this->symfonyMailer = $symfonyMailer;
-        $this->mailTemplateFacade = $mailTemplateFacade;
-        $this->logger = $logger;
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MessageData $messageData
+     * @deprecated This method will be replaced by sendForDomain() in next major version
      */
     public function send(MessageData $messageData): void
     {
+        DeprecationHelper::triggerMethod(__METHOD__, 'sendForDomain');
+
         $message = $this->getMessageWithReplacedVariables($messageData);
 
         try {
@@ -63,20 +49,51 @@ class Mailer
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MessageData $messageData
-     * @return \Symfony\Component\Mime\Email
+     * @param int $domainId
      */
-    protected function getMessageWithReplacedVariables(MessageData $messageData): Email
+    public function sendForDomain(MessageData $messageData, int $domainId): void
     {
+        $message = $this->getMessageWithReplacedVariables($messageData, $domainId);
+
+        try {
+            $this->symfonyMailer->send($message);
+        } catch (TransportExceptionInterface $exception) {
+            $this->logger->error('There was a failure while sending emails', [
+                'exception' => $exception,
+            ]);
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Mail\MessageData $messageData
+     * @phpstan-ignore-next-line
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Mail\Email
+     */
+    protected function getMessageWithReplacedVariables(
+        MessageData $messageData,
+        /* int $domainId */
+    ): BaseEmail {
         $body = $this->replaceVariables(
             $messageData->body,
-            $messageData->variablesReplacementsForBody
+            $messageData->variablesReplacementsForBody,
         );
         $subject = $this->replaceVariables(
             $messageData->subject,
-            $messageData->variablesReplacementsForSubject
+            $messageData->variablesReplacementsForSubject,
         );
 
-        $email = new Email();
+        $domainId = DeprecationHelper::triggerNewArgumentInMethod(
+            __METHOD__,
+            '$domainId',
+            'int',
+            func_get_args(),
+            1,
+            0,
+            true,
+        );
+
+        $email = new Email($domainId);
         $email
             ->subject($subject)
             ->from(new Address($messageData->fromEmail, $messageData->fromName))
@@ -96,7 +113,7 @@ class Mailer
             try {
                 $email->attachFromPath(
                     $this->mailTemplateFacade->getMailTemplateAttachmentFilepath($attachment),
-                    $attachment->getNameWithExtension()
+                    $attachment->getNameWithExtension(),
                 );
             } catch (FilesystemOperationFailed $exception) {
                 $this->logger->error('Attachment could not be added because file was not found.', [$exception]);

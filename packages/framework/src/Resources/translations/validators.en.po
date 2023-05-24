@@ -97,6 +97,9 @@ msgstr ""
 msgid "Image can be only in JPG, GIF or PNG format"
 msgstr ""
 
+msgid "Invalid whitelist pattern."
+msgstr ""
+
 msgid "Last name cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -356,6 +359,9 @@ msgid "Please enter valid 3-digit currency code according to ISO 4217 standard (
 msgstr ""
 
 msgid "Please enter valid email"
+msgstr ""
+
+msgid "Please enter whitelist pattern."
 msgstr ""
 
 msgid "Please enter whole number."

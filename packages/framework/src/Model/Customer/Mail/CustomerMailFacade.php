@@ -59,6 +59,6 @@ class CustomerMailFacade
         );
         $messageData = $this->registrationMail->createMessage($mailTemplate, $customerUser);
         $messageData->attachments = $this->uploadedFileFacade->getUploadedFilesByEntity($mailTemplate);
-        $this->mailer->send($messageData);
+        $this->mailer->sendForDomain($messageData, $customerUser->getDomainId());
     }
 }

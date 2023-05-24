@@ -97,6 +97,9 @@ msgstr "Obrázek může být pouze ve formátech jpg nebo png"
 msgid "Image can be only in JPG, GIF or PNG format"
 msgstr "Obrázek může být pouze ve formátech jpg, png nebo gif"
 
+msgid "Invalid whitelist pattern."
+msgstr "Neplatný předpis whitelistu."
+
 msgid "Last name cannot be longer than {{ limit }} characters"
 msgstr "Příjmení nesmí být delší než {{ limit }} znaků"
 
@@ -357,6 +360,9 @@ msgstr "Prosím zadejte platný třímístný kód měny podle standardu ISO 421
 
 msgid "Please enter valid email"
 msgstr "Vyplňte prosím platný e-mail"
+
+msgid "Please enter whitelist pattern."
+msgstr "Vyplňte prosím předpis whitelistu."
 
 msgid "Please enter whole number."
 msgstr "Zadejte prosím celé číslo."

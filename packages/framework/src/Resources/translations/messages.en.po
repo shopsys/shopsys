@@ -79,6 +79,9 @@ msgstr ""
 msgid "Add URL"
 msgstr ""
 
+msgid "Add another mail whitelist pattern"
+msgstr ""
+
 msgid "Add another parameter"
 msgstr ""
 
@@ -92,6 +95,9 @@ msgid "Add product"
 msgstr ""
 
 msgid "Add requirement"
+msgstr ""
+
+msgid "Add some mail whitelist patterns"
 msgstr ""
 
 msgid "Add some parameters"
@@ -592,6 +598,9 @@ msgstr ""
 msgid "Currency settings modified"
 msgstr ""
 
+msgid "Currently the ENV variable MAILER_DELIVERY_WHITELIST is set and overrides this setting."
+msgstr ""
+
 msgid "Customer"
 msgstr ""
 
@@ -829,6 +838,21 @@ msgstr ""
 msgid "Duration (seconds)"
 msgstr ""
 
+msgid "E-mail addresses whitelist"
+msgstr ""
+
+msgid "E-mail whitelist is currently forced by MAILER_FORCE_WHITELIST environment variable. Whitelist is always active."
+msgstr ""
+
+msgid "E-mail whitelist settings"
+msgstr ""
+
+msgid "E-mail whitelist settings modified"
+msgstr ""
+
+msgid "E-mails are sent to addresses which comply with at least one regular expression. You can use <a href=\"https://regex101.com\">https://regex101.com</a> for validating regular expressions."
+msgstr ""
+
 msgid "E-shop URL address"
 msgstr ""
 
@@ -980,6 +1004,9 @@ msgid "Email templates settings"
 msgstr ""
 
 msgid "Enable"
+msgstr ""
+
+msgid "Enable whitelist"
 msgstr ""
 
 msgid "Enter 32-digit code which will be sent to server"
@@ -2444,6 +2471,9 @@ msgid "When changing the default currency there is no recalculation of prices"
 msgstr ""
 
 msgid "While creating a new pricing group, please be patient. The application needs to recalculate price for every product on e-shop. Products without recalculated price will not be displayed on e-shop. For instance, it takes about an hour to recalculate 2000 products."
+msgstr ""
+
+msgid "Whitelist is active, but empty. No email will be sent from the app."
 msgstr ""
 
 msgid "Width [px]"

@@ -79,6 +79,6 @@ class PersonalDataAccessMailFacade
 
         $messageData->attachments = $this->uploadedFileFacade->getUploadedFilesByEntity($mailTemplate);
 
-        $this->mailer->send($messageData);
+        $this->mailer->sendForDomain($messageData, $personalDataAccessRequest->getDomainId());
     }
 }

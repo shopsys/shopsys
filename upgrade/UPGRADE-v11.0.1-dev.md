@@ -170,3 +170,49 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
 - apply new coding standards for requiring blank line before break, continue, declare, do, for, foreach, if, return, switch, throw, try, while and yield statements ([#2128](https://github.com/shopsys/shopsys/pull/2128))
     - run `php phing ecs-fix` to apply new standards
+- add ability to set e-mail whitelists per domain in the administration ([#2592](https://github.com/shopsys/shopsys/pull/2592))
+    - `MAILER_MASTER_EMAIL_ADDRESS` ENV variable is now deprecated and will be removed in next major
+    - `MAILER_DELIVERY_WHITELIST` ENV variable is now deprecated and will be removed in next major
+    - you need to convert email whitelist setting from `MAILER_DELIVERY_WHITELIST` ENV variable to `mailWhitelist` database setting through database migration if you want to use whitelist configuration through administration
+        - see `\Shopsys\FrameworkBundle\Migrations\Version20230405111441`
+    - constructor `Shopsys\FrameworkBundle\Controller\Admin\SuperadminController::__construct()` changed its interface:
+        ```diff
+            public function __construct(
+                ModuleList $moduleList,
+                ModuleFacade $moduleFacade,
+                PricingSetting $pricingSetting,
+                DelayedPricingSetting $delayedPricingSetting,
+                GridFactory $gridFactory,
+                Localization $localization,
+                LocalizedRouterFactory $localizedRouterFactory
+        +       protected /* readonly */ ?MailSettingFacade $mailSettingFacade = null,
+        +       protected /* readonly */ ?MailerSettingProvider $mailerSettingProvider = null,
+        +       protected /* readonly */ ?AdminDomainTabsFacade $adminDomainTabsFacade = null,
+            ) {
+        ```
+    - method `Shopsys\FrameworkBundle\Model\Mail\Mailer::send()` is now deprecated and will be removed in next major, use `sendForDomain` instead
+    - `Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider` class:
+        - method `__construct` changed its interface:
+            ```diff
+                public function __construct(
+                    MailerInterface $symfonyMailer,
+                    MailTemplateFacade $mailTemplateFacade,
+                    LoggerInterface $logger,
+                    protected readonly ?bool $whitelistForced = null,
+                    protected /* readonly */ ?MailSettingFacade $mailSettingFacade = null,
+                ) {
+            ```
+        - property `$mailerMasterEmailAddress` is now deprecated and will be removed in next major
+        - property `$mailerWhitelistExpressions` is now deprecated and will be removed in next major
+        - method `getMailerMasterEmailAddress()` is now deprecated and will be removed in next major
+        - method `isMailerMasterEmailSet()` is now deprecated and will be removed in next major
+        - method `getMailerWhitelistExpressions()` is now deprecated and will be removed in next major
+    - constructor `Shopsys\FrameworkBundle\Twig\MailerSettingExtension::__construct()` changed its interface:
+        ```diff
+            public function __construct(
+                MailerSettingProvider $mailerSettingProvider,
+                Environment $twigEnvironment,
+        +       protected /* readonly */ ?Domain $domain = null,
+            ) {
+        ```
+    - see #project-base-diff to update your project
