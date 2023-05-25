@@ -8,7 +8,6 @@ use App\DataFixtures\Performance\CategoryDataFixture;
 use App\DataFixtures\Performance\CustomerUserDataFixture;
 use App\DataFixtures\Performance\OrderDataFixture;
 use App\DataFixtures\Performance\ProductDataFixture;
-use Shopsys\FrameworkBundle\Command\CommandResultCodes;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -82,6 +81,6 @@ class PerformanceDataCommand extends Command
         $output->writeln('<fg=green>loading ' . OrderDataFixture::class . '</fg=green>');
         $this->orderDataFixture->load($output);
 
-        return CommandResultCodes::RESULT_OK;
+        return Command::SUCCESS;
     }
 }

@@ -57,6 +57,7 @@
         "fakerphp/faker": "^1.19.0",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
         "gedmo/doctrine-extensions": "^3.5",
+        "gordalina/cachetool": "^8.5",
         "guzzlehttp/guzzle": "^7.5",
         "helios-ag/fm-elfinder-bundle": "^12.2",
         "heureka/overeno-zakazniky": "^4.0.1",

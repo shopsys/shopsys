@@ -42,6 +42,6 @@ class LoadPluginDataFixturesCommand extends Command
     {
         $this->pluginDataFixtureFacade->loadAll();
 
-        return CommandResultCodes::RESULT_OK;
+        return Command::SUCCESS;
     }
 }

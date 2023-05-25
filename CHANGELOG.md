@@ -18,6 +18,7 @@ There is a list of all the repositories maintained by monorepo:
 * [shopsys/product-feed-heureka-delivery]
 * [shopsys/product-feed-zbozi]
 * [shopsys/google-cloud-bundle]
+* [shopsys/s3-bridge]
 * [shopsys/read-model]
 * [shopsys/frontend-api]
 
@@ -3504,6 +3505,7 @@ That's why is this section formatted differently.
 [shopsys/migrations]: https://github.com/shopsys/migrations
 [shopsys/monorepo-tools]: https://github.com/shopsys/monorepo-tools
 [shopsys/google-cloud-bundle]: https://github.com/shopsys/google-cloud-bundle
+[shopsys/s3-bridge]: https://github.com/shopsys/s3-bridge
 [shopsys/read-model]: https://github.com/shopsys/read-model
 [shopsys/backend-api]: https://github.com/shopsys/backend-api
 [shopsys/frontend-api]: https://github.com/shopsys/frontend-api

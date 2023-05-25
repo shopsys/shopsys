@@ -11,7 +11,7 @@ jobs:
             fail-fast: false
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     ref: ${{ github.ref }}
             -   name: Install PHP, extensions and tools

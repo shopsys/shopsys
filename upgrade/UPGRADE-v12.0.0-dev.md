@@ -367,3 +367,57 @@ There you can find links to upgrade notes for other versions too.
     - parameter `$targetEntity` of `copyImages()` changed from no type to `object`
     - return type of `setImagePositionsByOrder()` changed from no type to `void`
     - parameter `$orderedImages` of `setImagePositionsByOrder()` changed from no type to `array`
+
+- improvements ([#2609](https://github.com/shopsys/shopsys/pull/2609))
+    - `Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade` class:
+        - type of property `$errorPagesDir` changed from having no type to `string`
+        - type of property `$domain` changed from having no type to `Shopsys\FrameworkBundle\Component\Domain\Domain`
+        - type of property `$domainRouterFactory` changed from having no type to `Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory`
+        - type of property `$errorIdProvider` changed from having no type to `Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider`
+        - property `$filesystem` was removed
+        - constructor `__construct` changed its interface
+        ```diff
+            public function __construct(
+        -       $errorPagesDir,
+        +       protected readonly string $errorPagesDir,
+        -       Domain $domain,
+        +       protected readonly Domain $domain,
+        -       DomainRouterFactory $domainRouterFactory,
+        +       protected readonly DomainRouterFactory $domainRouterFactory,
+        -       Filesystem $filesystem,
+        -       ErrorIdProvider $errorIdProvider
+        +       protected readonly ErrorIdProvider $errorIdProvider,
+        +       protected readonly FilesystemOperator $mainFilesystem,
+            ) {
+        ```
+    - return type of `generateAllErrorPagesForProduction()` changed from no type to `void`
+    - return type of `getErrorPageContentByDomainIdAndStatusCode()` changed from no type to `string`
+    - parameter `$domainId` of `getErrorPageContentByDomainIdAndStatusCode()` changed from no type to `int`
+    - parameter `$statusCode` of `getErrorPageContentByDomainIdAndStatusCode()` changed from no type to `int`
+    - return type of `getErrorPageStatusCodeByStatusCode()` changed from no type to `int`
+    - parameter `$statusCode` of `getErrorPageStatusCodeByStatusCode()` changed from no type to `int`
+    - return type of `generateAndSaveErrorPage()` changed from no type to `void`
+    - parameter `$domainId` of `generateAndSaveErrorPage()` changed from no type to `int`
+    - parameter `$statusCode` of `generateAndSaveErrorPage()` changed from no type to `int`
+    - return type of `getErrorPageFilename()` changed from no type to `string`
+    - parameter `$domainId` of `getErrorPageFilename()` changed from no type to `int`
+    - parameter `$statusCode` of `getErrorPageFilename()` changed from no type to `int`
+    - return type of `getUrlContent()` changed from no type to `string`
+    - parameter `$errorPageUrl` of `getUrlContent()` changed from no type to `string`
+    - parameter `$expectedStatusCode` of `getUrlContent()` changed from no type to `int`
+    - maintenance mode is now detected by checking presence of `maintenance` key in Redis instead of `MAINTENANCE` file in root directory
+    - maintenance page template is now standard twig template (`@ShopsysFramework/Common/maintenance.html.twig`) instead of php file
+    - class `Shopsys\FrameworkBundle\Command\CommandResultCodes` was removed
+    - constructor `CronCommand` changed its interface
+    ```diff
+        public function __construct(
+    -       CronFacade $cronFacade,
+    +       protected readonly CronFacade $cronFacade,
+    -       MutexFactory $mutexFactory,
+    +       protected readonly MutexFactory $mutexFactory,
+    -       ParameterBagInterface $parameterBag
+    +       protected readonly ParameterBagInterface $parameterBag,
+    +       protected readonly LockInterface $lock,
+        ) {
+    ```
+    - see #project-base-diff for more details
