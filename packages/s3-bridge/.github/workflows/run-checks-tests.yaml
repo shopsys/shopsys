@@ -22,4 +22,4 @@ jobs:
             -   name: Run Easy Coding Standards
                 run: php vendor/bin/ecs check --verbose ./src
             -   name: Run PHPStan level 5
-                run: php vendor/bin/phpstan analyze -c ./phpstan.neon ./src --level=5
+                run: php vendor/bin/phpstan analyze ./src --level=5
