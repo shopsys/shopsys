@@ -8,16 +8,11 @@ on:
     pull_request:
         branches:
             - '**'
+concurrency:
+    group: ${{ github.ref }}
+    cancel-in-progress: true
 name: "Docker build"
 jobs:
-    cancel:
-        name: Cancel previous workflow runs
-        runs-on: ubuntu-20.04
-        steps:
-            -   name: Cancelling
-                uses: styfle/cancel-workflow-action@0.7.0
-                with:
-                    access_token: ${{ github.token }}
     build-docker-images:
         if: github.event.pull_request.head.repo.full_name == 'shopsys/shopsys'
         name: Build PHP-FPM and Elasticsearch images
