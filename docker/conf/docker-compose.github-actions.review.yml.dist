@@ -1,0 +1,91 @@
+version: "3.4"
+
+services:
+    postgres:
+        restart: always
+        image: postgres:12.1-alpine
+        volumes:
+            - postgres-conf:/var/lib/postgresql/conf
+        environment:
+            - POSTGRES_USER=root
+            - POSTGRES_PASSWORD=root
+            - POSTGRES_DB=shopsys
+        command:
+            - postgres
+            - -c
+            - config_file=/var/lib/postgresql/conf/postgres.conf
+        networks:
+            - default
+        labels:
+            - traefik.enable=false
+
+    webserver:
+        restart: always
+        image: nginx:1.13-alpine
+        depends_on:
+            - php-fpm
+        volumes:
+            - web-volume:/var/www/html/project-base/web
+            - nginx-conf:/etc/nginx/conf.d/
+        labels:
+            - traefik.backend=BRANCH_NAME
+            - traefik.http.routers.BRANCH_NAME.rule=Host(TRAEFIK_HOSTS)
+            - traefik.http.routers.BRANCH_NAME.entrypoints=http,https
+            - traefik.http.routers.BRANCH_NAME.tls.certresolver=letsencrypt
+            - traefik.http.services.BRANCH_NAME.loadbalancer.server.port=8080
+            - traefik.docker.network=github-runner_traefik-network
+            - traefik.enable=true
+        networks:
+            - default
+            - github-runner_traefik-network
+
+    php-fpm:
+        restart: always
+        image: php-fpm-image
+        volumes:
+            - web-volume:/var/www/html/project-base/web
+            - nginx-conf:/var/www/html/docker/nginx
+            - postgres-conf:/var/www/html/project-base/docker/postgres
+        environment:
+            IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK: 1
+        networks:
+            - default
+        labels:
+            - traefik.enable=false
+
+    redis:
+        image: redis:7.0-alpine
+        networks:
+            - default
+        labels:
+            - traefik.enable=false
+
+    smtp-server:
+        image: namshi/smtp:latest
+        networks:
+            - default
+        labels:
+            - traefik.enable=false
+
+    elasticsearch:
+        image: elasticsearch-image
+        ulimits:
+            nofile:
+                soft: 65536
+                hard: 65536
+        environment:
+            - discovery.type=single-node
+        networks:
+            - default
+        labels:
+            - traefik.enable=false
+
+volumes:
+    web-volume:
+    nginx-conf:
+    postgres-conf:
+
+networks:
+    github-runner_traefik-network:
+        external: true
+    default:
