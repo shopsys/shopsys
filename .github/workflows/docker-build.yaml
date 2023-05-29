@@ -16,67 +16,89 @@ jobs:
     build-docker-images:
         if: github.event.pull_request.head.repo.full_name == 'shopsys/shopsys'
         name: Build PHP-FPM and Elasticsearch images
-        needs: cancel
         runs-on: ubuntu-20.04
+        permissions:
+            contents: read
+            packages: write
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     ref: ${{ github.ref }}
-            -   name: Login to Docker Hub
-                uses: docker/login-action@v1
+            -   name: Login to GitHub Container Registry
+                uses: docker/login-action@v2
                 with:
-                    username: ${{ secrets.DOCKER_USERNAME }}
-                    password: ${{ secrets.DOCKER_PASSWORD }}
+                    registry: ghcr.io
+                    username: ${{ github.actor }}
+                    password: ${{ secrets.GITHUB_TOKEN }}
             -   name: Check if PHP-FPM image exists
                 env:
-                    DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+                    DOCKER_USERNAME: ${{ github.repository_owner }}
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 run: |
-                    DOCKER_PHP_FPM_IMAGE_TAG=gitlab-action-`find project-base/docker/php-fpm -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    DOCKER_PHP_FPM_IMAGE_TAG=github-action-`find project-base/docker/php-fpm -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
                     echo "DOCKER_PHP_FPM_IMAGE_TAG=${DOCKER_PHP_FPM_IMAGE_TAG}" >> $GITHUB_ENV
                     echo "DOCKER_USERNAME=${DOCKER_USERNAME}" >> $GITHUB_ENV
-                    DOCKER_PHP_FPM_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} php-fpm ${DOCKER_PHP_FPM_IMAGE_TAG} > /dev/null ; echo $?`
+                    DOCKER_PHP_FPM_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} php-fpm ${DOCKER_PHP_FPM_IMAGE_TAG} ${GITHUB_TOKEN} > /dev/null ; echo $?`
                     echo "DOCKER_PHP_FPM_IMAGE_EXISTS=${DOCKER_PHP_FPM_IMAGE_EXISTS}" >> $GITHUB_ENV
-            -   name: Build PHP-FPM image and push it to Docker Hub
+            -   name: Build PHP-FPM image and push it to Github Container Registry
                 if: env.DOCKER_PHP_FPM_IMAGE_EXISTS == 0
                 run: .github/build-php-fpm-image.sh
             -   name: Check if Elasticseach image exists
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 run: |
-                    DOCKER_ELASTICSEARCH_IMAGE_TAG=gitlab-action-`find project-base/docker/elasticsearch -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    DOCKER_ELASTICSEARCH_IMAGE_TAG=github-action-`find project-base/docker/elasticsearch -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
                     echo "DOCKER_ELASTICSEARCH_IMAGE_TAG=${DOCKER_ELASTICSEARCH_IMAGE_TAG}" >> $GITHUB_ENV
-                    DOCKER_ELASTICSEARCH_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} elasticsearch ${DOCKER_ELASTICSEARCH_IMAGE_TAG} > /dev/null ; echo $?`
+                    DOCKER_ELASTICSEARCH_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} elasticsearch ${DOCKER_ELASTICSEARCH_IMAGE_TAG} ${GITHUB_TOKEN} > /dev/null ; echo $?`
                     echo "DOCKER_ELASTICSEARCH_IMAGE_EXISTS=${DOCKER_ELASTICSEARCH_IMAGE_EXISTS}" >> $GITHUB_ENV
-            -   name: Build Elasticsearch image and push it to Docker Hub
+            -   name: Build Elasticsearch image and push it to Github Container Registry
                 if: env.DOCKER_ELASTICSEARCH_IMAGE_EXISTS == 0
                 run: .github/build-elasticsearch-image.sh
             -   name: Copy and rename docker-compose.github-actions.yml.dist to docker-compose.yml
                 run: cp -f ./docker/conf/docker-compose.github-actions.yml.dist ./docker-compose.yml
             -   name: Update docker-compose.yml file with right PHP-FPM image
-                run: "sed -i \"s#php-fpm-image#${{ secrets.DOCKER_USERNAME }}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}-${{ github.sha }}#\" ./docker-compose.yml"
+                run: "sed -i \"s#php-fpm-image#ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}-${{ github.sha }}#\" ./docker-compose.yml"
             -   name: Update docker-compose.yml file with right Elastichsearch image
-                run: "sed -i \"s#elasticsearch-image#${{ secrets.DOCKER_USERNAME }}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG}#\" ./docker-compose.yml"
+                run: "sed -i \"s#elasticsearch-image#ghcr.io/${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG}#\" ./docker-compose.yml"
+            -   name: Copy and rename docker-compose.github-actions.review.yml.dist to docker-compose.review.yml
+                run: cp -f ./docker/conf/docker-compose.github-actions.review.yml.dist ./docker-compose.review.yml
+            -   name: Update docker-compose.review.yml file with right PHP-FPM image
+                run: "sed -i \"s#php-fpm-image#ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}-${{ github.sha }}#\" ./docker-compose.review.yml"
+            -   name: Update docker-compose.review.yml file with right Elastichsearch image
+                run: "sed -i \"s#elasticsearch-image#ghcr.io/${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG}#\" ./docker-compose.review.yml"
             -   name: Create branch specific PHP-FPM image with project files
                 run: |
-                    docker run -d --name php-fpm ${{ secrets.DOCKER_USERNAME }}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}
+                    docker run -d --name php-fpm ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}
                     docker cp ./ php-fpm:/var/www/html
                     docker exec php-fpm composer install --optimize-autoloader --no-interaction
                     docker exec php-fpm php phing composer-dev dirs-create test-dirs-create assets npm build-version-generate frontend-api-enable
-            -   name: Push branch specific PHP-FPM image to Docker Hub
+            -   name: Push branch specific PHP-FPM image to Github Container Registry
                 run: |
-                    docker commit -m="Include Composer and NPM files" php-fpm ${{ secrets.DOCKER_USERNAME }}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}-${{ github.sha }}
-                    docker image push ${{ secrets.DOCKER_USERNAME }}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}-${{ github.sha }}
+                    docker commit -m="Include Composer and NPM files" php-fpm ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}-${{ github.sha }}
+                    docker image push ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}-${{ github.sha }}
             -   name: Upload docker-compose.yml to artifacts
-                uses: actions/upload-artifact@v2
+                uses: actions/upload-artifact@v3
                 with:
                     name: docker-compose
                     path: ./docker-compose.yml
+            -   name: Upload docker-compose.review.yml to artifacts
+                uses: actions/upload-artifact@v3
+                with:
+                    name: docker-compose-review
+                    path: ./docker-compose.review.yml
+            -   name: Upload set-urls-for-review.sh to artifacts
+                uses: actions/upload-artifact@v3
+                with:
+                    name: set-urls-for-review
+                    path: ./.github/set-urls-for-review.sh
     standards:
         name: Check standards
         needs: build-docker-images
         runs-on: ubuntu-20.04
         steps:
             -   name: Download docker-compose.yml from artifacts
-                uses: actions/download-artifact@v2
+                uses: actions/download-artifact@v3
                 with:
                     name: docker-compose
             -   name: Build application
@@ -89,11 +111,11 @@ jobs:
         runs-on: ubuntu-20.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.yml from artifacts
-                uses: actions/download-artifact@v2
+                uses: actions/download-artifact@v3
                 with:
                     name: docker-compose
             -   name: Build application
@@ -112,11 +134,11 @@ jobs:
         runs-on: ubuntu-20.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     ref: ${{ github.ref }}
             -   name: Download docker-compose.yml from artifacts
-                uses: actions/download-artifact@v2
+                uses: actions/download-artifact@v3
                 with:
                     name: docker-compose
             -   name: Build application
@@ -134,28 +156,28 @@ jobs:
                 run: docker cp shopsys-framework-php-fpm:/var/www/html/project-base/var/log ./project-base/var/log
             -   name: Upload Codeception logs to artifacts
                 if: ${{ failure() }}
-                uses: actions/upload-artifact@v2
+                uses: actions/upload-artifact@v3
                 with:
                     name: acceptance-logs
                     path: ./project-base/var/log/
     build-fork-docker-images:
         if: github.event.pull_request.head.repo.full_name != 'shopsys/shopsys'
         name: Build application and run standards checks and tests
-        needs: cancel
         runs-on: ubuntu-20.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     ref: ${{ github.ref }}
             -   name: Check if PHP-FPM image exists
                 env:
-                    DOCKER_USERNAME: shopsysbot
+                    DOCKER_USERNAME: ${{ github.repository_owner }}
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 run: |
-                    DOCKER_PHP_FPM_IMAGE_TAG=gitlab-action-`find project-base/docker/php-fpm -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    DOCKER_PHP_FPM_IMAGE_TAG=github-action-`find project-base/docker/php-fpm -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
                     echo "DOCKER_PHP_FPM_IMAGE_TAG=${DOCKER_PHP_FPM_IMAGE_TAG}" >> $GITHUB_ENV
                     echo "DOCKER_USERNAME=${DOCKER_USERNAME}" >> $GITHUB_ENV
-                    DOCKER_PHP_FPM_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} php-fpm ${DOCKER_PHP_FPM_IMAGE_TAG} > /dev/null ; echo $?`
+                    DOCKER_PHP_FPM_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} php-fpm ${DOCKER_PHP_FPM_IMAGE_TAG} ${GITHUB_TOKEN} > /dev/null ; echo $?`
                     echo ${DOCKER_PHP_FPM_IMAGE_EXISTS}
                     echo "DOCKER_PHP_FPM_IMAGE_EXISTS=${DOCKER_PHP_FPM_IMAGE_EXISTS}" >> $GITHUB_ENV
             -   name: Build PHP-FPM image
@@ -165,7 +187,7 @@ jobs:
                         --build-arg project_root=project-base \
                         --build-arg www_data_uid=$(id -u) \
                         --build-arg www_data_gid=$(id -g) \
-                        --tag ${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG} \
+                        --tag ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG} \
                         --target development \
                         --no-cache \
                         --compress \
@@ -173,15 +195,15 @@ jobs:
                         .
             -   name: Check if Elasticseach image exists
                 run: |
-                    DOCKER_ELASTICSEARCH_IMAGE_TAG=gitlab-action-`find project-base/docker/elasticsearch -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    DOCKER_ELASTICSEARCH_IMAGE_TAG=github-action-`find project-base/docker/elasticsearch -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
                     echo "DOCKER_ELASTICSEARCH_IMAGE_TAG=${DOCKER_ELASTICSEARCH_IMAGE_TAG}" >> $GITHUB_ENV
-                    DOCKER_ELASTICSEARCH_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} elasticsearch ${DOCKER_ELASTICSEARCH_IMAGE_TAG} > /dev/null ; echo $?`
+                    DOCKER_ELASTICSEARCH_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} elasticsearch ${DOCKER_ELASTICSEARCH_IMAGE_TAG} ${GITHUB_TOKEN} > /dev/null ; echo $?`
                     echo "DOCKER_ELASTICSEARCH_IMAGE_EXISTS=${DOCKER_ELASTICSEARCH_IMAGE_EXISTS}" >> $GITHUB_ENV
             -   name: Build Elasticsearch image
                 if: env.DOCKER_ELASTICSEARCH_IMAGE_EXISTS == 0
                 run: |
                     docker image build \
-                        --tag ${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG} \
+                        --tag ghcr.io/${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG} \
                         --no-cache \
                         --compress \
                         -f project-base/docker/elasticsearch/Dockerfile \
@@ -189,9 +211,9 @@ jobs:
             -   name: Copy and rename docker-compose.github-actions.yml.dist to docker-compose.yml
                 run: cp -f ./docker/conf/docker-compose.github-actions.yml.dist ./docker-compose.yml
             -   name: Update docker-compose.yml file with right PHP-FPM image
-                run: "sed -i \"s#php-fpm-image#${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}#\" ./docker-compose.yml"
+                run: "sed -i \"s#php-fpm-image#ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}#\" ./docker-compose.yml"
             -   name: Update docker-compose.yml file with right Elastichsearch image
-                run: "sed -i \"s#elasticsearch-image#${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG}#\" ./docker-compose.yml"
+                run: "sed -i \"s#elasticsearch-image#ghcr.io/${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG}#\" ./docker-compose.yml"
             -   name: Build application
                 run: |
                     docker-compose pull --parallel webserver postgres redis selenium-server
@@ -213,7 +235,7 @@ jobs:
                 run: docker cp shopsys-framework-php-fpm:/var/www/html/project-base/var/log ./project-base/var/log
             -   name: Upload Codeception logs to artifacts
                 if: ${{ failure() }}
-                uses: actions/upload-artifact@v2
+                uses: actions/upload-artifact@v3
                 with:
                     name: acceptance-logs
                     path: ./project-base/var/log/
@@ -229,10 +251,51 @@ jobs:
             TESTS_ACCEPTANCE_RESULT: ${{ needs.tests-acceptance.result }}
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     ref: ${{ github.ref }}
             -   name: Build successful
                 run: |
                     EXIT_CODE=`. .github/get-build-exit-code.sh && getBuildExitCodeBasedOnJobResults ${BUILD_FORK_RESULT} ${STANDARDS_RESULT} ${TESTS_RESULT} ${TESTS_ACCEPTANCE_RESULT} > /dev/null ; echo $?`
                     exit "${EXIT_CODE}"
+    review:
+        if: github.event.pull_request.head.repo.full_name == 'shopsys/shopsys'
+        name: Review
+        needs: build-docker-images
+        runs-on: [self-hosted, linux, review-stage]
+        steps:
+            -   name: Extract branch name to ENV variable BRANCH_NAME
+                run: echo "BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
+            -   name: Create branch directory
+                run: |
+                    rm -rf ${BRANCH_NAME}
+                    mkdir ${BRANCH_NAME}
+            -   name: Set ENV variables required for review
+                run: |
+                    HOST=${BRANCH_NAME}.${{ vars.REVIEW_STAGE_URL }}
+                    echo "HOST=${HOST}" >> $GITHUB_ENV
+                    echo "HOSTS=${HOST}, en.${HOST}" >> $GITHUB_ENV
+                    echo "TRAEFIK_HOSTS=\`${HOST}\`, \`en.${HOST}\`" >> $GITHUB_ENV
+                    echo "COMPOSE_PROJECT_NAME=${BRANCH_NAME}" >> $GITHUB_ENV
+            -   name: Download docker-compose.review.yml from artifacts
+                uses: actions/download-artifact@v3
+                with:
+                    name: docker-compose-review
+            -   name: Download set-urls-for-review-sh from artifacts
+                uses: actions/download-artifact@v3
+                with:
+                    name: set-urls-for-review
+            -   name: Move artifacts to branch folder
+                run: |
+                    mv docker-compose.review.yml ${BRANCH_NAME}/docker-compose.yml
+                    mv set-urls-for-review.sh ${BRANCH_NAME}/set-urls-for-review.sh
+            -   name: Start project
+                run: |
+                    cd ${BRANCH_NAME}
+                    docker compose pull --parallel webserver postgres redis php-fpm elasticsearch smtp-server
+                    chmod +x ./set-urls-for-review.sh
+                    docker compose down -v --remove-orphans
+                    docker compose up -d --force-recreate
+                    ./set-urls-for-review.sh setUrlsToDomainsUrls
+                    docker compose exec -T php-fpm php phing -D production.confirm.action=y db-create demo-data error-pages-generate warmup
+                    ./set-urls-for-review.sh printDomains
