@@ -15,7 +15,6 @@ return [
     Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
     Shopsys\FormTypesBundle\ShopsysFormTypesBundle::class => ['all' => true],
     Shopsys\FrontendApiBundle\ShopsysFrontendApiBundle::class => ['all' => true],
-    Shopsys\GoogleCloudBundle\ShopsysGoogleCloudBundle::class => ['all' => true],
     Shopsys\MigrationBundle\ShopsysMigrationBundle::class => ['all' => true],
     Shopsys\ProductFeed\HeurekaBundle\ShopsysProductFeedHeurekaBundle::class => ['all' => true],
     Shopsys\ProductFeed\HeurekaDeliveryBundle\ShopsysProductFeedHeurekaDeliveryBundle::class => ['all' => true],
