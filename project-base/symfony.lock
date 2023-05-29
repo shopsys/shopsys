@@ -50,9 +50,6 @@
     "codeception/module-webdriver": {
         "version": "1.0.5"
     },
-    "codeception/phpunit-wrapper": {
-        "version": "7.7.1"
-    },
     "codeception/stub": {
         "version": "2.1.0"
     },
@@ -622,6 +619,9 @@
     },
     "shopsys/read-model": {
         "version": "dev-mg-weird-flex-but-ok"
+    },
+    "shopsys/s3-bridge": {
+        "version": "12.0.x-dev"
     },
     "sinergi/browser-detector": {
         "version": "6.1.3"
