@@ -42,6 +42,7 @@ DOCKER_PHP_FPM_IMAGE=${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
 DOCKER_ELASTIC_IMAGE=${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTIC_IMAGE_TAG}
 PATH_CONFIG_DIRECTORY='/var/www/html/config'
 GOOGLE_CLOUD_PROJECT_ID=${PROJECT_ID}
+TRUSTED_PROXIES='10.0.0.0/8'
 
 FILES=$( find kubernetes -type f )
 VARS=(
@@ -52,6 +53,7 @@ VARS=(
     PATH_CONFIG_DIRECTORY
     GOOGLE_CLOUD_STORAGE_BUCKET_NAME
     GOOGLE_CLOUD_PROJECT_ID
+    TRUSTED_PROXIES
 )
 
 for FILE in $FILES; do
@@ -65,9 +67,6 @@ unset VARS
 # Set domain urls
 yq write --inplace config/domains_urls.yaml domains_urls[0].url https://${FIRST_DOMAIN_HOSTNAME}
 yq write --inplace config/domains_urls.yaml domains_urls[1].url https://${SECOND_DOMAIN_HOSTNAME}
-
-# Add a mask for trusted proxies so that load balanced traffic is trusted and headers from outside of the network are not lost
-yq write --inplace config/parameters.yaml parameters.trusted_proxies[+] 10.0.0.0/8
 
 cd /tmp/infrastructure/google-cloud
 

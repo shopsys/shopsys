@@ -88,6 +88,8 @@ spec:
                             value: "{{GOOGLE_CLOUD_PROJECT_ID}}"
                         -   name: OVERWRITE_DOMAIN_URL
                             value: "{{OVERWRITE_DOMAIN_URL}}"
+                        -   name: TRUSTED_PROXIES
+                            value: "{{TRUSTED_PROXIES}}"
                 -   image: nginx:1.13.10-alpine
                     name: webserver
                     ports:
