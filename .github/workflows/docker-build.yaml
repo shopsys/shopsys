@@ -72,7 +72,7 @@ jobs:
             -   name: Set TRAEFIK_HOSTS ENV variables
                 run: |
                     HOST=${BRANCH_NAME}.${{ vars.REVIEW_STAGE_URL }}
-                    echo "TRAEFIK_HOSTS=\`$HOST\`, \`en.$HOST\`" >> $GITHUB_ENV
+                    echo "TRAEFIK_HOSTS=\`$HOST\`, \`cz.$HOST\`" >> $GITHUB_ENV
             -   name: Update docker-compose.review.yml file with BRANCH_NAME ENV variable
                 run: "sed -i \"s#BRANCH_NAME#${BRANCH_NAME}#\" ./docker-compose.review.yml"
             -   name: Update docker-compose.review.yml file with TRAEFIK_HOSTS ENV variable
