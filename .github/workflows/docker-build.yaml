@@ -73,8 +73,8 @@ jobs:
                 run: |
                     HOST=${BRANCH_NAME}.${{ vars.REVIEW_STAGE_URL }}
                     TRAEFIK_HOSTS="\`${HOST}\`, \`en.${HOST}\`"
-                    "sed -i \"s#TRAEFIK_HOSTS#${TRAEFIK_HOSTS}#\" ./docker-compose.review.yml"
                     "sed -i \"s#BRANCH_NAME#${BRANCH_NAME}#\" ./docker-compose.review.yml"
+                    "sed -i \"s#TRAEFIK_HOSTS#${TRAEFIK_HOSTS}#\" ./docker-compose.review.yml"
             -   name: Create branch specific PHP-FPM image with project files
                 run: |
                     docker run -d --name php-fpm ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}
