@@ -69,13 +69,13 @@ jobs:
                 run: "sed -i \"s#php-fpm-image#ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}-${{ github.sha }}#\" ./docker-compose.review.yml"
             -   name: Update docker-compose.review.yml file with right Elastichsearch image
                 run: "sed -i \"s#elasticsearch-image#ghcr.io/${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG}#\" ./docker-compose.review.yml"
-            -   name: Update docker-compose.review.yml file with right project values
+            -   name: Set TRAEFIK_HOSTS ENV variables
                 run: |
-                    echo "HOST=${BRANCH_NAME}.${{ vars.REVIEW_STAGE_URL }}" >> $GITHUB_ENV
-                    echo "TRAEFIK_HOSTS=\`${HOST}\`, \`en.${HOST}\`" >> $GITHUB_ENV
-            -   name: Update docker-compose.review.yml file with right project values
+                    HOST=${BRANCH_NAME}.${{ vars.REVIEW_STAGE_URL }}
+                    echo "TRAEFIK_HOSTS=\`$HOST\`, \`en.$HOST\`" >> $GITHUB_ENV
+            -   name: Update docker-compose.review.yml file with BRANCH_NAME ENV variable
                 run: "sed -i \"s#BRANCH_NAME#${BRANCH_NAME}#\" ./docker-compose.review.yml"
-            -   name: Update docker-compose.review.yml file with right project values
+            -   name: Update docker-compose.review.yml file with TRAEFIK_HOSTS ENV variable
                 run: "sed -i \"s#TRAEFIK_HOSTS#${TRAEFIK_HOSTS}#\" ./docker-compose.review.yml"
             -   name: Create branch specific PHP-FPM image with project files
                 run: |
