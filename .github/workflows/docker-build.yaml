@@ -31,6 +31,8 @@ jobs:
                     registry: ghcr.io
                     username: ${{ github.actor }}
                     password: ${{ secrets.GITHUB_TOKEN }}
+            -   name: Extract branch name to ENV variable BRANCH_NAME
+                run: echo "BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
             -   name: Check if PHP-FPM image exists
                 env:
                     DOCKER_USERNAME: ${{ github.repository_owner }}
@@ -67,6 +69,12 @@ jobs:
                 run: "sed -i \"s#php-fpm-image#ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}-${{ github.sha }}#\" ./docker-compose.review.yml"
             -   name: Update docker-compose.review.yml file with right Elastichsearch image
                 run: "sed -i \"s#elasticsearch-image#ghcr.io/${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG}#\" ./docker-compose.review.yml"
+            -   name: Update docker-compose.review.yml file with right project values
+                run: |
+                    HOST=${BRANCH_NAME}.${{ vars.REVIEW_STAGE_URL }}
+                    TRAEFIK_HOSTS=\`${HOST}\`, \`en.${HOST}\`
+                    "sed -i \"s#TRAEFIK_HOSTS#${TRAEFIK_HOSTS}#\" ./docker-compose.review.yml"
+                    "sed -i \"s#BRANCH_NAME#${BRANCH_NAME}#\" ./docker-compose.review.yml"
             -   name: Create branch specific PHP-FPM image with project files
                 run: |
                     docker run -d --name php-fpm ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}
@@ -273,10 +281,7 @@ jobs:
             -   name: Set ENV variables required for review
                 run: |
                     HOST=${BRANCH_NAME}.${{ vars.REVIEW_STAGE_URL }}
-                    echo "HOST=${HOST}" >> $GITHUB_ENV
                     echo "HOSTS=${HOST}, en.${HOST}" >> $GITHUB_ENV
-                    echo "TRAEFIK_HOSTS=\`${HOST}\`, \`en.${HOST}\`" >> $GITHUB_ENV
-                    echo "COMPOSE_PROJECT_NAME=${BRANCH_NAME}" >> $GITHUB_ENV
             -   name: Download docker-compose.review.yml from artifacts
                 uses: actions/download-artifact@v3
                 with:

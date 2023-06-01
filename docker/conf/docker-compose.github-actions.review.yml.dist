@@ -28,14 +28,15 @@ services:
             - web-volume:/var/www/html/project-base/web
             - nginx-conf:/etc/nginx/conf.d/
         labels:
-            - traefik.backend=${COMPOSE_PROJECT_NAME}
-            - traefik.http.routers.${BRANCH_NAME}.rule=Host(${TRAEFIK_HOSTS})
-            - traefik.http.routers.${BRANCH_NAME}.entrypoints=http,https
-            - traefik.http.routers.${BRANCH_NAME}.tls.certresolver=letsencrypt
-            - traefik.http.services.${BRANCH_NAME}.loadbalancer.server.port=8080
+            - traefik.backend=BRANCH_NAME
+            - traefik.http.routers.BRANCH_NAME.rule=Host(TRAEFIK_HOSTS)
+            - traefik.http.routers.BRANCH_NAME.entrypoints=http,https
+            - traefik.http.routers.BRANCH_NAME.tls.certresolver=letsencrypt
+            - traefik.http.services.BRANCH_NAME.loadbalancer.server.port=8080
             - traefik.docker.network=github-runner_traefik-network
             - traefik.enable=true
         networks:
+            - default
             - github-runner_traefik-network
 
     php-fpm:
