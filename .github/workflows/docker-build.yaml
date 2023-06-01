@@ -71,8 +71,8 @@ jobs:
                 run: "sed -i \"s#elasticsearch-image#ghcr.io/${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG}#\" ./docker-compose.review.yml"
             -   name: Update docker-compose.review.yml file with right project values
                 run: |
-                    HOST=${BRANCH_NAME}.${{ vars.REVIEW_STAGE_URL }}
-                    TRAEFIK_HOSTS="\`${HOST}\`, \`en.${HOST}\`"
+                    echo "HOST=${BRANCH_NAME}.${{ vars.REVIEW_STAGE_URL }}" >> $GITHUB_ENV
+                    echo "TRAEFIK_HOSTS="\`${HOST}\`, \`en.${HOST}\`" >> $GITHUB_ENV
                     "sed -i \"s#BRANCH_NAME#${BRANCH_NAME}#\" ./docker-compose.review.yml"
                     "sed -i \"s#TRAEFIK_HOSTS#${TRAEFIK_HOSTS}#\" ./docker-compose.review.yml"
             -   name: Create branch specific PHP-FPM image with project files
