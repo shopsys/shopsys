@@ -15,7 +15,7 @@ services:
             - -c
             - config_file=/var/lib/postgresql/conf/postgres.conf
         networks:
-            - github-runner_traefik-network
+            - default
         labels:
             - traefik.enable=false
 
@@ -48,21 +48,21 @@ services:
         environment:
             IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK: 1
         networks:
-            - github-runner_traefik-network
+            - default
         labels:
             - traefik.enable=false
 
     redis:
         image: redis:7.0-alpine
         networks:
-            - github-runner_traefik-network
+            - default
         labels:
             - traefik.enable=false
 
     smtp-server:
         image: namshi/smtp:latest
         networks:
-            - github-runner_traefik-network
+            - default
         labels:
             - traefik.enable=false
 
@@ -75,7 +75,7 @@ services:
         environment:
             - discovery.type=single-node
         networks:
-            - github-runner_traefik-network
+            - default
         labels:
             - traefik.enable=false
 
@@ -87,3 +87,4 @@ volumes:
 networks:
     github-runner_traefik-network:
         external: true
+    default:
