@@ -39,7 +39,6 @@ class FlagResolverMap extends ResolverMap
         return [
             'Flag' => [
                 'name' => function (Flag $flag) {
-                    // @phpstan-ignore-next-line Flag::getName() is wrongly annotated
                     return $flag->getName($this->domain->getLocale()) ?? '';
                 },
                 'slug' => function (Flag $flag) {
