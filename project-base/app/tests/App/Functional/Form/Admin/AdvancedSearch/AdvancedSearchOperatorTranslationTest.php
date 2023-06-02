@@ -9,12 +9,9 @@ use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchTransla
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\OrderAdvancedSearchConfig;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig;
 use Tests\App\Test\FunctionalTestCase;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class AdvancedSearchOperatorTranslationTest extends FunctionalTestCase
 {
-    use SymfonyTestContainer;
-
     /**
      * @inject
      */

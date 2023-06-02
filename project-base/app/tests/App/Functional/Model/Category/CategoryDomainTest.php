@@ -8,12 +8,9 @@ use App\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class CategoryDomainTest extends TransactionFunctionalTestCase
 {
-    use SymfonyTestContainer;
-
     protected const FIRST_DOMAIN_ID = 1;
     protected const SECOND_DOMAIN_ID = 2;
     protected const DEMONSTRATIVE_SEO_TITLE = 'Demonstrative seo title';

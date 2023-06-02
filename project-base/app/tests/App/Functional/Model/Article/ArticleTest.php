@@ -9,12 +9,9 @@ use DateTime;
 use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class ArticleTest extends TransactionFunctionalTestCase
 {
-    use SymfonyTestContainer;
-
     /**
      * @inject
      */

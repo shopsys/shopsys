@@ -37,9 +37,11 @@ abstract class ApplicationTestCase extends WebTestCase
     }
 
     /**
+     * Method is declared as final, so it's not unintentionally overridden by using SymfonyTestContainer trait
+     *
      * @return \Psr\Container\ContainerInterface
      */
-    public function createContainer(): PsrContainerInterface
+    final public function createContainer(): PsrContainerInterface
     {
         return self::getContainer();
     }

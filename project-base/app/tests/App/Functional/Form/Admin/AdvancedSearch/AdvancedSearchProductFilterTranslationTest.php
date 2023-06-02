@@ -8,12 +8,9 @@ use Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchProductFilte
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchTranslationNotFoundException;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig;
 use Tests\App\Test\FunctionalTestCase;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class AdvancedSearchProductFilterTranslationTest extends FunctionalTestCase
 {
-    use SymfonyTestContainer;
-
     /**
      * @inject
      */

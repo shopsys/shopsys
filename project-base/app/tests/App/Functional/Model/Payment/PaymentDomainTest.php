@@ -8,12 +8,9 @@ use App\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFactoryInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class PaymentDomainTest extends TransactionFunctionalTestCase
 {
-    use SymfonyTestContainer;
-
     protected const FIRST_DOMAIN_ID = 1;
     protected const SECOND_DOMAIN_ID = 2;
 

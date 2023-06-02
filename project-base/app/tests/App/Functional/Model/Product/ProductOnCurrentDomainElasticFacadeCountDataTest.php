@@ -6,12 +6,9 @@ namespace Tests\App\Functional\Model\Product;
 
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class ProductOnCurrentDomainElasticFacadeCountDataTest extends ProductOnCurrentDomainFacadeCountDataTest
 {
-    use SymfonyTestContainer;
-
     /**
      * @inject
      */
