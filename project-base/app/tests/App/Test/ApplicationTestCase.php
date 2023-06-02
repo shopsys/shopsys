@@ -8,6 +8,11 @@ use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use const PHP_URL_SCHEME;
 
 abstract class ApplicationTestCase extends WebTestCase
@@ -17,6 +22,15 @@ abstract class ApplicationTestCase extends WebTestCase
      */
     protected EntityManagerDecorator $em;
 
+    /**
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     * @inject
+     */
+    private EventDispatcherInterface $eventDispatcher;
+
+    /**
+     * @var \Tests\App\Test\Client|null
+     */
     protected static ?Client $client = null;
 
     protected function setUp(): void
@@ -139,6 +153,23 @@ abstract class ApplicationTestCase extends WebTestCase
         }
 
         return $clientServerParameters;
+    }
+
+    /**
+     * Runs scheduled recalculations that would be executed on a kernel.response event
+     * This allows to clean scheduled recalculations before making request on a client that could break the application
+     * Eg. when testing GraphQL validation that breaks consistency of the entity and disallows any operation over it afterwards
+     */
+    protected function dispatchFakeKernelResponseEventToTriggerImmediateRecalculations(): void
+    {
+        $fakeKernelResponseEvent = new ResponseEvent(
+            self::getCurrentClient()->getKernel(),
+            new Request(),
+            HttpKernelInterface::MAIN_REQUEST,
+            new Response()
+        );
+
+        $this->eventDispatcher->dispatch($fakeKernelResponseEvent, 'kernel.response');
     }
 
     protected function tearDown(): void
