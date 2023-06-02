@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace App\Model\ProductFeed\Mergado\FeedItem;
 
 use App\Component\Image\ImageFacade;
+use App\Model\Category\CategoryFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Product;
+use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
-use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
@@ -21,51 +22,6 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCust
 class MergadoFeedItemFactory
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader
-     */
-    private $productUrlsBatchLoader;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader
-     */
-    private $productParametersBatchLoader;
-
-    /**
-     * @var \App\Model\Category\CategoryFacade
-     */
-    private $categoryFacade;
-
-    /**
-     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
-     */
-    private $availabilityFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
-     */
-    private $productPriceCalculationForCustomerUser;
-
-    /**
-     * @var \App\Component\Image\ImageFacade
-     */
-    private $imageFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    private $currencyFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation
-     */
-    private ProductPriceCalculation $productPriceCalculation;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade
-     */
-    private PricingGroupSettingFacade $pricingGroupSettingFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader $productUrlsBatchLoader
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader $productParametersBatchLoader
      * @param \App\Model\Category\CategoryFacade $categoryFacade
@@ -75,27 +31,20 @@ class MergadoFeedItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
+     * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
-        ProductUrlsBatchLoader $productUrlsBatchLoader,
-        ProductParametersBatchLoader $productParametersBatchLoader,
-        CategoryFacade $categoryFacade,
-        ProductAvailabilityFacade $availabilityFacade,
-        ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
-        ImageFacade $imageFacade,
-        CurrencyFacade $currencyFacade,
-        ProductPriceCalculation $productPriceCalculation,
-        PricingGroupSettingFacade $pricingGroupSettingFacade
+        private readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
+        private readonly ProductParametersBatchLoader $productParametersBatchLoader,
+        private readonly CategoryFacade $categoryFacade,
+        private readonly ProductAvailabilityFacade $availabilityFacade,
+        private readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
+        private readonly ImageFacade $imageFacade,
+        private readonly CurrencyFacade $currencyFacade,
+        private readonly ProductPriceCalculation $productPriceCalculation,
+        private readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
+        private readonly LoggerInterface $logger,
     ) {
-        $this->productUrlsBatchLoader = $productUrlsBatchLoader;
-        $this->productParametersBatchLoader = $productParametersBatchLoader;
-        $this->categoryFacade = $categoryFacade;
-        $this->availabilityFacade = $availabilityFacade;
-        $this->productPriceCalculationForCustomerUser = $productPriceCalculationForCustomerUser;
-        $this->imageFacade = $imageFacade;
-        $this->currencyFacade = $currencyFacade;
-        $this->productPriceCalculation = $productPriceCalculation;
-        $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
     }
 
     /**
@@ -110,7 +59,7 @@ class MergadoFeedItemFactory
         $productPrice = $this->productPriceCalculation->calculatePrice(
             $product,
             $domainId,
-            $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId)
+            $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId),
         );
         $availability = $this->availabilityFacade->getProductAvailabilityDaysByDomainId($product, $domainId);
         $flags = $this->extractProductFlags($product, $domainId);
@@ -200,6 +149,7 @@ class MergadoFeedItemFactory
             try {
                 $imageUrls[] = $this->imageFacade->getImageUrl($domainConfig, $image, 'original');
             } catch (ImageNotFoundException $exception) {
+                $this->logger->error(sprintf('Image with id "%s" not found on filesystem', $image->getId()));
             }
         }
 

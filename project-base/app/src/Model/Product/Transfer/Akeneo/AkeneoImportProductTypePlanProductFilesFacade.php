@@ -20,29 +20,9 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
     protected const DS = DIRECTORY_SEPARATOR;
 
     /**
-     * @var \App\Component\Akeneo\Transfer\MediaFiles\MediaFilesTransferAkeneoFacade
-     */
-    private $mediaFilesTransferAkeneoFacade;
-
-    /**
      * @var \App\Model\Product\Product|null
      */
     private $product;
-
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    private $filesystem;
-
-    /**
-     * @var \App\Model\Product\ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var string
-     */
-    private $productFilesDir;
 
     /**
      * @param string $productFilesDir
@@ -52,18 +32,13 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
      * @param \League\Flysystem\FilesystemOperator $localFilesystem
      */
     public function __construct(
-        string $productFilesDir,
+        private readonly string $productFilesDir,
         AkeneoImportTransferDependency $akeneoImportTransferDependency,
-        ProductRepository $productRepository,
-        MediaFilesTransferAkeneoFacade $mediaFilesTransferAkeneoFacade,
-        FilesystemOperator $localFilesystem
+        private readonly ProductRepository $productRepository,
+        private readonly MediaFilesTransferAkeneoFacade $mediaFilesTransferAkeneoFacade,
+        private readonly FilesystemOperator $localFilesystem
     ) {
         parent::__construct($akeneoImportTransferDependency);
-
-        $this->productRepository = $productRepository;
-        $this->productFilesDir = $productFilesDir;
-        $this->mediaFilesTransferAkeneoFacade = $mediaFilesTransferAkeneoFacade;
-        $this->filesystem = $localFilesystem;
     }
 
     /**
@@ -116,12 +91,13 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
     private function storeFile(string $fileName, string $content): void
     {
         try {
-            $this->filesystem->write($this->getFullPathWithName($fileName), $content);
+            $this->localFilesystem->write($this->getFullPathWithName($fileName), $content);
             $this->logger->info('File was successfully stored.');
         } catch (FilesystemException $exception) {
             try {
-                $this->filesystem->delete($this->getFullPathWithName($fileName));
+                $this->localFilesystem->delete($this->getFullPathWithName($fileName));
             } catch (FilesystemException $exception) {
+                $this->logger->error($exception->getMessage());
             }
 
             $this->storeFile($fileName, $content);
@@ -136,8 +112,9 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
     private function removeFile(string $fileName): void
     {
         try {
-            $this->filesystem->delete($this->getFullPathWithName($fileName));
+            $this->localFilesystem->delete($this->getFullPathWithName($fileName));
         } catch (FilesystemException $exception) {
+            $this->logger->error($exception->getMessage());
         }
     }
 

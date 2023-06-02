@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\ProductFeed\Mergado;
 
-use App\Model\ProductFeed\Mergado\Exception\MissingRequiredInformationException;
 use App\Model\ProductFeed\Mergado\FeedItem\MergadoFeedItemFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
@@ -14,31 +13,6 @@ use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 class MergadoFeedItemFacade
 {
     /**
-     * @var \App\Model\ProductFeed\Mergado\MergadoProductRepository
-     */
-    private $mergadoProductRepository;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade
-     */
-    private $pricingGroupSettingFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader
-     */
-    private $productUrlsBatchLoader;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader
-     */
-    private $productParametersBatchLoader;
-
-    /**
-     * @var \App\Model\ProductFeed\Mergado\FeedItem\MergadoFeedItemFactory
-     */
-    private $mergadoFeedItemFactory;
-
-    /**
      * @param \App\Model\ProductFeed\Mergado\MergadoProductRepository $mergadoProductRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader $productUrlsBatchLoader
@@ -46,17 +20,12 @@ class MergadoFeedItemFacade
      * @param \App\Model\ProductFeed\Mergado\FeedItem\MergadoFeedItemFactory $mergadoFeedItemFactory
      */
     public function __construct(
-        MergadoProductRepository $mergadoProductRepository,
-        PricingGroupSettingFacade $pricingGroupSettingFacade,
-        ProductUrlsBatchLoader $productUrlsBatchLoader,
-        ProductParametersBatchLoader $productParametersBatchLoader,
-        MergadoFeedItemFactory $mergadoFeedItemFactory
+        private readonly MergadoProductRepository $mergadoProductRepository,
+        private readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
+        private readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
+        private readonly ProductParametersBatchLoader $productParametersBatchLoader,
+        private readonly MergadoFeedItemFactory $mergadoFeedItemFactory,
     ) {
-        $this->mergadoProductRepository = $mergadoProductRepository;
-        $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
-        $this->productUrlsBatchLoader = $productUrlsBatchLoader;
-        $this->productParametersBatchLoader = $productParametersBatchLoader;
-        $this->mergadoFeedItemFactory = $mergadoFeedItemFactory;
     }
 
     /**
@@ -74,11 +43,7 @@ class MergadoFeedItemFacade
         $this->productParametersBatchLoader->loadForProducts($products, $domainConfig);
 
         foreach ($products as $product) {
-            try {
-                yield $this->mergadoFeedItemFactory->createForProduct($product, $domainConfig);
-            } catch (MissingRequiredInformationException $exception) {
-                //skip single item
-            }
+            yield $this->mergadoFeedItemFactory->createForProduct($product, $domainConfig);
         }
     }
 }

@@ -13,34 +13,30 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 class NormalizeUrlTrailingSlashListener
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter
-     */
-    private $router;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter $router
      */
-    public function __construct(CurrentDomainRouter $router)
-    {
-        $this->router = $router;
+    public function __construct(
+        private readonly CurrentDomainRouter $router,
+    ) {
     }
 
     /**
      * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
      */
-    public function onKernelException(ExceptionEvent $event)
+    public function onKernelException(ExceptionEvent $event): void
     {
         if ($event->getThrowable() instanceof NotFoundHttpException) {
             $pathInfo = $event->getRequest()->getPathInfo();
 
-            if (substr($pathInfo, -1) === '/') {
+            if (str_ends_with($pathInfo, '/')) {
                 try {
                     $pathInfo = rtrim($pathInfo, ' /');
 
                     $routerData = $this->router->match($pathInfo);
 
                     $this->setRedirectResponse($routerData, $event);
-                } catch (ResourceNotFoundException $exception) {
+                } catch (ResourceNotFoundException) {
+                    return;
                 }
             }
         }
@@ -58,9 +54,14 @@ class NormalizeUrlTrailingSlashListener
         }
 
         // Filter route parameters
-        $parameters = array_replace($event->getRequest()->query->all(), array_filter($routerData, function ($key) {
-            return substr($key, 0, 1) !== '_';
-        }, ARRAY_FILTER_USE_KEY));
+        $parameters = array_replace(
+            $event->getRequest()->query->all(),
+            array_filter(
+                $routerData,
+                static fn ($key) => !str_starts_with($key, '_'),
+                ARRAY_FILTER_USE_KEY,
+            ),
+        );
 
         $url = $this->router->generate($routerData['_route'], $parameters);
 

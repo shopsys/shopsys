@@ -115,6 +115,19 @@ class ComparisonFacade
 
     /**
      * @param string|null $uuid
+     * @return \App\Model\Product\Comparison\Comparison|null
+     */
+    public function findComparisonByUuid(?string $uuid): ?Comparison
+    {
+        try {
+            return $this->getComparisonByUuid($uuid);
+        } catch (ComparisonNotFoundException) {
+            return null;
+        }
+    }
+
+    /**
+     * @param string|null $uuid
      * @return \App\Model\Product\Comparison\Comparison
      */
     public function getOrCreateComparisonByUuid(?string $uuid): Comparison
