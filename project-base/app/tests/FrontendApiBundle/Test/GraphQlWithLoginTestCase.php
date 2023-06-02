@@ -7,8 +7,9 @@ namespace Tests\FrontendApiBundle\Test;
 abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
 {
     public const DEFAULT_USER_EMAIL = 'no-reply@shopsys.com';
-
     public const DEFAULT_USER_PASSWORD = 'user123';
+
+    private string $currentAccessToken = '';
 
     protected function setUp(): void
     {
@@ -20,14 +21,15 @@ abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
                 static::DEFAULT_USER_PASSWORD,
             ),
         );
-        $accessToken = $responseData['data']['Login']['accessToken'];
+        $accessToken = $responseData['data']['Login']['tokens']['accessToken'];
+        $this->currentAccessToken = $accessToken;
 
         $this->configureCurrentClient(
             null,
             null,
             [
                 'CONTENT_TYPE' => 'application/graphql',
-                'HTTP_Authorization' => sprintf('Bearer %s', $accessToken),
+                'HTTP_X-Auth-Token' => sprintf('Bearer %s', $accessToken),
             ],
         );
     }
@@ -50,10 +52,35 @@ abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
                     email: "' . $customerUserEmail . '"
                     password: "' . $customerUserPassword . '"
                 }) {
-                    accessToken
-                    refreshToken
+                    tokens {
+                        accessToken
+                        refreshToken    
+                    }
                 }
             }
         ';
+    }
+
+    protected function login(): void
+    {
+        $this->configureCurrentClient(
+            null,
+            null,
+            [
+                'CONTENT_TYPE' => 'application/graphql',
+                'HTTP_X-Auth-Token' => sprintf('Bearer %s', $this->currentAccessToken),
+            ]
+        );
+    }
+
+    protected function logout(): void
+    {
+        $this->configureCurrentClient(
+            null,
+            null,
+            [
+                'CONTENT_TYPE' => 'application/graphql',
+            ]
+        );
     }
 }

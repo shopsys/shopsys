@@ -6,10 +6,10 @@ namespace Tests\FrontendApiBundle\Test;
 
 use App\DataFixtures\Demo\CurrencyDataFixture;
 use Nette\Utils\Json;
+use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
@@ -33,11 +33,6 @@ abstract class GraphQlTestCase extends ApplicationTestCase
      * @inject
      */
     protected PriceConverter $priceConverter;
-
-    /**
-     * @inject
-     */
-    protected CurrencyFacade $currencyFacade;
 
     /**
      * @inject
@@ -69,7 +64,7 @@ abstract class GraphQlTestCase extends ApplicationTestCase
      * @param string $jsonExpected
      * @param string $jsonVariables
      */
-    protected function assertQueryWithExpectedJson(string $query, string $jsonExpected, $jsonVariables = '{}'): void
+    protected function assertQueryWithExpectedJson(string $query, string $jsonExpected, string $jsonVariables = '{}'): void
     {
         $this->assertQueryWithExpectedArray(
             $query,
@@ -123,6 +118,31 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         );
 
         return self::$client->getResponse();
+    }
+
+    /**
+     * @param string $pathToFile
+     * @param array<string, mixed> $variables
+     * @return array<string, mixed>
+     */
+    protected function getResponseContentForGql(string $pathToFile, array $variables = []): array
+    {
+        $path = $this->getLocalizedPathOnFirstDomainByRouteName('overblog_graphql_endpoint');
+
+        self::$client->request(
+            'GET',
+            $path,
+            [
+                'query' => file_get_contents($pathToFile),
+                'variables' => json_encode($variables, JSON_THROW_ON_ERROR),
+            ],
+        );
+
+        if (self::$client->getResponse()->getStatusCode() === 500) {
+            throw new RuntimeException(self::$client->getResponse()->getContent());
+        }
+
+        return json_decode(self::$client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR);
     }
 
     /**
