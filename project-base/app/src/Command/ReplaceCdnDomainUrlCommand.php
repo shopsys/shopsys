@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Command;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Command\CommandResultCodes;
 use Shopsys\FrameworkBundle\Component\Domain\DomainUrlReplacer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -47,7 +46,7 @@ class ReplaceCdnDomainUrlCommand extends Command
         $trimmedCdnDomainUrl = trim($this->cdnDomainUrl, '/');
         if ($trimmedCdnDomainUrl === '') {
             $output->writeln('No CDN domain set, nothing to replace.');
-            return CommandResultCodes::RESULT_OK;
+            return Command::SUCCESS;
         }
         $contentDirectory = '/content';
         $publicDirectory = '/public';
@@ -64,6 +63,6 @@ class ReplaceCdnDomainUrlCommand extends Command
             $this->domainUrlReplacer->replaceUrlInStringColumns($cdnPublicUrl, $domainPublicUrl);
             $output->writeln(sprintf('Replaced %s with %s in all string columns', $domainPublicUrl, $cdnPublicUrl));
         }
-        return CommandResultCodes::RESULT_OK;
+        return Command::SUCCESS;
     }
 }

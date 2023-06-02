@@ -6,7 +6,6 @@ namespace App\Command;
 
 use JMS\TranslationBundle\Translation\FileWriter;
 use JMS\TranslationBundle\Translation\Loader\SymfonyLoaderAdapter;
-use Shopsys\FrameworkBundle\Command\CommandResultCodes;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\PoDumper;
 use Shopsys\FrameworkBundle\Component\Translation\PoFileLoader;
@@ -112,6 +111,6 @@ class ImportPoFilesCommand extends Command
             }
         }
 
-        return CommandResultCodes::RESULT_OK;
+        return Command::SUCCESS;
     }
 }

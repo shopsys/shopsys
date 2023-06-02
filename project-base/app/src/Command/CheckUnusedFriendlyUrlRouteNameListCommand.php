@@ -6,7 +6,6 @@ namespace App\Command;
 
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\Component\Router\FriendlyUrl\FriendlyUrlRepository;
-use Shopsys\FrameworkBundle\Command\CommandResultCodes;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -53,7 +52,7 @@ class CheckUnusedFriendlyUrlRouteNameListCommand extends Command
         $undefinedRouteNamesInMapping = $this->friendlyUrlFacade->getUndefinedRouteNamesInMapping();
         if (count($undefinedRouteNamesInMapping) === 0) {
             $io->success('Friendly URLs mapping is OK.');
-            return CommandResultCodes::RESULT_OK;
+            return Command::SUCCESS;
         }
 
         $io->error(sprintf(
@@ -62,6 +61,6 @@ class CheckUnusedFriendlyUrlRouteNameListCommand extends Command
             implode(',', $undefinedRouteNamesInMapping)
         ));
 
-        return CommandResultCodes::RESULT_FAIL;
+        return Command::FAILURE;
     }
 }
