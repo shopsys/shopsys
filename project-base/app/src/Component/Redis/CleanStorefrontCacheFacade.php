@@ -36,7 +36,7 @@ class CleanStorefrontCacheFacade
         $toRemove = [];
 
         do {
-            $keys = $this->storefrontGraphqlQueryClient->scan($iterator, $keyPattern);
+            $keys = $this->storefrontGraphqlQueryClient->scan($iterator, $keyPattern, 0);
 
             if ($keys === false || count($keys) === 0) {
                 continue;
