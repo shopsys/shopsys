@@ -65,6 +65,9 @@ class CdnTest extends FunctionalTestCase
     {
         $_ENV['CDN_DOMAIN'] = $this->originalCdnDomain;
 
+        $imageCache = self::getContainer()->get('image_cache');
+        $imageCache->clear();
+
         parent::tearDown();
     }
 }
