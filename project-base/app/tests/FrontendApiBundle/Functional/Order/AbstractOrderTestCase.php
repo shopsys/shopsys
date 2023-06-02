@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Order;
 
+use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use App\Model\Payment\Payment;
+use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -29,19 +32,19 @@ class AbstractOrderTestCase extends GraphQlTestCase
 
         return [
             0 => [
-                'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'name' => t('Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh),
-                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh, 10),
-                'quantity' => 10,
-                'vatRate' => '21.0000',
+                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh),
+                'quantity' => 1,
+                'vatRate' => $vatHigh->getPercent(),
                 'unit' => t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             ],
             1 => [
                 'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('50', $vatZero),
-                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('50', $vatZero),
+                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.9', $vatZero),
+                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.9', $vatZero),
                 'quantity' => 1,
-                'vatRate' => '0.0000',
+                'vatRate' => $vatZero->getPercent(),
                 'unit' => null,
             ],
             2 => [
@@ -49,7 +52,7 @@ class AbstractOrderTestCase extends GraphQlTestCase
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
                 'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
                 'quantity' => 1,
-                'vatRate' => '21.0000',
+                'vatRate' => $vatHigh->getPercent(),
                 'unit' => null,
             ],
         ];
@@ -107,5 +110,135 @@ class AbstractOrderTestCase extends GraphQlTestCase
             'priceWithoutVat' => $price->getPriceWithoutVat()->getAmount(),
             'vatAmount' => $price->getVatAmount()->getAmount(),
         ];
+    }
+
+    /**
+     * @param string $cartUuid
+     */
+    protected function addCzechPostTransportToCart(string $cartUuid): void
+    {
+        /** @var \App\Model\Transport\Transport $transportCzechPost */
+        $transportCzechPost = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST);
+        $this->addTransportToCart($cartUuid, $transportCzechPost);
+    }
+
+    protected function addPplTransportToDemoCart(): void
+    {
+        /** @var \App\Model\Transport\Transport $transportPpl */
+        $transportPpl = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
+        $this->addTransportToCart(CartDataFixture::CART_UUID, $transportPpl);
+    }
+
+    /**
+     * @param string $cartUuid
+     * @param \App\Model\Transport\Transport $transport
+     * @param string|null $pickupPlaceIdentifier
+     */
+    protected function addTransportToCart(string $cartUuid, Transport $transport, ?string $pickupPlaceIdentifier = null): void
+    {
+        $pickupPlaceIdentifierLine = '';
+        if ($pickupPlaceIdentifier !== null) {
+            $pickupPlaceIdentifierLine = 'pickupPlaceIdentifier: "' . $pickupPlaceIdentifier . '"';
+        }
+        $changeTransportInCartMutation = '
+            mutation {
+                ChangeTransportInCart(input:{
+                    cartUuid: "' . $cartUuid . '"
+                    transportUuid: "' . $transport->getUuid() . '"
+                    ' . $pickupPlaceIdentifierLine . '
+                }) {
+                    uuid
+                }
+            }
+        ';
+        $this->getResponseContentForQuery($changeTransportInCartMutation);
+    }
+
+    /**
+     * @param string $cartUuid
+     */
+    protected function addCashOnDeliveryPaymentToCart(string $cartUuid): void
+    {
+        /** @var \App\Model\Payment\Payment $paymentCashOnDelivery */
+        $paymentCashOnDelivery = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
+        $this->addPaymentToCart($cartUuid, $paymentCashOnDelivery);
+    }
+
+    /**
+     * @param string $cartUuid
+     */
+    protected function addCardPaymentToCart(string $cartUuid): void
+    {
+        /** @var \App\Model\Payment\Payment $paymentCard */
+        $paymentCard = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $this->addPaymentToCart($cartUuid, $paymentCard);
+    }
+
+    /**
+     * @param string $cartUuid
+     * @param \App\Model\Payment\Payment $payment
+     */
+    protected function addPaymentToCart(string $cartUuid, Payment $payment): void
+    {
+        $changePaymentInCartMutation = '
+            mutation {
+                ChangePaymentInCart(input:{
+                    cartUuid: "' . $cartUuid . '"
+                    paymentUuid: "' . $payment->getUuid() . '"
+                }) {
+                    uuid
+                }
+            }
+        ';
+        $this->getResponseContentForQuery($changePaymentInCartMutation);
+    }
+
+    protected function addCardPaymentToDemoCart(): void
+    {
+        /** @var \App\Model\Payment\Payment $paymentCard */
+        $paymentCard = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $this->addPaymentToCart(CartDataFixture::CART_UUID, $paymentCard);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCreateOrderMutationFromDemoCart(): string
+    {
+        return 'mutation {
+                    CreateOrder(
+                        input: {
+                            cartUuid: "' . CartDataFixture::CART_UUID . '"
+                            firstName: "firstName"
+                            lastName: "lastName"
+                            email: "user@example.com"
+                            telephone: "+53 123456789"
+                            onCompanyBehalf: false
+                            street: "123 Fake Street"
+                            city: "Springfield"
+                            postcode: "12345"
+                            country: "CZ"
+                            differentDeliveryAddress: false
+                        }
+                    ) {
+                        order {
+                            uuid
+                        }
+                        cart {
+                            modifications {
+                                paymentModifications {
+                                    paymentPriceChanged
+                                    paymentUnavailable
+                                }
+                                transportModifications {
+                                    transportUnavailable
+                                    transportPriceChanged
+                                    personalPickupStoreUnavailable
+                                    transportWeightLimitExceeded
+                                }
+                            }
+                        }
+                    }
+                }';
     }
 }

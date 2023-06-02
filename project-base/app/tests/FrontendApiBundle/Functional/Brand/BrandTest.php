@@ -4,21 +4,27 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Brand;
 
+use App\DataFixtures\Demo\BrandDataFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
-use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class BrandTest extends GraphQlTestCase
 {
     protected Brand $brand;
 
+    /**
+     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
+     * @inject
+     */
+    protected UrlGeneratorInterface $urlGenerator;
+
     protected function setUp(): void
     {
-        $brandFacade = self::getContainer()->get(BrandFacade::class);
-        $this->brand = $brandFacade->getById(2);
-
         parent::setUp();
+
+        $this->brand = $this->getReference(BrandDataFixture::BRAND_CANON);
     }
 
     public function testBrandByUuid(): void
@@ -27,12 +33,14 @@ class BrandTest extends GraphQlTestCase
             query {
                 brand(uuid: "' . $this->brand->getUuid() . '") {
                     name
+                    slug
                     description
                     link
                     seoTitle
                     seoMetaDescription
                     seoH1
                     products (first: 5) {
+                        orderingMode
                         edges {
                             node {
                                 name
@@ -40,12 +48,18 @@ class BrandTest extends GraphQlTestCase
                         }
                     }
                     images {
-                        url,
-                        type,
-                        size,
-                        width,
-                        height,
                         position
+                        type
+                        sizes {
+                            url
+                            size
+                            width
+                            height
+                        }
+                    }
+                    breadcrumb {
+                        name
+                        slug
                     }
                 }
             }
@@ -55,22 +69,24 @@ class BrandTest extends GraphQlTestCase
     "data": {
         "brand": {
             "name": "' . t('Canon', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
+            "slug": "/canon",
             "description": "' . t(
-            'This is description of brand Canon.',
-            [],
+            'This is description of brand %brandName%.',
+            ['%brandName%' => 'Canon'],
             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $this->getFirstDomainLocale(),
         ) . '",
-            "link": "' . $this->getFullUrlPath('/canon/') . '",
-            "seoTitle": "' . t('Canon SEO Title', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
+            "link": "' . $this->getFullUrlPath('/canon') . '",
+            "seoTitle": "' . t('%brandName% SEO Title', ['%brandName%' => 'Canon'], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
             "seoMetaDescription": "' . t(
-            'This is SEO meta description of brand Canon.',
-            [],
+            'This is SEO meta description of brand %brandName%.',
+            ['%brandName%' => 'Canon'],
             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $this->getFirstDomainLocale(),
         ) . '",
-            "seoH1": "' . t('Canon SEO H1', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
+            "seoH1": "' . t('%brandName% SEO H1', ['%brandName%' => 'Canon'], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
             "products": {
+                "orderingMode": "PRIORITY",
                 "edges": [
                     {
                         "node": {
@@ -101,20 +117,32 @@ class BrandTest extends GraphQlTestCase
             },
             "images": [
                 {
-                    "url": "' . $this->getFullUrlPath('/content-test/images/brand/default/80.jpg') . '",
+                    "position": null,
                     "type": null,
-                    "size": "default",
-                    "width": 300,
-                    "height": 200,
-                    "position": null
+                    "sizes": [
+                        {
+                            "url": "' . $this->getFullUrlPath('/content-test/images/brand/default/canon_80.jpg') . '",
+                            "size": "default",
+                            "width": 300,
+                            "height": 200
+                        },
+                        {
+                            "url": "' . $this->getFullUrlPath('/content-test/images/brand/original/canon_80.jpg') . '",
+                            "size": "original",
+                            "width": null,
+                            "height": null
+                        }
+                    ]
+                }
+            ],
+            "breadcrumb": [
+                {
+                    "name": "' . t('Brand overview') . '",
+                    "slug": "' . $this->urlGenerator->generate('front_brand_list') . '"
                 },
                 {
-                    "url": "' . $this->getFullUrlPath('/content-test/images/brand/original/80.jpg') . '",
-                    "type": null,
-                    "size": "original",
-                    "width": null,
-                    "height": null,
-                    "position": null
+                  "name": "Canon",
+                  "slug": "' . $this->urlGenerator->generate('front_brand_detail', ['id' => $this->brand->getId()]) . '"
                 }
             ]
         }

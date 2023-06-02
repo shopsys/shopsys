@@ -36,11 +36,14 @@ class ParameterFilterChoiceRepositoryTest extends ParameterTransactionFunctional
 
         $ids = array_keys($parameterFilterChoices);
 
-        $this->assertContains(50, $ids);
         $this->assertContains(51, $ids);
-        $this->assertContains(10, $ids);
+        $this->assertContains(52, $ids);
+        $this->assertContains(28, $ids);
 
         $parameterParameterValuePair = [
+            52 => [$this->getParameterValueIdForFirstDomain('hardcover'), $this->getParameterValueIdForFirstDomain('paper')],
+            51 => [$this->getParameterValueIdForFirstDomain('250'), $this->getParameterValueIdForFirstDomain('48'), $this->getParameterValueIdForFirstDomain('50'), $this->getParameterValueIdForFirstDomain('55')],
+            28 => [$this->getParameterValueIdForFirstDomain('150 g'), $this->getParameterValueIdForFirstDomain('250 g'), $this->getParameterValueIdForFirstDomain('50 g')],
             51 => [$this->getParameterValueIdForFirstDomain('hardcover'), $this->getParameterValueIdForFirstDomain(
                 'paper',
             )],

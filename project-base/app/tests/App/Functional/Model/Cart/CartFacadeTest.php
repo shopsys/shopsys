@@ -5,21 +5,21 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Cart;
 
 use App\DataFixtures\Demo\ProductDataFixture;
-use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
+use App\Model\Cart\CartFacade;
+use App\Model\Cart\Watcher\CartWatcherFacade;
+use App\Model\Customer\User\CurrentCustomerUser;
+use App\Model\Customer\User\CustomerUserIdentifierFactory;
+use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
+use App\Model\Product\Availability\ProductAvailabilityFacade;
+use App\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Cart\CartFactory;
 use Shopsys\FrameworkBundle\Model\Cart\CartRepository;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
-use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
-use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class CartFacadeTest extends TransactionFunctionalTestCase
@@ -72,7 +72,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private CartItemFactoryInterface $cartItemFactory;
+    private ProductAvailabilityFacade $productAvailabilityFacade;
 
     public function testAddProductToCartAddsItemsOnlyToCurrentCart()
     {
@@ -189,56 +189,16 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @dataProvider productCartDataProvider
-     * @param int $productId
-     * @param bool $cartShouldBeNull
-     */
-    public function testCartNotExistIfNoListableProductIsInCart(int $productId, bool $cartShouldBeNull): void
-    {
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productId);
-
-        $cart = $this->cartFacadeFromContainer->getCartOfCurrentCustomerUserCreateIfNotExists();
-        $cartItem = $this->cartItemFactory->create($cart, $product, 1, Money::create(10));
-        $cart->addItem($cartItem);
-
-        $this->em->persist($cartItem);
-        $this->em->flush();
-
-        $this->assertFalse($cart->isEmpty(), 'Cart should not be empty');
-
-        $cart = $this->cartFacadeFromContainer->findCartOfCurrentCustomerUser();
-
-        if ($cartShouldBeNull) {
-            $this->assertNull($cart);
-        } else {
-            $this->assertEquals(1, $cart->getItemsCount());
-        }
-    }
-
-    public function productCartDataProvider()
-    {
-        return [
-            ['productId' => 1, 'cartShouldBeNull' => false],
-            ['productId' => 34, 'cartShouldBeNull' => true], // not listable product
-
-        ];
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
      * @return \Shopsys\FrameworkBundle\Model\Cart\CartFacade
      */
     private function createCartFacade(CustomerUserIdentifier $customerUserIdentifier)
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory */
-        $customerUserIdentifierFactory = $this->getCustomerUserIdentifierFactoryMock($customerUserIdentifier);
-
         return new CartFacade(
             $this->em,
             $this->cartFactory,
             $this->productRepository,
-            $customerUserIdentifierFactory,
+            $this->getCustomerUserIdentifierFactoryMock($customerUserIdentifier),
             $this->domain,
             $this->currentCustomerUser,
             $this->currentPromoCodeFacade,
@@ -246,6 +206,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
             $this->cartItemFactoryInterface,
             $this->cartRepository,
             $this->cartWatcherFacade,
+            $this->productAvailabilityFacade,
         );
     }
 
@@ -255,8 +216,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
      */
     private function getCartByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier)
     {
-        return $this->cartFacadeFromContainer->getCartByCustomerUserIdentifierCreateIfNotExists(
-            $customerUserIdentifier,
+        return $this->cartFacadeFromContainer->getCartByCustomerUserIdentifierCreateIfNotExists($customerUserIdentifier,
         );
     }
 
@@ -283,7 +243,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject|\App\Model\Customer\User\CustomerUserIdentifierFactory
      */
     private function getCustomerUserIdentifierFactoryMock(CustomerUserIdentifier $customerUserIdentifier)
     {

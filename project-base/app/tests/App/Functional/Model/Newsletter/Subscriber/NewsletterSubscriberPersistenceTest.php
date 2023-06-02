@@ -15,7 +15,7 @@ class NewsletterSubscriberPersistenceTest extends TransactionFunctionalTestCase
     public function testPersistence(): void
     {
         $newsletterSubscriber = new NewsletterSubscriber(
-            'no-reply@shopsys.com',
+            'no-reply2@shopsys.com',
             new DateTimeImmutable('2018-02-06 15:15:48'),
             1,
         );
@@ -30,7 +30,7 @@ class NewsletterSubscriberPersistenceTest extends TransactionFunctionalTestCase
         ->where('ns.email = :email')
         ->andWhere('ns.domainId = :domainId')
         ->setParameters([
-            'email' => 'no-reply@shopsys.com',
+            'email' => 'no-reply2@shopsys.com',
             'domainId' => Domain::FIRST_DOMAIN_ID,
         ])
         ->getQuery()->getOneOrNullResult();

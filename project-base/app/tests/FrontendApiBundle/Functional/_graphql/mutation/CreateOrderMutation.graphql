@@ -1,0 +1,149 @@
+mutation CreateOrder(
+    $cartUuid: Uuid
+    $firstName: String!
+    $lastName: String!
+    $email: String!
+    $telephone: String!
+    $street: String!
+    $city: String!
+    $postcode: String!
+    $country: String!
+    $onCompanyBehalf: Boolean!
+    $companyName: String
+    $companyNumber: String
+    $companyTaxNumber: String
+    $differentDeliveryAddress: Boolean!
+    $deliveryAddressUuid: Uuid
+    $deliveryFirstName: String
+    $deliveryLastName: String
+    $deliveryCompanyName: String
+    $deliveryTelephone: String
+    $deliveryStreet: String
+    $deliveryCity: String
+    $deliveryPostcode: String
+    $deliveryCountry: String
+    $note: String
+    $newsletterSubscription: Boolean
+) {
+    CreateOrder(
+        input: {
+            cartUuid: $cartUuid
+            firstName: $firstName
+            lastName: $lastName
+            email: $email
+            telephone: $telephone
+            onCompanyBehalf: $onCompanyBehalf
+            companyName: $companyName
+            companyNumber: $companyNumber
+            companyTaxNumber: $companyTaxNumber
+            street: $street
+            city: $city
+            postcode: $postcode
+            country: $country
+            differentDeliveryAddress: $differentDeliveryAddress
+            deliveryAddressUuid: $deliveryAddressUuid
+            deliveryFirstName: $deliveryFirstName
+            deliveryLastName: $deliveryLastName
+            deliveryCompanyName: $deliveryCompanyName
+            deliveryTelephone: $deliveryTelephone
+            deliveryStreet: $deliveryStreet
+            deliveryCity: $deliveryCity
+            deliveryCountry: $deliveryCountry
+            deliveryPostcode: $deliveryPostcode
+            note: $note
+            newsletterSubscription: $newsletterSubscription
+        }
+    ) {
+        order {
+            uuid
+            transport {
+                uuid
+                name
+            }
+            payment {
+                uuid
+                name
+            }
+            status
+            totalPrice {
+                priceWithVat
+                priceWithoutVat
+                vatAmount
+            }
+            items {
+                name
+                unitPrice {
+                    priceWithVat
+                    priceWithoutVat
+                    vatAmount
+                }
+                totalPrice {
+                    priceWithVat
+                    priceWithoutVat
+                    vatAmount
+                }
+                quantity
+                vatRate
+                unit
+            }
+            firstName
+            lastName
+            email
+            telephone
+            companyName
+            companyNumber
+            companyTaxNumber
+            street
+            city
+            postcode
+            country {
+                code
+            }
+            differentDeliveryAddress
+            deliveryFirstName
+            deliveryLastName
+            deliveryCompanyName
+            deliveryTelephone
+            deliveryStreet
+            deliveryCity
+            deliveryPostcode
+            deliveryCountry {
+                code
+            }
+            note
+        }
+        orderCreated
+        cart {
+            modifications {
+                itemModifications {
+                    cartItemsWithChangedQuantity {
+                        uuid
+                    }
+                    cartItemsWithModifiedPrice {
+                        uuid
+                    }
+                    noLongerAvailableCartItemsDueToQuantity {
+                        uuid
+                    }
+                    noLongerListableCartItems {
+                        uuid
+                    }
+                }
+                paymentModifications {
+                    paymentPriceChanged
+                    paymentUnavailable
+                }
+                promoCodeModifications {
+                    noLongerApplicablePromoCode
+                }
+                transportModifications {
+                    personalPickupStoreUnavailable
+                    transportPriceChanged
+                    transportUnavailable
+                    transportWeightLimitExceeded
+                }
+                someProductWasRemovedFromEshop
+            }
+        }
+    }
+}

@@ -1,0 +1,15 @@
+mutation SetDefaultDeliveryAddress($deliveryAddressUuid: Uuid!) {
+    SetDefaultDeliveryAddress(deliveryAddressUuid: $deliveryAddressUuid) {
+        uuid
+        defaultDeliveryAddress {
+            uuid
+            street
+            city
+        }
+        deliveryAddresses {
+            uuid
+            street
+            city
+        }
+    }
+}

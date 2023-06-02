@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Product;
 use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
+use App\DataFixtures\Demo\ParameterDataFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
@@ -48,7 +49,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
 
     public function testFilterByFlag(): void
     {
-        $flag = $this->getReference(FlagDataFixture::FLAG_ACTION_PRODUCT);
+        $flag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION);
 
         $query = '
             query {
@@ -110,7 +111,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
 
         $productsExpected = [
             ['name' => t(
-                'Reflective tape for safe movement on the road',
+                'ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $this->firstDomainLocale,
@@ -198,6 +199,47 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $this->firstDomainLocale,
             )],
+        ];
+
+        $this->assertProducts($query, 'category', $productsExpected);
+    }
+
+    public function testFilterBySliderParameter(): void
+    {
+        /** @var \App\Model\Category\Category $category */
+        $category = $this->getReference(CategoryDataFixture::CATEGORY_PC);
+        /** @var \App\Model\Product\Parameter\Parameter $parameterSlider */
+        $parameterSlider = $this->getReference(ParameterDataFixture::PARAMETER_SLIDER_WARRANTY);
+
+        $query = '
+            query {
+                category (uuid: "' . $category->getUuid() . '") {
+                    products (
+                        filter: {
+                            parameters: [
+                                {
+                                    parameter: "' . $parameterSlider->getUuid() . '",
+                                    minimalValue: 3
+                                    maximalValue: 4
+                                }
+                            ]
+                        }
+                    ) {
+                        edges {
+                            node {
+                                name
+                            }
+                        }
+                    },
+                }
+            }
+        ';
+
+        $productsExpected = [
+            ['name' => t('Canon MG3550', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
+            ['name' => t('Genius NetScroll 310 silver', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
+            ['name' => t('Genius SlimStar i820', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
+            ['name' => t('OKI MC861cdxn+ (01318206)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale)],
         ];
 
         $this->assertProducts($query, 'category', $productsExpected);

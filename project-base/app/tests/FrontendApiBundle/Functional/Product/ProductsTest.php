@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Product;
 
 use App\DataFixtures\Demo\VatDataFixture;
+use App\Model\Product\Availability\AvailabilityStatusEnum;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 class ProductsTest extends ProductsGraphQlTestCase
@@ -44,12 +45,16 @@ class ProductsTest extends ProductsGraphQlTestCase
                         node {
                             name
                             shortDescription
+                            seoH1
+                            seoTitle
+                            seoMetaDescription
                             link
                             unit {
                                 name
                             }
                             availability {
                                 name
+                                status
                             }
                             stockQuantity
                             categories {
@@ -75,9 +80,26 @@ class ProductsTest extends ProductsGraphQlTestCase
                             orderingPriority
                             parameters {
                                 name
+                                group
+                                unit {
+                                    name
+                                }
                                 values {
                                     text
                                 }
+                            }
+                            isUsingStock
+                            namePrefix
+                            nameSuffix
+                            fullName
+                            catalogNumber
+                            partNumber
+                            ean
+                            usps
+                            hasPreorder
+                            files {
+                              anchorText
+                              url
                             }
                         }
                     }
@@ -122,17 +144,24 @@ class ProductsTest extends ProductsGraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale,
                 ),
+                'seoH1' => null,
+                'seoTitle' => null,
+                'seoMetaDescription' => null,
                 'link' => $this->getLocalizedPathOnFirstDomainByRouteName('front_product_detail', ['id' => 77]),
                 'unit' => [
                     'name' => t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 ],
                 'availability' => [
                     'name' => t('In stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'status' => AvailabilityStatusEnum::InStock->name,
                 ],
-                'stockQuantity' => 100,
+                'stockQuantity' => 900,
                 'categories' => [
                     [
                         'name' => t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    ],
+                    [
+                        'name' => t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                     ],
                 ],
                 'flags' => [],
@@ -148,26 +177,14 @@ class ProductsTest extends ProductsGraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale,
                 ),
-                'orderingPriority' => 1,
+                'orderingPriority' => 0,
                 'parameters' => [
                     [
-                        'name' => t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                        'values' => [
-                            [
-                                'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            ],
-                        ],
-                    ],
-                    [
-                        'name' => t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                        'values' => [
-                            [
-                                'text' => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            ],
-                        ],
-                    ],
-                    [
                         'name' => t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'group' => t('Hlavní údaje', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'unit' => [
+                            'name' => t('in', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        ],
                         'values' => [
                             [
                                 'text' => t('30"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -176,6 +193,8 @@ class ProductsTest extends ProductsGraphQlTestCase
                     ],
                     [
                         'name' => t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'group' => t('Hlavní údaje', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'unit' => null,
                         'values' => [
                             [
                                 'text' => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -183,7 +202,29 @@ class ProductsTest extends ProductsGraphQlTestCase
                         ],
                     ],
                     [
+                        'name' => t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'group' => t('Hlavní údaje', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'unit' => null,
+                        'values' => [
+                            [
+                                'text' => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            ],
+                        ],
+                    ],
+                    [
                         'name' => t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'group' => t('Způsob připojení', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'unit' => null,
+                        'values' => [
+                            [
+                                'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            ],
+                        ],
+                    ],
+                    [
+                        'name' => t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'group' => t('Způsob připojení', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'unit' => null,
                         'values' => [
                             [
                                 'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -191,6 +232,16 @@ class ProductsTest extends ProductsGraphQlTestCase
                         ],
                     ],
                 ],
+                'isUsingStock' => true,
+                'namePrefix' => null,
+                'nameSuffix' => null,
+                'fullName' => t('30” Hyundai 22MT44D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'catalogNumber' => '7700769',
+                'partNumber' => '22MT44D',
+                'ean' => '8845781245931',
+                'usps' => [],
+                'hasPreorder' => false,
+                'files' => [],
             ],
         ];
     }
@@ -220,6 +271,12 @@ class ProductsTest extends ProductsGraphQlTestCase
     private function getExpectedDataForLastProduct(): string
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
+        $productName = t(
+            'ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue',
+            [],
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+            $firstDomainLocale
+        );
 
         return '{
     "data": {
@@ -227,12 +284,7 @@ class ProductsTest extends ProductsGraphQlTestCase
             "edges": [
                 {
                     "node": {
-                        "name": "' . t(
-            'Reflective tape for safe movement on the road',
-            [],
-            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-            $firstDomainLocale,
-        ) . '"
+                        "name": "' . $productName . '"
                     }
                 }
             ]

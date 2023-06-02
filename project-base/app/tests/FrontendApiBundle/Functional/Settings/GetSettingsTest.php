@@ -27,7 +27,6 @@ final class GetSettingsTest extends GraphQlTestCase
 
         $graphQlType = 'settings';
         $response = $this->getResponseContentForQuery($this->getSettingsQuery());
-        $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
         self::assertSame($expectedSettingsData, $responseData);

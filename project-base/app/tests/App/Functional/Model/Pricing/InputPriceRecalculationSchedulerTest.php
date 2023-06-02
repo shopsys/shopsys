@@ -78,7 +78,7 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         $responseEvent = new ResponseEvent(
             self::$kernel,
             new Request(),
-            HttpKernelInterface::MASTER_REQUEST,
+            HttpKernelInterface::MAIN_REQUEST,
             new Response(),
         );
 
@@ -183,18 +183,18 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
 
         $this->em->flush();
 
+        $responseEvent = new ResponseEvent(
+            self::$kernel,
+            new Request(),
+            HttpKernelInterface::MAIN_REQUEST,
+            new Response(),
+        );
+
         if ($scheduleSetInputPricesMethod === self::METHOD_WITH_VAT) {
             $this->inputPriceRecalculationScheduler->scheduleSetInputPricesWithVat();
         } elseif ($scheduleSetInputPricesMethod === self::METHOD_WITHOUT_VAT) {
             $this->inputPriceRecalculationScheduler->scheduleSetInputPricesWithoutVat();
         }
-
-        $responseEvent = new ResponseEvent(
-            self::$kernel,
-            new Request(),
-            HttpKernelInterface::MASTER_REQUEST,
-            new Response(),
-        );
 
         $this->inputPriceRecalculationScheduler->onKernelResponse($responseEvent);
 

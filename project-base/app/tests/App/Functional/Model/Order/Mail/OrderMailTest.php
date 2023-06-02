@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Order\Mail;
 
+use App\Model\Mail\MailTemplate;
+use App\Model\Mail\MailTemplateData;
+use App\Model\Order\Mail\OrderMail;
+use App\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
-use Shopsys\FrameworkBundle\Model\Mail\MailTemplateData;
 use Shopsys\FrameworkBundle\Model\Mail\MessageData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 use Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator;
-use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Shopsys\FrameworkBundle\Twig\PriceExtension;
 use Symfony\Component\Routing\RouterInterface;
-use Tests\App\Test\FunctionalTestCase;
+use Tests\App\Test\TransactionFunctionalTestCase;
 use Twig\Environment;
 
-class OrderMailTest extends FunctionalTestCase
+class OrderMailTest extends TransactionFunctionalTestCase
 {
     public function testGetMailTemplateNameByStatus()
     {
@@ -51,9 +51,9 @@ class OrderMailTest extends FunctionalTestCase
 
     public function testGetMessageByOrder()
     {
-        $routerMock = $this->getMockBuilder(RouterInterface::class)->setMethods(
-            ['generate'],
-        )->getMockForAbstractClass();
+        $routerMock = $this->getMockBuilder(RouterInterface::class)
+            ->setMethods(['generate'])
+            ->getMockForAbstractClass();
         $routerMock->expects($this->any())->method('generate')->willReturn('generatedUrl');
 
         $domainRouterFactoryMock = $this->getMockBuilder(DomainRouterFactory::class)

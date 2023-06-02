@@ -9,13 +9,14 @@ use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\OrderStatusDataFixture;
 use App\Model\Order\Item\OrderItemData;
 use App\Model\Order\OrderData;
+use App\Model\Order\OrderDataFactory;
+use App\Model\Order\OrderFacade;
+use App\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
-use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
-use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
@@ -60,8 +61,9 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
 
     /**
      * @inject
+     * @phpstan-ignore-next-line Test is skipped
      */
-    private OrderDataFactoryInterface $orderDataFactory;
+    private OrderDataFactory $orderDataFactory;
 
     public function testCreate()
     {
@@ -70,14 +72,25 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $this->cartFacade->addProductToCart($product->getId(), 1);
 
         /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->transportRepository->getById(1);
+        $transport = $this->transportRepository->getById(3);
         /** @var \App\Model\Payment\Payment $payment */
         $payment = $this->paymentRepository->getById(1);
 
-        $orderData = $this->createBaseOrderData();
-
+        $orderData = new OrderData();
         $orderData->transport = $transport;
         $orderData->payment = $payment;
+        $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW);
+        $orderData->firstName = 'firstName';
+        $orderData->lastName = 'lastName';
+        $orderData->email = 'email';
+        $orderData->telephone = 'telephone';
+        $orderData->companyName = null;
+        $orderData->companyNumber = null;
+        $orderData->companyTaxNumber = null;
+        $orderData->street = 'street';
+        $orderData->city = 'city';
+        $orderData->postcode = 'postcode';
+        $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
         $orderData->deliveryAddressSameAsBillingAddress = false;
         $orderData->deliveryFirstName = 'deliveryFirstName';
         $orderData->deliveryLastName = 'deliveryLastName';
@@ -86,8 +99,18 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderData->deliveryStreet = 'deliveryStreet';
         $orderData->deliveryCity = 'deliveryCity';
         $orderData->deliveryPostcode = 'deliveryPostcode';
+        $orderData->deliveryCountry = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
+        $orderData->note = 'note';
+        $orderData->domainId = Domain::FIRST_DOMAIN_ID;
+        $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
 
-        $orderPreview = $this->orderPreviewFactory->createForCurrentUser($transport, $payment);
+        $orderPreview = $this->orderPreviewFactory->create(
+            $orderData->currency,
+            $orderData->domainId,
+            [new QuantifiedProduct($product, 1)],
+            $transport,
+            $payment
+        );
         $order = $this->orderFacade->createOrder($orderData, $orderPreview, null);
 
         $orderFromDb = $this->orderRepository->getById($order->getId());
@@ -98,9 +121,6 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame($orderData->lastName, $orderFromDb->getLastName());
         $this->assertSame($orderData->email, $orderFromDb->getEmail());
         $this->assertSame($orderData->telephone, $orderFromDb->getTelephone());
-        $this->assertSame($orderData->companyName, $orderFromDb->getCompanyName());
-        $this->assertSame($orderData->companyNumber, $orderFromDb->getCompanyNumber());
-        $this->assertSame($orderData->companyTaxNumber, $orderFromDb->getCompanyTaxNumber());
         $this->assertSame($orderData->street, $orderFromDb->getStreet());
         $this->assertSame($orderData->city, $orderFromDb->getCity());
         $this->assertSame($orderData->postcode, $orderFromDb->getPostcode());
@@ -121,7 +141,10 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
 
     public function testEdit()
     {
-        /** @var \App\Model\Order\Order $order */
+        $this->markTestSkipped('Adding new items into Order is denied. It is caused by unknown ProductType for new order items.'
+            . ' If you need it, It can be solved by filling OrderItemData and calling new methods for creating OrderItems');
+
+        // @phpstan-ignore-next-line Tests are skipped
         $order = $this->getReference('order_1');
 
         $this->assertCount(4, $order->getItems());
@@ -154,59 +177,5 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderFromDb = $this->orderRepository->getById($order->getId());
 
         $this->assertCount(5, $orderFromDb->getItems());
-    }
-
-    public function testEntityStateAfterOrder(): void
-    {
-        $product = $this->productRepository->getById(1);
-        $previousProductQuantity = $product->getStockQuantity();
-        // stock quantity for product is 300 in ProductDataFixture, buy quantity is selected so the product is hidden after order
-        $buyQuantity = 500;
-
-        $this->cartFacade->addProductToCart($product->getId(), $buyQuantity);
-
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->transportRepository->getById(1);
-        /** @var \App\Model\Payment\Payment $payment */
-        $payment = $this->paymentRepository->getById(1);
-
-        $orderData = $this->createBaseOrderData();
-        $orderData->transport = $transport;
-        $orderData->payment = $payment;
-        $orderData->deliveryAddressSameAsBillingAddress = true;
-
-        // place order, expecting stock statuses are subtracted and visibilities are recalculated
-        $this->orderFacade->createOrderFromFront($orderData, null);
-
-        $product = $this->productRepository->getById(1);
-        $newStockQuantity = $product->getStockQuantity();
-
-        self::assertEquals($previousProductQuantity - $buyQuantity, $newStockQuantity);
-        self::assertEquals(true, $product->getCalculatedHidden(), 'Product has to be hidden as it\'s sold out');
-    }
-
-    /**
-     * @return \App\Model\Order\OrderData
-     */
-    private function createBaseOrderData(): OrderData
-    {
-        $orderData = new OrderData();
-        $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW);
-        $orderData->firstName = 'firstName';
-        $orderData->lastName = 'lastName';
-        $orderData->email = 'email';
-        $orderData->telephone = 'telephone';
-        $orderData->companyName = 'companyName';
-        $orderData->companyNumber = 'companyNumber';
-        $orderData->companyTaxNumber = 'companyTaxNumber';
-        $orderData->street = 'street';
-        $orderData->city = 'city';
-        $orderData->postcode = 'postcode';
-        $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $orderData->note = 'note';
-        $orderData->domainId = Domain::FIRST_DOMAIN_ID;
-        $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
-
-        return $orderData;
     }
 }

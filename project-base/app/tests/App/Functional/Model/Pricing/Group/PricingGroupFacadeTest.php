@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Model\Pricing\Group;
 
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\Model\Customer\BillingAddressDataFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
@@ -43,6 +44,12 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
      */
     private CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory;
 
+    /**
+     * @var \App\Model\Customer\BillingAddressDataFactory
+     * @inject
+     */
+    private BillingAddressDataFactory $billingAddressDataFactory;
+
     public function testCreate()
     {
         /** @var \App\Model\Product\Product $product */
@@ -76,8 +83,15 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
 
         $customerUserData = $this->customerUserDataFactory->createFromCustomerUser($customerUser);
         $customerUserData->pricingGroup = $pricingGroupToDelete;
+
+        /** @var \App\Model\Customer\BillingAddress $billingAddress */
+        $billingAddress = $customerUser->getCustomer()->getBillingAddress();
+        $billingAddressData = $this->billingAddressDataFactory->createFromBillingAddress($billingAddress);
+
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
         $customerUserUpdateData->customerUserData = $customerUserData;
+        $customerUserUpdateData->billingAddressData = $billingAddressData;
+
         $this->customerUserFacade->editByAdmin($customerUser->getId(), $customerUserUpdateData);
 
         $this->pricingGroupFacade->delete($pricingGroupToDelete->getId(), $pricingGroupToReplaceWith->getId());

@@ -6,10 +6,10 @@ namespace Tests\App\Functional\Model\Unit;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
-use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
-use Shopsys\FrameworkBundle\Model\Product\Unit\UnitData;
-use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
+use App\Model\Product\ProductDataFactory;
+use App\Model\Product\ProductFacade;
+use App\Model\Product\Unit\UnitData;
+use App\Model\Product\Unit\UnitFacade;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class UnitFacadeTest extends TransactionFunctionalTestCase
@@ -22,7 +22,7 @@ class UnitFacadeTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private ProductDataFactoryInterface $productDataFactory;
+    private ProductDataFactory $productDataFactory;
 
     /**
      * @inject

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Payment;
 
 use App\Model\Payment\Payment;
+use App\Model\Payment\PaymentData;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFactoryInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -26,7 +27,7 @@ class PaymentDomainTest extends TransactionFunctionalTestCase
 
     public function testCreatePaymentEnabledOnDomain()
     {
-        $paymentData = $this->paymentDataFactory->create();
+        $paymentData = $this->createPaymentData();
 
         $paymentData->enabled = [
             self::FIRST_DOMAIN_ID => true,
@@ -42,7 +43,7 @@ class PaymentDomainTest extends TransactionFunctionalTestCase
 
     public function testCreatePaymentDisabledOnDomain()
     {
-        $paymentData = $this->paymentDataFactory->create();
+        $paymentData = $this->createPaymentData();
 
         $paymentData->enabled[self::FIRST_DOMAIN_ID] = false;
 
@@ -60,7 +61,7 @@ class PaymentDomainTest extends TransactionFunctionalTestCase
             $this->markTestSkipped('Test is skipped for single domain');
         }
 
-        $paymentData = $this->paymentDataFactory->create();
+        $paymentData = $this->createPaymentData();
 
         $paymentData->enabled[self::FIRST_DOMAIN_ID] = true;
         $paymentData->enabled[self::SECOND_DOMAIN_ID] = false;
@@ -88,5 +89,16 @@ class PaymentDomainTest extends TransactionFunctionalTestCase
         $this->em->clear();
 
         return $this->em->getRepository(Payment::class)->find($paymentId);
+    }
+
+    /**
+     * @return \App\Model\Payment\PaymentData
+     */
+    private function createPaymentData(): PaymentData
+    {
+        /** @var \App\Model\Payment\PaymentData $paymentData */
+        $paymentData = $this->paymentDataFactory->create();
+
+        return $paymentData;
     }
 }

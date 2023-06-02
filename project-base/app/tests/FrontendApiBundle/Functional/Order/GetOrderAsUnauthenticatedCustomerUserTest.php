@@ -31,6 +31,21 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
             $this->assertArrayHasKey('totalPrice', $responseData);
             $this->assertArrayHasKey('priceWithVat', $responseData['totalPrice']);
             $this->assertSame($expectedOrderData['totalPriceWithVat'], $responseData['totalPrice']['priceWithVat']);
+
+            $this->assertArrayHasKey('firstName', $responseData);
+            $this->assertSame($expectedOrderData['firstName'], $responseData['firstName']);
+
+            $this->assertArrayHasKey('lastName', $responseData);
+            $this->assertSame($expectedOrderData['lastName'], $responseData['lastName']);
+
+            $this->assertArrayHasKey('promoCode', $responseData);
+            $this->assertSame($expectedOrderData['promoCode'], $responseData['promoCode']);
+
+            $this->assertArrayHasKey('trackingNumber', $responseData);
+            $this->assertSame($expectedOrderData['trackingNumber'], $responseData['trackingNumber']);
+
+            $this->assertArrayHasKey('trackingUrl', $responseData);
+            $this->assertSame($expectedOrderData['trackingUrl'], $responseData['trackingUrl']);
         }
     }
 
@@ -55,9 +70,10 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
     public function getOrderDataProvider(): array
     {
         $data = [];
-        $orderIds = [7, 8, 9];
+        $orderIds = [7, 8, 9, 10];
 
         foreach ($orderIds as $orderId) {
+            /** @var \App\Model\Order\Order $order */
             $order = $this->orderFacade->getById($orderId);
             $data[] = [
                 $order->getUrlHash(),
@@ -66,6 +82,11 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
                     'totalPriceWithVat' => MoneyFormatterHelper::formatWithMaxFractionDigits(
                         $order->getTotalPriceWithVat(),
                     ),
+                    'firstName' => $order->getFirstName(),
+                    'lastName' => $order->getLastName(),
+                    'promoCode' => $order->getGtmCoupon(),
+                    'trackingNumber' => $order->getTrackingNumber(),
+                    'trackingUrl' => $order->getTrackingUrl(),
                 ],
             ];
         }
@@ -85,7 +106,7 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
             ],
             [
                 'foo',
-                'Order with urlHash "foo" was not found.',
+                'Order not found',
             ],
         ];
     }
@@ -109,6 +130,11 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
                     totalPrice {
                         priceWithVat
                     }
+                    firstName
+                    lastName
+                    promoCode
+                    trackingNumber
+                    trackingUrl
                 }
             }
         ';

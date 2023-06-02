@@ -39,6 +39,7 @@ class CartItemTest extends TransactionFunctionalTestCase
         $productData = $this->productDataFactory->create();
         $productData->name = [];
         $productData->availability = $availability;
+        $productData->catnum = '123';
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
 
         $productVatsIndexedByDomainId = [];
@@ -47,8 +48,11 @@ class CartItemTest extends TransactionFunctionalTestCase
             $productVatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
         }
         $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
+        $productData->manualInputPricesByPricingGroupId = [1 => Money::zero(), 2 => Money::zero()];
 
         $product1 = Product::create($productData);
+        $productData2 = $productData;
+        $productData2->catnum = '321';
         $product2 = Product::create($productData);
         $this->em->persist($availability);
         $this->em->persist($product1);

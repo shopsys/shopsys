@@ -6,9 +6,10 @@ namespace Tests\App\Functional\Model\Product;
 
 use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\Model\Product\Product;
+use App\Model\Product\ProductData;
+use App\Model\Product\ProductDataFactory;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
-use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
-use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -25,7 +26,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private ProductDataFactoryInterface $productDataFactory;
+    private ProductDataFactory $productDataFactory;
 
     /**
      * @inject
@@ -50,7 +51,13 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         $productData->descriptions[self::SECOND_DOMAIN_ID] = self::DEMONSTRATIVE_DESCRIPTION;
         $productData->shortDescriptions[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SHORT_DESCRIPTION;
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $productData->outOfStockAvailability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
+        $productData->outOfStockAvailability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
+        $productData->manualInputPricesByPricingGroupId = [
+            1 => Money::zero(),
+            2 => Money::zero(),
+        ];
+        $productData->catnum = '123';
+
         $this->setVats($productData);
 
         /** @var \App\Model\Product\Product $product */
@@ -89,7 +96,8 @@ class ProductDomainTest extends TransactionFunctionalTestCase
         $productData->descriptions[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_DESCRIPTION;
         $productData->shortDescriptions[self::FIRST_DOMAIN_ID] = self::DEMONSTRATIVE_SHORT_DESCRIPTION;
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $productData->outOfStockAvailability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
+        $productData->outOfStockAvailability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
+        $productData->catnum = '123';
         $this->setVats($productData);
 
         /** @var \App\Model\Product\Product $product */
@@ -127,9 +135,9 @@ class ProductDomainTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     * @param \App\Model\Product\ProductData $productData
      */
-    private function setVats(BaseProductData $productData): void
+    private function setVats(ProductData $productData): void
     {
         $productVatsIndexedByDomainId = [];
 

@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
+use PHPUnit\Framework\MockObject\MockObject;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
@@ -86,18 +87,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
             ->setMethods(null)
             ->getMock();
 
-        $expectedPricingGroup = $this->getReferenceForDomain(
-            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID,
-        );
-        $currentCustomerUserMock = $this->getMockBuilder(CurrentCustomerUser::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getPricingGroup'])
-            ->getMock();
-        $currentCustomerUserMock
-            ->expects($this->any())
-            ->method('getPricingGroup')
-            ->willReturn($expectedPricingGroup);
+        $currentCustomerUserMock = $this->createCustomerUserMock();
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier());
         $cart->addItem($cartItemMock);
@@ -113,53 +103,19 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $productData->name = [];
+        $productData->manualInputPricesByPricingGroupId = [1 => Money::zero(), 2 => Money::zero()];
         $this->setVats($productData);
-        $product = Product::create($productData);
 
-        $cartItemMock = $this->getMockBuilder(CartItem::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getProduct'])
-            ->getMock();
-        $cartItemMock
-            ->expects($this->any())
-            ->method('getProduct')
-            ->willReturn($product);
+        $cartItemMock = $this->createCartItemMock($productData);
 
-        $expectedPricingGroup = $this->getReferenceForDomain(
-            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
-            Domain::FIRST_DOMAIN_ID,
-        );
-        $currentCustomerUserMock = $this->getMockBuilder(CurrentCustomerUser::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getPricingGroup'])
-            ->getMock();
-        $currentCustomerUserMock
-            ->expects($this->any())
-            ->method('getPricingGroup')
-            ->willReturn($expectedPricingGroup);
+        $currentCustomerUserMock = $this->createCustomerUserMock();
 
-        $productVisibilityMock = $this->getMockBuilder(ProductVisibility::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['isVisible'])
-            ->getMock();
-        $productVisibilityMock
-            ->expects($this->any())
-            ->method('isVisible')
-            ->willReturn(true);
-
-        $productVisibilityRepositoryMock = $this->getMockBuilder(ProductVisibilityRepository::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getProductVisibility'])
-            ->getMock();
-        $productVisibilityRepositoryMock
-            ->expects($this->any())
-            ->method('getProductVisibility')
-            ->willReturn($productVisibilityMock);
+        $productVisibilityRepositoryMock = $this->createProductVisibilityRepositoryMock();
 
         $cartWatcher = new CartWatcher(
             $this->productPriceCalculationForCustomerUser,
             $productVisibilityRepositoryMock,
-            $this->domain,
+            $this->domain
         );
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier());
@@ -180,5 +136,77 @@ class CartWatcherTest extends TransactionFunctionalTestCase
             $productVatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
         }
         $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     * @return \PHPUnit\Framework\MockObject\MockObject|(\Shopsys\FrameworkBundle\Model\Cart\Item\CartItem&\PHPUnit\Framework\MockObject\MockObject)
+     */
+    public function createCartItemMock(ProductData $productData): MockObject|CartItem
+    {
+        $product = Product::create($productData);
+
+        $cartItemMock = $this->getMockBuilder(CartItem::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getProduct'])
+            ->getMock();
+
+        $cartItemMock
+            ->expects($this->any())
+            ->method('getProduct')
+            ->willReturn($product);
+
+        return $cartItemMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|(\Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser&\PHPUnit\Framework\MockObject\MockObject)
+     */
+    public function createCustomerUserMock(): CurrentCustomerUser|MockObject
+    {
+        $expectedPricingGroup = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
+            Domain::FIRST_DOMAIN_ID,
+        );
+
+        $currentCustomerUserMock = $this->getMockBuilder(CurrentCustomerUser::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getPricingGroup'])
+            ->getMock();
+
+        $currentCustomerUserMock
+            ->expects($this->any())
+            ->method('getPricingGroup')
+            ->willReturn($expectedPricingGroup);
+
+        return $currentCustomerUserMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|(\Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository&\PHPUnit\Framework\MockObject\MockObject)
+     */
+    public function createProductVisibilityRepositoryMock(): ProductVisibilityRepository|MockObject
+    {
+        $productVisibilityMock = $this->getMockBuilder(ProductVisibility::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['isVisible'])
+            ->getMock();
+
+        $productVisibilityMock
+            ->expects($this->any())
+            ->method('isVisible')
+            ->willReturn(true);
+
+        $productVisibilityRepositoryMock = $this->getMockBuilder(ProductVisibilityRepository::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getProductVisibility'])
+            ->getMock();
+
+        $productVisibilityRepositoryMock
+            ->expects($this->any())
+            ->method('getProductVisibility')
+            ->willReturn($productVisibilityMock);
+
+        return $productVisibilityRepositoryMock;
     }
 }

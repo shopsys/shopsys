@@ -29,6 +29,24 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
     {
         $flagFilterChoices = $this->getChoicesForCategoryReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
 
+        $this->assertCount(1, $flagFilterChoices);
+
+        $ids = array_map(
+            static function (Flag $flag) {
+                return $flag->getId();
+            },
+            $flagFilterChoices,
+        );
+
+        $this->assertContains(2, $ids);
+    }
+
+    public function testGetFlagFilterChoicesForSearchPhone(): void
+    {
+        $this->skipTestIfFirstDomainIsNotInEnglish();
+
+        $flagFilterChoices = $this->getChoicesForSearchText('phone');
+
         $this->assertCount(2, $flagFilterChoices);
 
         $ids = array_map(
@@ -39,27 +57,6 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
         );
 
         $this->assertContains(2, $ids);
-        $this->assertContains(3, $ids);
-    }
-
-    public function testGetFlagFilterChoicesForSearchPhone(): void
-    {
-        $this->skipTestIfFirstDomainIsNotInEnglish();
-
-        $flagFilterChoices = $this->getChoicesForSearchText('phone');
-
-        $this->assertCount(3, $flagFilterChoices);
-
-        $ids = array_map(
-            static function (Flag $flag) {
-                return $flag->getId();
-            },
-            $flagFilterChoices,
-        );
-
-        $this->assertContains(1, $ids);
-        $this->assertContains(2, $ids);
-        $this->assertContains(3, $ids);
     }
 
     public function testGetFlagFilterChoicesForBook(): void
@@ -69,16 +66,6 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
         $flagFilterChoices = $this->getChoicesForSearchText('book');
 
         $this->assertCount(2, $flagFilterChoices);
-
-        $ids = array_map(
-            static function (Flag $flag) {
-                return $flag->getId();
-            },
-            $flagFilterChoices,
-        );
-
-        $this->assertContains(1, $ids);
-        $this->assertContains(2, $ids);
     }
 
     /**

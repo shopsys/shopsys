@@ -13,7 +13,7 @@ class CategoriesSearchTest extends GraphQlTestCase
     {
         $query = '
             query {
-                categoriesSearch(search: "tv") {
+                categoriesSearch(search: "audio") {
                     edges {
                         node {
                             name
