@@ -16,7 +16,7 @@ class ParameterFilterOptionResolverMap extends ResolverMap
     private const PARAMETER_COLOR_FILTER_OPTION = 'ParameterColorFilterOption';
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function map()
     {

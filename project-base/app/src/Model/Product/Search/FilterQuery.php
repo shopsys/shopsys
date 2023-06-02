@@ -82,7 +82,7 @@ class FilterQuery extends BaseFilterQuery
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getQuery(): array
     {

@@ -67,7 +67,7 @@ class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function run(): void
     {

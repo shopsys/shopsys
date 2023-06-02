@@ -12,7 +12,7 @@ class DeprecatedFieldUserError extends EntityNotFoundUserError implements UserEr
     private const CODE = 'deprecated-field';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

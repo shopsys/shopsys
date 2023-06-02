@@ -12,7 +12,7 @@ class ReadyCategorySeoMixNotFoundUserError extends EntityNotFoundUserError imple
     private const CODE = 'ready-category-seo-mix-not-found';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

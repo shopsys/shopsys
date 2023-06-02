@@ -19,7 +19,7 @@ use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 class RefreshTokensMutation extends BaseRefreshTokensMutation
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function refreshTokensMutation(Argument $argument): array
     {

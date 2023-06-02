@@ -12,7 +12,7 @@ class MaxAllowedLimitUserError extends EntityNotFoundUserError implements UserEr
     private const CODE = 'max-allowed-limit';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

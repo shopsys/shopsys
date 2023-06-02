@@ -21,7 +21,7 @@ class ClassExtensionRegistry extends BaseClassExtensionRegistry
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getOtherClassesExtensionMap(): array
     {

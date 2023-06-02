@@ -34,7 +34,7 @@ class ContainerConstraintValidatorFactory extends SymfonyContainerConstraintVali
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getInstance(Constraint $constraint)
     {

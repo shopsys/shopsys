@@ -63,7 +63,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function load(ObjectManager $manager)
     {
@@ -365,7 +365,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getDependencies()
     {

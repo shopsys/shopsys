@@ -43,7 +43,7 @@ class BlogArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterfa
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getBreadcrumbItems($routeName, array $routeParameters = []): array
     {
@@ -56,7 +56,7 @@ class BlogArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterfa
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getBreadcrumbItemsOnDomain(int $domainId, string $routeName, array $routeParameters = [], ?string $locale = null): array
     {
@@ -102,7 +102,7 @@ class BlogArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterfa
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getRouteNames(): array
     {

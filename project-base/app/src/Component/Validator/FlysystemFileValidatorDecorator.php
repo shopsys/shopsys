@@ -65,7 +65,7 @@ class FlysystemFileValidatorDecorator extends ConstraintValidator
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function validate($value, Constraint $constraint)
     {

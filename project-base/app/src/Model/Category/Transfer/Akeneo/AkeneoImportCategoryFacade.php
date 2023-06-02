@@ -118,7 +118,7 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function processItem($akeneoCategoryData): void
     {

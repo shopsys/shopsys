@@ -51,7 +51,7 @@ class PaymentTransactionDataFixture extends AbstractReferenceFixture implements 
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDependencies()
     {

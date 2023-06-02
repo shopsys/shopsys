@@ -19,7 +19,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductBreadcrumbGenerator as BaseProd
 class ProductBreadcrumbGenerator extends BaseProductBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getBreadcrumbItems($routeName, array $routeParameters = [])
     {
@@ -27,7 +27,7 @@ class ProductBreadcrumbGenerator extends BaseProductBreadcrumbGenerator implemen
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getBreadcrumbItemsOnDomain(int $domainId, string $routeName, array $routeParameters = [], ?string $locale = null): array
     {

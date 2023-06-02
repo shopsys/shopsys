@@ -36,7 +36,7 @@ class TransferIssueLogCleanerCronModule implements SimpleCronModuleInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function run(): void
     {

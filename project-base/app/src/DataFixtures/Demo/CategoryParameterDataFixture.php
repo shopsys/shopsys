@@ -74,7 +74,7 @@ class CategoryParameterDataFixture extends AbstractReferenceFixture implements D
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDependencies(): array
     {

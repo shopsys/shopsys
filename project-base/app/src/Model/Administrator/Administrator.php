@@ -240,7 +240,7 @@ class Administrator extends BaseAdministrator implements EmailTwoFactorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getRoles(): array
     {

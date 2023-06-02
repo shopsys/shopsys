@@ -12,7 +12,7 @@ class NoResultFoundForSlugUserError extends EntityNotFoundUserError implements U
     private const CODE = 'no-result-found-for-slug';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

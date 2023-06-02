@@ -12,7 +12,7 @@ class StoreNotFoundUserError extends EntityNotFoundUserError implements UserErro
     private const CODE = 'store-not-found';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

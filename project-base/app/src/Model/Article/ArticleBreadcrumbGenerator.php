@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleBreadcrumbGenerator as BaseArti
 class ArticleBreadcrumbGenerator extends BaseArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getBreadcrumbItemsOnDomain(int $domainId, string $routeName, array $routeParameters = [], ?string $locale = null): array
     {

@@ -12,7 +12,7 @@ class BlogCategoryNotFoundUserError extends EntityNotFoundUserError implements U
     private const CODE = 'blog-category-not-found';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

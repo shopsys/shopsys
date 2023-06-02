@@ -12,7 +12,7 @@ class InvalidPacketeryAddressIdUserError extends EntityNotFoundUserError impleme
     private const CODE = 'packetery-address-id-invalid';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

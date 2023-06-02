@@ -91,7 +91,7 @@ class Cart extends BaseCart
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getQuantifiedProducts(): array
     {

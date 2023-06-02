@@ -51,7 +51,7 @@ class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function extractTotalCount(array $result): int
     {

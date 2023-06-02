@@ -13,7 +13,7 @@ class OrderCannotBePairedException extends UserError implements OrderException, 
     private const CODE = 'order-cannot-be-paired-with-new-registration';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

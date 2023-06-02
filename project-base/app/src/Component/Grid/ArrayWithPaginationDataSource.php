@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 class ArrayWithPaginationDataSource extends ArrayDataSource
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getPaginatedRows(
         $limit = null,

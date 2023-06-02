@@ -93,7 +93,7 @@ class AkeneoImportFlagFacade extends AbstractAkeneoImportTransfer
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function processItem($akeneoFlagData): void
     {

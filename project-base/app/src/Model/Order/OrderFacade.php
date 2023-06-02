@@ -222,7 +222,8 @@ class OrderFacade extends BaseOrderFacade
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
+     *
      * @deprecated use App\FrontendApi\Model\Order\PlaceOrderFacade::placeOrder() instead
      */
     public function createOrderFromFront(BaseOrderData $orderData, ?DeliveryAddress $deliveryAddress)
