@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\App\Smoke\Http;
 
-use App\Controller\Front\ProductController;
 use App\DataFixtures\Demo\CustomerUserDataFixture;
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\PersonalDataAccessRequestDataFixture;
-use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
@@ -60,7 +58,8 @@ class RouteConfigCustomization
                 }
             })
             ->customize(function (RouteConfig $config, RouteInfo $info) {
-                if (preg_match('~^(/admin)?/_~', $info->getRoutePath())) {
+                $adminUrl = $this->container->getParameter('admin_url');
+                if (preg_match('~^(/' . $adminUrl . ')?/_~', $info->getRoutePath())) {
                     $config->skipRoute('Internal routes (prefixed with "/_") are not tested.');
                 }
             })
@@ -74,17 +73,18 @@ class RouteConfigCustomization
                     $config->skipRoute('Only routes for front-end and administration are tested.');
                 }
             })
-            ->customizeByRouteName(['admin_login_check', 'front_login_check'], function (RouteConfig $config) {
+            ->customizeByRouteName('admin_login_check', function (RouteConfig $config) {
                 $config->skipRoute(
                     'Used by firewall to catch login requests. '
                     . 'See http://symfony.com/doc/current/reference/configuration/security.html#check-path',
                 );
             })
-            ->customizeByRouteName(
-                ['front_image', 'front_image_without_type', 'front_additional_image', 'front_additional_image_without_type'],
-                function (RouteConfig $config) {
-                    $config->skipRoute('There are no images in the shop when the tests are processed.');
-                },
+            ->customizeByRouteName([
+                'front_image', 'front_image_without_type', 'front_additional_image', 'front_additional_image_without_type',
+                'front_image_seo', 'front_image_seo_without_type', 'front_additional_image_seo', 'front_additional_image_seo_without_type',
+            ], function (RouteConfig $config) {
+                $config->skipRoute('There are no images in the shop when the tests are processed.');
+            },
             )
             ->customizeByRouteName('admin_domain_selectdomain', function (RouteConfig $config) {
                 $config->skipRoute('Used only for internal setting of selected domain by tab control in admin.');
@@ -108,6 +108,9 @@ class RouteConfigCustomization
                     'This route serves as "access_denied_url" (see security.yaml) and always redirects to a referer (or dashboard).',
                 )
                     ->setExpectedStatusCode(302);
+            })
+            ->customizeByRouteName('admin_flag_delete', function (RouteConfig $config) {
+                $config->skipRoute('Deletion of flag from ShopSys is disabled.');
             });
     }
 
@@ -127,7 +130,7 @@ class RouteConfigCustomization
                 }
             })
             ->customize(function (RouteConfig $config, RouteInfo $info) {
-                if (preg_match('~_delete$~', $info->getRouteName())) {
+                if (preg_match('~(_delete$)|(^admin_mail_deletetemplate$)|(^admin_(stock|store)_setdefault$)~', $info->getRouteName())) {
                     $debugNote = 'Add CSRF token for any delete action during test execution. '
                         . '(Routes are protected by RouteCsrfProtector.)';
                     $config->changeDefaultRequestDataSet($debugNote)
@@ -237,19 +240,11 @@ class RouteConfigCustomization
                     ->setParameter('categoryId', 2);
             })
             ->customizeByRouteName('admin_pricinggroup_delete', function (RouteConfig $config) {
-                /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-                $pricingGroup = $this->getPersistentReference(
-                    PricingGroupDataFixture::PRICING_GROUP_PARTNER,
-                    Domain::FIRST_DOMAIN_ID,
-                );
-
-                $debugNote = sprintf('Delete pricing group "%s".', $pricingGroup->getName());
-                $config->changeDefaultRequestDataSet($debugNote)
-                    ->setParameter('id', $pricingGroup->getId());
+                $config->skipRoute('Deleting pricing group is not necessary.');
             })
             ->customizeByRouteName('admin_product_edit', function (RouteConfig $config) {
-                $config->addExtraRequestDataSet('Edit product that is a main variant (ID 149).')
-                    ->setParameter('id', 149);
+                $config->addExtraRequestDataSet('Edit product that is a main variant (ID 82).')
+                    ->setParameter('id', 82);
                 $config->addExtraRequestDataSet('Edit product that is a variant (ID 75).')
                     ->setParameter('id', 75);
             })
@@ -278,6 +273,20 @@ class RouteConfigCustomization
                 $config->changeDefaultRequestDataSet($debugNote)
                     ->setParameter('id', $vat->getId())
                     ->setParameter('newId', $newVat->getId());
+            })
+            ->customizeByRouteName('admin_redis_clean', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Only superadmin can clean the storefront query cache.')
+                    ->setExpectedStatusCode(302);
+                $config->addExtraRequestDataSet('You can clean the storefront query cache when logged in as superadmin.')
+                    ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
+                    ->setExpectedStatusCode(302);
+            })
+            ->customizeByRouteName('admin_redis_show', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('You are not allowed to access storefront cache clean. Log in as superadmin.')
+                    ->setExpectedStatusCode(302);
+                $config->addExtraRequestDataSet('As superadmin, you are allowed to access storefront cache clean.')
+                    ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
+                    ->setExpectedStatusCode(200);
             })
             ->customizeByRouteName('admin_currency_list', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Currency setting is available only to superadmin.')
@@ -407,15 +416,6 @@ class RouteConfigCustomization
                     ->setParameter('product_filter_form', [
                         'minimalPrice' => '100',
                         'inStock' => '1',
-                    ]);
-            })
-            ->customizeByRouteName('front_product_search', function (RouteConfig $config) {
-                $config->addExtraRequestDataSet('Search for "a" and filter the results')
-                    ->setParameter(ProductController::SEARCH_TEXT_PARAMETER, 'a')
-                    ->setParameter('product_filter_form', [
-                        'inStock' => '1',
-                        'flags' => ['2'],
-                        'brands' => ['2', '19'],
                     ]);
             })
             ->customizeByRouteName('front_registration_set_new_password', function (RouteConfig $config) {
