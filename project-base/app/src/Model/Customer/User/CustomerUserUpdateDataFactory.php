@@ -19,7 +19,7 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
  * @property \App\Model\Customer\BillingAddressDataFactory $billingAddressDataFactory
  * @property \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
  * @property \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
- * @method __construct(\App\Model\Customer\BillingAddressDataFactory $billingAddressDataFactory, \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory, \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory, \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface $customerFactory)
+ * @method __construct(\App\Model\Customer\BillingAddressDataFactory $billingAddressDataFactory, \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory, \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory)
  * @method \App\Model\Customer\User\CustomerUserUpdateData create()
  * @method \App\Model\Customer\DeliveryAddressData getDeliveryAddressDataFromCustomerUser(\App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Customer\DeliveryAddressData getAmendedDeliveryAddressDataByOrder(\App\Model\Order\Order $order, \App\Model\Customer\DeliveryAddress|null $deliveryAddress = null)

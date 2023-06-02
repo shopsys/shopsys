@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Mail;
 
-use App\Component\Image\ImageFacade;
 use App\Model\Mail\Setting\MailSettingFacade;
+use Shopsys\FrameworkBundle\Component\Cdn\CdnFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class MailTemplateBuilder
@@ -13,12 +13,12 @@ class MailTemplateBuilder
     /**
      * @param \App\Model\Mail\Setting\MailSettingFacade $mailSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrameworkBundle\Component\Cdn\CdnFacade $cdnFacade
      */
     public function __construct(
         private readonly MailSettingFacade $mailSettingFacade,
         private readonly Domain $domain,
-        private readonly ImageFacade $imageFacade
+        private readonly CdnFacade $cdnFacade,
     ) {
     }
 
@@ -28,7 +28,7 @@ class MailTemplateBuilder
      */
     private function getContentBaseUrl(int $domainId): string
     {
-        return $this->imageFacade->getCdnDomain() ?? $this->domain->getDomainConfigById($domainId)->getUrl();
+        return $this->cdnFacade->resolveDomainUrlForAssets($this->domain->getDomainConfigById($domainId));
     }
 
     /**

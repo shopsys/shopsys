@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Component\Constraints;
 
 use App\FrontendApi\Model\Cart\CartFacade;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\FrontendApiBundle\Component\Constraints\PaymentTransportRelation;
 use Shopsys\FrontendApiBundle\Component\Constraints\PaymentTransportRelationValidator;
@@ -36,22 +33,16 @@ class AppPaymentTransportRelationValidator extends PaymentTransportRelationValid
     /**
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \App\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(
         PaymentFacade $paymentFacade,
         TransportFacade $transportFacade,
-        Domain $domain,
-        PaymentPriceCalculation $paymentPriceCalculation,
-        CurrencyFacade $currencyFacade,
         CurrentCustomerUser $currentCustomerUser,
-        CartFacade $cartFacade
+        CartFacade $cartFacade,
     ) {
-        parent::__construct($paymentFacade, $transportFacade, $domain, $paymentPriceCalculation, $currencyFacade);
+        parent::__construct($paymentFacade, $transportFacade);
 
         $this->currentCustomerUser = $currentCustomerUser;
         $this->cartFacade = $cartFacade;

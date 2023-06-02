@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Twig;
 
 use CommerceGuys\Intl\Currency\CurrencyRepositoryInterface;
-use CommerceGuys\Intl\NumberFormat\NumberFormatRepositoryInterface;
 use Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -29,7 +28,6 @@ class PriceExtension extends BasePriceExtension
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \CommerceGuys\Intl\NumberFormat\NumberFormatRepositoryInterface $numberFormatRepository
      * @param \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface $intlCurrencyRepository
      * @param \Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory $currencyFormatterFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
@@ -38,7 +36,6 @@ class PriceExtension extends BasePriceExtension
         CurrencyFacade $currencyFacade,
         Domain $domain,
         Localization $localization,
-        NumberFormatRepositoryInterface $numberFormatRepository,
         CurrencyRepositoryInterface $intlCurrencyRepository,
         CurrencyFormatterFactory $currencyFormatterFactory,
         AdminDomainTabsFacade $adminDomainTabsFacade
@@ -47,7 +44,6 @@ class PriceExtension extends BasePriceExtension
             $currencyFacade,
             $domain,
             $localization,
-            $numberFormatRepository,
             $intlCurrencyRepository,
             $currencyFormatterFactory
         );

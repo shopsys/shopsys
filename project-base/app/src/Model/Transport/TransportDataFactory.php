@@ -8,12 +8,10 @@ use App\Model\Transport\Type\TransportTypeEnum;
 use App\Model\Transport\Type\TransportTypeFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
-use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport as BaseTransport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData as BaseTransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory as BaseTransportDataFactory;
-use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 
 /**
  * @method fillFromTransport(\App\Model\Transport\TransportData $transportData, \App\Model\Transport\Transport $transport)
@@ -21,27 +19,21 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 class TransportDataFactory extends BaseTransportDataFactory
 {
     /**
-     * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      * @param \App\Model\Transport\Type\TransportTypeFacade $transportTypeFacade
      */
     public function __construct(
-        TransportFacade $transportFacade,
         VatFacade $vatFacade,
         Domain $domain,
-        ImageFacade $imageFacade,
         ImageUploadDataFactory $imageUploadDataFactory,
-        private readonly TransportTypeFacade $transportTypeFacade
+        private readonly TransportTypeFacade $transportTypeFacade,
     ) {
         parent::__construct(
-            $transportFacade,
             $vatFacade,
             $domain,
-            $imageFacade,
-            $imageUploadDataFactory
+            $imageUploadDataFactory,
         );
     }
 
