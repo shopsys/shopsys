@@ -1,5 +1,7 @@
 SeoSetting:
     type: object
+    inherits:
+        - 'SeoSettingDecorator'
     config:
         description: "Represents setting of SEO"
         fields:
