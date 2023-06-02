@@ -19,7 +19,8 @@
             "Shopsys\\ProductFeed\\HeurekaDeliveryBundle\\": "packages/product-feed-heureka-delivery/src/",
             "Shopsys\\ReadModelBundle\\": "packages/read-model/src/",
             "Shopsys\\S3Bridge\\": "packages/s3-bridge/src/",
-            "Shopsys\\FrameworkBundle\\": "packages/framework/src/"
+            "Shopsys\\FrameworkBundle\\": "packages/framework/src/",
+            "Sniffer\\": "project-base/app/sniffer/"
         },
         "classmap": [
             "project-base/app/app/Environment.php"
