@@ -22,17 +22,11 @@ msgstr "+420123456789"
 msgid "1 kg"
 msgstr "1 kg"
 
-msgid "1.7GHz"
-msgstr "1.7GHz"
-
 msgid "100 Czech crowns ticket"
 msgstr "100 Korun českých - poukázka"
 
 msgid "1024 MB"
 msgstr "1024 MB"
-
-msgid "112 g"
-msgstr "112 g"
 
 msgid "12 Mpix"
 msgstr "12 Mpix"
@@ -198,12 +192,6 @@ msgstr "4 W"
 
 msgid "4.5\""
 msgstr "4.5\""
-
-msgid "40% SLEVA NA POSTELE, MATRACE A ROŠTY"
-msgstr ""
-
-msgid "40% SLEVA NA ÚLOŽNÉ PROSTORY"
-msgstr ""
 
 msgid "400 g"
 msgstr "400 g"
@@ -466,9 +454,6 @@ msgstr "Aktivní"
 msgid "Active/Passive"
 msgstr "Aktivní/Pasivní"
 
-msgid "Add to cart"
-msgstr "Přidat do košíku"
-
 msgid "All kind of electronic devices."
 msgstr "Všechny druhy elektroniky."
 
@@ -498,6 +483,9 @@ msgstr "Autentifikační kód pro dvoufaktorovou autentifikaci: {authentication_
 
 msgid "BROTHER PT-H300"
 msgstr "BROTHER PT-H300"
+
+msgid "Become one of us"
+msgstr ""
 
 msgid "Blog article example %counter% %locale%"
 msgstr "Ukázkový článek blogu %counter% %locale%"
@@ -700,8 +688,8 @@ msgstr "DeLonghi ECAM 44.660 B Eletta Plus"
 msgid "Dear customer, <br /><br /> based on your email {email}, we are sending you a link to your personal details. By clicking on the link below, you will be taken to a page listing all the<br/> personal details which we have in evidence in our online store {domain}. <br/><br/> To overview your personal information please click here - {url} <br/> The link is valid for next 24 hours.<br/> Best Regards <br/><br/> team of {domain}"
 msgstr "Vážený zákazníku,<br /><br /> na základě vašeho zadaného e-mailu {email}, Vám zasíláme odkaz na zobrazení osobních údajů. Klikem na odkaz níže se dostanete na stránku s <br/> přehledem všech osobních údajů, které k Vašemu e-mailu evidujeme na našem e-shopu {domain}.<br/><br/> Pro zobrazení osobních údajů klikněte zde - {url}<br/> Odkaz je platný 24 hodin.<br/><br/> S pozdravem<br/> tým {domain}"
 
-msgid "Dear customer, <br /><br />Processing your order has been finished.<br /><br />{tracking_instructions}"
-msgstr "Vážený zákazníku, <br /><br />Vaše objednávka byla zpracována.<br /><br />{tracking_instructions}"
+msgid "Dear customer, <br /><br />Processing your order has been finished."
+msgstr ""
 
 msgid "Dear customer, <br /><br />Your order has been cancelled."
 msgstr "Vážený zákazníku, <br /><br />Vaše objednávka byla zrušena."
@@ -739,8 +727,8 @@ msgstr "reproduktory 2.0, jednopásmové, výkon 2x2W RMS, 90Hz až 20kHz, USB n
 msgid "Demo advert"
 msgstr "Demo reklama"
 
-msgid "Demo advert in category"
-msgstr "Demo reklama v kategorii"
+msgid "Demo category advert"
+msgstr ""
 
 msgid "Determination"
 msgstr "Určení"
@@ -792,6 +780,9 @@ msgstr "Velikost displeje"
 
 msgid "Display type"
 msgstr "Typ displeje"
+
+msgid "Documentation"
+msgstr ""
 
 msgid "Done"
 msgstr "Vyřízena"
@@ -1282,6 +1273,9 @@ msgstr ""
 msgid "Odstoupení od smlouvy"
 msgstr ""
 
+msgid "On request"
+msgstr ""
+
 msgid "Open"
 msgstr "Otevřená"
 
@@ -1308,6 +1302,9 @@ msgstr "Spotřební elektronika zahrnuje elektronická zařízení každodenníh
 
 msgid "Our electronics include devices used for entertainment, communicationsand home office activities."
 msgstr "Naše elektronika zahrnuje zařízení používaná pro zábavu, komunikaci a domácí kancelářské aktivity."
+
+msgid "Out of stock"
+msgstr ""
 
 msgid "Overall performance"
 msgstr "Celkový výkon"
@@ -1390,6 +1387,9 @@ msgstr ""
 msgid "PremiumCord micro USB, A-B, 1m"
 msgstr "PremiumCord micro USB, A-B, 1m"
 
+msgid "Preparing"
+msgstr ""
+
 msgid "Pressure"
 msgstr "Tlak"
 
@@ -1413,9 +1413,6 @@ msgstr "Zásady ochrany osobních údajů"
 
 msgid "Pro média"
 msgstr ""
-
-msgid "Processor frequency"
-msgstr "Frekvence procesoru"
 
 msgid "Processor frequency (GHz)"
 msgstr "Frekvence procesoru (GHz)"
@@ -1485,9 +1482,6 @@ msgstr "SDV-3360 Sklokeramická deska vestavná 60 cm"
 
 msgid "SDV 3460-built ceramic plate 60 cm"
 msgstr "SDV-3460 Sklokeramická deska vestavná 60 cm"
-
-msgid "SLEVA 20% + 21% DPH NAVÍC"
-msgstr ""
 
 msgid "SLR"
 msgstr "zrcadlovky"
@@ -1915,9 +1909,6 @@ msgstr "akumulátor"
 msgid "black"
 msgstr "černá"
 
-msgid "book"
-msgstr "kniha"
-
 msgid "classic"
 msgstr "klasické"
 
@@ -2149,6 +2140,6 @@ msgstr "bílá"
 msgid "wood"
 msgstr "dřevo"
 
-msgid "| Commerce Cloud"
+msgid "| Demo eshop"
 msgstr ""
 

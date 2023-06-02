@@ -22,16 +22,10 @@ msgstr ""
 msgid "1 kg"
 msgstr ""
 
-msgid "1.7GHz"
-msgstr ""
-
 msgid "100 Czech crowns ticket"
 msgstr ""
 
 msgid "1024 MB"
-msgstr ""
-
-msgid "112 g"
 msgstr ""
 
 msgid "12 Mpix"
@@ -74,6 +68,9 @@ msgid "2"
 msgstr ""
 
 msgid "2 l"
+msgstr ""
+
+msgid "2 litre coffeemakers in sale"
 msgstr ""
 
 msgid "2.0"
@@ -196,12 +193,6 @@ msgstr ""
 msgid "4.5\""
 msgstr ""
 
-msgid "40% SLEVA NA POSTELE, MATRACE A ROŠTY"
-msgstr ""
-
-msgid "40% SLEVA NA ÚLOŽNÉ PROSTORY"
-msgstr ""
-
 msgid "400 g"
 msgstr ""
 
@@ -313,7 +304,7 @@ msgstr ""
 msgid "9 Mpix"
 msgstr ""
 
-msgid "<a class=\"btn\" href=\"{order_detail_url}\">Zobrazit moje objednávky</a>"
+msgid "<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>"
 msgstr ""
 
 msgid "<b>You have chosen payment by credit card. Please finish it in two business days.</b>"
@@ -391,6 +382,9 @@ msgstr ""
 msgid "<p> It is safe for you to your loved ones as important as us? In that case, you will appreciate with hob SDV-3460 feature residual heat indicators - H that you and your loved ones will protect against nasty burns. The residual heat indicator signals a residual temperature of the cooking zone even after power off. </p><br /> <h2> Reasons to opt just for built-in ceramic plate Concept SDV-3460: </h2><br /> <ol> <li> The built-in ceramic hob SDV-3460 you will be astonished <strong> handy touch controls </strong>. </li><li> Special radiators cooking zones <strong> HI-LIGHT </strong> are able to warm up to a maximum of a few seconds. </li><li> <strong> The residual heat indicator H </strong> - protects you against nasty burns. Indicates residual temperature of the cooking zone even after power off. </li><li> If you want to directly select the time that you want to cook, be sure to take the opportunity of the <strong> off-delay </strong>. </li></ol><br /> <h2> Specifications: </h2><br /> <ul> <li> Height: 60 mm </li> <li> Width: 590 mm </li><li> Depth: 520 mm </li><li> Glass ceramics </li><li> Accessories cleaning scraper </li><li> Touch control </li><li> The residual heat indicator - H </li><li> Without frame, angled edges Grounded </li><li> 4 cooking zones </li><li> Auto-off function - EXTRA SECURE </li><li> The off-delay </li><li> Beep </li><li> Control Panel front center </li><li> Child lock </li><li> The ON state </li></ul><br /> <h2> Details: </h2><br /> <ul> <li> Dimensions for installation (HxWxD): 50 x 560 x 490 mm </li><li> Main switch </li><li> <strong> Left Front plate: </strong> </li><li> The diameter of the front left plates: 165x265 mm </li><li> Input left front plate: 1100/2000 W </li><li> <strong> Rear Left plate: </strong> Circular HI-LIGHT </li><li> The diameter of the rear left of the plate 165 mm </li><li> Input left rear plate: 1200 W </li><li> <strong> The right rear plate: </strong> Circular HI-LIGHT </li><li> The diameter of the rear right plate: 200mm </li><li> wattage right rear plate: 1800 W </li><li> <strong> The front right plate: </strong> Circular HI-lihgt </li><li> The diameter of the front right plate: 165 mm </li><li> Input right front plate: 1200 W </li><li> Max.příkon-el .: 5700-6800 W </li><li> Weight: 10 kg </li><li> Voltage: 220-240 / 400 V 2N ~ 50/60 Hz </li> </ul>"
 msgstr ""
 
+msgid "<p> Order number {number} has been sent, thank you for your purchase. We will contact you about next order status. <br /><br /> <a href=\"{order_detail_url}\">Track</a> the status of your order. <br /> {transport_instructions} <br /> {payment_instructions} <br /> </p>"
+msgstr ""
+
 msgid "<p> The minimum space requirements excels sub-mounting range hood OPP-2060th Suitable for very small kitchens. Metal buttons provide ease of use and precise adjustment of the corresponding stage performance. </p> <br /> <br /> <h2> Reasons to choose just the sub-mounting range hood Concept OPP-2060: </h2> <br /> <br /> <ol> <li> Performance is the most important parameter hoods and should be at least equal to ten times the volume of the room. The sub-mounting range hood brand Concept OPP-2060 will surprise performance <strong> 186 m3 per hour </strong>. </li><li> Very practical is the ability to select <strong> 4 Ways exhaust </strong>. </li></ol> Model OPP-2060 is equipped with a practical <strong> metal grease filter </strong>, its maintenance is very easy and unlimited lifespan. If you can not pay out of steam, you can choose instead of exhaust classic <strong> recirculation system </strong> using a carbon filter, which can be bought."
 msgstr ""
 
@@ -451,13 +445,13 @@ msgstr ""
 msgid "A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,"
 msgstr ""
 
+msgid "Action"
+msgstr ""
+
 msgid "Active"
 msgstr ""
 
 msgid "Active/Passive"
-msgstr ""
-
-msgid "Add to cart"
 msgstr ""
 
 msgid "All kind of electronic devices."
@@ -478,7 +472,7 @@ msgstr ""
 msgid "Article for search testing"
 msgstr ""
 
-msgid "Article text for search testing, the search phrase is \"Dina\"."
+msgid "Article text for search testing, the search phrase is &#34;Dina&#34;."
 msgstr ""
 
 msgid "Authentication code"
@@ -488,6 +482,21 @@ msgid "Authentication code for two factor authentication: {authentication_code}"
 msgstr ""
 
 msgid "BROTHER PT-H300"
+msgstr ""
+
+msgid "Become one of us"
+msgstr ""
+
+msgid "Blog article example %counter% %locale%"
+msgstr ""
+
+msgid "Blog article example %counter% %locale% - H1"
+msgstr ""
+
+msgid "Blog article example %counter% %locale% - Meta description"
+msgstr ""
+
+msgid "Blog article for products testing"
 msgstr ""
 
 msgid "Blog article for search testing"
@@ -512,6 +521,9 @@ msgid "Book scoring system and traffic regulations"
 msgstr ""
 
 msgid "Books"
+msgstr ""
+
+msgid "Bookworm"
 msgstr ""
 
 msgid "By entering an email below, you can download your personal and other information (for example, order history) from our online store. An email with a link will be sent to you after entering your email address, to verify your identity. Clicking on the link will take you to a page where you’ll be able to download these informations in readable format - it will be the data registered to given email address on this online store domain."
@@ -655,6 +667,9 @@ msgstr ""
 msgid "Czech republic"
 msgstr ""
 
+msgid "Czech state post service."
+msgstr ""
+
 msgid "D-Link"
 msgstr ""
 
@@ -673,7 +688,7 @@ msgstr ""
 msgid "Dear customer, <br /><br /> based on your email {email}, we are sending you a link to your personal details. By clicking on the link below, you will be taken to a page listing all the<br/> personal details which we have in evidence in our online store {domain}. <br/><br/> To overview your personal information please click here - {url} <br/> The link is valid for next 24 hours.<br/> Best Regards <br/><br/> team of {domain}"
 msgstr ""
 
-msgid "Dear customer, <br /><br />Processing your order has been finished.<br /><br />{tracking_instructions}"
+msgid "Dear customer, <br /><br />Processing your order has been finished."
 msgstr ""
 
 msgid "Dear customer, <br /><br />Your order has been cancelled."
@@ -712,7 +727,7 @@ msgstr ""
 msgid "Demo advert"
 msgstr ""
 
-msgid "Demo advert in category"
+msgid "Demo category advert"
 msgstr ""
 
 msgid "Determination"
@@ -766,16 +781,16 @@ msgstr ""
 msgid "Display type"
 msgstr ""
 
+msgid "Documentation"
+msgstr ""
+
 msgid "Done"
 msgstr ""
 
 msgid "Doprava a platba"
 msgstr ""
 
-msgid "Druhá podsekce %locale%"
-msgstr ""
-
-msgid "Druhá podsekce %locale% - h1"
+msgid "Drone delivery"
 msgstr ""
 
 msgid "DéLonghi ECAM 44.660.B. Start the morning with your favorite drink with the DeLonghi ECAM 44.660.B Eletta automatic coffee maker"
@@ -797,6 +812,21 @@ msgid "Electronic stuff"
 msgstr ""
 
 msgid "Electronics"
+msgstr ""
+
+msgid "Electronics from most expensive"
+msgstr ""
+
+msgid "Electronics in black"
+msgstr ""
+
+msgid "Electronics in red"
+msgstr ""
+
+msgid "Electronics with LED technology and size 30 inch in sale"
+msgstr ""
+
+msgid "Electronics without HDMI in sale"
 msgstr ""
 
 msgid "Element arrangement"
@@ -826,6 +856,12 @@ msgstr ""
 msgid "Filter input VP-9161 / SF-9162 / SF-8210"
 msgstr ""
 
+msgid "First subsection %locale%"
+msgstr ""
+
+msgid "First subsection %locale% - h1"
+msgstr ""
+
 msgid "Floor nozzle metal VP-9310"
 msgstr ""
 
@@ -847,6 +883,9 @@ msgstr ""
 msgid "Food is any substance consumed to provide nutritional support for the body. It is usually of plant or animal origin, and contains essential nutrients, such as fats, proteins, vitamins, or minerals. The substance is ingested by an organism and assimilated by the organism's cells to provide energy, maintain life, or stimulate growth."
 msgstr ""
 
+msgid "Full HD Electronics with LED technology and USB"
+msgstr ""
+
 msgid "GENIUS LuxeMate I222 is a stylish black keyboard, which at first glance invites you to use your Apple design."
 msgstr ""
 
@@ -854,6 +893,9 @@ msgid "GIGABYTE KM7580 CZ"
 msgstr ""
 
 msgid "GPS module"
+msgstr ""
+
+msgid "Gadgets"
 msgstr ""
 
 msgid "Gaming mouse"
@@ -877,10 +919,16 @@ msgstr ""
 msgid "Glass cleaner and a glass-ceramic plates (4019786908123)"
 msgstr ""
 
-msgid "GoPay - Platba kartou"
+msgid "GoPay - Payment By Card"
+msgstr ""
+
+msgid "GoPay - Quick Bank Account Transfer"
 msgstr ""
 
 msgid "GrapesJS page"
+msgstr ""
+
+msgid "Growing"
 msgstr ""
 
 msgid "HDMI"
@@ -935,9 +983,6 @@ msgid "Hewlett-Packard was founded in the difficult times of the Great Depressio
 msgstr ""
 
 msgid "High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D."
-msgstr ""
-
-msgid "Hlavní stránka blogu - %locale%"
 msgstr ""
 
 msgid "Hlavní údaje"
@@ -1033,6 +1078,21 @@ msgstr ""
 msgid "Magazine capacity for beans"
 msgstr ""
 
+msgid "Main blog page - %locale%"
+msgstr ""
+
+msgid "Main blog page - %locale% - H1"
+msgstr ""
+
+msgid "Main blog page - %locale% - Title"
+msgstr ""
+
+msgid "Main blog page - %locale% - meta description"
+msgstr ""
+
+msgid "Material"
+msgstr ""
+
 msgid "Maximum size"
 msgstr ""
 
@@ -1117,14 +1177,14 @@ msgstr ""
 msgid "NS-9710 Prominent replacement paper bags for VP-9711/12/13"
 msgstr ""
 
-msgid "Nadlimitní"
-msgstr ""
-
 msgid "Nejčastější dotazy FAQ"
 msgstr ""
 
 msgid "New [adjective]"
 msgstr "New"
+
+msgid "New computers with USB"
+msgstr ""
 
 msgid "New driving rules and tips just for you!"
 msgstr ""
@@ -1151,6 +1211,9 @@ msgid "Nikon VH-520"
 msgstr ""
 
 msgid "No"
+msgstr ""
+
+msgid "Notification in the bar, notification of a new event."
 msgstr ""
 
 msgid "Nozzle with brush VP-4290"
@@ -1210,6 +1273,9 @@ msgstr ""
 msgid "Odstoupení od smlouvy"
 msgstr ""
 
+msgid "On request"
+msgstr ""
+
 msgid "Open"
 msgstr ""
 
@@ -1232,6 +1298,12 @@ msgid "Other"
 msgstr ""
 
 msgid "Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.)."
+msgstr ""
+
+msgid "Our electronics include devices used for entertainment, communicationsand home office activities."
+msgstr ""
+
+msgid "Out of stock"
 msgstr ""
 
 msgid "Overall performance"
@@ -1259,6 +1331,9 @@ msgid "Pages count"
 msgstr ""
 
 msgid "Parallel port"
+msgstr ""
+
+msgid "Pay later"
 msgstr ""
 
 msgid "Perfectly cleans, treats and protects stainless steel surfaces in one step.<ul> <li> <strong> remove </strong> without smudges dust, dirt, fingerprints and grease </li><li> long-lasting protective film <strong> repellent </strong> water and prevents new settling of dirt </li><li> <strong> acts </strong> antistatically </li></ul>"
@@ -1312,6 +1387,9 @@ msgstr ""
 msgid "PremiumCord micro USB, A-B, 1m"
 msgstr ""
 
+msgid "Preparing"
+msgstr ""
+
 msgid "Pressure"
 msgstr ""
 
@@ -1336,13 +1414,7 @@ msgstr ""
 msgid "Pro média"
 msgstr ""
 
-msgid "Processor frequency"
-msgstr ""
-
-msgid "První podsekce %locale%"
-msgstr ""
-
-msgid "První podsekce %locale% - h1"
+msgid "Processor frequency (GHz)"
 msgstr ""
 
 msgid "Práce v Shopsys"
@@ -1355,6 +1427,9 @@ msgid "Quality digital camera with CMOS sensor with a resolution of 18 megapixel
 msgstr ""
 
 msgid "Quality set keyboard and optical mouse from Gigabyte. Both components are color-matched to the sleek glossy black color."
+msgstr ""
+
+msgid "Quick and Safe payment via bank account transfer."
 msgstr ""
 
 msgid "Quick, cheap and reliable!"
@@ -1408,9 +1483,6 @@ msgstr ""
 msgid "SDV 3460-built ceramic plate 60 cm"
 msgstr ""
 
-msgid "SLEVA 20% + 21% DPH NAVÍC"
-msgstr ""
-
 msgid "SLR"
 msgstr ""
 
@@ -1445,6 +1517,12 @@ msgid "Samsung UE75HU7500 (UHD)"
 msgstr ""
 
 msgid "Screen size"
+msgstr ""
+
+msgid "Second subsection %locale%"
+msgstr ""
+
+msgid "Second subsection %locale% - h1"
 msgstr ""
 
 msgid "Sencor SDB 4002M4"
@@ -1495,6 +1573,9 @@ msgstr ""
 msgid "Služby obchodních domů"
 msgstr ""
 
+msgid "Snack"
+msgstr ""
+
 msgid "Spare paper bags for vacuum cleaners CONCEPT Clipper 9030/31/32/33 VP and VP 9130/31/32"
 msgstr ""
 
@@ -1529,6 +1610,15 @@ msgid "Speakers 2 x 3W RMS, 2.0 stereo, portable, volume control, frequency rang
 msgstr ""
 
 msgid "Spolupráce"
+msgstr ""
+
+msgid "Store in Ostrava Přívoz"
+msgstr ""
+
+msgid "Store in Žilina"
+msgstr ""
+
+msgid "Store v Pardubice"
 msgstr ""
 
 msgid "Super LCD"
@@ -1693,6 +1783,9 @@ msgstr ""
 msgid "Ticket for 100 Czech crowns"
 msgstr ""
 
+msgid "To track your package, click on this link: <a href=\"{tracking_url}\">{tracking_number}</a>."
+msgstr ""
+
 msgid "To track your package, click on this link: <a href=\"{tracking_url}\">{tracking_url}</a>."
 msgstr ""
 
@@ -1717,12 +1810,6 @@ msgstr ""
 msgid "USB"
 msgstr ""
 
-msgid "Ukázkový článek blogu %counter% %locale%"
-msgstr ""
-
-msgid "Ukázkový článek blogu %counter% %locale% - H1"
-msgstr ""
-
 msgid "Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts."
 msgstr ""
 
@@ -1735,7 +1822,7 @@ msgstr ""
 msgid "VIP"
 msgstr ""
 
-msgid "Vhodné pro nadměrné zboží"
+msgid "Vhodné pro všechny druhy zboží"
 msgstr ""
 
 msgid "Video"
@@ -1745,6 +1832,9 @@ msgid "Viewfinder type"
 msgstr ""
 
 msgid "W"
+msgstr ""
+
+msgid "Warranty (in years)"
 msgstr ""
 
 msgid "Watch broadcast in stunning Full HD, while at the same stylish devices work."
@@ -1760,6 +1850,9 @@ msgid "We are looking forward to your visit."
 msgstr ""
 
 msgid "Weight"
+msgstr ""
+
+msgid "Weight (kg)"
 msgstr ""
 
 msgid "Well known USB cable with A and micro B connectors."
@@ -1822,16 +1915,49 @@ msgstr ""
 msgid "cm"
 msgstr ""
 
-msgid "description - Druhá podsekce %locale%"
+msgid "description - First subsection %locale%"
 msgstr ""
 
-msgid "description - Hlavní stránka blogu - %locale%"
+msgid "description - Lorem ipsum dolor sit amet, <div class=\"gjs-products\" data-products=\"9177759,7700768,9146508\"><div class=\"gjs-product\" data-product=\"9177759\"></div><div class=\"gjs-product\" data-product=\"7700768\"></div><div class=\"gjs-product\" data-product=\"9146508\"></div></div> consectetur <div class=\"gjs-products\" data-products=\"9177759,9176508\"><div class=\"gjs-product\" data-product=\"9177759\"></div><div class=\"gjs-product\" data-product=\"9176508\"></div></div> adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue."
 msgstr ""
 
-msgid "description - Lorem ipsum dolor sit amet, {products=9177759,7700768,9146508} consectetur {products=9177759,9176508} adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue."
+msgid "description - Main blog page - %locale%"
 msgstr ""
 
-msgid "description - První podsekce %locale%"
+msgid "description - Second subsection %locale%"
+msgstr ""
+
+msgid "description of 2 litre coffeemakers in sale seo category"
+msgstr ""
+
+msgid "description of Electronics from most expensive seo category"
+msgstr ""
+
+msgid "description of Electronics in black seo category"
+msgstr ""
+
+msgid "description of Electronics in red seo category"
+msgstr ""
+
+msgid "description of Electronics with LED technology and size 30 inch in sale seo category"
+msgstr ""
+
+msgid "description of Electronics without HDMI in sale seo category"
+msgstr ""
+
+msgid "description of Full HD Electronics with LED technology and USB seo category"
+msgstr ""
+
+msgid "description of New computers with USB seo category"
+msgstr ""
+
+msgid "description of TV, audio from the cheapest seo category"
+msgstr ""
+
+msgid "description of TV, audio in sale seo category"
+msgstr ""
+
+msgid "description of TV, audio plasma with HDMI seo category"
 msgstr ""
 
 msgid "fits into VP812x VP9520"
@@ -1864,6 +1990,39 @@ msgstr ""
 msgid "media 210MB, 24min., writing speed 24x, slim box"
 msgstr ""
 
+msgid "meta description of 2 litre coffeemakers in sale seo category"
+msgstr ""
+
+msgid "meta description of Electronics from most expensive seo category"
+msgstr ""
+
+msgid "meta description of Electronics in black seo category"
+msgstr ""
+
+msgid "meta description of Electronics in red seo category"
+msgstr ""
+
+msgid "meta description of Electronics with LED technology and size 30 inch in sale seo category"
+msgstr ""
+
+msgid "meta description of Full HD Electronics with LED technology and USB seo category"
+msgstr ""
+
+msgid "meta description of New computers with USB seo category"
+msgstr ""
+
+msgid "meta description of TV, audio from the cheapest seo category"
+msgstr ""
+
+msgid "meta description of TV, audio in sale seo category"
+msgstr ""
+
+msgid "meta description of TV, audio plasma with HDMI seo category"
+msgstr ""
+
+msgid "metal"
+msgstr ""
+
 msgid "m³"
 msgstr ""
 
@@ -1885,26 +2044,102 @@ msgstr ""
 msgid "perex"
 msgstr ""
 
+msgid "plastic"
+msgstr ""
+
 msgid "plazmová"
+msgstr ""
+
+msgid "red"
+msgstr ""
+
+msgid "short description of 2 litre coffeemakers in sale seo category"
+msgstr ""
+
+msgid "short description of Electronics from most expensive seo category"
+msgstr ""
+
+msgid "short description of Electronics in black seo category"
+msgstr ""
+
+msgid "short description of Electronics in red seo category"
+msgstr ""
+
+msgid "short description of Electronics with LED technology and size 30 inch in sale seo category"
+msgstr ""
+
+msgid "short description of Electronics without HDMI in sale seo category"
+msgstr ""
+
+msgid "short description of Full HD Electronics with LED technology and USB seo category"
+msgstr ""
+
+msgid "short description of New computers with USB seo category"
+msgstr ""
+
+msgid "short description of TV, audio from the cheapest seo category"
+msgstr ""
+
+msgid "short description of TV, audio in sale seo category"
+msgstr ""
+
+msgid "short description of TV, audio plasma with HDMI seo category"
 msgstr ""
 
 msgid "t"
 msgstr ""
 
+msgid "the Czech Post will try to deliver your parcel on time, but it will not succeed and despite the constant presence of your person at home, it will not catch you and you will have to pick up the parcel personally at the counter. Here, however, you have to endure an endlessly long line and an eternally grumpy lady postman."
+msgstr ""
+
 msgid "title"
 msgstr ""
 
-msgid "title - Druhá podsekce %locale%"
+msgid "title - Blog article example %counter% %locale%"
 msgstr ""
 
-msgid "title - První podsekce %locale%"
+msgid "title - First subsection %locale%"
 msgstr ""
 
-msgid "title - Ukázkový článek blogu %counter% %locale%"
+msgid "title - Second subsection %locale%"
+msgstr ""
+
+msgid "title of 2 litre coffeemakers in sale seo category"
+msgstr ""
+
+msgid "title of Electronics from most expensive seo category"
+msgstr ""
+
+msgid "title of Electronics in black seo category"
+msgstr ""
+
+msgid "title of Electronics in red seo category"
+msgstr ""
+
+msgid "title of Electronics with LED technology and size 30 inch in sale seo category"
+msgstr ""
+
+msgid "title of Full HD Electronics with LED technology and USB seo category"
+msgstr ""
+
+msgid "title of New computers with USB seo category"
+msgstr ""
+
+msgid "title of TV, audio from the cheapest seo category"
+msgstr ""
+
+msgid "title of TV, audio in sale seo category"
+msgstr ""
+
+msgid "title of TV, audio plasma with HDMI seo category"
 msgstr ""
 
 msgid "white"
 msgstr ""
 
-msgid "| Commerce Cloud"
+msgid "wood"
 msgstr ""
+
+msgid "| Demo eshop"
+msgstr ""
+

@@ -16,9 +16,6 @@ msgstr "Vyberte obrázek"
 msgid "Chybný formát RGB HEX : #336699 nebo #ABC"
 msgstr ""
 
-msgid "City cannot be longer than {{ limit }} characters"
-msgstr "Název města nesmí být delší než {{ limit }} znaků"
-
 msgid "City name cannot be longer than {{ limit }} characters"
 msgstr "Název města nesmí být delší než {{ limit }} znaků"
 
@@ -40,9 +37,6 @@ msgstr "Jméno nesmí být delší než {{ limit }} znaků"
 msgid "Flag \"{{ flagName }}\" is selected multiple times."
 msgstr "Příznak \"{{ flagName }}\" je zvolen několikrát."
 
-msgid "Flag color in must be in valid hexadecimal code e.g. #3333ff"
-msgstr "Barva příznaku musí mít správný formát hexadecimálního kódu, např.: #3333ff"
-
 msgid "Flag color must be in valid hexadecimal code e.g. #3333ff"
 msgstr "Barva příznaku musí mít správný formát hexadecimálního kódu, např.: #3333ff"
 
@@ -57,9 +51,6 @@ msgstr ""
 
 msgid "Identification number cannot be longer than {{ limit }} characters"
 msgstr "IČ nesmí být delší než {{ limit }} znaků"
-
-msgid "Identification number has to be exactly {{ limit }} characters long"
-msgstr "Identifikační číslo musí obsahovat přesně {{ limit }} znaků"
 
 msgid "Image can be only in JPG or PNG format"
 msgstr "Obrázek může být pouze ve formátu JPG nebo PNG"
@@ -195,9 +186,6 @@ msgstr "Vyplňte prosím množství."
 
 msgid "Please enter the whole number."
 msgstr "Zadejte prosím celé číslo."
-
-msgid "Please enter valid delivery address UUID"
-msgstr "Vyplňte prosím platné UUID doručovací adresy"
 
 msgid "Please enter valid email"
 msgstr "Vyplňte prosím platný e-mail"
@@ -354,9 +342,6 @@ msgstr "Doprava musí být vybrána před odesláním objednávky"
 
 msgid "Transport type name cannot be longer than {{ limit }} characters"
 msgstr "Název typu dopravy nesmí být delší než {{ limit }} znaků"
-
-msgid "Transport with provided UUID does not exist"
-msgstr "Doprava se zadaným UUID neexistuje"
 
 msgid "Transport with provided UUID is not available"
 msgstr "Doprava se zadaným UUID není dostupná"
