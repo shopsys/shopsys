@@ -23,7 +23,7 @@ class Version20200714071640 extends AbstractMigration
         $lastFlagsId = $this->connection->lastInsertId('flags_id_seq');
 
         $this->sql(sprintf('INSERT INTO flag_translations (translatable_id, name, locale) VALUES (%d, \'Cenový hit\', \'cs\')', $lastFlagsId));
-        $this->sql(sprintf('INSERT INTO flag_translations (translatable_id, name, locale) VALUES (%d, \'Cenový hit\', \'sk\')', $lastFlagsId));
+        $this->sql(sprintf('INSERT INTO flag_translations (translatable_id, name, locale) VALUES (%d, \'Price hit\', \'en\')', $lastFlagsId));
     }
 
     /**

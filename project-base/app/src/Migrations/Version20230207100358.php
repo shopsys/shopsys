@@ -16,39 +16,39 @@ class Version20230207100358 extends AbstractMigration
     private const PREDEFINED_SEO_PAGES = [
         'Homepage' => [
             'cs' => SeoPage::SEO_PAGE_HOMEPAGE_SLUG,
-            'sk' => SeoPage::SEO_PAGE_HOMEPAGE_SLUG,
+            'en' => SeoPage::SEO_PAGE_HOMEPAGE_SLUG,
         ],
         'Nákupní košík' => [
             'cs' => 'kosik',
-            'sk' => 'kosik',
+            'en' => 'cart',
         ],
         'Napište nám' => [
             'cs' => 'kontakt',
-            'sk' => 'kontakt',
+            'en' => 'contact',
         ],
         'Zapomenuté heslo' => [
             'cs' => 'zapomenute-heslo',
-            'sk' => 'zapomenute-heslo',
+            'en' => 'forgot-password',
         ],
         'Registrace' => [
             'cs' => 'registrace',
-            'sk' => 'registracia',
+            'en' => 'registration',
         ],
         'Prodejny' => [
             'cs' => 'obchodni-domy',
-            'sk' => 'obchodne-domy',
+            'en' => 'stores',
         ],
         'Značky' => [
             'cs' => 'prehled-znacek',
-            'sk' => 'prehled-znacek',
+            'en' => 'brands',
         ],
         'Přihlášení' => [
             'cs' => 'prihlaseni',
-            'sk' => 'prihlasenie',
+            'en' => 'login',
         ],
         'Souhlas se soubory cookies' => [
             'cs' => 'souhlas-se-soubory-cookies',
-            'sk' => 'souhlas-se-soubory-cookies',
+            'en' => 'cookie-consent',
         ],
     ];
 

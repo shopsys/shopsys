@@ -19,7 +19,6 @@ class Version20200921071900 extends AbstractMigration
 
         $this->sql(sprintf('INSERT INTO order_status_translations (translatable_id, name, locale) VALUES (%d, \'Nadlimitní\', \'cs\')', $lastOrderStatusId));
         $this->sql(sprintf('INSERT INTO order_status_translations (translatable_id, name, locale) VALUES (%d, \'Over limit\', \'en\')', $lastOrderStatusId));
-        $this->sql(sprintf('INSERT INTO order_status_translations (translatable_id, name, locale) VALUES (%d, \'Nadlimitní\', \'sk\')', $lastOrderStatusId));
 
         $this->sql('ALTER TABLE orders ADD is_over_limit BOOLEAN NOT NULL DEFAULT FALSE');
         $this->sql('ALTER TABLE orders ALTER is_over_limit DROP DEFAULT');

@@ -42,7 +42,7 @@ class Version20210429125507 extends AbstractMigration
 
         $this->sql('INSERT INTO transport_types (code) VALUES (\'' . TransportTypeEnum::TYPE_COMMON . '\')');
         $this->sql('INSERT INTO transport_type_translations (translatable_id, name, locale) VALUES (1, \'Standardní\', \'cs\')');
-        $this->sql('INSERT INTO transport_type_translations (translatable_id, name, locale) VALUES (1, \'Štandardná\', \'sk\')');
+        $this->sql('INSERT INTO transport_type_translations (translatable_id, name, locale) VALUES (1, \'Standard\', \'en\')');
 
         $this->sql('ALTER TABLE transports ADD transport_type_id INT NOT NULL DEFAULT 1');
         $this->sql('
