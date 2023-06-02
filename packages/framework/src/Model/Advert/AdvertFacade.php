@@ -10,6 +10,9 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 
 class AdvertFacade
 {
+    public const IMAGE_TYPE_WEB = 'web';
+    public const IMAGE_TYPE_MOBILE = 'mobile';
+
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertRepository $advertRepository
@@ -59,7 +62,9 @@ class AdvertFacade
 
         $this->em->persist($advert);
         $this->em->flush();
-        $this->imageFacade->manageImages($advert, $advertData->image);
+
+        $this->imageFacade->manageImages($advert, $advertData->image, self::IMAGE_TYPE_WEB);
+        $this->imageFacade->manageImages($advert, $advertData->mobileImage, self::IMAGE_TYPE_MOBILE);
         $this->em->flush();
 
         return $advert;
@@ -76,7 +81,9 @@ class AdvertFacade
         $advert->edit($advertData);
 
         $this->em->flush();
-        $this->imageFacade->manageImages($advert, $advertData->image);
+
+        $this->imageFacade->manageImages($advert, $advertData->image, self::IMAGE_TYPE_WEB);
+        $this->imageFacade->manageImages($advert, $advertData->mobileImage, self::IMAGE_TYPE_MOBILE);
         $this->em->flush();
 
         return $advert;
