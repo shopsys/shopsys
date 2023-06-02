@@ -6,8 +6,8 @@ namespace App\DataFixtures\Demo;
 
 use App\Model\Product\Flag\FlagDataFactory;
 use Doctrine\Persistence\ObjectManager;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 

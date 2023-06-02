@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Controller\Admin\MailController as baseMailController;
 use Shopsys\FrameworkBundle\Form\Admin\Mail\MailSettingFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Mail\MailTemplateFormType;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @property \App\Model\Mail\MailTemplateFacade $mailTemplateFacade

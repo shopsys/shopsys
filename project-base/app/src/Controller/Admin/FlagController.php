@@ -8,7 +8,6 @@ use App\Form\Admin\Product\Flag\FlagFormType;
 use App\Model\Product\Flag\FlagDataFactory;
 use App\Model\Product\Flag\FlagFacade;
 use App\Model\Product\Flag\FlagGridFactory;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\FlagController as BaseFlagController;
@@ -17,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagInlineEdit;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @property \App\Model\Product\Flag\FlagFacade $flagFacade
