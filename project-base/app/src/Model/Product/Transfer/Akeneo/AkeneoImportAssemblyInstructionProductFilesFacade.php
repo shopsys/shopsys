@@ -120,6 +120,7 @@ class AkeneoImportAssemblyInstructionProductFilesFacade extends AbstractAkeneoIm
             try {
                 $this->filesystem->delete($this->getFullPathWithName($fileName));
             } catch (FilesystemException $exception) {
+                $this->logger->error($exception->getMessage());
             }
 
             $this->storeFile($fileName, $content);
@@ -136,6 +137,7 @@ class AkeneoImportAssemblyInstructionProductFilesFacade extends AbstractAkeneoIm
         try {
             $this->filesystem->delete($this->getFullPathWithName($fileName));
         } catch (FilesystemException $exception) {
+            $this->logger->error($exception->getMessage());
         }
     }
 

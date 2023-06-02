@@ -95,6 +95,7 @@ class PaymentServiceFacade
             $paymentServiceFacade->createTransaction($paymentTransactionData, $paymentSetupCreationData);
             $this->paymentTransactionFacade->create($paymentTransactionData);
         } catch (PaymentServiceFacadeNotRegisteredException $exception) {
+            $this->logger->error($exception->getMessage());
         }
 
         return $paymentSetupCreationData;
@@ -115,6 +116,7 @@ class PaymentServiceFacade
                     $this->paymentTransactionFacade->edit($paymentTransaction->getId(), $paymentTransactionData);
                 }
             } catch (PaymentServiceFacadeNotRegisteredException $exception) {
+                $this->logger->error($exception->getMessage());
             }
         }
     }
@@ -147,6 +149,7 @@ class PaymentServiceFacade
                 $this->paymentTransactionFacade->edit($paymentTransaction->getId(), $paymentTransactionData);
             }
         } catch (PaymentServiceFacadeNotRegisteredException $exception) {
+            $this->logger->error($exception->getMessage());
         }
     }
 }

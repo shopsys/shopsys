@@ -122,7 +122,8 @@ class SlugQuery extends AbstractQuery
 
                     return $readyCategorySeoMix;
             }
-        } catch (EntityNotFoundUserError $error) {
+        } catch (EntityNotFoundUserError) {
+            throw new NoResultFoundForSlugUserError('No result found for request.');
         }
 
         throw new NoResultFoundForSlugUserError('No result found for request.');

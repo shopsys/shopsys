@@ -6,7 +6,6 @@ namespace App\FrontendApi\Resolver\Products\Comparison;
 
 use App\Model\Product\Comparison\Comparison;
 use App\Model\Product\Comparison\ComparisonFacade;
-use App\Model\Product\Comparison\Exception\ComparisonNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
@@ -18,7 +17,7 @@ class ComparisonQuery extends AbstractQuery
      */
     public function __construct(
         private readonly ComparisonFacade $comparisonFacade,
-        private readonly CurrentCustomerUser $currentCustomerUser
+        private readonly CurrentCustomerUser $currentCustomerUser,
     ) {
     }
 
@@ -43,10 +42,7 @@ class ComparisonQuery extends AbstractQuery
                 || $loggedCustomerComparison->getUuid()
                 !== $uuid)
         ) {
-            try {
-                $comparisonByUuid = $this->comparisonFacade->getComparisonByUuid($uuid);
-            } catch (ComparisonNotFoundException $exception) {
-            }
+            $comparisonByUuid = $this->comparisonFacade->findComparisonByUuid($uuid);
         }
 
         if ($loggedCustomerComparison !== null && $comparisonByUuid !== null) {

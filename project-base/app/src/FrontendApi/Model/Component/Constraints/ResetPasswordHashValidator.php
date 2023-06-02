@@ -52,8 +52,9 @@ class ResetPasswordHashValidator extends ConstraintValidator
                     ->atPath('hash')
                     ->addViolation();
             }
-        } catch (CustomerUserNotFoundByEmailAndDomainException $ex) {
+        } catch (CustomerUserNotFoundByEmailAndDomainException) {
             /** No need to do anything, already handled by @see \App\FrontendApi\Model\Component\Constraints\ExistingEmailValidator */
+            return;
         }
     }
 }
