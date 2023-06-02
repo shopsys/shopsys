@@ -10,8 +10,8 @@ use App\Model\Order\Order;
 use App\Model\Payment\Service\PaymentServiceInterface;
 use App\Model\Payment\Transaction\PaymentTransactionData;
 use GoPay\Definition\Response\PaymentStatus;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class GoPayFacade implements PaymentServiceInterface
