@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sniffer\PhpStan;
+namespace Shopsys\CodingStandards\Phpstan;
 
 use PHPStan\Reflection\PropertyReflection;
 use PHPStan\Rules\Properties\ReadWritePropertiesExtension;
