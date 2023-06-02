@@ -18,7 +18,7 @@ class Version20210813063216 extends AbstractMigration
         $this->sql('INSERT INTO transport_types (code) VALUES (\'' . TransportTypeEnum::TYPE_PACKETERY . '\')');
         $lastTransportTypeId = $this->connection->lastInsertId('transport_types_id_seq');
         $this->sql('INSERT INTO transport_type_translations (translatable_id, name, locale) VALUES (' . $lastTransportTypeId . ', \'Zásilkovna\', \'cs\')');
-        $this->sql('INSERT INTO transport_type_translations (translatable_id, name, locale) VALUES (' . $lastTransportTypeId . ', \'Zásielkovňa\', \'sk\')');
+        $this->sql('INSERT INTO transport_type_translations (translatable_id, name, locale) VALUES (' . $lastTransportTypeId . ', \'Packetery\', \'en\')');
 
         $this->sql('INSERT INTO tranfers (identifier, name) VALUES (\'PacketeryPacketsExport\', \'Packetery Send packet data to packetery\');');
     }
