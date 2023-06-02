@@ -215,6 +215,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
             108 => 71,
         ];
 
+        $positions = [];
         foreach ($productsIdsWithImageIdSameAsProductId as $productId) {
             $names = [];
 
@@ -222,7 +223,8 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
                 $names[$locale] = 'Product ' . $productId . ' image';
             }
 
-            $this->saveImageIntoDb($productId, 'product', $productId, $names, null, 'image_main');
+            $positions[$productId] = 0;
+            $this->saveImageIntoDb($productId, 'product', $productId, $names, null, 'image_main', $positions[$productId]);
         }
 
         foreach ($specificProductsIdsIndexedByImagesIds as $imageId => $productId) {
@@ -232,7 +234,8 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
                 $names[$locale] = 'Product ' . $productId . ' image';
             }
 
-            $this->saveImageIntoDb($productId, 'product', $imageId, $names, null, 'image_main');
+            $positions[$productId] = array_key_exists($productId, $positions) ? ++$positions[$productId] : 0;
+            $this->saveImageIntoDb($productId, 'product', $imageId, $names, null, 'image_main', $positions[$productId]);
         }
     }
 
@@ -305,10 +308,17 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
      * @param array $names
      * @param string|null $type
      * @param string|null $akeneoImageType
-     * @throws \Doctrine\DBAL\Exception
+     * @param int|null $position
      */
-    private function saveImageIntoDb(int $entityId, string $entityName, int $imageId, array $names = [], ?string $type = null, ?string $akeneoImageType = null)
-    {
+    private function saveImageIntoDb(
+        int $entityId,
+        string $entityName,
+        int $imageId,
+        array $names = [],
+        ?string $type = null,
+        ?string $akeneoImageType = null,
+        ?int $position = null,
+    ) {
         $this->em->getConnection()->executeStatement(
             'INSERT INTO images (id, entity_name, entity_id, type, extension, position, modified_at, akeneo_image_type)
             VALUES (:id, :entity_name, :entity_id, :type, :extension, :position, :modified_at, :akeneo_image_type)',
@@ -318,7 +328,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
                 'entity_id' => $entityId,
                 'type' => $type,
                 'extension' => self::IMAGE_TYPE,
-                'position' => null,
+                'position' => $position,
                 'modified_at' => new DateTimeImmutable('2015-04-16 11:36:06'),
                 'akeneo_image_type' => $akeneoImageType,
             ],
@@ -328,7 +338,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
                 'entity_id' => Types::INTEGER,
                 'type' => Types::STRING,
                 'extension' => Types::STRING,
-                'position' => Types::STRING,
+                'position' => Types::INTEGER,
                 'modified_at' => Types::DATETIME_IMMUTABLE,
                 'akeneo_image_type' => Types::STRING,
             ],
