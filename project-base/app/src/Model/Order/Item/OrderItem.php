@@ -7,7 +7,6 @@ namespace App\Model\Order\Item;
 use App\Model\Order\Item\Exception\OrderItemRelatedException;
 use App\Model\Store\Store;
 use Doctrine\ORM\Mapping as ORM;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -140,54 +139,5 @@ class OrderItem extends BaseOrderItem
         }
 
         return $this->relatedOrderItem;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDiscountText(): string
-    {
-        return str_replace(' - ' . $this->getRelatedProduct()->getName(), '', $this->name);
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    public function getFinalPriceWithVat(): Money
-    {
-        $priceWithVat = $this->getPriceWithVat();
-
-        try {
-            $coupon = $this->getRelatedCoupon();
-
-            if ($coupon instanceof self) {
-                $discountPerItem = $coupon->getPriceWithVat()->divide($this->quantity, 2);
-                $priceWithVat = $priceWithVat->add($discountPerItem);
-            }
-        } catch (OrderItemRelatedException $e) {
-            //order item is not discounted
-        }
-
-        return $priceWithVat;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    public function getFinalPriceWithoutVat(): Money
-    {
-        $priceWithVat = $this->getPriceWithoutVat();
-        try {
-            $coupon = $this->getRelatedCoupon();
-
-            if ($coupon instanceof self) {
-                $discountPerItem = $coupon->getPriceWithoutVat()->divide($this->quantity, 2);
-                $priceWithVat = $priceWithVat->add($discountPerItem);
-            }
-        } catch (OrderItemRelatedException $e) {
-            //order item is not discounted
-        }
-
-        return $priceWithVat;
     }
 }
