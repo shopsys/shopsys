@@ -20,7 +20,7 @@ class ContainerControllerResolverTest extends FunctionalTestCase
 
         $request->attributes->set(
             '_controller',
-            'Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController::redirectAction',
+            RedirectController::class . '::redirectAction',
         );
 
         $controller = $containerControllerResolver->getController($request);
