@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Advert;
 
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Model\Advert\Exception\AdvertNotFoundException;
@@ -42,16 +43,25 @@ class AdvertRepository
      */
     protected function getAdvertByPositionQueryBuilder($positionName, $domainId, $category = null)
     {
-        if ($positionName === AdvertPositionRegistry::POSITION_PRODUCT_LIST && $category === null) {
+        if (AdvertPositionRegistry::isCategoryPosition($positionName) && $category === null) {
             DeprecationHelper::trigger('Retrieving advert on product list page without setting category is deprecated and will be disabled in next major.');
         }
+
+        $dateToday = (new DateTimeImmutable())->format('Y-m-d 00:00:00');
 
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('a')
             ->from(Advert::class, 'a')
-            ->where('a.positionName = :positionName')->setParameter('positionName', $positionName)
+            ->where('a.positionName = :positionName')
             ->andWhere('a.hidden = FALSE')
-            ->andWhere('a.domainId = :domainId')->setParameter('domainId', $domainId);
+            ->andWhere('a.domainId = :domainId')
+            ->andWhere('a.datetimeVisibleFrom is NULL or a.datetimeVisibleFrom <= :now')
+            ->andWhere('a.datetimeVisibleTo is NULL or a.datetimeVisibleTo >= :now')
+            ->setParameters([
+                'domainId' => $domainId,
+                'positionName' => $positionName,
+                'now' => $dateToday,
+            ]);
 
         if ($category !== null) {
             $queryBuilder

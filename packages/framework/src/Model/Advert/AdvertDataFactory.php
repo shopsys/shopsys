@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Advert;
 
+use App\Model\Advert\AdvertFacade;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 
 class AdvertDataFactory implements AdvertDataFactoryInterface
@@ -23,6 +24,7 @@ class AdvertDataFactory implements AdvertDataFactoryInterface
     {
         $advertData = new AdvertData();
         $advertData->image = $this->imageUploadDataFactory->create();
+        $advertData->mobileImage = $this->imageUploadDataFactory->create();
 
         return $advertData;
     }
@@ -61,6 +63,13 @@ class AdvertDataFactory implements AdvertDataFactoryInterface
         $advertData->hidden = $advert->isHidden();
         $advertData->domainId = $advert->getDomainId();
         $advertData->image = $this->imageUploadDataFactory->createFromEntityAndType($advert);
+        $advertData->categories = $advert->getCategories();
+
+        $advertData->image = $this->imageUploadDataFactory->createFromEntityAndType($advert, AdvertFacade::IMAGE_TYPE_WEB);
+        $advertData->mobileImage = $this->imageUploadDataFactory->createFromEntityAndType($advert, AdvertFacade::IMAGE_TYPE_MOBILE);
+
+        $advertData->datetimeVisibleFrom = $advert->getDatetimeVisibleFrom();
+        $advertData->datetimeVisibleTo = $advert->getDatetimeVisibleTo();
         $advertData->categories = $advert->getCategories();
     }
 }

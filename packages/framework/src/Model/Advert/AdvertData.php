@@ -56,6 +56,21 @@ class AdvertData
      */
     public array $categories;
 
+    /**
+     * @var \DateTime|null
+     */
+    public $datetimeVisibleFrom;
+
+    /**
+     * @var \DateTime|null
+     */
+    public $datetimeVisibleTo;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData
+     */
+    public $mobileImage;
+
     public function __construct()
     {
         $this->hidden = false;

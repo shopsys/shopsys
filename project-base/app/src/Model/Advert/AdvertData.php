@@ -6,20 +6,9 @@ namespace App\Model\Advert;
 
 use Shopsys\FrameworkBundle\Model\Advert\AdvertData as BaseAdvertData;
 
+/**
+ * @property \App\Model\Category\Category[] $categories
+ */
 class AdvertData extends BaseAdvertData
 {
-    /**
-     * @var \DateTime|null
-     */
-    public $datetimeVisibleFrom;
-
-    /**
-     * @var \DateTime|null
-     */
-    public $datetimeVisibleTo;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData
-     */
-    public $mobileImage;
 }

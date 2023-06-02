@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Advert;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -82,42 +83,57 @@ class Advert
     protected Collection $categories;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advert
+     * @var \DateTime|null
+     * @ORM\Column(type="datetime",nullable=true)
      */
-    public function __construct(AdvertData $advert)
+    protected $datetimeVisibleFrom;
+
+    /**
+     * @var \DateTime|null
+     * @ORM\Column(type="datetime",nullable=true)
+     */
+    protected $datetimeVisibleTo;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advertData
+     */
+    public function __construct(AdvertData $advertData)
     {
-        $this->setData($advert);
+        $this->setData($advertData);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advert
+     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advertData
      */
-    public function edit(AdvertData $advert)
+    public function edit(AdvertData $advertData)
     {
-        $this->setData($advert);
+        $this->setData($advertData);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advert
+     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertData $advertData
      */
-    protected function setData(AdvertData $advert): void
+    protected function setData(AdvertData $advertData): void
     {
-        $this->domainId = $advert->domainId;
-        $this->name = $advert->name;
-        $this->type = $advert->type;
-        $this->code = $advert->code;
-        $this->link = $advert->link;
-        $this->positionName = $advert->positionName;
-        $this->hidden = $advert->hidden;
-        $this->uuid = $advert->uuid ?: Uuid::uuid4()->toString();
+        $this->domainId = $advertData->domainId;
+        $this->name = $advertData->name;
+        $this->type = $advertData->type;
+        $this->code = $advertData->code;
+        $this->link = $advertData->link;
+        $this->positionName = $advertData->positionName;
+        $this->hidden = $advertData->hidden;
+        $this->uuid = $advertData->uuid ?: Uuid::uuid4()->toString();
+
+        $this->datetimeVisibleFrom = $advertData->datetimeVisibleFrom;
+        $this->datetimeVisibleTo = $advertData->datetimeVisibleTo;
 
         $this->categories = new ArrayCollection();
 
-        if ($this->positionName !== AdvertPositionRegistry::POSITION_PRODUCT_LIST) {
+        if (!AdvertPositionRegistry::isCategoryPosition($this->positionName)) {
             return;
         }
 
-        foreach ($advert->categories as $category) {
+        foreach ($advertData->categories as $category) {
             $this->categories->add($category);
         }
     }
@@ -200,5 +216,21 @@ class Advert
     public function getCategories(): array
     {
         return $this->categories->getValues();
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getDatetimeVisibleFrom(): ?DateTime
+    {
+        return $this->datetimeVisibleFrom;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getDatetimeVisibleTo(): ?DateTime
+    {
+        return $this->datetimeVisibleTo;
     }
 }
