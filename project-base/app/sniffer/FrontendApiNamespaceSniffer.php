@@ -9,8 +9,8 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 
 class FrontendApiNamespaceSniffer implements Sniff
 {
-    private const RESOLVER_NAMESPACE_PART = 'Resolver';
-    private const RESOLVER_SERVICE_FILE = 'Resolver.php';
+    private const RESOLVER_NAMESPACE_PART = 'Query';
+    private const RESOLVER_SERVICE_FILE = 'Query.php';
 
     private const MUTATION_NAMESPACE_PART = 'Mutation';
     private const MUTATION_SERVICE_FILE = 'Mutation.php';
@@ -33,12 +33,11 @@ class FrontendApiNamespaceSniffer implements Sniff
      */
     public function process(File $file, $position): void
     {
-
-        if ($this->stringEndsWith($file->getFilename(), self::RESOLVER_SERVICE_FILE) !== false) {
+        if (str_ends_with($file->getFilename(), self::RESOLVER_SERVICE_FILE)) {
             $this->processResolver($file, $position);
         }
 
-        if ($this->stringEndsWith($file->getFilename(), self::MUTATION_SERVICE_FILE) !== false) {
+        if (str_ends_with($file->getFilename(), self::MUTATION_SERVICE_FILE)) {
             $this->processMutation($file, $position);
         }
     }
@@ -49,13 +48,19 @@ class FrontendApiNamespaceSniffer implements Sniff
      */
     private function processMutation(File $file, int $position): void
     {
+        $actualNamespace = $this->getNamespaceOfFile($file, $position);
+
+        if (!str_starts_with('App\\', $actualNamespace)) {
+            return;
+        }
+
         $this->processCurrentNamespacePart($file, $position, self::MUTATION_NAMESPACE_PART);
         $this->processDirectionApiNamespaceParts($file, $position, self::MUTATION_NAMESPACE_PART);
         $this->processParentFrontendApiNamespacePart(
             $file,
             $position,
             $this->getNamespaceOfFile($file, $position),
-            self::MUTATION_NAMESPACE_PART
+            self::MUTATION_NAMESPACE_PART,
         );
     }
 
@@ -67,9 +72,11 @@ class FrontendApiNamespaceSniffer implements Sniff
     {
         $actualNamespace = $this->getNamespaceOfFile($file, $position);
 
-        if (strpos($actualNamespace, self::RESOLVER_NAMESPACE_PART) === false
-            &&
-            strpos($actualNamespace, self::FRONTEND_API_NAMESPACE_PART) === false
+        if (
+            !str_starts_with('App\\', $actualNamespace) || (
+                !str_contains($actualNamespace, self::RESOLVER_NAMESPACE_PART)
+                && !str_contains($actualNamespace, self::FRONTEND_API_NAMESPACE_PART)
+            )
         ) {
             return;
         }
@@ -80,7 +87,7 @@ class FrontendApiNamespaceSniffer implements Sniff
             $file,
             $position,
             $actualNamespace,
-            self::RESOLVER_NAMESPACE_PART
+            self::RESOLVER_NAMESPACE_PART,
         );
     }
 
@@ -104,7 +111,7 @@ class FrontendApiNamespaceSniffer implements Sniff
             $checkedNamespacePart,
             self::FRONTEND_API_NAMESPACE_PART,
             $checkedNamespacePart,
-            $className
+            $className,
         );
 
         $file->addError($error, $position, 'missingNamespace');
@@ -139,7 +146,7 @@ class FrontendApiNamespaceSniffer implements Sniff
                     $checkedNamespacePart,
                     self::FRONTEND_API_NAMESPACE_PART,
                     $checkedNamespacePart,
-                    $this->getClassnameOfFile($file)
+                    $this->getClassnameOfFile($file),
                 );
                 $file->addError($error, $checkedNamespacePartKey, 'wrongNamespaceOrdering');
 
@@ -172,7 +179,7 @@ class FrontendApiNamespaceSniffer implements Sniff
                         $actualNamespace,
                         $checkedNamespacePart,
                         $this->getCorrectNamespace($namespacePartsIndexedByPosition),
-                        $className
+                        $className,
                     );
                     $file->addError($error, $previousKey, 'missingApiNamespace');
                 }
@@ -191,7 +198,7 @@ class FrontendApiNamespaceSniffer implements Sniff
         $correctNamespaceParts = [];
         foreach ($namespacePartsIndexedByPosition as $part) {
             if ($part === self::RESOLVER_NAMESPACE_PART) {
-                $correctNamespaceParts = ['...',self::FRONTEND_API_NAMESPACE_PART];
+                $correctNamespaceParts = ['...', self::FRONTEND_API_NAMESPACE_PART];
             }
             $correctNamespaceParts[] = $part;
         }
@@ -250,15 +257,5 @@ class FrontendApiNamespaceSniffer implements Sniff
         } while ($token['code'] !== T_SEMICOLON);
 
         return $namespace;
-    }
-
-    /**
-     * @param string $name
-     * @param string $needle
-     * @return bool
-     */
-    private function stringEndsWith(string $name, string $needle): bool
-    {
-        return substr($name, -strlen($needle)) === $needle;
     }
 }
