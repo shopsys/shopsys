@@ -59,7 +59,7 @@ class ProductAvailabilityFacade
     public function getProductAvailabilityInformationByDomainId(Product $product, int $domainId): string
     {
         if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
-            return t('Skladem');
+            return t('In stock');
         }
 
         if ($product->hasPreorder() === false) {
@@ -112,7 +112,7 @@ class ProductAvailabilityFacade
 
         $groupedStockQuantity = $this->sumProductStockQuantities($productStocks);
         if ($groupedStockQuantity >= $quantifiedProduct->getQuantity()) {
-            return t('Skladem');
+            return t('In stock');
         }
 
         if ($product->hasPreorder() === false) {

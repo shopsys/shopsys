@@ -44,7 +44,7 @@ class CustomerUserFormTypeExtension extends AbstractTypeExtension
         $builderSystemDataGroup = $builder->get('systemData');
         $builderSystemDataGroup->add('activated', DisplayOnlyType::class, [
             'label' => t('Aktivní'),
-            'data' => $customerUser->isActivated() ? t('Ano') : t('Ne'),
+            'data' => $customerUser->isActivated() ? t('Yes') : t('No'),
             'position' => ['after' => 'formId'],
         ]);
     }
