@@ -25,12 +25,9 @@ use Tests\App\Functional\EntityExtension\Model\ProductOneToManyBidirectionalEnti
 use Tests\App\Functional\EntityExtension\Model\ProductOneToOneBidirectionalEntity;
 use Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity;
 use Tests\App\Test\TransactionFunctionalTestCase;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class EntityExtensionTest extends TransactionFunctionalTestCase
 {
-    use SymfonyTestContainer;
-
     protected const MAIN_PRODUCT_ID = 1;
     protected const ONE_TO_ONE_SELF_REFERENCING_PRODUCT_ID = 2;
     protected const ONE_TO_MANY_SELF_REFERENCING_PRODUCT_ID = 3;

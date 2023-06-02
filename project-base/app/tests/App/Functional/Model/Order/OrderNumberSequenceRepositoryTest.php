@@ -6,12 +6,9 @@ namespace Tests\App\Functional\Model\Order;
 
 use Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository;
 use Tests\App\Test\TransactionFunctionalTestCase;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class OrderNumberSequenceRepositoryTest extends TransactionFunctionalTestCase
 {
-    use SymfonyTestContainer;
-
     /**
      * @inject
      */

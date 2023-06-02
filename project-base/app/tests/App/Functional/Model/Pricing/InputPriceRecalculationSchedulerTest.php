@@ -24,12 +24,9 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
 {
-    use SymfonyTestContainer;
-
     private const METHOD_WITH_VAT = 'scheduleSetInputPricesWithVat';
 
     private const METHOD_WITHOUT_VAT = 'scheduleSetInputPricesWithoutVat';
