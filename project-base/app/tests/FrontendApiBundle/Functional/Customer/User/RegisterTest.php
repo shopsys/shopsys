@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Customer\User;
 
+use App\DataFixtures\Demo\OrderDataFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -17,21 +18,21 @@ class RegisterTest extends GraphQlTestCase
     public function testRegister(): void
     {
         $graphQlType = 'Register';
-        $response = $this->getResponseContentForQuery($this->getRegisterQuery());
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', $this->getRegisterQueryVariables());
 
         $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
-        $this->assertArrayHasKey('accessToken', $responseData);
-        $this->assertIsString($responseData['accessToken']);
+        $this->assertArrayHasKey('tokens', $responseData);
+        $this->assertIsString($responseData['tokens']['accessToken']);
 
-        $this->assertArrayHasKey('refreshToken', $responseData);
-        $this->assertIsString($responseData['refreshToken']);
+        $this->assertArrayHasKey('tokens', $responseData);
+        $this->assertIsString($responseData['tokens']['refreshToken']);
     }
 
     public function testRegisterAlreadyRegisteredCustomerUser(): void
     {
-        $response = $this->getResponseContentForQuery($this->getRegisterQuery('no-reply@shopsys.com'));
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', $this->getRegisterQueryVariables('no-reply@shopsys.com'));
 
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $expectedViolationMessage = t(
@@ -54,8 +55,9 @@ class RegisterTest extends GraphQlTestCase
 
     public function testRegisterWithWrongData(): void
     {
-        $response = $this->getResponseContentForQuery(
-            $this->getRegisterQuery(
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql',
+            $this->getRegisterQueryVariables(
                 'no-replyshopsys.com',
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit ultrices molestie. Donec s',
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit ultrices molestie. Donec s',
@@ -105,30 +107,67 @@ class RegisterTest extends GraphQlTestCase
         }
     }
 
+    public function testRegisterWithOrderPairing()
+    {
+        /** @var \App\Model\Order\Order $order */
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 19);
+        $graphQlType = 'Register';
+        $mutationVariables = $this->getRegisterQueryVariables(
+            'not-registered-user@shopsys.com',
+            'NotRegistered',
+            'User'
+        );
+        $mutationVariables['lastOrderUuid'] = $order->getUuid();
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', $mutationVariables);
+
+        $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
+
+        $this->assertArrayHasKey('tokens', $responseData);
+        $this->assertIsString($responseData['tokens']['accessToken']);
+
+        $this->assertArrayHasKey('tokens', $responseData);
+        $this->assertIsString($responseData['tokens']['refreshToken']);
+    }
+
+    public function testRegisterWithOrderPairingError(): void
+    {
+        /** @var \App\Model\Order\Order $order */
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 1);
+        $mutationVariables = $this->getRegisterQueryVariables(
+            'new-one-no-reply@shopsys.com',
+            'Adam',
+            'Bořič'
+        );
+        $mutationVariables['lastOrderUuid'] = $order->getUuid();
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', $mutationVariables);
+        $this->assertResponseContainsArrayOfErrors($response);
+    }
+
     /**
      * @param string $email
      * @param string $firstName
      * @param string $lastName
      * @param string $password
-     * @return string
+     * @return array
      */
-    private function getRegisterQuery(
+    private function getRegisterQueryVariables(
         string $email = self::DEFAULT_USER_EMAIL,
         string $firstName = self::DEFAULT_USER_FIRST_NAME,
         string $lastName = self::DEFAULT_USER_LAST_NAME,
         string $password = self::DEFAULT_USER_PASSWORD,
-    ): string {
-        return
-            'mutation {
-                Register(input: {
-                    email: "' . $email . '"
-                    firstName: "' . $firstName . '"
-                    lastName: "' . $lastName . '"
-                    password: "' . $password . '"
-                }) {
-                    accessToken
-                    refreshToken
-                }
-            }';
+    ): array {
+        return [
+            'email' => $email,
+            'firstName' => $firstName,
+            'lastName' => $lastName,
+            'password' => $password,
+            'telephone' => '145612314',
+            'newsletterSubscription' => false,
+            'street' => '123 Fake Street',
+            'city' => 'Springfield',
+            'postcode' => '12345',
+            'companyCustomer' => false,
+            'country' => 'CZ',
+        ];
     }
 }

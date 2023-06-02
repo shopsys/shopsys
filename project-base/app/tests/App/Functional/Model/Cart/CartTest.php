@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Cart;
 
 use App\DataFixtures\Demo\UnitDataFixture;
+use App\Model\Cart\Cart;
+use App\Model\Cart\Item\CartItem;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Cart\Cart;
-use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
@@ -40,12 +40,16 @@ class CartTest extends TransactionFunctionalTestCase
         $productData = $this->productDataFactory->create();
         $productData->name = [];
         $productData->availability = $availability;
+        $productData->catnum = '123';
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
+        $productData->manualInputPricesByPricingGroupId = [1 => Money::zero(), 2 => Money::zero()];
         $this->setVats($productData);
         $product1 = Product::create($productData);
-        $product2 = Product::create($productData);
+        $productData2 = $productData;
+        $productData2->catnum = '321';
+        $product2 = Product::create($productData2);
 
-        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
 
         $cartItem1 = new CartItem($cart, $product1, 1, Money::zero());
         $cart->addItem($cartItem1);
@@ -73,7 +77,7 @@ class CartTest extends TransactionFunctionalTestCase
 
         $customerUserIdentifier = new CustomerUserIdentifier('randomString');
 
-        $cart = new Cart($customerUserIdentifier->getCartIdentifier());
+        $cart = new Cart($customerUserIdentifier->getCartIdentifier(), null);
 
         $cartItem = new CartItem($cart, $product, 1, Money::zero());
         $cart->addItem($cartItem);
@@ -91,6 +95,7 @@ class CartTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $productData->name = ['cs' => 'Any name'];
+        $productData->manualInputPricesByPricingGroupId = [1 => Money::zero(), 2 => Money::zero()];
         $this->setVats($productData);
 
         return Product::create($productData);

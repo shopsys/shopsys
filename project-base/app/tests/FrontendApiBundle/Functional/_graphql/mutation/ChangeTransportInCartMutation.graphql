@@ -1,0 +1,32 @@
+mutation ChangeTransportInCart(
+    $cartUuid: Uuid
+    $transportUuid: Uuid
+    $pickupPlaceIdentifier: String
+) {
+    ChangeTransportInCart(input: {
+        cartUuid: $cartUuid
+        transportUuid: $transportUuid
+        pickupPlaceIdentifier: $pickupPlaceIdentifier
+    }) {
+        uuid
+        transport {
+            uuid
+            name
+            transportType {
+                name
+                code
+            }
+            payments {
+                uuid
+                name
+                type
+                price {
+                    priceWithoutVat
+                    priceWithVat
+                    vatAmount
+                }
+            }
+        }
+        selectedPickupPlaceIdentifier
+    }
+}

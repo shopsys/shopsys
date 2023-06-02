@@ -24,30 +24,30 @@ class LoginTest extends GraphQlTestCase
         $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
-        $this->assertArrayHasKey('accessToken', $responseData);
-        $this->assertIsString($responseData['accessToken']);
+        $this->assertArrayHasKey('tokens', $responseData);
+        $this->assertIsString($responseData['tokens']['accessToken']);
 
-        $this->assertArrayHasKey('refreshToken', $responseData);
-        $this->assertIsString($responseData['refreshToken']);
+        $this->assertArrayHasKey('tokens', $responseData);
+        $this->assertIsString($responseData['tokens']['refreshToken']);
 
         try {
-            $this->tokenFacade->getTokenByString($responseData['accessToken']);
+            $this->tokenFacade->getTokenByString($responseData['tokens']['accessToken']);
         } catch (Throwable $throwable) {
             $this->fail('Token is not valid');
         }
 
-        $clientOptions = ['HTTP_Authorization' => sprintf('Bearer %s', $responseData['accessToken'])];
+        $clientOptions = ['HTTP_X-Auth-Token' => sprintf('Bearer %s', $responseData['tokens']['accessToken'])];
         $this->configureCurrentClient(null, null, $clientOptions);
         $authorizationResponse = $this->getResponseContentForQuery(self::getLoginQuery());
 
         $this->assertResponseContainsArrayOfDataForGraphQlType($authorizationResponse, $graphQlType);
         $authorizationResponseData = $this->getResponseDataForGraphQlType($authorizationResponse, $graphQlType);
 
-        $this->assertArrayHasKey('accessToken', $authorizationResponseData);
-        $this->assertIsString($authorizationResponseData['accessToken']);
+        $this->assertArrayHasKey('tokens', $authorizationResponseData);
+        $this->assertIsString($authorizationResponseData['tokens']['accessToken']);
 
-        $this->assertArrayHasKey('refreshToken', $authorizationResponseData);
-        $this->assertIsString($authorizationResponseData['refreshToken']);
+        $this->assertArrayHasKey('tokens', $authorizationResponseData);
+        $this->assertIsString($authorizationResponseData['tokens']['refreshToken']);
     }
 
     public function testInvalidTokenException()
@@ -64,16 +64,16 @@ class LoginTest extends GraphQlTestCase
                     'message' => 'Token is not valid.',
                     'extensions' => [
                         'category' => 'token',
+                        'userCode' => 'invalid-token',
                     ],
                 ],
             ],
         ];
 
-        $this->configureCurrentClient(null, null, ['HTTP_Authorization' => 'Bearer 123']);
-        $response = $this->getResponseContentForQuery(
-            self::getLoginQuery(),
-            [],
-        );
+        $this->configureCurrentClient(null, null, ['HTTP_X-Auth-Token' => 'Bearer 123']);
+
+        $response = $this->getResponseContentForQuery(self::getLoginQuery());
+
         $this->assertSame($expectedError, $response);
     }
 
@@ -88,8 +88,10 @@ class LoginTest extends GraphQlTestCase
                     email: "no-reply@shopsys.com"
                     password: "user123"
                 }) {
-                    accessToken
-                    refreshToken
+                    tokens {
+                        accessToken
+                        refreshToken
+                    }
                 }
             }
         ';

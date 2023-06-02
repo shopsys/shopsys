@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Product;
 
+use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ProductVariantTest extends GraphQlTestCase
@@ -17,17 +17,10 @@ class ProductVariantTest extends GraphQlTestCase
 
     protected function setUp(): void
     {
-        $productFacade = self::getContainer()->get(ProductFacade::class);
-
-        /** @var \App\Model\Product\Product $productAsMainVariant */
-        $productAsMainVariant = $productFacade->getById(150);
-        $this->productAsMainVariant = $productAsMainVariant;
-
-        /** @var \App\Model\Product\Product $productAsVariant */
-        $productAsVariant = $productFacade->getById(75);
-        $this->productAsVariant = $productAsVariant;
-
         parent::setUp();
+
+        $this->productAsMainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 83);
+        $this->productAsVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 75);
     }
 
     public function testProductMainVariantResultData(): void
@@ -63,9 +56,6 @@ class ProductVariantTest extends GraphQlTestCase
                         // Variant 51,5” Hyundai 22HD44D is not sellable, so it's not present
                         [
                             'name' => t('60” Hyundai 22HD44D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                        ],
-                        [
-                            'name' => t('Hyundai 22HD44D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         ],
                     ],
                 ],

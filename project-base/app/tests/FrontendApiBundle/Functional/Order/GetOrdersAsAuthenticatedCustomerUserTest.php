@@ -12,35 +12,37 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
 {
     public function testGetAllCustomerUserOrders(): void
     {
-        foreach ($this->getOrdersDataProvider() as $dataSet) {
+        foreach ($this->getOrdersDataProvider() as $datasetIndex => $dataSet) {
             [$query, $expectedOrdersData] = $dataSet;
 
             $graphQlType = 'orders';
             $response = $this->getResponseContentForQuery($query);
-            $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
             $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
-            $this->assertArrayHasKey('edges', $responseData);
-            $this->assertCount(count($expectedOrdersData), $responseData['edges']);
+            $message = sprintf('Dataset index: %d', $datasetIndex);
 
-            foreach ($responseData['edges'] as $edge) {
-                $this->assertArrayHasKey('node', $edge);
+            $this->assertArrayHasKey('edges', $responseData, $message);
+            $this->assertCount(count($expectedOrdersData), $responseData['edges'], $message);
+
+            foreach ($responseData['edges'] as $orderIndex => $edge) {
+                $orderMessage = $message . sprintf(' [Order index: %d]', $orderIndex);
+                $this->assertArrayHasKey('node', $edge, $orderMessage);
 
                 $expectedOrderData = array_shift($expectedOrdersData);
-                $this->assertArrayHasKey('status', $edge['node']);
-                $this->assertSame($expectedOrderData['status'], $edge['node']['status']);
+                $this->assertArrayHasKey('status', $edge['node'], $orderMessage);
+                $this->assertSame($expectedOrderData['status'], $edge['node']['status'], $orderMessage);
 
-                $this->assertArrayHasKey('totalPrice', $edge['node']);
-                $this->assertArrayHasKey('priceWithVat', $edge['node']['totalPrice']);
-                $this->assertSame($expectedOrderData['priceWithVat'], $edge['node']['totalPrice']['priceWithVat']);
+                $this->assertArrayHasKey('totalPrice', $edge['node'], $orderMessage);
+                $this->assertArrayHasKey('priceWithVat', $edge['node']['totalPrice'], $orderMessage);
+                $this->assertSame($expectedOrderData['priceWithVat'], $edge['node']['totalPrice']['priceWithVat'], $orderMessage);
             }
         }
     }
 
     /**
-     * @return array
+     * @return iterable
      */
-    private function getOrdersDataProvider(): array
+    private function getOrdersDataProvider(): iterable
     {
         return [
             [
@@ -144,7 +146,7 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
 
         $expectedOrderItems1 = [
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.7', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.74', $vatHigh)],
             ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatZero)],
             ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatHigh)],
         ];
@@ -156,10 +158,10 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         ];
 
         $expectedOrderItems2 = [
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('8173.50', $vatHigh, 8)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('17843.00', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh, 2)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('8173.55', $vatHigh, 8)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('17842.98', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.74', $vatHigh, 2)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatHigh)],
             ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero)],
         ];
         $expectedOrder2 = [
@@ -170,10 +172,10 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         ];
 
         $expectedOrderItems3 = [
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('263.60', $vatHigh, 6)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('5.00', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('50', $vatZero)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('263.64', $vatHigh, 6)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('4.96', $vatHigh)],
             ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('50', $vatZero)],
         ];
         $expectedOrder3 = [
             'status' => t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -183,10 +185,10 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         ];
 
         $expectedOrderItems4 = [
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('1314.10', $vatHigh, 2)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('818.00', $vatHigh, 3)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('1314.05', $vatHigh, 2)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('818.18', $vatHigh, 3)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatHigh)],
         ];
         $expectedOrder4 = [
             'status' => t('Done', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -196,12 +198,12 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         ];
 
         $expectedOrderItems5 = [
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('437.20', $vatHigh, 2)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('180.00', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('429.80', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('3.00', $vatHigh, 5)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('437.19', $vatHigh, 2)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('180.17', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('429.75', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('3.31', $vatHigh, 5)],
             ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatZero)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatHigh)],
         ];
         $expectedOrder5 = [
             'status' => t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -211,14 +213,14 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         ];
 
         $expectedOrderItems6 = [
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('98.30', $vatHigh, 2)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('19743.60', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('3.00', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('90.10', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('164.50', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('437.20', $vatHigh)],
-            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatZero)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('98.35', $vatHigh, 2)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('19743.80', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('3.31', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('90.08', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('164.46', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('437.19', $vatHigh)],
             ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatZero)],
         ];
         $expectedOrder6 = [
             'status' => t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),

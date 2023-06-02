@@ -30,7 +30,7 @@ class PaginatedProductsTest extends GraphQlTestCase
                 $queryResult[] = $edge['node'];
             }
 
-            $this->assertEquals($expectedOrderedProducts, $queryResult, $orderingMode . ' - ' . json_encode($queryResult));
+            $this->assertEquals($expectedOrderedProducts, $queryResult, json_encode($queryResult));
         }
     }
 
@@ -67,16 +67,21 @@ class PaginatedProductsTest extends GraphQlTestCase
             [
                 'orderingMode' => 'PRICE_ASC',
                 'expectedOrderedProducts' => [
+                    ['name' => t(
+                        'Reflective tape for safe movement on the road',
+                        [],
+                        Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                        $firstDomainLocale
+                    )],
                     ['name' => t('CD-R VERBATIM 210MB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
                     ['name' => t('Prime flour 1 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+                    ['name' => t('Million-euro toilet paper', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
                     ['name' => t(
                         'Aquila Aquagym non-carbonated spring water',
                         [],
                         Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                         $firstDomainLocale,
                     )],
-                    ['name' => t('Fluorescent laces, green', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-                    ['name' => t('PRIMECOOLER PC-AD2 3D glasses', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
                 ],
             ],
             [

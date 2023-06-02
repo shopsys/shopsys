@@ -8,11 +8,11 @@ use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\Product;
+use App\Model\Product\ProductData;
+use App\Model\Product\ProductDataFactory;
 use ReflectionClass;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
-use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
-use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -21,7 +21,7 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private ProductDataFactoryInterface $productDataFactory;
+    private ProductDataFactory $productDataFactory;
 
     /**
      * @inject
@@ -39,31 +39,25 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
     private VatFacade $vatFacade;
 
     /**
-     * @dataProvider getTestHandleOutOfStockStateDataProvider
+     * @dataProvider getTestCalculationHiddenAndSellingDeniedDataProvider
      * @param mixed $hidden
      * @param mixed $sellingDenied
-     * @param mixed $stockQuantity
-     * @param mixed $outOfStockAction
      * @param mixed $calculatedHidden
      * @param mixed $calculatedSellingDenied
      */
-    public function testHandleOutOfStockState(
+    public function testCalculationHiddenAndSellingDenied(
         $hidden,
         $sellingDenied,
-        $stockQuantity,
-        $outOfStockAction,
         $calculatedHidden,
         $calculatedSellingDenied,
     ) {
         $productData = $this->productDataFactory->create();
         $productData->hidden = $hidden;
         $productData->sellingDenied = $sellingDenied;
-        $productData->stockQuantity = $stockQuantity;
-        $productData->outOfStockAction = $outOfStockAction;
-        $productData->usingStock = true;
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
-        $productData->outOfStockAvailability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_OUT_OF_STOCK);
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
+        $productData->preorder = true;
+        $productData->catnum = '123';
         $this->setVats($productData);
 
         $product = $this->productFacade->create($productData);
@@ -72,60 +66,36 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
 
         $productFromDb = $this->productFacade->getById($product->getId());
 
-        $this->assertSame($productFromDb->getCalculatedHidden(), $calculatedHidden);
+        $this->assertSame($calculatedHidden, $productFromDb->getCalculatedHidden());
         $this->assertSame($calculatedSellingDenied, $productFromDb->getCalculatedSellingDenied());
     }
 
-    public function getTestHandleOutOfStockStateDataProvider()
+    public function getTestCalculationHiddenAndSellingDeniedDataProvider()
     {
         return [
             [
                 'hidden' => true,
                 'sellingDenied' => true,
-                'stockQuantity' => 0,
-                'outOfStockAction' => Product::OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY,
                 'calculatedHidden' => true,
                 'calculatedSellingDenied' => true,
             ],
             [
                 'hidden' => false,
                 'sellingDenied' => false,
-                'stockQuantity' => 0,
-                'outOfStockAction' => Product::OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY,
                 'calculatedHidden' => false,
                 'calculatedSellingDenied' => false,
             ],
             [
                 'hidden' => true,
                 'sellingDenied' => false,
-                'stockQuantity' => 0,
-                'outOfStockAction' => Product::OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY,
                 'calculatedHidden' => true,
                 'calculatedSellingDenied' => false,
             ],
             [
                 'hidden' => false,
                 'sellingDenied' => true,
-                'stockQuantity' => 0,
-                'outOfStockAction' => Product::OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY,
                 'calculatedHidden' => false,
                 'calculatedSellingDenied' => true,
-            ],
-            [
-                'hidden' => false,
-                'sellingDenied' => false,
-                'stockQuantity' => 0,
-                'outOfStockAction' => Product::OUT_OF_STOCK_ACTION_EXCLUDE_FROM_SALE,
-                'calculatedHidden' => false,
-                'calculatedSellingDenied' => true,
-            ],
-            [
-                'hidden' => false,
-                'sellingDenied' => false,
-                'stockQuantity' => 0,
-                'outOfStockAction' => Product::OUT_OF_STOCK_ACTION_HIDE,
-                'calculatedHidden' => true,
-                'calculatedSellingDenied' => false,
             ],
         ];
     }
@@ -152,6 +122,7 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $productId = $product->getId();
 
         $productData = $this->productDataFactory->create();
+        $productData->catnum = '123';
         $this->setVats($productData);
 
         $this->productFacade->edit($productId, $productData);
@@ -163,9 +134,9 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     * @param \App\Model\Product\ProductData $productData
      */
-    private function setVats(BaseProductData $productData): void
+    private function setVats(ProductData $productData): void
     {
         $productVatsIndexedByDomainId = [];
 

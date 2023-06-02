@@ -4,25 +4,30 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Product;
 
+use App\DataFixtures\Demo\CategoryDataFixture;
+use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use App\Model\Product\Availability\AvailabilityStatusEnum;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ProductTest extends GraphQlTestCase
 {
     private Product $product;
 
+    /**
+     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
+     * @inject
+     */
+    protected UrlGeneratorInterface $urlGenerator;
+
     protected function setUp(): void
     {
-        $productFacade = self::getContainer()->get(ProductFacade::class);
-
-        /** @var \App\Model\Product\Product $product */
-        $product = $productFacade->getById(1);
-        $this->product = $product;
-
         parent::setUp();
+
+        $this->product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
     }
 
     public function testProductDetailNameByUuid(): void
@@ -56,50 +61,79 @@ class ProductTest extends GraphQlTestCase
         $query = '
             query {
                 product(uuid: "' . $this->product->getUuid() . '") {
-                    name,
-                    shortDescription,
-                    seoH1,
-                    seoTitle,
+                    id
+                    name
+                    slug
+                    shortDescription
+                    seoH1
+                    seoTitle
                     seoMetaDescription
-                    link,
+                    link
                     unit {
                         name
-                    },
-                    availability{
+                    }
+                    availability {
                         name
-                    },
-                    stockQuantity,
+                        status
+                    }
+                    stockQuantity
                     categories {
                         name
-                    },
+                    }
                     flags {
-                        name, 
+                        name
                         rgbColor
-                    },
+                    }
                     price {
-                        priceWithVat,
-                        priceWithoutVat,
+                        priceWithVat
+                        priceWithoutVat
                         vatAmount
                     },
                     brand {
                         name
-                    },
+                    }
                     accessories {
                         name
-                    },
-                    isSellingDenied,
-                    description,
+                    }
+                    isSellingDenied
+                    description
                     orderingPriority
                     parameters {
                         name
+                        group
+                        unit {
+                            name
+                        }
                         values {
                             text
                         }
                     }
-                    images(size: "original") {
+                    isUsingStock
+                    namePrefix
+                    nameSuffix
+                    fullName
+                    catalogNumber
+                    partNumber
+                    ean
+                    usps
+                    hasPreorder
+                    files {
+                      anchorText
+                      url
+                    }
+                    storeAvailabilities {
+                        store {
+                            name
+                        }
+                        exposed
+                        availabilityInformation
+                        availabilityStatus
+                    }
+                    availableStoresCount
+                    exposedStoresCount
+                    breadcrumb {
                         name
-                        position
-                        type
+                        slug
                     }
                 }
             }
@@ -124,10 +158,25 @@ class ProductTest extends GraphQlTestCase
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
         $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $this->domain->getId());
 
+        $fullName = sprintf(
+            '%s %s %s',
+            t('Televize', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+            t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+            t('plazmová', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+        );
+
+        /** @var \App\Model\Category\Category $mainCategory */
+        $mainCategory = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
+
+        /** @var \App\Model\Category\Category $subCategory */
+        $subCategory = $this->getReference(CategoryDataFixture::CATEGORY_TV);
+
         return [
             'data' => [
                 'product' => [
+                    'id' => 1,
                     'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'slug' => '/televize-22-sencor-sle-22f46dm4-hello-kitty-plazmova',
                     'shortDescription' => $shortDescription,
                     'seoH1' => t(
                         'Hello Kitty Television',
@@ -153,8 +202,9 @@ class ProductTest extends GraphQlTestCase
                     ],
                     'availability' => [
                         'name' => t('In stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'status' => AvailabilityStatusEnum::InStock->name,
                     ],
-                    'stockQuantity' => 300,
+                    'stockQuantity' => 2700,
                     'categories' => [
                         [
                             'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -162,15 +212,14 @@ class ProductTest extends GraphQlTestCase
                         [
                             'name' => t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         ],
+                        [
+                            'name' => t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        ],
                     ],
                     'flags' => [
                         [
-                            'name' => t('TOP', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            'rgbColor' => '#d6fffa',
-                        ],
-                        [
                             'name' => t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            'rgbColor' => '#f9ffd6',
+                            'rgbColor' => '#ffffff',
                         ],
                     ],
                     'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh),
@@ -178,6 +227,33 @@ class ProductTest extends GraphQlTestCase
                         'name' => 'Sencor',
                     ],
                     'accessories' => [
+                        [
+                            'name' => t('32" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        ],
+                        [
+                            'name' => t('47" LG 47LA790V (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        ],
+                        [
+                            'name' => t('Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        ],
+                        [
+                            'name' => t('A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        ],
+                        [
+                            'name' => t('Apple iPhone 5S 64GB, gold', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        ],
+                        [
+                            'name' => t('Canon EH-22L', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        ],
+                        [
+                            'name' => t('Canon EOS 700D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        ],
+                        [
+                            'name' => t('Canon MG3550', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        ],
+                        [
+                            'name' => t('CD-R VERBATIM 210MB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        ],
                         [
                             'name' => t(
                                 'Kabel HDMI A - HDMI A M/M 2m gold-plated connectors High Speed HD',
@@ -189,6 +265,9 @@ class ProductTest extends GraphQlTestCase
                         [
                             'name' => t('Defender 2.0 SPK-480', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         ],
+                        [
+                            'name' => t('24" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        ],
                     ],
                     'isSellingDenied' => false,
                     'description' => t(
@@ -197,26 +276,14 @@ class ProductTest extends GraphQlTestCase
                         Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                         $firstDomainLocale,
                     ),
-                    'orderingPriority' => 1,
+                    'orderingPriority' => 0,
                     'parameters' => [
                         [
-                            'name' => t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            'values' => [
-                                [
-                                    'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                                ],
-                            ],
-                        ],
-                        [
-                            'name' => t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            'values' => [
-                                [
-                                    'text' => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                                ],
-                            ],
-                        ],
-                        [
                             'name' => t('Screen size', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'group' => t('Hlavní údaje', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'unit' => [
+                                'name' => t('in', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            ],
                             'values' => [
                                 [
                                     'text' => t('27"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -225,6 +292,8 @@ class ProductTest extends GraphQlTestCase
                         ],
                         [
                             'name' => t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'group' => t('Hlavní údaje', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'unit' => null,
                             'values' => [
                                 [
                                     'text' => t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
@@ -232,24 +301,128 @@ class ProductTest extends GraphQlTestCase
                             ],
                         ],
                         [
+                            'name' => t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'group' => t('Hlavní údaje', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'unit' => null,
+                            'values' => [
+                                [
+                                    'text' => t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                                ],
+                            ],
+                        ],
+                        [
                             'name' => t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'group' => t('Způsob připojení', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'unit' => null,
                             'values' => [
                                 [
                                     'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                                 ],
                             ],
                         ],
-                    ],
-                    'images' => [
-                        0 => [
-                            'name' => 'Product 1 image',
-                            'position' => null,
-                            'type' => null,
+                        [
+                            'name' => t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'group' => t('Způsob připojení', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'unit' => null,
+                            'values' => [
+                                [
+                                    'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                                ],
+                            ],
                         ],
-                        1 => [
-                            'name' => 'Product 1 image',
-                            'position' => null,
-                            'type' => null,
+                        [
+                            'name' => t('Color', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'group' => null,
+                            'unit' => null,
+                            'values' => [
+                                [
+                                    'text' => t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                                ],
+                            ],
+                        ],
+                        [
+                            'name' => t('Material', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'group' => null,
+                            'unit' => null,
+                            'values' => [
+                                [
+                                    'text' => t('metal', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                                ],
+                            ],
+                        ],
+                    ],
+                    'isUsingStock' => true,
+                    'namePrefix' => t('Televize', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'nameSuffix' => t('plazmová', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'fullName' => $fullName,
+                    'catalogNumber' => '9177759',
+                    'partNumber' => 'SLE 22F46DM4',
+                    'ean' => '8845781245930',
+                    'usps' => [
+                        t(
+                            'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
+                            [],
+                            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                            $firstDomainLocale
+                        ),
+                        t(
+                            'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
+                            [],
+                            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                            $firstDomainLocale
+                        ),
+                        t(
+                            'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
+                            [],
+                            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                            $firstDomainLocale
+                        ),
+                        t(
+                            'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
+                            [],
+                            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                            $firstDomainLocale
+                        ),
+                        t(
+                            'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
+                            [],
+                            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                            $firstDomainLocale
+                        ),
+                    ],
+                    'hasPreorder' => false,
+                    'files' => [],
+                    'storeAvailabilities' => [
+                        [
+                            'store' => [
+                                'name' => 'Ostrava',
+                            ],
+                            'exposed' => true,
+                            'availabilityInformation' => 'Ihned k odběru',
+                            'availabilityStatus' => AvailabilityStatusEnum::InStock->name,
+                        ], [
+                            'store' => [
+                                'name' => 'Pardubice',
+                            ],
+                            'exposed' => false,
+                            'availabilityInformation' => 'K dispozici za týden',
+                            'availabilityStatus' => AvailabilityStatusEnum::InStock->name,
+                        ],
+                    ],
+                    'availableStoresCount' => 1,
+                    'exposedStoresCount' => 1,
+                    'breadcrumb' => [
+                        [
+                            'name' => $mainCategory->getName($firstDomainLocale),
+                            'slug' => $this->urlGenerator->generate('front_product_list', ['id' => $mainCategory->getId()]),
+                        ],
+                        [
+                            'name' => $subCategory->getName($firstDomainLocale),
+                            'slug' => $this->urlGenerator->generate('front_product_list', ['id' => $subCategory->getId()]),
+                        ],
+                        [
+                            'name' => $fullName,
+                            'slug' => $this->urlGenerator->generate('front_product_detail', ['id' => $this->product->getId()]),
                         ],
                     ],
                 ],

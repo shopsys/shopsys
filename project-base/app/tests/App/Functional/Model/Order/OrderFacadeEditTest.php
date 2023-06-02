@@ -10,7 +10,6 @@ use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
@@ -38,6 +37,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
     /**
      * @inject
+     * @phpstan-ignore-next-line Tests are skipped
      */
     private OrderItemDataFactoryInterface $orderItemDataFactory;
 
@@ -96,6 +96,10 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
     public function testAddProductItem(): void
     {
+        $this->markTestSkipped('Adding new items into Order is denied. It is caused by unknown ProductType for new order items.'
+            . ' If you need it, It can be solved by filling OrderItemData and calling new methods for creating OrderItems');
+
+        // @phpstan-ignore-next-line Tests are skipped
         $orderData = $this->orderDataFactory->createFromOrder($this->order);
 
         $orderItemData = $this->orderItemDataFactory->create();
@@ -119,6 +123,10 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
 
     public function testAddProductItemWithoutUsingPriceCalculation(): void
     {
+        $this->markTestSkipped('Adding new items into Order is denied. It is caused by unknown ProductType for new order items.'
+            . ' If you need it, It can be solved by filling OrderItemData and calling new methods for creating OrderItems');
+
+        // @phpstan-ignore-next-line Tests are skipped
         $orderData = $this->orderDataFactory->createFromOrder($this->order);
 
         $orderItemData = $this->orderItemDataFactory->create();
@@ -236,8 +244,9 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
      * @param \App\Model\Order\Order $order
      * @param string $name
      * @return \App\Model\Order\Item\OrderItem
+     * @phpstan-ignore-next-line Tests are skipped
      */
-    private function getOrderItemByName(BaseOrder $order, string $name): OrderItem
+    private function getOrderItemByName(Order $order, string $name): OrderItem
     {
         foreach ($order->getItems() as $orderItem) {
             if ($orderItem->getName() === $name) {

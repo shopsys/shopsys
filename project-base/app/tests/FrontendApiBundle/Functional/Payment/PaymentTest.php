@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Payment;
 
+use App\DataFixtures\Demo\CartDataFixture;
+use App\DataFixtures\Demo\PaymentDataFixture;
+use App\DataFixtures\Demo\ProductDataFixture;
+use App\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Payment\Payment;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class PaymentTest extends GraphQlTestCase
 {
     /**
-     * @inject
+     * @var \App\Model\Payment\Payment
      */
-    protected PaymentFacade $paymentFacade;
-
     protected Payment $payment;
 
     protected function setUp(): void
     {
-        $this->payment = $this->paymentFacade->getById(2);
+        $this->payment = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
 
         parent::setUp();
     }
@@ -39,6 +39,41 @@ class PaymentTest extends GraphQlTestCase
             'data' => [
                 'payment' => [
                     'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                ],
+            ],
+        ];
+
+        $this->assertQueryWithExpectedArray($query, $arrayExpected);
+    }
+
+    public function testGetFreePayment(): void
+    {
+        $cartUuid = CartDataFixture::CART_UUID;
+        /** @var \App\Model\Product\Product $product */
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
+
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
+            'cartUuid' => $cartUuid,
+            'productUuid' => $product->getUuid(),
+            'quantity' => 100,
+        ]);
+
+        $query = '
+            query {
+                payment(uuid: "' . $this->payment->getUuid() . '") {
+                    price(cartUuid: "' . $cartUuid . '") {
+                        priceWithVat
+                    }
+                }
+            }
+        ';
+
+        $arrayExpected = [
+            'data' => [
+                'payment' => [
+                    'price' => [
+                        'priceWithVat' => '0.000000',
+                    ],
                 ],
             ],
         ];

@@ -22,8 +22,16 @@ class PromotedProductsTest extends GraphQlTestCase
 
         $productsExpected = [
             ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            ['name' => t('Genius repro SP-M120 black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('32" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('47" LG 47LA790V (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Apple iPhone 5S 64GB, gold', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Canon EH-22L', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Canon EOS 700D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             ['name' => t('Canon MG3550', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('Genius repro SP-M120 black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('24" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
         ];
 
         $graphQlType = 'promotedProducts';
@@ -43,13 +51,16 @@ class PromotedProductsTest extends GraphQlTestCase
                     uuid
                     name
                     shortDescription
+                    seoH1
+                    seoTitle
+                    seoMetaDescription
                     link
                     unit {
                         name
                     }
-                    isUsingStock
                     availability {
                         name
+                        status
                     }
                     stockQuantity
                     categories {
@@ -63,9 +74,38 @@ class PromotedProductsTest extends GraphQlTestCase
                         priceWithVat
                         priceWithoutVat
                         vatAmount
-                    }
+                    },
                     brand {
                         name
+                    }
+                    accessories {
+                        name
+                    }
+                    isSellingDenied
+                    description
+                    orderingPriority
+                    parameters {
+                        name
+                        group
+                        unit {
+                            name
+                        }
+                        values {
+                            text
+                        }
+                    }
+                    isUsingStock
+                    namePrefix
+                    nameSuffix
+                    fullName
+                    catalogNumber
+                    partNumber
+                    ean
+                    usps
+                    hasPreorder
+                    files {
+                      anchorText
+                      url
                     }
                 }
             }
@@ -88,13 +128,16 @@ class PromotedProductsTest extends GraphQlTestCase
                     uuid
                     name
                     shortDescription
+                    seoH1
+                    seoTitle
+                    seoMetaDescription
                     link
                     unit {
                         name
                     }
-                    isUsingStock
                     availability {
                         name
+                        status
                     }
                     stockQuantity
                     categories {
@@ -108,9 +151,38 @@ class PromotedProductsTest extends GraphQlTestCase
                         priceWithVat
                         priceWithoutVat
                         vatAmount
-                    }
+                    },
                     brand {
                         name
+                    }
+                    accessories {
+                        name
+                    }
+                    isSellingDenied
+                    description
+                    orderingPriority
+                    parameters {
+                        name
+                        group
+                        unit {
+                            name
+                        }
+                        values {
+                            text
+                        }
+                    }
+                    isUsingStock
+                    namePrefix
+                    nameSuffix
+                    fullName
+                    catalogNumber
+                    partNumber
+                    ean
+                    usps
+                    hasPreorder
+                    files {
+                      anchorText
+                      url
                     }
                 }
             }

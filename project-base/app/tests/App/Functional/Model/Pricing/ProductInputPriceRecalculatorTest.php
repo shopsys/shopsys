@@ -57,6 +57,10 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
 
         $productData = $this->productDataFactory->create();
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
+        $productData->manualInputPricesByPricingGroupId = [
+            1 => Money::zero(),
+            2 => Money::zero(),
+        ];
         $this->setVats($productData);
         $product = Product::create($productData);
 
@@ -83,6 +87,10 @@ class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
 
         $productData = $this->productDataFactory->create();
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
+        $productData->manualInputPricesByPricingGroupId = [
+            1 => Money::zero(),
+            2 => Money::zero(),
+        ];
         $this->setVats($productData);
         $product = Product::create($productData);
 

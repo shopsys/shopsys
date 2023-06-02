@@ -58,17 +58,22 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
         $productData->availability = $this->getReference($availabilityReference);
         $this->setVats($productData);
 
+        $productData->catnum = '12345';
         /** @var \App\Model\Product\Product $mainProduct */
         $mainProduct = $this->productFacade->create($productData);
+
+        $productData->catnum = '123456';
         /** @var \App\Model\Product\Product $secondProduct */
         $secondProduct = $this->productFacade->create($productData);
+
+        $productData->catnum = '1234567';
         /** @var \App\Model\Product\Product $thirdProduct */
         $thirdProduct = $this->productFacade->create($productData);
 
         $mainVariant = $this->productVariantFacade->createVariant($mainProduct, [$secondProduct, $thirdProduct]);
 
         $this->assertTrue($mainVariant->isMainVariant());
-        $this->assertContainsAllVariants([$mainProduct, $secondProduct, $thirdProduct], $mainVariant);
+        $this->assertContainsAllVariants([$secondProduct, $thirdProduct], $mainVariant);
     }
 
     /**
@@ -114,17 +119,22 @@ final class ProductVariantCreationTest extends TransactionFunctionalTestCase
         }
         $this->setVats($productData);
 
+        $productData->catnum = '12345';
         /** @var \App\Model\Product\Product $mainProduct */
         $mainProduct = $this->productFacade->create($productData);
+
+        $productData->catnum = '123456';
         /** @var \App\Model\Product\Product $secondProduct */
         $secondProduct = $this->productFacade->create($productData);
+
+        $productData->catnum = '1234567';
         /** @var \App\Model\Product\Product $thirdProduct */
         $thirdProduct = $this->productFacade->create($productData);
 
         $mainVariant = $this->productVariantFacade->createVariant($mainProduct, [$secondProduct, $thirdProduct]);
 
         $this->assertTrue($mainVariant->isMainVariant());
-        $this->assertContainsAllVariants([$mainProduct, $secondProduct, $thirdProduct], $mainVariant);
+        $this->assertContainsAllVariants([$secondProduct, $thirdProduct], $mainVariant);
     }
 
     /**
