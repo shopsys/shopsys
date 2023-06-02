@@ -12,7 +12,7 @@ class FlagNotFoundUserError extends EntityNotFoundUserError implements UserError
     private const CODE = 'flag-not-found';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

@@ -12,7 +12,7 @@ class PersonalDataHashInvalidUserError extends UserError implements UserErrorWit
     private const CODE = 'personal-data-hash-invalid';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

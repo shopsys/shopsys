@@ -12,7 +12,7 @@ class SeoPageNotFoundUserError extends EntityNotFoundUserError implements UserEr
     private const CODE = 'seo-page-not-found';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

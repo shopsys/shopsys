@@ -13,7 +13,7 @@ class UnavailableCartUserError extends UserError implements UserErrorWithCodeInt
     private const CODE = 'cart-unavailable';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

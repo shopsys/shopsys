@@ -66,7 +66,7 @@ class CartDataFixture extends AbstractReferenceFixture implements DependentFixtu
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDependencies(): array
     {

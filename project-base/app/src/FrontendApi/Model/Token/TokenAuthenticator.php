@@ -20,7 +20,7 @@ class TokenAuthenticator extends BaseTokenAuthenticator
     protected const HEADER_AUTHORIZATION = 'X-Auth-Token';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {

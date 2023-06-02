@@ -359,7 +359,7 @@ EOT));
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDependencies(): array
     {

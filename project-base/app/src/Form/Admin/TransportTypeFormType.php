@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints;
 class TransportTypeFormType extends AbstractType
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -42,7 +42,7 @@ class TransportTypeFormType extends AbstractType
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver): void
     {

@@ -32,14 +32,14 @@ class AkeneoImportProductFilesCronModule implements SimpleCronModuleInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setLogger(Logger $logger)
     {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function run()
     {

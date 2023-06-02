@@ -12,7 +12,7 @@ class ImageTypeInvalidUserError extends EntityNotFoundUserError implements UserE
     private const CODE = 'image-type-invalid';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

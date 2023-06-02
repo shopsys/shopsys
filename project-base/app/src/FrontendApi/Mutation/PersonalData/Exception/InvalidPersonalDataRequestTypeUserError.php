@@ -12,7 +12,7 @@ class InvalidPersonalDataRequestTypeUserError extends EntityNotFoundUserError im
     private const CODE = 'personal-data-request-type-invalid';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

@@ -30,7 +30,7 @@ class NotificationBarFormType extends AbstractType
     public const SCENARIO_EDIT = 'edit';
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -110,7 +110,7 @@ class NotificationBarFormType extends AbstractType
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver): void
     {

@@ -68,7 +68,7 @@ class AdministratorController extends BaseAdministratorController
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function editAction(Request $request, int $id)
     {

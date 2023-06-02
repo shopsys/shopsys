@@ -145,7 +145,7 @@ class PriceQuery extends BasePriceQuery
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function priceByProductQuery($data): ProductPrice
     {

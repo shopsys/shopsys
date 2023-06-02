@@ -12,7 +12,7 @@ class InvalidRefreshTokenUserError extends EntityNotFoundUserError implements Us
     private const CODE = 'invalid-refresh-token';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

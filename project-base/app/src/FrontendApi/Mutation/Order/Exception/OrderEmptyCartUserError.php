@@ -12,7 +12,7 @@ class OrderEmptyCartUserError extends EntityNotFoundUserError implements UserErr
     private const CODE = 'order-empty-cart';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

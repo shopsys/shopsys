@@ -12,7 +12,7 @@ class OrderEmailsNotSentUserError extends EntityNotFoundUserError implements Use
     private const CODE = 'order-emails-not-sent';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

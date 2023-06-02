@@ -56,7 +56,7 @@ class AkeneoImportProductGroupParameterFacade extends AbstractAkeneoImportTransf
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getData(): Generator
     {
@@ -69,7 +69,7 @@ class AkeneoImportProductGroupParameterFacade extends AbstractAkeneoImportTransf
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function processItem($akeneoParameterGroup): void
     {
@@ -97,7 +97,7 @@ class AkeneoImportProductGroupParameterFacade extends AbstractAkeneoImportTransf
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getTransferName(): string
     {
@@ -105,7 +105,7 @@ class AkeneoImportProductGroupParameterFacade extends AbstractAkeneoImportTransf
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getTransferIdentifier(): string
     {

@@ -12,7 +12,7 @@ class DeliveryAddressNotFoundUserError extends EntityNotFoundUserError implement
     private const CODE = 'delivery-address-not-found';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

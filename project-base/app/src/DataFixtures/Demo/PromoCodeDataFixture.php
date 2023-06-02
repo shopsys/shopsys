@@ -156,7 +156,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDependencies(): array
     {

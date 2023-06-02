@@ -87,7 +87,7 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
     public const DEFAULT_METRIC_UNIT_AKENEO_KEY = 'default_metric_unit';
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getData(): Generator
     {
@@ -101,7 +101,7 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function processItem($akeneoParameterData): void
     {
@@ -138,7 +138,7 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getTransferName(): string
     {
@@ -146,7 +146,7 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getTransferIdentifier(): string
     {

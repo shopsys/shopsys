@@ -12,7 +12,7 @@ class ComparisonException extends UserError implements UserErrorWithCodeInterfac
     protected const CODE = 'invalid-argument';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

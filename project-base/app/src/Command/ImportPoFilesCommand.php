@@ -65,7 +65,7 @@ class ImportPoFilesCommand extends Command
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function configure(): void
     {

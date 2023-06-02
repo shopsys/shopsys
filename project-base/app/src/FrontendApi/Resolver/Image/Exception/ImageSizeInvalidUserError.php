@@ -12,7 +12,7 @@ class ImageSizeInvalidUserError extends EntityNotFoundUserError implements UserE
     private const CODE = 'image-size-invalid';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {

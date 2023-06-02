@@ -13,7 +13,7 @@ class OrderSentPageNotAvailableUserError extends UserError implements OrderExcep
     private const CODE = 'order-sent-page-not-available';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getUserErrorCode(): string
     {
