@@ -97,9 +97,6 @@ msgstr ""
 msgid "Aktvní"
 msgstr ""
 
-msgid "All"
-msgstr "Vše"
-
 msgid "All - full"
 msgstr "Vše"
 
@@ -108,12 +105,6 @@ msgstr "Vše - zobrazení"
 
 msgid "All domains"
 msgstr ""
-
-msgid "All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically."
-msgstr "Pokud je zaškrtnuto, všechny ceny je třeba nastavovat ručně, jinak se jednotková cena bez DPH a celkové ceny pro tuto položku přepočítají automaticky."
-
-msgid "Amount"
-msgstr "Množství"
 
 msgid "An authentication exception occurred."
 msgstr ""
@@ -124,12 +115,6 @@ msgstr ""
 msgid "Ancestor category"
 msgstr ""
 
-msgid "Ano"
-msgstr ""
-
-msgid "Applies to the second product in the cart"
-msgstr "Platí na druhý produkt v košíku"
-
 msgid "Apply according to customer"
 msgstr "Aplikovat podle zákazníka"
 
@@ -138,9 +123,6 @@ msgstr "Aplikovat podle časového omezení"
 
 msgid "Apply according to product flags"
 msgstr "Aplikovat podle příznaků zboží"
-
-msgid "Apply according to the content of the cart"
-msgstr "Aplikovat podle obsahu košíku"
 
 msgid "Apply according to the total price of the order"
 msgstr "Aplikovat podle celkové ceny objednávky"
@@ -153,9 +135,6 @@ msgstr "Aplikovat na vybrané kategorie"
 
 msgid "Apply to selected products"
 msgstr "Aplikovat na vybrané produkty"
-
-msgid "Area"
-msgstr "Plocha"
 
 msgid "Article"
 msgstr "Článek"
@@ -298,9 +277,6 @@ msgstr "Kategorie"
 msgid "Category with prefilled filters"
 msgstr "Kategorie s předvyplněnými filtry"
 
-msgid "Check the address correctness"
-msgstr "Zkontrolujte správnost adresy"
-
 msgid "Choose type of redirect"
 msgstr "Vyberte typ přesměrování"
 
@@ -406,9 +382,6 @@ msgstr "Vytvořit novou prodejnu"
 msgid "Create promo code"
 msgstr ""
 
-msgid "Creation date"
-msgstr "Datum vytvoření"
-
 msgid "Cron overview"
 msgstr ""
 
@@ -507,9 +480,6 @@ msgstr "Opravdu chcete smazat tuto SEO stránku?"
 
 msgid "Do you really want to remove this administrator role group?"
 msgstr "Opravdu chcete smazat tuto skupinu práv pro administrátora?"
-
-msgid "Do you really want to remove this advert?"
-msgstr "Opravdu chcete odstranit tuto reklamu?"
 
 msgid "Do you really want to remove this customer?"
 msgstr ""
@@ -672,9 +642,6 @@ msgstr "Nastavení emailu bylo upraveno."
 
 msgid "Email template <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr "Byla upravena e-mailová šablona <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
-
-msgid "Emailová šablona <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla vytvořena."
-msgstr ""
 
 msgid "Enable two factor authentication by Google Authenticator"
 msgstr ""
@@ -859,7 +826,13 @@ msgstr "Velikost obrázku - zobrazení"
 msgid "Image will be deleted after saving."
 msgstr ""
 
+msgid "Images"
+msgstr ""
+
 msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
+msgstr ""
+
+msgid "In stock"
 msgstr ""
 
 msgid "Instagram URL"
@@ -1042,9 +1015,6 @@ msgstr ""
 msgid "Nastavení kategorie výprodej"
 msgstr ""
 
-msgid "Nastavení nadlimitního množství"
-msgstr ""
-
 msgid "Nastavení skladů"
 msgstr ""
 
@@ -1056,9 +1026,6 @@ msgstr "Navigace - vše"
 
 msgid "Navigation - view"
 msgstr "Navigace - zobrazení"
-
-msgid "Ne"
-msgstr ""
 
 msgid "Nebyly nalezeny žádné kombinace pro SEO kategorií."
 msgstr ""
@@ -1177,9 +1144,6 @@ msgstr ""
 msgid "Nová rubrika blogu"
 msgstr ""
 
-msgid "Nová šablona emailu"
-msgstr ""
-
 msgid "Nový sklad"
 msgstr ""
 
@@ -1270,9 +1234,6 @@ msgstr ""
 msgid "Order has not been sent to GoPay"
 msgstr "Objednávka nebyla odeslána do GoPay"
 
-msgid "Order items"
-msgstr "Položky objednávky"
-
 msgid "Order number"
 msgstr "Číslo objednávky"
 
@@ -1324,14 +1285,8 @@ msgstr "Název stránky"
 msgid "Page not found"
 msgstr "Stránka nenalazena"
 
-msgid "Page not found!"
-msgstr "Stránka nenalezena!"
-
 msgid "Page title"
 msgstr "Titulek stránky"
-
-msgid "Page you are looking for either no longer exists or you entered wrong address."
-msgstr "Stránka, kterou hledáte buďto již neexistuje, nebo jste zadali špatnou adresu."
 
 msgid "Paid amount"
 msgstr "Zaplacená částka"
@@ -1360,9 +1315,6 @@ msgstr "Heslo"
 msgid "Password again"
 msgstr "Heslo znovu"
 
-msgid "Payment"
-msgstr "Platba"
-
 msgid "Payment instructions"
 msgstr ""
 
@@ -1377,9 +1329,6 @@ msgstr "Procenta"
 
 msgid "Perex"
 msgstr ""
-
-msgid "Permission denied. Login as superadmin to be able to clean the queries cache."
-msgstr "Přístup odmítnut. Přihlašte se jako superadmin, abyste mohli smazat cache."
 
 msgid "Personal data access"
 msgstr ""
@@ -1426,9 +1375,6 @@ msgstr "Prosím vyplňte správný formát času (hh:mm)"
 msgid "Please excuse this error, we are working on fixing it. If needed, contact us on %mail% or by phone %phone%."
 msgstr "Omluvte tuto chybu, pracujeme na tom, aby se chyba opravila co nejdříve. Případně nás kontaktujte na %mail% nebo telefonicky %phone%."
 
-msgid "Please follow the instructions"
-msgstr "Prosím, pokračujte podle pokynů"
-
 msgid "Položka navigace <strong>{{ name }}</strong> byla smazána"
 msgstr ""
 
@@ -1444,9 +1390,6 @@ msgstr "PSČ"
 msgid "Povolit nákup do mínusu"
 msgstr ""
 
-msgid "Požadovaná šablona neexistuje."
-msgstr ""
-
 msgid "Prefix"
 msgstr ""
 
@@ -1455,9 +1398,6 @@ msgstr "Prefix (např. \"JARO_\")"
 
 msgid "Prefix kuponu"
 msgstr ""
-
-msgid "Preview"
-msgstr "Náhled"
 
 msgid "Price"
 msgstr "Cena"
@@ -1486,9 +1426,6 @@ msgstr "Nastavení zásad ochrany osobních údajů - vše"
 msgid "Privacy policy article setting - view"
 msgstr "Nastavení zásad ochrany osobních údajů - zobrazení"
 
-msgid "Pro tuto kombinaci již <a href=\"{{ url }}\">existuje emailová šablona</a>."
-msgstr ""
-
 msgid "Problém v přenosu byl označen jako vyřešený"
 msgstr ""
 
@@ -1497,12 +1434,6 @@ msgstr "Produkt"
 
 msgid "Product <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> modified"
 msgstr ""
-
-msgid "Product <strong>{{ name }}</strong> you had in cart is no longer available. Please check your order."
-msgstr "Zboží <strong>{{ name }}</strong>, které jste měli v košíku, již není v nabídce. Prosím, překontrolujte si objednávku."
-
-msgid "Product you had in cart is no longer in available. Please check your order."
-msgstr "Zboží, které jste měli v košíku, již není v nabídce. Prosím, překontrolujte si objednávku."
 
 msgid "Products - full"
 msgstr "Produkty - vše"
@@ -1611,9 +1542,6 @@ msgstr "Cíl přesměrování"
 
 msgid "Redirect type"
 msgstr "Typ přesměrování"
-
-msgid "Referenced products"
-msgstr "Odkazované produkty"
 
 msgid "Refund amount"
 msgstr "Refundovat částku"
@@ -1786,9 +1714,6 @@ msgstr ""
 msgid "Set as default"
 msgstr "Nastavit jako výchozí"
 
-msgid "Set prices manually"
-msgstr "Nastavit ceny ručně"
-
 msgid "Settings"
 msgstr ""
 
@@ -1918,9 +1843,6 @@ msgstr "DIČ"
 msgid "Telephone"
 msgstr "Telefon"
 
-msgid "Tento typ šablony nemůže být odstraněn."
-msgstr ""
-
 msgid "Tento způsob platby je skrytý systémem GoPay."
 msgstr ""
 
@@ -1944,9 +1866,6 @@ msgstr ""
 
 msgid "Text zprávy"
 msgstr ""
-
-msgid "The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order."
-msgstr "Byla změněna cena zboží <strong>{{ name }}</strong>, které máte v košíku. Prosím, překontrolujte si objednávku."
 
 msgid "The selected flag cannot be deleted."
 msgstr "Vybraný příznak nelze smazat."
@@ -1987,18 +1906,6 @@ msgstr "Promované produkty - vše"
 msgid "Top products - view"
 msgstr "Promované produkty - zobrazení"
 
-msgid "Too many login attempts. Please try again later."
-msgstr "Příliš mnoho pokusů o přihlášení. Prosím, zkuste to později."
-
-msgid "Total"
-msgstr "Celkem"
-
-msgid "Total excluding VAT"
-msgstr "Celkem bez DPH"
-
-msgid "Total including VAT"
-msgstr "Celkem s DPH"
-
 msgid "Total order price (including VAT)"
 msgstr ""
 
@@ -2020,9 +1927,6 @@ msgstr "Číslo zásilky"
 msgid "Transfers - view"
 msgstr "Přehlad chyb v přenosech - zobrazení"
 
-msgid "Transport"
-msgstr "Doprava"
-
 msgid "Transport type"
 msgstr "Typ dopravy"
 
@@ -2043,9 +1947,6 @@ msgstr "Dopravy a platby - vše"
 
 msgid "Transports and payments - view"
 msgstr "Dopravy a platby - zobrazení"
-
-msgid "Try using web search"
-msgstr "Zkuste použít vyhledávání na webu"
 
 msgid "Two factor authentication code"
 msgstr ""
@@ -2107,15 +2008,6 @@ msgstr "Nepodařilo se načíst přehled jazykových konstant"
 msgid "Unavailable"
 msgstr "Nedostupné"
 
-msgid "Unit"
-msgstr "Jednotka"
-
-msgid "Unit price excluding VAT"
-msgstr "Jednotková cena bez DPH"
-
-msgid "Unit price including VAT"
-msgstr "Jednotková cena s DPH"
-
 msgid "Units - full"
 msgstr "Měrné jednotky - vše"
 
@@ -2151,9 +2043,6 @@ msgstr ""
 
 msgid "User translation"
 msgstr "Uživatelský překlad"
-
-msgid "VAT rate (%)"
-msgstr "Výše DPH (%)"
 
 msgid "Valid from (date)"
 msgstr "Datum platnosti OD"
@@ -2215,13 +2104,7 @@ msgstr ""
 msgid "Vypršelá platnost platby"
 msgstr ""
 
-msgid "Vytvoření email template - %name%"
-msgstr ""
-
 msgid "Vytvoření notifikační lišty"
-msgstr ""
-
-msgid "Vytvoři novou šablonu pro emaily objednávek dle skladovosti"
 msgstr ""
 
 msgid "Vytvořit"
@@ -2284,9 +2167,6 @@ msgstr ""
 msgid "You can upload following formats: PNG, JPG, GIF"
 msgstr ""
 
-msgid "You have successfully paid order via GoPay."
-msgstr "Objednávku jste úspěšně zaplatili přes GoPay."
-
 msgid "You have successfully paid order."
 msgstr ""
 
@@ -2347,9 +2227,6 @@ msgstr ""
 msgid "margin-top-20 margin-bottom-20"
 msgstr ""
 
-msgid "nad souhrnem objednávky v košíku"
-msgstr ""
-
 msgid "např. Akce-zidle-20-2020-04"
 msgstr ""
 
@@ -2383,20 +2260,11 @@ msgstr ""
 msgid "turnover in"
 msgstr ""
 
-msgid "v kategorii (mezi prvním a druhým řádkem produktů)"
-msgstr ""
-
-msgid "v kategorii (nad výpisem produktů)"
-msgstr ""
-
 msgid "without positioning"
 msgstr ""
 
 msgid "{0,1} K dispozici za týden|[2,4] K dispozici za %count% týdny|[5,Inf] K dispozici za %count% týdnů"
 msgstr ""
-
-msgid "{0,1} K dispozici za týden|[2,4] K dispozici za %weeks% týdny|[5,Inf] K dispozici za %weeks% týdnů"
-msgstr "{0,1} K dispozici za týden|[2,4] K dispozici za %weeks% týdny|[5,Inf] K dispozici za %weeks% týdnů"
 
 msgid "{0}|{1}Můžete mít ihned na <span class=\"box-detail__avail__text__strong\">%count%</span> prodejně|[2,Inf]Můžete mít ihned na <span class=\"box-detail__avail__text__strong\">%count%</span> prodejnách"
 msgstr ""
@@ -2423,9 +2291,6 @@ msgid "Články blogu"
 msgstr ""
 
 msgid "Řazení"
-msgstr ""
-
-msgid "Šablona s předmětem <strong>{{ subject }}</strong> byla smazána"
 msgstr ""
 
 msgid "Škálovaný slevový kupón"
