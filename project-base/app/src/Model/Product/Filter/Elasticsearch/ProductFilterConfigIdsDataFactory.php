@@ -4,11 +4,23 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Filter\Elasticsearch;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange;
 
 class ProductFilterConfigIdsDataFactory
 {
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     */
+    public function __construct(
+        private readonly CurrencyFacade $currencyFacade,
+        private readonly Domain $domain,
+    ) {
+    }
+
     /**
      * @param array $aggregationElasticsearchResult
      * @return \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigIdsData
@@ -67,6 +79,9 @@ class ProductFilterConfigIdsDataFactory
 
         $minPrice = Money::create((string)($pricesData['min_price']['value'] ?? 0));
         $maxPrice = Money::create((string)($pricesData['max_price']['value'] ?? 0));
+
+        $minPrice = $minPrice->round($this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId())->getMinFractionDigits());
+        $maxPrice = $maxPrice->round($this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId())->getMinFractionDigits());
 
         return new PriceRange($minPrice, $maxPrice);
     }
