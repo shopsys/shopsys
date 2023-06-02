@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
-use App\Form\Admin\Transformer\CKEditorCdnDataTransformer;
+use Shopsys\FrameworkBundle\Form\Transformers\WysiwygCdnDataTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,10 +17,10 @@ class GrapesJsType extends AbstractType
     public const GRAPESJS_TEMPLATE_PATH = '/grapesjs-template';
 
     /**
-     * @param \App\Form\Admin\Transformer\CKEditorCdnDataTransformer $ckeditorCdnDataTransformer
+     * @param \Shopsys\FrameworkBundle\Form\Transformers\WysiwygCdnDataTransformer $wysiwygCdnDataTransformer
      */
     public function __construct(
-        private readonly CKEditorCdnDataTransformer $ckeditorCdnDataTransformer,
+        private readonly WysiwygCdnDataTransformer $wysiwygCdnDataTransformer,
     ) {
     }
 
@@ -32,7 +32,7 @@ class GrapesJsType extends AbstractType
     {
         parent::buildForm($builder, $options);
 
-        $builder->addViewTransformer($this->ckeditorCdnDataTransformer);
+        $builder->addViewTransformer($this->wysiwygCdnDataTransformer);
     }
 
     /**
