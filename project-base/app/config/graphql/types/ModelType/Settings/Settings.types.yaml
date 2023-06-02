@@ -1,5 +1,7 @@
 Settings:
     type: object
+    inherits:
+        - "SettingsDecorator"
     config:
         description: "Represents settings of the current domain"
         fields:
@@ -7,10 +9,6 @@ Settings:
                 type: "PricingSetting!"
                 resolve: "@=query('pricingSettingsQuery')"
                 description: "Settings related to pricing"
-            seo:
-                type: "SeoSetting!"
-                resolve: "@=query('seoSettingsQuery')"
-                description: "Settings related to SEO"
             contactFormMainText:
                 type: String!
                 resolve: "@=query('contactFormMainTextQuery')"
