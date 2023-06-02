@@ -37,7 +37,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
  * @property \App\Model\Product\ProductVisibilityRepository $productVisibilityRepository
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
- * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @method array extractParameters(string $locale, \App\Model\Product\Product $product)
  * @property \App\Model\Category\CategoryFacade $categoryFacade
  * @method setCategoryFacade(\App\Model\Category\CategoryFacade $categoryFacade)
@@ -57,7 +56,6 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\ProductVisibilityRepository $productVisibilityRepository
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Category\CategoryFacade $categoryFacade
@@ -68,13 +66,13 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \App\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         EntityManagerInterface $em,
         ParameterRepository $parameterRepository,
         ProductFacade $productFacade,
         FriendlyUrlRepository $friendlyUrlRepository,
-        Domain $domain,
         ProductVisibilityRepository $productVisibilityRepository,
         FriendlyUrlFacade $friendlyUrlFacade,
         CategoryFacade $categoryFacade,
@@ -84,19 +82,19 @@ class ProductExportRepository extends BaseProductExportRepository
         private readonly ProductRepository $productRepository,
         private readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         private readonly ProductPriceCalculation $productPriceCalculation,
-        private readonly BreadcrumbFacade $breadcrumbFacade
+        private readonly BreadcrumbFacade $breadcrumbFacade,
+        private readonly Domain $domain,
     ) {
         parent::__construct(
             $em,
             $parameterRepository,
             $productFacade,
             $friendlyUrlRepository,
-            $domain,
             $productVisibilityRepository,
             $friendlyUrlFacade,
             $categoryFacade,
             $productAccessoryFacade,
-            $brandCachedFacade
+            $brandCachedFacade,
         );
     }
 
@@ -191,7 +189,7 @@ class ProductExportRepository extends BaseProductExportRepository
             'categories' => $categoryIds,
             'main_category_id' => $this->categoryFacade->getProductMainCategoryByDomainId(
                 $product,
-                $domainId
+                $domainId,
             )->getId(),
             'main_category_path' => $this->categoryFacade->getCategoriesNamesInPathAsString($mainCategory, $locale),
             'in_stock' => $this->productAvailabilityFacade->isProductAvailableOnDomainOrHasPreorder($product, $domainId),
@@ -284,7 +282,7 @@ class ProductExportRepository extends BaseProductExportRepository
             return $this->productPriceCalculation->calculatePrice(
                 $product,
                 $pricingGroup->getDomainId(),
-                $pricingGroup
+                $pricingGroup,
             )->getPriceWithVat();
         }
 
@@ -294,7 +292,7 @@ class ProductExportRepository extends BaseProductExportRepository
             $variantPrice = $this->productPriceCalculation->calculatePrice(
                 $variant,
                 $pricingGroup->getDomainId(),
-                $pricingGroup
+                $pricingGroup,
             )->getPriceWithVat();
 
             if ($price === null || $variantPrice->isGreaterThan($price)) {
@@ -322,7 +320,7 @@ class ProductExportRepository extends BaseProductExportRepository
             return $this->productPriceCalculation->calculatePrice(
                 $product,
                 $pricingGroup->getDomainId(),
-                $pricingGroup
+                $pricingGroup,
             )->getPriceWithVat();
         }
 
@@ -332,7 +330,7 @@ class ProductExportRepository extends BaseProductExportRepository
             $variantPrice = $this->productPriceCalculation->calculatePrice(
                 $variant,
                 $pricingGroup->getDomainId(),
-                $pricingGroup
+                $pricingGroup,
             )->getPriceWithVat();
             if ($price === null || $variantPrice->isLessThan($price)) {
                 $price = $variantPrice;

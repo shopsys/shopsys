@@ -26,7 +26,6 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactory as BaseProductDataFactory;
-use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 
 /**
@@ -40,7 +39,6 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \App\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
      * @param \App\Model\Product\Unit\UnitFacade $unitFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Model\Product\ProductRepository $productRepository
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
@@ -63,7 +61,6 @@ class ProductDataFactory extends BaseProductDataFactory
         ProductInputPriceFacade $productInputPriceFacade,
         UnitFacade $unitFacade,
         Domain $domain,
-        ProductRepository $productRepository,
         ParameterRepository $parameterRepository,
         FriendlyUrlFacade $friendlyUrlFacade,
         ProductAccessoryRepository $productAccessoryRepository,
@@ -79,14 +76,13 @@ class ProductDataFactory extends BaseProductDataFactory
         private readonly Setting $setting,
         private readonly StoreFacade $storeFacade,
         private readonly ProductStoreDataFactory $productStoreDataFactory,
-        private readonly ProductStoreFacade $productStoreFacade
+        private readonly ProductStoreFacade $productStoreFacade,
     ) {
         parent::__construct(
             $vatFacade,
             $productInputPriceFacade,
             $unitFacade,
             $domain,
-            $productRepository,
             $parameterRepository,
             $friendlyUrlFacade,
             $productAccessoryRepository,

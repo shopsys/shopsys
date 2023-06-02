@@ -13,12 +13,10 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactory as BaseCategoryDataFactory;
-use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 
 class CategoryDataFactory extends BaseCategoryDataFactory
 {
     /**
-     * @param \App\Model\Category\CategoryRepository $categoryRepository
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -27,20 +25,18 @@ class CategoryDataFactory extends BaseCategoryDataFactory
      * @param \App\Model\Category\LinkedCategory\LinkedCategoryRepository $linkedCategoryRepository
      */
     public function __construct(
-        CategoryRepository $categoryRepository,
         FriendlyUrlFacade $friendlyUrlFacade,
         PluginCrudExtensionFacade $pluginCrudExtensionFacade,
         Domain $domain,
         ImageUploadDataFactory $imageUploadDataFactory,
         private readonly CategoryParameterRepository $categoryParameterRepository,
-        private readonly LinkedCategoryRepository $linkedCategoryRepository
+        private readonly LinkedCategoryRepository $linkedCategoryRepository,
     ) {
         parent::__construct(
-            $categoryRepository,
             $friendlyUrlFacade,
             $pluginCrudExtensionFacade,
             $domain,
-            $imageUploadDataFactory
+            $imageUploadDataFactory,
         );
     }
 

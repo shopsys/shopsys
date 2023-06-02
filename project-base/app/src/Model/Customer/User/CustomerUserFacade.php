@@ -10,7 +10,6 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade;
-use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
@@ -48,7 +47,6 @@ class CustomerUserFacade extends BaseCustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \App\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface $billingAddressFactory
      * @param \App\Model\Customer\BillingAddressDataFactory $billingAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface $customerUserFactory
      * @param \App\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
@@ -56,8 +54,8 @@ class CustomerUserFacade extends BaseCustomerUserFacade
      * @param \App\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade $billingAddressFacade
-     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
+     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \App\Component\String\HashGenerator $hashGenerator
      */
     public function __construct(
@@ -65,7 +63,6 @@ class CustomerUserFacade extends BaseCustomerUserFacade
         CustomerUserRepository $customerUserRepository,
         CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
         CustomerMailFacade $customerMailFacade,
-        BillingAddressFactoryInterface $billingAddressFactory,
         BillingAddressDataFactoryInterface $billingAddressDataFactory,
         CustomerUserFactoryInterface $customerUserFactory,
         CustomerUserPasswordFacade $customerUserPasswordFacade,
@@ -73,8 +70,8 @@ class CustomerUserFacade extends BaseCustomerUserFacade
         DeliveryAddressFacade $deliveryAddressFacade,
         CustomerDataFactoryInterface $customerDataFactory,
         BillingAddressFacade $billingAddressFacade,
-        NewsletterFacade $newsletterFacade,
         CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
+        NewsletterFacade $newsletterFacade,
         HashGenerator $hashGenerator
     ) {
         parent::__construct(
@@ -82,7 +79,6 @@ class CustomerUserFacade extends BaseCustomerUserFacade
             $customerUserRepository,
             $customerUserUpdateDataFactory,
             $customerMailFacade,
-            $billingAddressFactory,
             $billingAddressDataFactory,
             $customerUserFactory,
             $customerUserPasswordFacade,

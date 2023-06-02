@@ -11,16 +11,15 @@ use App\Model\Stock\StockFacade;
 use App\Model\Store\ProductStoreData;
 use App\Model\Store\ProductStoreFacade;
 use App\Model\Store\StoreFacade;
+use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
-use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
@@ -110,7 +109,6 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
      * @param \App\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
-     * @param \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface $productFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface $productAccessoryFactory
@@ -126,7 +124,7 @@ class ProductFacade extends BaseProductFacade
      */
     public function __construct(
         string $productFilesUrlPrefix,
-        EntityManagerDecorator $em,
+        EntityManagerInterface $em,
         ProductRepository $productRepository,
         ProductVisibilityFacade $productVisibilityFacade,
         ParameterRepository $parameterRepository,
@@ -140,7 +138,6 @@ class ProductFacade extends BaseProductFacade
         ProductHiddenRecalculator $productHiddenRecalculator,
         ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
         ProductAccessoryRepository $productAccessoryRepository,
-        AvailabilityFacade $availabilityFacade,
         PluginCrudExtensionFacade $pluginCrudExtensionFacade,
         ProductFactoryInterface $productFactory,
         ProductAccessoryFactoryInterface $productAccessoryFactory,
@@ -152,7 +149,7 @@ class ProductFacade extends BaseProductFacade
         ProductStockFacade $productStockFacade,
         StockFacade $stockFacade,
         ProductStoreFacade $productStoreFacade,
-        StoreFacade $storeFacade
+        StoreFacade $storeFacade,
     ) {
         parent::__construct(
             $em,
@@ -169,7 +166,6 @@ class ProductFacade extends BaseProductFacade
             $productHiddenRecalculator,
             $productSellingDeniedRecalculator,
             $productAccessoryRepository,
-            $availabilityFacade,
             $pluginCrudExtensionFacade,
             $productFactory,
             $productAccessoryFactory,
