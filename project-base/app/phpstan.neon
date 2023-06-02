@@ -64,4 +64,3 @@ includes:
     - vendor/phpstan/phpstan-symfony/extension.neon
     - vendor/phpstan/phpstan-symfony/rules.neon
     - vendor/shopsys/coding-standards/extension.neon
-    - sniffer/PhpStan/extension.neon
