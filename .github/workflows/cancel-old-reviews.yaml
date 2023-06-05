@@ -3,7 +3,7 @@ on:
         -   cron: '0 2 * * *'
 name: Cancel reviews older than seven days
 jobs:
-    rebuild-master-images:
+    cancel-old-reviews:
         name: Cancel reviews older than seven days
         runs-on: [ self-hosted, linux, review-stage ]
         steps:
@@ -13,5 +13,4 @@ jobs:
                     ref: 'refs/heads/master'
             -   name: Cancel reviews older than seven days
                 run: |
-                    chmod +x ./.github/cancel-old-reviews.sh
                     ./.github/cancel-old-reviews.sh
