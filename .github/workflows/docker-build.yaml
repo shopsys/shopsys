@@ -283,7 +283,7 @@ jobs:
             -   name: Set ENV variables required for review
                 run: |
                     HOST=${BRANCH_NAME}.${{ vars.REVIEW_STAGE_URL }}
-                    echo "HOSTS=${HOST}, en.${HOST}" >> $GITHUB_ENV
+                    echo "HOSTS=${HOST}, cz.${HOST}" >> $GITHUB_ENV
             -   name: Download docker-compose.review.yml from artifacts
                 uses: actions/download-artifact@v3
                 with:
