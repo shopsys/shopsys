@@ -16,6 +16,7 @@ class MaintenanceModeCommand extends Command
 {
     /**
      * @var string
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected static $defaultName = 'deploy:maintenance';
 

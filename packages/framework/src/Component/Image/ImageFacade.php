@@ -272,8 +272,12 @@ class ImageFacade
      * @param string|null $type
      * @return string
      */
-    public function getImageUrl(DomainConfig $domainConfig, object $imageOrEntity, ?string $sizeName = null, ?string $type = null): string
-    {
+    public function getImageUrl(
+        DomainConfig $domainConfig,
+        object $imageOrEntity,
+        ?string $sizeName = null,
+        ?string $type = null,
+    ): string {
         $image = $this->getImageByObject($imageOrEntity, $type);
 
         if (!$this->imageLocator->imageExists($image)) {
@@ -386,8 +390,12 @@ class ImageFacade
      * @param string|null $sizeName
      * @return string
      */
-    protected function getAdditionalImageUrl(DomainConfig $domainConfig, int $additionalSizeIndex, Image $image, ?string $sizeName): string
-    {
+    protected function getAdditionalImageUrl(
+        DomainConfig $domainConfig,
+        int $additionalSizeIndex,
+        Image $image,
+        ?string $sizeName,
+    ): string {
         if (!$this->imageLocator->imageExists($image)) {
             throw new ImageNotFoundException();
         }

@@ -10,9 +10,6 @@ use Tests\App\Test\FunctionalTestCase;
 
 class CdnTest extends FunctionalTestCase
 {
-    /**
-     * @var string|null
-     */
     private ?string $originalCdnDomain;
 
     public function testImageHasCdnUrl(): void

@@ -14,6 +14,7 @@ class CronWatchCommand extends Command
 {
     /**
      * @var string
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected static $defaultName = 'deploy:cron:watch';
 

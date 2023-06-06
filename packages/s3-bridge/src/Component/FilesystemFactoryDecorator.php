@@ -31,7 +31,7 @@ class FilesystemFactoryDecorator implements FilesystemFactoryInterface
         if ($this->s3Configuration->isConfigured()) {
             $s3Adapter = new AwsS3V3Adapter(
                 $this->createS3Client(),
-                $this->s3Configuration->bucketName
+                $this->s3Configuration->bucketName,
             );
 
             return new Filesystem($s3Adapter, ['visibility' => Visibility::PUBLIC]);

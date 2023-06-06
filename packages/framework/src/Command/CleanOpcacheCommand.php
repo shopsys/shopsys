@@ -15,6 +15,7 @@ class CleanOpcacheCommand extends Command
 {
     /**
      * @var string
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected static $defaultName = 'shopsys:clean-opcache';
 

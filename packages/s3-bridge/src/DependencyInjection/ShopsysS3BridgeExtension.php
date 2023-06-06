@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\S3Bridge\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
