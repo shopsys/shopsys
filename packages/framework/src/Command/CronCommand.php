@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Command;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeZone;
+use NinjaMutex\Lock\LockInterface;
 use Shopsys\FrameworkBundle\Command\Exception\CronCommandException;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
@@ -36,11 +37,13 @@ class CronCommand extends Command
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
      * @param \Shopsys\FrameworkBundle\Component\Cron\MutexFactory $mutexFactory
      * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
+     * @param \NinjaMutex\Lock\LockInterface $lock
      */
     public function __construct(
         private readonly CronFacade $cronFacade,
         private readonly MutexFactory $mutexFactory,
         private readonly ParameterBagInterface $parameterBag,
+        protected readonly LockInterface $lock,
     ) {
         parent::__construct();
     }

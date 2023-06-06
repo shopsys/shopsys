@@ -49,7 +49,7 @@ class ImagesIdsToImagesTransformer implements DataTransformerInterface
         if (is_array($imagesIds)) {
             foreach ($imagesIds as $imageId) {
                 try {
-                    $images[] = $this->imageFacade->getById($imageId);
+                    $images[] = $this->imageFacade->getById((int)$imageId);
                 } catch (ImageNotFoundException $e) {
                     throw new TransformationFailedException('Image not found', 0, $e);
                 }

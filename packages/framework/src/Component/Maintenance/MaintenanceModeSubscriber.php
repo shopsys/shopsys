@@ -51,7 +51,7 @@ class MaintenanceModeSubscriber implements EventSubscriberInterface
                     'Last-Modified', gmdate('D, d M Y H:i:s', time()) . ' GMT',
                     'Cache-Control' => 'max-age=0, no-cache, must-revalidate, proxy-revalidate',
                     'Expires' => 'Thu, 01 Dec 1994 16:00:00 GMT',
-                ]
+                ],
             ),
         );
 

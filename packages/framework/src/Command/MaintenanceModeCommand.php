@@ -14,7 +14,11 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class MaintenanceModeCommand extends Command
 {
-    protected static string $defaultName = 'deploy:maintenance';
+    /**
+     * @var string
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+     */
+    protected static $defaultName = 'deploy:maintenance';
 
     /**
      * @var string
