@@ -18,7 +18,6 @@ class UnitTranslation extends AbstractTranslation
      * @var \Shopsys\FrameworkBundle\Model\Product\Unit\Unit
      * @Prezent\Translatable(targetEntity="Shopsys\FrameworkBundle\Model\Product\Unit\Unit")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName
      */
     protected $translatable;
 

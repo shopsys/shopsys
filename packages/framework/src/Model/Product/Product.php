@@ -45,7 +45,6 @@ class Product extends AbstractTranslatableEntity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName
      */
     protected $id;
 
@@ -53,7 +52,6 @@ class Product extends AbstractTranslatableEntity
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductTranslation[]|\Doctrine\Common\Collections\Collection
      * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Product\ProductTranslation")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName
      */
     protected $translations;
 

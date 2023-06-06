@@ -18,7 +18,6 @@ class CreateDatabaseCommand extends Command
     /**
      * @var string
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName
      */
     protected static $defaultName = 'shopsys:database:create';
 

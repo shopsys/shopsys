@@ -18,7 +18,6 @@ class PaymentTransportRelation extends Constraint
     /**
      * @var array<string, string>
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName
      */
     protected static $errorNames = [
         self::INVALID_COMBINATION_ERROR => 'INVALID_COMBINATION_ERROR',

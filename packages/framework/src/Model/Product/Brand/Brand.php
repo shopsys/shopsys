@@ -24,7 +24,6 @@ class Brand extends AbstractTranslatableEntity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName
      */
     protected $id;
 
@@ -44,7 +43,6 @@ class Brand extends AbstractTranslatableEntity
      * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandTranslation[]|\Doctrine\Common\Collections\Collection
      * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Product\Brand\BrandTranslation")
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName
      */
     protected $translations;
 

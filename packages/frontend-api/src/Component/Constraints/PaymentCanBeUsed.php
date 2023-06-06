@@ -21,7 +21,6 @@ class PaymentCanBeUsed extends Constraint
     /**
      * @var array<string, string>
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-     * @phpcsSuppress SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnlySniff.ReferenceViaFullyQualifiedName
      */
     protected static $errorNames = [
         self::PRICES_DOES_NOT_MATCH_ERROR => 'PRICES_DOES_NOT_MATCH_ERROR',
