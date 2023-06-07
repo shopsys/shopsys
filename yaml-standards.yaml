@@ -8,6 +8,8 @@
         - ./project-base/app/node_modules/**/*.{yaml,yml}
         - ./project-base/app/config/domains_urls.yaml
         - ./project-base/app/config/oauth2/parameters_oauth.yaml.dist
+        - ./project-base/storefront/**/*.{yaml,yml}
+        - ./project-base/storefront/*.{yaml,yml}
         - ./packages/framework/assets/node_modules/**/*.{yaml,yml}
         - ./packages/backend-api/install/config/oauth2/parameters_oauth.yaml.dist
     checkers:

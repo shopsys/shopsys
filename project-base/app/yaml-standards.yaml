@@ -7,7 +7,8 @@
         - ./config/oauth2/parameters_oauth.yaml.dist
         - ./kubernetes/horizontalPodAutoscaler/webserver-php-fpm.yaml
         - ./kubernetes/deployments/cron.yaml
-        - ./storefront/node_modules/**/*.{yaml,yml}
+        - ./storefront/**/*.{yaml,yml}
+        - ./storefront/*.{yaml,yml}
         - ./var/deployment/**/*.{yaml,yml} #this is ignored because of wrong formatting in devops/kubernetes-deployment
     checkers:
         -   pathToChecker: YamlStandards\Model\YamlIndent\YamlIndentChecker
