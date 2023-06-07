@@ -33,4 +33,4 @@ parameters:
     shopsys.product_files_dir: '/web%shopsys.product_files_url_prefix%'
     shopsys.product_files_url_prefix: '/%shopsys.content_dir_name%/frontend/products/'
     shopsys.var_dir: '/var'
-    svg_icon_path: '%kernel.project_dir%/src/Shopsys/ShopBundle/Resources/svg'
+    svg_icon_path: '%kernel.project_dir%/src/Resources/svg'

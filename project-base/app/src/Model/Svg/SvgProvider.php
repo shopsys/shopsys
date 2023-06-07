@@ -11,22 +11,17 @@ class SvgProvider
     private const FILE_EXTENSION_SVG = 'svg';
 
     /**
-     * @var string
-     */
-    private $svgDirectoryPath;
-
-    /**
      * @param string $svgDirectoryPath
      */
-    public function __construct(string $svgDirectoryPath)
-    {
-        $this->svgDirectoryPath = $svgDirectoryPath;
+    public function __construct(
+        private readonly string $svgDirectoryPath,
+    ) {
     }
 
     /**
      * @return string[]
      */
-    public function getAllSvgIconsNames()
+    public function getAllSvgIconsNames(): array
     {
         $directory = new DirectoryIterator($this->svgDirectoryPath);
         $svgIcons = [];
