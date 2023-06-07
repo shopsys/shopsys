@@ -12,6 +12,10 @@ jobs:
         name: Cancel review
         runs-on: [self-hosted, linux, review-stage]
         steps:
+            -   name: GIT checkout branch - master
+                uses: actions/checkout@v3
+                with:
+                    ref: 'refs/heads/master'
             -   name: Cancel review
                 env:
                     BRANCH_NAME: ${{ inputs.branch_name }}
