@@ -14,6 +14,10 @@ class CdnTest extends FunctionalTestCase
 
     public function testImageHasCdnUrl(): void
     {
+        // ensure the services will be created newly with the new CDN domain
+        self::ensureKernelShutdown();
+        self::bootKernel();
+
         $cdnDomain = 'https://cdn.example.com';
         $this->originalCdnDomain = $_ENV['CDN_DOMAIN'] ?? null;
 
