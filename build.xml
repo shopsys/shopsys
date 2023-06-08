@@ -13,6 +13,7 @@
 
     <import file="${path.framework}/build.xml"/>
     <import file="${path.frontend-api}/build.xml"/>
+    <import file="${path.root}/build-cron.xml"/>
 
     <target name="build-demo-ci" depends="composer-dev,shopsys_framework.build-demo-ci" description="Builds application for development with clean demo DB and runs CI checks."/>
 
@@ -35,6 +36,10 @@
         <exec executable="${path.composer.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="update"/>
         </exec>
+    </target>
+
+    <target name="cron" description="Disabled - use new cron instances instead.">
+        <fail message="Default cron instance is disabled. All modules are in new instances."/>
     </target>
 
     <target name="ecs" description="Checks coding standards in all files in the whole monorepo by PHP easy coding standards." depends="entities-dump" hidden="true">

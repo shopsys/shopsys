@@ -58,6 +58,16 @@
         </else>
     </if>
 
+    <target name="acceptance-elasticsearch-export" description="Exports indexes data into elasticsearch for acceptance environment.">
+        <property name="elasticsearch.index" value=""/>
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="--env=acc"/>
+            <arg value="shopsys:elasticsearch:data-export"/>
+            <arg value="${elasticsearch.index}"/>
+        </exec>
+    </target>
+
     <target name="annotations-check" description="Checks whether annotations of extended classes in the project match the actual types according to ClassExtensionRegistry. Reported problems can be fixed using 'annotations-fix' phing target">
         <if>
             <istrue value="${check-and-fix-annotations}"/>
@@ -130,13 +140,15 @@
 
     <target name="build-deploy-part-1-db-independent" depends="build-version-generate,clean,composer-prod,dirs-create,assets,npm" description="First part of application build for production preserving your DB (can be run without maintenance page)."/>
 
-    <target name="build-deploy-part-2-db-dependent" depends="elasticsearch-index-migrate,redis-check,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,error-pages-generate,warmup,clean-redis-old" description="Second part of application build for production preserving your DB (must be run with maintenance page when containing DB migrations)."/>
+    <target name="build-deploy-part-2-db-dependent" depends="elasticsearch-index-migrate,redis-check,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,error-pages-generate,warmup" description="Second part of application build for production preserving your DB (must be run with maintenance page when containing DB migrations)."/>
 
-    <target name="build-dev" depends="build-version-generate,clean,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,elasticsearch-index-recreate,elasticsearch-export,error-pages-generate,tests-acceptance-build,clean-redis-old,checks" description="Builds application for development preserving your DB and runs checks on changed files."/>
+    <target name="build-dev" depends="build-version-generate,clean,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace,elasticsearch-index-recreate,elasticsearch-export,error-pages-generate,tests-acceptance-build,clean-redis-old,checks" description="Builds application for development preserving your DB and runs checks on changed files."/>
 
-    <target name="build-dev-quick" depends="build-version-generate,clean,composer-dev,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,elasticsearch-index-migrate,clean-redis-old" description="Builds application for development preserving your DB while skipping nonessential steps."/>
+    <target name="build-dev-quick" depends="build-version-generate,clean,composer-dev,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace,elasticsearch-index-migrate,clean-redis-old" description="Builds application for development preserving your DB while skipping nonessential steps."/>    <target name="build-dev-quick" depends="build-version-generate,clean,composer-dev,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace,elasticsearch-index-migrate,clean-redis-old" description="Builds application for development preserving your DB while skipping nonessential ."/>
 
     <target name="build-new" depends="production-protection,wipe,build-version-generate,composer-prod,redis-check,dirs-create,assets,npm,db-rebuild,elasticsearch-index-recreate,error-pages-generate,warmup,clean-redis-old" description="Builds application for production with clean DB (with base data only)."/>
+
+    <target name="build-review-ci" depends="production-protection,wipe,build-version-generate,redis-check,dirs-create,db-demo,error-pages-generate,warmup,elasticsearch-index-recreate,elasticsearch-export,clean-redis-old" description="Builds application for review with clean demo DB."/>
 
     <target name="build-version-generate" description="Generates parameters_version.yaml config file with a new build version number.">
         <exec executable="${path.php.executable}" checkreturn="true" outputProperty="version">
@@ -206,6 +218,19 @@
                 <exclude name="/"/>
             </fileset>
         </delete>
+    </target>
+
+    <target name="cluster-first-deploy" hidden="true" description="Run commands for first deploy to cluster.">
+        <property name="production.confirm.action" value="y" override="true"/>
+        <phingcall target="dirs-create"/>
+        <phingcall target="db-import-basic-structure"/>
+        <phingcall target="db-migrations"/>
+        <phingcall target="domains-data-create"/>
+        <phingcall target="frontend-api-generate-new-keys"/>
+        <phingcall target="elasticsearch-index-migrate"/>
+        <phingcall target="elasticsearch-export"/>
+        <phingcall target="error-pages-generate"/>
+        <phingcall target="warmup"/>
     </target>
 
     <target name="composer-check" description="Checks if Composer lock file is valid." hidden="true">
@@ -285,7 +310,7 @@
         </exec>
     </target>
 
-    <target name="db-demo" depends="production-protection,db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,domains-urls-replace" description="Creates DB and fills it with demo data" hidden="true"/>
+    <target name="db-demo" depends="production-protection,frontend-api-generate-new-keys,db-wipe-public-schema,clean,clean-redis,db-import-basic-structure,db-migrations,domains-data-create,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace" description="Creates DB and fills it with demo data" hidden="true"/>
 
     <target name="db-fixtures-demo" depends="production-protection" description="Loads demo data fixtures." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
@@ -310,7 +335,7 @@
         </exec>
     </target>
 
-    <target name="db-migrations" description="Executes database migrations and checks schema.">
+    <target name="db-migrations" depends="clean,clean-redis" description="Executes database migrations and checks schema.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:migrations:migrate"/>
@@ -352,7 +377,7 @@
         </exec>
     </target>
 
-    <target name="db-rebuild" depends="production-protection,db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace" description="Drops all data in database and creates a new one with base data only."/>
+    <target name="db-rebuild" depends="production-protection,db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace" description="Drops all data in database and creates a new one with base data only."/>
 
     <target name="db-wipe-public-schema" depends="production-protection" description="Drops and creates public database schema." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
@@ -772,6 +797,13 @@
         </if>
     </target>
 
+    <target name="friendly-url-entity-mapping-check" description="Checks completeness of entity mapping by route name">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:friendly-urls:check-entity-mapping"/>
+        </exec>
+    </target>
+
     <target name="friendly-urls-generate" description="Generates friendly urls for supported entities when missing.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -841,7 +873,7 @@
 
     <target name="npm-install-dependencies" description="Installs node modules dependencies." hidden="true">
         <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
-            <arg value="install"/>
+            <arg value="ci"/>
         </exec>
     </target>
 
@@ -1030,7 +1062,7 @@
         </exec>
     </target>
 
-    <target name="test-db-demo" depends="production-protection,clean,test-clean-redis,test-db-wipe-public-schema,test-db-import-basic-structure,test-db-migrations,test-domains-data-create,test-db-fixtures-demo,test-friendly-urls-generate,test-plugin-demo-data-load,test-domains-urls-replace" description="Drops all data in test database and creates a new one with demo data." hidden="true"/>
+    <target name="test-db-demo" depends="production-protection,clean,test-clean-redis,test-db-wipe-public-schema,test-db-import-basic-structure,test-db-migrations,test-domains-data-create,test-db-fixtures-demo,test-friendly-urls-generate,test-friendly-url-entity-mapping-check,test-plugin-demo-data-load,test-domains-urls-replace" description="Drops all data in test database and creates a new one with demo data." hidden="true"/>
 
     <target name="test-db-dump" depends="production-protection" description="Dumps current test database into a file to be used in acceptance tests." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
@@ -1193,6 +1225,22 @@
 
     <target name="test-elasticsearch-index-recreate" depends="production-protection,test-elasticsearch-index-delete,test-elasticsearch-index-migrate" description="Recreates structure for searching via elasticsearch in test environment (deletes existing structure and creates new one)"/>
 
+    <target name="test-error-pages-generate" depends="redis-check" description="Generates error pages for testing environment.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:error-page:generate-all"/>
+            <arg value="--env=test"/>
+        </exec>
+    </target>
+
+    <target name="test-friendly-url-entity-mapping-check" description="Checks completeness of entity mapping by route name">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:friendly-urls:check-entity-mapping"/>
+            <arg value="--env=test"/>
+        </exec>
+    </target>
+
     <target name="test-friendly-urls-generate" depends="production-protection" description="Generates friendly urls for supported entities when missing in test DB." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -1211,7 +1259,7 @@
         </exec>
     </target>
 
-    <target name="tests" depends="npm-install-dependencies,test-db-demo,test-elasticsearch-index-recreate,test-elasticsearch-export,error-pages-generate,tests-unit,tests-functional,tests-smoke" description="Runs unit, functional and smoke tests. Builds new test database in the process."/>
+    <target name="tests" depends="test-db-demo,test-elasticsearch-index-recreate,test-elasticsearch-export,test-error-pages-generate,tests-unit,tests-functional,tests-smoke" description="Runs unit, functional and smoke tests. Builds new test database in the process."/>
 
     <target name="tests-acceptance" depends="production-protection,clean,test-clean-redis" description="Runs acceptance tests. Running Selenium server is required (Selenium is always running in Docker setup).">
         <phingcall target="tests-acceptance-before"/>
@@ -1236,6 +1284,7 @@
                 <delete file="${path.root}/ACCEPTANCE"/>
             </then>
         </if>
+        <phingcall target="test-elasticsearch-export"/>
     </target>
 
     <target name="tests-acceptance-before" description="Actions necessary to run before acceptance tests." hidden="true">
@@ -1249,6 +1298,7 @@
             </then>
         </if>
         <phingcall target="test-db-dump"/>
+        <phingcall target="acceptance-elasticsearch-export"/>
         <delete failonerror="false" includeemptydirs="true">
             <fileset dir="${path.var}/log/codeception/">
                 <exclude name="/"/>
@@ -1457,6 +1507,41 @@
             <arg line="${translations.dump.flags}"/>
             <arg line="${domains-info.locales}"/>
             <arg value="--verbose"/>
+        </exec>
+    </target>
+
+    <target name="translations-frontend-dump" depends="domains-info-load" description="Extracts translatable messages from front-end source files in your project.">
+        <phingcall target="npm-translations-dump"/>
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="translation:extract"/>
+            <arg value="--dir=${path.src}"/>
+            <arg value="--dir=${path.templates}"/>
+            <arg value="--dir=${path.var}/translations/projectBase"/>
+            <arg value="--exclude-dir=admin/plugins"/>
+            <arg value="--exclude-dir=frontend/plugins"/>
+            <arg value="--exclude-name=*GridFactory.php"/>
+            <arg value="--exclude-dir=styleguide/plugins"/>
+            <arg value="--exclude-dir=${path.templates}/Admin"/>
+            <arg value="--exclude-dir=admin"/>
+            <arg value="--exclude-dir=Admin"/>
+            <arg value="--exclude-dir=DataFixtures/Demo"/>
+            <arg value="--exclude-dir=Transfer/Akeneo"/>
+            <arg value="--output-format=po"/>
+            <arg value="--output-dir=${path.root}/translations-frontend"/>
+            <arg line="${translations.dump.flags}"/>
+            <arg line="${domains-info.locales}"/>
+        </exec>
+    </target>
+
+    <target name="translations-import" description="Import translatable messages from front-end source files in your project.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="translation:import"/>
+            <arg value="${path.root}/translations-update/"/>
+            <arg value="${path.root}/translations/"/>
+            <arg value="messages"/>
+            <arg value="validators"/>
         </exec>
     </target>
 

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="cron">
+
+    <target name="cron-service" description="Runs SERVICE background jobs. Should be executed periodically by system Cron every 5 minutes.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}" />
+            <arg value="shopsys:cron" />
+            <arg value="--instance-name=service" />
+        </exec>
+    </target>
+
+    <target name="cron-export" description="Runs EXPORT background jobs. Should be executed periodically by system Cron every 5 minutes.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}" />
+            <arg value="shopsys:cron" />
+            <arg value="--instance-name=export" />
+        </exec>
+    </target>
+
+    <target name="cron-products" description="Runs PRODUCTS background jobs. Should be executed periodically by system Cron every 5 minutes.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}" />
+            <arg value="shopsys:cron" />
+            <arg value="--instance-name=products" />
+        </exec>
+    </target>
+
+    <target name="cron-import-akeneo-product" description="Runs Import Akeneo Product background jobs. Should be executed periodically by system Cron every 5 minutes.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}" />
+            <arg value="shopsys:cron" />
+            <arg value="--instance-name=importAkeneoProduct" />
+        </exec>
+    </target>
+
+    <target name="cron-import-akeneo-files" description="Runs Import Akeneo Files background jobs. Should be executed periodically by system Cron every 5 minutes.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}" />
+            <arg value="shopsys:cron" />
+            <arg value="--instance-name=importAkeneoFiles" />
+        </exec>
+    </target>
+
+    <target name="cron-gopay" description="Runs GoPay background jobs. Should be executed periodically by system Cron every 5 minutes.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}" />
+            <arg value="shopsys:cron" />
+            <arg value="--instance-name=gopay" />
+        </exec>
+    </target>
+
+    <target name="cron-ssfwcc-bridge-import" description="Runs SSFWCC bridge import background jobs. Should be executed periodically by system Cron every 5 minutes.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}" />
+            <arg value="shopsys:cron" />
+            <arg value="--instance-name=ssfwccBridgeImport" />
+        </exec>
+    </target>
+
+    <target name="cron-packetery" description="Runs PACKETERY background jobs. Should be executed periodically by system Cron every 5 minutes.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}" />
+            <arg value="shopsys:cron" />
+            <arg value="--instance-name=packetery" />
+        </exec>
+    </target>
+
+</project>
