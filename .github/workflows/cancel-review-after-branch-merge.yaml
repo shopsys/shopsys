@@ -1,0 +1,17 @@
+on:
+    pull_request:
+        types:
+            - closed
+jobs:
+    cancel-review-after-branch-merge:
+        name: Review
+        needs: build-docker-images
+        runs-on: [self-hosted, linux, review-stage]
+        steps:
+            -   name: Extract branch name to ENV variable BRANCH_NAME
+                run: echo "BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
+            -   name: Cancel review
+                env:
+                    BRANCH_NAME: ${BRANCH_NAME}
+                run: |
+                    ./.github/cancel-review.sh
