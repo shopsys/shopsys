@@ -1,4 +1,4 @@
-version: "3.4"
+version: "3.7"
 
 services:
     postgres:
@@ -21,11 +21,19 @@ services:
         container_name: shopsys-framework-webserver
         depends_on:
             - php-fpm
+            - storefront
         volumes:
             - web-data:/var/www/html/project-base/app/web
             - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
         ports:
             - "8000:8080"
+
+    storefront:
+        restart: always
+        image: storefront-image
+        container_name: shopsys-framework-storefront
+        ports:
+            - "3000:3000"
 
     php-fpm:
         image: php-fpm-image
