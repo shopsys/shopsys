@@ -609,7 +609,12 @@
     <target name="elasticsearch-index-recreate" depends="production-protection, elasticsearch-index-delete, elasticsearch-index-migrate" description="Recreates indexes into elasticsearch (deletes existing indexes and creates new one)"/>
 
     <target name="environment-change" depends="production-protection" description="Change application environment and install composer dev-dependencies when development environment is selected.">
-        <input propertyName="change.environment" validArgs="dev, prod, test, acc" defaultValue="prod" message="Select environment you want to change to"/>
+        <if>
+            <not><isset property="change.environment"/></not>
+            <then>
+                <input propertyName="change.environment" validArgs="dev, prod, test, acc" defaultValue="prod" message="Select environment you want to change to"/>
+            </then>
+        </if>
         <phingcall target="maintenance-on"/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>

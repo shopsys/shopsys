@@ -81,8 +81,8 @@ jobs:
                 run: |
                     docker run -d --name php-fpm ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}
                     docker cp ./ php-fpm:/var/www/html
-                    docker exec php-fpm composer install --optimize-autoloader --no-interaction
-                    docker exec php-fpm php phing composer-dev dirs-create test-dirs-create assets npm build-version-generate frontend-api-enable
+                    docker exec --user root php-fpm chown -R www-data:www-data /var/www/html
+                    docker exec php-fpm php phing -D production.confirm.action=y build-version-generate frontend-api-enable
             -   name: Push branch specific PHP-FPM image to Github Container Registry
                 run: |
                     docker commit -m="Include Composer and NPM files" php-fpm ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}-${{ github.sha }}
@@ -114,7 +114,9 @@ jobs:
             -   name: Build application
                 run: docker-compose up -d php-fpm
             -   name: Check standards
-                run: docker-compose exec -T php-fpm php phing standards
+                run: |
+                    docker-compose exec -T php-fpm mv ./project-base/PRODUCTION ./project-base/DEVELOPMENT
+                    docker-compose exec -T php-fpm php phing -D production.confirm.action=y composer-dev standards
     tests-unit-functional-smoke:
         name: Run unit, functional and smoke tests
         needs: build-docker-images
@@ -132,9 +134,9 @@ jobs:
                 run: |
                     docker-compose pull --parallel postgres elasticsearch redis php-fpm
                     docker-compose up -d postgres elasticsearch redis php-fpm
-                    docker-compose exec -T php-fpm php phing db-create test-db-create db-demo elasticsearch-index-recreate elasticsearch-export error-pages-generate
+                    docker-compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change test-dirs-create db-create test-db-create db-demo elasticsearch-index-recreate elasticsearch-export error-pages-generate
             -   name: Run tests
-                run: docker-compose exec -T php-fpm php phing tests
+                run: docker-compose exec -T php-fpm php phing -D production.confirm.action=y tests
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker-compose logs php-fpm
@@ -155,9 +157,9 @@ jobs:
                 run: |
                     docker-compose pull --parallel webserver postgres elasticsearch redis php-fpm selenium-server
                     docker-compose up -d
-                    docker-compose exec -T php-fpm php phing dirs-create db-create test-db-create db-demo error-pages-generate test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build
+                    docker-compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change dirs-create test-dirs-create db-create test-db-create db-demo error-pages-generate test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build
             -   name: Run acceptance tests
-                run: docker-compose exec -T php-fpm php phing tests-acceptance
+                run: docker-compose exec -T php-fpm php phing -D production.confirm.action=y tests-acceptance
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker-compose logs php-fpm
@@ -198,7 +200,7 @@ jobs:
                         --build-arg www_data_uid=$(id -u) \
                         --build-arg www_data_gid=$(id -g) \
                         --tag ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG} \
-                        --target development \
+                        --target production \
                         --no-cache \
                         --compress \
                         -f project-base/docker/php-fpm/Dockerfile \
@@ -229,8 +231,9 @@ jobs:
                     docker-compose pull --parallel webserver postgres redis selenium-server
                     docker-compose up -d
                     docker cp ./ shopsys-framework-php-fpm:/var/www/html
+                    docker-compose exec -T --user root php-fpm chown -R www-data:www-data /var/www/html
                     docker-compose exec -T php-fpm composer install --optimize-autoloader --no-interaction
-                    docker-compose exec -T php-fpm php phing composer-dev dirs-create test-dirs-create assets npm build-version-generate frontend-api-enable db-create test-db-create db-demo elasticsearch-index-recreate elasticsearch-export error-pages-generate test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build
+                    docker-compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change dirs-create test-dirs-create assets npm build-version-generate frontend-api-enable db-create test-db-create db-demo elasticsearch-index-recreate elasticsearch-export error-pages-generate test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build
             -   name: Check standards
                 run: docker-compose exec -T php-fpm php phing standards
             -   name: Run tests
