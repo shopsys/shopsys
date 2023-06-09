@@ -81,7 +81,7 @@ services:
         image: ghcr.io/joeferner/redis-commander:latest
         restart: always
         environment:
-            - REDIS_HOST=redis
+            - REDIS_HOSTS=redis
         ports:
             - "1600:8081"
 
@@ -104,7 +104,7 @@ services:
             - "1100:8080"
 
     smtp-server:
-        image: namshi/smtp:latest
+        image: ixdotai/smtp:latest
         container_name: shopsys-framework-smtp-server
 
     elasticsearch:
@@ -122,7 +122,6 @@ services:
             - elasticsearch-data:/usr/share/elasticsearch/data
         environment:
             - discovery.type=single-node
-            - cluster.routing.allocation.disk.watermark.flood_stage=0.99
 
     kibana:
         image: docker.elastic.co/kibana/kibana-oss:7.6.0
@@ -130,7 +129,7 @@ services:
         depends_on:
             - elasticsearch
         ports:
-            - "5602:5601"
+            - "5601:5601"
 
 volumes:
     source-code:
@@ -170,6 +169,5 @@ x-mutagen:
             mode: "two-way-resolved"
             configurationBeta:
                 permissions:
-                    defaultOwner: "id:1000"
-                    defaultGroup: "id:1000"
+                    defaultOwner: "id:501"
                     defaultDirectoryMode: 0777
