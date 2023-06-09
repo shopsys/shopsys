@@ -873,7 +873,7 @@
 
     <target name="npm-install-dependencies" description="Installs node modules dependencies." hidden="true">
         <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
-            <arg value="ci"/>
+            <arg value="install"/>
         </exec>
     </target>
 
