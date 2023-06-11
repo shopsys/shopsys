@@ -18,32 +18,30 @@ export const ProductMetadata: FC<ProductMetadataProps> = ({ product }) => {
                 type="application/ld+json"
                 id="product-metadata"
                 dangerouslySetInnerHTML={{
-                    __html: JSON.stringify([
-                        {
-                            '@context': 'https://schema.org/',
-                            '@type': 'Product',
-                            name: product.fullName,
-                            image: imageUrls,
-                            description: product.description,
-                            sku: product.catalogNumber,
-                            mpn: product.ean,
-                            brand: {
-                                '@type': 'Brand',
-                                name: product.brand?.name,
-                            },
-                            offers: {
-                                '@type': 'Offer',
-                                url: router.asPath,
-                                priceCurrency: currencyCode,
-                                price: product.price.priceWithVat,
-                                itemCondition: 'https://schema.org/NewCondition',
-                                availability:
-                                    product.availability.status === AvailabilityStatusEnumApi.InStockApi
-                                        ? 'https://schema.org/InStock'
-                                        : 'https://schema.org/OutOfStock',
-                            },
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org/',
+                        '@type': 'Product',
+                        name: product.fullName,
+                        image: imageUrls,
+                        description: product.description,
+                        sku: product.catalogNumber,
+                        mpn: product.ean,
+                        brand: {
+                            '@type': 'Brand',
+                            name: product.brand?.name,
                         },
-                    ]),
+                        offers: {
+                            '@type': 'Offer',
+                            url: router.asPath,
+                            priceCurrency: currencyCode,
+                            price: product.price.priceWithVat,
+                            itemCondition: 'https://schema.org/NewCondition',
+                            availability:
+                                product.availability.status === AvailabilityStatusEnumApi.InStockApi
+                                    ? 'https://schema.org/InStock'
+                                    : 'https://schema.org/OutOfStock',
+                        },
+                    }),
                 }}
                 key="product-metadata"
             />

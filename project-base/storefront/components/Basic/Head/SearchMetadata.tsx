@@ -12,21 +12,19 @@ export const SearchMetadata: FC = () => {
                 type="application/ld+json"
                 id="search-metadata"
                 dangerouslySetInnerHTML={{
-                    __html: JSON.stringify([
-                        {
-                            '@context': 'https://schema.org',
-                            '@type': 'WebSite',
-                            url,
-                            potentialAction: {
-                                '@type': 'SearchAction',
-                                target: {
-                                    '@type': 'EntryPoint',
-                                    urlTemplate: `${searchUrl}?q={q}`,
-                                },
-                                'query-input': 'required name=q',
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'WebSite',
+                        url,
+                        potentialAction: {
+                            '@type': 'SearchAction',
+                            target: {
+                                '@type': 'EntryPoint',
+                                urlTemplate: `${searchUrl}?q={q}`,
                             },
+                            'query-input': 'required name=q',
                         },
-                    ]),
+                    }),
                 }}
                 key="search-metadata"
             />

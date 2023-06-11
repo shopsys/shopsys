@@ -4,12 +4,19 @@ const { withSentryConfig } = require('@sentry/nextjs');
 const nextTranslate = require('next-translate');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const STATIC_REWRITE_PATHS = require('./config/staticRewritePaths');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+    enabled: process.env.ANALYZE === 'true',
+});
 
 const moduleExports = nextTranslate({
     reactStrictMode: true,
+    swcMinify: true,
+    assetPrefix: process.env.CDN_DOMAIN ?? undefined,
     sentry: {
         disableServerWebpackPlugin: process.env.NODE_ENV === 'development',
         disableClientWebpackPlugin: process.env.NODE_ENV === 'development',
+        hideSourceMaps: true,
     },
     serverRuntimeConfig: {
         internalGraphqlEndpoint: process.env.INTERNAL_GRAPHQL_ENDPOINT,
@@ -18,6 +25,7 @@ const moduleExports = nextTranslate({
         googleMapApiKey: process.env.GOOGLE_MAP_API_KEY,
         packeteryApiKey: process.env.PACKETERY_API_KEY,
         lightgalleryLicenceKey: process.env.LIGHTGALLERY_LICENCE_KEY,
+        cdnDomain: process.env.CDN_DOMAIN ?? '',
         sentryDsn: process.env.SENTRY_DSN ?? '',
         sentryEnvironment: process.env.SENTRY_ENVIRONMENT ?? '',
         domains: [
@@ -94,4 +102,4 @@ const SentryWebpackPluginOptions = {
     },
 };
 
-module.exports = withSentryConfig(moduleExports, SentryWebpackPluginOptions);
+module.exports = withBundleAnalyzer(withSentryConfig(moduleExports, SentryWebpackPluginOptions));

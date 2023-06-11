@@ -29,7 +29,9 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount }) => {
         { stateValue: ProductOrderingModeEnumApi.PriceDescApi, displayValue: t('price descending') },
     ];
 
-    const selectedSortOption = sortValues.find((v) => v.stateValue === sortSelected);
+    const selectedSortOption = sortValues.find(
+        (v) => v.stateValue === (sortSelected || sorting || ProductOrderingModeEnumApi.PriorityApi),
+    );
 
     useResizeWidthEffect(
         width,
@@ -39,9 +41,8 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount }) => {
         () => setMobileSortBarVisible(isElementVisible([{ min: 0, max: 1024 }], width)),
     );
 
-    const handleSort = (newSort: ProductOrderingModeEnumApi) => () => {
+    const handleSort = (newSort: ProductOrderingModeEnumApi) =>
         updateSort(newSort === sortValues[0].stateValue ? undefined : newSort);
-    };
 
     return (
         <div
@@ -78,11 +79,11 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount }) => {
                         {toggleSortMenu && (
                             <div className="absolute top-full z-[1] w-full rounded-b-xl bg-border">
                                 {sortValues
-                                    .filter((value) => value.stateValue !== sortSelected)
+                                    .filter((value) => value.stateValue !== selectedSortOption?.stateValue)
                                     .map((value, index) => (
                                         <SortingBarItem key={value.stateValue}>
                                             <SortingBarItemLink
-                                                isActive={sortSelected === value.stateValue}
+                                                isActive={value.stateValue === selectedSortOption?.stateValue}
                                                 onClick={() => {
                                                     setToggleSortMenu((prev) => !prev);
                                                     handleSort(value.stateValue);
@@ -99,24 +100,19 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount }) => {
                 ) : (
                     <>
                         <div className="flex vl:gap-3">
-                            {sortValues.map((sortOption, index) => {
-                                const isActive =
-                                    sortSelected === undefined
-                                        ? sortOption.stateValue === sorting
-                                        : sortSelected === sortOption.stateValue;
-
-                                return (
-                                    <SortingBarItem
-                                        key={sortOption.stateValue}
-                                        onClick={handleSort(sortOption.stateValue)}
-                                        dataTestId={TEST_IDENTIFIER + '-' + index}
+                            {sortValues.map((sortOption, index) => (
+                                <SortingBarItem
+                                    key={sortOption.stateValue}
+                                    onClick={() => handleSort(sortOption.stateValue)}
+                                    dataTestId={TEST_IDENTIFIER + '-' + index}
+                                >
+                                    <SortingBarItemLink
+                                        isActive={sortOption.stateValue === selectedSortOption?.stateValue}
                                     >
-                                        <SortingBarItemLink isActive={isActive}>
-                                            <span>{sortOption.displayValue}</span>
-                                        </SortingBarItemLink>
-                                    </SortingBarItem>
-                                );
-                            })}
+                                        <span>{sortOption.displayValue}</span>
+                                    </SortingBarItemLink>
+                                </SortingBarItem>
+                            ))}
                         </div>
                         <SortingBarItem>
                             <strong>{totalCount} </strong>

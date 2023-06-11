@@ -25,6 +25,7 @@ module.exports = {
     serializeConfig: false,
     defaultNS: 'common',
     keySeparator: false,
+    logBuild: process.env.NODE_ENV !== 'production',
     nsSeparator: false,
     loader: false,
     skipInitialProps: true,

@@ -4,7 +4,6 @@ import { GtmHeadScript } from 'components/Helpers/GtmHeadScript';
 import { LoadingHandler } from 'components/Layout/LoadingHandler';
 import { Error500ContentWithBoundary } from 'components/Pages/ErrorPage/Error500Content';
 import { Error503Content } from 'components/Pages/ErrorPage/Error503Content';
-import { FontFaceStyle } from 'components/Theme/FontFaceStyle';
 import { extend, locale } from 'dayjs';
 import 'dayjs/locale/cs';
 import 'dayjs/locale/sk';
@@ -21,6 +20,7 @@ import 'lightgallery/css/lightgallery.css';
 import appWithI18n from 'next-translate/appWithI18n';
 import { withUrqlClient } from 'next-urql';
 import { AppProps as NextAppProps } from 'next/app';
+import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -47,6 +47,7 @@ function MyApp({ Component, pageProps, err }: AppProps): ReactElement {
     const router = useRouter();
     const { url, defaultLocale } = pageProps.domainConfig;
     const userConsentCookie = getUserConsentCookie();
+    const { publicRuntimeConfig } = getConfig();
 
     useSetDomainConfig(pageProps.domainConfig);
 
@@ -91,20 +92,55 @@ function MyApp({ Component, pageProps, err }: AppProps): ReactElement {
 
     const [consentUpdatePageUrl] = getInternationalizedStaticUrls(['/cookie-consent'], url);
     const isConsentUpdatePage = router.asPath === consentUpdatePageUrl;
+    const baseDomain = publicRuntimeConfig.cdnDomain;
 
     return (
         <>
             <Head>
-                <link rel="preload" href="/fonts/dmSans400ext.woff2" as="font" type="font/woff2" crossOrigin="" />
-                <link rel="preload" href="/fonts/dmSans400.woff2" as="font" type="font/woff2" crossOrigin="" />
-                <link rel="preload" href="/fonts/dmSans500ext.woff2" as="font" type="font/woff2" crossOrigin="" />
-                <link rel="preload" href="/fonts/dmSans500.woff2" as="font" type="font/woff2" crossOrigin="" />
-                <link rel="preload" href="/fonts/dmSans700ext.woff2" as="font" type="font/woff2" crossOrigin="" />
-                <link rel="preload" href="/fonts/dmSans700.woff2" as="font" type="font/woff2" crossOrigin="" />
+                <link
+                    rel="preload"
+                    href={`${baseDomain}/fonts/dmSans400ext.woff2`}
+                    as="font"
+                    type="font/woff2"
+                    crossOrigin=""
+                />
+                <link
+                    rel="preload"
+                    href={`${baseDomain}/fonts/dmSans400.woff2`}
+                    as="font"
+                    type="font/woff2"
+                    crossOrigin=""
+                />
+                <link
+                    rel="preload"
+                    href={`${baseDomain}/fonts/dmSans500ext.woff2`}
+                    as="font"
+                    type="font/woff2"
+                    crossOrigin=""
+                />
+                <link
+                    rel="preload"
+                    href={`${baseDomain}/fonts/dmSans500.woff2`}
+                    as="font"
+                    type="font/woff2"
+                    crossOrigin=""
+                />
+                <link
+                    rel="preload"
+                    href={`${baseDomain}/fonts/dmSans700ext.woff2`}
+                    as="font"
+                    type="font/woff2"
+                    crossOrigin=""
+                />
+                <link
+                    rel="preload"
+                    href={`${baseDomain}/fonts/dmSans700.woff2`}
+                    as="font"
+                    type="font/woff2"
+                    crossOrigin=""
+                />
                 <GtmHeadScript />
             </Head>
-
-            <FontFaceStyle />
 
             <div className="absolute left-0 top-0 z-overlay h-[1px] w-[1px]" id="portal" />
 

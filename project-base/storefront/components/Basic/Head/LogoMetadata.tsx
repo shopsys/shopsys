@@ -11,14 +11,12 @@ export const LogoMetadata: FC = () => {
                 type="application/ld+json"
                 id="logo-metadata"
                 dangerouslySetInnerHTML={{
-                    __html: JSON.stringify([
-                        {
-                            '@context': 'https://schema.org',
-                            '@type': 'Organization',
-                            url,
-                            logo: logoUrl,
-                        },
-                    ]),
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'Organization',
+                        url,
+                        logo: logoUrl,
+                    }),
                 }}
                 key="logo-metadata"
             />
