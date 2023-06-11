@@ -30,13 +30,10 @@ services:
 
     storefront:
         restart: always
-        build:
-            context: ./project-base/storefront
-            dockerfile: ./docker/dev.Dockerfile
-            target: development
+        image: storefront-image
         container_name: shopsys-framework-storefront
         command: # Optional
-            - dev # change to `- build` if you want to test application build
+            - build
         volumes:
             - storefront:/home/node/app
         ports:
@@ -78,4 +75,6 @@ services:
 
 volumes:
     web-data:
+        driver: local
+    storefront:
         driver: local
