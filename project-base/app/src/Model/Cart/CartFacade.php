@@ -63,7 +63,7 @@ class CartFacade extends BaseCartFacade
         CartItemFactoryInterface $cartItemFactory,
         CartRepository $cartRepository,
         CartWatcherFacade $cartWatcherFacade,
-        private ProductAvailabilityFacade $productAvailabilityFacade,
+        private readonly ProductAvailabilityFacade $productAvailabilityFacade,
     ) {
         parent::__construct(
             $em,

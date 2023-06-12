@@ -10,6 +10,7 @@ use Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterFilterOption as Base
 
 /**
  * @property \App\FrontendApi\Model\Product\Filter\ParameterValueFilterOption[] $values
+ * @property \App\Model\Product\Parameter\Parameter $parameter
  */
 class ParameterFilterOption extends BaseParameterFilterOption
 {

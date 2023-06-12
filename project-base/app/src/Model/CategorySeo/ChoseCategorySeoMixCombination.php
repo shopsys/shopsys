@@ -5,28 +5,23 @@ declare(strict_types=1);
 namespace App\Model\CategorySeo;
 
 use App\Model\CategorySeo\Exception\ChoseCategorySeoMixCombinationIsNotValidException;
-use function GuzzleHttp\json_decode;
-use function GuzzleHttp\json_encode;
 
 class ChoseCategorySeoMixCombination
 {
-    private string $ordering;
-
     /**
      * @param int $domainId
      * @param int $categoryId
-     * @param int $flagId
-     * @param string $ordering
+     * @param string|null $ordering
+     * @param int|null $flagId
      * @param int[] $parameterValueIdsByParameterIds
      */
     public function __construct(
-        private int $domainId,
-        private int $categoryId,
-        private ?int $flagId = null,
-        ?string $ordering,
-        private array $parameterValueIdsByParameterIds = [],
+        private readonly int $domainId,
+        private readonly int $categoryId,
+        private readonly ?string $ordering,
+        private readonly ?int $flagId = null,
+        private readonly array $parameterValueIdsByParameterIds = [],
     ) {
-        $this->ordering = $ordering;
     }
 
     /**
@@ -39,7 +34,7 @@ class ChoseCategorySeoMixCombination
             return null;
         }
 
-        $choseCategorySeoMixCombinationArray = json_decode($choseCategorySeoMixCombinationJson, true);
+        $choseCategorySeoMixCombinationArray = json_decode($choseCategorySeoMixCombinationJson, true, 512, JSON_THROW_ON_ERROR);
 
         return self::createFromArray($choseCategorySeoMixCombinationArray);
     }
@@ -64,8 +59,8 @@ class ChoseCategorySeoMixCombination
         return new self(
             $choseCategorySeoMixCombinationArray['domainId'],
             $choseCategorySeoMixCombinationArray['categoryId'],
-            $choseCategorySeoMixCombinationArray['flagId'],
             $choseCategorySeoMixCombinationArray['ordering'],
+            $choseCategorySeoMixCombinationArray['flagId'],
             $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'],
         );
     }
@@ -89,7 +84,7 @@ class ChoseCategorySeoMixCombination
      */
     public function getInJson(): string
     {
-        return json_encode($this->getInArray());
+        return json_encode($this->getInArray(), JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -117,7 +112,7 @@ class ChoseCategorySeoMixCombination
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getOrdering(): ?string
     {

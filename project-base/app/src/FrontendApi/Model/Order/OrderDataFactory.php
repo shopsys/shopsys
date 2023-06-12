@@ -48,7 +48,7 @@ class OrderDataFactory extends BaseOrderDataFactory
         CurrencyFacade $currencyFacade,
         CountryFacade $countryFacade,
         ProductFacade $productFacade,
-        private StoreFacade $storeFacade,
+        private readonly StoreFacade $storeFacade,
     ) {
         parent::__construct($orderDataFactory, $domain, $paymentFacade, $transportFacade, $currencyFacade, $countryFacade, $productFacade);
     }
@@ -150,6 +150,14 @@ class OrderDataFactory extends BaseOrderDataFactory
 
         if ($input['differentDeliveryAddress']) {
             $cloneOrderData->deliveryCountry = $this->countryFacade->findByCode($input['deliveryCountry']);
+        }
+
+        unset($input['currency'], $input['country'], $input['deliveryCountry']);
+
+        foreach ($input as $key => $value) {
+            if (property_exists(get_class($orderData), $key)) {
+                $cloneOrderData->{$key} = $value;
+            }
         }
 
         return $cloneOrderData;

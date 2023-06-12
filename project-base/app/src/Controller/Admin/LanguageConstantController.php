@@ -28,10 +28,10 @@ class LanguageConstantController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
-        private LanguageConstantFacade $languageConstantFacade,
-        private LanguageConstantDataFactory $languageConstantDataFactory,
-        private LanguageConstantGridFactory $languageConstantGridFactory,
-        private AdminDomainTabsFacade $adminDomainTabsFacade,
+        private readonly LanguageConstantFacade $languageConstantFacade,
+        private readonly LanguageConstantDataFactory $languageConstantDataFactory,
+        private readonly LanguageConstantGridFactory $languageConstantGridFactory,
+        private readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 

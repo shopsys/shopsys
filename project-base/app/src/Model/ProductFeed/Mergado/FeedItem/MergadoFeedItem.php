@@ -22,8 +22,6 @@ class MergadoFeedItem implements FeedItemInterface
         7 => 'Vyrobeno v SK',
     ];
 
-    private string $description;
-
     /**
      * @param int $id
      * @param string $productNo
@@ -37,34 +35,33 @@ class MergadoFeedItem implements FeedItemInterface
      * @param array $parameters
      * @param string $currencyCode
      * @param string|null $description
-     * @param \App\Model\Product\Brand\Brand|null $brand
-     * @param string|null $imageUrl
-     * @param int|null $mainVariantId
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $highProductPrice
      * @param string[] $flags
      * @param int|null $availability
+     * @param \App\Model\Product\Brand\Brand|null $brand
+     * @param string|null $imageUrl
+     * @param int|null $mainVariantId
      */
     public function __construct(
-        private int $id,
-        private string $productNo,
-        private string $name,
-        private string $url,
-        private array $categoryPath,
-        private array $shortDescriptionUsp,
-        private int $deliveryDays,
-        private ProductPrice $price,
-        private array $galleryImageUrls,
-        private array $parameters,
-        private string $currencyCode,
-        ?string $description,
-        private ?Brand $brand = null,
-        private ?string $imageUrl = null,
-        private ?int $mainVariantId = null,
-        private ProductPrice $highProductPrice,
-        private array $flags,
-        private ?int $availability,
+        private readonly int $id,
+        private readonly string $productNo,
+        private readonly string $name,
+        private readonly string $url,
+        private readonly array $categoryPath,
+        private readonly array $shortDescriptionUsp,
+        private readonly int $deliveryDays,
+        private readonly ProductPrice $price,
+        private readonly array $galleryImageUrls,
+        private readonly array $parameters,
+        private readonly string $currencyCode,
+        private readonly ?string $description,
+        private readonly ProductPrice $highProductPrice,
+        private readonly array $flags,
+        private readonly ?int $availability,
+        private readonly ?Brand $brand = null,
+        private readonly ?string $imageUrl = null,
+        private readonly ?int $mainVariantId = null,
     ) {
-        $this->description = $description;
     }
 
     /**

@@ -22,7 +22,7 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
      */
     public function __construct(
         CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
-        protected CountryFacade $countryFacade,
+        protected readonly CountryFacade $countryFacade,
     ) {
         parent::__construct($customerUserUpdateDataFactory);
     }

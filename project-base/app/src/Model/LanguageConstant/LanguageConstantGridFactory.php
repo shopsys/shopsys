@@ -15,8 +15,8 @@ class LanguageConstantGridFactory
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      */
     public function __construct(
-        private LanguageConstantFacade $languageConstantFacade,
-        private GridFactory $gridFactory,
+        private readonly LanguageConstantFacade $languageConstantFacade,
+        private readonly GridFactory $gridFactory,
     ) {
     }
 

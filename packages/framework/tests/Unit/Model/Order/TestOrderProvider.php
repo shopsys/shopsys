@@ -23,7 +23,7 @@ class TestOrderProvider
      */
     public static function getTestOrderData(): OrderData
     {
-        $orderData = new OrderData();
+        $orderData = static::createOrderDataInstance();
         $countryData = new CountryData();
         $countryData->names = ['cs' => 'Slovenská republika'];
         $country = new Country($countryData);
@@ -63,5 +63,13 @@ class TestOrderProvider
         $orderData->currency = TestCurrencyProvider::getTestCurrency();
 
         return $orderData;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
+     */
+    protected static function createOrderDataInstance(): OrderData
+    {
+        return new OrderData();
     }
 }

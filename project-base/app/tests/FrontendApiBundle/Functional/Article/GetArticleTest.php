@@ -6,9 +6,9 @@ namespace Tests\FrontendApiBundle\Functional\Article;
 
 use App\DataFixtures\Demo\ArticleDataFixture;
 use App\Model\Article\Article;
+use App\Model\Article\ArticleFacade;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 

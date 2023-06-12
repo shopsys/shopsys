@@ -15,8 +15,8 @@ class AdministratorRoleGroupFacade
      * @param \Doctrine\ORM\EntityManager $entityManager
      */
     public function __construct(
-        private AdministratorRoleGroupRepository $administratorRoleGroupRepository,
-        private EntityManagerInterface $entityManager,
+        private readonly AdministratorRoleGroupRepository $administratorRoleGroupRepository,
+        private readonly EntityManagerInterface $entityManager,
     ) {
     }
 

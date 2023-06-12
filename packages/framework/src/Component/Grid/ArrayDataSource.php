@@ -10,15 +10,14 @@ use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 
 class ArrayDataSource implements DataSourceInterface
 {
-    protected ?string $rowIdSourceColumnName;
-
     /**
      * @param array $data
-     * @param string $rowIdSourceColumnName
+     * @param string|null $rowIdSourceColumnName
      */
-    public function __construct(protected readonly array $data, $rowIdSourceColumnName = null)
-    {
-        $this->rowIdSourceColumnName = $rowIdSourceColumnName;
+    public function __construct(
+        protected array $data,
+        protected ?string $rowIdSourceColumnName = null,
+    ) {
     }
 
     /**

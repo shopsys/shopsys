@@ -45,10 +45,10 @@ class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
         CurrentCustomerUser $currentCustomerUser,
         BrandFilterChoiceRepository $brandFilterChoiceRepository,
         PriceRangeRepository $priceRangeRepository,
-        private ProductFilterElasticFacade $productFilterElasticFacade,
-        private FlagFacade $flagFacade,
-        private BrandFacade $brandFacade,
-        private ParameterFacade $parameterFacade,
+        private readonly ProductFilterElasticFacade $productFilterElasticFacade,
+        private readonly FlagFacade $flagFacade,
+        private readonly BrandFacade $brandFacade,
+        private readonly ParameterFacade $parameterFacade,
     ) {
         parent::__construct(
             $parameterFilterChoiceRepository,
@@ -57,8 +57,6 @@ class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
             $brandFilterChoiceRepository,
             $priceRangeRepository,
         );
-
-        $this->currentCustomerUser = $currentCustomerUser;
     }
 
     /**

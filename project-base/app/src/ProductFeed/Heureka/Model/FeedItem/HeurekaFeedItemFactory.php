@@ -28,7 +28,7 @@ class HeurekaFeedItemFactory extends BaseHeurekaFeedItemFactory
         HeurekaProductDataBatchLoader $heurekaProductDataBatchLoader,
         HeurekaCategoryFacade $heurekaCategoryFacade,
         CategoryFacade $categoryFacade,
-        private ProductAvailabilityFacade $productAvailabilityFacade,
+        private readonly ProductAvailabilityFacade $productAvailabilityFacade,
     ) {
         parent::__construct(
             $productPriceCalculationForCustomerUser,
@@ -49,17 +49,17 @@ class HeurekaFeedItemFactory extends BaseHeurekaFeedItemFactory
 
         return new HeurekaFeedItem(
             $product->getId(),
-            $mainVariantId,
             $product->getFullname($domainConfig->getLocale()),
-            $product->getDescription($domainConfig->getId()),
+            $this->productDataBatchLoader->getProductParametersByName($product, $domainConfig),
             $this->productDataBatchLoader->getProductUrl($product, $domainConfig),
+            $this->getPrice($product, $domainConfig),
+            $mainVariantId,
+            $product->getDescription($domainConfig->getId()),
             $this->productDataBatchLoader->getProductImageUrl($product, $domainConfig),
             $this->getBrandName($product),
             $product->getEan(),
             $this->productAvailabilityFacade->getProductAvailabilityDaysByDomainId($product, $domainConfig->getId()),
-            $this->getPrice($product, $domainConfig),
             $this->getHeurekaCategoryFullName($product, $domainConfig),
-            $this->productDataBatchLoader->getProductParametersByName($product, $domainConfig),
             $this->productDataBatchLoader->getProductCpc($product, $domainConfig),
         );
     }

@@ -27,8 +27,8 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Tests\App\Functional\Model\Order\TestOrderProvider;
 use Tests\App\Test\TransactionFunctionalTestCase;
-use Tests\FrameworkBundle\Unit\Model\Order\TestOrderProvider;
 use Twig\Environment;
 
 class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
@@ -42,7 +42,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
      */
     private Environment $twigEnvironment;
 
-    public function testExportXml()
+    public function testExportXml(): void
     {
         $country = $this->createCountry();
 
@@ -169,7 +169,6 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
      */
     private function createOrder(Currency $currency, OrderStatus $status, Country $country)
     {
-        /** @var \App\Model\Order\OrderData $orderData */
         $orderData = TestOrderProvider::getTestOrderData();
         $orderData->currency = $currency;
         $orderData->status = $status;

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Advert;
 
-use App\Model\Advert\AdvertFacade;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 
 class AdvertDataFactory implements AdvertDataFactoryInterface

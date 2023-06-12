@@ -39,8 +39,8 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
     ): BaseCustomerUserUpdateData {
         return new CustomerUserUpdateData(
             $billingAddressData,
-            $deliveryAddressData,
             $customerUserData,
+            $deliveryAddressData,
         );
     }
 

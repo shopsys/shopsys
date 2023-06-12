@@ -48,8 +48,8 @@ class BreadcrumbResolver extends BaseBreadcrumbResolver
 
         try {
             return $breadcrumbGenerator->getBreadcrumbItemsOnDomain($domainId, $routeName, $routeParameters, $locale);
-        } catch (Exception $ex) {
-            throw new UnableToGenerateBreadcrumbItemsException($ex->getMessage());
+        } catch (Exception) {
+            throw new UnableToGenerateBreadcrumbItemsException();
         }
     }
 }
