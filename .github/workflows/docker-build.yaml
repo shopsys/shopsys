@@ -126,6 +126,34 @@ jobs:
                     docker-compose exec -T php-fpm php phing -D production.confirm.action=y composer-dev standards
             -   name: Check GraphQl schema
                 run: docker-compose exec -T php-fpm project-base/app/check-schema.sh
+    standards-storefront:
+        name: Check standards on storefront
+        needs: build-docker-images
+        runs-on: ubuntu-22.04
+        steps:
+            -   name: GIT checkout branch - ${{ github.ref }}
+                uses: actions/checkout@v3
+                with:
+                    ref: ${{ github.ref }}
+            -   name: Prepare PNPM
+                run:  |
+                    corepack enable
+                    corepack prepare --activate pnpm@8.6.0
+                    pnpm config set store-dir .pnpm-store
+            -   name: Copy necessary files
+                run: cp ./project-base/app/schema.graphql ./project-base/storefront/schema.graphql
+            -   name: Install dependencies
+                run: pnpm install --frozen-lockfile
+                working-directory: ./project-base/storefront
+            -   name: Check code generation
+                run: bash ./check-code-gen.sh
+                working-directory: ./project-base/storefront
+            -   name: Check standards
+                run: pnpm run check
+                working-directory: ./project-base/storefront
+            -   name: Check no NEXT_PUBLIC_ variables is used
+                run: ./check-next-public-variable.sh
+                working-directory: ./project-base/storefront
     tests-unit-functional-smoke:
         name: Run unit, functional and smoke tests
         needs: build-docker-images
