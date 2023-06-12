@@ -9,22 +9,13 @@ use Symfony\Bridge\Monolog\Logger;
 
 class TransferIssueLogCleanerCronModule implements SimpleCronModuleInterface
 {
-    /**
-     * @var \Symfony\Bridge\Monolog\Logger
-     */
-    private $logger;
-
-    /**
-     * @var \App\Model\Transfer\Issue\TransferIssueRepository
-     */
-    private $transferIssueRepository;
+    private Logger $logger;
 
     /**
      * @param \App\Model\Transfer\Issue\TransferIssueRepository $transferIssueRepository
      */
-    public function __construct(TransferIssueRepository $transferIssueRepository)
+    public function __construct(private TransferIssueRepository $transferIssueRepository)
     {
-        $this->transferIssueRepository = $transferIssueRepository;
     }
 
     /**

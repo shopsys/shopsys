@@ -16,16 +16,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class BlogCategoriesType extends AbstractType
 {
     /**
-     * @var \App\Form\Transformers\BlogCategoriesTypeTransformer
-     */
-    private $blogCategoriesTypeTransformer;
-
-    /**
      * @param \App\Form\Transformers\BlogCategoriesTypeTransformer $blogCategoriesTypeTransformer
      */
-    public function __construct(BlogCategoriesTypeTransformer $blogCategoriesTypeTransformer)
+    public function __construct(private BlogCategoriesTypeTransformer $blogCategoriesTypeTransformer)
     {
-        $this->blogCategoriesTypeTransformer = $blogCategoriesTypeTransformer;
     }
 
     /**

@@ -30,33 +30,15 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     public const DISABLED_FIELDS = [];
 
     /**
-     * @var \App\Component\Form\FormBuilderHelper
-     */
-    private FormBuilderHelper $formBuilderHelper;
-
-    /**
-     * @var \App\Model\Product\Flag\FlagFacade
-     */
-    private FlagFacade $flagFacade;
-
-    /**
-     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
-     */
-    private UrlGeneratorInterface $urlGenerator;
-
-    /**
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
-        FormBuilderHelper $formBuilderHelper,
-        FlagFacade $flagFacade,
-        UrlGeneratorInterface $urlGenerator
+        private FormBuilderHelper $formBuilderHelper,
+        private FlagFacade $flagFacade,
+        private UrlGeneratorInterface $urlGenerator,
     ) {
-        $this->formBuilderHelper = $formBuilderHelper;
-        $this->flagFacade = $flagFacade;
-        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -106,7 +88,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 [
                     'data-unique-catnum-url' => $this->urlGenerator->generate('admin_product_catnumexists'),
                     'data-current-product-catnum' => $product !== null ? $product->getCatnum() : '',
-                ]
+                ],
             ),
             'label' => t('Catalog number'),
             'position' => ['before' => 'partno'],

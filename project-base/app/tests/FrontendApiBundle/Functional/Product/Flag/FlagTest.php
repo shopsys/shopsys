@@ -12,13 +12,11 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 class FlagTest extends GraphQlTestCase
 {
     /**
-     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
      * @inject
      */
     protected UrlGeneratorInterface $urlGenerator;
 
     /**
-     * @var \App\Model\Product\Flag\FlagFacade
      * @inject
      */
     protected FlagFacade $flagFacade;

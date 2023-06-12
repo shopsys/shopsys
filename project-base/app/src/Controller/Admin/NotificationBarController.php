@@ -21,41 +21,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class NotificationBarController extends AdminBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    private $adminDomainTabsFacade;
-
-    /**
-     * @var \App\Model\NotificationBar\NotificationBarFacade
-     */
-    private $notificationBarFacade;
-
-    /**
-     * @var \App\Model\NotificationBar\NotificationBarDataFactory
-     */
-    private $notificationBarDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    private $gridFactory;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \App\Model\NotificationBar\NotificationBarFacade $notificationBarFacade
      * @param \App\Model\NotificationBar\NotificationBarDataFactory $notificationBarDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      */
     public function __construct(
-        AdminDomainTabsFacade $adminDomainTabsFacade,
-        NotificationBarFacade $notificationBarFacade,
-        NotificationBarDataFactory $notificationBarDataFactory,
-        GridFactory $gridFactory
+        private AdminDomainTabsFacade $adminDomainTabsFacade,
+        private NotificationBarFacade $notificationBarFacade,
+        private NotificationBarDataFactory $notificationBarDataFactory,
+        private GridFactory $gridFactory,
     ) {
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
-        $this->notificationBarFacade = $notificationBarFacade;
-        $this->notificationBarDataFactory = $notificationBarDataFactory;
-        $this->gridFactory = $gridFactory;
     }
 
     /**
@@ -141,7 +117,7 @@ class NotificationBarController extends AdminBaseController
                 t('<strong><a href="{{ url }}">Notifikační lišta</a></strong> byla úspešne upravená'),
                 [
                     'url' => $this->generateUrl('admin_notificationbar_edit', ['id' => $notificationBar->getId()]),
-                ]
+                ],
             );
 
             return $this->redirectToRoute('admin_notificationbar_list');

@@ -40,14 +40,14 @@ class CategoryController extends BaseCategoryController
         Domain $domain,
         BreadcrumbOverrider $breadcrumbOverrider,
         private readonly FormBuilderHelper $formBuilderHelper,
-        private readonly ReadyCategorySeoMixFacade $categorySeoMixFacade
+        private readonly ReadyCategorySeoMixFacade $categorySeoMixFacade,
     ) {
         parent::__construct(
             $categoryFacade,
             $categoryDataFactory,
             $domain,
             $breadcrumbOverrider,
-            $requestStack
+            $requestStack,
         );
     }
 

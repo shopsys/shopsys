@@ -71,7 +71,7 @@ class PaginatedProductsTest extends GraphQlTestCase
                         'Reflective tape for safe movement on the road',
                         [],
                         Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                        $firstDomainLocale
+                        $firstDomainLocale,
                     )],
                     ['name' => t('CD-R VERBATIM 210MB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
                     ['name' => t('Prime flour 1 kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],

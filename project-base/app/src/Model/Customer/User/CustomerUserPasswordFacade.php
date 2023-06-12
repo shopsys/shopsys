@@ -34,8 +34,12 @@ class CustomerUserPasswordFacade extends BaseCustomerUserPasswordFacade
      * @param string $newPassword
      * @return \App\Model\Customer\User\CustomerUser
      */
-    public function setNewPassword(string $email, int $domainId, ?string $resetPasswordHash, string $newPassword): CustomerUser
-    {
+    public function setNewPassword(
+        string $email,
+        int $domainId,
+        ?string $resetPasswordHash,
+        string $newPassword,
+    ): CustomerUser {
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = parent::setNewPassword($email, $domainId, $resetPasswordHash, $newPassword);
         /** @var \App\Model\Customer\BillingAddress $billingAddress */

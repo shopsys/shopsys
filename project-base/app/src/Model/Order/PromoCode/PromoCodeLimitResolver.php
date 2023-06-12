@@ -7,25 +7,13 @@ namespace App\Model\Order\PromoCode;
 class PromoCodeLimitResolver
 {
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeLimitRepository
-     */
-    private $promoCodeLimitRepository;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator
-     */
-    private PromoCodeApplicableProductsTotalPriceCalculator $calculator;
-
-    /**
      * @param \App\Model\Order\PromoCode\PromoCodeLimitRepository $promoCodeLimitRepository
      * @param \App\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator $calculator
      */
     public function __construct(
-        PromoCodeLimitRepository $promoCodeLimitRepository,
-        PromoCodeApplicableProductsTotalPriceCalculator $calculator
+        private PromoCodeLimitRepository $promoCodeLimitRepository,
+        private PromoCodeApplicableProductsTotalPriceCalculator $calculator,
     ) {
-        $this->promoCodeLimitRepository = $promoCodeLimitRepository;
-        $this->calculator = $calculator;
     }
 
     /**
@@ -39,7 +27,7 @@ class PromoCodeLimitResolver
 
         return $this->promoCodeLimitRepository->getHighestLimitByPromoCodeAndTotalPrice(
             $promoCode,
-            $totalCartPrice->getAmount()
+            $totalCartPrice->getAmount(),
         );
     }
 }

@@ -13,7 +13,6 @@ use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 class AuthenticatedRemovePromoCodeFromCartTest extends GraphQlWithLoginTestCase
 {
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeFacade
      * @inject
      */
     private PromoCodeFacade $promoCodeFacade;

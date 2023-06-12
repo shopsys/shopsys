@@ -13,31 +13,6 @@ use Scheb\TwoFactorBundle\Security\TwoFactor\QrCode\QrCodeGenerator;
 class AdministratorTwoFactorAuthenticationFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var \Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Email\Generator\CodeGeneratorInterface
-     */
-    private CodeGeneratorInterface $emailCodeGenerator;
-
-    /**
-     * @var \Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticatorInterface
-     */
-    private GoogleAuthenticatorInterface $googleAuthenticator;
-
-    /**
-     * @var \Scheb\TwoFactorBundle\Security\TwoFactor\QrCode\QrCodeGenerator
-     */
-    private QrCodeGenerator $qrCodeGenerator;
-
-    /**
-     * @var \Endroid\QrCode\Writer\PngWriter
-     */
-    private PngWriter $pngWriter;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Email\Generator\CodeGeneratorInterface $emailCodeGenerator
      * @param \Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Google\GoogleAuthenticatorInterface $googleAuthenticator
@@ -45,17 +20,12 @@ class AdministratorTwoFactorAuthenticationFacade
      * @param \Endroid\QrCode\Writer\PngWriter $pngWriter
      */
     public function __construct(
-        EntityManagerInterface $em,
-        CodeGeneratorInterface $emailCodeGenerator,
-        GoogleAuthenticatorInterface $googleAuthenticator,
-        QrCodeGenerator $qrCodeGenerator,
-        PngWriter $pngWriter
+        private EntityManagerInterface $em,
+        private CodeGeneratorInterface $emailCodeGenerator,
+        private GoogleAuthenticatorInterface $googleAuthenticator,
+        private QrCodeGenerator $qrCodeGenerator,
+        private PngWriter $pngWriter,
     ) {
-        $this->em = $em;
-        $this->emailCodeGenerator = $emailCodeGenerator;
-        $this->googleAuthenticator = $googleAuthenticator;
-        $this->qrCodeGenerator = $qrCodeGenerator;
-        $this->pngWriter = $pngWriter;
     }
 
     /**

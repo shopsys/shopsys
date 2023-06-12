@@ -27,9 +27,9 @@ class FeedExportFactory extends BaseFeedExportFactory
                 sprintf(
                     'The argument "$lastSeekId" passed to method "%s()" should be type of int or null.'
                     . ' Argument will be strict typed in the next major.',
-                    __METHOD__
+                    __METHOD__,
                 ),
-                E_USER_DEPRECATED
+                E_USER_DEPRECATED,
             );
         }
 
@@ -47,7 +47,7 @@ class FeedExportFactory extends BaseFeedExportFactory
             $this->em,
             $feedFilepath,
             $feedLocalFilepath,
-            $lastSeekId
+            $lastSeekId,
         );
     }
 }

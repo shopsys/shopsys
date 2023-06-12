@@ -18,7 +18,7 @@ class StoreDataFactory
     public function __construct(
         private readonly Domain $domain,
         private readonly FriendlyUrlFacade $friendlyUrlFacade,
-        private readonly ImageUploadDataFactory $imageUploadDataFactory
+        private readonly ImageUploadDataFactory $imageUploadDataFactory,
     ) {
     }
 
@@ -59,7 +59,7 @@ class StoreDataFactory
             $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
                 $domainId,
                 StoreFriendlyUrlProvider::ROUTE_NAME,
-                $store->getId()
+                $store->getId(),
             );
             $storeData->urls->mainFriendlyUrlsByDomainId[$domainId] = $mainFriendlyUrl;
         }

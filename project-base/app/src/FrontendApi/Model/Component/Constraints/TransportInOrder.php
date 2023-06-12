@@ -27,6 +27,10 @@ class TransportInOrder extends Constraint
 
     public string $missingPickupPlaceIdentifierMessage = 'Selected transport needs to have pickup place identifier set';
 
+    /**
+     * @var array<string, string>
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+     */
     protected static $errorNames = [
         self::TRANSPORT_NOT_SET_ERROR => 'TRANSPORT_NOT_SET_ERROR',
         self::TRANSPORT_UNAVAILABLE_ERROR => 'TRANSPORT_UNAVAILABLE_ERROR',

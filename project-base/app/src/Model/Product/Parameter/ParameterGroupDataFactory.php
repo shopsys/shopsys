@@ -41,8 +41,10 @@ class ParameterGroupDataFactory
      * @param \App\Model\Product\Parameter\ParameterGroupData $parameterGroupData
      * @param \App\Model\Product\Parameter\ParameterGroup $parameterGroup
      */
-    private function fillFromParameterGroup(ParameterGroupData $parameterGroupData, ParameterGroup $parameterGroup): void
-    {
+    private function fillFromParameterGroup(
+        ParameterGroupData $parameterGroupData,
+        ParameterGroup $parameterGroup,
+    ): void {
         /** @var \App\Model\Product\Parameter\ParameterGroupTranslation[] $translations */
         $translations = $parameterGroup->getTranslations();
         $names = [];

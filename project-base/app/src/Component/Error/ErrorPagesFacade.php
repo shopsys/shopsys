@@ -64,7 +64,7 @@ class ErrorPagesFacade extends BaseErrorPagesFacade
             throw new BadErrorPageStatusCodeException(
                 $errorPageUrl,
                 $expectedStatusCode,
-                $errorPageResponse->getStatusCode()
+                $errorPageResponse->getStatusCode(),
             );
         }
 

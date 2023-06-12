@@ -14,14 +14,10 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 class AnonymousAddToCartTest extends GraphQlTestCase
 {
     /**
-     * @var \App\Model\Cart\CartFacade
      * @inject
      */
     private CartFacade $cartFacade;
 
-    /**
-     * @var \App\Model\Product\Product
-     */
     private Product $testingProduct;
 
     protected function setUp(): void
@@ -182,7 +178,7 @@ class AnonymousAddToCartTest extends GraphQlTestCase
 
         self::assertEquals(
             sprintf('Product with UUID "%s" is not available', $unknownUuid),
-            $response['errors'][0]['message']
+            $response['errors'][0]['message'],
         );
     }
 

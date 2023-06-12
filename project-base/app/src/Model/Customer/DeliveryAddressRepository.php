@@ -24,7 +24,7 @@ class DeliveryAddressRepository extends BaseDeliveryAddressRepository
             [
                 'uuid' => $uuid,
                 'customer' => $customer,
-            ]
+            ],
         );
     }
 
@@ -39,7 +39,7 @@ class DeliveryAddressRepository extends BaseDeliveryAddressRepository
 
         if ($deliveryAddress === null) {
             throw new DeliveryAddressNotFoundException(
-                'Delivery address with UUID ' . $uuid . ' not found.'
+                'Delivery address with UUID ' . $uuid . ' not found.',
             );
         }
 

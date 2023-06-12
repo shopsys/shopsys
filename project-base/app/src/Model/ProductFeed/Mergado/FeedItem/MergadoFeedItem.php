@@ -22,95 +22,7 @@ class MergadoFeedItem implements FeedItemInterface
         7 => 'Vyrobeno v SK',
     ];
 
-    /**
-     * @var int
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $url;
-
-    /**
-     * @var array
-     */
-    private $categoryPath;
-
-    /**
-     * @var array
-     */
-    private $shortDescriptionUsp;
-
-    /**
-     * @var string
-     */
-    private $description;
-
-    /**
-     * @var int
-     */
-    private $deliveryDays;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
-     */
-    private $price;
-
-    /**
-     * @var \App\Model\Product\Brand\Brand|null
-     */
-    private $brand;
-
-    /**
-     * @var string|null
-     */
-    private $imageUrl;
-
-    /**
-     * @var array
-     */
-    private $galleryImageUrls;
-
-    /**
-     * @var array
-     */
-    private $parameters;
-
-    /**
-     * @var string
-     */
-    private $productNo;
-
-    /**
-     * @var int|null
-     */
-    private $mainVariantId;
-
-    /**
-     * @var string
-     */
-    private $currencyCode;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
-     */
-    private ProductPrice $highProductPrice;
-
-    /**
-     * @var string[]
-     */
-    private array $flags;
-
-    /**
-     * @var int|null
-     */
-    private ?int $availability;
+    private string $description;
 
     /**
      * @param int $id
@@ -133,43 +45,26 @@ class MergadoFeedItem implements FeedItemInterface
      * @param int|null $availability
      */
     public function __construct(
-        int $id,
-        string $productNo,
-        string $name,
-        string $url,
-        array $categoryPath,
-        array $shortDescriptionUsp,
-        int $deliveryDays,
-        ProductPrice $price,
-        array $galleryImageUrls,
-        array $parameters,
-        string $currencyCode,
+        private int $id,
+        private string $productNo,
+        private string $name,
+        private string $url,
+        private array $categoryPath,
+        private array $shortDescriptionUsp,
+        private int $deliveryDays,
+        private ProductPrice $price,
+        private array $galleryImageUrls,
+        private array $parameters,
+        private string $currencyCode,
         ?string $description,
-        ?Brand $brand,
-        ?string $imageUrl,
-        ?int $mainVariantId,
-        ProductPrice $highProductPrice,
-        array $flags,
-        ?int $availability
+        private ?Brand $brand = null,
+        private ?string $imageUrl = null,
+        private ?int $mainVariantId = null,
+        private ProductPrice $highProductPrice,
+        private array $flags,
+        private ?int $availability,
     ) {
-        $this->id = $id;
-        $this->productNo = $productNo;
-        $this->name = $name;
-        $this->url = $url;
-        $this->categoryPath = $categoryPath;
-        $this->shortDescriptionUsp = $shortDescriptionUsp;
         $this->description = $description;
-        $this->deliveryDays = $deliveryDays;
-        $this->price = $price;
-        $this->brand = $brand;
-        $this->imageUrl = $imageUrl;
-        $this->galleryImageUrls = $galleryImageUrls;
-        $this->parameters = $parameters;
-        $this->currencyCode = $currencyCode;
-        $this->mainVariantId = $mainVariantId;
-        $this->highProductPrice = $highProductPrice;
-        $this->flags = $flags;
-        $this->availability = $availability;
     }
 
     /**

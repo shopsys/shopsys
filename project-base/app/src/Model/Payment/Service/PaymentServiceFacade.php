@@ -23,21 +23,6 @@ class PaymentServiceFacade
     use FlashMessageTrait;
 
     /**
-     * @var \App\Model\Payment\Transaction\PaymentTransactionFacade
-     */
-    private PaymentTransactionFacade $paymentTransactionFacade;
-
-    /**
-     * @var \App\Model\Payment\Transaction\PaymentTransactionDataFactory
-     */
-    private PaymentTransactionDataFactory $paymentTransactionDataFactory;
-
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    private LoggerInterface $logger;
-
-    /**
      * @var \App\Model\Payment\Service\PaymentServiceInterface[]
      */
     private array $paymentServices;
@@ -50,17 +35,14 @@ class PaymentServiceFacade
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
     public function __construct(
-        PaymentTransactionFacade $paymentTransactionFacade,
-        PaymentTransactionDataFactory $paymentTransactionDataFactory,
+        private PaymentTransactionFacade $paymentTransactionFacade,
+        private PaymentTransactionDataFactory $paymentTransactionDataFactory,
         GoPayFacade $goPayFacade,
-        LoggerInterface $logger,
-        ContainerInterface $container
+        private LoggerInterface $logger,
+        ContainerInterface $container,
     ) {
-        $this->paymentTransactionFacade = $paymentTransactionFacade;
-        $this->paymentTransactionDataFactory = $paymentTransactionDataFactory;
         $this->paymentServices = [];
         $this->paymentServices[Payment::TYPE_GOPAY] = $goPayFacade;
-        $this->logger = $logger;
         $this->container = $container;
     }
 

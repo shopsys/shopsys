@@ -38,11 +38,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 class CartFacade extends BaseCartFacade
 {
     /**
-     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
-     */
-    private $productAvailabilityFacade;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFactory $cartFactory
      * @param \App\Model\Product\ProductRepository $productRepository
@@ -68,7 +63,7 @@ class CartFacade extends BaseCartFacade
         CartItemFactoryInterface $cartItemFactory,
         CartRepository $cartRepository,
         CartWatcherFacade $cartWatcherFacade,
-        ProductAvailabilityFacade $productAvailabilityFacade,
+        private ProductAvailabilityFacade $productAvailabilityFacade,
     ) {
         parent::__construct(
             $em,
@@ -81,10 +76,8 @@ class CartFacade extends BaseCartFacade
             $productPriceCalculation,
             $cartItemFactory,
             $cartRepository,
-            $cartWatcherFacade
+            $cartWatcherFacade,
         );
-
-        $this->productAvailabilityFacade = $productAvailabilityFacade;
     }
 
     /**
@@ -97,7 +90,7 @@ class CartFacade extends BaseCartFacade
         $product = $this->productRepository->getSellableById(
             $productId,
             $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
         $cart = $this->getCartOfCurrentCustomerUserCreateIfNotExists();
 
@@ -111,8 +104,12 @@ class CartFacade extends BaseCartFacade
      * @param bool $isAbsoluteQuantity
      * @return \App\Model\Cart\AddProductResult
      */
-    public function addProductToExistingCart(Product $product, $quantity, BaseCart $cart, bool $isAbsoluteQuantity = false): AddProductResult
-    {
+    public function addProductToExistingCart(
+        Product $product,
+        $quantity,
+        BaseCart $cart,
+        bool $isAbsoluteQuantity = false,
+    ): AddProductResult {
         $maximumOrderQuantity = $this->productAvailabilityFacade->getMaximumOrderQuantity($product, $this->domain->getId());
         $notOnStockQuantity = 0;
 

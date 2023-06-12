@@ -35,7 +35,7 @@ final class Version20201010164758 extends AbstractMigration
                     'sendMail' => true,
                     'subject' => $subject,
                     'body' => $body,
-                ]
+                ],
             );
         }
     }

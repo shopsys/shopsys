@@ -33,7 +33,7 @@ class MailController extends baseMailController
         $mailTemplateData = $this->mailTemplateDataFactory->createFromMailTemplate($mailTemplate);
 
         $mailTemplateVariables = $this->mailTemplateConfiguration->getMailTemplateVariablesBySlug(
-            $mailTemplate->getName()
+            $mailTemplate->getName(),
         );
 
         $form = $this->createForm(
@@ -46,9 +46,9 @@ class MailController extends baseMailController
                 'required_body_variables' => $mailTemplateVariables->getRequiredBodyVariables(),
                 'body_variables' => $this->transformBodyVariables(
                     $mailTemplateVariables->getLabeledVariables(),
-                    $mailTemplateVariables->getRequiredBodyVariables()
+                    $mailTemplateVariables->getRequiredBodyVariables(),
                 ),
-            ]
+            ],
         );
         $form->handleRequest($request);
 
@@ -60,7 +60,7 @@ class MailController extends baseMailController
                 [
                     'name' => $mailTemplateVariables->getReadableName(),
                     'url' => $this->generateUrl('admin_mail_edit', ['id' => $mailTemplate->getId()]),
-                ]
+                ],
             );
 
             return $this->redirectToRoute('admin_mail_template');
@@ -71,7 +71,7 @@ class MailController extends baseMailController
         }
 
         $this->breadcrumbOverrider->overrideLastItem(
-            t('Editing email template - %name%', ['%name%' => $mailTemplateVariables->getReadableName()])
+            t('Editing email template - %name%', ['%name%' => $mailTemplateVariables->getReadableName()]),
         );
 
         return $this->render('@ShopsysFramework/Admin/Content/Mail/edit.html.twig', [

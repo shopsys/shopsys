@@ -26,61 +26,49 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CartModificationsResultTest extends GraphQlTestCase
 {
-    /**
-     * @var \App\Model\Product\Product
-     */
     private Product $testingProduct;
 
     /**
-     * @var \App\Model\Product\ProductFacade
      * @inject
      */
     private ProductFacade $productFacade;
 
     /**
-     * @var \App\Model\Product\ProductDataFactory
      * @inject
      */
     private ProductDataFactory $productDataFactory;
 
     /**
-     * @var \App\Model\Transport\TransportFacade
      * @inject
      */
     private TransportFacade $transportFacade;
 
     /**
-     * @var \App\Model\Payment\PaymentFacade
      * @inject
      */
     private PaymentFacade $paymentFacade;
 
     /**
-     * @var \App\Model\Transport\TransportDataFactory
      * @inject
      */
     private TransportDataFactory $transportDataFactory;
 
     /**
-     * @var \App\Model\Store\StoreFacade
      * @inject
      */
     private StoreFacade $storeFacade;
 
     /**
-     * @var \App\Model\Payment\PaymentDataFactory
      * @inject
      */
     private PaymentDataFactory $paymentDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler
      * @inject
      */
     private ProductPriceRecalculationScheduler $productPriceRecalculationScheduler;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler
      * @inject
      */
     private ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler;
@@ -604,8 +592,10 @@ class CartModificationsResultTest extends GraphQlTestCase
      * @param string $cartUuid
      * @return array
      */
-    private function addTestingProductToExistingCartAndGetTransportModifications(int $productQuantity, string $cartUuid): array
-    {
+    private function addTestingProductToExistingCartAndGetTransportModifications(
+        int $productQuantity,
+        string $cartUuid,
+    ): array {
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
             'cartUuid' => $cartUuid,
             'productUuid' => $this->testingProduct->getUuid(),
@@ -646,8 +636,11 @@ class CartModificationsResultTest extends GraphQlTestCase
      * @param \App\Model\Transport\Transport $transport
      * @param string|null $pickupPlaceIdentifier
      */
-    private function addTransportToCart(string $cartUuid, Transport $transport, ?string $pickupPlaceIdentifier = null): void
-    {
+    private function addTransportToCart(
+        string $cartUuid,
+        Transport $transport,
+        ?string $pickupPlaceIdentifier = null,
+    ): void {
         $pickupPlaceIdentifierLine = '';
         if ($pickupPlaceIdentifier !== null) {
             $pickupPlaceIdentifierLine = 'pickupPlaceIdentifier: "' . $pickupPlaceIdentifier . '"';

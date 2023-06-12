@@ -6,10 +6,7 @@ namespace App\Model\Blog;
 
 class BlogVisibilityRecalculationScheduler
 {
-    /**
-     * @var bool
-     */
-    private $recalculate = false;
+    private bool $recalculate = false;
 
     public function scheduleRecalculation(): void
     {

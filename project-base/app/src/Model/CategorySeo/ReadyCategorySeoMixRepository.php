@@ -16,11 +16,6 @@ use function GuzzleHttp\json_encode;
 class ReadyCategorySeoMixRepository
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
      * @var string[][][]
      */
     private array $readySeoCategorySetup;
@@ -29,9 +24,8 @@ class ReadyCategorySeoMixRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
-        EntityManagerInterface $em
+        private EntityManagerInterface $em,
     ) {
-        $this->em = $em;
         $this->readySeoCategorySetup = [];
     }
 
@@ -47,8 +41,9 @@ class ReadyCategorySeoMixRepository
      * @param \App\Model\CategorySeo\ChoseCategorySeoMixCombination $choseCategorySeoMixCombination
      * @return \App\Model\CategorySeo\ReadyCategorySeoMix|null
      */
-    public function findByChoseCategorySeoMixCombination(ChoseCategorySeoMixCombination $choseCategorySeoMixCombination): ?ReadyCategorySeoMix
-    {
+    public function findByChoseCategorySeoMixCombination(
+        ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
+    ): ?ReadyCategorySeoMix {
         return $this->getRepository()->findOneBy([
             'choseCategorySeoMixCombinationJson' => $choseCategorySeoMixCombination->getInJson(),
         ]);
@@ -94,7 +89,7 @@ class ReadyCategorySeoMixRepository
         array $parameterValueIdsByParameterId,
         array $flagIds,
         ?string $ordering,
-        DomainConfig $domainConfig
+        DomainConfig $domainConfig,
     ): ReadyCategorySeoMix {
         if (count($flagIds) === 1) {
             $flagId = (int)array_shift($flagIds);
@@ -107,14 +102,14 @@ class ReadyCategorySeoMixRepository
             $categoryId,
             $flagId,
             $ordering,
-            $parameterValueIdsByParameterId
+            $parameterValueIdsByParameterId,
         );
 
         $combinationJson = json_encode($combinationArray);
 
         if ($this->isJsonCombinationSeoCategory($categoryId, $domainConfig->getId(), $combinationJson) === false) {
             throw new UnableToFindReadyCategorySeoMixException(
-                'Unable to find ReadyCategorySeoMix: no exact match by product filter form and ordering'
+                'Unable to find ReadyCategorySeoMix: no exact match by product filter form and ordering',
             );
         }
 
@@ -128,7 +123,7 @@ class ReadyCategorySeoMixRepository
 
         if ($readyCategorySeoMix === null) {
             throw new UnableToFindReadyCategorySeoMixException(
-                'Unable to find ReadyCategorySeoMix: no exact match by product filter form and ordering'
+                'Unable to find ReadyCategorySeoMix: no exact match by product filter form and ordering',
             );
         }
 

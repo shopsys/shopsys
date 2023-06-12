@@ -47,7 +47,7 @@ class SeoPage
      * @param \App\Model\SeoPage\SeoPageData $seoPageData
      */
     public function __construct(
-        SeoPageData $seoPageData
+        SeoPageData $seoPageData,
     ) {
         $this->pageName = $seoPageData->pageName;
         $this->domains = new ArrayCollection();

@@ -27,7 +27,7 @@ class ArticleExportSubscriber extends AbstractExportSubscriber
         IndexFacade $indexFacade,
         IndexDefinitionLoader $indexDefinitionLoader,
         ArticleIndex $index,
-        Domain $domain
+        Domain $domain,
     ) {
         parent::__construct(
             $articleExportScheduler,
@@ -35,7 +35,7 @@ class ArticleExportSubscriber extends AbstractExportSubscriber
             $indexFacade,
             $indexDefinitionLoader,
             $index,
-            $domain
+            $domain,
         );
     }
 

@@ -10,33 +10,15 @@ use Doctrine\ORM\EntityManagerInterface;
 class CategoryParameterFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var \App\Model\Category\CategoryParameterRepository
-     */
-    private $categoryParameterRepository;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterFacade
-     */
-    private ParameterFacade $parameterFacade;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Category\CategoryParameterRepository $categoryParameterRepository
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      */
     public function __construct(
-        EntityManagerInterface $em,
-        CategoryParameterRepository $categoryParameterRepository,
-        ParameterFacade $parameterFacade
+        private EntityManagerInterface $em,
+        private CategoryParameterRepository $categoryParameterRepository,
+        private ParameterFacade $parameterFacade,
     ) {
-        $this->em = $em;
-        $this->categoryParameterRepository = $categoryParameterRepository;
-        $this->parameterFacade = $parameterFacade;
     }
 
     /**

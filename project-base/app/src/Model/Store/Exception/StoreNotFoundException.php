@@ -15,7 +15,7 @@ class StoreNotFoundException extends NotFoundHttpException implements StoreExcep
     {
         parent::__construct(sprintf(
             'Store with ID "%d" was not found.',
-            $storeId
+            $storeId,
         ));
     }
 }

@@ -9,16 +9,10 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 class FlagFacade
 {
     /**
-     * @var \App\FrontendApi\Model\Flag\FlagRepository
-     */
-    private FlagRepository $flagRepository;
-
-    /**
      * @param \App\FrontendApi\Model\Flag\FlagRepository $flagRepository
      */
-    public function __construct(FlagRepository $flagRepository)
+    public function __construct(private FlagRepository $flagRepository)
     {
-        $this->flagRepository = $flagRepository;
     }
 
     /**

@@ -13,25 +13,13 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 class RelatedProductDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     /**
-     * @var \App\Model\Product\ProductDataFactory
-     */
-    private ProductDataFactory $productDataFactory;
-
-    /**
-     * @var \App\Model\Product\ProductFacade
-     */
-    private ProductFacade $productFacade;
-
-    /**
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
      * @param \App\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
-        ProductDataFactory $productDataFactory,
-        ProductFacade $productFacade
+        private ProductDataFactory $productDataFactory,
+        private ProductFacade $productFacade,
     ) {
-        $this->productDataFactory = $productDataFactory;
-        $this->productFacade = $productFacade;
     }
 
     /**

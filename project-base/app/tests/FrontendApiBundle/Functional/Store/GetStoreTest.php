@@ -17,19 +17,16 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 class GetStoreTest extends GraphQlTestCase
 {
     /**
-     * @var \App\Model\Store\StoreFacade
      * @inject
      */
     private StoreFacade $storeFacade;
 
     /**
-     * @var \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade
      * @inject
      */
     private FriendlyUrlFacade $friendlyUrlFacade;
 
     /**
-     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
      * @inject
      */
     protected UrlGeneratorInterface $urlGenerator;
@@ -61,7 +58,7 @@ class GetStoreTest extends GraphQlTestCase
                     'breadcrumb',
                 ],
                 $responseData,
-                $expectedStoreData
+                $expectedStoreData,
             );
         }
     }
@@ -77,7 +74,7 @@ class GetStoreTest extends GraphQlTestCase
         self::assertArrayHasKey('message', $errors, Json::encode($errors));
         self::assertEquals(
             sprintf('Store with UUID "%s" does not exist.', $storeOnSecondDomain->getUuid()),
-            $errors['message']
+            $errors['message'],
         );
 
         $urlSlug = 'zilina';
@@ -87,7 +84,7 @@ class GetStoreTest extends GraphQlTestCase
         self::assertArrayHasKey('message', $errors, Json::encode($errors));
         self::assertEquals(
             sprintf('Store with URL slug "%s" does not exist.', $urlSlug),
-            $errors['message']
+            $errors['message'],
         );
     }
 
@@ -118,7 +115,7 @@ class GetStoreTest extends GraphQlTestCase
                     'breadcrumb',
                 ],
                 $responseData,
-                $expectedStoreData
+                $expectedStoreData,
             );
         }
     }
@@ -164,7 +161,7 @@ class GetStoreTest extends GraphQlTestCase
             $friendlyUrl = $this->friendlyUrlFacade->getFriendlyUrlByRouteNameAndSlug(
                 Domain::FIRST_DOMAIN_ID,
                 StoreFriendlyUrlProvider::ROUTE_NAME,
-                $urlSlug
+                $urlSlug,
             );
 
             $data[] = [

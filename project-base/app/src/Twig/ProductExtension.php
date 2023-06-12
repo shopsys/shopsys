@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Twig;
 
+use App\Model\Product\Listing\ProductListOrderingModeForListFacade;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
-use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\FrameworkBundle\Twig\ProductExtension as BaseProductExtension;
 use Twig\TwigFunction;
@@ -18,11 +18,6 @@ use Twig\TwigFunction;
 class ProductExtension extends BaseProductExtension
 {
     /**
-     * @var \App\Model\Product\Listing\ProductListOrderingModeForListFacade
-     */
-    private $productListOrderingModeForListFacade;
-
-    /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \App\Model\Product\Listing\ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
@@ -30,14 +25,12 @@ class ProductExtension extends BaseProductExtension
     public function __construct(
         CategoryFacade $categoryFacade,
         ProductCachedAttributesFacade $productCachedAttributesFacade,
-        ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
+        private readonly ProductListOrderingModeForListFacade $productListOrderingModeForListFacade,
     ) {
         parent::__construct(
             $categoryFacade,
-            $productCachedAttributesFacade
+            $productCachedAttributesFacade,
         );
-
-        $this->productListOrderingModeForListFacade = $productListOrderingModeForListFacade;
     }
 
     /**
@@ -48,14 +41,14 @@ class ProductExtension extends BaseProductExtension
         $functions = parent::getFunctions();
         $functions[] = new TwigFunction(
             'getOrderingNameByOrderingId',
-            [$this, 'getOrderingNameByOrderingId']
+            [$this, 'getOrderingNameByOrderingId'],
         );
 
         return $functions;
     }
 
     /**
-     * @param string $orderingId
+     * @param string|null $orderingId
      * @return string
      */
     public function getOrderingNameByOrderingId(?string $orderingId): string

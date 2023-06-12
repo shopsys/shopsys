@@ -33,11 +33,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 class ProductOnCurrentDomainFacade extends BaseProductOnCurrentDomainFacade
 {
     /**
-     * @var \App\Model\Product\Filter\ProductFilterDataFactory
-     */
-    private ProductFilterDataFactory $productFilterDataFactory;
-
-    /**
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
@@ -55,7 +50,7 @@ class ProductOnCurrentDomainFacade extends BaseProductOnCurrentDomainFacade
         ProductFilterCountRepository $productFilterCountRepository,
         ProductAccessoryRepository $productAccessoryRepository,
         BrandRepository $brandRepository,
-        ProductFilterDataFactory $productFilterDataFactory
+        private ProductFilterDataFactory $productFilterDataFactory,
     ) {
         parent::__construct(
             $productRepository,
@@ -64,10 +59,8 @@ class ProductOnCurrentDomainFacade extends BaseProductOnCurrentDomainFacade
             $categoryRepository,
             $productFilterCountRepository,
             $productAccessoryRepository,
-            $brandRepository
+            $brandRepository,
         );
-
-        $this->productFilterDataFactory = $productFilterDataFactory;
     }
 
     /**
@@ -79,7 +72,7 @@ class ProductOnCurrentDomainFacade extends BaseProductOnCurrentDomainFacade
         return $this->productRepository->getVisibleProductsByCatnumsAndDomainId(
             $productCatnums,
             $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
     }
 
@@ -104,7 +97,7 @@ class ProductOnCurrentDomainFacade extends BaseProductOnCurrentDomainFacade
             ProductListOrderingConfig::ORDER_BY_RELEVANCE,
             $this->currentCustomerUser->getPricingGroup(),
             $page,
-            $limit
+            $limit,
         );
     }
 }

@@ -31,7 +31,7 @@ class PersonalDataController extends AbstractController
         private readonly OrderFacade $orderFacade,
         private readonly NewsletterFacade $newsletterFacade,
         private readonly PersonalDataAccessRequestFacade $personalDataAccessRequestFacade,
-        private readonly XmlResponse $xmlResponse
+        private readonly XmlResponse $xmlResponse,
     ) {
     }
 

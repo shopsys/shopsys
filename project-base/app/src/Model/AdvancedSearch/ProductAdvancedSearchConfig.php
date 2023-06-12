@@ -38,7 +38,7 @@ class ProductAdvancedSearchConfig extends BaseProductAdvancedSearchConfig
         ProductCalculatedSellingDeniedFilter $productCalculatedSellingDeniedFilter,
         ProductAvailabilityFilter $productAvailabilityFilter,
         ProductBrandFilter $productBrandFilter,
-        ProductCategoryFilter $productCategoryFilter
+        ProductCategoryFilter $productCategoryFilter,
     ) {
         parent::__construct(
             $productCatnumFilter,
@@ -49,7 +49,7 @@ class ProductAdvancedSearchConfig extends BaseProductAdvancedSearchConfig
             $productCalculatedSellingDeniedFilter,
             $productAvailabilityFilter,
             $productBrandFilter,
-            $productCategoryFilter
+            $productCategoryFilter,
         );
 
         $this->unregisterFilter($productAvailabilityFilter);

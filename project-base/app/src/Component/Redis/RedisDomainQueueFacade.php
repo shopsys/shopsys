@@ -9,16 +9,10 @@ use Redis;
 abstract class RedisDomainQueueFacade
 {
     /**
-     * @var \Redis
-     */
-    protected Redis $redisQueue;
-
-    /**
      * @param \Redis $redisQueue
      */
-    public function __construct(Redis $redisQueue)
+    public function __construct(protected Redis $redisQueue)
     {
-        $this->redisQueue = $redisQueue;
     }
 
     /**

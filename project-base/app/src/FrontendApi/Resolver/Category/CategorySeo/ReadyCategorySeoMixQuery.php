@@ -23,7 +23,7 @@ class ReadyCategorySeoMixQuery extends AbstractQuery
     public function __construct(
         private readonly FriendlyUrlFacade $friendlyUrlFacade,
         private readonly Domain $domain,
-        private readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
+        private readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
     ) {
     }
 
@@ -37,7 +37,7 @@ class ReadyCategorySeoMixQuery extends AbstractQuery
             $friendlyUrl = $this->friendlyUrlFacade->getFriendlyUrlByRouteNameAndSlug(
                 $this->domain->getId(),
                 'front_category_seo',
-                $urlSlug
+                $urlSlug,
             );
 
             return $this->readyCategorySeoMixFacade->getById($friendlyUrl->getEntityId());

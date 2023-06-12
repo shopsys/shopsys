@@ -11,16 +11,10 @@ use function t;
 class StoresBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
     /**
-     * @var \App\Model\Store\StoreFacade
-     */
-    private StoreFacade $storeFacade;
-
-    /**
      * @param \App\Model\Store\StoreFacade $storeFacade
      */
-    public function __construct(StoreFacade $storeFacade)
+    public function __construct(private StoreFacade $storeFacade)
     {
-        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -32,14 +26,14 @@ class StoresBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     {
         $breadcrumbItems[] = new BreadcrumbItem(
             t('Obchodní domy'),
-            'front_stores'
+            'front_stores',
         );
 
         if (array_key_exists('id', $routeParameters)) {
             $store = $this->storeFacade->getById((int)$routeParameters['id']);
 
             $breadcrumbItems[] = new BreadcrumbItem(
-                $store->getName()
+                $store->getName(),
             );
         }
 

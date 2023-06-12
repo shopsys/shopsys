@@ -10,16 +10,10 @@ use Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface;
 class AkeneoClientFactory
 {
     /**
-     * @var \App\Component\Akeneo\AkeneoConfig
-     */
-    private $akeneoConfig;
-
-    /**
      * @param \App\Component\Akeneo\AkeneoConfig $akeneoConfig
      */
-    public function __construct(AkeneoConfig $akeneoConfig)
+    public function __construct(private AkeneoConfig $akeneoConfig)
     {
-        $this->akeneoConfig = $akeneoConfig;
     }
 
     /**
@@ -33,7 +27,7 @@ class AkeneoClientFactory
             $this->akeneoConfig->getClientId(),
             $this->akeneoConfig->getSecret(),
             $this->akeneoConfig->getUser(),
-            $this->akeneoConfig->getPassword()
+            $this->akeneoConfig->getPassword(),
         );
     }
 }

@@ -49,8 +49,11 @@ class OrderDataMapper extends BaseOrderDataMapper
      * @param \App\Model\Order\FrontOrderData $frontOrderData
      * @param \App\Model\Store\Store $store
      */
-    private function setOrderDeliveryAddressDataByStore(OrderData $orderData, FrontOrderData $frontOrderData, Store $store): void
-    {
+    private function setOrderDeliveryAddressDataByStore(
+        OrderData $orderData,
+        FrontOrderData $frontOrderData,
+        Store $store,
+    ): void {
         $orderData->deliveryFirstName = $frontOrderData->firstName;
         $orderData->deliveryLastName = $frontOrderData->lastName;
         $orderData->deliveryCompanyName = $frontOrderData->companyName;

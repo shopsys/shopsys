@@ -16,7 +16,7 @@ class NavigationQuery extends AbstractQuery
      */
     public function __construct(
         private readonly NavigationItemFacade $navigationItemFacade,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 

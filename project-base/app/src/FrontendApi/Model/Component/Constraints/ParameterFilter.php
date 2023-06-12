@@ -17,6 +17,7 @@ class ParameterFilter extends Constraint
 
     /**
      * @var array<string, string>
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected static $errorNames = [
         self::VALUES_NOT_SUPPORTED_FOR_SLIDER_TYPE_ERROR => 'VALUES_NOT_SUPPORTED_FOR_SLIDER_TYPE_ERROR',

@@ -20,31 +20,26 @@ use Tests\App\Test\TransactionFunctionalTestCase;
 class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
 {
     /**
-     * @var \App\Model\Order\PromoCode\ProductPromoCodeFiller
      * @inject
      */
     private ProductPromoCodeFiller $productPromoCodeFiller;
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeFacade
      * @inject
      */
     private PromoCodeFacade $promoCodeFacade;
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeDataFactory
      * @inject
      */
     private PromoCodeDataFactory $promoCodeDataFactory;
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagFactory
      * @inject
      */
     private PromoCodeFlagFactory $promoCodeFlagFactory;
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeLimitFactory
      * @inject
      */
     private PromoCodeLimitFactory $promoCodeLimitFactory;
@@ -55,7 +50,7 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
 
         $promoCodeFlag = $this->promoCodeFlagFactory->create(
             $this->getFlag(FlagDataFixture::FLAG_PRODUCT_ACTION),
-            PromoCodeFlag::TYPE_INCLUSIVE
+            PromoCodeFlag::TYPE_INCLUSIVE,
         );
         $promoCode = $this->createPromoCodeWithFlags([$promoCodeFlag]);
 
@@ -69,7 +64,7 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
 
         $promoCodeFlag = $this->promoCodeFlagFactory->create(
             $this->getFlag(FlagDataFixture::FLAG_PRODUCT_NEW),
-            PromoCodeFlag::TYPE_EXCLUSIVE
+            PromoCodeFlag::TYPE_EXCLUSIVE,
         );
         $promoCode = $this->createPromoCodeWithFlags([$promoCodeFlag]);
 
@@ -83,17 +78,17 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
 
         $promoCodeFlagNew = $this->promoCodeFlagFactory->create(
             $this->getFlag(FlagDataFixture::FLAG_PRODUCT_NEW),
-            PromoCodeFlag::TYPE_INCLUSIVE
+            PromoCodeFlag::TYPE_INCLUSIVE,
         );
 
         $promoCodeFlagMadeInCz = $this->promoCodeFlagFactory->create(
             $this->getFlag(FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ),
-            PromoCodeFlag::TYPE_INCLUSIVE
+            PromoCodeFlag::TYPE_INCLUSIVE,
         );
 
         $promoCodeFlagAction = $this->promoCodeFlagFactory->create(
             $this->getFlag(FlagDataFixture::FLAG_PRODUCT_ACTION),
-            PromoCodeFlag::TYPE_EXCLUSIVE
+            PromoCodeFlag::TYPE_EXCLUSIVE,
         );
 
         $promoCode = $this->createPromoCodeWithFlags([$promoCodeFlagNew, $promoCodeFlagMadeInCz, $promoCodeFlagAction]);
@@ -121,7 +116,7 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
 
         $promoCodeFlag = $this->promoCodeFlagFactory->create(
             $this->getFlag(FlagDataFixture::FLAG_PRODUCT_ACTION),
-            PromoCodeFlag::TYPE_INCLUSIVE
+            PromoCodeFlag::TYPE_INCLUSIVE,
         );
         $promoCode = $this->createPromoCodeWithFlags([$promoCodeFlag]);
 
@@ -135,7 +130,7 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
 
         $promoCodeFlag = $this->promoCodeFlagFactory->create(
             $this->getFlag(FlagDataFixture::FLAG_PRODUCT_ACTION),
-            PromoCodeFlag::TYPE_EXCLUSIVE
+            PromoCodeFlag::TYPE_EXCLUSIVE,
         );
         $promoCode = $this->createPromoCodeWithFlags([$promoCodeFlag]);
 
@@ -149,12 +144,12 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
 
         $promoCodeFlagAction = $this->promoCodeFlagFactory->create(
             $this->getFlag(FlagDataFixture::FLAG_PRODUCT_ACTION),
-            PromoCodeFlag::TYPE_INCLUSIVE
+            PromoCodeFlag::TYPE_INCLUSIVE,
         );
 
         $promoCodeFlagMadeInCz = $this->promoCodeFlagFactory->create(
             $this->getFlag(FlagDataFixture::FLAG_PRODUCT_MADEIN_CZ),
-            PromoCodeFlag::TYPE_INCLUSIVE
+            PromoCodeFlag::TYPE_INCLUSIVE,
         );
 
         $promoCode = $this->createPromoCodeWithFlags([$promoCodeFlagMadeInCz, $promoCodeFlagAction]);

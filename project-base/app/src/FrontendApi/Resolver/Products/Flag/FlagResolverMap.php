@@ -12,23 +12,11 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class FlagResolverMap extends ResolverMap
 {
     /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private FriendlyUrlFacade $friendlyUrlFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(FriendlyUrlFacade $friendlyUrlFacade, Domain $domain)
+    public function __construct(private FriendlyUrlFacade $friendlyUrlFacade, private Domain $domain)
     {
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->domain = $domain;
     }
 
     /**
@@ -57,7 +45,7 @@ class FlagResolverMap extends ResolverMap
         $friendlyUrlSlug = $this->friendlyUrlFacade->getMainFriendlyUrlSlug(
             $this->domain->getId(),
             'front_flag_detail',
-            $flag->getId()
+            $flag->getId(),
         );
 
         return '/' . $friendlyUrlSlug;

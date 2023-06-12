@@ -31,33 +31,15 @@ use Symfony\Component\Validator\Constraints;
 class BlogCategoryFormType extends AbstractType
 {
     /**
-     * @var \App\Model\Blog\Category\BlogCategoryFacade
-     */
-    private $blogCategoryFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade
-     */
-    private $seoSettingFacade;
-
-    /**
      * @param \App\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      */
     public function __construct(
-        BlogCategoryFacade $blogCategoryFacade,
-        Domain $domain,
-        SeoSettingFacade $seoSettingFacade
+        private BlogCategoryFacade $blogCategoryFacade,
+        private Domain $domain,
+        private SeoSettingFacade $seoSettingFacade,
     ) {
-        $this->blogCategoryFacade = $blogCategoryFacade;
-        $this->domain = $domain;
-        $this->seoSettingFacade = $seoSettingFacade;
     }
 
     /**
@@ -98,8 +80,10 @@ class BlogCategoryFormType extends AbstractType
      * @param \App\Model\Blog\Category\BlogCategory|null $blogCategory
      * @return string|null
      */
-    private function getCategoryNameForPlaceholder(DomainConfig $domainConfig, ?BlogCategory $blogCategory = null): ?string
-    {
+    private function getCategoryNameForPlaceholder(
+        DomainConfig $domainConfig,
+        ?BlogCategory $blogCategory = null,
+    ): ?string {
         $domainLocale = $domainConfig->getLocale();
 
         return $blogCategory === null ? '' : $blogCategory->getName($domainLocale);

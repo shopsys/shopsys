@@ -16,7 +16,7 @@ class GoPayQuery extends AbstractQuery
      */
     public function __construct(
         private readonly GoPayBankSwiftFacade $goPayBankSwiftFacade,
-        private readonly CurrencyFacade $currencyFacade
+        private readonly CurrencyFacade $currencyFacade,
     ) {
     }
 

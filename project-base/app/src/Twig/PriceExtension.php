@@ -20,11 +20,6 @@ use Twig\TwigFilter;
 class PriceExtension extends BasePriceExtension
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    private AdminDomainTabsFacade $adminDomainTabsFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
@@ -38,17 +33,15 @@ class PriceExtension extends BasePriceExtension
         Localization $localization,
         CurrencyRepositoryInterface $intlCurrencyRepository,
         CurrencyFormatterFactory $currencyFormatterFactory,
-        AdminDomainTabsFacade $adminDomainTabsFacade
+        private AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
         parent::__construct(
             $currencyFacade,
             $domain,
             $localization,
             $intlCurrencyRepository,
-            $currencyFormatterFactory
+            $currencyFormatterFactory,
         );
-
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**
@@ -60,7 +53,7 @@ class PriceExtension extends BasePriceExtension
 
         $filters[] = new TwigFilter(
             'priceFromDecimalStringWithCurrencyAdmin',
-            [$this, 'priceFromDecimalStringWithCurrencyAdmin']
+            [$this, 'priceFromDecimalStringWithCurrencyAdmin'],
         );
 
         return $filters;

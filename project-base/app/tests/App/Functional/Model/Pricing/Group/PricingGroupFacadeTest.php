@@ -45,7 +45,6 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
     private CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory;
 
     /**
-     * @var \App\Model\Customer\BillingAddressDataFactory
      * @inject
      */
     private BillingAddressDataFactory $billingAddressDataFactory;

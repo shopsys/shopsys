@@ -12,16 +12,10 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory as
 class ParameterValueDataFactory extends BaseParameterValueDataFactory
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactoryInterface
-     */
-    protected $uploadedFileDataFactory;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactoryInterface $uploadedFileDataFactory
      */
-    public function __construct(UploadedFileDataFactoryInterface $uploadedFileDataFactory)
+    public function __construct(protected UploadedFileDataFactoryInterface $uploadedFileDataFactory)
     {
-        $this->uploadedFileDataFactory = $uploadedFileDataFactory;
     }
 
     /**
@@ -61,8 +55,10 @@ class ParameterValueDataFactory extends BaseParameterValueDataFactory
      * @param \App\Model\Product\Parameter\ParameterValueData $parameterValueData
      * @param \App\Model\Product\Parameter\ParameterValue $parameterValue
      */
-    protected function fillFromParameterValue(BaseParameterValueData $parameterValueData, BaseParameterValue $parameterValue)
-    {
+    protected function fillFromParameterValue(
+        BaseParameterValueData $parameterValueData,
+        BaseParameterValue $parameterValue,
+    ) {
         parent::fillFromParameterValue($parameterValueData, $parameterValue);
 
         $parameterValueData->rgbHex = $parameterValue->getRgbHex();

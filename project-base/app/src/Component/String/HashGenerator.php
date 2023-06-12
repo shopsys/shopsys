@@ -11,7 +11,7 @@ class HashGenerator extends BaseHashGenerator
     /**
      * There is missing characters 0 and O
      */
-    public $charactersWithoutConfusingCharacters = 'ABCDEFGHIJKLMNPQRSTUVWXYZ123456789abcdefghijklmnpqrstuvwxyz';
+    public string $charactersWithoutConfusingCharacters = 'ABCDEFGHIJKLMNPQRSTUVWXYZ123456789abcdefghijklmnpqrstuvwxyz';
 
     /**
      * @param int $length

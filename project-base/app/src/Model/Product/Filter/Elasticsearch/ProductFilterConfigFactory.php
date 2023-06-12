@@ -29,26 +29,6 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory as B
 class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
 {
     /**
-     * @var \App\Model\Product\Filter\Elasticsearch\ProductFilterElasticFacade
-     */
-    private ProductFilterElasticFacade $productFilterElasticFacade;
-
-    /**
-     * @var \App\Model\Product\Flag\FlagFacade
-     */
-    private FlagFacade $flagFacade;
-
-    /**
-     * @var \App\Model\Product\Brand\BrandFacade
-     */
-    private BrandFacade $brandFacade;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterFacade
-     */
-    private ParameterFacade $parameterFacade;
-
-    /**
      * @param \App\Model\Product\Filter\ParameterFilterChoiceRepository $parameterFilterChoiceRepository
      * @param \App\Model\Product\Filter\FlagFilterChoiceRepository $flagFilterChoiceRepository
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
@@ -65,24 +45,20 @@ class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
         CurrentCustomerUser $currentCustomerUser,
         BrandFilterChoiceRepository $brandFilterChoiceRepository,
         PriceRangeRepository $priceRangeRepository,
-        ProductFilterElasticFacade $productFilterElasticFacade,
-        FlagFacade $flagFacade,
-        BrandFacade $brandFacade,
-        ParameterFacade $parameterFacade
+        private ProductFilterElasticFacade $productFilterElasticFacade,
+        private FlagFacade $flagFacade,
+        private BrandFacade $brandFacade,
+        private ParameterFacade $parameterFacade,
     ) {
         parent::__construct(
             $parameterFilterChoiceRepository,
             $flagFilterChoiceRepository,
             $currentCustomerUser,
             $brandFilterChoiceRepository,
-            $priceRangeRepository
+            $priceRangeRepository,
         );
 
-        $this->productFilterElasticFacade = $productFilterElasticFacade;
         $this->currentCustomerUser = $currentCustomerUser;
-        $this->flagFacade = $flagFacade;
-        $this->brandFacade = $brandFacade;
-        $this->parameterFacade = $parameterFacade;
     }
 
     /**
@@ -92,24 +68,28 @@ class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
      * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
-    public function createForCategory($domainId, $locale, BaseCategory $category, string $searchText = ''): ProductFilterConfig
-    {
+    public function createForCategory(
+        $domainId,
+        $locale,
+        BaseCategory $category,
+        string $searchText = '',
+    ): ProductFilterConfig {
         $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataInCategory(
             $category->getId(),
             $this->currentCustomerUser->getPricingGroup(),
-            $searchText
+            $searchText,
         );
 
         $aggregatedParameterFilterChoices = $this->parameterFacade->getParameterFilterChoicesByIds(
             $productFilterConfigIdsData->getParameterValueIdsByParameterId(),
-            $locale
+            $locale,
         );
 
         return new ProductFilterConfig(
             $this->getSortedParameterFilterChoicesForCategory($aggregatedParameterFilterChoices, $category),
             $this->flagFacade->getVisibleFlagsByIds($productFilterConfigIdsData->getFlagIds(), $locale),
             $this->brandFacade->getBrandsByIds($productFilterConfigIdsData->getBrandIds()),
-            $productFilterConfigIdsData->getPriceRange()
+            $productFilterConfigIdsData->getPriceRange(),
         );
     }
 
@@ -123,14 +103,14 @@ class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
     {
         $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataForSearch(
             $searchText,
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
 
         return new ProductFilterConfig(
             [],
             $this->flagFacade->getVisibleFlagsByIds($productFilterConfigIdsData->getFlagIds(), $locale),
             $this->brandFacade->getBrandsByIds($productFilterConfigIdsData->getBrandIds()),
-            $productFilterConfigIdsData->getPriceRange()
+            $productFilterConfigIdsData->getPriceRange(),
         );
     }
 
@@ -141,19 +121,23 @@ class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
      * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
-    public function createForBrand(int $domainId, string $locale, Brand $brand, string $searchText = ''): ProductFilterConfig
-    {
+    public function createForBrand(
+        int $domainId,
+        string $locale,
+        Brand $brand,
+        string $searchText = '',
+    ): ProductFilterConfig {
         $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataInBrand(
             $brand->getId(),
             $this->currentCustomerUser->getPricingGroup(),
-            $searchText
+            $searchText,
         );
 
         return new ProductFilterConfig(
             [],
             $this->flagFacade->getVisibleFlagsByIds($productFilterConfigIdsData->getFlagIds(), $locale),
             [],
-            $productFilterConfigIdsData->getPriceRange()
+            $productFilterConfigIdsData->getPriceRange(),
         );
     }
 
@@ -168,14 +152,14 @@ class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
         $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataInFlag(
             $flag->getId(),
             $this->currentCustomerUser->getPricingGroup(),
-            $searchText
+            $searchText,
         );
 
         return new ProductFilterConfig(
             [],
             $this->flagFacade->getVisibleFlagsByIds($productFilterConfigIdsData->getFlagIds(), $locale),
             $this->brandFacade->getBrandsByIds($productFilterConfigIdsData->getBrandIds()),
-            $productFilterConfigIdsData->getPriceRange()
+            $productFilterConfigIdsData->getPriceRange(),
         );
     }
 
@@ -187,14 +171,14 @@ class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
     public function createForAll(int $domainId, string $locale): ProductFilterConfig
     {
         $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataForAll(
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
 
         return new ProductFilterConfig(
             [],
             $this->flagFacade->getVisibleFlagsByIds($productFilterConfigIdsData->getFlagIds(), $locale),
             $this->brandFacade->getBrandsByIds($productFilterConfigIdsData->getBrandIds()),
-            $productFilterConfigIdsData->getPriceRange()
+            $productFilterConfigIdsData->getPriceRange(),
         );
     }
 
@@ -205,7 +189,7 @@ class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
      */
     private function getSortedParameterFilterChoicesForCategory(
         array $aggregatedParameterFilterChoices,
-        Category $category
+        Category $category,
     ): array {
         $aggregatedParametersFilterChoicesIndexedByParameterId = [];
         foreach ($aggregatedParameterFilterChoices as $aggregatedParameterFilterChoice) {

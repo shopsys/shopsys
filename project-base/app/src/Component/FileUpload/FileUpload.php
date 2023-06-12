@@ -25,17 +25,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class FileUpload extends BaseFileUpload
 {
     /**
-     * @var \App\Component\Image\ImageRepository
-     */
-    private ImageRepository $imageRepository;
-
-    /**
-     * @var \App\Component\UploadedFile\UploadedFileRepository
-     */
-    private UploadedFileRepository $uploadedFileRepository;
-
-    /**
-     * @var array
+     * @var array<string, array<int, array<string, array<string|null, int>>>>
      */
     private array $positionByEntityAndType = [];
 
@@ -58,8 +48,8 @@ class FileUpload extends BaseFileUpload
         MountManager $mountManager,
         FilesystemOperator $filesystem,
         ParameterBagInterface $parameterBag,
-        ImageRepository $imageRepository,
-        UploadedFileRepository $uploadedFileRepository
+        private readonly ImageRepository $imageRepository,
+        private readonly UploadedFileRepository $uploadedFileRepository,
     ) {
         parent::__construct(
             $temporaryDir,
@@ -68,11 +58,8 @@ class FileUpload extends BaseFileUpload
             $fileNamingConvention,
             $mountManager,
             $filesystem,
-            $parameterBag
+            $parameterBag,
         );
-
-        $this->imageRepository = $imageRepository;
-        $this->uploadedFileRepository = $uploadedFileRepository;
     }
 
     /**
@@ -103,13 +90,13 @@ class FileUpload extends BaseFileUpload
             $originalFilename = $this->fileNamingConvention->getFilenameByNamingConvention(
                 $fileForUpload->getNameConventionType(),
                 $fileForUpload->getTemporaryFilename(),
-                $entity->getId()
+                $entity->getId(),
             );
             $targetFilename = $this->getTargetFilepath(
                 $originalFilename,
                 $fileForUpload->isImage(),
                 $fileForUpload->getCategory(),
-                $fileForUpload->getTargetDirectory()
+                $fileForUpload->getTargetDirectory(),
             );
 
             try {
@@ -194,13 +181,13 @@ class FileUpload extends BaseFileUpload
             $position = $this->imageRepository->getImagesCountByEntityIndexedById(
                 $entityName,
                 $entityId,
-                $type
+                $type,
             );
         } else {
             $position = $this->uploadedFileRepository->getUploadedFilesCountByEntityIndexedById(
                 $entityName,
                 $entityId,
-                $type
+                $type,
             );
         }
 
@@ -223,7 +210,7 @@ class FileUpload extends BaseFileUpload
             $uploadEntityType = 'file';
         } else {
             throw new UnexpectedTypeException(
-                sprintf('Provided entity with class %s was not expected.', $entityClass)
+                sprintf('Provided entity with class %s was not expected.', $entityClass),
             );
         }
 

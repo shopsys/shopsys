@@ -13,41 +13,6 @@ use Doctrine\ORM\QueryBuilder;
 class StoreFacade
 {
     /**
-     * @var \App\Model\Store\StoreRepository
-     */
-    private StoreRepository $storeRepository;
-
-    /**
-     * @var \App\Model\Store\StoreFactory
-     */
-    private StoreFactory $storeFactory;
-
-    /**
-     * @var \App\Component\Image\ImageFacade
-     */
-    private ImageFacade $imageFacade;
-
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private EntityManagerInterface $em;
-
-    /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private FriendlyUrlFacade $friendlyUrlFacade;
-
-    /**
-     * @var \App\Model\Store\ProductStoreFacade
-     */
-    private ProductStoreFacade $productStoreFacade;
-
-    /**
-     * @var \App\Model\Product\ProductRepository
-     */
-    private ProductRepository $productRepository;
-
-    /**
      * @param \App\Model\Store\StoreRepository $storeRepository
      * @param \App\Model\Store\StoreFactory $storeFactory
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
@@ -57,21 +22,14 @@ class StoreFacade
      * @param \App\Model\Product\ProductRepository $productRepository
      */
     public function __construct(
-        StoreRepository $storeRepository,
-        StoreFactory $storeFactory,
-        FriendlyUrlFacade $friendlyUrlFacade,
-        ImageFacade $imageFacade,
-        EntityManagerInterface $em,
-        ProductStoreFacade $productStoreFacade,
-        ProductRepository $productRepository
+        private StoreRepository $storeRepository,
+        private StoreFactory $storeFactory,
+        private FriendlyUrlFacade $friendlyUrlFacade,
+        private ImageFacade $imageFacade,
+        private EntityManagerInterface $em,
+        private ProductStoreFacade $productStoreFacade,
+        private ProductRepository $productRepository,
     ) {
-        $this->storeRepository = $storeRepository;
-        $this->storeFactory = $storeFactory;
-        $this->imageFacade = $imageFacade;
-        $this->em = $em;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->productStoreFacade = $productStoreFacade;
-        $this->productRepository = $productRepository;
     }
 
     /**
@@ -131,7 +89,7 @@ class StoreFacade
                 StoreFriendlyUrlProvider::ROUTE_NAME,
                 $store->getId(),
                 $store->getName(),
-                $storeDomain->getDomainId()
+                $storeDomain->getDomainId(),
             );
         }
     }

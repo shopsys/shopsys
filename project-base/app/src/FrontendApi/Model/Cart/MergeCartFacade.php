@@ -12,24 +12,6 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory;
 
 class MergeCartFacade
 {
-    /**
-     * @var \App\FrontendApi\Model\Cart\CartFacade
-     */
-    private CartFacade $cartFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory
-     */
-    private CartItemFactory $cartItemFactory;
-
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private EntityManagerInterface $entityManager;
-
-    /**
-     * @var bool
-     */
     private bool $showCartMergeInfo = false;
 
     /**
@@ -38,13 +20,10 @@ class MergeCartFacade
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
     public function __construct(
-        CartFacade $cartFacade,
-        CartItemFactory $cartItemFactory,
-        EntityManagerInterface $entityManager
+        private CartFacade $cartFacade,
+        private CartItemFactory $cartItemFactory,
+        private EntityManagerInterface $entityManager,
     ) {
-        $this->cartFacade = $cartFacade;
-        $this->cartItemFactory = $cartItemFactory;
-        $this->entityManager = $entityManager;
     }
 
     /**
@@ -79,7 +58,7 @@ class MergeCartFacade
                     $currentCart,
                     $itemToMerge->getProduct(),
                     $itemToMerge->getQuantity(),
-                    $itemToMerge->getWatchedPrice()
+                    $itemToMerge->getWatchedPrice(),
                 );
                 $currentCart->addItem($newCartItem);
                 $this->entityManager->persist($newCartItem);

@@ -29,33 +29,15 @@ class StocksDataFixture extends AbstractReferenceFixture
     public const STOCK_PREFIX = 'stock_';
 
     /**
-     * @var \App\Model\Stock\StockFacade
-     */
-    private StockFacade $stockFacade;
-
-    /**
-     * @var \App\Model\Stock\StockDataFactory
-     */
-    private StockDataFactory $stockDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
      * @param \App\Model\Stock\StockFacade $stockFacade
      * @param \App\Model\Stock\StockDataFactory $stockDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        StockFacade $stockFacade,
-        StockDataFactory $stockDataFactory,
-        Domain $domain
+        private StockFacade $stockFacade,
+        private StockDataFactory $stockDataFactory,
+        private Domain $domain,
     ) {
-        $this->stockFacade = $stockFacade;
-        $this->stockDataFactory = $stockDataFactory;
-        $this->domain = $domain;
     }
 
     /**

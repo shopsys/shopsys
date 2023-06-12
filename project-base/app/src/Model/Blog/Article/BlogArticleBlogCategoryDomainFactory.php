@@ -17,7 +17,7 @@ class BlogArticleBlogCategoryDomainFactory
     public function create(
         BlogArticle $blogArticle,
         BlogCategory $blogCategory,
-        int $domainId
+        int $domainId,
     ): BlogArticleBlogCategoryDomain {
         return new BlogArticleBlogCategoryDomain($blogArticle, $blogCategory, $domainId);
     }

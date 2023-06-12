@@ -16,7 +16,7 @@ class FlagsQuery extends AbstractQuery
      */
     public function __construct(
         private readonly FlagFacade $flagFacade,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 

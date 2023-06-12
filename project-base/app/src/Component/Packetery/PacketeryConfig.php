@@ -8,24 +8,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PacketeryConfig
 {
-    /**
-     * @var bool
-     */
     private bool $enabled;
 
-    /**
-     * @var string
-     */
     private string $restApiUrl;
 
-    /**
-     * @var string
-     */
     private string $apiPassword;
 
-    /**
-     * @var string
-     */
     private string $sender;
 
     /**
@@ -44,22 +32,22 @@ class PacketeryConfig
 
         $optionsResolver->setAllowedTypes(
             'enabled',
-            'bool'
+            'bool',
         );
 
         $optionsResolver->setAllowedTypes(
             'rest_api_url',
-            'string'
+            'string',
         );
 
         $optionsResolver->setAllowedTypes(
             'api_password',
-            'string'
+            'string',
         );
 
         $optionsResolver->setAllowedTypes(
             'sender',
-            'string'
+            'string',
         );
 
         $optionsResolver->resolve($packeteryConfig);

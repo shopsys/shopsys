@@ -33,7 +33,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
     public function createForCurrentUser(
         ?Transport $transport = null,
         ?Payment $payment = null,
-        ?Store $personalPickupStore = null
+        ?Store $personalPickupStore = null,
     ): OrderPreview {
         throw new DeprecatedMethodException();
     }
@@ -59,7 +59,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
         ?CustomerUser $customerUser = null,
         ?string $promoCodeDiscountPercent = null,
         ?Store $personalPickupStore = null,
-        ?PromoCode $promoCode = null
+        ?PromoCode $promoCode = null,
     ): OrderPreview {
         return $this->orderPreviewCalculation->calculatePreview(
             $currency,
@@ -70,7 +70,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
             $customerUser,
             $promoCodeDiscountPercent,
             $personalPickupStore,
-            $promoCode
+            $promoCode,
         );
     }
 }

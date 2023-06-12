@@ -275,7 +275,7 @@ class ProductsTest extends ProductsGraphQlTestCase
             'ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue',
             [],
             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-            $firstDomainLocale
+            $firstDomainLocale,
         );
 
         return '{

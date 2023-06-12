@@ -11,23 +11,13 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 class CartTransportFacade
 {
     /**
-     * @var \App\Model\Cart\Transport\CartTransportDataFactory
-     */
-    private CartTransportDataFactory $cartTransportDataFactory;
-
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private EntityManagerInterface $entityManager;
-
-    /**
      * @param \App\Model\Cart\Transport\CartTransportDataFactory $cartTransportDataFactory
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
-    public function __construct(CartTransportDataFactory $cartTransportDataFactory, EntityManagerInterface $entityManager)
-    {
-        $this->cartTransportDataFactory = $cartTransportDataFactory;
-        $this->entityManager = $entityManager;
+    public function __construct(
+        private CartTransportDataFactory $cartTransportDataFactory,
+        private EntityManagerInterface $entityManager,
+    ) {
     }
 
     /**

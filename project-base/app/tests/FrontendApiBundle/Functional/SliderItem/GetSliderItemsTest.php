@@ -50,7 +50,7 @@ class GetSliderItemsTest extends GraphQlTestCase
                     'extendedTextLink',
                 ],
                 $sliderItem,
-                array_shift($expectedSliderItemsData)
+                array_shift($expectedSliderItemsData),
             );
         }
     }
@@ -112,7 +112,7 @@ class GetSliderItemsTest extends GraphQlTestCase
                     'images',
                 ],
                 $sliderItem,
-                array_shift($expectedSliderItemsWebImagesData)
+                array_shift($expectedSliderItemsWebImagesData),
             );
         }
     }
@@ -174,7 +174,7 @@ class GetSliderItemsTest extends GraphQlTestCase
                     'images',
                 ],
                 $sliderItem,
-                array_shift($expectedSliderItemsWebImagesData)
+                array_shift($expectedSliderItemsWebImagesData),
             );
         }
     }

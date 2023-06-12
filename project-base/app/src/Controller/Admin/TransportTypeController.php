@@ -19,31 +19,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class TransportTypeController extends AdminBaseController
 {
     /**
-     * @var \App\Model\Transport\Type\TransportTypeFacade
-     */
-    protected TransportTypeFacade $transportTypeFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    protected GridFactory $gridFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected Domain $domain;
-
-    /**
-     * @var \App\Model\Transport\Type\TransportTypeDataFactory
-     */
-    protected TransportTypeDataFactory $transportTypeDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
-     */
-    protected BreadcrumbOverrider $breadcrumbOverrider;
-
-    /**
      * @param \App\Model\Transport\Type\TransportTypeFacade $transportTypeFacade
      * @param \App\Model\Transport\Type\TransportTypeDataFactory $transportTypeDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
@@ -51,17 +26,12 @@ class TransportTypeController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      */
     public function __construct(
-        TransportTypeFacade $transportTypeFacade,
-        TransportTypeDataFactory $transportTypeDataFactory,
-        GridFactory $gridFactory,
-        Domain $domain,
-        BreadcrumbOverrider $breadcrumbOverrider
+        protected TransportTypeFacade $transportTypeFacade,
+        protected TransportTypeDataFactory $transportTypeDataFactory,
+        protected GridFactory $gridFactory,
+        protected Domain $domain,
+        protected BreadcrumbOverrider $breadcrumbOverrider,
     ) {
-        $this->transportTypeFacade = $transportTypeFacade;
-        $this->gridFactory = $gridFactory;
-        $this->domain = $domain;
-        $this->transportTypeDataFactory = $transportTypeDataFactory;
-        $this->breadcrumbOverrider = $breadcrumbOverrider;
     }
 
     /**
@@ -112,7 +82,7 @@ class TransportTypeController extends AdminBaseController
                 [
                     'url' => $this->generateUrl('admin_transporttype_edit', ['id' => $transportType->getId()]),
                     'code' => $transportType->getCode(),
-                ]
+                ],
             );
 
             return $this->redirectToRoute('admin_transporttype_list');

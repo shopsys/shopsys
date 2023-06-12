@@ -14,16 +14,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class CspHeaderController extends AdminBaseController
 {
     /**
-     * @var \App\Component\Setting\Setting
-     */
-    private Setting $setting;
-
-    /**
      * @param \App\Component\Setting\Setting $setting
      */
-    public function __construct(Setting $setting)
+    public function __construct(private Setting $setting)
     {
-        $this->setting = $setting;
     }
 
     /**

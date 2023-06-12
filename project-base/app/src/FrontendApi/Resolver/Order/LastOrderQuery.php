@@ -18,7 +18,7 @@ class LastOrderQuery extends AbstractQuery
      */
     public function __construct(
         private readonly CurrentCustomerUser $currentCustomerUser,
-        private readonly OrderFacade $orderFacade
+        private readonly OrderFacade $orderFacade,
     ) {
     }
 

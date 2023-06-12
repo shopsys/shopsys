@@ -9,46 +9,6 @@ use App\Model\Product\Filter\ProductFilterData;
 class ProductBatchLoadByEntityData
 {
     /**
-     * @var string
-     */
-    private string $id;
-
-    /**
-     * @var int
-     */
-    private int $entityId;
-
-    /**
-     * @var string
-     */
-    private string $entityClass;
-
-    /**
-     * @var int
-     */
-    private int $limit;
-
-    /**
-     * @var int
-     */
-    private int $offset;
-
-    /**
-     * @var \App\Model\Product\Filter\ProductFilterData
-     */
-    private ProductFilterData $productFilterData;
-
-    /**
-     * @var string
-     */
-    private string $orderingModeId;
-
-    /**
-     * @var string
-     */
-    private string $search;
-
-    /**
      * @param string $id
      * @param int $entityId
      * @param string $entityClass
@@ -59,23 +19,15 @@ class ProductBatchLoadByEntityData
      * @param string $search
      */
     public function __construct(
-        string $id,
-        int $entityId,
-        string $entityClass,
-        int $limit,
-        int $offset,
-        string $orderingModeId,
-        ProductFilterData $productFilterData,
-        string $search
+        private string $id,
+        private int $entityId,
+        private string $entityClass,
+        private int $limit,
+        private int $offset,
+        private string $orderingModeId,
+        private ProductFilterData $productFilterData,
+        private string $search,
     ) {
-        $this->id = $id;
-        $this->entityId = $entityId;
-        $this->entityClass = $entityClass;
-        $this->limit = $limit;
-        $this->offset = $offset;
-        $this->orderingModeId = $orderingModeId;
-        $this->productFilterData = $productFilterData;
-        $this->search = $search;
     }
 
     /**

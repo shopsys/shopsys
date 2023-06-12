@@ -12,18 +12,12 @@ class PacketeryRenderer
     public const TEMPLATE_FILE_PATH = 'packetery/createPacket.xml.twig';
 
     /**
-     * @var \Twig\Environment
-     */
-    private TwigEnvironment $twig;
-
-    /**
      * PacketeryRenderer constructor.
      *
      * @param \Twig\Environment $twig
      */
-    public function __construct(TwigEnvironment $twig)
+    public function __construct(private TwigEnvironment $twig)
     {
-        $this->twig = $twig;
     }
 
     /**

@@ -94,41 +94,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
     ];
 
     /**
-     * @var \App\Model\Product\Parameter\ParameterDataFactory
-     */
-    private ParameterDataFactory $parameterDataFactory;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterFacade
-     */
-    private ParameterFacade $parameterFacade;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterValueDataFactory
-     */
-    private ParameterValueDataFactory $parameterValueDataFactory;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterRepository
-     */
-    private ParameterRepository $parameterRepository;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory
-     */
-    private ProductParameterValueFactory $productParameterValueFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
-     */
-    private EntityManagerDecorator $entityManager;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
      * @param \App\Model\Product\Parameter\ParameterDataFactory $parameterDataFactory
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
@@ -138,21 +103,14 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        ParameterDataFactory $parameterDataFactory,
-        ParameterFacade $parameterFacade,
-        ParameterValueDataFactory $parameterValueDataFactory,
-        ParameterRepository $parameterRepository,
-        ProductParameterValueFactory $productParameterValueFactory,
-        EntityManagerDecorator $entityManager,
-        Domain $domain
+        private ParameterDataFactory $parameterDataFactory,
+        private ParameterFacade $parameterFacade,
+        private ParameterValueDataFactory $parameterValueDataFactory,
+        private ParameterRepository $parameterRepository,
+        private ProductParameterValueFactory $productParameterValueFactory,
+        private EntityManagerDecorator $entityManager,
+        private Domain $domain,
     ) {
-        $this->parameterDataFactory = $parameterDataFactory;
-        $this->parameterFacade = $parameterFacade;
-        $this->parameterValueDataFactory = $parameterValueDataFactory;
-        $this->parameterRepository = $parameterRepository;
-        $this->productParameterValueFactory = $productParameterValueFactory;
-        $this->entityManager = $entityManager;
-        $this->domain = $domain;
     }
 
     /**
@@ -173,7 +131,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
                 $this->getReference(CategoryDataFixture::CATEGORY_TV),
             ],
             Parameter::PARAMETER_TYPE_COLOR,
-            Parameter::AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT
+            Parameter::AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT,
         );
         $parameterMaterial = $this->createParameter(
             $parameterMaterialNamesByLocale,
@@ -182,7 +140,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
                 $this->getReference(CategoryDataFixture::CATEGORY_TV),
             ],
             null,
-            Parameter::AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT
+            Parameter::AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT,
         );
 
         /** @var \App\Model\Product\Product $product1 */
@@ -236,7 +194,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         array $namesByLocale,
         array $asFilterInCategories,
         ?string $parameterType,
-        ?string $akeneoType
+        ?string $akeneoType,
     ): Parameter {
         $parameterData = $this->parameterDataFactory->create();
         $parameterData->uuid = array_pop($this->uuidPool);
@@ -274,7 +232,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         $parameterValueData->text = $text;
 
         return $this->parameterRepository->findOrCreateParameterValueByParameterValueData(
-            $parameterValueData
+            $parameterValueData,
         );
     }
 
@@ -283,12 +241,15 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
      * @param \App\Model\Product\Parameter\Parameter $parameter
      * @param \App\Model\Product\Parameter\ParameterValue $parameterValue
      */
-    private function addParameterValueToProduct(Product $product, Parameter $parameter, ParameterValue $parameterValue): void
-    {
+    private function addParameterValueToProduct(
+        Product $product,
+        Parameter $parameter,
+        ParameterValue $parameterValue,
+    ): void {
         $productParameterValue = $this->productParameterValueFactory->create(
             $product,
             $parameter,
-            $parameterValue
+            $parameterValue,
         );
 
         $this->entityManager->persist($productParameterValue);

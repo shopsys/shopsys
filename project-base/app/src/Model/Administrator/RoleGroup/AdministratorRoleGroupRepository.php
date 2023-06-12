@@ -12,16 +12,10 @@ use Doctrine\ORM\QueryBuilder;
 class AdministratorRoleGroupRepository
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $entityManager;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(protected EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
     }
 
     /**

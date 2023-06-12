@@ -10,16 +10,10 @@ use Symfony\Bridge\Monolog\Logger;
 class AkeneoImportCategoryCronModule implements SimpleCronModuleInterface
 {
     /**
-     * @var \App\Model\Category\Transfer\Akeneo\AkeneoImportCategoryFacade
-     */
-    private $akeneoImportCategoryFacade;
-
-    /**
      * @param \App\Model\Category\Transfer\Akeneo\AkeneoImportCategoryFacade $akeneoImportCategoryFacade
      */
-    public function __construct(AkeneoImportCategoryFacade $akeneoImportCategoryFacade)
+    public function __construct(private AkeneoImportCategoryFacade $akeneoImportCategoryFacade)
     {
-        $this->akeneoImportCategoryFacade = $akeneoImportCategoryFacade;
     }
 
     /**

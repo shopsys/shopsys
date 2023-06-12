@@ -47,7 +47,7 @@ class SeoPageFacade
                 'front_page_seo',
                 $seoPage->getId(),
                 $seoPageData->pageSlugsIndexedByDomainId[$domain->getId()],
-                $domain->getId()
+                $domain->getId(),
             );
         }
 

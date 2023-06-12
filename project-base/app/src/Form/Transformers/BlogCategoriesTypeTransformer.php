@@ -10,16 +10,10 @@ use Symfony\Component\Form\DataTransformerInterface;
 class BlogCategoriesTypeTransformer implements DataTransformerInterface
 {
     /**
-     * @var \App\Model\Blog\Category\BlogCategoryFacade
-     */
-    private $blogCategoryFacade;
-
-    /**
      * @param \App\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
      */
-    public function __construct(BlogCategoryFacade $blogCategoryFacade)
+    public function __construct(private BlogCategoryFacade $blogCategoryFacade)
     {
-        $this->blogCategoryFacade = $blogCategoryFacade;
     }
 
     /**

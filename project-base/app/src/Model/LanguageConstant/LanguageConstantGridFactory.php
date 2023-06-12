@@ -11,23 +11,13 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 class LanguageConstantGridFactory
 {
     /**
-     * @var \App\Model\LanguageConstant\LanguageConstantFacade
-     */
-    private LanguageConstantFacade $languageConstantFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    private GridFactory $gridFactory;
-
-    /**
      * @param \App\Model\LanguageConstant\LanguageConstantFacade $languageConstantFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      */
-    public function __construct(LanguageConstantFacade $languageConstantFacade, GridFactory $gridFactory)
-    {
-        $this->languageConstantFacade = $languageConstantFacade;
-        $this->gridFactory = $gridFactory;
+    public function __construct(
+        private LanguageConstantFacade $languageConstantFacade,
+        private GridFactory $gridFactory,
+    ) {
     }
 
     /**
@@ -101,7 +91,7 @@ class LanguageConstantGridFactory
         array $originalTranslations,
         array $userTranslations,
         string $locale,
-        string $search
+        string $search,
     ): array {
         $translations = [];
 

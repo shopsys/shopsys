@@ -12,25 +12,13 @@ use Doctrine\ORM\EntityManagerInterface;
 class CartPromoCodeFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private EntityManagerInterface $em;
-
-    /**
-     * @var \App\Model\Order\PromoCode\CurrentPromoCodeFacade
-     */
-    private CurrentPromoCodeFacade $currentPromoCodeFacade;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      */
     public function __construct(
-        EntityManagerInterface $em,
-        CurrentPromoCodeFacade $currentPromoCodeFacade
+        private EntityManagerInterface $em,
+        private CurrentPromoCodeFacade $currentPromoCodeFacade,
     ) {
-        $this->em = $em;
-        $this->currentPromoCodeFacade = $currentPromoCodeFacade;
     }
 
     /**

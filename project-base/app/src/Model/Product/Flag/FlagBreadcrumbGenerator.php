@@ -11,23 +11,11 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class FlagBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
-     * @var \App\Model\Product\Flag\FlagFacade
-     */
-    private FlagFacade $flagFacade;
-
-    /**
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(FlagFacade $flagFacade, Domain $domain)
+    public function __construct(private FlagFacade $flagFacade, private Domain $domain)
     {
-        $this->domain = $domain;
-        $this->flagFacade = $flagFacade;
     }
 
     /**
@@ -44,7 +32,7 @@ class FlagBreadcrumbGenerator implements BreadcrumbGeneratorInterface
             $breadcrumbItems[] = new BreadcrumbItem(
                 $flag->getName(),
                 'front_flag_detail',
-                ['id' => $id]
+                ['id' => $id],
             );
         }
 

@@ -80,7 +80,7 @@ class MailTemplateConfiguration extends BaseMailTemplateConfiguration
         foreach ($allOrderStatuses as $orderStatus) {
             $this->addMailTemplateVariables(
                 OrderMail::getMailTemplateNameByStatus($orderStatus),
-                $orderStatusMailTemplate->withNewName($orderStatus->getName())
+                $orderStatusMailTemplate->withNewName($orderStatus->getName()),
             );
         }
     }
@@ -92,7 +92,7 @@ class MailTemplateConfiguration extends BaseMailTemplateConfiguration
             TwoFactorAuthenticationMail::VARIABLE_AUTHENTICATION_CODE,
             t('Authentication code'),
             MailTemplateVariables::CONTEXT_BODY,
-            MailTemplateVariables::REQUIRED_BODY
+            MailTemplateVariables::REQUIRED_BODY,
         );
 
         $this->addMailTemplateVariables(TwoFactorAuthenticationMail::TWO_FACTOR_AUTHENTICATION_CODE, $mailTemplate);

@@ -20,7 +20,7 @@ class SeoPageImagesQuery extends ImagesQuery
         return $this->mainImageByEntityPromiseQuery(
             $seoPage,
             SeoPageFacade::IMAGE_TYPE_OG,
-            $size
+            $size,
         );
     }
 }

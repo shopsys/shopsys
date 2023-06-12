@@ -10,25 +10,13 @@ use Doctrine\ORM\QueryBuilder;
 class TransportTypeFacade
 {
     /**
-     * @var \App\Model\Transport\Type\TransportTypeRepository
-     */
-    protected TransportTypeRepository $transportTypeRepository;
-
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected EntityManagerInterface $em;
-
-    /**
      * @param \App\Model\Transport\Type\TransportTypeRepository $transportTypeRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
-        TransportTypeRepository $transportTypeRepository,
-        EntityManagerInterface $em
+        protected TransportTypeRepository $transportTypeRepository,
+        protected EntityManagerInterface $em,
     ) {
-        $this->transportTypeRepository = $transportTypeRepository;
-        $this->em = $em;
     }
 
     /**

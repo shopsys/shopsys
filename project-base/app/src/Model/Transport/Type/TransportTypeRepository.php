@@ -13,16 +13,10 @@ use Doctrine\Persistence\ObjectRepository;
 class TransportTypeRepository
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected EntityManagerInterface $em;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(protected EntityManagerInterface $em)
     {
-        $this->em = $em;
     }
 
     /**

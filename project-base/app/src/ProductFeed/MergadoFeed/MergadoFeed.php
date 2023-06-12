@@ -13,23 +13,13 @@ use Shopsys\FrameworkBundle\Model\Feed\FeedInterface;
 class MergadoFeed implements FeedInterface
 {
     /**
-     * @var \App\Model\ProductFeed\Mergado\MergadoFeedInfo
-     */
-    private $mergadoFeedInfo;
-
-    /**
-     * @var \App\Model\ProductFeed\Mergado\MergadoFeedItemFacade
-     */
-    private $mergadoFeedItemFacade;
-
-    /**
      * @param \App\Model\ProductFeed\Mergado\MergadoFeedInfo $mergadoFeedInfo
      * @param \App\Model\ProductFeed\Mergado\MergadoFeedItemFacade $mergadoFeedItemFacade
      */
-    public function __construct(MergadoFeedInfo $mergadoFeedInfo, MergadoFeedItemFacade $mergadoFeedItemFacade)
-    {
-        $this->mergadoFeedInfo = $mergadoFeedInfo;
-        $this->mergadoFeedItemFacade = $mergadoFeedItemFacade;
+    public function __construct(
+        private MergadoFeedInfo $mergadoFeedInfo,
+        private MergadoFeedItemFacade $mergadoFeedItemFacade,
+    ) {
     }
 
     /**

@@ -196,7 +196,7 @@ class TransportsTest extends GraphQlTestCase
                             'Vhodné pro všechny druhy zboží',
                             [],
                             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                            $this->getLocaleForFirstDomain()
+                            $this->getLocaleForFirstDomain(),
                         ),
                         'instruction' => null,
                         'position' => 3,

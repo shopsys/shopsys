@@ -10,16 +10,10 @@ use Psr\Http\Message\ResponseInterface;
 class AssetTransferAkeneoFacade
 {
     /**
-     * @var \Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface
-     */
-    private $akeneoClient;
-
-    /**
      * @param \Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface $akeneoClient
      */
-    public function __construct(AkeneoPimEnterpriseClientInterface $akeneoClient)
+    public function __construct(private AkeneoPimEnterpriseClientInterface $akeneoClient)
     {
-        $this->akeneoClient = $akeneoClient;
     }
 
     /**

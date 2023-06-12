@@ -22,43 +22,36 @@ use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
 {
     /**
-     * @var \App\Model\Product\ProductDataFactory
      * @inject
      */
     private ProductDataFactory $productDataFactory;
 
     /**
-     * @var \App\Model\Product\ProductFacade
      * @inject
      */
     private ProductFacade $productFacade;
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeFacade
      * @inject
      */
     private PromoCodeFacade $promoCodeFacade;
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeDataFactory
      * @inject
      */
     private PromoCodeDataFactory $promoCodeDataFactory;
 
     /**
-     * @var \App\Model\Cart\CartFacade
      * @inject
      */
     private CartFacade $cartFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
      * @inject
      */
     private CurrentCustomerUser $currentCustomerUser;
 
     /**
-     * @var \App\Model\Customer\User\CustomerUserIdentifierFactory
      * @inject
      */
     private CustomerUserIdentifierFactory $customerUserIdentifierFactory;
@@ -102,7 +95,7 @@ class AuthenticatedApplyPromoCodeToCartTest extends GraphQlWithLoginTestCase
 
         $actualPrice = $this->getSerializedPriceConvertedToDomainDefaultCurrency(
             $data['totalPrice']['priceWithoutVat'],
-            $vatHigh
+            $vatHigh,
         );
 
         self::assertEquals(

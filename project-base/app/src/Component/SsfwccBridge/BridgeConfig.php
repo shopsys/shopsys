@@ -8,25 +8,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BridgeConfig
 {
-    /**
-     * @var bool
-     */
-    private $enabled;
+    private bool $enabled;
 
-    /**
-     * @var string
-     */
-    private $baseUri;
+    private string $baseUri;
 
-    /**
-     * @var string
-     */
-    private $user;
+    private string $user;
 
-    /**
-     * @var string
-     */
-    private $password;
+    private string $password;
 
     /**
      * @param array $bridgeConfig
@@ -44,19 +32,19 @@ class BridgeConfig
 
         $optionsResolver->setAllowedTypes(
             'enabled',
-            ['bool']
+            ['bool'],
         );
         $optionsResolver->setAllowedTypes(
             'base_uri',
-            ['string']
+            ['string'],
         );
         $optionsResolver->setAllowedTypes(
             'user',
-            ['string']
+            ['string'],
         );
         $optionsResolver->setAllowedTypes(
             'password',
-            ['string']
+            ['string'],
         );
 
         $optionsResolver->resolve($bridgeConfig);

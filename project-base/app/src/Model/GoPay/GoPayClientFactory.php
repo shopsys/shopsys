@@ -9,16 +9,10 @@ use App\Model\GoPay\Exception\GoPayNotConfiguredException;
 class GoPayClientFactory
 {
     /**
-     * @var array
-     */
-    private $config;
-
-    /**
      * @param array $config
      */
-    public function __construct(array $config)
+    public function __construct(private array $config)
     {
-        $this->config = $config;
     }
 
     /**

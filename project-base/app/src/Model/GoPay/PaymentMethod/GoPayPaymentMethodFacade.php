@@ -17,51 +17,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 class GoPayPaymentMethodFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    private $currencyFacade;
-
-    /**
-     * @var \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodRepository
-     */
-    private $goPayPaymentMethodRepository;
-
-    /**
-     * @var \App\Model\GoPay\BankSwift\GoPayBankSwiftFacade
-     */
-    private $goPayBankSwiftFacade;
-
-    /**
-     * @var \App\Model\Payment\PaymentFacade
-     */
-    private $paymentFacade;
-
-    /**
-     * @var \App\Model\GoPay\BankSwift\GoPayBankSwiftRepository
-     */
-    private $goPayBankSwiftRepository;
-
-    /**
-     * @var \App\Model\GoPay\GoPayClientFactory
-     */
-    private $goPayClientFactory;
-
-    /**
-     * @var \App\Model\GoPay\BankSwift\GoPayBankSwiftDataFactory
-     */
-    private $goPayBankSwiftDataFactory;
-
-    /**
-     * @var \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodDataFactory
-     */
-    private $goPayPaymentMethodDataFactory;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\GoPay\GoPayClientFactory $goPayClientFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
@@ -73,25 +28,16 @@ class GoPayPaymentMethodFacade
      * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodDataFactory $goPayPaymentMethodDataFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        GoPayClientFactory $goPayClientFactory,
-        CurrencyFacade $currencyFacade,
-        GoPayPaymentMethodRepository $goPayPaymentMethodRepository,
-        GoPayBankSwiftFacade $goPayBankSwiftFacade,
-        PaymentFacade $paymentFacade,
-        GoPayBankSwiftRepository $goPayBankSwiftRepository,
-        GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory,
-        GoPayPaymentMethodDataFactory $goPayPaymentMethodDataFactory
+        private EntityManagerInterface $em,
+        private GoPayClientFactory $goPayClientFactory,
+        private CurrencyFacade $currencyFacade,
+        private GoPayPaymentMethodRepository $goPayPaymentMethodRepository,
+        private GoPayBankSwiftFacade $goPayBankSwiftFacade,
+        private PaymentFacade $paymentFacade,
+        private GoPayBankSwiftRepository $goPayBankSwiftRepository,
+        private GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory,
+        private GoPayPaymentMethodDataFactory $goPayPaymentMethodDataFactory,
     ) {
-        $this->em = $em;
-        $this->currencyFacade = $currencyFacade;
-        $this->goPayPaymentMethodRepository = $goPayPaymentMethodRepository;
-        $this->goPayBankSwiftFacade = $goPayBankSwiftFacade;
-        $this->paymentFacade = $paymentFacade;
-        $this->goPayBankSwiftRepository = $goPayBankSwiftRepository;
-        $this->goPayClientFactory = $goPayClientFactory;
-        $this->goPayBankSwiftDataFactory = $goPayBankSwiftDataFactory;
-        $this->goPayPaymentMethodDataFactory = $goPayPaymentMethodDataFactory;
     }
 
     /**
@@ -167,8 +113,11 @@ class GoPayPaymentMethodFacade
      * @param array $goPayMethodRawData
      * @param string $language
      */
-    public function setFromGoPayRawData(GoPayPaymentMethodData $goPayPaymentMethodData, array $goPayMethodRawData, string $language): void
-    {
+    public function setFromGoPayRawData(
+        GoPayPaymentMethodData $goPayPaymentMethodData,
+        array $goPayMethodRawData,
+        string $language,
+    ): void {
         $goPayPaymentMethodData->name = sprintf('[%s] %s', $language, $goPayMethodRawData['label']['cs']);
         $goPayPaymentMethodData->identifier = $goPayMethodRawData['paymentInstrument'];
         $goPayPaymentMethodData->imageNormalUrl = $goPayMethodRawData['image']['normal'];
@@ -181,8 +130,11 @@ class GoPayPaymentMethodFacade
      * @param array $goPayMethodRawData
      * @param string $language
      */
-    private function editByRawData(GoPayPaymentMethod $goPayPaymentMethod, array $goPayMethodRawData, string $language): void
-    {
+    private function editByRawData(
+        GoPayPaymentMethod $goPayPaymentMethod,
+        array $goPayMethodRawData,
+        string $language,
+    ): void {
         $paymentMethodData = $this->goPayPaymentMethodDataFactory->createFromGoPayPaymentMethod($goPayPaymentMethod);
         $this->setFromGoPayRawData($paymentMethodData, $goPayMethodRawData, $language);
         $this->edit($goPayPaymentMethod, $paymentMethodData);
@@ -196,8 +148,11 @@ class GoPayPaymentMethodFacade
      * @param string $language
      * @return \App\Model\GoPay\PaymentMethod\GoPayPaymentMethod
      */
-    private function createFromRawData(array $goPayMethodRawData, Currency $currency, string $language): GoPayPaymentMethod
-    {
+    private function createFromRawData(
+        array $goPayMethodRawData,
+        Currency $currency,
+        string $language,
+    ): GoPayPaymentMethod {
         $paymentMethodData = $this->goPayPaymentMethodDataFactory->create();
         $paymentMethodData->currency = $currency;
 

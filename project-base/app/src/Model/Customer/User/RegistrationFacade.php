@@ -12,41 +12,17 @@ use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 class RegistrationFacade implements RegistrationFacadeInterface
 {
     /**
-     * @var \App\Model\Customer\User\CustomerUserUpdateDataFactory
-     */
-    private CustomerUserUpdateDataFactory $customerUserUpdateDataFactory;
-
-    /**
-     * @var \App\Model\Customer\User\CustomerUserFacade
-     */
-    private CustomerUserFacade $customerUserFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade
-     */
-    private NewsletterFacade $newsletterFacade;
-
-    /**
      * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
-        CustomerUserFacade $customerUserFacade,
-        NewsletterFacade $newsletterFacade,
-        Domain $domain
+        private CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
+        private CustomerUserFacade $customerUserFacade,
+        private NewsletterFacade $newsletterFacade,
+        private Domain $domain,
     ) {
-        $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
-        $this->customerUserFacade = $customerUserFacade;
-        $this->newsletterFacade = $newsletterFacade;
-        $this->domain = $domain;
     }
 
     /**
@@ -99,7 +75,7 @@ class RegistrationFacade implements RegistrationFacadeInterface
      */
     private function mapRegistrationDataToCustomerUserUpdateData(
         CustomerUser $customerUser,
-        RegistrationData $registrationData
+        RegistrationData $registrationData,
     ): CustomerUserUpdateData {
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
 

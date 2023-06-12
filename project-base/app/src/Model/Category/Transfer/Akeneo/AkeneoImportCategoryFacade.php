@@ -21,54 +21,16 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
     public const PREFIX_CATEGORY_CODE = 'eshop__';
 
     /**
-     * @var \App\Model\Category\Transfer\Akeneo\CategoryTransferAkeneoFacade
+     * @var array<int, mixed>
      */
-    private $categoryTransferAkeneoFacade;
-
-    /**
-     * @var \App\Model\Category\Transfer\Akeneo\CategoryTransferAkeneoValidator
-     */
-    private $categoryTransferAkeneoValidator;
-
-    /**
-     * @var \App\Model\Category\Transfer\Akeneo\CategoryTransferAkeneoMapper
-     */
-    private $categoryTransferAkeneoMapper;
-
-    /**
-     * @var \App\Model\Category\CategoryFacade
-     */
-    private $categoryFacade;
-
-    /**
-     * @var array
-     */
-    private $akeneoCategoriesDataForOrdering;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository
-     */
-    private $categoryVisibilityRepository;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade
-     */
-    private $productVisibilityFacade;
-
-    /**
-     * @var \App\Model\Category\CategoryDataFactory
-     */
-    private $categoryDataFactory;
+    private array $akeneoCategoriesDataForOrdering;
 
     /**
      * @var int[]
      */
-    private $notTransferredCategoriesIds = [];
+    private array $notTransferredCategoriesIds = [];
 
-    /**
-     * @var int
-     */
-    private $categoriesFromAkeneoCountBeforeTransfer = 0;
+    private int $categoriesFromAkeneoCountBeforeTransfer = 0;
 
     /**
      * @param \App\Component\Akeneo\Transfer\AkeneoImportTransferDependency $akeneoImportTransferDependency
@@ -82,23 +44,15 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
      */
     public function __construct(
         AkeneoImportTransferDependency $akeneoImportTransferDependency,
-        CategoryTransferAkeneoFacade $categoryTransferAkeneoFacade,
-        CategoryTransferAkeneoValidator $categoryTransferAkeneoValidator,
-        CategoryTransferAkeneoMapper $categoryTransferAkeneoMapper,
-        CategoryFacade $categoryFacade,
-        CategoryVisibilityRepository $categoryVisibilityRepository,
-        ProductVisibilityFacade $productVisibilityFacade,
-        CategoryDataFactory $categoryDataFactory
+        private CategoryTransferAkeneoFacade $categoryTransferAkeneoFacade,
+        private CategoryTransferAkeneoValidator $categoryTransferAkeneoValidator,
+        private CategoryTransferAkeneoMapper $categoryTransferAkeneoMapper,
+        private CategoryFacade $categoryFacade,
+        private CategoryVisibilityRepository $categoryVisibilityRepository,
+        private ProductVisibilityFacade $productVisibilityFacade,
+        private CategoryDataFactory $categoryDataFactory,
     ) {
         parent::__construct($akeneoImportTransferDependency);
-
-        $this->categoryTransferAkeneoFacade = $categoryTransferAkeneoFacade;
-        $this->categoryTransferAkeneoValidator = $categoryTransferAkeneoValidator;
-        $this->categoryTransferAkeneoMapper = $categoryTransferAkeneoMapper;
-        $this->categoryFacade = $categoryFacade;
-        $this->categoryVisibilityRepository = $categoryVisibilityRepository;
-        $this->productVisibilityFacade = $productVisibilityFacade;
-        $this->categoryDataFactory = $categoryDataFactory;
     }
 
     /**
@@ -192,7 +146,7 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
             ];
 
             $this->categoryFacade->reorderByNestedSetValues(
-                CategoryNestedSetCalculator::calculateNestedSetFromAdjacencyList($ordering)
+                CategoryNestedSetCalculator::calculateNestedSetFromAdjacencyList($ordering),
             );
         }
     }

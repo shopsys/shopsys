@@ -12,16 +12,10 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 class AdministratorRoleGroupDataFixture extends AbstractReferenceFixture
 {
     /**
-     * @var \App\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade
-     */
-    private AdministratorRoleGroupFacade $administratorRoleGroupFacade;
-
-    /**
      * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
      */
-    public function __construct(AdministratorRoleGroupFacade $administratorRoleGroupFacade)
+    public function __construct(private AdministratorRoleGroupFacade $administratorRoleGroupFacade)
     {
-        $this->administratorRoleGroupFacade = $administratorRoleGroupFacade;
     }
 
     /**

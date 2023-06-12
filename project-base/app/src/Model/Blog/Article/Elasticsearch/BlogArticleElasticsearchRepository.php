@@ -12,25 +12,13 @@ use Shopsys\FrameworkBundle\Component\String\TransformString;
 class BlogArticleElasticsearchRepository
 {
     /**
-     * @var \App\Model\Blog\Article\Elasticsearch\FilterQueryFactory
-     */
-    private FilterQueryFactory $filterQueryFactory;
-
-    /**
-     * @var \App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchDataFetcher
-     */
-    private BlogArticleElasticsearchDataFetcher $blogArticleElasticsearchDataFetcher;
-
-    /**
      * @param \App\Model\Blog\Article\Elasticsearch\FilterQueryFactory $filterQueryFactory
      * @param \App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchDataFetcher $blogArticleElasticsearchDataFetcher
      */
     public function __construct(
-        FilterQueryFactory $filterQueryFactory,
-        BlogArticleElasticsearchDataFetcher $blogArticleElasticsearchDataFetcher
+        private FilterQueryFactory $filterQueryFactory,
+        private BlogArticleElasticsearchDataFetcher $blogArticleElasticsearchDataFetcher,
     ) {
-        $this->filterQueryFactory = $filterQueryFactory;
-        $this->blogArticleElasticsearchDataFetcher = $blogArticleElasticsearchDataFetcher;
     }
 
     /**
@@ -115,8 +103,12 @@ class BlogArticleElasticsearchRepository
      * @param bool $onlyVisibleOnHomepage
      * @return array
      */
-    public function getByBlogCategory(BlogCategory $blogCategory, int $offset, int $limit, bool $onlyVisibleOnHomepage = false): array
-    {
+    public function getByBlogCategory(
+        BlogCategory $blogCategory,
+        int $offset,
+        int $limit,
+        bool $onlyVisibleOnHomepage = false,
+    ): array {
         $filterQuery = $this->filterQueryFactory
             ->createFilteredByBlogCategory($blogCategory, $offset, $limit)
             ->onlyVisibleOnHomepage($onlyVisibleOnHomepage);

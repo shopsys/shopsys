@@ -78,12 +78,14 @@ class RouteConfigCustomization
                     . 'See http://symfony.com/doc/current/reference/configuration/security.html#check-path',
                 );
             })
-            ->customizeByRouteName([
-                'front_image', 'front_image_without_type', 'front_additional_image', 'front_additional_image_without_type',
-                'front_image_seo', 'front_image_seo_without_type', 'front_additional_image_seo', 'front_additional_image_seo_without_type',
-            ], function (RouteConfig $config) {
-                $config->skipRoute('There are no images in the shop when the tests are processed.');
-            },
+            ->customizeByRouteName(
+                [
+                    'front_image', 'front_image_without_type', 'front_additional_image', 'front_additional_image_without_type',
+                    'front_image_seo', 'front_image_seo_without_type', 'front_additional_image_seo', 'front_additional_image_seo_without_type',
+                ],
+                function (RouteConfig $config) {
+                    $config->skipRoute('There are no images in the shop when the tests are processed.');
+                },
             )
             ->customizeByRouteName('admin_domain_selectdomain', function (RouteConfig $config) {
                 $config->skipRoute('Used only for internal setting of selected domain by tab control in admin.');

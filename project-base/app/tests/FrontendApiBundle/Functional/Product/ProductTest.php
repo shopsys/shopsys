@@ -18,7 +18,6 @@ class ProductTest extends GraphQlTestCase
     private Product $product;
 
     /**
-     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
      * @inject
      */
     protected UrlGeneratorInterface $urlGenerator;
@@ -363,31 +362,31 @@ class ProductTest extends GraphQlTestCase
                             'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
                             [],
                             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                            $firstDomainLocale
+                            $firstDomainLocale,
                         ),
                         t(
                             'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
                             [],
                             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                            $firstDomainLocale
+                            $firstDomainLocale,
                         ),
                         t(
                             'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
                             [],
                             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                            $firstDomainLocale
+                            $firstDomainLocale,
                         ),
                         t(
                             'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
                             [],
                             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                            $firstDomainLocale
+                            $firstDomainLocale,
                         ),
                         t(
                             'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
                             [],
                             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                            $firstDomainLocale
+                            $firstDomainLocale,
                         ),
                     ],
                     'hasPreorder' => false,

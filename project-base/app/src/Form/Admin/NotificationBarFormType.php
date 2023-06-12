@@ -131,8 +131,10 @@ class NotificationBarFormType extends AbstractType
      * @param \App\Model\NotificationBar\NotificationBarData $notificationBarData
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
-    public function checkDateValidity(NotificationBarData $notificationBarData, ExecutionContextInterface $context): void
-    {
+    public function checkDateValidity(
+        NotificationBarData $notificationBarData,
+        ExecutionContextInterface $context,
+    ): void {
         if ($notificationBarData->validityFrom !== null
             && $notificationBarData->validityTo !== null
             && $notificationBarData->validityTo <= $notificationBarData->validityFrom

@@ -21,23 +21,13 @@ use Symfony\Component\Validator\Constraints;
 class AdministratorFormTypeExtension extends AbstractTypeExtension
 {
     /**
-     * @var \Symfony\Component\Security\Core\Security
-     */
-    private Security $security;
-
-    /**
-     * @var \App\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade
-     */
-    private AdministratorRoleGroupFacade $administratorRoleGroupFacade;
-
-    /**
      * @param \Symfony\Component\Security\Core\Security $security
      * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
      */
-    public function __construct(Security $security, AdministratorRoleGroupFacade $administratorRoleGroupFacade)
-    {
-        $this->security = $security;
-        $this->administratorRoleGroupFacade = $administratorRoleGroupFacade;
+    public function __construct(
+        private Security $security,
+        private AdministratorRoleGroupFacade $administratorRoleGroupFacade,
+    ) {
     }
 
     /**

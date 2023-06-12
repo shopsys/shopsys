@@ -21,41 +21,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class TransferController extends AdminBaseController
 {
     /**
-     * @var \App\Model\Transfer\Issue\TransferIssueFacade
-     */
-    private $transferIssueFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    private $gridFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade
-     */
-    private $administratorGridFacade;
-
-    /**
-     * @var \App\Model\Administrator\AdministratorFacade
-     */
-    private $administratorFacade;
-
-    /**
      * @param \App\Model\Transfer\Issue\TransferIssueFacade $transferIssueFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
      * @param \App\Model\Administrator\AdministratorFacade $administratorFacade
      */
     public function __construct(
-        TransferIssueFacade $transferIssueFacade,
-        GridFactory $gridFactory,
-        AdministratorGridFacade $administratorGridFacade,
-        AdministratorFacade $administratorFacade
+        private TransferIssueFacade $transferIssueFacade,
+        private GridFactory $gridFactory,
+        private AdministratorGridFacade $administratorGridFacade,
+        private AdministratorFacade $administratorFacade,
     ) {
-        $this->transferIssueFacade = $transferIssueFacade;
-        $this->gridFactory = $gridFactory;
-        $this->administratorGridFacade = $administratorGridFacade;
-        $this->administratorFacade = $administratorFacade;
     }
 
     /**
@@ -116,7 +92,7 @@ class TransferController extends AdminBaseController
             $this->transferIssueFacade->deleteById((int)$id);
 
             $this->addSuccessFlashTwig(
-                t('Problém v přenosu byl označen jako vyřešený')
+                t('Problém v přenosu byl označen jako vyřešený'),
             );
         } catch (NotFoundHttpException $ex) {
             $this->addErrorFlash(t('Vybraný problém v přenosu nebyl nalezen'));

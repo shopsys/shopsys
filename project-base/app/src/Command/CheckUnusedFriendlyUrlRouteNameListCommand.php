@@ -14,23 +14,17 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class CheckUnusedFriendlyUrlRouteNameListCommand extends Command
 {
     /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      * @var string
      */
     protected static $defaultName = 'shopsys:friendly-urls:check-entity-mapping';
 
     /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private FriendlyUrlFacade $friendlyUrlFacade;
-
-    /**
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
-    public function __construct(FriendlyUrlFacade $friendlyUrlFacade)
+    public function __construct(private FriendlyUrlFacade $friendlyUrlFacade)
     {
         parent::__construct();
-
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
     }
 
     protected function configure()
@@ -58,7 +52,7 @@ class CheckUnusedFriendlyUrlRouteNameListCommand extends Command
         $io->error(sprintf(
             'Friendly URL mapping is incomplete in "%s". Following route names need to be defined: "%s"',
             FriendlyUrlRepository::class . '::getRouteNameToEntityMap()',
-            implode(',', $undefinedRouteNamesInMapping)
+            implode(',', $undefinedRouteNamesInMapping),
         ));
 
         return Command::FAILURE;

@@ -9,22 +9,13 @@ use Symfony\Bridge\Monolog\Logger;
 
 class DeleteOldUploadedFilesCronModule implements SimpleCronModuleInterface
 {
-    /**
-     * @var \App\Component\FileUpload\FileUpload
-     */
-    private $fileUpload;
-
-    /**
-     * @var \Symfony\Bridge\Monolog\Logger
-     */
-    private $logger;
+    private Logger $logger;
 
     /**
      * @param \App\Component\FileUpload\FileUpload $fileUpload
      */
-    public function __construct(FileUpload $fileUpload)
+    public function __construct(private FileUpload $fileUpload)
     {
-        $this->fileUpload = $fileUpload;
     }
 
     /**

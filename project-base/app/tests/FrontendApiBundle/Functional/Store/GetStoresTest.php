@@ -45,7 +45,7 @@ class GetStoresTest extends GraphQlTestCase
                         'locationLongitude',
                     ],
                     $edge['node'],
-                    array_shift($expectedStoresData)
+                    array_shift($expectedStoresData),
                 );
             }
         }

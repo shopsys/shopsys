@@ -13,13 +13,9 @@ use Tests\FrontendApiBundle\Functional\Order\AbstractOrderTestCase;
 
 class RemainingToFreeTransportCartTest extends AbstractOrderTestCase
 {
-    /**
-     * @var \App\Model\Product\Product
-     */
     private Product $testingProduct;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting
      * @inject
      */
     private PricingSetting $pricingSetting;
@@ -111,8 +107,8 @@ class RemainingToFreeTransportCartTest extends AbstractOrderTestCase
             sprintf(
                 'Actual remaining price (%s) is different than expected (%s)',
                 $expectedRemainingPrice->getAmount(),
-                $newlyCreatedCart['remainingAmountWithVatForFreeTransport']
-            )
+                $newlyCreatedCart['remainingAmountWithVatForFreeTransport'],
+            ),
         );
 
         $newlyCreatedCartUuid = $newlyCreatedCart['uuid'];
@@ -141,8 +137,8 @@ class RemainingToFreeTransportCartTest extends AbstractOrderTestCase
             sprintf(
                 'Actual remaining price (%s) is different than expected (%s)',
                 $expectedRemainingPriceAfterAddingTransportAndPayment->getAmount(),
-                $newlyCreatedCart['remainingAmountWithVatForFreeTransport']
-            )
+                $newlyCreatedCart['remainingAmountWithVatForFreeTransport'],
+            ),
         );
 
         self::assertTrue(
@@ -151,7 +147,7 @@ class RemainingToFreeTransportCartTest extends AbstractOrderTestCase
                 'Remaining price after adding transport and payment (%s) differs from the original remaining price (%s)',
                 $expectedRemainingPriceAfterAddingTransportAndPayment->getAmount(),
                 $expectedRemainingPrice->getAmount(),
-            )
+            ),
         );
     }
 
@@ -178,8 +174,8 @@ class RemainingToFreeTransportCartTest extends AbstractOrderTestCase
             Money::create($newlyCreatedCart['remainingAmountWithVatForFreeTransport'])->isZero(),
             sprintf(
                 'Actual remaining price (%s) should be zero',
-                $newlyCreatedCart['remainingAmountWithVatForFreeTransport']
-            )
+                $newlyCreatedCart['remainingAmountWithVatForFreeTransport'],
+            ),
         );
 
         $query = '{
@@ -200,8 +196,8 @@ class RemainingToFreeTransportCartTest extends AbstractOrderTestCase
             Money::create($cart['remainingAmountWithVatForFreeTransport'])->isZero(),
             sprintf(
                 'Actual remaining price (%s) should be zero',
-                $cart['remainingAmountWithVatForFreeTransport']
-            )
+                $cart['remainingAmountWithVatForFreeTransport'],
+            ),
         );
     }
 }

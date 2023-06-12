@@ -29,8 +29,11 @@ class UploadedFileFacade extends BaseUploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData $uploadedFileData
      * @param string $type
      */
-    public function manageSingleFile(object $entity, UploadedFileData $uploadedFileData, string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME): void
-    {
+    public function manageSingleFile(
+        object $entity,
+        UploadedFileData $uploadedFileData,
+        string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
+    ): void {
         $uploadedFiles = $uploadedFileData->uploadedFiles;
         $uploadedFilenames = $uploadedFileData->uploadedFilenames;
         $uploadedFileEntityConfig = $this->uploadedFileConfig->getUploadedFileEntityConfig($entity);

@@ -13,16 +13,10 @@ use Symfony\Component\Security\Core\Security;
 class SideMenuConfigurationSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var \Symfony\Component\Security\Core\Security
-     */
-    private Security $security;
-
-    /**
      * @param \Symfony\Component\Security\Core\Security $security
      */
-    public function __construct(Security $security)
+    public function __construct(private Security $security)
     {
-        $this->security = $security;
     }
 
     /**
@@ -267,26 +261,26 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $administratorViewMenu = $administratorMenu->addChild('administrator_view', ['route' => 'admin_administrator_list', 'label' => t('Administrators overview')]);
         $administratorViewMenu->addChild(
             'new',
-            ['route' => 'admin_administrator_new', 'label' => t('New administrator'), 'display' => false]
+            ['route' => 'admin_administrator_new', 'label' => t('New administrator'), 'display' => false],
         );
         $administratorViewMenu->addChild(
             'edit',
-            ['route' => 'admin_administrator_edit', 'label' => t('Editing administrator'), 'display' => false]
+            ['route' => 'admin_administrator_edit', 'label' => t('Editing administrator'), 'display' => false],
         );
 
         $administratorRoleGroupMenu = $administratorMenu->addChild('role_groups', ['route' => 'admin_administratorrolegroup_list', 'label' => t('Role Groups')]);
 
         $administratorRoleGroupMenu->addChild(
             'new',
-            ['route' => 'admin_administratorrolegroup_new', 'label' => t('New administrator role group'), 'display' => false]
+            ['route' => 'admin_administratorrolegroup_new', 'label' => t('New administrator role group'), 'display' => false],
         );
         $administratorRoleGroupMenu->addChild(
             'edit',
-            ['route' => 'admin_administratorrolegroup_edit', 'label' => t('Editing administrator role group'), 'display' => false]
+            ['route' => 'admin_administratorrolegroup_edit', 'label' => t('Editing administrator role group'), 'display' => false],
         );
         $administratorRoleGroupMenu->addChild(
             'copy',
-            ['route' => 'admin_administratorrolegroup_copy', 'label' => t('Copy administrator role group'), 'display' => false]
+            ['route' => 'admin_administratorrolegroup_copy', 'label' => t('Copy administrator role group'), 'display' => false],
         );
     }
 
@@ -299,7 +293,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
             $isGranted = array_reduce(
                 $grantedRoles,
                 fn ($isGranted, $role) => $isGranted || $this->security->isGranted($role),
-                false
+                false,
             );
 
             if (!$isGranted) {

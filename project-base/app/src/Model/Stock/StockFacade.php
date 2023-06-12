@@ -11,41 +11,17 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class StockFacade
 {
     /**
-     * @var \App\Model\Stock\StockRepository
-     */
-    private $stockRepository;
-
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected EventDispatcherInterface $eventDispatcher;
-
-    /**
-     * @var \App\Model\Stock\ProductStockFacade
-     */
-    private ProductStockFacade $productStockFacade;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Stock\StockRepository $stockRepository
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \App\Model\Stock\ProductStockFacade $productStockFacade
      */
     public function __construct(
-        EntityManagerInterface $em,
-        StockRepository $stockRepository,
-        EventDispatcherInterface $eventDispatcher,
-        ProductStockFacade $productStockFacade
+        private EntityManagerInterface $em,
+        private StockRepository $stockRepository,
+        protected EventDispatcherInterface $eventDispatcher,
+        private ProductStockFacade $productStockFacade,
     ) {
-        $this->stockRepository = $stockRepository;
-        $this->em = $em;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->productStockFacade = $productStockFacade;
     }
 
     /**

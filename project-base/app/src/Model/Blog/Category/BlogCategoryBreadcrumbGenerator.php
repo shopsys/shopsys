@@ -11,23 +11,11 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class BlogCategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
     /**
-     * @var \App\Model\Blog\Category\BlogCategoryRepository
-     */
-    private $blogCategoryRepository;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
      * @param \App\Model\Blog\Category\BlogCategoryRepository $blogCategoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(BlogCategoryRepository $blogCategoryRepository, Domain $domain)
+    public function __construct(private BlogCategoryRepository $blogCategoryRepository, private Domain $domain)
     {
-        $this->blogCategoryRepository = $blogCategoryRepository;
-        $this->domain = $domain;
     }
 
     /**
@@ -39,7 +27,7 @@ class BlogCategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 
         $blogCategoriesInPath = $this->blogCategoryRepository->getVisibleBlogCategoriesInPathFromRootOnDomain(
             $blogCategory,
-            $this->domain->getId()
+            $this->domain->getId(),
         );
 
         $breadcrumbItems = [];
@@ -48,11 +36,11 @@ class BlogCategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
                 $breadcrumbItems[] = new BreadcrumbItem(
                     $blogCategoryInPath->getName(),
                     $routeName,
-                    ['id' => $blogCategoryInPath->getId()]
+                    ['id' => $blogCategoryInPath->getId()],
                 );
             } else {
                 $breadcrumbItems[] = new BreadcrumbItem(
-                    $blogCategoryInPath->getName()
+                    $blogCategoryInPath->getName(),
                 );
             }
         }

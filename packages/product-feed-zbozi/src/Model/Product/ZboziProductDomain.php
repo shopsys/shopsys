@@ -6,6 +6,7 @@ namespace Shopsys\ProductFeed\ZboziBundle\Model\Product;
 
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 
 /**
  * @ORM\Table(
@@ -16,43 +17,37 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 class ZboziProductDomain
 {
     /**
-     * @var int
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    protected int $id;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Product
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
-    protected $product;
+    protected Product $product;
 
     /**
-     * @var bool
      * @ORM\Column(type="boolean")
      */
-    protected $show;
+    protected bool $show;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
-    protected $cpc;
+    protected ?Money $cpc = null;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
-    protected $cpcSearch;
+    protected ?Money $cpcSearch = null;
 
     /**
-     * @var int
      * @ORM\Column(type="integer")
      */
-    protected $domainId;
+    protected int $domainId;
 
     /**
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData $zboziProductDomainData

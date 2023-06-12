@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace App\Model\Navigation;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 
 class NavigationItemCategoryRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManager
-     */
-    private $em;
+    private EntityManager $em;
 
     /**
      * @param \Doctrine\ORM\EntityManager $em
@@ -27,8 +25,9 @@ class NavigationItemCategoryRepository
      * @param \App\Model\Navigation\NavigationItem[] $navigationItems
      * @return \Doctrine\ORM\QueryBuilder
      */
-    private function getSortedNavigationItemCategoriesByNavigationItemQueryBuilder(array $navigationItems): QueryBuilder
-    {
+    private function getSortedNavigationItemCategoriesByNavigationItemQueryBuilder(
+        array $navigationItems,
+    ): QueryBuilder {
         return $this->em->createQueryBuilder()
             ->select('nic')
             ->from(NavigationItemCategory::class, 'nic')
@@ -55,7 +54,7 @@ class NavigationItemCategoryRepository
      */
     public function getSortedVisibleNavigationItemCategoriesByNavigationItems(
         array $navigationItems,
-        DomainConfig $domainConfig
+        DomainConfig $domainConfig,
     ): array {
         $queryBuilder = $this->getSortedNavigationItemCategoriesByNavigationItemQueryBuilder($navigationItems);
 

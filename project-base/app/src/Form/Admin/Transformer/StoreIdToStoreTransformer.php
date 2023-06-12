@@ -13,16 +13,10 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 class StoreIdToStoreTransformer implements DataTransformerInterface
 {
     /**
-     * @var \App\Model\Store\StoreRepository
-     */
-    private StoreRepository $storeRepository;
-
-    /**
      * @param \App\Model\Store\StoreRepository $storeRepository
      */
-    public function __construct(StoreRepository $storeRepository)
+    public function __construct(private StoreRepository $storeRepository)
     {
-        $this->storeRepository = $storeRepository;
     }
 
     /**

@@ -23,14 +23,10 @@ abstract class ApplicationTestCase extends WebTestCase
     protected EntityManagerDecorator $em;
 
     /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
      * @inject
      */
     private EventDispatcherInterface $eventDispatcher;
 
-    /**
-     * @var \Tests\App\Test\Client|null
-     */
     protected static ?Client $client = null;
 
     protected function setUp(): void
@@ -166,7 +162,7 @@ abstract class ApplicationTestCase extends WebTestCase
             self::getCurrentClient()->getKernel(),
             new Request(),
             HttpKernelInterface::MAIN_REQUEST,
-            new Response()
+            new Response(),
         );
 
         $this->eventDispatcher->dispatch($fakeKernelResponseEvent, 'kernel.response');

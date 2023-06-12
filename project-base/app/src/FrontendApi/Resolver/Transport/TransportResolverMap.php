@@ -11,16 +11,10 @@ use Overblog\GraphQLBundle\Resolver\ResolverMap;
 class TransportResolverMap extends ResolverMap
 {
     /**
-     * @var \App\Model\Payment\PaymentFacade
-     */
-    private PaymentFacade $paymentFacade;
-
-    /**
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
      */
-    public function __construct(PaymentFacade $paymentFacade)
+    public function __construct(private PaymentFacade $paymentFacade)
     {
-        $this->paymentFacade = $paymentFacade;
     }
 
     /**

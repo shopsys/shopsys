@@ -13,30 +13,9 @@ use Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterFilterOption as Base
  */
 class ParameterFilterOption extends BaseParameterFilterOption
 {
-    /**
-     * @var \App\Model\Product\Parameter\Parameter
-     */
-    public BaseParameter $parameter;
-
-    /**
-     * @var float|null
-     */
     public ?float $minimalValue = null;
 
-    /**
-     * @var float|null
-     */
     public ?float $maximalValue = null;
-
-    /**
-     * @var bool
-     */
-    public bool $isCollapsed;
-
-    /**
-     * @var float|null
-     */
-    public ?float $selectedValue;
 
     /**
      * @param \App\Model\Product\Parameter\Parameter $parameter
@@ -44,11 +23,13 @@ class ParameterFilterOption extends BaseParameterFilterOption
      * @param bool $isCollapsed
      * @param float|null $selectedValue
      */
-    public function __construct(BaseParameter $parameter, array $values, bool $isCollapsed, ?float $selectedValue = null)
-    {
+    public function __construct(
+        BaseParameter $parameter,
+        array $values,
+        public bool $isCollapsed,
+        public ?float $selectedValue = null,
+    ) {
         parent::__construct($parameter, $values);
-
-        $this->isCollapsed = $isCollapsed;
 
         if (!$parameter->isSlider()) {
             return;
@@ -56,7 +37,6 @@ class ParameterFilterOption extends BaseParameterFilterOption
         $floatValues = $this->getFloatValuesFromParameterValueFilterOptions($values);
         $this->minimalValue = min($floatValues);
         $this->maximalValue = max($floatValues);
-        $this->selectedValue = $selectedValue;
     }
 
     /**

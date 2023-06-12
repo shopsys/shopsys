@@ -12,25 +12,13 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class BlogCategoryVisibilityRepository
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        EntityManagerInterface $em,
-        Domain $domain
+        private EntityManagerInterface $em,
+        private Domain $domain,
     ) {
-        $this->em = $em;
-        $this->domain = $domain;
     }
 
     public function refreshCategoriesVisibility(): void
@@ -80,7 +68,7 @@ class BlogCategoryVisibilityRepository
             ',
             [
                 'domainId' => $domainConfig->getId(),
-            ]
+            ],
         );
     }
 
@@ -97,7 +85,7 @@ class BlogCategoryVisibilityRepository
             ',
             [
                 'domainId' => $domainConfig->getId(),
-            ]
+            ],
         );
     }
 
@@ -128,7 +116,7 @@ class BlogCategoryVisibilityRepository
                 'domainId' => $domainConfig->getId(),
                 'locale' => $domainConfig->getLocale(),
                 'level' => $level,
-            ]
+            ],
         );
     }
 }

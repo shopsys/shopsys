@@ -10,9 +10,6 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class RemoveFromCartTest extends GraphQlTestCase
 {
-    /**
-     * @var \App\Model\Product\Product
-     */
     private Product $testingProduct;
 
     protected function setUp(): void

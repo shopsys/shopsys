@@ -19,16 +19,10 @@ use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory as BaseDel
 class DeliveryAddressDataFactory extends BaseDeliveryAddressDataFactory
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade
-     */
-    private CountryFacade $countryFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      */
-    public function __construct(CountryFacade $countryFacade)
+    public function __construct(private CountryFacade $countryFacade)
     {
-        $this->countryFacade = $countryFacade;
     }
 
     /**
@@ -43,8 +37,10 @@ class DeliveryAddressDataFactory extends BaseDeliveryAddressDataFactory
      * @param \App\Model\Customer\DeliveryAddressData $deliveryAddressData
      * @param \App\Model\Customer\DeliveryAddress $deliveryAddress
      */
-    protected function fillFromDeliveryAddress(BaseDeliveryAddressData $deliveryAddressData, BaseDeliveryAddress $deliveryAddress)
-    {
+    protected function fillFromDeliveryAddress(
+        BaseDeliveryAddressData $deliveryAddressData,
+        BaseDeliveryAddress $deliveryAddress,
+    ) {
         parent::fillFromDeliveryAddress($deliveryAddressData, $deliveryAddress);
 
         $deliveryAddressData->uuid = $deliveryAddress->getUuid();
@@ -57,7 +53,7 @@ class DeliveryAddressDataFactory extends BaseDeliveryAddressDataFactory
      */
     public function createFromDeliveryInputArgumentAndCustomer(
         Argument $argument,
-        Customer $customer
+        Customer $customer,
     ): DeliveryAddressData {
         $input = $argument['input'];
 

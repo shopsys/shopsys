@@ -14,16 +14,10 @@ class DateTimeHelper
     public const TIME_REGEX = '#^([01]?[0-9]|2[0-3]):[0-5][0-9]$#'; //hh:mm
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface
-     */
-    private $displayTimeZoneProvider;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
      */
-    public function __construct(DisplayTimeZoneProviderInterface $displayTimeZoneProvider)
+    public function __construct(private DisplayTimeZoneProviderInterface $displayTimeZoneProvider)
     {
-        $this->displayTimeZoneProvider = $displayTimeZoneProvider;
     }
 
     /**

@@ -13,25 +13,13 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 class PaymentTransactionDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     /**
-     * @var \App\Model\Payment\Transaction\PaymentTransactionDataFactory
-     */
-    private PaymentTransactionDataFactory $paymentTransactionDataFactory;
-
-    /**
-     * @var \App\Model\Payment\Transaction\PaymentTransactionFacade
-     */
-    private PaymentTransactionFacade $paymentTransactionFacade;
-
-    /**
      * @param \App\Model\Payment\Transaction\PaymentTransactionDataFactory $paymentTransactionDataFactory
      * @param \App\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade
      */
     public function __construct(
-        PaymentTransactionDataFactory $paymentTransactionDataFactory,
-        PaymentTransactionFacade $paymentTransactionFacade
+        private PaymentTransactionDataFactory $paymentTransactionDataFactory,
+        private PaymentTransactionFacade $paymentTransactionFacade,
     ) {
-        $this->paymentTransactionDataFactory = $paymentTransactionDataFactory;
-        $this->paymentTransactionFacade = $paymentTransactionFacade;
     }
 
     /**

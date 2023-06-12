@@ -12,33 +12,15 @@ use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 class BlogArticleGridFactory
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    private $gridFactory;
-
-    /**
-     * @var \App\Model\Blog\Article\BlogArticleRepository
-     */
-    private $blogArticleRepository;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
      * @param \App\Model\Blog\Article\BlogArticleRepository $blogArticleRepository
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        BlogArticleRepository $blogArticleRepository,
-        GridFactory $gridFactory,
-        Domain $domain
+        private BlogArticleRepository $blogArticleRepository,
+        private GridFactory $gridFactory,
+        private Domain $domain,
     ) {
-        $this->gridFactory = $gridFactory;
-        $this->blogArticleRepository = $blogArticleRepository;
-        $this->domain = $domain;
     }
 
     /**
@@ -51,13 +33,13 @@ class BlogArticleGridFactory
         if ($domainId === 0) {
             $locale = $this->domain->getLocale();
             $queryBuilder = $this->blogArticleRepository->getAllBlogArticlesByLocaleQueryBuilder(
-                $locale
+                $locale,
             );
         } else {
             $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
             $queryBuilder = $this->blogArticleRepository->getBlogArticlesByDomainIdAndLocaleQueryBuilderIfInBlogCategory(//getBlogArticlesByDomainIdAndLocaleQueryBuilder(
                 $domainId,
-                $locale
+                $locale,
             );
         }
 

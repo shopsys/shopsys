@@ -11,33 +11,15 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class CategoryChildrenBatchLoader
 {
     /**
-     * @var \GraphQL\Executor\Promise\PromiseAdapter
-     */
-    private PromiseAdapter $promiseAdapter;
-
-    /**
-     * @var \App\FrontendApi\Model\Category\CategoryFacade
-     */
-    private CategoryFacade $categoryFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
      * @param \App\FrontendApi\Model\Category\CategoryFacade $categoryFacade
      * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        CategoryFacade $categoryFacade,
-        PromiseAdapter $promiseAdapter,
-        Domain $domain
+        private CategoryFacade $categoryFacade,
+        private PromiseAdapter $promiseAdapter,
+        private Domain $domain,
     ) {
-        $this->promiseAdapter = $promiseAdapter;
-        $this->categoryFacade = $categoryFacade;
-        $this->domain = $domain;
     }
 
     /**
@@ -48,7 +30,7 @@ class CategoryChildrenBatchLoader
     {
         $childrenByCategories = $this->categoryFacade->getAllVisibleChildrenByCategoriesAndDomainConfig(
             $categories,
-            $this->domain->getCurrentDomainConfig()
+            $this->domain->getCurrentDomainConfig(),
         );
 
         return $this->promiseAdapter->all($childrenByCategories);

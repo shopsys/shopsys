@@ -26,61 +26,49 @@ use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
 {
-    /**
-     * @var \App\Model\Product\Product
-     */
     private Product $testingProduct;
 
     /**
-     * @var \App\Model\Product\ProductFacade
      * @inject
      */
     private ProductFacade $productFacade;
 
     /**
-     * @var \App\Model\Product\ProductDataFactory
      * @inject
      */
     private ProductDataFactory $productDataFactory;
 
     /**
-     * @var \App\Model\Transport\TransportFacade
      * @inject
      */
     private TransportFacade $transportFacade;
 
     /**
-     * @var \App\Model\Payment\PaymentFacade
      * @inject
      */
     private PaymentFacade $paymentFacade;
 
     /**
-     * @var \App\Model\Transport\TransportDataFactory
      * @inject
      */
     private TransportDataFactory $transportDataFactory;
 
     /**
-     * @var \App\Model\Store\StoreFacade
      * @inject
      */
     private StoreFacade $storeFacade;
 
     /**
-     * @var \App\Model\Payment\PaymentDataFactory
      * @inject
      */
     private PaymentDataFactory $paymentDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler
      * @inject
      */
     private ProductPriceRecalculationScheduler $productPriceRecalculationScheduler;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler
      * @inject
      */
     private ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler;

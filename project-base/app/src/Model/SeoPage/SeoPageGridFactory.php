@@ -55,7 +55,7 @@ class SeoPageGridFactory
                 $row['seoPageSlug'] = $seoPageSlug;
 
                 return $row;
-            }
+            },
         );
 
         $grid = $this->gridFactory->create('seo_page', $dataSource);

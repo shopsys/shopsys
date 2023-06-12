@@ -14,31 +14,6 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 class OrderPreview extends BaseOrderPreview
 {
     /**
-     * @var \App\Model\Store\Store|null
-     */
-    private $personalPickupStore;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price[]
-     */
-    protected $quantifiedItemsDiscountPricesByIndex;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    private $totalPriceDiscount;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    private Price $totalPriceWithoutDiscountTransportAndPayment;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCode|null
-     */
-    private ?PromoCode $promoCode;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProductsByIndex
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemsPricesByIndex
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $quantifiedItemsDiscountsByIndex
@@ -62,17 +37,17 @@ class OrderPreview extends BaseOrderPreview
         array $quantifiedItemsDiscountsByIndex,
         Price $productsPrice,
         Price $totalPrice,
-        array $quantifiedItemsDiscountPricesByIndex,
-        Price $totalPriceDiscount,
-        Price $totalPriceWithoutDiscountTransportAndPayment,
+        protected array $quantifiedItemsDiscountPricesByIndex,
+        private Price $totalPriceDiscount,
+        private Price $totalPriceWithoutDiscountTransportAndPayment,
         ?Transport $transport = null,
         ?Price $transportPrice = null,
         ?Payment $payment = null,
         ?Price $paymentPrice = null,
         ?Price $roundingPrice = null,
         $promoCodeDiscountPercent = null,
-        ?Store $personalPickupStore = null,
-        ?PromoCode $promoCode = null
+        private ?Store $personalPickupStore = null,
+        private ?PromoCode $promoCode = null,
     ) {
         parent::__construct(
             $quantifiedProductsByIndex,
@@ -85,14 +60,8 @@ class OrderPreview extends BaseOrderPreview
             $payment,
             $paymentPrice,
             $roundingPrice,
-            $promoCodeDiscountPercent
+            $promoCodeDiscountPercent,
         );
-
-        $this->personalPickupStore = $personalPickupStore;
-        $this->quantifiedItemsDiscountPricesByIndex = $quantifiedItemsDiscountPricesByIndex;
-        $this->totalPriceDiscount = $totalPriceDiscount;
-        $this->totalPriceWithoutDiscountTransportAndPayment = $totalPriceWithoutDiscountTransportAndPayment;
-        $this->promoCode = $promoCode;
     }
 
     /**

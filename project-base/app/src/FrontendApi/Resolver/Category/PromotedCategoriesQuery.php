@@ -16,7 +16,7 @@ class PromotedCategoriesQuery extends AbstractQuery
      */
     public function __construct(
         private readonly PromotedCategoryFacade $promotedCategoryFacade,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 

@@ -9,22 +9,14 @@ use Symfony\Bridge\Monolog\Logger;
 
 class RemoveOldCustomerUserRefreshTokenChainsCronModule implements SimpleCronModuleInterface
 {
-    /**
-     * @var \Symfony\Bridge\Monolog\Logger
-     */
     private Logger $logger;
-
-    /**
-     * @var \App\Model\Customer\User\CustomerUserRefreshTokenChainRepository
-     */
-    private CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository;
 
     /**
      * @param \App\Model\Customer\User\CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository
      */
-    public function __construct(CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository)
-    {
-        $this->customerUserRefreshTokenChainRepository = $customerUserRefreshTokenChainRepository;
+    public function __construct(
+        private CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository,
+    ) {
     }
 
     /**

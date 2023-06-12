@@ -87,36 +87,6 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 class OrderFacade extends BaseOrderFacade
 {
     /**
-     * @var \App\Model\Security\LoginAsUserFacade
-     */
-    private LoginAsUserFacade $loginAsUserFacade;
-
-    /**
-     * @var \App\Model\Order\Item\OrderItemDataFactory
-     */
-    private $orderItemDataFactory;
-
-    /**
-     * @var \App\Model\Order\OrderDataFactory
-     */
-    private $orderDataFactory;
-
-    /**
-     * @var \App\Model\Payment\Transaction\PaymentTransactionFacade
-     */
-    private PaymentTransactionFacade $paymentTransactionFacade;
-
-    /**
-     * @var \App\Model\Payment\Service\PaymentServiceFacade
-     */
-    private PaymentServiceFacade $paymentServiceFacade;
-
-    /**
-     * @var \App\Model\Payment\Transaction\PaymentTransactionDataFactory
-     */
-    private PaymentTransactionDataFactory $paymentTransactionDataFactory;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository $orderNumberSequenceRepository
      * @param \App\Model\Order\OrderRepository $orderRepository
@@ -177,12 +147,12 @@ class OrderFacade extends BaseOrderFacade
         PaymentPriceCalculation $paymentPriceCalculation,
         TransportPriceCalculation $transportPriceCalculation,
         OrderItemFactoryInterface $orderItemFactory,
-        OrderItemDataFactory $orderItemDataFactory,
-        OrderDataFactory $orderDataFactory,
-        PaymentTransactionFacade $paymentTransactionFacade,
-        PaymentServiceFacade $paymentServiceFacade,
-        PaymentTransactionDataFactory $paymentTransactionDataFactory,
-        LoginAsUserFacade $loginAsUserFacade
+        private OrderItemDataFactory $orderItemDataFactory,
+        private OrderDataFactory $orderDataFactory,
+        private PaymentTransactionFacade $paymentTransactionFacade,
+        private PaymentServiceFacade $paymentServiceFacade,
+        private PaymentTransactionDataFactory $paymentTransactionDataFactory,
+        private LoginAsUserFacade $loginAsUserFacade,
     ) {
         parent::__construct(
             $em,
@@ -210,15 +180,8 @@ class OrderFacade extends BaseOrderFacade
             $numberFormatterExtension,
             $paymentPriceCalculation,
             $transportPriceCalculation,
-            $orderItemFactory
+            $orderItemFactory,
         );
-
-        $this->orderItemDataFactory = $orderItemDataFactory;
-        $this->orderDataFactory = $orderDataFactory;
-        $this->paymentTransactionFacade = $paymentTransactionFacade;
-        $this->paymentServiceFacade = $paymentServiceFacade;
-        $this->paymentTransactionDataFactory = $paymentTransactionDataFactory;
-        $this->loginAsUserFacade = $loginAsUserFacade;
     }
 
     /**
@@ -254,7 +217,7 @@ class OrderFacade extends BaseOrderFacade
     public function createOrder(
         BaseOrderData $orderData,
         BaseOrderPreview $orderPreview,
-        ?BaseCustomerUser $customerUser = null
+        ?BaseCustomerUser $customerUser = null,
     ): Order {
         $promoCode = $orderPreview->getPromoCode();
         if ($promoCode) {
@@ -344,7 +307,7 @@ class OrderFacade extends BaseOrderFacade
             $orderItem = $this->orderItemFactory->createProductByOrderItemData(
                 $orderItemData,
                 $order,
-                $product
+                $product,
             );
 
             if ($quantifiedItemDiscount === null) {
@@ -356,7 +319,7 @@ class OrderFacade extends BaseOrderFacade
                 $quantifiedItemDiscount,
                 $locale,
                 (float)$orderPreview->getPromoCodeDiscountPercent(),
-                $orderPreview->getPromoCodeIdentifier()
+                $orderPreview->getPromoCodeIdentifier(),
             );
             $orderItem->setRelatedOrderItem($coupon);
         }
@@ -375,13 +338,13 @@ class OrderFacade extends BaseOrderFacade
         Price $quantifiedItemDiscount,
         string $locale,
         float $discountPercent,
-        ?string $promoCodeIdentifier = null
+        ?string $promoCodeIdentifier = null,
     ): Item\OrderItem {
         $name = sprintf(
             '%s %s - %s',
             t('Promo code', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale),
             $this->numberFormatterExtension->formatPercent(-$discountPercent, $locale),
-            $orderItem->getName()
+            $orderItem->getName(),
         );
         $discountPrice = $quantifiedItemDiscount->inverse();
 
@@ -397,7 +360,7 @@ class OrderFacade extends BaseOrderFacade
         return $this->orderItemFactory->createProductByOrderItemData(
             $orderItemData,
             $orderItem->getOrder(),
-            null
+            null,
         );
     }
 
@@ -478,8 +441,11 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Transport\Transport[] $transports
      * @return \App\Model\Order\FrontOrderData
      */
-    public function revalidatePaymentAndTransport(FrontOrderData $frontOrderFormData, array $payments, array $transports)
-    {
+    public function revalidatePaymentAndTransport(
+        FrontOrderData $frontOrderFormData,
+        array $payments,
+        array $transports,
+    ) {
         if ($frontOrderFormData->payment !== null) {
             $isPaymentValid = false;
             $paymentId = $frontOrderFormData->payment->getId();
@@ -523,7 +489,7 @@ class OrderFacade extends BaseOrderFacade
             $payment,
             $order->getCurrency(),
             $orderPreview->getProductsPrice(),
-            $order->getDomainId()
+            $order->getDomainId(),
         );
 
         $orderItemData = $this->orderItemDataFactory->create();
@@ -535,7 +501,7 @@ class OrderFacade extends BaseOrderFacade
         $orderItemData->payment = $payment;
         $orderPayment = $this->orderItemFactory->createPaymentByOrderItemData(
             $orderItemData,
-            $order
+            $order,
         );
 
         $order->addItem($orderPayment);
@@ -553,7 +519,7 @@ class OrderFacade extends BaseOrderFacade
             $transport,
             $order->getCurrency(),
             $orderPreview->getProductsPrice(),
-            $order->getDomainId()
+            $order->getDomainId(),
         );
         $orderItemData = $this->orderItemDataFactory->create();
 
@@ -573,7 +539,7 @@ class OrderFacade extends BaseOrderFacade
 
         $orderTransport = $this->orderItemFactory->createTransportByOrderItemData(
             $orderItemData,
-            $order
+            $order,
         );
 
         $order->addItem($orderTransport);
@@ -601,7 +567,7 @@ class OrderFacade extends BaseOrderFacade
         $this->orderItemFactory->createProductByOrderItemData(
             $orderItemData,
             $order,
-            null
+            null,
         );
     }
 

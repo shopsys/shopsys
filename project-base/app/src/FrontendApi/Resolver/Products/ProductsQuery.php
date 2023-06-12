@@ -68,8 +68,10 @@ class ProductsQuery extends BaseProductsQuery
      * @param \App\Model\Category\Category|\App\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
      * @return \GraphQL\Executor\Promise\Promise
      */
-    public function productsByCategoryOrReadyCategorySeoMixQuery(Argument $argument, $categoryOrReadyCategorySeoMix): Promise
-    {
+    public function productsByCategoryOrReadyCategorySeoMixQuery(
+        Argument $argument,
+        $categoryOrReadyCategorySeoMix,
+    ): Promise {
         PageSizeValidator::checkMaxPageSize($argument);
 
         if ($categoryOrReadyCategorySeoMix instanceof Category) {
@@ -77,7 +79,7 @@ class ProductsQuery extends BaseProductsQuery
             $readyCategorySeoMix = null;
             $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForCategory(
                 $argument,
-                $category
+                $category,
             );
             $orderingMode = $this->getOrderingModeFromArgument($argument);
             $defaultOrderingMode = $this->getDefaultOrderingMode($argument);
@@ -92,7 +94,7 @@ class ProductsQuery extends BaseProductsQuery
                 sprintf(
                     'The "$categoryOrReadyCategorySeoMix" argument must be an instance of "%s" or "%s".',
                     Category::class,
-                    ReadyCategorySeoMix::class
+                    ReadyCategorySeoMix::class,
                 ),
             );
         }
@@ -113,7 +115,7 @@ class ProductsQuery extends BaseProductsQuery
 
         $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForFlag(
             $argument,
-            $flag
+            $flag,
         );
 
         $productFilterData->flags[] = $flag;
@@ -131,15 +133,15 @@ class ProductsQuery extends BaseProductsQuery
                         $offset,
                         $this->getOrderingModeFromArgument($argument),
                         $productFilterData,
-                        $argument['search'] ?? ''
-                    )
+                        $argument['search'] ?? '',
+                    ),
                 );
             },
             $argument,
             $productFilterData,
             $this->getOrderingModeFromArgument($argument),
             $this->getDefaultOrderingMode($argument),
-            $batchLoadDataId
+            $batchLoadDataId,
         );
     }
 
@@ -155,7 +157,7 @@ class ProductsQuery extends BaseProductsQuery
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForAll(
-            $argument
+            $argument,
         );
 
         return $this->productConnectionFactory->createConnectionForAll(
@@ -165,13 +167,13 @@ class ProductsQuery extends BaseProductsQuery
                     $offset,
                     $this->getOrderingModeFromArgument($argument),
                     $productFilterData,
-                    $search
+                    $search,
                 );
             },
             $this->productFacade->getFilteredProductsCountOnCurrentDomain($productFilterData, $search),
             $argument,
             $productFilterData,
-            $this->getOrderingModeFromArgument($argument)
+            $this->getOrderingModeFromArgument($argument),
         );
     }
 
@@ -199,7 +201,7 @@ class ProductsQuery extends BaseProductsQuery
 
         $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForBrand(
             $argument,
-            $brand
+            $brand,
         );
         $batchLoadDataId = Uuid::uuid4()->toString();
 
@@ -215,15 +217,15 @@ class ProductsQuery extends BaseProductsQuery
                         $offset,
                         $this->getOrderingModeFromArgument($argument),
                         $productFilterData,
-                        $argument['search'] ?? ''
-                    )
+                        $argument['search'] ?? '',
+                    ),
                 );
             },
             $argument,
             $productFilterData,
             $this->getOrderingModeFromArgument($argument),
             $this->getDefaultOrderingMode($argument),
-            $batchLoadDataId
+            $batchLoadDataId,
         );
     }
 
@@ -264,7 +266,7 @@ class ProductsQuery extends BaseProductsQuery
         ProductFilterData $productFilterData,
         string $orderingMode,
         string $defaultOrderingMode,
-        ?ReadyCategorySeoMix $readyCategorySeoMix
+        ?ReadyCategorySeoMix $readyCategorySeoMix,
     ): Promise {
         $this->setDefaultFirstOffsetIfNecessary($argument);
         $batchLoadDataId = Uuid::uuid4()->toString();
@@ -281,8 +283,8 @@ class ProductsQuery extends BaseProductsQuery
                         $offset,
                         $orderingMode,
                         $productFilterData,
-                        $argument['search'] ?? ''
-                    )
+                        $argument['search'] ?? '',
+                    ),
                 );
             },
             $argument,
@@ -290,7 +292,7 @@ class ProductsQuery extends BaseProductsQuery
             $orderingMode,
             $defaultOrderingMode,
             $batchLoadDataId,
-            $readyCategorySeoMix
+            $readyCategorySeoMix,
         );
     }
 

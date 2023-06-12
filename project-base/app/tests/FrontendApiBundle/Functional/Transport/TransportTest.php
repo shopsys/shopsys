@@ -13,9 +13,6 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class TransportTest extends GraphQlTestCase
 {
-    /**
-     * @var \App\Model\Transport\Transport
-     */
     protected Transport $transport;
 
     protected function setUp(): void

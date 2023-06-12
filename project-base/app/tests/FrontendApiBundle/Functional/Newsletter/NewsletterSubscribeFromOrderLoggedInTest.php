@@ -12,7 +12,6 @@ use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 class NewsletterSubscribeFromOrderLoggedInTest extends GraphQlWithLoginTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade
      * @inject
      */
     private NewsletterFacade $newsletterFacade;

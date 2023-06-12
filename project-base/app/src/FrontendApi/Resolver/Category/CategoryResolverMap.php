@@ -19,31 +19,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolverMap as Bas
 class CategoryResolverMap extends BaseCategoryResolverMap
 {
     /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private FriendlyUrlFacade $friendlyUrlFacade;
-
-    /**
-     * @var \Overblog\DataLoader\DataLoaderInterface
-     */
-    private DataLoaderInterface $readyCategorySeoMixesBatchLoader;
-
-    /**
-     * @var \Overblog\DataLoader\DataLoaderInterface
-     */
-    private DataLoaderInterface $categoryChildrenBatchLoader;
-
-    /**
-     * @var \Overblog\DataLoader\DataLoaderInterface
-     */
-    private DataLoaderInterface $linkedCategoriesBatchLoader;
-
-    /**
-     * @var \App\Model\Category\CategoryFacade
-     */
-    private CategoryFacade $categoryFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Overblog\DataLoader\DataLoaderInterface $readyCategorySeoMixesBatchLoader
@@ -53,19 +28,13 @@ class CategoryResolverMap extends BaseCategoryResolverMap
      */
     public function __construct(
         Domain $domain,
-        FriendlyUrlFacade $friendlyUrlFacade,
-        DataLoaderInterface $readyCategorySeoMixesBatchLoader,
-        DataLoaderInterface $categoryChildrenBatchLoader,
-        DataLoaderInterface $linkedCategoriesBatchLoader,
-        CategoryFacade $categoryFacade
+        private FriendlyUrlFacade $friendlyUrlFacade,
+        private DataLoaderInterface $readyCategorySeoMixesBatchLoader,
+        private DataLoaderInterface $categoryChildrenBatchLoader,
+        private DataLoaderInterface $linkedCategoriesBatchLoader,
+        private CategoryFacade $categoryFacade,
     ) {
         parent::__construct($domain);
-
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->readyCategorySeoMixesBatchLoader = $readyCategorySeoMixesBatchLoader;
-        $this->categoryChildrenBatchLoader = $categoryChildrenBatchLoader;
-        $this->linkedCategoriesBatchLoader = $linkedCategoriesBatchLoader;
-        $this->categoryFacade = $categoryFacade;
     }
 
     /**
@@ -87,7 +56,7 @@ class CategoryResolverMap extends BaseCategoryResolverMap
                         sprintf(
                             'The "$value" argument must be an instance of "%s" or "%s".',
                             Category::class,
-                            ReadyCategorySeoMix::class
+                            ReadyCategorySeoMix::class,
                         ),
                     );
                 },
@@ -105,7 +74,7 @@ class CategoryResolverMap extends BaseCategoryResolverMap
         $friendlyUrlSlug = $this->friendlyUrlFacade->getMainFriendlyUrlSlug(
             $this->domain->getId(),
             $routeName,
-            $entityId
+            $entityId,
         );
 
         return '/' . $friendlyUrlSlug;

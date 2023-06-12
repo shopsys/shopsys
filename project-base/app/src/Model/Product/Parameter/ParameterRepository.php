@@ -83,7 +83,7 @@ class ParameterRepository extends BaseParameterRepository
         Category $category,
         Parameter $parameter,
         int $domainId,
-        string $locale
+        string $locale,
     ): array {
         $queryBuilder = $this->getParameterValueRepository()->createQueryBuilder('pv')
             ->select('pv')
@@ -157,7 +157,7 @@ class ParameterRepository extends BaseParameterRepository
                 Join::WITH,
                 'pg = ' . $alias . '.translatable
                     AND ' . $alias . '.locale = :' . $localeParameterName . '
-                    AND ' . $alias . '.name = :' . $nameParameterName
+                    AND ' . $alias . '.name = :' . $nameParameterName,
             );
             $queryBuilder->setParameter($localeParameterName, $locale);
             $queryBuilder->setParameter($nameParameterName, $name);
@@ -211,8 +211,10 @@ class ParameterRepository extends BaseParameterRepository
      * @param string $locale
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getProductParameterValuesByProductSortedByNameQueryBuilder(BaseProduct $product, $locale): QueryBuilder
-    {
+    protected function getProductParameterValuesByProductSortedByNameQueryBuilder(
+        BaseProduct $product,
+        $locale,
+    ): QueryBuilder {
         return $this->em->createQueryBuilder()
             ->select('ppv')
             ->from(ProductParameterValue::class, 'ppv')
@@ -233,8 +235,9 @@ class ParameterRepository extends BaseParameterRepository
      * @param \App\Model\Product\Parameter\ParameterValueData $parameterValueData
      * @return \App\Model\Product\Parameter\ParameterValue
      */
-    public function findOrCreateParameterValueByParameterValueData(ParameterValueData $parameterValueData): ParameterValue
-    {
+    public function findOrCreateParameterValueByParameterValueData(
+        ParameterValueData $parameterValueData,
+    ): ParameterValue {
         /** @var \App\Model\Product\Parameter\ParameterValue|null $parameterValue */
         $parameterValue = $this->getParameterValueRepository()->findOneBy([
             'text' => $parameterValueData->text,
@@ -276,7 +279,7 @@ class ParameterRepository extends BaseParameterRepository
      */
     public function getQueryBuilderParameterValuesUsedByProductsByLocaleAndType(
         string $locale,
-        string $type
+        string $type,
     ): QueryBuilder {
         return $this->getParameterValueRepository()->createQueryBuilder('pv')
             ->select('pv')
@@ -342,7 +345,7 @@ class ParameterRepository extends BaseParameterRepository
                 pv.text as parameter_value_text,
                 CASE WHEN pg.akeneoCode = :akeneoCodeDimensions THEN TRUE ELSE FALSE END as parameter_is_dimensional,
                 pgt.name as parameter_group,
-                put.name as parameter_unit'
+                put.name as parameter_unit',
             )
             ->distinct()
             ->from(ProductParameterValue::class, 'ppv')
@@ -369,8 +372,9 @@ class ParameterRepository extends BaseParameterRepository
      * @param array $productIdsAndParameterNamesAndValues
      * @return string[][]
      */
-    protected function getParameterValuesIndexedByProductIdAndParameterName(array $productIdsAndParameterNamesAndValues)
-    {
+    protected function getParameterValuesIndexedByProductIdAndParameterName(
+        array $productIdsAndParameterNamesAndValues,
+    ) {
         $productParameterValuesIndexedByProductIdAndParameterName = [];
         foreach ($productIdsAndParameterNamesAndValues as $productIdAndParameterNameAndValue) {
             $parameterName = $productIdAndParameterNameAndValue['name'];

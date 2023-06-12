@@ -16,7 +16,7 @@ class NotificationBarsQuery extends AbstractQuery
      */
     public function __construct(
         private readonly NotificationBarFacade $notificationBarFacade,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 

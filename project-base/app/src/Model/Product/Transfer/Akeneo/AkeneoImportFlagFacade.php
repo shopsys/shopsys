@@ -19,39 +19,11 @@ class AkeneoImportFlagFacade extends AbstractAkeneoImportTransfer
     public const PREFIX_FLAG_CODE = 'flag__';
 
     /**
-     * @var \App\Model\Product\Transfer\Akeneo\FlagTransferAkeneoFacade
-     */
-    protected $flagTransferAkeneoFacade;
-
-    /**
-     * @var \App\Model\Product\Transfer\Akeneo\FlagTransferAkeneoValidator
-     */
-    protected $flagTransferAkeneoValidator;
-
-    /**
-     * @var \App\Model\Product\Transfer\Akeneo\FlagTransferAkeneoMapper
-     */
-    protected $flagTransferAkeneoMapper;
-
-    /**
-     * @var \App\Model\Product\Flag\FlagFacade
-     */
-    protected $flagFacade;
-
-    /**
-     * @var \App\Model\Product\Flag\FlagDataFactory
-     */
-    protected $flagDataFactory;
-
-    /**
      * @var string[]
      */
-    protected $nonImportedFlagCodes = [];
+    protected array $nonImportedFlagCodes = [];
 
-    /**
-     * @var int
-     */
-    protected $countBeforeImport = null;
+    protected ?int $countBeforeImport = null;
 
     /**
      * @param \App\Component\Akeneo\Transfer\AkeneoImportTransferDependency $akeneoImportTransferDependency
@@ -63,19 +35,13 @@ class AkeneoImportFlagFacade extends AbstractAkeneoImportTransfer
      */
     public function __construct(
         AkeneoImportTransferDependency $akeneoImportTransferDependency,
-        FlagTransferAkeneoFacade $flagTransferAkeneoFacade,
-        FlagTransferAkeneoValidator $flagTransferAkeneoValidator,
-        FlagTransferAkeneoMapper $flagTransferAkeneoMapper,
-        FlagFacade $flagFacade,
-        FlagDataFactory $flagDataFactory
+        protected FlagTransferAkeneoFacade $flagTransferAkeneoFacade,
+        protected FlagTransferAkeneoValidator $flagTransferAkeneoValidator,
+        protected FlagTransferAkeneoMapper $flagTransferAkeneoMapper,
+        protected FlagFacade $flagFacade,
+        protected FlagDataFactory $flagDataFactory,
     ) {
         parent::__construct($akeneoImportTransferDependency);
-
-        $this->flagTransferAkeneoFacade = $flagTransferAkeneoFacade;
-        $this->flagTransferAkeneoValidator = $flagTransferAkeneoValidator;
-        $this->flagTransferAkeneoMapper = $flagTransferAkeneoMapper;
-        $this->flagFacade = $flagFacade;
-        $this->flagDataFactory = $flagDataFactory;
     }
 
     /**
@@ -144,7 +110,7 @@ class AkeneoImportFlagFacade extends AbstractAkeneoImportTransfer
         if ($this->countBeforeImport === count($this->nonImportedFlagCodes)) {
             $this->logger->info(
                 'Import flags from Akeneo probably faild, because all flags with akeneo code should be deleted. '
-                . 'Deletion was aborted.'
+                . 'Deletion was aborted.',
             );
             return;
         }

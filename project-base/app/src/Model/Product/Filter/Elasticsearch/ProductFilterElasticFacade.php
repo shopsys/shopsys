@@ -11,33 +11,15 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 class ProductFilterElasticFacade
 {
     /**
-     * @var \Elasticsearch\Client
-     */
-    private Client $client;
-
-    /**
-     * @var \App\Model\Product\Search\FilterQueryFactory
-     */
-    private FilterQueryFactory $filterQueryFactory;
-
-    /**
-     * @var \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigIdsDataFactory
-     */
-    private ProductFilterConfigIdsDataFactory $productFilterConfigIdsDataFactory;
-
-    /**
      * @param \Elasticsearch\Client $client
      * @param \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory
      * @param \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigIdsDataFactory $productFilterConfigIdsDataFactory
      */
     public function __construct(
-        Client $client,
-        FilterQueryFactory $filterQueryFactory,
-        ProductFilterConfigIdsDataFactory $productFilterConfigIdsDataFactory
+        private Client $client,
+        private FilterQueryFactory $filterQueryFactory,
+        private ProductFilterConfigIdsDataFactory $productFilterConfigIdsDataFactory,
     ) {
-        $this->client = $client;
-        $this->filterQueryFactory = $filterQueryFactory;
-        $this->productFilterConfigIdsDataFactory = $productFilterConfigIdsDataFactory;
     }
 
     /**
@@ -46,8 +28,11 @@ class ProductFilterElasticFacade
      * @param string $search
      * @return \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigIdsData
      */
-    public function getProductFilterDataInCategory(int $categoryId, PricingGroup $pricingGroup, string $search): ProductFilterConfigIdsData
-    {
+    public function getProductFilterDataInCategory(
+        int $categoryId,
+        PricingGroup $pricingGroup,
+        string $search,
+    ): ProductFilterConfigIdsData {
         $filterQuery = $this->filterQueryFactory->createVisible()
             ->filterOnlySellable()
             ->filterByCategory([$categoryId]);
@@ -66,8 +51,10 @@ class ProductFilterElasticFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigIdsData
      */
-    public function getProductFilterDataForSearch(string $searchText, PricingGroup $pricingGroup): ProductFilterConfigIdsData
-    {
+    public function getProductFilterDataForSearch(
+        string $searchText,
+        PricingGroup $pricingGroup,
+    ): ProductFilterConfigIdsData {
         $aggregationQuery = $this->filterQueryFactory->createVisible()
             ->filterOnlySellable()
             ->search($searchText)
@@ -83,8 +70,11 @@ class ProductFilterElasticFacade
      * @param string $searchText
      * @return \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigIdsData
      */
-    public function getProductFilterDataInBrand(int $brandId, PricingGroup $pricingGroup, string $searchText = ''): ProductFilterConfigIdsData
-    {
+    public function getProductFilterDataInBrand(
+        int $brandId,
+        PricingGroup $pricingGroup,
+        string $searchText = '',
+    ): ProductFilterConfigIdsData {
         $filterQuery = $this->filterQueryFactory->createVisible()
             ->filterOnlySellable()
             ->filterByBrands([$brandId]);
@@ -104,8 +94,11 @@ class ProductFilterElasticFacade
      * @param string $searchText
      * @return \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigIdsData
      */
-    public function getProductFilterDataInFlag(int $flagId, PricingGroup $pricingGroup, string $searchText = ''): ProductFilterConfigIdsData
-    {
+    public function getProductFilterDataInFlag(
+        int $flagId,
+        PricingGroup $pricingGroup,
+        string $searchText = '',
+    ): ProductFilterConfigIdsData {
         $filterQuery = $this->filterQueryFactory->createVisible()
             ->filterOnlySellable()
             ->filterByFlags([$flagId]);

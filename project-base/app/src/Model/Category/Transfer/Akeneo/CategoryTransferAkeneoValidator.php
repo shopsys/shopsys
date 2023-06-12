@@ -11,16 +11,10 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class CategoryTransferAkeneoValidator
 {
     /**
-     * @var \Symfony\Component\Validator\Validator\ValidatorInterface
-     */
-    protected $validator;
-
-    /**
      * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
      */
-    public function __construct(ValidatorInterface $validator)
+    public function __construct(protected ValidatorInterface $validator)
     {
-        $this->validator = $validator;
     }
 
     /**

@@ -29,19 +29,23 @@ class ProductBreadcrumbGenerator extends BaseProductBreadcrumbGenerator implemen
     /**
      * {@inheritdoc}
      */
-    public function getBreadcrumbItemsOnDomain(int $domainId, string $routeName, array $routeParameters = [], ?string $locale = null): array
-    {
+    public function getBreadcrumbItemsOnDomain(
+        int $domainId,
+        string $routeName,
+        array $routeParameters = [],
+        ?string $locale = null,
+    ): array {
         $product = $this->productRepository->getById($routeParameters['id']);
 
         $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId(
             $product,
-            $domainId
+            $domainId,
         );
 
         $breadcrumbItems = $this->getCategoryBreadcrumbItemsOnDomain($productMainCategory, $domainId, $locale);
 
         $breadcrumbItems[] = new BreadcrumbItem(
-            $product->getFullname($locale)
+            $product->getFullname($locale),
         );
 
         return $breadcrumbItems;
@@ -57,7 +61,7 @@ class ProductBreadcrumbGenerator extends BaseProductBreadcrumbGenerator implemen
     {
         $categoriesInPath = $this->categoryFacade->getVisibleCategoriesInPathFromRootOnDomain(
             $category,
-            $domainId
+            $domainId,
         );
 
         $breadcrumbItems = [];
@@ -65,7 +69,7 @@ class ProductBreadcrumbGenerator extends BaseProductBreadcrumbGenerator implemen
             $breadcrumbItems[] = new BreadcrumbItem(
                 $categoryInPath->getName($locale),
                 'front_product_list',
-                ['id' => $categoryInPath->getId()]
+                ['id' => $categoryInPath->getId()],
             );
         }
 

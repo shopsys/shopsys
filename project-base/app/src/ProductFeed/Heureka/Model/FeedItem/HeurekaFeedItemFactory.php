@@ -17,11 +17,6 @@ use Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacad
 class HeurekaFeedItemFactory extends BaseHeurekaFeedItemFactory
 {
     /**
-     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
-     */
-    private ProductAvailabilityFacade $productAvailabilityFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaProductDataBatchLoader $heurekaProductDataBatchLoader
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade $heurekaCategoryFacade
@@ -33,16 +28,14 @@ class HeurekaFeedItemFactory extends BaseHeurekaFeedItemFactory
         HeurekaProductDataBatchLoader $heurekaProductDataBatchLoader,
         HeurekaCategoryFacade $heurekaCategoryFacade,
         CategoryFacade $categoryFacade,
-        ProductAvailabilityFacade $productAvailabilityFacade
+        private ProductAvailabilityFacade $productAvailabilityFacade,
     ) {
         parent::__construct(
             $productPriceCalculationForCustomerUser,
             $heurekaProductDataBatchLoader,
             $heurekaCategoryFacade,
-            $categoryFacade
+            $categoryFacade,
         );
-
-        $this->productAvailabilityFacade = $productAvailabilityFacade;
     }
 
     /**
@@ -67,7 +60,7 @@ class HeurekaFeedItemFactory extends BaseHeurekaFeedItemFactory
             $this->getPrice($product, $domainConfig),
             $this->getHeurekaCategoryFullName($product, $domainConfig),
             $this->productDataBatchLoader->getProductParametersByName($product, $domainConfig),
-            $this->productDataBatchLoader->getProductCpc($product, $domainConfig)
+            $this->productDataBatchLoader->getProductCpc($product, $domainConfig),
         );
     }
 }

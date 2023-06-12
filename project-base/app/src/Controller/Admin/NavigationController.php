@@ -22,41 +22,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class NavigationController extends AdminBaseController
 {
     /**
-     * @var \App\Model\Navigation\NavigationItemFacade
-     */
-    private NavigationItemFacade $navigationItemFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    private GridFactory $gridFactory;
-
-    /**
-     * @var \App\Model\Navigation\NavigationItemDataFactory
-     */
-    private NavigationItemDataFactory $navigationItemDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    private AdminDomainTabsFacade $adminDomainTabsFacade;
-
-    /**
      * @param \App\Model\Navigation\NavigationItemFacade $navigationItemFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \App\Model\Navigation\NavigationItemDataFactory $navigationItemDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
-        NavigationItemFacade $navigationItemFacade,
-        GridFactory $gridFactory,
-        NavigationItemDataFactory $navigationItemDataFactory,
-        AdminDomainTabsFacade $adminDomainTabsFacade
+        private NavigationItemFacade $navigationItemFacade,
+        private GridFactory $gridFactory,
+        private NavigationItemDataFactory $navigationItemDataFactory,
+        private AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
-        $this->navigationItemFacade = $navigationItemFacade;
-        $this->gridFactory = $gridFactory;
-        $this->navigationItemDataFactory = $navigationItemDataFactory;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**
@@ -66,7 +42,7 @@ class NavigationController extends AdminBaseController
     public function listAction(): Response
     {
         $grid = $this->getGrid(
-            $this->adminDomainTabsFacade->getSelectedDomainId()
+            $this->adminDomainTabsFacade->getSelectedDomainId(),
         );
 
         return $this->render('Admin/Content/Navigation/itemsList.html.twig', [
@@ -99,7 +75,7 @@ class NavigationController extends AdminBaseController
                     [
                         'name' => $navigationItem->getName(),
                         'url' => $this->generateUrl('admin_navigation_edit', ['id' => $navigationItem->getId()]),
-                    ]
+                    ],
                 );
             return $this->redirectToRoute('admin_navigation_list');
         }
@@ -140,7 +116,7 @@ class NavigationController extends AdminBaseController
                     [
                         'name' => $navigationItem->getName(),
                         'url' => $this->generateUrl('admin_navigation_edit', ['id' => $navigationItem->getId()]),
-                    ]
+                    ],
                 );
             return $this->redirectToRoute('admin_navigation_list');
         }
@@ -173,7 +149,7 @@ class NavigationController extends AdminBaseController
                 t('Položka navigace <strong>{{ name }}</strong> byla smazána'),
                 [
                     'name' => $fullName,
-                ]
+                ],
             );
         } catch (NavigationItemNotFoundException $ex) {
             $this->addErrorFlash(t('Zvolená položka navigace neexistuje.'));

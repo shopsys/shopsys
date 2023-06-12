@@ -20,7 +20,7 @@ class RequestToOrderingModeIdConverter extends BaseRequestToOrderingModeIdConver
     public function getOrderingModeIdFromRequest(
         Request $request,
         ProductListOrderingConfig $productListOrderingConfig,
-        ?ReadyCategorySeoMix $readyCategorySeoMix = null
+        ?ReadyCategorySeoMix $readyCategorySeoMix = null,
     ) {
         if ($readyCategorySeoMix !== null) {
             $readyCategorySeoMixOrderingModeId = $readyCategorySeoMix->getOrdering();

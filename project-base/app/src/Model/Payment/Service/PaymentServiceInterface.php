@@ -14,7 +14,10 @@ interface PaymentServiceInterface
      * @param \App\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
      * @param \App\FrontendApi\Model\Payment\PaymentSetupCreationData $paymentSetupCreationData
      */
-    public function createTransaction(PaymentTransactionData $paymentTransactionData, PaymentSetupCreationData $paymentSetupCreationData): void;
+    public function createTransaction(
+        PaymentTransactionData $paymentTransactionData,
+        PaymentSetupCreationData $paymentSetupCreationData,
+    ): void;
 
     /**
      * @param \App\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData

@@ -19,34 +19,6 @@ use Twig\Error\Error;
 
 class PacketeryClient implements TransferIdentificationInterface
 {
-    /**
-     * @var \App\Component\Packetery\PacketeryConfig
-     */
-    private PacketeryConfig $packeteryConfig;
-
-    /**
-     * @var \App\Component\Packetery\PacketeryRenderer
-     */
-    private PacketeryRenderer $packeteryRenderer;
-
-    /**
-     * @var \Symfony\Contracts\HttpClient\HttpClientInterface
-     */
-    private HttpClientInterface $client;
-
-    /**
-     * @var \App\Model\Transfer\TransferLoggerFactory
-     */
-    private TransferLoggerFactory $transferLoggerFactory;
-
-    /**
-     * @var \App\Model\Order\OrderFacade
-     */
-    private OrderFacade $orderFacade;
-
-    /**
-     * @var \App\Model\Transfer\TransferLoggerInterface
-     */
     private TransferLoggerInterface $transferLogger;
 
     /**
@@ -57,17 +29,12 @@ class PacketeryClient implements TransferIdentificationInterface
      * @param \App\Model\Order\OrderFacade $orderFacade
      */
     public function __construct(
-        PacketeryConfig $packeteryConfig,
-        PacketeryRenderer $packeteryRenderer,
-        HttpClientInterface $client,
-        TransferLoggerFactory $transferLoggerFactory,
-        OrderFacade $orderFacade
+        private PacketeryConfig $packeteryConfig,
+        private PacketeryRenderer $packeteryRenderer,
+        private HttpClientInterface $client,
+        private TransferLoggerFactory $transferLoggerFactory,
+        private OrderFacade $orderFacade,
     ) {
-        $this->packeteryConfig = $packeteryConfig;
-        $this->packeteryRenderer = $packeteryRenderer;
-        $this->client = $client;
-        $this->transferLoggerFactory = $transferLoggerFactory;
-        $this->orderFacade = $orderFacade;
     }
 
     private function getTransferLogger()
@@ -88,7 +55,7 @@ class PacketeryClient implements TransferIdentificationInterface
         return $this->client->request(
             'POST',
             $this->packeteryConfig->getRestApiUrl(),
-            ['body' => $xml]
+            ['body' => $xml],
         );
     }
 
@@ -129,21 +96,21 @@ class PacketeryClient implements TransferIdentificationInterface
                     'Transport error - packetery API.',
                     [
                         'msg' => $transportException->getMessage(),
-                    ]
+                    ],
                 );
             } catch (Error $twigError) {
                 $logger->error(
                     'Render error - packetery xml: ',
                     [
                         'msg' => $twigError->getMessage(),
-                    ]
+                    ],
                 );
             } catch (HttpExceptionInterface $httpException) {
                 $logger->error(
                     'Packetery http error: ',
                     [
                         'msg' => $httpException->getMessage(),
-                    ]
+                    ],
                 );
             }
         }
@@ -163,7 +130,7 @@ class PacketeryClient implements TransferIdentificationInterface
                 [
                     'statusCode' => $responseXml->getStatusCode(),
                     'content' => $responseXml->getContent(false),
-                ]
+                ],
             );
             return;
         }
@@ -175,7 +142,7 @@ class PacketeryClient implements TransferIdentificationInterface
                     'fault' => (string)$parsedResponse->fault,
                     'statusString' => (string)$parsedResponse->string,
                     'detail' => $parsedResponse->detail->asXML(),
-                ]
+                ],
             );
             return;
         }
@@ -186,7 +153,7 @@ class PacketeryClient implements TransferIdentificationInterface
             [
                 'orderNumber' => $order->getNumber(),
                 'barcode' => $barcode,
-            ]
+            ],
         );
     }
 

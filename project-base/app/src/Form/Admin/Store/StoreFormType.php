@@ -28,24 +28,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class StoreFormType extends AbstractType
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade
-     */
-    private CountryFacade $countryFacade;
-
-    /**
-     * @var \App\Model\Stock\StockFacade
-     */
-    private StockFacade $stockFacade;
-
-    /**
-     * @var \App\Model\Store\StoreFacade
-     */
-    private StoreFacade $storeFacade;
-
-    /**
-     * @var \App\Model\Store\Store|null
-     */
     private ?Store $store = null;
 
     /**
@@ -54,13 +36,10 @@ class StoreFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      */
     public function __construct(
-        StockFacade $stockFacade,
-        StoreFacade $storeFacade,
-        CountryFacade $countryFacade
+        private StockFacade $stockFacade,
+        private StoreFacade $storeFacade,
+        private CountryFacade $countryFacade,
     ) {
-        $this->stockFacade = $stockFacade;
-        $this->storeFacade = $storeFacade;
-        $this->countryFacade = $countryFacade;
     }
 
     /**
@@ -95,7 +74,7 @@ class StoreFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter name']),
                     new Constraints\Length(
-                        ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters']
+                        ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
                     ),
                 ],
                 'label' => t('Name'),
@@ -108,7 +87,7 @@ class StoreFormType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new Constraints\Length(
-                        ['max' => 255, 'maxMessage' => 'External ID cannot be longer than {{ limit }} characters']
+                        ['max' => 255, 'maxMessage' => 'External ID cannot be longer than {{ limit }} characters'],
                     ),
                     new Constraints\Callback([$this, 'sameStoreExternalIdValidation']),
                 ],

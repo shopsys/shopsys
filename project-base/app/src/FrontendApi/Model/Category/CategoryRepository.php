@@ -24,8 +24,13 @@ class CategoryRepository extends BaseCategoryRepository
      * @param int $limit
      * @return \App\Model\Category\Category[]
      */
-    public function getVisibleCategoriesBySearchText(string $searchText, string $locale, int $domainId, int $offset, int $limit): array
-    {
+    public function getVisibleCategoriesBySearchText(
+        string $searchText,
+        string $locale,
+        int $domainId,
+        int $offset,
+        int $limit,
+    ): array {
         $queryBuilder = $this->getVisibleCategoriesBySearchTextQueryBuilder($searchText, $locale, $domainId);
 
         $queryBuilder
@@ -41,8 +46,10 @@ class CategoryRepository extends BaseCategoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \App\Model\Category\Category[][]
      */
-    public function getAllVisibleChildrenByCategoriesAndDomainConfig(array $categories, DomainConfig $domainConfig): array
-    {
+    public function getAllVisibleChildrenByCategoriesAndDomainConfig(
+        array $categories,
+        DomainConfig $domainConfig,
+    ): array {
         $childrenByCategories = [];
         foreach ($categories as $category) {
             $childrenByCategories[$category->getId()] = [];

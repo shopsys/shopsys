@@ -51,7 +51,7 @@ class PriceQuery extends BasePriceQuery
         PriceFacade $priceFacade,
         private readonly CartFacade $cartFacade,
         private readonly CurrentCustomerUser $currentCustomerUser,
-        private readonly OrderPreviewFactory $orderPreviewFactory
+        private readonly OrderPreviewFactory $orderPreviewFactory,
     ) {
         parent::__construct(
             $productCachedAttributesFacade,
@@ -60,7 +60,7 @@ class PriceQuery extends BasePriceQuery
             $domain,
             $currencyFacade,
             $transportPriceCalculation,
-            $priceFacade
+            $priceFacade,
         );
     }
 
@@ -70,8 +70,11 @@ class PriceQuery extends BasePriceQuery
      * @param ?\ArrayObject $context
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function priceByTransportQuery(Transport $transport, ?string $cartUuid = null, ?ArrayObject $context = null): Price
-    {
+    public function priceByTransportQuery(
+        Transport $transport,
+        ?string $cartUuid = null,
+        ?ArrayObject $context = null,
+    ): Price {
         $cartUuid = $cartUuid ?? GqlContextHelper::getCartUuid($context);
 
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
@@ -93,14 +96,14 @@ class PriceQuery extends BasePriceQuery
             $cart->getQuantifiedProducts(),
             $transport,
             null,
-            $customerUser
+            $customerUser,
         );
 
         return $this->transportPriceCalculation->calculatePrice(
             $transport,
             $currency,
             $orderPreview->getProductsPrice(),
-            $domainId
+            $domainId,
         );
     }
 
@@ -110,8 +113,11 @@ class PriceQuery extends BasePriceQuery
      * @param ?\ArrayObject $context
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    public function priceByPaymentQuery(Payment $payment, ?string $cartUuid = null, ?ArrayObject $context = null): Price
-    {
+    public function priceByPaymentQuery(
+        Payment $payment,
+        ?string $cartUuid = null,
+        ?ArrayObject $context = null,
+    ): Price {
         $cartUuid = $cartUuid ?? GqlContextHelper::getCartUuid($context);
 
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
@@ -133,14 +139,14 @@ class PriceQuery extends BasePriceQuery
             $cart->getQuantifiedProducts(),
             null,
             $payment,
-            $customerUser
+            $customerUser,
         );
 
         return $this->paymentPriceCalculation->calculatePrice(
             $payment,
             $currency,
             $orderPreview->getProductsPrice(),
-            $domainId
+            $domainId,
         );
     }
 

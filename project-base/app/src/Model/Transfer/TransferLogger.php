@@ -12,24 +12,9 @@ use Monolog\Logger;
 class TransferLogger implements TransferLoggerInterface
 {
     /**
-     * @var \Monolog\Logger
-     */
-    private $logger;
-
-    /**
      * @var \App\Model\Transfer\Issue\TransferIssueData[]
      */
-    private $transferIssueDataList = [];
-
-    /**
-     * @var \App\Model\Transfer\Issue\TransferIssueFacade
-     */
-    private $transferIssueFacade;
-
-    /**
-     * @var string
-     */
-    private $serviceTransferIdentifier;
+    private array $transferIssueDataList = [];
 
     /**
      * @param \Monolog\Logger $logger
@@ -37,13 +22,10 @@ class TransferLogger implements TransferLoggerInterface
      * @param \App\Model\Transfer\Issue\TransferIssueFacade $transferIssueFacade
      */
     public function __construct(
-        Logger $logger,
-        string $serviceTransferIdentifier,
-        TransferIssueFacade $transferIssueFacade
+        private Logger $logger,
+        private string $serviceTransferIdentifier,
+        private TransferIssueFacade $transferIssueFacade,
     ) {
-        $this->logger = $logger;
-        $this->serviceTransferIdentifier = $serviceTransferIdentifier;
-        $this->transferIssueFacade = $transferIssueFacade;
     }
 
     public function persistAllLoggedTransferIssues(): void

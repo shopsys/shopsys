@@ -25,13 +25,14 @@ class ProductFilterConfigIdsDataFactory
      * @param array $aggregationElasticsearchResult
      * @return \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigIdsData
      */
-    public function createFromElasticsearchAggregationResult(array $aggregationElasticsearchResult): ProductFilterConfigIdsData
-    {
+    public function createFromElasticsearchAggregationResult(
+        array $aggregationElasticsearchResult,
+    ): ProductFilterConfigIdsData {
         return new ProductFilterConfigIdsData(
             $this->extractParameterValueIdsByParameterId($aggregationElasticsearchResult),
             $this->extractFlagIds($aggregationElasticsearchResult),
             $this->extractBrandIds($aggregationElasticsearchResult),
-            $this->extractPriceRange($aggregationElasticsearchResult)
+            $this->extractPriceRange($aggregationElasticsearchResult),
         );
     }
 

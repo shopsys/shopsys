@@ -20,7 +20,7 @@ class ComparisonFacade
      */
     public function __construct(
         private readonly EntityManagerInterface $em,
-        private readonly ComparisonRepository $comparisonRepository
+        private readonly ComparisonRepository $comparisonRepository,
     ) {
     }
 
@@ -30,8 +30,11 @@ class ComparisonFacade
      * @param string|null $comparisonUuid
      * @return \App\Model\Product\Comparison\Comparison
      */
-    public function addProductToComparison(Product $product, ?CustomerUser $customerUser, ?string $comparisonUuid): Comparison
-    {
+    public function addProductToComparison(
+        Product $product,
+        ?CustomerUser $customerUser,
+        ?string $comparisonUuid,
+    ): Comparison {
         if ($customerUser === null) {
             $comparison = $this->getOrCreateComparisonByUuid($comparisonUuid);
             if ($comparison->getCustomerUser() !== null) {
@@ -187,8 +190,11 @@ class ComparisonFacade
      * @param string|null $comparisonUuid
      * @return \App\Model\Product\Comparison\Comparison|null
      */
-    public function removeProductFromComparison(Product $product, ?CustomerUser $customerUser, ?string $comparisonUuid): ?Comparison
-    {
+    public function removeProductFromComparison(
+        Product $product,
+        ?CustomerUser $customerUser,
+        ?string $comparisonUuid,
+    ): ?Comparison {
         if ($customerUser !== null) {
             $comparison = $this->getComparisonOfCustomerUser($customerUser);
         } else {

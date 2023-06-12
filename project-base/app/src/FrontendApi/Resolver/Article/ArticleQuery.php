@@ -24,7 +24,7 @@ class ArticleQuery extends AbstractQuery
     public function __construct(
         private readonly ArticleElasticsearchFacade $articleElasticsearchFacade,
         private readonly Setting $setting,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 

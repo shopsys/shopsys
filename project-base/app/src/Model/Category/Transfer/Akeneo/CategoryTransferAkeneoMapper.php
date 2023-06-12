@@ -12,16 +12,10 @@ use App\Model\Category\CategoryDataFactory;
 class CategoryTransferAkeneoMapper
 {
     /**
-     * @var \App\Model\Category\CategoryDataFactory
-     */
-    private $categoryDataFactory;
-
-    /**
      * @param \App\Model\Category\CategoryDataFactory $categoryDataFactory
      */
-    public function __construct(CategoryDataFactory $categoryDataFactory)
+    public function __construct(private CategoryDataFactory $categoryDataFactory)
     {
-        $this->categoryDataFactory = $categoryDataFactory;
     }
 
     /**

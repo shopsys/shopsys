@@ -12,16 +12,10 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 class MergadoProductRepository
 {
     /**
-     * @var \App\Model\Product\ProductRepository
-     */
-    protected $productRepository;
-
-    /**
      * @param \App\Model\Product\ProductRepository $productRepository
      */
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(protected ProductRepository $productRepository)
     {
-        $this->productRepository = $productRepository;
     }
 
     /**
@@ -31,8 +25,12 @@ class MergadoProductRepository
      * @param int $maxResults
      * @return \App\Model\Product\Product[]|\Doctrine\Common\Collections\Collection
      */
-    public function getProducts(DomainConfig $domainConfig, PricingGroup $pricingGroup, ?int $lastSeekId, int $maxResults): iterable
-    {
+    public function getProducts(
+        DomainConfig $domainConfig,
+        PricingGroup $pricingGroup,
+        ?int $lastSeekId,
+        int $maxResults,
+    ): iterable {
         $queryBuilder = $this->productRepository->getAllVisibleQueryBuilder($domainConfig->getId(), $pricingGroup)
             ->addSelect('b')->leftJoin('p.brand', 'b')
             ->andWhere('p.variantType != :variantTypeMain')->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)

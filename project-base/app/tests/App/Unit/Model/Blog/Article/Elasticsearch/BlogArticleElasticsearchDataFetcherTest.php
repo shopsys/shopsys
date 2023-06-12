@@ -67,8 +67,9 @@ class BlogArticleElasticsearchDataFetcherTest extends TestCase
      * @param array $mockedResultArray
      * @return \App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchDataFetcher
      */
-    private function getBlogArticleElasticsearchDataFetcherWithMockedClient(array $mockedResultArray): BlogArticleElasticsearchDataFetcher
-    {
+    private function getBlogArticleElasticsearchDataFetcherWithMockedClient(
+        array $mockedResultArray,
+    ): BlogArticleElasticsearchDataFetcher {
         $clientMock = $this->createMock(Client::class);
         $clientMock->method('search')->willReturn($mockedResultArray);
 

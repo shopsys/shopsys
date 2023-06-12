@@ -11,21 +11,16 @@ use App\Model\Product\Parameter\Transfer\Akeneo\ProductParameterTransferAkeneoFa
 class ParameterTransferCachedAkeneoFacade
 {
     /**
-     * @var \App\Model\Product\Parameter\Transfer\Akeneo\ProductParameterTransferAkeneoFacade
+     * @var array<string, mixed>
      */
-    private $productParameterTransferAkeneoFacade;
-
-    /**
-     * @var array
-     */
-    private $cache = [];
+    private array $cache = [];
 
     /**
      * @param \App\Model\Product\Parameter\Transfer\Akeneo\ProductParameterTransferAkeneoFacade $productParameterTransferAkeneoFacade
      */
-    public function __construct(ProductParameterTransferAkeneoFacade $productParameterTransferAkeneoFacade)
-    {
-        $this->productParameterTransferAkeneoFacade = $productParameterTransferAkeneoFacade;
+    public function __construct(
+        private readonly ProductParameterTransferAkeneoFacade $productParameterTransferAkeneoFacade,
+    ) {
     }
 
     /**
@@ -50,8 +45,10 @@ class ParameterTransferCachedAkeneoFacade
      * @param string $akeneoParameterValueCode
      * @return string[]|null[]
      */
-    public function getParameterValueTextsIndexedByLocaleForParameterAndAkeneoValue(string $parameterAkeneoCode, string $akeneoParameterValueCode): array
-    {
+    public function getParameterValueTextsIndexedByLocaleForParameterAndAkeneoValue(
+        string $parameterAkeneoCode,
+        string $akeneoParameterValueCode,
+    ): array {
         $parameterValueTextsByAkeneoCodeAndLocale = $this->getAllParameterOptionLocalizedLabels($parameterAkeneoCode);
 
         if (array_key_exists($akeneoParameterValueCode, $parameterValueTextsByAkeneoCodeAndLocale) === false) {
@@ -59,9 +56,9 @@ class ParameterTransferCachedAkeneoFacade
                 sprintf(
                     'Parameter value %s for attribute code %s does not exist',
                     $akeneoParameterValueCode,
-                    $parameterAkeneoCode
+                    $parameterAkeneoCode,
                 ),
-                0
+                0,
             );
         }
 

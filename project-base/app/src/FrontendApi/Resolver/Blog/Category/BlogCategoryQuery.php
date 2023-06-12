@@ -24,7 +24,7 @@ class BlogCategoryQuery extends AbstractQuery
     public function __construct(
         private readonly BlogCategoryFacade $blogCategoryFacade,
         private readonly Domain $domain,
-        private readonly FriendlyUrlFacade $friendlyUrlFacade
+        private readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
     }
 
@@ -62,7 +62,7 @@ class BlogCategoryQuery extends AbstractQuery
             $friendlyUrl = $this->friendlyUrlFacade->getFriendlyUrlByRouteNameAndSlug(
                 $this->domain->getId(),
                 'front_blogcategory_detail',
-                $urlSlug
+                $urlSlug,
             );
 
             return $this->blogCategoryFacade->getVisibleOnDomainById($this->domain->getId(), $friendlyUrl->getEntityId());

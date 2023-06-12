@@ -21,36 +21,6 @@ use Tracy\Debugger;
 class ErrorController extends AbstractController
 {
     /**
-     * @var bool
-     */
-    protected bool $debug;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Error\ExceptionListener
-     */
-    protected ExceptionListener $exceptionListener;
-
-    /**
-     * @var \App\Component\Error\ErrorPagesFacade
-     */
-    protected ErrorPagesFacade $errorPagesFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected Domain $domain;
-
-    /**
-     * @var string
-     */
-    protected string $environment;
-
-    /**
-     * @var string|null
-     */
-    protected ?string $overwriteDomainUrl;
-
-    /**
      * @param bool $debug
      * @param \Shopsys\FrameworkBundle\Component\Error\ExceptionListener $exceptionListener
      * @param \App\Component\Error\ErrorPagesFacade $errorPagesFacade
@@ -59,19 +29,13 @@ class ErrorController extends AbstractController
      * @param string|null $overwriteDomainUrl
      */
     public function __construct(
-        bool $debug,
-        ExceptionListener $exceptionListener,
-        ErrorPagesFacade $errorPagesFacade,
-        Domain $domain,
-        string $environment,
-        ?string $overwriteDomainUrl = null
+        protected bool $debug,
+        protected ExceptionListener $exceptionListener,
+        protected ErrorPagesFacade $errorPagesFacade,
+        protected Domain $domain,
+        protected string $environment,
+        protected ?string $overwriteDomainUrl = null,
     ) {
-        $this->debug = $debug;
-        $this->exceptionListener = $exceptionListener;
-        $this->errorPagesFacade = $errorPagesFacade;
-        $this->domain = $domain;
-        $this->environment = $environment;
-        $this->overwriteDomainUrl = $overwriteDomainUrl;
     }
 
     /**
@@ -93,7 +57,7 @@ class ErrorController extends AbstractController
      */
     public function showAction(
         Request $request,
-        FlattenException $exception
+        FlattenException $exception,
     ): Response {
         if ($this->isUnableToResolveDomainInNotDebug($exception)) {
             return $this->createUnableToResolveDomainResponse($request);
@@ -115,7 +79,7 @@ class ErrorController extends AbstractController
         $errorPageStatusCode = $this->errorPagesFacade->getErrorPageStatusCodeByStatusCode($statusCode);
         $errorPageContent = $this->errorPagesFacade->getErrorPageContentByDomainIdAndStatusCode(
             $this->domain->getId(),
-            $errorPageStatusCode
+            $errorPageStatusCode,
         );
 
         return new Response($errorPageContent, $errorPageStatusCode);
@@ -199,7 +163,7 @@ class ErrorController extends AbstractController
         return sprintf(
             'Admin/Content/Error/error%s.%s.twig',
             $format === 'html' ? $code : '',
-            $format
+            $format,
         );
     }
 
@@ -215,7 +179,7 @@ class ErrorController extends AbstractController
             [
                 'status_code' => $code,
                 'status_text' => Response::$statusTexts[$code] ?? '',
-            ]
+            ],
         );
 
         return new Response($content, $code);

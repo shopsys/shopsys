@@ -28,76 +28,6 @@ class PromoCodeFacade extends BasePromoCodeFacade
     private const MASS_CREATE_BATCH_SIZE = 200;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
-     * @var \App\Component\DateTimeHelper\DateTimeHelper
-     */
-    private $dateTimeHelper;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeProductRepository
-     */
-    private $promoCodeProductRepository;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeCategoryRepository
-     */
-    private $promoCodeCategoryRepository;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeProductFactory
-     */
-    private $promoCodeProductFactory;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeCategoryFactory
-     */
-    private $promoCodeCategoryFactory;
-
-    /**
-     * @var \App\Component\String\HashGenerator
-     */
-    private $hashGenerator;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeLimitRepository
-     */
-    private $promoCodeLimitRepository;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeLimitFactory
-     */
-    private PromoCodeLimitFactory $promoCodeLimitFactory;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeBrandRepository
-     */
-    private PromoCodeBrandRepository $promoCodeBrandRepository;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeBrandFactory
-     */
-    private PromoCodeBrandFactory $promoCodeBrandFactory;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodePricingGroupRepository
-     */
-    private PromoCodePricingGroupRepository $promoCodePricingGroupRepository;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodePricingGroupFactory
-     */
-    private PromoCodePricingGroupFactory $promoCodePricingGroupFactory;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository
-     */
-    private PromoCodeFlagRepository $promoCodeFlagRepository;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Order\PromoCode\PromoCodeRepository $promoCodeRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactoryInterface $promoCodeFactory
@@ -120,37 +50,22 @@ class PromoCodeFacade extends BasePromoCodeFacade
         EntityManagerInterface $em,
         PromoCodeRepository $promoCodeRepository,
         PromoCodeFactoryInterface $promoCodeFactory,
-        Domain $domain,
-        DateTimeHelper $dateTimeHelper,
-        PromoCodeProductRepository $promoCodeProductRepository,
-        PromoCodeCategoryRepository $promoCodeCategoryRepository,
-        PromoCodeProductFactory $promoCodeProductFactory,
-        PromoCodeCategoryFactory $promoCodeCategoryFactory,
-        PromoCodeLimitRepository $promoCodeLimitRepository,
-        HashGenerator $hashGenerator,
-        PromoCodeLimitFactory $promoCodeLimitFactory,
-        PromoCodeBrandRepository $promoCodeBrandRepository,
-        PromoCodeBrandFactory $promoCodeBrandFactory,
-        PromoCodePricingGroupRepository $promoCodePricingGroupRepository,
-        PromoCodePricingGroupFactory $promoCodePricingGroupFactory,
-        PromoCodeFlagRepository $promoCodeFlagRepository
+        private Domain $domain,
+        private DateTimeHelper $dateTimeHelper,
+        private PromoCodeProductRepository $promoCodeProductRepository,
+        private PromoCodeCategoryRepository $promoCodeCategoryRepository,
+        private PromoCodeProductFactory $promoCodeProductFactory,
+        private PromoCodeCategoryFactory $promoCodeCategoryFactory,
+        private PromoCodeLimitRepository $promoCodeLimitRepository,
+        private HashGenerator $hashGenerator,
+        private PromoCodeLimitFactory $promoCodeLimitFactory,
+        private PromoCodeBrandRepository $promoCodeBrandRepository,
+        private PromoCodeBrandFactory $promoCodeBrandFactory,
+        private PromoCodePricingGroupRepository $promoCodePricingGroupRepository,
+        private PromoCodePricingGroupFactory $promoCodePricingGroupFactory,
+        private PromoCodeFlagRepository $promoCodeFlagRepository,
     ) {
         parent::__construct($em, $promoCodeRepository, $promoCodeFactory);
-
-        $this->domain = $domain;
-        $this->dateTimeHelper = $dateTimeHelper;
-        $this->promoCodeProductRepository = $promoCodeProductRepository;
-        $this->promoCodeCategoryRepository = $promoCodeCategoryRepository;
-        $this->promoCodeProductFactory = $promoCodeProductFactory;
-        $this->promoCodeCategoryFactory = $promoCodeCategoryFactory;
-        $this->promoCodeLimitRepository = $promoCodeLimitRepository;
-        $this->hashGenerator = $hashGenerator;
-        $this->promoCodeLimitFactory = $promoCodeLimitFactory;
-        $this->promoCodeBrandRepository = $promoCodeBrandRepository;
-        $this->promoCodeBrandFactory = $promoCodeBrandFactory;
-        $this->promoCodePricingGroupRepository = $promoCodePricingGroupRepository;
-        $this->promoCodePricingGroupFactory = $promoCodePricingGroupFactory;
-        $this->promoCodeFlagRepository = $promoCodeFlagRepository;
     }
 
     /**
@@ -225,7 +140,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
             foreach ($promoCodeData->limits as $promoCodeLimit) {
                 $promoCodeDataForCreate->limits[] = $this->promoCodeLimitFactory->create(
                     $promoCodeLimit->getFromPriceWithVat(),
-                    $promoCodeLimit->getDiscount()
+                    $promoCodeLimit->getDiscount(),
                 );
             }
 
@@ -437,7 +352,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
         if ($promoCodeData->dateValidFrom !== null) {
             $promoCodeData->datetimeValidFrom = $this->createDateTimeInUtc(
                 $promoCodeData->dateValidFrom,
-                $promoCodeData->timeValidFrom ?? self::PROMOCODE_DEFAULT_TIME_FROM
+                $promoCodeData->timeValidFrom ?? self::PROMOCODE_DEFAULT_TIME_FROM,
             );
         }
 
@@ -446,7 +361,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
         if ($promoCodeData->dateValidTo !== null) {
             $promoCodeData->datetimeValidTo = $this->createDateTimeInUtc(
                 $promoCodeData->dateValidTo,
-                $promoCodeData->timeValidTo
+                $promoCodeData->timeValidTo,
             );
         }
     }
@@ -459,7 +374,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
     private function createDateTimeInUtc(DateTime $date, string $time): DateTime
     {
         return $this->dateTimeHelper->convertDatetimeStringFromDisplayTimeZoneToUtc(
-            $date->format(self::DATABASE_DATE_FORMAT) . 'T' . $time
+            $date->format(self::DATABASE_DATE_FORMAT) . 'T' . $time,
         );
     }
 

@@ -7,16 +7,10 @@ namespace App\Model\Article\Elasticsearch;
 class ArticleElasticsearchFacade
 {
     /**
-     * @var \App\Model\Article\Elasticsearch\ArticleElasticsearchRepository
-     */
-    private ArticleElasticsearchRepository $articleElasticsearchRepository;
-
-    /**
      * @param \App\Model\Article\Elasticsearch\ArticleElasticsearchRepository $articleElasticsearchRepository
      */
-    public function __construct(ArticleElasticsearchRepository $articleElasticsearchRepository)
+    public function __construct(private ArticleElasticsearchRepository $articleElasticsearchRepository)
     {
-        $this->articleElasticsearchRepository = $articleElasticsearchRepository;
     }
 
     /**

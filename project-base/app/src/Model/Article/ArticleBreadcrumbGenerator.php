@@ -12,8 +12,12 @@ class ArticleBreadcrumbGenerator extends BaseArticleBreadcrumbGenerator implemen
     /**
      * {@inheritdoc}
      */
-    public function getBreadcrumbItemsOnDomain(int $domainId, string $routeName, array $routeParameters = [], ?string $locale = null): array
-    {
+    public function getBreadcrumbItemsOnDomain(
+        int $domainId,
+        string $routeName,
+        array $routeParameters = [],
+        ?string $locale = null,
+    ): array {
         return $this->getBreadcrumbItems($routeName, $routeParameters);
     }
 }

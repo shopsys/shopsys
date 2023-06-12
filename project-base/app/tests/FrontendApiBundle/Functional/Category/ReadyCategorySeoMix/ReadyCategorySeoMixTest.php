@@ -16,13 +16,11 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 class ReadyCategorySeoMixTest extends GraphQlTestCase
 {
     /**
-     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
      * @inject
      */
     private UrlGeneratorInterface $urlGenerator;
 
     /**
-     * @var \App\Model\Product\Parameter\ParameterFacade
      * @inject
      */
     private ParameterFacade $parameterFacade;
@@ -353,8 +351,10 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
      * @param array $additionalVariables
      * @return array
      */
-    private function getDataForCategorySeoMixPcNewWithUsb(string $graphQlFilePath, array $additionalVariables = []): array
-    {
+    private function getDataForCategorySeoMixPcNewWithUsb(
+        string $graphQlFilePath,
+        array $additionalVariables = [],
+    ): array {
         /** @var \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoPcNewWithUsb */
         $readyCategorySeoPcNewWithUsb = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_PC_NEW_WITH_USB, 1);
         $seoMixUrlSlug = $this->urlGenerator->generate('front_category_seo', ['id' => $readyCategorySeoPcNewWithUsb->getId()]);
@@ -379,7 +379,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         $categorySlug = $this->urlGenerator->generate('front_product_list', ['id' => $categoryPc->getId()]);
         $parameterValueYes = $this->parameterFacade->getParameterValueByValueTextAndLocale(
             t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-            $firstDomainLocale
+            $firstDomainLocale,
         );
         $responseForCategory = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/query/SlugQueryCategoryMatchingSeoMix.graphql', [
             'slug' => $categorySlug,

@@ -22,7 +22,7 @@ class MultidomainEntityClassProvider extends BaseMultidomainEntityClassProviderA
                 StockDomain::class,
                 StoreDomain::class,
                 SeoPageDomain::class,
-            ]
+            ],
         );
     }
 }

@@ -12,22 +12,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CleanStorefrontQueryCacheCommand extends Command
 {
     /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      * @var string
      */
     protected static $defaultName = 'shopsys:redis:clean-storefront-query-cache';
 
     /**
-     * @var \App\Component\Redis\CleanStorefrontCacheFacade
-     */
-    private CleanStorefrontCacheFacade $cleanStorefrontCacheFacade;
-
-    /**
      * @param \App\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
      */
-    public function __construct(CleanStorefrontCacheFacade $cleanStorefrontCacheFacade)
+    public function __construct(private CleanStorefrontCacheFacade $cleanStorefrontCacheFacade)
     {
-        $this->cleanStorefrontCacheFacade = $cleanStorefrontCacheFacade;
-
         parent::__construct();
     }
 

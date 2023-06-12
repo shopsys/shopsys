@@ -38,7 +38,7 @@ class UniqueEmailValidator extends BaseUniqueEmailValidator
                 $constraint->message,
                 [
                     '{{ email }}' => $email,
-                ]
+                ],
             );
         }
     }

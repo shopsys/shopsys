@@ -11,19 +11,14 @@ use Shopsys\FrontendApiBundle\Component\Image\ImageFacade as BaseImageFacade;
 class ImageFacade extends BaseImageFacade
 {
     /**
-     * @var \App\FrontendApi\Model\Image\ImageRepository
-     */
-    private FrontendApiImageRepository $frontendApiImageRepository;
-
-    /**
      * @param \App\Component\Image\ImageRepository $imageRepository
      * @param \App\FrontendApi\Model\Image\ImageRepository $frontendApiImageRepository
      */
-    public function __construct(ImageRepository $imageRepository, FrontendApiImageRepository $frontendApiImageRepository)
-    {
+    public function __construct(
+        ImageRepository $imageRepository,
+        private FrontendApiImageRepository $frontendApiImageRepository,
+    ) {
         parent::__construct($imageRepository);
-
-        $this->frontendApiImageRepository = $frontendApiImageRepository;
     }
 
     /**
@@ -43,12 +38,15 @@ class ImageFacade extends BaseImageFacade
      * @param string|null $type
      * @return \App\Component\Image\Image[]|null[]
      */
-    public function getImagesByTypeAndPositionIndexedByEntityId(array $entityIds, string $entityName, ?string $type): array
-    {
+    public function getImagesByTypeAndPositionIndexedByEntityId(
+        array $entityIds,
+        string $entityName,
+        ?string $type,
+    ): array {
         return $this->frontendApiImageRepository->getImagesByTypeAndPositionIndexedByEntityId(
             $entityIds,
             $entityName,
-            $type
+            $type,
         );
     }
 }

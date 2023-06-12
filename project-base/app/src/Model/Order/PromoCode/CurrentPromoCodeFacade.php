@@ -42,11 +42,11 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
         private readonly ProductPromoCodeFiller $productPromoCodeFiller,
         private readonly PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver,
         private readonly CurrentCustomerUser $currentCustomerUser,
-        private readonly PromoCodePricingGroupRepository $promoCodePricingGroupRepository
+        private readonly PromoCodePricingGroupRepository $promoCodePricingGroupRepository,
     ) {
         parent::__construct(
             $promoCodeFacade,
-            $requestStack
+            $requestStack,
         );
     }
 
@@ -155,7 +155,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     {
         $limit = $this->promoCodeLimitByCartTotalResolver->getLimitByPromoCode(
             $promoCode,
-            $cart->getQuantifiedProducts()
+            $cart->getQuantifiedProducts(),
         );
         if ($limit === null) {
             throw new LimitNotReachedException($promoCode);
@@ -189,8 +189,11 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCode|null $promoCode
      * @return \App\Model\Order\PromoCode\PromoCode[]
      */
-    public function getPromoCodePerProductByDomainId(array $quantifiedProducts, int $domainId, ?PromoCode $promoCode = null): array
-    {
+    public function getPromoCodePerProductByDomainId(
+        array $quantifiedProducts,
+        int $domainId,
+        ?PromoCode $promoCode = null,
+    ): array {
         if ($promoCode === null) {
             return [];
         }
@@ -204,7 +207,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     private function validatePricingGroup(PromoCode $promoCode): void
     {
         $limitedPricingGroups = $this->promoCodePricingGroupRepository->getPricingGroupsByPromoCodeId(
-            $promoCode->getId()
+            $promoCode->getId(),
         );
 
         if (count($limitedPricingGroups) === 0) {

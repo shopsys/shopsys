@@ -12,13 +12,11 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 class LanguageConstantsTest extends GraphQlTestCase
 {
     /**
-     * @var \App\Model\LanguageConstant\LanguageConstantFacade
      * @inject
      */
     private LanguageConstantFacade $languageConstantFacade;
 
     /**
-     * @var \App\Model\LanguageConstant\LanguageConstantDataFactory
      * @inject
      */
     private LanguageConstantDataFactory $languageConstantDataFactory;

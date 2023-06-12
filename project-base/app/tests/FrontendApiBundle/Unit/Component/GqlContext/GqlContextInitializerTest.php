@@ -25,7 +25,7 @@ class GqlContextInitializerTest extends TestCase
             null,
             [
                 'cartUuid' => self::CART_UUID,
-            ]
+            ],
         );
 
         $contextInitializer = new GqlContextInitializer();
@@ -52,7 +52,7 @@ class GqlContextInitializerTest extends TestCase
                 'input' => [
                     'cartUuid' => self::CART_UUID,
                 ],
-            ]
+            ],
         );
 
         $contextInitializer = new GqlContextInitializer();

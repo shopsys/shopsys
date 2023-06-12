@@ -13,10 +13,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
  */
 class AddProductResult extends BaseAddProductResult
 {
-    /**
-     * @var int
-     */
-    protected $notOnStockQuantity;
+    protected int $notOnStockQuantity;
 
     /**
      * @param \App\Model\Cart\Item\CartItem $cartItem

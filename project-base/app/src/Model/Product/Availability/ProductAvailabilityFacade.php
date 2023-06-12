@@ -16,24 +16,9 @@ class ProductAvailabilityFacade
     private const DAYS_IN_WEEK = 7;
 
     /**
-     * @var \App\Model\Stock\ProductStockFacade
+     * @var array<string, bool>
      */
-    private ProductStockFacade $productStockFacade;
-
-    /**
-     * @var \App\Component\Setting\Setting
-     */
-    private Setting $setting;
-
-    /**
-     * @var array
-     */
-    private $productAvailabilityDomainCache;
-
-    /**
-     * @var \App\Model\Store\ProductStoreFacade
-     */
-    private ProductStoreFacade $productStoreFacade;
+    private array $productAvailabilityDomainCache;
 
     /**
      * @param \App\Component\Setting\Setting $setting
@@ -41,14 +26,11 @@ class ProductAvailabilityFacade
      * @param \App\Model\Store\ProductStoreFacade $productStoreFacade
      */
     public function __construct(
-        Setting $setting,
-        ProductStockFacade $productStockFacade,
-        ProductStoreFacade $productStoreFacade
+        private readonly Setting $setting,
+        private readonly ProductStockFacade $productStockFacade,
+        private readonly ProductStoreFacade $productStoreFacade,
     ) {
-        $this->productStockFacade = $productStockFacade;
-        $this->setting = $setting;
         $this->productAvailabilityDomainCache = [];
-        $this->productStoreFacade = $productStoreFacade;
     }
 
     /**
@@ -104,8 +86,10 @@ class ProductAvailabilityFacade
      * @param int $domainId
      * @return string
      */
-    public function getProductAvailabilityInformationByQuantifiedProductAndDomainId(QuantifiedProduct $quantifiedProduct, int $domainId): string
-    {
+    public function getProductAvailabilityInformationByQuantifiedProductAndDomainId(
+        QuantifiedProduct $quantifiedProduct,
+        int $domainId,
+    ): string {
         /** @var \App\Model\Product\Product $product */
         $product = $quantifiedProduct->getProduct();
         $productStocks = $this->productStockFacade->getProductStocksByProductAndDomainId($product, $domainId);
@@ -147,7 +131,7 @@ class ProductAvailabilityFacade
 
         return t(
             '{0}|{1}Můžete mít ihned na <span class="box-detail__avail__text__strong">%count%</span> prodejně|[2,Inf]Můžete mít ihned na <span class="box-detail__avail__text__strong">%count%</span> prodejnách',
-            ['%count%' => $count]
+            ['%count%' => $count],
         );
     }
 
@@ -181,7 +165,7 @@ class ProductAvailabilityFacade
 
         return t(
             '{0}|{1}Můžete si prohlédnout na <span class="box-detail__avail__text__strong">%count%</span> prodejně|[2,Inf]Můžete si prohlédnout na <span class="box-detail__avail__text__strong">%count%</span> prodejnách',
-            ['%count%' => $count]
+            ['%count%' => $count],
         );
     }
 
@@ -244,7 +228,7 @@ class ProductAvailabilityFacade
     {
         return $product->getSaleExclusion($domainId) && !$this->isProductAvailableOnDomainCached(
             $product,
-            $domainId
+            $domainId,
         );
     }
 
@@ -257,7 +241,7 @@ class ProductAvailabilityFacade
     {
         return $product->hasPreorder() || $this->isProductAvailableOnDomainCached(
             $product,
-            $domainId
+            $domainId,
         );
     }
 
@@ -266,8 +250,10 @@ class ProductAvailabilityFacade
      * @param int $domainId
      * @return \App\Model\Product\Availability\ProductStoreAvailabilityInformation[]
      */
-    public function getProductStoresAvailabilitiesInformationByDomainIdIndexedByStoreId(Product $product, int $domainId): array
-    {
+    public function getProductStoresAvailabilitiesInformationByDomainIdIndexedByStoreId(
+        Product $product,
+        int $domainId,
+    ): array {
         $productStores = $this->productStoreFacade->getProductStoresByProductAndDomainId($product, $domainId);
 
         $weeks = $this->getDeliveryWeeksByDomainId($domainId, $product);
@@ -305,7 +291,7 @@ class ProductAvailabilityFacade
                 $productStore->getStore()->getId(),
                 $availabilityInformation,
                 $productStore->isProductExposed(),
-                $availabilityStatus
+                $availabilityStatus,
             );
         }
 
@@ -320,7 +306,7 @@ class ProductAvailabilityFacade
     {
         return t(
             '{0,1} K dispozici za týden|[2,4] K dispozici za %count% týdny|[5,Inf] K dispozici za %count% týdnů',
-            ['%count%' => $weeks]
+            ['%count%' => $weeks],
         );
     }
 
@@ -419,8 +405,11 @@ class ProductAvailabilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @return int[]
      */
-    public function getStoreDayAvailabilitiesIndexedByStoreId(int $domainId, array $stores, array $quantifiedProducts): array
-    {
+    public function getStoreDayAvailabilitiesIndexedByStoreId(
+        int $domainId,
+        array $stores,
+        array $quantifiedProducts,
+    ): array {
         $maximumDayAvailabilityByStoreId = [];
         foreach ($stores as $store) {
             $maximumDayAvailabilityByStoreId[$store->getId()] = 0;
@@ -431,7 +420,7 @@ class ProductAvailabilityFacade
                 $quantifiedProduct,
                 $maximumDayAvailabilityByStoreId,
                 $domainId,
-                $stores
+                $stores,
             );
         }
 
@@ -449,7 +438,7 @@ class ProductAvailabilityFacade
         int $domainId,
         array $stores,
         array $quantifiedProducts,
-        array $transports
+        array $transports,
     ): array {
         $storeDayAvailabilities = $this->getStoreDayAvailabilitiesIndexedByStoreId($domainId, $stores, $quantifiedProducts);
         asort($storeDayAvailabilities);
@@ -475,14 +464,14 @@ class ProductAvailabilityFacade
         QuantifiedProduct $quantifiedProduct,
         array $maximumDayAvailabilityByStoreId,
         int $domainId,
-        array $stores
+        array $stores,
     ): array {
         /** @var \App\Model\Product\Product $product */
         $product = $quantifiedProduct->getProduct();
 
         $productStocksByDomainIdIndexedByStockId = $this->productStockFacade->getProductStocksByProductAndDomainIdIndexedByStockId(
             $product,
-            $domainId
+            $domainId,
         );
 
         $productStocksFromStoresIndexedByStoreId = [];
@@ -500,12 +489,12 @@ class ProductAvailabilityFacade
                 $quantifiedProduct,
                 $productStocksFromStoresIndexedByStoreId[$storeId] ?? null,
                 $quantityOnAllStocks,
-                $domainId
+                $domainId,
             );
 
             $maximumDayAvailabilityByStoreId[$storeId] = max(
                 $maximumDayAvailability,
-                $productDayAvailability
+                $productDayAvailability,
             );
         }
 
@@ -537,7 +526,7 @@ class ProductAvailabilityFacade
         QuantifiedProduct $quantifiedProduct,
         ?ProductStock $productStock,
         int $quantityOnAllStocks,
-        int $domainId
+        int $domainId,
     ): int {
         //php_int_max serves as a numerical indicator of unavailability of goods
         $productBetweenStockTransferDays = PHP_INT_MAX;

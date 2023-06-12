@@ -17,41 +17,29 @@ abstract class AbstractFilterQuery
     protected const DEFAULT_FROM = 0;
 
     /**
-     * @var array
+     * @var array<int, mixed>
      */
     protected array $filters = [];
 
     /**
-     * @var string
-     */
-    protected string $indexName;
-
-    /**
-     * @var array
+     * @var array<string, string>
      */
     protected array $sorting = [];
 
-    /**
-     * @var int
-     */
     protected int $limit = self::DEFAULT_LIMIT;
 
     /**
-     * @var array
+     * @var array<string, \stdClass>
      */
     protected array $match;
 
-    /**
-     * @var int
-     */
     protected int $from = self::DEFAULT_FROM;
 
     /**
      * @param string $indexName
      */
-    public function __construct(string $indexName)
+    public function __construct(protected string $indexName)
     {
-        $this->indexName = $indexName;
         $this->match = [
             'match_all' => new stdClass(),
         ];

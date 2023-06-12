@@ -25,11 +25,6 @@ use Shopsys\FrameworkBundle\Model\Sitemap\SitemapRepository as BaseSitemapReposi
 class SitemapRepository extends BaseSitemapRepository
 {
     /**
-     * @var \App\Model\Blog\Article\BlogArticleRepository
-     */
-    private $blogArticleRepository;
-
-    /**
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \App\Model\Category\CategoryRepository $categoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
@@ -39,11 +34,9 @@ class SitemapRepository extends BaseSitemapRepository
         ProductRepository $productRepository,
         CategoryRepository $categoryRepository,
         ArticleRepository $articleRepository,
-        BlogArticleRepository $blogArticleRepository
+        private BlogArticleRepository $blogArticleRepository,
     ) {
         parent::__construct($productRepository, $categoryRepository, $articleRepository);
-
-        $this->blogArticleRepository = $blogArticleRepository;
     }
 
     /**
@@ -64,7 +57,7 @@ class SitemapRepository extends BaseSitemapRepository
                 'fu.routeName = :productDetailRouteName
                 AND fu.entityId = p.id
                 AND fu.domainId = :domainId
-                AND fu.main = TRUE'
+                AND fu.main = TRUE',
             )
             ->andWhere('p.variantType != :variantTypeMain')
             ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
@@ -100,7 +93,7 @@ class SitemapRepository extends BaseSitemapRepository
                 'fu.routeName = :categorySeoMixRouteName
                 AND fu.entityId = rcsm
                 AND fu.domainId = :domainId
-                AND fu.main = TRUE'
+                AND fu.main = TRUE',
             )
             ->setParameter('categorySeoMixRouteName', 'front_category_seo')
             ->setParameter('domainId', $domainConfig->getId());
@@ -125,7 +118,7 @@ class SitemapRepository extends BaseSitemapRepository
                 'fu.routeName = :productDetailRouteName
                 AND fu.entityId = p.id
                 AND fu.domainId = :domainId
-                AND fu.main = TRUE'
+                AND fu.main = TRUE',
             )
             ->andWhere('p.variantType != :variantTypeMain')
             ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
@@ -161,7 +154,7 @@ class SitemapRepository extends BaseSitemapRepository
                 'fu.routeName = :articlesRouteName
                 AND fu.entityId = a.id
                 AND fu.domainId = :domainId
-                AND fu.main = TRUE'
+                AND fu.main = TRUE',
             )
             ->setParameter('articlesRouteName', 'front_article_detail')
             ->setParameter('domainId', $domainConfig->getId());
@@ -177,7 +170,7 @@ class SitemapRepository extends BaseSitemapRepository
     {
         $queryBuilder = $this->blogArticleRepository->getVisibleBlogArticlesByDomainIdAndLocaleQueryBuilder(
             $domainConfig->getId(),
-            $domainConfig->getLocale()
+            $domainConfig->getLocale(),
         );
         $queryBuilder
             ->select('fu.slug')
@@ -188,7 +181,7 @@ class SitemapRepository extends BaseSitemapRepository
                 'fu.routeName = :blogArticlesRouteName
                 AND fu.entityId = ba.id
                 AND fu.domainId = :domainId
-                AND fu.main = TRUE'
+                AND fu.main = TRUE',
             )
             ->setParameter('blogArticlesRouteName', 'front_blogarticle_detail')
             ->setParameter('domainId', $domainConfig->getId());

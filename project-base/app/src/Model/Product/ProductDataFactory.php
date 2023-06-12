@@ -90,7 +90,7 @@ class ProductDataFactory extends BaseProductDataFactory
             $productParameterValueDataFactory,
             $pricingGroupFacade,
             $availabilityFacade,
-            $imageUploadDataFactory
+            $imageUploadDataFactory,
         );
     }
 
@@ -200,7 +200,7 @@ class ProductDataFactory extends BaseProductDataFactory
             $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
                 $domainId,
                 'front_product_detail',
-                $product->getId()
+                $product->getId(),
             );
             $productData->urls->mainFriendlyUrlsByDomainId[$domainId] = $mainFriendlyUrl;
         }
@@ -259,14 +259,14 @@ class ProductDataFactory extends BaseProductDataFactory
             if ($product->getAssemblyInstructionCode($domainId) !== null) {
                 $productData->assemblyInstructionFileUrl[$domainId] = $this->productFacade->getProductTransferredFileUrl(
                     $product->getProductFileNameByType($domainId, Product::FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE),
-                    $domainConfig->getUrl()
+                    $domainConfig->getUrl(),
                 );
             }
 
             if ($product->getProductTypePlanCode($domainId) !== null) {
                 $productData->productTypePlanFileUrl[$domainId] = $this->productFacade->getProductTransferredFileUrl(
                     $product->getProductFileNameByType($domainId, Product::FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE),
-                    $domainConfig->getUrl()
+                    $domainConfig->getUrl(),
                 );
             }
         }

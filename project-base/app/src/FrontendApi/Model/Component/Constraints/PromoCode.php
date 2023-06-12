@@ -36,6 +36,10 @@ class PromoCode extends Constraint
 
     public string $limitNotReachedMessage = 'The promo code can only be used for a higher total price.';
 
+    /**
+     * @var array<string, string>
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+     */
     protected static $errorNames = [
         self::INVALID_ERROR => 'INVALID_ERROR',
         self::NOT_YET_VALID_ERROR => 'NOT_YET_VALID_ERROR',

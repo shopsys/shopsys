@@ -7,23 +7,9 @@ namespace App\Component\Doctrine;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender as BaseQueryBuilderExtender;
-use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
 class QueryBuilderExtender extends BaseQueryBuilderExtender
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver
-     */
-    protected $entityNameResolver;
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     */
-    public function __construct(EntityNameResolver $entityNameResolver)
-    {
-        $this->entityNameResolver = $entityNameResolver;
-    }
-
     /**
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string $class
@@ -51,7 +37,7 @@ class QueryBuilderExtender extends BaseQueryBuilderExtender
                 $resolvedClass,
                 $alias,
                 Join::WITH,
-                $condition
+                $condition,
             );
         } else {
             $queryBuilder->andWhere($condition);

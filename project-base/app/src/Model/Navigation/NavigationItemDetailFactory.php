@@ -9,17 +9,11 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 class NavigationItemDetailFactory
 {
     /**
-     * @var \App\Model\Navigation\NavigationItemCategoryFacade
-     */
-    private NavigationItemCategoryFacade $navigationItemCategoryFacade;
-
-    /**
      * @param \App\Model\Navigation\NavigationItemCategoryFacade $navigationItemCategoryFacade
      */
     public function __construct(
-        NavigationItemCategoryFacade $navigationItemCategoryFacade
+        private NavigationItemCategoryFacade $navigationItemCategoryFacade,
     ) {
-        $this->navigationItemCategoryFacade = $navigationItemCategoryFacade;
     }
 
     /**
@@ -39,7 +33,7 @@ class NavigationItemDetailFactory
             }
             $details[] = new NavigationItemDetail(
                 $navigationItem,
-                $categoriesIndexedByNavigationItemIdAndColumnNumber[$navigationItem->getId()]
+                $categoriesIndexedByNavigationItemIdAndColumnNumber[$navigationItem->getId()],
             );
         }
 

@@ -12,16 +12,10 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class FriendlyUrlDataFixture extends AbstractReferenceFixture
 {
     /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private FriendlyUrlFacade $friendlyUrlFacade;
-
-    /**
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
-    public function __construct(FriendlyUrlFacade $friendlyUrlFacade)
+    public function __construct(private FriendlyUrlFacade $friendlyUrlFacade)
     {
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
     }
 
     /**
@@ -33,7 +27,7 @@ class FriendlyUrlDataFixture extends AbstractReferenceFixture
             'front_product_detail',
             9999,
             'Unused friendly URL',
-            Domain::FIRST_DOMAIN_ID
+            Domain::FIRST_DOMAIN_ID,
         );
     }
 }

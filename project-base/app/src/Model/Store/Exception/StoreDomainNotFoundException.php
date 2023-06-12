@@ -19,7 +19,7 @@ class StoreDomainNotFoundException extends Exception implements StoreException
         $message = sprintf(
             'StoreDomain for store %s and domain ID %d not found.',
             $storeDescription,
-            $domainId
+            $domainId,
         );
 
         parent::__construct($message, 0, $previous);

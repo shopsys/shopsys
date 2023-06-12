@@ -11,16 +11,10 @@ use Doctrine\ORM\Query\ResultSetMappingBuilder;
 class ImageRepository
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private EntityManagerInterface $entityManager;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
     }
 
     /**
@@ -58,8 +52,11 @@ class ImageRepository
      * @param string|null $type
      * @return \App\Component\Image\Image[]|null[]
      */
-    public function getImagesByTypeAndPositionIndexedByEntityId(array $entityIds, string $entityName, ?string $type): array
-    {
+    public function getImagesByTypeAndPositionIndexedByEntityId(
+        array $entityIds,
+        string $entityName,
+        ?string $type,
+    ): array {
         $rsm = new ResultSetMappingBuilder($this->entityManager);
         $rsm->addRootEntityFromClassMetadata(Image::class, 'i');
 
@@ -82,7 +79,7 @@ class ImageRepository
             AND i.entity_id = isub.entity_id
             AND COALESCE(i.type, \'\') = isub.type
             AND COALESCE(i.position, 0) = isub.min',
-            $rsm
+            $rsm,
         );
 
         $queryBuilder->setParameter('entityName', $entityName);

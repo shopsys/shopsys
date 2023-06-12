@@ -17,25 +17,21 @@ use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 class MergeCartsTest extends GraphQlWithLoginTestCase
 {
     /**
-     * @var \App\Model\Cart\CartFacade
      * @inject
      */
     private CartFacade $cartFacade;
 
     /**
-     * @var \App\Model\Customer\User\CustomerUserIdentifierFactory
      * @inject
      */
     private CustomerUserIdentifierFactory $customerUserIdentifierFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
      * @inject
      */
     private CurrentCustomerUser $currentCustomerUser;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider
      * @inject
      */
     private FrontendCustomerUserProvider $frontendCustomerUserProvider;
@@ -71,7 +67,7 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
 
         $response = $this->getResponseDataForGraphQlType(
             $this->getResponseContentForQuery($loginMutationWithCartUuid),
-            'Login'
+            'Login',
         );
 
         $cart = $this->findCartOfCurrentCustomer();
@@ -129,7 +125,7 @@ class MergeCartsTest extends GraphQlWithLoginTestCase
 
         $response = $this->getResponseDataForGraphQlType(
             $this->getResponseContentForQuery($registerMutationWithCartUuid),
-            'Register'
+            'Register',
         );
 
         $cart = $this->findCartOfCustomerByEmail('test@example.com');

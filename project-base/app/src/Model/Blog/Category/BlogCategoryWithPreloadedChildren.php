@@ -7,25 +7,13 @@ namespace App\Model\Blog\Category;
 class BlogCategoryWithPreloadedChildren
 {
     /**
-     * @var \App\Model\Blog\Category\BlogCategory
-     */
-    private $blogCategory;
-
-    /**
-     * @var \App\Model\Blog\Category\BlogCategoryWithPreloadedChildren[]
-     */
-    private $children;
-
-    /**
      * @param \App\Model\Blog\Category\BlogCategory $blogCategory
      * @param \App\Model\Blog\Category\BlogCategoryWithPreloadedChildren[] $children
      */
     public function __construct(
-        BlogCategory $blogCategory,
-        array $children
+        private BlogCategory $blogCategory,
+        private array $children,
     ) {
-        $this->blogCategory = $blogCategory;
-        $this->children = $children;
     }
 
     /**

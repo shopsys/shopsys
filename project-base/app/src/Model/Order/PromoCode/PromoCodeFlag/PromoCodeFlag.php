@@ -45,7 +45,7 @@ class PromoCodeFlag
      */
     public function __construct(
         Flag $flag,
-        string $type
+        string $type,
     ) {
         $this->flag = $flag;
         $this->type = $type;

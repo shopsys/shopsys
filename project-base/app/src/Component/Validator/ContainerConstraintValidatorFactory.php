@@ -11,26 +11,16 @@ use Symfony\Component\Validator\ContainerConstraintValidatorFactory as SymfonyCo
 class ContainerConstraintValidatorFactory extends SymfonyContainerConstraintValidatorFactory
 {
     /**
-     * @var \Psr\Container\ContainerInterface
-     */
-    private $appContainer;
-
-    /**
-     * @var string[]
-     */
-    private $validatorClassByServiceId;
-
-    /**
      * @param \Psr\Container\ContainerInterface $validatorContainer
      * @param \Psr\Container\ContainerInterface $appContainer
      * @param string[] $validatorClassByServiceId
      */
-    public function __construct(ContainerInterface $validatorContainer, ContainerInterface $appContainer, array $validatorClassByServiceId)
-    {
+    public function __construct(
+        ContainerInterface $validatorContainer,
+        private ContainerInterface $appContainer,
+        private array $validatorClassByServiceId,
+    ) {
         parent::__construct($validatorContainer);
-
-        $this->appContainer = $appContainer;
-        $this->validatorClassByServiceId = $validatorClassByServiceId;
     }
 
     /**

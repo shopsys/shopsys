@@ -17,30 +17,15 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class PaymentInCartValidator extends ConstraintValidator
 {
     /**
-     * @var \App\FrontendApi\Model\Payment\PaymentValidationFacade
-     */
-    private PaymentValidationFacade $paymentValidationFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
-     * @var \App\Model\Payment\PaymentFacade
-     */
-    private PaymentFacade $paymentFacade;
-
-    /**
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\FrontendApi\Model\Payment\PaymentValidationFacade $paymentValidationFacade
      */
-    public function __construct(PaymentFacade $paymentFacade, Domain $domain, PaymentValidationFacade $paymentValidationFacade)
-    {
-        $this->paymentFacade = $paymentFacade;
-        $this->domain = $domain;
-        $this->paymentValidationFacade = $paymentValidationFacade;
+    public function __construct(
+        private PaymentFacade $paymentFacade,
+        private Domain $domain,
+        private PaymentValidationFacade $paymentValidationFacade,
+    ) {
     }
 
     /**
@@ -72,8 +57,11 @@ class PaymentInCartValidator extends ConstraintValidator
      * @param string|null $cartUuid
      * @param \App\FrontendApi\Model\Component\Constraints\PaymentInCart $constraint
      */
-    private function checkPaymentTransportRelation(Payment $payment, ?string $cartUuid, PaymentInCart $constraint): void
-    {
+    private function checkPaymentTransportRelation(
+        Payment $payment,
+        ?string $cartUuid,
+        PaymentInCart $constraint,
+    ): void {
         try {
             $this->paymentValidationFacade->checkPaymentTransportRelation($payment, $cartUuid);
         } catch (InvalidPaymentTransportCombinationException $exception) {

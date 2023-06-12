@@ -23,27 +23,10 @@ class ImportPoFilesCommand extends Command
     public const INPUT_FILES_TO_PROCESS = 'messages';
     public const TYPE = 'po';
 
-    /**
-     * @var \JMS\TranslationBundle\Translation\Loader\SymfonyLoaderAdapter
-     */
-    private $fileLoader;
+    private SymfonyLoaderAdapter $fileLoader;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Translation\PoDumper
-     */
-    private $poDumper;
-
-    /**
-     * @var \Symfony\Component\Filesystem\Filesystem
-     */
-    private $filesystem;
-
-    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      * @var string
      */
     protected static $defaultName = 'translation:import';
@@ -54,12 +37,13 @@ class ImportPoFilesCommand extends Command
      * @param \Shopsys\FrameworkBundle\Component\Translation\PoDumper $poDumper
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem
      */
-    public function __construct(PoFileLoader $fileLoader, Domain $domain, PoDumper $poDumper, Filesystem $filesystem)
-    {
-        $this->domain = $domain;
+    public function __construct(
+        PoFileLoader $fileLoader,
+        private Domain $domain,
+        private PoDumper $poDumper,
+        private Filesystem $filesystem,
+    ) {
         $this->fileLoader = new SymfonyLoaderAdapter($fileLoader);
-        $this->poDumper = $poDumper;
-        $this->filesystem = $filesystem;
 
         parent::__construct();
     }

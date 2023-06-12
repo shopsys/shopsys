@@ -17,21 +17,14 @@ use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory 
 class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade
-     */
-    protected CountryFacade $countryFacade;
-
-    /**
      * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      */
     public function __construct(
         CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
-        CountryFacade $countryFacade
+        protected CountryFacade $countryFacade,
     ) {
         parent::__construct($customerUserUpdateDataFactory);
-
-        $this->countryFacade = $countryFacade;
     }
 
     /**
@@ -39,8 +32,10 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \App\Model\Customer\User\CustomerUserUpdateData
      */
-    public function createFromCustomerUserWithArgument(CustomerUser $customerUser, Argument $argument): CustomerUserUpdateData
-    {
+    public function createFromCustomerUserWithArgument(
+        CustomerUser $customerUser,
+        Argument $argument,
+    ): CustomerUserUpdateData {
         $input = $argument['input'];
 
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);

@@ -41,8 +41,8 @@ class ProductImagesQuery extends ImagesQuery
                 $productId,
                 self::PRODUCT_ENTITY_NAME,
                 $sizeConfigs,
-                $type
-            )
+                $type,
+            ),
         );
     }
 }

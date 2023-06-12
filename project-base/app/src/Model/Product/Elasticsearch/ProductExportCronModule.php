@@ -15,11 +15,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class ProductExportCronModule extends BaseProductExportCronModule
 {
     /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    private $eventDispatcher;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex $index
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade $indexFacade
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
@@ -31,11 +26,9 @@ class ProductExportCronModule extends BaseProductExportCronModule
         IndexFacade $indexFacade,
         IndexDefinitionLoader $indexDefinitionLoader,
         Domain $domain,
-        EventDispatcherInterface $eventDispatcher
+        private EventDispatcherInterface $eventDispatcher,
     ) {
         parent::__construct($index, $indexFacade, $indexDefinitionLoader, $domain);
-
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function run()
@@ -44,7 +37,7 @@ class ProductExportCronModule extends BaseProductExportCronModule
 
         $this->eventDispatcher->dispatch(
             new IndexExportedEvent($this->index),
-            IndexExportedEvent::INDEX_EXPORTED
+            IndexExportedEvent::INDEX_EXPORTED,
         );
     }
 }

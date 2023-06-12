@@ -54,26 +54,6 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildrenFactory;
 class CategoryFacade extends BaseCategoryFacade
 {
     /**
-     * @var \App\Model\Category\CategoryParameterFacade
-     */
-    private $categoryParameterFacade;
-
-    /**
-     * @var \App\Model\Category\LinkedCategory\LinkedCategoryFacade
-     */
-    private LinkedCategoryFacade $linkedCategoryFacade;
-
-    /**
-     * @var \App\Model\Product\ProductOnCurrentDomainElasticFacade
-     */
-    private ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade;
-
-    /**
-     * @var \App\Model\Product\ProductFacade
-     */
-    private ProductFacade $productFacade;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Category\CategoryRepository $categoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -100,10 +80,10 @@ class CategoryFacade extends BaseCategoryFacade
         CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory,
         CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory,
         CategoryFactoryInterface $categoryFactory,
-        CategoryParameterFacade $categoryParameterFacade,
-        LinkedCategoryFacade $linkedCategoryFacade,
-        ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade,
-        ProductFacade $productFacade
+        private CategoryParameterFacade $categoryParameterFacade,
+        private LinkedCategoryFacade $linkedCategoryFacade,
+        private ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade,
+        private ProductFacade $productFacade,
     ) {
         parent::__construct(
             $em,
@@ -115,13 +95,8 @@ class CategoryFacade extends BaseCategoryFacade
             $pluginCrudExtensionFacade,
             $categoryWithPreloadedChildrenFactory,
             $categoryWithLazyLoadedVisibleChildrenFactory,
-            $categoryFactory
+            $categoryFactory,
         );
-
-        $this->categoryParameterFacade = $categoryParameterFacade;
-        $this->linkedCategoryFacade = $linkedCategoryFacade;
-        $this->productOnCurrentDomainElasticFacade = $productOnCurrentDomainElasticFacade;
-        $this->productFacade = $productFacade;
     }
 
     /**
@@ -220,8 +195,11 @@ class CategoryFacade extends BaseCategoryFacade
      * @param string $delimiter
      * @return string
      */
-    public function getCategoriesNamesInPathAsString(Category $destinationCategory, string $locale, string $delimiter = '/'): string
-    {
+    public function getCategoriesNamesInPathAsString(
+        Category $destinationCategory,
+        string $locale,
+        string $delimiter = '/',
+    ): string {
         $categoriesInPath = $this->getCategoriesInPath($destinationCategory);
 
         $categoriesNamesInPath = [];
@@ -295,8 +273,10 @@ class CategoryFacade extends BaseCategoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \App\Model\Category\Category[]
      */
-    public function getAllVisibleChildrenByCategoryAndDomainConfig(Category $category, DomainConfig $domainConfig): array
-    {
+    public function getAllVisibleChildrenByCategoryAndDomainConfig(
+        Category $category,
+        DomainConfig $domainConfig,
+    ): array {
         return $this->categoryRepository->getAllVisibleChildrenByCategoryAndDomainConfig($category, $domainConfig);
     }
 }

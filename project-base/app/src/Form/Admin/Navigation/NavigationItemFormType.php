@@ -23,19 +23,9 @@ use Symfony\Component\Validator\Constraints;
 class NavigationItemFormType extends AbstractType
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer
-     */
-    private $removeDuplicatesTransformer;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer
-     */
-    private $categoriesIdsToCategoriesTransformer;
-
-    /**
      * @var \App\Model\Category\Category[]
      */
-    private $categoryPaths;
+    private array $categoryPaths;
 
     /**
      * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer
@@ -43,13 +33,10 @@ class NavigationItemFormType extends AbstractType
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      */
     public function __construct(
-        RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer,
-        CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer,
-        CategoryFacade $categoryFacade
+        private RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer,
+        private CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer,
+        CategoryFacade $categoryFacade,
     ) {
-        $this->removeDuplicatesTransformer = $removeDuplicatesTransformer;
-        $this->categoriesIdsToCategoriesTransformer = $categoriesIdsToCategoriesTransformer;
-
         $this->categoryPaths = $categoryFacade->getFullPathsIndexedByIdsForDomain(Domain::FIRST_DOMAIN_ID, LocaleHelper::LOCALE_CS);
     }
 
@@ -116,7 +103,7 @@ class NavigationItemFormType extends AbstractType
         string $fieldName,
         string $label,
         int $index,
-        FormBuilderInterface $builder
+        FormBuilderInterface $builder,
     ): FormBuilderInterface {
         return $builder
             ->create($fieldName, SortableValuesType::class, [
@@ -139,32 +126,32 @@ class NavigationItemFormType extends AbstractType
                 'categoriesInFirstColumn',
                 'Kategorie prvního sloupce',
                 1,
-                $builder
-            )
+                $builder,
+            ),
         )
         ->add(
             $this->createCategoryColumnBuilder(
                 'categoriesInSecondColumn',
                 'Kategorie druhého sloupce',
                 2,
-                $builder
-            )
+                $builder,
+            ),
         )
         ->add(
             $this->createCategoryColumnBuilder(
                 'categoriesInThirdColumn',
                 'Kategorie třetího sloupce',
                 3,
-                $builder
-            )
+                $builder,
+            ),
         )
         ->add(
             $this->createCategoryColumnBuilder(
                 'categoriesInFourthColumn',
                 'Kategorie čtvrtého sloupce',
                 4,
-                $builder
-            )
+                $builder,
+            ),
         );
     }
 }

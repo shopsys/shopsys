@@ -26,7 +26,7 @@ class CategoryQuery extends BaseCategoryQuery
         CategoryFacade $categoryFacade,
         Domain $domain,
         FriendlyUrlFacade $friendlyUrlFacade,
-        private readonly ProductFilterFacade $productFilterFacade
+        private readonly ProductFilterFacade $productFilterFacade,
     ) {
         parent::__construct($categoryFacade, $domain, $friendlyUrlFacade);
     }
@@ -68,7 +68,7 @@ class CategoryQuery extends BaseCategoryQuery
 
         $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForFlag(
             $argument,
-            $flag
+            $flag,
         );
 
         $productFilterData->flags = [$flag];

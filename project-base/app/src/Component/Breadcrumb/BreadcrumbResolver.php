@@ -15,7 +15,7 @@ class BreadcrumbResolver extends BaseBreadcrumbResolver
     /**
      * @var \App\Component\Breadcrumb\DomainBreadcrumbGeneratorInterface[]|\Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface[]
      */
-    protected $breadcrumbGeneratorsByRouteName;
+    protected array $breadcrumbGeneratorsByRouteName;
 
     /**
      * @param int $domainId
@@ -24,8 +24,12 @@ class BreadcrumbResolver extends BaseBreadcrumbResolver
      * @param string|null $locale
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
-    public function resolveBreadcrumbItemsOnDomain(int $domainId, string $routeName, array $routeParameters = [], ?string $locale = null): array
-    {
+    public function resolveBreadcrumbItemsOnDomain(
+        int $domainId,
+        string $routeName,
+        array $routeParameters = [],
+        ?string $locale = null,
+    ): array {
         if (!$this->hasGeneratorForRoute($routeName)) {
             throw new BreadcrumbGeneratorNotFoundException($routeName);
         }
@@ -37,8 +41,8 @@ class BreadcrumbResolver extends BaseBreadcrumbResolver
                 sprintf(
                     'Breadcrumb generator for route "%s" must implement "%s" to be able generate breadcrumbs for different domain ',
                     $routeName,
-                    DomainBreadcrumbGeneratorInterface::class
-                )
+                    DomainBreadcrumbGeneratorInterface::class,
+                ),
             );
         }
 

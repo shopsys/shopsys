@@ -20,19 +20,12 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 class BrandFilterChoiceRepository extends BaseBrandFilterChoiceRepository
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(ProductRepository $productRepository, Domain $domain)
+    public function __construct(ProductRepository $productRepository, private Domain $domain)
     {
         parent::__construct($productRepository);
-
-        $this->domain = $domain;
     }
 
     /**

@@ -9,17 +9,11 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class TransportTypeDataFactory
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected Domain $domain;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        Domain $domain
+        protected Domain $domain,
     ) {
-        $this->domain = $domain;
     }
 
     /**

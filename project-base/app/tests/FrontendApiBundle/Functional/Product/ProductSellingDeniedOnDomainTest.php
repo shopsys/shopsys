@@ -15,25 +15,21 @@ use function sleep;
 class ProductSellingDeniedOnDomainTest extends GraphQlTestCase
 {
     /**
-     * @var \App\Model\Product\ProductSellingDeniedRecalculator
      * @inject
      */
     private ProductSellingDeniedRecalculator $productSellingDeniedRecalculator;
 
     /**
-     * @var \App\Model\Product\ProductFacade
      * @inject
      */
     private ProductFacade $productFacade;
 
     /**
-     * @var \App\Model\Product\ProductDataFactory
      * @inject
      */
     private ProductDataFactory $productDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportSubscriber
      * @inject
      */
     private ProductExportSubscriber $productExportSubscriber;

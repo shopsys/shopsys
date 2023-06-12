@@ -15,16 +15,10 @@ use Symfony\Component\Validator\Constraints;
 class PromoCodeLimitType extends AbstractType
 {
     /**
-     * @var \App\Form\Admin\Transformer\PromoCodeLimitTransformer
-     */
-    private $promoCodeLimitTransformer;
-
-    /**
      * @param \App\Form\Admin\Transformer\PromoCodeLimitTransformer $promoCodeLimitTransformer
      */
-    public function __construct(PromoCodeLimitTransformer $promoCodeLimitTransformer)
+    public function __construct(private PromoCodeLimitTransformer $promoCodeLimitTransformer)
     {
-        $this->promoCodeLimitTransformer = $promoCodeLimitTransformer;
     }
 
     /**
@@ -70,7 +64,7 @@ class PromoCodeLimitType extends AbstractType
         $builder->add(
             'discount',
             NumberType::class,
-            $options
+            $options,
         );
 
         $builder->addModelTransformer($this->promoCodeLimitTransformer);

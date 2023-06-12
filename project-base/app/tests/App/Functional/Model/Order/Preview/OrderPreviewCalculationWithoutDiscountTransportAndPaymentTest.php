@@ -19,7 +19,6 @@ use Tests\App\Test\TransactionFunctionalTestCase;
 class OrderPreviewCalculationWithoutDiscountTransportAndPaymentTest extends TransactionFunctionalTestCase
 {
     /**
-     * @var \App\Model\Order\Preview\OrderPreviewCalculation
      * @inject
      */
     private OrderPreviewCalculation $orderPreviewCalculation;
@@ -34,7 +33,7 @@ class OrderPreviewCalculationWithoutDiscountTransportAndPaymentTest extends Tran
 
         $quantifiedProduct = new QuantifiedProduct(
             $product,
-            $productQuantity
+            $productQuantity,
         );
 
         $quantifiedProducts = [
@@ -59,7 +58,7 @@ class OrderPreviewCalculationWithoutDiscountTransportAndPaymentTest extends Tran
             null,
             null,
             null,
-            $validPromoCode
+            $validPromoCode,
         );
 
         $totalPrice = new Price(Money::createFromFloat(578.35, 2), Money::createFromFloat(699.80, 2));

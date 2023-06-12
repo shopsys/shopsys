@@ -14,16 +14,10 @@ class FlagTransferAkeneoFacade
     public const FLAG_GROUP_NAME = 'Flag';
 
     /**
-     * @var \Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface
-     */
-    private $akeneoClient;
-
-    /**
      * @param \Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface $akeneoClient
      */
-    public function __construct(AkeneoPimEnterpriseClientInterface $akeneoClient)
+    public function __construct(private AkeneoPimEnterpriseClientInterface $akeneoClient)
     {
-        $this->akeneoClient = $akeneoClient;
     }
 
     /**

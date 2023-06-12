@@ -15,19 +15,16 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 class OrderWithPromoCodeTest extends AbstractOrderTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension
      * @inject
      */
     private NumberFormatterExtension $numberFormatterExtension;
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeFacade
      * @inject
      */
     private PromoCodeFacade $promoCodeFacade;
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeDataFactory
      * @inject
      */
     private PromoCodeDataFactory $promoCodeDataFactory;
@@ -229,7 +226,7 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
             '%s %s - %s',
             t('Promo code', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
             $this->numberFormatterExtension->formatPercent(-10, $firstDomainLocale),
-            t('Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)
+            t('Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
         );
     }
 

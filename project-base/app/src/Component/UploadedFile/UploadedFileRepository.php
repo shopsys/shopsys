@@ -27,8 +27,11 @@ class UploadedFileRepository extends BaseUploadedFileRepository
      * @param string $type
      * @return int
      */
-    public function getUploadedFilesCountByEntityIndexedById(string $entityName, int $entityId, string $type = 'default'): int
-    {
+    public function getUploadedFilesCountByEntityIndexedById(
+        string $entityName,
+        int $entityId,
+        string $type = 'default',
+    ): int {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('COUNT(uf)')
             ->from(UploadedFile::class, 'uf', 'uf.id')

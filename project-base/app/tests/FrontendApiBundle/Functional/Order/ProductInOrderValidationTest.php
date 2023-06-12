@@ -11,7 +11,6 @@ use App\Model\Product\ProductFacade;
 class ProductInOrderValidationTest extends AbstractOrderTestCase
 {
     /**
-     * @var \App\Model\Product\ProductFacade
      * @inject
      */
     private ProductFacade $productFacade;
@@ -78,7 +77,7 @@ class ProductInOrderValidationTest extends AbstractOrderTestCase
 
         $cart = $this->getResponseDataForGraphQlType(
             $this->getResponseContentForQuery($addToCartMutation),
-            'AddToCart'
+            'AddToCart',
         )['cart'];
         $cartUuid = $cart['uuid'];
         $cartItemUuid = $cart['items'][0]['uuid'];

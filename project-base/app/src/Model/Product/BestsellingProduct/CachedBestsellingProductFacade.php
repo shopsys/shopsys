@@ -37,8 +37,11 @@ class CachedBestsellingProductFacade extends BaseCachedBestsellingProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return int[]
      */
-    public function getAllOfferedBestsellingProductIds(int $domainId, Category $category, PricingGroup $pricingGroup): array
-    {
+    public function getAllOfferedBestsellingProductIds(
+        int $domainId,
+        Category $category,
+        PricingGroup $pricingGroup,
+    ): array {
         $cacheId = $this->getCacheId($domainId, $category, $pricingGroup);
 
         return $this->cache->get(
@@ -49,16 +52,16 @@ class CachedBestsellingProductFacade extends BaseCachedBestsellingProductFacade
                 $bestsellingProducts = $this->bestsellingProductFacade->getAllOfferedBestsellingProducts(
                     $domainId,
                     $category,
-                    $pricingGroup
+                    $pricingGroup,
                 );
 
                 return array_map(
                     function (Product $product): int {
                         return $product->getId();
                     },
-                    $bestsellingProducts
+                    $bestsellingProducts,
                 );
-            }
+            },
         );
     }
 }

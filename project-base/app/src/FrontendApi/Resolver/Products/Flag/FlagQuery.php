@@ -24,7 +24,7 @@ class FlagQuery extends AbstractQuery
     public function __construct(
         private readonly FlagFacade $flagFacade,
         private readonly Domain $domain,
-        private readonly FriendlyUrlFacade $friendlyUrlFacade
+        private readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
     }
 
@@ -62,7 +62,7 @@ class FlagQuery extends AbstractQuery
             $friendlyUrl = $this->friendlyUrlFacade->getFriendlyUrlByRouteNameAndSlug(
                 $this->domain->getId(),
                 'front_flag_detail',
-                $urlSlug
+                $urlSlug,
             );
 
             return $this->flagFacade->getVisibleFlagById($friendlyUrl->getEntityId(), $this->domain->getLocale());

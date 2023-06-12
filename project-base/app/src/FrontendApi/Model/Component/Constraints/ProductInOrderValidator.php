@@ -13,25 +13,13 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class ProductInOrderValidator extends ConstraintValidator
 {
     /**
-     * @var \App\Model\Customer\User\CurrentCustomerUser
-     */
-    private CurrentCustomerUser $currentCustomerUser;
-
-    /**
-     * @var \App\FrontendApi\Model\Cart\CartFacade
-     */
-    private CartFacade $cartFacade;
-
-    /**
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(
-        CurrentCustomerUser $currentCustomerUser,
-        CartFacade $cartFacade
+        private CurrentCustomerUser $currentCustomerUser,
+        private CartFacade $cartFacade,
     ) {
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->cartFacade = $cartFacade;
     }
 
     /**

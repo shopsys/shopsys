@@ -11,33 +11,15 @@ use Doctrine\ORM\QueryBuilder;
 class NotificationBarFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var \App\Model\NotificationBar\NotificationBarRepository
-     */
-    private $notificationBarRepository;
-
-    /**
-     * @var \App\Component\Image\ImageFacade
-     */
-    private $imageFacade;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\NotificationBar\NotificationBarRepository $notificationBarRepository
      * @param \App\Component\Image\ImageFacade $imageFacade
      */
     public function __construct(
-        EntityManagerInterface $em,
-        NotificationBarRepository $notificationBarRepository,
-        ImageFacade $imageFacade
+        private EntityManagerInterface $em,
+        private NotificationBarRepository $notificationBarRepository,
+        private ImageFacade $imageFacade,
     ) {
-        $this->em = $em;
-        $this->notificationBarRepository = $notificationBarRepository;
-        $this->imageFacade = $imageFacade;
     }
 
     /**

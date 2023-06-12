@@ -11,31 +11,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class ProductPromoCodeFiller
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeProductRepository
-     */
-    private PromoCodeProductRepository $promoCodeProductRepository;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeCategoryRepository
-     */
-    private PromoCodeCategoryRepository $promoCodeCategoryRepository;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeBrandRepository
-     */
-    private PromoCodeBrandRepository $promoCodeBrandRepository;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository
-     */
-    private PromoCodeFlagRepository $promoCodeFlagRepository;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
@@ -43,17 +18,12 @@ class ProductPromoCodeFiller
      * @param \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository $promoCodeFlagRepository
      */
     public function __construct(
-        Domain $domain,
-        PromoCodeProductRepository $promoCodeProductRepository,
-        PromoCodeCategoryRepository $promoCodeCategoryRepository,
-        PromoCodeBrandRepository $promoCodeBrandRepository,
-        PromoCodeFlagRepository $promoCodeFlagRepository
+        private Domain $domain,
+        private PromoCodeProductRepository $promoCodeProductRepository,
+        private PromoCodeCategoryRepository $promoCodeCategoryRepository,
+        private PromoCodeBrandRepository $promoCodeBrandRepository,
+        private PromoCodeFlagRepository $promoCodeFlagRepository,
     ) {
-        $this->domain = $domain;
-        $this->promoCodeProductRepository = $promoCodeProductRepository;
-        $this->promoCodeCategoryRepository = $promoCodeCategoryRepository;
-        $this->promoCodeBrandRepository = $promoCodeBrandRepository;
-        $this->promoCodeFlagRepository = $promoCodeFlagRepository;
     }
 
     /**
@@ -62,8 +32,11 @@ class ProductPromoCodeFiller
      * @param \App\Model\Order\PromoCode\PromoCode $promoCode
      * @return \App\Model\Order\PromoCode\PromoCode[]
      */
-    public function getPromoCodePerProductByDomainId(array $quantifiedProducts, int $domainId, PromoCode $promoCode): array
-    {
+    public function getPromoCodePerProductByDomainId(
+        array $quantifiedProducts,
+        int $domainId,
+        PromoCode $promoCode,
+    ): array {
         $allowedProductIds = $this->promoCodeProductRepository->getProductIdsByPromoCodeId($promoCode->getId());
         $allowedProductIdsByCriteria = $this->getAllowedProductIdsForBrandsAndCategories($promoCode, $domainId);
 
@@ -80,8 +53,10 @@ class ProductPromoCodeFiller
      * @param \App\Model\Order\PromoCode\PromoCode $validEnteredPromoCode
      * @return \App\Model\Order\PromoCode\PromoCode[]
      */
-    private function fillPromoCodeDiscountsForAllProducts(array $quantifiedProducts, PromoCode $validEnteredPromoCode): array
-    {
+    private function fillPromoCodeDiscountsForAllProducts(
+        array $quantifiedProducts,
+        PromoCode $validEnteredPromoCode,
+    ): array {
         $promoCodePercentPerProduct = [];
         foreach ($quantifiedProducts as $quantifiedProduct) {
             /** @var \App\Model\Product\Product $product */
@@ -103,8 +78,11 @@ class ProductPromoCodeFiller
      * @param \App\Model\Order\PromoCode\PromoCode $validEnteredPromoCode
      * @return \App\Model\Order\PromoCode\PromoCode[]
      */
-    private function fillPromoCodes(array $quantifiedProducts, array $allowedProductIds, PromoCode $validEnteredPromoCode): array
-    {
+    private function fillPromoCodes(
+        array $quantifiedProducts,
+        array $allowedProductIds,
+        PromoCode $validEnteredPromoCode,
+    ): array {
         $promoCodeDiscountPercentPerProduct = [];
         foreach ($quantifiedProducts as $quantifiedProduct) {
             /** @var \App\Model\Product\Product $product */
@@ -158,10 +136,10 @@ class ProductPromoCodeFiller
     {
         $allowedProductIdsFromCategories = $this->promoCodeCategoryRepository->getProductIdsFromCategoriesByPromoCodeIdAndDomainId(
             $promoCode->getId(),
-            $domainId
+            $domainId,
         );
         $allowedProductIdsFromBrands = $this->promoCodeBrandRepository->getProductIdsFromBrandsByPromoCodeId(
-            $promoCode->getId()
+            $promoCode->getId(),
         );
 
         if (count($allowedProductIdsFromCategories) !== 0 && count($allowedProductIdsFromBrands) !== 0) {

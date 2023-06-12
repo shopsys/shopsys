@@ -14,6 +14,7 @@ class ProductInOrder extends Constraint
 
     /**
      * @var array<string, string>
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected static $errorNames = [
         self::NO_PRODUCT_IN_ORDER_ERROR => 'NO_PRODUCT_IN_ORDER_ERROR',

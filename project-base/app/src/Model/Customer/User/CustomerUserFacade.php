@@ -33,16 +33,6 @@ use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 class CustomerUserFacade extends BaseCustomerUserFacade
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade
-     */
-    private $newsletterFacade;
-
-    /**
-     * @var \App\Component\String\HashGenerator
-     */
-    private HashGenerator $hashGenerator;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
@@ -71,8 +61,8 @@ class CustomerUserFacade extends BaseCustomerUserFacade
         CustomerDataFactoryInterface $customerDataFactory,
         BillingAddressFacade $billingAddressFacade,
         CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
-        NewsletterFacade $newsletterFacade,
-        HashGenerator $hashGenerator
+        private NewsletterFacade $newsletterFacade,
+        private HashGenerator $hashGenerator,
     ) {
         parent::__construct(
             $em,
@@ -86,11 +76,8 @@ class CustomerUserFacade extends BaseCustomerUserFacade
             $deliveryAddressFacade,
             $customerDataFactory,
             $billingAddressFacade,
-            $customerUserRefreshTokenChainFacade
+            $customerUserRefreshTokenChainFacade,
         );
-
-        $this->newsletterFacade = $newsletterFacade;
-        $this->hashGenerator = $hashGenerator;
     }
 
     /**
@@ -99,8 +86,11 @@ class CustomerUserFacade extends BaseCustomerUserFacade
      * @param \App\Model\Customer\DeliveryAddress|null $deliveryAddress
      * @return \App\Model\Customer\User\CustomerUser
      */
-    public function edit($customerUserId, CustomerUserUpdateData $customerUserUpdateData, ?DeliveryAddress $deliveryAddress = null)
-    {
+    public function edit(
+        $customerUserId,
+        CustomerUserUpdateData $customerUserUpdateData,
+        ?DeliveryAddress $deliveryAddress = null,
+    ) {
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = parent::edit($customerUserId, $customerUserUpdateData, $deliveryAddress);
 
@@ -129,14 +119,14 @@ class CustomerUserFacade extends BaseCustomerUserFacade
         string $refreshTokenChain,
         string $deviceId,
         DateTime $tokenExpiration,
-        ?Administrator $administrator = null
+        ?Administrator $administrator = null,
     ): void {
         $refreshTokenChain = $this->customerUserRefreshTokenChainFacade->createCustomerUserRefreshTokenChain(
             $customerUser,
             $refreshTokenChain,
             $deviceId,
             $tokenExpiration,
-            $administrator
+            $administrator,
         );
 
         $customerUser->addRefreshTokenChain($refreshTokenChain);

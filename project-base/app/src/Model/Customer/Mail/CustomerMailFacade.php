@@ -19,11 +19,6 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 class CustomerMailFacade extends BaseCustomerMailFacade
 {
     /**
-     * @var \App\Model\Customer\Mail\CustomerActivationMail
-     */
-    private CustomerActivationMail $customerActivationMail;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\Mailer $mailer
      * @param \App\Model\Mail\MailTemplateFacade $mailTemplateFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\RegistrationMail $registrationMail
@@ -35,11 +30,9 @@ class CustomerMailFacade extends BaseCustomerMailFacade
         MailTemplateFacade $mailTemplateFacade,
         RegistrationMail $registrationMail,
         UploadedFileFacade $uploadedFileFacade,
-        CustomerActivationMail $customerActivationMail
+        private CustomerActivationMail $customerActivationMail,
     ) {
         parent::__construct($mailer, $mailTemplateFacade, $registrationMail, $uploadedFileFacade);
-
-        $this->customerActivationMail = $customerActivationMail;
     }
 
     /**

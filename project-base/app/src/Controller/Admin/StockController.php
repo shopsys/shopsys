@@ -28,41 +28,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class StockController extends AdminBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    private $adminDomainTabsFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
-     */
-    private $breadcrumbOverrider;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    private $gridFactory;
-
-    /**
-     * @var \App\Model\Stock\StockFacade
-     */
-    private $stockFacade;
-
-    /**
-     * @var \App\Model\Stock\StockDataFactory
-     */
-    private $stockDataFactory;
-
-    /**
-     * @var \App\Model\Stock\StockSettingsDataFacade
-     */
-    private $stockSettingsDataFacade;
-
-    /**
-     * @var \App\Model\Stock\StockSettingsDataFactory
-     */
-    private $stockSettingsDataFactory;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
@@ -72,21 +37,14 @@ class StockController extends AdminBaseController
      * @param \App\Model\Stock\StockSettingsDataFactory $stockSettingsDataFactory
      */
     public function __construct(
-        GridFactory $gridFactory,
-        BreadcrumbOverrider $breadcrumbOverrider,
-        AdminDomainTabsFacade $adminDomainTabsFacade,
-        StockFacade $stockFacade,
-        StockDataFactory $stockDataFactory,
-        StockSettingsDataFacade $stockSettingsDataFacade,
-        StockSettingsDataFactory $stockSettingsDataFactory
+        private GridFactory $gridFactory,
+        private BreadcrumbOverrider $breadcrumbOverrider,
+        private AdminDomainTabsFacade $adminDomainTabsFacade,
+        private StockFacade $stockFacade,
+        private StockDataFactory $stockDataFactory,
+        private StockSettingsDataFacade $stockSettingsDataFacade,
+        private StockSettingsDataFactory $stockSettingsDataFactory,
     ) {
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
-        $this->breadcrumbOverrider = $breadcrumbOverrider;
-        $this->gridFactory = $gridFactory;
-        $this->stockFacade = $stockFacade;
-        $this->stockDataFactory = $stockDataFactory;
-        $this->stockSettingsDataFacade = $stockSettingsDataFacade;
-        $this->stockSettingsDataFactory = $stockSettingsDataFactory;
     }
 
     /**
@@ -122,7 +80,7 @@ class StockController extends AdminBaseController
     private function getStockSettingsForm(): FormInterface
     {
         $stockSettingsData = $this->stockSettingsDataFactory->getForDomainId(
-            $this->adminDomainTabsFacade->getSelectedDomainId()
+            $this->adminDomainTabsFacade->getSelectedDomainId(),
         );
         return $this->createForm(StockSettingsFormType::class, $stockSettingsData, [
             'action' => $this->generateUrl('admin_stock_savesettings'),
@@ -150,8 +108,8 @@ class StockController extends AdminBaseController
                         'Nastavení %domainName% skladů uloženo.',
                         [
                             '%domainName%' => $this->adminDomainTabsFacade->getSelectedDomainConfig()->getName(),
-                        ]
-                    )
+                        ],
+                    ),
                 );
         }
 
@@ -186,7 +144,7 @@ class StockController extends AdminBaseController
                     [
                         'name' => $stock->getName(),
                         'url' => $this->generateUrl('admin_stock_edit', ['id' => $stock->getId()]),
-                    ]
+                    ],
                 );
             return $this->redirectToRoute('admin_stock_list');
         }
@@ -225,7 +183,7 @@ class StockController extends AdminBaseController
                     [
                         'name' => $stock->getName(),
                         'url' => $this->generateUrl('admin_stock_edit', ['id' => $stock->getId()]),
-                    ]
+                    ],
                 );
             return $this->redirectToRoute('admin_stock_list');
         }
@@ -259,7 +217,7 @@ class StockController extends AdminBaseController
                 t('Stock <strong>{{ name }}</strong> was set as default.'),
                 [
                     'name' => $stock->getName(),
-                ]
+                ],
             );
         } catch (StockNotFoundException $ex) {
             $this->addErrorFlash(t('Vybraný sklad neexistuje.'));
@@ -291,7 +249,7 @@ class StockController extends AdminBaseController
                 t('Stock <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $stock->getName(),
-                ]
+                ],
             );
         } catch (StockNotFoundException $ex) {
             $this->addErrorFlash(t('Vybraný sklad neexistuje.'));

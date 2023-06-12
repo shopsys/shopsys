@@ -105,7 +105,7 @@ class NavigationTest extends GraphQlTestCase
             [
                 'id' => $this->getReference($categoryReferenceName)->getId(),
             ],
-            UrlGeneratorInterface::ABSOLUTE_PATH
+            UrlGeneratorInterface::ABSOLUTE_PATH,
         );
     }
 }

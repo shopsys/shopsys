@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Parameter;
 
+use App\Component\UploadedFile\UploadedFileFacade;
 use App\Model\Category\Category;
 use App\Model\Category\CategoryParameterRepository;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade as BaseParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface;
@@ -33,21 +33,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class ParameterFacade extends BaseParameterFacade
 {
     /**
-     * @var \App\Model\CategorySeo\ReadyCategorySeoMixFacade
-     */
-    private $readyCategorySeoMixFacade;
-
-    /**
-     * @var \App\Component\UploadedFile\UploadedFileFacade
-     */
-    protected $uploadedFileFacade;
-
-    /**
-     * @var \App\Model\Category\CategoryParameterRepository
-     */
-    private CategoryParameterRepository $categoryParameterRepository;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface $parameterFactory
@@ -61,20 +46,16 @@ class ParameterFacade extends BaseParameterFacade
         ParameterRepository $parameterRepository,
         ParameterFactoryInterface $parameterFactory,
         EventDispatcherInterface $eventDispatcher,
-        ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
-        UploadedFileFacade $uploadedFileFacade,
-        CategoryParameterRepository $categoryParameterRepository
+        private readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
+        private readonly UploadedFileFacade $uploadedFileFacade,
+        private readonly CategoryParameterRepository $categoryParameterRepository,
     ) {
         parent::__construct(
             $em,
             $parameterRepository,
             $parameterFactory,
-            $eventDispatcher
+            $eventDispatcher,
         );
-
-        $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
-        $this->uploadedFileFacade = $uploadedFileFacade;
-        $this->categoryParameterRepository = $categoryParameterRepository;
     }
 
     /**
@@ -174,7 +155,7 @@ class ParameterFacade extends BaseParameterFacade
         $parameterValueIds = array_reduce($parameterValueIdsIndexedByParameterId, 'array_merge', []);
         $allParameters = $this->parameterRepository->getVisibleParametersByIds(
             array_keys($parameterValueIdsIndexedByParameterId),
-            $locale
+            $locale,
         );
         $allParameterValues = $this->parameterRepository->getParameterValuesByIds($parameterValueIds);
 
@@ -190,7 +171,7 @@ class ParameterFacade extends BaseParameterFacade
 
             $parameterFilterChoices[] = new ParameterFilterChoice(
                 $parameter,
-                $parameterValues
+                $parameterValues,
             );
         }
 
@@ -207,7 +188,7 @@ class ParameterFacade extends BaseParameterFacade
             function ($categoryParameter) {
                 return $categoryParameter->getParameter()->getId();
             },
-            $this->categoryParameterRepository->getCategoryParametersByCategorySortedByPosition($category)
+            $this->categoryParameterRepository->getCategoryParametersByCategorySortedByPosition($category),
         );
     }
 }

@@ -13,25 +13,13 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class BlogArticleVisibilityRepository
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        EntityManagerInterface $em,
-        Domain $domain
+        private EntityManagerInterface $em,
+        private Domain $domain,
     ) {
-        $this->em = $em;
-        $this->domain = $domain;
     }
 
     public function refreshArticlesVisibility(): void
@@ -91,7 +79,7 @@ class BlogArticleVisibilityRepository
             [
                 'locale' => Types::STRING,
                 'domainId' => Types::INTEGER,
-            ]
+            ],
         );
     }
 }

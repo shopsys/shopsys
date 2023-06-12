@@ -76,7 +76,7 @@ class PaymentAndTransportRemovalOnEmptyCartTest extends GraphQlTestCase
 
         return $this->getResponseDataForGraphQlType(
             $this->getResponseContentForQuery($addToCartMutation),
-            'AddToCart'
+            'AddToCart',
         )['cart'];
     }
 
@@ -146,7 +146,7 @@ class PaymentAndTransportRemovalOnEmptyCartTest extends GraphQlTestCase
 
         return $this->getResponseDataForGraphQlType(
             $this->getResponseContentForQuery($getCartQuery),
-            'cart'
+            'cart',
         );
     }
 
@@ -180,7 +180,7 @@ class PaymentAndTransportRemovalOnEmptyCartTest extends GraphQlTestCase
 
         return $this->getResponseDataForGraphQlType(
             $this->getResponseContentForQuery($removeFromCartMutation),
-            'RemoveFromCart'
+            'RemoveFromCart',
         );
     }
 }

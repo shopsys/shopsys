@@ -15,16 +15,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 class PaymentFormTypeExtension extends AbstractTypeExtension
 {
     /**
-     * @var \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade
-     */
-    private $goPayPaymentMethodFacade;
-
-    /**
      * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade $goPayPaymentMethodFacade
      */
-    public function __construct(GoPayPaymentMethodFacade $goPayPaymentMethodFacade)
+    public function __construct(private GoPayPaymentMethodFacade $goPayPaymentMethodFacade)
     {
-        $this->goPayPaymentMethodFacade = $goPayPaymentMethodFacade;
     }
 
     /**

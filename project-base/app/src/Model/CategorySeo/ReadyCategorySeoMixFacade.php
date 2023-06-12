@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\CategorySeo;
 
 use App\Component\HttpFoundation\TransactionalMasterRequestListener;
+use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\FrontendApi\Model\Flag\FlagFacade;
 use App\FrontendApi\Model\Parameter\ParameterFacade;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFoundException;
@@ -16,43 +17,12 @@ use App\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 
 class ReadyCategorySeoMixFacade
 {
     public const FILTER_FORM_KEY = 'product_filter_form';
-
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var \App\Model\CategorySeo\ReadyCategorySeoMixRepository
-     */
-    private $readyCategorySeoMixRepository;
-
-    /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private $friendlyUrlFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
-     * @var \App\FrontendApi\Model\Flag\FlagFacade
-     */
-    private FlagFacade $flagFacade;
-
-    /**
-     * @var \App\FrontendApi\Model\Parameter\ParameterFacade
-     */
-    private ParameterFacade $parameterFacade;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -63,19 +33,13 @@ class ReadyCategorySeoMixFacade
      * @param \App\FrontendApi\Model\Parameter\ParameterFacade $parameterFacade
      */
     public function __construct(
-        EntityManagerInterface $em,
-        ReadyCategorySeoMixRepository $readyCategorySeoMixRepository,
-        FriendlyUrlFacade $friendlyUrlFacade,
-        Domain $domain,
-        FlagFacade $flagFacade,
-        ParameterFacade $parameterFacade
+        private readonly EntityManagerInterface $em,
+        private readonly ReadyCategorySeoMixRepository $readyCategorySeoMixRepository,
+        private readonly FriendlyUrlFacade $friendlyUrlFacade,
+        private readonly Domain $domain,
+        private readonly FlagFacade $flagFacade,
+        private readonly ParameterFacade $parameterFacade,
     ) {
-        $this->em = $em;
-        $this->readyCategorySeoMixRepository = $readyCategorySeoMixRepository;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->domain = $domain;
-        $this->flagFacade = $flagFacade;
-        $this->parameterFacade = $parameterFacade;
     }
 
     /**
@@ -84,8 +48,11 @@ class ReadyCategorySeoMixFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData $urlListData
      * @return \App\Model\CategorySeo\ReadyCategorySeoMix
      */
-    public function createOrEdit(ChoseCategorySeoMixCombination $choseCategorySeoMixCombination, ReadyCategorySeoMixData $readyCategorySeoMixData, UrlListData $urlListData): ReadyCategorySeoMix
-    {
+    public function createOrEdit(
+        ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
+        ReadyCategorySeoMixData $readyCategorySeoMixData,
+        UrlListData $urlListData,
+    ): ReadyCategorySeoMix {
         $readyCategorySeoMix = $this->findByChoseCategorySeoMixCombination($choseCategorySeoMixCombination);
 
         $this->em->beginTransaction();
@@ -124,8 +91,9 @@ class ReadyCategorySeoMixFacade
      * @param \App\Model\CategorySeo\ChoseCategorySeoMixCombination $choseCategorySeoMixCombination
      * @return \App\Model\CategorySeo\ReadyCategorySeoMix|null
      */
-    public function findByChoseCategorySeoMixCombination(ChoseCategorySeoMixCombination $choseCategorySeoMixCombination): ?ReadyCategorySeoMix
-    {
+    public function findByChoseCategorySeoMixCombination(
+        ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
+    ): ?ReadyCategorySeoMix {
         return $this->readyCategorySeoMixRepository->findByChoseCategorySeoMixCombination($choseCategorySeoMixCombination);
     }
 
@@ -166,8 +134,10 @@ class ReadyCategorySeoMixFacade
      * @param \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData $urlListData
      */
-    private function saveReadyCategoryMixFriendlyUrls(ReadyCategorySeoMix $readyCategorySeoMix, UrlListData $urlListData): void
-    {
+    private function saveReadyCategoryMixFriendlyUrls(
+        ReadyCategorySeoMix $readyCategorySeoMix,
+        UrlListData $urlListData,
+    ): void {
         $this->friendlyUrlFacade->saveUrlListFormData('front_category_seo', $readyCategorySeoMix->getId(), $urlListData);
 
         $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl($readyCategorySeoMix->getDomainId(), 'front_category_seo', $readyCategorySeoMix->getId());
@@ -247,7 +217,7 @@ class ReadyCategorySeoMixFacade
         int $categoryId,
         array $parametersFilterData,
         array $flagUuids,
-        ?string $orderingMode
+        ?string $orderingMode,
     ): ?ReadyCategorySeoMix {
         try {
             $currentDomainConfig = $this->domain->getCurrentDomainConfig();
@@ -261,7 +231,7 @@ class ReadyCategorySeoMixFacade
                 $this->getParameterValueIdsByParameterId($parametersFilterData, $currentDomainConfig->getLocale()),
                 $this->flagFacade->getFlagIdsByUuids($flagUuids),
                 $orderingMode,
-                $currentDomainConfig
+                $currentDomainConfig,
             );
         } catch (UnableToFindReadyCategorySeoMixException|ParameterValueNotFoundException $exception) {
             return null;
@@ -276,11 +246,11 @@ class ReadyCategorySeoMixFacade
     private function checkPossibilityToFindReadyCategorySeoMix(
         array $parametersFilterData,
         array $flagUuids,
-        ?string $ordering
+        ?string $ordering,
     ): void {
         if ($ordering === null && count($parametersFilterData) === 0 && count($flagUuids)) {
             throw new UnableToFindReadyCategorySeoMixException(
-                'Unable to find ReadyCategorySeoMix: it cannot have set no conditions'
+                'Unable to find ReadyCategorySeoMix: it cannot have set no conditions',
             );
         }
 
@@ -288,19 +258,19 @@ class ReadyCategorySeoMixFacade
             $valuesCount = count($parameterFilterData['values']);
             if ($valuesCount === 0 && ($parameterFilterData['minimalValue'] !== $parameterFilterData['maximalValue'])) {
                 throw new UnableToFindReadyCategorySeoMixException(
-                    'Unable to find ReadyCategorySeoMix: there must be exactly one value for slider parameters selected'
+                    'Unable to find ReadyCategorySeoMix: there must be exactly one value for slider parameters selected',
                 );
             }
             if ($valuesCount > 1) {
                 throw new UnableToFindReadyCategorySeoMixException(
-                    'Unable to find ReadyCategorySeoMix: it cannot have more than one parameter value of one parameter'
+                    'Unable to find ReadyCategorySeoMix: it cannot have more than one parameter value of one parameter',
                 );
             }
         }
 
         if (count($flagUuids) > 1) {
             throw new UnableToFindReadyCategorySeoMixException(
-                'Unable to find ReadyCategorySeoMix: it cannot have more than one flag'
+                'Unable to find ReadyCategorySeoMix: it cannot have more than one flag',
             );
         }
     }

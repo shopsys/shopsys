@@ -15,33 +15,15 @@ use Twig\TwigFunction;
 class CategorySeoExtension extends AbstractExtension
 {
     /**
-     * @var \App\Model\Product\Parameter\ParameterFacade
-     */
-    private $parameterFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
-     */
-    private $domainRouterFactory;
-
-    /**
-     * @var \App\Model\CategorySeo\ReadyCategorySeoMixFacade
-     */
-    private $readyCategorySeoMixFacade;
-
-    /**
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      */
     public function __construct(
-        ParameterFacade $parameterFacade,
-        DomainRouterFactory $domainRouterFactory,
-        ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
+        private ParameterFacade $parameterFacade,
+        private DomainRouterFactory $domainRouterFactory,
+        private ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
     ) {
-        $this->parameterFacade = $parameterFacade;
-        $this->domainRouterFactory = $domainRouterFactory;
-        $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
     }
 
     /**

@@ -22,7 +22,7 @@ class ArticleExportRepository
         private readonly ArticleRepository $articleRepository,
         private readonly FriendlyUrlFacade $friendlyUrlFacade,
         private readonly BreadcrumbFacade $breadcrumbFacade,
-        private readonly GrapesJsParser $grapesJsParser
+        private readonly GrapesJsParser $grapesJsParser,
     ) {
     }
 

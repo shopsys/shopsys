@@ -115,7 +115,7 @@ class RegisterTest extends GraphQlTestCase
         $mutationVariables = $this->getRegisterQueryVariables(
             'not-registered-user@shopsys.com',
             'NotRegistered',
-            'User'
+            'User',
         );
         $mutationVariables['lastOrderUuid'] = $order->getUuid();
         $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', $mutationVariables);
@@ -136,7 +136,7 @@ class RegisterTest extends GraphQlTestCase
         $mutationVariables = $this->getRegisterQueryVariables(
             'new-one-no-reply@shopsys.com',
             'Adam',
-            'Bořič'
+            'Bořič',
         );
         $mutationVariables['lastOrderUuid'] = $order->getUuid();
         $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', $mutationVariables);

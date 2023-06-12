@@ -22,7 +22,7 @@ class GoPayPaymentDownloadException extends Exception implements GoPayException
         $requestData = null,
         $responseData = null,
         $expectedCode = null,
-        $actualCode = null
+        $actualCode = null,
     ) {
         parent::__construct(
             sprintf(
@@ -37,8 +37,8 @@ class GoPayPaymentDownloadException extends Exception implements GoPayException
                 $url,
                 $method,
                 print_r($requestData, true),
-                print_r($responseData, true)
-            )
+                print_r($responseData, true),
+            ),
         );
     }
 }

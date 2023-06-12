@@ -175,41 +175,17 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
     ];
 
     /**
-     * @var \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade
-     */
-    private $goPayPaymentMethodFacade;
-
-    /**
-     * @var \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodDataFactory
-     */
-    private $goPayPaymentMethodDataFactory;
-
-    /**
-     * @var \App\Model\GoPay\BankSwift\GoPayBankSwiftFacade
-     */
-    private GoPayBankSwiftFacade $goPayBankSwiftFacade;
-
-    /**
-     * @var \App\Model\GoPay\BankSwift\GoPayBankSwiftDataFactory
-     */
-    private GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory;
-
-    /**
      * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade $goPayPaymentMethodFacade
      * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodDataFactory $goPayPaymentMethodDataFactory
      * @param \App\Model\GoPay\BankSwift\GoPayBankSwiftFacade $goPayBankSwiftFacade
      * @param \App\Model\GoPay\BankSwift\GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory
      */
     public function __construct(
-        GoPayPaymentMethodFacade $goPayPaymentMethodFacade,
-        GoPayPaymentMethodDataFactory $goPayPaymentMethodDataFactory,
-        GoPayBankSwiftFacade $goPayBankSwiftFacade,
-        GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory
+        private GoPayPaymentMethodFacade $goPayPaymentMethodFacade,
+        private GoPayPaymentMethodDataFactory $goPayPaymentMethodDataFactory,
+        private GoPayBankSwiftFacade $goPayBankSwiftFacade,
+        private GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory,
     ) {
-        $this->goPayPaymentMethodFacade = $goPayPaymentMethodFacade;
-        $this->goPayPaymentMethodDataFactory = $goPayPaymentMethodDataFactory;
-        $this->goPayBankSwiftFacade = $goPayBankSwiftFacade;
-        $this->goPayBankSwiftDataFactory = $goPayBankSwiftDataFactory;
     }
 
     /**
@@ -250,7 +226,7 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
      */
     private function createGoPayPaymentMethod(
         ?string $referenceName,
-        GoPayPaymentMethodData $goPayPaymentMethodData
+        GoPayPaymentMethodData $goPayPaymentMethodData,
     ) {
         $goPayPaymentMethod = $this->goPayPaymentMethodFacade->create($goPayPaymentMethodData);
         if ($referenceName !== null) {

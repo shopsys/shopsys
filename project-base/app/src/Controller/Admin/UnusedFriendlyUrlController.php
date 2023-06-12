@@ -17,25 +17,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class UnusedFriendlyUrlController extends AdminBaseController
 {
     /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private FriendlyUrlFacade $friendlyUrlFacade;
-
-    /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlInlineEdit
-     */
-    private FriendlyUrlInlineEdit $friendlyUrlInlineEdit;
-
-    /**
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlInlineEdit $friendlyUrlInlineEdit
      */
     public function __construct(
-        FriendlyUrlFacade $friendlyUrlFacade,
-        FriendlyUrlInlineEdit $friendlyUrlInlineEdit
+        private FriendlyUrlFacade $friendlyUrlFacade,
+        private FriendlyUrlInlineEdit $friendlyUrlInlineEdit,
     ) {
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->friendlyUrlInlineEdit = $friendlyUrlInlineEdit;
     }
 
     /**

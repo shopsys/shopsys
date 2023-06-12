@@ -21,16 +21,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class AppPaymentTransportRelationValidator extends PaymentTransportRelationValidator
 {
     /**
-     * @var \App\Model\Customer\User\CurrentCustomerUser
-     */
-    private CurrentCustomerUser $currentCustomerUser;
-
-    /**
-     * @var \App\FrontendApi\Model\Cart\CartFacade
-     */
-    private CartFacade $cartFacade;
-
-    /**
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
@@ -39,13 +29,10 @@ class AppPaymentTransportRelationValidator extends PaymentTransportRelationValid
     public function __construct(
         PaymentFacade $paymentFacade,
         TransportFacade $transportFacade,
-        CurrentCustomerUser $currentCustomerUser,
-        CartFacade $cartFacade,
+        private CurrentCustomerUser $currentCustomerUser,
+        private CartFacade $cartFacade,
     ) {
         parent::__construct($paymentFacade, $transportFacade);
-
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->cartFacade = $cartFacade;
     }
 
     /**

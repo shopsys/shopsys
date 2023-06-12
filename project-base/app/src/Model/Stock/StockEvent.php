@@ -28,23 +28,11 @@ class StockEvent extends Event
     public const DELETE = 'stock.delete';
 
     /**
-     * @var \App\Model\Stock\Stock
-     */
-    protected Stock $stock;
-
-    /**
-     * @var bool
-     */
-    protected bool $hasChangedDomains;
-
-    /**
      * @param \App\Model\Stock\Stock $stock
      * @param bool $hasChangedDomains
      */
-    public function __construct(Stock $stock, bool $hasChangedDomains = false)
+    public function __construct(protected Stock $stock, protected bool $hasChangedDomains = false)
     {
-        $this->stock = $stock;
-        $this->hasChangedDomains = $hasChangedDomains;
     }
 
     /**

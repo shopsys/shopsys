@@ -20,16 +20,10 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class FriendlyUrlFormType extends AbstractType
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension
-     */
-    private DateTimeFormatterExtension $dateTimeFormatterExtension;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
      */
-    public function __construct(DateTimeFormatterExtension $dateTimeFormatterExtension)
+    public function __construct(private DateTimeFormatterExtension $dateTimeFormatterExtension)
     {
-        $this->dateTimeFormatterExtension = $dateTimeFormatterExtension;
     }
 
     /**
@@ -51,7 +45,7 @@ class FriendlyUrlFormType extends AbstractType
                     'attr' => [
                         'class' => 'input--auto-size',
                     ],
-                ]
+                ],
             )
             ->add(
                 'routeName',
@@ -62,7 +56,7 @@ class FriendlyUrlFormType extends AbstractType
                     'attr' => [
                         'class' => 'input--auto-size',
                     ],
-                ]
+                ],
             )
             ->add(
                 'entityId',
@@ -73,7 +67,7 @@ class FriendlyUrlFormType extends AbstractType
                     'attr' => [
                         'class' => 'input--auto-size',
                     ],
-                ]
+                ],
             )
             ->add('redirectTo', TextType::class, [
                 'constraints' => [
@@ -93,7 +87,7 @@ class FriendlyUrlFormType extends AbstractType
                         t('301 (Permanent redirect)') => 301,
                         t('302 (Temporary redirect)') => 302,
                     ],
-                ]
+                ],
             )
             ->add(
                 'lastModification',
@@ -102,7 +96,7 @@ class FriendlyUrlFormType extends AbstractType
                     'compound' => false,
                     'data' => $this->dateTimeFormatterExtension->formatDateTime($friendlyUrlData->lastModification),
                     'attr' => ['class' => 'input--auto-size'],
-                ]
+                ],
             );
     }
 

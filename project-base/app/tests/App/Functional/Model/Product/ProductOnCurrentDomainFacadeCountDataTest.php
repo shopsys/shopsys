@@ -24,26 +24,20 @@ use Tests\App\Test\ParameterTransactionFunctionalTestCase;
 abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransactionFunctionalTestCase
 {
     /**
-     * @var \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory
      * @inject
      */
     protected ProductFilterConfigFactory $productFilterConfigFactory;
 
     /**
-     * @var \App\Model\Product\Parameter\ParameterRepository
      * @inject
      */
     protected ParameterRepository $parameterRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
      * @inject
      */
     protected PriceConverter $priceConverter;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface
-     */
     protected ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade;
 
     protected function setUp(): void

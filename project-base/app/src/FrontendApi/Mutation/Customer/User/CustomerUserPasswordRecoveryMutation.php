@@ -24,7 +24,7 @@ class CustomerUserPasswordRecoveryMutation extends AbstractMutation
         private readonly CustomerUserPasswordFacade $customerUserPasswordFacade,
         private readonly Domain $domain,
         private readonly LoginMutation $loginMutation,
-        private readonly ArgumentFactory $argumentFactory
+        private readonly ArgumentFactory $argumentFactory,
     ) {
     }
 

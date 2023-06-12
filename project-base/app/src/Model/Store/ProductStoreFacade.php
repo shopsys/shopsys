@@ -10,25 +10,13 @@ use Doctrine\ORM\EntityManagerInterface;
 class ProductStoreFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private EntityManagerInterface $em;
-
-    /**
-     * @var \App\Model\Store\ProductStoreRepository
-     */
-    private ProductStoreRepository $productStoreRepository;
-
-    /**
      * @param \App\Model\Store\ProductStoreRepository $productStoreRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
-        ProductStoreRepository $productStoreRepository,
-        EntityManagerInterface $em
+        private ProductStoreRepository $productStoreRepository,
+        private EntityManagerInterface $em,
     ) {
-        $this->productStoreRepository = $productStoreRepository;
-        $this->em = $em;
     }
 
     /**
@@ -39,11 +27,11 @@ class ProductStoreFacade
     public function editProductStoreRelations(
         Product $product,
         array $storesIndexedById,
-        array $productStoreDataItems
+        array $productStoreDataItems,
     ): void {
         $productStoresIndexedByStoreId = $this->productStoreRepository->getProductStoresByStoresAndProductIndexedByStoreId(
             array_keys($storesIndexedById),
-            $product
+            $product,
         );
 
         foreach ($storesIndexedById as $storeId => $store) {

@@ -23,16 +23,10 @@ class FlagFormType extends AbstractType
     public const DISABLED_FIELDS = [];
 
     /**
-     * @var \App\Component\Form\FormBuilderHelper
-     */
-    private FormBuilderHelper $formBuilderHelper;
-
-    /**
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
      */
-    public function __construct(FormBuilderHelper $formBuilderHelper)
+    public function __construct(private FormBuilderHelper $formBuilderHelper)
     {
-        $this->formBuilderHelper = $formBuilderHelper;
     }
 
     /**
@@ -49,7 +43,7 @@ class FlagFormType extends AbstractType
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please enter flag name in all languages']),
                         new Constraints\Length(
-                            ['max' => 100, 'maxMessage' => 'Flag name cannot be longer than {{ limit }} characters']
+                            ['max' => 100, 'maxMessage' => 'Flag name cannot be longer than {{ limit }} characters'],
                         ),
                     ],
                 ],

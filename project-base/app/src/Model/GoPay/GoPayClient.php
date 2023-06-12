@@ -20,28 +20,15 @@ class GoPayClient
 {
     public const RESPONSE_STATUS_CODE_OK = 200;
 
-    /**
-     * @var array
-     */
-    private $config;
+    private GoPay $goPay;
 
-    /**
-     * @var \GoPay\GoPay
-     */
-    private $goPay;
-
-    /**
-     * @var \GoPay\Token\CachedOAuth
-     */
-    private $oAuth;
+    private CachedOAuth $oAuth;
 
     /**
      * @param array $config
      */
-    public function __construct(array $config)
+    public function __construct(private array $config)
     {
-        $this->config = $config;
-
         $browser = new JsonBrowser(new NullLogger(), $this->config['timeout']);
         $this->goPay = new GoPay($this->config, $browser);
         $this->oAuth = new CachedOAuth(new OAuth2($this->goPay), new InMemoryTokenCache());
@@ -54,8 +41,12 @@ class GoPayClient
      * @param array|null $data
      * @return \GoPay\Http\Response
      */
-    private function sendApiRequest(string $urlPath, string $contentType, string $method, ?array $data = null): Response
-    {
+    private function sendApiRequest(
+        string $urlPath,
+        string $contentType,
+        string $method,
+        ?array $data = null,
+    ): Response {
         if ($this->config['goid'] === null) {
             throw new GoPayNotConfiguredException();
         }
@@ -68,7 +59,7 @@ class GoPayClient
                 $contentType,
                 'Bearer ' . $token->token,
                 $method,
-                $data
+                $data,
             );
         }
 
@@ -93,7 +84,7 @@ class GoPayClient
             'payments/payment',
             GoPay::JSON,
             RequestMethods::POST,
-            $payment
+            $payment,
         );
     }
 
@@ -114,7 +105,7 @@ class GoPayClient
                 null,
                 $response,
                 self::RESPONSE_STATUS_CODE_OK,
-                $response->statusCode
+                $response->statusCode,
             );
         }
 
@@ -137,7 +128,7 @@ class GoPayClient
             $urlPath,
             GoPay::FORM,
             RequestMethods::POST,
-            $body
+            $body,
         );
 
         if ((int)$response->statusCode !== (int)self::RESPONSE_STATUS_CODE_OK) {
@@ -147,7 +138,7 @@ class GoPayClient
                 $body,
                 $response,
                 self::RESPONSE_STATUS_CODE_OK,
-                $response->statusCode
+                $response->statusCode,
             );
         }
 
@@ -165,7 +156,7 @@ class GoPayClient
         $response = $this->sendApiRequest(
             $urlPath,
             GoPay::FORM,
-            RequestMethods::GET
+            RequestMethods::GET,
         );
 
         if ((int)$response->statusCode !== (int)self::RESPONSE_STATUS_CODE_OK) {
@@ -175,7 +166,7 @@ class GoPayClient
                 null,
                 $response,
                 self::RESPONSE_STATUS_CODE_OK,
-                $response->statusCode
+                $response->statusCode,
             );
         }
 

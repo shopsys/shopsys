@@ -35,7 +35,7 @@ class TransportGridFactory extends BaseTransportGridFactory
                 $row['displayPrice'] = $this->getDisplayPrice($transport);
                 $row['domainId'] = $this->adminDomainTabsFacade->getSelectedDomainId();
                 return $row;
-            }
+            },
         );
 
         $grid = $this->gridFactory->create('transportList', $dataSource);

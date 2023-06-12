@@ -15,7 +15,6 @@ class BrandTest extends GraphQlTestCase
     protected Brand $brand;
 
     /**
-     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
      * @inject
      */
     protected UrlGeneratorInterface $urlGenerator;

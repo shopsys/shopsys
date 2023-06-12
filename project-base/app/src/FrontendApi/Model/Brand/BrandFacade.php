@@ -9,16 +9,10 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 class BrandFacade
 {
     /**
-     * @var \App\FrontendApi\Model\Brand\BrandRepository
-     */
-    private BrandRepository $brandRepository;
-
-    /**
      * @param \App\FrontendApi\Model\Brand\BrandRepository $brandRepository
      */
-    public function __construct(BrandRepository $brandRepository)
+    public function __construct(private BrandRepository $brandRepository)
     {
-        $this->brandRepository = $brandRepository;
     }
 
     /**

@@ -15,16 +15,10 @@ use App\Model\Product\Flag\FlagDataFactory;
 class FlagTransferAkeneoMapper
 {
     /**
-     * @var \App\Model\Product\Flag\FlagDataFactory
-     */
-    private $flagDataFactory;
-
-    /**
      * @param \App\Model\Product\Flag\FlagDataFactory $flagDataFactory
      */
-    public function __construct(FlagDataFactory $flagDataFactory)
+    public function __construct(private FlagDataFactory $flagDataFactory)
     {
-        $this->flagDataFactory = $flagDataFactory;
     }
 
     /**

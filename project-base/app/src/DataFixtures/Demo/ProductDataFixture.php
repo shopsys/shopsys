@@ -6,10 +6,14 @@ namespace App\DataFixtures\Demo;
 
 use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterDataFactory;
+use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Parameter\ParameterGroupDataFactory;
 use App\Model\Product\Parameter\ParameterGroupFacade;
+use App\Model\Product\Parameter\ParameterValueDataFactory;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
+use App\Model\Product\ProductDataFactory;
+use App\Model\Product\ProductFacade;
 use App\Model\Stock\ProductStockDataFactory;
 use App\Model\Stock\StockRepository;
 use App\Model\Store\ProductStoreDataFactory;
@@ -25,105 +29,24 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter as BaseParameter;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 
 class ProductDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const PRODUCT_PREFIX = 'product_';
 
-    /**
-     * @var \App\Model\Product\ProductFacade
-     */
-    private $productFacade;
+    private ProductDataFactory $productDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
+    private ParameterValueDataFactory $parameterValueDataFactory;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
-     */
-    private $pricingGroupFacade;
-
-    /**
-     * @var \App\Model\Product\ProductDataFactory
-     */
-    private $productDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory
-     */
-    private $productParameterValueDataFactory;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterValueDataFactory
-     */
-    private $parameterValueDataFactory;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterFacade
-     */
-    private $parameterFacade;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterDataFactory
-     */
-    private $parameterDataFactory;
-
-    /**
-     * @var int
-     */
-    private $productNo = 1;
+    private int $productNo = 1;
 
     /**
      * @var int[]
      */
-    private $productIdsByCatnum = [];
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
-     */
-    private $priceConverter;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterGroupDataFactory|\App\Model\Product\Parameter\ParameterGroupDataFactory
-     */
-    private $parameterGroupDataFactory;
-
-    /**
-     * @var \Faker\Generator
-     */
-    private $generator;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterGroupFacade
-     */
-    private $parameterGroupFacade;
-
-    /**
-     * @var \App\Model\Stock\StockRepository
-     */
-    private $stockRepository;
-
-    /**
-     * @var \App\Model\Stock\ProductStockDataFactory
-     */
-    private $productStockDataFactory;
-
-    /**
-     * @var \App\Model\Store\ProductStoreDataFactory
-     */
-    private ProductStoreDataFactory $productStoreDataFactory;
-
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
+    private array $productIdsByCatnum = [];
 
     /**
      * @var string[]
@@ -183,7 +106,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     ];
 
     /**
-     * @param \App\Model\Product\ProductFacade $productFacade
+     * @param \App\DataFixtures\Demo\ProductFacadeAlias $productFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
@@ -201,39 +124,25 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
-        ProductFacade $productFacade,
-        Domain $domain,
-        PricingGroupFacade $pricingGroupFacade,
+        private ProductFacade $productFacade,
+        private Domain $domain,
+        private PricingGroupFacade $pricingGroupFacade,
         ProductDataFactoryInterface $productDataFactory,
-        ProductParameterValueDataFactory $productParameterValueDataFactory,
+        private ProductParameterValueDataFactory $productParameterValueDataFactory,
         ParameterValueDataFactoryInterface $parameterValueDataFactory,
-        ParameterFacade $parameterFacade,
-        ParameterDataFactory $parameterDataFactory,
-        PriceConverter $priceConverter,
-        ParameterGroupDataFactory $parameterGroupDataFactory,
-        Generator $generator,
-        ParameterGroupFacade $parameterGroupFacade,
-        StockRepository $stockRepository,
-        ProductStockDataFactory $productStockDataFactory,
-        ProductStoreDataFactory $productStoreDataFactory,
-        EntityManagerInterface $em
+        private ParameterFacade $parameterFacade,
+        private ParameterDataFactory $parameterDataFactory,
+        private PriceConverter $priceConverter,
+        private ParameterGroupDataFactory $parameterGroupDataFactory,
+        private Generator $generator,
+        private ParameterGroupFacade $parameterGroupFacade,
+        private StockRepository $stockRepository,
+        private ProductStockDataFactory $productStockDataFactory,
+        private ProductStoreDataFactory $productStoreDataFactory,
+        private EntityManagerInterface $em,
     ) {
-        $this->productFacade = $productFacade;
-        $this->domain = $domain;
-        $this->pricingGroupFacade = $pricingGroupFacade;
         $this->productDataFactory = $productDataFactory;
-        $this->productParameterValueDataFactory = $productParameterValueDataFactory;
         $this->parameterValueDataFactory = $parameterValueDataFactory;
-        $this->parameterFacade = $parameterFacade;
-        $this->parameterDataFactory = $parameterDataFactory;
-        $this->priceConverter = $priceConverter;
-        $this->parameterGroupDataFactory = $parameterGroupDataFactory;
-        $this->generator = $generator;
-        $this->parameterGroupFacade = $parameterGroupFacade;
-        $this->stockRepository = $stockRepository;
-        $this->productStockDataFactory = $productStockDataFactory;
-        $this->em = $em;
-        $this->productStoreDataFactory = $productStoreDataFactory;
     }
 
     /**
@@ -6241,8 +6150,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param string|null $unitReferenceName
      * @return \App\Model\Product\Parameter\Parameter
      */
-    private function findParameterByNamesOrCreateNew(array $parameterNamesByLocale, ?array $parameterGroupNamesByLocale, ?string $unitReferenceName = null): BaseParameter
-    {
+    private function findParameterByNamesOrCreateNew(
+        array $parameterNamesByLocale,
+        ?array $parameterGroupNamesByLocale,
+        ?string $unitReferenceName = null,
+    ): BaseParameter {
         /** @var \App\Model\Product\Parameter\Parameter|null $parameter */
         $parameter = $this->parameterFacade->findParameterByNames($parameterNamesByLocale);
 
@@ -6314,7 +6226,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 Money::create($price),
                 $currencyCzk,
                 $vat->getPercent(),
-                $pricingGroup->getDomainId()
+                $pricingGroup->getDomainId(),
             );
 
             $productData->manualInputPricesByPricingGroupId[$pricingGroup->getId()] = $money;
@@ -6330,8 +6242,15 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param string|null $parameterGroupName
      * @param string|null $unitReferenceName
      */
-    private function addParameterTranslations(array &$parameterTranslations, string $parameterName, string $parameterValue, string $locale, int &$i, ?string $parameterGroupName = null, ?string $unitReferenceName = null): void
-    {
+    private function addParameterTranslations(
+        array &$parameterTranslations,
+        string $parameterName,
+        string $parameterValue,
+        string $locale,
+        int &$i,
+        ?string $parameterGroupName = null,
+        ?string $unitReferenceName = null,
+    ): void {
         $parameterTranslations[$i]['names'][$locale] = $parameterName;
         $parameterTranslations[$i]['values'][$locale] = $parameterValue;
         $parameterTranslations[$i]['group_name'][$locale] = $parameterGroupName;

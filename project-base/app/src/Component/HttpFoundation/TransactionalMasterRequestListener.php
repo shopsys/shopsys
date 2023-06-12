@@ -9,10 +9,7 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class TransactionalMasterRequestListener extends BaseTransactionalMasterRequestListener
 {
-    /**
-     * @var bool
-     */
-    private static $transactionHasBeenRollbacked = false;
+    private static bool $transactionHasBeenRollbacked = false;
 
     public static function setTransactionHasBeenRollbacked(): void
     {

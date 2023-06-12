@@ -19,7 +19,7 @@ class BlogCategoryWithPreloadedChildrenFactory
         foreach ($firstLevelBlogCategories as $firstLevelBlogCategory) {
             $blogCategoriesWithPreloadedChildren[] = new BlogCategoryWithPreloadedChildren(
                 $firstLevelBlogCategory,
-                $this->getBlogCategoriesWithPreloadedChildren($firstLevelBlogCategory, $blogCategoriesByParentId)
+                $this->getBlogCategoriesWithPreloadedChildren($firstLevelBlogCategory, $blogCategoriesByParentId),
             );
         }
 
@@ -31,8 +31,10 @@ class BlogCategoryWithPreloadedChildrenFactory
      * @param \App\Model\Blog\Category\BlogCategory[][] $blogCategoriesByParentId
      * @return \App\Model\Blog\Category\BlogCategoryWithPreloadedChildren[]
      */
-    private function getBlogCategoriesWithPreloadedChildren(BlogCategory $blogCategory, array $blogCategoriesByParentId): array
-    {
+    private function getBlogCategoriesWithPreloadedChildren(
+        BlogCategory $blogCategory,
+        array $blogCategoriesByParentId,
+    ): array {
         if (!array_key_exists($blogCategory->getId(), $blogCategoriesByParentId)) {
             return [];
         }
@@ -42,7 +44,7 @@ class BlogCategoryWithPreloadedChildrenFactory
         foreach ($blogCategoriesByParentId[$blogCategory->getId()] as $blogChildCategory) {
             $childBlogCategoriesWithPreloadedChildren[] = new BlogCategoryWithPreloadedChildren(
                 $blogChildCategory,
-                $this->getBlogCategoriesWithPreloadedChildren($blogChildCategory, $blogCategoriesByParentId)
+                $this->getBlogCategoriesWithPreloadedChildren($blogChildCategory, $blogCategoriesByParentId),
             );
         }
 

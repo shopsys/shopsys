@@ -16,21 +16,14 @@ use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory as BaseOrderDataFactory
 class OrderDataFactory extends BaseOrderDataFactory
 {
     /**
-     * @var \App\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory
-     */
-    private PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory;
-
-    /**
      * @param \App\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
      * @param \App\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory
      */
     public function __construct(
         OrderItemDataFactoryInterface $orderItemDataFactory,
-        PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory
+        private PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory,
     ) {
         parent::__construct($orderItemDataFactory);
-
-        $this->paymentTransactionRefundDataFactory = $paymentTransactionRefundDataFactory;
     }
 
     /**

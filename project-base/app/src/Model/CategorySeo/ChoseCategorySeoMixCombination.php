@@ -10,30 +10,7 @@ use function GuzzleHttp\json_encode;
 
 class ChoseCategorySeoMixCombination
 {
-    /**
-     * @var int
-     */
-    private $domainId;
-
-    /**
-     * @var int
-     */
-    private $categoryId;
-
-    /**
-     * @var int|null
-     */
-    private $flagId;
-
-    /**
-     * @var string
-     */
-    private $ordering;
-
-    /**
-     * @var int[]
-     */
-    private $parameterValueIdsByParameterIds = [];
+    private string $ordering;
 
     /**
      * @param int $domainId
@@ -42,13 +19,14 @@ class ChoseCategorySeoMixCombination
      * @param string $ordering
      * @param int[] $parameterValueIdsByParameterIds
      */
-    public function __construct(int $domainId, int $categoryId, ?int $flagId, ?string $ordering, array $parameterValueIdsByParameterIds)
-    {
-        $this->domainId = $domainId;
-        $this->categoryId = $categoryId;
-        $this->flagId = $flagId;
+    public function __construct(
+        private int $domainId,
+        private int $categoryId,
+        private ?int $flagId = null,
+        ?string $ordering,
+        private array $parameterValueIdsByParameterIds = [],
+    ) {
         $this->ordering = $ordering;
-        $this->parameterValueIdsByParameterIds = $parameterValueIdsByParameterIds;
     }
 
     /**
@@ -77,8 +55,8 @@ class ChoseCategorySeoMixCombination
                 throw new ChoseCategorySeoMixCombinationIsNotValidException(
                     sprintf(
                         'ChoseCategorySeoMixCombinationJson is not valid due to missing %s index',
-                        $checkIndex
-                    )
+                        $checkIndex,
+                    ),
                 );
             }
         }
@@ -88,7 +66,7 @@ class ChoseCategorySeoMixCombination
             $choseCategorySeoMixCombinationArray['categoryId'],
             $choseCategorySeoMixCombinationArray['flagId'],
             $choseCategorySeoMixCombinationArray['ordering'],
-            $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds']
+            $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'],
         );
     }
 
@@ -102,7 +80,7 @@ class ChoseCategorySeoMixCombination
             $this->categoryId,
             $this->flagId,
             $this->ordering,
-            $this->parameterValueIdsByParameterIds
+            $this->parameterValueIdsByParameterIds,
         );
     }
 
@@ -167,7 +145,7 @@ class ChoseCategorySeoMixCombination
         int $categoryId,
         ?int $flagId,
         ?string $ordering,
-        array $parameterValueIdsByParameterIds
+        array $parameterValueIdsByParameterIds,
     ): array {
         ksort($parameterValueIdsByParameterIds);
         return [

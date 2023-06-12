@@ -19,21 +19,14 @@ use Symfony\Component\Routing\RouteCollection;
 class FriendlyUrlMatcher extends BaseFriendlyUrlMatcher
 {
     /**
-     * @var \App\Model\CategorySeo\ReadyCategorySeoMixRepository
-     */
-    private $readyCategorySeoMixRepository;
-
-    /**
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixRepository $readyCategorySeoMixRepository
      */
     public function __construct(
         FriendlyUrlRepository $friendlyUrlRepository,
-        ReadyCategorySeoMixRepository $readyCategorySeoMixRepository
+        private ReadyCategorySeoMixRepository $readyCategorySeoMixRepository,
     ) {
         parent::__construct($friendlyUrlRepository);
-
-        $this->readyCategorySeoMixRepository = $readyCategorySeoMixRepository;
     }
 
     /**
@@ -92,8 +85,10 @@ class FriendlyUrlMatcher extends BaseFriendlyUrlMatcher
      * @param array $matchedParameters
      * @return array
      */
-    private function getMatchedParametersForMainFrontCategorySeoFriendlyUrl(FriendlyUrl $friendlyUrl, array $matchedParameters): array
-    {
+    private function getMatchedParametersForMainFrontCategorySeoFriendlyUrl(
+        FriendlyUrl $friendlyUrl,
+        array $matchedParameters,
+    ): array {
         $readyCategorySeoMixId = $friendlyUrl->getEntityId();
         $readyCategorySeoMix = $this->readyCategorySeoMixRepository->findById($readyCategorySeoMixId);
         if ($readyCategorySeoMix === null) {
@@ -112,8 +107,10 @@ class FriendlyUrlMatcher extends BaseFriendlyUrlMatcher
      * @param array $matchedParameters
      * @return array
      */
-    private function getMatchedParametersForNonMainFrontCategorySeoFriendlyUrl(FriendlyUrl $friendlyUrl, array $matchedParameters): array
-    {
+    private function getMatchedParametersForNonMainFrontCategorySeoFriendlyUrl(
+        FriendlyUrl $friendlyUrl,
+        array $matchedParameters,
+    ): array {
         $readyCategorySeoMixId = $friendlyUrl->getEntityId();
 
         $matchedParameters['_controller'] = 'FrameworkBundle:Redirect:redirect';

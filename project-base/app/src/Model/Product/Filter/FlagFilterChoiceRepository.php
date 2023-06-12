@@ -31,7 +31,7 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
         $productsQueryBuilder = $this->productRepository->getSellableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
-            $category
+            $category,
         );
 
         return $this->getVisibleFlagsByProductsQueryBuilderForDomain($productsQueryBuilder, $locale, $domainId);
@@ -44,12 +44,16 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
      * @param \App\Model\Product\Brand\Brand $brand
      * @return \App\Model\Product\Flag\Flag[]
      */
-    public function getFlagFilterChoicesForBrand(int $domainId, PricingGroup $pricingGroup, string $locale, Brand $brand): array
-    {
+    public function getFlagFilterChoicesForBrand(
+        int $domainId,
+        PricingGroup $pricingGroup,
+        string $locale,
+        Brand $brand,
+    ): array {
         $productsQueryBuilder = $this->productRepository->getListableForBrandQueryBuilder(
             $domainId,
             $pricingGroup,
-            $brand
+            $brand,
         );
 
         return $this->getVisibleFlagsByProductsQueryBuilderForDomain($productsQueryBuilder, $locale, $domainId);
@@ -80,7 +84,7 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
     {
         $productsQueryBuilder = $this->productRepository->getAllListableQueryBuilder(
             $domainId,
-            $pricingGroup
+            $pricingGroup,
         );
 
         return $this->getVisibleFlagsByProductsQueryBuilderForDomain($productsQueryBuilder, $locale, $domainId);
@@ -92,8 +96,11 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
      * @param int $domainId
      * @return \App\Model\Product\Flag\Flag[]
      */
-    protected function getVisibleFlagsByProductsQueryBuilderForDomain(QueryBuilder $productsQueryBuilder, string $locale, int $domainId)
-    {
+    protected function getVisibleFlagsByProductsQueryBuilderForDomain(
+        QueryBuilder $productsQueryBuilder,
+        string $locale,
+        int $domainId,
+    ) {
         $clonedProductsQueryBuilder = clone $productsQueryBuilder;
 
         $clonedProductsQueryBuilder

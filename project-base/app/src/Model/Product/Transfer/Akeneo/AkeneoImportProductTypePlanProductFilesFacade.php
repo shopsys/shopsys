@@ -19,10 +19,7 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
 {
     protected const DS = DIRECTORY_SEPARATOR;
 
-    /**
-     * @var \App\Model\Product\Product|null
-     */
-    private $product;
+    private ?Product $product = null;
 
     /**
      * @param string $productFilesDir
@@ -36,7 +33,7 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
         AkeneoImportTransferDependency $akeneoImportTransferDependency,
         private readonly ProductRepository $productRepository,
         private readonly MediaFilesTransferAkeneoFacade $mediaFilesTransferAkeneoFacade,
-        private readonly FilesystemOperator $localFilesystem
+        private readonly FilesystemOperator $localFilesystem,
     ) {
         parent::__construct($akeneoImportTransferDependency);
     }

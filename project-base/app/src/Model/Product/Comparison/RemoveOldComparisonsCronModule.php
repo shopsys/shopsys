@@ -13,7 +13,7 @@ class RemoveOldComparisonsCronModule implements SimpleCronModuleInterface
      * @param \App\Model\Product\Comparison\ComparisonRepository $comparisonRepository
      */
     public function __construct(
-        private readonly ComparisonRepository $comparisonRepository
+        private readonly ComparisonRepository $comparisonRepository,
     ) {
     }
 

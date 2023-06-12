@@ -48,7 +48,7 @@ class ParameterValuesViewFactory
             $parameter['parameter_name'],
             null,
             null,
-            null
+            null,
         );
         $viewData->addParameterValueText($parameter['parameter_value_text']);
         return $viewData;

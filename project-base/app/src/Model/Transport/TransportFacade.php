@@ -37,11 +37,6 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation;
 class TransportFacade extends BaseTransportFacade
 {
     /**
-     * @var \App\Model\Payment\PaymentFacade
-     */
-    private PaymentFacade $paymentFacade;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Transport\TransportRepository $transportRepository
      * @param \App\Model\Payment\PaymentRepository $paymentRepository
@@ -65,7 +60,7 @@ class TransportFacade extends BaseTransportFacade
         TransportPriceCalculation $transportPriceCalculation,
         TransportFactoryInterface $transportFactory,
         TransportPriceFactoryInterface $transportPriceFactory,
-        PaymentFacade $paymentFacade
+        private PaymentFacade $paymentFacade,
     ) {
         parent::__construct(
             $em,
@@ -77,10 +72,8 @@ class TransportFacade extends BaseTransportFacade
             $currencyFacade,
             $transportPriceCalculation,
             $transportFactory,
-            $transportPriceFactory
+            $transportPriceFactory,
         );
-
-        $this->paymentFacade = $paymentFacade;
     }
 
     /**

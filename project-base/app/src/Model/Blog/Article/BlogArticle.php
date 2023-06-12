@@ -102,8 +102,10 @@ class BlogArticle extends AbstractTranslatableEntity
      * @param \App\Model\Blog\Article\BlogArticleData $blogArticleData
      * @param \App\Model\Blog\Article\BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory
      */
-    public function edit(BlogArticleData $blogArticleData, BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory): void
-    {
+    public function edit(
+        BlogArticleData $blogArticleData,
+        BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory,
+    ): void {
         $this->setTranslations($blogArticleData);
         $this->setDomains($blogArticleData);
         $this->setCategories($blogArticleBlogCategoryDomainFactory, $blogArticleData->blogCategoriesByDomainId);
@@ -164,7 +166,7 @@ class BlogArticle extends AbstractTranslatableEntity
      */
     public function setCategories(
         BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory,
-        array $blogCategoriesByDomainId
+        array $blogCategoriesByDomainId,
     ): void {
         foreach ($blogCategoriesByDomainId as $domainId => $blogCategories) {
             $this->removeOldBlogArticleBlogCategoryDomains($blogCategories, $domainId);
@@ -180,7 +182,7 @@ class BlogArticle extends AbstractTranslatableEntity
     private function createNewBlogArticleBlogCategoryDomains(
         BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory,
         array $newBlogCategories,
-        int $domainId
+        int $domainId,
     ): void {
         $currentBlogArticleBlogCategoryDomainsOnDomainByCategoryId = $this->getBlogArticleBlogCategoryDomainsByDomainIdIndexedByCategoryId($domainId);
 

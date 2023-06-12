@@ -14,23 +14,11 @@ use Symfony\Component\Form\FormView;
 class DomainTypeExtension extends AbstractTypeExtension
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    private $adminDomainTabsFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
-    public function __construct(Domain $domain, AdminDomainTabsFacade $adminDomainTabsFacade)
+    public function __construct(private Domain $domain, private AdminDomainTabsFacade $adminDomainTabsFacade)
     {
-        $this->domain = $domain;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**

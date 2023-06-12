@@ -33,31 +33,6 @@ use Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade as BasePlaceOrderFaca
 class PlaceOrderFacade extends BasePlaceOrderFacade
 {
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeLimitResolver
-     */
-    private PromoCodeLimitResolver $promoCodeLimitResolver;
-
-    /**
-     * @var \App\Model\Customer\DeliveryAddressDataFactory
-     */
-    private DeliveryAddressDataFactory $deliveryAddressDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory
-     */
-    private DeliveryAddressFactory $deliveryAddressFactory;
-
-    /**
-     * @var \App\Model\Customer\User\CustomerUserUpdateDataFactory
-     */
-    private CustomerUserUpdateDataFactory $customerUserUpdateDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade
-     */
-    private NewsletterFacade $newsletterFacade;
-
-    /**
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade $orderProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
@@ -81,11 +56,11 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
         Domain $domain,
         CurrentCustomerUser $currentCustomerUser,
         CustomerUserFacade $customerUserFacade,
-        PromoCodeLimitResolver $promoCodeLimitResolver,
-        DeliveryAddressDataFactory $deliveryAddressDataFactory,
-        DeliveryAddressFactory $deliveryAddressFactory,
-        CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
-        NewsletterFacade $newsletterFacade
+        private PromoCodeLimitResolver $promoCodeLimitResolver,
+        private DeliveryAddressDataFactory $deliveryAddressDataFactory,
+        private DeliveryAddressFactory $deliveryAddressFactory,
+        private CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
+        private NewsletterFacade $newsletterFacade,
     ) {
         parent::__construct(
             $orderFacade,
@@ -95,14 +70,8 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
             $currencyFacade,
             $domain,
             $currentCustomerUser,
-            $customerUserFacade
+            $customerUserFacade,
         );
-
-        $this->promoCodeLimitResolver = $promoCodeLimitResolver;
-        $this->deliveryAddressDataFactory = $deliveryAddressDataFactory;
-        $this->deliveryAddressFactory = $deliveryAddressFactory;
-        $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
-        $this->newsletterFacade = $newsletterFacade;
     }
 
     /**
@@ -116,7 +85,7 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
         OrderData $orderData,
         array $quantifiedProducts,
         ?PromoCode $promoCode = null,
-        ?DeliveryAddress $deliveryAddress = null
+        ?DeliveryAddress $deliveryAddress = null,
     ): Order {
         /** @var \App\Model\Order\Status\OrderStatus $defaultOrderStatus */
         $defaultOrderStatus = $this->orderStatusRepository->getDefault();
@@ -133,7 +102,7 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
             $customerUser,
             $this->getPromoCodeDiscountPercent($quantifiedProducts, $promoCode),
             null,
-            $promoCode
+            $promoCode,
         );
 
         $order = $this->orderFacade->createOrder($orderData, $orderPreview, $customerUser);
@@ -148,7 +117,7 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
         } elseif ($orderData->newsletterSubscription) {
             $newsletterSubscriber = $this->newsletterFacade->findNewsletterSubscriberByEmailAndDomainId(
                 $orderData->email,
-                $this->domain->getId()
+                $this->domain->getId(),
             );
 
             if ($newsletterSubscriber === null) {
@@ -171,7 +140,7 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
         }
         $limit = $this->promoCodeLimitResolver->getLimitByPromoCode(
             $promoCode,
-            $quantifiedProducts
+            $quantifiedProducts,
         );
 
         return $limit !== null ? $limit->getDiscount() : null;

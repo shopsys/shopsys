@@ -25,11 +25,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class PromoCodeController extends BasePromoCodeController
 {
     /**
-     * @var \App\Model\Order\PromoCode\Grid\PromoCodeMassGeneratedBatchGridFactory
-     */
-    private PromoCodeMassGeneratedBatchGridFactory $promoCodeMassGeneratedBatchGridFactory;
-
-    /**
      * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
      * @param \App\Model\Order\PromoCode\PromoCodeDataFactory $promoCodeDataFactory
@@ -43,11 +38,9 @@ class PromoCodeController extends BasePromoCodeController
         PromoCodeDataFactoryInterface $promoCodeDataFactory,
         PromoCodeGridFactory $promoCodeGridFactory,
         BreadcrumbOverrider $breadcrumbOverrider,
-        PromoCodeMassGeneratedBatchGridFactory $promoCodeMassGeneratedBatchGridFactory
+        private PromoCodeMassGeneratedBatchGridFactory $promoCodeMassGeneratedBatchGridFactory,
     ) {
         parent::__construct($promoCodeFacade, $administratorGridFacade, $promoCodeDataFactory, $promoCodeGridFactory, $breadcrumbOverrider);
-
-        $this->promoCodeMassGeneratedBatchGridFactory = $promoCodeMassGeneratedBatchGridFactory;
     }
 
     /**
@@ -92,7 +85,7 @@ class PromoCodeController extends BasePromoCodeController
                 t('Bylo vytvořeno <strong>{{ quantity }}</strong> slevových kupónů'),
                 [
                     'quantity' => $promoCodeData->quantity,
-                ]
+                ],
             );
 
             /** @var \Symfony\Component\Form\SubmitButton $saveButton */
@@ -178,7 +171,7 @@ class PromoCodeController extends BasePromoCodeController
                 [
                     'code' => $promoCode->getCode(),
                     'url' => $this->generateUrl('admin_promocode_edit', ['id' => $promoCode->getId()]),
-                ]
+                ],
             );
             return $this->redirectToRoute('admin_promocode_list');
         }

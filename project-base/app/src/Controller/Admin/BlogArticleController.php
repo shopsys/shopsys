@@ -27,46 +27,6 @@ class BlogArticleController extends AdminBaseController
     private const SESSION_BLOG_ARTICLES_SELECTED_DOMAIN_ID = 'blog_articles_selected_domain_id';
 
     /**
-     * @var \App\Model\Blog\Article\BlogArticleFacade
-     */
-    private $blogArticleFacade;
-
-    /**
-     * @var \App\Model\Blog\Article\BlogArticleDataFactory
-     */
-    private $blogArticleDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    private $adminDomainTabsFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
-     */
-    private $breadcrumbOverrider;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory
-     */
-    private $confirmDeleteResponseFactory;
-
-    /**
-     * @var \App\Model\Blog\Article\BlogArticleGridFactory
-     */
-    private $blogArticleGridFactory;
-
-    /**
-     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
-     */
-    private $session;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
      * @param \App\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
      * @param \App\Model\Blog\Article\BlogArticleDataFactory $blogArticleDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
@@ -77,23 +37,15 @@ class BlogArticleController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        BlogArticleFacade $blogArticleFacade,
-        BlogArticleDataFactory $blogArticleDataFactory,
-        AdminDomainTabsFacade $adminDomainTabsFacade,
-        BreadcrumbOverrider $breadcrumbOverrider,
-        ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
-        BlogArticleGridFactory $blogArticleGridFactory,
-        SessionInterface $session,
-        Domain $domain
+        private BlogArticleFacade $blogArticleFacade,
+        private BlogArticleDataFactory $blogArticleDataFactory,
+        private AdminDomainTabsFacade $adminDomainTabsFacade,
+        private BreadcrumbOverrider $breadcrumbOverrider,
+        private ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
+        private BlogArticleGridFactory $blogArticleGridFactory,
+        private SessionInterface $session,
+        private Domain $domain,
     ) {
-        $this->blogArticleFacade = $blogArticleFacade;
-        $this->blogArticleDataFactory = $blogArticleDataFactory;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
-        $this->breadcrumbOverrider = $breadcrumbOverrider;
-        $this->confirmDeleteResponseFactory = $confirmDeleteResponseFactory;
-        $this->blogArticleGridFactory = $blogArticleGridFactory;
-        $this->session = $session;
-        $this->domain = $domain;
     }
 
     /**
@@ -157,7 +109,7 @@ class BlogArticleController extends AdminBaseController
                     [
                         'name' => $blogArticle->getName(),
                         'url' => $this->generateUrl('admin_blogarticle_edit', ['id' => $blogArticle->getId()]),
-                    ]
+                    ],
                 );
             return $this->redirectToRoute('admin_blogarticle_list');
         }
@@ -197,7 +149,7 @@ class BlogArticleController extends AdminBaseController
                     [
                         'name' => $blogArticle->getName(),
                         'url' => $this->generateUrl('admin_blogarticle_edit', ['id' => $blogArticle->getId()]),
-                    ]
+                    ],
                 );
             return $this->redirectToRoute('admin_blogarticle_list');
         }
@@ -228,7 +180,7 @@ class BlogArticleController extends AdminBaseController
                 t('Článek blogu <strong>{{ name }}</strong> byl smazán'),
                 [
                     'name' => $fullName,
-                ]
+                ],
             );
         } catch (ArticleNotFoundException $ex) {
             $this->addErrorFlash(t('Vybraný článek blogu neexistuje.'));

@@ -22,41 +22,17 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class NavigationItemDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     /**
-     * @var \App\Model\Navigation\NavigationItemFacade
-     */
-    private NavigationItemFacade $navigationItemFacade;
-
-    /**
-     * @var \App\Model\Navigation\NavigationItemDataFactory
-     */
-    private NavigationItemDataFactory $navigationItemDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected Domain $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
-     */
-    protected DomainRouterFactory $domainRouterFactory;
-
-    /**
      * @param \App\Model\Navigation\NavigationItemFacade $navigationItemFacade
      * @param \App\Model\Navigation\NavigationItemDataFactory $navigationItemDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      */
     public function __construct(
-        NavigationItemFacade $navigationItemFacade,
-        NavigationItemDataFactory $navigationItemDataFactory,
-        Domain $domain,
-        DomainRouterFactory $domainRouterFactory
+        private NavigationItemFacade $navigationItemFacade,
+        private NavigationItemDataFactory $navigationItemDataFactory,
+        protected Domain $domain,
+        protected DomainRouterFactory $domainRouterFactory,
     ) {
-        $this->navigationItemFacade = $navigationItemFacade;
-        $this->navigationItemDataFactory = $navigationItemDataFactory;
-        $this->domain = $domain;
-        $this->domainRouterFactory = $domainRouterFactory;
     }
 
     /**
@@ -79,7 +55,7 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
             $navigationItemData->name = t('Gadgets', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $navigationItemData->url = $this->generateUrlForCategoryOnDomain(
                 CategoryDataFixture::CATEGORY_ELECTRONICS,
-                $domainId
+                $domainId,
             );
             $navigationItemData->domainId = $domainId;
             $this->createItem($navigationItemData);
@@ -88,7 +64,7 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
             $navigationItemData->name = t('Bookworm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $navigationItemData->url = $this->generateUrlForCategoryOnDomain(
                 CategoryDataFixture::CATEGORY_BOOKS,
-                $domainId
+                $domainId,
             );
             $navigationItemData->domainId = $domainId;
             $this->createItem($navigationItemData);
@@ -97,7 +73,7 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
             $navigationItemData->name = t('Growing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $navigationItemData->url = $this->generateUrlForCategoryOnDomain(
                 CategoryDataFixture::CATEGORY_GARDEN_TOOLS,
-                $domainId
+                $domainId,
             );
             $navigationItemData->domainId = $domainId;
             $this->createItem($navigationItemData);
@@ -106,7 +82,7 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
             $navigationItemData->name = t('Snack', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $navigationItemData->url = $this->generateUrlForCategoryOnDomain(
                 CategoryDataFixture::CATEGORY_FOOD,
-                $domainId
+                $domainId,
             );
             $navigationItemData->domainId = $domainId;
             $this->createItem($navigationItemData);
@@ -171,7 +147,7 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
         return $router->generate(
             'front_product_list',
             ['id' => $categoryReference->getId()],
-            UrlGeneratorInterface::RELATIVE_PATH
+            UrlGeneratorInterface::RELATIVE_PATH,
         );
     }
 }

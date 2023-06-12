@@ -34,7 +34,7 @@ class OrderItemFactory extends BaseOrderItemFactory
         Price $price,
         string $vatPercent,
         int $quantity,
-        Payment $payment
+        Payment $payment,
     ): BaseOrderItem {
         throw new BadMethodCallException('Use ' . self::class . '::createPaymentByOrderItemData() instead of this method');
     }
@@ -54,7 +54,7 @@ class OrderItemFactory extends BaseOrderItemFactory
         Price $price,
         string $vatPercent,
         int $quantity,
-        Transport $transport
+        Transport $transport,
     ): BaseOrderItem {
         throw new BadMethodCallException('Use ' . self::class . '::createTransportByOrderItemData() instead of this method');
     }
@@ -65,8 +65,11 @@ class OrderItemFactory extends BaseOrderItemFactory
      * @param \App\Model\Product\Product|null $product
      * @return \App\Model\Order\Item\OrderItem
      */
-    public function createProductByOrderItemData(OrderItemData $orderItemData, Order $order, ?Product $product): OrderItem
-    {
+    public function createProductByOrderItemData(
+        OrderItemData $orderItemData,
+        Order $order,
+        ?Product $product,
+    ): OrderItem {
         /** @var \App\Model\Order\Item\OrderItem $orderItem */
         $orderItem = parent::createProduct(
             $order,
@@ -76,7 +79,7 @@ class OrderItemFactory extends BaseOrderItemFactory
             $orderItemData->quantity,
             $orderItemData->unitName,
             $orderItemData->catnum,
-            $product
+            $product,
         );
         $orderItem->setPromoCodeIdentifier($orderItemData->promoCodeIdentifier);
         $orderItem->setRelatedOrderItem($orderItemData->relatedOrderItem);
@@ -98,7 +101,7 @@ class OrderItemFactory extends BaseOrderItemFactory
             new Price($orderItemData->priceWithoutVat, $orderItemData->priceWithVat),
             $orderItemData->vatPercent,
             $orderItemData->quantity,
-            $orderItemData->payment
+            $orderItemData->payment,
         );
 
         return $orderItem;
@@ -118,7 +121,7 @@ class OrderItemFactory extends BaseOrderItemFactory
             new Price($orderItemData->priceWithoutVat, $orderItemData->priceWithVat),
             $orderItemData->vatPercent,
             $orderItemData->quantity,
-            $orderItemData->transport
+            $orderItemData->transport,
         );
         $orderItem->setPersonalPickupStore($orderItemData->personalPickupStore);
 

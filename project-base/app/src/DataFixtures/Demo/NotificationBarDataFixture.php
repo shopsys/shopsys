@@ -22,7 +22,7 @@ class NotificationBarDataFixture extends AbstractReferenceFixture
     public function __construct(
         readonly private NotificationBarFacade $notificationBarFacade,
         readonly private NotificationBarDataFactory $notificationBarDataFactory,
-        readonly private Domain $domain
+        readonly private Domain $domain,
     ) {
     }
 

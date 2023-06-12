@@ -22,41 +22,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdministratorRoleGroupController extends AdminBaseController
 {
     /**
-     * @var \App\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade
-     */
-    private AdministratorRoleGroupFacade $administratorRoleGroupFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    private GridFactory $gridFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
-     */
-    private BreadcrumbOverrider $breadcrumbOverrider;
-
-    /**
-     * @var \App\Model\Administrator\AdministratorFacade
-     */
-    private AdministratorFacade $administratorFacade;
-
-    /**
      * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \App\Model\Administrator\AdministratorFacade $administratorFacade
      */
     public function __construct(
-        AdministratorRoleGroupFacade $administratorRoleGroupFacade,
-        GridFactory $gridFactory,
-        BreadcrumbOverrider $breadcrumbOverrider,
-        AdministratorFacade $administratorFacade
+        private AdministratorRoleGroupFacade $administratorRoleGroupFacade,
+        private GridFactory $gridFactory,
+        private BreadcrumbOverrider $breadcrumbOverrider,
+        private AdministratorFacade $administratorFacade,
     ) {
-        $this->administratorRoleGroupFacade = $administratorRoleGroupFacade;
-        $this->gridFactory = $gridFactory;
-        $this->breadcrumbOverrider = $breadcrumbOverrider;
-        $this->administratorFacade = $administratorFacade;
     }
 
     /**
@@ -104,7 +80,7 @@ class AdministratorRoleGroupController extends AdminBaseController
                     [
                         'name' => $administratorRoleGroup->getName(),
                         'url' => $this->generateUrl('admin_administratorrolegroup_edit', ['id' => $administratorRoleGroup->getId()]),
-                    ]
+                    ],
                 );
 
                 return $this->redirectToRoute('admin_administratorrolegroup_list');
@@ -113,7 +89,7 @@ class AdministratorRoleGroupController extends AdminBaseController
                     t('Role group name <strong>{{ name }}</strong> is already used'),
                     [
                         'name' => $roleGroupData->name,
-                    ]
+                    ],
                 );
             }
         }
@@ -151,7 +127,7 @@ class AdministratorRoleGroupController extends AdminBaseController
                     [
                         'name' => $administratorRoleGroupData->name,
                         'url' => $this->generateUrl('admin_administratorrolegroup_edit', ['id' => $id]),
-                    ]
+                    ],
                 );
 
                 return $this->redirectToRoute('admin_administratorrolegroup_list');
@@ -160,7 +136,7 @@ class AdministratorRoleGroupController extends AdminBaseController
                     t('Role group name <strong>{{ name }}</strong> is already used'),
                     [
                         'name' => $administratorRoleGroupData->name,
-                    ]
+                    ],
                 );
             }
         }
@@ -170,7 +146,7 @@ class AdministratorRoleGroupController extends AdminBaseController
         }
 
         $this->breadcrumbOverrider->overrideLastItem(
-            t('Editing administrator role group - %name%', ['%name%' => $administratorRoleGroup->getName()])
+            t('Editing administrator role group - %name%', ['%name%' => $administratorRoleGroup->getName()]),
         );
 
         return $this->render('/Admin/Content/Administrator/RoleGroup/edit.html.twig', [
@@ -224,7 +200,7 @@ class AdministratorRoleGroupController extends AdminBaseController
                 t('Role group cannot be deleted, because some administrators are using it: {{ names }}'),
                 [
                     'names' => implode(', ', $namesUsingThisRoleGroup),
-                ]
+                ],
             );
 
             return $this->redirectToRoute('admin_administratorrolegroup_list');
@@ -238,7 +214,7 @@ class AdministratorRoleGroupController extends AdminBaseController
                 t('Administrator role group <strong>{{ name }}</strong> deleted.'),
                 [
                     'name' => $name,
-                ]
+                ],
             );
         } catch (AdministratorRoleGroupNotFoundException $ex) {
             $this->addErrorFlash(t('Selected administrator role group doesn\'t exist.'));

@@ -41,7 +41,7 @@ class BlogCategoryFacade
         private readonly BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler,
         private readonly BlogArticleExportQueueFacade $blogArticleExportQueueFacade,
         private readonly BlogArticleFacade $blogArticleFacade,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 
@@ -257,12 +257,12 @@ class BlogCategoryFacade
             $articleIds = $this->blogArticleFacade->getBlogArticleIdsByCategory(
                 $blogCategory,
                 $domainConfig->getId(),
-                $domainConfig->getLocale()
+                $domainConfig->getLocale(),
             );
 
             $this->blogArticleExportQueueFacade->addIdsBatch(
                 $articleIds,
-                $domainConfig->getId()
+                $domainConfig->getId(),
             );
         }
     }
@@ -293,7 +293,7 @@ class BlogCategoryFacade
         foreach ($this->domain->getAllIds() as $domainId) {
             $allIds = array_map(
                 static fn (BlogArticle $blogArticle) => $blogArticle->getId(),
-                $this->blogArticleFacade->getAllByDomainId($domainId)
+                $this->blogArticleFacade->getAllByDomainId($domainId),
             );
 
             $this->blogArticleExportQueueFacade->addIdsBatch($allIds, $domainId);

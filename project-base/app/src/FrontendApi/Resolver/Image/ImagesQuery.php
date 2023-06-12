@@ -38,7 +38,7 @@ class ImagesQuery extends BaseImagesQuery
         Domain $domain,
         FrontendApiImageFacade $frontendApiImageFacade,
         protected readonly DataLoaderInterface $imagesBatchLoader,
-        protected readonly DataLoaderInterface $firstImageBatchLoader
+        protected readonly DataLoaderInterface $firstImageBatchLoader,
     ) {
         parent::__construct($imageFacade, $imageConfig, $domain, $frontendApiImageFacade);
     }
@@ -63,8 +63,12 @@ class ImagesQuery extends BaseImagesQuery
      * @param string|null $size
      * @return \GraphQL\Executor\Promise\Promise
      */
-    public function mainImageByEntityIdPromiseQuery(int $entityId, string $entityName, ?string $type, ?string $size): Promise
-    {
+    public function mainImageByEntityIdPromiseQuery(
+        int $entityId,
+        string $entityName,
+        ?string $type,
+        ?string $size,
+    ): Promise {
         $sizes = $size === null ? [] : [$size];
         $sizeConfigs = $this->getSizesConfigs($type, $sizes, $entityName);
 
@@ -73,8 +77,8 @@ class ImagesQuery extends BaseImagesQuery
                 $entityId,
                 $entityName,
                 $sizeConfigs,
-                $type
-            )
+                $type,
+            ),
         );
     }
 
@@ -98,8 +102,12 @@ class ImagesQuery extends BaseImagesQuery
      * @param array|null $sizes
      * @return \GraphQL\Executor\Promise\Promise
      */
-    protected function resolveByEntityIdPromise(int $entityId, string $entityName, ?string $type, ?array $sizes): Promise
-    {
+    protected function resolveByEntityIdPromise(
+        int $entityId,
+        string $entityName,
+        ?string $type,
+        ?array $sizes,
+    ): Promise {
         $sizeConfigs = $this->getSizesConfigs($type, $sizes, $entityName);
 
         return $this->imagesBatchLoader->load(
@@ -107,8 +115,8 @@ class ImagesQuery extends BaseImagesQuery
                 $entityId,
                 $entityName,
                 $sizeConfigs,
-                $type
-            )
+                $type,
+            ),
         );
     }
 
@@ -153,8 +161,12 @@ class ImagesQuery extends BaseImagesQuery
      * @param string $entityName
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
      */
-    private function getSingleSizeConfig(ImageEntityConfig $imageConfig, ?string $type, string $size, string $entityName): ImageSizeConfig
-    {
+    private function getSingleSizeConfig(
+        ImageEntityConfig $imageConfig,
+        ?string $type,
+        string $size,
+        string $entityName,
+    ): ImageSizeConfig {
         try {
             if ($size === ImageConfig::DEFAULT_SIZE_NAME) {
                 $size = ImageEntityConfig::WITHOUT_NAME_KEY;

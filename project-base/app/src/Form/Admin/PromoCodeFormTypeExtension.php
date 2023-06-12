@@ -40,9 +40,6 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
     public const VALIDATION_GROUP_TYPE_PERCENT = 'type_percent';
     public const VALIDATION_GROUP_TYPE_NOMINAL = 'type_nominal';
 
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCode|null
-     */
     private ?PromoCode $promoCode;
 
     /**
@@ -55,7 +52,7 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
         private readonly PromoCodeFacade $promoCodeFacade,
         private readonly BrandFacade $brandFacade,
         private readonly PricingGroupFacade $pricingGroupFacade,
-        private readonly AdminDomainTabsFacade $adminDomainTabsFacade
+        private readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 
@@ -169,7 +166,7 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
                         'minMessage' => 'Please enter at least one discount limit',
                     ]),
                 ],
-            ])
+            ]),
         );
 
         $builder->add($limitsGroup);
@@ -396,8 +393,10 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
      * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
-    public function validateUniquePromoCodeByDomain(PromoCodeData $promoCodeData, ExecutionContextInterface $context): void
-    {
+    public function validateUniquePromoCodeByDomain(
+        PromoCodeData $promoCodeData,
+        ExecutionContextInterface $context,
+    ): void {
         if ($promoCodeData->code === null) {
             return;
         }

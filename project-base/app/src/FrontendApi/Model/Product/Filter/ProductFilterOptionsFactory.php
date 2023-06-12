@@ -39,11 +39,6 @@ use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory a
 class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
 {
     /**
-     * @var \App\Model\Category\CategoryParameterFacade
-     */
-    private CategoryParameterFacade $categoryParameterFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
      * @param \App\Model\Category\CategoryParameterFacade $categoryParameterFacade
@@ -51,11 +46,9 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
     public function __construct(
         ModuleFacade $moduleFacade,
         ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade,
-        CategoryParameterFacade $categoryParameterFacade
+        private CategoryParameterFacade $categoryParameterFacade,
     ) {
         parent::__construct($moduleFacade, $productOnCurrentDomainFacade);
-
-        $this->categoryParameterFacade = $categoryParameterFacade;
     }
 
     /**
@@ -65,8 +58,12 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
      * @param bool $isSelected
      * @return \App\FrontendApi\Model\Product\Filter\ParameterValueFilterOption
      */
-    protected function createParameterValueFilterOption(BaseParameterValue $brand, int $count, bool $isAbsolute, bool $isSelected = false): ParameterValueFilterOption
-    {
+    protected function createParameterValueFilterOption(
+        BaseParameterValue $brand,
+        int $count,
+        bool $isAbsolute,
+        bool $isSelected = false,
+    ): ParameterValueFilterOption {
         return new ParameterValueFilterOption($brand, $count, $isAbsolute, $isSelected);
     }
 
@@ -81,7 +78,7 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
         BaseParameter $parameter,
         array $parameterValueFilterOptions,
         bool $collapsed = false,
-        ?float $selectedValue = null
+        ?float $selectedValue = null,
     ): ParameterFilterOption {
         return new ParameterFilterOption($parameter, $parameterValueFilterOptions, $collapsed, $selectedValue);
     }
@@ -97,7 +94,7 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
         Flag $flag,
         ProductFilterConfig $productFilterConfig,
         ProductFilterData $productFilterData,
-        string $searchText = ''
+        string $searchText = '',
     ): ProductFilterOptions {
         if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
             return $this->createProductFilterOptionsInstance();
@@ -106,13 +103,13 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
         $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForFlag(
             $flag->getId(),
             $productFilterData,
-            $searchText
+            $searchText,
         );
 
         $productFilterOptions = $this->createProductFilterOptions(
             $productFilterConfig,
             $productFilterCountData,
-            $productFilterData
+            $productFilterData,
         );
         $this->fillBrands($productFilterOptions, $productFilterConfig, $productFilterCountData, $productFilterData);
 
@@ -128,7 +125,7 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
     public function createProductFilterOptionsForAll(
         ProductFilterConfig $productFilterConfig,
         BaseProductFilterData $productFilterData,
-        string $searchText = ''
+        string $searchText = '',
     ): ProductFilterOptions {
         if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
             return $this->createProductFilterOptionsInstance();
@@ -138,24 +135,24 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
             $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForSearch(
                 $searchText,
                 $productFilterConfig,
-                $productFilterData
+                $productFilterData,
             );
         } else {
             $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForAll(
-                $productFilterData
+                $productFilterData,
             );
         }
 
         $productFilterOptions = $this->createProductFilterOptions(
             $productFilterConfig,
             $productFilterCountData,
-            $productFilterData
+            $productFilterData,
         );
         $this->fillBrands(
             $productFilterOptions,
             $productFilterConfig,
             $productFilterCountData,
-            $productFilterData
+            $productFilterData,
         );
 
         return $productFilterOptions;
@@ -174,7 +171,7 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
         ProductFilterConfig $productFilterConfig,
         BaseProductFilterData $productFilterData,
         string $searchText = '',
-        ?ReadyCategorySeoMix $readyCategorySeoMix = null
+        ?ReadyCategorySeoMix $readyCategorySeoMix = null,
     ): ProductFilterOptions {
         if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
             return $this->createProductFilterOptionsInstance();
@@ -184,20 +181,20 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
             $category->getId(),
             $productFilterConfig,
             $productFilterData,
-            $searchText
+            $searchText,
         );
 
         $productFilterOptions = $this->createProductFilterOptions(
             $productFilterConfig,
             $productFilterCountData,
             $productFilterData,
-            $readyCategorySeoMix
+            $readyCategorySeoMix,
         );
         $this->fillBrands(
             $productFilterOptions,
             $productFilterConfig,
             $productFilterCountData,
-            $productFilterData
+            $productFilterData,
         );
         $this->fillParameters(
             $productFilterOptions,
@@ -205,7 +202,7 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
             $productFilterCountData,
             $productFilterData,
             $category,
-            $readyCategorySeoMix
+            $readyCategorySeoMix,
         );
 
         return $productFilterOptions;
@@ -222,7 +219,7 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
         Brand $brand,
         ProductFilterConfig $productFilterConfig,
         BaseProductFilterData $productFilterData,
-        string $searchText = ''
+        string $searchText = '',
     ): ProductFilterOptions {
         if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
             return $this->createProductFilterOptionsInstance();
@@ -231,13 +228,13 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
         $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForBrand(
             $brand->getId(),
             $productFilterData,
-            $searchText
+            $searchText,
         );
 
         return $this->createProductFilterOptions(
             $productFilterConfig,
             $productFilterCountData,
-            $productFilterData
+            $productFilterData,
         );
     }
 
@@ -255,7 +252,7 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
         ProductFilterCountData $productFilterCountData,
         BaseProductFilterData $productFilterData,
         ?Category $category = null,
-        ?ReadyCategorySeoMix $readyCategorySeoMix = null
+        ?ReadyCategorySeoMix $readyCategorySeoMix = null,
     ): void {
         if ($category === null) {
             throw new InvalidArgumentException('$category parameter must be provided');
@@ -274,13 +271,13 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
                     $parameter,
                     $parameterValue,
                     $productFilterData,
-                    $productFilterCountData
+                    $productFilterCountData,
                 );
                 $parameterValueFilterOptions[] = $this->createParameterValueFilterOption(
                     $parameterValue,
                     $parameterValueCount,
                     $isAbsolute,
-                    $this->isParameterValueSelected($readyCategorySeoMix, $parameter, $parameterValue)
+                    $this->isParameterValueSelected($readyCategorySeoMix, $parameter, $parameterValue),
                 );
             }
 
@@ -288,7 +285,7 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
                 $parameter,
                 $parameterValueFilterOptions,
                 in_array($parameter, $collapsedParameters, true),
-                $this->getParameterSelectedValue($readyCategorySeoMix, $parameterFilterChoice)
+                $this->getParameterSelectedValue($readyCategorySeoMix, $parameterFilterChoice),
             );
         }
     }
@@ -304,7 +301,7 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
         ProductFilterConfig $productFilterConfig,
         ProductFilterCountData $productFilterCountData,
         BaseProductFilterData $productFilterData,
-        ?ReadyCategorySeoMix $readyCategorySeoMix = null
+        ?ReadyCategorySeoMix $readyCategorySeoMix = null,
     ): ProductFilterOptions {
         $productFilterOptions = $this->createProductFilterOptionsInstance();
         $productFilterOptions->minimalPrice = $productFilterConfig->getPriceRange()->getMinimalPrice();
@@ -329,7 +326,7 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
         ProductFilterConfig $productFilterConfig,
         ProductFilterCountData $productFilterCountData,
         BaseProductFilterData $productFilterData,
-        ?ReadyCategorySeoMix $readyCategorySeoMix = null
+        ?ReadyCategorySeoMix $readyCategorySeoMix = null,
     ): void {
         $isAbsolute = count($productFilterData->flags) === 0;
 
@@ -339,7 +336,7 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
                 $flag,
                 $productFilterCountData->countByFlagId[$flag->getId()] ?? 0,
                 $isAbsolute,
-                $readyCategorySeoMix !== null && $readyCategorySeoMix->getFlag() === $flag
+                $readyCategorySeoMix !== null && $readyCategorySeoMix->getFlag() === $flag,
             );
         }
     }
@@ -351,8 +348,12 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
      * @param bool $isSelected
      * @return \App\FrontendApi\Model\Product\Filter\FlagFilterOption
      */
-    protected function createFlagFilterOption(BaseFlag $flag, int $count, bool $isAbsolute, bool $isSelected = false): BaseFlagFilterOption
-    {
+    protected function createFlagFilterOption(
+        BaseFlag $flag,
+        int $count,
+        bool $isAbsolute,
+        bool $isSelected = false,
+    ): BaseFlagFilterOption {
         return new FlagFilterOption($flag, $count, $isAbsolute, $isSelected);
     }
 
@@ -362,8 +363,11 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
      * @param \App\Model\Product\Parameter\ParameterValue $parameterValue
      * @return bool
      */
-    private function isParameterValueSelected(?ReadyCategorySeoMix $readyCategorySeoMix, Parameter $parameter, ParameterValue $parameterValue): bool
-    {
+    private function isParameterValueSelected(
+        ?ReadyCategorySeoMix $readyCategorySeoMix,
+        Parameter $parameter,
+        ParameterValue $parameterValue,
+    ): bool {
         if ($readyCategorySeoMix === null) {
             return false;
         }
@@ -382,8 +386,10 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice $parameterFilterChoice
      * @return float|null
      */
-    private function getParameterSelectedValue(?ReadyCategorySeoMix $readyCategorySeoMix, ParameterFilterChoice $parameterFilterChoice): ?float
-    {
+    private function getParameterSelectedValue(
+        ?ReadyCategorySeoMix $readyCategorySeoMix,
+        ParameterFilterChoice $parameterFilterChoice,
+    ): ?float {
         if ($readyCategorySeoMix === null) {
             return null;
         }

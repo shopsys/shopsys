@@ -17,25 +17,13 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation;
 class ReadyCategorySeoMixGridFactory
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    private $gridFactory;
-
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
-        GridFactory $gridFactory,
-        EntityManagerInterface $em
+        private GridFactory $gridFactory,
+        private EntityManagerInterface $em,
     ) {
-        $this->gridFactory = $gridFactory;
-        $this->em = $em;
     }
 
     /**

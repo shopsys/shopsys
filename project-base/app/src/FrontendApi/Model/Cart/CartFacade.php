@@ -20,31 +20,6 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 class CartFacade
 {
     /**
-     * @var \App\Model\Cart\CartFacade
-     */
-    protected BaseCartFacade $cartFacade;
-
-    /**
-     * @var \App\FrontendApi\Model\Product\ProductFacade
-     */
-    protected ProductFacade $productFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected Domain $domain;
-
-    /**
-     * @var \App\Model\Customer\User\CurrentCustomerUser
-     */
-    protected CurrentCustomerUser $currentCustomerUser;
-
-    /**
-     * @var \App\Model\Customer\User\CustomerUserIdentifierFactory
-     */
-    protected CustomerUserIdentifierFactory $customerUserIdentifierFactory;
-
-    /**
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\FrontendApi\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -52,17 +27,12 @@ class CartFacade
      * @param \App\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
      */
     public function __construct(
-        BaseCartFacade $cartFacade,
-        ProductFacade $productFacade,
-        Domain $domain,
-        CurrentCustomerUser $currentCustomerUser,
-        CustomerUserIdentifierFactory $customerUserIdentifierFactory
+        protected BaseCartFacade $cartFacade,
+        protected ProductFacade $productFacade,
+        protected Domain $domain,
+        protected CurrentCustomerUser $currentCustomerUser,
+        protected CustomerUserIdentifierFactory $customerUserIdentifierFactory,
     ) {
-        $this->cartFacade = $cartFacade;
-        $this->productFacade = $productFacade;
-        $this->domain = $domain;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->customerUserIdentifierFactory = $customerUserIdentifierFactory;
     }
 
     /**
@@ -72,13 +42,17 @@ class CartFacade
      * @param \App\Model\Cart\Cart $cart
      * @return \App\Model\Cart\AddProductResult
      */
-    public function addProductByUuidToCart(string $productUuid, int $quantity, bool $isAbsoluteQuantity, Cart $cart): AddProductResult
-    {
+    public function addProductByUuidToCart(
+        string $productUuid,
+        int $quantity,
+        bool $isAbsoluteQuantity,
+        Cart $cart,
+    ): AddProductResult {
         try {
             $product = $this->productFacade->getSellableByUuid(
                 $productUuid,
                 $this->domain->getId(),
-                $this->currentCustomerUser->getPricingGroup()
+                $this->currentCustomerUser->getPricingGroup(),
             );
         } catch (ProductNotFoundException $exception) {
             throw new InvalidCartItemUserError(sprintf('Product with UUID "%s" is not available', $productUuid));

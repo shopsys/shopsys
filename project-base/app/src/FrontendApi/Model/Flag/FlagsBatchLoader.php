@@ -11,30 +11,15 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class FlagsBatchLoader
 {
     /**
-     * @var \GraphQL\Executor\Promise\PromiseAdapter
-     */
-    private PromiseAdapter $promiseAdapter;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
-     * @var \App\FrontendApi\Model\Flag\FlagFacade
-     */
-    private FlagFacade $flagFacade;
-
-    /**
      * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\FrontendApi\Model\Flag\FlagFacade $flagFacade
      */
-    public function __construct(PromiseAdapter $promiseAdapter, Domain $domain, FlagFacade $flagFacade)
-    {
-        $this->promiseAdapter = $promiseAdapter;
-        $this->domain = $domain;
-        $this->flagFacade = $flagFacade;
+    public function __construct(
+        private PromiseAdapter $promiseAdapter,
+        private Domain $domain,
+        private FlagFacade $flagFacade,
+    ) {
     }
 
     /**

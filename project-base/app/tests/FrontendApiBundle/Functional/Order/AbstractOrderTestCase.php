@@ -134,8 +134,11 @@ class AbstractOrderTestCase extends GraphQlTestCase
      * @param \App\Model\Transport\Transport $transport
      * @param string|null $pickupPlaceIdentifier
      */
-    protected function addTransportToCart(string $cartUuid, Transport $transport, ?string $pickupPlaceIdentifier = null): void
-    {
+    protected function addTransportToCart(
+        string $cartUuid,
+        Transport $transport,
+        ?string $pickupPlaceIdentifier = null,
+    ): void {
         $pickupPlaceIdentifierLine = '';
         if ($pickupPlaceIdentifier !== null) {
             $pickupPlaceIdentifierLine = 'pickupPlaceIdentifier: "' . $pickupPlaceIdentifier . '"';

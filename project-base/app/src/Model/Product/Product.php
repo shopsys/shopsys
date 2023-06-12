@@ -257,7 +257,7 @@ class Product extends BaseProduct
         if (!$this->isMainVariant()) {
             throw new VariantCanBeAddedOnlyToMainVariantException(
                 $this->getId(),
-                $variant->getId()
+                $variant->getId(),
             );
         }
         if ($variant->isMainVariant()) {
@@ -347,7 +347,7 @@ class Product extends BaseProduct
             $usps,
             static function ($value) {
                 return $value !== null && $value !== '';
-            }
+            },
         ));
     }
 
@@ -403,7 +403,7 @@ class Product extends BaseProduct
             . ' '
             . $this->getName($locale)
             . ' '
-            . $this->getNameSufix($locale)
+            . $this->getNameSufix($locale),
         );
     }
 
@@ -439,7 +439,7 @@ class Product extends BaseProduct
         return trim(
             $this->getName($locale)
             . ' '
-            . $this->getNameSufix($locale)
+            . $this->getNameSufix($locale),
         );
     }
 

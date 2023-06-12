@@ -9,17 +9,11 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class StockDataFactory
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        Domain $domain
+        private Domain $domain,
     ) {
-        $this->domain = $domain;
     }
 
     /**

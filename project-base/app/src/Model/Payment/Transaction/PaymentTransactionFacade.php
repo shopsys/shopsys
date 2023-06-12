@@ -9,25 +9,13 @@ use Doctrine\ORM\EntityManagerInterface;
 class PaymentTransactionFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private EntityManagerInterface $em;
-
-    /**
-     * @var \App\Model\Payment\Transaction\PaymentTransactionRepository
-     */
-    private PaymentTransactionRepository $paymentTransactionRepository;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Payment\Transaction\PaymentTransactionRepository $paymentTransactionRepository
      */
     public function __construct(
-        EntityManagerInterface $em,
-        PaymentTransactionRepository $paymentTransactionRepository
+        private EntityManagerInterface $em,
+        private PaymentTransactionRepository $paymentTransactionRepository,
     ) {
-        $this->em = $em;
-        $this->paymentTransactionRepository = $paymentTransactionRepository;
     }
 
     /**

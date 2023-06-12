@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Transfer\Akeneo;
 
+use App\Component\FileUpload\FileUpload;
 use App\Component\Image\Image;
 use App\Component\Image\ImageFacade;
 use App\Model\Product\Parameter\ParameterFacade;
@@ -14,7 +15,6 @@ use App\Model\Transfer\TransferLoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Generator;
 use League\Flysystem\FilesystemOperator;
-use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 
 class TransferredProductProcessor
@@ -34,61 +34,6 @@ class TransferredProductProcessor
     private const AKENEO_IMAGE_TYPE_GALLERY = 'image_galery';
 
     /**
-     * @var \App\Model\Product\ProductFacade
-     */
-    private $productFacade;
-
-    /**
-     * @var \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoMapper
-     */
-    private $productTransferAkeneoMapper;
-
-    /**
-     * @var \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoValidator
-     */
-    private $productTransferAkeneoValidator;
-
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var \App\Component\Image\ImageFacade
-     */
-    private $imageFacade;
-
-    /**
-     * @var \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoFacade
-     */
-    private $productTransferAkeneoFacade;
-
-    /**
-     * @var \App\Model\Product\Transfer\Akeneo\AssetTransferAkeneoFacade
-     */
-    private $assetTransferAkeneoFacade;
-
-    /**
-     * @var \App\Component\FileUpload\FileUpload
-     */
-    private $fileUpload;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterFacade
-     */
-    private $parameterFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
-     */
-    private $imageConfig;
-
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    private $filesystem;
-
-    /**
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoMapper $productTransferAkeneoMapper
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoValidator $productTransferAkeneoValidator
@@ -102,29 +47,18 @@ class TransferredProductProcessor
      * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
-        ProductFacade $productFacade,
-        ProductTransferAkeneoMapper $productTransferAkeneoMapper,
-        ProductTransferAkeneoValidator $productTransferAkeneoValidator,
-        EntityManagerInterface $em,
-        ImageFacade $imageFacade,
-        ProductTransferAkeneoFacade $productTransferAkeneoFacade,
-        AssetTransferAkeneoFacade $assetTransferAkeneoFacade,
-        FileUpload $fileUpload,
-        ParameterFacade $parameterFacade,
-        ImageConfig $imageConfig,
-        FilesystemOperator $filesystem
+        private readonly ProductFacade $productFacade,
+        private readonly ProductTransferAkeneoMapper $productTransferAkeneoMapper,
+        private readonly ProductTransferAkeneoValidator $productTransferAkeneoValidator,
+        private readonly EntityManagerInterface $em,
+        private readonly ImageFacade $imageFacade,
+        private readonly ProductTransferAkeneoFacade $productTransferAkeneoFacade,
+        private readonly AssetTransferAkeneoFacade $assetTransferAkeneoFacade,
+        private readonly FileUpload $fileUpload,
+        private readonly ParameterFacade $parameterFacade,
+        private readonly ImageConfig $imageConfig,
+        private readonly FilesystemOperator $filesystem,
     ) {
-        $this->productFacade = $productFacade;
-        $this->productTransferAkeneoMapper = $productTransferAkeneoMapper;
-        $this->productTransferAkeneoValidator = $productTransferAkeneoValidator;
-        $this->em = $em;
-        $this->imageFacade = $imageFacade;
-        $this->productTransferAkeneoFacade = $productTransferAkeneoFacade;
-        $this->assetTransferAkeneoFacade = $assetTransferAkeneoFacade;
-        $this->fileUpload = $fileUpload;
-        $this->parameterFacade = $parameterFacade;
-        $this->imageConfig = $imageConfig;
-        $this->filesystem = $filesystem;
     }
 
     /**
@@ -197,8 +131,11 @@ class TransferredProductProcessor
      * @param array $akeneoProductDetailData
      * @param \App\Model\Transfer\TransferLoggerInterface $logger
      */
-    private function setProductAccessoriesByAkeneoProductDetailData(Product $product, array $akeneoProductDetailData, TransferLoggerInterface $logger): void
-    {
+    private function setProductAccessoriesByAkeneoProductDetailData(
+        Product $product,
+        array $akeneoProductDetailData,
+        TransferLoggerInterface $logger,
+    ): void {
         $accessoryCatnums = $this->productTransferAkeneoMapper->getProductAccessoryCatnumListFromAkeneoProductData($akeneoProductDetailData);
         $accessories = $this->getAccessoriesByCatnums($accessoryCatnums);
         $this->productFacade->refreshProductAccessories($product, $accessories);
@@ -293,8 +230,12 @@ class TransferredProductProcessor
      * @param string $akeneoImageType
      * @param int $position
      */
-    private function createProductImage(Product $product, array $akeneoMediaFileData, string $akeneoImageType, int $position): void
-    {
+    private function createProductImage(
+        Product $product,
+        array $akeneoMediaFileData,
+        string $akeneoImageType,
+        int $position,
+    ): void {
         if ($akeneoImageType === self::AKENEO_IMAGE_TYPE_GALLERY) {
             $mediaFileResponse = $this->assetTransferAkeneoFacade->getAssetMediaFileFromApi($akeneoMediaFileData['data']);
         } else {

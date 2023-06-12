@@ -16,23 +16,13 @@ class StoreFriendlyUrlProvider implements FriendlyUrlDataProviderInterface
     public const ROUTE_NAME = 'front_stores_detail';
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactoryInterface
-     */
-    private $friendlyUrlDataFactory;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory
      */
-    public function __construct(EntityManagerInterface $em, FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory)
-    {
-        $this->em = $em;
-        $this->friendlyUrlDataFactory = $friendlyUrlDataFactory;
+    public function __construct(
+        private EntityManagerInterface $em,
+        private FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory,
+    ) {
     }
 
     /**

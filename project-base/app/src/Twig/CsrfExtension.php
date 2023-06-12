@@ -11,14 +11,6 @@ use Twig\TwigFunction;
 
 class CsrfExtension extends AbstractExtension
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector
-     */
-    protected RouteCsrfProtector $routeCsrfProtector;
-
-    /**
-     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
-     */
     protected UrlGeneratorInterface $router;
 
     /**
@@ -26,10 +18,9 @@ class CsrfExtension extends AbstractExtension
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $generator
      */
     public function __construct(
-        RouteCsrfProtector $routeCsrfProtector,
-        UrlGeneratorInterface $generator
+        protected RouteCsrfProtector $routeCsrfProtector,
+        UrlGeneratorInterface $generator,
     ) {
-        $this->routeCsrfProtector = $routeCsrfProtector;
         $this->router = $generator;
     }
 
@@ -52,7 +43,7 @@ class CsrfExtension extends AbstractExtension
     public function protectedUrl(string $name, $parameters = [], $schemeRelative = false): string
     {
         $parameters[RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER] = $this->routeCsrfProtector->getCsrfTokenByRoute(
-            $name
+            $name,
         );
 
         return $this->router->generate($name, $parameters, $schemeRelative ? UrlGeneratorInterface::NETWORK_PATH : UrlGeneratorInterface::ABSOLUTE_URL);

@@ -32,9 +32,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class AdministratorController extends BaseAdministratorController
 {
-    /**
-     * @var \App\Model\Administrator\AdministratorTwoFactorAuthenticationFacade
-     */
     private AdministratorTwoFactorAuthenticationFacade $administratorTwoFactorFacade;
 
     /**
@@ -53,7 +50,7 @@ class AdministratorController extends BaseAdministratorController
         AdministratorActivityFacade $administratorActivityFacade,
         AdministratorDataFactoryInterface $administratorDataFactory,
         AdministratorRolesChangedFacade $administratorRolesChangedFacade,
-        AdministratorTwoFactorAuthenticationFacade $administratorTwoFactorAuthenticationFacade
+        AdministratorTwoFactorAuthenticationFacade $administratorTwoFactorAuthenticationFacade,
     ) {
         parent::__construct(
             $administratorFacade,
@@ -61,7 +58,7 @@ class AdministratorController extends BaseAdministratorController
             $breadcrumbOverrider,
             $administratorActivityFacade,
             $administratorDataFactory,
-            $administratorRolesChangedFacade
+            $administratorRolesChangedFacade,
         );
 
         $this->administratorTwoFactorFacade = $administratorTwoFactorAuthenticationFacade;
@@ -84,8 +81,11 @@ class AdministratorController extends BaseAdministratorController
      * @param string $twoFactorAuthenticationType
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function enableTwoFactorAuthenticationAction(Request $request, int $id, string $twoFactorAuthenticationType): Response
-    {
+    public function enableTwoFactorAuthenticationAction(
+        Request $request,
+        int $id,
+        string $twoFactorAuthenticationType,
+    ): Response {
         if (!in_array($twoFactorAuthenticationType, Administrator::TWO_FACTOR_AUTHENTICATION_TYPES, true)) {
             $this->addErrorFlashTwig(
                 t('Unsupported two factor authentication method'),
@@ -263,7 +263,7 @@ class AdministratorController extends BaseAdministratorController
                     new Constraints\NotBlank(['message' => 'Please enter code']),
                     new Constraints\Callback($twoFactorCodeValidationCallback),
                 ],
-            ]
+            ],
         );
         $form->add('verify', SubmitType::class, ['label' => t('Confirm authentication code')]);
         return $form;
@@ -277,7 +277,7 @@ class AdministratorController extends BaseAdministratorController
         if (!$loggedUser instanceof Administrator) {
             throw new AccessDeniedException(sprintf(
                 'Logged user is not instance of "%s". That should not happen due to security.yaml configuration.',
-                Administrator::class
+                Administrator::class,
             ));
         }
     }

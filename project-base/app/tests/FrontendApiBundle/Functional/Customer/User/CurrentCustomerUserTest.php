@@ -13,7 +13,6 @@ use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
 {
     /**
-     * @var \App\Model\Customer\User\CustomerUserFacade
      * @inject
      */
     private CustomerUserFacade $customerUserFacade;

@@ -21,9 +21,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class PersonalDataQuery extends AbstractQuery
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouter
-     */
     private DomainRouter $router;
 
     /**

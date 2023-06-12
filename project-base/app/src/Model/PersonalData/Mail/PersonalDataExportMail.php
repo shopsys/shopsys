@@ -17,11 +17,6 @@ use Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail as Ba
 class PersonalDataExportMail extends BasePersonalDataExportMail
 {
     /**
-     * @var \App\Model\PersonalData\PersonalDataExportFacade
-     */
-    private PersonalDataExportFacade $personalDataExportFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
@@ -31,10 +26,8 @@ class PersonalDataExportMail extends BasePersonalDataExportMail
         Domain $domain,
         Setting $setting,
         DomainRouterFactory $domainRouterFactory,
-        PersonalDataExportFacade $personalDataExportFacade
+        private PersonalDataExportFacade $personalDataExportFacade,
     ) {
-        $this->personalDataExportFacade = $personalDataExportFacade;
-
         parent::__construct($domain, $setting, $domainRouterFactory);
     }
 

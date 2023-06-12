@@ -19,7 +19,7 @@ class GqlContextHelperTest extends TestCase
                 'args' => [
                     'cartUuid' => self::CART_UUID,
                 ],
-            ])
+            ]),
         );
 
         $expectedContext = new ArrayObject([

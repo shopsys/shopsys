@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Preview;
 
+use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Store\Store;
@@ -11,7 +12,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview as BaseOrderPreview;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewCalculation as BaseOrderPreviewCalculation;
-use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -29,16 +29,6 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 class OrderPreviewCalculation extends BaseOrderPreviewCalculation
 {
     /**
-     * @var \App\Model\Order\PromoCode\CurrentPromoCodeFacade
-     */
-    private $currentPromoCodeFacade;
-
-    /**
-     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
-     */
-    private $productAvailabilityFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation
      * @param \App\Model\Product\Pricing\QuantifiedProductDiscountCalculation $quantifiedProductDiscountCalculation
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
@@ -53,19 +43,16 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         TransportPriceCalculation $transportPriceCalculation,
         PaymentPriceCalculation $paymentPriceCalculation,
         OrderPriceCalculation $orderPriceCalculation,
-        CurrentPromoCodeFacade $currentPromoCodeFacade,
-        ProductAvailabilityFacade $productAvailabilityFacade
+        private readonly CurrentPromoCodeFacade $currentPromoCodeFacade,
+        private readonly ProductAvailabilityFacade $productAvailabilityFacade,
     ) {
         parent::__construct(
             $quantifiedProductPriceCalculation,
             $quantifiedProductDiscountCalculation,
             $transportPriceCalculation,
             $paymentPriceCalculation,
-            $orderPriceCalculation
+            $orderPriceCalculation,
         );
-
-        $this->currentPromoCodeFacade = $currentPromoCodeFacade;
-        $this->productAvailabilityFacade = $productAvailabilityFacade;
     }
 
     /**
@@ -89,7 +76,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         ?CustomerUser $customerUser = null,
         ?string $promoCodeDiscountPercent = null,
         ?Store $personalPickupStore = null,
-        ?PromoCode $promoCode = null
+        ?PromoCode $promoCode = null,
     ): BaseOrderPreview {
         $promoCodePerProduct = $this->currentPromoCodeFacade->getPromoCodePerProductByDomainId($quantifiedProducts, $domainId, $promoCode);
         $quantifiedItemsPrices = $this->quantifiedProductPriceCalculation->calculatePrices(
@@ -102,13 +89,13 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $quantifiedProducts,
             $quantifiedItemsPrices,
             $promoCodePerProduct,
-            $currency
+            $currency,
         );
 
         $quantifiedItemsDiscountPrices = $this->quantifiedProductDiscountCalculation->calculateDiscountPricesPerProductRoundedByCurrency(
             $quantifiedItemsPrices,
             $quantifiedItemsDiscounts,
-            $currency
+            $currency,
         );
 
         $productsPrice = $this->getProductsPrice($quantifiedItemsPrices, $quantifiedItemsDiscounts);
@@ -118,7 +105,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
                 $transport,
                 $currency,
                 $productsPrice,
-                $domainId
+                $domainId,
             );
         } else {
             $transportPrice = null;
@@ -129,14 +116,14 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
                 $payment,
                 $currency,
                 $productsPrice,
-                $domainId
+                $domainId,
             );
             $roundingPrice = $this->calculateRoundingPrice(
                 $payment,
                 $currency,
                 $productsPrice,
                 $transportPrice,
-                $paymentPrice
+                $paymentPrice,
             );
         } else {
             $paymentPrice = null;
@@ -147,7 +134,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $productsPrice,
             $transportPrice,
             $paymentPrice,
-            $roundingPrice
+            $roundingPrice,
         );
 
         $totalPriceDiscount = $this->getTotalPriceDiscount($quantifiedItemsDiscounts);
@@ -155,10 +142,10 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         $quantifiedItemsPricesWithoutDiscount = $this->quantifiedProductPriceCalculation->calculatePrices(
             $quantifiedProducts,
             $domainId,
-            $customerUser
+            $customerUser,
         );
         $totalPriceWithoutDiscountTransportAndPayment = $this->getTotalPriceWithoutDiscountTransportAndPayment(
-            $quantifiedItemsPricesWithoutDiscount
+            $quantifiedItemsPricesWithoutDiscount,
         );
 
         return new OrderPreview(
@@ -177,7 +164,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $roundingPrice,
             $promoCodeDiscountPercent,
             $personalPickupStore,
-            $promoCode
+            $promoCode,
         );
     }
 
@@ -195,7 +182,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $availability[$product->getId()] =
                 $this->productAvailabilityFacade->getProductAvailabilityInformationByQuantifiedProductAndDomainId(
                     $quantifiedProduct,
-                    $domainId
+                    $domainId,
                 );
         }
 

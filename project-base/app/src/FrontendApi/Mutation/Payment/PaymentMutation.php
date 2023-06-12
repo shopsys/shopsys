@@ -20,7 +20,7 @@ class PaymentMutation extends AbstractMutation
      */
     public function __construct(
         private readonly OrderFacade $orderFacade,
-        private readonly PaymentServiceFacade $paymentServiceFacade
+        private readonly PaymentServiceFacade $paymentServiceFacade,
     ) {
     }
 

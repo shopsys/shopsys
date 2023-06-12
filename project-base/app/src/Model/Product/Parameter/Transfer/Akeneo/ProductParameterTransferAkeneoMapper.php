@@ -12,23 +12,13 @@ use App\Model\Product\Parameter\ParameterGroupFacade;
 class ProductParameterTransferAkeneoMapper
 {
     /**
-     * @var \App\Model\Product\Parameter\ParameterDataFactory
-     */
-    private $parameterDataFactory;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterGroupFacade
-     */
-    private $parameterGroupFacade;
-
-    /**
      * @param \App\Model\Product\Parameter\ParameterDataFactory $parameterDataFactory
      * @param \App\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
      */
-    public function __construct(ParameterDataFactory $parameterDataFactory, ParameterGroupFacade $parameterGroupFacade)
-    {
-        $this->parameterDataFactory = $parameterDataFactory;
-        $this->parameterGroupFacade = $parameterGroupFacade;
+    public function __construct(
+        private ParameterDataFactory $parameterDataFactory,
+        private ParameterGroupFacade $parameterGroupFacade,
+    ) {
     }
 
     /**
@@ -36,8 +26,10 @@ class ProductParameterTransferAkeneoMapper
      * @param \App\Model\Product\Parameter\Parameter|null $parameter
      * @return \App\Model\Product\Parameter\ParameterData
      */
-    public function mapAkeneoParameterDataToParameterData(array $akeneoParameterData, ?Parameter $parameter): ParameterData
-    {
+    public function mapAkeneoParameterDataToParameterData(
+        array $akeneoParameterData,
+        ?Parameter $parameter,
+    ): ParameterData {
         if ($parameter === null) {
             $parameterData = $this->parameterDataFactory->create();
             $parameterData->akeneoCode = $akeneoParameterData['code'];

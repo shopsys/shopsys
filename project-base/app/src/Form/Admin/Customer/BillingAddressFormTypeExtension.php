@@ -18,25 +18,13 @@ class BillingAddressFormTypeExtension extends AbstractTypeExtension
     private const DISABLED_FIELDS = [];
 
     /**
-     * @var \App\Component\Form\FormBuilderHelper
-     */
-    private $formBuilderHelper;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade
-     */
-    private CountryFacade $countryFacade;
-
-    /**
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      */
     public function __construct(
-        FormBuilderHelper $formBuilderHelper,
-        CountryFacade $countryFacade
+        private FormBuilderHelper $formBuilderHelper,
+        private CountryFacade $countryFacade,
     ) {
-        $this->formBuilderHelper = $formBuilderHelper;
-        $this->countryFacade = $countryFacade;
     }
 
     /**

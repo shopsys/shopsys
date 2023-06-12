@@ -7,23 +7,11 @@ namespace App\Model\Order;
 class OrderCreatedResult
 {
     /**
-     * @var \App\Model\Order\Order
-     */
-    private Order $order;
-
-    /**
-     * @var bool
-     */
-    private bool $loginCustomer;
-
-    /**
      * @param \App\Model\Order\Order $order
      * @param bool $loginCustomer
      */
-    public function __construct(Order $order, bool $loginCustomer)
+    public function __construct(private Order $order, private bool $loginCustomer)
     {
-        $this->order = $order;
-        $this->loginCustomer = $loginCustomer;
     }
 
     /**

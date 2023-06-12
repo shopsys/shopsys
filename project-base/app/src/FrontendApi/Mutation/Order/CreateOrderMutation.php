@@ -50,7 +50,7 @@ class CreateOrderMutation extends BaseCreateOrderMutation
         private readonly CurrentCustomerUser $currentCustomerUser,
         private readonly DeliveryAddressFacade $deliveryAddressFacade,
         private readonly CartWatcherFacade $cartWatcherFacade,
-        private readonly CreateOrderResultFactory $createOrderResultFactory
+        private readonly CreateOrderResultFactory $createOrderResultFactory,
     ) {
         parent::__construct($orderDataFactory, $placeOrderFacade, $orderMailFacade);
     }
@@ -89,7 +89,7 @@ class CreateOrderMutation extends BaseCreateOrderMutation
         $cartWithModifications = $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
         if ($cartWithModifications->isCartModified()) {
             return $this->createOrderResultFactory->getCreateOrderResultByCartWithModifications(
-                $cartWithModifications
+                $cartWithModifications,
             );
         }
 
@@ -103,7 +103,7 @@ class CreateOrderMutation extends BaseCreateOrderMutation
             $orderData,
             $cart->getQuantifiedProducts(),
             $cart->getFirstAppliedPromoCode(),
-            $deliveryAddress
+            $deliveryAddress,
         );
         $this->cartFacade->deleteCart($cart);
 
@@ -117,15 +117,17 @@ class CreateOrderMutation extends BaseCreateOrderMutation
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @return \App\Model\Customer\DeliveryAddress|null
      */
-    private function resolveDeliveryAddress(?string $deliveryAddressUuid, ?CustomerUser $customerUser): ?DeliveryAddress
-    {
+    private function resolveDeliveryAddress(
+        ?string $deliveryAddressUuid,
+        ?CustomerUser $customerUser,
+    ): ?DeliveryAddress {
         if ($deliveryAddressUuid === null || $customerUser === null) {
             return null;
         }
 
         return $this->deliveryAddressFacade->findByUuidAndCustomer(
             $deliveryAddressUuid,
-            $customerUser->getCustomer()
+            $customerUser->getCustomer(),
         );
     }
 

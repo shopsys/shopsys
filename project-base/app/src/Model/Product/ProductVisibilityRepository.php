@@ -97,7 +97,7 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
                     'domainId' => Types::INTEGER,
                     'pricingGroupId' => Types::INTEGER,
                     'variantTypeMain' => Types::STRING,
-                ]
+                ],
             );
         }
     }

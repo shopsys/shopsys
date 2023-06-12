@@ -18,7 +18,7 @@ class BlogCategoryDataFactory
     public function __construct(
         private readonly FriendlyUrlFacade $friendlyUrlFacade,
         private readonly Domain $domain,
-        private readonly ImageUploadDataFactory $imageUploadDataFactory
+        private readonly ImageUploadDataFactory $imageUploadDataFactory,
     ) {
     }
 

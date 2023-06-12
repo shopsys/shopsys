@@ -18,7 +18,6 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 class PriceWithoutDiscountTransportAndPaymentTest extends GraphQlTestCase
 {
     /**
-     * @var \App\Model\Cart\CartFacade
      * @inject
      */
     private CartFacade $cartFacade;
@@ -46,7 +45,7 @@ class PriceWithoutDiscountTransportAndPaymentTest extends GraphQlTestCase
             [
                 'cartUuid' => $newlyCreatedCart['uuid'],
                 'promoCode' => $promoCode->getCode(),
-            ]
+            ],
         );
         $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
         self::assertEquals($promoCode->getCode(), $data['promoCode']);
@@ -65,7 +64,7 @@ class PriceWithoutDiscountTransportAndPaymentTest extends GraphQlTestCase
             __DIR__ . '/../_graphql/query/TotalPriceWithoutDiscountPaymentAndTransportQuery.graphql',
             [
                 'cartUuid' => $newlyCreatedCart['uuid'],
-            ]
+            ],
         );
         $responseData = $this->getResponseDataForGraphQlType($response, 'cart');
 
@@ -105,7 +104,7 @@ class PriceWithoutDiscountTransportAndPaymentTest extends GraphQlTestCase
                 'cartUuid' => $cart['uuid'],
                 'transportUuid' => $transport->getUuid(),
                 'pickupPlaceIdentifier' => $pickupPlaceIdentifier,
-            ]
+            ],
         );
     }
 
@@ -121,7 +120,7 @@ class PriceWithoutDiscountTransportAndPaymentTest extends GraphQlTestCase
             [
                 'cartUuid' => $cart['uuid'],
                 'paymentUuid' => $payment->getUuid(),
-            ]
+            ],
         );
     }
 }

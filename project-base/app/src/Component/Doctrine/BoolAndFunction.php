@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Component\Doctrine;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
+use Doctrine\ORM\Query\AST\Node;
 use Doctrine\ORM\Query\Lexer;
 use Doctrine\ORM\Query\Parser;
 use Doctrine\ORM\Query\SqlWalker;
@@ -13,10 +14,7 @@ class BoolAndFunction extends FunctionNode
 {
     protected const FUNCTION_BOOL_AND = 'bool_and';
 
-    /**
-     * @var \Doctrine\ORM\Query\AST\Node
-     */
-    public $stringExpression;
+    public Node $stringExpression;
 
     /**
      * @param \Doctrine\ORM\Query\Parser $parser

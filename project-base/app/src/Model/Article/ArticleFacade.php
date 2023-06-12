@@ -26,11 +26,6 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleRepository;
 class ArticleFacade extends BaseArticleFacade
 {
     /**
-     * @var \App\Model\Article\Elasticsearch\ArticleExportScheduler
-     */
-    private ArticleExportScheduler $articleExportScheduler;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -44,17 +39,15 @@ class ArticleFacade extends BaseArticleFacade
         Domain $domain,
         FriendlyUrlFacade $friendlyUrlFacade,
         ArticleFactoryInterface $articleFactory,
-        ArticleExportScheduler $articleExportScheduler
+        private ArticleExportScheduler $articleExportScheduler,
     ) {
         parent::__construct(
             $em,
             $articleRepository,
             $domain,
             $friendlyUrlFacade,
-            $articleFactory
+            $articleFactory,
         );
-
-        $this->articleExportScheduler = $articleExportScheduler;
     }
 
     /**

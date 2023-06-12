@@ -44,7 +44,7 @@ class ReadyCategorySeoMixParameterParameterValue
      */
     public function __construct(
         Parameter $parameter,
-        ParameterValue $parameterValue
+        ParameterValue $parameterValue,
     ) {
         $this->parameter = $parameter;
         $this->parameterValue = $parameterValue;

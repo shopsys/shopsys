@@ -17,36 +17,6 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 class CartTransportDataFactory
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
-     * @var \App\Model\Transport\TransportFacade
-     */
-    private TransportFacade $transportFacade;
-
-    /**
-     * @var \App\Model\Customer\User\CurrentCustomerUser
-     */
-    private CurrentCustomerUser $currentCustomerUser;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    private CurrencyFacade $currencyFacade;
-
-    /**
-     * @var \App\Model\Order\Preview\OrderPreviewFactory
-     */
-    private OrderPreviewFactory $orderPreviewFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation
-     */
-    private TransportPriceCalculation $transportPriceCalculation;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
@@ -55,19 +25,13 @@ class CartTransportDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      */
     public function __construct(
-        Domain $domain,
-        TransportFacade $transportFacade,
-        CurrentCustomerUser $currentCustomerUser,
-        CurrencyFacade $currencyFacade,
-        OrderPreviewFactory $orderPreviewFactory,
-        TransportPriceCalculation $transportPriceCalculation
+        private Domain $domain,
+        private TransportFacade $transportFacade,
+        private CurrentCustomerUser $currentCustomerUser,
+        private CurrencyFacade $currencyFacade,
+        private OrderPreviewFactory $orderPreviewFactory,
+        private TransportPriceCalculation $transportPriceCalculation,
     ) {
-        $this->domain = $domain;
-        $this->transportFacade = $transportFacade;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->currencyFacade = $currencyFacade;
-        $this->orderPreviewFactory = $orderPreviewFactory;
-        $this->transportPriceCalculation = $transportPriceCalculation;
     }
 
     /**
@@ -79,7 +43,7 @@ class CartTransportDataFactory
     public function create(
         Cart $cart,
         string $transportUuid,
-        ?string $pickupPlaceIdentifier
+        ?string $pickupPlaceIdentifier,
     ): CartTransportData {
         $domainId = $this->domain->getId();
         $transport = $this->transportFacade->getEnabledOnDomainByUuid($transportUuid, $domainId);
@@ -113,14 +77,14 @@ class CartTransportDataFactory
             $customerUser,
             null,
             null,
-            $cart->getFirstAppliedPromoCode()
+            $cart->getFirstAppliedPromoCode(),
         );
 
         $watchedPrice = $this->transportPriceCalculation->calculatePrice(
             $transport,
             $currency,
             $orderPreview->getProductsPrice(),
-            $domainId
+            $domainId,
         );
 
         return $watchedPrice->getPriceWithVat();

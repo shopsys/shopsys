@@ -28,7 +28,7 @@ class MergeCartsInfoTest extends GraphQlTestCase
 
         $response = $this->getResponseDataForGraphQlType(
             $this->getResponseContentForQuery($loginMutationWithCartUuid),
-            'Login'
+            'Login',
         );
 
         self::AssertFalse($response['showCartMergeInfo']);

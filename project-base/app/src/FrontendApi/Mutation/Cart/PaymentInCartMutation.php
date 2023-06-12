@@ -24,7 +24,7 @@ class PaymentInCartMutation extends AbstractMutation
         private readonly CurrentCustomerUser $currentCustomerUser,
         private readonly CartFacade $cartFacade,
         private readonly CartWatcherFacade $cartWatcherFacade,
-        private readonly CartPaymentFacade $cartPaymentFacade
+        private readonly CartPaymentFacade $cartPaymentFacade,
     ) {
     }
 

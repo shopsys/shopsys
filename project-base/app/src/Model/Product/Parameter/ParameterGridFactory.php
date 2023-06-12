@@ -24,7 +24,7 @@ class ParameterGridFactory extends BaseParameterGridFactory
                 'name',
                 'pt.name',
                 t('Name %locale%', ['%locale%' => $this->localization->getLanguageName($adminLocale)]),
-                true
+                true,
             );
             foreach ($locales as $locale) {
                 if ($locale !== $adminLocale) {
@@ -32,7 +32,7 @@ class ParameterGridFactory extends BaseParameterGridFactory
                         'name_' . $locale,
                         'pt_' . $locale . '.name',
                         t('Name %locale%', ['%locale%' => $this->localization->getLanguageName($locale)]),
-                        true
+                        true,
                     );
                 }
             }
@@ -41,14 +41,14 @@ class ParameterGridFactory extends BaseParameterGridFactory
                 'name',
                 'pt.name',
                 t('Name'),
-                true
+                true,
             );
         }
 
         $grid->addColumn(
             'parameterType',
             'p.parameterType',
-            t('Typ')
+            t('Typ'),
         );
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
@@ -63,7 +63,7 @@ class ParameterGridFactory extends BaseParameterGridFactory
                 $actionColumn->setConfirmMessage(t(
                     'Opravdu chcete odstranit tento parametr?'
                     . ' Smazáním parametru dojde k odstranění tohoto parametru u zboží a případné landing stránky'
-                    . ' rozšířeného SEO kategorií, kde je parametr přiřazen. Tento krok je nevratný!'
+                    . ' rozšířeného SEO kategorií, kde je parametr přiřazen. Tento krok je nevratný!',
                 ));
             }
         }

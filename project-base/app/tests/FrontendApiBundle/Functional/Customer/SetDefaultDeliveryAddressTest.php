@@ -15,13 +15,11 @@ use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 class SetDefaultDeliveryAddressTest extends GraphQlWithLoginTestCase
 {
     /**
-     * @var \App\Model\Customer\DeliveryAddressDataFactory
      * @inject
      */
     private DeliveryAddressDataFactory $deliveryAddressDataFactory;
 
     /**
-     * @var \App\Model\Customer\DeliveryAddressFacade
      * @inject
      */
     private DeliveryAddressFacade $deliveryAddressFacade;
@@ -37,7 +35,7 @@ class SetDefaultDeliveryAddressTest extends GraphQlWithLoginTestCase
             __DIR__ . '/../_graphql/mutation/SetDefaultDeliveryAddressMutation.graphql',
             [
                 'deliveryAddressUuid' => $newDeliveryAddress->getUuid(),
-            ]
+            ],
         );
 
         $data = $this->getResponseDataForGraphQlType($response, 'SetDefaultDeliveryAddress');

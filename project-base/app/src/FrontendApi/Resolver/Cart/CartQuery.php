@@ -21,7 +21,7 @@ class CartQuery extends AbstractQuery
     public function __construct(
         private readonly CartFacade $cartFacade,
         private readonly CurrentCustomerUser $currentCustomerUser,
-        private readonly CartWatcherFacade $cartWatcherFacade
+        private readonly CartWatcherFacade $cartWatcherFacade,
     ) {
     }
 

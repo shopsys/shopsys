@@ -22,43 +22,36 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 class ApplyPromoCodeToCartTest extends GraphQlTestCase
 {
     /**
-     * @var \App\Model\Product\ProductDataFactory
      * @inject
      */
     private ProductDataFactory $productDataFactory;
 
     /**
-     * @var \App\Model\Product\ProductFacade
      * @inject
      */
     private ProductFacade $productFacade;
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeFacade
      * @inject
      */
     private PromoCodeFacade $promoCodeFacade;
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeDataFactory
      * @inject
      */
     private PromoCodeDataFactory $promoCodeDataFactory;
 
     /**
-     * @var \App\Model\Cart\CartFacade
      * @inject
      */
     private CartFacade $cartFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider
      * @inject
      */
     private FrontendCustomerUserProvider $frontendCustomerUserProvider;
 
     /**
-     * @var \App\Model\Customer\User\CustomerUserIdentifierFactory
      * @inject
      */
     private CustomerUserIdentifierFactory $customerUserIdentifierFactory;

@@ -10,16 +10,10 @@ use Doctrine\ORM\NoResultException;
 class ParameterFacade
 {
     /**
-     * @var \App\FrontendApi\Model\Parameter\ParameterRepository
-     */
-    private ParameterRepository $parameterRepository;
-
-    /**
      * @param \App\FrontendApi\Model\Parameter\ParameterRepository $parameterRepository
      */
-    public function __construct(ParameterRepository $parameterRepository)
+    public function __construct(private ParameterRepository $parameterRepository)
     {
-        $this->parameterRepository = $parameterRepository;
     }
 
     /**

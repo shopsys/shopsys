@@ -23,7 +23,7 @@ class PriceRangeRepository extends BasePriceRangeRepository
      */
     public function __construct(
         ProductRepository $productRepository,
-        QueryBuilderExtender $queryBuilderExtender
+        QueryBuilderExtender $queryBuilderExtender,
     ) {
         parent::__construct($productRepository, $queryBuilderExtender);
     }
@@ -39,7 +39,7 @@ class PriceRangeRepository extends BasePriceRangeRepository
         $productsQueryBuilder = $this->productRepository->getSellableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
-            $category
+            $category,
         );
 
         return $this->getPriceRangeByProductsQueryBuilder($productsQueryBuilder, $pricingGroup);

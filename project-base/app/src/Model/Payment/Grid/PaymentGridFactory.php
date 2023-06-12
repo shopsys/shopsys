@@ -35,7 +35,7 @@ class PaymentGridFactory extends BasePaymentGridFactory
                 $row['displayPrice'] = $this->getDisplayPrice($payment);
                 $row['domainId'] = $this->adminDomainTabsFacade->getSelectedDomainId();
                 return $row;
-            }
+            },
         );
 
         $grid = $this->gridFactory->create('paymentList', $dataSource);

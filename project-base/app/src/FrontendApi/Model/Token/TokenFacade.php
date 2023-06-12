@@ -27,13 +27,13 @@ class TokenFacade extends BaseTokenFacade
     public function createAccessTokenAsString(
         CustomerUser $customerUser,
         string $deviceId,
-        ?Administrator $administrator = null
+        ?Administrator $administrator = null,
     ): string {
         $tokenBuilder = $this->getTokenBuilderWithExpiration(static::ACCESS_TOKEN_EXPIRATION);
         $tokenBuilder->withClaim(FrontendApiUser::CLAIM_DEVICE_ID, $deviceId);
         $tokenBuilder->withClaim(
             FrontendApiUser::CLAIM_ADMINISTRATOR_UUID,
-            $administrator !== null ? $administrator->getUuid() : null
+            $administrator !== null ? $administrator->getUuid() : null,
         );
 
         foreach (TokenCustomerUserTransformer::transform($customerUser) as $key => $value) {
@@ -54,13 +54,13 @@ class TokenFacade extends BaseTokenFacade
     public function createRefreshTokenAsString(
         CustomerUser $customerUser,
         string $deviceId,
-        ?Administrator $administrator = null
+        ?Administrator $administrator = null,
     ): string {
         $randomChain = sha1(random_bytes(static::SECRET_CHAIN_LENGTH));
         $refreshToken = $this->generateRefreshTokenByCustomerUserAndSecretChainAndDeviceId(
             $customerUser,
             $randomChain,
-            $deviceId
+            $deviceId,
         );
 
         $this->customerUserFacade->addRefreshTokenChain(
@@ -68,7 +68,7 @@ class TokenFacade extends BaseTokenFacade
             $randomChain,
             $deviceId,
             DateTime::createFromImmutable($refreshToken->claims()->get('exp')),
-            $administrator
+            $administrator,
         );
 
         return $refreshToken->toString();
@@ -83,7 +83,7 @@ class TokenFacade extends BaseTokenFacade
     public function generateRefreshTokenByCustomerUserAndSecretChainAndDeviceId(
         CustomerUser $customerUser,
         string $secretChain,
-        string $deviceId
+        string $deviceId,
     ): UnencryptedToken {
         $tokenBuilder = $this->getTokenBuilderWithExpiration(static::REFRESH_TOKEN_EXPIRATION);
         $tokenBuilder->withClaim(FrontendApiUser::CLAIM_UUID, $customerUser->getUuid());
@@ -99,8 +99,10 @@ class TokenFacade extends BaseTokenFacade
      * @return \Lcobucci\JWT\UnencryptedToken
      * @deprecated Method is deprecated. Use "generateRefreshTokenByCustomerUserAndSecretChainAndDeviceId()" instead.
      */
-    public function generateRefreshTokenByCustomerUserAndSecretChain(CustomerUser $customerUser, string $secretChain): UnencryptedToken
-    {
+    public function generateRefreshTokenByCustomerUserAndSecretChain(
+        CustomerUser $customerUser,
+        string $secretChain,
+    ): UnencryptedToken {
         throw new DeprecatedMethodException();
     }
 }

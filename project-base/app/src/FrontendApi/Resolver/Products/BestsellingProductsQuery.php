@@ -26,7 +26,7 @@ class BestsellingProductsQuery extends AbstractQuery
         private readonly CachedBestsellingProductFacade $cachedBestsellingProductFacade,
         private readonly Domain $domain,
         private readonly CurrentCustomerUser $currentCustomerUser,
-        private readonly DataLoaderInterface $productsSellableByIdsBatchLoader
+        private readonly DataLoaderInterface $productsSellableByIdsBatchLoader,
     ) {
     }
 
@@ -45,7 +45,7 @@ class BestsellingProductsQuery extends AbstractQuery
                 sprintf(
                     'The "$categoryOrReadyCategorySeoMix" argument must be an instance of "%s" or "%s".',
                     Category::class,
-                    ReadyCategorySeoMix::class
+                    ReadyCategorySeoMix::class,
                 ),
             );
         }
@@ -53,7 +53,7 @@ class BestsellingProductsQuery extends AbstractQuery
         $bestsellingProductsIds = $this->cachedBestsellingProductFacade->getAllOfferedBestsellingProductIds(
             $this->domain->getId(),
             $category,
-            $this->currentCustomerUser->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup(),
         );
 
         return $this->productsSellableByIdsBatchLoader->load($bestsellingProductsIds);

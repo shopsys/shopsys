@@ -21,7 +21,7 @@ class ArticleExportCronModule extends AbstractExportCronModule
         ArticleIndex $index,
         IndexFacade $indexFacade,
         IndexDefinitionLoader $indexDefinitionLoader,
-        Domain $domain
+        Domain $domain,
     ) {
         parent::__construct($index, $indexFacade, $indexDefinitionLoader, $domain);
     }

@@ -10,25 +10,13 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 class StockSettingsDataFacade
 {
     /**
-     * @var \App\Component\Setting\Setting
-     */
-    private $setting;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    private $adminDomainTabsFacade;
-
-    /**
      * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
-        Setting $setting,
-        AdminDomainTabsFacade $adminDomainTabsFacade
+        private Setting $setting,
+        private AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
-        $this->setting = $setting;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**

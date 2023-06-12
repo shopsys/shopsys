@@ -19,25 +19,13 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class PaymentTransactionType extends AbstractType
 {
     /**
-     * @var \App\Model\Payment\Transaction\PaymentTransactionFacade
-     */
-    private PaymentTransactionFacade $paymentTransactionFacade;
-
-    /**
-     * @var \App\Twig\PriceExtension
-     */
-    private PriceExtension $priceExtension;
-
-    /**
      * @param \App\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade
      * @param \App\Twig\PriceExtension $priceExtension
      */
     public function __construct(
-        PaymentTransactionFacade $paymentTransactionFacade,
-        PriceExtension $priceExtension
+        private PaymentTransactionFacade $paymentTransactionFacade,
+        private PriceExtension $priceExtension,
     ) {
-        $this->paymentTransactionFacade = $paymentTransactionFacade;
-        $this->priceExtension = $priceExtension;
     }
 
     /**
@@ -81,8 +69,10 @@ class PaymentTransactionType extends AbstractType
      * @param \App\Model\Payment\Transaction\Refund\PaymentTransactionRefundData $paymentTransactionRefundData
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
-    public function maximalRefundAmountValidation(PaymentTransactionRefundData $paymentTransactionRefundData, ExecutionContextInterface $context): void
-    {
+    public function maximalRefundAmountValidation(
+        PaymentTransactionRefundData $paymentTransactionRefundData,
+        ExecutionContextInterface $context,
+    ): void {
         if ($paymentTransactionRefundData->executeRefund === null) {
             return;
         }
