@@ -14,36 +14,6 @@ class LanguageConstantFacade
     private const GENERATED_FILE_NAME = 'common.json';
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private EntityManagerInterface $em;
-
-    /**
-     * @var \App\Model\LanguageConstant\LanguageConstantRepository
-     */
-    private LanguageConstantRepository $languageConstantRepository;
-
-    /**
-     * @var \App\Model\LanguageConstant\LanguageConstantFactory
-     */
-    private LanguageConstantFactory $languageConstantFactory;
-
-    /**
-     * @var string
-     */
-    private string $languageConstantsUrlPattern;
-
-    /**
-     * @var string
-     */
-    private string $domainLocalesDirectory;
-
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    protected FilesystemOperator $filesystem;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\LanguageConstant\LanguageConstantRepository $languageConstantRepository
      * @param \App\Model\LanguageConstant\LanguageConstantFactory $languageConstantFactory
@@ -52,19 +22,13 @@ class LanguageConstantFacade
      * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
-        EntityManagerInterface $em,
-        LanguageConstantRepository $languageConstantRepository,
-        LanguageConstantFactory $languageConstantFactory,
-        string $languageConstantsUrlPattern,
-        string $domainLocalesDirectory,
-        FilesystemOperator $filesystem
+        private EntityManagerInterface $em,
+        private LanguageConstantRepository $languageConstantRepository,
+        private LanguageConstantFactory $languageConstantFactory,
+        private string $languageConstantsUrlPattern,
+        private string $domainLocalesDirectory,
+        protected FilesystemOperator $filesystem,
     ) {
-        $this->em = $em;
-        $this->languageConstantRepository = $languageConstantRepository;
-        $this->languageConstantFactory = $languageConstantFactory;
-        $this->languageConstantsUrlPattern = $languageConstantsUrlPattern;
-        $this->domainLocalesDirectory = $domainLocalesDirectory;
-        $this->filesystem = $filesystem;
     }
 
     /**
@@ -103,7 +67,7 @@ class LanguageConstantFacade
      */
     public function createOrEdit(
         LanguageConstantData $languageConstantData,
-        ?LanguageConstant $languageConstant
+        ?LanguageConstant $languageConstant,
     ): LanguageConstant {
         return $languageConstant === null ? $this->create($languageConstantData) : $this->edit($languageConstantData);
     }

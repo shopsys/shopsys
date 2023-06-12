@@ -19,11 +19,6 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 class ProductAvailabilityCalculation extends BaseProductAvailabilityCalculation
 {
     /**
-     * @var \App\Model\Product\ProductSellingDeniedRecalculator
-     */
-    protected $productSellingDeniedRecalculator;
-
-    /**
      * @deprecated Calculated availability always return default availability
      * @param \App\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability

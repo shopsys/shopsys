@@ -20,11 +20,6 @@ use Shopsys\FrameworkBundle\Model\Sitemap\SitemapListener as BaseSitemapListener
 class SitemapListener extends BaseSitemapListener
 {
     /**
-     * @var \App\Model\Sitemap\SitemapRepository
-     */
-    private SitemapRepository $sitemapRepository;
-
-    /**
      * @param \App\Model\Sitemap\SitemapFacade $sitemapFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
@@ -34,10 +29,8 @@ class SitemapListener extends BaseSitemapListener
         SitemapFacade $sitemapFacade,
         Domain $domain,
         DomainRouterFactory $domainRouterFactory,
-        SitemapRepository $sitemapRepository
+        private SitemapRepository $sitemapRepository,
     ) {
-        $this->sitemapRepository = $sitemapRepository;
-
         parent::__construct($sitemapFacade, $domain, $domainRouterFactory);
     }
 
@@ -84,7 +77,7 @@ class SitemapListener extends BaseSitemapListener
         array $sitemapItems,
         AbstractGenerator $generator,
         DomainConfig $domainConfig,
-        string $section
+        string $section,
     ): void {
         foreach ($sitemapItems as $sitemapItem) {
             $absoluteUrl = $this->getAbsoluteUrlByDomainConfigAndSlug($domainConfig, $sitemapItem->slug);
@@ -102,7 +95,7 @@ class SitemapListener extends BaseSitemapListener
     private function addUrlForHomepage(
         AbstractGenerator $generator,
         DomainConfig $domainConfig,
-        string $section
+        string $section,
     ): void {
         $urlConcrete = new UrlConcrete($domainConfig->getUrl());
 

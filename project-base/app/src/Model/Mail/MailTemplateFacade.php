@@ -43,7 +43,7 @@ class MailTemplateFacade extends BaseMailTemplateFacade
         MailTemplateFactoryInterface $mailTemplateFactory,
         MailTemplateDataFactoryInterface $mailTemplateDataFactory,
         MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider,
-        private readonly MailTemplateBuilder $mailTemplateBuilder
+        private readonly MailTemplateBuilder $mailTemplateBuilder,
     ) {
         parent::__construct($em, $mailTemplateRepository, $domain, $uploadedFileFacade, $mailTemplateFactory, $mailTemplateDataFactory, $mailTemplateAttachmentFilepathProvider);
     }
@@ -67,7 +67,7 @@ class MailTemplateFacade extends BaseMailTemplateFacade
         $mailTemplate = $this->mailTemplateFactory->create(
             MailTemplate::ORDER_STATUS_NAME,
             $mailTemplateData->domainId,
-            $mailTemplateData
+            $mailTemplateData,
         );
 
         $this->em->persist($mailTemplate);
@@ -98,7 +98,7 @@ class MailTemplateFacade extends BaseMailTemplateFacade
         $mailTemplates = [];
         $mailTemplate = $this->mailTemplateRepository->findOrderStatusMailTemplate(
             $order->getDomainId(),
-            $order->getStatus()
+            $order->getStatus(),
         );
 
         if ($mailTemplate !== null) {

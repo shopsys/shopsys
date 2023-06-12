@@ -12,16 +12,6 @@ use GraphQL\Executor\Promise\PromiseAdapter;
 class ProductsBatchLoader
 {
     /**
-     * @var \GraphQL\Executor\Promise\PromiseAdapter
-     */
-    private PromiseAdapter $promiseAdapter;
-
-    /**
-     * @var \App\Model\Product\ProductElasticsearchProvider
-     */
-    private ProductElasticsearchProvider $productElasticsearchProvider;
-
-    /**
      * @var array<string, int>
      */
     private static array $totalsIndexedByBatchLoadDataId;
@@ -30,10 +20,10 @@ class ProductsBatchLoader
      * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
      * @param \App\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      */
-    public function __construct(PromiseAdapter $promiseAdapter, ProductElasticsearchProvider $productElasticsearchProvider)
-    {
-        $this->promiseAdapter = $promiseAdapter;
-        $this->productElasticsearchProvider = $productElasticsearchProvider;
+    public function __construct(
+        private PromiseAdapter $promiseAdapter,
+        private ProductElasticsearchProvider $productElasticsearchProvider,
+    ) {
     }
 
     /**

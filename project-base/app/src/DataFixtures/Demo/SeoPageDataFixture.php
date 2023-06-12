@@ -20,7 +20,10 @@ class SeoPageDataFixture extends AbstractReferenceFixture
 {
     public const FIRST_DEMO_SEO_PAGE = 'first_demo_seo_page';
 
-    private static $demoSeoPages = [
+    /**
+     * @var array<string, string>
+     */
+    private static array $demoSeoPages = [
         self::FIRST_DEMO_SEO_PAGE => 'First Demo Seo Page',
     ];
 
@@ -36,7 +39,7 @@ class SeoPageDataFixture extends AbstractReferenceFixture
         private readonly SeoPageRepository $seoPageRepository,
         private readonly SeoPageFacade $seoPageFacade,
         private readonly SeoPageDataFactory $seoPageDataFactory,
-        private readonly DomainRouterFactory $domainRouterFactory
+        private readonly DomainRouterFactory $domainRouterFactory,
     ) {
     }
 
@@ -64,7 +67,7 @@ class SeoPageDataFixture extends AbstractReferenceFixture
                 $this->fillSeoPageData(
                     $seoPageData,
                     $domainId,
-                    $locale
+                    $locale,
                 );
             }
 
@@ -91,7 +94,7 @@ class SeoPageDataFixture extends AbstractReferenceFixture
                     $seoPageData,
                     $domain->getId(),
                     $domain->getLocale(),
-                    $seoPage->getId()
+                    $seoPage->getId(),
                 );
             }
 
@@ -105,8 +108,12 @@ class SeoPageDataFixture extends AbstractReferenceFixture
      * @param string $locale
      * @param int|null $seoPageId
      */
-    private function fillSeoPageData(SeoPageData $seoPageData, int $domainId, string $locale, ?int $seoPageId = null): void
-    {
+    private function fillSeoPageData(
+        SeoPageData $seoPageData,
+        int $domainId,
+        string $locale,
+        ?int $seoPageId = null,
+    ): void {
         $seoPageDomainRouter = $this->domainRouterFactory->getRouter($domainId);
 
         $pageName = $seoPageData->pageName;

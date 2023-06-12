@@ -15,24 +15,18 @@ use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
 {
     /**
-     * @var \App\Model\Cart\CartFacade
      * @inject
      */
     private CartFacade $cartFacade;
 
     /**
-     * @var \App\Model\Customer\User\CustomerUserIdentifierFactory
      * @inject
      */
     private CustomerUserIdentifierFactory $customerUserIdentifierFactory;
 
-    /**
-     * @var \App\Model\Product\Product
-     */
     private Product $testingProduct;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
      * @inject
      */
     private CurrentCustomerUser $currentCustomerUser;

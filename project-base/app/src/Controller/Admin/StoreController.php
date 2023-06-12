@@ -21,33 +21,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class StoreController extends AdminBaseController
 {
     /**
-     * @var \App\Model\Store\StoreFacade
-     */
-    private StoreFacade $storeFacade;
-
-    /**
-     * @var \App\Model\Store\StoreDataFactory
-     */
-    private StoreDataFactory $storeDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    private GridFactory $gridFactory;
-
-    /**
      * @param \App\Model\Store\StoreFacade $storeFacade
      * @param \App\Model\Store\StoreDataFactory $storeDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      */
     public function __construct(
-        StoreFacade $storeFacade,
-        StoreDataFactory $storeDataFactory,
-        GridFactory $gridFactory
+        private StoreFacade $storeFacade,
+        private StoreDataFactory $storeDataFactory,
+        private GridFactory $gridFactory,
     ) {
-        $this->storeFacade = $storeFacade;
-        $this->storeDataFactory = $storeDataFactory;
-        $this->gridFactory = $gridFactory;
     }
 
     /**
@@ -108,7 +90,7 @@ class StoreController extends AdminBaseController
                 [
                     'name' => $store->getName(),
                     'url' => $this->generateUrl('admin_store_edit', ['id' => $store->getId()]),
-                ]
+                ],
             );
 
             return $this->redirectToRoute('admin_store_list');
@@ -147,7 +129,7 @@ class StoreController extends AdminBaseController
                 [
                     'name' => $store->getName(),
                     'url' => $this->generateUrl('admin_store_edit', ['id' => $store->getId()]),
-                ]
+                ],
             );
 
             return $this->redirectToRoute('admin_store_list');
@@ -186,7 +168,7 @@ class StoreController extends AdminBaseController
                 t('Store <strong>{{ name }}</strong> was deleted'),
                 [
                     'name' => $store->getName(),
-                ]
+                ],
             );
         } catch (StoreNotFoundException $exception) {
             $this->addErrorFlash(t('Store does not exist'));
@@ -212,7 +194,7 @@ class StoreController extends AdminBaseController
                 t('Store <strong>{{ name }}</strong> was set as default.'),
                 [
                     'name' => $store->getName(),
-                ]
+                ],
             );
         } catch (StoreNotFoundException $exception) {
             $this->addErrorFlash(t('Store does not exist'));

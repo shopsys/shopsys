@@ -14,18 +14,13 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 class BlogArticleTest extends GraphQlTestCase
 {
     /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
      * @inject
      */
     private FriendlyUrlFacade $friendlyUrlFacade;
 
-    /**
-     * @var \App\Model\Blog\Article\BlogArticle
-     */
     private BlogArticle $blogArticle;
 
     /**
-     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
      * @inject
      */
     protected UrlGeneratorInterface $urlGenerator;

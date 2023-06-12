@@ -19,24 +19,9 @@ class GoPayFacade implements PaymentServiceInterface
     private const GOPAY_RESULT_FAILED = 'FAILED';
 
     /**
-     * @var \App\Model\GoPay\GoPayOrderMapper
-     */
-    private $goPayOrderMapper;
-
-    /**
-     * @var \App\Model\GoPay\GoPayClientFactory
-     */
-    private $goPayClientFactory;
-
-    /**
      * @var \App\Model\GoPay\GoPayClient[]
      */
     private array $goPayClients;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
 
     /**
      * @param \App\Model\GoPay\GoPayClientFactory $goPayClientFactory
@@ -44,14 +29,11 @@ class GoPayFacade implements PaymentServiceInterface
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        GoPayClientFactory $goPayClientFactory,
-        GoPayOrderMapper $goPayOrderMapper,
-        Domain $domain
+        private GoPayClientFactory $goPayClientFactory,
+        private GoPayOrderMapper $goPayOrderMapper,
+        private Domain $domain,
     ) {
-        $this->goPayOrderMapper = $goPayOrderMapper;
-        $this->goPayClientFactory = $goPayClientFactory;
         $this->goPayClients = [];
-        $this->domain = $domain;
     }
 
     /**
@@ -96,8 +78,10 @@ class GoPayFacade implements PaymentServiceInterface
      * @param \App\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
      * @param \App\FrontendApi\Model\Payment\PaymentSetupCreationData $paymentSetupCreationData
      */
-    public function createTransaction(PaymentTransactionData $paymentTransactionData, PaymentSetupCreationData $paymentSetupCreationData): void
-    {
+    public function createTransaction(
+        PaymentTransactionData $paymentTransactionData,
+        PaymentSetupCreationData $paymentSetupCreationData,
+    ): void {
         $goPayCreatePaymentSetup = $this->sendPaymentToGoPay($paymentTransactionData->order, $paymentTransactionData->order->getGoPayBankSwift());
 
         $paymentTransactionData->externalPaymentIdentifier = (string)$goPayCreatePaymentSetup['goPayId'];

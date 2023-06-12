@@ -13,9 +13,6 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class PaymentTest extends GraphQlTestCase
 {
-    /**
-     * @var \App\Model\Payment\Payment
-     */
     protected Payment $payment;
 
     protected function setUp(): void

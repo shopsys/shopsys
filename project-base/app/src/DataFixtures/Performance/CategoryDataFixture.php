@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Performance;
 
-use App\Model\Category\CategoryDataFactory;
 use Faker\Generator as Faker;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;

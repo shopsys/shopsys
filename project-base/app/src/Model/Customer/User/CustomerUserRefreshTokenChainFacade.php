@@ -24,8 +24,10 @@ class CustomerUserRefreshTokenChainFacade extends BaseCustomerUserRefreshTokenCh
      * @return \App\Model\Customer\User\CustomerUserRefreshTokenChain|null
      * @deprecated Method is deprecated. Use "findCustomersTokenChainByCustomerUserAndSecretChainAndDeviceId()" instead.
      */
-    public function findCustomersTokenChainByCustomerUserAndSecretChain(CustomerUser $customerUser, string $secretChain): ?CustomerUserRefreshTokenChain
-    {
+    public function findCustomersTokenChainByCustomerUserAndSecretChain(
+        CustomerUser $customerUser,
+        string $secretChain,
+    ): ?CustomerUserRefreshTokenChain {
         throw new DeprecatedMethodException();
     }
 
@@ -38,12 +40,12 @@ class CustomerUserRefreshTokenChainFacade extends BaseCustomerUserRefreshTokenCh
     public function findCustomersTokenChainByCustomerUserAndSecretChainAndDeviceId(
         CustomerUser $customerUser,
         string $secretChain,
-        string $deviceId
+        string $deviceId,
     ): ?CustomerUserRefreshTokenChain {
         $encoder = $this->passwordHasherFactory->getPasswordHasher($customerUser);
         $customersTokenChains = $this->customerUserRefreshTokenChainRepository->findCustomersTokenChainsByDeviceId(
             $customerUser,
-            $deviceId
+            $deviceId,
         );
 
         foreach ($customersTokenChains as $customersTokenChain) {
@@ -76,14 +78,14 @@ class CustomerUserRefreshTokenChainFacade extends BaseCustomerUserRefreshTokenCh
         string $tokenChain,
         string $deviceId,
         DateTime $tokenExpiration,
-        ?Administrator $administrator = null
+        ?Administrator $administrator = null,
     ): CustomerUserRefreshTokenChain {
         /** @var \App\Model\Customer\User\CustomerUserRefreshTokenChain $customerUserRefreshTokenChain */
         $customerUserRefreshTokenChain = parent::createCustomerUserRefreshTokenChain(
             $customerUser,
             $tokenChain,
             $deviceId,
-            $tokenExpiration
+            $tokenExpiration,
         );
 
         $customerUserRefreshTokenChain->setAdministrator($administrator);

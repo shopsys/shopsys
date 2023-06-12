@@ -30,7 +30,7 @@ class DeliveryAddressMutation extends AbstractMutation
         private readonly CurrentCustomerUser $currentCustomerUser,
         private readonly DeliveryAddressDataFactory $deliveryAddressDataFactory,
         private readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
-        private readonly CustomerUserFacade $customerUserFacade
+        private readonly CustomerUserFacade $customerUserFacade,
     ) {
     }
 
@@ -96,7 +96,7 @@ class DeliveryAddressMutation extends AbstractMutation
         try {
             $deliveryAddress = $this->deliveryAddressFacade->getByUuidAndCustomer(
                 $deliveryAddressUuid,
-                $customerUser->getCustomer()
+                $customerUser->getCustomer(),
             );
         } catch (DeliveryAddressNotFoundException $exception) {
             throw new DeliveryAddressNotFoundUserError($exception->getMessage());

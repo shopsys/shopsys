@@ -22,7 +22,7 @@ class Version20200129140317 extends AbstractMigration
                 'INSERT INTO "setting_values" ("name", "domain_id", "value", "type") VALUES 
                     (\'transferDaysBetweenStocks\', :domainId, \'1\', \'integer\'),
                     (\'deliveryDayOnStock\', :domainId, \'1\', \'integer\')',
-                ['domainId' => $domainId]
+                ['domainId' => $domainId],
             );
         }
     }

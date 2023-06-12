@@ -14,6 +14,7 @@ class ExistingEmail extends Constraint
 
     /**
      * @var array<string, string>
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected static $errorNames = [
         self::USER_WITH_EMAIL_DOES_NOT_EXIST_ERROR => 'USER_WITH_EMAIL_DOES_NOT_EXIST_ERROR',

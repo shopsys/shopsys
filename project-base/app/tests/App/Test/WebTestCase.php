@@ -27,7 +27,6 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
     protected Domain $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
      * @inject
      */
     protected CurrencyFacade $currencyFacade;

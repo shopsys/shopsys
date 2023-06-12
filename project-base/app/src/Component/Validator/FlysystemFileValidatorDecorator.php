@@ -19,31 +19,6 @@ class FlysystemFileValidatorDecorator extends ConstraintValidator
     private const LOCAL_TEMPORARY_DIRECTORY = 'localeFileUploads';
 
     /**
-     * @var \Symfony\Component\Validator\Constraints\FileValidator
-     */
-    private $fileValidator;
-
-    /**
-     * @var string
-     */
-    private $localTemporaryDir;
-
-    /**
-     * @var \Symfony\Component\Filesystem\Filesystem
-     */
-    private $symfonyFilesystem;
-
-    /**
-     * @var \League\Flysystem\MountManager
-     */
-    private $mountManager;
-
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    private $filesystem;
-
-    /**
      * @param \Symfony\Component\Validator\Constraints\FileValidator $fileValidator
      * @param string $localTemporaryDir
      * @param \Symfony\Component\Filesystem\Filesystem $symfonyFilesystem
@@ -51,17 +26,12 @@ class FlysystemFileValidatorDecorator extends ConstraintValidator
      * @param \League\Flysystem\FilesystemOperator $filesystem
      */
     public function __construct(
-        FileValidator $fileValidator,
-        string $localTemporaryDir,
-        Filesystem $symfonyFilesystem,
-        MountManager $mountManager,
-        FilesystemOperator $filesystem
+        private FileValidator $fileValidator,
+        private string $localTemporaryDir,
+        private Filesystem $symfonyFilesystem,
+        private MountManager $mountManager,
+        private FilesystemOperator $filesystem,
     ) {
-        $this->fileValidator = $fileValidator;
-        $this->symfonyFilesystem = $symfonyFilesystem;
-        $this->mountManager = $mountManager;
-        $this->filesystem = $filesystem;
-        $this->localTemporaryDir = $localTemporaryDir;
     }
 
     /**

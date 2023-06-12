@@ -10,12 +10,7 @@ namespace App\Component\Elasticsearch;
 class MultipleSearchQuery
 {
     /**
-     * @var string
-     */
-    private string $indexName;
-
-    /**
-     * @var array
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification
      */
     private array $body;
 
@@ -23,9 +18,8 @@ class MultipleSearchQuery
      * @param string $indexName
      * @param \App\Model\Product\Search\FilterQuery[] $filterQueries
      */
-    public function __construct(string $indexName, array $filterQueries)
+    public function __construct(private string $indexName, array $filterQueries)
     {
-        $this->indexName = $indexName;
         $this->body = $this->getBody($filterQueries);
     }
 

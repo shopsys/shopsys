@@ -19,7 +19,7 @@ class SettingValueShopInfoDataFixture extends AbstractReferenceFixture
      */
     public function __construct(
         private readonly Setting $setting,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 

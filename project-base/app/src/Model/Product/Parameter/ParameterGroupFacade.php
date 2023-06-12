@@ -9,33 +9,15 @@ use Doctrine\ORM\EntityManagerInterface;
 class ParameterGroupFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterGroupFactory
-     */
-    private $parameterGroupFactory;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterRepository
-     */
-    private $parameterRepository;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Parameter\ParameterGroupFactory $parameterGroupFactory
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      */
     public function __construct(
-        EntityManagerInterface $em,
-        ParameterGroupFactory $parameterGroupFactory,
-        ParameterRepository $parameterRepository
+        private EntityManagerInterface $em,
+        private ParameterGroupFactory $parameterGroupFactory,
+        private ParameterRepository $parameterRepository,
     ) {
-        $this->em = $em;
-        $this->parameterGroupFactory = $parameterGroupFactory;
-        $this->parameterRepository = $parameterRepository;
     }
 
     /**

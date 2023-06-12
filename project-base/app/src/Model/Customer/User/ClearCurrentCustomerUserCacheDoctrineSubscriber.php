@@ -14,7 +14,7 @@ class ClearCurrentCustomerUserCacheDoctrineSubscriber implements EventSubscriber
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      */
     public function __construct(
-        private readonly CurrentCustomerUser $currentCustomerUser
+        private readonly CurrentCustomerUser $currentCustomerUser,
     ) {
     }
 

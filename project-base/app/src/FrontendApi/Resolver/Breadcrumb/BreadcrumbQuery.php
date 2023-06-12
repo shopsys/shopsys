@@ -16,7 +16,7 @@ class BreadcrumbQuery extends AbstractQuery
      * @param \App\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      */
     public function __construct(
-        private readonly BreadcrumbFacade $breadcrumbFacade
+        private readonly BreadcrumbFacade $breadcrumbFacade,
     ) {
     }
 
@@ -29,7 +29,7 @@ class BreadcrumbQuery extends AbstractQuery
     {
         return $this->breadcrumbFacade->getBreadcrumbOnCurrentDomain(
             $id,
-            $routeName
+            $routeName,
         );
     }
 
@@ -48,7 +48,7 @@ class BreadcrumbQuery extends AbstractQuery
                 sprintf(
                     'The "$categoryOrReadyCategorySeoMix" argument must be an instance of "%s" or "%s".',
                     Category::class,
-                    ReadyCategorySeoMix::class
+                    ReadyCategorySeoMix::class,
                 ),
             );
         }

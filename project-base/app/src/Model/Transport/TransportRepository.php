@@ -25,8 +25,10 @@ class TransportRepository extends BaseTransportRepository
      * @param int|null $totalWeight
      * @return \App\Model\Transport\Transport[]
      */
-    public function getAllWithEagerLoadedDomainsAndTranslations(DomainConfig $domainConfig, ?int $totalWeight = null): array
-    {
+    public function getAllWithEagerLoadedDomainsAndTranslations(
+        DomainConfig $domainConfig,
+        ?int $totalWeight = null,
+    ): array {
         $queryBuilder = $this->getQueryBuilderForAll()
             ->addSelect('td')
             ->addSelect('tt')

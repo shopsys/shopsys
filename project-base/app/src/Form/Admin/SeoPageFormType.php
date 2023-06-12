@@ -59,8 +59,10 @@ class SeoPageFormType extends AbstractType
      * @param \App\Model\SeoPage\SeoPage|null $seoPage
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createBasicInformationGroup(FormBuilderInterface $builder, ?SeoPage $seoPage): FormBuilderInterface
-    {
+    private function createBasicInformationGroup(
+        FormBuilderInterface $builder,
+        ?SeoPage $seoPage,
+    ): FormBuilderInterface {
         $group = $builder->create('basicInformationGroup', GroupType::class, [
             'label' => t('Basic information'),
         ]);

@@ -20,21 +20,14 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository as BaseBrandRepo
 class BrandRepository extends BaseBrandRepository
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         EntityManagerInterface $entityManager,
-        Domain $domain
+        private Domain $domain,
     ) {
         parent::__construct($entityManager);
-
-        $this->domain = $domain;
     }
 
     /**
@@ -58,7 +51,7 @@ class BrandRepository extends BaseBrandRepository
         $queryBuilder = $this->getBrandRepository()
             ->createQueryBuilder('b')
             ->andWhere(
-                'NORMALIZE(b.name) LIKE NORMALIZE(:searchText)'
+                'NORMALIZE(b.name) LIKE NORMALIZE(:searchText)',
             );
         $queryBuilder->setParameter('searchText', DatabaseSearching::getFullTextLikeSearchString($searchText));
 

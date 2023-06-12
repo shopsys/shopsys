@@ -21,33 +21,15 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class PromoCodeValidator extends ConstraintValidator
 {
     /**
-     * @var \App\Model\Customer\User\CurrentCustomerUser
-     */
-    private CurrentCustomerUser $currentCustomerUser;
-
-    /**
-     * @var \App\Model\Order\PromoCode\CurrentPromoCodeFacade
-     */
-    private CurrentPromoCodeFacade $currentPromoCodeFacade;
-
-    /**
-     * @var \App\FrontendApi\Model\Cart\CartFacade
-     */
-    private CartFacade $cartFacade;
-
-    /**
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(
-        CurrentCustomerUser $currentCustomerUser,
-        CurrentPromoCodeFacade $currentPromoCodeFacade,
-        CartFacade $cartFacade
+        private CurrentCustomerUser $currentCustomerUser,
+        private CurrentPromoCodeFacade $currentPromoCodeFacade,
+        private CartFacade $cartFacade,
     ) {
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->currentPromoCodeFacade = $currentPromoCodeFacade;
-        $this->cartFacade = $cartFacade;
     }
 
     /**

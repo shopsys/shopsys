@@ -8,34 +8,16 @@ use App\Model\Order\Order;
 
 class PacketAttributes
 {
-    /**
-     * @var string
-     */
     private string $number;
 
-    /**
-     * @var string
-     */
     private string $name;
 
-    /**
-     * @var string
-     */
     private string $surname;
 
-    /**
-     * @var string
-     */
     private string $email;
 
-    /**
-     * @var int
-     */
     private int $addressId;
 
-    /**
-     * @var float
-     */
     private float $value;
 
     /**

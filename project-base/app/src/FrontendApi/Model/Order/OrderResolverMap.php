@@ -12,19 +12,12 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderResolverMap as BaseOrder
 class OrderResolverMap extends BaseOrderResolverMap
 {
     /**
-     * @var \Overblog\DataLoader\DataLoaderInterface
-     */
-    private DataLoaderInterface $orderItemsBatchLoader;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Overblog\DataLoader\DataLoaderInterface $orderItemsBatchLoader
      */
-    public function __construct(Domain $domain, DataLoaderInterface $orderItemsBatchLoader)
+    public function __construct(Domain $domain, private DataLoaderInterface $orderItemsBatchLoader)
     {
         parent::__construct($domain);
-
-        $this->orderItemsBatchLoader = $orderItemsBatchLoader;
     }
 
     /**

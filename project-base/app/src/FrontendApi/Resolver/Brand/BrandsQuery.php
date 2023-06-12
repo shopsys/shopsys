@@ -22,7 +22,7 @@ class BrandsQuery extends BaseBrandsQuery
     public function __construct(
         BaseBrandFacade $brandFacade,
         Domain $domain,
-        private readonly BrandFacade $apiBrandFacade
+        private readonly BrandFacade $apiBrandFacade,
     ) {
         parent::__construct($brandFacade, $domain);
     }

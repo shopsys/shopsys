@@ -47,7 +47,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         private readonly PromoCodeLimitFactory $promoCodeLimitFactory,
         private readonly PromoCodeFlagFactory $promoCodeFlagFactory,
         private readonly EntityManagerInterface $em,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 

@@ -13,7 +13,7 @@ class CountriesQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      */
     public function __construct(
-        private readonly CountryFacade $countryFacade
+        private readonly CountryFacade $countryFacade,
     ) {
     }
 

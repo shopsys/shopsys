@@ -16,7 +16,7 @@ final class CustomerUserRegisteredQuery extends AbstractQuery
      */
     public function __construct(
         private readonly CustomerUserFacade $customerUserFacade,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 

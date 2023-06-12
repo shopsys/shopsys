@@ -10,18 +10,11 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 class TransportPriceChangedException extends Exception
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    private Price $currentTransportPrice;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $currentTransportPrice
      */
-    public function __construct(Price $currentTransportPrice)
+    public function __construct(private Price $currentTransportPrice)
     {
         parent::__construct();
-
-        $this->currentTransportPrice = $currentTransportPrice;
     }
 
     /**

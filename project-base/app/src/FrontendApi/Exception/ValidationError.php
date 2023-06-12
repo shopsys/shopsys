@@ -30,11 +30,11 @@ class ValidationError extends ArgumentsValidationException
                         $field,
                         null,
                         null,
-                        $code
+                        $code,
                     ),
-                ]
+                ],
             ),
-            $previous
+            $previous,
         );
     }
 }

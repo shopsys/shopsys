@@ -115,7 +115,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         $cartWatcher = new CartWatcher(
             $this->productPriceCalculationForCustomerUser,
             $productVisibilityRepositoryMock,
-            $this->domain
+            $this->domain,
         );
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier());

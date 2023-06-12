@@ -202,7 +202,7 @@ class Cart extends BaseCart
         return $this->promoCodes->exists(
             static function ($key, PromoCode $promoCode) use ($promoCodeCode) {
                 return $promoCode->getCode() === $promoCodeCode;
-            }
+            },
         );
     }
 

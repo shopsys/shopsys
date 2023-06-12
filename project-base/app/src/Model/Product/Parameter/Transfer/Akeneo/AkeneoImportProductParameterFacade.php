@@ -17,44 +17,11 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
     public const PREFIX_PARAMETER_CODE = 'param__';
 
     /**
-     * @var \App\Model\Product\Parameter\Transfer\Akeneo\ProductParameterTransferAkeneoFacade
-     */
-    private $productParameterTransferAkeneoFacade;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterFacade
-     */
-    private $parameterFacade;
-
-    /**
-     * @var \App\Model\Product\Parameter\Transfer\Akeneo\ProductParameterTransferAkeneoMapper
-     */
-    private $productParameterTransferAkeneoMapper;
-
-    /**
-     * @var \App\Model\Product\Parameter\Transfer\Akeneo\ProductParameterTransferAkeneoValidator
-     */
-    private $productParameterTransferAkeneoValidator;
-
-    /**
      * @var int[]
      */
-    private $notTransferredParameterIds = [];
+    private array $notTransferredParameterIds = [];
 
-    /**
-     * @var int
-     */
-    private $parametersFromAkeneoCountBeforeTransfer;
-
-    /**
-     * @var \App\Model\Product\Unit\UnitFacade
-     */
-    private UnitFacade $unitFacade;
-
-    /**
-     * @var \App\Model\Product\Unit\UnitDataFactory
-     */
-    private UnitDataFactory $unitDataFactory;
+    private int $parametersFromAkeneoCountBeforeTransfer;
 
     /**
      * @param \App\Component\Akeneo\Transfer\AkeneoImportTransferDependency $akeneoImportTransferDependency
@@ -67,21 +34,14 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
      */
     public function __construct(
         AkeneoImportTransferDependency $akeneoImportTransferDependency,
-        ProductParameterTransferAkeneoFacade $productParameterTransferAkeneoFacade,
-        ProductParameterTransferAkeneoMapper $productParameterTransferAkeneoMapper,
-        ParameterFacade $parameterFacade,
-        ProductParameterTransferAkeneoValidator $productParameterTransferAkeneoValidator,
-        UnitFacade $unitFacade,
-        UnitDataFactory $unitDataFactory
+        private ProductParameterTransferAkeneoFacade $productParameterTransferAkeneoFacade,
+        private ProductParameterTransferAkeneoMapper $productParameterTransferAkeneoMapper,
+        private ParameterFacade $parameterFacade,
+        private ProductParameterTransferAkeneoValidator $productParameterTransferAkeneoValidator,
+        private UnitFacade $unitFacade,
+        private UnitDataFactory $unitDataFactory,
     ) {
         parent::__construct($akeneoImportTransferDependency);
-
-        $this->productParameterTransferAkeneoFacade = $productParameterTransferAkeneoFacade;
-        $this->parameterFacade = $parameterFacade;
-        $this->productParameterTransferAkeneoMapper = $productParameterTransferAkeneoMapper;
-        $this->productParameterTransferAkeneoValidator = $productParameterTransferAkeneoValidator;
-        $this->unitFacade = $unitFacade;
-        $this->unitDataFactory = $unitDataFactory;
     }
 
     public const DEFAULT_METRIC_UNIT_AKENEO_KEY = 'default_metric_unit';

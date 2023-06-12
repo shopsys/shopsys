@@ -15,30 +15,9 @@ use Symfony\Bridge\Monolog\Logger;
 
 class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
 {
-    /**
-     * @var \Symfony\Bridge\Monolog\Logger
-     */
-    private $logger;
+    private Logger $logger;
 
-    /**
-     * @var \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade
-     */
-    private $paymentMethodFacade;
-
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
-     * @var array
-     */
-    private $goPayConfig;
+    private EntityManagerInterface $em;
 
     /**
      * @param array $goPayConfig
@@ -47,15 +26,12 @@ class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        array $goPayConfig,
-        GoPayPaymentMethodFacade $paymentMethodFacade,
+        private array $goPayConfig,
+        private GoPayPaymentMethodFacade $paymentMethodFacade,
         EntityManagerInterface $entityManager,
-        Domain $domain
+        private Domain $domain,
     ) {
-        $this->paymentMethodFacade = $paymentMethodFacade;
         $this->em = $entityManager;
-        $this->domain = $domain;
-        $this->goPayConfig = $goPayConfig;
     }
 
     /**

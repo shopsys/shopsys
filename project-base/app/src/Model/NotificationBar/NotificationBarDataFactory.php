@@ -12,7 +12,7 @@ class NotificationBarDataFactory
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      */
     public function __construct(
-        private readonly ImageUploadDataFactory $imageUploadDataFactory
+        private readonly ImageUploadDataFactory $imageUploadDataFactory,
     ) {
     }
 

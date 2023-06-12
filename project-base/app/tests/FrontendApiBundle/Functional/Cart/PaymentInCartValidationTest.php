@@ -17,13 +17,11 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 class PaymentInCartValidationTest extends GraphQlTestCase
 {
     /**
-     * @var \App\Model\Payment\PaymentFacade
      * @inject
      */
     private PaymentFacade $paymentFacade;
 
     /**
-     * @var \App\Model\Payment\PaymentDataFactory
      * @inject
      */
     private PaymentDataFactory $paymentDataFactory;

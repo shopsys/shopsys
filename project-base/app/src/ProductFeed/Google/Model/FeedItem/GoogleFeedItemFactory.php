@@ -29,7 +29,7 @@ class GoogleFeedItemFactory extends BaseGoogleFeedItemFactory
             $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig),
             $product->getCalculatedSellingDenied(),
             $this->getPrice($product, $domainConfig),
-            $this->getCurrency($domainConfig)
+            $this->getCurrency($domainConfig),
         );
     }
 }

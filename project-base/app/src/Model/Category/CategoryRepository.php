@@ -100,7 +100,7 @@ class CategoryRepository extends BaseCategoryRepository
     public function getListableProductCountsIndexedByCategoryId(
         array $categories,
         PricingGroup $pricingGroup,
-        $domainId
+        $domainId,
     ) {
         if (count($categories) === 0) {
             return [];
@@ -118,7 +118,7 @@ class CategoryRepository extends BaseCategoryRepository
             Join::WITH,
             'pcd.product = p
                  AND pcd.category IN (:categories)
-                 AND pcd.domainId = :domainId'
+                 AND pcd.domainId = :domainId',
         )
             ->select('IDENTITY(pcd.category) AS categoryId, COUNT(p) AS productCount')
             ->setParameter('categories', $categories)
@@ -179,8 +179,11 @@ class CategoryRepository extends BaseCategoryRepository
      * @param \App\Model\Category\Category[] $excludeCategories
      * @return \App\Model\Category\Category[]
      */
-    public function getVisibleCategoriesByLinkedCategories(Category $parentCategory, int $domainId, array $excludeCategories): array
-    {
+    public function getVisibleCategoriesByLinkedCategories(
+        Category $parentCategory,
+        int $domainId,
+        array $excludeCategories,
+    ): array {
         $excludeCategories[] = $parentCategory;
 
         $queryBuilder = $this->getAllVisibleByDomainIdQueryBuilder($domainId)
@@ -206,7 +209,7 @@ class CategoryRepository extends BaseCategoryRepository
         $domainId,
         $locale,
         $page,
-        $limit
+        $limit,
     ): PaginationResult {
         $queryBuilder = $this->getVisibleByDomainIdAndSearchTextQueryBuilder($domainId, $locale, $searchText);
         $queryBuilder->orderBy(OrderByCollationHelper::createOrderByForLocale('ct.name', $locale));
@@ -238,8 +241,10 @@ class CategoryRepository extends BaseCategoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \App\Model\Category\Category[]
      */
-    public function getAllVisibleChildrenByCategoryAndDomainConfig(Category $category, DomainConfig $domainConfig): array
-    {
+    public function getAllVisibleChildrenByCategoryAndDomainConfig(
+        Category $category,
+        DomainConfig $domainConfig,
+    ): array {
         $queryBuilder = $this->getAllVisibleByDomainIdQueryBuilder($domainConfig->getId())
             ->addSelect('cd')
             ->andWhere('c.parent = :category')

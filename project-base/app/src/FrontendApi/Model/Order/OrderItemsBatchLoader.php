@@ -10,23 +10,11 @@ use GraphQL\Executor\Promise\PromiseAdapter;
 class OrderItemsBatchLoader
 {
     /**
-     * @var \GraphQL\Executor\Promise\PromiseAdapter
-     */
-    private PromiseAdapter $promiseAdapter;
-
-    /**
-     * @var \App\FrontendApi\Model\Order\OrderItemFacade
-     */
-    private OrderItemFacade $orderItemFacade;
-
-    /**
      * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
      * @param \App\FrontendApi\Model\Order\OrderItemFacade $orderItemFacade
      */
-    public function __construct(PromiseAdapter $promiseAdapter, OrderItemFacade $orderItemFacade)
+    public function __construct(private PromiseAdapter $promiseAdapter, private OrderItemFacade $orderItemFacade)
     {
-        $this->promiseAdapter = $promiseAdapter;
-        $this->orderItemFacade = $orderItemFacade;
     }
 
     /**

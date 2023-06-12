@@ -16,19 +16,14 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class RetrieveCartTest extends GraphQlTestCase
 {
-    /**
-     * @var \App\Model\Product\Product
-     */
     private Product $testingProduct;
 
     /**
-     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
      * @inject
      */
     private UrlGeneratorInterface $urlGenerator;
 
     /**
-     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
      * @inject
      */
     private ProductAvailabilityFacade $productAvailabilityFacade;
@@ -308,7 +303,7 @@ class RetrieveCartTest extends GraphQlTestCase
             'Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback',
             [],
             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-            $firstDomainLocale
+            $firstDomainLocale,
         );
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
@@ -335,19 +330,19 @@ class RetrieveCartTest extends GraphQlTestCase
                 'Hello Kitty Television',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $firstDomainLocale
+                $firstDomainLocale,
             ),
             'seoTitle' => t(
                 'Hello Kitty TV',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $firstDomainLocale
+                $firstDomainLocale,
             ),
             'seoMetaDescription' => t(
                 'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $firstDomainLocale
+                $firstDomainLocale,
             ),
             'link' => $this->getLocalizedPathOnFirstDomainByRouteName('front_product_detail', ['id' => 1]),
             'unit' => [
@@ -412,7 +407,7 @@ class RetrieveCartTest extends GraphQlTestCase
                         'Kabel HDMI A - HDMI A M/M 2m gold-plated connectors High Speed HD',
                         [],
                         Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                        $firstDomainLocale
+                        $firstDomainLocale,
                     ),
                 ],
                 [
@@ -427,7 +422,7 @@ class RetrieveCartTest extends GraphQlTestCase
                 'Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback (DivX, XviD, MP3, WMA, JPEG), HDMI, SCART, VGA, pink execution, energ. Class B',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $firstDomainLocale
+                $firstDomainLocale,
             ),
             'orderingPriority' => 0,
             'parameters' => [
@@ -516,31 +511,31 @@ class RetrieveCartTest extends GraphQlTestCase
                     'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
                     [],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $firstDomainLocale
+                    $firstDomainLocale,
                 ),
                 t(
                     'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
                     [],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $firstDomainLocale
+                    $firstDomainLocale,
                 ),
                 t(
                     'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
                     [],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $firstDomainLocale
+                    $firstDomainLocale,
                 ),
                 t(
                     'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
                     [],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $firstDomainLocale
+                    $firstDomainLocale,
                 ),
                 t(
                     'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
                     [],
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $firstDomainLocale
+                    $firstDomainLocale,
                 ),
             ],
             'hasPreorder' => false,

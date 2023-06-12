@@ -59,7 +59,7 @@ class SlugQuery extends AbstractQuery
         private readonly StoreQuery $storeQuery,
         private readonly ReadyCategorySeoMixQuery $readyCategorySeoMixQuery,
         private readonly FlagQuery $flagQuery,
-        private readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
+        private readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
     ) {
     }
 
@@ -149,7 +149,7 @@ class SlugQuery extends AbstractQuery
             $category->getId(),
             $variableValues['filter']['parameters'] ?? [],
             $variableValues['filter']['flags'] ?? [],
-            $variableValues['orderingMode'] ?? ProductsQuery::getDefaultOrderingModeForListing()
+            $variableValues['orderingMode'] ?? ProductsQuery::getDefaultOrderingModeForListing(),
         );
     }
 
@@ -175,8 +175,10 @@ class SlugQuery extends AbstractQuery
      * @param \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix
      * @return bool
      */
-    private function isSortingDifferentFromReadyCategorySeoMix(ResolveInfo $resolveInfo, ReadyCategorySeoMix $readyCategorySeoMix): bool
-    {
+    private function isSortingDifferentFromReadyCategorySeoMix(
+        ResolveInfo $resolveInfo,
+        ReadyCategorySeoMix $readyCategorySeoMix,
+    ): bool {
         $variableValues = $resolveInfo->variableValues;
         $sorting = $variableValues['orderingMode'] ?? null;
 

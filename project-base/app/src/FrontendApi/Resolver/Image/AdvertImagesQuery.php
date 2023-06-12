@@ -28,8 +28,8 @@ class AdvertImagesQuery extends ImagesQuery
                 $advert->getId(),
                 self::ENTITY_NAME,
                 $sizeConfigs,
-                $type
-            )
+                $type,
+            ),
         );
     }
 

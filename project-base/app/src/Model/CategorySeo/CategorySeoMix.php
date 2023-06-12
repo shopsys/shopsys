@@ -4,45 +4,29 @@ declare(strict_types=1);
 
 namespace App\Model\CategorySeo;
 
-use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
+use App\Model\Category\Category;
+use App\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 
 class CategorySeoMix
 {
-    /**
-     * @var int
-     */
-    private $domainId;
+    private ?Flag $flag = null;
 
-    /**
-     * @var \App\Model\Category\Category
-     */
-    private $category;
-
-    /**
-     * @var \App\Model\Product\Flag\Flag|null
-     */
-    private $flag;
-
-    /**
-     * @var string|null
-     */
-    private $ordering;
+    private ?string $ordering = null;
 
     /**
      * @var \App\Model\Product\Parameter\ParameterValue[]
      */
-    private $parameterValues = [];
+    private array $parameterValues = [];
 
     /**
      * @param int $domainId
      * @param \App\Model\Category\Category $category
      */
-    public function __construct(int $domainId, Category $category)
-    {
-        $this->category = $category;
-        $this->domainId = $domainId;
+    public function __construct(
+        private readonly int $domainId,
+        protected readonly Category $category,
+    ) {
     }
 
     /**
@@ -125,7 +109,7 @@ class CategorySeoMix
             $this->category->getId(),
             $this->flag !== null ? $this->flag->getId() : null,
             $this->ordering,
-            $parameterValueIdsByParameterIds
+            $parameterValueIdsByParameterIds,
         );
     }
 }

@@ -19,19 +19,12 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactory as BaseFlagDataFa
 class FlagDataFactory extends BaseFlagDataFactory
 {
     /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private FriendlyUrlFacade $friendlyUrlFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
-    public function __construct(Domain $domain, FriendlyUrlFacade $friendlyUrlFacade)
+    public function __construct(Domain $domain, private FriendlyUrlFacade $friendlyUrlFacade)
     {
         parent::__construct($domain);
-
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
     }
 
     /**

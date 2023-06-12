@@ -7,11 +7,6 @@ namespace App\Model\Navigation;
 class NavigationItemDetail
 {
     /**
-     * @var \App\Model\Navigation\NavigationItem
-     */
-    private NavigationItem $navigationItem;
-
-    /**
      * @var \App\Model\Category\Category[][]
      */
     private array $categoryDetailsByColumnNumber;
@@ -21,10 +16,9 @@ class NavigationItemDetail
      * @param \App\Model\Category\Category[][] $categoriesByColumnNumber
      */
     public function __construct(
-        NavigationItem $navigationItem,
-        array $categoriesByColumnNumber
+        private NavigationItem $navigationItem,
+        array $categoriesByColumnNumber,
     ) {
-        $this->navigationItem = $navigationItem;
         $this->categoryDetailsByColumnNumber = $categoriesByColumnNumber;
     }
 

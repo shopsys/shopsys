@@ -17,25 +17,13 @@ class BlogCategoryDetailFriendlyUrlDataProvider implements FriendlyUrlDataProvid
     private const ROUTE_NAME = 'front_blogcategory_detail';
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactoryInterface
-     */
-    private $friendlyUrlDataFactory;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory
      */
     public function __construct(
-        EntityManagerInterface $em,
-        FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory
+        private EntityManagerInterface $em,
+        private FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory,
     ) {
-        $this->em = $em;
-        $this->friendlyUrlDataFactory = $friendlyUrlDataFactory;
     }
 
     /**

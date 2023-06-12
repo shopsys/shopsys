@@ -17,41 +17,6 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
     public const TIME_VALID_FORMAT = 'H:i';
 
     /**
-     * @var \App\Component\DateTimeHelper\DateTimeHelper
-     */
-    private $dateTimeHelper;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeCategoryRepository
-     */
-    private $promoCodeCategoryRepository;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeProductRepository
-     */
-    private $promoCodeProductRepository;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeLimitRepository
-     */
-    private $promoCodeLimitRepository;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeBrandRepository
-     */
-    private PromoCodeBrandRepository $promoCodeBrandRepository;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodePricingGroupRepository
-     */
-    private PromoCodePricingGroupRepository $promoCodePricingGroupRepository;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository
-     */
-    private PromoCodeFlagRepository $promoCodeFlagRepository;
-
-    /**
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
      * @param \App\Model\Order\PromoCode\PromoCodeLimitRepository $promoCodeLimitRepository
@@ -61,21 +26,14 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
      * @param \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository $promoCodeFlagRepository
      */
     public function __construct(
-        PromoCodeCategoryRepository $promoCodeCategoryRepository,
-        PromoCodeProductRepository $promoCodeProductRepository,
-        PromoCodeLimitRepository $promoCodeLimitRepository,
-        DateTimeHelper $dateTimeHelper,
-        PromoCodeBrandRepository $promoCodeBrandRepository,
-        PromoCodePricingGroupRepository $promoCodePricingGroupRepository,
-        PromoCodeFlagRepository $promoCodeFlagRepository
+        private PromoCodeCategoryRepository $promoCodeCategoryRepository,
+        private PromoCodeProductRepository $promoCodeProductRepository,
+        private PromoCodeLimitRepository $promoCodeLimitRepository,
+        private DateTimeHelper $dateTimeHelper,
+        private PromoCodeBrandRepository $promoCodeBrandRepository,
+        private PromoCodePricingGroupRepository $promoCodePricingGroupRepository,
+        private PromoCodeFlagRepository $promoCodeFlagRepository,
     ) {
-        $this->dateTimeHelper = $dateTimeHelper;
-        $this->promoCodeCategoryRepository = $promoCodeCategoryRepository;
-        $this->promoCodeProductRepository = $promoCodeProductRepository;
-        $this->promoCodeLimitRepository = $promoCodeLimitRepository;
-        $this->promoCodeBrandRepository = $promoCodeBrandRepository;
-        $this->promoCodePricingGroupRepository = $promoCodePricingGroupRepository;
-        $this->promoCodeFlagRepository = $promoCodeFlagRepository;
     }
 
     /**

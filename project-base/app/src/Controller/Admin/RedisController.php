@@ -13,17 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class RedisController extends AdminBaseController
 {
     /**
-     * @var \App\Component\Redis\CleanStorefrontCacheFacade
-     */
-    private CleanStorefrontCacheFacade $cleanStorefrontCacheFacade;
-
-    /**
      * @param \App\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
      */
     public function __construct(
-        CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
+        private CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
-        $this->cleanStorefrontCacheFacade = $cleanStorefrontCacheFacade;
     }
 
     /**
@@ -36,7 +30,7 @@ class RedisController extends AdminBaseController
         $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache();
 
         $this->addSuccessFlashTwig(
-            t('Storefront queries cache has been cleaned.')
+            t('Storefront queries cache has been cleaned.'),
         );
 
         return $this->redirectToRoute('admin_redis_show');

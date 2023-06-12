@@ -16,11 +16,11 @@ class CategoriesQuery extends BaseCategoriesQuery
      */
     public function __construct(
         CategoryFacade $categoryFacade,
-        Domain $domain
+        Domain $domain,
     ) {
         parent::__construct(
             $categoryFacade,
-            $domain
+            $domain,
         );
     }
 
@@ -34,7 +34,7 @@ class CategoriesQuery extends BaseCategoriesQuery
 
         return $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainConfig( // @phpstan-ignore-line
             $rootCategory,
-            $this->domain->getCurrentDomainConfig()
+            $this->domain->getCurrentDomainConfig(),
         );
     }
 }

@@ -25,16 +25,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class TransportFormTypeExtension extends AbstractTypeExtension
 {
     /**
-     * @var \App\Model\Transport\Type\TransportTypeFacade
-     */
-    protected TransportTypeFacade $transportTypeFacade;
-
-    /**
      * @param \App\Model\Transport\Type\TransportTypeFacade $transportTypeFacade
      */
-    public function __construct(TransportTypeFacade $transportTypeFacade)
+    public function __construct(protected TransportTypeFacade $transportTypeFacade)
     {
-        $this->transportTypeFacade = $transportTypeFacade;
     }
 
     /**

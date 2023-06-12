@@ -13,23 +13,11 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class ExistingEmailValidator extends ConstraintValidator
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
-     */
-    private CustomerUserFacade $customerUserFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      */
-    public function __construct(Domain $domain, CustomerUserFacade $customerUserFacade)
+    public function __construct(private Domain $domain, private CustomerUserFacade $customerUserFacade)
     {
-        $this->domain = $domain;
-        $this->customerUserFacade = $customerUserFacade;
     }
 
     /**

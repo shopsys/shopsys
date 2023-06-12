@@ -30,11 +30,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class DefaultController extends BaseDefaultController
 {
     /**
-     * @var \App\Model\Transfer\Issue\TransferIssueFacade
-     */
-    private $transferIssueFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Statistics\StatisticsFacade $statisticsFacade
      * @param \Shopsys\FrameworkBundle\Model\Statistics\StatisticsProcessingFacade $statisticsProcessingFacade
      * @param \App\Model\Mail\MailTemplateFacade $mailTemplateFacade
@@ -58,7 +53,7 @@ class DefaultController extends BaseDefaultController
         GridFactory $gridFactory,
         CronConfig $cronConfig,
         CronFacade $cronFacade,
-        TransferIssueFacade $transferIssueFacade
+        private TransferIssueFacade $transferIssueFacade,
     ) {
         parent::__construct(
             $statisticsFacade,
@@ -70,10 +65,8 @@ class DefaultController extends BaseDefaultController
             $cronModuleFacade,
             $gridFactory,
             $cronConfig,
-            $cronFacade
+            $cronFacade,
         );
-
-        $this->transferIssueFacade = $transferIssueFacade;
     }
 
     /**
@@ -100,7 +93,7 @@ class DefaultController extends BaseDefaultController
         $currentCountOfOrders = $this->statisticsFacade->getOrdersCount(static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR);
         $previousCountOfOrders = $this->statisticsFacade->getOrdersCount(
             static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR * 2,
-            static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR
+            static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR,
         );
 
         $ordersTrend = $this->getTrendDifference($previousCountOfOrders, $currentCountOfOrders);
@@ -108,7 +101,7 @@ class DefaultController extends BaseDefaultController
         $currentCountOfNewCustomers = $this->statisticsFacade->getNewCustomersCount(static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR);
         $previousCountOfNewCustomers = $this->statisticsFacade->getNewCustomersCount(
             static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR * 2,
-            static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR
+            static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR,
         );
 
         $newCustomersTrend = $this->getTrendDifference($previousCountOfNewCustomers, $currentCountOfNewCustomers);
@@ -116,7 +109,7 @@ class DefaultController extends BaseDefaultController
         $currentValueOfOrders = $this->statisticsFacade->getOrdersValue(static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR);
         $previousValueOfOrders = $this->statisticsFacade->getOrdersValue(
             static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR * 2,
-            static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR
+            static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR,
         );
 
         $ordersValueTrend = $this->getTrendDifference($previousValueOfOrders, $currentValueOfOrders);
@@ -139,7 +132,7 @@ class DefaultController extends BaseDefaultController
                 'ordersValueTrend' => $ordersValueTrend,
                 'transferIssuesCount' => $transferIssuesCount,
                 'cronGridViews' => $this->getCronGridViews(),
-            ]
+            ],
         );
     }
 }

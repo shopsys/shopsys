@@ -14,33 +14,15 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 class CombinedArticleElasticsearchRepository
 {
     /**
-     * @var \Elasticsearch\Client
-     */
-    private Client $client;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader
-     */
-    private IndexDefinitionLoader $indexDefinitionLoader;
-
-    /**
      * @param \Elasticsearch\Client $client
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
      */
     public function __construct(
-        Client $client,
-        Domain $domain,
-        IndexDefinitionLoader $indexDefinitionLoader
+        private Client $client,
+        private Domain $domain,
+        private IndexDefinitionLoader $indexDefinitionLoader,
     ) {
-        $this->client = $client;
-        $this->indexDefinitionLoader = $indexDefinitionLoader;
-        $this->domain = $domain;
     }
 
     /**
@@ -112,11 +94,11 @@ class CombinedArticleElasticsearchRepository
         $domainId = $this->domain->getId();
         $articleIndexName = $this->indexDefinitionLoader->getIndexDefinition(
             ArticleIndex::getName(),
-            $domainId
+            $domainId,
         )->getIndexAlias();
         $blogArticleIndexName = $this->indexDefinitionLoader->getIndexDefinition(
             BlogArticleIndex::getName(),
-            $domainId
+            $domainId,
         )->getIndexAlias();
 
         return implode(',', [$articleIndexName, $blogArticleIndexName]);

@@ -11,17 +11,11 @@ class CleanStorefrontCacheFacade
     public const NAVIGATION_QUERY_KEY_PART = 'NavigationQuery';
 
     /**
-     * @var \Redis
-     */
-    private Redis $storefrontGraphqlQueryClient;
-
-    /**
      * @param \Redis $storefrontGraphqlQueryClient
      */
     public function __construct(
-        Redis $storefrontGraphqlQueryClient
+        private Redis $storefrontGraphqlQueryClient,
     ) {
-        $this->storefrontGraphqlQueryClient = $storefrontGraphqlQueryClient;
     }
 
     /**

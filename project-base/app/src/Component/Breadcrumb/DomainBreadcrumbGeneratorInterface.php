@@ -15,5 +15,10 @@ interface DomainBreadcrumbGeneratorInterface extends BreadcrumbGeneratorInterfac
      * @param string|null $locale
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
-    public function getBreadcrumbItemsOnDomain(int $domainId, string $routeName, array $routeParameters = [], ?string $locale = null): array;
+    public function getBreadcrumbItemsOnDomain(
+        int $domainId,
+        string $routeName,
+        array $routeParameters = [],
+        ?string $locale = null,
+    ): array;
 }

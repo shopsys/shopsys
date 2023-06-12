@@ -10,33 +10,15 @@ use Doctrine\ORM\EntityManagerInterface;
 class GoPayBankSwiftFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var \App\Model\GoPay\BankSwift\GoPayBankSwiftDataFactory
-     */
-    private $goPayBankSwiftDataFactory;
-
-    /**
-     * @var \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodRepository
-     */
-    private GoPayPaymentMethodRepository $goPayPaymentMethodRepository;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\GoPay\BankSwift\GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory
      * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodRepository $goPayPaymentMethodRepository
      */
     public function __construct(
-        EntityManagerInterface $em,
-        GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory,
-        GoPayPaymentMethodRepository $goPayPaymentMethodRepository
+        private EntityManagerInterface $em,
+        private GoPayBankSwiftDataFactory $goPayBankSwiftDataFactory,
+        private GoPayPaymentMethodRepository $goPayPaymentMethodRepository,
     ) {
-        $this->em = $em;
-        $this->goPayBankSwiftDataFactory = $goPayBankSwiftDataFactory;
-        $this->goPayPaymentMethodRepository = $goPayPaymentMethodRepository;
     }
 
     /**
@@ -69,8 +51,10 @@ class GoPayBankSwiftFacade
      * @param \App\Model\GoPay\BankSwift\GoPayBankSwiftData $goPayBankSwiftData
      * @param array $swiftRawData
      */
-    public function setGoPayBankSwiftDataFromSwiftRawData(GoPayBankSwiftData $goPayBankSwiftData, array $swiftRawData): void
-    {
+    public function setGoPayBankSwiftDataFromSwiftRawData(
+        GoPayBankSwiftData $goPayBankSwiftData,
+        array $swiftRawData,
+    ): void {
         $goPayBankSwiftData->swift = $swiftRawData['swift'];
         $goPayBankSwiftData->name = $swiftRawData['label']['cs']; // GoPay doesn't support Slovak names
         $goPayBankSwiftData->imageNormalUrl = $swiftRawData['image']['normal'];

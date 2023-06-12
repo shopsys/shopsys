@@ -9,16 +9,10 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class ProductFilesDataFactory
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(Domain $domain)
+    public function __construct(private Domain $domain)
     {
-        $this->domain = $domain;
     }
 
     /**

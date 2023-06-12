@@ -29,7 +29,7 @@ class PersonalDataMutation extends AbstractMutation
         private readonly PersonalDataAccessRequestDataFactoryInterface $personalDataAccessRequestDataFactory,
         private readonly PersonalDataAccessMailFacade $personalDataAccessMailFacade,
         private readonly Domain $domain,
-        private readonly PersonalDataQuery $personalDataPageResolver
+        private readonly PersonalDataQuery $personalDataPageResolver,
     ) {
     }
 
@@ -57,7 +57,7 @@ class PersonalDataMutation extends AbstractMutation
 
         $personalData = $this->personalDataAccessRequestFacade->createPersonalDataAccessRequest(
             $personalDataAccessRequestData,
-            $this->domain->getId()
+            $this->domain->getId(),
         );
 
         $this->personalDataAccessMailFacade->sendMail($personalData);

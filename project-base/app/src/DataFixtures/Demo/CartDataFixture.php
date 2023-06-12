@@ -17,33 +17,15 @@ class CartDataFixture extends AbstractReferenceFixture implements DependentFixtu
     public const CART_UUID = '1007c9a3-f570-484a-b84e-4a4f49bb35c0';
 
     /**
-     * @var \App\Model\Cart\CartFacade
-     */
-    private CartFacade $cartFacade;
-
-    /**
-     * @var \App\Model\Customer\User\CustomerUserIdentifierFactory
-     */
-    protected CustomerUserIdentifierFactory $customerUserIdentifierFactory;
-
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private EntityManagerInterface $em;
-
-    /**
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
-        CartFacade $cartFacade,
-        CustomerUserIdentifierFactory $customerUserIdentifierFactory,
-        EntityManagerInterface $em
+        private CartFacade $cartFacade,
+        protected CustomerUserIdentifierFactory $customerUserIdentifierFactory,
+        private EntityManagerInterface $em,
     ) {
-        $this->cartFacade = $cartFacade;
-        $this->customerUserIdentifierFactory = $customerUserIdentifierFactory;
-        $this->em = $em;
     }
 
     /**
@@ -87,8 +69,8 @@ class CartDataFixture extends AbstractReferenceFixture implements DependentFixtu
                     'UPDATE %s ci SET ci.uuid = \'%s\' WHERE ci.id = %d',
                     CartItem::class,
                     $uuid,
-                    $id
-                )
+                    $id,
+                ),
             )
             ->execute();
     }

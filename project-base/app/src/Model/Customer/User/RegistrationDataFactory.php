@@ -11,25 +11,13 @@ use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 class RegistrationDataFactory implements RegistrationDataFactoryInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected Domain $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Country\CountryFacade
-     */
-    protected CountryFacade $countryFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      */
     public function __construct(
-        Domain $domain,
-        CountryFacade $countryFacade
+        protected Domain $domain,
+        protected CountryFacade $countryFacade,
     ) {
-        $this->domain = $domain;
-        $this->countryFacade = $countryFacade;
     }
 
     /**

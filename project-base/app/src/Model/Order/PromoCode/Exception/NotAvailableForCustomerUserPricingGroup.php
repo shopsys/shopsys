@@ -23,10 +23,10 @@ class NotAvailableForCustomerUserPricingGroup extends Exception implements Promo
                     '%invalidPromoCode%' => $invalidPromoCode,
                     '%pricingGroupId%' => $pricingGroupId,
                 ],
-                'validators'
+                'validators',
             ),
             0,
-            $previous
+            $previous,
         );
     }
 }

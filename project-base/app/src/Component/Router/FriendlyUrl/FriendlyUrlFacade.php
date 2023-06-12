@@ -32,11 +32,11 @@ class FriendlyUrlFacade extends BaseFriendlyUrlFacade
      */
     public function getNonUsedFriendlyUrlQueryBuilderByDomainIdAndQuickSearch(
         int $domainId,
-        QuickSearchFormData $quickSearchFormData
+        QuickSearchFormData $quickSearchFormData,
     ): QueryBuilder {
         return $this->friendlyUrlRepository->getNonUsedFriendlyUrlQueryBuilderByDomainIdAndQuickSearch(
             $domainId,
-            $quickSearchFormData
+            $quickSearchFormData,
         );
     }
 
@@ -141,7 +141,7 @@ class FriendlyUrlFacade extends BaseFriendlyUrlFacade
         $cacheKey = $this->friendlyUrlCacheKeyProvider->getMainFriendlyUrlSlugCacheKey(
             $routeName,
             $domainId,
-            $entityId
+            $entityId,
         );
 
         /** @var string|null $friendlyUrlSlug */

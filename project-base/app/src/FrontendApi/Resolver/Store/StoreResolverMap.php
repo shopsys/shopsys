@@ -12,23 +12,11 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class StoreResolverMap extends ResolverMap
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private FriendlyUrlFacade $friendlyUrlFacade;
-
-    /**
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(FriendlyUrlFacade $friendlyUrlFacade, Domain $domain)
+    public function __construct(private FriendlyUrlFacade $friendlyUrlFacade, private Domain $domain)
     {
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->domain = $domain;
     }
 
     /**
@@ -57,7 +45,7 @@ class StoreResolverMap extends ResolverMap
         $friendlyUrlSlug = $this->friendlyUrlFacade->getMainFriendlyUrlSlug(
             $this->domain->getId(),
             'front_stores_detail',
-            $store->getId()
+            $store->getId(),
         );
 
         return '/' . $friendlyUrlSlug;

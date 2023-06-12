@@ -4,45 +4,32 @@ declare(strict_types=1);
 
 namespace App\Component\SsfwccBridge\Transfer;
 
+use App\Component\SsfwccBridge\BridgeConfig;
 use App\Component\SsfwccBridge\Transfer\Exception\TransferException;
 use App\Component\SsfwccBridge\Transfer\Exception\TransferInvalidDataAdministratorCriticalException;
 use App\Component\SsfwccBridge\Transfer\Exception\TransferInvalidDataAdministratorNonCriticalException;
 use App\Model\Transfer\TransferIdentificationInterface;
+use App\Model\Transfer\TransferLoggerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Generator;
+use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Symfony\Component\Validator\Validator\TraceableValidator;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class AbstractBridgeImportTransfer implements TransferIdentificationInterface
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \App\Model\Transfer\TransferLoggerInterface
-     */
-    protected $logger;
+    protected TransferLoggerInterface $logger;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade
-     */
-    protected $sqlLoggerFacade;
+    protected SqlLoggerFacade $sqlLoggerFacade;
 
-    /**
-     * @var \Symfony\Component\Validator\Validator\ValidatorInterface
-     */
-    protected $validator;
+    protected ValidatorInterface $validator;
 
-    /**
-     * @var \App\Component\SsfwccBridge\BridgeConfig
-     */
-    private $bridgeConfig;
+    private BridgeConfig $bridgeConfig;
 
-    /**
-     * @var int|null
-     */
-    public $cronBatchSize = null;
+    public ?int $cronBatchSize = null;
 
     /**
      * @param \App\Component\SsfwccBridge\Transfer\BridgeImportTransferDependency $bridgeImportTransferDependency
@@ -96,8 +83,8 @@ abstract class AbstractBridgeImportTransfer implements TransferIdentificationInt
                     sprintf(
                         'Transfer of item with code `%s` was aborted because : %s',
                         json_encode($item),
-                        $invalidDataSilentException->getMessage()
-                    )
+                        $invalidDataSilentException->getMessage(),
+                    ),
                 );
                 $this->em->rollback();
             } catch (TransferInvalidDataAdministratorCriticalException $invalidDataSilentException) {
@@ -105,8 +92,8 @@ abstract class AbstractBridgeImportTransfer implements TransferIdentificationInt
                     sprintf(
                         'Transfer of item with code `%s` was aborted because : %s',
                         json_encode($item),
-                        $invalidDataSilentException->getMessage()
-                    )
+                        $invalidDataSilentException->getMessage(),
+                    ),
                 );
                 $this->em->rollback();
             } catch (TransferException $transferException) {
@@ -114,8 +101,8 @@ abstract class AbstractBridgeImportTransfer implements TransferIdentificationInt
                     sprintf(
                         'Transfer of item with code `%s` was aborted because : %s',
                         json_encode($item),
-                        $transferException->getMessage()
-                    )
+                        $transferException->getMessage(),
+                    ),
                 );
                 $this->em->rollback();
             } catch (Exception $exception) {
@@ -124,8 +111,8 @@ abstract class AbstractBridgeImportTransfer implements TransferIdentificationInt
                         'Transfer of item with code key `%s` was aborted. '
                         . 'This error will be reported to Shopsys. Reason of this error: %s',
                         json_encode($item),
-                        $exception->getMessage()
-                    )
+                        $exception->getMessage(),
+                    ),
                 );
 
                 $this->sqlLoggerFacade->reenableLogging();

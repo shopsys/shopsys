@@ -32,7 +32,7 @@ class OrderFacade extends BaseOrderFacade
     public function __construct(
         OrderRepository $orderRepository,
         private readonly AppOrderFacade $appOrderFacade,
-        private readonly EntityManagerInterface $em
+        private readonly EntityManagerInterface $em,
     ) {
         parent::__construct($orderRepository);
     }

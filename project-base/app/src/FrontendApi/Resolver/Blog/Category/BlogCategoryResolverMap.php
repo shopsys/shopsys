@@ -23,7 +23,7 @@ class BlogCategoryResolverMap extends ResolverMap
         private readonly Domain $domain,
         private readonly FriendlyUrlFacade $friendlyUrlFacade,
         private readonly BlogCategoryFacade $blogCategoryFacade,
-        private readonly BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade
+        private readonly BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade,
     ) {
     }
 
@@ -57,13 +57,13 @@ class BlogCategoryResolverMap extends ResolverMap
                 'children' => function (BlogCategory $blogCategory) {
                     return $this->blogCategoryFacade->getAllVisibleChildrenByBlogCategoryAndDomainId(
                         $blogCategory,
-                        $this->domain->getId()
+                        $this->domain->getId(),
                     );
                 },
                 'blogCategoriesTree' => function () {
                     return $this->blogCategoryFacade->getAllVisibleChildrenByBlogCategoryAndDomainId(
                         $this->blogCategoryFacade->getRootBlogCategory(),
-                        $this->domain->getId()
+                        $this->domain->getId(),
                     );
                 },
                 'articlesTotalCount' => function (BlogCategory $blogCategory) {

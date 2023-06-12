@@ -11,33 +11,15 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexSupportChangesOnlyInter
 class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected Domain $domain;
-
-    /**
-     * @var \App\Model\Blog\Article\Elasticsearch\BlogArticleExportRepository
-     */
-    private BlogArticleExportRepository $blogArticleExportRepository;
-
-    /**
-     * @var \App\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade
-     */
-    private BlogArticleExportQueueFacade $blogArticleExportQueueFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Blog\Article\Elasticsearch\BlogArticleExportRepository $blogArticleExportRepository
      * @param \App\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade $blogArticleExportQueueFacade
      */
     public function __construct(
-        Domain $domain,
-        BlogArticleExportRepository $blogArticleExportRepository,
-        BlogArticleExportQueueFacade $blogArticleExportQueueFacade
+        protected Domain $domain,
+        private BlogArticleExportRepository $blogArticleExportRepository,
+        private BlogArticleExportQueueFacade $blogArticleExportQueueFacade,
     ) {
-        $this->domain = $domain;
-        $this->blogArticleExportRepository = $blogArticleExportRepository;
-        $this->blogArticleExportQueueFacade = $blogArticleExportQueueFacade;
     }
 
     /**
@@ -48,7 +30,7 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
     {
         return $this->blogArticleExportRepository->getVisibleBlogArticlesCountByDomainIdAndLocale(
             $domainId,
-            $this->domain->getDomainConfigById($domainId)->getLocale()
+            $this->domain->getDomainConfigById($domainId)->getLocale(),
         );
     }
 

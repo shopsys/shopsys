@@ -28,7 +28,7 @@ class FirstImageBatchLoader
         private readonly PromiseAdapter $promiseAdapter,
         private readonly FrontendApiImageFacade $frontendApiImageFacade,
         private readonly ImageFacade $imageFacade,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 
@@ -56,8 +56,11 @@ class FirstImageBatchLoader
      * @param string $type
      * @return array<string, array|null>
      */
-    private function getImagesByEntityNameAndTypeIndexedByDataId(array $imagesBatchLoadData, string $entityName, string $type): array
-    {
+    private function getImagesByEntityNameAndTypeIndexedByDataId(
+        array $imagesBatchLoadData,
+        string $entityName,
+        string $type,
+    ): array {
         if ($type === ImageEntityConfig::WITHOUT_NAME_KEY) {
             $type = null;
         }
@@ -98,8 +101,10 @@ class FirstImageBatchLoader
      * @param \App\FrontendApi\Model\Image\ImageBatchLoadData[] $imagesBatchLoadData
      * @return array<int, array|null>
      */
-    private function sortImagesByOriginalInputData(array $imagesIndexedByImageBatchLoadDataId, array $imagesBatchLoadData): array
-    {
+    private function sortImagesByOriginalInputData(
+        array $imagesIndexedByImageBatchLoadDataId,
+        array $imagesBatchLoadData,
+    ): array {
         $sortedImages = [];
         foreach ($imagesBatchLoadData as $imageBatchLoadData) {
             if (array_key_exists($imageBatchLoadData->getId(), $imagesIndexedByImageBatchLoadDataId) === false) {
@@ -156,13 +161,13 @@ class FirstImageBatchLoader
                 $this->domain->getCurrentDomainConfig(),
                 $image,
                 $sizeConfig->getName(),
-                $image->getType()
+                $image->getType(),
             ),
             'additionalSizes' => $this->imageFacade->getAdditionalImagesData(
                 $this->domain->getCurrentDomainConfig(),
                 $image,
                 $sizeConfig->getName(),
-                $image->getType()
+                $image->getType(),
             ),
         ];
     }

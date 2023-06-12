@@ -14,25 +14,13 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class GoPayOrderMapper
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
-     */
-    private $domainRouterFactory;
-
-    /**
-     * @var \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade
-     */
-    private $goPayPaymentMethodFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade $goPayPaymentMethodFacade
      */
     public function __construct(
-        DomainRouterFactory $domainRouterFactory,
-        GoPayPaymentMethodFacade $goPayPaymentMethodFacade
+        private DomainRouterFactory $domainRouterFactory,
+        private GoPayPaymentMethodFacade $goPayPaymentMethodFacade,
     ) {
-        $this->domainRouterFactory = $domainRouterFactory;
-        $this->goPayPaymentMethodFacade = $goPayPaymentMethodFacade;
     }
 
     /**
@@ -62,12 +50,12 @@ class GoPayOrderMapper
                 'return_url' => $router->generate(
                     'front_order_paid',
                     ['orderIdentifier' => $order->getUuid()],
-                    UrlGeneratorInterface::ABSOLUTE_URL
+                    UrlGeneratorInterface::ABSOLUTE_URL,
                 ),
                 'notification_url' => $router->generate(
                     'front_order_payment_status_notify',
                     ['orderIdentifier' => $order->getUuid()],
-                    UrlGeneratorInterface::ABSOLUTE_URL
+                    UrlGeneratorInterface::ABSOLUTE_URL,
                 ),
             ],
         ];

@@ -25,41 +25,17 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
     public const READY_CATEGORY_SEO_PC_NEW_WITH_USB = 'ready_category_seo_pc_new_with_usb';
 
     /**
-     * @var \App\Model\CategorySeo\ReadyCategorySeoMixDataFactory
-     */
-    private $readyCategorySeoMixDataFactory;
-
-    /**
-     * @var \App\Model\CategorySeo\ReadyCategorySeoMixFacade
-     */
-    private $readyCategorySeoMixFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterFacade
-     */
-    private ParameterFacade $parameterFacade;
-
-    /**
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixDataFactory $readyCategorySeoMixDataFactory
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      */
     public function __construct(
-        ReadyCategorySeoMixDataFactory $readyCategorySeoMixDataFactory,
-        ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
-        Domain $domain,
-        ParameterFacade $parameterFacade
+        private ReadyCategorySeoMixDataFactory $readyCategorySeoMixDataFactory,
+        private ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
+        private Domain $domain,
+        private ParameterFacade $parameterFacade,
     ) {
-        $this->readyCategorySeoMixDataFactory = $readyCategorySeoMixDataFactory;
-        $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
-        $this->domain = $domain;
-        $this->parameterFacade = $parameterFacade;
     }
 
     /**
@@ -320,13 +296,13 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         ?string $metaDescription = null,
     ): void {
         $readyCategorySeoMixDataForForm = $this->readyCategorySeoMixDataFactory->createReadyCategorySeoMixDataForForm(
-            $choseCategorySeoMixCombination
+            $choseCategorySeoMixCombination,
         );
         $readyCategorySeoMixDataForForm->h1 = $h1;
 
         $readyCategorySeoMixData = $this->readyCategorySeoMixDataFactory->createFromReadyCategorySeoMixDataForFormAndChoseCategorySeoMixCombination(
             $readyCategorySeoMixDataForForm,
-            $choseCategorySeoMixCombination
+            $choseCategorySeoMixCombination,
         );
         $readyCategorySeoMixData->showInCategory = true;
         $readyCategorySeoMixData->description = $description;
@@ -346,7 +322,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $readyCategorySeoMix = $this->readyCategorySeoMixFacade->createOrEdit(
             $choseCategorySeoMixCombination,
             $readyCategorySeoMixData,
-            $urlListData
+            $urlListData,
         );
 
         if ($referenceName !== null) {

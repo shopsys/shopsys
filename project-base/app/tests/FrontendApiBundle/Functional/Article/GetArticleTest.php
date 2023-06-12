@@ -20,7 +20,6 @@ class GetArticleTest extends GraphQlTestCase
     private ArticleFacade $articleFacade;
 
     /**
-     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
      * @inject
      */
     protected UrlGeneratorInterface $urlGenerator;

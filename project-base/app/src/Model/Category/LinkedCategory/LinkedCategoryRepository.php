@@ -10,9 +10,6 @@ use Doctrine\ORM\EntityRepository;
 
 class LinkedCategoryRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
     private EntityManagerInterface $em;
 
     /**

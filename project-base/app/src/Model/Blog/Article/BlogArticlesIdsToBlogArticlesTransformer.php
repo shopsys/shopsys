@@ -12,16 +12,10 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 class BlogArticlesIdsToBlogArticlesTransformer implements DataTransformerInterface
 {
     /**
-     * @var \App\Model\Blog\Article\BlogArticleFacade
-     */
-    private $blogArticleFacade;
-
-    /**
      * @param \App\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
      */
-    public function __construct(BlogArticleFacade $blogArticleFacade)
+    public function __construct(private BlogArticleFacade $blogArticleFacade)
     {
-        $this->blogArticleFacade = $blogArticleFacade;
     }
 
     /**

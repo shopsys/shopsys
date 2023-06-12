@@ -26,7 +26,7 @@ class TransportInOrderValidator extends ConstraintValidator
         private readonly TransportFacade $transportFacade,
         private readonly CurrentCustomerUser $currentCustomerUser,
         private readonly CartFacade $cartFacade,
-        private readonly TransportValidationFacade $transportValidationFacade
+        private readonly TransportValidationFacade $transportValidationFacade,
     ) {
     }
 
@@ -64,8 +64,11 @@ class TransportInOrderValidator extends ConstraintValidator
      * @param string|null $pickupPlaceIdentifier
      * @param \App\FrontendApi\Model\Component\Constraints\TransportInOrder $transportInOrder
      */
-    private function checkRequiredPickupPlaceIdentifier(Transport $transport, ?string $pickupPlaceIdentifier, TransportInOrder $transportInOrder): void
-    {
+    private function checkRequiredPickupPlaceIdentifier(
+        Transport $transport,
+        ?string $pickupPlaceIdentifier,
+        TransportInOrder $transportInOrder,
+    ): void {
         try {
             $this->transportValidationFacade->checkRequiredPickupPlaceIdentifier($transport, $pickupPlaceIdentifier);
         } catch (MissingPickupPlaceIdentifierException $exception) {

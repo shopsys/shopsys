@@ -10,16 +10,10 @@ use Doctrine\ORM\QueryBuilder;
 class PromoCodeFlagRepository
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private EntityManagerInterface $em;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
-        $this->em = $em;
     }
 
     /**

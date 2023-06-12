@@ -11,33 +11,15 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class LinkedCategoriesBatchLoader
 {
     /**
-     * @var \GraphQL\Executor\Promise\PromiseAdapter
-     */
-    private PromiseAdapter $promiseAdapter;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
-     * @var \App\FrontendApi\Model\Category\CategoryFacade
-     */
-    private CategoryFacade $categoryFacade;
-
-    /**
      * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\FrontendApi\Model\Category\CategoryFacade $categoryFacade
      */
     public function __construct(
-        PromiseAdapter $promiseAdapter,
-        Domain $domain,
-        CategoryFacade $categoryFacade
+        private PromiseAdapter $promiseAdapter,
+        private Domain $domain,
+        private CategoryFacade $categoryFacade,
     ) {
-        $this->promiseAdapter = $promiseAdapter;
-        $this->domain = $domain;
-        $this->categoryFacade = $categoryFacade;
     }
 
     /**

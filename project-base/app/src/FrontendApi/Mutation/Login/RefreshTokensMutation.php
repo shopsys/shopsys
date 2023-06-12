@@ -45,7 +45,7 @@ class RefreshTokensMutation extends BaseRefreshTokensMutation
         $customerUserValidRefreshTokenChain = $this->customerUserRefreshTokenChainFacade->findCustomersTokenChainByCustomerUserAndSecretChainAndDeviceId(
             $customerUser,
             $tokenSecretChain,
-            $deviceId
+            $deviceId,
         );
 
         if ($customerUserValidRefreshTokenChain === null) {
@@ -56,17 +56,17 @@ class RefreshTokensMutation extends BaseRefreshTokensMutation
             'accessToken' => $this->tokenFacade->createAccessTokenAsString(
                 $customerUser,
                 $customerUserValidRefreshTokenChain->getDeviceId(),
-                $customerUserValidRefreshTokenChain->getAdministrator()
+                $customerUserValidRefreshTokenChain->getAdministrator(),
             ),
             'refreshToken' => $this->tokenFacade->createRefreshTokenAsString(
                 $customerUser,
                 $customerUserValidRefreshTokenChain->getDeviceId(),
-                $customerUserValidRefreshTokenChain->getAdministrator()
+                $customerUserValidRefreshTokenChain->getAdministrator(),
             ),
         ];
 
         $this->customerUserRefreshTokenChainFacade->removeCustomerRefreshTokenChain(
-            $customerUserValidRefreshTokenChain
+            $customerUserValidRefreshTokenChain,
         );
 
         return $tokens;

@@ -16,7 +16,7 @@ class ContactFormMainTextQuery extends AbstractQuery
      */
     public function __construct(
         private readonly Domain $domain,
-        private readonly ContactFormSettingsFacade $contactFormSettingsFacade
+        private readonly ContactFormSettingsFacade $contactFormSettingsFacade,
     ) {
     }
 

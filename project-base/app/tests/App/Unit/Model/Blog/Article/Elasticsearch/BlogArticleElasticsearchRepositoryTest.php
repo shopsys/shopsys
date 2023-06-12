@@ -13,9 +13,6 @@ use PHPUnit\Framework\TestCase;
 
 class BlogArticleElasticsearchRepositoryTest extends TestCase
 {
-    /**
-     * @var \App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchRepository
-     */
     private BlogArticleElasticsearchRepository $blogArticleElasticsearchRepository;
 
     protected function setUp(): void
@@ -30,7 +27,7 @@ class BlogArticleElasticsearchRepositoryTest extends TestCase
             ->method('getSingleResult')->willThrowException(new NoResultException());
         $this->blogArticleElasticsearchRepository = new BlogArticleElasticsearchRepository(
             $filterQueryFactoryMock,
-            $blogArticleElasticsearchDataFetcherMock
+            $blogArticleElasticsearchDataFetcherMock,
         );
         $this->expectException(BlogArticleNotFoundException::class);
     }

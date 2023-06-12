@@ -4,39 +4,14 @@ declare(strict_types=1);
 
 namespace App\Model\CategorySeo;
 
+use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\Model\Category\CategoryFacade;
+use App\Model\Product\Flag\FlagFacade;
 use App\Model\Product\Parameter\ParameterFacade;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
-use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 
 class ReadyCategorySeoMixDataFactory
 {
-    /**
-     * @var \App\Model\Category\CategoryFacade
-     */
-    private $categoryFacade;
-
-    /**
-     * @var \App\Model\Product\Flag\FlagFacade
-     */
-    private $flagFacade;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterFacade
-     */
-    private $parameterFacade;
-
-    /**
-     * @var \App\Model\CategorySeo\ReadyCategorySeoMixFacade
-     */
-    private $readyCategorySeoMixFacade;
-
-    /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private $friendlyUrlFacade;
-
     /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
@@ -45,17 +20,12 @@ class ReadyCategorySeoMixDataFactory
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
     public function __construct(
-        CategoryFacade $categoryFacade,
-        FlagFacade $flagFacade,
-        ParameterFacade $parameterFacade,
-        ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
-        FriendlyUrlFacade $friendlyUrlFacade
+        private readonly CategoryFacade $categoryFacade,
+        private readonly FlagFacade $flagFacade,
+        private readonly ParameterFacade $parameterFacade,
+        private readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
+        private readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
-        $this->categoryFacade = $categoryFacade;
-        $this->flagFacade = $flagFacade;
-        $this->parameterFacade = $parameterFacade;
-        $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
     }
 
     /**
@@ -70,8 +40,9 @@ class ReadyCategorySeoMixDataFactory
      * @param \App\Model\CategorySeo\ChoseCategorySeoMixCombination|null $choseCategorySeoMixCombination
      * @return \App\Model\CategorySeo\ReadyCategorySeoMixDataForForm
      */
-    public function createReadyCategorySeoMixDataForForm(?ChoseCategorySeoMixCombination $choseCategorySeoMixCombination): ReadyCategorySeoMixDataForForm
-    {
+    public function createReadyCategorySeoMixDataForForm(
+        ?ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
+    ): ReadyCategorySeoMixDataForForm {
         $readyCategorySeoMix = null;
         if ($choseCategorySeoMixCombination !== null) {
             $readyCategorySeoMix = $this->readyCategorySeoMixFacade->findByChoseCategorySeoMixCombination($choseCategorySeoMixCombination);
@@ -87,7 +58,7 @@ class ReadyCategorySeoMixDataFactory
             $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
                 $readyCategorySeoMix->getDomainId(),
                 'front_category_seo',
-                $readyCategorySeoMix->getId()
+                $readyCategorySeoMix->getId(),
             );
             $readyCategorySeoMixDataForForm->urls->mainFriendlyUrlsByDomainId[$readyCategorySeoMix->getDomainId()] = $mainFriendlyUrl;
         }
@@ -102,7 +73,7 @@ class ReadyCategorySeoMixDataFactory
      */
     public function createFromReadyCategorySeoMixDataForFormAndChoseCategorySeoMixCombination(
         ReadyCategorySeoMixDataForForm $readyCategorySeoMixDataForForm,
-        ChoseCategorySeoMixCombination $choseCategorySeoMixCombination
+        ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
     ): ReadyCategorySeoMixData {
         $readyCategorySeoMixData = $this->create();
 
@@ -118,12 +89,12 @@ class ReadyCategorySeoMixDataFactory
      */
     public function fillValuesFromChoseCategorySeoMixCombination(
         ReadyCategorySeoMixData $readyCategorySeoMixData,
-        ChoseCategorySeoMixCombination $choseCategorySeoMixCombination
+        ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
     ): void {
         $readyCategorySeoMixData->domainId = $choseCategorySeoMixCombination->getDomainId();
 
         $readyCategorySeoMixData->category = $this->categoryFacade->getById(
-            $choseCategorySeoMixCombination->getCategoryId()
+            $choseCategorySeoMixCombination->getCategoryId(),
         );
 
         $readyCategorySeoMixData->flag = null;
@@ -139,7 +110,7 @@ class ReadyCategorySeoMixDataFactory
         foreach ($choseCategorySeoMixCombination->getParameterValueIdsByParameterIds() as $parameterId => $parameterValueId) {
             $readyCategorySeoMixData->readyCategorySeoMixParameterParameterValues[] = new ReadyCategorySeoMixParameterParameterValue(
                 $this->parameterFacade->getById($parameterId),
-                $this->parameterFacade->getParameterValueById($parameterValueId)
+                $this->parameterFacade->getParameterValueById($parameterValueId),
             );
         }
 
@@ -150,8 +121,10 @@ class ReadyCategorySeoMixDataFactory
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixData $readyCategorySeoMixData
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixDataForForm $readyCategorySeoMixDataForForm
      */
-    public function fillValuesFromReadyCategorySeoMixDataForForm(ReadyCategorySeoMixData $readyCategorySeoMixData, ReadyCategorySeoMixDataForForm $readyCategorySeoMixDataForForm): void
-    {
+    public function fillValuesFromReadyCategorySeoMixDataForForm(
+        ReadyCategorySeoMixData $readyCategorySeoMixData,
+        ReadyCategorySeoMixDataForForm $readyCategorySeoMixDataForForm,
+    ): void {
         $readyCategorySeoMixData->h1 = $readyCategorySeoMixDataForForm->h1;
         $readyCategorySeoMixData->shortDescription = $readyCategorySeoMixDataForForm->shortDescription;
         $readyCategorySeoMixData->description = $readyCategorySeoMixDataForForm->description;
@@ -164,8 +137,10 @@ class ReadyCategorySeoMixDataFactory
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixDataForForm $readyCategorySeoMixDataForForm
      * @param \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix
      */
-    public function fillValuesFromReadyCategorySeoMix(ReadyCategorySeoMixDataForForm $readyCategorySeoMixDataForForm, ReadyCategorySeoMix $readyCategorySeoMix): void
-    {
+    public function fillValuesFromReadyCategorySeoMix(
+        ReadyCategorySeoMixDataForForm $readyCategorySeoMixDataForForm,
+        ReadyCategorySeoMix $readyCategorySeoMix,
+    ): void {
         $readyCategorySeoMixDataForForm->h1 = $readyCategorySeoMix->getH1();
         $readyCategorySeoMixDataForForm->shortDescription = $readyCategorySeoMix->getShortDescription();
         $readyCategorySeoMixDataForForm->description = $readyCategorySeoMix->getDescription();

@@ -25,65 +25,7 @@ use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFac
 
 class TransportAndPaymentWatcherFacade
 {
-    /**
-     * @var \App\FrontendApi\Model\Payment\PaymentValidationFacade
-     */
-    private PaymentValidationFacade $paymentValidationFacade;
-
-    /**
-     * @var \App\FrontendApi\Model\Transport\TransportValidationFacade
-     */
-    private TransportValidationFacade $transportValidationFacade;
-
-    /**
-     * @var \App\Model\Cart\Payment\CartPaymentFacade
-     */
-    private CartPaymentFacade $cartPaymentFacade;
-
-    /**
-     * @var \App\FrontendApi\Model\Cart\CartWithModificationsResult
-     */
     private CartWithModificationsResult $cartWithModificationsResult;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    private CurrencyFacade $currencyFacade;
-
-    /**
-     * @var \App\Model\Transport\TransportFacade
-     */
-    private TransportFacade $transportFacade;
-
-    /**
-     * @var \App\Model\Payment\PaymentFacade
-     */
-    private PaymentFacade $paymentFacade;
-
-    /**
-     * @var \App\Model\Order\Preview\OrderPreviewFactory
-     */
-    private OrderPreviewFactory $orderPreviewFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
-     * @var \App\Model\Customer\User\CurrentCustomerUser
-     */
-    private CurrentCustomerUser $currentCustomerUser;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade
-     */
-    private FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade;
-
-    /**
-     * @var \App\Model\Cart\Transport\CartTransportFacade
-     */
-    private CartTransportFacade $cartTransportFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
@@ -99,29 +41,18 @@ class TransportAndPaymentWatcherFacade
      * @param \App\FrontendApi\Model\Payment\PaymentValidationFacade $paymentValidationFacade
      */
     public function __construct(
-        CurrencyFacade $currencyFacade,
-        TransportFacade $transportFacade,
-        PaymentFacade $paymentFacade,
-        OrderPreviewFactory $orderPreviewFactory,
-        Domain $domain,
-        CurrentCustomerUser $currentCustomerUser,
-        FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade,
-        CartTransportFacade $cartTransportFacade,
-        TransportValidationFacade $transportValidationFacade,
-        CartPaymentFacade $cartPaymentFacade,
-        PaymentValidationFacade $paymentValidationFacade
+        private CurrencyFacade $currencyFacade,
+        private TransportFacade $transportFacade,
+        private PaymentFacade $paymentFacade,
+        private OrderPreviewFactory $orderPreviewFactory,
+        private Domain $domain,
+        private CurrentCustomerUser $currentCustomerUser,
+        private FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade,
+        private CartTransportFacade $cartTransportFacade,
+        private TransportValidationFacade $transportValidationFacade,
+        private CartPaymentFacade $cartPaymentFacade,
+        private PaymentValidationFacade $paymentValidationFacade,
     ) {
-        $this->currencyFacade = $currencyFacade;
-        $this->transportFacade = $transportFacade;
-        $this->paymentFacade = $paymentFacade;
-        $this->orderPreviewFactory = $orderPreviewFactory;
-        $this->domain = $domain;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->freeTransportAndPaymentFacade = $freeTransportAndPaymentFacade;
-        $this->cartTransportFacade = $cartTransportFacade;
-        $this->transportValidationFacade = $transportValidationFacade;
-        $this->cartPaymentFacade = $cartPaymentFacade;
-        $this->paymentValidationFacade = $paymentValidationFacade;
     }
 
     /**
@@ -129,8 +60,10 @@ class TransportAndPaymentWatcherFacade
      * @param \App\Model\Cart\Cart $cart
      * @return \App\FrontendApi\Model\Cart\CartWithModificationsResult
      */
-    public function checkTransportAndPayment(CartWithModificationsResult $cartWithModificationsResult, Cart $cart): CartWithModificationsResult
-    {
+    public function checkTransportAndPayment(
+        CartWithModificationsResult $cartWithModificationsResult,
+        Cart $cart,
+    ): CartWithModificationsResult {
         $this->cartWithModificationsResult = $cartWithModificationsResult;
 
         $domainId = $this->domain->getId();
@@ -149,13 +82,13 @@ class TransportAndPaymentWatcherFacade
             $customerUser,
             null,
             null,
-            $cart->getFirstAppliedPromoCode()
+            $cart->getFirstAppliedPromoCode(),
         );
 
         if ($this->freeTransportAndPaymentFacade->isActive($domainId)) {
             $amountWithVatForFreeTransport = $this->freeTransportAndPaymentFacade->getRemainingPriceWithVat(
                 $orderPreview->getProductsPrice()->getPriceWithVat(),
-                $domainId
+                $domainId,
             );
 
             $this->cartWithModificationsResult->setRemainingAmountWithVatForFreeTransport($amountWithVatForFreeTransport);

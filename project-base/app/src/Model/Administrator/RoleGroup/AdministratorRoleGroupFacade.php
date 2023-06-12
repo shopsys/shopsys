@@ -11,25 +11,13 @@ use Doctrine\ORM\QueryBuilder;
 class AdministratorRoleGroupFacade
 {
     /**
-     * @var \App\Model\Administrator\RoleGroup\AdministratorRoleGroupRepository
-     */
-    private AdministratorRoleGroupRepository $administratorRoleGroupRepository;
-
-    /**
-     * @var \Doctrine\ORM\EntityManager
-     */
-    private EntityManagerInterface $entityManager;
-
-    /**
      * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroupRepository $administratorRoleGroupRepository
      * @param \Doctrine\ORM\EntityManager $entityManager
      */
     public function __construct(
-        AdministratorRoleGroupRepository $administratorRoleGroupRepository,
-        EntityManagerInterface $entityManager
+        private AdministratorRoleGroupRepository $administratorRoleGroupRepository,
+        private EntityManagerInterface $entityManager,
     ) {
-        $this->administratorRoleGroupRepository = $administratorRoleGroupRepository;
-        $this->entityManager = $entityManager;
     }
 
     /**
@@ -71,8 +59,10 @@ class AdministratorRoleGroupFacade
      * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroup $administratorRoleGroup
      * @param \App\Model\Administrator\RoleGroup\AdministratorRoleGroupData $administratorRoleGroupData
      */
-    public function edit(AdministratorRoleGroup $administratorRoleGroup, AdministratorRoleGroupData $administratorRoleGroupData): void
-    {
+    public function edit(
+        AdministratorRoleGroup $administratorRoleGroup,
+        AdministratorRoleGroupData $administratorRoleGroupData,
+    ): void {
         $this->checkUniqueName($administratorRoleGroup, $administratorRoleGroupData->name);
         $administratorRoleGroup->edit($administratorRoleGroupData);
         $this->entityManager->flush();

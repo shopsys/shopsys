@@ -28,7 +28,7 @@ class MailTemplateGridFactory extends BaseMailTemplateGridFactory
             '@ShopsysFramework/Admin/Content/Mail/listGrid.html.twig',
             [
                 'readableNames' => $this->mailTemplateConfiguration->getReadableNamesIndexedBySlug(),
-            ]
+            ],
         );
 
         return $grid;

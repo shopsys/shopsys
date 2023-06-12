@@ -13,30 +13,15 @@ use Symfony\Bridge\Monolog\Logger;
 class PacketeryCronModule implements SimpleCronModuleInterface
 {
     /**
-     * @var \App\Component\Packetery\PacketeryClient
-     */
-    private PacketeryClient $packeteryClient;
-
-    /**
-     * @var \App\Model\Order\OrderFacade
-     */
-    private OrderFacade $orderFacade;
-
-    /**
-     * @var \App\Model\Transport\Type\TransportTypeFacade
-     */
-    private TransportTypeFacade $transportTypeFacade;
-
-    /**
      * @param \App\Component\Packetery\PacketeryClient $packeteryClient
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \App\Model\Transport\Type\TransportTypeFacade $transportTypeFacade
      */
-    public function __construct(PacketeryClient $packeteryClient, OrderFacade $orderFacade, TransportTypeFacade $transportTypeFacade)
-    {
-        $this->packeteryClient = $packeteryClient;
-        $this->orderFacade = $orderFacade;
-        $this->transportTypeFacade = $transportTypeFacade;
+    public function __construct(
+        private PacketeryClient $packeteryClient,
+        private OrderFacade $orderFacade,
+        private TransportTypeFacade $transportTypeFacade,
+    ) {
     }
 
     /**

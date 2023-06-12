@@ -20,25 +20,13 @@ class CustomerActivationMail implements MessageFactoryInterface
     public const VARIABLE_ACTIVATION_URL = '{activation_url}';
 
     /**
-     * @var \App\Component\Setting\Setting
-     */
-    private Setting $setting;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
-     */
-    private DomainRouterFactory $domainRouterFactory;
-
-    /**
      * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      */
     public function __construct(
-        Setting $setting,
-        DomainRouterFactory $domainRouterFactory
+        private Setting $setting,
+        private DomainRouterFactory $domainRouterFactory,
     ) {
-        $this->setting = $setting;
-        $this->domainRouterFactory = $domainRouterFactory;
     }
 
     /**
@@ -56,7 +44,7 @@ class CustomerActivationMail implements MessageFactoryInterface
             $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL, $customerUser->getDomainId()),
             $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL_NAME, $customerUser->getDomainId()),
             $this->getBodyValuesIndexedByVariableName($customerUser),
-            $this->getSubjectValuesIndexedByVariableName($customerUser)
+            $this->getSubjectValuesIndexedByVariableName($customerUser),
         );
     }
 
@@ -88,7 +76,7 @@ class CustomerActivationMail implements MessageFactoryInterface
         return $router->generate(
             'front_customer_activation',
             $routeParameters,
-            UrlGeneratorInterface::ABSOLUTE_URL
+            UrlGeneratorInterface::ABSOLUTE_URL,
         );
     }
 

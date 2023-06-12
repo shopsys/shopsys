@@ -42,7 +42,7 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
             if ($domainId === 1) {
                 $this->pricingSetting->setFreeTransportAndPaymentPriceLimit(
                     $domainId,
-                    Money::create(self::FREE_TRANSPORT_AND_PAYMENT_LIMIT)
+                    Money::create(self::FREE_TRANSPORT_AND_PAYMENT_LIMIT),
                 );
             }
 
@@ -132,12 +132,12 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
             $this->setting->setForDomain(
                 Setting::DELIVERY_DAYS_ON_STOCK,
                 70,
-                $domainId
+                $domainId,
             );
             $this->setting->setForDomain(
                 Setting::TRANSFER_DAYS_BETWEEN_STOCKS,
                 7,
-                $domainId
+                $domainId,
             );
 
             $this->setting->setForDomain(

@@ -16,65 +16,12 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
 {
-    /**
-     * @var \App\Component\Setting\Setting
-     */
-    protected $setting;
-
-    /**
-     * @var \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoFacade
-     */
-    protected $productTransferAkeneoFacade;
-
-    /**
-     * @var \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoValidator
-     */
-    protected $productTransferAkeneoValidator;
-
-    /**
-     * @var \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoMapper
-     */
-    protected $productTransferAkeneoMapper;
-
-    /**
-     * @var \App\Model\Product\ProductFacade
-     */
-    protected $productFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade
-     */
-    private $productVisibilityFacade;
-
-    /**
-     * @var \DateTime|null
-     */
-    private $lastProductUpdatedAtFromAkeneo;
-
-    /**
-     * @var \App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFacade
-     */
-    private $akeneoImportProductParameterFacade;
-
-    /**
-     * @var \App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductGroupParameterFacade
-     */
-    private $akeneoImportProductGroupParameterFacade;
-
-    /**
-     * @var \App\Model\Product\Transfer\Akeneo\TransferredProductProcessor
-     */
-    private $transferredProductProcessor;
+    private ?DateTime $lastProductUpdatedAtFromAkeneo = null;
 
     /**
      * @var string[]
      */
-    private $processedProductIdentifierList;
-
-    /**
-     * @var \App\Model\Product\Transfer\Akeneo\AkeneoImportProductDetailFacade
-     */
-    private $akeneoImportProductDetailFacade;
+    private array $processedProductIdentifierList;
 
     /**
      * @param \App\Component\Akeneo\Transfer\AkeneoImportTransferDependency $akeneoImportTransferDependency
@@ -91,30 +38,20 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
      */
     public function __construct(
         AkeneoImportTransferDependency $akeneoImportTransferDependency,
-        ProductTransferAkeneoFacade $productTransferAkeneoFacade,
-        ProductTransferAkeneoValidator $productTransferAkeneoValidator,
-        ProductTransferAkeneoMapper $productTransferAkeneoMapper,
-        ProductFacade $productFacade,
-        ProductVisibilityFacade $productVisibilityFacade,
-        Setting $setting,
-        AkeneoImportProductParameterFacade $akeneoImportProductParameterFacade,
-        AkeneoImportProductGroupParameterFacade $akeneoImportProductGroupParameterFacade,
-        TransferredProductProcessor $transferredProductProcessor,
-        AkeneoImportProductDetailFacade $akeneoImportProductDetailFacade
+        protected ProductTransferAkeneoFacade $productTransferAkeneoFacade,
+        protected ProductTransferAkeneoValidator $productTransferAkeneoValidator,
+        protected ProductTransferAkeneoMapper $productTransferAkeneoMapper,
+        protected ProductFacade $productFacade,
+        private ProductVisibilityFacade $productVisibilityFacade,
+        protected Setting $setting,
+        private AkeneoImportProductParameterFacade $akeneoImportProductParameterFacade,
+        private AkeneoImportProductGroupParameterFacade $akeneoImportProductGroupParameterFacade,
+        private TransferredProductProcessor $transferredProductProcessor,
+        private AkeneoImportProductDetailFacade $akeneoImportProductDetailFacade,
     ) {
         parent::__construct($akeneoImportTransferDependency);
 
-        $this->productTransferAkeneoFacade = $productTransferAkeneoFacade;
-        $this->productTransferAkeneoValidator = $productTransferAkeneoValidator;
-        $this->productTransferAkeneoMapper = $productTransferAkeneoMapper;
-        $this->productFacade = $productFacade;
-        $this->productVisibilityFacade = $productVisibilityFacade;
-        $this->setting = $setting;
-        $this->akeneoImportProductParameterFacade = $akeneoImportProductParameterFacade;
-        $this->akeneoImportProductGroupParameterFacade = $akeneoImportProductGroupParameterFacade;
-        $this->transferredProductProcessor = $transferredProductProcessor;
         $this->processedProductIdentifierList = [];
-        $this->akeneoImportProductDetailFacade = $akeneoImportProductDetailFacade;
     }
 
     /**

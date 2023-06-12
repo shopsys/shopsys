@@ -32,51 +32,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategorySeoController extends AdminBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    private $adminDomainTabsFacade;
-
-    /**
-     * @var \App\Model\Category\CategoryFacade
-     */
-    private $categoryFacade;
-
-    /**
-     * @var \App\Model\CategorySeo\CategorySeoFacade
-     */
-    private $categorySeoFacade;
-
-    /**
-     * @var \App\Model\CategorySeo\ReadyCategorySeoMixDataFactory
-     */
-    private $readyCategorySeoMixDataFactory;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterFacade
-     */
-    private $parameterFacade;
-
-    /**
-     * @var \App\Model\Product\Flag\FlagFacade
-     */
-    private $flagFacade;
-
-    /**
-     * @var \App\Model\CategorySeo\ReadyCategorySeoMixFacade
-     */
-    private $readyCategorySeoMixFacade;
-
-    /**
-     * @var \App\Model\CategorySeo\ReadyCategorySeoMixGridFactory
-     */
-    private $readyCategorySeoMixGridFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\CategorySeo\CategorySeoFacade $categorySeoFacade
@@ -88,25 +43,16 @@ class CategorySeoController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        AdminDomainTabsFacade $adminDomainTabsFacade,
-        CategoryFacade $categoryFacade,
-        CategorySeoFacade $categorySeoFacade,
-        ReadyCategorySeoMixDataFactory $readyCategorySeoMixDataFactory,
-        ParameterFacade $parameterFacade,
-        FlagFacade $flagFacade,
-        ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
-        ReadyCategorySeoMixGridFactory $readyCategorySeoMixGridFactory,
-        Domain $domain
+        private readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        private readonly CategoryFacade $categoryFacade,
+        private readonly CategorySeoFacade $categorySeoFacade,
+        private readonly ReadyCategorySeoMixDataFactory $readyCategorySeoMixDataFactory,
+        private readonly ParameterFacade $parameterFacade,
+        private readonly FlagFacade $flagFacade,
+        private readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
+        private readonly ReadyCategorySeoMixGridFactory $readyCategorySeoMixGridFactory,
+        private readonly Domain $domain,
     ) {
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
-        $this->categoryFacade = $categoryFacade;
-        $this->categorySeoFacade = $categorySeoFacade;
-        $this->readyCategorySeoMixDataFactory = $readyCategorySeoMixDataFactory;
-        $this->parameterFacade = $parameterFacade;
-        $this->flagFacade = $flagFacade;
-        $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
-        $this->readyCategorySeoMixGridFactory = $readyCategorySeoMixGridFactory;
-        $this->domain = $domain;
     }
 
     /**
@@ -117,7 +63,7 @@ class CategorySeoController extends AdminBaseController
     {
         $grid = $this->readyCategorySeoMixGridFactory->create(
             $this->adminDomainTabsFacade->getSelectedDomainId(),
-            $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale()
+            $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale(),
         );
 
         return $this->render('Admin/Content/CategorySeo/list.html.twig', [
@@ -135,7 +81,7 @@ class CategorySeoController extends AdminBaseController
 
         $categoriesWithPreloadedChildren = $this->categoryFacade->getVisibleCategoriesWithPreloadedChildrenForDomain(
             $this->adminDomainTabsFacade->getSelectedDomainId(),
-            $locale
+            $locale,
         );
 
         return $this->render('Admin/Content/CategorySeo/newCategory.html.twig', [
@@ -166,8 +112,8 @@ class CategorySeoController extends AdminBaseController
                     'admin_categoryseo_newcombinations',
                     $categoryId,
                     $request->query->all(),
-                    false
-                )
+                    false,
+                ),
             );
         }
 
@@ -198,7 +144,7 @@ class CategorySeoController extends AdminBaseController
             $category,
             $categorySeoFiltersData,
             $this->adminDomainTabsFacade->getSelectedDomainId(),
-            $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale()
+            $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale(),
         );
 
         return $this->render('Admin/Content/CategorySeo/newCombinations.html.twig', [
@@ -211,7 +157,7 @@ class CategorySeoController extends AdminBaseController
                 'admin_categoryseo_newfilters',
                 $categoryId,
                 $request->query->all(),
-                true
+                true,
             ),
             'categorySeoFilterFormTypeAllQueries' => $request->query->all(),
             'categoryId' => $categoryId,
@@ -229,13 +175,13 @@ class CategorySeoController extends AdminBaseController
         $categorySeoFilterFormTypeAllQueries = $request->get('categorySeoFilterFormTypeAllQueries');
 
         $choseCategorySeoMixCombination = ChoseCategorySeoMixCombination::createFromJson(
-            $request->get('choseCategorySeoMixCombinationJson')
+            $request->get('choseCategorySeoMixCombinationJson'),
         );
         // A little hack - when you need form sent data to create that same form - need for friendly URLs
         if ($choseCategorySeoMixCombination === null) {
             $sentReadyCategorySeoCombinationFormData = $request->get('ready_category_seo_combination_form');
             $choseCategorySeoMixCombination = ChoseCategorySeoMixCombination::createFromJson(
-                $sentReadyCategorySeoCombinationFormData['choseCategorySeoMixCombinationJson']
+                $sentReadyCategorySeoCombinationFormData['choseCategorySeoMixCombinationJson'],
             );
         }
 
@@ -261,7 +207,7 @@ class CategorySeoController extends AdminBaseController
                 'admin_categoryseo_newcombinations',
                 $categoryId,
                 $categorySeoFilterFormTypeAllQueries,
-                false
+                false,
             );
         } else {
             $newCombinationsUrl = $this->generateUrl('admin_categoryseo_list');
@@ -270,7 +216,7 @@ class CategorySeoController extends AdminBaseController
         if ($readyCategorySeoCombinationFormType->isSubmitted() && $readyCategorySeoCombinationFormType->isValid()) {
             $readyCategorySeoMixData = $this->readyCategorySeoMixDataFactory->createFromReadyCategorySeoMixDataForFormAndChoseCategorySeoMixCombination(
                 $readyCategorySeoMixDataForForm,
-                $choseCategorySeoMixCombination
+                $choseCategorySeoMixCombination,
             );
 
             $selfUrl = $this->generateUrl(
@@ -279,19 +225,19 @@ class CategorySeoController extends AdminBaseController
                     'categoryId' => $categoryId,
                     'categorySeoFilterFormTypeAllQueries' => $categorySeoFilterFormTypeAllQueries,
                     'choseCategorySeoMixCombinationJson' => $choseCategorySeoMixCombination->getInJson(),
-                ]
+                ],
             );
 
             try {
                 $this->readyCategorySeoMixFacade->createOrEdit(
                     $choseCategorySeoMixCombination,
                     $readyCategorySeoMixData,
-                    $readyCategorySeoMixDataForForm->urls
+                    $readyCategorySeoMixDataForForm->urls,
                 );
 
                 $this->addSuccessFlashTwig(
                     t('<strong><a href="{{ url }}">SEO kombinace kategorie</a></strong> byla uložena'),
-                    ['url' => $selfUrl]
+                    ['url' => $selfUrl],
                 );
 
                 return $this->redirect($newCombinationsUrl);
@@ -309,7 +255,7 @@ class CategorySeoController extends AdminBaseController
             'choseCategorySeoMixCombination' => $choseCategorySeoMixCombination,
             'flagName' => $choseCategorySeoMixCombination->getFlagId() !== null ? $this->flagFacade->getById($choseCategorySeoMixCombination->getFlagId())->getName() : '',
             'parameterValueNamesIndexedByParameterNames' => $this->parameterFacade->getParameterValueNamesIndexedByParameterNames(
-                $choseCategorySeoMixCombination->getParameterValueIdsByParameterIds()
+                $choseCategorySeoMixCombination->getParameterValueIdsByParameterIds(),
             ),
             'choseCategorySeoMixCombinationDomainConfig' => $this->domain->getDomainConfigById($choseCategorySeoMixCombination->getDomainId()),
         ]);
@@ -324,7 +270,7 @@ class CategorySeoController extends AdminBaseController
     public function readyCombinationButtonAction(
         int $categoryId,
         array $categorySeoFilterFormTypeAllQueries,
-        ChoseCategorySeoMixCombination $choseCategorySeoMixCombination
+        ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
     ): Response {
         return $this->render('Admin/Content/CategorySeo/readyCombinationEditButton.html.twig', [
             'existsReadyCategorySeoMix' => $this->readyCategorySeoMixFacade->findByChoseCategorySeoMixCombination($choseCategorySeoMixCombination) !== null,
@@ -349,13 +295,13 @@ class CategorySeoController extends AdminBaseController
             $this->addSuccessFlashTwig(
                 t('SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} byla smazána', [
                     '{{ ReadyCategorySeoMixId }}' => $id,
-                ])
+                ]),
             );
         } catch (ReadyCategorySeoMixNotFoundException $readyCategorySeoMixNotFoundException) {
             $this->addSuccessFlashTwig(
                 t('SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} nebyla smazána, protože nebyla nalezena', [
                     '{{ ReadyCategorySeoMixId }}' => $id,
-                ])
+                ]),
             );
         }
 
@@ -369,7 +315,7 @@ class CategorySeoController extends AdminBaseController
      */
     private function createCategorySeoFilterForm(
         Category $category,
-        CategorySeoFiltersData $categorySeoFiltersData
+        CategorySeoFiltersData $categorySeoFiltersData,
     ): FormInterface {
         return $this->createForm(CategorySeoFilterFormType::class, $categorySeoFiltersData, [
             'category' => $category,
@@ -389,15 +335,15 @@ class CategorySeoController extends AdminBaseController
         string $routeName,
         int $categoryId,
         array $categorySeoFilterFormTypeAllQueries,
-        bool $isForBackLink
+        bool $isForBackLink,
     ): string {
         return $this->generateUrl(
             $routeName,
             array_merge(
                 ['categoryId' => $categoryId],
                 $categorySeoFilterFormTypeAllQueries,
-                ['is_for_backlink' => $isForBackLink]
-            )
+                ['is_for_backlink' => $isForBackLink],
+            ),
         );
     }
 
@@ -409,7 +355,7 @@ class CategorySeoController extends AdminBaseController
     private function storeJsonsToReadyCategorySeoMixDataForForm(
         ReadyCategorySeoMixDataForForm $readyCategorySeoMixDataForForm,
         ?array $categorySeoFilterFormTypeAllQueries,
-        ?ChoseCategorySeoMixCombination $choseCategorySeoMixCombination
+        ?ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
     ): void {
         if (isset($categorySeoFilterFormTypeAllQueries)) {
             $readyCategorySeoMixDataForForm->categorySeoFilterFormTypeAllQueriesJson = json_encode($categorySeoFilterFormTypeAllQueries);

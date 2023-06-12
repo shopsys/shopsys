@@ -82,7 +82,7 @@ class MergadoFeedItemFactory
             $product->isVariant() ? $product->getMainVariant()->getId() : null,
             $productPrice,
             $flags,
-            $availability
+            $availability,
         );
     }
 

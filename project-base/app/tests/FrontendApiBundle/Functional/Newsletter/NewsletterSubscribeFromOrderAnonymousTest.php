@@ -12,7 +12,6 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 class NewsletterSubscribeFromOrderAnonymousTest extends GraphQlTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade
      * @inject
      */
     private NewsletterFacade $newsletterFacade;

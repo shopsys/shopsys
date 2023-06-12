@@ -14,38 +14,18 @@ class ImageBatchLoadData
     private string $id;
 
     /**
-     * @var int
-     */
-    private int $entityId;
-
-    /**
-     * @var string
-     */
-    private string $entityName;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]
-     */
-    private array $sizeConfigs;
-
-    /**
-     * @var string|null
-     */
-    private ?string $type;
-
-    /**
      * @param int $entityId
      * @param string $entityName
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] $sizeConfigs
      * @param string|null $type
      */
-    public function __construct(int $entityId, string $entityName, array $sizeConfigs, ?string $type)
-    {
+    public function __construct(
+        private int $entityId,
+        private string $entityName,
+        private array $sizeConfigs,
+        private ?string $type,
+    ) {
         $this->id = Uuid::uuid4()->toString();
-        $this->entityId = $entityId;
-        $this->entityName = $entityName;
-        $this->sizeConfigs = $sizeConfigs;
-        $this->type = $type;
     }
 
     /**

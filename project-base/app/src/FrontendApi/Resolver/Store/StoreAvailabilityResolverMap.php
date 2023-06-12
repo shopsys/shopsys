@@ -10,16 +10,10 @@ use Overblog\GraphQLBundle\Resolver\ResolverMap;
 class StoreAvailabilityResolverMap extends ResolverMap
 {
     /**
-     * @var \Overblog\DataLoader\DataLoaderInterface
-     */
-    private DataLoaderInterface $storesBatchLoader;
-
-    /**
      * @param \Overblog\DataLoader\DataLoaderInterface $storesBatchLoader
      */
-    public function __construct(DataLoaderInterface $storesBatchLoader)
+    public function __construct(private DataLoaderInterface $storesBatchLoader)
     {
-        $this->storesBatchLoader = $storesBatchLoader;
     }
 
     /**

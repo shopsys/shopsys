@@ -60,7 +60,7 @@ class CustomerUserMutation extends BaseCustomerUserMutation
         private readonly RegistrationFacadeInterface $registrationFacade,
         private readonly RegistrationDataFactoryInterface $registrationDataFactory,
         private readonly MergeCartFacade $mergeCartFacade,
-        private readonly OrderFacade $orderFacade
+        private readonly OrderFacade $orderFacade,
     ) {
         parent::__construct(
             $tokenStorage,
@@ -70,7 +70,7 @@ class CustomerUserMutation extends BaseCustomerUserMutation
             $customerUserUpdateDataFactory,
             $customerUserFacade,
             $customerUserDataFactory,
-            $tokenFacade
+            $tokenFacade,
         );
     }
 
@@ -121,7 +121,7 @@ class CustomerUserMutation extends BaseCustomerUserMutation
         $customerUser = $this->customerUserFacade->getByUuid($user->getUuid());
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUserWithArgument(
             $customerUser,
-            $argument
+            $argument,
         );
         $this->customerUserFacade->editByCustomerUser($customerUser->getId(), $customerUserUpdateData);
 

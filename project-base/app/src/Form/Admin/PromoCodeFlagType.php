@@ -15,25 +15,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class PromoCodeFlagType extends AbstractType
 {
     /**
-     * @var \App\Model\Product\Flag\FlagFacade
-     */
-    private FlagFacade $flagFacade;
-
-    /**
-     * @var \App\Form\Admin\Transformer\PromoCodeFlagTransformer
-     */
-    private PromoCodeFlagTransformer $promoCodeFlagTransformer;
-
-    /**
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      * @param \App\Form\Admin\Transformer\PromoCodeFlagTransformer $promoCodeFlagTransformer
      */
     public function __construct(
-        FlagFacade $flagFacade,
-        PromoCodeFlagTransformer $promoCodeFlagTransformer
+        private FlagFacade $flagFacade,
+        private PromoCodeFlagTransformer $promoCodeFlagTransformer,
     ) {
-        $this->flagFacade = $flagFacade;
-        $this->promoCodeFlagTransformer = $promoCodeFlagTransformer;
     }
 
     /**

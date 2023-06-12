@@ -9,25 +9,13 @@ use App\Model\Category\CategoryFacade;
 class CategoryViewFacade
 {
     /**
-     * @var \App\Model\Category\CategoryFacade
-     */
-    private CategoryFacade $categoryFacade;
-
-    /**
-     * @var \App\Model\Category\Listed\CategoryViewFactory
-     */
-    private CategoryViewFactory $categoryViewFactory;
-
-    /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Category\Listed\CategoryViewFactory $categoryViewFactory
      */
     public function __construct(
-        CategoryFacade $categoryFacade,
-        CategoryViewFactory $categoryViewFactory
+        private CategoryFacade $categoryFacade,
+        private CategoryViewFactory $categoryViewFactory,
     ) {
-        $this->categoryFacade = $categoryFacade;
-        $this->categoryViewFactory = $categoryViewFactory;
     }
 
     /**

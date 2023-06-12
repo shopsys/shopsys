@@ -21,17 +21,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class MailTemplateFormTypeExtension extends AbstractTypeExtension
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade
-     */
-    private OrderStatusFacade $orderStatusFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
      */
     public function __construct(
-        OrderStatusFacade $orderStatusFacade
+        private OrderStatusFacade $orderStatusFacade,
     ) {
-        $this->orderStatusFacade = $orderStatusFacade;
     }
 
     /**
@@ -54,7 +48,7 @@ class MailTemplateFormTypeExtension extends AbstractTypeExtension
                     'constraints' => $this->getBodyConstraints($options),
                     'body_variables' => $options['body_variables'],
                 ])
-                ->addModelTransformer(new EmptyWysiwygTransformer())
+                ->addModelTransformer(new EmptyWysiwygTransformer()),
         );
 
         if ($mailTemplate === null) {

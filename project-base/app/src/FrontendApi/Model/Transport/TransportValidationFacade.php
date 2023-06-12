@@ -20,36 +20,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 class TransportValidationFacade
 {
     /**
-     * @var \App\FrontendApi\Model\Cart\CartFacade
-     */
-    private CartFacade $cartFacade;
-
-    /**
-     * @var \App\Model\Customer\User\CurrentCustomerUser
-     */
-    private CurrentCustomerUser $currentCustomerUser;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    private CurrencyFacade $currencyFacade;
-
-    /**
-     * @var \App\Model\Order\Preview\OrderPreviewFactory
-     */
-    private OrderPreviewFactory $orderPreviewFactory;
-
-    /**
-     * @var \App\Model\Store\StoreFacade
-     */
-    private StoreFacade $storeFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
      * @param \App\Model\Store\StoreFacade $storeFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
@@ -58,19 +28,13 @@ class TransportValidationFacade
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(
-        StoreFacade $storeFacade,
-        Domain $domain,
-        CurrencyFacade $currencyFacade,
-        OrderPreviewFactory $orderPreviewFactory,
-        CurrentCustomerUser $currentCustomerUser,
-        CartFacade $cartFacade
+        private StoreFacade $storeFacade,
+        private Domain $domain,
+        private CurrencyFacade $currencyFacade,
+        private OrderPreviewFactory $orderPreviewFactory,
+        private CurrentCustomerUser $currentCustomerUser,
+        private CartFacade $cartFacade,
     ) {
-        $this->storeFacade = $storeFacade;
-        $this->domain = $domain;
-        $this->currencyFacade = $currencyFacade;
-        $this->orderPreviewFactory = $orderPreviewFactory;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->cartFacade = $cartFacade;
     }
 
     /**
@@ -85,7 +49,7 @@ class TransportValidationFacade
 
         $this->storeFacade->getByUuidEnabledOnDomain(
             $pickupPlaceIdentifier,
-            $this->domain->getId()
+            $this->domain->getId(),
         );
     }
 
@@ -119,7 +83,7 @@ class TransportValidationFacade
             $currentCustomerUser,
             null,
             null,
-            $cart->getFirstAppliedPromoCode()
+            $cart->getFirstAppliedPromoCode(),
         );
 
         $calculatedTransportPrice = $orderPreview->getTransportPrice();

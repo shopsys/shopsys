@@ -38,7 +38,7 @@ class FriendlyUrlRepository extends BaseFriendlyUrlRepository
      */
     public function getNonUsedFriendlyUrlQueryBuilderByDomainIdAndQuickSearch(
         int $domainId,
-        ?QuickSearchFormData $quickSearchData = null
+        ?QuickSearchFormData $quickSearchData = null,
     ): QueryBuilder {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder->select('fu')
@@ -94,9 +94,9 @@ class FriendlyUrlRepository extends BaseFriendlyUrlRepository
                         $this->em->createQueryBuilder()->select($tmpTableAlias . '.id')
                             ->from($entity, $tmpTableAlias)
                             ->where('fu.entityId = ' . $tmpTableAlias . '.id')
-                            ->getDQL()
-                    )
-                )
+                            ->getDQL(),
+                    ),
+                ),
             );
             $i++;
         }
@@ -121,7 +121,7 @@ class FriendlyUrlRepository extends BaseFriendlyUrlRepository
             function ($row) {
                 return $row['routeName'];
             },
-            $results
+            $results,
         );
     }
 

@@ -15,7 +15,7 @@ class TransferInvalidDataException extends TransferException
      */
     public function __construct(
         ConstraintViolationListInterface $violations,
-        ?Exception $previous = null
+        ?Exception $previous = null,
     ) {
         $message = 'Data is not valid: ' . $this->getViolationsAsString($violations);
 

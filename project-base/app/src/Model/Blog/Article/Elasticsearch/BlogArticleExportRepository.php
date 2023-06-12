@@ -28,7 +28,7 @@ class BlogArticleExportRepository
         private readonly BlogArticleRepository $blogArticleRepository,
         private readonly FriendlyUrlFacade $friendlyUrlFacade,
         private readonly BreadcrumbFacade $breadcrumbFacade,
-        private readonly GrapesJsParser $grapesJsParser
+        private readonly GrapesJsParser $grapesJsParser,
     ) {
     }
 
@@ -43,7 +43,7 @@ class BlogArticleExportRepository
         int $domainId,
         string $locale,
         int $limit,
-        int $lastProcessedId
+        int $lastProcessedId,
     ): array {
         return $this->blogArticleRepository->getVisibleBlogArticlesByDomainIdAndLocaleQueryBuilder($domainId, $locale)
             ->andWhere('ba.id > :lastProcessedId')
@@ -63,7 +63,7 @@ class BlogArticleExportRepository
     public function getVisibleBlogArticlesByDomainIdAndLocaleAndBlogArticleIds(
         int $domainId,
         string $locale,
-        array $blogArticleIds
+        array $blogArticleIds,
     ): array {
         return $this->blogArticleRepository->getVisibleBlogArticlesByDomainIdAndLocaleQueryBuilder($domainId, $locale)
             ->andWhere('ba.id IN (:blogArticleIds)')

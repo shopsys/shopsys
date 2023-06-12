@@ -37,7 +37,7 @@ class CartItem extends BaseCartItem
         Cart $cart,
         Product $product,
         int $quantity,
-        ?Money $watchedPrice
+        ?Money $watchedPrice,
     ) {
         parent::__construct($cart, $product, $quantity, $watchedPrice);
 

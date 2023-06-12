@@ -24,8 +24,11 @@ class ProductFilterCountDataElasticsearchRepository extends BaseProductFilterCou
      * @param array $plusParameterNumbers
      * @param int $parameterId
      */
-    protected function mergeParameterCountData(ProductFilterCountData $countData, array $plusParameterNumbers, int $parameterId): void
-    {
+    protected function mergeParameterCountData(
+        ProductFilterCountData $countData,
+        array $plusParameterNumbers,
+        int $parameterId,
+    ): void {
         $countData->countByParameterIdAndValueId[$parameterId] = $plusParameterNumbers;
     }
 }

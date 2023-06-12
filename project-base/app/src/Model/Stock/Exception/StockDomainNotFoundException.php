@@ -19,7 +19,7 @@ class StockDomainNotFoundException extends Exception implements StockException
         $message = sprintf(
             'StockDomain for stock %s and domain ID "%d" not found.',
             $stockDescription,
-            $domainId
+            $domainId,
         );
 
         parent::__construct($message, 0, $previous);

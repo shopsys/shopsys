@@ -7,26 +7,6 @@ namespace App\Model\Product\Parameter;
 class ParameterValuesViewData
 {
     /**
-     * @var string
-     */
-    private string $parameterName;
-
-    /**
-     * @var string|null
-     */
-    private ?string $parameterGroupName;
-
-    /**
-     * @var string|null
-     */
-    private ?string $parameterGroupAkeneoCode;
-
-    /**
-     * @var string|null
-     */
-    private ?string $unitName;
-
-    /**
      * @var string[]
      */
     private array $valueTexts;
@@ -37,12 +17,12 @@ class ParameterValuesViewData
      * @param string|null $parameterGroupAkeneoCode
      * @param string|null $unitName
      */
-    public function __construct(string $parameterName, ?string $parameterGroupName, ?string $parameterGroupAkeneoCode, ?string $unitName)
-    {
-        $this->parameterName = $parameterName;
-        $this->parameterGroupName = $parameterGroupName;
-        $this->parameterGroupAkeneoCode = $parameterGroupAkeneoCode;
-        $this->unitName = $unitName;
+    public function __construct(
+        private string $parameterName,
+        private ?string $parameterGroupName,
+        private ?string $parameterGroupAkeneoCode,
+        private ?string $unitName,
+    ) {
         $this->valueTexts = [];
     }
 

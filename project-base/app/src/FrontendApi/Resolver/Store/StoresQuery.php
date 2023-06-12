@@ -20,7 +20,7 @@ class StoresQuery extends AbstractQuery
      */
     public function __construct(
         private readonly StoreFacade $storeFacade,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 

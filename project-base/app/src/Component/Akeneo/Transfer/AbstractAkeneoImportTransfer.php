@@ -5,41 +5,31 @@ declare(strict_types=1);
 namespace App\Component\Akeneo\Transfer;
 
 use Akeneo\Pim\ApiClient\Exception\RuntimeException;
+use App\Component\Akeneo\AkeneoConfig;
 use App\Component\Akeneo\Transfer\Exception\TransferException;
 use App\Component\Akeneo\Transfer\Exception\TransferInvalidDataAdministratorCriticalException;
 use App\Component\Akeneo\Transfer\Exception\TransferInvalidDataAdministratorNonCriticalException;
 use App\Model\Product\Transfer\Akeneo\Exception\FileSaveFailedException;
 use App\Model\Transfer\TransferIdentificationInterface;
+use App\Model\Transfer\TransferLoggerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Generator;
+use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Symfony\Component\Validator\Validator\TraceableValidator;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInterface
 {
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
-    /**
-     * @var \App\Model\Transfer\TransferLoggerInterface
-     */
-    protected $logger;
+    protected TransferLoggerInterface $logger;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade
-     */
-    protected $sqlLoggerFacade;
+    protected SqlLoggerFacade $sqlLoggerFacade;
 
-    /**
-     * @var \Symfony\Component\Validator\Validator\ValidatorInterface
-     */
-    protected $validator;
+    protected ValidatorInterface $validator;
 
-    /**
-     * @var \App\Component\Akeneo\AkeneoConfig
-     */
-    private $akeneoConfig;
+    private AkeneoConfig $akeneoConfig;
 
     /**
      * @param \App\Component\Akeneo\Transfer\AkeneoImportTransferDependency $akeneoImportTransferDependency
@@ -97,8 +87,8 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
                 sprintf(
                     'Transfer of item with code `%s` was aborted because : %s',
                     $item['identifier'] ?? $item['code'],
-                    $invalidDataSilentException->getMessage()
-                )
+                    $invalidDataSilentException->getMessage(),
+                ),
             );
             $this->em->rollback();
         } catch (TransferInvalidDataAdministratorCriticalException $invalidDataSilentException) {
@@ -106,8 +96,8 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
                 sprintf(
                     'Transfer of item with code `%s` was aborted because : %s',
                     $item['identifier'] ?? $item['code'],
-                    $invalidDataSilentException->getMessage()
-                )
+                    $invalidDataSilentException->getMessage(),
+                ),
             );
             $this->em->rollback();
         } catch (TransferException $transferException) {
@@ -115,8 +105,8 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
                 sprintf(
                     'Transfer of item with code `%s` was aborted because : %s',
                     $item['identifier'] ?? $item['code'],
-                    $transferException->getMessage()
-                )
+                    $transferException->getMessage(),
+                ),
             );
             $this->em->rollback();
         } catch (FileSaveFailedException $transferException) {
@@ -128,8 +118,8 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
                     'Transfer of item with code key `%s` was aborted. '
                     . 'This error will be reported to Shopsys. Reason of this error: %s',
                     $item['identifier'] ?? $item['code'],
-                    $exception->getMessage()
-                )
+                    $exception->getMessage(),
+                ),
             );
 
             $this->sqlLoggerFacade->reenableLogging();

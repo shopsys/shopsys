@@ -65,8 +65,11 @@ class ProductRepository extends BaseProductRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \App\Model\Product\Product[]
      */
-    public function getVisibleProductsByCatnumsAndDomainId(array $productCatnums, int $domainId, PricingGroup $pricingGroup): array
-    {
+    public function getVisibleProductsByCatnumsAndDomainId(
+        array $productCatnums,
+        int $domainId,
+        PricingGroup $pricingGroup,
+    ): array {
         return $this->getAllVisibleQueryBuilder($domainId, $pricingGroup)
             ->andWhere('p.catnum IN (:catnums)')
             ->andWhere('p.sellingDenied = FALSE')
@@ -189,7 +192,7 @@ class ProductRepository extends BaseProductRepository
         $domainId,
         PricingGroup $pricingGroup,
         $locale,
-        $searchText
+        $searchText,
     ) {
         $queryBuilder = $this->getAllListableQueryBuilder($domainId, $pricingGroup);
 
@@ -211,7 +214,7 @@ class ProductRepository extends BaseProductRepository
         $domainId,
         PricingGroup $pricingGroup,
         $locale,
-        $searchText
+        $searchText,
     ) {
         $queryBuilder = $this->getAllSellableQueryBuilder($domainId, $pricingGroup);
 
@@ -235,19 +238,19 @@ class ProductRepository extends BaseProductRepository
         $domainId,
         $locale,
         ProductFilterData $productFilterData,
-        PricingGroup $pricingGroup
+        PricingGroup $pricingGroup,
     ) {
         $queryBuilder = $this->getListableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
-            $category
+            $category,
         );
 
         $this->addTranslation($queryBuilder, $locale);
         $this->productFilterRepository->applyFiltering(
             $queryBuilder,
             $productFilterData,
-            $pricingGroup
+            $pricingGroup,
         );
 
         return $queryBuilder;
@@ -292,7 +295,7 @@ class ProductRepository extends BaseProductRepository
         QueryBuilder $queryBuilder,
         $orderingModeId,
         PricingGroup $pricingGroup,
-        $locale
+        $locale,
     ) {
         if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_RELEVANCE) {
             $queryBuilder->addOrderBy('relevance', 'asc');
@@ -324,7 +327,7 @@ class ProductRepository extends BaseProductRepository
                     $queryBuilder,
                     ProductCalculatedPrice::class,
                     'pcp',
-                    'pcp.product = p AND pcp.pricingGroup = :pricingGroup'
+                    'pcp.product = p AND pcp.pricingGroup = :pricingGroup',
                 );
                 $queryBuilder->addOrderBy('pcp.priceWithVat', 'asc');
                 $queryBuilder->setParameter('pricingGroup', $pricingGroup);
@@ -335,7 +338,7 @@ class ProductRepository extends BaseProductRepository
                     $queryBuilder,
                     ProductCalculatedPrice::class,
                     'pcp',
-                    'pcp.product = p AND pcp.pricingGroup = :pricingGroup'
+                    'pcp.product = p AND pcp.pricingGroup = :pricingGroup',
                 );
                 $queryBuilder->addOrderBy('pcp.priceWithVat', 'desc');
                 $queryBuilder->setParameter('pricingGroup', $pricingGroup);

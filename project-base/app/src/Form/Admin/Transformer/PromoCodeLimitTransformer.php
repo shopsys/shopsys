@@ -11,16 +11,10 @@ use Symfony\Component\Form\DataTransformerInterface;
 class PromoCodeLimitTransformer implements DataTransformerInterface
 {
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeLimitFactory
-     */
-    private $promoCodeLimitFactory;
-
-    /**
      * @param \App\Model\Order\PromoCode\PromoCodeLimitFactory $promoCodeLimitFactory
      */
-    public function __construct(PromoCodeLimitFactory $promoCodeLimitFactory)
+    public function __construct(private PromoCodeLimitFactory $promoCodeLimitFactory)
     {
-        $this->promoCodeLimitFactory = $promoCodeLimitFactory;
     }
 
     /**

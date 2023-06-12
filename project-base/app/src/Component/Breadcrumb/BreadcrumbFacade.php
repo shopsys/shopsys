@@ -11,33 +11,15 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class BreadcrumbFacade
 {
     /**
-     * @var \App\Component\Breadcrumb\BreadcrumbResolver
-     */
-    private BreadcrumbResolver $breadcrumbResolver;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
-     */
-    private DomainRouterFactory $domainRouterFactory;
-
-    /**
-     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
-     */
-    private UrlGeneratorInterface $urlGenerator;
-
-    /**
      * @param \App\Component\Breadcrumb\BreadcrumbResolver $breadcrumbResolver
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
-        BreadcrumbResolver $breadcrumbResolver,
-        DomainRouterFactory $domainRouterFactory,
-        UrlGeneratorInterface $urlGenerator
+        private BreadcrumbResolver $breadcrumbResolver,
+        private DomainRouterFactory $domainRouterFactory,
+        private UrlGeneratorInterface $urlGenerator,
     ) {
-        $this->breadcrumbResolver = $breadcrumbResolver;
-        $this->domainRouterFactory = $domainRouterFactory;
-        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -53,7 +35,7 @@ class BreadcrumbFacade
             $domainId,
             $routeName,
             ['id' => $id],
-            $locale
+            $locale,
         );
 
         $domainRouter = $this->domainRouterFactory->getRouter($domainId);
@@ -81,7 +63,7 @@ class BreadcrumbFacade
     {
         $breadcrumbItems = $this->breadcrumbResolver->resolveBreadcrumbItems(
             $routeName,
-            ['id' => $id]
+            ['id' => $id],
         );
 
         return array_map(
@@ -94,7 +76,7 @@ class BreadcrumbFacade
                     'slug' => $this->urlGenerator->generate($breadcrumbItemRouteName, $breadcrumbItemRouteParams),
                 ];
             },
-            $breadcrumbItems
+            $breadcrumbItems,
         );
     }
 }

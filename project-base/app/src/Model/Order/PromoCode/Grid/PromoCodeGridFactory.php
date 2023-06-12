@@ -16,27 +16,18 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory as B
 class PromoCodeGridFactory extends BasePromoCodeGridFactory
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    private $adminDomainTabsFacade;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeLimitRepository
-     */
-    private PromoCodeLimitRepository $promoCodeLimitRepository;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \App\Model\Order\PromoCode\PromoCodeLimitRepository $promoCodeLimitRepository
      */
-    public function __construct(EntityManagerInterface $em, GridFactory $gridFactory, AdminDomainTabsFacade $adminDomainTabsFacade, PromoCodeLimitRepository $promoCodeLimitRepository)
-    {
+    public function __construct(
+        EntityManagerInterface $em,
+        GridFactory $gridFactory,
+        private AdminDomainTabsFacade $adminDomainTabsFacade,
+        private PromoCodeLimitRepository $promoCodeLimitRepository,
+    ) {
         parent::__construct($em, $gridFactory);
-
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
-        $this->promoCodeLimitRepository = $promoCodeLimitRepository;
     }
 
     /**

@@ -14,6 +14,7 @@ class ResetPasswordHash extends Constraint
 
     /**
      * @var array<string, string>
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected static $errorNames = [
         self::INVALID_HASH_ERROR => 'INVALID_HASH_ERROR',

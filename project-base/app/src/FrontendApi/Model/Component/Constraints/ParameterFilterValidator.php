@@ -12,16 +12,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class ParameterFilterValidator extends ConstraintValidator
 {
     /**
-     * @var \App\Model\Product\Parameter\ParameterFacade
-     */
-    private ParameterFacade $parameterFacade;
-
-    /**
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      */
-    public function __construct(ParameterFacade $parameterFacade)
+    public function __construct(private ParameterFacade $parameterFacade)
     {
-        $this->parameterFacade = $parameterFacade;
     }
 
     /**

@@ -20,8 +20,9 @@ class ProductFilterDataFactory
      * @param \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix
      * @return \App\Model\Product\Filter\ProductFilterData
      */
-    public function createProductFilterDataFromReadyCategorySeoMix(ReadyCategorySeoMix $readyCategorySeoMix): ProductFilterData
-    {
+    public function createProductFilterDataFromReadyCategorySeoMix(
+        ReadyCategorySeoMix $readyCategorySeoMix,
+    ): ProductFilterData {
         $productFilterData = $this->create();
 
         if ($readyCategorySeoMix->getFlag() !== null) {

@@ -23,7 +23,7 @@ class NavigationItemFacade
         private readonly NavigationItemRepository $navigationItemRepository,
         private readonly NavigationItemCategoryFacade $navigationItemCategoryFacade,
         private readonly NavigationItemDetailFactory $navigationItemDetailFactory,
-        private readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
+        private readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }
 

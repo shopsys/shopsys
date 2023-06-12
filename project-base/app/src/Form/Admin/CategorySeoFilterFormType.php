@@ -17,17 +17,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CategorySeoFilterFormType extends AbstractType
 {
     /**
-     * @var \App\Model\CategorySeo\CategorySeoFacade
-     */
-    private $categorySeoFacade;
-
-    /**
      * @param \App\Model\CategorySeo\CategorySeoFacade $categorySeoFacade
      */
     public function __construct(
-        CategorySeoFacade $categorySeoFacade
+        private CategorySeoFacade $categorySeoFacade,
     ) {
-        $this->categorySeoFacade = $categorySeoFacade;
     }
 
     /**

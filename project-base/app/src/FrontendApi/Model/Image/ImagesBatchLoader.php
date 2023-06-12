@@ -19,41 +19,17 @@ use Shopsys\FrameworkBundle\Component\Utils\Utils;
 class ImagesBatchLoader
 {
     /**
-     * @var \GraphQL\Executor\Promise\PromiseAdapter
-     */
-    private PromiseAdapter $promiseAdapter;
-
-    /**
-     * @var \App\FrontendApi\Model\Image\ImageFacade
-     */
-    private FrontendApiImageFacade $frontendApiImageFacade;
-
-    /**
-     * @var \App\Component\Image\ImageFacade
-     */
-    private ImageFacade $imageFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
      * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
      * @param \App\FrontendApi\Model\Image\ImageFacade $frontendApiImageFacade
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        PromiseAdapter $promiseAdapter,
-        FrontendApiImageFacade $frontendApiImageFacade,
-        ImageFacade $imageFacade,
-        Domain $domain
+        private PromiseAdapter $promiseAdapter,
+        private FrontendApiImageFacade $frontendApiImageFacade,
+        private ImageFacade $imageFacade,
+        private Domain $domain,
     ) {
-        $this->promiseAdapter = $promiseAdapter;
-        $this->frontendApiImageFacade = $frontendApiImageFacade;
-        $this->imageFacade = $imageFacade;
-        $this->domain = $domain;
     }
 
     /**
@@ -80,8 +56,11 @@ class ImagesBatchLoader
      * @param string $type
      * @return array<string, array|null>
      */
-    private function getImagesByEntityNameAndTypeIndexedByDataId(array $imagesBatchLoadData, string $entityName, string $type): array
-    {
+    private function getImagesByEntityNameAndTypeIndexedByDataId(
+        array $imagesBatchLoadData,
+        string $entityName,
+        string $type,
+    ): array {
         if ($type === ImageEntityConfig::WITHOUT_NAME_KEY) {
             $type = null;
         }
@@ -122,8 +101,10 @@ class ImagesBatchLoader
      * @param \App\FrontendApi\Model\Image\ImageBatchLoadData[] $imagesBatchLoadData
      * @return array<int, array|null>
      */
-    private function sortAllImagesByOriginalInputData(array $allImagesIndexedByImageBatchLoadDataId, array $imagesBatchLoadData): array
-    {
+    private function sortAllImagesByOriginalInputData(
+        array $allImagesIndexedByImageBatchLoadDataId,
+        array $imagesBatchLoadData,
+    ): array {
         $sortedImages = [];
         foreach ($imagesBatchLoadData as $imageBatchLoadData) {
             if (array_key_exists($imageBatchLoadData->getId(), $allImagesIndexedByImageBatchLoadDataId) === false) {
@@ -185,13 +166,13 @@ class ImagesBatchLoader
                 $this->domain->getCurrentDomainConfig(),
                 $image,
                 $sizeConfig->getName(),
-                $image->getType()
+                $image->getType(),
             ),
             'additionalSizes' => $this->imageFacade->getAdditionalImagesData(
                 $this->domain->getCurrentDomainConfig(),
                 $image,
                 $sizeConfig->getName(),
-                $image->getType()
+                $image->getType(),
             ),
         ];
     }

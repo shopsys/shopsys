@@ -5,16 +5,14 @@ declare(strict_types=1);
 namespace App\Model\Navigation;
 
 use App\Model\Navigation\Exception\NavigationItemNotFoundException;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
 class NavigationItemRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManager
-     */
-    private $em;
+    private EntityManager $em;
 
     /**
      * @param \Doctrine\ORM\EntityManager $em
@@ -51,7 +49,7 @@ class NavigationItemRepository
 
         if ($item === null) {
             throw new NavigationItemNotFoundException(
-                sprintf('Navigation item with ID %s not found', $id)
+                sprintf('Navigation item with ID %s not found', $id),
             );
         }
 

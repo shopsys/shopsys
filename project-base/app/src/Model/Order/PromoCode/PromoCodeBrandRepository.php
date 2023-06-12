@@ -13,16 +13,10 @@ use Doctrine\ORM\QueryBuilder;
 class PromoCodeBrandRepository
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(protected EntityManagerInterface $em)
     {
-        $this->em = $em;
     }
 
     /**

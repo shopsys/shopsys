@@ -27,26 +27,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFie
 class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
 {
     /**
-     * @var \Overblog\DataLoader\DataLoaderInterface
-     */
-    private DataLoaderInterface $categoriesBatchLoader;
-
-    /**
-     * @var \Overblog\DataLoader\DataLoaderInterface
-     */
-    private DataLoaderInterface $flagsBatchLoader;
-
-    /**
-     * @var \Overblog\DataLoader\DataLoaderInterface
-     */
-    private DataLoaderInterface $productsSellableByIdsBatchLoader;
-
-    /**
-     * @var \Overblog\DataLoader\DataLoaderInterface
-     */
-    private DataLoaderInterface $brandsBatchLoader;
-
-    /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      * @param \App\Model\Product\Brand\BrandFacade $brandFacade
@@ -63,17 +43,12 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         BrandFacade $brandFacade,
         ProductElasticsearchProvider $productElasticsearchProvider,
         ParameterWithValuesFactory $parameterWithValuesFactory,
-        DataLoaderInterface $categoriesBatchLoader,
-        DataLoaderInterface $flagsBatchLoader,
-        DataLoaderInterface $productsSellableByIdsBatchLoader,
-        DataLoaderInterface $brandsBatchLoader
+        private DataLoaderInterface $categoriesBatchLoader,
+        private DataLoaderInterface $flagsBatchLoader,
+        private DataLoaderInterface $productsSellableByIdsBatchLoader,
+        private DataLoaderInterface $brandsBatchLoader,
     ) {
         parent::__construct($categoryFacade, $flagFacade, $brandFacade, $productElasticsearchProvider, $parameterWithValuesFactory);
-
-        $this->categoriesBatchLoader = $categoriesBatchLoader;
-        $this->flagsBatchLoader = $flagsBatchLoader;
-        $this->productsSellableByIdsBatchLoader = $productsSellableByIdsBatchLoader;
-        $this->brandsBatchLoader = $brandsBatchLoader;
     }
 
     /**
@@ -105,7 +80,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
                 . ' '
                 . $data['name']
                 . ' '
-                . $data['name_sufix']
+                . $data['name_sufix'],
         );
     }
 
@@ -204,7 +179,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
                 'anchorText' => $fileData['anchor_text'],
                 'url' => $fileData['url'],
             ],
-            $data['files']
+            $data['files'],
         );
     }
 

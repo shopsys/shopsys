@@ -92,7 +92,11 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                                     "isAbsolute": true
                                 },
                                 {
-                                    "text": "' . t('plastic', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale,
+                                    "text": "' . t(
+            'plastic',
+            [],
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+            $this->firstDomainLocale,
         ) . '",
                                     "count": 1,
                                     "isAbsolute": true
@@ -200,7 +204,11 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                                     "isAbsolute": true
                                 },
                                 {
-                                    "text": "' . t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale,
+                                    "text": "' . t(
+            'Yes',
+            [],
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+            $this->firstDomainLocale,
         ) . '",
                                     "count": 1,
                                     "isAbsolute": true
@@ -465,7 +473,11 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         "unit": null,
         "values": [
             {
-                "text": "' . t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->firstDomainLocale,
+                "text": "' . t(
+            'No',
+            [],
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+            $this->firstDomainLocale,
         ) . '",
                 "count": 0,
                 "isAbsolute": false
@@ -527,7 +539,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             '1920×1080 (Full HD)',
             [],
             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-            $this->firstDomainLocale
+            $this->firstDomainLocale,
         ) . '",
                 "count": 2,
                 "isAbsolute": true

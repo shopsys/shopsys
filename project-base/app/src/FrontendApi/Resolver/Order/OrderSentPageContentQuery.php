@@ -13,7 +13,7 @@ final class OrderSentPageContentQuery extends AbstractQuery
      * @param \App\FrontendApi\Model\Order\OrderFacade $orderFacade
      */
     public function __construct(
-        private readonly OrderFacade $orderFacade
+        private readonly OrderFacade $orderFacade,
     ) {
     }
 

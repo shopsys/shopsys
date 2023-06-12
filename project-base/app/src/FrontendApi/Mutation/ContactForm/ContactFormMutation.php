@@ -20,7 +20,7 @@ class ContactFormMutation extends AbstractMutation
      */
     public function __construct(
         private readonly ContactFormFacade $contactFormFacade,
-        private readonly LoggerInterface $logger
+        private readonly LoggerInterface $logger,
     ) {
     }
 
@@ -42,7 +42,7 @@ class ContactFormMutation extends AbstractMutation
                 'Email was not sent from contact form',
                 [
                     'error' => $ex->getMessage(),
-                ]
+                ],
             );
 
             return false;

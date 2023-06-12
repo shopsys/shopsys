@@ -20,19 +20,13 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class StockFormType extends AbstractType
 {
-    /**
-     * @var \App\Model\Stock\StockFacade
-     */
-    private $stockFacade;
-
     private ?Stock $stock;
 
     /**
      * @param \App\Model\Stock\StockFacade $stockFacade
      */
-    public function __construct(StockFacade $stockFacade)
+    public function __construct(private StockFacade $stockFacade)
     {
-        $this->stockFacade = $stockFacade;
     }
 
     /**

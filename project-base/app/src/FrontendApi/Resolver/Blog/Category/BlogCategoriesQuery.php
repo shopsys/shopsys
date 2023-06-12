@@ -16,7 +16,7 @@ class BlogCategoriesQuery extends AbstractQuery
      */
     public function __construct(
         private readonly BlogCategoryFacade $blogCategoryFacade,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 
@@ -27,7 +27,7 @@ class BlogCategoriesQuery extends AbstractQuery
     {
         return $this->blogCategoryFacade->getAllVisibleChildrenByBlogCategoryAndDomainId(
             $this->blogCategoryFacade->getRootBlogCategory(),
-            $this->domain->getId()
+            $this->domain->getId(),
         );
     }
 }

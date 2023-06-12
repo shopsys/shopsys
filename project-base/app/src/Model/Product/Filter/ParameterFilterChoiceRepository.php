@@ -30,13 +30,17 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
      * @param \App\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[]
      */
-    public function getParameterFilterChoicesInCategory($domainId, PricingGroup $pricingGroup, $locale, Category $category)
-    {
+    public function getParameterFilterChoicesInCategory(
+        $domainId,
+        PricingGroup $pricingGroup,
+        $locale,
+        Category $category,
+    ) {
         // it must contain variants + main variants
         $productsQueryBuilder = $this->productRepository->getSellableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
-            $category
+            $category,
         );
 
         $productsQueryBuilder
@@ -59,7 +63,7 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
             if (array_key_exists($parameterId, $parameterValuesIndexedByParameterId)) {
                 $parameterFilterChoices[] = new ParameterFilterChoice(
                     $parameter,
-                    $parameterValuesIndexedByParameterId[$parameterId]
+                    $parameterValuesIndexedByParameterId[$parameterId],
                 );
             }
         }
@@ -73,8 +77,11 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
      * @param \App\Model\Category\Category $category
      * @return array
      */
-    protected function getVisibleParametersIndexedByIdOrderedByParameterPositionInCategory(array $rows, string $locale, Category $category): array
-    {
+    protected function getVisibleParametersIndexedByIdOrderedByParameterPositionInCategory(
+        array $rows,
+        string $locale,
+        Category $category,
+    ): array {
         $parameterIds = [];
         foreach ($rows as $row) {
             $parameterIds[$row['pp']['id']] = $row['pp']['id'];

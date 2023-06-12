@@ -22,41 +22,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class LanguageConstantController extends AdminBaseController
 {
     /**
-     * @var \App\Model\LanguageConstant\LanguageConstantFacade
-     */
-    private LanguageConstantFacade $languageConstantFacade;
-
-    /**
-     * @var \App\Model\LanguageConstant\LanguageConstantDataFactory
-     */
-    private LanguageConstantDataFactory $languageConstantDataFactory;
-
-    /**
-     * @var \App\Model\LanguageConstant\LanguageConstantGridFactory
-     */
-    private LanguageConstantGridFactory $languageConstantGridFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    private AdminDomainTabsFacade $adminDomainTabsFacade;
-
-    /**
      * @param \App\Model\LanguageConstant\LanguageConstantFacade $languageConstantFacade
      * @param \App\Model\LanguageConstant\LanguageConstantDataFactory $languageConstantDataFactory
      * @param \App\Model\LanguageConstant\LanguageConstantGridFactory $languageConstantGridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
-        LanguageConstantFacade $languageConstantFacade,
-        LanguageConstantDataFactory $languageConstantDataFactory,
-        LanguageConstantGridFactory $languageConstantGridFactory,
-        AdminDomainTabsFacade $adminDomainTabsFacade
+        private LanguageConstantFacade $languageConstantFacade,
+        private LanguageConstantDataFactory $languageConstantDataFactory,
+        private LanguageConstantGridFactory $languageConstantGridFactory,
+        private AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
-        $this->languageConstantFacade = $languageConstantFacade;
-        $this->languageConstantDataFactory = $languageConstantDataFactory;
-        $this->languageConstantGridFactory = $languageConstantGridFactory;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**
@@ -99,7 +75,7 @@ class LanguageConstantController extends AdminBaseController
                 t('Language constant translation <strong>{{ name }}</strong> not found'),
                 [
                     'name' => $key,
-                ]
+                ],
             );
 
             return $this->redirectToRoute('admin_languageconstant_list');
@@ -119,14 +95,14 @@ class LanguageConstantController extends AdminBaseController
                     [
                         'name' => $constant->getKey(),
                         'url' => $this->generateUrl('admin_languageconstant_edit', ['key' => $constant->getKey()]),
-                    ]
+                    ],
                 );
             } catch (LanguageConstantNotFoundException $exception) {
                 $this->addErrorFlashTwig(
                     t('Language constant translation <strong>{{ name }}</strong> not found'),
                     [
                         'name' => $key,
-                    ]
+                    ],
                 );
             }
 
@@ -165,14 +141,14 @@ class LanguageConstantController extends AdminBaseController
                     t('Language constant translation <strong>{{ name }}</strong> deleted'),
                     [
                         'name' => $constant->getKey(),
-                    ]
+                    ],
                 );
             } catch (LanguageConstantNotFoundException $exception) {
                 $this->addErrorFlashTwig(
                     t('Language constant translation <strong>{{ name }}</strong> not found'),
                     [
                         'name' => $key,
-                    ]
+                    ],
                 );
             }
         }

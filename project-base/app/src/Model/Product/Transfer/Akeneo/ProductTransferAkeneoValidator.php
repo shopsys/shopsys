@@ -13,16 +13,10 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class ProductTransferAkeneoValidator
 {
     /**
-     * @var \Symfony\Component\Validator\Validator\ValidatorInterface
-     */
-    protected $validator;
-
-    /**
      * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
      */
-    public function __construct(ValidatorInterface $validator)
+    public function __construct(protected ValidatorInterface $validator)
     {
-        $this->validator = $validator;
     }
 
     /**
@@ -154,7 +148,7 @@ class ProductTransferAkeneoValidator
         ConstraintViolationListInterface $violations,
         ?array $data,
         string $validateKeyName,
-        array $asserts
+        array $asserts,
     ): void {
         if ($data === null || !array_key_exists($validateKeyName, $data)) {
             $notBlankAssert = $this->findNotBlankAssert($asserts);
@@ -177,7 +171,7 @@ class ProductTransferAkeneoValidator
                                     new Assert\IsNull(),
                                 ]),
                                 'data' => new Assert\Required(
-                                    $asserts
+                                    $asserts,
                                 ),
                             ],
                         ]),
@@ -197,7 +191,7 @@ class ProductTransferAkeneoValidator
         ConstraintViolationListInterface $violations,
         ?array $data,
         string $validateKeyName,
-        array $asserts
+        array $asserts,
     ): void {
         if ($data === null || !array_key_exists($validateKeyName, $data)) {
             $notBlankAssert = $this->findNotBlankAssert($asserts);
@@ -246,7 +240,7 @@ class ProductTransferAkeneoValidator
                         ]),
                     ]),
                 ],
-            ])
+            ]),
         ));
     }
 
@@ -260,7 +254,7 @@ class ProductTransferAkeneoValidator
         ConstraintViolationListInterface $violations,
         ?array $data,
         string $validateKeyName,
-        array $asserts
+        array $asserts,
     ): void {
         if ($data === null || !array_key_exists($validateKeyName, $data)) {
             $notBlankAssert = $this->findNotBlankAssert($asserts);
@@ -283,7 +277,7 @@ class ProductTransferAkeneoValidator
                                     new Assert\NotNull(),
                                 ]),
                                 'data' => new Assert\Required(
-                                    $asserts
+                                    $asserts,
                                 ),
                             ],
                         ]),
@@ -316,7 +310,7 @@ class ProductTransferAkeneoValidator
     private function addNewViolation(
         ConstraintViolationListInterface $violations,
         string $message,
-        string $validateKeyName
+        string $validateKeyName,
     ): void {
         $violation = new ConstraintViolation(
             $message,
@@ -324,7 +318,7 @@ class ProductTransferAkeneoValidator
             [],
             '',
             $validateKeyName,
-            null
+            null,
         );
         $violations->add($violation);
     }

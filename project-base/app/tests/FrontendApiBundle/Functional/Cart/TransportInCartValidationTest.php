@@ -17,13 +17,11 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 class TransportInCartValidationTest extends GraphQlTestCase
 {
     /**
-     * @var \App\Model\Transport\TransportDataFactory
      * @inject
      */
     private TransportDataFactory $transportDataFactory;
 
     /**
-     * @var \App\Model\Transport\TransportFacade
      * @inject
      */
     private TransportFacade $transportFacade;

@@ -39,56 +39,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {
     /**
-     * @var \App\Model\Product\ProductFacade
-     */
-    private ProductFacade $productFacade;
-
-    /**
-     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
-     */
-    private ProductAvailabilityFacade $productAvailabilityFacade;
-
-    /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private FriendlyUrlFacade $friendlyUrlFacade;
-
-    /**
-     * @var \App\Model\Product\ProductRepository
-     */
-    private ProductRepository $productRepository;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade
-     */
-    private PricingGroupSettingFacade $pricingGroupSettingFacade;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterRepository
-     */
-    protected ParameterRepository $parameterRepository;
-
-    /**
-     * @var \App\Component\Breadcrumb\BreadcrumbFacade
-     */
-    private BreadcrumbFacade $breadcrumbFacade;
-
-    /**
-     * @var \Overblog\DataLoader\DataLoaderInterface
-     */
-    private DataLoaderInterface $categoriesBatchLoader;
-
-    /**
-     * @var \Overblog\DataLoader\DataLoaderInterface
-     */
-    private DataLoaderInterface $productsSellableByIdsBatchLoader;
-
-    /**
-     * @var \Overblog\DataLoader\DataLoaderInterface
-     */
-    private DataLoaderInterface $brandsBatchLoader;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade
      * @param \Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade $productAccessoryFacade
@@ -111,35 +61,24 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         ProductAccessoryFacade $productAccessoryFacade,
         CurrentCustomerUser $currentCustomerUser,
         ParameterWithValuesFactory $parameterWithValuesFactory,
-        ProductFacade $productFacade,
-        ProductAvailabilityFacade $productAvailabilityFacade,
-        FriendlyUrlFacade $friendlyUrlFacade,
-        ProductRepository $productRepository,
-        PricingGroupSettingFacade $pricingGroupSettingFacade,
-        ParameterRepository $parameterRepository,
-        BreadcrumbFacade $breadcrumbFacade,
-        DataLoaderInterface $categoriesBatchLoader,
-        DataLoaderInterface $productsSellableByIdsBatchLoader,
-        DataLoaderInterface $brandsBatchLoader
+        private ProductFacade $productFacade,
+        private ProductAvailabilityFacade $productAvailabilityFacade,
+        private FriendlyUrlFacade $friendlyUrlFacade,
+        private ProductRepository $productRepository,
+        private PricingGroupSettingFacade $pricingGroupSettingFacade,
+        protected ParameterRepository $parameterRepository,
+        private BreadcrumbFacade $breadcrumbFacade,
+        private DataLoaderInterface $categoriesBatchLoader,
+        private DataLoaderInterface $productsSellableByIdsBatchLoader,
+        private DataLoaderInterface $brandsBatchLoader,
     ) {
         parent::__construct(
             $domain,
             $productCollectionFacade,
             $productAccessoryFacade,
             $currentCustomerUser,
-            $parameterWithValuesFactory
+            $parameterWithValuesFactory,
         );
-
-        $this->productFacade = $productFacade;
-        $this->productAvailabilityFacade = $productAvailabilityFacade;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->productRepository = $productRepository;
-        $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
-        $this->parameterRepository = $parameterRepository;
-        $this->breadcrumbFacade = $breadcrumbFacade;
-        $this->categoriesBatchLoader = $categoriesBatchLoader;
-        $this->productsSellableByIdsBatchLoader = $productsSellableByIdsBatchLoader;
-        $this->brandsBatchLoader = $brandsBatchLoader;
     }
 
     /**
@@ -205,11 +144,11 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         return [
             'name' => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId(
                 $product,
-                $this->domain->getId()
+                $this->domain->getId(),
             ),
             'status' => $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId(
                 $product,
-                $this->domain->getId()
+                $this->domain->getId(),
             )->value,
         ];
     }
@@ -259,7 +198,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $variants = $this->productRepository->getAllSellableVariantsByMainVariant(
                 $product,
                 $this->domain->getId(),
-                $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($this->domain->getId())
+                $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($this->domain->getId()),
             );
         }
 
@@ -287,7 +226,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $products = $this->productRepository->getAllSellableVariantsByMainVariant(
                 $product,
                 $this->domain->getId(),
-                $this->currentCustomerUser->getPricingGroup()
+                $this->currentCustomerUser->getPricingGroup(),
             );
         }
         $products[] = $product;
@@ -314,7 +253,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
     {
         $downloadFiles = $this->productFacade->getDownloadFilesForProductByDomainConfig(
             $product,
-            $this->domain->getDomainConfigById($this->domain->getId())
+            $this->domain->getDomainConfigById($this->domain->getId()),
         );
 
         return array_map(
@@ -322,7 +261,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
                 'anchorText' => $fileData['anchor_text'],
                 'url' => $fileData['url'],
             ],
-            $downloadFiles
+            $downloadFiles,
         );
     }
 
@@ -334,7 +273,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
     {
         $storeAvailabilitiesInformation = $this->productAvailabilityFacade->getProductStoresAvailabilitiesInformationByDomainIdIndexedByStoreId(
             $product,
-            $this->domain->getId()
+            $this->domain->getId(),
         );
 
         $result = [];
@@ -359,7 +298,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
     {
         return $this->productAvailabilityFacade->getAvailableStoresCount(
             $product,
-            $this->domain->getId()
+            $this->domain->getId(),
         );
     }
 
@@ -371,7 +310,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
     {
         return $this->productAvailabilityFacade->getExposedStoresCount(
             $product,
-            $this->domain->getId()
+            $this->domain->getId(),
         );
     }
 
@@ -394,7 +333,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $product->getId(),
             'front_product_detail',
             $this->domain->getId(),
-            $this->domain->getLocale()
+            $this->domain->getLocale(),
         );
     }
 

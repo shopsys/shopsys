@@ -22,31 +22,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class TransportInCartValidator extends ConstraintValidator
 {
     /**
-     * @var \App\FrontendApi\Model\Transport\TransportValidationFacade
-     */
-    private TransportValidationFacade $transportValidationFacade;
-
-    /**
-     * @var \App\Model\Customer\User\CurrentCustomerUser
-     */
-    private CurrentCustomerUser $currentCustomerUser;
-
-    /**
-     * @var \App\FrontendApi\Model\Cart\CartFacade
-     */
-    private CartFacade $cartFacade;
-
-    /**
-     * @var \App\Model\Transport\TransportFacade
-     */
-    private TransportFacade $transportFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
      * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
@@ -54,17 +29,12 @@ class TransportInCartValidator extends ConstraintValidator
      * @param \App\FrontendApi\Model\Transport\TransportValidationFacade $transportValidationFacade
      */
     public function __construct(
-        TransportFacade $transportFacade,
-        Domain $domain,
-        CurrentCustomerUser $currentCustomerUser,
-        CartFacade $cartFacade,
-        TransportValidationFacade $transportValidationFacade
+        private TransportFacade $transportFacade,
+        private Domain $domain,
+        private CurrentCustomerUser $currentCustomerUser,
+        private CartFacade $cartFacade,
+        private TransportValidationFacade $transportValidationFacade,
     ) {
-        $this->transportFacade = $transportFacade;
-        $this->domain = $domain;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->cartFacade = $cartFacade;
-        $this->transportValidationFacade = $transportValidationFacade;
     }
 
     /**
@@ -101,8 +71,11 @@ class TransportInCartValidator extends ConstraintValidator
      * @param string|null $pickupPlaceIdentifier
      * @param \App\FrontendApi\Model\Component\Constraints\TransportInCart $transportInCartConstraint
      */
-    private function checkRequiredPickupPlaceIdentifier(Transport $transport, ?string $pickupPlaceIdentifier, TransportInCart $transportInCartConstraint): void
-    {
+    private function checkRequiredPickupPlaceIdentifier(
+        Transport $transport,
+        ?string $pickupPlaceIdentifier,
+        TransportInCart $transportInCartConstraint,
+    ): void {
         try {
             $this->transportValidationFacade->checkRequiredPickupPlaceIdentifier($transport, $pickupPlaceIdentifier);
         } catch (MissingPickupPlaceIdentifierException $exception) {
@@ -118,8 +91,11 @@ class TransportInCartValidator extends ConstraintValidator
      * @param string|null $pickupPlaceIdentifier
      * @param \App\FrontendApi\Model\Component\Constraints\TransportInCart $transportInCartConstraint
      */
-    private function checkPersonalPickupStoreAvailability(Transport $transport, ?string $pickupPlaceIdentifier, TransportInCart $transportInCartConstraint): void
-    {
+    private function checkPersonalPickupStoreAvailability(
+        Transport $transport,
+        ?string $pickupPlaceIdentifier,
+        TransportInCart $transportInCartConstraint,
+    ): void {
         try {
             $this->transportValidationFacade->checkPersonalPickupStoreAvailability($transport, $pickupPlaceIdentifier);
         } catch (StoreByUuidNotFoundException $exception) {
@@ -135,8 +111,11 @@ class TransportInCartValidator extends ConstraintValidator
      * @param string|null $cartUuid
      * @param \App\FrontendApi\Model\Component\Constraints\TransportInCart $transportInCartConstraint
      */
-    private function checkTransportWeightLimit(Transport $transport, ?string $cartUuid, TransportInCart $transportInCartConstraint): void
-    {
+    private function checkTransportWeightLimit(
+        Transport $transport,
+        ?string $cartUuid,
+        TransportInCart $transportInCartConstraint,
+    ): void {
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         $cart = $this->cartFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
@@ -154,8 +133,11 @@ class TransportInCartValidator extends ConstraintValidator
      * @param string|null $cartUuid
      * @param \App\FrontendApi\Model\Component\Constraints\TransportInCart $transportInCartConstraint
      */
-    private function checkTransportPaymentRelation(Transport $transport, ?string $cartUuid, TransportInCart $transportInCartConstraint): void
-    {
+    private function checkTransportPaymentRelation(
+        Transport $transport,
+        ?string $cartUuid,
+        TransportInCart $transportInCartConstraint,
+    ): void {
         try {
             $this->transportValidationFacade->checkTransportPaymentRelation($transport, $cartUuid);
         } catch (InvalidTransportPaymentCombinationException $exception) {

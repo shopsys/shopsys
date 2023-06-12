@@ -16,33 +16,15 @@ use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 class CartMutation extends AbstractMutation
 {
     /**
-     * @var \App\FrontendApi\Model\Cart\CartFacade
-     */
-    private CartFacade $cartFacade;
-
-    /**
-     * @var \App\Model\Customer\User\CurrentCustomerUser
-     */
-    private CurrentCustomerUser $currentCustomerUser;
-
-    /**
-     * @var \App\FrontendApi\Model\Cart\CartWatcherFacade
-     */
-    protected CartWatcherFacade $cartWatcherFacade;
-
-    /**
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\FrontendApi\Model\Cart\CartWatcherFacade $cartWatcherFacade
      */
     public function __construct(
-        CartFacade $cartFacade,
-        CurrentCustomerUser $currentCustomerUser,
-        CartWatcherFacade $cartWatcherFacade
+        private CartFacade $cartFacade,
+        private CurrentCustomerUser $currentCustomerUser,
+        protected CartWatcherFacade $cartWatcherFacade,
     ) {
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->cartFacade = $cartFacade;
-        $this->cartWatcherFacade = $cartWatcherFacade;
     }
 
     /**
@@ -70,7 +52,7 @@ class CartMutation extends AbstractMutation
             $productUuid,
             $quantity,
             $isAbsoluteQuantity,
-            $cart
+            $cart,
         );
 
         $cartWithModifications = $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
@@ -99,7 +81,7 @@ class CartMutation extends AbstractMutation
 
         $cart = $this->cartFacade->removeItemByUuidFromCart(
             $cartItemUuid,
-            $cart
+            $cart,
         );
 
         return $this->cartWatcherFacade->getCheckedCartWithModifications($cart);

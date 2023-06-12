@@ -4,50 +4,25 @@ declare(strict_types=1);
 
 namespace App\Model\CategorySeo;
 
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
+
 class ReadyCategorySeoMixDataForForm
 {
-    /**
-     * @var string|null
-     */
-    public $h1;
+    public ?string $h1 = null;
 
-    /**
-     * @var string|null
-     */
-    public $shortDescription;
+    public ?string $shortDescription = null;
 
-    /**
-     * @var string|null
-     */
-    public $description;
+    public ?string $description = null;
 
-    /**
-     * @var string|null
-     */
-    public $title;
+    public ?string $title = null;
 
-    /**
-     * @var string|null
-     */
-    public $metaDescription;
+    public ?string $metaDescription = null;
 
-    /**
-     * @var string|null
-     */
-    public $categorySeoFilterFormTypeAllQueriesJson;
+    public ?string $categorySeoFilterFormTypeAllQueriesJson = null;
 
-    /**
-     * @var string|null
-     */
-    public $choseCategorySeoMixCombinationJson;
+    public ?string $choseCategorySeoMixCombinationJson = null;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData
-     */
-    public $urls;
+    public UrlListData $urls;
 
-    /**
-     * @var bool
-     */
     public bool $showInCategory = false;
 }

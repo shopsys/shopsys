@@ -69,31 +69,6 @@ class ProductFacade extends BaseProductFacade
     public const ASSETS_FILE_TYPE = '.pdf';
 
     /**
-     * @var \App\Model\Stock\StockFacade
-     */
-    private $stockFacade;
-
-    /**
-     * @var \App\Model\Stock\ProductStockFacade
-     */
-    private $productStockFacade;
-
-    /**
-     * @var string
-     */
-    private $productFilesUrlPrefix;
-
-    /**
-     * @var \App\Model\Store\StoreFacade
-     */
-    private StoreFacade $storeFacade;
-
-    /**
-     * @var \App\Model\Store\ProductStoreFacade
-     */
-    private ProductStoreFacade $productStoreFacade;
-
-    /**
      * @param string $productFilesUrlPrefix
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \App\Model\Product\ProductRepository $productRepository
@@ -123,7 +98,7 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Store\StoreFacade $storeFacade
      */
     public function __construct(
-        string $productFilesUrlPrefix,
+        private string $productFilesUrlPrefix,
         EntityManagerInterface $em,
         ProductRepository $productRepository,
         ProductVisibilityFacade $productVisibilityFacade,
@@ -146,10 +121,10 @@ class ProductFacade extends BaseProductFacade
         ProductVisibilityFactoryInterface $productVisibilityFactory,
         ProductPriceCalculation $productPriceCalculation,
         ProductExportScheduler $productExportScheduler,
-        ProductStockFacade $productStockFacade,
-        StockFacade $stockFacade,
-        ProductStoreFacade $productStoreFacade,
-        StoreFacade $storeFacade,
+        private ProductStockFacade $productStockFacade,
+        private StockFacade $stockFacade,
+        private ProductStoreFacade $productStoreFacade,
+        private StoreFacade $storeFacade,
     ) {
         parent::__construct(
             $em,
@@ -173,14 +148,8 @@ class ProductFacade extends BaseProductFacade
             $productParameterValueFactory,
             $productVisibilityFactory,
             $productPriceCalculation,
-            $productExportScheduler
+            $productExportScheduler,
         );
-
-        $this->stockFacade = $stockFacade;
-        $this->productStockFacade = $productStockFacade;
-        $this->productFilesUrlPrefix = $productFilesUrlPrefix;
-        $this->storeFacade = $storeFacade;
-        $this->productStoreFacade = $productStoreFacade;
     }
 
     /**
@@ -313,8 +282,11 @@ class ProductFacade extends BaseProductFacade
      * @param string|null $browserCacheCleanerSuffix
      * @return string
      */
-    public function getProductTransferredFileUrl(string $fileName, string $domainUrl, ?string $browserCacheCleanerSuffix = null): string
-    {
+    public function getProductTransferredFileUrl(
+        string $fileName,
+        string $domainUrl,
+        ?string $browserCacheCleanerSuffix = null,
+    ): string {
         return $domainUrl . $this->productFilesUrlPrefix . $fileName . ($browserCacheCleanerSuffix !== null ? '?' . md5($browserCacheCleanerSuffix) : '');
     }
 
@@ -330,10 +302,10 @@ class ProductFacade extends BaseProductFacade
             $url = $this->getProductTransferredFileUrl(
                 $product->getProductFileNameByType(
                     $domainConfig->getId(),
-                    Product::FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE
+                    Product::FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE,
                 ),
                 $domainConfig->getUrl(),
-                $product->getAssemblyInstructionCode($domainConfig->getId())
+                $product->getAssemblyInstructionCode($domainConfig->getId()),
             );
             $downloadFileUrls[] = [
                 'anchor_text' => t('Instalační manuál'),
@@ -345,10 +317,10 @@ class ProductFacade extends BaseProductFacade
             $url = $this->getProductTransferredFileUrl(
                 $product->getProductFileNameByType(
                     $domainConfig->getId(),
-                    Product::FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE
+                    Product::FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE,
                 ),
                 $domainConfig->getUrl(),
-                $product->getProductTypePlanCode($domainConfig->getId())
+                $product->getProductTypePlanCode($domainConfig->getId()),
             );
             $downloadFileUrls[] = [
                 'anchor_text' => t('Typový plán'),
@@ -381,13 +353,13 @@ class ProductFacade extends BaseProductFacade
             /** @var \App\Model\Product\Parameter\ParameterValueData $parameterValueData */
             $parameterValueData = $productParameterValueData->parameterValueData;
             $parameterValue = $this->parameterRepository->findOrCreateParameterValueByParameterValueData(
-                $parameterValueData
+                $parameterValueData,
             );
 
             $productParameterValue = $this->productParameterValueFactory->create(
                 $product,
                 $productParameterValueData->parameter,
-                $parameterValue
+                $parameterValue,
             );
             $this->em->persist($productParameterValue);
             $toFlush[] = $productParameterValue;
@@ -452,7 +424,7 @@ class ProductFacade extends BaseProductFacade
     {
         $stockIds = array_map(
             fn (ProductStockData $productStockData): int => $productStockData->stockId,
-            $productData->stockProductData
+            $productData->stockProductData,
         );
 
         $stocksIndexedById = $this->stockFacade->getStocksByIdsIndexedById($stockIds);
@@ -460,7 +432,7 @@ class ProductFacade extends BaseProductFacade
         $this->productStockFacade->editProductStockRelations(
             $product,
             $stocksIndexedById,
-            $productData->stockProductData
+            $productData->stockProductData,
         );
     }
 
@@ -472,7 +444,7 @@ class ProductFacade extends BaseProductFacade
     {
         $storeIds = array_map(
             fn (ProductStoreData $productStoreData): int => $productStoreData->storeId,
-            $productData->productStoreData
+            $productData->productStoreData,
         );
 
         $storesIndexedById = $this->storeFacade->getStoresByIdsIndexedById($storeIds);
@@ -480,7 +452,7 @@ class ProductFacade extends BaseProductFacade
         $this->productStoreFacade->editProductStoreRelations(
             $product,
             $storesIndexedById,
-            $productData->productStoreData
+            $productData->productStoreData,
         );
     }
 }

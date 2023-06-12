@@ -42,7 +42,7 @@ class RemoveMappingsSubscriber implements EventSubscriber
                 'usingStock',
                 'calculatedAvailability',
             ],
-            $classMetadata
+            $classMetadata,
         );
 
         $this->removeColumnsFromEntityMappings(PromoCode::class, ['percent'], $classMetadata);
@@ -53,8 +53,11 @@ class RemoveMappingsSubscriber implements EventSubscriber
      * @param string[] $attributeNames
      * @param \Doctrine\ORM\Mapping\ClassMetadata $classMetadata
      */
-    private function removeColumnsFromEntityMappings(string $parentClassName, array $attributeNames, ClassMetadata $classMetadata): void
-    {
+    private function removeColumnsFromEntityMappings(
+        string $parentClassName,
+        array $attributeNames,
+        ClassMetadata $classMetadata,
+    ): void {
         if ($classMetadata->rootEntityName === $parentClassName || is_subclass_of($classMetadata->rootEntityName, $parentClassName)) {
             foreach ($attributeNames as $attributeName) {
                 $classMetadata->associationMappings = $this->removeMappingByKey($attributeName, $classMetadata->associationMappings);

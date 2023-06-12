@@ -13,20 +13,13 @@ use Shopsys\FrontendApiBundle\Model\Product\Filter\FlagFilterOption as BaseFlagF
 class FlagFilterOption extends BaseFlagFilterOption
 {
     /**
-     * @var bool
-     */
-    public bool $isSelected;
-
-    /**
      * @param \App\Model\Product\Flag\Flag $flag
      * @param int $count
      * @param bool $isAbsolute
      * @param bool $isSelected
      */
-    public function __construct(Flag $flag, int $count, bool $isAbsolute, bool $isSelected)
+    public function __construct(Flag $flag, int $count, bool $isAbsolute, public bool $isSelected)
     {
         parent::__construct($flag, $count, $isAbsolute);
-
-        $this->isSelected = $isSelected;
     }
 }

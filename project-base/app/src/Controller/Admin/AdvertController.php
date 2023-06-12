@@ -48,7 +48,7 @@ class AdvertController extends BaseAdvertController
                 [
                     'name' => $advert->getName(),
                     'url' => $this->generateUrl('admin_advert_edit', ['id' => $advert->getId()]),
-                ]
+                ],
             );
             return $this->redirectToRoute('admin_advert_list');
         }
@@ -58,7 +58,7 @@ class AdvertController extends BaseAdvertController
         }
 
         $this->breadcrumbOverrider->overrideLastItem(
-            t('Editing advertising - %name%', ['%name%' => $advert->getName()])
+            t('Editing advertising - %name%', ['%name%' => $advert->getName()]),
         );
 
         return $this->render('@ShopsysFramework/Admin/Content/Advert/edit.html.twig', [

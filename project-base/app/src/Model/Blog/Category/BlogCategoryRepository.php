@@ -20,17 +20,10 @@ class BlogCategoryRepository extends NestedTreeRepository
     public const HIGHEST_CATEGORIES_PARENT_NUMBER = 1;
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
-        $this->em = $em;
-
         $classMetadata = $this->em->getClassMetadata(BlogCategory::class);
 
         parent::__construct($this->em, $classMetadata);
@@ -240,7 +233,7 @@ class BlogCategoryRepository extends NestedTreeRepository
                 Join::WITH,
                 'babcd.blogArticle = :blogArticle
                     AND babcd.blogCategory = bc
-                    AND babcd.domainId = :domainId'
+                    AND babcd.domainId = :domainId',
             )
             ->orderBy('bc.level DESC, bc.lft')
             ->setMaxResults(1);

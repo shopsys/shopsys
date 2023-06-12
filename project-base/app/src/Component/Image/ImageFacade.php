@@ -97,8 +97,12 @@ class ImageFacade extends BaseImageFacade
      * @param string|null $type
      * @return string
      */
-    public function getImageUrl(DomainConfig $domainConfig, object $imageOrEntity, ?string $sizeName = null, ?string $type = null): string
-    {
+    public function getImageUrl(
+        DomainConfig $domainConfig,
+        object $imageOrEntity,
+        ?string $sizeName = null,
+        ?string $type = null,
+    ): string {
         $image = $this->getImageByObject($imageOrEntity, $type);
         $cacheId = $this->getCacheIdForImageUrl($image->getId(), $domainConfig->getId(), $type, $sizeName);
 
@@ -183,8 +187,12 @@ class ImageFacade extends BaseImageFacade
      * @param string|null $type
      * @return \App\Component\Image\AdditionalImageData[]
      */
-    public function getAdditionalImagesData(DomainConfig $domainConfig, $imageOrEntity, ?string $sizeName, ?string $type): array
-    {
+    public function getAdditionalImagesData(
+        DomainConfig $domainConfig,
+        $imageOrEntity,
+        ?string $sizeName,
+        ?string $type,
+    ): array {
         $image = $this->getImageByObject($imageOrEntity, $type);
 
         $entityConfig = $this->imageConfig->getEntityConfigByEntityName($image->getEntityName());
@@ -197,7 +205,7 @@ class ImageFacade extends BaseImageFacade
                 $additionalSizeConfig->getMedia(),
                 $url,
                 $additionalSizeConfig->getWidth(),
-                $additionalSizeConfig->getHeight()
+                $additionalSizeConfig->getHeight(),
             );
         }
 
@@ -233,7 +241,7 @@ class ImageFacade extends BaseImageFacade
                 $additionalSizeConfig->getMedia(),
                 $imageUrl,
                 $additionalSizeConfig->getWidth(),
-                $additionalSizeConfig->getHeight()
+                $additionalSizeConfig->getHeight(),
             );
         }
 
@@ -247,8 +255,12 @@ class ImageFacade extends BaseImageFacade
      * @param string|null $sizeName
      * @return string
      */
-    protected function getAdditionalImageUrl(DomainConfig $domainConfig, int $additionalSizeIndex, BaseImage $image, ?string $sizeName): string
-    {
+    protected function getAdditionalImageUrl(
+        DomainConfig $domainConfig,
+        int $additionalSizeIndex,
+        BaseImage $image,
+        ?string $sizeName,
+    ): string {
         $cacheId = $this->getCacheIdForImageUrl(
             $image->getId(),
             $domainConfig->getId(),
@@ -285,7 +297,7 @@ class ImageFacade extends BaseImageFacade
         object $entity,
         array $temporaryFilenames,
         ?string $type,
-        bool $deleteOldImage = true
+        bool $deleteOldImage = true,
     ): ?Image {
         $newImage = null;
 
@@ -522,8 +534,11 @@ class ImageFacade extends BaseImageFacade
      * @param int $entityId
      * @param string|null $type
      */
-    public function invalidateCacheByEntityNameAndEntityIdAndType(string $entityName, int $entityId, ?string $type): void
-    {
+    public function invalidateCacheByEntityNameAndEntityIdAndType(
+        string $entityName,
+        int $entityId,
+        ?string $type,
+    ): void {
         $cacheIdForSingleEntity = $this->getCacheIdForSingleEntity($entityName, $entityId, $type);
         $cacheIdForMultipleEntities = $this->getCacheIdForMultipleEntities($entityName, $entityId, $type);
 

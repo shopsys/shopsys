@@ -12,16 +12,10 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class UniqueProductCatnumValidator extends ConstraintValidator
 {
     /**
-     * @var \App\Model\Product\ProductFacade
-     */
-    private ProductFacade $productFacade;
-
-    /**
      * @param \App\Model\Product\ProductFacade $productFacade
      */
-    public function __construct(ProductFacade $productFacade)
+    public function __construct(private ProductFacade $productFacade)
     {
-        $this->productFacade = $productFacade;
     }
 
     /**

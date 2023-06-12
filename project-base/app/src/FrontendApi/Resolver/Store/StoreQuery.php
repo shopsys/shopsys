@@ -25,7 +25,7 @@ class StoreQuery extends AbstractQuery
     public function __construct(
         private readonly StoreFacade $storeFacade,
         private readonly FriendlyUrlFacade $friendlyUrlFacade,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 
@@ -63,7 +63,7 @@ class StoreQuery extends AbstractQuery
             $friendlyUrl = $this->friendlyUrlFacade->getFriendlyUrlByRouteNameAndSlug(
                 $this->domain->getId(),
                 'front_stores_detail',
-                $urlSlug
+                $urlSlug,
             );
 
             return $this->storeFacade->getByIdEnabledOnDomain($friendlyUrl->getEntityId(), $this->domain->getId());

@@ -12,24 +12,6 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 
 class FriendlyUrlGridFactory implements GridFactoryInterface
 {
-    /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private FriendlyUrlFacade $friendlyUrlFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    private AdminDomainTabsFacade $adminDomainTabsFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    private GridFactory $gridFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData
-     */
     private QuickSearchFormData $quickSearchFormData;
 
     /**
@@ -38,13 +20,10 @@ class FriendlyUrlGridFactory implements GridFactoryInterface
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      */
     public function __construct(
-        FriendlyUrlFacade $friendlyUrlFacade,
-        AdminDomainTabsFacade $adminDomainTabsFacade,
-        GridFactory $gridFactory
+        private FriendlyUrlFacade $friendlyUrlFacade,
+        private AdminDomainTabsFacade $adminDomainTabsFacade,
+        private GridFactory $gridFactory,
     ) {
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
-        $this->gridFactory = $gridFactory;
         $this->quickSearchFormData = new QuickSearchFormData();
     }
 
@@ -108,7 +87,7 @@ class FriendlyUrlGridFactory implements GridFactoryInterface
     {
         $queryBuilder = $this->friendlyUrlFacade->getNonUsedFriendlyUrlQueryBuilderByDomainIdAndQuickSearch(
             $this->adminDomainTabsFacade->getSelectedDomainId(),
-            $this->getQuickSearchFormData()
+            $this->getQuickSearchFormData(),
         );
 
         $dataSource = new QueryBuilderWithRowManipulatorDataSource(
@@ -118,7 +97,7 @@ class FriendlyUrlGridFactory implements GridFactoryInterface
                 $row['fu']['routeName'] = $this->getReadableNameForRouteName($row['fu']['routeName']);
                 $row['fu']['redirectCode'] = $this->getReadableNameForRedirectCode($row['fu']['redirectCode']);
                 return $row;
-            }
+            },
         );
 
         $grid = $this->gridFactory->create('notUsedFriendlyUrls', $dataSource);

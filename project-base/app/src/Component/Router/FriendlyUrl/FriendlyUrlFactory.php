@@ -27,7 +27,7 @@ class FriendlyUrlFactory extends BaseFriendlyUrlFactory
         int $entityId,
         string $entityName,
         int $domainId,
-        ?int $indexPostfix = null
+        ?int $indexPostfix = null,
     ): ?FriendlyUrl {
         if ($entityName === '') {
             return null;

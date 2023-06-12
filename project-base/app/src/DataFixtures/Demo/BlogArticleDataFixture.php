@@ -50,45 +50,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         '41b8d6bf-1fe0-462d-91ba-e17adcdd3944', '654be677-983f-4f33-a8f6-996bf0b2a7c2', '064d88ef-a017-440f-8cab-7641aaab256f',
     ];
 
-    /**
-     * @var \App\Model\Blog\Article\BlogArticleFacade
-     */
-    private $blogArticleFacade;
-
-    /**
-     * @var \App\Model\Blog\Article\BlogArticleDataFactory
-     */
-    private $blogArticleDataFactory;
-
-    /**
-     * @var \App\Model\Blog\Category\BlogCategoryFacade
-     */
-    private $blogCategoryFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
-     * @var \App\Model\Blog\BlogVisibilityFacade
-     */
-    private $blogVisibilityFacade;
-
-    /**
-     * @var \App\Model\Blog\Category\BlogCategoryDataFactory
-     */
-    private $blogCategoryDataFactory;
-
-    /**
-     * @var int
-     */
-    private $articleCounter = 1;
-
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private EntityManagerInterface $em;
+    private int $articleCounter = 1;
 
     /**
      * @param \App\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
@@ -100,21 +62,14 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
-        BlogArticleFacade $blogArticleFacade,
-        BlogArticleDataFactory $blogArticleDataFactory,
-        BlogCategoryFacade $blogCategoryFacade,
-        Domain $domain,
-        BlogVisibilityFacade $blogVisibilityFacade,
-        BlogCategoryDataFactory $blogCategoryDataFactory,
-        EntityManagerInterface $em
+        private BlogArticleFacade $blogArticleFacade,
+        private BlogArticleDataFactory $blogArticleDataFactory,
+        private BlogCategoryFacade $blogCategoryFacade,
+        private Domain $domain,
+        private BlogVisibilityFacade $blogVisibilityFacade,
+        private BlogCategoryDataFactory $blogCategoryDataFactory,
+        private EntityManagerInterface $em,
     ) {
-        $this->blogArticleFacade = $blogArticleFacade;
-        $this->blogArticleDataFactory = $blogArticleDataFactory;
-        $this->blogCategoryFacade = $blogCategoryFacade;
-        $this->domain = $domain;
-        $this->blogVisibilityFacade = $blogVisibilityFacade;
-        $this->blogCategoryDataFactory = $blogCategoryDataFactory;
-        $this->em = $em;
     }
 
     /**
@@ -380,8 +335,8 @@ EOT));
                     'UPDATE %s bc SET bc.uuid = \'%s\' WHERE bc.id = %d',
                     BlogCategory::class,
                     $uuid,
-                    $id
-                )
+                    $id,
+                ),
             )
             ->execute();
     }

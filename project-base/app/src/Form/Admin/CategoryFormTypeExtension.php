@@ -28,41 +28,6 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
     public const DISABLED_FIELDS = [];
 
     /**
-     * @var \App\Model\Svg\SvgProvider
-     */
-    private $svgProvider;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterRepository
-     */
-    private $parameterRepository;
-
-    /**
-     * @var \App\Component\Form\FormBuilderHelper
-     */
-    private $formBuilderHelper;
-
-    /**
-     * @var \App\Model\Category\CategoryFacade
-     */
-    private CategoryFacade $categoryFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer
-     */
-    private RemoveDuplicatesFromArrayTransformer $removeDuplicatesFromArrayTransformer;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer
-     */
-    private CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
-    private Localization $localization;
-
-    /**
      * @param \App\Model\Svg\SvgProvider $svgProvider
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
@@ -72,21 +37,14 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
-        SvgProvider $svgProvider,
-        ParameterRepository $parameterRepository,
-        FormBuilderHelper $formBuilderHelper,
-        CategoryFacade $categoryFacade,
-        RemoveDuplicatesFromArrayTransformer $removeDuplicatesFromArrayTransformer,
-        CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer,
-        Localization $localization
+        private SvgProvider $svgProvider,
+        private ParameterRepository $parameterRepository,
+        private FormBuilderHelper $formBuilderHelper,
+        private CategoryFacade $categoryFacade,
+        private RemoveDuplicatesFromArrayTransformer $removeDuplicatesFromArrayTransformer,
+        private CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer,
+        private Localization $localization,
     ) {
-        $this->svgProvider = $svgProvider;
-        $this->parameterRepository = $parameterRepository;
-        $this->formBuilderHelper = $formBuilderHelper;
-        $this->categoryFacade = $categoryFacade;
-        $this->removeDuplicatesFromArrayTransformer = $removeDuplicatesFromArrayTransformer;
-        $this->categoriesIdsToCategoriesTransformer = $categoriesIdsToCategoriesTransformer;
-        $this->localization = $localization;
     }
 
     /**
@@ -122,7 +80,7 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
 
         $categoryPaths = $this->categoryFacade->getFullPathsIndexedByIds(
-            $this->localization->getAdminLocale()
+            $this->localization->getAdminLocale(),
         );
         $builder->get('seo')->add(
             $builder
@@ -132,7 +90,7 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
                         'label' => t('Propojené kategorie'),
                     ])
                     ->addViewTransformer($this->removeDuplicatesFromArrayTransformer)
-                    ->addModelTransformer($this->categoriesIdsToCategoriesTransformer)
+                    ->addModelTransformer($this->categoriesIdsToCategoriesTransformer),
         );
     }
 

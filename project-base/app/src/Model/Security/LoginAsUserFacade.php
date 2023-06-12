@@ -41,14 +41,14 @@ class LoginAsUserFacade extends BaseLoginAsUserFacade
         RequestStack $requestStack,
         private readonly TokenAuthenticator $tokenAuthenticator,
         private readonly AdministratorFacade $administratorFacade,
-        private readonly TokenFacade $tokenFacade
+        private readonly TokenFacade $tokenFacade,
     ) {
         parent::__construct(
             $tokenStorage,
             $eventDispatcher,
             $customerUserRepository,
             $administratorFrontSecurityFacade,
-            $requestStack
+            $requestStack,
         );
     }
 

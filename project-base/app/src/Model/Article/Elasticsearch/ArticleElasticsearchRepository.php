@@ -11,25 +11,13 @@ use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 class ArticleElasticsearchRepository
 {
     /**
-     * @var \App\Model\Article\Elasticsearch\FilterQueryFactory
-     */
-    private FilterQueryFactory $filterQueryFactory;
-
-    /**
-     * @var \App\Model\Article\Elasticsearch\ArticleElasticsearchDataFetcher
-     */
-    private ArticleElasticsearchDataFetcher $articleElasticsearchDataFetcher;
-
-    /**
      * @param \App\Model\Article\Elasticsearch\FilterQueryFactory $filterQueryFactory
      * @param \App\Model\Article\Elasticsearch\ArticleElasticsearchDataFetcher $articleElasticsearchDataFetcher
      */
     public function __construct(
-        FilterQueryFactory $filterQueryFactory,
-        ArticleElasticsearchDataFetcher $articleElasticsearchDataFetcher
+        private FilterQueryFactory $filterQueryFactory,
+        private ArticleElasticsearchDataFetcher $articleElasticsearchDataFetcher,
     ) {
-        $this->filterQueryFactory = $filterQueryFactory;
-        $this->articleElasticsearchDataFetcher = $articleElasticsearchDataFetcher;
     }
 
     /**

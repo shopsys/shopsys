@@ -41,7 +41,7 @@ class CustomerController extends BaseCustomerController
 
         $queryBuilder = $this->customerUserListAdminFacade->getCustomerUserListQueryBuilderByQuickSearchData(
             $this->adminDomainTabsFacade->getSelectedDomainId(),
-            $quickSearchForm->getData()
+            $quickSearchForm->getData(),
         );
         $queryBuilder->addSelect('BOOL_AND(ba.activated) as isActivated');
 

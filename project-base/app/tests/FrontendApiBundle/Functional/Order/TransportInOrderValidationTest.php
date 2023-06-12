@@ -20,37 +20,31 @@ use Shopsys\FrontendApiBundle\Component\Constraints\PaymentTransportRelation;
 class TransportInOrderValidationTest extends AbstractOrderTestCase
 {
     /**
-     * @var \App\Model\Transport\TransportFacade
      * @inject
      */
     private TransportFacade $transportFacade;
 
     /**
-     * @var \App\Model\Transport\TransportDataFactory
      * @inject
      */
     private TransportDataFactory $transportDataFactory;
 
     /**
-     * @var \App\Model\Store\StoreFacade
      * @inject
      */
     private StoreFacade $storeFacade;
 
     /**
-     * @var \App\Model\Store\StoreDataFactory
      * @inject
      */
     private StoreDataFactory $storeDataFactory;
 
     /**
-     * @var \App\Model\Cart\Transport\CartTransportFacade
      * @inject
      */
     private CartTransportFacade $cartTransportFacade;
 
     /**
-     * @var \App\FrontendApi\Model\Cart\CartFacade
      * @inject
      */
     private CartFacade $cartFacade;

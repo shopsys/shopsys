@@ -24,8 +24,12 @@ class GoogleProductRepository extends BaseGoogleProductRepository
      * @param int $maxResults
      * @return \App\Model\Product\Product[]|\Doctrine\Common\Collections\Collection
      */
-    public function getProducts(DomainConfig $domainConfig, PricingGroup $pricingGroup, ?int $lastSeekId, int $maxResults): iterable
-    {
+    public function getProducts(
+        DomainConfig $domainConfig,
+        PricingGroup $pricingGroup,
+        ?int $lastSeekId,
+        int $maxResults,
+    ): iterable {
         $queryBuilder = $this->productRepository->getAllVisibleQueryBuilder($domainConfig->getId(), $pricingGroup)
             ->addSelect('b')->leftJoin('p.brand', 'b')
             ->leftJoin(GoogleProductDomain::class, 'gpd', Join::WITH, 'gpd.product = p AND gpd.domainId = :domainId')

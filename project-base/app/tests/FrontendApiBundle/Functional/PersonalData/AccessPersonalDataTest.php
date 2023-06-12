@@ -11,9 +11,6 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class AccessPersonalDataTest extends GraphQlTestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest
-     */
     private PersonalDataAccessRequest $personalDataAccessRequest;
 
     protected function setUp(): void
@@ -30,7 +27,7 @@ class AccessPersonalDataTest extends GraphQlTestCase
 
         $this->personalDataAccessRequest = $personalDataAccessRequestFacade->createPersonalDataAccessRequest(
             $personalDataAccessRequest,
-            $this->domain->getId()
+            $this->domain->getId(),
         );
     }
 

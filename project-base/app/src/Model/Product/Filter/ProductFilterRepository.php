@@ -37,25 +37,25 @@ class ProductFilterRepository extends BaseProductFilterRepository
     public function applyFiltering(
         QueryBuilder $productsQueryBuilder,
         ProductFilterData $productFilterData,
-        PricingGroup $pricingGroup
+        PricingGroup $pricingGroup,
     ) {
         $this->filterByPrice(
             $productsQueryBuilder,
             $productFilterData->minimalPrice,
             $productFilterData->maximalPrice,
-            $pricingGroup
+            $pricingGroup,
         );
         $this->filterByFlags(
             $productsQueryBuilder,
-            $productFilterData->flags
+            $productFilterData->flags,
         );
         $this->filterByBrands(
             $productsQueryBuilder,
-            $productFilterData->brands
+            $productFilterData->brands,
         );
         $this->parameterFilterRepository->filterByParameters(
             $productsQueryBuilder,
-            $productFilterData->parameters
+            $productFilterData->parameters,
         );
     }
 }

@@ -12,33 +12,15 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculat
 class PromoCodeApplicableProductsTotalPriceCalculator
 {
     /**
-     * @var \App\Model\Customer\User\CurrentCustomerUser
-     */
-    private CurrentCustomerUser $currentCustomerUser;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation
-     */
-    private QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        CurrentCustomerUser $currentCustomerUser,
-        QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation,
-        Domain $domain
+        private CurrentCustomerUser $currentCustomerUser,
+        private QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation,
+        private Domain $domain,
     ) {
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->quantifiedProductPriceCalculation = $quantifiedProductPriceCalculation;
-        $this->domain = $domain;
     }
 
     /**

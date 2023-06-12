@@ -14,26 +14,6 @@ class AkeneoImportProductGroupParameterFacade extends AbstractAkeneoImportTransf
     public const PREFIX_PARAMETER_GROUP_CODE = 'param__';
 
     /**
-     * @var \App\Model\Product\Parameter\Transfer\Akeneo\ProductParameterGroupTransferAkeneoFacade
-     */
-    private $productParameterGroupTransferAkeneoFacade;
-
-    /**
-     * @var \App\Model\Product\Parameter\Transfer\Akeneo\ProductParameterGroupTransferAkeneoMapper
-     */
-    private $productParameterGroupTransferAkeneoMapper;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterGroupFacade
-     */
-    private $parameterGroupFacade;
-
-    /**
-     * @var \App\Model\Product\Parameter\Transfer\Akeneo\ProductParameterGroupTransferAkeneoValidator
-     */
-    private $productParameterGroupTransferAkeneoValidator;
-
-    /**
      * @param \App\Component\Akeneo\Transfer\AkeneoImportTransferDependency $akeneoImportTransferDependency
      * @param \App\Model\Product\Parameter\Transfer\Akeneo\ProductParameterGroupTransferAkeneoFacade $productParameterGroupTransferAkeneoFacade
      * @param \App\Model\Product\Parameter\Transfer\Akeneo\ProductParameterGroupTransferAkeneoMapper $productParameterGroupTransferAkeneoMapper
@@ -42,17 +22,12 @@ class AkeneoImportProductGroupParameterFacade extends AbstractAkeneoImportTransf
      */
     public function __construct(
         AkeneoImportTransferDependency $akeneoImportTransferDependency,
-        ProductParameterGroupTransferAkeneoFacade $productParameterGroupTransferAkeneoFacade,
-        ProductParameterGroupTransferAkeneoMapper $productParameterGroupTransferAkeneoMapper,
-        ParameterGroupFacade $parameterGroupFacade,
-        ProductParameterGroupTransferAkeneoValidator $productParameterGroupTransferAkeneoValidator
+        private ProductParameterGroupTransferAkeneoFacade $productParameterGroupTransferAkeneoFacade,
+        private ProductParameterGroupTransferAkeneoMapper $productParameterGroupTransferAkeneoMapper,
+        private ParameterGroupFacade $parameterGroupFacade,
+        private ProductParameterGroupTransferAkeneoValidator $productParameterGroupTransferAkeneoValidator,
     ) {
         parent::__construct($akeneoImportTransferDependency);
-
-        $this->productParameterGroupTransferAkeneoFacade = $productParameterGroupTransferAkeneoFacade;
-        $this->productParameterGroupTransferAkeneoMapper = $productParameterGroupTransferAkeneoMapper;
-        $this->parameterGroupFacade = $parameterGroupFacade;
-        $this->productParameterGroupTransferAkeneoValidator = $productParameterGroupTransferAkeneoValidator;
     }
 
     /**

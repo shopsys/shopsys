@@ -16,16 +16,10 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 class BlogArticleRepository
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
-        $this->em = $em;
     }
 
     /**
@@ -55,8 +49,10 @@ class BlogArticleRepository
      * @param string $locale
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getBlogArticlesByDomainIdAndLocaleQueryBuilderIfInBlogCategory(int $domainId, string $locale): QueryBuilder
-    {
+    public function getBlogArticlesByDomainIdAndLocaleQueryBuilderIfInBlogCategory(
+        int $domainId,
+        string $locale,
+    ): QueryBuilder {
         $queryBuilder = $this->getBlogArticlesByDomainIdAndLocaleQueryBuilder($domainId, $locale);
         $subquery = $queryBuilder->getEntityManager()->createQueryBuilder()
             ->select('1')

@@ -16,7 +16,7 @@ class StoresBatchLoader
      */
     public function __construct(
         readonly private PromiseAdapter $promiseAdapter,
-        readonly private StoreFacade $storeFacade
+        readonly private StoreFacade $storeFacade,
     ) {
     }
 

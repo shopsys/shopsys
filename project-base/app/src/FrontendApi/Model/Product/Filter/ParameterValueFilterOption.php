@@ -15,21 +15,14 @@ class ParameterValueFilterOption extends BaseParameterValueFilterOption
     public ParameterValue $value;
 
     /**
-     * @var bool
-     */
-    public bool $isSelected;
-
-    /**
      * @param \App\Model\Product\Parameter\ParameterValue $parameterValue
      * @param int $count
      * @param bool $isAbsolute
      * @param bool $isSelected
      */
-    public function __construct(ParameterValue $parameterValue, int $count, bool $isAbsolute, bool $isSelected)
+    public function __construct(ParameterValue $parameterValue, int $count, bool $isAbsolute, public bool $isSelected)
     {
         parent::__construct($parameterValue, $count, $isAbsolute);
-
-        $this->isSelected = $isSelected;
     }
 
     /**

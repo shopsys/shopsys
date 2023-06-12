@@ -55,7 +55,7 @@ class NavigationItemCategory implements OrderableEntityInterface
         NavigationItem $navigationItem,
         int $columnNumber,
         int $position,
-        Category $category
+        Category $category,
     ) {
         $this->navigationItem = $navigationItem;
         $this->columnNumber = $columnNumber;

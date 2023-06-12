@@ -32,7 +32,7 @@ class BlogArticleFacade
         private readonly BlogArticleBlogCategoryDomainFactory $blogArticleBlogCategoryDomainFactory,
         private readonly ImageFacade $imageFacade,
         private readonly BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler,
-        private readonly BlogArticleExportScheduler $blogArticleExportScheduler
+        private readonly BlogArticleExportScheduler $blogArticleExportScheduler,
     ) {
     }
 
@@ -139,7 +139,7 @@ class BlogArticleFacade
         return $this->blogArticleRepository->getBlogArticleIdsByCategory(
             $blogCategory,
             $domainId,
-            $locale
+            $locale,
         );
     }
 

@@ -24,11 +24,6 @@ use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer;
 class ProductFilterFacade extends BaseProductFilterFacade
 {
     /**
-     * @var \App\Model\Product\Filter\ProductFilterDataFactory
-     */
-    private ProductFilterDataFactory $productFilterDataFactory;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\FrontendApi\Model\Product\Filter\ProductFilterDataMapper $productFilterDataMapper
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer $productFilterNormalizer
@@ -40,16 +35,14 @@ class ProductFilterFacade extends BaseProductFilterFacade
         ProductFilterDataMapper $productFilterDataMapper,
         ProductFilterNormalizer $productFilterNormalizer,
         ProductFilterConfigFactory $productFilterConfigFactory,
-        ProductFilterDataFactory $productFilterDataFactory
+        private ProductFilterDataFactory $productFilterDataFactory,
     ) {
         parent::__construct(
             $domain,
             $productFilterDataMapper,
             $productFilterNormalizer,
-            $productFilterConfigFactory
+            $productFilterConfigFactory,
         );
-
-        $this->productFilterDataFactory = $productFilterDataFactory;
     }
 
     /**
@@ -82,7 +75,7 @@ class ProductFilterFacade extends BaseProductFilterFacade
             $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForFlag(
                 $flag,
                 $locale,
-                $searchText
+                $searchText,
             );
         }
 
@@ -155,7 +148,7 @@ class ProductFilterFacade extends BaseProductFilterFacade
             $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForSearch(
                 $this->domain->getId(),
                 $this->domain->getLocale(),
-                $searchText
+                $searchText,
             );
         }
 
@@ -176,7 +169,7 @@ class ProductFilterFacade extends BaseProductFilterFacade
                 $this->domain->getId(),
                 $this->domain->getLocale(),
                 $category,
-                $searchText
+                $searchText,
             );
         }
 
@@ -197,7 +190,7 @@ class ProductFilterFacade extends BaseProductFilterFacade
                 $this->domain->getId(),
                 $this->domain->getLocale(),
                 $brand,
-                $searchText
+                $searchText,
             );
         }
 

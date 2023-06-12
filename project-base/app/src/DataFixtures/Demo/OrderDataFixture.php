@@ -672,7 +672,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
                 ProductDataFixture::PRODUCT_PREFIX . '9' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '14' => 1,
                 ProductDataFixture::PRODUCT_PREFIX . '10' => 2,
-            ]
+            ],
         );
     }
 
@@ -823,7 +823,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
                 ProductDataFixture::PRODUCT_PREFIX . '2' => 2,
                 ProductDataFixture::PRODUCT_PREFIX . '4' => 4,
             ],
-            $customerUser
+            $customerUser,
         );
     }
 

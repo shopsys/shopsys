@@ -13,11 +13,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class BrandResolverMap extends BaseBrandResolverMap
 {
     /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private FriendlyUrlFacade $friendlyUrlFacade;
-
-    /**
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
@@ -25,11 +20,9 @@ class BrandResolverMap extends BaseBrandResolverMap
     public function __construct(
         UrlGeneratorInterface $urlGenerator,
         Domain $domain,
-        FriendlyUrlFacade $friendlyUrlFacade
+        private FriendlyUrlFacade $friendlyUrlFacade,
     ) {
         parent::__construct($urlGenerator, $domain);
-
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
     }
 
     /**
@@ -55,7 +48,7 @@ class BrandResolverMap extends BaseBrandResolverMap
         $friendlyUrlSlug = $this->friendlyUrlFacade->getMainFriendlyUrlSlug(
             $this->domain->getId(),
             'front_brand_detail',
-            $brand->getId()
+            $brand->getId(),
         );
 
         return '/' . $friendlyUrlSlug;

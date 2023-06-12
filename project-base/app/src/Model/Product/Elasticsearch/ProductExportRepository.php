@@ -275,8 +275,11 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    private function getMaximalVariantPriceForFilteringMinimalPrice(Product $product, PricingGroup $pricingGroup, int $domainId): Money
-    {
+    private function getMaximalVariantPriceForFilteringMinimalPrice(
+        Product $product,
+        PricingGroup $pricingGroup,
+        int $domainId,
+    ): Money {
         $price = null;
         if (!$product->isMainVariant()) {
             return $this->productPriceCalculation->calculatePrice(
@@ -313,8 +316,11 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function getMinimalVariantPriceForFilteringMaximalPrice(Product $product, PricingGroup $pricingGroup, int $domainId): Money
-    {
+    public function getMinimalVariantPriceForFilteringMaximalPrice(
+        Product $product,
+        PricingGroup $pricingGroup,
+        int $domainId,
+    ): Money {
         $price = null;
         if (!$product->isMainVariant()) {
             return $this->productPriceCalculation->calculatePrice(

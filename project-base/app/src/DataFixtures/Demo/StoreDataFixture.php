@@ -63,7 +63,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
         private readonly StoreFacade $storeFacade,
         private readonly StoreDataFactory $storeDataFactory,
         private readonly Domain $domain,
-        private readonly ImageUploadDataFactory $imageUploadDataFactory
+        private readonly ImageUploadDataFactory $imageUploadDataFactory,
     ) {
     }
 

@@ -14,17 +14,7 @@ class AkeneoImportProductDetailFacade extends AbstractAkeneoImportTransfer
     /**
      * @var string[]
      */
-    private $productIdentifierList;
-
-    /**
-     * @var \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoFacade
-     */
-    private $productTransferAkeneoFacade;
-
-    /**
-     * @var \App\Model\Product\Transfer\Akeneo\TransferredProductProcessor
-     */
-    private $transferredProductProcessor;
+    private array $productIdentifierList;
 
     /**
      * @param \App\Component\Akeneo\Transfer\AkeneoImportTransferDependency $akeneoImportTransferDependency
@@ -33,13 +23,10 @@ class AkeneoImportProductDetailFacade extends AbstractAkeneoImportTransfer
      */
     public function __construct(
         AkeneoImportTransferDependency $akeneoImportTransferDependency,
-        ProductTransferAkeneoFacade $productTransferAkeneoFacade,
-        TransferredProductProcessor $transferredProductProcessor
+        private ProductTransferAkeneoFacade $productTransferAkeneoFacade,
+        private TransferredProductProcessor $transferredProductProcessor,
     ) {
         parent::__construct($akeneoImportTransferDependency);
-
-        $this->productTransferAkeneoFacade = $productTransferAkeneoFacade;
-        $this->transferredProductProcessor = $transferredProductProcessor;
     }
 
     /**

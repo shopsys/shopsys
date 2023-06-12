@@ -37,7 +37,7 @@ class ProductListOrderingModeForListFacade extends BaseProductListOrderingModeFo
         return $this->requestToOrderingModeIdConverter->getOrderingModeIdFromRequest(
             $request,
             $this->getProductListOrderingConfig(),
-            $readyCategorySeoMix
+            $readyCategorySeoMix,
         );
     }
 }

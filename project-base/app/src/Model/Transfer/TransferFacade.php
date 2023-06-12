@@ -9,25 +9,13 @@ use Doctrine\ORM\EntityManagerInterface;
 class TransferFacade
 {
     /**
-     * @var \App\Model\Transfer\TransferRepository
-     */
-    private $transferRepository;
-
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
      * @param \App\Model\Transfer\TransferRepository $transferRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
-        TransferRepository $transferRepository,
-        EntityManagerInterface $em
+        private TransferRepository $transferRepository,
+        private EntityManagerInterface $em,
     ) {
-        $this->transferRepository = $transferRepository;
-        $this->em = $em;
     }
 
     /**

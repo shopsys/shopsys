@@ -15,7 +15,7 @@ class NavigationSaveOrderingListener
      * @param \App\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
      */
     public function __construct(
-        private readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
+        private readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }
 

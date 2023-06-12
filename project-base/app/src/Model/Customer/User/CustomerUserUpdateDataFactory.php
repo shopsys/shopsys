@@ -35,12 +35,12 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
     protected function createInstance(
         BillingAddressData $billingAddressData,
         DeliveryAddressData $deliveryAddressData,
-        BaseCustomerUserData $customerUserData
+        BaseCustomerUserData $customerUserData,
     ): BaseCustomerUserUpdateData {
         return new CustomerUserUpdateData(
             $billingAddressData,
             $deliveryAddressData,
-            $customerUserData
+            $customerUserData,
         );
     }
 
@@ -56,7 +56,7 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
         return $this->createInstance(
             $this->billingAddressDataFactory->createFromBillingAddress($billingAddress),
             $this->getDeliveryAddressDataFromCustomerUser($customerUser),
-            $this->customerUserDataFactory->createFromCustomerUser($customerUser)
+            $this->customerUserDataFactory->createFromCustomerUser($customerUser),
         );
     }
 
@@ -103,8 +103,11 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
      * @param \App\Model\Customer\DeliveryAddress|null $deliveryAddress
      * @return \App\Model\Customer\User\CustomerUserUpdateData
      */
-    public function createAmendedByOrder(CustomerUser $customerUser, Order $order, ?DeliveryAddress $deliveryAddress): BaseCustomerUserUpdateData
-    {
+    public function createAmendedByOrder(
+        CustomerUser $customerUser,
+        Order $order,
+        ?DeliveryAddress $deliveryAddress,
+    ): BaseCustomerUserUpdateData {
         /** @var \App\Model\Customer\BillingAddress $billingAddress */
         $billingAddress = $customerUser->getCustomer()->getBillingAddress();
 
@@ -112,15 +115,15 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
 
         $customerUserUpdateData->customerUserData->firstName = Utils::ifNull(
             $customerUser->getFirstName(),
-            $order->getFirstName()
+            $order->getFirstName(),
         );
         $customerUserUpdateData->customerUserData->lastName = Utils::ifNull(
             $customerUser->getLastName(),
-            $order->getLastName()
+            $order->getLastName(),
         );
         $customerUserUpdateData->billingAddressData = $this->getAmendedBillingAddressDataByOrder(
             $order,
-            $billingAddress
+            $billingAddress,
         );
 
         /** @var \App\Model\Transport\Transport $transport */
@@ -128,7 +131,7 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
         if (!$transport->isPersonalPickup()) {
             $customerUserUpdateData->deliveryAddressData = $this->getAmendedDeliveryAddressDataByOrder(
                 $order,
-                $deliveryAddress
+                $deliveryAddress,
             );
         }
 

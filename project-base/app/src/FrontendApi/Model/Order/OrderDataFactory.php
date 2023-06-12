@@ -31,11 +31,6 @@ use Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory as BaseOrderDataFacto
 class OrderDataFactory extends BaseOrderDataFactory
 {
     /**
-     * @var \App\Model\Store\StoreFacade
-     */
-    private StoreFacade $storeFacade;
-
-    /**
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
@@ -53,11 +48,9 @@ class OrderDataFactory extends BaseOrderDataFactory
         CurrencyFacade $currencyFacade,
         CountryFacade $countryFacade,
         ProductFacade $productFacade,
-        StoreFacade $storeFacade
+        private StoreFacade $storeFacade,
     ) {
         parent::__construct($orderDataFactory, $domain, $paymentFacade, $transportFacade, $currencyFacade, $countryFacade, $productFacade);
-
-        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -94,7 +87,7 @@ class OrderDataFactory extends BaseOrderDataFactory
             try {
                 $store = $this->storeFacade->getByUuidEnabledOnDomain(
                     $pickupPlaceIdentifier,
-                    $this->domain->getId()
+                    $this->domain->getId(),
                 );
                 $this->setOrderDataByStore($orderData, $store);
             } catch (StoreByUuidNotFoundException $exception) {

@@ -41,7 +41,7 @@ class FriendlyUrlRouterFactory extends BaseFriendlyUrlRouterFactory
             $configLoader,
             $friendlyUrlRepository,
             $friendlyUrlCacheKeyProvider,
-            $mainFriendlyUrlSlugCache
+            $mainFriendlyUrlSlugCache,
         );
     }
 
@@ -59,11 +59,11 @@ class FriendlyUrlRouterFactory extends BaseFriendlyUrlRouterFactory
                 $context,
                 $this->friendlyUrlRepository,
                 $this->friendlyUrlCacheKeyProvider,
-                $this->mainFriendlyUrlSlugCache
+                $this->mainFriendlyUrlSlugCache,
             ),
             new FriendlyUrlMatcher($this->friendlyUrlRepository, $this->readyCategorySeoMixRepository),
             $domainConfig,
-            $this->friendlyUrlRouterResourceFilepath
+            $this->friendlyUrlRouterResourceFilepath,
         );
     }
 }

@@ -30,7 +30,7 @@ class LoginMutation extends BaseLoginMutation
         FrontendCustomerUserProvider $frontendCustomerUserProvider,
         UserPasswordHasherInterface $userPasswordHasher,
         TokenFacade $tokenFacade,
-        private readonly MergeCartFacade $mergeCartFacade
+        private readonly MergeCartFacade $mergeCartFacade,
     ) {
         parent::__construct($frontendCustomerUserProvider, $userPasswordHasher, $tokenFacade);
     }

@@ -28,7 +28,7 @@ class PromoCodeMutation extends AbstractMutation
         private readonly CurrentCustomerUser $currentCustomerUser,
         private readonly CartWatcherFacade $cartWatcherFacade,
         private readonly CartPromoCodeFacade $cartPromoCodeFacade,
-        private readonly PromoCodeFacade $promoCodeFacade
+        private readonly PromoCodeFacade $promoCodeFacade,
     ) {
     }
 
@@ -37,8 +37,10 @@ class PromoCodeMutation extends AbstractMutation
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return \App\FrontendApi\Model\Cart\CartWithModificationsResult
      */
-    public function applyPromoCodeToCartMutation(Argument $argument, InputValidator $validator): CartWithModificationsResult
-    {
+    public function applyPromoCodeToCartMutation(
+        Argument $argument,
+        InputValidator $validator,
+    ): CartWithModificationsResult {
         $validator->validate();
 
         $input = $argument['input'];
@@ -61,8 +63,10 @@ class PromoCodeMutation extends AbstractMutation
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
      * @return \App\FrontendApi\Model\Cart\CartWithModificationsResult
      */
-    public function removePromoCodeFromCartMutation(Argument $argument, InputValidator $validator): CartWithModificationsResult
-    {
+    public function removePromoCodeFromCartMutation(
+        Argument $argument,
+        InputValidator $validator,
+    ): CartWithModificationsResult {
         $validator->validate();
 
         $input = $argument['input'];

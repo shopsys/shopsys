@@ -11,11 +11,6 @@ class FrontendApiUser extends BaseFrontendApiUser
     public const CLAIM_ADMINISTRATOR_UUID = 'administratorUuid';
 
     /**
-     * @var string|null
-     */
-    private ?string $administratorUuid;
-
-    /**
      * @param string $uuid
      * @param string $fullName
      * @param string $email
@@ -29,11 +24,9 @@ class FrontendApiUser extends BaseFrontendApiUser
         string $email,
         string $deviceId,
         array $roles,
-        ?string $administratorUuid = null
+        private ?string $administratorUuid = null,
     ) {
         parent::__construct($uuid, $fullName, $email, $deviceId, $roles);
-
-        $this->administratorUuid = $administratorUuid;
     }
 
     /**

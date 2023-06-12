@@ -13,16 +13,10 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 class PromoCodeCategoryRepository
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(protected EntityManagerInterface $em)
     {
-        $this->em = $em;
     }
 
     /**
@@ -78,7 +72,7 @@ class PromoCodeCategoryRepository
                 ProductCategoryDomain::class,
                 'pcd',
                 Join::WITH,
-                'pcc.category = pcd.category AND pcd.domainId = :domainId'
+                'pcc.category = pcd.category AND pcd.domainId = :domainId',
             )
             ->where('pcc.promoCode = :promoCodeId')
             ->setParameter('promoCodeId', $promoCodeId)

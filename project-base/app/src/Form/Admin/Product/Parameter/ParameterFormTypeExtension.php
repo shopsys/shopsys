@@ -16,16 +16,10 @@ class ParameterFormTypeExtension extends AbstractTypeExtension
     public const DISABLED_FIELDS = [];
 
     /**
-     * @var \App\Component\Form\FormBuilderHelper
-     */
-    private $formBuilderHelper;
-
-    /**
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
      */
-    public function __construct(FormBuilderHelper $formBuilderHelper)
+    public function __construct(private FormBuilderHelper $formBuilderHelper)
     {
-        $this->formBuilderHelper = $formBuilderHelper;
     }
 
     /**

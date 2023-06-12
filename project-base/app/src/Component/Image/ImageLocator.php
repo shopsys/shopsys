@@ -50,8 +50,12 @@ class ImageLocator extends BaseImageLocator
      * @param string|null $friendlyUrlSlug
      * @return string
      */
-    public function getRelativeAdditionalImageFilepathWithSlug(Image $image, int $additionalIndex, ?string $sizeName, ?string $friendlyUrlSlug)
-    {
+    public function getRelativeAdditionalImageFilepathWithSlug(
+        Image $image,
+        int $additionalIndex,
+        ?string $sizeName,
+        ?string $friendlyUrlSlug,
+    ) {
         $path = $this->getRelativeImagePath($image->getEntityName(), $image->getType(), $sizeName);
 
         $filename = $this->getAdditionalImageFilename($image->getSeoFilename($friendlyUrlSlug), $additionalIndex);

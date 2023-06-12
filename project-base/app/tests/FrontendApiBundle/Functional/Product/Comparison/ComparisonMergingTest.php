@@ -13,7 +13,6 @@ class ComparisonMergingTest extends GraphQlWithLoginTestCase
 {
     /**
      * @inject
-     * @var \App\Model\Product\Comparison\ComparisonFacade
      */
     private ComparisonFacade $comparisonFacade;
 

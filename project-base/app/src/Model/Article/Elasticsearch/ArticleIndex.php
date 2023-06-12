@@ -10,25 +10,13 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 class ArticleIndex extends AbstractIndex
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    protected Domain $domain;
-
-    /**
-     * @var \App\Model\Article\Elasticsearch\ArticleExportRepository
-     */
-    private ArticleExportRepository $articleExportRepository;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Article\Elasticsearch\ArticleExportRepository $articleExportRepository
      */
     public function __construct(
-        Domain $domain,
-        ArticleExportRepository $articleExportRepository
+        protected Domain $domain,
+        private ArticleExportRepository $articleExportRepository,
     ) {
-        $this->domain = $domain;
-        $this->articleExportRepository = $articleExportRepository;
     }
 
     /**

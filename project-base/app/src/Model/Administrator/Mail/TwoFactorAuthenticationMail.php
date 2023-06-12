@@ -17,23 +17,11 @@ class TwoFactorAuthenticationMail implements MessageFactoryInterface
     public const VARIABLE_AUTHENTICATION_CODE = '{authentication_code}';
 
     /**
-     * @var \App\Component\Setting\Setting
-     */
-    private Setting $setting;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
      * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(Setting $setting, Domain $domain)
+    public function __construct(private Setting $setting, private Domain $domain)
     {
-        $this->setting = $setting;
-        $this->domain = $domain;
     }
 
     /**
@@ -51,7 +39,7 @@ class TwoFactorAuthenticationMail implements MessageFactoryInterface
             $template->getSubject(),
             $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL, $domainId),
             $this->setting->getForDomain(MailSetting::MAIN_ADMIN_MAIL_NAME, $domainId),
-            [self::VARIABLE_AUTHENTICATION_CODE => $administrator->getEmailAuthCode()]
+            [self::VARIABLE_AUTHENTICATION_CODE => $administrator->getEmailAuthCode()],
         );
     }
 }

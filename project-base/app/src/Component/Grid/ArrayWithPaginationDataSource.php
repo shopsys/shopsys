@@ -16,7 +16,7 @@ class ArrayWithPaginationDataSource extends ArrayDataSource
         $limit = null,
         $page = 1,
         $orderSourceColumnName = null,
-        $orderDirection = self::ORDER_ASC
+        $orderDirection = self::ORDER_ASC,
     ): PaginationResult {
         $offset = (int)(($page - 1) * $limit);
         $orderSourceColumnNameArray = array_column($this->data, $orderSourceColumnName);
@@ -24,7 +24,7 @@ class ArrayWithPaginationDataSource extends ArrayDataSource
         array_multisort(
             $orderSourceColumnNameArray,
             $orderDirection === self::ORDER_ASC ? SORT_ASC : SORT_DESC,
-            $this->data
+            $this->data,
         );
 
         $data = array_slice($this->data, $offset, $limit);

@@ -26,8 +26,10 @@ class BillingAddressDataFactory extends BaseBillingAddressDataFactory
      * @param \App\Model\Customer\BillingAddressData $billingAddressData
      * @param \App\Model\Customer\BillingAddress $billingAddress
      */
-    protected function fillFromBillingAddress(BaseBillingAddressData $billingAddressData, BillingAddress $billingAddress): void
-    {
+    protected function fillFromBillingAddress(
+        BaseBillingAddressData $billingAddressData,
+        BillingAddress $billingAddress,
+    ): void {
         parent::fillFromBillingAddress($billingAddressData, $billingAddress);
 
         $billingAddressData->activated = $billingAddress->isActivated();

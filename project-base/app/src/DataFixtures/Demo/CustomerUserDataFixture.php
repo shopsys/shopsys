@@ -472,8 +472,10 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
      * @param \App\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
      * @param array $billingAddressInputData
      */
-    private function setBillingAddressData(CustomerUserUpdateData $customerUserUpdateData, array $billingAddressInputData): void
-    {
+    private function setBillingAddressData(
+        CustomerUserUpdateData $customerUserUpdateData,
+        array $billingAddressInputData,
+    ): void {
         /** @var \App\Model\Customer\BillingAddressData $billingAddressData */
         $billingAddressData = $customerUserUpdateData->billingAddressData;
         $billingAddressData->companyCustomer = $billingAddressInputData[self::KEY_ADDRESS_COMPANY_CUSTOMER];
@@ -490,8 +492,10 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
      * @param \App\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
      * @param array $deliveryAddressInputData
      */
-    private function setDeliveryAddressData(CustomerUserUpdateData $customerUserUpdateData, array $deliveryAddressInputData): void
-    {
+    private function setDeliveryAddressData(
+        CustomerUserUpdateData $customerUserUpdateData,
+        array $deliveryAddressInputData,
+    ): void {
         /** @var \App\Model\Customer\DeliveryAddressData $deliveryAddressData */
         $deliveryAddressData = $customerUserUpdateData->deliveryAddressData;
         $deliveryAddressData->addressFilled = $deliveryAddressInputData[self::KEY_ADDRESS_ADDRESS_FILLED] ?? null;

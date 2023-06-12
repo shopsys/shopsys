@@ -17,7 +17,7 @@ class GrapesJsMailExtension extends AbstractExtension
      */
     public function __construct(
         private readonly MailTemplateBuilder $mailTemplateBuilder,
-        private readonly AdminDomainTabsFacade $adminDomainTabsFacade
+        private readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 

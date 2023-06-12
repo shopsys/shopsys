@@ -14,41 +14,17 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class ReadyCategorySeoMixBatchLoader
 {
     /**
-     * @var \GraphQL\Executor\Promise\PromiseAdapter
-     */
-    private PromiseAdapter $promiseAdapter;
-
-    /**
-     * @var \App\Model\CategorySeo\ReadyCategorySeoMixFacade
-     */
-    private ReadyCategorySeoMixFacade $readyCategorySeoMixFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private FriendlyUrlFacade $friendlyUrlFacade;
-
-    /**
      * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
     public function __construct(
-        PromiseAdapter $promiseAdapter,
-        ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
-        Domain $domain,
-        FriendlyUrlFacade $friendlyUrlFacade
+        private PromiseAdapter $promiseAdapter,
+        private ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
+        private Domain $domain,
+        private FriendlyUrlFacade $friendlyUrlFacade,
     ) {
-        $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
-        $this->domain = $domain;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->promiseAdapter = $promiseAdapter;
     }
 
     /**
@@ -67,10 +43,10 @@ class ReadyCategorySeoMixBatchLoader
                     'slug' => $this->friendlyUrlFacade->getMainFriendlyUrlSlug(
                         $this->domain->getId(),
                         'front_category_seo',
-                        $readyCategorySeoMix->getId()
+                        $readyCategorySeoMix->getId(),
                     ),
                 ],
-                $readyCategorySeoMixes
+                $readyCategorySeoMixes,
             );
         }
 

@@ -18,16 +18,10 @@ class TransferIssueRepository
     public const TRANSFER_ISSUES_KEEP_DAYS_LIMIT = 7;
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(protected EntityManagerInterface $em)
     {
-        $this->em = $em;
     }
 
     /**
@@ -94,7 +88,7 @@ class TransferIssueRepository
         $this->em->getConnection()->executeStatement(
             'DELETE FROM transfer_issues WHERE created_at < :removeIssuesOfOlderDate',
             ['removeIssuesOfOlderDate' => $removeIssuesOfOlderDate],
-            ['removeIssuesOfOlderDate' => Types::DATETIME_IMMUTABLE]
+            ['removeIssuesOfOlderDate' => Types::DATETIME_IMMUTABLE],
         );
     }
 }

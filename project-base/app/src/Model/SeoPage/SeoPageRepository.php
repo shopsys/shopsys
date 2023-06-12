@@ -15,7 +15,7 @@ class SeoPageRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
-        private readonly EntityManagerInterface $em
+        private readonly EntityManagerInterface $em,
     ) {
     }
 

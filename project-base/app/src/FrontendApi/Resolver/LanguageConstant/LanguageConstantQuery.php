@@ -16,7 +16,7 @@ class LanguageConstantQuery extends AbstractQuery
      */
     public function __construct(
         private readonly LanguageConstantFacade $languageConstantFacade,
-        private readonly Domain $domain
+        private readonly Domain $domain,
     ) {
     }
 

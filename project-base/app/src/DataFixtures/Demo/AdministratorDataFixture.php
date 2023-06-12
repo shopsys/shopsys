@@ -22,7 +22,7 @@ class AdministratorDataFixture extends AbstractReferenceFixture
      */
     public function __construct(
         private readonly AdministratorFacade $administratorFacade,
-        private readonly AdministratorDataFactory $administratorDataFactory
+        private readonly AdministratorDataFactory $administratorDataFactory,
     ) {
     }
 

@@ -24,8 +24,11 @@ class OrderQuery extends BaseOrderQuery
      * @param string|null $orderNumber
      * @return \App\Model\Order\Order
      */
-    public function orderByUuidOrUrlHashQuery(?string $uuid = null, ?string $urlHash = null, ?string $orderNumber = null): Order
-    {
+    public function orderByUuidOrUrlHashQuery(
+        ?string $uuid = null,
+        ?string $urlHash = null,
+        ?string $orderNumber = null,
+    ): Order {
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 

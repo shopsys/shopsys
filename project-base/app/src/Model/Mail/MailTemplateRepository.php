@@ -20,21 +20,14 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 class MailTemplateRepository extends BaseMailTemplateRepository
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
-    private Localization $localization;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
         EntityManagerInterface $em,
-        Localization $localization
+        private Localization $localization,
     ) {
         parent::__construct($em);
-
-        $this->localization = $localization;
     }
 
     /**
@@ -60,7 +53,7 @@ class MailTemplateRepository extends BaseMailTemplateRepository
      */
     public function findOrderStatusMailTemplate(
         int $domainId,
-        OrderStatus $orderStatus
+        OrderStatus $orderStatus,
     ): ?MailTemplate {
         /** @var \App\Model\Mail\MailTemplate $mailTemplate */
         $mailTemplate = $this->getMailTemplateRepository()->findOneBy([

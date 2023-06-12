@@ -64,8 +64,11 @@ abstract class GraphQlTestCase extends ApplicationTestCase
      * @param string $jsonExpected
      * @param string $jsonVariables
      */
-    protected function assertQueryWithExpectedJson(string $query, string $jsonExpected, string $jsonVariables = '{}'): void
-    {
+    protected function assertQueryWithExpectedJson(
+        string $query,
+        string $jsonExpected,
+        string $jsonVariables = '{}',
+    ): void {
         $this->assertQueryWithExpectedArray(
             $query,
             Json::decode($jsonExpected, Json::FORCE_ARRAY),

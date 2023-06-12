@@ -17,50 +17,7 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeException;
 
 class CartWatcherFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher
-     */
-    private CartWatcher $cartWatcher;
-
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private EntityManagerInterface $em;
-
-    /**
-     * @var \App\Model\Customer\User\CurrentCustomerUser
-     */
-    private CurrentCustomerUser $currentCustomerUser;
-
-    /**
-     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
-     */
-    private ProductAvailabilityFacade $productAvailabilityFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
-     * @var \App\FrontendApi\Model\Cart\CartWithModificationsResult
-     */
     private CartWithModificationsResult $cartWithModificationsResult;
-
-    /**
-     * @var \App\FrontendApi\Model\Cart\TransportAndPaymentWatcherFacade
-     */
-    private TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade;
-
-    /**
-     * @var \App\Model\Order\PromoCode\CurrentPromoCodeFacade
-     */
-    private CurrentPromoCodeFacade $currentPromoCodeFacade;
-
-    /**
-     * @var \App\Model\Cart\CartPromoCodeFacade
-     */
-    private CartPromoCodeFacade $cartPromoCodeFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher $cartWatcher
@@ -73,23 +30,15 @@ class CartWatcherFacade
      * @param \App\Model\Cart\CartPromoCodeFacade $cartPromoCodeFacade
      */
     public function __construct(
-        CartWatcher $cartWatcher,
-        EntityManagerInterface $em,
-        CurrentCustomerUser $currentCustomerUser,
-        ProductAvailabilityFacade $productAvailabilityFacade,
-        Domain $domain,
-        TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade,
-        CurrentPromoCodeFacade $currentPromoCodeFacade,
-        CartPromoCodeFacade $cartPromoCodeFacade
+        private CartWatcher $cartWatcher,
+        private EntityManagerInterface $em,
+        private CurrentCustomerUser $currentCustomerUser,
+        private ProductAvailabilityFacade $productAvailabilityFacade,
+        private Domain $domain,
+        private TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade,
+        private CurrentPromoCodeFacade $currentPromoCodeFacade,
+        private CartPromoCodeFacade $cartPromoCodeFacade,
     ) {
-        $this->cartWatcher = $cartWatcher;
-        $this->em = $em;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->productAvailabilityFacade = $productAvailabilityFacade;
-        $this->domain = $domain;
-        $this->transportAndPaymentWatcherFacade = $transportAndPaymentWatcherFacade;
-        $this->currentPromoCodeFacade = $currentPromoCodeFacade;
-        $this->cartPromoCodeFacade = $cartPromoCodeFacade;
     }
 
     /**

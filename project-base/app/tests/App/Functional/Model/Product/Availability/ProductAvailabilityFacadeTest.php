@@ -21,37 +21,31 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
     protected const FIRST_DOMAIN_ID = 1;
 
     /**
-     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
      * @inject
      */
     private ProductAvailabilityFacade $productAvailabilityFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
      * @inject
      */
     private ProductDataFactoryInterface $productDataFactory;
 
     /**
-     * @var \App\Model\Product\ProductFacade
      * @inject
      */
     private ProductFacade $productFacade;
 
     /**
-     * @var \App\Model\Stock\ProductStockDataFactory
      * @inject
      */
     private ProductStockDataFactory $productStockDataFactory;
 
     /**
-     * @var \App\Model\Stock\StockSettingsDataFacade
      * @inject
      */
     private StockSettingsDataFacade $stockSettingsDataFacade;
 
     /**
-     * @var \App\Model\Stock\StockFacade
      * @inject
      */
     private StockFacade $stockFacade;

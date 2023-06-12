@@ -21,7 +21,7 @@ class PaymentInOrderValidator extends ConstraintValidator
     public function __construct(
         private readonly PaymentFacade $paymentFacade,
         private readonly CurrentCustomerUser $currentCustomerUser,
-        private readonly CartFacade $cartFacade
+        private readonly CartFacade $cartFacade,
     ) {
     }
 

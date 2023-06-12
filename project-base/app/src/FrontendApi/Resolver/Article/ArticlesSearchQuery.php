@@ -15,8 +15,9 @@ class ArticlesSearchQuery extends AbstractQuery
     /**
      * @param \App\Model\Article\CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade
      */
-    public function __construct(private readonly CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade)
-    {
+    public function __construct(
+        private readonly CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade,
+    ) {
     }
 
     /**
@@ -27,7 +28,7 @@ class ArticlesSearchQuery extends AbstractQuery
     {
         return $this->combinedArticleElasticsearchFacade->getArticlesBySearchText(
             $argument['search'] ?? '',
-            self::ARTICLE_SEARCH_LIMIT
+            self::ARTICLE_SEARCH_LIMIT,
         );
     }
 }

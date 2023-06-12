@@ -21,8 +21,11 @@ class CategoryOrReadyCategorySeoMixImagesQuery extends ImagesQuery implements Al
      * @param array|null $sizes
      * @return \GraphQL\Executor\Promise\Promise
      */
-    public function imagesByCategoryOrReadyCategorySeoMixPromiseQuery($categoryOrReadyCategorySeoMix, ?string $type, ?array $sizes): Promise
-    {
+    public function imagesByCategoryOrReadyCategorySeoMixPromiseQuery(
+        $categoryOrReadyCategorySeoMix,
+        ?string $type,
+        ?array $sizes,
+    ): Promise {
         if ($categoryOrReadyCategorySeoMix instanceof Category) {
             $categoryId = $categoryOrReadyCategorySeoMix->getId();
         } elseif ($categoryOrReadyCategorySeoMix instanceof ReadyCategorySeoMix) {
@@ -32,7 +35,7 @@ class CategoryOrReadyCategorySeoMixImagesQuery extends ImagesQuery implements Al
                 sprintf(
                     'The "$categoryOrReadyCategorySeoMix" argument must be an instance of "%s" or "%s".',
                     Category::class,
-                    ReadyCategorySeoMix::class
+                    ReadyCategorySeoMix::class,
                 ),
             );
         }
@@ -46,8 +49,11 @@ class CategoryOrReadyCategorySeoMixImagesQuery extends ImagesQuery implements Al
      * @param string|null $size
      * @return \GraphQL\Executor\Promise\Promise
      */
-    public function mainImageByCategoryOrReadyCategorySeoMixPromiseQuery($categoryOrReadyCategorySeoMix, ?string $type, ?string $size): Promise
-    {
+    public function mainImageByCategoryOrReadyCategorySeoMixPromiseQuery(
+        $categoryOrReadyCategorySeoMix,
+        ?string $type,
+        ?string $size,
+    ): Promise {
         if ($categoryOrReadyCategorySeoMix instanceof Category) {
             $categoryId = $categoryOrReadyCategorySeoMix->getId();
         } elseif ($categoryOrReadyCategorySeoMix instanceof ReadyCategorySeoMix) {
@@ -57,7 +63,7 @@ class CategoryOrReadyCategorySeoMixImagesQuery extends ImagesQuery implements Al
                 sprintf(
                     'The "$categoryOrReadyCategorySeoMix" argument must be an instance of "%s" or "%s".',
                     Category::class,
-                    ReadyCategorySeoMix::class
+                    ReadyCategorySeoMix::class,
                 ),
             );
         }
@@ -70,8 +76,8 @@ class CategoryOrReadyCategorySeoMixImagesQuery extends ImagesQuery implements Al
                 $categoryId,
                 self::CATEGORY_ENTITY_NAME,
                 $sizeConfigs,
-                $type
-            )
+                $type,
+            ),
         );
     }
 }

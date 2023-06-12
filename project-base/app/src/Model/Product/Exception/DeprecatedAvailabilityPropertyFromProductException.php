@@ -10,17 +10,11 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 class DeprecatedAvailabilityPropertyFromProductException extends Exception
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null
-     */
-    private $availability;
-
-    /**
      * @param string $availabilityPropertyName
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null $availability
      */
-    public function __construct(string $availabilityPropertyName, ?Availability $availability)
+    public function __construct(string $availabilityPropertyName, private ?Availability $availability = null)
     {
-        $this->availability = $availability;
         $message = sprintf('Deprecated %s property.', $availabilityPropertyName);
 
         parent::__construct($message);

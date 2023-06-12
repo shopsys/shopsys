@@ -24,26 +24,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class FlagController extends BaseFlagController
 {
     /**
-     * @var \App\Model\Product\Flag\FlagDataFactory
-     */
-    private FlagDataFactory $flagDataFactory;
-
-    /**
-     * @var \App\Model\Product\Flag\FlagGridFactory
-     */
-    private FlagGridFactory $flagGridFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
-     */
-    private BreadcrumbOverrider $breadcrumbOverrider;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory
-     */
-    private ConfirmDeleteResponseFactory $confirmDeleteResponseFactory;
-
-    /**
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagInlineEdit $flagInlineEdit
      * @param \App\Model\Product\Flag\FlagDataFactory $flagDataFactory
@@ -54,17 +34,12 @@ class FlagController extends BaseFlagController
     public function __construct(
         FlagFacade $flagFacade,
         FlagInlineEdit $flagInlineEdit,
-        FlagDataFactory $flagDataFactory,
-        FlagGridFactory $flagGridFactory,
-        BreadcrumbOverrider $breadcrumbOverrider,
-        ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
+        private FlagDataFactory $flagDataFactory,
+        private FlagGridFactory $flagGridFactory,
+        private BreadcrumbOverrider $breadcrumbOverrider,
+        private ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
     ) {
         parent::__construct($flagFacade, $flagInlineEdit);
-
-        $this->flagDataFactory = $flagDataFactory;
-        $this->flagGridFactory = $flagGridFactory;
-        $this->breadcrumbOverrider = $breadcrumbOverrider;
-        $this->confirmDeleteResponseFactory = $confirmDeleteResponseFactory;
     }
 
     /**
@@ -89,7 +64,7 @@ class FlagController extends BaseFlagController
             return $this->confirmDeleteResponseFactory->createDeleteResponse(
                 $message,
                 'admin_flag_delete',
-                $id
+                $id,
             );
         } catch (FlagNotFoundException $ex) {
             return new Response(t('Selected flag doesn\'t exist.'));
@@ -120,7 +95,7 @@ class FlagController extends BaseFlagController
                 t('Flag <strong>{{ name }}</strong> deleted'),
                 [
                     'name' => $fullName,
-                ]
+                ],
             );
         } catch (FlagNotFoundException $ex) {
             $this->addErrorFlash(t('Selected flag doesn\'t exist.'));
@@ -167,7 +142,7 @@ class FlagController extends BaseFlagController
                     [
                         'name' => $flag->getName(),
                         'url' => $this->generateUrl('admin_flag_edit', ['id' => $flag->getId()]),
-                    ]
+                    ],
                 );
             return $this->redirectToRoute('admin_flag_list');
         }
@@ -207,7 +182,7 @@ class FlagController extends BaseFlagController
                     [
                         'name' => $flag->getName(),
                         'url' => $this->generateUrl('admin_flag_edit', ['id' => $flag->getId()]),
-                    ]
+                    ],
                 );
             return $this->redirectToRoute('admin_flag_list');
         }

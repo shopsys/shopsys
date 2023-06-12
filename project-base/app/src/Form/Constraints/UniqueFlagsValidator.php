@@ -42,7 +42,7 @@ class UniqueFlagsValidator extends ConstraintValidator
                 $constraint->message,
                 [
                     '{{ flagName }}' => $violation,
-                ]
+                ],
             );
         }
     }

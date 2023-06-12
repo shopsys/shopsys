@@ -29,7 +29,7 @@ class EntityExtensionSubscriber extends BaseEntityExtensionSubscriber
 
                 $parentEntityAssociationMapping['targetEntity'] = $this->ensureAbsoluteClassName(
                     $parentEntityAssociationMapping['targetEntity'],
-                    $parentClass
+                    $parentClass,
                 );
 
                 $isDifferenceBetweenChildAssociationMappingAndParentAssociationMapping = !isset($classMetadata->associationMappings[$associationName]) || $classMetadata->associationMappings[$associationName] !== $parentEntityAssociationMapping;
@@ -56,7 +56,7 @@ class EntityExtensionSubscriber extends BaseEntityExtensionSubscriber
     protected function checkIsOverriddenPropertyInChildClass(
         array $overridingClassProperties,
         string $parentClassPropertyName,
-        string $overridingClassName
+        string $overridingClassName,
     ): bool {
         foreach ($overridingClassProperties as $overridingClassProperty) {
             if ($overridingClassProperty->name === $parentClassPropertyName && $overridingClassProperty->class === $overridingClassName) {

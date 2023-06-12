@@ -20,7 +20,7 @@ class AvailableForRegisteredCustomerUserOnly extends Exception implements PromoC
                 '%promoCode' => $invalidPromoCode,
             ], 'validators'),
             0,
-            $previous
+            $previous,
         );
     }
 }

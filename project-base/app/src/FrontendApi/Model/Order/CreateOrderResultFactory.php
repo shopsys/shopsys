@@ -22,8 +22,9 @@ class CreateOrderResultFactory
      * @param \App\FrontendApi\Model\Cart\CartWithModificationsResult $cartWithModifications
      * @return \App\FrontendApi\Model\Order\CreateOrderResult
      */
-    public function getCreateOrderResultByCartWithModifications(CartWithModificationsResult $cartWithModifications): CreateOrderResult
-    {
+    public function getCreateOrderResultByCartWithModifications(
+        CartWithModificationsResult $cartWithModifications,
+    ): CreateOrderResult {
         return new CreateOrderResult(null, $cartWithModifications);
     }
 }

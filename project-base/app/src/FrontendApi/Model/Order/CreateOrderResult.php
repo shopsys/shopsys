@@ -9,9 +9,6 @@ use App\Model\Order\Order;
 
 class CreateOrderResult
 {
-    /**
-     * @var bool
-     */
     private bool $orderCreated;
 
     /**
@@ -20,7 +17,7 @@ class CreateOrderResult
      */
     public function __construct(
         private readonly ?Order $order = null,
-        private readonly ?CartWithModificationsResult $cartWithModificationsResult = null
+        private readonly ?CartWithModificationsResult $cartWithModificationsResult = null,
     ) {
         $this->orderCreated = false;
         if ($this->order !== null) {

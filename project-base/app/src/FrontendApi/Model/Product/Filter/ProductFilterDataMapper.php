@@ -22,21 +22,18 @@ use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterDataMapper as Ba
 class ProductFilterDataMapper extends BaseProductFilterDataMapper
 {
     /**
-     * @var \App\Model\Product\Filter\ProductFilterDataFactory
-     */
-    private ProductFilterDataFactory $productFilterDataFactory;
-
-    /**
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      * @param \App\Model\Product\Brand\BrandFacade $brandFacade
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
      */
-    public function __construct(FlagFacade $flagFacade, BrandFacade $brandFacade, ParameterFacade $parameterFacade, ProductFilterDataFactory $productFilterDataFactory)
-    {
+    public function __construct(
+        FlagFacade $flagFacade,
+        BrandFacade $brandFacade,
+        ParameterFacade $parameterFacade,
+        private ProductFilterDataFactory $productFilterDataFactory,
+    ) {
         parent::__construct($flagFacade, $brandFacade, $parameterFacade);
-
-        $this->productFilterDataFactory = $productFilterDataFactory;
     }
 
     /**

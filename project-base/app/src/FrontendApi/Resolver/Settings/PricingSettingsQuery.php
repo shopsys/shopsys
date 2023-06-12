@@ -16,7 +16,7 @@ class PricingSettingsQuery extends AbstractQuery
      */
     public function __construct(
         private readonly Domain $domain,
-        private readonly CurrencyFacade $currencyFacade
+        private readonly CurrencyFacade $currencyFacade,
     ) {
     }
 

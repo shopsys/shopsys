@@ -21,36 +21,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class ParameterValueController extends AdminBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\GridFactory
-     */
-    private $gridFactory;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterRepository
-     */
-    private $parameterRepository;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    private $adminDomainTabsFacade;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterFacade
-     */
-    private $parameterFacade;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterValueDataFactory
-     */
-    private $parameterValueDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
-     */
-    private $breadcrumbOverrider;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
@@ -59,19 +29,13 @@ class ParameterValueController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      */
     public function __construct(
-        GridFactory $gridFactory,
-        ParameterRepository $parameterRepository,
-        AdminDomainTabsFacade $adminDomainTabsFacade,
-        ParameterFacade $parameterFacade,
-        ParameterValueDataFactory $parameterValueDataFactory,
-        BreadcrumbOverrider $breadcrumbOverrider
+        private GridFactory $gridFactory,
+        private ParameterRepository $parameterRepository,
+        private AdminDomainTabsFacade $adminDomainTabsFacade,
+        private ParameterFacade $parameterFacade,
+        private ParameterValueDataFactory $parameterValueDataFactory,
+        private BreadcrumbOverrider $breadcrumbOverrider,
     ) {
-        $this->gridFactory = $gridFactory;
-        $this->parameterRepository = $parameterRepository;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
-        $this->parameterFacade = $parameterFacade;
-        $this->parameterValueDataFactory = $parameterValueDataFactory;
-        $this->breadcrumbOverrider = $breadcrumbOverrider;
     }
 
     /**
@@ -96,7 +60,7 @@ class ParameterValueController extends AdminBaseController
             'Admin/Content/ParameterValue/list.html.twig',
             [
                 'gridView' => $grid->createView(),
-            ]
+            ],
         );
     }
 
@@ -121,7 +85,7 @@ class ParameterValueController extends AdminBaseController
                 [
                     'parameterValue' => $parameterValue,
                     'url' => $this->generateUrl('admin_parametervalue_edit', ['id' => $parameterValue->getId()]),
-                ]
+                ],
             );
             return $this->redirectToRoute('admin_parametervalue_list');
         }
@@ -137,7 +101,7 @@ class ParameterValueController extends AdminBaseController
             [
                 'parameterValue' => $parameterValue,
                 'form' => $form->createView(),
-            ]
+            ],
         );
     }
 }

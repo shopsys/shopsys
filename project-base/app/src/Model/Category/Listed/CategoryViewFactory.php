@@ -10,17 +10,11 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class CategoryViewFactory
 {
     /**
-     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
-     */
-    private UrlGeneratorInterface $generator;
-
-    /**
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $generator
      */
     public function __construct(
-        UrlGeneratorInterface $generator
+        private UrlGeneratorInterface $generator,
     ) {
-        $this->generator = $generator;
     }
 
     /**
@@ -31,7 +25,7 @@ class CategoryViewFactory
     {
         return new CategoryView(
             $category->getName(),
-            $this->generator->generate('front_product_list', ['id' => $category->getId()])
+            $this->generator->generate('front_product_list', ['id' => $category->getId()]),
         );
     }
 }

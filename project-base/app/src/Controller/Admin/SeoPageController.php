@@ -72,7 +72,7 @@ class SeoPageController extends AdminBaseController
                     [
                         'name' => $seoPage->getPageName(),
                         'url' => $this->generateUrl('admin_seopage_edit', ['id' => $seoPage->getId()]),
-                    ]
+                    ],
                 );
 
             return $this->redirectToRoute('admin_seopage_list');
@@ -112,7 +112,7 @@ class SeoPageController extends AdminBaseController
                     [
                         'name' => $seoPage->getPageName(),
                         'url' => $this->generateUrl('admin_seopage_edit', ['id' => $seoPage->getId()]),
-                    ]
+                    ],
                 );
 
             return $this->redirectToRoute('admin_seopage_list');
@@ -144,7 +144,7 @@ class SeoPageController extends AdminBaseController
                 t('SEO Page <strong>{{ name }}</strong> removed'),
                 [
                     'name' => $seoPage->getPageName(),
-                ]
+                ],
             );
         } catch (SeoPageNotFoundException) {
             $this->addErrorFlash(t('Selected SEO page does not exist'));

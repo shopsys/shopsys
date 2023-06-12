@@ -8,5 +8,5 @@ services:
     Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry:
         class: App\Component\ClassExtension\ClassExtensionRegistry
         arguments:
-            - '%shopsys.entity_extension.map%'
             - '%shopsys.framework.root_dir%'
+            - '%shopsys.entity_extension.map%'

@@ -16,23 +16,6 @@ use Symfony\Component\Form\FormFactoryInterface;
  */
 class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
 {
-    /**
-     * @var \Symfony\Component\Form\FormFactoryInterface
-     */
-    private FormFactoryInterface $formFactory;
-
-    /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private FriendlyUrlFacade $friendlyUrlFacade;
-
-    /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlDataFactory
-     */
-    private FriendlyUrlDataFactory $friendlyUrlDataFactory;
-
-    private AdminDomainTabsFacade $adminDomainTabsFacade;
-
     private QuickSearchFormData $gridQuickSearchFormData;
 
     /**
@@ -44,17 +27,13 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
      */
     public function __construct(
         FriendlyUrlGridFactory $gridFactory,
-        FormFactoryInterface $formFactory,
-        FriendlyUrlFacade $friendlyUrlFacade,
-        FriendlyUrlDataFactory $friendlyUrlDataFactory,
-        AdminDomainTabsFacade $adminDomainTabsFacade
+        private FormFactoryInterface $formFactory,
+        private FriendlyUrlFacade $friendlyUrlFacade,
+        private FriendlyUrlDataFactory $friendlyUrlDataFactory,
+        private AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
         parent::__construct($gridFactory);
 
-        $this->formFactory = $formFactory;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
-        $this->friendlyUrlDataFactory = $friendlyUrlDataFactory;
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
         $this->gridQuickSearchFormData = new QuickSearchFormData();
     }
 
@@ -98,7 +77,7 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
         $this->friendlyUrlFacade->setRedirect(
             $this->adminDomainTabsFacade->getSelectedDomainId(),
             $rowId,
-            $formData
+            $formData,
         );
     }
 

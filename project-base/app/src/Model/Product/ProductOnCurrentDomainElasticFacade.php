@@ -55,7 +55,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
         ProductElasticsearchRepository $productElasticsearchRepository,
         ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository,
         FilterQueryFactory $filterQueryFactory,
-        private readonly ProductFilterDataFactory $productFilterDataFactory
+        private readonly ProductFilterDataFactory $productFilterDataFactory,
     ) {
         parent::__construct(
             $productRepository,
@@ -64,7 +64,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
             $productAccessoryRepository,
             $productElasticsearchRepository,
             $productFilterCountDataElasticsearchRepository,
-            $filterQueryFactory
+            $filterQueryFactory,
         );
     }
 
@@ -83,7 +83,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
         int $page,
         int $limit,
         int $categoryId,
-        int $productId
+        int $productId,
     ): PaginationResult {
         $filterQuery = $this->filterQueryFactory->createListableProductsByCategoryId($productFilterData, $orderingModeId, $page, $limit, $categoryId);
         /** @var \App\Model\Product\Search\FilterQuery $filterQuery */
@@ -103,11 +103,11 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
     public function getProductFilterCountDataForFlag(
         int $flagId,
         ProductFilterData $productFilterData,
-        string $searchText = ''
+        string $searchText = '',
     ): ProductFilterCountData {
         $filterQuery = $this->filterQueryFactory->createListableProductsByFlagIdWithPriceAndStockFilter(
             $flagId,
-            $productFilterData
+            $productFilterData,
         );
         if ($searchText !== '') {
             $filterQuery = $filterQuery->search($searchText);
@@ -115,7 +115,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
 
         return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInCategory(
             $productFilterData,
-            $filterQuery
+            $filterQuery,
         );
     }
 
@@ -132,7 +132,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
         string $orderingModeId,
         int $page,
         int $limit,
-        int $brandId
+        int $brandId,
     ): PaginationResult {
         $emptyProductFilterData = $this->productFilterDataFactory->create();
 
@@ -141,7 +141,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
             $orderingModeId,
             $page,
             $limit,
-            $brandId
+            $brandId,
         );
 
         $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
@@ -168,7 +168,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
             ProductListOrderingConfig::ORDER_BY_RELEVANCE,
             $page,
             $limit,
-            $searchText
+            $searchText,
         );
 
         $productIds = $this->productElasticsearchRepository->getSortedProductIdsByFilterQuery($filterQuery);
@@ -176,7 +176,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
         $listableProductsByIds = $this->productRepository->getListableByIds(
             $this->domain->getId(),
             $this->currentCustomerUser->getPricingGroup(),
-            $productIds->getIds()
+            $productIds->getIds(),
         );
 
         return new PaginationResult($page, $limit, $productIds->getTotal(), $listableProductsByIds);
@@ -202,11 +202,11 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
         int $categoryId,
         ProductFilterConfig $productFilterConfig,
         ProductFilterData $productFilterData,
-        string $searchText = ''
+        string $searchText = '',
     ): ProductFilterCountData {
         $baseFilterQuery = $this->filterQueryFactory->createListableProductsByCategoryIdWithPriceAndStockFilter(
             $categoryId,
-            $productFilterData
+            $productFilterData,
         );
         if ($searchText !== '') {
             $baseFilterQuery = $baseFilterQuery->search($searchText);
@@ -214,7 +214,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
 
         return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInCategory(
             $productFilterData,
-            $baseFilterQuery
+            $baseFilterQuery,
         );
     }
 
@@ -227,11 +227,11 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
     public function getProductFilterCountDataForBrand(
         int $brandId,
         ProductFilterData $productFilterData,
-        string $searchText = ''
+        string $searchText = '',
     ): ProductFilterCountData {
         $filterQuery = $this->filterQueryFactory->createListableProductsByBrandIdWithPriceAndStockFilter(
             $brandId,
-            $productFilterData
+            $productFilterData,
         );
         if ($searchText !== '') {
             $filterQuery = $filterQuery->search($searchText);
@@ -239,7 +239,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
 
         return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInCategory(
             $productFilterData,
-            $filterQuery
+            $filterQuery,
         );
     }
 }

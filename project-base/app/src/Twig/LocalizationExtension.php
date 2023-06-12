@@ -32,7 +32,7 @@ class LocalizationExtension extends BaseLocalizationExtension
                 htmlspecialchars($locale, ENT_QUOTES),
                 htmlspecialchars($this->getTitle($locale), ENT_QUOTES),
                 $width,
-                $height
+                $height,
             );
         }
 
@@ -41,7 +41,7 @@ class LocalizationExtension extends BaseLocalizationExtension
             htmlspecialchars($src, ENT_QUOTES),
             htmlspecialchars($locale, ENT_QUOTES),
             $width,
-            $height
+            $height,
         );
     }
 }

@@ -15,8 +15,10 @@ class PageSizeValidator
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param int $maxAllowedItems
      */
-    public static function checkMaxPageSize(Argument $argument, int $maxAllowedItems = self::DEFAULT_MAX_ALLOWED_ITEMS): void
-    {
+    public static function checkMaxPageSize(
+        Argument $argument,
+        int $maxAllowedItems = self::DEFAULT_MAX_ALLOWED_ITEMS,
+    ): void {
         if (isset($argument['first']) && $argument['first'] > $maxAllowedItems
             || isset($argument['last']) && $argument['last'] > $maxAllowedItems
         ) {

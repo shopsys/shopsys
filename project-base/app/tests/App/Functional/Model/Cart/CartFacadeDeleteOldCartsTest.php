@@ -76,7 +76,6 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
     private CustomerUserFacade $customerUserFacade;
 
     /**
-     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
      * @inject
      */
     private ProductAvailabilityFacade $productAvailabilityFacade;

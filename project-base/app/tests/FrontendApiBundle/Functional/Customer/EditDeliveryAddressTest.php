@@ -31,14 +31,14 @@ class EditDeliveryAddressTest extends GraphQlWithLoginTestCase
 
         $response = $this->getResponseContentForGql(
             __DIR__ . '/../_graphql/mutation/EditDeliveryAddressMutation.graphql',
-            $editedValues
+            $editedValues,
         );
 
         $deliveryAddresses = $this->getResponseDataForGraphQlType($response, 'EditDeliveryAddress');
         $editedAddressKey = array_search(
             $deliveryAddress->getUuid(),
             array_column($deliveryAddresses, 'uuid'),
-            true
+            true,
         );
 
         $this->assertEquals($deliveryAddress->getUuid(), $deliveryAddresses[$editedAddressKey]['uuid']);
@@ -73,7 +73,7 @@ class EditDeliveryAddressTest extends GraphQlWithLoginTestCase
 
         $response = $this->getResponseContentForGql(
             __DIR__ . '/../_graphql/mutation/EditDeliveryAddressMutation.graphql',
-            $editedValues
+            $editedValues,
         );
 
         $errors = $this->getErrorsExtensionValidationFromResponse($response);

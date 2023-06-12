@@ -15,7 +15,7 @@ class TypeNotImplementedException extends RuntimeException
     {
         parent::__construct(sprintf(
             'Parameter filter option type "%s" has not been implemented yet.',
-            $parameterType
+            $parameterType,
         ));
     }
 }

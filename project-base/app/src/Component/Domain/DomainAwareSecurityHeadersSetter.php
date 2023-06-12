@@ -12,19 +12,12 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 class DomainAwareSecurityHeadersSetter extends BaseDomainAwareSecurityHeadersSetter
 {
     /**
-     * @var \App\Component\Setting\Setting
-     */
-    private Setting $setting;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Setting\Setting $setting
      */
-    public function __construct(Domain $domain, Setting $setting)
+    public function __construct(Domain $domain, private Setting $setting)
     {
         parent::__construct($domain);
-
-        $this->setting = $setting;
     }
 
     /**

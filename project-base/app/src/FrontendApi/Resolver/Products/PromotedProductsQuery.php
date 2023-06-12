@@ -26,7 +26,7 @@ class PromotedProductsQuery extends BasePromotedProductsQuery
         TopProductFacade $topProductFacade,
         Domain $domain,
         CurrentCustomerUser $currentCustomerUser,
-        private readonly ProductFacade $productFacade
+        private readonly ProductFacade $productFacade,
     ) {
         parent::__construct($topProductFacade, $domain, $currentCustomerUser);
     }
@@ -43,8 +43,8 @@ class PromotedProductsQuery extends BasePromotedProductsQuery
                 static function (TopProduct $product) {
                     return $product->getProduct()->getId();
                 },
-                $allSortedPromotedProductsOnDomain
-            )
+                $allSortedPromotedProductsOnDomain,
+            ),
         );
     }
 }

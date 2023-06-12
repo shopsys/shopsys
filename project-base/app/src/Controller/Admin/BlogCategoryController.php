@@ -26,31 +26,6 @@ class BlogCategoryController extends AdminBaseController
     private const SESSION_BLOG_CATEGORIES_SELECTED_DOMAIN_ID = 'blog_categories_selected_domain_id';
 
     /**
-     * @var \App\Model\Blog\Category\BlogCategoryFacade
-     */
-    private $blogCategoryFacade;
-
-    /**
-     * @var \App\Model\Blog\Category\BlogCategoryDataFactory
-     */
-    private $blogCategoryDataFactory;
-
-    /**
-     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
-     */
-    private $session;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider
-     */
-    private $breadcrumbOverrider;
-
-    /**
      * @param \App\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
      * @param \App\Model\Blog\Category\BlogCategoryDataFactory $blogCategoryDataFactory
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
@@ -58,17 +33,12 @@ class BlogCategoryController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      */
     public function __construct(
-        BlogCategoryFacade $blogCategoryFacade,
-        BlogCategoryDataFactory $blogCategoryDataFactory,
-        SessionInterface $session,
-        Domain $domain,
-        BreadcrumbOverrider $breadcrumbOverrider
+        private BlogCategoryFacade $blogCategoryFacade,
+        private BlogCategoryDataFactory $blogCategoryDataFactory,
+        private SessionInterface $session,
+        private Domain $domain,
+        private BreadcrumbOverrider $breadcrumbOverrider,
     ) {
-        $this->blogCategoryFacade = $blogCategoryFacade;
-        $this->blogCategoryDataFactory = $blogCategoryDataFactory;
-        $this->session = $session;
-        $this->domain = $domain;
-        $this->breadcrumbOverrider = $breadcrumbOverrider;
     }
 
     /**
@@ -95,7 +65,7 @@ class BlogCategoryController extends AdminBaseController
                 [
                     'name' => $blogCategory->getName(),
                     'url' => $this->generateUrl('admin_blogcategory_edit', ['id' => $blogCategory->getId()]),
-                ]
+                ],
             );
 
             return $this->redirectToRoute('admin_blogcategory_list');
@@ -136,7 +106,7 @@ class BlogCategoryController extends AdminBaseController
                 [
                     'name' => $blogCategory->getName(),
                     'url' => $this->generateUrl('admin_blogcategory_edit', ['id' => $blogCategory->getId()]),
-                ]
+                ],
             );
 
             return $this->redirectToRoute('admin_blogcategory_list');
@@ -223,7 +193,7 @@ class BlogCategoryController extends AdminBaseController
                 t('Rubrika blogu <strong>{{ name }}</strong> byla smazána'),
                 [
                     'name' => $fullName,
-                ]
+                ],
             );
         } catch (BlogCategoryNotFoundException $ex) {
             $this->addErrorFlash(t('Vybraná rubrika blogu neexistuje.'));

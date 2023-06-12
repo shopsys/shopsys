@@ -16,23 +16,11 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 class FilterQueryFactory
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader
-     */
-    private IndexDefinitionLoader $indexDefinitionLoader;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
      */
-    public function __construct(Domain $domain, IndexDefinitionLoader $indexDefinitionLoader)
+    public function __construct(private Domain $domain, private IndexDefinitionLoader $indexDefinitionLoader)
     {
-        $this->domain = $domain;
-        $this->indexDefinitionLoader = $indexDefinitionLoader;
     }
 
     /**
@@ -65,8 +53,11 @@ class FilterQueryFactory
      * @param int|null $limit
      * @return \App\Model\Blog\Article\Elasticsearch\FilterQuery
      */
-    public function createFilteredByBlogCategory(BlogCategory $blogCategory, ?int $offset = null, ?int $limit = null): FilterQuery
-    {
+    public function createFilteredByBlogCategory(
+        BlogCategory $blogCategory,
+        ?int $offset = null,
+        ?int $limit = null,
+    ): FilterQuery {
         return $this->create($offset, $limit)->filterByCategory($blogCategory);
     }
 

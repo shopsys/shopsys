@@ -15,11 +15,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 class CartWithModificationsResult
 {
     /**
-     * @var \App\Model\Cart\Cart
-     */
-    protected Cart $cart;
-
-    /**
      * @var array<string, array|bool>
      */
     private array $cartModifications = [
@@ -41,7 +36,7 @@ class CartWithModificationsResult
     ];
 
     /**
-     * @var array
+     * @var array<string, bool>
      */
     private array $transportModifications = [
         'transportPriceChanged' => false,
@@ -51,7 +46,7 @@ class CartWithModificationsResult
     ];
 
     /**
-     * @var array
+     * @var array<string, bool>
      */
     private array $paymentModifications = [
         'paymentPriceChanged' => false,
@@ -65,37 +60,21 @@ class CartWithModificationsResult
         'noLongerApplicablePromoCode' => [],
     ];
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null
-     */
     private ?Price $totalPrice = null;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null
-     */
     private ?Price $totalItemsPrice = null;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null
-     */
     private ?Price $totalDiscountPrice = null;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null
-     */
     private ?Price $totalPriceWithoutDiscountTransportAndPayment = null;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     */
     private ?Money $remainingAmountWithVatForFreeTransport = null;
 
     /**
      * @param \App\Model\Cart\Cart $cart
      */
-    public function __construct(Cart $cart)
+    public function __construct(protected Cart $cart)
     {
-        $this->cart = $cart;
     }
 
     /**
@@ -348,8 +327,9 @@ class CartWithModificationsResult
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPriceWithoutDiscountTransportAndPayment
      */
-    public function setTotalPriceWithoutDiscountTransportAndPayment(Price $totalPriceWithoutDiscountTransportAndPayment): void
-    {
+    public function setTotalPriceWithoutDiscountTransportAndPayment(
+        Price $totalPriceWithoutDiscountTransportAndPayment,
+    ): void {
         $this->totalPriceWithoutDiscountTransportAndPayment = $totalPriceWithoutDiscountTransportAndPayment;
     }
 

@@ -14,16 +14,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class TransferIssueSearchFormType extends AbstractType
 {
     /**
-     * @var \App\Model\Transfer\TransferFacade
-     */
-    private $transferFacade;
-
-    /**
      * @param \App\Model\Transfer\TransferFacade $transferFacade
      */
-    public function __construct(TransferFacade $transferFacade)
+    public function __construct(private TransferFacade $transferFacade)
     {
-        $this->transferFacade = $transferFacade;
     }
 
     /**

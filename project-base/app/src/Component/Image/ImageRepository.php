@@ -29,7 +29,7 @@ class ImageRepository extends BaseImageRepository
         $images = parent::getImagesByEntityIndexedById(
             $entityName,
             $entityId,
-            $type
+            $type,
         );
 
         foreach ($images as &$image) {
@@ -67,8 +67,11 @@ class ImageRepository extends BaseImageRepository
      * @param string $akeneoImageType
      * @return \App\Component\Image\Image|null
      */
-    public function findImageByEntityForAkeneoImageType(string $entityName, int $entityId, string $akeneoImageType): ?Image
-    {
+    public function findImageByEntityForAkeneoImageType(
+        string $entityName,
+        int $entityId,
+        string $akeneoImageType,
+    ): ?Image {
         return $this->getImageRepository()->findOneBy(
             [
                 'entityName' => $entityName,
@@ -78,7 +81,7 @@ class ImageRepository extends BaseImageRepository
             [
                 'position' => 'asc',
                 'id' => 'asc',
-            ]
+            ],
         );
     }
 

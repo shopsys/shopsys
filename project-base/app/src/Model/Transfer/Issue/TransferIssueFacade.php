@@ -14,33 +14,15 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class TransferIssueFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var \App\Model\Transfer\Issue\TransferIssueRepository
-     */
-    private $transferIssueRepository;
-
-    /**
-     * @var \App\Model\Transfer\TransferRepository
-     */
-    private $transferRepository;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Transfer\Issue\TransferIssueRepository $transferIssueRepository
      * @param \App\Model\Transfer\TransferRepository $transferRepository
      */
     public function __construct(
-        EntityManagerInterface $em,
-        TransferIssueRepository $transferIssueRepository,
-        TransferRepository $transferRepository
+        private EntityManagerInterface $em,
+        private TransferIssueRepository $transferIssueRepository,
+        private TransferRepository $transferRepository,
     ) {
-        $this->em = $em;
-        $this->transferIssueRepository = $transferIssueRepository;
-        $this->transferRepository = $transferRepository;
     }
 
     /**

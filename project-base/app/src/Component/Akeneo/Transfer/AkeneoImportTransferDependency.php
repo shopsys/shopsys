@@ -13,31 +13,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class AkeneoImportTransferDependency
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    protected $em;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade
-     */
-    protected $sqlLoggerFacade;
-
-    /**
-     * @var \Symfony\Component\Validator\Validator\ValidatorInterface
-     */
-    protected $validator;
-
-    /**
-     * @var \App\Component\Akeneo\AkeneoConfig
-     */
-    private $akeneoConfig;
-
-    /**
-     * @var \App\Model\Transfer\TransferLoggerFactory
-     */
-    private $transferLoggerFactory;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
@@ -45,17 +20,12 @@ class AkeneoImportTransferDependency
      * @param \App\Model\Transfer\TransferLoggerFactory $transferLoggerFactory
      */
     public function __construct(
-        SqlLoggerFacade $sqlLoggerFacade,
-        EntityManagerInterface $em,
-        ValidatorInterface $validator,
-        AkeneoConfig $akeneoConfig,
-        TransferLoggerFactory $transferLoggerFactory
+        protected SqlLoggerFacade $sqlLoggerFacade,
+        protected EntityManagerInterface $em,
+        protected ValidatorInterface $validator,
+        private AkeneoConfig $akeneoConfig,
+        private TransferLoggerFactory $transferLoggerFactory,
     ) {
-        $this->em = $em;
-        $this->sqlLoggerFacade = $sqlLoggerFacade;
-        $this->validator = $validator;
-        $this->akeneoConfig = $akeneoConfig;
-        $this->transferLoggerFactory = $transferLoggerFactory;
     }
 
     /**

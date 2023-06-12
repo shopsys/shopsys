@@ -16,33 +16,15 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 class CategoryParameterDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
-     * @var \App\Model\Category\CategoryParameterFacade
-     */
-    private $categoryParameterFacade;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterRepository
-     */
-    private $parameterRepository;
-
-    /**
      * @param \App\Model\Category\CategoryParameterFacade $categoryParameterFacade
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        CategoryParameterFacade $categoryParameterFacade,
-        ParameterRepository $parameterRepository,
-        Domain $domain
+        private CategoryParameterFacade $categoryParameterFacade,
+        private ParameterRepository $parameterRepository,
+        private Domain $domain,
     ) {
-        $this->categoryParameterFacade = $categoryParameterFacade;
-        $this->parameterRepository = $parameterRepository;
-        $this->domain = $domain;
     }
 
     /**

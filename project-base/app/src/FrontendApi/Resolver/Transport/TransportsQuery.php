@@ -26,7 +26,7 @@ class TransportsQuery extends BaseTransportsQuery
         TransportFacade $transportFacade,
         PaymentFacade $paymentFacade,
         private readonly CartFacade $cartFacade,
-        private readonly CurrentCustomerUser $currentCustomerUser
+        private readonly CurrentCustomerUser $currentCustomerUser,
     ) {
         parent::__construct($transportFacade, $paymentFacade);
     }

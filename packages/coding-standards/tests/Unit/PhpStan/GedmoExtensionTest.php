@@ -10,14 +10,8 @@ use Shopsys\CodingStandards\Phpstan\GedmoExtension;
 
 class GedmoExtensionTest extends PHPStanTestCase
 {
-    /**
-     * @var \PHPStan\Reflection\ReflectionProvider
-     */
     private ReflectionProvider $reflectionProvider;
 
-    /**
-     * @var \Shopsys\CodingStandards\Phpstan\GedmoExtension
-     */
     private GedmoExtension $extension;
 
     /**

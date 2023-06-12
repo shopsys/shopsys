@@ -14,7 +14,7 @@ class BlogArticleResolverMap extends ResolverMap
      * @param \App\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
      */
     public function __construct(
-        private readonly BlogCategoryFacade $blogCategoryFacade
+        private readonly BlogCategoryFacade $blogCategoryFacade,
     ) {
     }
 

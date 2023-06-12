@@ -7,17 +7,11 @@ namespace App\Model\Navigation;
 class NavigationItemDataFactory
 {
     /**
-     * @var \App\Model\Navigation\NavigationItemCategoryFacade
-     */
-    private NavigationItemCategoryFacade $navigationItemCategoryFacade;
-
-    /**
      * @param \App\Model\Navigation\NavigationItemCategoryFacade $navigationItemCategoryFacade
      */
     public function __construct(
-        NavigationItemCategoryFacade $navigationItemCategoryFacade
+        private NavigationItemCategoryFacade $navigationItemCategoryFacade,
     ) {
-        $this->navigationItemCategoryFacade = $navigationItemCategoryFacade;
     }
 
     /**

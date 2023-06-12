@@ -4,20 +4,13 @@ declare(strict_types=1);
 
 namespace App\Model\Navigation;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 
 class NavigationItemCategoryFacade
 {
-    /**
-     * @var \Doctrine\ORM\EntityManager
-     */
-    private $em;
-
-    /**
-     * @var \App\Model\Navigation\NavigationItemCategoryRepository
-     */
-    private NavigationItemCategoryRepository $navigationItemCategoryRepository;
+    private EntityManager $em;
 
     /**
      * @param \Doctrine\ORM\EntityManager $entityManager
@@ -25,10 +18,9 @@ class NavigationItemCategoryFacade
      */
     public function __construct(
         EntityManagerInterface $entityManager,
-        NavigationItemCategoryRepository $navigationItemCategoryRepository
+        private NavigationItemCategoryRepository $navigationItemCategoryRepository,
     ) {
         $this->em = $entityManager;
-        $this->navigationItemCategoryRepository = $navigationItemCategoryRepository;
     }
 
     /**
@@ -37,7 +29,7 @@ class NavigationItemCategoryFacade
      */
     public function refreshCategoriesForNavigationItem(
         NavigationItem $navigationItem,
-        NavigationItemData $navigationItemData
+        NavigationItemData $navigationItemData,
     ): void {
         $navigationItemCategories = $this->navigationItemCategoryRepository
             ->getSortedNavigationItemCategoriesByNavigationItems([$navigationItem]);
@@ -60,7 +52,7 @@ class NavigationItemCategoryFacade
     private function saveCategoriesInColumn(
         NavigationItem $navigationItem,
         int $columnNumber,
-        array $categories
+        array $categories,
     ): void {
         $position = 1;
         foreach ($categories as $category) {
@@ -68,7 +60,7 @@ class NavigationItemCategoryFacade
                 $navigationItem,
                 $columnNumber,
                 $position++,
-                $category
+                $category,
             );
 
             $this->em->persist($navigationItemCategory);
@@ -103,7 +95,7 @@ class NavigationItemCategoryFacade
      */
     public function getSortedVisibleCategoriesIndexedByNavigationItemIdAndColumnNumber(
         array $navigationItems,
-        DomainConfig $domainConfig
+        DomainConfig $domainConfig,
     ): array {
         $categoriesIndexedByNavigationItemIdAndColumnNumber = [];
 

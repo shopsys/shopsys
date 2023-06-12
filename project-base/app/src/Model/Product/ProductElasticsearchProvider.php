@@ -100,7 +100,7 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
             $productBatchLoadByEntityData->getOrderingModeId(),
             1,
             $productBatchLoadByEntityData->getLimit(),
-            $productBatchLoadByEntityData->getEntityId()
+            $productBatchLoadByEntityData->getEntityId(),
         );
     }
 
@@ -108,13 +108,14 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
      * @param \App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData $productBatchLoadByEntityData
      * @return \App\Model\Product\Search\FilterQuery
      */
-    private function getFilterQueryForFilterData(ProductBatchLoadByEntityData $productBatchLoadByEntityData): FilterQuery
-    {
+    private function getFilterQueryForFilterData(
+        ProductBatchLoadByEntityData $productBatchLoadByEntityData,
+    ): FilterQuery {
         return $this->filterQueryFactory->createWithProductFilterData(
             $productBatchLoadByEntityData->getProductFilterData(),
             $productBatchLoadByEntityData->getOrderingModeId(),
             1,
-            $productBatchLoadByEntityData->getLimit()
+            $productBatchLoadByEntityData->getLimit(),
         );
     }
 
@@ -129,7 +130,7 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
             $productBatchLoadByEntityData->getOrderingModeId(),
             1,
             $productBatchLoadByEntityData->getLimit(),
-            $productBatchLoadByEntityData->getEntityId()
+            $productBatchLoadByEntityData->getEntityId(),
         );
     }
 }

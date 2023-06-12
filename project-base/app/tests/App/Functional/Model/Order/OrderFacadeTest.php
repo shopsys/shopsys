@@ -109,7 +109,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
             $orderData->domainId,
             [new QuantifiedProduct($product, 1)],
             $transport,
-            $payment
+            $payment,
         );
         $order = $this->orderFacade->createOrder($orderData, $orderPreview, null);
 

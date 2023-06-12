@@ -30,25 +30,13 @@ use Symfony\Component\Validator\Constraints;
 class BlogArticleFormType extends AbstractType
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade
-     */
-    private $seoSettingFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      */
     public function __construct(
-        Domain $domain,
-        SeoSettingFacade $seoSettingFacade
+        private Domain $domain,
+        private SeoSettingFacade $seoSettingFacade,
     ) {
-        $this->domain = $domain;
-        $this->seoSettingFacade = $seoSettingFacade;
     }
 
     /**
@@ -94,8 +82,10 @@ class BlogArticleFormType extends AbstractType
      * @param \App\Model\Blog\Article\BlogArticle|null $blogArticle
      * @return string|null
      */
-    private function getArticleNameForPlaceholder(DomainConfig $domainConfig, ?BlogArticle $blogArticle = null): ?string
-    {
+    private function getArticleNameForPlaceholder(
+        DomainConfig $domainConfig,
+        ?BlogArticle $blogArticle = null,
+    ): ?string {
         $domainLocale = $domainConfig->getLocale();
 
         return $blogArticle === null ? '' : $blogArticle->getName($domainLocale);
@@ -167,8 +157,10 @@ class BlogArticleFormType extends AbstractType
      * @param \App\Model\Blog\Article\BlogArticle|null $blogArticle
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createSettingsGroup(FormBuilderInterface $builder, ?BlogArticle $blogArticle): FormBuilderInterface
-    {
+    private function createSettingsGroup(
+        FormBuilderInterface $builder,
+        ?BlogArticle $blogArticle,
+    ): FormBuilderInterface {
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
             'label' => t('Settings'),
         ]);

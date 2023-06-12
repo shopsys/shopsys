@@ -47,8 +47,13 @@ class FilterQueryFactory extends BaseFilterQueryFactory
      * @param string $searchText
      * @return \App\Model\Product\Search\FilterQuery
      */
-    public function createListableProductsBySearchText(ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, string $searchText): BaseFilterQuery
-    {
+    public function createListableProductsBySearchText(
+        ProductFilterData $productFilterData,
+        string $orderingModeId,
+        int $page,
+        int $limit,
+        string $searchText,
+    ): BaseFilterQuery {
         /** @var \App\Model\Product\Search\FilterQuery $filterQuery */
         $filterQuery = parent::createListableProductsBySearchText($productFilterData, $orderingModeId, $page, $limit, $searchText);
 
@@ -62,8 +67,10 @@ class FilterQueryFactory extends BaseFilterQueryFactory
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
      * @return \App\Model\Product\Search\FilterQuery
      */
-    public function createListableProductsByFlagIdWithPriceAndStockFilter(int $flagId, ProductFilterData $productFilterData): FilterQuery
-    {
+    public function createListableProductsByFlagIdWithPriceAndStockFilter(
+        int $flagId,
+        ProductFilterData $productFilterData,
+    ): FilterQuery {
         $filterQuery = $this->createListable()
             ->filterByFlags([$flagId]);
         $filterQuery = $this->addPricesAndStockFromFilterDataToQuery($productFilterData, $filterQuery);
@@ -82,7 +89,7 @@ class FilterQueryFactory extends BaseFilterQueryFactory
         ProductFilterData $productFilterData,
         string $orderingModeId,
         int $page,
-        int $limit
+        int $limit,
     ): FilterQuery {
         return $this->createWithProductFilterData($productFilterData, $orderingModeId, $page, $limit);
     }

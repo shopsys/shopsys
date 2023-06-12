@@ -10,23 +10,13 @@ use Doctrine\ORM\EntityManagerInterface;
 class LinkedCategoryFacade
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private EntityManagerInterface $em;
-
-    /**
-     * @var \App\Model\Category\LinkedCategory\LinkedCategoryRepository
-     */
-    private LinkedCategoryRepository $linkedCategoryRepository;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Category\LinkedCategory\LinkedCategoryRepository $linkedCategoryRepository
      */
-    public function __construct(EntityManagerInterface $em, LinkedCategoryRepository $linkedCategoryRepository)
-    {
-        $this->em = $em;
-        $this->linkedCategoryRepository = $linkedCategoryRepository;
+    public function __construct(
+        private EntityManagerInterface $em,
+        private LinkedCategoryRepository $linkedCategoryRepository,
+    ) {
     }
 
     /**

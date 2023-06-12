@@ -20,31 +20,18 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductDiscountCalcu
 class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscountCalculation
 {
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeLimitResolver
-     */
-    private PromoCodeLimitResolver $promoCodeLimitResolver;
-
-    /**
-     * @var \App\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator
-     */
-    private PromoCodeApplicableProductsTotalPriceCalculator $totalPriceCalculator;
-
-    /**
      * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitResolver
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
      * @param \App\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator $totalPriceCalculator
      */
     public function __construct(
-        PromoCodeLimitResolver $promoCodeLimitResolver,
+        private PromoCodeLimitResolver $promoCodeLimitResolver,
         PriceCalculation $priceCalculation,
         Rounding $rounding,
-        PromoCodeApplicableProductsTotalPriceCalculator $totalPriceCalculator
+        private PromoCodeApplicableProductsTotalPriceCalculator $totalPriceCalculator,
     ) {
         parent::__construct($priceCalculation, $rounding);
-
-        $this->promoCodeLimitResolver = $promoCodeLimitResolver;
-        $this->totalPriceCalculator = $totalPriceCalculator;
     }
 
     /**
@@ -58,7 +45,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
         array $quantifiedProducts,
         array $quantifiedItemsPrices,
         array $promoCodePerProduct,
-        Currency $currency
+        Currency $currency,
     ): array {
         $discountsPerProduct = $this->prefillNullDiscounts($quantifiedProducts);
         $applicablePromoCodeProductsCount = count($promoCodePerProduct);
@@ -80,7 +67,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
                 $quantifiedItemsPrices,
                 $promoCode,
                 $promoCodeLimit,
-                $currency
+                $currency,
             );
         }
 
@@ -91,7 +78,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
                 $promoCodePerProduct,
                 $quantifiedItemsPrices,
                 $promoCodeLimit,
-                $currency
+                $currency,
             );
         }
 
@@ -104,8 +91,11 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]|null[]
      */
-    public function calculateDiscountPricesPerProductRoundedByCurrency(array $quantifiedItemsPrices, array $quantifiedItemsDiscounts, Currency $currency): array
-    {
+    public function calculateDiscountPricesPerProductRoundedByCurrency(
+        array $quantifiedItemsPrices,
+        array $quantifiedItemsDiscounts,
+        Currency $currency,
+    ): array {
         $quantifiedItemsDiscountPrices = [];
         foreach ($quantifiedItemsPrices as $quantifiedItemIndex => $quantifiedItemPrice) {
             $discount = $quantifiedItemsDiscounts[$quantifiedItemIndex] ?? null;
@@ -114,7 +104,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
                 $quantifiedItemsDiscountPrices[$quantifiedItemIndex] = $this->calculateDiscountPriceRoundedByCurrency(
                     $quantifiedItemPrice,
                     $discount,
-                    $currency
+                    $currency,
                 );
             } else {
                 $quantifiedItemsDiscountPrices[$quantifiedItemIndex] = null;
@@ -137,7 +127,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
         PromoCode $promoCode,
         PromoCodeLimit $promoCodeLimit,
         Currency $currency,
-        QuantifiedProduct $quantifiedProduct
+        QuantifiedProduct $quantifiedProduct,
     ): ?Price {
         $percent = $promoCodeLimit->getDiscount();
         if ($percent === null) {
@@ -156,12 +146,12 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
     private function calculateDiscountPriceRoundedByCurrency(
         QuantifiedItemPrice $quantifiedItemPrice,
         Price $discount,
-        Currency $currency
+        Currency $currency,
     ): ?Price {
         $vat = $quantifiedItemPrice->getVat();
         $priceWithVat = $this->rounding->roundPriceWithVatByCurrency(
             $quantifiedItemPrice->getTotalPrice()->getPriceWithVat()->subtract($discount->getPriceWithVat()),
-            $currency
+            $currency,
         );
 
         if ($priceWithVat->isZero()) {
@@ -185,7 +175,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
         QuantifiedItemPrice $quantifiedItemPrice,
         PromoCodeLimit $promoCodeLimit,
         Money $totalApplicableProductsPrice,
-        Currency $currency
+        Currency $currency,
     ): Price {
         $productPriceWithVat = $quantifiedItemPrice
             ->getTotalPrice()
@@ -198,13 +188,13 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
 
         $productDiscountWithVat = $this->rounding->roundPriceWithVatByCurrency(
             $productPriceWithVat->multiply($productDiscountPercent),
-            $currency
+            $currency,
         );
 
         $productVat = $quantifiedItemPrice->getVat();
         $productVatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($productDiscountWithVat, $productVat);
         $productDiscountWithoutVat = $this->rounding->roundPriceWithoutVat(
-            $productDiscountWithVat->subtract($productVatAmount)
+            $productDiscountWithVat->subtract($productVatAmount),
         );
 
         return new Price($productDiscountWithoutVat, $productDiscountWithVat);
@@ -218,7 +208,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
     {
         return array_fill_keys(
             array_keys($quantifiedProducts),
-            null
+            null,
         );
     }
 
@@ -239,7 +229,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
         array $quantifiedItemsPrices,
         PromoCode $promoCode,
         PromoCodeLimit $promoCodeLimit,
-        Currency $currency
+        Currency $currency,
     ): array {
         foreach ($quantifiedProducts as $quantifiedProductIndex => $quantifiedProduct) {
             $productId = $quantifiedProduct->getProduct()->getId();
@@ -253,7 +243,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
                 $promoCode,
                 $promoCodeLimit,
                 $currency,
-                $quantifiedProduct
+                $quantifiedProduct,
             );
         }
 
@@ -275,10 +265,10 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
         array $promoCodePerProduct,
         array $quantifiedItemsPrices,
         PromoCodeLimit $promoCodeLimit,
-        Currency $currency
+        Currency $currency,
     ): array {
         $cartPromoCodeApplicableProductsTotalPrice = $this->totalPriceCalculator->calculateTotalPrice(
-            $quantifiedProducts
+            $quantifiedProducts,
         );
         $sumPriceWithVat = $cartPromoCodeApplicableProductsTotalPrice->getPriceWithVat();
         foreach ($quantifiedProducts as $quantifiedProductIndex => $quantifiedProduct) {
@@ -292,7 +282,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
                 $quantifiedItemPrice,
                 $promoCodeLimit,
                 $sumPriceWithVat,
-                $currency
+                $currency,
             );
         }
 

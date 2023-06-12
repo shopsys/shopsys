@@ -15,7 +15,6 @@ class CategoryTest extends GraphQlTestCase
     protected Category $category;
 
     /**
-     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
      * @inject
      */
     protected UrlGeneratorInterface $urlGenerator;

@@ -18,7 +18,7 @@ class ProductStoreAvailabilityInformation
         private readonly int $storeId,
         private readonly string $availabilityInformation,
         private readonly bool $exposedProduct,
-        private readonly AvailabilityStatusEnum $availabilityStatus
+        private readonly AvailabilityStatusEnum $availabilityStatus,
     ) {
     }
 

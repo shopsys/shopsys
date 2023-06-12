@@ -25,7 +25,7 @@ class LanguageConstantDataFactory
         string $key,
         string $locale,
         string $translation,
-        ?LanguageConstant $languageConstant
+        ?LanguageConstant $languageConstant,
     ): LanguageConstantData {
         return $languageConstant === null
             ? $this->createFromData($key, $locale, $translation)
@@ -57,7 +57,7 @@ class LanguageConstantDataFactory
     private function createFromLanguageConstant(
         LanguageConstant $languageConstant,
         string $locale,
-        string $originalTranslation
+        string $originalTranslation,
     ): LanguageConstantData {
         $languageConstantData = $this->create();
         $languageConstantData->key = $languageConstant->getKey();

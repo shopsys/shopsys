@@ -24,16 +24,10 @@ use Symfony\Component\Validator\Constraints;
 class AdvertFormTypeExtension extends AbstractTypeExtension
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
-     */
-    private $adminDomainTabsFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
-    public function __construct(AdminDomainTabsFacade $adminDomainTabsFacade)
+    public function __construct(private AdminDomainTabsFacade $adminDomainTabsFacade)
     {
-        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**

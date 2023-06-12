@@ -147,7 +147,7 @@ class Administrator extends BaseAdministrator implements EmailTwoFactorInterface
         if ($this->emailAuthenticationCode === null) {
             throw new LogicException(sprintf(
                 "You should not call '%s' when 2FA by email is not enabled. Maybe it is a bug.",
-                __METHOD__
+                __METHOD__,
             ));
         }
 
@@ -186,7 +186,7 @@ class Administrator extends BaseAdministrator implements EmailTwoFactorInterface
         if ($this->googleAuthenticatorSecret === null) {
             throw new LogicException(sprintf(
                 "You should not call '%s' when 2FA by Google Authenticator is not enabled. Maybe it is a bug.",
-                __METHOD__
+                __METHOD__,
             ));
         }
         return $this->googleAuthenticatorSecret;

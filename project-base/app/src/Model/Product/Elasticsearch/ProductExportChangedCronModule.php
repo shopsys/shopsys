@@ -15,7 +15,7 @@ class ProductExportChangedCronModule extends BaseProductExportChangedCronModule
 
         $this->eventDispatcher->dispatch(
             new IndexExportedEvent($this->index),
-            IndexExportedEvent::INDEX_EXPORTED
+            IndexExportedEvent::INDEX_EXPORTED,
         );
     }
 }

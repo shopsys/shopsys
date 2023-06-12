@@ -9,16 +9,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 class FormBuilderHelper
 {
     /**
-     * @var bool
-     */
-    private $disableFields;
-
-    /**
      * @param bool $disableFields
      */
-    public function __construct(bool $disableFields)
+    public function __construct(private bool $disableFields)
     {
-        $this->disableFields = $disableFields;
     }
 
     /**

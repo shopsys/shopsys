@@ -27,11 +27,6 @@ class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
     public const TOTALS_KEY = 'totals';
 
     /**
-     * @var \App\Component\Elasticsearch\MultipleSearchQueryFactory
-     */
-    private MultipleSearchQueryFactory $multipleSearchQueryFactory;
-
-    /**
      * @param \Elasticsearch\Client $client
      * @param \App\Model\Product\Search\ProductElasticsearchConverter $productElasticsearchConverter
      * @param \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory
@@ -43,11 +38,9 @@ class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
         ProductElasticsearchConverter $productElasticsearchConverter,
         FilterQueryFactory $filterQueryFactory,
         IndexDefinitionLoader $indexDefinitionLoader,
-        MultipleSearchQueryFactory $multipleSearchQueryFactory
+        private MultipleSearchQueryFactory $multipleSearchQueryFactory,
     ) {
         parent::__construct($client, $productElasticsearchConverter, $filterQueryFactory, $indexDefinitionLoader);
-
-        $this->multipleSearchQueryFactory = $multipleSearchQueryFactory;
     }
 
     /**
@@ -82,7 +75,7 @@ class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
     public function getCategoryIdsForFilterData(ProductFilterData $productFilterData): array
     {
         $result = $this->client->search(
-            $this->filterQueryFactory->createListableWithProductFilter($productFilterData)->setLimit(0)->getAggregationQueryForProductCountInCategories()
+            $this->filterQueryFactory->createListableWithProductFilter($productFilterData)->setLimit(0)->getAggregationQueryForProductCountInCategories(),
         );
 
         return $this->extractCategoryIdsAggregation($result);

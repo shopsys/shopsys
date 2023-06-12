@@ -30,7 +30,7 @@ class OrderRepository extends BaseOrderRepository
         if ($order === null) {
             throw new OrderNotFoundUserError(sprintf(
                 'Order with order number \'%s\' not found.',
-                $orderNumber
+                $orderNumber,
             ));
         }
 
@@ -63,7 +63,7 @@ class OrderRepository extends BaseOrderRepository
         if ($order === null) {
             throw new OrderNotFoundUserError(sprintf(
                 'Order with UUID \'%s\' not found.',
-                $uuid
+                $uuid,
             ));
         }
 
@@ -82,7 +82,7 @@ class OrderRepository extends BaseOrderRepository
         if ($order === null) {
             throw new OrderNotFoundUserError(sprintf(
                 'Order with UUID \'%s\' not found.',
-                $uuid
+                $uuid,
             ));
         }
 

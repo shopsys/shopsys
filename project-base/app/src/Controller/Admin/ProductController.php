@@ -46,7 +46,7 @@ class ProductController extends BaseProductController
                     [
                         'product' => $product,
                         'url' => $this->generateUrl('admin_product_edit', ['id' => $product->getId()]),
-                    ]
+                    ],
                 );
 
             return $this->redirectToRoute('admin_product_list');

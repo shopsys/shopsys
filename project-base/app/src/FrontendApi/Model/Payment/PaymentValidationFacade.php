@@ -17,31 +17,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 class PaymentValidationFacade
 {
     /**
-     * @var \App\FrontendApi\Model\Cart\CartFacade
-     */
-    private CartFacade $cartFacade;
-
-    /**
-     * @var \App\Model\Customer\User\CurrentCustomerUser
-     */
-    private CurrentCustomerUser $currentCustomerUser;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    private CurrencyFacade $currencyFacade;
-
-    /**
-     * @var \App\Model\Order\Preview\OrderPreviewFactory
-     */
-    private OrderPreviewFactory $orderPreviewFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
@@ -49,17 +24,12 @@ class PaymentValidationFacade
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(
-        Domain $domain,
-        CurrencyFacade $currencyFacade,
-        OrderPreviewFactory $orderPreviewFactory,
-        CurrentCustomerUser $currentCustomerUser,
-        CartFacade $cartFacade
+        private Domain $domain,
+        private CurrencyFacade $currencyFacade,
+        private OrderPreviewFactory $orderPreviewFactory,
+        private CurrentCustomerUser $currentCustomerUser,
+        private CartFacade $cartFacade,
     ) {
-        $this->domain = $domain;
-        $this->currencyFacade = $currencyFacade;
-        $this->orderPreviewFactory = $orderPreviewFactory;
-        $this->currentCustomerUser = $currentCustomerUser;
-        $this->cartFacade = $cartFacade;
     }
 
     /**
@@ -81,7 +51,7 @@ class PaymentValidationFacade
             $currentCustomerUser,
             null,
             null,
-            $cart->getFirstAppliedPromoCode()
+            $cart->getFirstAppliedPromoCode(),
         );
 
         $calculatedPaymentPrice = $orderPreview->getPaymentPrice();

@@ -30,9 +30,9 @@ class FilterQuery extends BaseFilterQuery
     protected const MAXIMUM_REASONABLE_AGGREGATION_BUCKET_COUNT = 400;
 
     /**
-     * @var array
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification
      */
-    private $mustNot = [];
+    private array $mustNot = [];
 
     /**
      * @param string $text
@@ -257,8 +257,11 @@ class FilterQuery extends BaseFilterQuery
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $maximalPrice
      * @return \App\Model\Product\Search\FilterQuery
      */
-    public function filterByPrices(PricingGroup $pricingGroup, ?Money $minimalPrice = null, ?Money $maximalPrice = null): self
-    {
+    public function filterByPrices(
+        PricingGroup $pricingGroup,
+        ?Money $minimalPrice = null,
+        ?Money $maximalPrice = null,
+    ): self {
         $clone = clone $this;
         $priceGte = null;
         $priceLte = null;

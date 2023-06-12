@@ -12,16 +12,10 @@ use Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategory;
 class PromotedCategoryRepository
 {
     /**
-     * @var \App\Model\Category\CategoryRepository
-     */
-    private CategoryRepository $categoryRepository;
-
-    /**
      * @param \App\Model\Category\CategoryRepository $categoryRepository
      */
-    public function __construct(CategoryRepository $categoryRepository)
+    public function __construct(private CategoryRepository $categoryRepository)
     {
-        $this->categoryRepository = $categoryRepository;
     }
 
     /**

@@ -11,7 +11,6 @@ use App\FrontendApi\Model\Order\OrderFacade;
 class GetOrderSentPageContentTest extends AbstractOrderTestCase
 {
     /**
-     * @var \App\FrontendApi\Model\Order\OrderFacade
      * @inject
      */
     private OrderFacade $orderFacade;
@@ -62,7 +61,7 @@ class GetOrderSentPageContentTest extends AbstractOrderTestCase
 
         $this->assertEquals(
             $this->orderFacade->getOrderSentPageContent($orderUuid),
-            $response['data']['orderSentPageContent']
+            $response['data']['orderSentPageContent'],
         );
     }
 

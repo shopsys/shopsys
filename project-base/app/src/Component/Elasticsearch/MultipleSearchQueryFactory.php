@@ -10,25 +10,13 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 class MultipleSearchQueryFactory
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader
-     */
-    private IndexDefinitionLoader $indexDefinitionLoader;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        IndexDefinitionLoader $indexDefinitionLoader,
-        Domain $domain
+        private IndexDefinitionLoader $indexDefinitionLoader,
+        private Domain $domain,
     ) {
-        $this->indexDefinitionLoader = $indexDefinitionLoader;
-        $this->domain = $domain;
     }
 
     /**
@@ -49,7 +37,7 @@ class MultipleSearchQueryFactory
     {
         return $this->indexDefinitionLoader->getIndexDefinition(
             $indexName,
-            $this->domain->getId()
+            $this->domain->getId(),
         )->getIndexAlias();
     }
 }

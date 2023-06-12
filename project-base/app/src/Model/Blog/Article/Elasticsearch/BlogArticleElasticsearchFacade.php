@@ -9,16 +9,10 @@ use App\Model\Blog\Category\BlogCategory;
 class BlogArticleElasticsearchFacade
 {
     /**
-     * @var \App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchRepository
-     */
-    private BlogArticleElasticsearchRepository $blogArticleElasticsearchRepository;
-
-    /**
      * @param \App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchRepository $blogArticleElasticsearchRepository
      */
-    public function __construct(BlogArticleElasticsearchRepository $blogArticleElasticsearchRepository)
+    public function __construct(private BlogArticleElasticsearchRepository $blogArticleElasticsearchRepository)
     {
-        $this->blogArticleElasticsearchRepository = $blogArticleElasticsearchRepository;
     }
 
     /**
@@ -66,8 +60,12 @@ class BlogArticleElasticsearchFacade
      * @param bool $onlyVisibleOnHomepage
      * @return array
      */
-    public function getByBlogCategory(BlogCategory $blogCategory, int $offset, int $limit, bool $onlyVisibleOnHomepage = false): array
-    {
+    public function getByBlogCategory(
+        BlogCategory $blogCategory,
+        int $offset,
+        int $limit,
+        bool $onlyVisibleOnHomepage = false,
+    ): array {
         return $this->blogArticleElasticsearchRepository->getByBlogCategory($blogCategory, $offset, $limit, $onlyVisibleOnHomepage);
     }
 

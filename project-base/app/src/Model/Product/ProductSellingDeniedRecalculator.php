@@ -18,19 +18,12 @@ use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator as Ba
 class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalculator
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(EntityManagerInterface $entityManager, Domain $domain)
+    public function __construct(EntityManagerInterface $entityManager, private Domain $domain)
     {
         parent::__construct($entityManager);
-
-        $this->domain = $domain;
     }
 
     /**
@@ -125,7 +118,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
                     'productIds' => Connection::PARAM_INT_ARRAY,
                     'variantTypeMain' => Types::STRING,
                     'domainId' => Types::INTEGER,
-                ]
+                ],
             );
         }
     }
@@ -282,7 +275,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
             [
                 'productIds' => Connection::PARAM_INT_ARRAY,
                 'variantTypeMain' => Types::STRING,
-            ]
+            ],
         );
     }
 
@@ -318,7 +311,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
             [
                 'productIds' => Connection::PARAM_INT_ARRAY,
                 'variantTypeMain' => Types::STRING,
-            ]
+            ],
         );
     }
 }

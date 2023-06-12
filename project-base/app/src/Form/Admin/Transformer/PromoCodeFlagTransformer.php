@@ -11,16 +11,10 @@ use Symfony\Component\Form\DataTransformerInterface;
 class PromoCodeFlagTransformer implements DataTransformerInterface
 {
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagFactory
-     */
-    private PromoCodeFlagFactory $promoCodeFlagFactory;
-
-    /**
      * @param \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagFactory $promoCodeFlagFactory
      */
-    public function __construct(PromoCodeFlagFactory $promoCodeFlagFactory)
+    public function __construct(private PromoCodeFlagFactory $promoCodeFlagFactory)
     {
-        $this->promoCodeFlagFactory = $promoCodeFlagFactory;
     }
 
     /**
@@ -51,7 +45,7 @@ class PromoCodeFlagTransformer implements DataTransformerInterface
 
         return $this->promoCodeFlagFactory->create(
             $value['flag'],
-            $value['type']
+            $value['type'],
         );
     }
 }

@@ -16,12 +16,12 @@ class SeoPageDomainNotFoundException extends Exception implements SeoPageExcepti
     public function __construct(
         int $seoPageId,
         int $domainId,
-        ?Exception $previous = null
+        ?Exception $previous = null,
     ) {
         $message = sprintf(
             'SeoPageDomain for seo page with ID %d and domain ID %d not found.',
             $seoPageId,
-            $domainId
+            $domainId,
         );
 
         parent::__construct($message, 0, $previous);

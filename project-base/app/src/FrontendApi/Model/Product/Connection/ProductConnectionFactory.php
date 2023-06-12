@@ -45,7 +45,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         string $orderingMode,
         string $defaultOrderingMode,
         string $batchLoadDataId,
-        ?ReadyCategorySeoMix $readyCategorySeoMix
+        ?ReadyCategorySeoMix $readyCategorySeoMix,
     ): Promise {
         $searchText = $argument['search'] ?? '';
         $productFilterOptionsClosure = function () use ($category, $productFilterData, $searchText, $readyCategorySeoMix) {
@@ -54,7 +54,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
                 $this->productFilterFacade->getProductFilterConfigForCategory($category, $searchText),
                 $productFilterData,
                 $searchText,
-                $readyCategorySeoMix
+                $readyCategorySeoMix,
             );
         };
 
@@ -80,7 +80,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         ProductFilterData $productFilterData,
         string $orderingMode,
         string $defaultOrderingMode,
-        string $batchLoadDataId
+        string $batchLoadDataId,
     ): Promise {
         $searchText = $argument['search'] ?? '';
         $productFilterOptionsClosure = function () use ($flag, $productFilterData, $searchText) {
@@ -88,7 +88,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
                 $flag,
                 $this->productFilterFacade->getProductFilterConfigForFlag($flag, $searchText),
                 $productFilterData,
-                $searchText
+                $searchText,
             );
         };
 
@@ -112,7 +112,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         ProductFilterData $productFilterData,
         string $orderingMode,
         string $defaultOrderingMode,
-        string $batchLoadDataId
+        string $batchLoadDataId,
     ): Promise {
         $searchText = $argument['search'] ?? '';
         $productFilterOptionsClosure = function () use ($brand, $productFilterData, $searchText) {
@@ -120,7 +120,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
                 $brand,
                 $this->productFilterFacade->getProductFilterConfigForBrand($brand, $searchText),
                 $productFilterData,
-                $searchText
+                $searchText,
             );
         };
 
@@ -140,7 +140,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         int $countOfProducts,
         Argument $argument,
         BaseProductFilterData $productFilterData,
-        ?string $orderingMode = null
+        ?string $orderingMode = null,
     ): ProductExtendedConnection {
         $searchText = $argument['search'] ?? '';
         $productFilterOptionsClosure = function () use ($productFilterData, $searchText) {
@@ -152,7 +152,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
             return $this->productFilterOptionsFactory->createProductFilterOptionsForAll(
                 $productFilterConfig,
                 $productFilterData,
-                $searchText
+                $searchText,
             );
         };
 
@@ -161,7 +161,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
             $countOfProducts,
             $argument,
             $productFilterOptionsClosure,
-            $orderingMode
+            $orderingMode,
         );
     }
 
@@ -180,7 +180,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         Argument $argument,
         string $batchLoadDataId,
         string $orderingMode,
-        string $defaultOrderingMode
+        string $defaultOrderingMode,
     ): Promise {
         $paginator = $this->createPaginator($retrieveProductClosure, $productFilterOptionsClosure, $orderingMode, $defaultOrderingMode);
 
@@ -216,9 +216,9 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
                     $pageInfo,
                     $productFilterOptionsClosure,
                     $orderingMode,
-                    $defaultOrderingMode
+                    $defaultOrderingMode,
                 );
-            })
+            }),
         );
     }
 
@@ -235,7 +235,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         int $countOfProducts,
         Argument $argument,
         callable $getProductFilterConfigClosure,
-        ?string $orderingMode = null
+        ?string $orderingMode = null,
     ): ProductExtendedConnection {
         $paginator = new Paginator($retrieveProductClosure);
         $connection = $paginator->auto($argument, $countOfProducts);
@@ -245,7 +245,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
             $connection->getPageInfo(),
             $connection->getTotalCount(),
             $getProductFilterConfigClosure,
-            $orderingMode
+            $orderingMode,
         );
     }
 }

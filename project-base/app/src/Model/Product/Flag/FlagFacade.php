@@ -24,11 +24,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class FlagFacade extends BaseFlagFacade
 {
     /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private FriendlyUrlFacade $friendlyUrlFacade;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Flag\FlagRepository $flagRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactory $flagFactory
@@ -40,11 +35,9 @@ class FlagFacade extends BaseFlagFacade
         FlagRepository $flagRepository,
         FlagFactory $flagFactory,
         EventDispatcherInterface $eventDispatcher,
-        FriendlyUrlFacade $friendlyUrlFacade
+        private FriendlyUrlFacade $friendlyUrlFacade,
     ) {
         parent::__construct($em, $flagRepository, $flagFactory, $eventDispatcher);
-
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
     }
 
     /**

@@ -11,24 +11,9 @@ use Symfony\Bridge\Monolog\Logger;
 class TransferLoggerFactory
 {
     /**
-     * @var \Symfony\Bridge\Monolog\Logger
-     */
-    private $defaultLogger;
-
-    /**
      * @var \App\Model\Transfer\TransferLoggerInterface[]
      */
-    private $transferLoggers = [];
-
-    /**
-     * @var \App\Model\Transfer\Issue\TransferIssueFacade
-     */
-    private $transferIssueFacade;
-
-    /**
-     * @var \App\Model\Transfer\TransferFacade
-     */
-    private $transferFacade;
+    private array $transferLoggers = [];
 
     /**
      * @param \Symfony\Bridge\Monolog\Logger $defaultLogger
@@ -36,21 +21,19 @@ class TransferLoggerFactory
      * @param \App\Model\Transfer\Issue\TransferIssueFacade $transferIssueFacade
      */
     public function __construct(
-        Logger $defaultLogger,
-        TransferFacade $transferFacade,
-        TransferIssueFacade $transferIssueFacade
+        private Logger $defaultLogger,
+        private TransferFacade $transferFacade,
+        private TransferIssueFacade $transferIssueFacade,
     ) {
-        $this->defaultLogger = $defaultLogger;
-        $this->transferIssueFacade = $transferIssueFacade;
-        $this->transferFacade = $transferFacade;
     }
 
     /**
      * @param \App\Model\Transfer\TransferIdentificationInterface $transferIdentification
      * @return \App\Model\Transfer\TransferLoggerInterface
      */
-    public function getTransferLoggerByIdentifier(TransferIdentificationInterface $transferIdentification): TransferLoggerInterface
-    {
+    public function getTransferLoggerByIdentifier(
+        TransferIdentificationInterface $transferIdentification,
+    ): TransferLoggerInterface {
         $serviceTransferIdentifier = $transferIdentification->getServiceIdentifier() . ucfirst($transferIdentification->getTransferIdentifier());
         $serviceTransferName = $transferIdentification->getServiceIdentifier() . ' ' . ucfirst($transferIdentification->getTransferName());
 
@@ -67,7 +50,7 @@ class TransferLoggerFactory
         $newLogger = new TransferLogger(
             $this->defaultLogger,
             $serviceTransferIdentifier,
-            $this->transferIssueFacade
+            $this->transferIssueFacade,
         );
 
         $this->transferLoggers[$serviceTransferIdentifier] = $newLogger;

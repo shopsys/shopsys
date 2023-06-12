@@ -9,16 +9,10 @@ use Elasticsearch\Client;
 abstract class AbstractElasticsearchDataFetcher
 {
     /**
-     * @var \Elasticsearch\Client
-     */
-    protected Client $client;
-
-    /**
      * @param \Elasticsearch\Client $client
      */
-    public function __construct(Client $client)
+    public function __construct(protected Client $client)
     {
-        $this->client = $client;
     }
 
     /**

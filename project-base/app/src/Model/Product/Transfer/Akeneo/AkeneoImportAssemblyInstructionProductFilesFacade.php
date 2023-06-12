@@ -17,30 +17,9 @@ use Throwable;
 
 class AkeneoImportAssemblyInstructionProductFilesFacade extends AbstractAkeneoImportTransfer
 {
-    /**
-     * @var \App\Component\Akeneo\Transfer\MediaFiles\MediaFilesTransferAkeneoFacade
-     */
-    private $mediaFilesTransferAkeneoFacade;
+    private ?Product $product = null;
 
-    /**
-     * @var \App\Model\Product\Product|null
-     */
-    private $product;
-
-    /**
-     * @var \League\Flysystem\FilesystemOperator
-     */
-    private $filesystem;
-
-    /**
-     * @var \App\Model\Product\ProductRepository
-     */
-    private $productRepository;
-
-    /**
-     * @var string
-     */
-    private $productFilesDir;
+    private FilesystemOperator $filesystem;
 
     /**
      * @param string $productFilesDir
@@ -50,17 +29,14 @@ class AkeneoImportAssemblyInstructionProductFilesFacade extends AbstractAkeneoIm
      * @param \League\Flysystem\FilesystemOperator $localFilesystem
      */
     public function __construct(
-        string $productFilesDir,
+        private string $productFilesDir,
         AkeneoImportTransferDependency $akeneoImportTransferDependency,
-        ProductRepository $productRepository,
-        MediaFilesTransferAkeneoFacade $mediaFilesTransferAkeneoFacade,
-        FilesystemOperator $localFilesystem
+        private ProductRepository $productRepository,
+        private MediaFilesTransferAkeneoFacade $mediaFilesTransferAkeneoFacade,
+        FilesystemOperator $localFilesystem,
     ) {
         parent::__construct($akeneoImportTransferDependency);
 
-        $this->productRepository = $productRepository;
-        $this->productFilesDir = $productFilesDir;
-        $this->mediaFilesTransferAkeneoFacade = $mediaFilesTransferAkeneoFacade;
         $this->filesystem = $localFilesystem;
     }
 

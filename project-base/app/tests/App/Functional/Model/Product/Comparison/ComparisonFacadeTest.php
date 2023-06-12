@@ -14,13 +14,11 @@ class ComparisonFacadeTest extends TransactionFunctionalTestCase
 {
     /**
      * @inject
-     * @var \App\Model\Product\Comparison\ComparisonFacade
      */
     private ComparisonFacade $comparisonFacade;
 
     /**
      * @inject
-     * @var \App\Model\Product\Comparison\ComparisonRepository
      */
     private ComparisonRepository $comparisonRepository;
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Model\Category\CategoryDataFactory;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -87,7 +86,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
                     . 'and home office activities.',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale
+                $locale,
             );
 
             $categoryData->seoH1s[$domainConfig->getId()] = t(

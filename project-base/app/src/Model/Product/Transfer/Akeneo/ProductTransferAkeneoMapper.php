@@ -11,6 +11,7 @@ use App\Model\Category\CategoryFacade;
 use App\Model\Product\Flag\FlagRepository;
 use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterFacade;
+use App\Model\Product\Parameter\ParameterValueDataFactory;
 use App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
@@ -28,45 +29,7 @@ class ProductTransferAkeneoMapper
 {
     private const PARAMETER_TEXT_MAX_LENGTH = 300;
 
-    /**
-     * @var \App\Model\Product\ProductDataFactory
-     */
-    private $productDataFactory;
-
-    /**
-     * @var \App\Model\Product\ProductFilesDataFactory
-     */
-    private $productFilesDataFactory;
-
-    /**
-     * @var \App\Model\Category\CategoryFacade
-     */
-    private $categoryFacade;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterFacade
-     */
-    private $parameterFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface
-     */
-    private $productParameterValueDataFactory;
-
-    /**
-     * @var \App\Model\Product\Parameter\ParameterValueDataFactory
-     */
-    private $parameterValueDataFactory;
-
-    /**
-     * @var \App\Model\Product\Flag\FlagRepository
-     */
-    private $flagRepository;
-
-    /**
-     * @var \App\Model\Product\Transfer\Akeneo\ParameterTransferCachedAkeneoFacade
-     */
-    private $parameterTransferCachedAkeneoFacade;
+    private ParameterValueDataFactory $parameterValueDataFactory;
 
     /**
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
@@ -79,23 +42,16 @@ class ProductTransferAkeneoMapper
      * @param \App\Model\Product\Transfer\Akeneo\ParameterTransferCachedAkeneoFacade $parameterTransferCachedAkeneoFacade
      */
     public function __construct(
-        ProductDataFactory $productDataFactory,
-        CategoryFacade $categoryFacade,
-        ProductFilesDataFactory $productFilesDataFactory,
-        ParameterFacade $parameterFacade,
-        ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
+        private ProductDataFactory $productDataFactory,
+        private CategoryFacade $categoryFacade,
+        private ProductFilesDataFactory $productFilesDataFactory,
+        private ParameterFacade $parameterFacade,
+        private ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
         ParameterValueDataFactoryInterface $parameterValueDataFactory,
-        FlagRepository $flagRepository,
-        ParameterTransferCachedAkeneoFacade $parameterTransferCachedAkeneoFacade
+        private FlagRepository $flagRepository,
+        private ParameterTransferCachedAkeneoFacade $parameterTransferCachedAkeneoFacade,
     ) {
-        $this->productDataFactory = $productDataFactory;
-        $this->categoryFacade = $categoryFacade;
-        $this->productFilesDataFactory = $productFilesDataFactory;
-        $this->parameterFacade = $parameterFacade;
-        $this->productParameterValueDataFactory = $productParameterValueDataFactory;
         $this->parameterValueDataFactory = $parameterValueDataFactory;
-        $this->flagRepository = $flagRepository;
-        $this->parameterTransferCachedAkeneoFacade = $parameterTransferCachedAkeneoFacade;
     }
 
     /**
@@ -103,18 +59,20 @@ class ProductTransferAkeneoMapper
      * @param \App\Model\Product\Product $product
      * @return \App\Model\Product\ProductFilesData
      */
-    public function mapAkeneoProductDataToProductFilesData(array $akeneoProductData, Product $product): ProductFilesData
-    {
+    public function mapAkeneoProductDataToProductFilesData(
+        array $akeneoProductData,
+        Product $product,
+    ): ProductFilesData {
         $productFilesData = $this->productFilesDataFactory->createFromProduct($product);
 
         $productFilesData->assemblyInstructionCode = AkeneoProductHelper::mapDomainDataString(
             $productFilesData->assemblyInstructionCode,
-            $akeneoProductData['values']['assembly_instruction'] ?? null
+            $akeneoProductData['values']['assembly_instruction'] ?? null,
         );
 
         $productFilesData->productTypePlanCode = AkeneoProductHelper::mapDomainDataString(
             $productFilesData->productTypePlanCode,
-            $akeneoProductData['values']['product_type_plan'] ?? null
+            $akeneoProductData['values']['product_type_plan'] ?? null,
         );
 
         return $productFilesData;
@@ -126,8 +84,11 @@ class ProductTransferAkeneoMapper
      * @param \App\Model\Transfer\TransferLoggerInterface $transferLogger
      * @return \App\Model\Product\ProductData
      */
-    public function mapAkeneoProductDataToProductData(array $akeneoProductData, ?Product $product, TransferLoggerInterface $transferLogger): ProductData
-    {
+    public function mapAkeneoProductDataToProductData(
+        array $akeneoProductData,
+        ?Product $product,
+        TransferLoggerInterface $transferLogger,
+    ): ProductData {
         if ($product === null) {
             $productData = $this->productDataFactory->create();
             $productData->catnum = $akeneoProductData['identifier'];
@@ -212,8 +173,11 @@ class ProductTransferAkeneoMapper
      * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Transfer\TransferLoggerInterface $transferLogger
      */
-    private function mapProductParameters(array $akeneoProductData, ProductData $productData, TransferLoggerInterface $transferLogger): void
-    {
+    private function mapProductParameters(
+        array $akeneoProductData,
+        ProductData $productData,
+        TransferLoggerInterface $transferLogger,
+    ): void {
         $akeneoProductParameters = $this->getParametersFromAkeneoData($akeneoProductData);
         $productData->parameters = [];
 
@@ -241,14 +205,17 @@ class ProductTransferAkeneoMapper
      * @param string[] $akeneoParameterValueCodes
      * @param \App\Model\Product\ProductData $productData
      */
-    private function addParameterValuesByAkeneoValueCodes(Parameter $parameter, array $akeneoParameterValueCodes, ProductData $productData): void
-    {
+    private function addParameterValuesByAkeneoValueCodes(
+        Parameter $parameter,
+        array $akeneoParameterValueCodes,
+        ProductData $productData,
+    ): void {
         foreach ($akeneoParameterValueCodes as $akeneoParameterValueCode) {
             foreach (AkeneoHelper::ESHOP_LOCALES_BY_AKENEO_LOCALES as $locale) {
                 $productData->parameters[] = $this->createProductParameterValueData(
                     $parameter,
                     $locale,
-                    $akeneoParameterValueCode
+                    $akeneoParameterValueCode,
                 );
             }
         }
@@ -260,8 +227,11 @@ class ProductTransferAkeneoMapper
      * @param string|null $productCatnum
      * @return string[]
      */
-    private function getParameterValueAkeneoCodes(array $akeneoProductParameterData, Parameter $parameter, ?string $productCatnum): array
-    {
+    private function getParameterValueAkeneoCodes(
+        array $akeneoProductParameterData,
+        Parameter $parameter,
+        ?string $productCatnum,
+    ): array {
         $currentAkeneoProductParameterData = current($akeneoProductParameterData);
         $currentAkeneoProductParameterDataValue = $currentAkeneoProductParameterData['data'];
 
@@ -275,7 +245,7 @@ class ProductTransferAkeneoMapper
             $this->checkExpectedParameterUnit(
                 $parameter,
                 $currentAkeneoProductParameterDataValue['unit'],
-                $productCatnum
+                $productCatnum,
             );
             return [(string)$currentAkeneoProductParameterDataValue['amount']];
         }
@@ -291,7 +261,7 @@ class ProductTransferAkeneoMapper
     private function addLocalizedParameterValues(
         array $akeneoProductParameterData,
         Parameter $parameter,
-        ProductData $productData
+        ProductData $productData,
     ): void {
         foreach ($akeneoProductParameterData as $currentAkeneoProductParameterData) {
             $locale = AkeneoHelper::findEshopLocaleByAkeneoLocale($currentAkeneoProductParameterData['locale']);
@@ -299,7 +269,7 @@ class ProductTransferAkeneoMapper
                 $productData->parameters[] = $this->createProductParameterValueData(
                     $parameter,
                     $locale,
-                    (string)$currentAkeneoProductParameterData['data']
+                    (string)$currentAkeneoProductParameterData['data'],
                 );
             }
         }
@@ -336,8 +306,11 @@ class ProductTransferAkeneoMapper
      * @param string $parameterValueUnitAkeneoCode
      * @param string $productCatnum
      */
-    private function checkExpectedParameterUnit(Parameter $parameter, string $parameterValueUnitAkeneoCode, string $productCatnum): void
-    {
+    private function checkExpectedParameterUnit(
+        Parameter $parameter,
+        string $parameterValueUnitAkeneoCode,
+        string $productCatnum,
+    ): void {
         if ($parameter->getUnit() === null || $parameter->getUnit()->getAkeneoCode() !== $parameterValueUnitAkeneoCode
         ) {
             throw new TransferException(
@@ -346,8 +319,8 @@ class ProductTransferAkeneoMapper
                     $productCatnum,
                     $parameter->getName('cs'),
                     $parameter->getUnit()->getAkeneoCode(),
-                    $parameterValueUnitAkeneoCode
-                )
+                    $parameterValueUnitAkeneoCode,
+                ),
             );
         }
     }
@@ -379,7 +352,7 @@ class ProductTransferAkeneoMapper
     private function createProductParameterValueData(
         Parameter $parameter,
         string $locale,
-        string $akeneoParameterValueCode
+        string $akeneoParameterValueCode,
     ): ProductParameterValueData {
         $productParameterValueData = $this->productParameterValueDataFactory->create();
 
@@ -391,8 +364,8 @@ class ProductTransferAkeneoMapper
                     'Value for parameter "%s" is too long: "%s", expected max %d',
                     $parameter->getAkeneoCode(),
                     $akeneoParameterValueCode,
-                    self::PARAMETER_TEXT_MAX_LENGTH
-                )
+                    self::PARAMETER_TEXT_MAX_LENGTH,
+                ),
             );
         }
 
@@ -417,8 +390,11 @@ class ProductTransferAkeneoMapper
      * @param string $akeneoParameterValueCode
      * @return string
      */
-    private function getParameterValueTextByAkeneoValueCode(Parameter $parameter, string $locale, string $akeneoParameterValueCode): string
-    {
+    private function getParameterValueTextByAkeneoValueCode(
+        Parameter $parameter,
+        string $locale,
+        string $akeneoParameterValueCode,
+    ): string {
         if ($parameter->getAkeneoType() === Parameter::AKENEO_ATTRIBUTES_TYPE_BOOLEAN) {
             switch ($akeneoParameterValueCode) {
                 case '':
@@ -433,7 +409,7 @@ class ProductTransferAkeneoMapper
         if (in_array($parameter->getAkeneoType(), [Parameter::AKENEO_ATTRIBUTES_TYPE_SIMPLE_SELECT, Parameter::AKENEO_ATTRIBUTES_TYPE_MULTI_SELECT], true)) {
             $valueTextsByLocale = $this->parameterTransferCachedAkeneoFacade->getParameterValueTextsIndexedByLocaleForParameterAndAkeneoValue(
                 $parameter->getAkeneoCode(),
-                $akeneoParameterValueCode
+                $akeneoParameterValueCode,
             );
             if (array_key_exists($locale, $valueTextsByLocale) === false || $valueTextsByLocale[$locale] === null) {
                 throw new TransferException(
@@ -441,9 +417,9 @@ class ProductTransferAkeneoMapper
                         'Parameter value `%s` for parameter code `%s` does not have localized `%s` label',
                         $akeneoParameterValueCode,
                         $parameter->getAkeneoCode(),
-                        $locale
+                        $locale,
                     ),
-                    0
+                    0,
                 );
             }
 

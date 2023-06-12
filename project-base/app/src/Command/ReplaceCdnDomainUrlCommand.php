@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ReplaceCdnDomainUrlCommand extends Command
 {
     /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      * @var string
      */
     protected static $defaultName = 'shopsys:cdn-domain-url:replace';
@@ -25,7 +26,7 @@ class ReplaceCdnDomainUrlCommand extends Command
     public function __construct(
         private readonly string $cdnDomainUrl,
         private readonly Domain $domain,
-        private readonly DomainUrlReplacer $domainUrlReplacer
+        private readonly DomainUrlReplacer $domainUrlReplacer,
     ) {
         parent::__construct();
     }

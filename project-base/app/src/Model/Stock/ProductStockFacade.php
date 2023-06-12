@@ -9,15 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ProductStockFacade
 {
-    /**
-     * @var \App\Model\Stock\ProductStockRepository
-     */
-    private $productStockRepository;
-
-    /**
-     * @var \Doctrine\ORM\EntityManagerInterface
-     */
-    private $em;
+    private ProductStockRepository $productStockRepository;
 
     /**
      * @param \App\Model\Stock\ProductStockRepository $stockProductRepository
@@ -25,10 +17,9 @@ class ProductStockFacade
      */
     public function __construct(
         ProductStockRepository $stockProductRepository,
-        EntityManagerInterface $em
+        private EntityManagerInterface $em,
     ) {
         $this->productStockRepository = $stockProductRepository;
-        $this->em = $em;
     }
 
     /**
@@ -90,11 +81,11 @@ class ProductStockFacade
     public function editProductStockRelations(
         Product $product,
         array $stocksIndexedById,
-        array $productStockDataItems
+        array $productStockDataItems,
     ): void {
         $productStocksIndexedByStockId = $this->productStockRepository->getProductStocksByStocksAndProductIndexedByStockId(
             array_keys($stocksIndexedById),
-            $product
+            $product,
         );
 
         foreach ($stocksIndexedById as $stockId => $stock) {

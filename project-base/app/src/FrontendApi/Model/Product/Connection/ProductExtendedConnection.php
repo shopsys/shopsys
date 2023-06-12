@@ -10,11 +10,6 @@ use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection as Base
 class ProductExtendedConnection extends BaseProductConnection
 {
     /**
-     * @var string|null
-     */
-    private ?string $orderingMode;
-
-    /**
      * @param \Overblog\GraphQLBundle\Relay\Connection\EdgeInterface[] $edges
      * @param \Overblog\GraphQLBundle\Relay\Connection\PageInfoInterface|null $pageInfo
      * @param int $totalCount
@@ -26,11 +21,9 @@ class ProductExtendedConnection extends BaseProductConnection
         ?PageInfoInterface $pageInfo,
         int $totalCount,
         callable $productFilterOptionsClosure,
-        ?string $orderingMode = null
+        private ?string $orderingMode = null,
     ) {
         parent::__construct($edges, $pageInfo, $totalCount, $productFilterOptionsClosure);
-
-        $this->orderingMode = $orderingMode;
     }
 
     /**

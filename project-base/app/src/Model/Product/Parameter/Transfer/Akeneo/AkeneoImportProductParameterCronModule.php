@@ -10,25 +10,13 @@ use Symfony\Bridge\Monolog\Logger;
 class AkeneoImportProductParameterCronModule implements SimpleCronModuleInterface
 {
     /**
-     * @var \App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFacade
-     */
-    private $akeneoImportProductParameterFacade;
-
-    /**
-     * @var \App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductGroupParameterFacade
-     */
-    private $akeneoImportProductGroupParameterFacade;
-
-    /**
      * @param \App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFacade $akeneoImportProductParameterFacade
      * @param \App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductGroupParameterFacade $akeneoImportProductGroupParameterFacade
      */
     public function __construct(
-        AkeneoImportProductParameterFacade $akeneoImportProductParameterFacade,
-        AkeneoImportProductGroupParameterFacade $akeneoImportProductGroupParameterFacade
+        private AkeneoImportProductParameterFacade $akeneoImportProductParameterFacade,
+        private AkeneoImportProductGroupParameterFacade $akeneoImportProductGroupParameterFacade,
     ) {
-        $this->akeneoImportProductParameterFacade = $akeneoImportProductParameterFacade;
-        $this->akeneoImportProductGroupParameterFacade = $akeneoImportProductGroupParameterFacade;
     }
 
     /**

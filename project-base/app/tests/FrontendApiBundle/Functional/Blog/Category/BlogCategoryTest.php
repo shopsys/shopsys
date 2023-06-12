@@ -13,19 +13,14 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class BlogCategoryTest extends GraphQlTestCase
 {
-    /**
-     * @var \App\Model\Blog\Category\BlogCategory
-     */
     private BlogCategory $blogCategory;
 
     /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
      * @inject
      */
     private FriendlyUrlFacade $friendlyUrlFacade;
 
     /**
-     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
      * @inject
      */
     protected UrlGeneratorInterface $urlGenerator;
