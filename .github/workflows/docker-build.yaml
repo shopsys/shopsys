@@ -124,6 +124,8 @@ jobs:
                 run: |
                     docker-compose exec -T php-fpm mv ./project-base/PRODUCTION ./project-base/DEVELOPMENT
                     docker-compose exec -T php-fpm php phing -D production.confirm.action=y composer-dev standards
+            -   name: Check GraphQl schema
+                run: docker-compose exec -T php-fpm project-base/app/check-schema.sh
     tests-unit-functional-smoke:
         name: Run unit, functional and smoke tests
         needs: build-docker-images
