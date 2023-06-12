@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductTranslation as BaseProductTrans
 /**
  * @ORM\Table(name="product_translations")
  * @ORM\Entity
+ * @property \App\Model\Product\Product $translatable
  */
 class ProductTranslation extends BaseProductTranslation
 {

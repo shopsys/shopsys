@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData as BaseUs
  * @property \App\Model\Customer\User\CustomerUserData $customerUserData
  * @property \App\Model\Customer\BillingAddressData $billingAddressData
  * @property \App\Model\Customer\DeliveryAddressData|null $deliveryAddressData
- * @method __construct(\App\Model\Customer\BillingAddressData $billingAddressData, \App\Model\Customer\DeliveryAddressData $deliveryAddressData, \App\Model\Customer\User\CustomerUserData $customerUserData)
+ * @method __construct(\App\Model\Customer\BillingAddressData $billingAddressData, \App\Model\Customer\User\CustomerUserData $customerUserData, \App\Model\Customer\DeliveryAddressData|null $deliveryAddressData)
  */
 class CustomerUserUpdateData extends BaseUserUpdateData
 {

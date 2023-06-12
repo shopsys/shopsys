@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportTranslation as BaseTranspor
 /**
  * @ORM\Table(name="transport_translations")
  * @ORM\Entity
+ * @property \App\Model\Transport\Transport $translatable
  */
 class TransportTranslation extends BaseTransportTranslation
 {
