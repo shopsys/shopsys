@@ -107,8 +107,8 @@ class CategorySeoMix
         return new ChoseCategorySeoMixCombination(
             $this->getDomainId(),
             $this->category->getId(),
-            $this->flag !== null ? $this->flag->getId() : null,
             $this->ordering,
+            $this->flag?->getId(),
             $parameterValueIdsByParameterIds,
         );
     }

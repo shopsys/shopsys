@@ -77,12 +77,12 @@ class MergadoFeedItemFactory
             $this->productParametersBatchLoader->getProductParametersByName($product, $domainConfig),
             $currency->getCode(),
             $product->getDescription($domainId),
-            $product->getBrand(),
-            $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig),
-            $product->isVariant() ? $product->getMainVariant()->getId() : null,
             $productPrice,
             $flags,
             $availability,
+            $product->getBrand(),
+            $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig),
+            $product->isVariant() ? $product->getMainVariant()->getId() : null,
         );
     }
 

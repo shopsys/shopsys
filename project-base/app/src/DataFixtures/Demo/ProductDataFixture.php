@@ -29,17 +29,11 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter as BaseParameter;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory;
-use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
 
 class ProductDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const PRODUCT_PREFIX = 'product_';
-
-    private ProductDataFactory $productDataFactory;
-
-    private ParameterValueDataFactory $parameterValueDataFactory;
 
     private int $productNo = 1;
 
@@ -106,7 +100,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     ];
 
     /**
-     * @param \App\DataFixtures\Demo\ProductFacadeAlias $productFacade
+     * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
@@ -124,25 +118,23 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
-        private ProductFacade $productFacade,
-        private Domain $domain,
-        private PricingGroupFacade $pricingGroupFacade,
-        ProductDataFactoryInterface $productDataFactory,
-        private ProductParameterValueDataFactory $productParameterValueDataFactory,
-        ParameterValueDataFactoryInterface $parameterValueDataFactory,
-        private ParameterFacade $parameterFacade,
-        private ParameterDataFactory $parameterDataFactory,
-        private PriceConverter $priceConverter,
-        private ParameterGroupDataFactory $parameterGroupDataFactory,
-        private Generator $generator,
-        private ParameterGroupFacade $parameterGroupFacade,
-        private StockRepository $stockRepository,
-        private ProductStockDataFactory $productStockDataFactory,
-        private ProductStoreDataFactory $productStoreDataFactory,
-        private EntityManagerInterface $em,
+        private readonly ProductFacade $productFacade,
+        private readonly Domain $domain,
+        private readonly PricingGroupFacade $pricingGroupFacade,
+        private readonly ProductDataFactory $productDataFactory,
+        private readonly ProductParameterValueDataFactory $productParameterValueDataFactory,
+        private readonly ParameterValueDataFactory $parameterValueDataFactory,
+        private readonly ParameterFacade $parameterFacade,
+        private readonly ParameterDataFactory $parameterDataFactory,
+        private readonly PriceConverter $priceConverter,
+        private readonly ParameterGroupDataFactory $parameterGroupDataFactory,
+        private readonly Generator $generator,
+        private readonly ParameterGroupFacade $parameterGroupFacade,
+        private readonly StockRepository $stockRepository,
+        private readonly ProductStockDataFactory $productStockDataFactory,
+        private readonly ProductStoreDataFactory $productStoreDataFactory,
+        private readonly EntityManagerInterface $em,
     ) {
-        $this->productDataFactory = $productDataFactory;
-        $this->parameterValueDataFactory = $parameterValueDataFactory;
     }
 
     /**

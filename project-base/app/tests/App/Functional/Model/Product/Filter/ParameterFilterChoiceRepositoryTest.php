@@ -44,21 +44,6 @@ class ParameterFilterChoiceRepositoryTest extends ParameterTransactionFunctional
             52 => [$this->getParameterValueIdForFirstDomain('hardcover'), $this->getParameterValueIdForFirstDomain('paper')],
             51 => [$this->getParameterValueIdForFirstDomain('250'), $this->getParameterValueIdForFirstDomain('48'), $this->getParameterValueIdForFirstDomain('50'), $this->getParameterValueIdForFirstDomain('55')],
             28 => [$this->getParameterValueIdForFirstDomain('150 g'), $this->getParameterValueIdForFirstDomain('250 g'), $this->getParameterValueIdForFirstDomain('50 g')],
-            51 => [$this->getParameterValueIdForFirstDomain('hardcover'), $this->getParameterValueIdForFirstDomain(
-                'paper',
-            )],
-            50 => [$this->getParameterValueIdForFirstDomain('250'), $this->getParameterValueIdForFirstDomain(
-                '48',
-            ), $this->getParameterValueIdForFirstDomain(
-                '50',
-            ), $this->getParameterValueIdForFirstDomain(
-                '55',
-            )],
-            10 => [$this->getParameterValueIdForFirstDomain('150 g'), $this->getParameterValueIdForFirstDomain(
-                '250 g',
-            ), $this->getParameterValueIdForFirstDomain(
-                '50 g',
-            )],
         ];
 
         foreach ($parameterParameterValuePair as $parameterId => $parameterValues) {

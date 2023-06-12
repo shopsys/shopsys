@@ -21,15 +21,15 @@ class GoogleFeedItemFactory extends BaseGoogleFeedItemFactory
         return new GoogleFeedItem(
             $product->getId(),
             $product->getFullname($domainConfig->getLocale()),
+            $product->getCalculatedSellingDenied(),
+            $this->getPrice($product, $domainConfig),
+            $this->getCurrency($domainConfig),
+            $this->productUrlsBatchLoader->getProductUrl($product, $domainConfig),
             $this->getBrandName($product),
             $product->getDescription($domainConfig->getId()),
             $product->getEan(),
             $product->getPartno(),
-            $this->productUrlsBatchLoader->getProductUrl($product, $domainConfig),
             $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig),
-            $product->getCalculatedSellingDenied(),
-            $this->getPrice($product, $domainConfig),
-            $this->getCurrency($domainConfig),
         );
     }
 }

@@ -4,23 +4,19 @@ declare(strict_types=1);
 
 namespace App\Model\Navigation;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 
 class NavigationItemCategoryFacade
 {
-    private EntityManager $em;
-
     /**
-     * @param \Doctrine\ORM\EntityManager $entityManager
+     * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Navigation\NavigationItemCategoryRepository $navigationItemCategoryRepository
      */
     public function __construct(
-        EntityManagerInterface $entityManager,
-        private NavigationItemCategoryRepository $navigationItemCategoryRepository,
+        private readonly EntityManagerInterface $em,
+        private readonly NavigationItemCategoryRepository $navigationItemCategoryRepository,
     ) {
-        $this->em = $entityManager;
     }
 
     /**
