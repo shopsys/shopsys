@@ -32,10 +32,6 @@ services:
         restart: always
         image: storefront-image
         container_name: shopsys-framework-storefront
-        command: # Optional
-            - build
-        volumes:
-            - storefront:/home/node/app
         ports:
             - "3000:3000"
 
@@ -75,6 +71,4 @@ services:
 
 volumes:
     web-data:
-        driver: local
-    storefront:
         driver: local
