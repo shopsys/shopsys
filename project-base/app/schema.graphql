@@ -1627,7 +1627,7 @@ type Query {
   """Returns list of advert positions."""
   advertPositions: [AdvertPosition!]!
   """Returns list of adverts, optionally filtered by `positionName`"""
-  adverts(positionName: String): [Advert!]!
+  adverts(categoryUuid: Uuid, positionName: String): [Advert!]!
   """Returns article filtered using UUID or URL slug"""
   article(urlSlug: String, uuid: Uuid): NotBlogArticleInterface
   ArticleLink: ArticleLink
@@ -1934,6 +1934,8 @@ type SeoPage {
 type SeoSetting {
   """Description of the content of a web page"""
   metaDescription: String!
+  """Robots.txt's file content"""
+  robotsTxtContent: String
   """Document's title that is shown in a browser's title"""
   title: String!
   """Complement to title"""
