@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 GENERATED_FILENAME=./graphql/generated/index.tsx
 ORIGINAL_HASH=$(md5sum $GENERATED_FILENAME | awk '{ print $1 }')
 
