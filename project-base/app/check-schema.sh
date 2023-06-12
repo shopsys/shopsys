@@ -1,6 +1,8 @@
 #!/bin/bash -e
 
-GENERATED_FILENAME=./schema.graphql
+BASE_PATH=$(dirname $0)
+
+GENERATED_FILENAME=$BASE_PATH/schema.graphql
 ORIGINAL_HASH=$(md5sum $GENERATED_FILENAME | awk '{ print $1 }')
 
 php phing frontend-api-generate-graphql-schema
