@@ -11,7 +11,7 @@ use App\Model\Product\Parameter\Transfer\Akeneo\ProductParameterTransferAkeneoFa
 class ParameterTransferCachedAkeneoFacade
 {
     /**
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification
+     * @var array<string, mixed>
      */
     private array $cache = [];
 

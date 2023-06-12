@@ -30,7 +30,7 @@ class FilterQuery extends BaseFilterQuery
     protected const MAXIMUM_REASONABLE_AGGREGATION_BUCKET_COUNT = 400;
 
     /**
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification
+     * @var array<int, array<string, array<string, int>>>
      */
     private array $mustNot = [];
 
@@ -98,7 +98,7 @@ class FilterQuery extends BaseFilterQuery
     /**
      * @return \App\Model\Product\Search\FilterQuery
      */
-    public function odrderByStockQuantity(): self
+    public function orderByStockQuantity(): self
     {
         $clone = clone $this;
 

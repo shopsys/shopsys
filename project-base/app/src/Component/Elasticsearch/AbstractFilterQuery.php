@@ -17,19 +17,19 @@ abstract class AbstractFilterQuery
     protected const DEFAULT_FROM = 0;
 
     /**
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification
+     * @var array<int, mixed>
      */
     protected array $filters = [];
 
     /**
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification
+     * @var array<string, string>
      */
     protected array $sorting = [];
 
     protected int $limit = self::DEFAULT_LIMIT;
 
     /**
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification
+     * @var array<string, \stdClass>
      */
     protected array $match;
 

@@ -10,7 +10,7 @@ namespace App\Component\Elasticsearch;
 class MultipleSearchQuery
 {
     /**
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingTraversableTypeHintSpecification
+     * @var array<int, mixed>
      */
     private array $body;
 
