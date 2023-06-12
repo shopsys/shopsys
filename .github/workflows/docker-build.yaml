@@ -164,7 +164,7 @@ jobs:
                     name: docker-compose
             -   name: Build application
                 run: |
-                    docker-compose pull --parallel webserver postgres elasticsearch redis php-fpm selenium-server
+                    docker-compose pull --parallel webserver postgres elasticsearch redis php-fpm storefront selenium-server
                     docker-compose up -d
                     docker-compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change dirs-create test-dirs-create db-create test-db-create db-demo error-pages-generate test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build
             -   name: Run acceptance tests
