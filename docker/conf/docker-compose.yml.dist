@@ -39,7 +39,7 @@ services:
         command: # Optional
             - dev # change to `- build` if you want to test application build
         volumes:
-            - storefront:/home/node/app
+            - ./project-base/storefront:/home/node/app
         ports:
             - "3000:3000"
 
@@ -61,7 +61,7 @@ services:
             args:
                 www_data_uid: 1000
                 www_data_gid: 1000
-                project_root: project-base
+                project_root: project-base/app
         container_name: shopsys-framework-php-fpm
         volumes:
             - ~/.gitconfig:/home/www-data/.gitconfig
