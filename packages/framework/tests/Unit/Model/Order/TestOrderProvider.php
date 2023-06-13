@@ -23,7 +23,7 @@ class TestOrderProvider
      */
     public static function getTestOrderData(): OrderData
     {
-        $orderData = self::createOrderDataInstance();
+        $orderData = static::createOrderDataInstance();
         $countryData = new CountryData();
         $countryData->names = ['cs' => 'Slovenská republika'];
         $country = new Country($countryData);

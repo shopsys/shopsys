@@ -12,6 +12,9 @@ use Tests\FrameworkBundle\Unit\Model\Order\TestOrderProvider as BaseTestOrderPro
  */
 class TestOrderProvider extends BaseTestOrderProvider
 {
+    /**
+     * @return \App\Model\Order\OrderData
+     */
     protected static function createOrderDataInstance(): OrderData
     {
         return new OrderData();

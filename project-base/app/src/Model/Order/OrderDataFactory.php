@@ -21,7 +21,7 @@ class OrderDataFactory extends BaseOrderDataFactory
      */
     public function __construct(
         OrderItemDataFactoryInterface $orderItemDataFactory,
-        private PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory,
+        private readonly PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory,
     ) {
         parent::__construct($orderItemDataFactory);
     }
