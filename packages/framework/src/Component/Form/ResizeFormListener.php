@@ -142,6 +142,7 @@ class ResizeFormListener implements EventSubscriberInterface
         if ($this->allowDelete) {
             foreach ($form as $name => $child) {
                 $name = (string)$name;
+
                 if (!isset($data[$name])) {
                     $form->remove($name);
                 }
@@ -157,6 +158,7 @@ class ResizeFormListener implements EventSubscriberInterface
 
         foreach (array_keys($data) as $name) {
             $name = (string)$name;
+
             if ($form->has($name)) {
                 continue;
             }
@@ -261,6 +263,7 @@ class ResizeFormListener implements EventSubscriberInterface
 
         foreach (array_keys($viewData) as $name) {
             $name = (string)$name;
+
             if (!$form->has($name)) {
                 $toDelete[] = $name;
             }

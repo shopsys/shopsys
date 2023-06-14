@@ -119,7 +119,7 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
             $this->setting->setForDomain(
                 MailSetting::MAIL_WHITELIST,
                 '["/@shopsys\\\\.com$/"]',
-                $domainId
+                $domainId,
             );
 
             $this->setDomainDefaultCurrency($domainId);

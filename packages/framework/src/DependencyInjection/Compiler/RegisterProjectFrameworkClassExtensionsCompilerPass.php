@@ -73,8 +73,11 @@ class RegisterProjectFrameworkClassExtensionsCompilerPass implements CompilerPas
      * @param string|null $aliasId
      * @return bool
      */
-    private function isShopsysClassWithAliasRegisteredAsService(ContainerBuilder $container, string $serviceId, ?string $aliasId): bool
-    {
+    private function isShopsysClassWithAliasRegisteredAsService(
+        ContainerBuilder $container,
+        string $serviceId,
+        ?string $aliasId,
+    ): bool {
         if ($aliasId === null || !$this->isShopsysClass($serviceId) || !($this->isProjectClass($aliasId) || $this->isShopsysClass($aliasId))) {
             return false;
         }
@@ -118,7 +121,7 @@ class RegisterProjectFrameworkClassExtensionsCompilerPass implements CompilerPas
     private function addAllVariantsOfServiceToClassExtension(
         ReflectionClass $frameworkClassBetterReflection,
         Definition $classExtensionRegistryDefinition,
-        string $aliasId
+        string $aliasId,
     ): void {
         if ($frameworkClassBetterReflection->isInterface()) {
             $className = preg_replace('/Interface$/', '', $frameworkClassBetterReflection->getName());
@@ -141,8 +144,11 @@ class RegisterProjectFrameworkClassExtensionsCompilerPass implements CompilerPas
      * @param string|null $aliasId
      * @return string
      */
-    private function getCorrectServiceIdIfServiceIsNotExtendedByAlias(ContainerBuilder $container, string $serviceId, ?string $aliasId): string
-    {
+    private function getCorrectServiceIdIfServiceIsNotExtendedByAlias(
+        ContainerBuilder $container,
+        string $serviceId,
+        ?string $aliasId,
+    ): string {
         if ($this->isProjectClass($aliasId)) {
             try {
                 $baseClassName = (string)ReflectionObject::createFromName($serviceId)->getLocatedSource()->getName();

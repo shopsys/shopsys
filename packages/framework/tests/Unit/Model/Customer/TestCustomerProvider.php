@@ -111,6 +111,7 @@ class TestCustomerProvider
         $deliveryAddressData->telephone = 'deliveryTelephone';
         $deliveryAddressData->country = $deliveryCountry;
         $deliveryAddressData->customer = $customer;
+
         return $deliveryAddressData;
     }
 }
