@@ -54,7 +54,7 @@
         "enlightn/security-checker": "^1.5",
         "fakerphp/faker": "^1.19.0",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
-        "gopay/payments-sdk-php": "^1.4",
+        "gopay/payments-sdk-php": ">=1.4 <1.7",
         "guzzlehttp/guzzle": "^7.5.0",
         "helios-ag/fm-elfinder-bundle": "^12.2",
         "heureka/overeno-zakazniky": "^4.0.1",
