@@ -59,11 +59,13 @@ class CombinedArticleElasticsearchRepository
     private function getIndexNameFromIndexVersion(string $indexVersion): string
     {
         $blogArticleVersionedIndexName = $this->indexDefinitionLoader->getIndexDefinition(BlogArticleIndex::getName(), $this->domain->getId())->getVersionedIndexName();
+
         if ($indexVersion === $blogArticleVersionedIndexName) {
             return BlogArticleIndex::getName();
         }
 
         $articleVersionedIndexName = $this->indexDefinitionLoader->getIndexDefinition(ArticleIndex::getName(), $this->domain->getId())->getVersionedIndexName();
+
         if ($indexVersion === $articleVersionedIndexName) {
             return ArticleIndex::getName();
         }

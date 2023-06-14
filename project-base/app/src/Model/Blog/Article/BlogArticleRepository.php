@@ -130,6 +130,7 @@ class BlogArticleRepository
 
         if ($blogArticle === null) {
             $message = 'Blog article with ID ' . $blogArticleId . ' not found';
+
             throw new BlogArticleNotFoundException($message);
         }
 

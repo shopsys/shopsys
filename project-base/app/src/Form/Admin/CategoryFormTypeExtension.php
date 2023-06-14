@@ -107,6 +107,7 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
         $parametersFilterBuilder = $builder->add('parametersGroup', GroupType::class, ['label' => t('Parametry filtru')]);
 
         $parameterNamesById = [];
+
         foreach ($this->parameterRepository->getParametersUsedByProductsInCategory($category, Domain::FIRST_DOMAIN_ID) as $parameter) {
             $parameterNamesById[$parameter->getId()] = $parameter->getName();
         }

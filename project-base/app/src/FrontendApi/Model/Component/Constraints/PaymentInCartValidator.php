@@ -38,9 +38,11 @@ class PaymentInCartValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, PaymentInCart::class);
         }
         $paymentUuid = $value->paymentUuid;
+
         if ($paymentUuid === null) {
             return;
         }
+
         try {
             $payment = $this->paymentFacade->getEnabledOnDomainByUuid($paymentUuid, $this->domain->getId());
             $this->checkPaymentTransportRelation($payment, $value->cartUuid, $constraint);

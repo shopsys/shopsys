@@ -40,6 +40,7 @@ class NotificationBarFormType extends AbstractType
         ]);
 
         $domainIdAttributes = [];
+
         if ($options['scenario'] === self::SCENARIO_EDIT) {
             $domainIdAttributes = ['readonly' => true];
         }

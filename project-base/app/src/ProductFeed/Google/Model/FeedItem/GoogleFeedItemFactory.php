@@ -9,6 +9,10 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItem;
 use Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItemFactory as BaseGoogleFeedItemFactory;
 
+/**
+ * @method string|null getBrandName(\App\Model\Product\Product $product)
+ * @method \Shopsys\FrameworkBundle\Model\Pricing\Price getPrice(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
+ */
 class GoogleFeedItemFactory extends BaseGoogleFeedItemFactory
 {
     /**

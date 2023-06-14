@@ -35,7 +35,7 @@ class ParameterFacade extends BaseParameterFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface $parameterFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactory $parameterFactory
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
@@ -74,6 +74,7 @@ class ParameterFacade extends BaseParameterFacade
     public function getParameterValueNamesIndexedByParameterNames(array $parameterValueIdsByParameterId): array
     {
         $parameterValueNamesIndexedByParameterNames = [];
+
         foreach ($parameterValueIdsByParameterId as $parameterId => $parameterValueId) {
             $parameter = $this->getById((int)$parameterId);
             $parameterValue = $this->parameterRepository->getParameterValueById((int)$parameterValueId);

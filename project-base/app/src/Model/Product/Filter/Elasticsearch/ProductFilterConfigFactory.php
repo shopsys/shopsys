@@ -190,11 +190,13 @@ class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
         Category $category,
     ): array {
         $aggregatedParametersFilterChoicesIndexedByParameterId = [];
+
         foreach ($aggregatedParameterFilterChoices as $aggregatedParameterFilterChoice) {
             $aggregatedParametersFilterChoicesIndexedByParameterId[$aggregatedParameterFilterChoice->getParameter()->getId()] = $aggregatedParameterFilterChoice;
         }
 
         $sortedParameterFilterChoices = [];
+
         foreach ($this->parameterFacade->getParametersIdsSortedByPositionFilteredByCategory($category) as $sortedParameterId) {
             if (!array_key_exists($sortedParameterId, $aggregatedParametersFilterChoicesIndexedByParameterId)) {
                 continue;

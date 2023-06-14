@@ -41,6 +41,7 @@ class MultipleSearchQuery
     private function getBody(array $filterQueries): array
     {
         $body = [];
+
         foreach ($filterQueries as $filterQuery) {
             $body[] = [];
             $body[] = $filterQuery->getQuery()['body'];

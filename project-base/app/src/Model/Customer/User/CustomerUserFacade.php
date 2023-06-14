@@ -29,6 +29,16 @@ use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
  * @property \App\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
  * @property \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
  * @method \App\Model\Customer\User\CustomerUser getByUuid(string $uuid)
+ * @method \App\Model\Customer\User\CustomerUser getCustomerUserById(int $customerUserId)
+ * @method \App\Model\Customer\User\CustomerUser|null findCustomerUserByEmailAndDomain(string $email, int $domainId)
+ * @method \App\Model\Customer\User\CustomerUser register(\App\Model\Customer\User\CustomerUserData $customerUserData)
+ * @method \App\Model\Customer\User\CustomerUser create(\App\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData)
+ * @method \App\Model\Customer\User\CustomerUser createCustomerUser(\Shopsys\FrameworkBundle\Model\Customer\Customer $customer, \App\Model\Customer\User\CustomerUserData $customerUserData)
+ * @method \App\Model\Customer\User\CustomerUser editByAdmin(int $customerUserId, \App\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData)
+ * @method \App\Model\Customer\User\CustomerUser editByCustomerUser(int $customerUserId, \App\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData)
+ * @method amendCustomerUserDataFromOrder(\App\Model\Customer\User\CustomerUser $customerUser, \App\Model\Order\Order $order, \App\Model\Customer\DeliveryAddress|null $deliveryAddress)
+ * @method setEmail(string $email, \App\Model\Customer\User\CustomerUser $customerUser)
+ * @method \Shopsys\FrameworkBundle\Model\Customer\Customer createCustomerWithBillingAddress(int $domainId, \App\Model\Customer\BillingAddressData $billingAddressData)
  */
 class CustomerUserFacade extends BaseCustomerUserFacade
 {
@@ -38,11 +48,11 @@ class CustomerUserFacade extends BaseCustomerUserFacade
      * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \App\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
      * @param \App\Model\Customer\BillingAddressDataFactory $billingAddressDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface $customerUserFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactory $customerUserFactory
      * @param \App\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
      * @param \App\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactory $customerDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade $billingAddressFacade
      * @param \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade

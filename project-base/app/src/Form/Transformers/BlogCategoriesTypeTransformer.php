@@ -26,6 +26,7 @@ class BlogCategoriesTypeTransformer implements DataTransformerInterface
         $allBlogCategories = $this->blogCategoryFacade->getAllBlogCategoriesOfCollapsedTree($blogCategories);
 
         $isCheckedIndexedByBlogCategoryId = [];
+
         foreach ($allBlogCategories as $blogCategory) {
             $isChecked = in_array($blogCategory, $blogCategories, true);
             $isCheckedIndexedByBlogCategoryId[$blogCategory->getId()] = $isChecked;
@@ -41,6 +42,7 @@ class BlogCategoriesTypeTransformer implements DataTransformerInterface
     public function reverseTransform($isCheckedIndexedByBlogCategoryId): array
     {
         $blogCategoryIds = [];
+
         foreach ($isCheckedIndexedByBlogCategoryId ?? [] as $blogCategoryId => $isChecked) {
             if ($isChecked) {
                 $blogCategoryIds[] = $blogCategoryId;

@@ -315,11 +315,13 @@ class ProductRepository extends BaseProductRepository
             case ProductListOrderingConfig::ORDER_BY_NAME_ASC:
                 $collation = $this->localization->getCollationByLocale($locale);
                 $queryBuilder->addOrderBy("COLLATE(pt.name, '" . $collation . "')", 'asc');
+
                 break;
 
             case ProductListOrderingConfig::ORDER_BY_NAME_DESC:
                 $collation = $this->localization->getCollationByLocale($locale);
                 $queryBuilder->addOrderBy("COLLATE(pt.name, '" . $collation . "')", 'desc');
+
                 break;
 
             case ProductListOrderingConfig::ORDER_BY_PRICE_ASC:
@@ -331,6 +333,7 @@ class ProductRepository extends BaseProductRepository
                 );
                 $queryBuilder->addOrderBy('pcp.priceWithVat', 'asc');
                 $queryBuilder->setParameter('pricingGroup', $pricingGroup);
+
                 break;
 
             case ProductListOrderingConfig::ORDER_BY_PRICE_DESC:
@@ -342,16 +345,19 @@ class ProductRepository extends BaseProductRepository
                 );
                 $queryBuilder->addOrderBy('pcp.priceWithVat', 'desc');
                 $queryBuilder->setParameter('pricingGroup', $pricingGroup);
+
                 break;
 
             case ProductListOrderingConfig::ORDER_BY_PRIORITY:
                 $queryBuilder->addOrderBy('p.orderingPriority', 'desc');
                 $collation = $this->localization->getCollationByLocale($locale);
                 $queryBuilder->addOrderBy("COLLATE(pt.name, '" . $collation . "')", 'asc');
+
                 break;
 
             default:
                 $message = 'Product list ordering mode "' . $orderingModeId . '" is not supported.';
+
                 throw new InvalidOrderingModeException($message);
         }
 
@@ -373,6 +379,7 @@ class ProductRepository extends BaseProductRepository
             ->getScalarResult();
 
         $productIdsSortedByCatnum = array_fill_keys($catnums, null);
+
         foreach ($result as $item) {
             $productIdsSortedByCatnum[$item['catnum']] = $item['id'];
         }

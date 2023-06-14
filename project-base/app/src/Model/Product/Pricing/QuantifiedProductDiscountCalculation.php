@@ -49,12 +49,14 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
     ): array {
         $discountsPerProduct = $this->prefillNullDiscounts($quantifiedProducts);
         $applicablePromoCodeProductsCount = count($promoCodePerProduct);
+
         if ($applicablePromoCodeProductsCount < 1) {
             return $discountsPerProduct;
         }
 
         $promoCode = reset($promoCodePerProduct);
         $promoCodeLimit = $this->promoCodeLimitResolver->getLimitByPromoCode($promoCode, $quantifiedProducts);
+
         if ($promoCodeLimit === null) {
             return $discountsPerProduct;
         }
@@ -97,6 +99,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
         Currency $currency,
     ): array {
         $quantifiedItemsDiscountPrices = [];
+
         foreach ($quantifiedItemsPrices as $quantifiedItemIndex => $quantifiedItemPrice) {
             $discount = $quantifiedItemsDiscounts[$quantifiedItemIndex] ?? null;
 
@@ -130,6 +133,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
         QuantifiedProduct $quantifiedProduct,
     ): ?Price {
         $percent = $promoCodeLimit->getDiscount();
+
         if ($percent === null) {
             return null;
         }
@@ -233,6 +237,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
     ): array {
         foreach ($quantifiedProducts as $quantifiedProductIndex => $quantifiedProduct) {
             $productId = $quantifiedProduct->getProduct()->getId();
+
             if (!array_key_exists($productId, $promoCodePerProduct)) {
                 continue;
             }
@@ -271,8 +276,10 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
             $quantifiedProducts,
         );
         $sumPriceWithVat = $cartPromoCodeApplicableProductsTotalPrice->getPriceWithVat();
+
         foreach ($quantifiedProducts as $quantifiedProductIndex => $quantifiedProduct) {
             $productId = $quantifiedProduct->getProduct()->getId();
+
             if (!array_key_exists($productId, $promoCodePerProduct)) {
                 continue;
             }

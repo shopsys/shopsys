@@ -45,6 +45,7 @@ class TransportsQuery extends BaseTransportsQuery
         }
 
         $cart = $this->cartFacade->findCart($customerUser, $cartUuid);
+
         if ($cart === null) {
             return $this->transportFacade->getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations();
         }

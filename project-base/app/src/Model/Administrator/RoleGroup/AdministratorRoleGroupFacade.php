@@ -35,6 +35,7 @@ class AdministratorRoleGroupFacade
     public function create(AdministratorRoleGroupData $roleGroupData): AdministratorRoleGroup
     {
         $administratorRoleGroupByName = $this->administratorRoleGroupRepository->findByName($roleGroupData->name);
+
         if ($administratorRoleGroupByName !== null) {
             throw new DuplicateNameException($administratorRoleGroupByName->getName());
         }
@@ -75,6 +76,7 @@ class AdministratorRoleGroupFacade
     private function checkUniqueName(AdministratorRoleGroup $administratorRoleGroup, string $name): void
     {
         $administratorRoleGroupByName = $this->administratorRoleGroupRepository->findByName($name);
+
         if ($administratorRoleGroupByName !== null
             && $administratorRoleGroupByName !== $administratorRoleGroup
             && $administratorRoleGroupByName->getName() === $name

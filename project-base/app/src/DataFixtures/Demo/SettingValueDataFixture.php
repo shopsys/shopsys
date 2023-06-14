@@ -39,6 +39,7 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
             $locale = $domainConfig->getLocale();
+
             if ($domainId === 1) {
                 $this->pricingSetting->setFreeTransportAndPaymentPriceLimit(
                     $domainId,

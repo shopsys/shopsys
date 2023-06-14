@@ -961,6 +961,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
         $result = $this->getResponseDataForGraphQlType($this->getResponseContentForQuery($query), 'category');
         $parameters = $result['products']['productFilterOptions']['parameters'];
+
         foreach ($parameters as $parameterArray) {
             if ($parameterArray['uuid'] === $parameterSliderWarrantyUuid) {
                 $this->assertSame(1, $parameterArray['minimalValue']);

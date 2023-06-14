@@ -42,6 +42,7 @@ class TokenAuthenticator extends BaseTokenAuthenticator
     public function getCredentials(Request $request): ?string
     {
         $authorizationHeader = $request->headers->get(static::HEADER_AUTHORIZATION);
+
         if ($authorizationHeader === null) {
             return null;
         }

@@ -25,6 +25,7 @@ class AkeneoAttributeHelper
 
         foreach ($akeneoData as $akeneoLocale => $data) {
             $locale = AkeneoHelper::findEshopLocaleByAkeneoLocale($akeneoLocale);
+
             if ($locale) {
                 $attributeData[$locale] = $data;
             }

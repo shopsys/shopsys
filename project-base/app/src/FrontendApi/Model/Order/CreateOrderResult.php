@@ -20,6 +20,7 @@ class CreateOrderResult
         private readonly ?CartWithModificationsResult $cartWithModificationsResult = null,
     ) {
         $this->orderCreated = false;
+
         if ($this->order !== null) {
             $this->orderCreated = true;
         }

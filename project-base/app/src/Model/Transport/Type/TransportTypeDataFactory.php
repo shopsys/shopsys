@@ -67,6 +67,7 @@ class TransportTypeDataFactory
         $translations = $transportType->getTranslations();
 
         $names = [];
+
         foreach ($translations as $translation) {
             $names[$translation->getLocale()] = $translation->getName();
         }

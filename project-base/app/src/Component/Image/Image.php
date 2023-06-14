@@ -64,6 +64,7 @@ class Image extends BaseImage
     public function getSeoFilename(?string $friendlyUrlSlug): string
     {
         $slug = '';
+
         if ($friendlyUrlSlug !== null) {
             $slug = $friendlyUrlSlug . '_';
         }

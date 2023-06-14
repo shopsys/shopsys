@@ -75,6 +75,7 @@ class FriendlyUrlFacade extends BaseFriendlyUrlFacade
     {
         /** @var \App\Component\Router\FriendlyUrl\FriendlyUrl|null $friendlyUrl */
         $friendlyUrl = $this->friendlyUrlRepository->findByDomainIdAndSlug($domainId, $slug);
+
         if ($friendlyUrl === null) {
             return;
         }
@@ -94,6 +95,7 @@ class FriendlyUrlFacade extends BaseFriendlyUrlFacade
         $allUsedRouteNames = $this->friendlyUrlRepository->getAllRouteNames();
 
         $undefinedRouteNameMappings = [];
+
         foreach ($allUsedRouteNames as $usedRouteName) {
             if (!array_key_exists($usedRouteName, $routeNameMapping)) {
                 $undefinedRouteNameMappings[] = $usedRouteName;
@@ -123,6 +125,7 @@ class FriendlyUrlFacade extends BaseFriendlyUrlFacade
     public function getMainFriendlyUrl(int $domainId, string $routeName, int $entityId): FriendlyUrl
     {
         $friendlyUrl = $this->findMainFriendlyUrl($domainId, $routeName, $entityId);
+
         if ($friendlyUrl === null) {
             throw new FriendlyUrlNotFoundException(sprintf('Main friendly URL not found for route "%s", domain ID "%d", and entity ID "%d".', $routeName, $domainId, $entityId));
         }

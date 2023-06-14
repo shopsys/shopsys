@@ -138,6 +138,7 @@ class BlogArticle extends AbstractTranslatableEntity
     public function getNames(): array
     {
         $namesByLocale = [];
+
         foreach ($this->translations as $translation) {
             $namesByLocale[$translation->getLocale()] = $translation->getName();
         }
@@ -248,9 +249,11 @@ class BlogArticle extends AbstractTranslatableEntity
         foreach ($blogArticleData->names as $locale => $name) {
             $this->translation($locale)->setName($name);
         }
+
         foreach ($blogArticleData->descriptions as $locale => $name) {
             $this->translation($locale)->setDescription($name);
         }
+
         foreach ($blogArticleData->perexes as $locale => $name) {
             $this->translation($locale)->setPerex($name);
         }
@@ -313,6 +316,7 @@ class BlogArticle extends AbstractTranslatableEntity
     public function getDescriptions(): array
     {
         $descriptionsByLocale = [];
+
         foreach ($this->translations as $translation) {
             $descriptionsByLocale[$translation->getLocale()] = $translation->getDescription();
         }
@@ -394,6 +398,7 @@ class BlogArticle extends AbstractTranslatableEntity
     public function getPerexes(): array
     {
         $perexesByLocale = [];
+
         foreach ($this->translations as $translation) {
             $perexesByLocale[$translation->getLocale()] = $translation->getPerex();
         }

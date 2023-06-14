@@ -37,6 +37,7 @@ class ClassExtensionRegistry extends BaseClassExtensionRegistry
         foreach ($finder as $file) {
             $frontendApiClassFqcn = $this->getFqcn($file->getPathname());
             $projectClassFqcn = str_replace('Shopsys\FrontendApiBundle', 'App\FrontendApi', $frontendApiClassFqcn);
+
             if ($this->isExcludedFromOtherClassesExtensionMap($projectClassFqcn) === false && class_exists($projectClassFqcn)) {
                 $otherClassesMap[$frontendApiClassFqcn] = $projectClassFqcn;
             }

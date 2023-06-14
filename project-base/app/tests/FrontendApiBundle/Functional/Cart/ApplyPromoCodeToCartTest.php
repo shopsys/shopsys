@@ -326,6 +326,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
     public function testApplyInvalidPromoCode(?string $promoCodeReferenceName, string $expectedError): void
     {
         $promoCodeCode = 'non-existing-promo-code';
+
         if ($promoCodeReferenceName !== null) {
             /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
             $promoCode = $this->getReferenceForDomain($promoCodeReferenceName, 1);
@@ -358,10 +359,15 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
     public function getInvalidPromoCodesDataProvider(): iterable
     {
         yield [null, PromoCode::INVALID_ERROR];
+
         yield [PromoCodeDataFixture::PROMO_CODE_FOR_PRODUCT_ID_2, PromoCode::NO_RELATION_TO_PRODUCTS_IN_CART_ERROR];
+
         yield [PromoCodeDataFixture::NOT_YET_VALID_PROMO_CODE, PromoCode::NOT_YET_VALID_ERROR];
+
         yield [PromoCodeDataFixture::NO_LONGER_VALID_PROMO_CODE, PromoCode::NO_LONGER_VALID_ERROR];
+
         yield [PromoCodeDataFixture::PROMO_CODE_FOR_REGISTERED_ONLY, PromoCode::FOR_REGISTERED_CUSTOMER_USERS_ONLY_ERROR];
+
         yield [PromoCodeDataFixture::PROMO_CODE_FOR_VIP_PRICING_GROUP, PromoCode::NOT_AVAILABLE_FOR_CUSTOMER_USER_PRICING_GROUP_ERROR];
     }
 

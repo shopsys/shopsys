@@ -84,6 +84,7 @@ class DeliveryAddressIsNotDuplicatedTest extends GraphQlWithLoginTestCase
     private function getCustomersDeliveryAddresses(): array
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/CurrentCustomerUserQuery.graphql');
+
         return $this->getResponseDataForGraphQlType(
             $response,
             'currentCustomerUser',

@@ -28,7 +28,7 @@ class ImagesQuery extends BaseImagesQuery
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrontendApiBundle\Component\Image\ImageFacade $frontendApiImageFacade
+     * @param \App\FrontendApi\Model\Image\ImageFacade $frontendApiImageFacade
      * @param \Overblog\DataLoader\DataLoaderInterface $imagesBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $firstImageBatchLoader
      */
@@ -147,6 +147,7 @@ class ImagesQuery extends BaseImagesQuery
         }
 
         $imageSizeConfigs = [];
+
         foreach ($sizes as $size) {
             $imageSizeConfigs[] = $this->getSingleSizeConfig($imageConfig, $type, $size, $entityName);
         }

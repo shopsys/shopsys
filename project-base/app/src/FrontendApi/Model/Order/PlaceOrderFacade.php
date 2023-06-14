@@ -40,7 +40,7 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitResolver
      * @param \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory $deliveryAddressFactory

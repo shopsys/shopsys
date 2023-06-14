@@ -33,7 +33,7 @@ class SliderItemDataFixture extends AbstractReferenceFixture
 
     /**
      * @param \App\Model\Slider\SliderItemFacade $sliderItemFacade
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory $sliderItemDataFactory
+     * @param \App\Model\Slider\SliderItemDataFactory $sliderItemDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(

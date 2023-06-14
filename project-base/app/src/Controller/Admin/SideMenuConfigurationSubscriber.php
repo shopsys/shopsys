@@ -210,6 +210,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $stockMenu->addChild('stock_settings', ['route' => 'admin_stock_settings', 'label' => t('Nastavení skladů')]);
 
         $superadminSettingMenu = $settingsMenu->getChild('superadmin');
+
         if ($superadminSettingMenu !== null) {
             $superadminSettingMenu->addChild('cspHeader', ['route' => 'admin_cspheader_setting', 'label' => t('Content-Security-Policy header')]);
             $superadminSettingMenu->addChild(t('Clean Storefront Cache'), ['route' => 'admin_redis_show']);
@@ -310,12 +311,15 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     {
         $itemToRemovePathExploded = explode(MenuItemsGrantedRolesSetting::MENU_ITEM_PATH_SEPARATOR, $itemToRemovePath);
         $itemToRemoveName = end($itemToRemovePathExploded);
+
         foreach ($itemToRemovePathExploded as $itemName) {
             if ($rootMenu === null) {
                 break;
             }
+
             if ($itemName === $itemToRemoveName) {
                 $rootMenu->removeChild($itemName);
+
                 break;
             }
             $rootMenu = $rootMenu->getChild($itemName);

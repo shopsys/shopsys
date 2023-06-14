@@ -137,6 +137,7 @@ class MailController extends baseMailController
     private function transformBodyVariables(array $variables, array $requiredVariables): array
     {
         $transformedVariables = [];
+
         foreach ($variables as $placeholder => $label) {
             $transformedVariables[] = [
                 'label' => $label,

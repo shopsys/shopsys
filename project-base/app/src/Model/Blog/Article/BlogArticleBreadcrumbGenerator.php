@@ -79,6 +79,7 @@ class BlogArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterfa
         );
 
         $breadcrumbItems = [];
+
         foreach ($blogCategoriesInPath as $blogCategoryInPath) {
             $breadcrumbItems[] = new BreadcrumbItem(
                 $blogCategoryInPath->getName($locale),

@@ -45,14 +45,17 @@ class ReplaceCdnDomainUrlCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $trimmedCdnDomainUrl = trim($this->cdnDomainUrl, '/');
+
         if ($trimmedCdnDomainUrl === '') {
             $output->writeln('No CDN domain set, nothing to replace.');
+
             return Command::SUCCESS;
         }
         $contentDirectory = '/content';
         $publicDirectory = '/public';
         $cdnContentUrl = $trimmedCdnDomainUrl . $contentDirectory;
         $cdnPublicUrl = $trimmedCdnDomainUrl . $publicDirectory;
+
         foreach ($this->domain->getAll() as $domainConfig) {
             $trimmedDomainUrl = trim($domainConfig->getUrl(), '/');
 
@@ -64,6 +67,7 @@ class ReplaceCdnDomainUrlCommand extends Command
             $this->domainUrlReplacer->replaceUrlInStringColumns($cdnPublicUrl, $domainPublicUrl);
             $output->writeln(sprintf('Replaced %s with %s in all string columns', $domainPublicUrl, $cdnPublicUrl));
         }
+
         return Command::SUCCESS;
     }
 }

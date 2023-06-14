@@ -61,6 +61,7 @@ class FlagController extends BaseFlagController
                 ]);
             }
             $message = t('Do you really want to remove this flag?');
+
             return $this->confirmDeleteResponseFactory->createDeleteResponse(
                 $message,
                 'admin_flag_delete',
@@ -84,8 +85,10 @@ class FlagController extends BaseFlagController
             $fullName = $flag->getName();
 
             $flagDependencies = $this->flagFacade->getFlagDependencies($flag->getId());
+
             if ($flagDependencies->hasSeoMixDependency || $flagDependencies->hasPromoCodeDependency) {
                 $this->addErrorFlash(t('The selected flag cannot be deleted.'));
+
                 return $this->redirectToRoute('admin_flag_list');
             }
 
@@ -144,6 +147,7 @@ class FlagController extends BaseFlagController
                         'url' => $this->generateUrl('admin_flag_edit', ['id' => $flag->getId()]),
                     ],
                 );
+
             return $this->redirectToRoute('admin_flag_list');
         }
 
@@ -184,6 +188,7 @@ class FlagController extends BaseFlagController
                         'url' => $this->generateUrl('admin_flag_edit', ['id' => $flag->getId()]),
                     ],
                 );
+
             return $this->redirectToRoute('admin_flag_list');
         }
 

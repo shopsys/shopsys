@@ -80,6 +80,7 @@ class PromoCodeMutation extends AbstractMutation
         $cart = $this->cartFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
 
         $promoCode = $this->promoCodeFacade->findPromoCodeByCode($promoCodeCode);
+
         if ($promoCode !== null) {
             $this->cartPromoCodeFacade->removePromoCode($cart, $promoCode);
         }

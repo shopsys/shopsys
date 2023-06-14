@@ -310,6 +310,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
     {
         /** @var \App\Model\Product\Flag\Flag $newFlag */
         $newFlag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
+
         foreach ($flags as $flagData) {
             if ($flagData['flag']['uuid'] === $newFlag->getUuid()) {
                 $this->assertTrue($flagData['isSelected']);

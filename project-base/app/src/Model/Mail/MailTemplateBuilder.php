@@ -48,6 +48,7 @@ class MailTemplateBuilder
     {
         $footerIconsHtml = '';
         $itemPadding = '';
+
         foreach ($this->mailSettingFacade->getFooterIconUrls($domainId) as $footerIconName => $footerIconUrl) {
             if ($footerIconUrl === null) {
                 continue;

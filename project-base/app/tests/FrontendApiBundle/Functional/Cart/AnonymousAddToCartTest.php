@@ -204,6 +204,7 @@ class AnonymousAddToCartTest extends GraphQlTestCase
             'productUuid' => $this->testingProduct->getUuid(),
             'quantity' => $productQuantity,
         ]);
+
         return $response['data']['AddToCart']['cart'];
     }
 }

@@ -84,6 +84,7 @@ class FileUpload extends BaseFileUpload
     public function postFlushEntity(EntityFileUploadInterface $entity)
     {
         $filesForUpload = $entity->getTemporaryFilesForUpload();
+
         foreach ($filesForUpload as $fileForUpload) {
             /** @var \Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload $fileForUpload */
             $sourceFilepath = TransformString::removeDriveLetterFromPath($this->getTemporaryFilepath($fileForUpload->getTemporaryFilename()));
@@ -107,6 +108,7 @@ class FileUpload extends BaseFileUpload
                 $this->mountManager->move('main://' . $sourceFilepath, 'main://' . $targetFilename);
             } catch (IOException $ex) {
                 $message = 'Failed to rename file from temporary directory to entity';
+
                 throw new MoveToEntityFailedException($message, $ex);
             }
         }
@@ -120,12 +122,14 @@ class FileUpload extends BaseFileUpload
     {
         if ($filename !== null && $filename !== '') {
             $filepath = $this->getTemporaryFilepath($filename);
+
             try {
                 $this->filesystem->delete($filepath);
             } catch (FilesystemException $ex) {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -138,6 +142,7 @@ class FileUpload extends BaseFileUpload
         $currentTimestamp = time();
 
         $uploadedFiles = $this->filesystem->listContents($this->getTemporaryDirectory());
+
         foreach ($uploadedFiles as $uploadedFile) {
             if ($uploadedFile['type'] === 'file' && $currentTimestamp - $uploadedFile['timestamp'] > static::DELETE_OLD_FILES_SECONDS) {
                 $this->filesystem->delete($uploadedFile['path']);

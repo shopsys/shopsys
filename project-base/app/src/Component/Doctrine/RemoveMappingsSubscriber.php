@@ -91,6 +91,7 @@ class RemoveMappingsSubscriber implements EventSubscriber
     private function removeMappingByValue(string $attributeName, array $mapping): array
     {
         $key = array_search($attributeName, $mapping, true);
+
         if ($key !== false) {
             unset($mapping[$key]);
         }

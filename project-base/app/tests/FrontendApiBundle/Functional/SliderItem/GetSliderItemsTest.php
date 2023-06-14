@@ -38,6 +38,7 @@ class GetSliderItemsTest extends GraphQlTestCase
                 'extendedTextLink' => 'https://www.shopsys.cz',
             ],
         ];
+
         foreach ($responseData as $sliderItem) {
             $this->assertArrayHasKey('uuid', $sliderItem);
             $this->assertTrue(Uuid::isValid($sliderItem['uuid']));

@@ -104,6 +104,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
     private function setupStockQuantityToProductData(ProductData $productData, int $stockQuantity): void
     {
         $productData->stockProductData = [];
+
         foreach ($this->stockFacade->getStocksEnabledOnDomainIndexedByStockId(self::FIRST_DOMAIN_ID) as $stock) {
             $stockProductData = $this->productStockDataFactory->createFromStock($stock);
             $stockProductData->productQuantity = $stockQuantity;
@@ -126,6 +127,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $productData = $this->productDataFactory->createFromProduct($product);
 
         $productData->stockProductData = [];
+
         foreach ($this->stockFacade->getStocksEnabledOnDomainIndexedByStockId(self::FIRST_DOMAIN_ID) as $stock) {
             $stockProductData = $this->productStockDataFactory->createFromStock($stock);
             $stockProductData->productQuantity = $stockQuantity;
@@ -173,6 +175,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $productData = $this->productDataFactory->createFromProduct($product);
 
         $productData->stockProductData = [];
+
         foreach ($this->stockFacade->getStocksEnabledOnDomainIndexedByStockId(self::FIRST_DOMAIN_ID) as $stock) {
             $stockProductData = $this->productStockDataFactory->createFromStock($stock);
             $stockProductData->productQuantity = $stockQuantity;
@@ -229,6 +232,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $productData = $this->productDataFactory->createFromProduct($product);
 
         $productData->stockProductData = [];
+
         foreach ($this->stockFacade->getStocksEnabledOnDomainIndexedByStockId(self::FIRST_DOMAIN_ID) as $stock) {
             $stockProductData = $this->productStockDataFactory->createFromStock($stock);
             $stockProductData->productQuantity = $stockQuantity;
@@ -271,6 +275,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $productData = $this->productDataFactory->createFromProduct($product);
 
         $productData->stockProductData = [];
+
         foreach ($this->stockFacade->getStocksEnabledOnDomainIndexedByStockId(self::FIRST_DOMAIN_ID) as $stock) {
             $stockProductData = $this->productStockDataFactory->createFromStock($stock);
             $stockProductData->productQuantity = $stockQuantity;

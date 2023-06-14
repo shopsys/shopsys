@@ -22,6 +22,7 @@ class EntityExtensionSubscriber extends BaseEntityExtensionSubscriber
 
         foreach ($this->parentEntitiesByClass[$currentEntityClass] as $parentClass) {
             $parentMetadata = $this->getClassMetadataForEntity($parentClass);
+
             foreach ($parentMetadata->getAssociationMappings() as $associationName => $parentEntityAssociationMapping) {
                 if (isset($parentEntityAssociationMapping['sourceEntity']) && $parentEntityAssociationMapping['sourceEntity'] === $parentClass) {
                     $parentEntityAssociationMapping['sourceEntity'] = $currentEntityClass;
@@ -34,6 +35,7 @@ class EntityExtensionSubscriber extends BaseEntityExtensionSubscriber
 
                 $isDifferenceBetweenChildAssociationMappingAndParentAssociationMapping = !isset($classMetadata->associationMappings[$associationName]) || $classMetadata->associationMappings[$associationName] !== $parentEntityAssociationMapping;
                 $isOverriddenPropertyInChildClass = true;
+
                 if ($isDifferenceBetweenChildAssociationMappingAndParentAssociationMapping) {
                     $overridingClassReflection = new ReflectionClass($currentEntityClass);
                     $overridingClassProperties = $overridingClassReflection->getProperties();
@@ -63,6 +65,7 @@ class EntityExtensionSubscriber extends BaseEntityExtensionSubscriber
                 return true;
             }
         }
+
         return false;
     }
 }

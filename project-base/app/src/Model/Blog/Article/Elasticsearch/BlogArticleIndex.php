@@ -45,6 +45,7 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
         $results = [];
+
         foreach ($this->blogArticleExportRepository->getVisibleBlogArticlesByDomainIdAndLocale($domainId, $locale, $batchSize, $lastProcessedId) as $blogArticle) {
             $results[$blogArticle->getId()] = $this->blogArticleExportRepository->extractBlogArticle($blogArticle, $domainId, $locale);
         }
@@ -62,6 +63,7 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
         $results = [];
+
         foreach ($this->blogArticleExportRepository->getVisibleBlogArticlesByDomainIdAndLocaleAndBlogArticleIds($domainId, $locale, $restrictToIds) as $blogArticle) {
             $results[$blogArticle->getId()] = $this->blogArticleExportRepository->extractBlogArticle($blogArticle, $domainId, $locale);
         }

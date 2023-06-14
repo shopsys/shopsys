@@ -152,6 +152,7 @@ class ProductTransferAkeneoValidator
     ): void {
         if ($data === null || !array_key_exists($validateKeyName, $data)) {
             $notBlankAssert = $this->findNotBlankAssert($asserts);
+
             if ($notBlankAssert !== null) {
                 $this->addNewViolation($violations, $notBlankAssert->message, $validateKeyName);
             }
@@ -195,6 +196,7 @@ class ProductTransferAkeneoValidator
     ): void {
         if ($data === null || !array_key_exists($validateKeyName, $data)) {
             $notBlankAssert = $this->findNotBlankAssert($asserts);
+
             if ($notBlankAssert !== null) {
                 $this->addNewViolation($violations, $notBlankAssert->message, $validateKeyName);
             }
@@ -258,6 +260,7 @@ class ProductTransferAkeneoValidator
     ): void {
         if ($data === null || !array_key_exists($validateKeyName, $data)) {
             $notBlankAssert = $this->findNotBlankAssert($asserts);
+
             if ($notBlankAssert !== null) {
                 $this->addNewViolation($violations, $notBlankAssert->message, $validateKeyName);
             }

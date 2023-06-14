@@ -14,6 +14,7 @@ class SessionChecker
     public function onKernelResponse(ResponseEvent $event): void
     {
         $request = $event->getRequest();
+
         if (!$request->hasSession() || !$request->getSession()->isStarted() || !str_contains($request->getRequestUri(), 'graphql')) {
             return;
         }

@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade as BaseUpl
 
 /**
  * @property \App\Component\UploadedFile\UploadedFileRepository $uploadedFileRepository
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig, \App\Component\UploadedFile\UploadedFileRepository $uploadedFileRepository, \League\Flysystem\FilesystemOperator $filesystem, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator $uploadedFileLocator, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactoryInterface $uploadedFileFactory)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig, \App\Component\UploadedFile\UploadedFileRepository $uploadedFileRepository, \League\Flysystem\FilesystemOperator $filesystem, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator $uploadedFileLocator, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactory $uploadedFileFactory)
  */
 class UploadedFileFacade extends BaseUploadedFileFacade
 {

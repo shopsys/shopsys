@@ -152,6 +152,7 @@ class Order extends BaseOrder
     public function getGoPayTransactions(): array
     {
         $paymentTransactions = [];
+
         foreach ($this->getPaymentTransactions() as $paymentTransaction) {
             if ($paymentTransaction->getPayment()->isGoPay()) {
                 $paymentTransactions[] = $paymentTransaction;
@@ -167,6 +168,7 @@ class Order extends BaseOrder
     public function getGoPayTransactionStatusesIndexedByGoPayId(): array
     {
         $returnArray = [];
+
         foreach ($this->getPaymentTransactions() as $paymentTransaction) {
             if ($paymentTransaction->getPayment()->isGoPay()) {
                 $returnArray[$paymentTransaction->getExternalPaymentIdentifier()] = $paymentTransaction->getExternalPaymentStatus();

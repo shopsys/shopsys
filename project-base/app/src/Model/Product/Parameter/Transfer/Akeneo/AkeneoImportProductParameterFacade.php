@@ -151,6 +151,7 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
     {
         if ($this->parametersFromAkeneoCountBeforeTransfer === count($this->notTransferredParameterIds)) {
             $this->logger->error('Import parameters from Akeneo probably failed, all parameters with akeneo code should be deleted. Deletion was aborted.');
+
             return;
         }
 

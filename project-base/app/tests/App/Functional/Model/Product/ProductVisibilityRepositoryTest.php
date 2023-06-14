@@ -284,6 +284,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
     private function createImage(string $entityName, int $entityId): void
     {
         $namesIndexedByLocale = [];
+
         foreach ($this->domain->getAllLocales() as $locale) {
             $namesIndexedByLocale[$locale] = $entityName . '-' . $entityId . ' (' . $locale . ')';
         }

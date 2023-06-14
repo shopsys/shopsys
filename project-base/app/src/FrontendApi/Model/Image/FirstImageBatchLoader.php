@@ -41,6 +41,7 @@ class FirstImageBatchLoader
         $imagesBatchLoadDataByEntityNameAndType = $this->getImageBatchLoadDataArrayIndexedByEntityAndType($imagesBatchLoadData);
 
         $imagesIndexedByImageBatchLoadDataId = [];
+
         foreach ($imagesBatchLoadDataByEntityNameAndType as $entityName => $dataByTypes) {
             foreach ($dataByTypes as $type => $imagesBatchLoadData) {
                 $imagesIndexedByImageBatchLoadDataId = array_merge($imagesIndexedByImageBatchLoadDataId, $this->getImagesByEntityNameAndTypeIndexedByDataId($imagesBatchLoadData, $entityName, $type));
@@ -68,6 +69,7 @@ class FirstImageBatchLoader
         $imagesIndexedByEntityId = $this->frontendApiImageFacade->getImagesByTypeAndPositionIndexedByEntityId($entityIds, $entityName, $type);
 
         $images = [];
+
         foreach ($imagesBatchLoadData as $imageBatchLoadData) {
             if (!isset($imagesIndexedByEntityId[$imageBatchLoadData->getEntityId()]) || $imagesIndexedByEntityId[$imageBatchLoadData->getEntityId()] === null) { // @phpstan-ignore-line
                 continue;
@@ -87,6 +89,7 @@ class FirstImageBatchLoader
     private function getImageBatchLoadDataArrayIndexedByEntityAndType(array $imagesBatchLoadData): array
     {
         $result = [];
+
         foreach ($imagesBatchLoadData as $imageBatchLoadData) {
             $entityName = $imageBatchLoadData->getEntityName();
             $type = Utils::ifNull($imageBatchLoadData->getType(), ImageEntityConfig::WITHOUT_NAME_KEY);
@@ -106,6 +109,7 @@ class FirstImageBatchLoader
         array $imagesBatchLoadData,
     ): array {
         $sortedImages = [];
+
         foreach ($imagesBatchLoadData as $imageBatchLoadData) {
             if (array_key_exists($imageBatchLoadData->getId(), $imagesIndexedByImageBatchLoadDataId) === false) {
                 $sortedImages[] = null;
@@ -127,6 +131,7 @@ class FirstImageBatchLoader
     private function getResolvedImage(Image $image, array $sizeConfigs): ?array
     {
         $imageSizes = [];
+
         foreach ($sizeConfigs as $sizeConfig) {
             try {
                 $imageSizes[] = $this->getResolvedImageSize($image, $sizeConfig);

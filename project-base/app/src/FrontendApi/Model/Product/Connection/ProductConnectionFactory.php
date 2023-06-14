@@ -149,6 +149,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
             } else {
                 $productFilterConfig = $this->productFilterFacade->getProductFilterConfigForSearch($searchText);
             }
+
             return $this->productFilterOptionsFactory->createProductFilterOptionsForAll(
                 $productFilterConfig,
                 $productFilterData,

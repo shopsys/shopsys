@@ -61,6 +61,7 @@ class PaymentFormTypeExtension extends AbstractTypeExtension
 
         /** @var \App\Model\Payment\Payment $payment */
         $payment = $options['payment'];
+
         if ($payment->isHiddenByGoPay()) {
             $builderBasicInformationGroup->add('hidden', YesNoType::class, [
                 'label' => t('Hidden'),

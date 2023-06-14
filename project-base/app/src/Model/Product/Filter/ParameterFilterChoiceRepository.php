@@ -83,6 +83,7 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
         Category $category,
     ): array {
         $parameterIds = [];
+
         foreach ($rows as $row) {
             $parameterIds[$row['pp']['id']] = $row['pp']['id'];
         }
@@ -100,6 +101,7 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
         $parameters = $parametersQueryBuilder->getQuery()->execute();
 
         $parametersIndexedById = [];
+
         foreach ($parameters as $parameter) {
             /** @var \App\Model\Product\Parameter\Parameter $parameter */
             $parametersIndexedById[$parameter->getId()] = $parameter;
@@ -116,6 +118,7 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
     protected function getVisibleParametersIndexedByIdOrderedByName(array $rows, $locale): array
     {
         $parameterIds = [];
+
         foreach ($rows as $row) {
             $parameterIds[$row['pp']['id']] = $row['pp']['id'];
         }
@@ -148,6 +151,7 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
     protected function getParameterValuesIndexedByIdOrderedByText(array $rows, $locale): array
     {
         $valueIds = [];
+
         foreach ($rows as $row) {
             $valueId = $row['pv']['id'];
             $valueIds[$valueId] = $valueId;

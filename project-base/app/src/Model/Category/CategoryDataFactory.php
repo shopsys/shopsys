@@ -119,6 +119,7 @@ class CategoryDataFactory extends BaseCategoryDataFactory
     {
         $parameterIdsSortedByPosition = [];
         $categoryParameters = $this->categoryParameterRepository->getCategoryParametersByCategorySortedByPosition($category);
+
         foreach ($categoryParameters as $categoryParameter) {
             $parameterIdsSortedByPosition[] = $categoryParameter->getParameter()->getId();
         }

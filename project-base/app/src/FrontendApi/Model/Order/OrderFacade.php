@@ -94,6 +94,7 @@ class OrderFacade extends BaseOrderFacade
     public function pairCustomerUserWithOrderByOrderUuid(CustomerUser $customerUser, string $orderUuid): void
     {
         $order = $this->orderRepository->getByUuid($orderUuid);
+
         if ($order->getCustomerUser() !== null) {
             throw new OrderCannotBePairedException('Order is owned by another customer.');
         }

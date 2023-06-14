@@ -24,6 +24,7 @@ class IndependentPaymentVisibilityCalculation extends BaseIndependentPaymentVisi
 
         /** @var string|null $paymentName */
         $paymentName = $payment->getName($locale);
+
         if ($paymentName === '' || $paymentName === null) {
             return false;
         }

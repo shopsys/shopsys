@@ -30,7 +30,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Order\PromoCode\PromoCodeRepository $promoCodeRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactoryInterface $promoCodeFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactory $promoCodeFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
@@ -137,6 +137,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
             $promoCodeDataForCreate->code = $code;
 
             $promoCodeDataForCreate->limits = [];
+
             foreach ($promoCodeData->limits as $promoCodeLimit) {
                 $promoCodeDataForCreate->limits[] = $this->promoCodeLimitFactory->create(
                     $promoCodeLimit->getFromPriceWithVat(),
@@ -197,13 +198,16 @@ class PromoCodeFacade extends BasePromoCodeFacade
         $needFlush = false;
         $pricingGroupIdsFromForm = [];
         $pricingGroupIdsFromStorage = [];
+
         foreach ($pricingGroups as $pricingGroup) {
             $pricingGroupIdsFromForm[$pricingGroup->getId()] = $pricingGroup->getId();
         }
 
         $promoCodePricingGroups = $this->promoCodePricingGroupRepository->getAllByPromoCodeId($promoCode->getId());
+
         foreach ($promoCodePricingGroups as $promoCodePricingGroup) {
             $pricingGroupId = $promoCodePricingGroup->getPricingGroup()->getId();
+
             if (in_array($pricingGroupId, $pricingGroupIdsFromForm, true) === false) {
                 $this->em->remove($promoCodePricingGroup);
                 $needFlush = true;
@@ -232,13 +236,16 @@ class PromoCodeFacade extends BasePromoCodeFacade
         $needFlush = false;
         $categoryIdsFromForm = [];
         $categoryIdsFromStorage = [];
+
         foreach ($categories as $category) {
             $categoryIdsFromForm[$category->getId()] = $category->getId();
         }
 
         $promoCodeCategories = $this->promoCodeCategoryRepository->getAllByPromoCodeId($promoCode->getId());
+
         foreach ($promoCodeCategories as $promoCodeCategory) {
             $categoryId = $promoCodeCategory->getCategory()->getId();
+
             if (in_array($categoryId, $categoryIdsFromForm, true) === false) {
                 $this->em->remove($promoCodeCategory);
                 $needFlush = true;
@@ -267,13 +274,16 @@ class PromoCodeFacade extends BasePromoCodeFacade
         $needFlush = false;
         $productIdsFromForm = [];
         $productIdsFromStorage = [];
+
         foreach ($products as $product) {
             $productIdsFromForm[$product->getId()] = $product->getId();
         }
 
         $promoCodeProducts = $this->promoCodeProductRepository->getAllByPromoCodeId($promoCode->getId());
+
         foreach ($promoCodeProducts as $promoCodeProduct) {
             $productId = $promoCodeProduct->getProduct()->getId();
+
             if (in_array($productId, $productIdsFromForm, true) === false) {
                 $this->em->remove($promoCodeProduct);
                 $needFlush = true;
@@ -302,13 +312,16 @@ class PromoCodeFacade extends BasePromoCodeFacade
         $needFlush = false;
         $brandIdsFromForm = [];
         $brandIdsFromStorage = [];
+
         foreach ($brands as $brand) {
             $brandIdsFromForm[$brand->getId()] = $brand->getId();
         }
 
         $promoCodeBrands = $this->promoCodeBrandRepository->getAllByPromoCodeId($promoCode->getId());
+
         foreach ($promoCodeBrands as $promoCodeBrand) {
             $brandId = $promoCodeBrand->getBrand()->getId();
+
             if (in_array($brandId, $brandIdsFromForm, true) === false) {
                 $this->em->remove($promoCodeBrand);
                 $needFlush = true;

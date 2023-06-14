@@ -50,6 +50,7 @@ abstract class AbstractBridgeImportTransfer implements TransferIdentificationInt
     {
         if (!$this->bridgeConfig->isEnabled()) {
             $this->logger->warning('Skipping transfer, SSFWCC bridge is disabled from parameters.yml');
+
             return false;
         }
 
@@ -135,6 +136,7 @@ abstract class AbstractBridgeImportTransfer implements TransferIdentificationInt
 
             if ($processed === $this->cronBatchSize) {
                 $this->sqlLoggerFacade->reenableLogging();
+
                 return true;
             }
             $processed++;
@@ -143,6 +145,7 @@ abstract class AbstractBridgeImportTransfer implements TransferIdentificationInt
         $this->logger->persistAllLoggedTransferIssues();
 
         $this->sqlLoggerFacade->reenableLogging();
+
         return false;
     }
 

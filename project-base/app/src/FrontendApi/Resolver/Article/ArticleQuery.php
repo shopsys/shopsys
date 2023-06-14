@@ -14,6 +14,11 @@ use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Article\Exception\ArticleNotFoundUserError;
 
+/**
+ * @method \App\Model\Article\Article articleByUuidOrUrlSlugQuery(string|null $uuid = null, string|null $urlSlug = null)
+ * @method \App\Model\Article\Article getVisibleByDomainIdAndUuid(string $uuid)
+ * @method \App\Model\Article\Article getVisibleByDomainIdAndSlug(string $urlSlug)
+ */
 class ArticleQuery extends AbstractQuery
 {
     /**
@@ -82,9 +87,11 @@ class ArticleQuery extends AbstractQuery
     {
         try {
             $specialArticleId = $this->setting->getForDomain($settingName, $this->domain->getId());
+
             if ($specialArticleId === null) {
                 throw new ArticleNotFoundUserError(sprintf('Special article setting "%s" is not set', $settingName));
             }
+
             return $this->articleElasticsearchFacade->getById($specialArticleId);
         } catch (ArticleNotFoundException|SettingValueNotFoundException $exception) {
             throw new ArticleNotFoundUserError($exception->getMessage());

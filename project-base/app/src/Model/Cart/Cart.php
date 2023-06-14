@@ -96,6 +96,7 @@ class Cart extends BaseCart
     public function getQuantifiedProducts(): array
     {
         $quantifiedProducts = [];
+
         foreach ($this->items as $item) {
             try {
                 $quantifiedProducts[$item->getId()] = new QuantifiedProduct($item->getProduct(), $item->getQuantity());
@@ -113,6 +114,7 @@ class Cart extends BaseCart
     public function getTotalWeight(): int
     {
         $totalWeight = 0;
+
         foreach ($this->items as $item) {
             try {
                 $product = $item->getProduct();
@@ -138,6 +140,7 @@ class Cart extends BaseCart
         }
 
         $message = 'Cart item with UUID "' . $itemUuid . '" not found in cart.';
+
         throw new InvalidCartItemException($message);
     }
 
@@ -190,6 +193,7 @@ class Cart extends BaseCart
             }
         }
         $message = 'Promo code with ID = ' . $promoCodeId . ' is not applied.';
+
         throw new InvalidCartItemException($message);
     }
 

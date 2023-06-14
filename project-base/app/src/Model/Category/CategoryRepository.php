@@ -56,6 +56,7 @@ class CategoryRepository extends BaseCategoryRepository
             // Query builder is not used to be able to get the category from identity map if it was loaded previously
             return null;
         }
+
         return $category;
     }
 
@@ -70,6 +71,7 @@ class CategoryRepository extends BaseCategoryRepository
 
         if ($category === null) {
             $message = 'Category with Akeneo code ' . $akeneoCode . ' not found.';
+
             throw new CategoryNotFoundException($message);
         }
 
@@ -106,6 +108,7 @@ class CategoryRepository extends BaseCategoryRepository
             return [];
         }
         $listableProductCountsIndexedByCategoryId = [];
+
         foreach ($categories as $category) {
             // Initialize array with zeros as categories without found products will not be represented in result rows
             $listableProductCountsIndexedByCategoryId[$category->getId()] = 0;
@@ -146,6 +149,7 @@ class CategoryRepository extends BaseCategoryRepository
         $rows = $queryBuilder->select('c.id, IDENTITY(c.parent) AS parentId, ct.name')->getQuery()->getScalarResult();
 
         $fullPathsById = [];
+
         foreach ($rows as $row) {
             if (array_key_exists($row['parentId'], $fullPathsById)) {
                 $fullPathsById[$row['id']] = $fullPathsById[$row['parentId']] . ' - ' . $row['name'];

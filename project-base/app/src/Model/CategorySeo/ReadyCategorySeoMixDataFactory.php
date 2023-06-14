@@ -44,6 +44,7 @@ class ReadyCategorySeoMixDataFactory
         ?ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
     ): ReadyCategorySeoMixDataForForm {
         $readyCategorySeoMix = null;
+
         if ($choseCategorySeoMixCombination !== null) {
             $readyCategorySeoMix = $this->readyCategorySeoMixFacade->findByChoseCategorySeoMixCombination($choseCategorySeoMixCombination);
         }
@@ -98,6 +99,7 @@ class ReadyCategorySeoMixDataFactory
         );
 
         $readyCategorySeoMixData->flag = null;
+
         if ($choseCategorySeoMixCombination->getFlagId() !== null) {
             /** @var \App\Model\Product\Flag\Flag $flag */
             $flag = $this->flagFacade->getById($choseCategorySeoMixCombination->getFlagId());
@@ -107,6 +109,7 @@ class ReadyCategorySeoMixDataFactory
         $readyCategorySeoMixData->ordering = $choseCategorySeoMixCombination->getOrdering();
 
         $readyCategorySeoMixData->readyCategorySeoMixParameterParameterValues = [];
+
         foreach ($choseCategorySeoMixCombination->getParameterValueIdsByParameterIds() as $parameterId => $parameterValueId) {
             $readyCategorySeoMixData->readyCategorySeoMixParameterParameterValues[] = new ReadyCategorySeoMixParameterParameterValue(
                 $this->parameterFacade->getById($parameterId),

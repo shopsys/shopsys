@@ -36,6 +36,7 @@ class ParameterFilterOptionResolverMap extends ResolverMap
     private function getResolveType(ParameterFilterOption $parameterFilterOption): string
     {
         $parameterType = $parameterFilterOption->parameter->getParameterType();
+
         if ($parameterType === Parameter::PARAMETER_TYPE_COMMON) {
             return self::PARAMETER_CHECKBOX_FILTER_OPTION;
         }

@@ -22,6 +22,7 @@ class ProductFilesDataFactory
     public function createFromProduct(Product $product): ProductFilesData
     {
         $productFilesData = new ProductFilesData();
+
         foreach ($this->domain->getAllIds() as $domainId) {
             $productFilesData->assemblyInstructionCode[$domainId] = $product->getAssemblyInstructionCode($domainId);
             $productFilesData->productTypePlanCode[$domainId] = $product->getProductTypePlanCode($domainId);

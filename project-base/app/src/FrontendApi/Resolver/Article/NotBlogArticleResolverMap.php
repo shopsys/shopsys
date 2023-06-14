@@ -19,6 +19,7 @@ class NotBlogArticleResolverMap extends ResolverMap
                     if ($data['type'] === 'site') {
                         return 'ArticleSite';
                     }
+
                     if ($data['type'] === 'link') {
                         return 'ArticleLink';
                     }

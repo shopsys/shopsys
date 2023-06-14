@@ -37,6 +37,7 @@ class BlogCategoryQuery extends AbstractQuery
     {
         try {
             $domainId = $this->domain->getId();
+
             if ($uuid !== null) {
                 $blogCategory = $this->blogCategoryFacade->getVisibleByUuid($domainId, $uuid);
             } elseif ($urlSlug !== null) {

@@ -50,6 +50,7 @@ class MergeCartFacade
     {
         foreach ($cart->getItems() as $itemToMerge) {
             $similarItem = $currentCart->findSimilarItemByItem($itemToMerge);
+
             if ($similarItem instanceof CartItem) {
                 $similarItem->changeQuantity($similarItem->getQuantity() + $itemToMerge->getQuantity());
             } else {

@@ -9,10 +9,13 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue as BaseParame
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData as BaseParameterValueData;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory as BaseParameterValueDataFactory;
 
+/**
+ * @method \App\Model\Product\Parameter\ParameterValueData createInstance()
+ */
 class ParameterValueDataFactory extends BaseParameterValueDataFactory
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactoryInterface $uploadedFileDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory $uploadedFileDataFactory
      */
     public function __construct(protected UploadedFileDataFactoryInterface $uploadedFileDataFactory)
     {

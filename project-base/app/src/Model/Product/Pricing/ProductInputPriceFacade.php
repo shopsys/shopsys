@@ -29,6 +29,7 @@ class ProductInputPriceFacade extends BaseProductInputPriceFacade
             if ($row === false) {
                 $this->em->flush();
                 $this->em->clear();
+
                 return false;
             }
 

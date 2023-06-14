@@ -40,7 +40,7 @@ class SlugQuery extends AbstractQuery
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery $brandQuery
      * @param \App\FrontendApi\Resolver\Blog\Article\BlogArticleQuery $blogArticleQuery
      * @param \App\FrontendApi\Resolver\Blog\Category\BlogCategoryQuery $blogCategoryQuery
-     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryQuery $categoryQuery
+     * @param \App\FrontendApi\Resolver\Category\CategoryQuery $categoryQuery
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductDetailQuery $productDetailQuery
      * @param \App\FrontendApi\Resolver\Store\StoreQuery $storeQuery
      * @param \App\FrontendApi\Resolver\Category\CategorySeo\ReadyCategorySeoMixQuery $readyCategorySeoMixQuery
@@ -116,6 +116,7 @@ class SlugQuery extends AbstractQuery
                     return $this->storeQuery->storeQuery(null, $slugWithoutSlash);
                 case ReadyCategorySeoMix::class:
                     $readyCategorySeoMix = $this->readyCategorySeoMixQuery->readyCategorySeoMixQuery($slugWithoutSlash);
+
                     if ($this->isSortingDifferentFromReadyCategorySeoMix($info, $readyCategorySeoMix) || $this->isFilterSet($info)) {
                         return $readyCategorySeoMix->getCategory();
                     }
@@ -141,6 +142,7 @@ class SlugQuery extends AbstractQuery
         $minimalPrice = $variableValues['filter']['minimalPrice'] ?? null;
         $maximalPrice = $variableValues['filter']['maximalPrice'] ?? null;
         $brandChoices = $variableValues['filter']['brands'] ?? [];
+
         if ($onlyInStock || isset($minimalPrice) || isset($maximalPrice) || count($brandChoices) > 0) {
             return null;
         }

@@ -33,6 +33,7 @@ class ResetPasswordHashValidator extends ConstraintValidator
 
         $email = $value->email;
         $hash = $value->hash;
+
         try {
             if (!$this->customerUserPasswordFacade->isResetPasswordHashValid($email, $this->domain->getId(), $hash)) {
                 $this->context->buildViolation($constraint->invalidMessage)

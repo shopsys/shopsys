@@ -109,6 +109,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
             $flagId,
             $productFilterData,
         );
+
         if ($searchText !== '') {
             $filterQuery = $filterQuery->search($searchText);
         }
@@ -208,6 +209,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
             $categoryId,
             $productFilterData,
         );
+
         if ($searchText !== '') {
             $baseFilterQuery = $baseFilterQuery->search($searchText);
         }
@@ -233,6 +235,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
             $brandId,
             $productFilterData,
         );
+
         if ($searchText !== '') {
             $filterQuery = $filterQuery->search($searchText);
         }

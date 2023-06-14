@@ -70,8 +70,10 @@ class ImportPoFilesCommand extends Command
         $domains = $this->domain->getAll();
         $targetDir = $input->getArgument(self::TARGET_TRANSLATION_DIR);
         $fileWriter = new FileWriter([self::TYPE => $this->poDumper]);
+
         foreach ($domains as $domain) {
             $locale = $domain->getLocale();
+
             foreach ($input->getArgument(self::INPUT_FILES_TO_PROCESS) as $inputFile) {
                 $targetFileName = $targetDir . $inputFile . '.' . $locale . '.' . self::TYPE;
                 $sourceTranslationFileName = $input->getArgument(self::SOURCE_TRANSLATION_DIR) . $inputFile . '.' . $locale . '.' . self::TYPE;

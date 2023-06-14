@@ -82,6 +82,7 @@ class StockController extends AdminBaseController
         $stockSettingsData = $this->stockSettingsDataFactory->getForDomainId(
             $this->adminDomainTabsFacade->getSelectedDomainId(),
         );
+
         return $this->createForm(StockSettingsFormType::class, $stockSettingsData, [
             'action' => $this->generateUrl('admin_stock_savesettings'),
         ]);
@@ -116,6 +117,7 @@ class StockController extends AdminBaseController
         if ($form->isSubmitted() && !$form->isValid()) {
             $this->addErrorFlashTwig(t('Prosím zkontrolujte zda jsou všechna políčka správně vyplněná.'));
         }
+
         return $this->redirectToRoute('admin_stock_list');
     }
 
@@ -146,6 +148,7 @@ class StockController extends AdminBaseController
                         'url' => $this->generateUrl('admin_stock_edit', ['id' => $stock->getId()]),
                     ],
                 );
+
             return $this->redirectToRoute('admin_stock_list');
         }
 
@@ -185,6 +188,7 @@ class StockController extends AdminBaseController
                         'url' => $this->generateUrl('admin_stock_edit', ['id' => $stock->getId()]),
                     ],
                 );
+
             return $this->redirectToRoute('admin_stock_list');
         }
 

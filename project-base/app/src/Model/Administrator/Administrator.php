@@ -189,6 +189,7 @@ class Administrator extends BaseAdministrator implements EmailTwoFactorInterface
                 __METHOD__,
             ));
         }
+
         return $this->googleAuthenticatorSecret;
     }
 
@@ -246,6 +247,7 @@ class Administrator extends BaseAdministrator implements EmailTwoFactorInterface
     {
         if ($this->roleGroup !== null) {
             $roles = $this->roleGroup->getRoles();
+
             return array_merge($roles, [Roles::ROLE_ADMIN]);
         }
 

@@ -28,6 +28,7 @@ class BlogArticleElasticsearchRepository
     public function getByUuid(string $uuid): array
     {
         $filterQuery = $this->filterQueryFactory->createFilteredByUuid($uuid);
+
         try {
             return $this->blogArticleElasticsearchDataFetcher->getSingleResult($filterQuery);
         } catch (NoResultException $exception) {
@@ -70,6 +71,7 @@ class BlogArticleElasticsearchRepository
     public function getBySlug(string $slug): array
     {
         $blogArticle = $this->findBySlug($slug);
+
         if ($blogArticle === null) {
             $blogArticle = $this->findBySlug(TransformString::addOrRemoveTrailingSlashFromString($slug));
         }

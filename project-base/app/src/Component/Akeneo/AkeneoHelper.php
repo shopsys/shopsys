@@ -74,12 +74,14 @@ class AkeneoHelper
         }
 
         $labels = $akeneoData['labels'] ?? null;
+
         if ($labels === null) {
             return $itemData;
         }
 
         foreach ($labels as $akeneoLocale => $akeneoString) {
             $locale = self::findEshopLocaleByAkeneoLocale($akeneoLocale);
+
             if ($locale) {
                 $itemData[$locale] = $akeneoString;
             }

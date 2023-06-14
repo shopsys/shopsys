@@ -25,6 +25,7 @@ class ProductFilterDataToQueryTransformer extends BaseProductFilterDataToQueryTr
     public function addParametersToQuery(ProductFilterData $productFilterData, FilterQuery $filterQuery): FilterQuery
     {
         $parametersFilterData = $productFilterData->parameters;
+
         if (count($parametersFilterData) === 0) {
             return $filterQuery;
         }
@@ -45,6 +46,7 @@ class ProductFilterDataToQueryTransformer extends BaseProductFilterDataToQueryTr
     {
         foreach ($parametersFilterData as $key => $parameterFilterData) {
             $parameter = $parameterFilterData->parameter;
+
             if ($parameter === null || $parameter->isSlider() === false) {
                 unset($parametersFilterData[$key]);
             }

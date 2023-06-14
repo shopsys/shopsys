@@ -72,7 +72,7 @@ class ProductFacade extends BaseProductFacade
      * @param string $productFilesUrlPrefix
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \App\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
+     * @param \App\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Image\ImageFacade $imageFacade
@@ -85,11 +85,11 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface $productFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface $productAccessoryFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface $productCategoryDomainFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface $productParameterValueFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface $productVisibilityFactory
+     * @param \App\Model\Product\ProductFactory $productFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactory $productAccessoryFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactory $productCategoryDomainFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory $productParameterValueFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactory $productVisibilityFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler $productExportScheduler
      * @param \App\Model\Stock\ProductStockFacade $productStockFacade
@@ -177,6 +177,7 @@ class ProductFacade extends BaseProductFacade
         try {
             /** @var \App\Model\Product\Product $product */
             $product = $this->productRepository->getOneByCatnumExcludeMainVariants($productCatnum);
+
             return $product;
         } catch (ProductNotFoundException $exception) {
             return null;
@@ -206,6 +207,7 @@ class ProductFacade extends BaseProductFacade
         if ($product->isMainVariant()) {
             $product->refreshVariants($productData->variants);
         }
+
         if ($product->isVariant() === true) {
             $product->getMainVariant()->markForExport();
         }
@@ -298,6 +300,7 @@ class ProductFacade extends BaseProductFacade
     public function getDownloadFilesForProductByDomainConfig(BaseProduct $product, DomainConfig $domainConfig): array
     {
         $downloadFileUrls = [];
+
         if ($product->isDownloadAssemblyInstructionFiles() === false && $product->getAssemblyInstructionCode($domainConfig->getId()) !== null) {
             $url = $this->getProductTransferredFileUrl(
                 $product->getProductFileNameByType(
@@ -343,12 +346,14 @@ class ProductFacade extends BaseProductFacade
         // That's why it's necessary to do remove and flush first.
 
         $oldProductParameterValues = $this->parameterRepository->getProductParameterValuesByProduct($product);
+
         foreach ($oldProductParameterValues as $oldProductParameterValue) {
             $this->em->remove($oldProductParameterValue);
         }
         $this->em->flush();
 
         $toFlush = [];
+
         foreach ($productParameterValuesData as $productParameterValueData) {
             /** @var \App\Model\Product\Parameter\ParameterValueData $parameterValueData */
             $parameterValueData = $productParameterValueData->parameterValueData;

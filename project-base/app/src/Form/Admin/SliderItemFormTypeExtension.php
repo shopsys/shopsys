@@ -39,6 +39,7 @@ class SliderItemFormTypeExtension extends AbstractTypeExtension
         $builderImageGroup = $builder->get('image');
 
         $imageConstraints = [];
+
         if ($options['scenario'] === SliderItemFormType::SCENARIO_CREATE) {
             $imageConstraints[] = new Constraints\NotBlank(['message' => 'Please choose image']);
         }

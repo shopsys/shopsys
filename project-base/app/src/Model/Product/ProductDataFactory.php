@@ -43,7 +43,7 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory $productParameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
@@ -114,6 +114,7 @@ class ProductDataFactory extends BaseProductDataFactory
         $this->fillNew($productData);
         $this->fillStockProductByStocks($productData);
         $this->fillStoreProductByStores($productData);
+
         return $productData;
     }
 
@@ -170,6 +171,7 @@ class ProductDataFactory extends BaseProductDataFactory
     {
         /** @var \App\Model\Product\ProductTranslation[] $translations */
         $translations = $product->getTranslations();
+
         foreach ($translations as $translation) {
             $locale = $translation->getLocale();
 
@@ -222,6 +224,7 @@ class ProductDataFactory extends BaseProductDataFactory
         $productData->orderingPriority = $product->getOrderingPriority();
 
         $productData->parameters = $this->getParametersData($product);
+
         try {
             $productData->manualInputPricesByPricingGroupId = $this->productInputPriceFacade->getManualInputPricesDataIndexedByPricingGroupId($product);
         } catch (MainVariantPriceCalculationException $ex) {
@@ -289,6 +292,7 @@ class ProductDataFactory extends BaseProductDataFactory
     private function fillStockProductByProduct(ProductData $productData, Product $product): void
     {
         $this->fillStockProductByStocks($productData);
+
         foreach ($this->stockProductFacade->getProductStocksByProduct($product) as $stockProduct) {
             $productData->stockProductData[$stockProduct->getStock()->getId()] = $this->stockProductDataFactory->createFromProductStock($stockProduct);
         }
@@ -311,6 +315,7 @@ class ProductDataFactory extends BaseProductDataFactory
     private function fillStoreProductByProduct(ProductData $productData, Product $product): void
     {
         $this->fillStoreProductByStores($productData);
+
         foreach ($this->productStoreFacade->getProductStoresByProduct($product) as $productStore) {
             $productData->productStoreData[$productStore->getStore()->getId()] = $this->productStoreDataFactory->createFromProductStore($productStore);
         }

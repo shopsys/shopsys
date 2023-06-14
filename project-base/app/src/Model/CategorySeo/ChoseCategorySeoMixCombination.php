@@ -143,6 +143,7 @@ class ChoseCategorySeoMixCombination
         array $parameterValueIdsByParameterIds,
     ): array {
         ksort($parameterValueIdsByParameterIds);
+
         return [
             'domainId' => $domainId,
             'categoryId' => $categoryId,

@@ -55,14 +55,17 @@ class FlagDataFixture extends AbstractReferenceFixture
     private function createFlag(int $flagId, ?string $referenceName = null): void
     {
         $flag = $this->flagFacade->getById($flagId);
+
         if ($referenceName !== null) {
             $this->addReference($referenceName, $flag);
         }
+
         if ($referenceName !== self::FLAG_PRODUCT_ACTION) {
             return;
         }
 
         $flagData = $this->flagDataFactory->createFromFlag($flag);
+
         foreach ($this->domain->getAllLocales() as $locale) {
             $flagData->name[$locale] = t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }

@@ -36,7 +36,7 @@ class ProductTransferAkeneoMapper
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Product\ProductFilesDataFactory $productFilesDataFactory
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory $productParameterValueDataFactory
      * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      * @param \App\Model\Product\Flag\FlagRepository $flagRepository
      * @param \App\Model\Product\Transfer\Akeneo\ParameterTransferCachedAkeneoFacade $parameterTransferCachedAkeneoFacade
@@ -125,6 +125,7 @@ class ProductTransferAkeneoMapper
         $productData->preorder = $akeneoProductData['values']['preorder'][0]['data'] ?? false;
 
         $vendorDeliveryDate = $akeneoProductData['values']['vendor_delivery_date'][0]['data'] ?? null;
+
         if ($vendorDeliveryDate !== null) {
             $productData->vendorDeliveryDate = intval($vendorDeliveryDate);
         }
@@ -183,11 +184,14 @@ class ProductTransferAkeneoMapper
 
         foreach ($akeneoProductParameters as $akeneoProductParameterCode => $akeneoProductParameterData) {
             $parameter = $this->parameterFacade->findParameterByAkeneoCode($akeneoProductParameterCode);
+
             if ($parameter === null) {
                 continue;
             }
+
             try {
                 $currentAkeneoProductParameterData = current($akeneoProductParameterData);
+
                 if (array_key_exists('locale', $currentAkeneoProductParameterData) === false || $currentAkeneoProductParameterData['locale'] === null) {
                     $akeneoParameterValueCodes = $this->getParameterValueAkeneoCodes($akeneoProductParameterData, $parameter, $productData->catnum);
                     $this->addParameterValuesByAkeneoValueCodes($parameter, $akeneoParameterValueCodes, $productData);
@@ -247,6 +251,7 @@ class ProductTransferAkeneoMapper
                 $currentAkeneoProductParameterDataValue['unit'],
                 $productCatnum,
             );
+
             return [(string)$currentAkeneoProductParameterDataValue['amount']];
         }
 
@@ -265,6 +270,7 @@ class ProductTransferAkeneoMapper
     ): void {
         foreach ($akeneoProductParameterData as $currentAkeneoProductParameterData) {
             $locale = AkeneoHelper::findEshopLocaleByAkeneoLocale($currentAkeneoProductParameterData['locale']);
+
             if ($locale) {
                 $productData->parameters[] = $this->createProductParameterValueData(
                     $parameter,
@@ -282,6 +288,7 @@ class ProductTransferAkeneoMapper
     protected function getProductFlags(array $akeneoProductDataValues): array
     {
         $selectedFlags = [];
+
         foreach ($this->flagRepository->getAll() as $flag) {
             if (array_key_exists($flag->getAkeneoCode(), $akeneoProductDataValues)) {
                 foreach ($akeneoProductDataValues[$flag->getAkeneoCode()] as $flagData) {
@@ -370,6 +377,7 @@ class ProductTransferAkeneoMapper
         }
 
         $parameterValue = $this->parameterFacade->findParameterValueByText($parameterTextValue, $locale);
+
         if ($parameterValue === null) {
             $parameterValueData = $this->parameterValueDataFactory->create();
             $parameterValueData->text = $parameterTextValue;
@@ -411,6 +419,7 @@ class ProductTransferAkeneoMapper
                 $parameter->getAkeneoCode(),
                 $akeneoParameterValueCode,
             );
+
             if (array_key_exists($locale, $valueTextsByLocale) === false || $valueTextsByLocale[$locale] === null) {
                 throw new TransferException(
                     sprintf(

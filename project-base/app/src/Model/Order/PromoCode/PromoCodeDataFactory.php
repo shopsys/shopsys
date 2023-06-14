@@ -12,6 +12,9 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode as BasePromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData as BasePromoCodeData;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory as BasePromoCodeDataFactory;
 
+/**
+ * @method \App\Model\Order\PromoCode\PromoCodeData createInstance()
+ */
 class PromoCodeDataFactory extends BasePromoCodeDataFactory
 {
     public const TIME_VALID_FORMAT = 'H:i';
@@ -109,6 +112,7 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
     {
         if ($dateTime !== null) {
             $this->dateTimeHelper->convertDateTimeFromUtcToDisplayTimeZone($dateTime);
+
             return $dateTime->format(self::TIME_VALID_FORMAT);
         }
 

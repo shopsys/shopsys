@@ -120,6 +120,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
     {
         $parameterColorNamesByLocale = [];
         $parameterMaterialNamesByLocale = [];
+
         foreach ($this->domain->getAllLocales() as $locale) {
             $parameterColorNamesByLocale[$locale] = t('Color', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $parameterMaterialNamesByLocale[$locale] = t('Material', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -145,6 +146,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
 
         /** @var \App\Model\Product\Product $product1 */
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+
         foreach ($this->domain->getAllLocales() as $locale) {
             $parameterValueRed = $this->getParameterValue($locale, t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), '#ff0000');
             $this->addParameterValueToProduct($product1, $parameterColor, $parameterValueRed);
@@ -154,6 +156,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
 
         /** @var \App\Model\Product\Product $product2 */
         $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '2');
+
         foreach ($this->domain->getAllLocales() as $locale) {
             $parameterValueRed = $this->getParameterValue($locale, t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), '#000000');
             $this->addParameterValueToProduct($product2, $parameterColor, $parameterValueRed);
@@ -163,6 +166,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
 
         /** @var \App\Model\Product\Product $product3 */
         $product3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '3');
+
         foreach ($this->domain->getAllLocales() as $locale) {
             $parameterValueRed = $this->getParameterValue($locale, t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), '#ff0000');
             $this->addParameterValueToProduct($product3, $parameterColor, $parameterValueRed);
@@ -172,6 +176,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
 
         /** @var \App\Model\Product\Product $product4 */
         $product4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '4');
+
         foreach ($this->domain->getAllLocales() as $locale) {
             $parameterValueRed = $this->getParameterValue($locale, t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale), '#ff0000');
             $this->addParameterValueToProduct($product4, $parameterColor, $parameterValueRed);
@@ -199,6 +204,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         $parameterData = $this->parameterDataFactory->create();
         $parameterData->uuid = array_pop($this->uuidPool);
         $parameterData->visible = true;
+
         if ($parameterType !== null) {
             $parameterData->parameterType = $parameterType;
         }
@@ -208,6 +214,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         $parameter = $this->parameterFacade->create($parameterData);
 
         $counter = 0;
+
         foreach ($asFilterInCategories as $category) {
             $categoryParameter = new CategoryParameter($category, $parameter, false, $counter);
             $this->entityManager->persist($categoryParameter);
@@ -259,6 +266,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
     private function createSliderParameterWithValuesAndAssignThemToProducts(): void
     {
         $parameterNamesByLocale = [];
+
         foreach ($this->domain->getAllLocales() as $locale) {
             $parameterNamesByLocale[$locale] = t('Warranty (in years)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }

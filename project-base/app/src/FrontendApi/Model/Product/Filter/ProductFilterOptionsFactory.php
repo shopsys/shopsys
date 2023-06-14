@@ -258,6 +258,7 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
             throw new InvalidArgumentException('$category parameter must be provided');
         }
         $collapsedParameters = $this->categoryParameterFacade->getParametersCollapsedByCategory($category);
+
         foreach ($productFilterConfig->getParameterChoices() as $parameterFilterChoice) {
             /** @var \App\Model\Product\Parameter\Parameter $parameter */
             $parameter = $parameterFilterChoice->getParameter();

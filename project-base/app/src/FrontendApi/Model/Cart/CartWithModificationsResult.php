@@ -233,6 +233,7 @@ class CartWithModificationsResult
         if (!$this->totalDiscountPrice) {
             throw new LogicException('Total discount price must be set before calling the getter.');
         }
+
         return $this->totalDiscountPrice;
     }
 

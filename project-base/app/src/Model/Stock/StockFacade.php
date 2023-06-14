@@ -130,6 +130,7 @@ class StockFacade
     {
         $stocks = $this->stockRepository->getStocksEnabledOnDomain($domainId);
         $stocksById = [];
+
         foreach ($stocks as $stock) {
             $stocksById[$stock->getId()] = $stock;
         }

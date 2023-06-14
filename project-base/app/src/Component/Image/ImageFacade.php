@@ -53,7 +53,7 @@ class ImageFacade extends BaseImageFacade
      * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \App\Component\FileUpload\FileUpload $fileUpload
      * @param \App\Component\Image\ImageLocator $imageLocator
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface $imageFactory
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactory $imageFactory
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Shopsys\FrameworkBundle\Component\Cdn\CdnFacade $cdnFacade
@@ -146,12 +146,15 @@ class ImageFacade extends BaseImageFacade
         switch ($image->getEntityName()) {
             case 'category':
                 $category = $this->em->getRepository(Category::class)->find($image->getEntityId());
+
                 return $category?->getName($locale);
             case 'product':
                 $product = $this->em->getRepository(Product::class)->find($image->getEntityId());
+
                 return $product?->getName($locale);
             case 'brand':
                 $brand = $this->em->getRepository(Brand::class)->find($image->getEntityId());
+
                 return $brand?->getName();
             default:
                 return null;
@@ -199,6 +202,7 @@ class ImageFacade extends BaseImageFacade
         $sizeConfig = $entityConfig->getSizeConfigByType($type, $sizeName);
 
         $result = [];
+
         foreach ($sizeConfig->getAdditionalSizes() as $additionalSizeIndex => $additionalSizeConfig) {
             $url = $this->getAdditionalImageUrl($domainConfig, $additionalSizeIndex, $image, $sizeName);
             $result[] = new AdditionalImageData(
@@ -233,6 +237,7 @@ class ImageFacade extends BaseImageFacade
         $sizeConfig = $entityConfig->getSizeConfigByType($type, $sizeName);
 
         $result = [];
+
         foreach ($sizeConfig->getAdditionalSizes() as $additionalSizeIndex => $additionalSizeConfig) {
             $image = $this->imageRepository->getById($id);
             $imageUrl = $this->getAdditionalImageUrl($domainConfig, $additionalSizeIndex, $image, $sizeName);
@@ -307,6 +312,7 @@ class ImageFacade extends BaseImageFacade
             $entityId = $this->getEntityId($entity);
             $oldImage = $this->imageRepository->findImageByEntity($imageEntityConfig->getEntityName(), $entityId, $type);
             $generatedNamesIndexedByLocale = [];
+
             foreach ($this->domain->getAllLocales() as $locale) {
                 $generatedNamesIndexedByLocale[$locale] = sprintf('%s - %d (%s)', $entityName, $entityId, $locale);
             }
@@ -350,6 +356,7 @@ class ImageFacade extends BaseImageFacade
         foreach ($images as $image) {
             $imageToRemove = $this->imageRepository->findById($image->getId());
             $this->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, $image->getType());
+
             if ($imageToRemove !== null) {
                 $this->em->remove($imageToRemove);
             }
@@ -427,9 +434,11 @@ class ImageFacade extends BaseImageFacade
     {
         $position = 0;
         $canUpdateAkeneoType = false;
+
         foreach ($orderedImages as $image) {
             $image->setPosition($position);
             $position++;
+
             if ($image->getEntityName() === 'product') {
                 $canUpdateAkeneoType = true;
             }
@@ -455,6 +464,7 @@ class ImageFacade extends BaseImageFacade
     {
         // Image entity can be cached, and It caused no persisted entity -> fatal on flush
         $persistedImages = [];
+
         foreach ($orderedImages as $image) {
             if ($this->em->getUnitOfWork()->isInIdentityMap($image) === true) {
                 $persistedImages[] = $image;

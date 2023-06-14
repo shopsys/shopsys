@@ -18,7 +18,7 @@ class BlogCategoryDetailFriendlyUrlDataProvider implements FriendlyUrlDataProvid
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlDataFactory $friendlyUrlDataFactory
      */
     public function __construct(
         private EntityManagerInterface $em,

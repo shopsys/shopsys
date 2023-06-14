@@ -605,6 +605,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
     private function addTransportToExistingCart(Transport $transport, ?string $pickupPlaceIdentifier = null): void
     {
         $pickupPlaceIdentifierLine = '';
+
         if ($pickupPlaceIdentifier !== null) {
             $pickupPlaceIdentifierLine = 'pickupPlaceIdentifier: "' . $pickupPlaceIdentifier . '"';
         }

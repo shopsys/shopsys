@@ -189,11 +189,13 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         $flags = $product->getFlagsForDomain($this->domain->getId());
 
         $flagsIndexedById = [];
+
         foreach ($flags as $flag) {
             $flagsIndexedById[$flag->getId()] = $flag;
         }
 
         $variants = [];
+
         if ($product->isMainVariant() === true) {
             $variants = $this->productRepository->getAllSellableVariantsByMainVariant(
                 $product,
@@ -204,6 +206,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 
         foreach ($variants as $variant) {
             $variantFlags = $variant->getFlagsForDomain($this->domain->getId());
+
             foreach ($variantFlags as $variantFlag) {
                 $flagsIndexedById[$variantFlag->getId()] = $variantFlag;
             }
@@ -222,6 +225,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
     public function getParameters(BaseProduct $product): array
     {
         $products = [];
+
         if ($product->isMainVariant() === true) {
             $products = $this->productRepository->getAllSellableVariantsByMainVariant(
                 $product,
@@ -277,6 +281,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         );
 
         $result = [];
+
         foreach ($storeAvailabilitiesInformation as $storeAvailabilityInformation) {
             $result[] = [
                 'store_name' => $storeAvailabilityInformation->getStoreName(),

@@ -79,11 +79,13 @@ class PriceQuery extends BasePriceQuery
 
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+
         if ($customerUser === null && $cartUuid === null) {
             return parent::priceByTransportQuery($transport);
         }
 
         $cart = $this->cartFacade->findCart($customerUser, $cartUuid);
+
         if ($cart === null) {
             return parent::priceByTransportQuery($transport);
         }
@@ -122,11 +124,13 @@ class PriceQuery extends BasePriceQuery
 
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+
         if ($customerUser === null && $cartUuid === null) {
             return parent::priceByPaymentQuery($payment);
         }
 
         $cart = $this->cartFacade->findCart($customerUser, $cartUuid);
+
         if ($cart === null) {
             return parent::priceByPaymentQuery($payment);
         }

@@ -44,6 +44,7 @@ class BrandRepository
             ->getQuery()->getResult();
 
         $brands = [];
+
         foreach ($brandIds as $brandId) {
             if (isset($result[$brandId])) {
                 $brands[] = $result[$brandId];

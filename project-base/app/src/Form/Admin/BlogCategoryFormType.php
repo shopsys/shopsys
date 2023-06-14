@@ -254,6 +254,7 @@ class BlogCategoryFormType extends AbstractType
         if ($blogCategory !== null) {
             return $blogCategory->getId();
         }
+
         return null;
     }
 

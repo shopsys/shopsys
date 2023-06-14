@@ -127,6 +127,7 @@ class BlogCategoryRepository extends NestedTreeRepository
 
         if ($blogCategory === null) {
             $message = 'BlogCategory with ID ' . $blogCategoryId . ' not found.';
+
             throw new BlogCategoryNotFoundException($message);
         }
 

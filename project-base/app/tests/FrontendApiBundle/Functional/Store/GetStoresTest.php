@@ -148,6 +148,7 @@ class GetStoresTest extends GraphQlTestCase
     private function getExpectedStores(): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
+
         return [
             [
                 'name' => t('Ostrava', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),

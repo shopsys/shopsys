@@ -36,15 +36,18 @@ class CategoryParameterDataFixture extends AbstractReferenceFixture implements D
         $categoryElectronics = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
         $firstDomainLocale = $this->domain->getDomainConfigById(1)->getLocale();
         $categoryDataFixtureClassReflection = new ReflectionClass(CategoryDataFixture::class);
+
         foreach ($categoryDataFixtureClassReflection->getConstants() as $constant) {
             /** @var \App\Model\Category\Category $category */
             $category = $this->getReference($constant);
             $parameters = $this->parameterRepository->getParametersUsedByProductsInCategory($category, Domain::FIRST_DOMAIN_ID);
             $parametersId = [];
+
             foreach ($parameters as $parameter) {
                 $parametersId[] = $parameter->getId();
             }
             $parametersCollapsed = [];
+
             if ($category === $categoryElectronics) {
                 $parametersCollapsed = [
                     $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),

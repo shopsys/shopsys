@@ -35,6 +35,7 @@ class ImageRepository extends BaseImageRepository
         foreach ($images as &$image) {
             /** @var \Doctrine\ORM\PersistentCollection $translations */
             $translations = $image->getTranslations();
+
             if ($translations instanceof PersistentCollection) {
                 $translations->initialize();
             }
@@ -55,9 +56,11 @@ class ImageRepository extends BaseImageRepository
         $image = parent::getImageByEntity($entityName, $entityId, $type);
         /** @var \Doctrine\ORM\PersistentCollection $translations */
         $translations = $image->getTranslations();
+
         if ($translations instanceof PersistentCollection) {
             $translations->initialize();
         }
+
         return $image;
     }
 

@@ -173,6 +173,7 @@ class PromoCodeController extends BasePromoCodeController
                     'url' => $this->generateUrl('admin_promocode_edit', ['id' => $promoCode->getId()]),
                 ],
             );
+
             return $this->redirectToRoute('admin_promocode_list');
         }
 

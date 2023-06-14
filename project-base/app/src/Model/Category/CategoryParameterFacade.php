@@ -29,32 +29,40 @@ class CategoryParameterFacade
     public function saveRelation(Category $category, array $parameterIds, array $parametersCollapsed): void
     {
         $parametersCollapsedById = [];
+
         foreach ($parametersCollapsed as $parameterCollapsed) {
             $parametersCollapsedById[$parameterCollapsed->getId()] = true;
         }
 
         $oldCategoryParameters = $this->categoryParameterRepository->getAllByCategory($category);
         $oldCategoryParametersById = [];
+
         foreach ($oldCategoryParameters as $oldCategoryParameter) {
             $oldCategoryParametersById[$oldCategoryParameter->getParameter()->getId()] = $oldCategoryParameter;
         }
         $catFlushAfterSaveRelation = false;
+
         foreach ($parameterIds as $position => $parameterId) {
             $collapsed = false;
+
             if (array_key_exists($parameterId, $parametersCollapsedById)) {
                 $collapsed = true;
             }
+
             if (array_key_exists($parameterId, $oldCategoryParametersById)) {
                 $oldCategoryParameter = $oldCategoryParametersById[$parameterId];
+
                 if ($oldCategoryParameter->isCollapsed() !== $collapsed) {
                     $oldCategoryParameter->setCollapsed($collapsed);
                     $catFlushAfterSaveRelation = true;
                 }
+
                 if ($oldCategoryParameter->getPosition() !== $position) {
                     $oldCategoryParameter->setPosition($position);
                     $catFlushAfterSaveRelation = true;
                 }
                 unset($oldCategoryParametersById[$parameterId]);
+
                 continue;
             }
 

@@ -24,6 +24,7 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
     protected function calculateIndependentVisibility($onlyMarkedProducts)
     {
         $now = new DateTimeImmutable();
+
         if ($onlyMarkedProducts) {
             $onlyMarkedProductsCondition = ' AND p.recalculate_visibility = TRUE';
         } else {

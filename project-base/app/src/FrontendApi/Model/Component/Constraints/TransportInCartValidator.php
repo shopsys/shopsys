@@ -48,9 +48,11 @@ class TransportInCartValidator extends ConstraintValidator
         }
         $transportUuid = $value->transportUuid;
         $pickupPlaceIdentifier = $value->pickupPlaceIdentifier;
+
         if ($transportUuid === null) {
             return;
         }
+
         try {
             $transport = $this->transportFacade->getEnabledOnDomainByUuid($transportUuid, $this->domain->getId());
             $this->checkTransportPaymentRelation($transport, $value->cartUuid, $constraint);
@@ -62,6 +64,7 @@ class TransportInCartValidator extends ConstraintValidator
                 ->setCode($constraint::UNAVAILABLE_TRANSPORT_ERROR)
                 ->atPath('transportUuid')
                 ->addViolation();
+
             return;
         }
     }
@@ -119,6 +122,7 @@ class TransportInCartValidator extends ConstraintValidator
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         $cart = $this->cartFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
+
         try {
             $this->transportValidationFacade->checkTransportWeightLimit($transport, $cart);
         } catch (TransportWeightLimitExceededException $exception) {

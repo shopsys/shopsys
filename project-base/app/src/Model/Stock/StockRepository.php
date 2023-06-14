@@ -34,9 +34,11 @@ class StockRepository
     public function getById(int $stockId): Stock
     {
         $stock = $this->getStockRepository()->find($stockId);
+
         if ($stock === null) {
             throw new StockNotFoundException();
         }
+
         return $stock;
     }
 

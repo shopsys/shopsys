@@ -17,7 +17,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade as BaseAdmin
  * @method setRolesChangedNow(\App\Model\Administrator\Administrator $administrator)
  * @property \App\Model\Administrator\AdministratorRepository $administratorRepository
  * @property \App\Model\Administrator\Role\AdministratorRoleFacade $administratorRoleFacade
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Administrator\AdministratorRepository $administratorRepository, \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFactoryInterface $administratorFactory, \App\Model\Administrator\Role\AdministratorRoleFacade $administratorRoleFacade, \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory, \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Administrator\AdministratorRepository $administratorRepository, \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFactory $administratorFactory, \App\Model\Administrator\Role\AdministratorRoleFacade $administratorRoleFacade, \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory, \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage)
  */
 class AdministratorFacade extends BaseAdministratorFacade
 {

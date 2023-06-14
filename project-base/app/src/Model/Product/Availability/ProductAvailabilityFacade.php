@@ -95,6 +95,7 @@ class ProductAvailabilityFacade
         $productStocks = $this->productStockFacade->getProductStocksByProductAndDomainId($product, $domainId);
 
         $groupedStockQuantity = $this->sumProductStockQuantities($productStocks);
+
         if ($groupedStockQuantity >= $quantifiedProduct->getQuantity()) {
             return t('In stock');
         }
@@ -145,6 +146,7 @@ class ProductAvailabilityFacade
         $productStocks = $this->productStockFacade->getProductStocksByProduct($product);
 
         $count = 0;
+
         foreach ($productStocks as $productStock) {
             if ($productStock->getProductQuantity() > 0 && $productStock->getStock()->isEnabled($domainId)) {
                 $count += count($productStock->getStock()->getStores());
@@ -179,6 +181,7 @@ class ProductAvailabilityFacade
         $productStores = $this->productStoreFacade->getProductStoresByProductAndDomainId($product, $domainId);
 
         $count = 0;
+
         foreach ($productStores as $productStore) {
             if ($productStore->isProductExposed()) {
                 $count++;
@@ -210,6 +213,7 @@ class ProductAvailabilityFacade
     public function isProductAvailableOnDomainCached(Product $product, int $domainId): bool
     {
         $cacheKey = sprintf('product:%d-domain:%d', $product->getId(), $domainId);
+
         if (array_key_exists($cacheKey, $this->productAvailabilityDomainCache)) {
             return $this->productAvailabilityDomainCache[$cacheKey];
         }
@@ -258,6 +262,7 @@ class ProductAvailabilityFacade
 
         $weeks = $this->getDeliveryWeeksByDomainId($domainId, $product);
         $isOutOfStock = true;
+
         if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
             $weeks = $this->getTransferWeeksByDomainId($domainId);
             $isOutOfStock = false;
@@ -266,6 +271,7 @@ class ProductAvailabilityFacade
         $productStocksIndexedByStockId = $this->productStockFacade->getProductStocksByProductIndexedByStockId($product);
 
         $productStoresAvailabilityInformationList = [];
+
         foreach ($productStores as $productStore) {
             $availabilityInformation = t('Ihned k odběru');
             $availabilityStatus = AvailabilityStatusEnum::InStock;
@@ -277,6 +283,7 @@ class ProductAvailabilityFacade
                 $stock = $productStore->getStore()->getStock();
 
                 $productStock = null;
+
                 if ($stock !== null && $stock->isEnabled($domainId)) {
                     $productStock = $productStocksIndexedByStockId[$stock->getId()];
                 }
@@ -370,6 +377,7 @@ class ProductAvailabilityFacade
         if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
             return $this->getTransferDaysByDomainId($domainId);
         }
+
         return $this->getDeliveryDaysByDomainId($product, $domainId);
     }
 
@@ -411,6 +419,7 @@ class ProductAvailabilityFacade
         array $quantifiedProducts,
     ): array {
         $maximumDayAvailabilityByStoreId = [];
+
         foreach ($stores as $store) {
             $maximumDayAvailabilityByStoreId[$store->getId()] = 0;
         }
@@ -446,6 +455,7 @@ class ProductAvailabilityFacade
         $minimalStockDaysAvailability = reset($storeDayAvailabilities);
 
         $minimalDaysAvailabilityIndexedByTransportIds = [];
+
         foreach ($transports as $transport) {
             $minimalDaysAvailabilityIndexedByTransportIds[$transport->getId()] = $minimalStockDaysAvailability + $transport->getDaysUntilDelivery();
         }
@@ -475,8 +485,10 @@ class ProductAvailabilityFacade
         );
 
         $productStocksFromStoresIndexedByStoreId = [];
+
         foreach ($stores as $store) {
             $stockFromStore = $store->getStock();
+
             if ($stockFromStore !== null && array_key_exists($stockFromStore->getId(), $productStocksByDomainIdIndexedByStockId)) {
                 $productStocksFromStoresIndexedByStoreId[$store->getId()] = $productStocksByDomainIdIndexedByStockId[$stockFromStore->getId()];
             }
@@ -508,6 +520,7 @@ class ProductAvailabilityFacade
     private function sumProductStockQuantities(array $productStocksByDomainIdIndexedByStockId): int
     {
         $totalProductStocksQuantity = 0;
+
         foreach ($productStocksByDomainIdIndexedByStockId as $productStock) {
             $totalProductStocksQuantity += $productStock->getProductQuantity();
         }
@@ -530,6 +543,7 @@ class ProductAvailabilityFacade
     ): int {
         //php_int_max serves as a numerical indicator of unavailability of goods
         $productBetweenStockTransferDays = PHP_INT_MAX;
+
         if ($quantityOnAllStocks >= $quantifiedProduct->getQuantity()) {
             $productBetweenStockTransferDays = $this->getTransferDaysByDomainId($domainId);
         }
@@ -540,11 +554,13 @@ class ProductAvailabilityFacade
         //relation between product and stock doesn't exists
         if ($productStock === null) {
             $defaultVendorDeliveryDays = $this->getDeliveryDaysByDomainId($product, $domainId);
+
             return min($defaultVendorDeliveryDays, $productBetweenStockTransferDays);
         }
 
         //the product is in the stock
         $quantityOnStock = $productStock->getProductQuantity();
+
         if ($quantityOnStock >= $quantifiedProduct->getQuantity()) {
             return 0;
         }

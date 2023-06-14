@@ -89,6 +89,7 @@ class ParameterGroup extends AbstractTranslatableEntity
     public function getNames(): array
     {
         $namesByLocale = [];
+
         foreach ($this->translations as $translation) {
             $namesByLocale[$translation->getLocale()] = $translation->getName();
         }

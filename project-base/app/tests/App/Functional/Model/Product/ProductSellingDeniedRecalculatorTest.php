@@ -45,6 +45,7 @@ class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
 
         /** @var \App\Model\Product\ProductData $variant3productData */
         $variant3productData = $this->productDataFactory->createFromProduct($variant3);
+
         foreach ($this->domain->getAll() as $domainConfig) {
             $variant3productData->saleExclusion[$domainConfig->getId()] = true;
         }

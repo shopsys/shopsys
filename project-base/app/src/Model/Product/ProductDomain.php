@@ -231,6 +231,7 @@ class ProductDomain extends BaseProductDomain
     public function setFlags(array $flags): void
     {
         $this->flags->clear();
+
         foreach ($flags as $flag) {
             $this->flags->add($flag);
         }

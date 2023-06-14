@@ -45,6 +45,7 @@ class PromoCodeLimitType extends AbstractType
         ]);
 
         $options = $options['discount'];
+
         foreach ($options['constraints'] as $constraint) {
             $constraint->groups = [PromoCodeFormTypeExtension::VALIDATION_GROUP_TYPE_PERCENT];
         }

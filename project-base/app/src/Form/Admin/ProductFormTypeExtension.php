@@ -233,6 +233,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     private function setPricesGroup(FormBuilderInterface $builder, ?Product $product): void
     {
         $builderPricesGroup = $builder->get('pricesGroup');
+
         if ($this->isProductMainVariant($product)) {
             $builderPricesGroup->remove('disabledPricesOnMainVariant');
         }

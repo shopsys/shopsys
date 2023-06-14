@@ -87,6 +87,7 @@ class ParameterValueController extends AdminBaseController
                     'url' => $this->generateUrl('admin_parametervalue_edit', ['id' => $parameterValue->getId()]),
                 ],
             );
+
             return $this->redirectToRoute('admin_parametervalue_list');
         }
 

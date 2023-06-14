@@ -47,6 +47,7 @@ class CustomerUserDataFactory extends BaseUserDataFactory
     {
         $customerUserData = $this->create();
         $customerUserData->customer = $customer;
+
         return $customerUserData;
     }
 
@@ -70,6 +71,7 @@ class CustomerUserDataFactory extends BaseUserDataFactory
     {
         $customerUserData = $this->create();
         $this->fillFromUser($customerUserData, $customerUser);
+
         return $customerUserData;
     }
 

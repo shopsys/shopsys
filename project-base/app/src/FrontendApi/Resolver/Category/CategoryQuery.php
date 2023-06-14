@@ -14,6 +14,10 @@ use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryQuery as BaseCategoryQuery;
 
+/**
+ * @method \App\Model\Category\Category getByUuid(string $uuid)
+ * @method \App\Model\Category\Category getVisibleOnDomainAndSlug(string $urlSlug)
+ */
 class CategoryQuery extends BaseCategoryQuery
 {
     /**

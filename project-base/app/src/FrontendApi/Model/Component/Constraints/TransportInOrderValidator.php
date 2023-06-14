@@ -44,16 +44,20 @@ class TransportInOrderValidator extends ConstraintValidator
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         $cart = $this->cartFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
         $transportInCart = $cart->getTransport();
+
         if ($transportInCart === null) {
             $this->context->buildViolation($constraint->transportNotSetMessage)
                 ->setCode(TransportInOrder::TRANSPORT_NOT_SET_ERROR)
                 ->addViolation();
+
             return;
         }
+
         if ($this->transportFacade->isTransportVisibleAndEnabledOnCurrentDomain($transportInCart) === false) {
             $this->context->buildViolation($constraint->transportUnavailableMessage)
                 ->setCode(TransportInOrder::TRANSPORT_UNAVAILABLE_ERROR)
                 ->addViolation();
+
             return;
         }
         $this->checkRequiredPickupPlaceIdentifier($transportInCart, $cart->getPickupPlaceIdentifier(), $constraint);

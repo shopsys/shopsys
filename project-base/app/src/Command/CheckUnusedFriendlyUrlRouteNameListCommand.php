@@ -44,8 +44,10 @@ class CheckUnusedFriendlyUrlRouteNameListCommand extends Command
         $io->comment('Checks friendly URLs route name mapping to entity...');
 
         $undefinedRouteNamesInMapping = $this->friendlyUrlFacade->getUndefinedRouteNamesInMapping();
+
         if (count($undefinedRouteNamesInMapping) === 0) {
             $io->success('Friendly URLs mapping is OK.');
+
             return Command::SUCCESS;
         }
 

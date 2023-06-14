@@ -33,7 +33,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
  * @method \App\Model\Product\Parameter\ParameterValue getParameterValueByUuid(string $uuid)
  * @method \App\Model\Product\Parameter\Parameter[] getParametersByUuids(string[] $uuids)
  * @method \App\Model\Product\Parameter\ParameterValue[] getParameterValuesByUuids(string[] $uuids)
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $entityManager, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactoryInterface $parameterValueFactory, \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $entityManager, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactory $parameterValueFactory, \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory)
  */
 class ParameterRepository extends BaseParameterRepository
 {
@@ -108,6 +108,7 @@ class ParameterRepository extends BaseParameterRepository
 
         if ($parameterValue === null) {
             $message = 'ParameterValue with ID ' . $parameterValueId . ' not found.';
+
             throw new ParameterValueNotFoundException($message);
         }
 
@@ -376,10 +377,12 @@ class ParameterRepository extends BaseParameterRepository
         array $productIdsAndParameterNamesAndValues,
     ) {
         $productParameterValuesIndexedByProductIdAndParameterName = [];
+
         foreach ($productIdsAndParameterNamesAndValues as $productIdAndParameterNameAndValue) {
             $parameterName = $productIdAndParameterNameAndValue['name'];
             $productId = $productIdAndParameterNameAndValue['productId'];
             $parameterValue = $productIdAndParameterNameAndValue['text'];
+
             if ($productParameterValuesIndexedByProductIdAndParameterName[$productId][$parameterName] ?? false) {
                 $productParameterValuesIndexedByProductIdAndParameterName[$productId][$parameterName] .= '/' . $parameterValue;
             } else {

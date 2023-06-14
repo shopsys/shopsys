@@ -37,6 +37,7 @@ class NotificationBarRepository
 
         if ($notificationBar === null) {
             $message = 'Notification bar with ID ' . $notificationBarId . ' not found.';
+
             throw new NotificationBarNotFoundException($message);
         }
 

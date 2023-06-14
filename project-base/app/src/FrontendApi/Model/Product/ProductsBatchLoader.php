@@ -43,6 +43,7 @@ class ProductsBatchLoader
     {
         $products = $this->productElasticsearchProvider->getBatchedVisibleByProductIds($productsIds)[ProductElasticsearchRepository::PRODUCTS_KEY];
         $sortedProducts = [];
+
         foreach ($products as $index => $result) {
             $sortedProducts[] = $this->sortByOriginalArray($result, $productsIds[$index]);
         }
@@ -58,8 +59,10 @@ class ProductsBatchLoader
     private function sortByOriginalArray(array $arrayForSorting, array $originalArray): array
     {
         $sortedItems = [];
+
         foreach ($arrayForSorting as $item) {
             $originalIndex = array_search($item['id'], $originalArray, true);
+
             if ($originalIndex !== false) {
                 $sortedItems[$originalIndex] = $item;
             }
@@ -88,6 +91,7 @@ class ProductsBatchLoader
         self::$totalsIndexedByBatchLoadDataId = $batchedByEntities[ProductElasticsearchRepository::TOTALS_KEY];
 
         $result = [];
+
         foreach ($productBatchLoadByEntitiesData as $productBatchLoadByEntityData) {
             $result[] = $batchedByEntities[ProductElasticsearchRepository::PRODUCTS_KEY][$productBatchLoadByEntityData->getId()];
         }

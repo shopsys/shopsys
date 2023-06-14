@@ -166,6 +166,7 @@ class BlogArticleFormType extends AbstractType
         ]);
 
         $categoriesOptionsByDomainId = [];
+
         foreach ($this->domain->getAllIds() as $domainId) {
             $categoriesOptionsByDomainId[$domainId] = [
                 'domain_id' => $domainId,
@@ -254,6 +255,7 @@ class BlogArticleFormType extends AbstractType
                 ],
                 'label' => t('Perex'),
             ]);
+
         return $builderDescriptionGroup;
     }
 

@@ -58,6 +58,7 @@ class UnusedFriendlyUrlController extends AdminBaseController
         $this->friendlyUrlFacade->removeFriendlyUrl($domainId, $slug);
 
         $this->addSuccessFlash(sprintf('Friendlu URL "%s" was removed.', $slug));
+
         return $this->redirectToRoute('admin_unused_friendly_url_list');
     }
 }

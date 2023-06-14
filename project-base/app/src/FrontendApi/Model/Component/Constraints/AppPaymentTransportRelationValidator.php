@@ -53,6 +53,7 @@ class AppPaymentTransportRelationValidator extends PaymentTransportRelationValid
         $cart = $this->cartFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
         $transportInCart = $cart->getTransport();
         $paymentInCart = $cart->getPayment();
+
         if ($transportInCart === null || $paymentInCart === null) {
             return;
         }

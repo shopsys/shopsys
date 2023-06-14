@@ -13,6 +13,7 @@ class ParameterValuesViewFactory
     public function getDimensionParametersFromArray(array $parameterArray): array
     {
         $result = [];
+
         foreach ($parameterArray as $parameter) {
             if ($parameter['parameter_is_dimensional'] === true) {
                 $result[] = $this->createParameterValueViewData($parameter);
@@ -29,6 +30,7 @@ class ParameterValuesViewFactory
     public function getNonDimensionParametersFromArray(array $parameterArray): array
     {
         $result = [];
+
         foreach ($parameterArray as $parameter) {
             if ($parameter['parameter_is_dimensional'] === false) {
                 $result[] = $this->createParameterValueViewData($parameter);
@@ -51,6 +53,7 @@ class ParameterValuesViewFactory
             null,
         );
         $viewData->addParameterValueText($parameter['parameter_value_text']);
+
         return $viewData;
     }
 }

@@ -98,11 +98,14 @@ class GoPayFacade implements PaymentServiceInterface
     {
         $domainConfig = $this->domain->getDomainConfigById($paymentTransactionData->order->getDomainId());
         $goPayStatusResponse = $this->getGoPayClientByDomainConfig($domainConfig)->getStatus($paymentTransactionData->externalPaymentIdentifier);
+
         if (array_key_exists('state', (array)$goPayStatusResponse->json)) {
             $paymentTransactionData->externalPaymentStatus = (string)$goPayStatusResponse->json['state'];
+
             if ($paymentTransactionData->externalPaymentStatus === PaymentStatus::REFUNDED) {
                 $paymentTransactionData->refundedAmount = $paymentTransactionData->paidAmount;
             }
+
             return true;
         }
 
@@ -118,8 +121,10 @@ class GoPayFacade implements PaymentServiceInterface
     {
         $domainConfig = $this->domain->getDomainConfigById($paymentTransactionData->order->getDomainId());
         $refundResponse = $this->getGoPayClientByDomainConfig($domainConfig)->refundTransaction($paymentTransactionData->externalPaymentIdentifier, $this->goPayOrderMapper->formatPriceForGoPay($refundAmount));
+
         if (array_key_exists('result', (array)$refundResponse->json) && $refundResponse->json['result'] !== self::GOPAY_RESULT_FAILED) {
             $paymentTransactionData->refundedAmount = $paymentTransactionData->refundedAmount->add($refundAmount);
+
             return true;
         }
 

@@ -29,7 +29,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoValidator $productTransferAkeneoValidator
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoMapper $productTransferAkeneoMapper
      * @param \App\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
+     * @param \App\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \App\Component\Setting\Setting $setting
      * @param \App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFacade $akeneoImportProductParameterFacade
      * @param \App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductGroupParameterFacade $akeneoImportProductGroupParameterFacade
@@ -77,6 +77,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         $akeneoProductsData = $this->getData();
 
         $isAllParametersImported = true;
+
         foreach ($akeneoProductsData as $akeneoProductData) {
             if ($isAllParametersImported === true) {
                 $isAllParametersImported = $this->transferredProductProcessor->checkIsAllParametersExistFromAkeneoData($akeneoProductData);

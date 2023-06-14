@@ -99,13 +99,13 @@ class OrderFacade extends BaseOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      * @param \App\Model\Cart\CartFacade $cartFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade $orderProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFactoryInterface $orderFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFactory $orderFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\FrontOrderDataMapper $frontOrderDataMapper
@@ -200,6 +200,7 @@ class OrderFacade extends BaseOrderFacade
     protected function setOrderDataAdministrator(OrderData $orderData)
     {
         $currentAdministratorLoggedAsCustomer = $this->loginAsUserFacade->getCurrentAdministratorLoggedAsCustomer();
+
         if ($currentAdministratorLoggedAsCustomer === null) {
             return;
         }
@@ -220,6 +221,7 @@ class OrderFacade extends BaseOrderFacade
         ?BaseCustomerUser $customerUser = null,
     ): Order {
         $promoCode = $orderPreview->getPromoCode();
+
         if ($promoCode) {
             $promoCode->decreaseRemainingUses();
         }
@@ -449,12 +451,15 @@ class OrderFacade extends BaseOrderFacade
         if ($frontOrderFormData->payment !== null) {
             $isPaymentValid = false;
             $paymentId = $frontOrderFormData->payment->getId();
+
             foreach ($payments as $payment) {
                 if ($payment->getId() === $paymentId) {
                     $isPaymentValid = true;
+
                     break;
                 }
             }
+
             if ($isPaymentValid === false) {
                 $frontOrderFormData->payment = null;
             }
@@ -463,12 +468,15 @@ class OrderFacade extends BaseOrderFacade
         if ($frontOrderFormData->transport !== null) {
             $transportId = $frontOrderFormData->transport->getId();
             $isTransportValid = false;
+
             foreach ($transports as $transport) {
                 if ($transport->getId() === $transportId) {
                     $isTransportValid = true;
+
                     break;
                 }
             }
+
             if ($isTransportValid === false) {
                 $frontOrderFormData->transport = null;
             }
@@ -525,6 +533,7 @@ class OrderFacade extends BaseOrderFacade
 
         $transportName = $transport->getName($locale);
         $pickupStore = $orderPreview->getPersonalPickupStore();
+
         if ($pickupStore !== null) {
             $transportName = sprintf('%s %s', $transportName, $pickupStore->getName());
             $orderItemData->personalPickupStore = $pickupStore;
@@ -553,6 +562,7 @@ class OrderFacade extends BaseOrderFacade
     protected function fillOrderRounding(BaseOrder $order, BaseOrderPreview $orderPreview, string $locale): void
     {
         $roundingPrice = $orderPreview->getRoundingPrice();
+
         if ($roundingPrice === null) {
             return;
         }

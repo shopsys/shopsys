@@ -106,6 +106,7 @@ class CartFacade
 
         if ($customerUser !== null) {
             $customerUserIdentifier = $this->customerUserIdentifierFactory->getByCustomerUser($customerUser);
+
             return $this->cartFacade->findCartByCustomerUserIdentifier($customerUserIdentifier);
         }
 
@@ -119,6 +120,7 @@ class CartFacade
     private function getCartByUuid(string $cartUuid): Cart
     {
         $cart = $this->cartFacade->findCartByCartIdentifier($cartUuid);
+
         if ($cart === null) {
             $cart = $this->cartFacade->createCart($cartUuid);
         }

@@ -149,6 +149,7 @@ class BlogCategoryFacade
     public function getAllBlogCategoriesWithPreloadedChildren(string $locale): array
     {
         $blogCategories = $this->blogCategoryRepository->getPreOrderTreeTraversalForAllBlogCategories($locale);
+
         return $this->blogCategoryWithPreloadedChildrenFactory->createBlogCategoriesWithPreloadedChildren($blogCategories);
     }
 
@@ -213,6 +214,7 @@ class BlogCategoryFacade
 
         if (!$blogCategory->isVisible($domainId)) {
             $message = 'Blog category ID ' . $blogCategoryId . ' is not visible on domain ID ' . $domainId;
+
             throw new BlogCategoryNotFoundException($message);
         }
 

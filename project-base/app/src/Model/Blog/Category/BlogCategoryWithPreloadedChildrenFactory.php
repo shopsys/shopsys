@@ -16,6 +16,7 @@ class BlogCategoryWithPreloadedChildrenFactory
         $blogCategoriesByParentId = $this->getBlogCategoriesIndexedByParentId($blogCategories);
 
         $blogCategoriesWithPreloadedChildren = [];
+
         foreach ($firstLevelBlogCategories as $firstLevelBlogCategory) {
             $blogCategoriesWithPreloadedChildren[] = new BlogCategoryWithPreloadedChildren(
                 $firstLevelBlogCategory,

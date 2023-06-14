@@ -8,6 +8,9 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter as BaseParameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData as BaseParameterData;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactory as BaseParameterDataFactory;
 
+/**
+ * @method \App\Model\Product\Parameter\ParameterData createInstance()
+ */
 class ParameterDataFactory extends BaseParameterDataFactory
 {
     /**
@@ -52,6 +55,7 @@ class ParameterDataFactory extends BaseParameterDataFactory
     {
         /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation[] $translations */
         $translations = $parameter->getTranslations();
+
         foreach ($translations as $translate) {
             $parameterData->name[$translate->getLocale()] = $translate->getName();
         }

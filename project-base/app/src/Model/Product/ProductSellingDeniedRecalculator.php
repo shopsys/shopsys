@@ -45,6 +45,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
         $qb = $this->em->createQueryBuilder()
             ->update(Product::class, 'p')
             ->set('p.calculatedSellingDenied', 'p.sellingDenied');
+
         if (count($products) > 0) {
             $qb->andWhere('p IN (:products)')->setParameter('products', $products);
         }
@@ -100,6 +101,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
             ' . (count($products) > 0 ? ' AND p.id IN (:productIds)' : '');
 
         $productIds = [];
+
         foreach ($products as $product) {
             $productIds[] = $product->getId();
         }
@@ -140,6 +142,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
             ' . (count($products) > 0 ? ' AND p.id IN (:productIds)' : '');
 
         $productIds = [];
+
         foreach ($products as $product) {
             $productIds[] = $product->getId();
         }
@@ -178,6 +181,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
             ' . (count($products) > 0 ? ' AND m.id IN (:productIds)' : '');
 
         $productIds = [];
+
         foreach ($products as $product) {
             $productIds[] = $product->getId();
         }
@@ -213,6 +217,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
             ' . (count($products) > 0 ? ' AND m.id IN (:productIds)' : '');
 
         $productIds = [];
+
         foreach ($products as $product) {
             $productIds[] = $product->getId();
         }
@@ -262,6 +267,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
             ' . (count($products) > 0 ? ' AND p.id IN (:productIds)' : '');
 
         $productIds = [];
+
         foreach ($products as $product) {
             $productIds[] = $product->getId();
         }
@@ -298,6 +304,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
             ' . (count($products) > 0 ? ' AND p.id IN (:productIds)' : '');
 
         $productIds = [];
+
         foreach ($products as $product) {
             $productIds[] = $product->getId();
         }
