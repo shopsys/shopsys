@@ -1,6 +1,7 @@
-if [ -d "$BRANCH_NAME" ]; then
-    cd "$BRANCH_NAME"
-    docker compose down --rmi all -v --remove-orphans
+if [ ! -z "$BRANCH_NAME" ]; then
+    cd "../$BRANCH_NAME"
+    docker compose down -v --remove-orphans
+    docker system prune -a -f
     cd ..
     rm -rf "$BRANCH_NAME"
 fi
