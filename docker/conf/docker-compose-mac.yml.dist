@@ -176,5 +176,6 @@ x-mutagen:
             mode: "two-way-resolved"
             configurationBeta:
                 permissions:
-                    defaultOwner: "id:501"
+                    defaultOwner: "id:1000"
+                    defaultOwner: "id:1000"
                     defaultDirectoryMode: 0777
