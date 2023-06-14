@@ -21,12 +21,6 @@ done
 
 filtered_branches=($(echo "${filtered_branches[@]}" | tr ' ' '\n' | grep -v "master"))
 
-for branch in "${filtered_branches[@]}"; do
-    if [ -d "$branch" ]; then
-        cd "$branch"
-        docker compose down -v --remove-orphans
-        docker system prune -a
-        cd ..
-        rm -rf "$branch"
-    fi
+for BRANCH_NAME in "${filtered_branches[@]}"; do
+    /bin/bash ./cancel-review.sh
 done
