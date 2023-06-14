@@ -1,0 +1,16 @@
+on:
+    schedule:
+        -   cron: '0 2 * * *'
+name: Cancel reviews older than seven days
+jobs:
+    cancel-old-reviews:
+        name: Cancel reviews older than seven days
+        runs-on: [ self-hosted, linux, review-stage ]
+        steps:
+            -   name: GIT checkout branch - master
+                uses: actions/checkout@v3
+                with:
+                    ref: 'refs/heads/master'
+            -   name: Cancel reviews older than seven days
+                run: |
+                    ./.github/cancel-old-reviews.sh
