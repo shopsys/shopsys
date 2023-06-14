@@ -16,7 +16,7 @@ use Shopsys\FrameworkBundle\Model\Cart\CartFactory;
 use Shopsys\FrameworkBundle\Model\Cart\CartRepository;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
-use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
@@ -52,7 +52,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private CartItemFactoryInterface $cartItemFactoryInterface;
+    private CartItemFactory $cartItemFactory;
 
     /**
      * @inject
@@ -203,7 +203,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
             $this->currentCustomerUser,
             $this->currentPromoCodeFacade,
             $this->productPriceCalculationForCustomerUser,
-            $this->cartItemFactoryInterface,
+            $this->cartItemFactory,
             $this->cartRepository,
             $this->cartWatcherFacade,
             $this->productAvailabilityFacade,

@@ -16,7 +16,7 @@ use DateTime;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\CartFactory;
 use Shopsys\FrameworkBundle\Model\Cart\CartRepository;
-use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
@@ -53,7 +53,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private CartItemFactoryInterface $cartItemFactoryInterface;
+    private CartItemFactory $cartItemFactory;
 
     /**
      * @inject
@@ -183,7 +183,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
             $this->currentCustomerUser,
             $this->currentPromoCodeFacade,
             $this->productPriceCalculationForCustomerUser,
-            $this->cartItemFactoryInterface,
+            $this->cartItemFactory,
             $this->cartRepository,
             $this->cartWatcherFacade,
             $this->productAvailabilityFacade,
