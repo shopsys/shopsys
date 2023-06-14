@@ -169,8 +169,8 @@ jobs:
                     name: docker-compose
             -   name: Build application
                 run: |
-                    docker-compose pull --parallel postgres elasticsearch redis php-fpm storefront
-                    docker-compose up -d postgres elasticsearch redis php-fpm storefront
+                    docker-compose pull --parallel postgres webserver elasticsearch redis php-fpm storefront
+                    docker-compose up -d postgres webserver elasticsearch redis php-fpm storefront
                     docker-compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change test-dirs-create db-create test-db-create db-demo elasticsearch-index-recreate elasticsearch-export error-pages-generate
             -   name: Run tests
                 run: docker-compose exec -T php-fpm php phing -D production.confirm.action=y tests
