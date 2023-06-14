@@ -22,11 +22,9 @@ jobs:
                     stale-issue-message: >
                         This issue has been automatically marked as stale because there was no activity within the last 4 months (and it is quite a long time).
                         It will be closed if no further activity occurs.
-                        Thank you for your contributions.
                     stale-pr-message: >
                         This pull request has been automatically marked as stale because there was no activity within the last 4 months (and it is quite a long time).
                         It will be closed if no further activity occurs.
-                        Thank you for your contributions.
                     exempt-all-milestones: true
                     exempt-issue-labels: 'Security,Status: in implementation,Priority,In Backlog'
                     exempt-pr-labels: 'Security,Status: in implementation,Priority,In Backlog'
