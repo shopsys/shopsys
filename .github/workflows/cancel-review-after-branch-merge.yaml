@@ -17,7 +17,5 @@ jobs:
                 run: echo "BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
             -   name: Cancel review
                 working-directory: cancel-review-after-branch-merge
-                env:
-                    BRANCH_NAME: ${BRANCH_NAME}
                 run: |
                     ./.github/cancel-review.sh
