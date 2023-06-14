@@ -72,7 +72,7 @@ jobs:
             -   name: Update docker-compose.review.yml file with right PHP-FPM image
                 run: "sed -i \"s#php-fpm-image#ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}-${{ github.sha }}#\" ./docker-compose.review.yml"
             -   name: Update docker-compose.review.yml file with right Storefront image
-                run: "sed -i \"s#storefront-image#${{ secrets.DOCKER_USERNAME }}/storefront:${DOCKER_STOREFRONT_IMAGE_TAG}#\" ./docker-compose.yml"
+                run: "sed -i \"s#storefront-image#$ghcr.io/${DOCKER_USERNAME}/storefront:${DOCKER_STOREFRONT_IMAGE_TAG}#\" ./docker-compose.yml"
             -   name: Update docker-compose.yml file with right Elasticsearch image
                 run: "sed -i \"s#elasticsearch-image#ghcr.io/${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG}#\" ./docker-compose.review.yml"
             -   name: Set TRAEFIK_HOSTS ENV variables
