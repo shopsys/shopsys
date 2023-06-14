@@ -46,7 +46,7 @@ class CartFacade extends BaseCartFacade
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory $cartItemFactory
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface $cartItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartRepository $cartRepository
      * @param \App\Model\Cart\Watcher\CartWatcherFacade $cartWatcherFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
@@ -63,7 +63,7 @@ class CartFacade extends BaseCartFacade
         CartItemFactoryInterface $cartItemFactory,
         CartRepository $cartRepository,
         CartWatcherFacade $cartWatcherFacade,
-        private ProductAvailabilityFacade $productAvailabilityFacade,
+        private readonly ProductAvailabilityFacade $productAvailabilityFacade,
     ) {
         parent::__construct(
             $em,
