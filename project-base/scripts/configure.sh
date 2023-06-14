@@ -47,6 +47,8 @@ case "$operatingSystem" in
 
         sed -i -r "s#www_data_uid: [0-9]+#www_data_uid: $(id -u)#" ./docker-compose.yml
         sed -i -r "s#www_data_gid: [0-9]+#www_data_gid: $(id -g)#" ./docker-compose.yml
+        sed -i -r "s#node_uid: [0-9]+#node_uid: $(id -u)#" ./docker-compose.yml
+        sed -i -r "s#node_gid: [0-9]+#node_gid: $(id -g)#" ./docker-compose.yml
 
         echo "Starting docker-compose"
         docker-compose up -d --build --force-recreate
