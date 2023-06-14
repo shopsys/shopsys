@@ -102,6 +102,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $paymentData = $this->paymentDataFactory->create();
         $paymentData->type = Payment::TYPE_GOPAY;
+
         foreach ($this->domain->getAllLocales() as $locale) {
             $paymentData->name[$locale] = t('GoPay - Payment By Card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $paymentData->description[$locale] = '';
@@ -119,6 +120,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $paymentData = $this->paymentDataFactory->create();
         $paymentData->type = self::PAYMENT_GOPAY;
+
         foreach ($this->domain->getAllLocales() as $locale) {
             $paymentData->name[$locale] = t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $paymentData->description[$locale] = t('Quick and Safe payment via bank account transfer.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);

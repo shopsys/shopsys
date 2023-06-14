@@ -63,7 +63,7 @@ class CategoryFacade extends BaseCategoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface $categoryFactory
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFactory $categoryFactory
      * @param \App\Model\Category\CategoryParameterFacade $categoryParameterFacade
      * @param \App\Model\Category\LinkedCategory\LinkedCategoryFacade $linkedCategoryFacade
      * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade
@@ -203,6 +203,7 @@ class CategoryFacade extends BaseCategoryFacade
         $categoriesInPath = $this->getCategoriesInPath($destinationCategory);
 
         $categoriesNamesInPath = [];
+
         foreach ($categoriesInPath as $category) {
             $categoriesNamesInPath[] = $category->getName($locale);
         }
@@ -253,11 +254,13 @@ class CategoryFacade extends BaseCategoryFacade
         $categories = $this->categoryRepository->getCategoriesByIds($categoryIds);
 
         $categoriesIndexedByIds = [];
+
         foreach ($categories as $category) {
             $categoriesIndexedByIds[$category->getId()] = $category;
         }
 
         $sortedCategories = [];
+
         foreach ($categoryIds as $categoryId) {
             if (!array_key_exists($categoryId, $categoriesIndexedByIds)) {
                 continue;

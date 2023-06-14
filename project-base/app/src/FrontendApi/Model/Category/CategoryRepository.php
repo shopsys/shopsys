@@ -51,6 +51,7 @@ class CategoryRepository extends BaseCategoryRepository
         DomainConfig $domainConfig,
     ): array {
         $childrenByCategories = [];
+
         foreach ($categories as $category) {
             $childrenByCategories[$category->getId()] = [];
         }
@@ -76,6 +77,7 @@ class CategoryRepository extends BaseCategoryRepository
     public function getVisibleLinkedCategories(array $parentCategories, DomainConfig $domainConfig): array
     {
         $visibleLinkedCategories = [];
+
         foreach ($parentCategories as $parentCategory) {
             $visibleLinkedCategories[$parentCategory->getId()] = [];
         }
@@ -117,8 +119,10 @@ class CategoryRepository extends BaseCategoryRepository
         $result = $queryBuilder->getQuery()->execute();
 
         $allCategories = [];
+
         foreach ($categoriesIds as $key => $categoryIds) {
             $allCategories[$key] = [];
+
             foreach ($categoryIds as $categoryId) {
                 if (!array_key_exists($categoryId, $result)) {
                     continue;

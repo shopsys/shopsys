@@ -27,6 +27,7 @@ class CategoryViewFacade
         $categories = $this->categoryFacade->getByIds($categoryIds);
 
         $categoryViews = [];
+
         foreach ($categories as $category) {
             $categoryViews[] = $this->categoryViewFactory->createFromCategory($category);
         }

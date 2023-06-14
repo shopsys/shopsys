@@ -54,6 +54,7 @@ class FriendlyUrlMatcher extends BaseFriendlyUrlMatcher
         }
 
         $route = $routeCollection->get($friendlyUrl->getRouteName());
+
         if ($route === null) {
             throw new ResourceNotFoundException();
         }
@@ -91,6 +92,7 @@ class FriendlyUrlMatcher extends BaseFriendlyUrlMatcher
     ): array {
         $readyCategorySeoMixId = $friendlyUrl->getEntityId();
         $readyCategorySeoMix = $this->readyCategorySeoMixRepository->findById($readyCategorySeoMixId);
+
         if ($readyCategorySeoMix === null) {
             throw new ReadyCategorySeoMixNotFoundException(sprintf('ReadyCategorySeoMix with ID %s not found', $readyCategorySeoMixId));
         }

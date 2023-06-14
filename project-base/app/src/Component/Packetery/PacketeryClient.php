@@ -66,6 +66,7 @@ class PacketeryClient implements TransferIdentificationInterface
     public function createPacketXml(Order $order): string
     {
         $packetAttributes = new PacketAttributes($order);
+
         return $this->packeteryRenderer->getPacketXml($packetAttributes, $this->packeteryConfig);
     }
 
@@ -75,14 +76,18 @@ class PacketeryClient implements TransferIdentificationInterface
     public function sendPackets(array $orders): void
     {
         $logger = $this->getTransferLogger();
+
         if (count($orders) === 0) {
             $logger->info('No orders to send to Packetery.');
             $logger->persistAllLoggedTransferIssues();
+
             return;
         }
+
         if (!$this->packeteryConfig->isApiAllowed()) {
             $logger->error('Packetery API is not enabled or not set credentials.');
             $logger->persistAllLoggedTransferIssues();
+
             return;
         }
 
@@ -124,6 +129,7 @@ class PacketeryClient implements TransferIdentificationInterface
     private function saveTrackingNumberFromResponse(ResponseInterface $responseXml, Order $order)
     {
         $logger = $this->getTransferLogger();
+
         if ($responseXml->getStatusCode() !== 200 || $responseXml->getContent(false) === '') {
             $logger->error(
                 'Bad response from http client.',
@@ -132,9 +138,11 @@ class PacketeryClient implements TransferIdentificationInterface
                     'content' => $responseXml->getContent(false),
                 ],
             );
+
             return;
         }
         $parsedResponse = new SimpleXMLElement($responseXml->getContent(false));
+
         if ((string)$parsedResponse->status === 'fault') {
             $logger->error(
                 'Response from Packetery fault.',
@@ -144,6 +152,7 @@ class PacketeryClient implements TransferIdentificationInterface
                     'detail' => $parsedResponse->detail->asXML(),
                 ],
             );
+
             return;
         }
         $barcode = (string)$parsedResponse->result->barcode;

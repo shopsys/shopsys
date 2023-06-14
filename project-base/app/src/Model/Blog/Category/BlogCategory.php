@@ -139,6 +139,7 @@ class BlogCategory extends AbstractTranslatableEntity
     public function getNames(): array
     {
         $namesByLocale = [];
+
         foreach ($this->translations as $translation) {
             $namesByLocale[$translation->getLocale()] = $translation->getName();
         }
@@ -219,6 +220,7 @@ class BlogCategory extends AbstractTranslatableEntity
         foreach ($blogCategoryData->names as $locale => $name) {
             $this->translation($locale)->setName($name);
         }
+
         foreach ($blogCategoryData->descriptions as $locale => $name) {
             $this->translation($locale)->setDescription($name);
         }
@@ -284,6 +286,7 @@ class BlogCategory extends AbstractTranslatableEntity
     public function getDescriptions(): array
     {
         $descriptionsByLocale = [];
+
         foreach ($this->translations as $translation) {
             $descriptionsByLocale[$translation->getLocale()] = $translation->getDescription();
         }

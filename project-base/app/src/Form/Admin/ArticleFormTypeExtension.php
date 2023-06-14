@@ -109,6 +109,7 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
                     } elseif ($articleData->type === Article::TYPE_LINK) {
                         $validationGroups[] = static::VALIDATION_GROUP_TYPE_LINK;
                     }
+
                     return $validationGroups;
                 },
             ]);

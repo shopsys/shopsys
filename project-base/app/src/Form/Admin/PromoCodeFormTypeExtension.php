@@ -400,11 +400,13 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
         if ($promoCodeData->code === null) {
             return;
         }
+
         if ($this->promoCode !== null && $promoCodeData->code === $this->promoCode->getCode()) {
             return;
         }
 
         $promoCode = $this->promoCodeFacade->findPromoCodeByCodeAndDomain($promoCodeData->code, $this->getDomainId());
+
         if ($promoCode !== null) {
             $context->buildViolation('Promo code with this code already exists')->atPath('code')->addViolation();
         }

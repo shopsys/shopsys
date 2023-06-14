@@ -28,6 +28,7 @@ class BlogArticleVisibilityRepository
             $this->em->beginTransaction();
 
             $domains = $this->domain->getAll();
+
             foreach ($domains as $domainConfig) {
                 $this->refreshBlogArticlesVisibilityOnDomain($domainConfig);
             }
@@ -35,6 +36,7 @@ class BlogArticleVisibilityRepository
             $this->em->commit();
         } catch (Exception $ex) {
             $this->em->rollback();
+
             throw $ex;
         }
     }

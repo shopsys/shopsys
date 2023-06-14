@@ -87,6 +87,7 @@ class CreateOrderMutation extends BaseCreateOrderMutation
         $cart = $this->cartFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
 
         $cartWithModifications = $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
+
         if ($cartWithModifications->isCartModified()) {
             return $this->createOrderResultFactory->getCreateOrderResultByCartWithModifications(
                 $cartWithModifications,
@@ -139,9 +140,11 @@ class CreateOrderMutation extends BaseCreateOrderMutation
         if (array_key_exists('products', $input) && $input['products'] !== null) {
             throw new DeprecatedFieldUserError('Usage of "products" input is deprecated, we do not work with this field anymore, the products are taken from the server cart instead.');
         }
+
         if (array_key_exists('transport', $input) && $input['transport'] !== null) {
             throw new DeprecatedFieldUserError('Usage of "transport" input is deprecated, we do not work with this field anymore, the transport is taken from the server cart instead.');
         }
+
         if (array_key_exists('payment', $input) && $input['payment'] !== null) {
             throw new DeprecatedFieldUserError('Usage of "payment" input is deprecated, we do not work with this field anymore, the payment is taken from the server cart instead.');
         }

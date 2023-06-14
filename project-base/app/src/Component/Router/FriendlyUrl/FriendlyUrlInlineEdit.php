@@ -45,6 +45,7 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
     {
         $friendlyUrl = $this->friendlyUrlFacade->findByDomainIdAndSlug($this->adminDomainTabsFacade->getSelectedDomainId(), $rowId);
         $friendlyUrlData = $this->friendlyUrlDataFactory->createFromFriendlyUrl($friendlyUrl);
+
         return $this->formFactory->create(FriendlyUrlFormType::class, $friendlyUrlData);
     }
 

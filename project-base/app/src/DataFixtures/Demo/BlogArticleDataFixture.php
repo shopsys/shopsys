@@ -82,6 +82,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         $this->updateBlogCategoryUuid($mainPageBlogCategory->getId(), '5247c908-b258-43ee-b184-015ee77df608');
         $this->updateBlogCategoryUuid($mainPageBlogCategory->getParent()->getId(), '77f0ef08-871e-4099-855f-07650eaaf64d');
         $mainPageBlogCategoryData = $this->blogCategoryDataFactory->createFromBlogCategory($mainPageBlogCategory);
+
         foreach ($this->domain->getAll() as $domain) {
             $locale = $domain->getLocale();
             $domainId = $domain->getId();
@@ -99,6 +100,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {
             $blogArticleData = $this->createArticle([$mainPageBlogCategory]);
             $blogArticle = $this->blogArticleFacade->create($blogArticleData);
+
             if ($i === 0) {
                 $this->addReference(self::FIRST_DEMO_BLOG_ARTICLE, $blogArticle);
             }
@@ -111,6 +113,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         //in first subcategory
         for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {
             $blogArticleData = $this->createArticle([$mainPageBlogCategory, $firstSubcategory]);
+
             if ($i === self::PAGES_IN_CATEGORY - 1) {
                 $blogArticleData->visibleOnHomepage = false;
             }
@@ -123,6 +126,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         //in second subcategory
         for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {
             $blogArticleData = $this->createArticle([$mainPageBlogCategory, $secondSubcategory]);
+
             if ($i === self::PAGES_IN_CATEGORY - 1) {
                 $blogArticleData->visibleOnHomepage = false;
             }
@@ -150,6 +154,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
 
         foreach ($this->domain->getAll() as $domain) {
             $locale = $domain->getLocale();
+
             if ($subcategoryOrder === 1) {
                 $h1 = t('First subsection %locale% - h1', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
                 $title = t('title - First subsection %locale%', ['%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);

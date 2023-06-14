@@ -94,24 +94,31 @@ class MergadoFeedItemFactory
     private function extractProductFlags(product $product, int $domainId): array
     {
         $flags = MergadoFeedItem::FLAGS_MAP;
+
         if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_ACTION, $domainId) === false) {
             unset($flags[1]);
         }
+
         if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_HIT, $domainId) === false) {
             unset($flags[2]);
         }
+
         if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_NEW, $domainId) === false) {
             unset($flags[3]);
         }
+
         if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SALE, $domainId) === false) {
             unset($flags[4]);
         }
+
         if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_MADE_IN_CZ, $domainId) === false) {
             unset($flags[5]);
         }
+
         if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_MADE_IN_DE, $domainId) === false) {
             unset($flags[6]);
         }
+
         if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_MADE_IN_SK, $domainId) === false) {
             unset($flags[7]);
         }
@@ -145,6 +152,7 @@ class MergadoFeedItemFactory
         $imageUrls = [];
         $images = $this->imageFacade->getImagesByEntityIndexedById($product, null);
         array_shift($images);
+
         foreach ($images as $image) {
             try {
                 $imageUrls[] = $this->imageFacade->getImageUrl($domainConfig, $image, 'original');

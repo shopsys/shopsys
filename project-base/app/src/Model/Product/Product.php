@@ -180,6 +180,7 @@ class Product extends BaseProduct
         foreach ($productData->namePrefix as $locale => $namePrefix) {
             $this->translation($locale)->setNamePrefix($namePrefix);
         }
+
         foreach ($productData->nameSufix as $locale => $nameSufix) {
             $this->translation($locale)->setNameSufix($nameSufix);
         }
@@ -221,6 +222,7 @@ class Product extends BaseProduct
     {
         foreach ($this->domains as $productDomain) {
             $domainId = $productDomain->getDomainId();
+
             if ($this->getAssemblyInstructionCode($domainId) !== $productFilesData->assemblyInstructionCode[$domainId]) {
                 $productDomain->setAssemblyInstructionCode($productFilesData->assemblyInstructionCode[$domainId]);
                 $this->setDownloadAssemblyInstructionFiles(true);
@@ -241,6 +243,7 @@ class Product extends BaseProduct
     protected function createDomains(BaseProductData $productData): void
     {
         $domainIds = array_keys($productData->seoTitles);
+
         foreach ($domainIds as $domainId) {
             $productDomain = new ProductDomain($this, $domainId);
             $this->domains->add($productDomain);
@@ -260,9 +263,11 @@ class Product extends BaseProduct
                 $variant->getId(),
             );
         }
+
         if ($variant->isMainVariant()) {
             throw new MainVariantCannotBeVariantException($variant->getId());
         }
+
         if ($variant->isVariant()) {
             throw new ProductIsAlreadyVariantException($variant->getId());
         }
@@ -367,6 +372,7 @@ class Product extends BaseProduct
     public function getFlagsIdsForDomain(int $domainId): array
     {
         $flagIds = [];
+
         foreach ($this->getFlagsForDomain($domainId) as $flag) {
             $flagIds[] = $flag->getId();
         }
@@ -526,6 +532,7 @@ class Product extends BaseProduct
     public function hasPreorder(): bool
     {
         $result = $this->preorder;
+
         if ($this->isMainVariant()) {
             foreach ($this->getVariants() as $variant) {
                 $result = $result || $variant->hasPreorder();
@@ -646,11 +653,13 @@ class Product extends BaseProduct
                 $this->productCategoryDomains->removeElement($productCategoryDomain);
             }
         }
+
         foreach ($productCategoryDomains as $productCategoryDomain) {
             if ($this->isProductCategoryDomainInArray($productCategoryDomain, $this->productCategoryDomains->getValues()) === false) {
                 $this->productCategoryDomains->add($productCategoryDomain);
             }
         }
+
         if (!$this->isMainVariant()) {
             return;
         }
@@ -715,6 +724,7 @@ class Product extends BaseProduct
     protected function editRelatedProducts(array $relatedProducts)
     {
         $this->relatedProducts->clear();
+
         foreach ($relatedProducts as $relatedProduct) {
             $this->relatedProducts->add($relatedProduct);
         }

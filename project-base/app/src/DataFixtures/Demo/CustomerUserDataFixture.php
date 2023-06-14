@@ -51,7 +51,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     private const KEY_ADDRESS_UUID = 'uuid';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Faker\Generator $faker
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator

@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory as BaseArticleDataF
 
 /**
  * @method fillNew(\App\Model\Article\ArticleData $articleData)
+ * @method __construct(\App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade)
  */
 class ArticleDataFactory extends BaseArticleDataFactory
 {

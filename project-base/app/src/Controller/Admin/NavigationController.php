@@ -77,6 +77,7 @@ class NavigationController extends AdminBaseController
                         'url' => $this->generateUrl('admin_navigation_edit', ['id' => $navigationItem->getId()]),
                     ],
                 );
+
             return $this->redirectToRoute('admin_navigation_list');
         }
 
@@ -118,6 +119,7 @@ class NavigationController extends AdminBaseController
                         'url' => $this->generateUrl('admin_navigation_edit', ['id' => $navigationItem->getId()]),
                     ],
                 );
+
             return $this->redirectToRoute('admin_navigation_list');
         }
 

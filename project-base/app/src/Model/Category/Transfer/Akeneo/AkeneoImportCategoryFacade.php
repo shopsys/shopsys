@@ -39,7 +39,7 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
      * @param \App\Model\Category\Transfer\Akeneo\CategoryTransferAkeneoMapper $categoryTransferAkeneoMapper
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository $categoryVisibilityRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
+     * @param \App\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \App\Model\Category\CategoryDataFactory $categoryDataFactory
      */
     public function __construct(
@@ -124,6 +124,7 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
                 $parentCategoryId = null;
             } else {
                 $parentCategory = $this->categoryFacade->findByAkeneoCode($akeneoCategoryData['parent']);
+
                 if ($parentCategory === null) {
                     $this->logger->warning(sprintf('Parent category with akeneo code %s not found in eshop', $akeneoCategoryData['parent']));
                     $this->logger->warning(sprintf('Hiding category with akeneo code %s', $akeneoCategoryData['code']));
@@ -135,6 +136,7 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
                     }, $categoryData->enabled);
 
                     $this->categoryFacade->edit($category->getId(), $categoryData);
+
                     continue;
                 }
 
@@ -173,8 +175,10 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
         if ($this->categoriesFromAkeneoCountBeforeTransfer === 0 && count($this->notTransferredCategoriesIds) === 0) {
             return;
         }
+
         if ($this->categoriesFromAkeneoCountBeforeTransfer === count($this->notTransferredCategoriesIds)) {
             $this->logger->error(sprintf('Import categories from Akeneo probably failed, because all categories with akeneo code should be deleted. Deletion was aborted.'));
+
             return;
         }
 

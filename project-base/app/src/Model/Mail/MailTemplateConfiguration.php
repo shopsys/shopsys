@@ -77,6 +77,7 @@ class MailTemplateConfiguration extends BaseMailTemplateConfiguration
 
         /** @var \App\Model\Order\Status\OrderStatus[] $allOrderStatuses */
         $allOrderStatuses = $this->orderStatusFacade->getAll();
+
         foreach ($allOrderStatuses as $orderStatus) {
             $this->addMailTemplateVariables(
                 OrderMail::getMailTemplateNameByStatus($orderStatus),

@@ -229,6 +229,7 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
         GoPayPaymentMethodData $goPayPaymentMethodData,
     ) {
         $goPayPaymentMethod = $this->goPayPaymentMethodFacade->create($goPayPaymentMethodData);
+
         if ($referenceName !== null) {
             $this->addReference($referenceName, $goPayPaymentMethod);
         }

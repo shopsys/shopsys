@@ -58,6 +58,7 @@ class RouteConfigCustomization
             })
             ->customize(function (RouteConfig $config, RouteInfo $info) {
                 $adminUrl = $this->container->getParameter('admin_url');
+
                 if (preg_match('~^(/' . $adminUrl . ')?/_~', $info->getRoutePath())) {
                     $config->skipRoute('Internal routes (prefixed with "/_") are not tested.');
                 }

@@ -28,6 +28,7 @@ class RegistrationDataFactory implements RegistrationDataFactoryInterface
     {
         $registrationData = $this->create();
         $registrationData->domainId = $domainId;
+
         return $registrationData;
     }
 

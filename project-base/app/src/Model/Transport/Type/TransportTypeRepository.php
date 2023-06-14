@@ -37,6 +37,7 @@ class TransportTypeRepository
 
         if ($transportType === null) {
             $message = sprintf('Transport type with ID "%d" not found.', $id);
+
             throw new TransportTypeNotFoundException($message);
         }
 
@@ -53,6 +54,7 @@ class TransportTypeRepository
 
         if ($transportType === null) {
             $message = sprintf('Transport type with code "%s" not found.', $code);
+
             throw new TransportTypeNotFoundException($message);
         }
 

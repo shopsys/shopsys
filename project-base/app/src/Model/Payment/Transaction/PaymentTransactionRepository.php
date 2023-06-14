@@ -32,6 +32,7 @@ class PaymentTransactionRepository
     public function getById(int $id): PaymentTransaction
     {
         $paymentTransaction = $this->getRepository()->find($id);
+
         if ($paymentTransaction === null) {
             throw new PaymentTransactionNotFoundException(sprintf('Payment transaction id %d not found.', $id));
         }

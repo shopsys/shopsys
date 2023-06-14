@@ -65,6 +65,7 @@ class TransferIssueFacade
     public function deleteById(int $id): void
     {
         $transferIssue = $this->transferIssueRepository->findById($id);
+
         if ($transferIssue === null) {
             throw new NotFoundHttpException('Transfer issue ' . $id . ' not found');
         }

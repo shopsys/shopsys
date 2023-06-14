@@ -38,6 +38,7 @@ class ProductElasticsearchConverter extends BaseProductElasticsearchConverter
     protected function fillEmptyParameters(array $parameters): array
     {
         $results = [];
+
         foreach ($parameters as $parameter) {
             $filledParameter = [];
             $filledParameter['parameter_id'] = $parameter['parameter_id'] ?? '';

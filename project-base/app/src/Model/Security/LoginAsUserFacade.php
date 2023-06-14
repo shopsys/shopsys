@@ -80,16 +80,19 @@ class LoginAsUserFacade extends BaseLoginAsUserFacade
     public function getCurrentAdministratorLoggedAsCustomer(): ?Administrator
     {
         $request = $this->requestStack->getCurrentRequest();
+
         if ($request === null) {
             return null;
         }
         $tokenString = $this->tokenAuthenticator->getCredentials($request);
+
         if ($tokenString === null) {
             return null;
         }
         $unencryptedToken = $this->tokenFacade->getTokenByString($tokenString);
         $claims = $unencryptedToken->claims();
         $administratorUuid = $claims->get(FrontendApiUser::CLAIM_ADMINISTRATOR_UUID);
+
         if ($administratorUuid === null) {
             return null;
         }

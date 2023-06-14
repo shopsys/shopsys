@@ -20,10 +20,15 @@ class GedmoExtensionTest extends PHPStanTestCase
     public function getProperties(): iterable
     {
         yield ['parent', true];
+
         yield ['level', true];
+
         yield ['lft', true];
+
         yield ['rgt', true];
+
         yield ['name', false];
+
         yield ['children', false];
     }
 

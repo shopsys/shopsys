@@ -14,7 +14,7 @@ class ExistingEmailValidator extends ConstraintValidator
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      */
     public function __construct(private Domain $domain, private CustomerUserFacade $customerUserFacade)
     {
@@ -30,6 +30,7 @@ class ExistingEmailValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, ExistingEmail::class);
         }
         $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($value, $this->domain->getId());
+
         if ($customerUser === null) {
             $this->context->buildViolation($constraint->invalidMessage)
                 ->setCode($constraint::USER_WITH_EMAIL_DOES_NOT_EXIST_ERROR)

@@ -36,9 +36,11 @@ class OrderQuery extends BaseOrderQuery
             if ($orderNumber !== null && $customerUser !== null) {
                 return $this->frontendApiOrderFacade->getByOrderNumberAndCustomerUser($orderNumber, $customerUser);
             }
+
             if ($uuid !== null && $customerUser !== null) {
                 return $this->getOrderForCustomerUserByUuid($customerUser, $uuid);
             }
+
             if ($urlHash !== null) {
                 return $this->orderFacade->getByUrlHashAndDomain($urlHash, $this->domain->getId());
             }

@@ -140,6 +140,7 @@ class GetStoreTest extends GraphQlTestCase
     {
         $data = [];
         $storeIds = [1, 2];
+
         foreach ($storeIds as $storeId) {
             $store = $this->storeFacade->getById($storeId);
             $data[] = [
@@ -147,6 +148,7 @@ class GetStoreTest extends GraphQlTestCase
                 $this->getExpectedStore($storeId),
             ];
         }
+
         return $data;
     }
 
@@ -157,6 +159,7 @@ class GetStoreTest extends GraphQlTestCase
     {
         $data = [];
         $urlSlugs = ['ostrava', 'pardubice'];
+
         foreach ($urlSlugs as $urlSlug) {
             $friendlyUrl = $this->friendlyUrlFacade->getFriendlyUrlByRouteNameAndSlug(
                 Domain::FIRST_DOMAIN_ID,
@@ -169,6 +172,7 @@ class GetStoreTest extends GraphQlTestCase
                 $this->getExpectedStore($friendlyUrl->getEntityId()),
             ];
         }
+
         return $data;
     }
 
@@ -179,6 +183,7 @@ class GetStoreTest extends GraphQlTestCase
     public function getStoreQueryByUuid(string $uuid): string
     {
         $graphQlTypeWithFilters = 'store (uuid:"' . $uuid . '")';
+
         return $this->getStoreQuery($graphQlTypeWithFilters);
     }
 
@@ -189,6 +194,7 @@ class GetStoreTest extends GraphQlTestCase
     public function getStoreQueryByUrlSlug(string $urlSlug): string
     {
         $graphQlTypeWithFilters = 'store (urlSlug:"' . $urlSlug . '")';
+
         return $this->getStoreQuery($graphQlTypeWithFilters);
     }
 
@@ -289,6 +295,7 @@ class GetStoreTest extends GraphQlTestCase
                 ],
             ],
         ];
+
         return $data[$storeId];
     }
 }

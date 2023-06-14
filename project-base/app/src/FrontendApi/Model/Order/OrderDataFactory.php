@@ -79,6 +79,7 @@ class OrderDataFactory extends BaseOrderDataFactory
         $orderData->transport = $cart->getTransport();
         $orderData->goPayBankSwift = $cart->getPaymentGoPayBankSwift();
         $pickupPlaceIdentifier = $cart->getPickupPlaceIdentifier();
+
         if ($cart->getPickupPlaceIdentifier() === null) {
             return;
         }

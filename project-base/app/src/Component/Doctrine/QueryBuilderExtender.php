@@ -24,10 +24,13 @@ class QueryBuilderExtender extends BaseQueryBuilderExtender
         $joinAlreadyUsed = false;
 
         $resolvedClass = $this->entityNameResolver->resolve($class);
+
         foreach ($joins as $join) {
             $resolvedJoinClass = $this->entityNameResolver->resolve($join->getJoin());
+
             if ($resolvedJoinClass === $resolvedClass) {
                 $joinAlreadyUsed = true;
+
                 break;
             }
         }
@@ -55,6 +58,7 @@ class QueryBuilderExtender extends BaseQueryBuilderExtender
         $rootAlias = $this->getRootAlias($queryBuilder);
 
         $joinDqlPart = $queryBuilder->getDQLPart('join');
+
         if (array_key_exists($rootAlias, $joinDqlPart) === true) {
             return $joinDqlPart[$rootAlias];
         }

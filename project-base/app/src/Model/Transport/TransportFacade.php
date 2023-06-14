@@ -45,8 +45,8 @@ class TransportFacade extends BaseTransportFacade
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFactoryInterface $transportFactory
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactoryInterface $transportPriceFactory
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFactory $transportFactory
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactory $transportPriceFactory
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
      */
     public function __construct(

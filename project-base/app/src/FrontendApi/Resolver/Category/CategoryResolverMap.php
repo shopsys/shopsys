@@ -52,6 +52,7 @@ class CategoryResolverMap extends BaseCategoryResolverMap
                     if ($value instanceof ReadyCategorySeoMix) {
                         return $this->mapByReadyCategorySeoMix($info->fieldName, $value);
                     }
+
                     throw new InvalidArgumentException(
                         sprintf(
                             'The "$value" argument must be an instance of "%s" or "%s".',
@@ -131,6 +132,7 @@ class CategoryResolverMap extends BaseCategoryResolverMap
     private function mapByReadyCategorySeoMix(string $fieldName, ReadyCategorySeoMix $readyCategorySeoMix)
     {
         $category = $readyCategorySeoMix->getCategory();
+
         switch ($fieldName) {
             case 'id':
                 return $category->getId();

@@ -360,6 +360,7 @@ class CategorySeoController extends AdminBaseController
         if (isset($categorySeoFilterFormTypeAllQueries)) {
             $readyCategorySeoMixDataForForm->categorySeoFilterFormTypeAllQueriesJson = json_encode($categorySeoFilterFormTypeAllQueries);
         }
+
         if (isset($choseCategorySeoMixCombination)) {
             $readyCategorySeoMixDataForForm->choseCategorySeoMixCombinationJson = $choseCategorySeoMixCombination->getInJson();
         }

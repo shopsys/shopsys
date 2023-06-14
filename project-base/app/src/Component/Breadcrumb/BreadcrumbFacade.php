@@ -41,6 +41,7 @@ class BreadcrumbFacade
         $domainRouter = $this->domainRouterFactory->getRouter($domainId);
 
         $breadcrumb = [];
+
         foreach ($breadcrumbItems as $breadcrumbItem) {
             $breadcrumbItemRouteName = $breadcrumbItem->getRouteName() ?? $routeName;
             $breadcrumbItemRouteParams = $breadcrumbItem->getRouteName() ? $breadcrumbItem->getRouteParameters() : ['id' => $id];

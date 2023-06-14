@@ -247,9 +247,11 @@ class ProductExportRepository extends BaseProductExportRepository
     {
         $prices = [];
         $productSellingPrices = $this->productFacade->getAllProductSellingPricesByDomainId($product, $domainId);
+
         foreach ($productSellingPrices as $productSellingPrice) {
             $sellingPrice = $productSellingPrice->getSellingPrice();
             $priceFrom = false;
+
             if ($sellingPrice instanceof ProductPrice) {
                 $priceFrom = $sellingPrice->isPriceFrom();
             }
@@ -281,6 +283,7 @@ class ProductExportRepository extends BaseProductExportRepository
         int $domainId,
     ): Money {
         $price = null;
+
         if (!$product->isMainVariant()) {
             return $this->productPriceCalculation->calculatePrice(
                 $product,
@@ -322,6 +325,7 @@ class ProductExportRepository extends BaseProductExportRepository
         int $domainId,
     ): Money {
         $price = null;
+
         if (!$product->isMainVariant()) {
             return $this->productPriceCalculation->calculatePrice(
                 $product,
@@ -338,6 +342,7 @@ class ProductExportRepository extends BaseProductExportRepository
                 $pricingGroup->getDomainId(),
                 $pricingGroup,
             )->getPriceWithVat();
+
             if ($price === null || $variantPrice->isLessThan($price)) {
                 $price = $variantPrice;
             }
@@ -368,6 +373,7 @@ class ProductExportRepository extends BaseProductExportRepository
 
             return trim(implode(' ', array_unique($variantCatnums)));
         }
+
         return $product->getCatnum();
     }
 
@@ -389,6 +395,7 @@ class ProductExportRepository extends BaseProductExportRepository
 
             return trim(implode(' ', array_unique($variantEans)));
         }
+
         return $product->getEan() ?? '';
     }
 
@@ -410,6 +417,7 @@ class ProductExportRepository extends BaseProductExportRepository
 
             return trim(implode(' ', array_unique($variantEans)));
         }
+
         return $product->getPartno() ?? '';
     }
 
@@ -427,6 +435,7 @@ class ProductExportRepository extends BaseProductExportRepository
 
             foreach ($variants as $variant) {
                 $variantFullName = $variant->getFullname($locale);
+
                 if ($variantFullName !== '' && strpos($variantNames, $variantFullName) === false) {
                     $variantNames .= ' ' . $variantFullName;
                 }
@@ -434,6 +443,7 @@ class ProductExportRepository extends BaseProductExportRepository
 
             return trim($variantNames);
         }
+
         return $product->getFullname($locale);
     }
 
@@ -450,6 +460,7 @@ class ProductExportRepository extends BaseProductExportRepository
 
             foreach ($variants as $variant) {
                 $variantDescription = $variant->getDescription($domainId);
+
                 if ($variantDescription !== null && $variantDescription !== '' && strpos($variantDescriptions, $variantDescription) === false) {
                     $variantDescriptions .= ' ' . $variantDescription;
                 }
@@ -457,6 +468,7 @@ class ProductExportRepository extends BaseProductExportRepository
 
             return trim($variantDescriptions);
         }
+
         return $product->getDescription($domainId) ?? '';
     }
 
@@ -473,6 +485,7 @@ class ProductExportRepository extends BaseProductExportRepository
 
             foreach ($variants as $variant) {
                 $variantDescription = $variant->getShortDescription($domainId);
+
                 if ($variantDescription !== null && $variantDescription !== '' && strpos($variantDescriptions, $variantDescription) === false) {
                     $variantDescriptions .= ' ' . $variantDescription;
                 }
@@ -480,6 +493,7 @@ class ProductExportRepository extends BaseProductExportRepository
 
             return trim($variantDescriptions);
         }
+
         return $product->getShortDescription($domainId) ?? '';
     }
 
@@ -492,6 +506,7 @@ class ProductExportRepository extends BaseProductExportRepository
     {
         $flagIds = $product->getFlagsIdsForDomain($domainId);
         $variants = [];
+
         if ($product->isMainVariant() === true) {
             $variants = $this->getVariantsForDefaultPricingGroup($product, $domainId);
         }
@@ -516,6 +531,7 @@ class ProductExportRepository extends BaseProductExportRepository
     private function extractParametersIncludedVariants(Product $product, string $locale, int $domainId): array
     {
         $products = [];
+
         if ($product->isMainVariant() === true) {
             $products = $this->getVariantsForDefaultPricingGroup($product, $domainId);
         }
@@ -542,6 +558,7 @@ class ProductExportRepository extends BaseProductExportRepository
         $storeAvailabilitiesInformation = $this->productAvailabilityFacade->getProductStoresAvailabilitiesInformationByDomainIdIndexedByStoreId($product, $domainId);
 
         $result = [];
+
         foreach ($storeAvailabilitiesInformation as $item) {
             $result[] = [
                 'store_name' => $item->getStoreName(),
@@ -562,6 +579,7 @@ class ProductExportRepository extends BaseProductExportRepository
     private function extractRelatedProductsId(Product $product): array
     {
         $relatedProductsId = [];
+
         foreach ($product->getRelatedProducts() as $relatedProduct) {
             $relatedProductsId[] = $relatedProduct->getId();
         }

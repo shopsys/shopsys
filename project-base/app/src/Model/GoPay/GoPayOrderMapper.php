@@ -87,6 +87,7 @@ class GoPayOrderMapper
     private function createGoPayPaymentItemsData(Order $order): array
     {
         $orderItems = [];
+
         foreach ($order->getItems() as $orderItem) {
             $orderItems[] = [
                 'name' => $orderItem->getName(),

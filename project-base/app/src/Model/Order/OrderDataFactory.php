@@ -65,6 +65,7 @@ class OrderDataFactory extends BaseOrderDataFactory
         $orderData->gtmCoupon = $order->getGtmCoupon();
         $orderData->trackingNumber = $order->getTrackingNumber();
         $orderData->goPayBankSwift = $order->getGoPayBankSwift();
+
         foreach ($order->getPaymentTransactions() as $paymentTransaction) {
             $orderData->paymentTransactionRefunds[$paymentTransaction->getId()] = $this->paymentTransactionRefundDataFactory->createFromPaymentTransaction($paymentTransaction);
         }

@@ -228,6 +228,7 @@ class GetAdvertsTest extends GraphQlTestCase
         $imageFacade = self::getContainer()->get(ImageFacade::class);
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $testImage = $imageFacade->getImageByEntity($this->advertWithImage, 'web');
+
         return [
             [
                 'name' => t('Demo advert', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),

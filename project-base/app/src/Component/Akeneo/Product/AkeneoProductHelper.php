@@ -25,6 +25,7 @@ class AkeneoProductHelper
         }
 
         $mappedData = current($arrayData);
+
         if (is_array($mappedData)) {
             return (string)$mappedData['data'];
         }
@@ -49,6 +50,7 @@ class AkeneoProductHelper
 
         foreach ($akeneoData as $data) {
             $locale = AkeneoHelper::findEshopLocaleByAkeneoLocale($data['locale']);
+
             if ($locale) {
                 $productData[$locale] = $data['data'];
             }
@@ -74,6 +76,7 @@ class AkeneoProductHelper
 
         foreach ($akeneoData as $data) {
             $domainId = AkeneoHelper::findEshopDomainIdByAkeneoLocale($data['locale']);
+
             if ($domainId) {
                 $productData[$domainId] = $data['data'];
             }
@@ -100,6 +103,7 @@ class AkeneoProductHelper
 
         foreach ($akeneoData as $data) {
             $domainId = AkeneoHelper::findEshopDomainIdByAkeneoLocale($data['locale']);
+
             if ($domainId !== null) {
                 $productData[$domainId] = $data['data'];
             }
@@ -121,6 +125,7 @@ class AkeneoProductHelper
 
         foreach ($akeneoData as $data) {
             $domainId = AkeneoHelper::findEshopDomainIdByAkeneoLocale($data['locale']);
+
             if ($domainId) {
                 $productData[$domainId] = (int)$data['data'];
             }
@@ -147,6 +152,7 @@ class AkeneoProductHelper
         foreach ($akeneoData as $akeneoPricesData) {
             foreach ($akeneoPricesData['data'] as $akeneoPriceData) {
                 $domainId = AkeneoHelper::findEshopDomainIdByCurrencyCode($akeneoPriceData['currency']);
+
                 if ($domainId) {
                     $productData[$domainId] = $akeneoPriceData['amount'] ? Money::create($akeneoPriceData['amount']) : null;
                 }
@@ -173,6 +179,7 @@ class AkeneoProductHelper
 
         foreach ($akeneoData as $locale => $data) {
             $domainId = AkeneoHelper::findEshopDomainIdByAkeneoLocale($locale);
+
             if ($domainId) {
                 $productData[$domainId] = $data;
             }

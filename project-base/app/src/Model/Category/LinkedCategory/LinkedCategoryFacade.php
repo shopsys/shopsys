@@ -34,8 +34,10 @@ class LinkedCategoryFacade
         }
 
         $sortedCategories = array_values($sortedCategories);
+
         foreach ($sortedCategories as $position => $category) {
             $linkedCategory = $this->findLinkedCategoryByCategory($linkedCategories, $category);
+
             if ($linkedCategory === null) {
                 $linkedCategory = new LinkedCategory($parentCategory, $category, $position);
                 $this->em->persist($linkedCategory);

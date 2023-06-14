@@ -128,6 +128,7 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
 
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $order->getTransport();
+
         if (!$transport->isPersonalPickup()) {
             $customerUserUpdateData->deliveryAddressData = $this->getAmendedDeliveryAddressDataByOrder(
                 $order,

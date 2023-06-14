@@ -37,8 +37,10 @@ class FlagRepository
         $result = $queryBuilder->getQuery()->execute();
 
         $allFlags = [];
+
         foreach ($flagsIds as $key => $flagIds) {
             $allFlags[$key] = [];
+
             foreach ($flagIds as $flagId) {
                 if (!array_key_exists($flagId, $result)) {
                     continue;
@@ -73,6 +75,7 @@ class FlagRepository
     private function sortFlagsById(array $flagsIndexedByKeyAndId): array
     {
         $allFlagsValues = [];
+
         foreach ($flagsIndexedByKeyAndId as $flagsIndexedById) {
             ksort($flagsIndexedById);
             $allFlagsValues[] = array_values($flagsIndexedById);

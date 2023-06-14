@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade as BaseUnitFacade;
 /**
  * @property \App\Model\Product\Unit\UnitRepository $unitRepository
  * @property \App\Component\Setting\Setting $setting
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\Unit\UnitRepository $unitRepository, \App\Component\Setting\Setting $setting, \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFactoryInterface $unitFactory, \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\Unit\UnitRepository $unitRepository, \App\Component\Setting\Setting $setting, \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFactory $unitFactory, \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher)
  * @method \App\Model\Product\Unit\Unit getById(int $unitId)
  * @method \App\Model\Product\Unit\Unit create(\App\Model\Product\Unit\UnitData $unitData)
  * @method \App\Model\Product\Unit\Unit edit(int $unitId, \App\Model\Product\Unit\UnitData $unitData)

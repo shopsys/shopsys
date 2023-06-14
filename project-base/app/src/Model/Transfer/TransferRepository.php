@@ -32,6 +32,7 @@ class TransferRepository
     public function getTransferByIdentifier(string $identifier): Transfer
     {
         $transfer = $this->getRepository()->findOneBy(['identifier' => $identifier]);
+
         if ($transfer === null) {
             throw new UnknownServiceTransferException($identifier);
         }

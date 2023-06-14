@@ -148,6 +148,7 @@ class Stock implements OrderableEntityInterface
     public function getEnabledIndexedByDomainId(): array
     {
         $return = [];
+
         foreach ($this->domains as $domain) {
             $return[$domain->getDomainId()] = $domain->isEnabled();
         }

@@ -227,6 +227,7 @@ class BlogCategoryController extends AdminBaseController
         $blogCategories = $blogParentCategory->getChildren();
 
         $blogCategoriesData = [];
+
         foreach ($blogCategories as $blogCategory) {
             $blogCategoriesData[] = [
                 'id' => $blogCategory->getId(),

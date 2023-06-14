@@ -65,6 +65,7 @@ class RegistrationFacade implements RegistrationFacadeInterface
     public function registerCompany(RegistrationData $registrationData): CustomerUser
     {
         $registrationData->companyCustomer = true;
+
         return $this->register($registrationData);
     }
 
@@ -82,6 +83,7 @@ class RegistrationFacade implements RegistrationFacadeInterface
         /** @var \App\Model\Customer\BillingAddressData $billingAddressData */
         $billingAddressData = $customerUserUpdateData->billingAddressData;
         $billingAddressData->companyCustomer = $registrationData->companyCustomer;
+
         if ($registrationData->companyCustomer === true) {
             $billingAddressData->companyName = $registrationData->companyName;
             $billingAddressData->companyNumber = $registrationData->companyNumber;

@@ -25,6 +25,7 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
     public function getBatchedVisibleByProductIds(array $productsIds): array
     {
         $filterQueries = [];
+
         foreach ($productsIds as $productIds) {
             $filterQueries[] = $this->filterQueryFactory->createVisibleProductsByProductIdsFilter($productIds);
         }
@@ -39,6 +40,7 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
     public function getBatchedSellableByProductIds(array $productsIds): array
     {
         $filterQueries = [];
+
         foreach ($productsIds as $productIds) {
             $filterQueries[] = $this->filterQueryFactory->createSellableProductsByProductIdsFilter($productIds);
         }
@@ -53,6 +55,7 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
     public function getBatchedByEntities(array $productBatchLoadByEntitiesData): array
     {
         $filterQueries = [];
+
         foreach ($productBatchLoadByEntitiesData as $productBatchLoadByEntityData) {
             $filterQueries[$productBatchLoadByEntityData->getId()] = $this->getFilterQuery($productBatchLoadByEntityData);
         }
@@ -67,21 +70,26 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
     private function getFilterQuery(ProductBatchLoadByEntityData $productBatchLoadByEntityData): FilterQuery
     {
         $entityClass = $productBatchLoadByEntityData->getEntityClass();
+
         switch ($entityClass) {
             case Category::class:
                 $filterQuery = $this->getFilterQueryForCategory($productBatchLoadByEntityData);
+
                 break;
             case Flag::class:
                 $filterQuery = $this->getFilterQueryForFilterData($productBatchLoadByEntityData);
+
                 break;
             case Brand::class:
                 $filterQuery = $this->getFilterQueryForBrand($productBatchLoadByEntityData);
+
                 break;
             default:
                 throw new InvalidArgumentException(sprintf('Entity class "%s" is not supported for creating filter query', $entityClass));
         }
 
         $filterQuery = $filterQuery->setFrom($productBatchLoadByEntityData->getOffset());
+
         if ($productBatchLoadByEntityData->getSearch() !== '') {
             $filterQuery = $filterQuery->search($productBatchLoadByEntityData->getSearch());
         }

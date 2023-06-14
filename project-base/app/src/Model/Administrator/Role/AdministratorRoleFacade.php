@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade as 
  * @method string[] addAdminRoleIfMissing(\App\Model\Administrator\Administrator $administrator, string[] $roles)
  * @method removeAllByAdministrator(\App\Model\Administrator\Administrator $administrator)
  * @method \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRole createNewRole(\App\Model\Administrator\Administrator $administrator, string $role)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFactory $administratorRoleFactory, \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleDataFactory $administratorRoleDataFactory)
  */
 class AdministratorRoleFacade extends BaseAdministratorRoleFacade
 {
@@ -32,6 +33,7 @@ class AdministratorRoleFacade extends BaseAdministratorRoleFacade
         }
 
         $newRoles = [];
+
         foreach ($roles as $role) {
             $newRoles[] = $this->createNewRole($administrator, $role);
         }

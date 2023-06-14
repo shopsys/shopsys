@@ -36,6 +36,7 @@ class ProductFilterElasticFacade
         $filterQuery = $this->filterQueryFactory->createVisible()
             ->filterOnlySellable()
             ->filterByCategory([$categoryId]);
+
         if ($search !== '') {
             $filterQuery = $filterQuery->search($search);
         }
@@ -78,6 +79,7 @@ class ProductFilterElasticFacade
         $filterQuery = $this->filterQueryFactory->createVisible()
             ->filterOnlySellable()
             ->filterByBrands([$brandId]);
+
         if ($searchText !== '') {
             $filterQuery = $filterQuery->search($searchText);
         }
@@ -102,6 +104,7 @@ class ProductFilterElasticFacade
         $filterQuery = $this->filterQueryFactory->createVisible()
             ->filterOnlySellable()
             ->filterByFlags([$flagId]);
+
         if ($searchText !== '') {
             $filterQuery = $filterQuery->search($searchText);
         }

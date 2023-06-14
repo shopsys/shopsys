@@ -79,6 +79,7 @@ class ReadyCategorySeoMixFacade
         } catch (ReadyCategorySeoMixUrlsContainBadDomainUrlException | ReadyCategorySeoMixUrlsDoNotContainUrlForCorrectDomainException $e) {
             TransactionalMasterRequestListener::setTransactionHasBeenRollbacked();
             $this->em->rollback();
+
             throw $e;
         }
 
@@ -141,6 +142,7 @@ class ReadyCategorySeoMixFacade
         $this->friendlyUrlFacade->saveUrlListFormData('front_category_seo', $readyCategorySeoMix->getId(), $urlListData);
 
         $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl($readyCategorySeoMix->getDomainId(), 'front_category_seo', $readyCategorySeoMix->getId());
+
         if ($mainFriendlyUrl !== null) {
             return;
         }
@@ -196,6 +198,7 @@ class ReadyCategorySeoMixFacade
     public function deleteAllWithParameter(Parameter $parameter): void
     {
         $readyCategorySeoMixes = $this->readyCategorySeoMixRepository->getAllWithParameter($parameter);
+
         if (count($readyCategorySeoMixes) === 0) {
             return;
         }
@@ -256,11 +259,13 @@ class ReadyCategorySeoMixFacade
 
         foreach ($parametersFilterData as $parameterFilterData) {
             $valuesCount = count($parameterFilterData['values']);
+
             if ($valuesCount === 0 && ($parameterFilterData['minimalValue'] !== $parameterFilterData['maximalValue'])) {
                 throw new UnableToFindReadyCategorySeoMixException(
                     'Unable to find ReadyCategorySeoMix: there must be exactly one value for slider parameters selected',
                 );
             }
+
             if ($valuesCount > 1) {
                 throw new UnableToFindReadyCategorySeoMixException(
                     'Unable to find ReadyCategorySeoMix: it cannot have more than one parameter value of one parameter',
@@ -304,8 +309,10 @@ class ReadyCategorySeoMixFacade
         $allParameterValuesUuids = array_merge(...array_column($parametersFilterData, 'values'));
         $parameterValueIdsByUuids = $this->parameterFacade->getParameterValueIdsIndexedByUuids($allParameterValuesUuids);
         $parameterValueIdsByParameterId = [];
+
         foreach ($parametersFilterData as $parameterFilterData) {
             $parameterId = $parameterIdsByUuids[$parameterFilterData['parameter']];
+
             if (count($parameterFilterData['values']) === 0) {
                 // slider parameter, minimal and maximal value are the same (see checkPossibilityToFindReadyCategorySeoMix method)
                 // so it does not matter which one is used for grabbing the text

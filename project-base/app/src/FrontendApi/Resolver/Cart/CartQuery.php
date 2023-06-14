@@ -37,6 +37,7 @@ class CartQuery extends AbstractQuery
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
         $cart = $this->cartFacade->findCart($customerUser, $input['cartUuid']);
+
         if ($cart === null) {
             return null;
         }

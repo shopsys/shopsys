@@ -51,6 +51,7 @@ class BlogArticleDataFactory
     private function fillNew(BlogArticleData $blogArticleData): void
     {
         $blogArticleData->image = $this->imageUploadDataFactory->create();
+
         foreach ($this->domain->getAllIds() as $domainId) {
             $blogArticleData->seoMetaDescriptions[$domainId] = null;
             $blogArticleData->seoTitles[$domainId] = null;

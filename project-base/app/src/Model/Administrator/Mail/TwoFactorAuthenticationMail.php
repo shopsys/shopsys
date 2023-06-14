@@ -32,6 +32,7 @@ class TwoFactorAuthenticationMail implements MessageFactoryInterface
     public function createMessage(MailTemplate $template, $administrator)
     {
         $domainId = $this->domain->getId();
+
         return new MessageData(
             $administrator->getEmail(),
             $template->getBccEmail(),

@@ -28,6 +28,7 @@ class PacketeryRenderer
     public function getPacketXml(PacketAttributes $packetAttributes, PacketeryConfig $packeteryConfig): string
     {
         $template = $this->twig->load(self::TEMPLATE_FILE_PATH);
+
         return $template->render([
             'config' => $packeteryConfig,
             'packet' => $packetAttributes,

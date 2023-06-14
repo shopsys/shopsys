@@ -51,6 +51,7 @@ class NavigationItemCategoryFacade
         array $categories,
     ): void {
         $position = 1;
+
         foreach ($categories as $category) {
             $navigationItemCategory = new NavigationItemCategory(
                 $navigationItem,
@@ -101,6 +102,7 @@ class NavigationItemCategoryFacade
         foreach ($navigationItems as $navigationItem) {
             $navigationItemId = $navigationItem->getId();
             $categoriesIndexedByNavigationItemIdAndColumnNumber[$navigationItemId] = [];
+
             foreach ($navigationItemCategories as $navigationItemCategory) {
                 if ($navigationItemCategory->getNavigationItem()->getId() === $navigationItemId) {
                     $categoriesIndexedByNavigationItemIdAndColumnNumber[$navigationItemId][$navigationItemCategory->getColumnNumber()][]

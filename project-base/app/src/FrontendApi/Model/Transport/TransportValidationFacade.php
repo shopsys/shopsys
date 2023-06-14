@@ -89,6 +89,7 @@ class TransportValidationFacade
         $calculatedTransportPrice = $orderPreview->getTransportPrice();
 
         $transportWatchedPrice = $cart->getTransportWatchedPrice();
+
         if ($transportWatchedPrice === null || ($calculatedTransportPrice !== null && !$calculatedTransportPrice->getPriceWithVat()->equals($transportWatchedPrice))) {
             throw new TransportPriceChangedException($calculatedTransportPrice);
         }
@@ -115,6 +116,7 @@ class TransportValidationFacade
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         $cart = $this->cartFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
         $payment = $cart->getPayment();
+
         if ($payment === null || in_array($payment, $transport->getPayments(), true)) {
             return;
         }

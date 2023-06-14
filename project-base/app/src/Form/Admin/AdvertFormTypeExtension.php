@@ -160,6 +160,7 @@ class AdvertFormTypeExtension extends AbstractTypeExtension
                     } elseif ($advertData->type === Advert::TYPE_IMAGE) {
                         $validationGroups[] = AdvertFormType::VALIDATION_GROUP_TYPE_IMAGE;
                     }
+
                     return $validationGroups;
                 },
             ]);

@@ -21,6 +21,7 @@ class ProductImagesQuery extends ImagesQuery
     public function imagesByProductPromiseQuery($data, ?string $type, ?array $sizes): Promise
     {
         $productId = $data instanceof Product ? $data->getId() : $data['id'];
+
         return $this->resolveByEntityIdPromise($productId, self::PRODUCT_ENTITY_NAME, $type, $sizes);
     }
 

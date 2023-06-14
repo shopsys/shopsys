@@ -85,6 +85,7 @@ class FriendlyUrlRepository extends BaseFriendlyUrlRepository
 
         $expressionParts = [];
         $i = 0;
+
         foreach ($this->getRouteNameToEntityMap() as $routeName => $entity) {
             $tmpTableAlias = 'tmp' . $i;
             $expressionParts[] = $queryBuilder->expr()->andX(

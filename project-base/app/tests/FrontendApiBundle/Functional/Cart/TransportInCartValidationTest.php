@@ -130,6 +130,7 @@ class TransportInCartValidationTest extends GraphQlTestCase
     private function addTransportToDemoCart(string $transportUuid, ?string $pickupPlaceIdentifier = null): array
     {
         $pickupPlaceIdentifierLine = '';
+
         if ($pickupPlaceIdentifier !== null) {
             $pickupPlaceIdentifierLine = 'pickupPlaceIdentifier: "' . $pickupPlaceIdentifier . '"';
         }

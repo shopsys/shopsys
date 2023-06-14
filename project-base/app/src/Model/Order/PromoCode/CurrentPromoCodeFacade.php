@@ -88,6 +88,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
         }
 
         $currentTimestamp = time();
+
         if ($promoCode->getDatetimeValidFrom() !== null
             && $promoCode->getDatetimeValidTo() !== null
         ) {
@@ -113,6 +114,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     public function validateRemainigUses(PromoCode $promoCode): void
     {
         $remainingCodeUses = $promoCode->getRemainingUses();
+
         if ($remainingCodeUses !== null && $remainingCodeUses === 0) {
             throw new InvalidPromoCodeException($promoCode->getCode());
         }
@@ -129,15 +131,18 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
         $allowedProductIdsByCriteria = $this->productPromoCodeFiller->getAllowedProductIdsForBrandsAndCategories($promoCode, $domainId);
 
         $allowedProductIds = array_unique(array_merge($allowedProductIds, $allowedProductIdsByCriteria));
+
         if (count($allowedProductIds) === 0) {
             //promo code hasn't any relation with products or product from categories or product from brands
             return;
         }
 
         $isValidPromoCode = false;
+
         foreach ($cart->getItems() as $cartItem) {
             if (in_array($cartItem->getProduct()->getId(), $allowedProductIds, true) === true) {
                 $isValidPromoCode = true;
+
                 break;
             }
         }
@@ -157,6 +162,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
             $promoCode,
             $cart->getQuantifiedProducts(),
         );
+
         if ($limit === null) {
             throw new LimitNotReachedException($promoCode);
         }
@@ -169,11 +175,14 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     private function validatePromoCodeByFlags(PromoCode $promoCode, Cart $cart)
     {
         $isValidPromoCode = false;
+
         foreach ($cart->getItems() as $cartItem) {
             $productFromCart = $cartItem->getProduct();
             $product = $this->productPromoCodeFiller->filterProductByPromoCodeFlags($productFromCart, $promoCode);
+
             if ($product !== null) {
                 $isValidPromoCode = true;
+
                 break;
             }
         }
@@ -231,9 +240,11 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     public function getValidatedPromoCode(string $enteredCode, Cart $cart): PromoCode
     {
         $promoCode = $this->promoCodeFacade->findPromoCodeByCode($enteredCode);
+
         if ($promoCode === null) {
             throw new InvalidPromoCodeException($enteredCode);
         }
+
         if ($promoCode->isRegisteredCustomerUserOnly() && $this->currentCustomerUser->findCurrentCustomerUser() === null) {
             throw new AvailableForRegisteredCustomerUserOnly($enteredCode);
         }

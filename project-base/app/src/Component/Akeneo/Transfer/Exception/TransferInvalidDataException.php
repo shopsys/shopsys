@@ -29,6 +29,7 @@ class TransferInvalidDataException extends TransferException
     private function getViolationsAsString(ConstraintViolationListInterface $violations): string
     {
         $constraintsViolationsMessages = [];
+
         foreach ($violations as $violation) {
             $constraintsViolationsMessages[] =
                 sprintf('Invalid value of %s - "%s"', $violation->getPropertyPath(), $violation->getMessage());

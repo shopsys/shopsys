@@ -52,9 +52,11 @@ class FriendlyUrlGridFactory implements GridFactoryInterface
         if ($redirectCode === null) {
             return '';
         }
+
         if ($redirectCode === 301) {
             return t('301 (Permanent redirect)');
         }
+
         return t('302 (Temporary redirect)');
     }
 
@@ -96,6 +98,7 @@ class FriendlyUrlGridFactory implements GridFactoryInterface
             function ($row) {
                 $row['fu']['routeName'] = $this->getReadableNameForRouteName($row['fu']['routeName']);
                 $row['fu']['redirectCode'] = $this->getReadableNameForRedirectCode($row['fu']['redirectCode']);
+
                 return $row;
             },
         );

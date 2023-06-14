@@ -176,6 +176,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
     protected function getProductsAvailability(array $quantifiedProducts, int $domainId): array
     {
         $availability = [];
+
         foreach ($quantifiedProducts as $quantifiedProduct) {
             /** @var \App\Model\Product\Product $product */
             $product = $quantifiedProduct->getProduct();

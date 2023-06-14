@@ -28,6 +28,7 @@ abstract class AbstractElasticsearchDataFetcher
     public function getSingleResult(AbstractFilterQuery $filterQuery): array
     {
         $results = $this->getAllResults($filterQuery);
+
         if (count($results) === 0) {
             throw new NoResultException();
         }

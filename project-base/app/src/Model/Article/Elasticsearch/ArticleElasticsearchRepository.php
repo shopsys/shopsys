@@ -27,6 +27,7 @@ class ArticleElasticsearchRepository
     public function getByUuid(string $uuid): array
     {
         $filterQuery = $this->filterQueryFactory->createFilteredByUuid($uuid);
+
         try {
             return $this->articleElasticsearchDataFetcher->getSingleResult($filterQuery);
         } catch (NoResultException $exception) {
@@ -41,6 +42,7 @@ class ArticleElasticsearchRepository
     public function getById(int $articleId): array
     {
         $filterQuery = $this->filterQueryFactory->createFilteredById($articleId);
+
         try {
             return $this->articleElasticsearchDataFetcher->getSingleResult($filterQuery);
         } catch (NoResultException $exception) {
@@ -55,6 +57,7 @@ class ArticleElasticsearchRepository
     public function getAllArticlesTotalCount(array $placements): int
     {
         $filterQuery = $this->filterQueryFactory->create();
+
         if (count($placements) > 0) {
             $filterQuery = $filterQuery->filterByPlacements($placements);
         }
@@ -71,6 +74,7 @@ class ArticleElasticsearchRepository
     public function getAllArticles(int $offset, int $limit, array $placements): array
     {
         $filterQuery = $this->filterQueryFactory->create($offset, $limit);
+
         if (count($placements) > 0) {
             $filterQuery = $filterQuery->filterByPlacements($placements);
         }
@@ -85,6 +89,7 @@ class ArticleElasticsearchRepository
     public function getBySlug(string $slug): array
     {
         $article = $this->findBySlug($slug);
+
         if ($article === null) {
             $article = $this->findBySlug(TransformString::addOrRemoveTrailingSlashFromString($slug));
         }

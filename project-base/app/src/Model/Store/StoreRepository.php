@@ -27,6 +27,7 @@ class StoreRepository
     {
         /** @var \Doctrine\ORM\EntityRepository $repository */
         $repository = $this->entityManager->getRepository(Store::class);
+
         return $repository;
     }
 
@@ -112,9 +113,11 @@ class StoreRepository
         $queryBuilder = $this->getAllStoresQueryBuilder()
             ->join(StoreDomain::class, 'sd', Join::WITH, 's.id = sd.store AND sd.isEnabled = TRUE AND sd.domainId = :domainId')
             ->setParameter('domainId', $domainId);
+
         if ($limit !== null) {
             $queryBuilder->setMaxResults($limit);
         }
+
         if ($offset !== null) {
             $queryBuilder->setFirstResult($offset);
         }

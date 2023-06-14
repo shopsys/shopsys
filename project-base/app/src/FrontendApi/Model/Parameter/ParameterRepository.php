@@ -68,6 +68,7 @@ class ParameterRepository
             ->setParameter('uuids', $uuids);
 
         $idsIndexedByUuids = [];
+
         foreach ($queryBuilder->getQuery()->getArrayResult() as $idAndUuid) {
             $idsIndexedByUuids[$idAndUuid['uuid']] = $idAndUuid['id'];
         }

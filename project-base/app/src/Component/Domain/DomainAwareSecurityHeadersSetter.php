@@ -28,6 +28,7 @@ class DomainAwareSecurityHeadersSetter extends BaseDomainAwareSecurityHeadersSet
         if (!$event->isMainRequest()) {
             return;
         }
+
         if (!$this->domain->isHttps()) {
             return;
         }

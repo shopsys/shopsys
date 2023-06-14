@@ -57,6 +57,7 @@ class PaymentValidationFacade
         $calculatedPaymentPrice = $orderPreview->getPaymentPrice();
 
         $paymentWatchedPrice = $cart->getPaymentWatchedPrice();
+
         if ($paymentWatchedPrice === null || ($calculatedPaymentPrice !== null && !$calculatedPaymentPrice->getPriceWithVat()->equals($paymentWatchedPrice))) {
             throw new PaymentPriceChangedException($calculatedPaymentPrice);
         }
@@ -72,6 +73,7 @@ class PaymentValidationFacade
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         $cart = $this->cartFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
         $transport = $cart->getTransport();
+
         if ($transport === null || in_array($transport, $payment->getTransports(), true)) {
             return;
         }

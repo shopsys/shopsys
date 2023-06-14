@@ -15,6 +15,7 @@ use Shopsys\FrontendApiBundle\Model\Token\TokenFacade as BaseTokenFacade;
 
 /**
  * @property \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
+ * @method __construct(\Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Model\Customer\User\CustomerUserFacade $customerUserFacade, \Lcobucci\JWT\Configuration $jwtConfiguration)
  */
 class TokenFacade extends BaseTokenFacade
 {

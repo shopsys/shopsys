@@ -30,8 +30,8 @@ class MailTemplateFacade extends BaseMailTemplateFacade
      * @param \App\Model\Mail\MailTemplateRepository $mailTemplateRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface $mailTemplateFactory
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactoryInterface $mailTemplateDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactory $mailTemplateFactory
+     * @param \App\Model\Mail\MailTemplateDataFactory $mailTemplateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider
      * @param \App\Model\Mail\MailTemplateBuilder $mailTemplateBuilder
      */
@@ -119,6 +119,7 @@ class MailTemplateFacade extends BaseMailTemplateFacade
     public function get($templateName, $domainId): BaseMailTemplate
     {
         $mailTemplate = $this->mailTemplateRepository->getByNameAndDomainId($templateName, $domainId);
+
         if ($mailTemplate !== null) {
             $mailTemplate->setBody($this->mailTemplateBuilder->getMailTemplateWithContent($domainId, $mailTemplate->getBody()));
             $this->em->detach($mailTemplate);

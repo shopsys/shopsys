@@ -30,7 +30,7 @@ class ArticleFacade extends BaseArticleFacade
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface $articleFactory
+     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFactory $articleFactory
      * @param \App\Model\Article\Elasticsearch\ArticleExportScheduler $articleExportScheduler
      */
     public function __construct(

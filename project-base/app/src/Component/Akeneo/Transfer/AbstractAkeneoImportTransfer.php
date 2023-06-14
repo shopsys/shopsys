@@ -49,6 +49,7 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
     {
         if (!$this->akeneoConfig->isEnabled()) {
             $this->logger->warning('Skipping transfer, akeneo is disabled from parameters.yml');
+
             return;
         }
 
@@ -66,6 +67,7 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
             $this->logger->error('RuntimeException: ' . $exception->getMessage());
             $this->logger->persistAllLoggedTransferIssues();
             $this->sqlLoggerFacade->reenableLogging();
+
             return;
         }
 
@@ -129,6 +131,7 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
             }
 
             $this->logger->persistAllLoggedTransferIssues();
+
             throw $exception;
         } finally {
             $this->em->clear();

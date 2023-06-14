@@ -16,7 +16,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductResolverMap as Base
  * @property \App\Model\Product\Flag\FlagFacade $flagFacade
  * @property \App\Model\Category\CategoryFacade $categoryFacade
  * @property \App\FrontendApi\Resolver\Products\DataMapper\ProductArrayFieldMapper|null $productArrayFieldMapper
- * @method __construct(\Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade, \App\Model\Product\Flag\FlagFacade $flagFacade, \App\Model\Category\CategoryFacade $categoryFacade, \App\FrontendApi\Resolver\Products\DataMapper\ProductEntityFieldMapper|null $productEntityFieldMapper = null, \App\FrontendApi\Resolver\Products\DataMapper\ProductArrayFieldMapper|null $productArrayFieldMapper = null)
+ * @method __construct(\App\FrontendApi\Resolver\Products\DataMapper\ProductEntityFieldMapper $productEntityFieldMapper, \App\FrontendApi\Resolver\Products\DataMapper\ProductArrayFieldMapper $productArrayFieldMapper)
  * @method setProductArrayFieldMapper(\App\FrontendApi\Resolver\Products\DataMapper\ProductArrayFieldMapper $productArrayFieldMapper)
  * @method \App\Model\Product\Flag\Flag[] getFlagsForData(\App\Model\Product\Product|array $data)
  * @method \App\Model\Category\Category[] getCategoriesForData(array $data)
@@ -62,9 +62,11 @@ class ProductResolverMap extends BaseProductResolverMap
         foreach ($prefixes as $prefix) {
             $methodCandidate = lcfirst($prefix . ucfirst($fieldName));
             $methodPromiseCandidate = $methodCandidate . 'Promise';
+
             if (method_exists($mapper, $methodPromiseCandidate)) {
                 return [$mapper, $methodPromiseCandidate];
             }
+
             if (method_exists($mapper, $methodCandidate)) {
                 return [$mapper, $methodCandidate];
             }

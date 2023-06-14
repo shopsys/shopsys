@@ -41,6 +41,7 @@ class ProductPromoCodeFiller
         $allowedProductIdsByCriteria = $this->getAllowedProductIdsForBrandsAndCategories($promoCode, $domainId);
 
         $totalAllowedProductIds = array_unique(array_merge($allowedProductIds, $allowedProductIdsByCriteria));
+
         if (count($totalAllowedProductIds) === 0) {
             return $this->fillPromoCodeDiscountsForAllProducts($quantifiedProducts, $promoCode);
         }
@@ -58,10 +59,12 @@ class ProductPromoCodeFiller
         PromoCode $validEnteredPromoCode,
     ): array {
         $promoCodePercentPerProduct = [];
+
         foreach ($quantifiedProducts as $quantifiedProduct) {
             /** @var \App\Model\Product\Product $product */
             $product = $quantifiedProduct->getProduct();
             $allowedProduct = $this->filterProductByPromoCodeFlags($product, $validEnteredPromoCode);
+
             if ($allowedProduct === null) {
                 continue;
             }
@@ -84,14 +87,17 @@ class ProductPromoCodeFiller
         PromoCode $validEnteredPromoCode,
     ): array {
         $promoCodeDiscountPercentPerProduct = [];
+
         foreach ($quantifiedProducts as $quantifiedProduct) {
             /** @var \App\Model\Product\Product $product */
             $product = $quantifiedProduct->getProduct();
             $allowedProduct = $this->filterProductByPromoCodeFlags($product, $validEnteredPromoCode);
+
             if ($allowedProduct === null) {
                 continue;
             }
             $productId = $allowedProduct->getId();
+
             if (in_array($productId, $allowedProductIds, true)) {
                 $promoCodeDiscountPercentPerProduct[(string)$productId] = $validEnteredPromoCode;
             }

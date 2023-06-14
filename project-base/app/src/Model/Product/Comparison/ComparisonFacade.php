@@ -37,6 +37,7 @@ class ComparisonFacade
     ): Comparison {
         if ($customerUser === null) {
             $comparison = $this->getOrCreateComparisonByUuid($comparisonUuid);
+
             if ($comparison->getCustomerUser() !== null) {
                 throw new HandlingWithOtherLoggedCustomerComparisonException('Handling with different customer comparison.');
             }
@@ -168,6 +169,7 @@ class ComparisonFacade
     {
         foreach ($comparisonByUuid->getItems() as $comparedItem) {
             $productFromComparisonByUuid = $comparedItem->getProduct();
+
             if ($loggedCustomerComparison->isProductInComparison($productFromComparisonByUuid)) {
                 continue;
             }

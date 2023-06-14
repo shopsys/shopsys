@@ -71,6 +71,7 @@ class TransferredProductProcessor
         $this->productTransferAkeneoValidator->validate($akeneoProductData);
 
         $product = $this->findProductByIdentifier((string)$akeneoProductData['identifier']);
+
         if ($product !== null) {
             $entityName = $this->imageConfig->getEntityName($product);
             $entityId = $product->getId();
@@ -100,6 +101,7 @@ class TransferredProductProcessor
         $this->productTransferAkeneoValidator->validateIdentifier($akeneoProductDetailData);
 
         $product = $this->findProductByIdentifier((string)$akeneoProductDetailData['identifier']);
+
         if ($product !== null) {
             $this->setProductAccessoriesByAkeneoProductDetailData($product, $akeneoProductDetailData, $logger);
         }
@@ -150,8 +152,10 @@ class TransferredProductProcessor
     private function getAccessoriesByCatnums(array $catnums): array
     {
         $accessories = [];
+
         foreach ($catnums as $catnum) {
             $product = $this->productFacade->findByCatnum($catnum);
+
             if ($product !== null) {
                 $accessories[] = $product;
             }
@@ -188,6 +192,7 @@ class TransferredProductProcessor
             if ($akeneoImageKeyType === self::AKENEO_IMAGE_TYPE_GALLERY) {
                 foreach ($this->getGalleryImagesForProduct($akeneoProductData) as $imageInfo) {
                     $importedImage = current($imageInfo['values']['media']);
+
                     if (isset($originalImages[$importedImage['data']])) {
                         $image = $originalImages[$importedImage['data']];
                         $imagesCollection[$i++] = $image;
@@ -198,6 +203,7 @@ class TransferredProductProcessor
                 }
             } elseif (array_key_exists($akeneoImageKeyType, $akeneoProductData['values'])) {
                 $importedImage = current($akeneoProductData['values'][$akeneoImageKeyType]);
+
                 if (isset($originalImages[$importedImage['data']])
                     && $originalImages[$importedImage['data']]->getAkeneoImageType() === $akeneoImageKeyType
                 ) {
@@ -280,6 +286,7 @@ class TransferredProductProcessor
 
         foreach (array_keys($akeneoProductParameters) as $akeneoParameterCode) {
             $parameter = $this->parameterFacade->findParameterByAkeneoCode($akeneoParameterCode);
+
             if ($parameter === null) {
                 return false;
             }

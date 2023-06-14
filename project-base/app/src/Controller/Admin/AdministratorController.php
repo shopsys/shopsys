@@ -90,6 +90,7 @@ class AdministratorController extends BaseAdministratorController
             $this->addErrorFlashTwig(
                 t('Unsupported two factor authentication method'),
             );
+
             return $this->redirectToRoute('admin_administrator_edit', ['id' => $id]);
         }
 
@@ -99,11 +100,13 @@ class AdministratorController extends BaseAdministratorController
 
         if ($administrator->getUsername() !== $loggedUser->getUsername()) {
             $this->addErrorFlash(t('You are allowed to set up two factor authentication only to yourself.'));
+
             return $this->redirectToRoute('admin_administrator_edit', ['id' => $id]);
         }
 
         if ($administrator->isEnabledTwoFactorAuth()) {
             $this->addErrorFlash(t('Two factor authentication is already enabled.'));
+
             return $this->redirectToRoute('admin_administrator_edit', ['id' => $id]);
         }
 
@@ -125,14 +128,17 @@ class AdministratorController extends BaseAdministratorController
         $formVerification = $this->createVerificationForm([$this, 'validateEmailCode']);
 
         $formSendEmail->handleRequest($request);
+
         if ($formSendEmail->isSubmitted() && $formSendEmail->isValid()) {
             $this->addSuccessFlashTwig(t('An email with 6 digit code was sent to your email address.'));
             $this->administratorTwoFactorFacade->generateAndSendEmail($administrator);
         } else {
             $formVerification->handleRequest($request);
+
             if ($formVerification->isSubmitted() && $formVerification->isValid()) {
                 $this->administratorTwoFactorFacade->enableTwoFactorAuthenticationByEmail($administrator);
                 $this->addSuccessFlashTwig(t('Two factor authentication was enabled'));
+
                 return $this->redirectToRoute('admin_administrator_edit', ['id' => $administrator->getId()]);
             }
         }
@@ -156,6 +162,7 @@ class AdministratorController extends BaseAdministratorController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->administratorTwoFactorFacade->enableTwoFactorAuthenticationByGoogleAuthenticator($administrator);
             $this->addSuccessFlashTwig(t('Two factor authentication was enabled'));
+
             return $this->redirectToRoute('admin_administrator_edit', ['id' => $administrator->getId()]);
         }
 
@@ -179,6 +186,7 @@ class AdministratorController extends BaseAdministratorController
     {
         /** @var \App\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
+
         if ($code !== $administrator->getEmailAuthCode()) {
             $context->addViolation(t('Zadany kod neni spravny'));
         }
@@ -192,6 +200,7 @@ class AdministratorController extends BaseAdministratorController
     {
         /** @var \App\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
+
         if (!$this->administratorTwoFactorFacade->isGoogleAuthenticatorCodeValid($administrator, $code)) {
             $context->addViolation(t('Zadany kod neni spravny'));
         }
@@ -212,6 +221,7 @@ class AdministratorController extends BaseAdministratorController
 
         if ($administrator->getUsername() !== $loggedUser->getUsername()) {
             $this->addErrorFlash(t('You are allowed to disable two factor authentication only to yourself.'));
+
             return $this->redirectToRoute('admin_administrator_edit', ['id' => $id]);
         }
 
@@ -221,6 +231,7 @@ class AdministratorController extends BaseAdministratorController
             $codeValidationCallback = [$this, 'validateGoogleAuthCode'];
         } else {
             $this->addErrorFlash(t('Two factor authentication is not enabled.'));
+
             return $this->redirectToRoute('admin_administrator_edit', ['id' => $id]);
         }
 
@@ -228,14 +239,17 @@ class AdministratorController extends BaseAdministratorController
         $formVerification = $this->createVerificationForm($codeValidationCallback);
 
         $formSendEmail->handleRequest($request);
+
         if ($formSendEmail->isSubmitted() && $formSendEmail->isValid()) {
             $this->administratorTwoFactorFacade->generateAndSendEmail($administrator);
             $this->addSuccessFlashTwig(t('An email with 6 digit code was sent to your email address.'));
         } else {
             $formVerification->handleRequest($request);
+
             if ($formVerification->isSubmitted() && $formVerification->isValid()) {
                 $this->administratorTwoFactorFacade->disableTwoFactorAuthentication($administrator);
                 $this->addSuccessFlashTwig(t('Two factor authentication was disabled'));
+
                 return $this->redirectToRoute('admin_administrator_edit', ['id' => $administrator->getId()]);
             }
         }
@@ -266,6 +280,7 @@ class AdministratorController extends BaseAdministratorController
             ],
         );
         $form->add('verify', SubmitType::class, ['label' => t('Confirm authentication code')]);
+
         return $form;
     }
 
@@ -292,6 +307,7 @@ class AdministratorController extends BaseAdministratorController
 
         $formSendEmail = $formFactory->createNamed('formSendEmail');
         $formSendEmail->add('send', SubmitType::class, ['label' => t('Send me authentication code')]);
+
         return $formSendEmail;
     }
 

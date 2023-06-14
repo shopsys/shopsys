@@ -32,6 +32,7 @@ class ImageRepository
             ->andWhere('i.entityId IN (:entities)')->setParameter('entities', $entityIds)
             ->addOrderBy('i.position', 'asc')
             ->addOrderBy('i.id', 'asc');
+
         if ($type === null) {
             $queryBuilder->andWhere('i.type IS NULL');
         } else {

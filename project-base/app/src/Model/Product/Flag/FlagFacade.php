@@ -97,11 +97,14 @@ class FlagFacade extends BaseFlagFacade
     public function deleteByAkeneoCode(string $akeneoCode): bool
     {
         $flag = $this->flagRepository->findByAkeneoCode($akeneoCode);
+
         if ($flag !== null) {
             $this->em->remove($flag);
             $this->em->flush();
+
             return true;
         }
+
         return false;
     }
 

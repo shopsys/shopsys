@@ -41,6 +41,7 @@ class ImagesBatchLoader
         $imagesBatchLoadDataByEntityNameAndType = $this->getImageBatchLoadDataArrayByEntityAndType($imagesBatchLoadData);
 
         $allImages = [];
+
         foreach ($imagesBatchLoadDataByEntityNameAndType as $entityName => $dataByTypes) {
             foreach ($dataByTypes as $type => $imagesBatchLoadDataOfEntityAndType) {
                 $allImages = array_merge($allImages, $this->getImagesByEntityNameAndTypeIndexedByDataId($imagesBatchLoadDataOfEntityAndType, $entityName, $type));
@@ -68,9 +69,11 @@ class ImagesBatchLoader
         $imagesIndexedByEntityId = $this->frontendApiImageFacade->getAllImagesIndexedByEntityId($entityIds, $entityName, $type);
 
         $images = [];
+
         foreach ($imagesBatchLoadData as $imageBatchLoadData) {
             if (!isset($imagesIndexedByEntityId[$imageBatchLoadData->getEntityId()])) {
                 $images[$imageBatchLoadData->getId()] = [];
+
                 continue;
             }
             $entityResolvedImages = $this->getResolvedImages($imagesIndexedByEntityId[$imageBatchLoadData->getEntityId()], $imageBatchLoadData->getSizeConfigs());
@@ -87,6 +90,7 @@ class ImagesBatchLoader
     private function getImageBatchLoadDataArrayByEntityAndType(array $imagesBatchLoadData): array
     {
         $result = [];
+
         foreach ($imagesBatchLoadData as $imageBatchLoadData) {
             $entityName = $imageBatchLoadData->getEntityName();
             $type = Utils::ifNull($imageBatchLoadData->getType(), ImageEntityConfig::WITHOUT_NAME_KEY);
@@ -106,9 +110,11 @@ class ImagesBatchLoader
         array $imagesBatchLoadData,
     ): array {
         $sortedImages = [];
+
         foreach ($imagesBatchLoadData as $imageBatchLoadData) {
             if (array_key_exists($imageBatchLoadData->getId(), $allImagesIndexedByImageBatchLoadDataId) === false) {
                 $sortedImages[] = [];
+
                 continue;
             }
             $sortedImages[] = $allImagesIndexedByImageBatchLoadDataId[$imageBatchLoadData->getId()];
@@ -128,6 +134,7 @@ class ImagesBatchLoader
 
         foreach ($images as $image) {
             $imageSizes = [];
+
             foreach ($sizeConfigs as $sizeConfig) {
                 try {
                     $imageSizes[] = $this->getResolvedImage($image, $sizeConfig);

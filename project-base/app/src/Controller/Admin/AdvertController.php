@@ -50,6 +50,7 @@ class AdvertController extends BaseAdvertController
                     'url' => $this->generateUrl('admin_advert_edit', ['id' => $advert->getId()]),
                 ],
             );
+
             return $this->redirectToRoute('admin_advert_list');
         }
 

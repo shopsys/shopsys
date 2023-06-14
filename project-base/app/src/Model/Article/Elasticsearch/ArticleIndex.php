@@ -37,6 +37,7 @@ class ArticleIndex extends AbstractIndex
     public function getExportDataForBatch(int $domainId, int $lastProcessedId, int $batchSize): array
     {
         $results = [];
+
         foreach ($this->articleExportRepository->getAllVisibleArticleSitesByDomainId($domainId, $batchSize, $lastProcessedId) as $article) {
             $results[$article->getId()] = $this->articleExportRepository->extractArticle($article);
         }

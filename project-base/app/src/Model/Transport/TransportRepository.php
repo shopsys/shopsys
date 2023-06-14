@@ -36,6 +36,7 @@ class TransportRepository extends BaseTransportRepository
             ->join('t.translations', 'tt', Join::WITH, 'tt.locale = :locale')
             ->setParameter('domainId', $domainConfig->getId())
             ->setParameter('locale', $domainConfig->getLocale());
+
         if ($totalWeight !== null) {
             $queryBuilder
                 ->andWhere('t.maxWeight IS NULL OR t.maxWeight >= :maxWeight')

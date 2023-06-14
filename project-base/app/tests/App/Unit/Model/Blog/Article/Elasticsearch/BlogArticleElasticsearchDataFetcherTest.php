@@ -128,6 +128,7 @@ class BlogArticleElasticsearchDataFetcherTest extends TestCase
     private function getMockedHits(...$blogArticlesData): array
     {
         $mockedHits = [];
+
         foreach ($blogArticlesData as $blogArticleData) {
             $mockedHits[] = [
                 '_index' => 'blog_article_1_index_hash',

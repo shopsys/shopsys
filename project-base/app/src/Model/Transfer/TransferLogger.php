@@ -31,6 +31,7 @@ class TransferLogger implements TransferLoggerInterface
     public function persistAllLoggedTransferIssues(): void
     {
         $transferIssuesCount = count($this->transferIssueDataList);
+
         if ($transferIssuesCount === 0) {
             return;
         }

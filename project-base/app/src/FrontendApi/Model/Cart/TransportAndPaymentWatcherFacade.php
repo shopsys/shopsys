@@ -171,11 +171,13 @@ class TransportAndPaymentWatcherFacade
         }
 
         $transport = $cart->getTransport();
+
         if ($transport === null) {
             if ($cart->getTransportWatchedPrice() !== null) {
                 // this might happen when transport is set to null in cart thanks to "onDelete=SET NULL" ORM setting
                 $this->setTransportInCartUnavailable($cart);
             }
+
             return;
         }
 
@@ -199,15 +201,19 @@ class TransportAndPaymentWatcherFacade
         }
 
         $payment = $cart->getPayment();
+
         if ($payment === null) {
             if ($cart->getPaymentWatchedPrice() !== null) {
                 // this might happen when payment is set to null in cart thanks to "onDelete=SET NULL" ORM setting
                 $this->setPaymentInCartUnavailable($cart);
             }
+
             return;
         }
+
         if ($this->paymentFacade->isPaymentVisibleAndEnabledOnCurrentDomain($payment) === false) {
             $this->setPaymentInCartUnavailable($cart);
+
             return;
         }
         $this->checkPaymentPrice($cart, $payment);

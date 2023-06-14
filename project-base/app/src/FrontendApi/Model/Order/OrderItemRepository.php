@@ -23,6 +23,7 @@ class OrderItemRepository
     public function loadAllByOrders(array $orders): array
     {
         $allOrderItemsByOrderId = [];
+
         foreach ($orders as $order) {
             $allOrderItemsByOrderId[$order->getId()] = [];
         }

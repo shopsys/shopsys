@@ -269,6 +269,7 @@ class FilterQuery extends BaseFilterQuery
         if ($minimalPrice !== null) {
             $priceGte = (float)$minimalPrice->getAmount();
         }
+
         if ($maximalPrice !== null) {
             $priceLte = (float)$maximalPrice->getAmount();
         }

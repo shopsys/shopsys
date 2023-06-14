@@ -258,11 +258,13 @@ class CartTransportTest extends GraphQlTestCase
         /** @var \App\Model\Transport\Transport $transport */
         $transport = $this->getReference($transportReferenceName);
         $pickupPlaceIdentifier = null;
+
         if ($transportReferenceName === TransportDataFixture::TRANSPORT_PERSONAL) {
             /** @var \App\Model\Store\Store $store */
             $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
             $pickupPlaceIdentifier = $store->getUuid();
         }
+
         return $this->addTransportToDemoCart($transport->getUuid(), $pickupPlaceIdentifier);
     }
 
@@ -274,6 +276,7 @@ class CartTransportTest extends GraphQlTestCase
     private function addTransportToDemoCart(string $transportUuid, ?string $pickupPlaceIdentifier = null): array
     {
         $pickupPlaceIdentifierLine = '';
+
         if ($pickupPlaceIdentifier !== null) {
             $pickupPlaceIdentifierLine = 'pickupPlaceIdentifier: "' . $pickupPlaceIdentifier . '"';
         }

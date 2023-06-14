@@ -111,6 +111,7 @@ class BlogArticleController extends AdminBaseController
                         'url' => $this->generateUrl('admin_blogarticle_edit', ['id' => $blogArticle->getId()]),
                     ],
                 );
+
             return $this->redirectToRoute('admin_blogarticle_list');
         }
 
@@ -151,6 +152,7 @@ class BlogArticleController extends AdminBaseController
                         'url' => $this->generateUrl('admin_blogarticle_edit', ['id' => $blogArticle->getId()]),
                     ],
                 );
+
             return $this->redirectToRoute('admin_blogarticle_list');
         }
 

@@ -22,6 +22,7 @@ class ComplexityCalculator
         if ($argument->offsetExists('first')) {
             return $argument['first'] * $oneItemComplexity;
         }
+
         if ($argument->offsetExists('last')) {
             return $argument['last'] * $oneItemComplexity;
         }

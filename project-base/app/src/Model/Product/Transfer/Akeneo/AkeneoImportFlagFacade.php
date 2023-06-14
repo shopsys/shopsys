@@ -112,6 +112,7 @@ class AkeneoImportFlagFacade extends AbstractAkeneoImportTransfer
                 'Import flags from Akeneo probably faild, because all flags with akeneo code should be deleted. '
                 . 'Deletion was aborted.',
             );
+
             return;
         }
 

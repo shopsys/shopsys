@@ -7,6 +7,10 @@ namespace App\Model\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade as BaseProductVisibilityFacade;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
+/**
+ * @method __construct(\App\Model\Product\ProductVisibilityRepository $productVisibilityRepository)
+ * @method markProductsForRecalculationAffectedByCategory(\App\Model\Category\Category $category)
+ */
 class ProductVisibilityFacade extends BaseProductVisibilityFacade
 {
     /**

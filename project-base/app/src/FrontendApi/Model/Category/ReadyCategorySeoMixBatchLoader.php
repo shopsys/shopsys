@@ -36,6 +36,7 @@ class ReadyCategorySeoMixBatchLoader
         $allReadyCategorySeoMixes = $this->readyCategorySeoMixFacade->getAllIndexedByCategoryId($categoryIds, $this->domain->getCurrentDomainConfig());
 
         $result = [];
+
         foreach ($allReadyCategorySeoMixes as $readyCategorySeoMixes) {
             $result[] = array_map(
                 fn (ReadyCategorySeoMix $readyCategorySeoMix) => [

@@ -56,6 +56,7 @@ class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
         } catch (Exception $exception) {
             $this->logger->error($exception->getMessage(), ['exception' => $exception]);
             $this->em->rollback();
+
             throw $exception;
         }
     }
@@ -63,12 +64,14 @@ class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
     private function downloadAndUpdatePaymentMethodsForAllDomains(): void
     {
         $allDomains = $this->domain->getAll();
+
         foreach ($allDomains as $domain) {
             if (array_key_exists($domain->getLocale(), $this->goPayConfig) === false) {
                 continue;
             }
 
             $this->logger->info(sprintf('downloading for %s locale', $domain->getLocale()));
+
             try {
                 $this->paymentMethodFacade->downloadAndUpdatePaymentMethods($domain);
             } catch (GoPayPaymentDownloadException $ex) {

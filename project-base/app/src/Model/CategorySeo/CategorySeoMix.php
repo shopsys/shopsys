@@ -100,6 +100,7 @@ class CategorySeoMix
     public function getChoseCategorySeoMixCombination(array $parameters): ChoseCategorySeoMixCombination
     {
         $parameterValueIdsByParameterIds = [];
+
         foreach ($this->getParameterValues() as $index => $parameterValue) {
             $parameterValueIdsByParameterIds[$parameters[$index]->getId()] = $parameterValue->getId();
         }

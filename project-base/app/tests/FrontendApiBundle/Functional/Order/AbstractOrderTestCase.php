@@ -140,6 +140,7 @@ class AbstractOrderTestCase extends GraphQlTestCase
         ?string $pickupPlaceIdentifier = null,
     ): void {
         $pickupPlaceIdentifierLine = '';
+
         if ($pickupPlaceIdentifier !== null) {
             $pickupPlaceIdentifierLine = 'pickupPlaceIdentifier: "' . $pickupPlaceIdentifier . '"';
         }

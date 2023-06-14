@@ -94,6 +94,7 @@ class PaymentServiceFacade
             try {
                 $paymentServiceFacade = $this->getPaymentServiceFacadeByPaymentType($paymentTransaction->getPayment()->getType());
                 $update = $paymentServiceFacade->updateTransaction($paymentTransactionData);
+
                 if ($update) {
                     $this->paymentTransactionFacade->edit($paymentTransaction->getId(), $paymentTransactionData);
                 }
@@ -113,6 +114,7 @@ class PaymentServiceFacade
 
         try {
             $paymentServiceFacade = $this->getPaymentServiceFacadeByPaymentType($paymentTransaction->getPayment()->getType());
+
             try {
                 $update = $paymentServiceFacade->refundTransaction($paymentTransactionData, $refundAmount);
             } catch (GoPayPaymentDownloadException $exception) {

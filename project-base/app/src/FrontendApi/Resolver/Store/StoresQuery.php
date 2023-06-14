@@ -38,6 +38,7 @@ class StoresQuery extends AbstractQuery
         });
 
         $storesCount = $this->storeFacade->getStoresCountEnabledOnDomain($domainId);
+
         return $paginator->auto($argument, $storesCount);
     }
 

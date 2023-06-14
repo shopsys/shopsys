@@ -29,6 +29,7 @@ class LastOrderQuery extends AbstractQuery
     {
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+
         if ($customerUser === null) {
             throw new InvalidCredentialsUserError('You need to be logged in.');
         }

@@ -39,12 +39,15 @@ class PaymentInOrderValidator extends ConstraintValidator
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         $cart = $this->cartFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
         $paymentInCart = $cart->getPayment();
+
         if ($paymentInCart === null) {
             $this->context->buildViolation($constraint->paymentNotSetMessage)
                 ->setCode($constraint::PAYMENT_NOT_SET_ERROR)
                 ->addViolation();
+
             return;
         }
+
         if ($this->paymentFacade->isPaymentVisibleAndEnabledOnCurrentDomain($paymentInCart) === false) {
             $this->context->buildViolation($constraint->unavailablePaymentMessage)
                 ->setCode($constraint::UNAVAILABLE_PAYMENT_ERROR)

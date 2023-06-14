@@ -69,6 +69,7 @@ class BlogArticlesTest extends GraphQlTestCase
 
             $this->assertArrayHasKey('edges', $responseData);
             $this->assertCount(count($expectedBlogArticlesData), $responseData['edges']);
+
             foreach ($responseData['edges'] as $key => $edge) {
                 $this->assertArrayHasKey('node', $edge);
                 $this->assertArrayHasKey('name', $edge['node']);

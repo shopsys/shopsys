@@ -216,6 +216,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
         ];
 
         $positions = [];
+
         foreach ($productsIdsWithImageIdSameAsProductId as $productId) {
             $names = [];
 
@@ -272,6 +273,7 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
 
         foreach ($imagesIdsIndexedBySliderItemsIds as $sliderItemId => $imageId) {
             $names = [];
+
             foreach ($this->domain->getAllLocales() as $locale) {
                 $names[$locale] = 'Product ' . $sliderItemId . ' image';
             }

@@ -2930,6 +2930,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->ean = '8845781243205';
 
         $parameterTranslations = [];
+
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
             $productData->name[$locale] = t('Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -6151,6 +6152,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $parameter = $this->parameterFacade->findParameterByNames($parameterNamesByLocale);
 
         $parameterGroup = null;
+
         if ($parameterGroupNamesByLocale !== null) {
             $parameterGroup = $this->findParameterGroupByNamesOrCreateNew($parameterGroupNamesByLocale);
         }
@@ -6437,6 +6439,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     public function setStocksQuantity(ProductData $productData, int $quantity)
     {
         $stocks = $this->stockRepository->getAllStocks();
+
         foreach ($stocks as $stock) {
             $productStockData = $this->productStockDataFactory->createFromStock($stock);
             $productStockData->productQuantity = $quantity;
@@ -6451,6 +6454,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     private function getProductStoreDataWithExposedOnStores(array $storeReferenceNames): array
     {
         $productStoreDataArray = [];
+
         foreach ($storeReferenceNames as $storeReferenceName) {
             /** @var \App\Model\Store\Store $store */
             $store = $this->getReference($storeReferenceName);

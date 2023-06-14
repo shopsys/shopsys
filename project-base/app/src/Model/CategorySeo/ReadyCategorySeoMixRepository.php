@@ -161,6 +161,7 @@ class ReadyCategorySeoMixRepository
                 ->getQuery()->getScalarResult();
 
             $readySeoCategorySetup = [];
+
             foreach ($scalarData as $data) {
                 $readySeoCategorySetup[] = $data['json'];
             }

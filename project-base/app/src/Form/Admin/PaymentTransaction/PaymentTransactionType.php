@@ -81,6 +81,7 @@ class PaymentTransactionType extends AbstractType
             $context->buildViolation(t('If you want execute refund, you have to setup refund amount.'))
                 ->atPath('refundAmount')
                 ->addViolation();
+
             return;
         }
 

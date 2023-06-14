@@ -16,6 +16,7 @@ class NotNullableColumnsFinder extends BaseNotNullableColumnsFinder
     protected function getNotNullableAssociationColumnNames(ClassMetadataInfo $classMetadataInfo)
     {
         $notNullableAssociationNames = [];
+
         foreach ($classMetadataInfo->getAssociationMappings() as $associationMapping) {
             if (array_key_exists('joinColumns', $associationMapping)
                 && $associationMapping['joinColumns'][0]['nullable'] === false

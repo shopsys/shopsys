@@ -88,6 +88,7 @@ class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
     private function extractCategoryIdsAggregation(array $productCountAggregation): array
     {
         $result = [];
+
         foreach ($productCountAggregation['aggregations']['by_categories']['buckets'] as $categoryAggregation) {
             $result[] = $categoryAggregation['key'];
         }
@@ -107,6 +108,7 @@ class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
         $keys = array_keys($filterQueries);
         $products = [];
         $totals = [];
+
         foreach ($result['responses'] as $index => $response) {
             $products[$keys[$index]] = $this->extractHits($response);
             $totals[$keys[$index]] = $this->extractTotalCount($response);
