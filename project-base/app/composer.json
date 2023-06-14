@@ -42,8 +42,6 @@
         "commerceguys/intl": "^1.0.0",
         "composer/composer": "^2.2.12",
         "craue/formflow-bundle": "^3.0.3",
-        "cweagans/composer-patches": "^1.7",
-        "devops/kubernetes-deployment": "^1.11.0",
         "doctrine/annotations": "^1.6.0",
         "doctrine/common": "^3.2.2",
         "doctrine/doctrine-bundle": "^2.5.7",
@@ -187,7 +185,6 @@
             "allow-contrib": true,
             "require": "^5.4",
             "docker": false
-        },
-        "patches-file": "composer/composer.patches.json"
+        }
     }
 }
