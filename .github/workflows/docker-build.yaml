@@ -39,7 +39,7 @@ jobs:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 run: |
                     DOCKER_PHP_FPM_IMAGE_TAG=github-action-`find project-base/app/docker/php-fpm -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
-                    DOCKER_STOREFRONT_IMAGE_TAG=gitlab-action-storefront-${{ github.sha }}
+                    DOCKER_STOREFRONT_IMAGE_TAG=github-action-storefront-${{ github.sha }}
                     echo "DOCKER_PHP_FPM_IMAGE_TAG=${DOCKER_PHP_FPM_IMAGE_TAG}" >> $GITHUB_ENV
                     echo "DOCKER_STOREFRONT_IMAGE_TAG=${DOCKER_STOREFRONT_IMAGE_TAG}" >> $GITHUB_ENV
                     echo "DOCKER_USERNAME=${DOCKER_USERNAME}" >> $GITHUB_ENV
