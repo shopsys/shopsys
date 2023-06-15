@@ -34,6 +34,8 @@ services:
         container_name: shopsys-framework-storefront
         ports:
             - "3000:3000"
+        volumes:
+            - ./project-base/storefront:/home/node/app
 
     php-fpm:
         image: php-fpm-image
