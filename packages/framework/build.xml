@@ -27,7 +27,7 @@
     <property name="path.phplint.executable" value="${path.bin}/parallel-lint"/>
     <property name="path.phpstan.config" value="${path.root}/phpstan.neon"/>
     <property name="path.phpstan.executable" value="${path.bin}/phpstan"/>
-    <property name="path.phpunit.executable" value="${path.bin}/phpunit"/>
+    <property name="path.phpunit.executable" value="${path.bin}/paratest"/>
     <property name="path.root" value="."/>
     <property name="path.src" value="${path.root}/src"/>
     <property name="path.assets" value="${path.root}/assets"/>
@@ -1347,7 +1347,7 @@
             <istrue value="${domains-info.is-multidomain}"/>
             <then>
                 <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
-                    <arg value="--colors=always"/>
+                    <arg value="--colors"/>
                     <arg value="--testsuite"/>
                     <arg value="Functional"/>
                     <arg value="--exclude-group"/>
@@ -1443,7 +1443,7 @@
             <istrue value="${domains-info.is-multidomain}"/>
             <then>
                 <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
-                    <arg value="--colors=always"/>
+                    <arg value="--colors"/>
                     <arg value="--testsuite"/>
                     <arg value="Smoke"/>
                     <arg value="--exclude-group"/>
@@ -1468,7 +1468,7 @@
 
     <target name="tests-unit" depends="production-protection,clean,tests-unit-jest" description="Runs unit tests.">
         <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
-            <arg value="--colors=always"/>
+            <arg value="--colors"/>
             <arg value="--testsuite"/>
             <arg value="Unit"/>
             <arg value="--configuration"/>

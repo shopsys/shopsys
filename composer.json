@@ -173,6 +173,7 @@
     },
     "require-dev": {
         "ext-pgsql": "*",
+        "brianium/paratest": "^6.4",
         "codeception/codeception": "^5.0.10",
         "codeception/module-db": "^3.1.0",
         "codeception/module-webdriver": "^3.2.1",
