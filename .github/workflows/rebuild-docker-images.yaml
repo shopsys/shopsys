@@ -4,7 +4,7 @@ on:
 name: Rebuild Docker images
 jobs:
     rebuild-master-images:
-        name: Rebuild ${{ matrix.branches }} branch Docker images in Github Container Registry
+        name: Rebuild ${{ matrix.branches }} branch Docker images in GitHub Container Registry
         runs-on: ubuntu-20.04
         strategy:
             matrix:
@@ -31,11 +31,19 @@ jobs:
                     DOCKER_PHP_FPM_IMAGE_TAG=github-action-`find project-base/app/docker/php-fpm -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
                     echo "DOCKER_PHP_FPM_IMAGE_TAG=${DOCKER_PHP_FPM_IMAGE_TAG}" >> $GITHUB_ENV
                     echo "DOCKER_USERNAME=${DOCKER_USERNAME}" >> $GITHUB_ENV
-            -   name: Build PHP-FPM image and push it to Github Container Registry
-                run: .github/build-php-fpm-image.sh
+            -   name: Build PHP-FPM image and push it to GitHub Container Registry
+                run: |
+                    DOCKER_PHP_FPM_REPOSITORY_TAG=ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}
+                    .github/build-php-fpm-image.sh ${DOCKER_PHP_FPM_REPOSITORY_TAG}
+                    docker image push ${DOCKER_PHP_FPM_REPOSITORY_TAG}
             -   name: Generate Elasticseach tag
                 run: |
                     DOCKER_ELASTICSEARCH_IMAGE_TAG=github-action-`find project-base/app/docker/elasticsearch -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
                     echo "DOCKER_ELASTICSEARCH_IMAGE_TAG=${DOCKER_ELASTICSEARCH_IMAGE_TAG}" >> $GITHUB_ENV
-            -   name: Build Elasticsearch image and push it to Github Container Registry
-                run: .github/build-elasticsearch-image.sh
+            -   name: Build Elasticsearch image and push it to GitHub Container Registry
+                env:
+                    DOCKER_ELASTICSEARCH_REPOSITORY_TAG:
+                run: |
+                    DOCKER_ELASTICSEARCH_REPOSITORY_TAG=ghcr.io/${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG}
+                    .github/build-elasticsearch-image.sh ${DOCKER_ELASTICSEARCH_REPOSITORY_TAG}
+                    docker image push ${DOCKER_ELASTICSEARCH_REPOSITORY_TAG}

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DOCKER_STOREFRONT_REPOSITORY_TAG=ghcr.io/${DOCKER_USERNAME}/storefront:${DOCKER_STOREFRONT_IMAGE_TAG}
+DOCKER_STOREFRONT_REPOSITORY_TAG=$1
 
 docker image build \
     --tag ${DOCKER_STOREFRONT_REPOSITORY_TAG} \
@@ -9,4 +9,3 @@ docker image build \
     --compress \
     -f project-base/storefront/docker/Dockerfile \
     ./project-base/storefront
-docker image push ${DOCKER_STOREFRONT_REPOSITORY_TAG}
