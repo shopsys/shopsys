@@ -15,7 +15,7 @@ name: Docker build
 jobs:
     variables:
         name: Prepare variables and artifacts
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-22.04
         outputs:
             DOCKER_PHP_FPM_REPOSITORY_TAG: ${{ steps.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}
             DOCKER_PHP_FPM_IMAGE_EXISTS: ${{ steps.variables.outputs.DOCKER_PHP_FPM_IMAGE_EXISTS }}
@@ -72,7 +72,7 @@ jobs:
                 run: "sed -i \"s#php-fpm-image#${{ steps.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}-${{ github.sha }}#\" ./docker-compose.review.yml"
             -   name: Update docker-compose.review.yml file with right Storefront image
                 run: "sed -i \"s#storefront-image#${{ steps.variables.outputs.DOCKER_STOREFRONT_REPOSITORY_TAG }}#\" ./docker-compose.review.yml"
-            -   name: Update docker-compose.yml file with right Elasticsearch image
+            -   name: Update docker-compose.review.yml file with right Elasticsearch image
                 run: "sed -i \"s#elasticsearch-image#${{ steps.variables.outputs.DOCKER_ELASTICSEARCH_REPOSITORY_TAG }}#\" ./docker-compose.review.yml"
             -   name: Set TRAEFIK_HOSTS ENV variables
                 run: |
@@ -82,6 +82,14 @@ jobs:
                 run: "sed -i \"s#BRANCH_NAME#${BRANCH_NAME}#\" ./docker-compose.review.yml"
             -   name: Update docker-compose.review.yml file with TRAEFIK_HOSTS ENV variable
                 run: "sed -i \"s#TRAEFIK_HOSTS#${TRAEFIK_HOSTS}#\" ./docker-compose.review.yml"
+            -   name: Copy and rename docker-compose.github-actions.cypress.yml.dist to docker-compose.cypress.yml
+                run: cp -f ./docker/conf/docker-compose.github-actions.cypress.yml.dist ./docker-compose.cypress.yml
+            -   name: Update docker-compose.cypress.yml file with right PHP-FPM image
+                run: "sed -i \"s#php-fpm-image#${{ steps.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}-${{ github.sha }}#\" ./docker-compose.cypress.yml"
+            -   name: Update docker-compose.cypress.yml file with right Storefront image
+                run: "sed -i \"s#storefront-image#${{ steps.variables.outputs.DOCKER_STOREFRONT_REPOSITORY_TAG }}#\" ./docker-compose.cypress.yml"
+            -   name: Update docker-compose.cypress.yml file with right Elasticsearch image
+                run: "sed -i \"s#elasticsearch-image#${{ steps.variables.outputs.DOCKER_ELASTICSEARCH_REPOSITORY_TAG }}#\" ./docker-compose.cypress.yml"
             -   name: Upload docker-compose.yml to artifacts
                 uses: actions/upload-artifact@v3
                 with:
@@ -92,6 +100,11 @@ jobs:
                 with:
                     name: docker-compose-review
                     path: ./docker-compose.review.yml
+            -   name: Upload docker-compose.cypress.yml to artifacts
+                uses: actions/upload-artifact@v3
+                with:
+                    name: docker-compose-cypress
+                    path: ./docker-compose.cypress.yml
             -   name: Upload set-urls-for-review.sh to artifacts
                 uses: actions/upload-artifact@v3
                 with:
@@ -100,7 +113,7 @@ jobs:
     build-php-fpm-image:
         if: github.event.pull_request.head.repo.full_name == 'shopsys/shopsys'
         name: Build PHP-FPM image
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-22.04
         needs: variables
         permissions:
             contents: read
@@ -133,8 +146,7 @@ jobs:
                     docker commit -m="Include Composer and NPM files" php-fpm ${{ needs.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}-${{ github.sha }}
                     docker image push ${{ needs.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}-${{ github.sha }}
     build-storefront-image:
-        if: github.event.pull_request.head.repo.full_name == 'shopsys/shopsys'
-        name: Build Storefront image
+        name: Build storefront image
         runs-on: ubuntu-22.04
         needs: variables
         permissions:
@@ -158,7 +170,7 @@ jobs:
     build-storefront-ci-image:
         if: github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' && needs.variables.outputs.DOCKER_STOREFRONT_CI_IMAGE_EXISTS == 0
         name: Build storefront CI image
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-22.04
         needs: variables
         permissions:
             contents: read
@@ -181,7 +193,7 @@ jobs:
     build-elasticsearch-image:
         if: github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' && needs.variables.outputs.DOCKER_ELASTICSEARCH_IMAGE_EXISTS == 0
         name: Build Elasticsearch image
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-22.04
         needs: variables
         permissions:
             contents: read
@@ -207,7 +219,7 @@ jobs:
         if: |
             always() && !failure() && !cancelled() &&
             (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped')
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-22.04
         steps:
             -   name: Download docker-compose.yml from artifacts
                 uses: actions/download-artifact@v3
@@ -275,7 +287,7 @@ jobs:
             always() && !failure() && !cancelled() &&
             (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped') &&
             (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped')
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
                 uses: actions/checkout@v3
@@ -302,7 +314,7 @@ jobs:
             always() && !failure() && !cancelled() &&
             (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped') &&
             (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped')
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
                 uses: actions/checkout@v3
@@ -331,10 +343,60 @@ jobs:
                 with:
                     name: acceptance-logs
                     path: ./project-base/app/var/log/
+    tests-storefront-acceptance:
+        name: Run Cypress tests
+        needs: [build-php-fpm-image, build-storefront-image, build-elasticsearch-image]
+        if: |
+            always() && !failure() && !cancelled() &&
+            (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped') &&
+            (needs.build-storefront-image.result == 'success' || needs.build-storefront-image.result == 'skipped') &&
+            (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped')
+        runs-on: ubuntu-22.04
+        steps:
+            -   name: GIT checkout branch - ${{ github.ref }}
+                uses: actions/checkout@v3
+                with:
+                    ref: ${{ github.ref }}
+            -   name: Download docker-compose.cypress.yml from artifacts
+                uses: actions/download-artifact@v3
+                with:
+                    name: docker-compose-cypress
+            -   name: Build application
+                run: |
+                    mv docker-compose.cypress.yml docker-compose.yml
+                    docker compose up -d
+                    docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-enable frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate test-db-create test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export
+                    docker compose exec php-fpm php phing -D production.confirm.action=y -D change.environment=acc environment-change
+            -   name: Run Cypress tests
+                run: docker compose run cypress
+            -   name: Upload Cypress videos to artifacts
+                if: ${{ failure() }}
+                uses: actions/upload-artifact@v3
+                with:
+                    name: cypress-videos
+                    path: ./videos
+            -   name: Upload Cypress screenshots to artifacts
+                if: ${{ failure() }}
+                uses: actions/upload-artifact@v3
+                with:
+                    name: cypress-screenshots
+                    path: ./screenshots
+            -   name: PHP-FPM container logs
+                if: ${{ failure() }}
+                run: docker compose logs php-fpm
+            -   name: Nginx container logs
+                if: ${{ failure() }}
+                run: docker compose logs webserver
+            -   name: Storefront container logs
+                if: ${{ failure() }}
+                run: docker compose logs storefront
+            -   name: Cypress container logs
+                if: ${{ failure() }}
+                run: docker compose logs cypress
     build-fork-docker-images:
         if: github.event.pull_request.head.repo.full_name != 'shopsys/shopsys'
         name: Build application and run standards checks and tests
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-22.04
         needs: variables
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
@@ -418,8 +480,8 @@ jobs:
                     cd ${BRANCH_NAME}
                     chmod +x set-urls-for-review.sh
                     ./set-urls-for-review.sh setDomainsToDockerCompose
+                    docker compose down -v --remove-orphans || true
                     docker compose pull --parallel webserver postgres redis php-fpm elasticsearch smtp-server
-                    docker compose down -v --remove-orphans
                     docker compose up -d --force-recreate
                     ./set-urls-for-review.sh setUrlsToDomainsUrls
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y db-create demo-data error-pages-generate warmup
@@ -428,7 +490,7 @@ jobs:
         if: ${{ always() }}
         name: Build successful
         needs: [tests-acceptance, standards, tests-unit-functional-smoke, standards-storefront, review, build-fork-docker-images]
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-22.04
         env:
             BUILD_FORK_RESULT: ${{ needs.build-fork-docker-images.result }}
             STANDARDS_RESULT: ${{ needs.standards.result }}
