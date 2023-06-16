@@ -22,8 +22,8 @@ jobs:
                 uses: docker/login-action@v2
                 with:
                     registry: ghcr.io
-                    username: ${{ github.actor }}
-                    password: ${{ secrets.GITHUB_TOKEN }}
+                    username: ${{ secrets.ACTIONS_USER }}
+                    password: ${{ secrets.ACTIONS_TOKEN }}
             -   name: Generate PHP-FPM tag
                 env:
                     DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
