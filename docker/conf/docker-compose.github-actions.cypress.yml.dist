@@ -1,0 +1,75 @@
+version: "3.7"
+services:
+    postgres:
+        image: postgres:12.1-alpine
+        container_name: shopsys-framework-postgres
+        volumes:
+            - postgres-data:/var/lib/postgresql/data:rw
+            - ./project-base/app/docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf
+        environment:
+            - PGDATA=/var/lib/postgresql/data/pgdata
+            - POSTGRES_USER=root
+            - POSTGRES_PASSWORD=root
+            - POSTGRES_DB=shopsys
+        command:
+            - postgres
+            - -c
+            - config_file=/var/lib/postgresql/data/postgresql.conf
+
+    webserver:
+        image: nginx:1.13-alpine
+        container_name: shopsys-framework-webserver
+        depends_on:
+            - php-fpm
+            - storefront
+        volumes:
+            - web-volume:/var/www/html/project-base/app/web
+            - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+        ports:
+            - "8000:8080"
+
+    storefront:
+        image: storefront-image
+        container_name: shopsys-framework-storefront
+        ports:
+            - "3000:3000"
+
+    php-fpm:
+        image: php-fpm-image
+        container_name: shopsys-framework-php-fpm
+        volumes:
+            - web-volume:/var/www/html/project-base/app/web
+
+    redis:
+        image: redis:5.0-alpine
+        container_name: shopsys-framework-redis
+
+    elasticsearch:
+        image: elasticsearch-image
+        container_name: shopsys-framework-elasticsearch
+        privileged: false
+        ulimits:
+            nofile:
+                soft: 65536
+                hard: 65536
+        ports:
+            - "9200:9200"
+        environment:
+            - discovery.type=single-node
+            - "ES_JAVA_OPTS=-Xms512m -Xmx1024m"
+
+    cypress:
+        build:
+            context: ./project-base/storefront/cypress
+            dockerfile: ./docker/Dockerfile
+        container_name: shopsys-framework-cypress
+        volumes:
+            - ./videos:/app/videos
+            - ./screenshots:/app/screenshots
+
+volumes:
+    web-volume:
+    postgres-data:
+        driver_opts:
+            type: tmpfs
+            device: tmpfs
