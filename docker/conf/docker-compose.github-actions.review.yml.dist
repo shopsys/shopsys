@@ -53,6 +53,14 @@ services:
         labels:
             - traefik.enable=false
 
+    storefront:
+        restart: always
+        image: storefront-image
+        networks:
+            - default
+        labels:
+            - traefik.enable=false
+
     redis:
         image: redis:7.0-alpine
         networks:
