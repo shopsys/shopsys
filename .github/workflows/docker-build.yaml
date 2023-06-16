@@ -419,10 +419,11 @@ jobs:
             -   name: Start project
                 run: |
                     cd ${BRANCH_NAME}
+                    chmod +x set-urls-for-review.sh
+                    ./set-urls-for-review.sh setDomainsToDockerCompose
                     docker compose pull --parallel webserver postgres redis php-fpm elasticsearch smtp-server
                     docker compose down -v --remove-orphans
                     docker compose up -d --force-recreate
-                    chmod +x set-urls-for-review.sh
                     ./set-urls-for-review.sh setUrlsToDomainsUrls
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y db-create demo-data error-pages-generate warmup
                     ./set-urls-for-review.sh printDomains
