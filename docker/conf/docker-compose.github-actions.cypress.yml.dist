@@ -23,7 +23,7 @@ services:
             - php-fpm
             - storefront
         volumes:
-            - web-volume:/var/www/html/web
+            - web-volume:/var/www/html/project-base/app/web
             - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
         ports:
             - "8000:8080"
@@ -38,7 +38,7 @@ services:
         image: php-fpm-image
         container_name: shopsys-framework-php-fpm
         volumes:
-            - web-volume:/var/www/html/project-base/web
+            - web-volume:/var/www/html/project-base/app/web
 
     redis:
         image: redis:5.0-alpine
