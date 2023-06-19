@@ -38,7 +38,7 @@ services:
         image: php-fpm-image
         container_name: shopsys-framework-php-fpm
         volumes:
-            - web-volume:/var/www/html/web
+            - web-volume:/var/www/html/project-base/web
 
     redis:
         image: redis:5.0-alpine
