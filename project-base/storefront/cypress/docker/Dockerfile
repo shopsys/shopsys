@@ -6,4 +6,4 @@ WORKDIR /app
 
 COPY . /app
 
-CMD npm ci && npx cypress run
+CMD whoami && ls -la && npm ci && npx cypress run
