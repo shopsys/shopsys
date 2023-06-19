@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Order;
 
 use App\Model\Order\OrderData;
-use Tests\FrameworkBundle\Unit\Model\Order\TestOrderProvider as BaseTestOrderProvider;
+use Tests\FrameworkBundle\Test\Provider\TestOrderProvider as BaseTestOrderProvider;
 
 /**
  * @method static \App\Model\Order\OrderData getTestOrderData()

@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
-use Tests\FrameworkBundle\Unit\Model\Order\TestOrderProvider;
+use Tests\FrameworkBundle\Test\Provider\TestOrderProvider;
 
 class CustomerUserUpdateDataFactoryTest extends TestCase
 {
