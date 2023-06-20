@@ -42,4 +42,7 @@ fragment ProductDetailInterfaceFragment on Product {
     seoTitle
     seoMetaDescription
     isMainVariant
+    productVideos {
+        ...VideoTokenFragment
+    }
 }

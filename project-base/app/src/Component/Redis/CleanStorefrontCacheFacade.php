@@ -9,13 +9,24 @@ use Redis;
 class CleanStorefrontCacheFacade
 {
     public const NAVIGATION_QUERY_KEY_PART = 'NavigationQuery';
+    public const BLOG_ARTICLES_QUERY_KEY_PART = 'BlogArticlesQuery';
+    public const ARTICLES_QUERY_KEY_PART = 'ArticlesQuery';
 
     /**
      * @param \Redis $storefrontGraphqlQueryClient
      */
     public function __construct(
-        private Redis $storefrontGraphqlQueryClient,
+        private readonly Redis $storefrontGraphqlQueryClient,
     ) {
+    }
+
+    /**
+     * @param string $locale
+     */
+    public function cleanStorefrontTranslationCache(string $locale): void
+    {
+        $keyPattern = 'translates:' . $locale . '*';
+        $this->cleanStorefrontCacheByKeyPattern($keyPattern);
     }
 
     /**
@@ -23,9 +34,18 @@ class CleanStorefrontCacheFacade
      */
     public function cleanStorefrontGraphqlQueryCache(string $queryKey = ''): void
     {
+        $keyPattern = 'queryCache:' . $queryKey . '*';
+        $this->cleanStorefrontCacheByKeyPattern($keyPattern);
+    }
+
+    /**
+     * @param string $keyPattern
+     */
+    private function cleanStorefrontCacheByKeyPattern(string $keyPattern): void
+    {
         $prefix = (string)$this->storefrontGraphqlQueryClient->getOption(Redis::OPT_PREFIX);
 
-        $keyPattern = $prefix . $queryKey . '*';
+        $keyPattern = $prefix . $keyPattern;
         $iterator = null;
         $toRemove = [];
 

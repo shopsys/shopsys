@@ -24,7 +24,6 @@ export default grapesjs.plugins.add('text-with-image', editor => {
                     <div class="gjs-text-with-image-inner inner left">
                         <img class="image">
                         <div class="gjs-text-ckeditor text">Insert your text here</div>
-                        <div class="clear"></div>
                     </div>
                 `
             }

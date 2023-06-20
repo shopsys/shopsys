@@ -1,0 +1,47 @@
+{% macro productVideoRow(formData, escape) %}
+    <tr>
+        <td >
+            {%  if escape %}
+                {{ form_errors(formData, { errors_attr: { class: 'table-form__cell__error'}})|escape }}
+                {{ form_widget(formData, { attr: { class: 'form-line__item'|trans} })|escape }}
+            {% else %}
+                {{ form_errors(formData, { errors_attr: { class: 'table-form__cell__error' }})}}
+                {{ form_widget(formData, { attr: { class: 'form-line__item'|trans} })}}
+            {% endif %}
+        </td>
+        <td>
+            <span class='js-remove-row'><i class='svg svg-delete-thin in-icon'></i></span>
+        </td>
+    </tr>
+{% endmacro %}
+
+
+{% block _product_form_videosGroup_widget %}
+    <div class="form-group">
+        <table class="table-form">
+            <thead>
+            <tr class="table-form__row">
+                <th class="table-form__cell table-form__cell--label">{{ 'Youtube URL Id'|trans }}</th>
+                <th class="table-form__cell"></th>
+            </tr>
+            </thead>
+            <tbody class="js-videos-collection" data-prototype="{{ _self.productVideoRow(form.children.productVideosData.vars.prototype, true)}}"
+            data-index="{{ form.children.productVideosData.children|length }}">
+                {% for productVideosDataRow in form.children.productVideosData %}
+                    {{ _self.productVideoRow(productVideosDataRow, false) }}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% do form.setRendered() %}
+
+    <div class="form-line form-line--no-top-border">
+        <div class="form-line__line form-line__line--no-space">
+            <span class="js-videos-collection-add-row btn btn--plus">
+                <i class="btn__icon">+</i>
+                {{ 'Add another video'|trans }}
+            </span>
+        </div>
+    </div>
+{% endblock _product_form_videosGroup_widget %}

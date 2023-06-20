@@ -10,7 +10,6 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import NextLink from 'next/link';
-import nookies from 'nookies';
 import { useEffect, useState } from 'react';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -35,7 +34,6 @@ export const MenuIconic: FC = () => {
 
     const logoutHandler = () => {
         logout();
-        nookies.destroy(null, 'contactInformation');
     };
 
     useEffect(() => {

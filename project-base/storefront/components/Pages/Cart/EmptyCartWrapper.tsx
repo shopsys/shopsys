@@ -6,7 +6,7 @@ import { getInternationalizedStaticUrls } from 'helpers/localization/getInternat
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useSessionStore } from 'store/zustand/useSessionStore';
+import { usePersistStore } from 'store/zustand/usePersistStore';
 import { CurrentCartType } from 'types/cart';
 
 type EmptyCartWrapperProps = {
@@ -24,7 +24,7 @@ export const EmptyCartWrapper: FC<EmptyCartWrapperProps> = ({
     enableHandling = true,
 }) => {
     const router = useRouter();
-    const loginLoading = useSessionStore((s) => s.loginLoading);
+    const loginLoading = usePersistStore((s) => s.loginLoading);
     const { url } = useDomainConfig();
     const [transportAndPaymentUrl] = getInternationalizedStaticUrls(['/order/transport-and-payment'], url);
     const [initiatedLoading, setInitiatedLoading] = useState(false);

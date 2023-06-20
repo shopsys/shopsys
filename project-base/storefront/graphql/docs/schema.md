@@ -92,6 +92,7 @@
     * [TransportType](#transporttype)
     * [Unit](#unit)
     * [Variant](#variant)
+    * [VideoToken](#videotoken)
   * [Inputs](#inputs)
     * [AddToCartInput](#addtocartinput)
     * [ApplyPromoCodeToCartInput](#applypromocodetocartinput)
@@ -202,11 +203,6 @@ Returns list of advert positions.
 Returns list of adverts, optionally filtered by `positionName`
 
 </td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">categoryUuid</td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td></td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">positionName</td>

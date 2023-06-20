@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use App\Model\Category\Category as AppCategory;
+use App\Model\ProductVideo\ProductVideoFacade;
 use App\Model\Stock\ProductStockData;
 use App\Model\Stock\ProductStockFacade;
 use App\Model\Stock\StockFacade;
@@ -96,6 +97,7 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Stock\StockFacade $stockFacade
      * @param \App\Model\Store\ProductStoreFacade $productStoreFacade
      * @param \App\Model\Store\StoreFacade $storeFacade
+     * @param \App\Model\ProductVideo\ProductVideoFacade $productVideoFacade
      */
     public function __construct(
         private string $productFilesUrlPrefix,
@@ -125,6 +127,7 @@ class ProductFacade extends BaseProductFacade
         private StockFacade $stockFacade,
         private ProductStoreFacade $productStoreFacade,
         private StoreFacade $storeFacade,
+        private readonly ProductVideoFacade $productVideoFacade,
     ) {
         parent::__construct(
             $em,
@@ -237,6 +240,8 @@ class ProductFacade extends BaseProductFacade
         $this->editProductStockAndStoreRelation($productData, $product);
 
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
+
+        $this->productVideoFacade->saveProductVideosToProduct($product, $productData->productVideosData);
 
         return $product;
     }

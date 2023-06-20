@@ -200,7 +200,7 @@
         "type": "text"
       },
       "searching_short_descriptions": {
-            "type": "text",
+        "type": "text",
         "analyzer": "edge_ngram_without_diacritic",
         "search_analyzer": "full_without_diacritic"
       },

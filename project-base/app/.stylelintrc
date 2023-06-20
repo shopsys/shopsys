@@ -30,7 +30,7 @@
             "ignore": ["after-comment"]
         } ],
         "unit-case": "lower",
-        "unit-whitelist": ["em", "rem", "%", "px", "s", "ms", "deg", "vh"],
+        "unit-whitelist": ["em", "rem", "%", "px", "s", "ms", "deg", "vh", "vw"],
         "no-missing-end-of-source-newline": true
     }
 }

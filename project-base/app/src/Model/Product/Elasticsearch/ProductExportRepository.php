@@ -10,6 +10,8 @@ use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Product;
 use App\Model\Product\ProductRepository;
+use App\Model\ProductVideo\ProductVideo;
+use App\Model\ProductVideo\ProductVideoTranslationsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -67,6 +69,7 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \App\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -84,6 +87,7 @@ class ProductExportRepository extends BaseProductExportRepository
         private readonly ProductPriceCalculation $productPriceCalculation,
         private readonly BreadcrumbFacade $breadcrumbFacade,
         private readonly Domain $domain,
+        private readonly ProductVideoTranslationsRepository $productVideoTranslationsRepository,
     ) {
         parent::__construct(
             $em,
@@ -235,6 +239,12 @@ class ProductExportRepository extends BaseProductExportRepository
             'exposed_stores_count' => $this->productAvailabilityFacade->getExposedStoresCount($product, $domainId),
             'related_products' => $relatedProductsId,
             'breadcrumb' => $this->extractBreadcrumb($product, $domainId, $locale),
+            'product_videos' => array_map(function (ProductVideo $productVideo) use ($locale) {
+                return [
+                    'token' => $productVideo->getVideoToken(),
+                    'description' => ($this->productVideoTranslationsRepository->findByProductVideoIdAndLocale($productVideo->getId(), $locale))->getDescription(),
+                ];
+            }, $product->getProductVideos()),
         ];
     }
 

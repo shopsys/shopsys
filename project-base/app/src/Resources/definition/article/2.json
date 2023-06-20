@@ -191,6 +191,16 @@
       "createdAt": {
         "type": "text"
       },
+      "product_videos": {
+        "properties": {
+          "description": {
+            "type": "text"
+          },
+          "token":  {
+            "type": "text"
+          }
+        }
+      },
       "breadcrumb": {
         "properties": {
           "name": {

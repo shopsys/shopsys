@@ -1,12 +1,12 @@
 import { showInfoMessage, showSuccessMessage } from 'components/Helpers/toasts';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useEffect } from 'react';
-import { useSessionStore } from 'store/zustand/useSessionStore';
+import { usePersistStore } from 'store/zustand/usePersistStore';
 
 export const LoadingHandler: FC = () => {
     const t = useTypedTranslationFunction();
-    const loginLoading = useSessionStore((s) => s.loginLoading);
-    const updateGeneralState = useSessionStore((s) => s.updateGeneralState);
+    const loginLoading = usePersistStore((s) => s.loginLoading);
+    const updateGeneralState = usePersistStore((s) => s.updateLoginLoadingState);
 
     useEffect(() => {
         if (loginLoading === 'not-loading') {

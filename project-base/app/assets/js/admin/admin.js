@@ -22,4 +22,6 @@ import './roleGroup/administratorForm';
 
 import './order/executeRefund';
 
+import './product/product';
+
 registerAdmin();

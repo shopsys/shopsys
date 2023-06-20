@@ -1,10 +1,11 @@
-import { ProductDetailImageSlider } from './ProductDetailImageSlider';
+import { ProductDetailGallerySlider } from './ProductDetailGallerySlider';
+import { Gallery } from 'components/Basic/Gallery/Gallery';
+import { Icon } from 'components/Basic/Icon/Icon';
 import { Image } from 'components/Basic/Image/Image';
-import { ImageGallery } from 'components/Basic/ImageGallery/ImageGallery';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { ImageSizesFragmentApi, SimpleFlagFragmentApi } from 'graphql/generated';
+import { ImageSizesFragmentApi, SimpleFlagFragmentApi, VideoTokenFragmentApi } from 'graphql/generated';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
@@ -15,9 +16,10 @@ type ProductDetailGalleryProps = {
     images: ImageSizesFragmentApi[];
     productName: string;
     flags: SimpleFlagFragmentApi[];
+    videoIds?: VideoTokenFragmentApi[];
 };
 
-export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, images, productName }) => {
+export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, images, productName, videoIds }) => {
     const [isSliderVisible, setSliderVisibility] = useState(false);
     const { width } = useGetWindowSize();
 
@@ -29,7 +31,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
         () => setSliderVisibility(isElementVisible([{ min: 0, max: desktopFirstSizes.tablet }], width)),
     );
 
-    if (images.length === 0) {
+    if (images.length === 0 && videoIds === undefined) {
         return null;
     }
 
@@ -38,12 +40,15 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
     const mainImageUrl = firstImage?.sizes.find((size) => size.size === 'default')?.url;
 
     return isSliderVisible ? (
-        <ProductDetailImageSlider galleryItems={images} flags={flags} />
+        <ProductDetailGallerySlider galleryItems={images} flags={flags} videoIds={videoIds} />
     ) : (
-        <ImageGallery selector=".lightboxItem">
+        <Gallery selector=".lightboxItem">
             <div
                 data-src={mainImageUrl}
-                className="lightboxItem hidden lg:relative lg:order-1 lg:block lg:overflow-hidden lg:rounded-xl lg:p-4"
+                className={twJoin(
+                    'hidden lg:relative lg:order-1 lg:block lg:overflow-hidden lg:rounded-xl lg:p-4',
+                    mainImage !== null && 'lightboxItem',
+                )}
             >
                 <Image image={mainImage} alt={mainImage?.name || productName} type="default" maxHeight="400px" />
                 <div className="absolute top-3 left-4 flex flex-col">
@@ -71,7 +76,62 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
                             </div>
                         ),
                 )}
+                {!!videoIds &&
+                    videoIds.map((videoId) => {
+                        const videoImage: ImageSizesFragmentApi = {
+                            __typename: 'Image',
+                            sizes: [
+                                {
+                                    __typename: 'ImageSize',
+                                    size: 'default',
+                                    url: `https://img.youtube.com/vi/${videoId.token}/0.jpg`,
+                                    width: 480,
+                                    height: 360,
+                                    additionalSizes: [
+                                        {
+                                            __typename: 'AdditionalSize',
+                                            width: 480,
+                                            height: 360,
+                                            media: 'only screen and (-webkit-min-device-pixel-ratio: 1.5)',
+                                            url: `https://img.youtube.com/vi/${videoId.token}/0.jpg`,
+                                        },
+                                    ],
+                                },
+                                {
+                                    __typename: 'ImageSize',
+                                    size: 'thumbnailSmall',
+                                    url: `https://img.youtube.com/vi/${videoId.token}/1.jpg`,
+                                    width: 120,
+                                    height: 90,
+                                    additionalSizes: [
+                                        {
+                                            __typename: 'AdditionalSize',
+                                            width: 120,
+                                            height: 90,
+                                            media: 'only screen and (-webkit-min-device-pixel-ratio: 1.5)',
+                                            url: `https://img.youtube.com/vi/${videoId.token}/1.jpg`,
+                                        },
+                                    ],
+                                },
+                            ],
+                            name: null,
+                        };
+
+                        return (
+                            <div
+                                key={videoId.token}
+                                className="lightboxItem relative block max-h-56 w-20 cursor-pointer lg:mb-3 lg:h-16 lg:rounded-md lg:bg-greyVeryLight lg:p-2 lg:transition lg:hover:bg-greyLighter"
+                                data-poster={`https://img.youtube.com/vi/${videoId.token}/0.jpg`}
+                                data-src={`https://www.youtube.com/embed/${videoId.token}`}
+                            >
+                                <Image image={videoImage} type="thumbnailSmall" alt={videoId.description} />
+                                <div className="absolute top-4 left-6 flex h-8 w-8 items-center justify-center rounded-full bg-dark bg-opacity-50 text-white">
+                                    <Icon iconType="icon" icon="Play" className="ml-1" />
+                                </div>
+                            </div>
+                        );
+                    })}
             </div>
-        </ImageGallery>
+        </Gallery>
     );
 };

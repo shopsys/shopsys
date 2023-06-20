@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use App\Component\Setting\Setting;
+use App\Model\ProductVideo\ProductVideoDataFactory;
+use App\Model\ProductVideo\ProductVideoRepository;
 use App\Model\Stock\ProductStockDataFactory;
 use App\Model\Stock\ProductStockFacade;
 use App\Model\Stock\StockFacade;
@@ -54,7 +56,9 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \App\Component\Setting\Setting $setting
      * @param \App\Model\Store\StoreFacade $storeFacade
      * @param \App\Model\Store\ProductStoreDataFactory $productStoreDataFactory
+     * @param \App\Model\ProductVideo\ProductVideoDataFactory $productVideoDataFactory
      * @param \App\Model\Store\ProductStoreFacade $productStoreFacade
+     * @param \App\Model\ProductVideo\ProductVideoRepository $productVideoRepository
      */
     public function __construct(
         VatFacade $vatFacade,
@@ -76,7 +80,9 @@ class ProductDataFactory extends BaseProductDataFactory
         private readonly Setting $setting,
         private readonly StoreFacade $storeFacade,
         private readonly ProductStoreDataFactory $productStoreDataFactory,
+        private readonly ProductVideoDataFactory $productVideoDataFactory,
         private readonly ProductStoreFacade $productStoreFacade,
+        private readonly ProductVideoRepository $productVideoRepository,
     ) {
         parent::__construct(
             $vatFacade,
@@ -129,6 +135,7 @@ class ProductDataFactory extends BaseProductDataFactory
         $this->fillStockProductByProduct($productData, $product);
         $this->fillStoreProductByProduct($productData, $product);
         $this->fillProductFilesAttributesFromProduct($productData, $product);
+        $this->fillProductVideosByProductId($productData, $product);
 
         return $productData;
     }
@@ -305,6 +312,17 @@ class ProductDataFactory extends BaseProductDataFactory
     {
         foreach ($this->storeFacade->getAllStores() as $store) {
             $productData->productStoreData[$store->getId()] = $this->productStoreDataFactory->createFromStore($store);
+        }
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     * @param \App\Model\Product\Product $product
+     */
+    private function fillProductVideosByProductId(ProductData $productData, Product $product): void
+    {
+        foreach ($this->productVideoRepository->findByProductId($product->getId()) as $video) {
+            $productData->productVideosData[$video->getid()] = $this->productVideoDataFactory->createFromProductVideo($video);
         }
     }
 

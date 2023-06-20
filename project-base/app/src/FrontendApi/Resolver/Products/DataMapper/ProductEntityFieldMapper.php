@@ -14,6 +14,8 @@ use App\Model\Product\Parameter\ParameterRepository;
 use App\Model\Product\Product;
 use App\Model\Product\ProductFacade;
 use App\Model\Product\ProductRepository;
+use App\Model\ProductVideo\ProductVideo;
+use App\Model\ProductVideo\ProductVideoTranslationsRepository;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -54,6 +56,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * @param \Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $brandsBatchLoader
+     * @param \App\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
      */
     public function __construct(
         Domain $domain,
@@ -71,6 +74,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         private DataLoaderInterface $categoriesBatchLoader,
         private DataLoaderInterface $productsSellableByIdsBatchLoader,
         private DataLoaderInterface $brandsBatchLoader,
+        private readonly ProductVideoTranslationsRepository $productVideoTranslationsRepository,
     ) {
         parent::__construct(
             $domain,
@@ -375,5 +379,21 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         $brand = $product->getBrand();
 
         return $brand !== null ? $this->brandsBatchLoader->load($brand->getId()) : null;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @return array
+     */
+    public function getProductVideos(Product $product): array
+    {
+        $locale = $this->domain->getLocale();
+
+        return array_map(function (ProductVideo $productVideo) use ($locale) {
+            return [
+                'token' => $productVideo->getVideoToken(),
+                'description' => $this->productVideoTranslationsRepository->findByProductVideoIdAndLocale($productVideo->getId(), $locale),
+            ];
+        }, $product->getProductVideos());
     }
 }

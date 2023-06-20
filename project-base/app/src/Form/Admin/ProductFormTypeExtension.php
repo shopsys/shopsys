@@ -103,6 +103,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $this->setPricesGroup($builder, $product);
         $this->setTransferredFilesGroup($builder, $product);
         $this->setRelatedProductsGroup($builder, $product);
+        $this->setVideoGroup($builder);
 
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
     }
@@ -334,6 +335,29 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         ]);
 
         $builder->add($storeGroupBuilder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     */
+    private function setVideoGroup(FormBuilderInterface $builder)
+    {
+        $videosGroup = $builder->create('videosGroup', GroupType::class, [
+            'label' => t('Videos'),
+        ]);
+        $videosGroup
+            ->add(
+                $builder->create('productVideosData', CollectionType::class, [
+                    'entry_type' => VideoTokenType::class,
+                    'render_form_row' => false,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'label' => false,
+                    'required' => false,
+                ]),
+            );
+
+        $builder->add($videosGroup);
     }
 
     /**

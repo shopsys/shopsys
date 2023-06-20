@@ -30,6 +30,7 @@
         "@urql/exchange-graphcache": "5.0.1",
         "crypto-js": "4.1.1",
         "dayjs": "1.11.3",
+        "embla-carousel-react": "^7.1.0",
         "graphql": "15.5.1",
         "graphql-tag": "2.12.6",
         "js-base64": "3.7.2",

@@ -131,6 +131,11 @@ class ProductData extends BaseProductData
      */
     public array $relatedProducts;
 
+    /**
+     * @var \App\Model\ProductVideo\ProductVideoData[]
+     */
+    public $productVideosData;
+
     public function __construct()
     {
         parent::__construct();
@@ -155,5 +160,6 @@ class ProductData extends BaseProductData
         $this->domainOrderingPriority = [];
         $this->weight = null;
         $this->relatedProducts = [];
+        $this->productVideosData = [];
     }
 }

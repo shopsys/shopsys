@@ -288,4 +288,13 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     {
         return $data['is_main_variant'];
     }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function getProductVideos(array $data): array
+    {
+        return $data['product_videos'];
+    }
 }

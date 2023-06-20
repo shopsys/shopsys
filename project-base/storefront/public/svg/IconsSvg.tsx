@@ -327,3 +327,15 @@ export const ArrowSecondary = () => (
         />
     </svg>
 );
+
+export const Play = () => (
+    <svg viewBox="0 0 9 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="m1.4218 1.5 6.5 4.3333-6.5 4.3334V1.5Z"
+            stroke="currentColor"
+            stroke-width="1.1304"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
+    </svg>
+);

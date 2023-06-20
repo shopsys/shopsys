@@ -2,16 +2,16 @@ import { StateCreator } from 'zustand';
 
 type LoginLoadingStatus = 'not-loading' | 'loading' | 'loading-with-cart-modifications';
 
-export type GeneralSlice = {
+export type LoginLoadingSlice = {
     loginLoading: LoginLoadingStatus;
 
-    updateGeneralState: (value: Partial<GeneralSlice>) => void;
+    updateLoginLoadingState: (value: Partial<LoginLoadingSlice>) => void;
 };
 
-export const createGeneralSlice: StateCreator<GeneralSlice> = (set) => ({
+export const createLoginLoadingSlice: StateCreator<LoginLoadingSlice> = (set) => ({
     loginLoading: 'not-loading',
 
-    updateGeneralState: (value) => {
+    updateLoginLoadingState: (value) => {
         set(value);
     },
 });

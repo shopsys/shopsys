@@ -6,7 +6,6 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { usePersistStore } from 'store/zustand/usePersistStore';
-import { useSessionStore } from 'store/zustand/useSessionStore';
 import { OperationResult } from 'urql';
 
 export type LoginHandler = (
@@ -36,7 +35,7 @@ export const useAuth = (): { login: typeof login; logout: typeof logout } => {
     const [, logoutMutation] = useLogoutApi();
     const t = useTypedTranslationFunction();
     const updateUserState = usePersistStore((s) => s.updateUserState);
-    const updateGeneralState = useSessionStore((s) => s.updateGeneralState);
+    const updateGeneralState = usePersistStore((s) => s.updateLoginLoadingState);
 
     const router = useRouter();
 

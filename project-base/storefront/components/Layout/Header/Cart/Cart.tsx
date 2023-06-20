@@ -11,7 +11,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { useSessionStore } from 'store/zustand/useSessionStore';
+import { usePersistStore } from 'store/zustand/usePersistStore';
 import { twJoin } from 'tailwind-merge';
 import { GtmProductListNameType } from 'types/gtm/enums';
 
@@ -24,7 +24,7 @@ export const Cart: FC = () => {
     const { cart, isCartEmpty, isInitiallyLoaded } = useCurrentCart();
     const { url } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
-    const loginLoading = useSessionStore((s) => s.loginLoading);
+    const loginLoading = usePersistStore((s) => s.loginLoading);
     const [removeItemFromCart, isRemovingItem] = useRemoveFromCart(GtmProductListNameType.cart);
 
     return (

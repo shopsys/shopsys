@@ -1,7 +1,7 @@
+import { Gallery } from 'components/Basic/Gallery/Gallery';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Image } from 'components/Basic/Image/Image';
-import { ImageGallery } from 'components/Basic/ImageGallery/ImageGallery';
 import { SeznamMap } from 'components/Basic/SeznamMap/SeznamMap';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { StoreDetailFragmentApi } from 'graphql/generated';
@@ -88,7 +88,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                 </div>
                 <div className="mt-10 bg-greyVeryLight p-3">
                     {store.storeImages.length > 0 && (
-                        <ImageGallery selector=".lightboxItem">
+                        <Gallery selector=".lightboxItem">
                             <div className="flex flex-wrap justify-center lg:justify-start">
                                 {store.storeImages.map((image, index) => (
                                     <div
@@ -106,7 +106,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                                     </div>
                                 ))}
                             </div>
-                        </ImageGallery>
+                        </Gallery>
                     )}
                 </div>
             </div>

@@ -46,6 +46,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
                             flags={product.flags}
                             images={product.images}
                             productName={product.name}
+                            videoIds={product.productVideos}
                         />
                     </ProductDetailImage>
                     <ProductDetailInfo>

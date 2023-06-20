@@ -303,3 +303,11 @@ div.smap .cluster > div {
 div.smap .cluster img {
     @apply !bg-dark;
 }
+
+/* fix gallery video start width and hide dummy image */
+.lg-outer .lg-video-cont .lg-object.lg-video-poster {
+    @apply !w-auto
+}
+.lg-outer .lg-video-cont.lg-has-youtube .lg-dummy-img {
+    @apply !hidden
+}

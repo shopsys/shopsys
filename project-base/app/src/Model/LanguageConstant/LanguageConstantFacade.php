@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\LanguageConstant;
 
+use App\Component\Redis\CleanStorefrontCacheFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use League\Flysystem\FilesystemOperator;
@@ -20,14 +21,16 @@ class LanguageConstantFacade
      * @param string $languageConstantsUrlPattern
      * @param string $domainLocalesDirectory
      * @param \League\Flysystem\FilesystemOperator $filesystem
+     * @param \App\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
      */
     public function __construct(
-        private EntityManagerInterface $em,
-        private LanguageConstantRepository $languageConstantRepository,
-        private LanguageConstantFactory $languageConstantFactory,
-        private string $languageConstantsUrlPattern,
-        private string $domainLocalesDirectory,
-        protected FilesystemOperator $filesystem,
+        private readonly EntityManagerInterface $em,
+        private readonly LanguageConstantRepository $languageConstantRepository,
+        private readonly LanguageConstantFactory $languageConstantFactory,
+        private readonly string $languageConstantsUrlPattern,
+        private readonly string $domainLocalesDirectory,
+        private readonly FilesystemOperator $filesystem,
+        private readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }
 
@@ -69,7 +72,10 @@ class LanguageConstantFacade
         LanguageConstantData $languageConstantData,
         ?LanguageConstant $languageConstant,
     ): LanguageConstant {
-        return $languageConstant === null ? $this->create($languageConstantData) : $this->edit($languageConstantData);
+        $languageConstant = $languageConstant === null ? $this->create($languageConstantData) : $this->edit($languageConstantData);
+        $this->cleanStorefrontCacheFacade->cleanStorefrontTranslationCache($languageConstantData->locale);
+
+        return $languageConstant;
     }
 
     /**
@@ -89,6 +95,8 @@ class LanguageConstantFacade
 
         $this->em->remove($languageConstant);
         $this->em->flush();
+
+        $this->cleanStorefrontCacheFacade->cleanStorefrontTranslationCache($locale);
     }
 
     /**
@@ -129,7 +137,7 @@ class LanguageConstantFacade
         $targetFilePath = $this->domainLocalesDirectory . $locale;
 
         if (!$this->filesystem->has($targetFilePath)) {
-            $this->filesystem->createDirectory($targetFilePath);
+            $this->filesystem->createDirectory($targetFilePath, ['directory_visibility' => 'public']);
         }
 
         $this->filesystem->write($targetFilePath . '/' . self::GENERATED_FILE_NAME, $translations);
