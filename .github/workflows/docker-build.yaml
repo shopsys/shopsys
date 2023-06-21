@@ -348,7 +348,7 @@ jobs:
                     name: acceptance-logs
                     path: ./project-base/app/var/log/
     tests-storefront-acceptance:
-        name: Run Storefront acceptance tests
+        name: Run Cypress tests
         needs: [build-php-fpm-image, build-storefront-image, build-elasticsearch-image]
         if: |
             always() && !failure() && !cancelled() &&
@@ -369,9 +369,10 @@ jobs:
                 run: |
                     mv docker-compose.cypress.yml docker-compose.yml
                     docker compose up -d
+                    docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-enable frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate test-db-create test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export
                     docker compose exec php-fpm php phing -D production.confirm.action=y -D change.environment=acc environment-change
-                    docker compose exec php-fpm php phing db-create frontend-api-enable frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate test-db-create test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export
-                    docker compose run cypress
+            -   name: Run Cypress tests
+                run: docker compose run cypress
             -   name: Upload Cypress videos to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v3
