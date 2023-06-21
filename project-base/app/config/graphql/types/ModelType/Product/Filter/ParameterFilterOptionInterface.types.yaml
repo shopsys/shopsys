@@ -1,0 +1,17 @@
+ParameterFilterOptionInterface:
+    type: interface
+    config:
+        description: "Represents parameter filter option"
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "The parameter UUID"
+            isCollapsed:
+                type: "Boolean!"
+                description: "Indicator whether the parameter should be collapsed based on the current category setting"
+            name:
+                type: "String!"
+                description: "The parameter name"
+            unit:
+                type: "Unit"
+                description: "The parameter unit"

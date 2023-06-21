@@ -1,0 +1,28 @@
+SeoPage:
+    type: object
+    config:
+        description: "Represents SEO settings for specific page"
+        fields:
+            title:
+                type: "String"
+                description: "Document's title that is shown in a browser's title"
+            metaDescription:
+                type: "String"
+                description: "Description for meta tag"
+            canonicalUrl:
+                type: "String"
+                description: "Page's canonical link"
+            ogTitle:
+                type: "String"
+                description: "Title for og:title meta tag"
+            ogDescription:
+                type: "String"
+                description: "Description for og:description meta tag"
+            ogImage:
+                type: "Image"
+                description: "Image for og image meta tag by params"
+                resolve: '@=query("ogImageBySeoPageQuery", value, args["size"])'
+                args:
+                    size:
+                        type: "String"
+                        defaultValue: null

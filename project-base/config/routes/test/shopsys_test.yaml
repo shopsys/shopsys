@@ -1,4 +1,0 @@
-shopsys_shop_tests:
-    resource: ../../../src/Controller/Test/
-    prefix: /test
-    type: annotation

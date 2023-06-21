@@ -1,0 +1,55 @@
+query PersonalDataDetailQuery($hash: String!) {
+    accessPersonalData(hash: $hash) {
+        __typename
+        orders {
+            __typename
+            uuid
+            city
+            companyName
+            number
+            creationDate
+            firstName
+            lastName
+            telephone
+            companyNumber
+            companyTaxNumber
+            street
+            city
+            postcode
+            country {
+                ...CountryFragment
+            }
+            deliveryFirstName
+            deliveryLastName
+            deliveryCompanyName
+            deliveryTelephone
+            deliveryStreet
+            deliveryCity
+            deliveryPostcode
+            deliveryCountry {
+                ...CountryFragment
+            }
+            payment {
+                ...SimplePaymentFragment
+            }
+            transport {
+                ...SimpleTransportFragment
+            }
+            productItems {
+                ...OrderDetailItemFragment
+            }
+            totalPrice {
+                priceWithVat
+            }
+        }
+        customerUser {
+            ...CustomerUserFragment
+        }
+        newsletterSubscriber {
+            __typename
+            email
+            createdAt
+        }
+        exportLink
+    }
+}

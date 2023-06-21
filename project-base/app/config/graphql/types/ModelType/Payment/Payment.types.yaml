@@ -1,0 +1,42 @@
+Payment:
+    type: object
+    inherits:
+        - 'PaymentDecorator'
+    config:
+        fields:
+            type:
+                type: "String!"
+                description: "Type of payment"
+            goPayPaymentMethod:
+                type: "GoPayPaymentMethod"
+                description: "Additional data for GoPay payment"
+            price:
+                type: "Price!"
+                description: "Payment price"
+                resolve: '@=query("priceByPaymentQuery", value, args["cartUuid"], context)'
+                args:
+                    cartUuid:
+                        type: "Uuid"
+                        defaultValue: null
+            images:
+                type: "[Image!]!"
+                description: "Payment images"
+                resolve: '@=query("imagesByEntityPromiseQuery", value, args["type"], args["sizes"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    sizes:
+                        type: "[String!]"
+                        defaultValue: null
+            mainImage:
+                type: "Image"
+                description: "Payment image by params"
+                resolve: '@=query("mainImageByEntityPromiseQuery", value, args["type"], args["size"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    size:
+                        type: "String"
+                        defaultValue: null

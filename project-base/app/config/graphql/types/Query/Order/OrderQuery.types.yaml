@@ -1,0 +1,32 @@
+OrderQuery:
+    type: object
+    config:
+        fields:
+            orders:
+                type: "OrderConnection"
+                argsBuilder: "Relay::Connection"
+                resolve: "@=query('ordersQuery', args)"
+                complexity: "@=dynamicPaginationComplexity(args)"
+                description: "Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords"
+            order:
+                type: 'Order'
+                resolve: "@=query('orderByUuidOrUrlHashQuery', args['uuid'], args['urlHash'], args['orderNumber'])"
+                args:
+                    uuid:
+                        type: "Uuid"
+                    urlHash:
+                        type: "String"
+                    orderNumber:
+                        type: "String"
+                description: "Returns order filtered using UUID, orderNumber, or urlHash"
+            lastOrder:
+                type: 'Order'
+                resolve: "@=query('lastOrderQuery')"
+                description: "Returns last order of the user or null if no order was placed yet"
+            orderSentPageContent:
+                type: "String!"
+                resolve: "@=query('orderSentPageContentQuery', args['orderUuid'])"
+                args:
+                    orderUuid:
+                        type: "Uuid!"
+                description: "Returns HTML content for order sent page."

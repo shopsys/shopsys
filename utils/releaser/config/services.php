@@ -52,7 +52,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(QuestionHelper::class);
 
     $services->set(ComposerJsonFilesProvider::class)
-        ->args([['packages', 'project-base']]);
+        ->args([['packages', 'project-base/app']]);
 
     $services->set(Environment::class);
 

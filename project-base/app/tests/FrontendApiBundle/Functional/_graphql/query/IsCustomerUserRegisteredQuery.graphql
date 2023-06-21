@@ -1,0 +1,3 @@
+query IsCustomerUserRegistered($email: String!) {
+    isCustomerUserRegistered(email: $email)
+}

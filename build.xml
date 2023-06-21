@@ -3,7 +3,7 @@
 
     <property name="check-and-fix-annotations" value="true"/>
     <property name="npm.framework" value="@shopsys/framework"/>
-    <property name="path.root" value="${project.basedir}/project-base"/>
+    <property name="path.root" value="${project.basedir}/project-base/app"/>
     <property name="path.vendor" value="${project.basedir}/vendor"/>
     <property name="path.packages" value="${project.basedir}/packages"/>
     <property name="path.frontend-api" value="${path.packages}/frontend-api"/>
@@ -13,6 +13,7 @@
 
     <import file="${path.framework}/build.xml"/>
     <import file="${path.frontend-api}/build.xml"/>
+    <import file="${path.root}/build-cron.xml"/>
 
     <target name="build-demo-ci" depends="composer-dev,shopsys_framework.build-demo-ci" description="Builds application for development with clean demo DB and runs CI checks."/>
 
@@ -37,6 +38,10 @@
         </exec>
     </target>
 
+    <target name="cron" description="Disabled - use new cron instances instead.">
+        <fail message="Default cron instance is disabled. All modules are in new instances."/>
+    </target>
+
     <target name="ecs" description="Checks coding standards in all files in the whole monorepo by PHP easy coding standards." depends="entities-dump" hidden="true">
         <exec executable="${path.ecs.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="check"/>
@@ -44,7 +49,7 @@
             <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
-            <arg path="${path.root}/*.md"/>
+            <arg path="${path.root}/../*.md"/>
             <arg path="${path.root}/docs"/>
             <arg path="${path.packages}/*/src"/>
             <arg path="${path.packages}/*/tests"/>
@@ -62,7 +67,7 @@
             <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
-            <arg path="${path.root}/*.md"/>
+            <arg path="${path.root}/../*.md"/>
             <arg path="${path.root}/docs"/>
             <arg path="${path.packages}/*/src"/>
             <arg path="${path.packages}/*/tests"/>
@@ -82,7 +87,7 @@
             <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
-            <arg path="${path.root}/*.md"/>
+            <arg path="${path.root}/../*.md"/>
             <arg path="${path.root}/docs"/>
             <arg path="${path.packages}/*/src"/>
             <arg path="${path.packages}/*/tests"/>
@@ -101,7 +106,7 @@
             <arg path="${path.app}"/>
             <arg path="${path.src}"/>
             <arg path="${path.tests}"/>
-            <arg path="${path.root}/*.md"/>
+            <arg path="${path.root}/../*.md"/>
             <arg path="${path.root}/docs"/>
             <arg path="${path.packages}/*/src"/>
             <arg path="${path.packages}/*/tests"/>
@@ -245,7 +250,7 @@
         </exec>
     </target>
 
-    <target name="project-base-vendor-check" description="Check there exists no vendor directory in project-base/ as that would break the autoloader" hidden="true">
+    <target name="project-base-vendor-check" description="Check there exists no vendor directory in project-base/app as that would break the autoloader" hidden="true">
         <if>
             <available file="${path.root}/vendor" type="dir" property="dir.Exists"/>
             <then>

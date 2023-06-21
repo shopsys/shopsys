@@ -1,0 +1,11 @@
+LanguageConstant:
+    type: object
+    config:
+        description: "Represents a single user translation of language constant"
+        fields:
+            key:
+                type: "String!"
+                description: "Translation key"
+            translation:
+                type: "String!"
+                description: "User translation"

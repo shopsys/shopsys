@@ -1,0 +1,25 @@
+overwrite: true
+schema: schema.graphql
+documents: './graphql/requests/**/*.graphql'
+generates:
+    schema.graphql.json:
+        plugins:
+            - introspection
+        config:
+            minify: true
+    graphql/generated/index.tsx:
+        plugins:
+            - 'typescript'
+            - 'typescript-operations'
+            - 'fragment-matcher'
+            - 'typescript-urql'
+        config:
+            omitOperationSuffix: true
+            typesSuffix: Api
+            withHooks: true
+            withHOC: false
+            withComponent: false
+            scalars:
+                Money: string
+                Uuid: string
+            avoidOptionals: true

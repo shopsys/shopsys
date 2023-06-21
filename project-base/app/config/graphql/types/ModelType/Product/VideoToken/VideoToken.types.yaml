@@ -1,0 +1,8 @@
+VideoToken:
+    type: object
+    config:
+        fields:
+            token:
+                type: "String!"
+            description:
+                type: "String!"

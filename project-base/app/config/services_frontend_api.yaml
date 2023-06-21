@@ -1,0 +1,151 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+        bind:
+            Overblog\DataLoader\DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader: '@products_visible_and_sorted_by_ids_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $productsByEntitiesBatchLoader: '@products_by_entities_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $imagesBatchLoader: '@images_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $firstImageBatchLoader: '@first_image_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $readyCategorySeoMixesBatchLoader: '@ready_category_seo_mixes_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $categoryChildrenBatchLoader: '@category_children_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $linkedCategoriesBatchLoader: '@linked_categories_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader: '@categories_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $flagsBatchLoader: '@flags_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $brandsBatchLoader: '@brands_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $orderItemsBatchLoader: '@order_items_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $storesBatchLoader: '@stores_batch_loader'
+
+    resolverMaps:
+        namespace: App\FrontendApi\
+        resource: '../src/FrontendApi/**/*{Map}.php'
+        tags:
+            - { name: overblog_graphql.resolver_map, schema: default }
+
+    App\FrontendApi\:
+        resource: '../src/FrontendApi/**/*{Mutation,Query,Mapper}.php'
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Products\PromotedProductsQuery:
+        alias: App\FrontendApi\Resolver\Products\PromotedProductsQuery
+        public: true
+
+    Shopsys\FrontendApiBundle\Model\Product\ProductFacade:
+        alias: App\FrontendApi\Model\Product\ProductFacade
+
+    Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterDataMapper:
+        alias: App\FrontendApi\Model\Product\Filter\ProductFilterDataMapper
+
+    Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory:
+        alias: App\FrontendApi\Model\Order\OrderDataFactory
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper:
+        alias: App\FrontendApi\Resolver\Products\DataMapper\ProductArrayFieldMapper
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper:
+        alias: App\FrontendApi\Resolver\Products\DataMapper\ProductEntityFieldMapper
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductResolverMap:
+        alias: App\FrontendApi\Resolver\Products\ProductResolverMap
+
+    Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory:
+        alias: App\FrontendApi\Model\Parameter\ParameterWithValuesFactory
+
+    Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\CustomerUserMutation:
+        alias: App\FrontendApi\Mutation\Customer\User\CustomerUserMutation
+
+    Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory:
+        alias: App\FrontendApi\Model\Customer\User\CustomerUserUpdateDataFactory
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderResolverMap:
+        alias: App\FrontendApi\Model\Order\OrderResolverMap
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolverMap:
+        alias: App\FrontendApi\Resolver\Category\CategoryResolverMap
+
+    Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory:
+        alias: App\FrontendApi\Model\Product\Filter\ProductFilterOptionsFactory
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsQuery:
+        alias: App\FrontendApi\Resolver\Products\ProductsQuery
+        public: true
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryQuery:
+        alias: App\FrontendApi\Resolver\Category\CategoryQuery
+        public: true
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticleQuery:
+        alias: App\FrontendApi\Resolver\Article\ArticleQuery
+        public: true
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticlesQuery:
+        alias: App\FrontendApi\Resolver\Article\ArticlesQuery
+        public: true
+
+    Shopsys\FrontendApiBundle\Model\Mutation\Order\CreateOrderMutation:
+        alias: App\FrontendApi\Mutation\Order\CreateOrderMutation
+
+    Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade:
+        alias: App\FrontendApi\Model\Order\PlaceOrderFacade
+
+    Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade:
+        alias: App\FrontendApi\Model\Product\Filter\ProductFilterFacade
+
+    Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory:
+        alias: App\FrontendApi\Model\Product\Connection\ProductConnectionFactory
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Price\PriceQuery:
+        alias: App\FrontendApi\Resolver\Price\PriceQuery
+        public: true
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Transport\TransportsQuery:
+        alias: App\FrontendApi\Resolver\Transport\TransportsQuery
+        public: true
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesSearchQuery:
+        alias: App\FrontendApi\Resolver\Category\CategoriesSearchQuery
+        public: true
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Order\OrdersQuery:
+        alias: App\FrontendApi\Resolver\Order\OrdersQuery
+        public: true
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderQuery:
+        alias: App\FrontendApi\Resolver\Order\OrderQuery
+        public: true
+
+    Shopsys\FrontendApiBundle\Model\Order\OrderFacade:
+        alias: App\FrontendApi\Model\Order\OrderFacade
+
+    Shopsys\FrontendApiBundle\Model\Order\OrderRepository:
+        alias: App\FrontendApi\Model\Order\OrderRepository
+
+    Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation:
+        alias: App\FrontendApi\Mutation\Login\LoginMutation
+        public: true
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandsQuery:
+        alias: App\FrontendApi\Resolver\Brand\BrandsQuery
+        public: true
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesQuery:
+        alias: App\FrontendApi\Resolver\Category\CategoriesQuery
+        public: true
+
+    Shopsys\FrontendApiBundle\Component\Image\ImageFacade:
+        alias: App\FrontendApi\Model\Image\ImageFacade
+
+    Shopsys\FrontendApiBundle\Model\Category\CategoryFacade:
+        alias: App\FrontendApi\Model\Category\CategoryFacade
+
+    Shopsys\FrontendApiBundle\Model\Mutation\Login\RefreshTokensMutation:
+        alias: App\FrontendApi\Mutation\Login\RefreshTokensMutation
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Customer\User\CurrentCustomerUserQuery:
+        alias: App\FrontendApi\Resolver\Customer\User\CurrentCustomerUserQuery
+        public: true
+
+    App\FrontendApi\Component\SessionChecker\SessionChecker:
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: -999 } # must be run before the session is closed (in Symfony\Component\HttpKernel\EventListener\SessionListener::onKernelResponse)

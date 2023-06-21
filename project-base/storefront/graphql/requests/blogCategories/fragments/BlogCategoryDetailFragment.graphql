@@ -1,0 +1,14 @@
+fragment BlogCategoryDetailFragment on BlogCategory {
+    __typename
+    uuid
+    name
+    breadcrumb {
+        ...BreadcrumbFragment
+    }
+    seoTitle
+    seoMetaDescription
+    blogCategoriesTree {
+        ...BlogCategoriesFragment
+    }
+    articlesTotalCount
+}

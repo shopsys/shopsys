@@ -1,0 +1,5 @@
+fragment AvailabilityFragment on Availability {
+    __typename
+    name
+    status
+}

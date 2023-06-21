@@ -1,0 +1,27 @@
+ProductQuery:
+    type: object
+    config:
+        fields:
+            products:
+                type: "ProductConnection!"
+                argsBuilder:
+                    builder: "PaginatorArgumentsBuilder"
+                    config:
+                        orderingModeType: 'ProductOrderingModeEnum'
+                resolve: "@=query('productsQuery', args)"
+                complexity: "@=dynamicPaginationComplexity(args)"
+                description: "Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"
+            productsByCatnums:
+                type: "[Product!]!"
+                resolve: '@=resolver("productsByCatnumsQuery", [args["catnums"]])'
+                args:
+                    catnums:
+                        type: "[String!]!"
+                        description: "Array of product catalog numbers"
+                description: "Returns list of products by catalog numbers"
+            ParameterSliderFilterOption:
+                type: "ParameterSliderFilterOption"
+            ParameterCheckboxFilterOption:
+                type: "ParameterCheckboxFilterOption"
+            ParameterColorFilterOption:
+                type: "ParameterColorFilterOption"

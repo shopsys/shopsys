@@ -1,0 +1,8 @@
+CartInput:
+    type: input-object
+    config:
+        fields:
+            cartUuid:
+                type: "Uuid"
+                defaultValue: null
+                description: "Cart identifier, new cart will be created if not provided and customer is not logged in"

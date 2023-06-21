@@ -1,0 +1,9 @@
+ParameterValueColorFilterOption:
+    type: object
+    inherits:
+        - 'ParameterValueFilterOption'
+    config:
+        fields:
+            rgbHex:
+                type: "String"
+                description: "RGB hex of color parameter"

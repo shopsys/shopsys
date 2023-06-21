@@ -1,0 +1,96 @@
+Product:
+    type: interface
+    inherits:
+        - 'ProductDecorator'
+    config:
+        fields:
+            slug:
+                type: "String!"
+                description: "Product URL slug"
+            id:
+                type: "Int!"
+                description: "Product id"
+            catalogNumber:
+                type: "String!"
+                description: "Product catalog number"
+            partNumber:
+                type: "String"
+                description: "Product part number"
+            ean:
+                type: "String"
+                description: "EAN"
+            usps:
+                type: "[String!]!"
+                description: "List of product's unique selling propositions"
+            name:
+                type: "String!"
+                description: "Localized product name (domain dependent)"
+            namePrefix:
+                type: "String"
+                description: "Name prefix"
+            nameSuffix:
+                type: "String"
+                description: "Name suffix"
+            fullName:
+                type: "String!"
+                description: "The full name of the product, which consists of a prefix, name, and a suffix"
+            hasPreorder:
+                type: "Boolean!"
+                description: "Distinguishes if the product can be pre-ordered"
+            files:
+                type: "[File!]!"
+                description: "List of downloadable files"
+            storeAvailabilities:
+                type: "[StoreAvailability!]!"
+                description: "List of availabilities in individual stores"
+            availableStoresCount:
+                type: "Int!"
+                description: "Number of the stores where the product is available"
+            exposedStoresCount:
+                type: "Int!"
+                description: "Number of the stores where the product is exposed"
+            breadcrumb:
+                type: "[Link!]!"
+                description: "Hierarchy of the current element in relation to the structure"
+            relatedProducts:
+                type: "[Product!]!"
+                description: "List of related products"
+            availability:
+                type: "Availability!"
+            stockQuantity:
+                type: "Int!"
+                description: "Count of quantity on stock"
+            images:
+                type: "[Image!]!"
+                description: "Product images"
+                resolve: '@=query("imagesByProductPromiseQuery", value, args["type"], args["sizes"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    sizes:
+                        type: "[String!]"
+                        defaultValue: null
+            price:
+                type: "ProductPrice!"
+                description: "Product price"
+                resolve: '@=query("priceByProductQuery", value)'
+            accessories:
+                type: "[Product!]!"
+            parameters:
+                type: "[Parameter!]!"
+            mainImage:
+                type: "Image"
+                description: "Product image by params"
+                resolve: '@=query("mainImageByProductPromiseQuery", value, args["type"], args["size"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    size:
+                        type: "String"
+                        defaultValue: null
+            isMainVariant:
+                type: "Boolean!"
+            productVideos:
+                type: "[VideoToken!]!"

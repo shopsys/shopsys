@@ -1,0 +1,8 @@
+StoreConnection:
+    type: relay-connection
+    config:
+        nodeType: Store
+        connectionFields:
+            totalCount:
+                type: "Int!"
+                description: "Total number of stores"

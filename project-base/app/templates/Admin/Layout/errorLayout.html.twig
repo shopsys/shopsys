@@ -1,0 +1,38 @@
+{% extends '@ShopsysFramework/Admin/Layout/base.html.twig' %}
+
+{% block html_body %}
+    {% if isMailerSettingUnusual() %}
+        <div class="window-fixed-bar window-fixed-bar--top window-fixed-bar--type-alert">
+            <div class="window-fixed-bar__in">
+                <div class="window-fixed-bar__item">
+                    <div class="window-fixed-bar__item__cell">
+                        {{ getMailerSettingInfo() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="web {% if isMailerSettingUnusual() %} web--with-info {% endif %}">
+        {% block header %}
+            <header class="web__header">
+                <div class="web__header__in">
+                    <div class="web__header__menu"></div>
+                    <div class="web__header__logo">
+                        <a href="{{ url('admin_default_dashboard') }}">
+                            <img class="web__header__logo__svg" src="{{ asset('public/admin/images/logo.svg') }}" alt="Shopsys Framework">
+                        </a>
+                    </div>
+                </div>
+            </header>
+        {% endblock %}
+
+        <div class="web__container">
+            <div class="web__panel"></div>
+
+            <div class="web__content">
+                {% block error_content %}{% endblock %}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

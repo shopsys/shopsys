@@ -1,0 +1,11 @@
+mutation {
+    CreateOrder(
+        input: {
+            note:"Thank You"
+        }
+    ) {
+        order {
+            uuid
+        }
+    }
+}

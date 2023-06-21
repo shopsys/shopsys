@@ -1,0 +1,33 @@
+Order:
+    type: object
+    inherits:
+        - 'OrderDecorator'
+    config:
+        fields:
+            firstName:
+                type: "String"
+                description: "The customer's first name"
+            lastName:
+                type: "String"
+                description: "The customer's last name"
+            promoCode:
+                type: "String"
+                description: "Promo code (coupon) used in the order"
+            trackingNumber:
+                type: "String"
+                description: "The order tracking number"
+            trackingUrl:
+                type: "String"
+                description: "The order tracking link"
+            country:
+                type: "Country!"
+                description: "Billing address country"
+            deliveryCountry:
+                type: "Country"
+                description: "Country for delivery"
+            pickupPlaceIdentifier:
+                type: "String"
+                description: "Selected pickup place identifier"
+            productItems:
+                type: "[OrderItem!]!"
+                description: "All product items in the order"

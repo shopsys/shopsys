@@ -2,7 +2,7 @@
 numberRegex="^[0-9]+([.][0-9]+)?$"
 operatingSystem=""
 allowedValues=(1 2)
-projectPathPrefix=""
+projectPathPrefix="app/"
 echo This is installation script that will install demo Shopsys Framework application on docker with all required containers and with demo database created.
 
 docker ps -q &> /dev/null
@@ -33,7 +33,7 @@ do
 done
 
 if [[ -d "project-base" ]]; then
-    projectPathPrefix="project-base/"
+    projectPathPrefix="project-base/app/"
     echo "You are in monorepo, prefixing paths app paths with ${projectPathPrefix}"
 fi
 
@@ -47,6 +47,8 @@ case "$operatingSystem" in
 
         sed -i -r "s#www_data_uid: [0-9]+#www_data_uid: $(id -u)#" ./docker-compose.yml
         sed -i -r "s#www_data_gid: [0-9]+#www_data_gid: $(id -g)#" ./docker-compose.yml
+        sed -i -r "s#node_uid: [0-9]+#node_uid: $(id -u)#" ./docker-compose.yml
+        sed -i -r "s#node_gid: [0-9]+#node_gid: $(id -g)#" ./docker-compose.yml
 
         echo "Starting docker-compose"
         docker-compose up -d --build --force-recreate

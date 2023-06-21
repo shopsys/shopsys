@@ -2605,6 +2605,9 @@ msgstr ""
 msgid "lower than"
 msgstr ""
 
+msgid "nad souhrnem objednávky v košíku"
+msgstr ""
+
 msgid "never"
 msgstr ""
 
@@ -2657,6 +2660,12 @@ msgid "unregistered customer"
 msgstr ""
 
 msgid "uses"
+msgstr ""
+
+msgid "v kategorii (mezi prvním a druhým řádkem produktů)"
+msgstr ""
+
+msgid "v kategorii (nad výpisem produktů)"
 msgstr ""
 
 msgid "without positioning"

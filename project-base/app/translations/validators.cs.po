@@ -1,0 +1,381 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
+
+msgid "An array of values is not supported as an input for \"slider\" type parameter. Use \"minimalValue\" and \"maximalValue\" instead."
+msgstr "Pole hodnot (\"values\") není podporováno jako vstup pro parametry typu \"slider\". Namísto toho použijte \"minimalValue\" and \"maximalValue\"."
+
+msgid "Catalog number cannot be longer than {{ limit }} characters"
+msgstr "Katalogové číslo nesmí být delší než {{ limit }} znaků"
+
+msgid "Choose image"
+msgstr "Vyberte obrázek"
+
+msgid "Chybný formát RGB HEX : #336699 nebo #ABC"
+msgstr ""
+
+msgid "City name cannot be longer than {{ limit }} characters"
+msgstr "Název města nesmí být delší než {{ limit }} znaků"
+
+msgid "Company name cannot be longer than {{ limit }} characters"
+msgstr "Název společnosti nesmí být delší než {{ limit }} znaků"
+
+msgid "Email cannot be longer than {{ limit }} characters"
+msgstr "E-mail nesmí být delší než {{ limit }} znaků"
+
+msgid "External ID cannot be longer than {{ limit }} characters"
+msgstr "Externí ID nesmí být delší než {{ limit }} znaků"
+
+msgid "Externí ID můstku nesmí být delší než {{ limit }} znaků"
+msgstr ""
+
+msgid "First name cannot be longer than {{ limit }} characters"
+msgstr "Jméno nesmí být delší než {{ limit }} znaků"
+
+msgid "Flag \"{{ flagName }}\" is selected multiple times."
+msgstr "Příznak \"{{ flagName }}\" je zvolen několikrát."
+
+msgid "Flag color must be in valid hexadecimal code e.g. #3333ff"
+msgstr "Barva příznaku musí mít správný formát hexadecimálního kódu, např.: #3333ff"
+
+msgid "Flag name cannot be longer than {{ limit }} characters"
+msgstr "Název příznaku nemůže být delší než {{ limit }} znaků"
+
+msgid "Heading (H1) cannot be longer than {{ limit }} characters"
+msgstr "Nadpis (H1) nesmí být delší než {{ limit }} znaků"
+
+msgid "Heslo musí obsahovat velké, malé písmena, číslice a musí být delší než 10 znaků."
+msgstr ""
+
+msgid "Identification number cannot be longer than {{ limit }} characters"
+msgstr "IČ nesmí být delší než {{ limit }} znaků"
+
+msgid "Image can be only in JPG or PNG format"
+msgstr "Obrázek může být pouze ve formátu JPG nebo PNG"
+
+msgid "Image can be only in JPG, GIF or PNG format"
+msgstr "Obrázek může být pouze ve formátu JPG, GIF nebo PNG"
+
+msgid "Last name cannot be longer than {{ limit }} characters"
+msgstr "Příjmení nesmí být delší než {{ limit }} znaků"
+
+msgid "Link must be valid URL address"
+msgstr ""
+
+msgid "Minimal and maximal value are not supported as an input for other than \"slider\" type parameter. Use \"values\" instead."
+msgstr "Minimální a maximalní hodnota nejsou podporovány jako vstup pro parametry jiného typu než \"slider\". Namísto toho použijte \"values\"."
+
+msgid "Name cannot be longer than {{ limit }} characters"
+msgstr "Jméno nesmí být delší než {{ limit }} znaků"
+
+msgid "New password must be at least {{ limit }} characters long"
+msgstr "Nové heslo musí být delší než {{ limit }} znaků"
+
+msgid "Název skladu nesmí být delší než {{ limit }} znaků"
+msgstr ""
+
+msgid "Password must be at least {{ limit }} characters long"
+msgstr "Heslo musí být delší než {{ limit }} znaků"
+
+msgid "Passwords do not match"
+msgstr "Hesla se neshodují"
+
+msgid "Payment must be set in cart before sending the order"
+msgstr "Platba musí být vybrána před odesláním objednávky"
+
+msgid "Payment with provided UUID is not available"
+msgstr "Platba se zadaným UUID není dostupná"
+
+msgid "Pickup place with provided UUID is not available"
+msgstr "Odběrné místo se zadaným UUID není dostupné"
+
+msgid "Please check Tax number format"
+msgstr "Prosím zkontrolujte formát DIČ"
+
+msgid "Please choose article placement"
+msgstr "Vyberte prosím umístění článku"
+
+msgid "Please choose country"
+msgstr "Prosím vyberte stát"
+
+msgid "Please choose flag"
+msgstr "Prosím vyberte příznak"
+
+msgid "Please choose image"
+msgstr "Vyberte prosím obrázek"
+
+msgid "Please choose type of limitation"
+msgstr "Prosím vyberte typ omezení"
+
+msgid "Please enter at least one discount limit"
+msgstr "Vložte, prosím, alespoň jeden limit se slevou"
+
+msgid "Please enter city"
+msgstr "Vyplňte prosím město"
+
+msgid "Please enter code"
+msgstr "Vyplňte prosím kód"
+
+msgid "Please enter company name"
+msgstr "Vyplňte prosím název společnosti"
+
+msgid "Please enter date of creation"
+msgstr "Vyplňte prosím datum vytvoření"
+
+msgid "Please enter email"
+msgstr "Vyplňte prosím e-mail"
+
+msgid "Please enter email content"
+msgstr "Vyplňte prosím text e-mailu"
+
+msgid "Please enter first name"
+msgstr "Vyplňte prosím křestní jméno"
+
+msgid "Please enter flag color"
+msgstr "Vyplňte prosím barvu příznaku"
+
+msgid "Please enter flag name in all languages"
+msgstr "Prosím zadejte název příznaku ve všech jazycích"
+
+msgid "Please enter identification number"
+msgstr "Prosím vyplňte IČ"
+
+msgid "Please enter last name"
+msgstr "Vyplňte prosím příjmení"
+
+msgid "Please enter name"
+msgstr "Vyplňte prosím jméno"
+
+msgid "Please enter new password"
+msgstr "Vyplňte prosím nové heslo"
+
+msgid "Please enter only numbers and the + character"
+msgstr "Prosím, zadávejte pouze čísla a znak +"
+
+msgid "Please enter only numbers and the + sign"
+msgstr "Prosím vyplňte čísla a znak +"
+
+msgid "Please enter page URL"
+msgstr ""
+
+msgid "Please enter page name"
+msgstr ""
+
+msgid "Please enter password"
+msgstr "Vyplňte prosím heslo"
+
+msgid "Please enter promo code"
+msgstr "Vyplňte prosím promo kód"
+
+msgid "Please enter street"
+msgstr "Vyplňte prosím ulici"
+
+msgid "Please enter telephone number"
+msgstr "Vyplňte prosím telefonní číslo"
+
+msgid "Please enter the message"
+msgstr "Vyplňte prosím zprávu"
+
+msgid "Please enter the positive value."
+msgstr "Vyplňte prosím kladnou hodnotu."
+
+msgid "Please enter the quantity."
+msgstr "Vyplňte prosím množství."
+
+msgid "Please enter the whole number."
+msgstr "Zadejte prosím celé číslo."
+
+msgid "Please enter valid email"
+msgstr "Vyplňte prosím platný e-mail"
+
+msgid "Please enter your city"
+msgstr "Prosím vyplňte vaše město"
+
+msgid "Please enter your email address"
+msgstr "Vyplňte prosím e-mail"
+
+msgid "Please enter your name"
+msgstr "Vyplňte prosím své jméno"
+
+msgid "Please enter your postal code"
+msgstr "Prosím vyplňte vaše PSČ"
+
+msgid "Please enter your street"
+msgstr "Prosím vyplňte vaši ulici s popisným číslem."
+
+msgid "Please enter zip code"
+msgstr "Vyplňte prosím PSČ"
+
+msgid "Please fill in numbers only"
+msgstr "Prosím vyplňte pouze čísla"
+
+msgid "Postcode cannot be longer than {{ limit }} characters"
+msgstr "PSČ nesmí být delší než {{ limit }} znaků"
+
+msgid "Product prefix name cannot be longer than {{ limit }} characters"
+msgstr "Prefix produktu nesmí být delší než {{ limit }} znaků"
+
+msgid "Product suffix name cannot be longer than {{ limit }} characters"
+msgstr "Suffix produktu nesmí být delší než {{ limit }} znaků"
+
+msgid "Produkt s tímto katalogovým číslem již existuje"
+msgstr ""
+
+msgid "Promo code \"%invalidPromoCode%\" is not available for pricing group ID \"%pricingGroupId%\"."
+msgstr "Slevový kupón \"%invalidPromoCode%\" není dostupný pro Vaši cenovou skupinu."
+
+msgid "Promo code \"%promoCode%\" is already applied."
+msgstr "Slevový kupón \"%promoCode%\" už byl uplatněn."
+
+msgid "Promo code \"%promoCode%\" is available for registered customer user only."
+msgstr "Slevový kupón \"%promoCode%\" je dostupný jen pro registrované uživatele."
+
+msgid "Promo code \"%promoCode%\" is no longer valid."
+msgstr "Slevový kupón \"%promoCode%\" už není platný."
+
+msgid "Promo code \"%promoCode%\" is not applicable with current cart total price."
+msgstr "Slevový kupón \"%promoCode%\" není možné uplatnit pro výši nákupu Vašeho košíku."
+
+msgid "Promo code \"%promoCode%\" is not valid for any product in cart."
+msgstr "Slevový kupón \"%promoCode%\" není platný pro žádný produkt v košíku."
+
+msgid "Promo code \"%promoCode%\" is not yet valid."
+msgstr "Slevový kupón \"%promoCode%\" není ještě možné uplatnit."
+
+msgid "Promo code is already applied in the current cart."
+msgstr "Promo kód je již použit v aktuálním košíku."
+
+msgid "Promo code is available for registered customers only."
+msgstr "Promo kód je dostupný pouze přihlášeným uživatelům."
+
+msgid "Promo code is not available for your pricing group. Maybe you forgot to log in."
+msgstr "Promo kód není dostupný pro vaši cenovou skupinu. Možná jste se zapomněl přihlásit."
+
+msgid "Prosím vložte limit od"
+msgstr ""
+
+msgid "Prosím vyplňte GTM ID"
+msgstr ""
+
+msgid "Provided hash is not valid."
+msgstr "Zadaný hash není validní."
+
+msgid "Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)"
+msgstr "Cíl přesměrování musí být relativní cesta (začínající lomítkem) nebo absolutni cesta začínající protokolem (http:// nebo https://)"
+
+msgid "Selected payment price has changed"
+msgstr "Cena vybrané dopravy se změnila"
+
+msgid "Selected pickup place is not available"
+msgstr "Vybrané odběrné místo není dostupné"
+
+msgid "Selected transport is not available"
+msgstr "Vybraná doprava není dostupná"
+
+msgid "Selected transport needs to have pickup place identifier set"
+msgstr "Pro vybranou dopravu je potřeba nastavit identifikátor odběrného místa"
+
+msgid "Selected transport price has changed"
+msgstr "Cena vybrané dopravy se změnila"
+
+msgid "Selected transport weight limit has been exceeded"
+msgstr "Váhový limit vybrané dopravy byl překročen"
+
+msgid "Sklad s tímto externím kódem již existuje"
+msgstr ""
+
+msgid "Street and house number must contain a number"
+msgstr "Ulice a číslo popisná musí obsahovat čísla"
+
+msgid "Street and house number must contain letters"
+msgstr "Ulice a číslo popisná musí obsahovat znaky"
+
+msgid "Street cannot be longer than {{ limit }} characters"
+msgstr "Ulice a č. popisné nesmí být delší než {{ limit }} znaků"
+
+msgid "Street name cannot be longer than {{ limit }} characters"
+msgstr "Název ulice nesmí být delší než {{ limit }} znaků"
+
+msgid "Tax number cannot be longer than {{ limit }} characters"
+msgstr "DIČ nesmí být delší než {{ limit }} znaků"
+
+msgid "Telephone number cannot be longer than {{ limit }} characters"
+msgstr "Telefonní číslo nesmí být delší než {{ limit }} znaků"
+
+msgid "Telephone number cannot be shorter than {{ limit }} characters"
+msgstr "Telefonní číslo nesmí být kratší než {{ limit }} znaků"
+
+msgid "The identifier must contain two characters"
+msgstr "Identifikátor musí obsahovat dva znaky"
+
+msgid "The payment is not allowed in combination with already selected transport"
+msgstr "Platba není povolena v kombinaci s již vybranou dopravou"
+
+msgid "The promo code can only be used for a higher total price."
+msgstr "Promo kód lze použít pouze pro vyšší celkovou cenu."
+
+msgid "The promo code is no longer valid. Check it, please."
+msgstr "Promo kód už není platný. Zkontrolujte jej, prosím."
+
+msgid "The promo code is not applicable to any of the products in your cart. Check it, please."
+msgstr "Promo kód není použitelný s žádným produktem v košíku. Zkontrolujte jej, prosím."
+
+msgid "The promo code is not valid or it has been already used. Check it, please."
+msgstr "Promo kód není platný, nebo už byl využit. Zkontrolujte jej, prosím."
+
+msgid "The promo code is not valid yet. Check it, please."
+msgstr "Promo kód ještě není platný. Zkontrolujte jej, prosím."
+
+msgid "The transport is not allowed in combination with already selected payment"
+msgstr "Doprava není povolena v kombinaci s již vybranou platbou"
+
+msgid "There are no products in the cart"
+msgstr "V košíku nejsou žádné produkty"
+
+msgid "This email is already registered"
+msgstr "Tento email je již registrován"
+
+msgid "Transport must be set in cart before sending the order"
+msgstr "Doprava musí být vybrána před odesláním objednávky"
+
+msgid "Transport type name cannot be longer than {{ limit }} characters"
+msgstr "Název typu dopravy nesmí být delší než {{ limit }} znaků"
+
+msgid "Transport with provided UUID is not available"
+msgstr "Doprava se zadaným UUID není dostupná"
+
+msgid "Uploaded file is to large ({{ size }} {{ suffix }}). Maximum size of an file is {{ limit }} {{ suffix }}."
+msgstr "Uploadovaný soubor je příliš velký ({{ size }} {{ suffix }}). Maximální velikost souboru je {{ limit }} {{ suffix }}."
+
+msgid "Uploaded image is to large ({{ size }} {{ suffix }}). Maximum size of an image is {{ limit }} {{ suffix }}."
+msgstr "Uploadovaný obrázek je příliš velký ({{ size }} {{ suffix }}). Maximální velikost obrázku je {{ limit }} {{ suffix }}."
+
+msgid "User with provided email address does not exist."
+msgstr "Uživatel s uvedenou e-mailovou adresou neexistuje."
+
+msgid "Variable {{ needle }} is required"
+msgstr "Proměnná {{ needle }} je povinná"
+
+msgid "Vyplňte prosím URL"
+msgstr ""
+
+msgid "Vyplňte prosím URL odkazu"
+msgstr ""
+
+msgid "Vyplňte prosím název skladu"
+msgstr ""
+
+msgid "Vyplňte prosím název článku"
+msgstr ""
+
+msgid "Vyplňte prosím obsah notifikační lišty"
+msgstr ""
+
+msgid "Vyplňte prosím obsah článku"
+msgstr ""
+
+msgid "Zip code cannot be longer than {{ limit }} characters"
+msgstr "PSČ nesmí být delší než {{ limit }} znaků"
+

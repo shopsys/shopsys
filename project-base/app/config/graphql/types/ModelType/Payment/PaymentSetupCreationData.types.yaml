@@ -1,0 +1,7 @@
+PaymentSetupCreationData:
+    type: object
+    config:
+        fields:
+            goPayCreatePaymentSetup:
+                type: "GoPayCreatePaymentSetup"
+                description: "Identifiers of GoPay payment method"

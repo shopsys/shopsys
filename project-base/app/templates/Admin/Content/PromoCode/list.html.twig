@@ -1,0 +1,19 @@
+{% extends '@!ShopsysFramework/Admin/Content/PromoCode/list.html.twig' %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+    {{ parent() }}
+{% endblock %}
+
+{% block btn %}
+    <div class="wrap-bar">
+        <a href="{{ url('admin_promocode_new') }}" class="btn btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>
+            {{ 'Create promo code'|trans }}
+        </a>
+        <a href="{{ url('admin_promocode_newmassgenerate') }}" class="btn btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>
+            {{ 'Vytvořit hromadné slevové kupóny'|trans }}
+        </a>
+    </div>
+{% endblock %}

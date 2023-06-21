@@ -1,0 +1,63 @@
+version: "3.4"
+services:
+    webserver:
+        restart: always
+        image: nginx:1.13-alpine
+        depends_on:
+            - php-fpm
+            - storefront
+        volumes:
+            - web-volume:/var/www/html/web
+            - nginx-conf:/etc/nginx/conf.d/
+        labels:
+            - traefik.backend=${COMPOSE_PROJECT_NAME}
+            - traefik.frontend.rule=Host:${HOSTS}
+            - traefik.docker.network=ci_traefik-network
+            - traefik.port=8080
+        networks:
+            - default
+            - traefik-network
+
+    storefront:
+        restart: always
+        image: ${STOREFRONT_TAG}
+        labels:
+            - traefik.enable=false
+        networks:
+            - default
+            - services-network
+        environment:
+            REDIS_PREFIX: ${COMPOSE_PROJECT_NAME}
+
+    php-fpm:
+        restart: always
+        image: ${TAG}
+        volumes:
+            - web-volume:/var/www/html/web
+            - nginx-conf:/var/www/html/docker/nginx
+            - ./gitlab/php-fpm-conf/ci-www.conf:/usr/local/etc/php-fpm.d/www.conf
+        environment:
+            ELASTIC_SEARCH_INDEX_PREFIX: ${COMPOSE_PROJECT_NAME}
+            IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK: 1
+            REDIS_PREFIX: ${COMPOSE_PROJECT_NAME}
+            PACKETERY_ENABLED: ~
+            PACKETERY_REST_API_URL: ~
+            PACKETERY_API_PASSWORD: ~
+            PACKETERY_SENDER: ~
+        labels:
+            - traefik.enable=false
+        networks:
+            - default
+            - services-network
+
+volumes:
+    web-volume:
+    nginx-conf:
+
+networks:
+    traefik-network:
+        external:
+            name: ci_traefik-network
+    services-network:
+        external:
+            name: ci_default

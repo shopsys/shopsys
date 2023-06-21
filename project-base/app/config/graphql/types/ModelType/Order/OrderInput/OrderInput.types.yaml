@@ -1,0 +1,65 @@
+OrderInput:
+    type: input-object
+    inherits:
+        - 'OrderInputDecorator'
+    config:
+        validation:
+            -   App\FrontendApi\Model\Component\Constraints\AppPaymentTransportRelation: ~
+            -   App\FrontendApi\Model\Component\Constraints\ProductInOrder:
+                    groups: "beforeDefaultValidation"
+            -   App\FrontendApi\Model\Component\Constraints\TransportInOrder:
+                    groups: "beforeDefaultValidation"
+            -   App\FrontendApi\Model\Component\Constraints\PaymentInOrder:
+                    groups: "beforeDefaultValidation"
+        fields:
+            products:
+                type: "[OrderProductInput!]"
+                validation: ~
+                description: "Deprecated, this field is not used, the products are taken from the server cart instead."
+            cartUuid:
+                type: "Uuid"
+                description: "Cart identifier used for getting carts of not logged customers"
+                defaultValue: null
+            transport:
+                type: "TransportInput"
+                description: "Deprecated, this field is not used, the transport is taken from the server cart instead."
+                validation: ~
+            payment:
+                type: "PaymentInput"
+                description: "Deprecated, this field is not used, the payment is taken from the server cart instead."
+                validation: ~
+            deliveryAddressUuid:
+                type: "Uuid"
+                description: "Delivery address identifier"
+                defaultValue: null
+            newsletterSubscription:
+                type: Boolean
+                description: "Allows user to subscribe/unsubscribe newsletter."
+                defaultValue: false
+            companyNumber:
+                type: "String"
+                description: "The customer’s company identification number (required when onCompanyBehalf is true)"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter identification number"
+                            groups: "onCompanyBehalf"
+                    -   Length:
+                            max: 50
+                            maxMessage: "Identification number cannot be longer than {{ limit }} characters"
+                            groups: "onCompanyBehalf"
+                    -   Regex:
+                            pattern: '/^[0-9]+$/' # see \App\Component\Validator\RegexValidationRule::COMPANY_NUMBER_REGEX
+                            message: "Please fill in numbers only"
+                            groups: "onCompanyBehalf"
+            companyTaxNumber:
+                type: "String"
+                description: "The customer’s company tax number (required when onCompanyBehalf is true)"
+                validation:
+                    -   Length:
+                            max: 50
+                            maxMessage: "Tax number cannot be longer than {{ limit }} characters"
+                            groups: "onCompanyBehalf"
+                    -   Regex:
+                            pattern: '/^[0-9A-Z]*([0-9]+[A-Z]+|[A-Z]+[0-9]+)[0-9A-Z]*$/' # see \App\Component\Validator\RegexValidationRule::COMPANY_TAX_NUMBER_REGEX
+                            message: "Please check Tax number format"
+                            groups: "onCompanyBehalf"

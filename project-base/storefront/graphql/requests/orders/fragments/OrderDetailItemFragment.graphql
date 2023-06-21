@@ -1,0 +1,13 @@
+fragment OrderDetailItemFragment on OrderItem {
+    __typename
+    name
+    unitPrice {
+        ...PriceFragment
+    }
+    totalPrice {
+        ...PriceFragment
+    }
+    vatRate
+    quantity
+    unit
+}

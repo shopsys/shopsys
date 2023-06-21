@@ -6,6 +6,6 @@ docker image build \
     --tag ${DOCKER_ELASTICSEARCH_REPOSITORY_TAG} \
     --no-cache \
     --compress \
-    -f project-base/docker/elasticsearch/Dockerfile \
+    -f project-base/app/docker/elasticsearch/Dockerfile \
     .
 docker image push ${DOCKER_ELASTICSEARCH_REPOSITORY_TAG}

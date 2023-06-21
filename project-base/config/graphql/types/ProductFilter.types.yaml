@@ -1,4 +1,0 @@
-ProductFilter:
-    type: input-object
-    inherits:
-        - 'ProductFilterDecorator'

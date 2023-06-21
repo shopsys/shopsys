@@ -1,0 +1,12 @@
+PaymentInCartMutation:
+    type: object
+    config:
+        fields:
+            ChangePaymentInCart:
+                type: Cart!
+                description: "Add a payment to the cart, or remove a payment from the cart"
+                args:
+                    input:
+                        type: ChangePaymentInCartInput!
+                        validation: cascade
+                resolve: "@=mutation('changePaymentInCartMutation', args)"

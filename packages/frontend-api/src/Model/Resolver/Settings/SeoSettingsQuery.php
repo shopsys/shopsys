@@ -21,12 +21,15 @@ class SeoSettingsQuery extends AbstractQuery
     }
 
     /**
-     * @return array{robotsTxtContent: string}
+     * @return array{robotsTxtContent: string, title: string, titleAddOn: string, metaDescription: string}
      */
     public function seoSettingsQuery(): array
     {
         return [
             'robotsTxtContent' => $this->seoSettingFacade->getRobotsTxtContent($this->domain->getId()),
+            'title' => $this->seoSettingFacade->getTitleMainPage($this->domain->getId()),
+            'titleAddOn' => $this->seoSettingFacade->getTitleAddOn($this->domain->getId()),
+            'metaDescription' => $this->seoSettingFacade->getDescriptionMainPage($this->domain->getId()),
         ];
     }
 }

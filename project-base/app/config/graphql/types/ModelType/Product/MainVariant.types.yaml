@@ -1,0 +1,8 @@
+MainVariant:
+    type: object
+    inherits:
+        - 'MainVariantDecorator'
+    config:
+        interfaces:
+            - 'Breadcrumb'
+            - 'Slug'

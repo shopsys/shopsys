@@ -1,9 +1,0 @@
-framework:
-    cache:
-        pools:
-            doctrine.metadata_cache_pool:
-                adapter: cache.adapter.array
-                provider: ~
-            doctrine.query_cache_pool:
-                adapter: cache.adapter.array
-                provider: ~

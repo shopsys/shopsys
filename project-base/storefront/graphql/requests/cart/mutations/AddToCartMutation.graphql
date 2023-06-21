@@ -1,0 +1,15 @@
+mutation AddToCartMutation($input: AddToCartInput!) {
+    AddToCart(input: $input) {
+        cart {
+            ...CartFragment
+        }
+        addProductResult {
+            cartItem {
+                ...CartItemFragment
+            }
+            addedQuantity
+            isNew
+            notOnStockQuantity
+        }
+    }
+}

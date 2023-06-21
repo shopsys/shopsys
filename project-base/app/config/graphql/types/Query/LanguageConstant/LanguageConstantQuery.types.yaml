@@ -1,0 +1,8 @@
+LanguageConstantQuery:
+    type: object
+    config:
+        fields:
+            languageConstants:
+                type: '[LanguageConstant!]!'
+                resolve: "@=query('languageConstantsQuery')"
+                description: "Return user translated language constants for current domain locale"

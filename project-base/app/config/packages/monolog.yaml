@@ -1,0 +1,29 @@
+monolog:
+    channels: ["cron", "slow"]
+    handlers:
+        sentry:
+            type: stream
+            path: "%shopsys.log_stream%"
+            level: debug
+        # display cron.DEBUG messages in console for -v, -vv and -vvv verbosities
+        console_output:
+            type: console
+            verbosity_levels:
+                VERBOSITY_NORMAL: INFO
+                VERBOSITY_VERBOSE: DEBUG
+                VERBOSITY_VERY_VERBOSE: DEBUG
+                VERBOSITY_DEBUG: DEBUG
+            channels: cron
+        cron_output:
+            type: stream
+            path: "%shopsys.log_stream%"
+            channels: cron
+            level: debug
+            formatter: "monolog.formatter.line"
+            # stop propagation to the second "console" handler so that message is not printed twice
+            bubble: false
+        log_stream:
+            type: stream
+            path: "%shopsys.log_stream%"
+            level: info
+            formatter: "monolog.formatter.line"

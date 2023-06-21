@@ -1,0 +1,13 @@
+fragment ProductFilterOptionsParametersCheckboxFragment on ParameterCheckboxFilterOption {
+    name
+    uuid
+    __typename
+    values {
+        __typename
+        uuid
+        text
+        count
+        isSelected
+    }
+    isCollapsed
+}

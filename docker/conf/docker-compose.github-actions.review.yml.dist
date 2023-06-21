@@ -25,7 +25,7 @@ services:
         depends_on:
             - php-fpm
         volumes:
-            - web-volume:/var/www/html/project-base/web
+            - web-volume:/var/www/html/project-base/app/web
             - nginx-conf:/etc/nginx/conf.d/
         labels:
             - traefik.backend=BRANCH_NAME
@@ -43,9 +43,9 @@ services:
         restart: always
         image: php-fpm-image
         volumes:
-            - web-volume:/var/www/html/project-base/web
+            - web-volume:/var/www/html/project-base/app/web
             - nginx-conf:/var/www/html/docker/nginx
-            - postgres-conf:/var/www/html/project-base/docker/postgres
+            - postgres-conf:/var/www/html/project-base/app/docker/postgres
         environment:
             IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK: 1
         networks:

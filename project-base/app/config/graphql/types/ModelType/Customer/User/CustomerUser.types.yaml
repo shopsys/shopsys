@@ -1,0 +1,33 @@
+CustomerUser:
+    type: interface
+    inherits:
+        - 'CurrentCustomerUserDecorator'
+    heirs:
+        - 'CompanyCustomerUser'
+        - 'RegularCustomerUser'
+    config:
+        fields:
+            street:
+                type: "String!"
+                description: "Billing address street name"
+            city:
+                type: "String!"
+                description: "Billing address city name"
+            postcode:
+                type: "String!"
+                description: "Billing address zip code"
+            country:
+                type: "Country!"
+                description: "Billing address country"
+            newsletterSubscription:
+                type: "Boolean!"
+                description: "Whether customer user receives newsletters or not"
+            defaultDeliveryAddress:
+                type: "DeliveryAddress"
+                description: "Default customer delivery addresses"
+            deliveryAddresses:
+                type: "[DeliveryAddress!]!"
+                description: "List of delivery addresses"
+            pricingGroup:
+                type: "String!"
+                description: "The name of the customer pricing group"

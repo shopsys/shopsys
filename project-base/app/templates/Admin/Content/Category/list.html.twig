@@ -1,0 +1,75 @@
+{% extends '@ShopsysFramework/Admin/Content/Category/list.html.twig' %}
+{% import _self as self %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\CategoryController::listDomainTabsAction')) }}
+
+    {% macro categoryTreeItem(categoriesWithPreloadedChildren, isFirstLevel, disabledFormFields, getAllCategoryIdsInSeoMixes) %}
+        {% import _self as self %}
+        <ul class="{{ disabledFormFields ? '' : 'js-category-tree-items' }} {{ isFirstLevel ? 'form-tree__content' : '' }}">
+            {% for categoryWithPreloadedChildren in categoriesWithPreloadedChildren %}
+                {% set categoryHasSeoMix = categoryWithPreloadedChildren.category.id in getAllCategoryIdsInSeoMixes ? true : false %}
+                <li class="js-category-tree-item form-tree__item" id="js-category-tree-{{ categoryWithPreloadedChildren.category.id }}">
+                    <div class="{{ disabledFormFields ? '' : 'js-category-tree-item-line' }} form-tree__item__drag">
+                        <img src="{{ asset('public/admin/images/icons/level.png') }}" class="form-tree__item__icon form-tree__item__icon--level" />
+                        <span class="js-category-tree-item-line  js-category-tree-item-handle form-tree__item__name">{{ categoryWithPreloadedChildren.category.name }}</span>
+                        <span class="js-category-tree-item-icons form-tree__item__controls">
+                            <a href="{{ url('admin_category_edit', {id: categoryWithPreloadedChildren.category.id}) }}" class="form-tree__item__control">
+                                {{ icon('pencil') }}
+                            </a>
+                            {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_category_delete' %}
+                            {% set categoryDeleteUrl = url('admin_category_delete', {
+                                id: categoryWithPreloadedChildren.category.id,
+                                (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
+                            }) %}
+                            <a
+                                class="form-tree__item__control {{ categoryHasSeoMix ? 'js-category-with-seomix-delete-confirm' : 'js-category-delete-confirm' }}"
+                                data-delete-url="{{categoryDeleteUrl}}"
+                            >
+                                {{ icon('trash') }}
+                            </a>
+                        </span>
+                    </div>
+                    {{ self.categoryTreeItem(categoryWithPreloadedChildren.children, false, disabledFormFields, getAllCategoryIdsInSeoMixes) }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endmacro %}
+
+    {% if isForAllDomains %}
+        <div class="wrap-divider">
+            <div class="form-line">
+                <div id="js-category-tree-sorting" class="form-tree form-tree--open form-tree--dragable">
+                    {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true, disabledFormFields, getAllCategoryIdsInSeoMixes) }}
+                </div>
+            </div>
+        </div>
+
+        {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+            {% block fixed_bar_content %}
+                <button
+                    class="btn btn--disabled"
+                    id="js-category-tree-sorting-save-button"
+                    data-category-apply-sorting-url="{{ url('admin_category_applysorting') }}"
+                    type="button"
+                >
+                    {{ 'Save changes in order'|trans }}
+                </button>
+            {% endblock %}
+        {% endembed %}
+    {% else %}
+        {% if disabledFormFields == false %}
+            <div class="in-message in-message--info">
+                {{ 'In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains'|trans }}
+                <i class="in-message__icon svg svg-remove js-message-close"></i>
+            </div>
+        {% endif %}
+        <div class="wrap-divider">
+            <div class="form-line">
+                <div class="form-tree form-tree--open form-tree--dragable">
+                    {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true, disabledFormFields, getAllCategoryIdsInSeoMixes) }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

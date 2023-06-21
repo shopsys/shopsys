@@ -1,0 +1,15 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Unused friendly URL list'|trans }}{% endblock %}
+{% block h1 %}{{ 'Unused friendly URL list'|trans }}{% endblock %}
+
+{% block main_content %}
+
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    {{ 'Quick search'|trans }}
+    {% include 'Admin/Content/UnusedFriendlyUrl/quickSearchFormContent.html.twig' with {quickSearchForm: quickSearchForm} %}
+
+    {{ gridView.render() }}
+
+{% endblock %}

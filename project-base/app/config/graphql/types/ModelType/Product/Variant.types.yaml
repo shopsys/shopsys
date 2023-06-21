@@ -1,0 +1,8 @@
+Variant:
+    type: object
+    inherits:
+        - 'VariantDecorator'
+    config:
+        interfaces:
+            - 'Breadcrumb'
+            - 'Slug'

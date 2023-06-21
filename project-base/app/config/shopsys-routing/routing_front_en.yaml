@@ -1,0 +1,43 @@
+front_customer_order_detail_registered:
+    path: /customer/orders/detail/{orderNumber}
+
+front_customer_order_detail_unregistered:
+    path: /order-detail/{urlHash}
+
+front_login:
+    path: /login/
+
+front_logout:
+    # controller's action is unnecessary, because firewall processes whole request
+    path: /logout/{_csrf_token}
+
+front_order_paid:
+    path: /order-confirmation
+
+front_order_not_paid:
+    path: /unpaid-order/{orderNumber}
+
+front_order_payment_status_notify:
+    path: /order/payment-status-notify
+    methods: [GET]
+
+front_registration_set_new_password:
+    path: /new-password
+
+front_customer_activation:
+    path: /registration-confirmation
+
+front_brand_list:
+    path: /brand-overview
+
+front_personal_data:
+    path: /personal-data-overview
+
+front_personal_data_access:
+    path: /personal-data-access/{hash}
+
+front_personal_data_export:
+    path: /export-personal-data
+
+front_stores:
+    path: /stores

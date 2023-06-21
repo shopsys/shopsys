@@ -1,0 +1,93 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\FrontendApiBundle\Functional\Order;
+
+use App\DataFixtures\Demo\ProductDataFixture;
+use App\DataFixtures\Demo\TransportDataFixture;
+use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
+
+class DeliveryAddressIsNotDuplicatedTest extends GraphQlWithLoginTestCase
+{
+    public function testDeliveryAddressIsNotDuplicatedForLoggedInClient(): void
+    {
+        $this->initializeCart();
+
+        $orderVariables = [
+            'firstName' => 'firstName',
+            'lastName' => 'lastName',
+            'email' => 'user@example.com',
+            'telephone' => '+53 123456789',
+            'onCompanyBehalf' => false,
+            'street' => '123 Fake Street',
+            'city' => 'Springfield',
+            'postcode' => '12345',
+            'country' => 'CZ',
+            'differentDeliveryAddress' => true,
+            'deliveryFirstName' => 'deliveryFirstName',
+            'deliveryLastName' => 'deliveryLastName',
+            'deliveryCompanyName' => null,
+            'deliveryTelephone' => null,
+            'deliveryStreet' => 'deliveryStreet',
+            'deliveryCity' => 'deliveryCity',
+            'deliveryPostcode' => '46014',
+            'deliveryCountry' => 'CZ',
+        ];
+
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/CreateOrderMutation.graphql', $orderVariables);
+
+        $deliveryAddresses = $this->getCustomersDeliveryAddresses();
+        $lastDeliveryAddressUuid = end($deliveryAddresses)['uuid'];
+
+        $this->assertCount(2, $deliveryAddresses);
+
+        $this->initializeCart();
+        $this->getResponseContentForGql(
+            __DIR__ . '/../_graphql/mutation/CreateOrderMutation.graphql',
+            $orderVariables + [
+                'deliveryAddressUuid' => $lastDeliveryAddressUuid,
+            ],
+        );
+
+        $deliveryAddresses = $this->getCustomersDeliveryAddresses();
+
+        $this->assertCount(2, $deliveryAddresses);
+        $this->assertEquals($lastDeliveryAddressUuid, end($deliveryAddresses)['uuid']);
+    }
+
+    private function initializeCart(): void
+    {
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+
+        /** @var \App\Model\Transport\Transport $transport */
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
+
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
+            'productUuid' => $product->getUuid(),
+            'quantity' => 1,
+        ]);
+
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangeTransportInCartMutation.graphql', [
+            'transportUuid' => $transport->getUuid(),
+        ]);
+
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangePaymentInCartMutation.graphql', [
+            'paymentUuid' => $transport->getPayments()[0]->getUuid(),
+        ]);
+    }
+
+    /**
+     * @return array<int, array{uuid: string}>
+     */
+    private function getCustomersDeliveryAddresses(): array
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/CurrentCustomerUserQuery.graphql');
+
+        return $this->getResponseDataForGraphQlType(
+            $response,
+            'currentCustomerUser',
+        )['deliveryAddresses'];
+    }
+}

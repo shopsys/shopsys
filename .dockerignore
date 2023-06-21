@@ -5,19 +5,18 @@
 .ci
 .idea
 .github
-.idea
 nbproject
 
 # ignore directories that should be created and filled during the image build
-project-base/node_modules
-project-base/var
-!project-base/var/.gitkeep
-project-base/web/assets/scripts
-project-base/web/bundles
-project-base/web/components
-project-base/web/content
+project-base/app/node_modules
+project-base/app/var
+!project-base/app/var/.gitkeep
+project-base/app/web/assets/scripts
+project-base/app/web/bundles
+project-base/app/web/components
+project-base/app/web/content
 vendor
 
 # ignore kubernetes manifests
-project-base/infrastructure
-project-base/kubernetes
+project-base/app/infrastructure
+project-base/app/kubernetes

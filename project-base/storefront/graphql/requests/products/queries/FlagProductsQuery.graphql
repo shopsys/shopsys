@@ -1,0 +1,13 @@
+query FlagProductsQuery(
+    $endCursor: String!
+    $orderingMode: ProductOrderingModeEnum
+    $filter: ProductFilter
+    $uuid: Uuid
+    $pageSize: Int
+) {
+    flag(uuid: $uuid) {
+        products(after: $endCursor, orderingMode: $orderingMode, filter: $filter, first: $pageSize) {
+            ...ListedProductConnectionFragment
+        }
+    }
+}

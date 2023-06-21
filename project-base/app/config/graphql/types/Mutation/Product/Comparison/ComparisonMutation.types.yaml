@@ -1,0 +1,29 @@
+ComparisonMutation:
+    type: object
+    config:
+        fields:
+            addProductToComparison:
+                type: 'Comparison!'
+                description: "Add product to Comparison and create if not exists."
+                args:
+                    productUuid:
+                        type: "Uuid!"
+                    comparisonUuid:
+                        type: "Uuid"
+                resolve: "@=mutation('addProductToComparisonMutation', args)"
+            removeProductFromComparison:
+                type: 'Comparison'
+                description: "Remove product from Comparison and if is Comparison empty remove it."
+                args:
+                    productUuid:
+                        type: "Uuid!"
+                    comparisonUuid:
+                        type: "Uuid"
+                resolve: "@=mutation('removeProductFromComparisonMutation', args)"
+            cleanComparison:
+                type: 'String!'
+                description: "Remove all products from Comparison and remove it."
+                resolve: "@=mutation('cleanComparisonMutation', args)"
+                args:
+                    comparisonUuid:
+                        type: "Uuid"

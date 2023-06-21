@@ -1,0 +1,23 @@
+NameInputObjectDecorator:
+    type: input-object
+    decorator: true
+    config:
+        fields:
+            firstName:
+                type: "String!"
+                description: "Customer user first name"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter first name"
+                    -   Length:
+                            max: 100
+                            maxMessage: "First name cannot be longer than {{ limit }} characters"
+            lastName:
+                type: "String!"
+                description: "Customer user last name"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter last name"
+                    -   Length:
+                            max: 100
+                            maxMessage: "Last name cannot be longer than {{ limit }} characters"

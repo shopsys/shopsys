@@ -1,0 +1,20 @@
+-   pathsToCheck:
+        - ./**/*.{yaml,yml}
+    excludedPaths:
+        - ./vendor/**/*.{yaml,yml}
+        - ./node_modules/**/*.{yaml,yml}
+        - ./config/domains_urls.yaml
+        - ./config/oauth2/parameters_oauth.yaml.dist
+        - ./kubernetes/horizontalPodAutoscaler/webserver-php-fpm.yaml
+        - ./kubernetes/deployments/cron.yaml
+        - ./storefront/**/*.{yaml,yml}
+        - ./storefront/*.{yaml,yml}
+        - ./var/deployment/**/*.{yaml,yml} #this is ignored because of wrong formatting in devops/kubernetes-deployment
+    checkers:
+        -   pathToChecker: YamlStandards\Model\YamlIndent\YamlIndentChecker
+            parameters:
+                { indents: 4, indentsCommentsWithoutParent: default }
+        -   pathToChecker: YamlStandards\Model\YamlServiceAliasing\YamlServiceAliasingChecker
+            parameters:
+                { serviceAliasingType: long, indents: 4 }
+        -   pathToChecker: YamlStandards\Model\YamlEmptyLineAtEnd\YamlEmptyLineAtEndChecker

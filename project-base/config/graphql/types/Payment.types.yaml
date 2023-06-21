@@ -1,4 +1,0 @@
-Payment:
-    type: object
-    inherits:
-        - 'PaymentDecorator'

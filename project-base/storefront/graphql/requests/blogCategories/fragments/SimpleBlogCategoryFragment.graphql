@@ -1,0 +1,9 @@
+fragment SimpleBlogCategoryFragment on BlogCategory {
+    __typename
+    uuid
+    name
+    link
+    parent {
+        name
+    }
+}

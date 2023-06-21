@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Shopsys Framework" default="list">
+
+    <property file="${project.basedir}/build/build.local.properties"/>
+
+    <property name="check-and-fix-annotations" value="true"/>
+    <property name="path.root" value="${project.basedir}"/>
+    <property name="path.vendor" value="${path.root}/vendor"/>
+    <property name="path.framework" value="${path.vendor}/shopsys/framework"/>
+    <property name="path.framework.assets" value="${path.root}/node_modules/@shopsys/framework"/>
+    <property name="path.frontend-api" value="${path.vendor}/shopsys/frontend-api"/>
+
+    <property name="phpstan.level" value="5"/>
+
+    <import file="${path.framework}/build.xml"/>
+    <import file="${path.frontend-api}/build.xml"/>
+    <import file="${path.root}/build-cron.xml"/>
+
+    <target name="cron" description="Disabled - use new cron instances instead.">
+        <fail message="Default cron instance is disabled. All modules are in new instances."/>
+    </target>
+
+</project>

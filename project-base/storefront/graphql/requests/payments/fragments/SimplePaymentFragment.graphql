@@ -1,0 +1,20 @@
+fragment SimplePaymentFragment on Payment {
+    __typename
+    uuid
+    name
+    description
+    instruction
+    price {
+        ...PriceFragment
+    }
+    images {
+        ...ImageSizesFragment
+    }
+    type
+    goPayPaymentMethod {
+        __typename
+        identifier
+        name
+        paymentGroup
+    }
+}

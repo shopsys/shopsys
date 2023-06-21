@@ -1,0 +1,9 @@
+{
+    "name": "cypress-tests-commerce-cloud-storefront",
+    "version": "0.1.0",
+    "description": "Acceptance tests of Shopsys Commerce Cloud Storefront",
+    "private": true,
+    "devDependencies": {
+        "cypress": "^12.3.0"
+    }
+}

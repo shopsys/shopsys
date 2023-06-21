@@ -1,0 +1,79 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    App\Form\:
+        resource: '../src/Form/'
+
+    App\Form\Admin\ArticleFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Article\ArticleFormType }
+
+    App\Form\Admin\AdministratorFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Administrator\AdministratorFormType }
+
+    App\Form\Admin\BrandFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Product\Brand\BrandFormType }
+
+    App\Form\Admin\CategoryFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Category\CategoryFormType }
+
+    App\Form\Admin\CustomerUserFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserFormType }
+
+    App\Form\Admin\OrderFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Order\OrderFormType }
+
+    App\Form\Admin\TransportFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Transport\TransportFormType }
+
+    App\Form\Admin\ProductFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType }
+
+    App\Form\Admin\Product\Parameter\ParameterFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ParameterFormType }
+
+    App\Form\Admin\Product\Unit\UnitFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Product\Unit\UnitFormType }
+
+    App\Form\Admin\PaymentFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Payment\PaymentFormType }
+
+    App\Form\Admin\PromoCodeFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\PromoCode\PromoCodeFormType }
+
+    App\Form\Admin\SliderItemFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Slider\SliderItemFormType }
+
+    App\Form\Admin\AdvertFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Advert\AdvertFormType }
+    App\Form\Admin\Customer\BillingAddressFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Customer\BillingAddressFormType }
+
+    App\Form\Admin\Customer\DeliveryAddressFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Customer\DeliveryAddressFormType }
+
+    App\Form\Type\CKEditorTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: FOS\CKEditorBundle\Form\Type\CKEditorType }
+
+    App\Form\Admin\Mail\MailSettingFormTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Mail\MailSettingFormType }

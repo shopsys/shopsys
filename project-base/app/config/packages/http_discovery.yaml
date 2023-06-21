@@ -1,0 +1,16 @@
+services:
+    Psr\Http\Message\RequestFactoryInterface:
+        alias: http_discovery.psr17_factory
+    Psr\Http\Message\ResponseFactoryInterface:
+        alias: http_discovery.psr17_factory
+    Psr\Http\Message\ServerRequestFactoryInterface:
+        alias: http_discovery.psr17_factory
+    Psr\Http\Message\StreamFactoryInterface:
+        alias: http_discovery.psr17_factory
+    Psr\Http\Message\UploadedFileFactoryInterface:
+        alias: http_discovery.psr17_factory
+    Psr\Http\Message\UriFactoryInterface:
+        alias: http_discovery.psr17_factory
+
+    http_discovery.psr17_factory:
+        class: Http\Discovery\Psr17Factory

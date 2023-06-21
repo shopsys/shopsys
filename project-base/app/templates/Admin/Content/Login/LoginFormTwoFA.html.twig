@@ -1,0 +1,46 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutBlank.html.twig' %}
+
+{% block title %}
+    - {{ 'Login'|trans }}
+{% endblock %}
+
+{% block content %}
+    <form class="box-login" action="{{ checkPathUrl ? checkPathUrl: path(checkPathRoute) }}" method="post">
+        <h1 class="box-login__heading">{{ 'Administration'|trans }}</h1>
+
+        {# Authentication errors #}
+        {% if authenticationError %}
+            {% if authenticationError == 'code_invalid' %}
+                {% set authenticationErrorMessage = 'Invalid two-factor authentication code.'|trans %}
+            {% else %}
+                {% set authenticationErrorMessage = 'An authentication exception occurred.'|trans %}
+            {% endif %}
+            <div class="in-message in-message--error">
+                {{ authenticationErrorMessage }}
+                <i class="in-message__icon svg svg-remove js-message-close"></i>
+            </div>
+        {% endif %}
+
+        {# Display current two-factor provider #}
+        <div class="box-login__row">
+            <input
+                    class="input box-login__input"
+                    placeholder="{{ 'Authentication code'|trans }} {{ twoFactorProvider }}"
+                    type="text"
+                    name="{{ authCodeParameterName }}"
+                    autocomplete="one-time-code"
+                    autofocus
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+            />
+        </div>
+
+        <div class="box-login__row box-login__row--btn">
+            <button type="submit" class="btn btn--block btn--large">{{ 'Log in'|trans }}</button>
+        </div>
+
+        {# The logout link gives the user a way out if they can't complete two-factor authentication #}
+        <p class="cancel"><a href="{{ logoutPath }}">{{ 'Cancel'|trans }}</a></p>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Navigation'|trans }}{% endblock %}
+{% block h1 %}{{ 'Navigation'|trans }}{% endblock %}
+
+{% block btn %}
+    <div class="wrap-bar__buttons">
+        <a href="{{ url('admin_navigation_new') }}" class="btn btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>{{ 'Vytvořit novou položku'|trans }}
+        </a>
+    </div>
+{% endblock %}
+
+{% block main_content %}
+
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+
+    {{ gridView.render() }}
+
+{% endblock %}

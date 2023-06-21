@@ -1,0 +1,9 @@
+fragment ProductFilterOptionsBrandsFragment on BrandFilterOption {
+    __typename
+    count
+    brand {
+        __typename
+        uuid
+        name
+    }
+}

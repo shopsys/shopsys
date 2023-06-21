@@ -1,0 +1,2304 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "-- Choose article position --"
+msgstr ""
+
+msgid "-- Vyber roli --"
+msgstr ""
+
+msgid "-- Vyberte název přenosu --"
+msgstr ""
+
+msgid "0"
+msgstr ""
+
+msgid "301 (Permanent redirect)"
+msgstr ""
+
+msgid "302 (Temporary redirect)"
+msgstr ""
+
+msgid "<strong><a href=\"{{ url }}\">Notifikační lišta</a></strong> byla úspešne upravená"
+msgstr ""
+
+msgid "<strong><a href=\"{{ url }}\">SEO kombinace kategorie</a></strong> byla uložena"
+msgstr ""
+
+msgid "Add another flag"
+msgstr ""
+
+msgid "Add another parameter"
+msgstr ""
+
+msgid "Add some flag"
+msgstr ""
+
+msgid "Add some parameters"
+msgstr ""
+
+msgid "Administration"
+msgstr ""
+
+msgid "Administrator"
+msgstr ""
+
+msgid "Administrator role group"
+msgstr ""
+
+msgid "Administrator role group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was created"
+msgstr ""
+
+msgid "Administrator role group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was edited"
+msgstr ""
+
+msgid "Administrator role group <strong>{{ name }}</strong> deleted."
+msgstr ""
+
+msgid "Administrator role groups"
+msgstr ""
+
+msgid "Administrators - full"
+msgstr ""
+
+msgid "Administrators - view"
+msgstr ""
+
+msgid "Administrators overview"
+msgstr ""
+
+msgid "Advanced SEO categories"
+msgstr ""
+
+msgid "Advanced search"
+msgstr ""
+
+msgid "Advertising <a href=\"{{ url }}\"><strong>{{ name }}</strong></a> modified"
+msgstr ""
+
+msgid "Adverts - full"
+msgstr ""
+
+msgid "Adverts - view"
+msgstr ""
+
+msgid "Akce"
+msgstr ""
+
+msgid "Akeneo code"
+msgstr ""
+
+msgid "Aktivní"
+msgstr ""
+
+msgid "Aktvní"
+msgstr ""
+
+msgid "All - full"
+msgstr ""
+
+msgid "All - view"
+msgstr ""
+
+msgid "All domains"
+msgstr ""
+
+msgid "An authentication exception occurred."
+msgstr ""
+
+msgid "An email with 6 digit code was sent to your email address."
+msgstr ""
+
+msgid "Ancestor category"
+msgstr ""
+
+msgid "Apply according to customer"
+msgstr ""
+
+msgid "Apply according to date and time limit"
+msgstr ""
+
+msgid "Apply according to product flags"
+msgstr ""
+
+msgid "Apply according to the total price of the order"
+msgstr ""
+
+msgid "Apply to selected brands"
+msgstr ""
+
+msgid "Apply to selected categories"
+msgstr ""
+
+msgid "Apply to selected products"
+msgstr ""
+
+msgid "Article"
+msgstr ""
+
+msgid "Articles - full"
+msgstr ""
+
+msgid "Articles - view"
+msgstr ""
+
+msgid "Articles in footer"
+msgstr ""
+
+msgid "Articles in upper menu"
+msgstr ""
+
+msgid "Articles without positioning"
+msgstr ""
+
+msgid "Assign to category"
+msgstr ""
+
+msgid "Authentication code"
+msgstr ""
+
+msgid "Authenticator key"
+msgstr ""
+
+msgid "Back to overview"
+msgstr ""
+
+msgid "Banner"
+msgstr ""
+
+msgid "Banners"
+msgstr ""
+
+msgid "Barva pozadí"
+msgstr ""
+
+msgid "Basic"
+msgstr ""
+
+msgid "Basic information"
+msgstr ""
+
+msgid "Bestselling products - full"
+msgstr ""
+
+msgid "Bestselling products - view"
+msgstr ""
+
+msgid "Billing address - name, last name, company, company number, tax number and billing address"
+msgstr ""
+
+msgid "Blog"
+msgstr ""
+
+msgid "Blog article"
+msgstr ""
+
+msgid "Blog article - full"
+msgstr ""
+
+msgid "Blog article - view"
+msgstr ""
+
+msgid "Blog category"
+msgstr ""
+
+msgid "Blog category - full"
+msgstr ""
+
+msgid "Blog category - view"
+msgstr ""
+
+msgid "Brand"
+msgstr ""
+
+msgid "Brand overview"
+msgstr ""
+
+msgid "Brands"
+msgstr ""
+
+msgid "Brands - full"
+msgstr ""
+
+msgid "Brands - view"
+msgstr ""
+
+msgid "Bulk promo code generation"
+msgstr ""
+
+msgid "But at other addresses we have a lot for you..."
+msgstr ""
+
+msgid "Byla upravena položka navigace <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
+msgstr ""
+
+msgid "Byla vytvořena položka navigace <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
+msgstr ""
+
+msgid "Bylo vytvořeno <strong>{{ quantity }}</strong> slevových kupónů"
+msgstr ""
+
+msgid "CMS"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Canonical URL"
+msgstr ""
+
+msgid "Catalog number"
+msgstr ""
+
+msgid "Catalog numbers delimited by comma"
+msgstr ""
+
+msgid "Categories"
+msgstr ""
+
+msgid "Categories - full"
+msgstr ""
+
+msgid "Categories - view"
+msgstr ""
+
+msgid "Categories extended SEO - full"
+msgstr ""
+
+msgid "Categories extended SEO - view"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Category with prefilled filters"
+msgstr ""
+
+msgid "Choose type of redirect"
+msgstr ""
+
+msgid "Chosen payment name"
+msgstr ""
+
+msgid "Chosen shipping name"
+msgstr ""
+
+msgid "City"
+msgstr ""
+
+msgid "Clean Storefront Cache"
+msgstr ""
+
+msgid "Clean Storefront Query Cache"
+msgstr ""
+
+msgid "Code"
+msgstr ""
+
+msgid "Color"
+msgstr ""
+
+msgid "Color parameter values - full"
+msgstr ""
+
+msgid "Color parameter values - view"
+msgstr ""
+
+msgid "Company"
+msgstr ""
+
+msgid "Company number"
+msgstr ""
+
+msgid "Confirm authentication code"
+msgstr ""
+
+msgid "Contact"
+msgstr ""
+
+msgid "Contact form - full"
+msgstr ""
+
+msgid "Contact form - view"
+msgstr ""
+
+msgid "Content"
+msgstr ""
+
+msgid "Content-Security-Policy header"
+msgstr ""
+
+msgid "Content-Security-Policy header has been set."
+msgstr ""
+
+msgid "Content-Security-Policy header setting"
+msgstr ""
+
+msgid "Cookies article setting - full"
+msgstr ""
+
+msgid "Cookies article setting - view"
+msgstr ""
+
+msgid "Cookies information"
+msgstr ""
+
+msgid "Copy administrator role group"
+msgstr ""
+
+msgid "Countries - full"
+msgstr ""
+
+msgid "Countries - view"
+msgstr ""
+
+msgid "Country"
+msgstr ""
+
+msgid "Create SEO page"
+msgstr ""
+
+msgid "Create and download CSV"
+msgstr ""
+
+msgid "Create flag"
+msgstr ""
+
+msgid "Create new administrator role group"
+msgstr ""
+
+msgid "Create new banner"
+msgstr ""
+
+msgid "Create new order status"
+msgstr ""
+
+msgid "Create new store"
+msgstr ""
+
+msgid "Create promo code"
+msgstr ""
+
+msgid "Cron overview"
+msgstr ""
+
+msgid "Custom"
+msgstr ""
+
+msgid "Customer not found."
+msgstr ""
+
+msgid "Customers - full"
+msgstr ""
+
+msgid "Customers - view"
+msgstr ""
+
+msgid "Customers overview"
+msgstr ""
+
+msgid "Date and time of order creation"
+msgstr ""
+
+msgid "Datum a čas"
+msgstr ""
+
+msgid "Datum publikace"
+msgstr ""
+
+msgid "Datum vytvoření"
+msgstr ""
+
+msgid "Datum zobrazení DO"
+msgstr ""
+
+msgid "Datum zobrazení OD"
+msgstr ""
+
+msgid "Default stock cannot be removed"
+msgstr ""
+
+msgid "Default store"
+msgstr ""
+
+msgid "Default store cannot be removed"
+msgstr ""
+
+msgid "Defaultně zavřené parametry ve filtru"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "Delete category with SEO mix"
+msgstr ""
+
+msgid "Delivery address"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Detail skladu"
+msgstr ""
+
+msgid "Disable two factor authentication"
+msgstr ""
+
+msgid "Discount"
+msgstr ""
+
+msgid "Discount type"
+msgstr ""
+
+msgid "Display"
+msgstr ""
+
+msgid "Display on"
+msgstr ""
+
+msgid "Dle příznaků"
+msgstr ""
+
+msgid "Dny pro přesun mezi sklady"
+msgstr ""
+
+msgid "Dní do naskladnění"
+msgstr ""
+
+msgid "Dnů do doručení"
+msgstr ""
+
+msgid "Do you really want to delete this category even with their SEO mixes?"
+msgstr ""
+
+msgid "Do you really want to remove this SEO page?"
+msgstr ""
+
+msgid "Do you really want to remove this administrator role group?"
+msgstr ""
+
+msgid "Do you really want to remove this customer?"
+msgstr ""
+
+msgid "Do you really want to remove this flag?"
+msgstr ""
+
+msgid "Do you really want to remove this friendly URL? Removing friendly URL may have bad impact to SEO performance."
+msgstr ""
+
+msgid "Do you really want to remove this language constant translation?"
+msgstr ""
+
+msgid "Do you really want to remove this parameter? By deleting this parameter you will remove this parameter from a product where the parameter is assigned. This step is irreversible!"
+msgstr ""
+
+msgid "Do you really want to remove this payment?"
+msgstr ""
+
+msgid "Do you really want to remove this promo code?"
+msgstr ""
+
+msgid "Do you really want to remove this shipping?"
+msgstr ""
+
+msgid "Do you really want to remove this stock? By deleting this stock you will remove all stock quantities from products and association to stores. This step is irreversible!"
+msgstr ""
+
+msgid "Do you really want to remove this store? This step is irreversible!"
+msgstr ""
+
+msgid "Dodací lhůta dodavatele"
+msgstr ""
+
+msgid "Dokončení registrace"
+msgstr ""
+
+msgid "Domain"
+msgstr ""
+
+msgid "Doména"
+msgstr ""
+
+msgid "Duplikovat"
+msgstr ""
+
+msgid "Dávka ID"
+msgstr ""
+
+msgid "E-shop URL address"
+msgstr ""
+
+msgid "E-shop identification - full"
+msgstr ""
+
+msgid "E-shop identification - view"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Edit data"
+msgstr ""
+
+msgid "Edit store"
+msgstr ""
+
+msgid "Edit transport type"
+msgstr ""
+
+msgid "Editace hodnoty parameteru typu barva"
+msgstr ""
+
+msgid "Editace hodnoty parameteru typu barva:"
+msgstr ""
+
+msgid "Editace hodnoty parametru typu barva"
+msgstr ""
+
+msgid "Editace notifikační lišty"
+msgstr ""
+
+msgid "Editace položky"
+msgstr ""
+
+msgid "Editace položky navigace"
+msgstr ""
+
+msgid "Editace rubriky blogu"
+msgstr ""
+
+msgid "Editace rubriky blogu - %name%"
+msgstr ""
+
+msgid "Editace skladu"
+msgstr ""
+
+msgid "Editace skladu - %name%"
+msgstr ""
+
+msgid "Editace slevového kupónu"
+msgstr ""
+
+msgid "Editace článku blogu"
+msgstr ""
+
+msgid "Editace článku blogu - %name%"
+msgstr ""
+
+msgid "Editing SEO page"
+msgstr ""
+
+msgid "Editing administrator"
+msgstr ""
+
+msgid "Editing administrator role group"
+msgstr ""
+
+msgid "Editing administrator role group - %name%"
+msgstr ""
+
+msgid "Editing advertising - %name%"
+msgstr ""
+
+msgid "Editing banner"
+msgstr ""
+
+msgid "Editing email template - %name%"
+msgstr ""
+
+msgid "Editing flag"
+msgstr ""
+
+msgid "Editing flag - {{ name }}"
+msgstr ""
+
+msgid "Editing page"
+msgstr ""
+
+msgid "Editing product - %name%"
+msgstr ""
+
+msgid "Editing script"
+msgstr ""
+
+msgid "Editing transport type"
+msgstr ""
+
+msgid "Editing transport type - %code%"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Email newsletter"
+msgstr ""
+
+msgid "Email settings modified."
+msgstr ""
+
+msgid "Email template <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
+msgid "Enable two factor authentication by Google Authenticator"
+msgstr ""
+
+msgid "Enable two factor authentication by email"
+msgstr ""
+
+msgid "Enter a 6 digit authentication from your email. You need to request it by button bellow first."
+msgstr ""
+
+msgid "Enter a 6 digit authentication from your two factor authentication mobile application."
+msgstr ""
+
+msgid "Entity"
+msgstr ""
+
+msgid "Entity ID"
+msgstr ""
+
+msgid "Error messages"
+msgstr ""
+
+msgid "Exposed in Stores"
+msgstr ""
+
+msgid "External ID"
+msgstr ""
+
+msgid "External scripts"
+msgstr ""
+
+msgid "External transaction ID"
+msgstr ""
+
+msgid "External transaction status"
+msgstr ""
+
+msgid "Externí ID můstku"
+msgstr ""
+
+msgid "Facebook URL"
+msgstr ""
+
+msgid "Feeds - view"
+msgstr ""
+
+msgid "First name"
+msgstr ""
+
+msgid "Flag"
+msgstr ""
+
+msgid "Flag <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr ""
+
+msgid "Flag <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
+msgid "Flag <strong>{{ name }}</strong> deleted"
+msgstr ""
+
+msgid "Flags"
+msgstr ""
+
+msgid "Flags - full"
+msgstr ""
+
+msgid "Flags - view"
+msgstr ""
+
+msgid "Footer"
+msgstr ""
+
+msgid "Footer Text"
+msgstr ""
+
+msgid "For registered customers only"
+msgstr ""
+
+msgid "Forgotten password"
+msgstr ""
+
+msgid "Free transport and payment - full"
+msgstr ""
+
+msgid "Free transport and payment - view"
+msgstr ""
+
+msgid "Full name"
+msgstr ""
+
+msgid "GTM ID"
+msgstr ""
+
+msgid "GTM creative"
+msgstr ""
+
+msgid "GoPay"
+msgstr ""
+
+msgid "GoPay API return error - go to GoPay admin and find transaction %paymentId% and check if is all right."
+msgstr ""
+
+msgid "GoPay payment method"
+msgstr ""
+
+msgid "Google analytics"
+msgstr ""
+
+msgid "Heading (H1)"
+msgstr ""
+
+msgid "Heslo musí obsahovat velké, malé písmena, číslice a musí být delší než 10 znaků."
+msgstr ""
+
+msgid "Heureka"
+msgstr ""
+
+msgid "Heureka setting - full"
+msgstr ""
+
+msgid "Heureka setting - view"
+msgstr ""
+
+msgid "Hidden"
+msgstr ""
+
+msgid "Hide"
+msgstr ""
+
+msgid "Hlavní URL"
+msgstr ""
+
+msgid "Hledání v přenosech"
+msgstr ""
+
+msgid "Hodnota parameteru"
+msgstr ""
+
+msgid "Hodnota parameteru typu barva"
+msgstr ""
+
+msgid "Hodnota parametru <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> je úspěšně upravena."
+msgstr ""
+
+msgid "Hodnota parametru typu barva"
+msgstr ""
+
+msgid "Hodnoty parameterů typu barva"
+msgstr ""
+
+msgid "Home page"
+msgstr ""
+
+msgid "Hromadné kupony s prefixem"
+msgstr ""
+
+msgid "Hromadné vytvoření slevových kupónů"
+msgstr ""
+
+msgid "ID"
+msgstr ""
+
+msgid "If the time FROM is filled in, enter the date FROM too."
+msgstr ""
+
+msgid "If the time TO is filled in, enter the date TO too."
+msgstr ""
+
+msgid "If you want execute refund, you have to setup refund amount."
+msgstr ""
+
+msgid "Ihned k odběru"
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "Image sizes - view"
+msgstr ""
+
+msgid "Image will be deleted after saving."
+msgstr ""
+
+msgid "Images"
+msgstr ""
+
+msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
+msgstr ""
+
+msgid "In stock"
+msgstr ""
+
+msgid "Instagram URL"
+msgstr ""
+
+msgid "Instalační manuál"
+msgstr ""
+
+msgid "Integrations"
+msgstr ""
+
+msgid "Interní poznámka"
+msgstr ""
+
+msgid "Invalid two-factor authentication code."
+msgstr ""
+
+msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
+msgstr ""
+
+msgid "Je vystaven"
+msgstr ""
+
+msgid "Key"
+msgstr ""
+
+msgid "Kombinace parametrů a jejich hodnot parametrů"
+msgstr ""
+
+msgid "Krátký popis"
+msgstr ""
+
+msgid "Krátký popis 1"
+msgstr ""
+
+msgid "Krátký popis 2"
+msgstr ""
+
+msgid "Krátký popis 3"
+msgstr ""
+
+msgid "Krátký popis 4"
+msgstr ""
+
+msgid "Krátký popis 5"
+msgstr ""
+
+msgid "Krátký popis USP"
+msgstr ""
+
+msgid "Krátký popis kategorie"
+msgstr ""
+
+msgid "Language"
+msgstr ""
+
+msgid "Language constant translation"
+msgstr ""
+
+msgid "Language constant translation <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
+msgid "Language constant translation <strong>{{ name }}</strong> deleted"
+msgstr ""
+
+msgid "Language constant translation <strong>{{ name }}</strong> not found"
+msgstr ""
+
+msgid "Language constants"
+msgstr ""
+
+msgid "Language constants - full"
+msgstr ""
+
+msgid "Language constants - view"
+msgstr ""
+
+msgid "Last modification"
+msgstr "Naposledy upraveno"
+
+msgid "Last name"
+msgstr ""
+
+msgid "Last order"
+msgstr ""
+
+msgid "Legal conditions"
+msgstr ""
+
+msgid "Legal conditions article setting - full"
+msgstr ""
+
+msgid "Legal conditions article setting - view"
+msgstr ""
+
+msgid "Legal conditions settings modified."
+msgstr ""
+
+msgid "Limits"
+msgstr ""
+
+msgid "LinkedIn URL"
+msgstr ""
+
+msgid "List of language constants"
+msgstr ""
+
+msgid "List of products"
+msgstr ""
+
+msgid "List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)"
+msgstr ""
+
+msgid "Location"
+msgstr ""
+
+msgid "Log in"
+msgstr ""
+
+msgid "Login"
+msgstr ""
+
+msgid "Mail setting - full"
+msgstr ""
+
+msgid "Mail setting - view"
+msgstr ""
+
+msgid "Mail templates - full"
+msgstr ""
+
+msgid "Mail templates - view"
+msgstr ""
+
+msgid "Main image"
+msgstr ""
+
+msgid "Maximum weight (g)"
+msgstr ""
+
+msgid "Measurement units"
+msgstr ""
+
+msgid "Measurement units overview"
+msgstr ""
+
+msgid "Meta description"
+msgstr ""
+
+msgid "Move"
+msgstr ""
+
+msgid "Na konkrétní záložce domény není možné upravovat pořadí a zanoření rubrik blogu. Prosím přejděte na detail kategorie nebo na přehled kategorií na všech doménách"
+msgstr ""
+
+msgid "Nadpis H1"
+msgstr ""
+
+msgid "Nahrát nový obrázek pro mobilní zařízení"
+msgstr ""
+
+msgid "Nahrát obrázek pro mobilní zařízení"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Name %locale%"
+msgstr ""
+
+msgid "Nastavení %domainName% skladů uloženo."
+msgstr ""
+
+msgid "Nastavení SVG ikony"
+msgstr ""
+
+msgid "Nastavení URL"
+msgstr ""
+
+msgid "Nastavení kategorie výprodej"
+msgstr ""
+
+msgid "Nastavení skladů"
+msgstr ""
+
+msgid "Navigation"
+msgstr ""
+
+msgid "Navigation - full"
+msgstr ""
+
+msgid "Navigation - view"
+msgstr ""
+
+msgid "Nebyly nalezeny žádné kombinace pro SEO kategorií."
+msgstr ""
+
+msgid "Nebyly nalezeny žádné články blogu."
+msgstr ""
+
+msgid "Neomezeně"
+msgstr ""
+
+msgid "Neplatné řazení"
+msgstr ""
+
+msgid "Nepodporovaný datový typ pro validaci souboru. Kontaktujte, prosím, správce obchodu."
+msgstr ""
+
+msgid "New SEO page"
+msgstr ""
+
+msgid "New administrator"
+msgstr ""
+
+msgid "New administrator role group"
+msgstr ""
+
+msgid "New banner"
+msgstr ""
+
+msgid "New flag"
+msgstr ""
+
+msgid "New orders"
+msgstr ""
+
+msgid "New page"
+msgstr ""
+
+msgid "New registered customers"
+msgstr ""
+
+msgid "New script"
+msgstr ""
+
+msgid "New store"
+msgstr ""
+
+msgid "Newsletter - full"
+msgstr ""
+
+msgid "Newsletter - view"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "No SEO pages found."
+msgstr ""
+
+msgid "No articles found on this domain. You have to create some first."
+msgstr ""
+
+msgid "No flags found. You have to create some first."
+msgstr ""
+
+msgid "No orders status found."
+msgstr ""
+
+msgid "No page found."
+msgstr ""
+
+msgid "No products are set. Please add some in the component settings."
+msgstr ""
+
+msgid "No store is created. You have to create one first."
+msgstr ""
+
+msgid "No transport types found."
+msgstr ""
+
+msgid "No warehouse associated"
+msgstr ""
+
+msgid "Nominal"
+msgstr ""
+
+msgid "Not refundable"
+msgstr ""
+
+msgid "Note"
+msgstr ""
+
+msgid "Notification bar - full"
+msgstr ""
+
+msgid "Notification bar - view"
+msgstr ""
+
+msgid "Notifikační lišta"
+msgstr ""
+
+msgid "Notifikační lišta byla úspešne smazaná"
+msgstr ""
+
+msgid "Notifikační lišta byla úspešne vytvořená"
+msgstr ""
+
+msgid "Nová notifikační lišta"
+msgstr ""
+
+msgid "Nová položka"
+msgstr ""
+
+msgid "Nová položka navigace"
+msgstr ""
+
+msgid "Nová rubrika blogu"
+msgstr ""
+
+msgid "Nový sklad"
+msgstr ""
+
+msgid "Nový slevový kupóny"
+msgstr ""
+
+msgid "Nový článek blogu"
+msgstr ""
+
+msgid "Number of generated promo codes"
+msgstr ""
+
+msgid "Number of orders"
+msgstr ""
+
+msgid "Název"
+msgstr ""
+
+msgid "Název kategorie"
+msgstr ""
+
+msgid "Název prefix"
+msgstr ""
+
+msgid "Název suffix"
+msgstr ""
+
+msgid "Obchodní domy"
+msgstr ""
+
+msgid "Od"
+msgstr ""
+
+msgid "Odeslat refund a uložit celou změny objednávky"
+msgstr ""
+
+msgid "Odkaz"
+msgstr ""
+
+msgid "Odkaz na dokončení registrace"
+msgstr ""
+
+msgid "Odkaz textu pod bannerem"
+msgstr ""
+
+msgid "Oops! Error occurred"
+msgstr ""
+
+msgid "Oops! Error occurred."
+msgstr ""
+
+msgid "Open Graph description"
+msgstr ""
+
+msgid "Open Graph title"
+msgstr ""
+
+msgid "Operator information - full"
+msgstr ""
+
+msgid "Operator information - view"
+msgstr ""
+
+msgid "Opravdu chcete odstranit tento parametr? Smazáním parametru dojde k odstranění tohoto parametru u zboží a případné landing stránky rozšířeného SEO kategorií, kde je parametr přiřazen. Tento krok je nevratný!"
+msgstr ""
+
+msgid "Opravdu chcete odstranit tuto notifikační lištu?"
+msgstr ""
+
+msgid "Opravdu chcete smazat tento článek blogu?"
+msgstr ""
+
+msgid "Opravdu chcete smazat tuto rubriku blogu?"
+msgstr ""
+
+msgid "Opravdu chcete tento problém označit jako vyřešený?"
+msgstr ""
+
+msgid "Order confirmation page"
+msgstr ""
+
+msgid "Order detail"
+msgstr ""
+
+msgid "Order detail URL address"
+msgstr ""
+
+msgid "Order has not been sent to GoPay"
+msgstr ""
+
+msgid "Order number"
+msgstr ""
+
+msgid "Order status"
+msgstr ""
+
+msgid "Order statuses - full"
+msgstr ""
+
+msgid "Order statuses - view"
+msgstr ""
+
+msgid "Order submitted page setting - full"
+msgstr ""
+
+msgid "Order submitted page setting - view"
+msgstr ""
+
+msgid "Orders"
+msgstr ""
+
+msgid "Orders - full"
+msgstr ""
+
+msgid "Orders - view"
+msgstr ""
+
+msgid "Orders value"
+msgstr ""
+
+msgid "Original translation"
+msgstr ""
+
+msgid "Osobní odběr Commerce Cloud"
+msgstr ""
+
+msgid "Otevírat v novém okně"
+msgstr ""
+
+msgid "Package tracking"
+msgstr ""
+
+msgid "Page URL"
+msgstr ""
+
+msgid "Page name"
+msgstr ""
+
+msgid "Page not found"
+msgstr ""
+
+msgid "Page title"
+msgstr ""
+
+msgid "Paid amount"
+msgstr ""
+
+msgid "Parameter"
+msgstr ""
+
+msgid "Parameters - full"
+msgstr ""
+
+msgid "Parameters - view"
+msgstr ""
+
+msgid "Parametry a pořadí v kategorii"
+msgstr ""
+
+msgid "Parametry filtru"
+msgstr ""
+
+msgid "Parametry produktů vybrané kategorie"
+msgstr ""
+
+msgid "Password"
+msgstr ""
+
+msgid "Password again"
+msgstr ""
+
+msgid "Payment instructions"
+msgstr ""
+
+msgid "Payment method name"
+msgstr ""
+
+msgid "Payment transactions"
+msgstr ""
+
+msgid "Percents"
+msgstr ""
+
+msgid "Perex"
+msgstr ""
+
+msgid "Personal data access"
+msgstr ""
+
+msgid "Personal data access pages setting - full"
+msgstr ""
+
+msgid "Personal data access pages setting - view"
+msgstr ""
+
+msgid "Platba předautorizována"
+msgstr ""
+
+msgid "Platba refundována"
+msgstr ""
+
+msgid "Platba založena"
+msgstr ""
+
+msgid "Platba zaplacena"
+msgstr ""
+
+msgid "Platba zrušena"
+msgstr ""
+
+msgid "Platba částečně refundována"
+msgstr ""
+
+msgid "Platební metoda vybrána"
+msgstr ""
+
+msgid "Platnost do"
+msgstr ""
+
+msgid "Platnost od"
+msgstr ""
+
+msgid "Please check the correctness of all data filled."
+msgstr ""
+
+msgid "Please enter the correct time format (hh:mm)"
+msgstr ""
+
+msgid "Please excuse this error, we are working on fixing it. If needed, contact us on %mail% or by phone %phone%."
+msgstr ""
+
+msgid "Položka navigace <strong>{{ name }}</strong> byla smazána"
+msgstr ""
+
+msgid "Popis kategorie"
+msgstr ""
+
+msgid "Position of image"
+msgstr ""
+
+msgid "Postcode"
+msgstr ""
+
+msgid "Povolit nákup do mínusu"
+msgstr ""
+
+msgid "Prefix"
+msgstr ""
+
+msgid "Prefix (e.g. \"SPRING_\")"
+msgstr ""
+
+msgid "Prefix kuponu"
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "Pricing group"
+msgstr ""
+
+msgid "Pricing groups"
+msgstr ""
+
+msgid "Pricing groups - full"
+msgstr ""
+
+msgid "Pricing groups - view"
+msgstr ""
+
+msgid "Privacy Policy"
+msgstr ""
+
+msgid "Privacy Policy settings"
+msgstr ""
+
+msgid "Privacy policy article setting - full"
+msgstr ""
+
+msgid "Privacy policy article setting - view"
+msgstr ""
+
+msgid "Problém v přenosu byl označen jako vyřešený"
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+msgid "Product <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> modified"
+msgstr ""
+
+msgid "Products - full"
+msgstr ""
+
+msgid "Products - view"
+msgstr ""
+
+msgid "Products excluded from sale can't be displayed on lists and can't be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart."
+msgstr ""
+
+msgid "Products with this flag"
+msgstr ""
+
+msgid "Products without this flag"
+msgstr ""
+
+msgid "Promo code"
+msgstr ""
+
+msgid "Promo code <strong><a href=\"{{ url }}\">{{ code }}</a></strong> created"
+msgstr ""
+
+msgid "Promo code identifier in IS"
+msgstr ""
+
+msgid "Promo codes - full"
+msgstr ""
+
+msgid "Promo codes - view"
+msgstr ""
+
+msgid "Promoted categories"
+msgstr ""
+
+msgid "Promoted products"
+msgstr ""
+
+msgid "Propojené kategorie"
+msgstr ""
+
+msgid "Prosím zkontrolujte si správnost vyplnění všech údajů"
+msgstr ""
+
+msgid "Prosím zkontrolujte si, zda jsou všechna data správně vyplněna."
+msgstr ""
+
+msgid "Prosím zkontrolujte zda jsou všechna políčka správně vyplněná."
+msgstr ""
+
+msgid "Přehled chyb v přenosech"
+msgstr ""
+
+msgid "Přehled problémů v přenosech"
+msgstr ""
+
+msgid "Přehled skladů"
+msgstr ""
+
+msgid "Přenesené soubory"
+msgstr ""
+
+msgid "Přenos"
+msgstr ""
+
+msgid "Přenos kategorií"
+msgstr ""
+
+msgid "Přenos parametrů produkt"
+msgstr ""
+
+msgid "Přenos produktů"
+msgstr ""
+
+msgid "Přenos příslušenství produktu"
+msgstr ""
+
+msgid "Přenos příznaků produktů"
+msgstr ""
+
+msgid "Přenos skupin parametrů produkt"
+msgstr ""
+
+msgid "Přenosy"
+msgstr ""
+
+msgid "Přidat další limit"
+msgstr ""
+
+msgid "Přidejte limit"
+msgstr ""
+
+msgid "Příznak"
+msgstr ""
+
+msgid "Quick product search"
+msgstr ""
+
+msgid "Quick search"
+msgstr ""
+
+msgid "RGB Hex"
+msgstr ""
+
+msgid "Redirect target"
+msgstr ""
+
+msgid "Redirect type"
+msgstr ""
+
+msgid "Refund amount"
+msgstr ""
+
+msgid "Refundable amount"
+msgstr ""
+
+msgid "Refunded amount"
+msgstr ""
+
+msgid "Registration"
+msgstr ""
+
+msgid "Related products"
+msgstr ""
+
+msgid "Remaining number of uses"
+msgstr ""
+
+msgid "Return back"
+msgstr ""
+
+msgid "Role"
+msgstr ""
+
+msgid "Role Group"
+msgstr ""
+
+msgid "Role Groups"
+msgstr ""
+
+msgid "Role group cannot be deleted, because some administrators are using it: {{ names }}"
+msgstr ""
+
+msgid "Role group name <strong>{{ name }}</strong> is already used"
+msgstr ""
+
+msgid "Role name"
+msgstr ""
+
+msgid "Roles"
+msgstr ""
+
+msgid "Rounding"
+msgstr ""
+
+msgid "Rozbalit"
+msgstr ""
+
+msgid "Rozšířené SEO kategorie %categoryName% - filtry"
+msgstr ""
+
+msgid "Rozšířené SEO kategorie %categoryName% - kombinace"
+msgstr ""
+
+msgid "Rozšířené SEO kategorie - filtry"
+msgstr ""
+
+msgid "Rozšířené SEO kategorie - kombinace"
+msgstr ""
+
+msgid "Rozšířené SEO kategorie - nastavení kombinace se SEO hodnotami"
+msgstr ""
+
+msgid "Rozšířené SEO kategorie - volba kategorie"
+msgstr ""
+
+msgid "Rozšířené SEO kategorií"
+msgstr ""
+
+msgid "Rozšířené SEO kategorií - volba kategorie"
+msgstr ""
+
+msgid "Rubrika blogu"
+msgstr ""
+
+msgid "Rubrika blogu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla upravena"
+msgstr ""
+
+msgid "Rubrika blogu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla vytvořena"
+msgstr ""
+
+msgid "Rubrika blogu <strong>{{ name }}</strong> byla smazána"
+msgstr ""
+
+msgid "Rubriky blogu"
+msgstr ""
+
+msgid "SEO"
+msgstr ""
+
+msgid "SEO - full"
+msgstr ""
+
+msgid "SEO - view"
+msgstr ""
+
+msgid "SEO Page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr ""
+
+msgid "SEO Page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
+msgid "SEO Page <strong>{{ name }}</strong> removed"
+msgstr ""
+
+msgid "SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} byla smazána"
+msgstr ""
+
+msgid "SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} nebyla smazána, protože nebyla nalezena"
+msgstr ""
+
+msgid "SEO page"
+msgstr ""
+
+msgid "SEO pages"
+msgstr ""
+
+msgid "Sales overview (last 7 days)"
+msgstr ""
+
+msgid "Save changes"
+msgstr ""
+
+msgid "Save changes in order"
+msgstr ""
+
+msgid "Sbalit"
+msgstr ""
+
+msgid "Scripts - full"
+msgstr ""
+
+msgid "Scripts - view"
+msgstr ""
+
+msgid "Scripts overview"
+msgstr ""
+
+msgid "Search [noun]"
+msgstr ""
+
+msgid "Search [verb]"
+msgstr "Search"
+
+msgid "Search by slug..."
+msgstr ""
+
+msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
+msgstr ""
+
+msgid "Selected SEO page cannot be deleted"
+msgstr ""
+
+msgid "Selected SEO page does not exist"
+msgstr ""
+
+msgid "Selected administrator role group doesn't exist."
+msgstr ""
+
+msgid "Selected flag doesn't exist."
+msgstr ""
+
+msgid "Send me authentication code"
+msgstr ""
+
+msgid "Seo"
+msgstr ""
+
+msgid "Set as default"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Shipping instructions"
+msgstr ""
+
+msgid "Sklad"
+msgstr ""
+
+msgid "Skladem"
+msgstr ""
+
+msgid "Skladovost"
+msgstr ""
+
+msgid "Sklady"
+msgstr ""
+
+msgid "Skrýt na doméně"
+msgstr ""
+
+msgid "Skupiny"
+msgstr ""
+
+msgid "Sleva"
+msgstr ""
+
+msgid "Slevové kupóny"
+msgstr ""
+
+msgid "Slevové kupóny - vygenerované dávky"
+msgstr ""
+
+msgid "Slider items - full"
+msgstr ""
+
+msgid "Slider items - view"
+msgstr ""
+
+msgid "Slug"
+msgstr ""
+
+msgid "Sorting priority"
+msgstr ""
+
+msgid "Soubor se nepodařilo nalézt na hlavním uložišti. Zkuste to, prosím, znovu nebo kontaktujte správce obchodu."
+msgstr ""
+
+msgid "Stav objednávky"
+msgstr ""
+
+msgid "Stav platby GoPay"
+msgstr ""
+
+msgid "Stock"
+msgstr ""
+
+msgid "Stock <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr ""
+
+msgid "Stock <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
+msgid "Stock <strong>{{ name }}</strong> deleted"
+msgstr ""
+
+msgid "Stock <strong>{{ name }}</strong> was set as default."
+msgstr ""
+
+msgid "Stocks"
+msgstr ""
+
+msgid "Stocks - full"
+msgstr ""
+
+msgid "Stocks - view"
+msgstr ""
+
+msgid "Store"
+msgstr ""
+
+msgid "Store <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr ""
+
+msgid "Store <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edited"
+msgstr ""
+
+msgid "Store <strong>{{ name }}</strong> was deleted"
+msgstr ""
+
+msgid "Store <strong>{{ name }}</strong> was set as default."
+msgstr ""
+
+msgid "Store does not exist"
+msgstr ""
+
+msgid "Store list"
+msgstr ""
+
+msgid "Storefront queries cache has been cleaned."
+msgstr ""
+
+msgid "Stores"
+msgstr ""
+
+msgid "Stores - full"
+msgstr ""
+
+msgid "Stores - view"
+msgstr ""
+
+msgid "Street"
+msgstr ""
+
+msgid "Stránka"
+msgstr ""
+
+msgid "Stáhnout soubor"
+msgstr ""
+
+msgid "TOP"
+msgstr ""
+
+msgid "Tax number"
+msgstr ""
+
+msgid "Telephone"
+msgstr ""
+
+msgid "Tento způsob platby je skrytý systémem GoPay."
+msgstr ""
+
+msgid "Terms and Conditions"
+msgstr ""
+
+msgid "Terms and Conditions settings"
+msgstr ""
+
+msgid "Terms-and-conditions.html"
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "Text with image"
+msgstr ""
+
+msgid "Text zobrazený pod bannerem"
+msgstr ""
+
+msgid "Text zprávy"
+msgstr ""
+
+msgid "The selected flag cannot be deleted."
+msgstr ""
+
+msgid "This SEO page cannot be deleted."
+msgstr ""
+
+msgid "This flag can not be deleted as it is used in definition of"
+msgstr ""
+
+msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were not successfully processed."
+msgstr ""
+
+msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were successfully processed."
+msgstr ""
+
+msgid "This status can't be deleted. This is automatically assigned status to all new orders."
+msgstr ""
+
+msgid "TikTok URL"
+msgstr ""
+
+msgid "Time format: \"hh:mm\", e.g.: \"07:45\", \"23:05\""
+msgstr ""
+
+msgid "Titulek stránky"
+msgstr ""
+
+msgid "Top categories - full"
+msgstr ""
+
+msgid "Top categories - view"
+msgstr ""
+
+msgid "Top products - full"
+msgstr ""
+
+msgid "Top products - view"
+msgstr ""
+
+msgid "Total order price (including VAT)"
+msgstr ""
+
+msgid "Tracking URL"
+msgstr ""
+
+msgid "Tracking URL variables"
+msgstr ""
+
+msgid "Tracking instructions"
+msgstr ""
+
+msgid "Tracking instructions variables"
+msgstr ""
+
+msgid "Tracking number"
+msgstr ""
+
+msgid "Transfers - view"
+msgstr ""
+
+msgid "Transport type"
+msgstr ""
+
+msgid "Transport type <strong><a href=\"{{ url }}\">{{ code }}</a></strong> modified"
+msgstr ""
+
+msgid "Transport types"
+msgstr ""
+
+msgid "Transport types - full"
+msgstr ""
+
+msgid "Transport types - view"
+msgstr ""
+
+msgid "Transports and payments - full"
+msgstr ""
+
+msgid "Transports and payments - view"
+msgstr ""
+
+msgid "Two factor authentication code"
+msgstr ""
+
+msgid "Two factor authentication is already enabled."
+msgstr ""
+
+msgid "Two factor authentication is not enabled."
+msgstr ""
+
+msgid "Two factor authentication was disabled"
+msgstr ""
+
+msgid "Two factor authentication was enabled"
+msgstr ""
+
+msgid "Typ"
+msgstr ""
+
+msgid "Typ dopravy"
+msgstr ""
+
+msgid "Typ platby"
+msgstr ""
+
+msgid "Typ přenosu"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Typový plán"
+msgstr ""
+
+msgid "URL"
+msgstr ""
+
+msgid "URL addresses"
+msgstr ""
+
+msgid "URL odkazu"
+msgstr ""
+
+msgid "URL settings"
+msgstr ""
+
+msgid "Uh-oh, uh-oh. And specially <strong>\"%status_code% %status_text%\"</strong>, as if it was on purpose!"
+msgstr ""
+
+msgid "Uložit"
+msgstr ""
+
+msgid "Uložit nastavení skladu"
+msgstr ""
+
+msgid "Unable to load list of language constants"
+msgstr ""
+
+msgid "Unavailable"
+msgstr ""
+
+msgid "Units - full"
+msgstr ""
+
+msgid "Units - view"
+msgstr ""
+
+msgid "Unsupported two factor authentication method"
+msgstr ""
+
+msgid "Unused friendly URL list"
+msgstr ""
+
+msgid "Unused friendly URLs - full"
+msgstr ""
+
+msgid "Unused friendly URLs - view"
+msgstr ""
+
+msgid "Upload attachment"
+msgstr ""
+
+msgid "Upload image"
+msgstr ""
+
+msgid "Upload new image"
+msgstr ""
+
+msgid "Upravit"
+msgstr ""
+
+msgid "Use stocks"
+msgstr ""
+
+msgid "User translation"
+msgstr ""
+
+msgid "Valid from (date)"
+msgstr ""
+
+msgid "Valid from (time)"
+msgstr ""
+
+msgid "Valid to (date)"
+msgstr ""
+
+msgid "Valid to (time)"
+msgstr ""
+
+msgid "Value"
+msgstr ""
+
+msgid "Vats - full"
+msgstr ""
+
+msgid "Vats - view"
+msgstr ""
+
+msgid "Viditelný na homepage"
+msgstr ""
+
+msgid "Visibility"
+msgstr ""
+
+msgid "Vybraná notifikační lišta neexistuje"
+msgstr ""
+
+msgid "Vybraná rubrika blogu neexistuje."
+msgstr ""
+
+msgid "Vybraný problém v přenosu nebyl nalezen"
+msgstr ""
+
+msgid "Vybraný sklad neexistuje."
+msgstr ""
+
+msgid "Vybraný článek blogu neexistuje."
+msgstr ""
+
+msgid "Vygenerované dávky"
+msgstr ""
+
+msgid "Vyhledat"
+msgstr ""
+
+msgid "Vyplňte pouze URL pro zvolenou doménu"
+msgstr ""
+
+msgid "Vyplňte také URL pro zvolenou doménu"
+msgstr ""
+
+msgid "Vyprodáno"
+msgstr ""
+
+msgid "Vypršelá platnost platby"
+msgstr ""
+
+msgid "Vytvoření notifikační lišty"
+msgstr ""
+
+msgid "Vytvořit"
+msgstr ""
+
+msgid "Vytvořit hromadné slevové kupóny"
+msgstr ""
+
+msgid "Vytvořit notifikační lištu"
+msgstr ""
+
+msgid "Vytvořit novou položku"
+msgstr ""
+
+msgid "Vytvořit novou rubriku blogu"
+msgstr ""
+
+msgid "Vytvořit nový sklad"
+msgstr ""
+
+msgid "Vytvořit nový článek blogu"
+msgstr ""
+
+msgid "Vyřadit z prodeje v celém eshopu"
+msgstr ""
+
+msgid "Vyřazení z prodeje dle domén"
+msgstr ""
+
+msgid "Výchozí sklad"
+msgstr ""
+
+msgid "Warehouse"
+msgstr ""
+
+msgid "We have nothing to show you at this url."
+msgstr ""
+
+msgid "Weight (g)"
+msgstr ""
+
+msgid "XML Feeds"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "You are allowed to disable two factor authentication only to yourself."
+msgstr ""
+
+msgid "You are allowed to set up two factor authentication only to yourself."
+msgstr ""
+
+msgid "You can refund only %refundableAmount%."
+msgstr ""
+
+msgid "You can upload following formats: PNG, JPG"
+msgstr ""
+
+msgid "You can upload following formats: PNG, JPG, GIF"
+msgstr ""
+
+msgid "You have successfully paid order."
+msgstr ""
+
+msgid "You have to set redirect code for redirect."
+msgstr ""
+
+msgid "Youtube URL"
+msgstr ""
+
+msgid "Zadany kod neni spravny"
+msgstr ""
+
+msgid "Změna stavu objednávky"
+msgstr ""
+
+msgid "Zobrazit kombinace"
+msgstr ""
+
+msgid "Zobrazit v rozcestníku"
+msgstr ""
+
+msgid "Zpět na nástěnku"
+msgstr ""
+
+msgid "Zpět na přehled"
+msgstr ""
+
+msgid "Zpět na přehled možných kombinací"
+msgstr ""
+
+msgid "Zpět na volbu kategorie"
+msgstr ""
+
+msgid "Zpět na volbu parametrů"
+msgstr ""
+
+msgid "Zpět výpis"
+msgstr ""
+
+msgid "Zvolená položka navigace neexistuje."
+msgstr ""
+
+msgid "blogArticles"
+msgstr ""
+
+msgid "flags"
+msgstr ""
+
+msgid "from most expensive"
+msgstr ""
+
+msgid "from the cheapest"
+msgstr ""
+
+msgid "in upper menu"
+msgstr ""
+
+msgid "margin-top-20 margin-bottom-20"
+msgstr ""
+
+msgid "např. Akce-zidle-20-2020-04"
+msgstr ""
+
+msgid "např. cervena-1035x340-jpg-carousel"
+msgstr ""
+
+msgid "new customers"
+msgstr ""
+
+msgid "order statuses"
+msgstr ""
+
+msgid "orders sold"
+msgstr ""
+
+msgid "parameterValue"
+msgstr ""
+
+msgid "přenos souborů \"Instalační manuál\""
+msgstr ""
+
+msgid "přenos souborů \"Typový plán\""
+msgstr ""
+
+msgid "readyCategorySeoMixs"
+msgstr ""
+
+msgid "relevance"
+msgstr ""
+
+msgid "turnover in"
+msgstr ""
+
+msgid "without positioning"
+msgstr ""
+
+msgid "{0,1} K dispozici za týden|[2,4] K dispozici za %count% týdny|[5,Inf] K dispozici za %count% týdnů"
+msgstr ""
+
+msgid "{0}|{1}Můžete mít ihned na <span class=\"box-detail__avail__text__strong\">%count%</span> prodejně|[2,Inf]Můžete mít ihned na <span class=\"box-detail__avail__text__strong\">%count%</span> prodejnách"
+msgstr ""
+
+msgid "{0}|{1}Můžete si prohlédnout na <span class=\"box-detail__avail__text__strong\">%count%</span> prodejně|[2,Inf]Můžete si prohlédnout na <span class=\"box-detail__avail__text__strong\">%count%</span> prodejnách"
+msgstr ""
+
+msgid "Úprava hodnoty parametru typu barva - %name%"
+msgstr ""
+
+msgid "Článek blogu"
+msgstr ""
+
+msgid "Článek blogu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl vytvořen"
+msgstr ""
+
+msgid "Článek blogu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl změněn"
+msgstr ""
+
+msgid "Článek blogu <strong>{{ name }}</strong> byl smazán"
+msgstr ""
+
+msgid "Články blogu"
+msgstr ""
+
+msgid "Řazení"
+msgstr ""
+
+msgid "Škálovaný slevový kupón"
+msgstr ""
+
+msgid "Žádná hodnota parameteru typu barva není vytvořena."
+msgstr ""
+
+msgid "Žádný sklad na této doméně není vytvořen. Nejprve musíte nějaký vytvořit."
+msgstr ""
+

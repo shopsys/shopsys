@@ -1,0 +1,20 @@
+# It is best practice to name first type as "default"
+#
+# Example:
+# -   name: mailTemplate
+#     class: Shopsys\FrameworkBundle\Model\Mail\MailTemplate
+#     types:
+#         -   name: default
+#             multiple: false
+
+-   name: mailTemplate
+    class: Shopsys\FrameworkBundle\Model\Mail\MailTemplate
+    types:
+        -   name: default
+            multiple: true
+
+-   name: parameterValue
+    class: App\Model\Product\Parameter\ParameterValue
+    types:
+        -   name: default
+            multiple: false

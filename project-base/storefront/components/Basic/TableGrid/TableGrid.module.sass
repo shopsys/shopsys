@@ -1,0 +1,21 @@
+.tableGridRoot
+    width: 100%
+
+    tr
+        @apply border-b border-border last:border-b-0
+
+        th
+            @apply pt-6 px-4 pb-4 text-sm font-bold text-left text-greyLight md:pt-5 vl:whitespace-nowrap [&.text-right]:text-right
+
+        td
+            @apply pt-6 px-4 pb-4 text-sm [&.nowrap]:whitespace-nowrap
+
+.tableGridColumn
+    @apply w-full md:w-[calc(50%-16px)] md:mr-4 even:mr-0 even:ml-4
+
+    tr
+        th
+            @apply mb-0 pb-4 pl-0 text-lg font-normal border-b-2 border-greyLighter text-dark #{!important}
+
+        td
+            @apply pl-0 text-greyLight [&.nowrap]:whitespace-nowrap

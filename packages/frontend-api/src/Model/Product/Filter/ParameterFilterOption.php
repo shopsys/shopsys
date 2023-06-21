@@ -12,8 +12,10 @@ class ParameterFilterOption
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterValueFilterOption[] $values
      */
-    public function __construct(public readonly Parameter $parameter, public readonly array $values)
-    {
+    public function __construct(
+        public readonly Parameter $parameter,
+        public readonly array $values,
+    ) {
     }
 
     /**

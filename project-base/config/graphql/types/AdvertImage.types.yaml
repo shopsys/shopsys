@@ -1,4 +1,0 @@
-AdvertImage:
-    type: object
-    inherits:
-        - 'AdvertImageDecorator'

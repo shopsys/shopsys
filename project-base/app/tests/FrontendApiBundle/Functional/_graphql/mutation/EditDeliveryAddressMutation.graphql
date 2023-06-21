@@ -1,0 +1,36 @@
+mutation EditDeliveryAddress(
+    $uuid: Uuid,
+    $firstName: String!,
+    $lastName: String!,
+    $street: String!,
+    $city: String!,
+    $postcode: String!,
+    $country: String!,
+    $companyName: String,
+    $telephone: String,
+) {
+    EditDeliveryAddress(input: {
+        uuid: $uuid
+        firstName: $firstName
+        lastName: $lastName
+        street: $street
+        city: $city
+        postcode: $postcode
+        country: $country
+        companyName: $companyName
+        telephone: $telephone
+    }) {
+        uuid
+        firstName
+        lastName
+        street
+        city
+        postcode
+        country {
+            code
+            name
+        }
+        companyName
+        telephone
+    }
+}

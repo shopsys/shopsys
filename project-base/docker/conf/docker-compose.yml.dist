@@ -1,11 +1,17 @@
-version: "3.4"
+version: "3.7"
+
+x-variables:
+    common_build_args: &common_build_args
+        www_data_uid: 1000
+        www_data_gid: 1000
+
 services:
     postgres:
         image: postgres:12.1-alpine
         container_name: shopsys-framework-postgres
         volumes:
-            - ./var/postgres-data:/var/lib/postgresql/data
-            - ./docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf
+            - ./app/docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf
+            - postgres-data:/var/lib/postgresql/data
         environment:
             - PGDATA=/var/lib/postgresql/data/pgdata
             - POSTGRES_USER=root
@@ -21,23 +27,50 @@ services:
         container_name: shopsys-framework-webserver
         depends_on:
             - php-fpm
+            - storefront
         volumes:
-            - .:/var/www/html
+            - ./app/:/var/www/html
             - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
         ports:
             - "8000:8080"
 
+    storefront:
+        restart: always
+        build:
+            context: ./storefront
+            dockerfile: ./docker/dev.Dockerfile
+            target: development
+            args:
+                node_uid: 1000
+                node_gid: 1000
+        container_name: shopsys-framework-storefront
+        command: # Optional
+            - dev # change to `- build` if you want to test application build
+        volumes:
+            - ./storefront:/home/node/app
+        ports:
+            - "3000:3000"
+
+    cypress:
+        build:
+            context: ./storefront
+            dockerfile: ./cypress/docker/Dockerfile
+        container_name: shopsys-framework-cypress
+        volumes:
+            - ./storefront:/app
+        profiles:
+            - storefront-acceptance-tests
+
     php-fpm:
         build:
-            context: .
+            context: ./app
             dockerfile: docker/php-fpm/Dockerfile
             target: development
             args:
-                www_data_uid: 1000
-                www_data_gid: 1000
+                <<: *common_build_args
         container_name: shopsys-framework-php-fpm
         volumes:
-            - .:/var/www/html
+            - ./app/:/var/www/html
         ports:
             - "35729:35729"
 
@@ -73,12 +106,12 @@ services:
             - "1100:8080"
 
     smtp-server:
-        image: namshi/smtp:latest
+        image: ixdotai/smtp:latest
         container_name: shopsys-framework-smtp-server
 
     elasticsearch:
         build:
-            context: .
+            context: ./app/
             dockerfile: docker/elasticsearch/Dockerfile
         container_name: shopsys-framework-elasticsearch
         ulimits:
@@ -102,4 +135,6 @@ services:
 
 volumes:
     elasticsearch-data:
+        driver: local
+    postgres-data:
         driver: local

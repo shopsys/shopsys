@@ -1,0 +1,29 @@
+fragment SimpleProductFragment on Product {
+    __typename
+    id
+    uuid
+    catalogNumber
+    fullName
+    slug
+    price {
+        ...ProductPriceFragment
+    }
+    image: mainImage {
+        ...ImageSizesFragment
+    }
+    unit {
+        name
+    }
+    brand {
+        ...SimpleBrandFragment
+    }
+    categories {
+        name
+    }
+    flags {
+        ...SimpleFlagFragment
+    }
+    availability {
+        ...AvailabilityFragment
+    }
+}

@@ -1,0 +1,16 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'SEO pages'|trans }}{% endblock %}
+{% block h1 %}{{ 'SEO pages'|trans }}{% endblock %}
+
+{% block btn %}
+    <div class="wrap-bar">
+        <a href="{{ url('admin_seopage_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>{{ 'Create SEO page'|trans }}
+        </a>
+    </div>
+{% endblock %}
+
+{% block main_content %}
+    {{ gridView.render() }}
+{% endblock %}

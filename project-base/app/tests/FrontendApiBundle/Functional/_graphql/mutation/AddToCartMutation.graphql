@@ -1,0 +1,256 @@
+mutation AddToCart(
+    $cartUuid: Uuid
+    $productUuid: Uuid!
+    $quantity: Int!
+    $isAbsoluteQuantity: Boolean
+) {
+    AddToCart(
+        input: {
+            cartUuid: $cartUuid
+            productUuid: $productUuid
+            quantity: $quantity
+            isAbsoluteQuantity: $isAbsoluteQuantity
+        }
+    ) {
+        cart {
+            modifications {
+                itemModifications {
+                    noLongerListableCartItems {
+                        uuid
+                        quantity
+                        product {
+                            uuid
+                        }
+                    }
+                    cartItemsWithChangedQuantity {
+                        uuid
+                        quantity
+                        product {
+                            uuid
+                        }
+                    }
+                    cartItemsWithModifiedPrice {
+                        uuid
+                        quantity
+                        product {
+                            uuid
+                        }
+                    }
+                }
+                transportModifications {
+                    transportWeightLimitExceeded
+                    personalPickupStoreUnavailable
+                    transportPriceChanged
+                    transportUnavailable
+                }
+                paymentModifications {
+                    paymentPriceChanged
+                    paymentUnavailable
+                }
+            }
+            uuid
+            totalPrice {
+                priceWithVat
+                priceWithoutVat
+                vatAmount
+            }
+            totalDiscountPrice {
+                priceWithVat
+                priceWithoutVat
+                vatAmount
+            }
+            items {
+                uuid
+                product {
+                    ...TestProductFragment
+                    ... on Variant {
+                        mainVariant {
+                            ...TestMainVariantFragment
+                        }
+                    }
+                }
+            }
+            transport {
+                name
+                description
+                instruction
+                position
+                daysUntilDelivery
+                transportType {
+                    name
+                    code
+                }
+                price {
+                    priceWithVat
+                    priceWithoutVat
+                    vatAmount
+                }
+                images {
+                    position
+                    sizes {
+                        url
+                    }
+                }
+                stores {
+                    edges {
+                        node {
+                            name
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+fragment TestProductFragment on Product {
+    name
+    slug
+    shortDescription
+    seoH1
+    seoTitle
+    seoMetaDescription
+    link
+    unit {
+        name
+    }
+    availability {
+        name
+        status
+    }
+    stockQuantity
+    categories {
+        name
+    }
+    flags {
+        name
+        rgbColor
+    }
+    price {
+        priceWithVat
+        priceWithoutVat
+        vatAmount
+    }
+    brand {
+        name
+    }
+    accessories {
+        name
+    }
+    isSellingDenied
+    description
+    orderingPriority
+    parameters {
+        name
+        group
+        unit {
+            name
+        }
+        values {
+            text
+        }
+    }
+    isUsingStock
+    namePrefix
+    nameSuffix
+    fullName
+    catalogNumber
+    partNumber
+    ean
+    usps
+    hasPreorder
+    files {
+        anchorText
+        url
+    }
+    storeAvailabilities {
+        store {
+            name
+        }
+        exposed
+        availabilityInformation
+        availabilityStatus
+    }
+    availableStoresCount
+    exposedStoresCount
+    breadcrumb {
+        name
+        slug
+    }
+}
+
+fragment TestMainVariantFragment on MainVariant {
+    name
+    slug
+    shortDescription
+    seoH1
+    seoTitle
+    seoMetaDescription
+    link
+    unit {
+        name
+    }
+    availability {
+        name
+        status
+    }
+    stockQuantity
+    categories {
+        name
+    }
+    flags {
+        name
+        rgbColor
+    }
+    price {
+        priceWithVat
+        priceWithoutVat
+        vatAmount
+    }
+    brand {
+        name
+    }
+    accessories {
+        name
+    }
+    isSellingDenied
+    description
+    orderingPriority
+    parameters {
+        name
+        group
+        unit {
+            name
+        }
+        values {
+            text
+        }
+    }
+    isUsingStock
+    namePrefix
+    nameSuffix
+    fullName
+    catalogNumber
+    partNumber
+    ean
+    usps
+    hasPreorder
+    files {
+        anchorText
+        url
+    }
+    storeAvailabilities {
+        store {
+            name
+        }
+        exposed
+        availabilityInformation
+        availabilityStatus
+    }
+    availableStoresCount
+    exposedStoresCount
+    breadcrumb {
+        name
+        slug
+    }
+}

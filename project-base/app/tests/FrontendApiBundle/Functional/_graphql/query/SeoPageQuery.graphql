@@ -1,0 +1,9 @@
+query SeoPageQuery($pageSlug: String!) {
+    seoPage(pageSlug: $pageSlug) {
+        title
+        metaDescription
+        canonicalUrl
+        ogTitle
+        ogDescription
+    }
+}

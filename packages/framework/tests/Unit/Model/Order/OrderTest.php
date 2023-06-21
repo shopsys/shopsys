@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Tests\FrameworkBundle\Test\Provider\TestOrderProvider;
 
 class OrderTest extends TestCase
 {

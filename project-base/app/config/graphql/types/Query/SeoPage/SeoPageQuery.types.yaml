@@ -1,0 +1,11 @@
+SeoPageQuery:
+    type: object
+    config:
+        fields:
+            seoPage:
+                type: "SeoPage"
+                resolve: "@=query('seoPageByPageSlugQuery', args['pageSlug'])"
+                args:
+                    pageSlug:
+                        type: "String!"
+                description: "Returns SEO settings for a specific page based on the url slug of that page"

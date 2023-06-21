@@ -1,0 +1,12 @@
+ContactFormMutation:
+    type: object
+    config:
+        fields:
+            Contact:
+                type: Boolean!
+                description: "Send message to the site owner"
+                args:
+                    input:
+                        type: ContactInput!
+                        validation: cascade
+                resolve: "@=mutation('contactMutation', args, validator)"

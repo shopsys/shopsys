@@ -1,0 +1,12 @@
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry:
+        class: App\Component\ClassExtension\ClassExtensionRegistry
+        arguments:
+            - '%shopsys.framework.root_dir%'
+            - '%shopsys.entity_extension.map%'

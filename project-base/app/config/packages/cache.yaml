@@ -1,0 +1,19 @@
+framework:
+    cache:
+        pools:
+            main_friendly_url_slug_cache:
+                adapter: cache.adapter.redis
+                provider: snc_redis.main_friendly_url_slugs
+            bestselling_product_cache:
+                adapter: cache.adapter.redis
+                provider: snc_redis.bestselling_products
+                default_lifetime: 43200
+            doctrine.metadata_cache_pool:
+                adapter: cache.adapter.filesystem
+            doctrine.query_cache_pool:
+                adapter: cache.adapter.redis
+                provider: snc_redis.doctrine_query
+            image_cache:
+                adapter: cache.adapter.redis
+                provider: snc_redis.image
+                default_lifetime: 43200

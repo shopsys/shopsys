@@ -30,9 +30,9 @@ final class RemoveLockFilesReleaseWorker extends AbstractShopsysReleaseWorker
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
-        $this->processRunner->run('git rm project-base/composer.lock --ignore-unmatch');
-        $this->processRunner->run('git rm project-base/package-lock.json --ignore-unmatch');
-        $this->processRunner->run('git rm project-base/migrations-lock.yml --ignore-unmatch');
+        $this->processRunner->run('git rm project-base/app/composer.lock --ignore-unmatch');
+        $this->processRunner->run('git rm project-base/app/package-lock.json --ignore-unmatch');
+        $this->processRunner->run('git rm project-base/app/migrations-lock.yml --ignore-unmatch');
         // symfony.lock is not deleted as its removal would lead to reset of Symfony Flex
         $this->commit('removed locked versions of dependencies for unreleased version');
 

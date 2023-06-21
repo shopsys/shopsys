@@ -1,0 +1,27 @@
+fragment CategoryDetailFragment on Category {
+    __typename
+    id
+    uuid
+    slug
+    originalCategorySlug
+    name
+    description
+    seoH1
+    breadcrumb {
+        ...BreadcrumbFragment
+    }
+    children {
+        ...CategoryPreviewFragment
+    }
+    linkedCategories {
+        ...CategoryPreviewFragment
+    }
+    ...ListedProductsPreviewFragment
+    readyCategorySeoMixLinks {
+        __typename
+        name
+        slug
+    }
+    seoTitle
+    seoMetaDescription
+}

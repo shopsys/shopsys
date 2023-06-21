@@ -1,0 +1,59 @@
+{% block begin %}
+<?xml version="1.0" encoding="utf-8"?>
+<CHANNEL xmlns="http://www.mergado.com/ns/1.7">
+    <LINK>{{ domainConfig.url }}</LINK>
+    <GENERATOR>ssfwcc-mergado-feed-v1.0</GENERATOR>
+{% endblock %}
+
+{% block item %}
+    <ITEM>
+        <ITEM_ID>{{ item.id }}</ITEM_ID>
+        <NAME_EXACT>{{ item.name }}</NAME_EXACT>
+        <CATEGORY>{{ item.categoryPath }}</CATEGORY>
+        <PRODUCTNO>{{ item.productNo }}</PRODUCTNO>
+        {% if item.shortDescription != '' %}
+            <DESCRIPTION_SHORT>{{ item.shortDescription }}</DESCRIPTION_SHORT>
+        {% endif %}
+        {% if item.description is not null %}
+            <DESCRIPTION>{{ item.description }}</DESCRIPTION>
+        {% endif %}
+        <DELIVERY_DAYS>{{ item.deliveryDays }}</DELIVERY_DAYS>
+        <CURRENCY>{{ item.currencyCode }}</CURRENCY>
+        {% if item.imageUrl != null %}
+            <IMAGE>{{ item.imageUrl }}</IMAGE>
+        {% endif %}
+        {% for galleryImageUrl in item.galleryImageUrls %}
+            <IMAGE_ALTERNATIVE>{{ galleryImageUrl }}</IMAGE_ALTERNATIVE>
+        {% endfor %}
+        {% if item.brand is not null %}
+            <BRAND>{{ item.brand.name }}</BRAND>
+        {% endif %}
+        <URL>{{ item.url }}</URL>
+        <PRICE>{{ item.highProductPrice.priceWithoutVat|moneyFormat(2, '.') }}</PRICE>
+        <PRICE_VAT>{{ item.highProductPrice.priceWithVat|moneyFormat(2, '.') }}</PRICE_VAT>
+        {% for parameterName, parameterValue in item.parameters %}
+            <PARAM>
+                <NAME>{{ parameterName }}</NAME>
+                <VALUE>{{ parameterValue }}</VALUE>
+            </PARAM>
+        {% endfor %}
+        {% if item.mainVariantId is not null %}
+            <ITEMGROUP_ID>{{ item.mainVariantId }}</ITEMGROUP_ID>
+        {% endif %}
+        {% if item.availability is not null %}
+            <AVAILABILITY>{{ item.availability }}</AVAILABILITY>
+        {% else %}
+            <AVAILABILITY>out of stock</AVAILABILITY>
+        {% endif %}
+        <CONDITION>new</CONDITION>
+        {% for flagOrder, flagDescription in item.flags %}
+            <CUSTOM_LABEL_{{ flagOrder }}>
+                {{ flagDescription }}
+            </CUSTOM_LABEL_{{ flagOrder }}>
+        {% endfor %}
+    </ITEM>
+{% endblock %}
+
+{% block end %}
+</CHANNEL>
+{% endblock %}

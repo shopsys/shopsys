@@ -1,0 +1,447 @@
+security:
+    enable_authenticator_manager: true
+    password_hashers:
+        Symfony\Component\Security\Core\User\UserInterface:
+            algorithm: bcrypt
+            cost: 12
+
+    role_hierarchy:
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALL]
+        ROLE_ALL:
+            - ROLE_ORDER_FULL
+            - ROLE_CUSTOMER_FULL
+            - ROLE_NEWSLETTER_FULL
+            - ROLE_PROMO_CODE_FULL
+            - ROLE_PRODUCT_FULL
+            - ROLE_TOP_PRODUCT_FULL
+            - ROLE_BESTSELLING_PRODUCT_FULL
+            - ROLE_FLAG_FULL
+            - ROLE_PARAMETER_FULL
+            - ROLE_UNIT_FULL
+            - ROLE_CATEGORY_FULL
+            - ROLE_TOP_CATEGORY_FULL
+            - ROLE_PRICING_GROUP_FULL
+            - ROLE_VAT_FULL
+            - ROLE_ARTICLE_FULL
+            - ROLE_ADVERT_FULL
+            - ROLE_SLIDER_ITEM_FULL
+            - ROLE_NAVIGATION_FULL
+            - ROLE_BLOG_CATEGORY_FULL
+            - ROLE_BLOG_ARTICLE_FULL
+            - ROLE_NOTIFICATION_BAR_FULL
+            - ROLE_ORDER_SUBMITTED_FULL
+            - ROLE_LEGAL_CONDITIONS_FULL
+            - ROLE_PRIVACY_POLICY_FULL
+            - ROLE_PERSONAL_DATA_FULL
+            - ROLE_COOKIES_FULL
+            - ROLE_ADMINISTRATOR_FULL
+            - ROLE_DOMAIN_FULL
+            - ROLE_SHOP_INFO_FULL
+            - ROLE_MAIL_SETTING_FULL
+            - ROLE_MAIL_TEMPLATE_FULL
+            - ROLE_FREE_TRANSPORT_AND_PAYMENT_FULL
+            - ROLE_TRANSPORT_AND_PAYMENT_FULL
+            - ROLE_ORDER_STATUS_FULL
+            - ROLE_BRAND_FULL
+            - ROLE_COUNTRY_FULL
+            - ROLE_STORE_FULL
+            - ROLE_PARAMETER_VALUE_FULL
+            - ROLE_TRANSPORT_TYPE_FULL
+            - ROLE_IMAGE_SIZE_VIEW
+            - ROLE_SEO_FULL
+            - ROLE_CATEGORY_SEO_FULL
+            - ROLE_FRIENDLY_URL_FULL
+            - ROLE_CONTACT_FORM_FULL
+            - ROLE_STOCK_FULL
+            - ROLE_FEED_VIEW
+            - ROLE_HEUREKA_FULL
+            - ROLE_SCRIPT_FULL
+            - ROLE_LANGUAGE_CONSTANTS_FULL
+            - ROLE_TRANSFER_VIEW
+        ROLE_ALL_VIEW:
+            - ROLE_ORDER_VIEW
+            - ROLE_CUSTOMER_VIEW
+            - ROLE_NEWSLETTER_VIEW
+            - ROLE_PROMO_CODE_VIEW
+            - ROLE_PRODUCT_VIEW
+            - ROLE_TOP_PRODUCT_VIEW
+            - ROLE_BESTSELLING_PRODUCT_VIEW
+            - ROLE_FLAG_VIEW
+            - ROLE_PARAMETER_VIEW
+            - ROLE_UNIT_VIEW
+            - ROLE_CATEGORY_VIEW
+            - ROLE_TOP_CATEGORY_VIEW
+            - ROLE_PRICING_GROUP_VIEW
+            - ROLE_VAT_VIEW
+            - ROLE_ARTICLE_VIEW
+            - ROLE_ADVERT_VIEW
+            - ROLE_SLIDER_ITEM_VIEW
+            - ROLE_NAVIGATION_VIEW
+            - ROLE_BLOG_CATEGORY_VIEW
+            - ROLE_BLOG_ARTICLE_VIEW
+            - ROLE_NOTIFICATION_BAR_VIEW
+            - ROLE_ORDER_SUBMITTED_VIEW
+            - ROLE_LEGAL_CONDITIONS_VIEW
+            - ROLE_PRIVACY_POLICY_VIEW
+            - ROLE_PERSONAL_DATA_VIEW
+            - ROLE_COOKIES_VIEW
+            - ROLE_ADMINISTRATOR_VIEW
+            - ROLE_DOMAIN_VIEW
+            - ROLE_SHOP_INFO_VIEW
+            - ROLE_MAIL_SETTING_VIEW
+            - ROLE_MAIL_TEMPLATE_VIEW
+            - ROLE_FREE_TRANSPORT_AND_PAYMENT_VIEW
+            - ROLE_TRANSPORT_AND_PAYMENT_VIEW
+            - ROLE_ORDER_STATUS_VIEW
+            - ROLE_BRAND_VIEW
+            - ROLE_COUNTRY_VIEW
+            - ROLE_STORE_VIEW
+            - ROLE_PARAMETER_VALUE_VIEW
+            - ROLE_TRANSPORT_TYPE_VIEW
+            - ROLE_IMAGE_SIZE_VIEW
+            - ROLE_SEO_VIEW
+            - ROLE_CATEGORY_SEO_VIEW
+            - ROLE_FRIENDLY_URL_VIEW
+            - ROLE_CONTACT_FORM_VIEW
+            - ROLE_STOCK_VIEW
+            - ROLE_FEED_VIEW
+            - ROLE_HEUREKA_VIEW
+            - ROLE_SCRIPT_VIEW
+            - ROLE_LANGUAGE_CONSTANTS_VIEW
+            - ROLE_TRANSFER_VIEW
+        ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
+        ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
+        ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
+        ROLE_PROMO_CODE_FULL: [ROLE_PROMO_CODE_VIEW]
+        ROLE_PRODUCT_FULL: [ROLE_PRODUCT_VIEW]
+        ROLE_TOP_PRODUCT_FULL: [ROLE_TOP_PRODUCT_VIEW]
+        ROLE_BESTSELLING_PRODUCT_FULL: [ROLE_BESTSELLING_PRODUCT_VIEW]
+        ROLE_FLAG_FULL: [ROLE_FLAG_VIEW]
+        ROLE_PARAMETER_FULL: [ROLE_PARAMETER_VIEW]
+        ROLE_UNIT_FULL: [ROLE_UNIT_VIEW]
+        ROLE_CATEGORY_FULL: [ROLE_CATEGORY_VIEW]
+        ROLE_TOP_CATEGORY_FULL: [ROLE_TOP_CATEGORY_VIEW]
+        ROLE_PRICING_GROUP_FULL: [ROLE_PRICING_GROUP_VIEW]
+        ROLE_VAT_FULL: [ROLE_VAT_VIEW]
+        ROLE_ARTICLE_FULL: [ROLE_ARTICLE_VIEW]
+        ROLE_ADVERT_FULL: [ROLE_ADVERT_VIEW]
+        ROLE_SLIDER_ITEM_FULL: [ROLE_SLIDER_ITEM_VIEW]
+        ROLE_NAVIGATION_FULL: [ROLE_NAVIGATION_VIEW]
+        ROLE_BLOG_CATEGORY_FULL: [ROLE_BLOG_CATEGORY_VIEW]
+        ROLE_BLOG_ARTICLE_FULL: [ROLE_BLOG_ARTICLE_VIEW]
+        ROLE_NOTIFICATION_BAR_FULL: [ROLE_NOTIFICATION_BAR_VIEW]
+        ROLE_ORDER_SUBMITTED_FULL: [ROLE_ORDER_SUBMITTED_VIEW]
+        ROLE_LEGAL_CONDITIONS_FULL: [ROLE_LEGAL_CONDITIONS_VIEW]
+        ROLE_PRIVACY_POLICY_FULL: [ROLE_PRIVACY_POLICY_VIEW]
+        ROLE_PERSONAL_DATA_FULL: [ROLE_PERSONAL_DATA_VIEW]
+        ROLE_COOKIES_FULL: [ROLE_COOKIES_VIEW]
+        ROLE_ADMINISTRATOR_FULL: [ROLE_ADMINISTRATOR_VIEW]
+        ROLE_DOMAIN_FULL: [ROLE_DOMAIN_VIEW]
+        ROLE_SHOP_INFO_FULL: [ROLE_SHOP_INFO_VIEW]
+        ROLE_MAIL_SETTING_FULL: [ROLE_MAIL_SETTING_VIEW]
+        ROLE_MAIL_TEMPLATE_FULL: [ROLE_MAIL_TEMPLATE_VIEW]
+        ROLE_FREE_TRANSPORT_AND_PAYMENT_FULL: [ROLE_FREE_TRANSPORT_AND_PAYMENT_VIEW]
+        ROLE_TRANSPORT_AND_PAYMENT_FULL: [ROLE_TRANSPORT_AND_PAYMENT_VIEW]
+        ROLE_ORDER_STATUS_FULL: [ROLE_ORDER_STATUS_VIEW]
+        ROLE_BRAND_FULL: [ROLE_BRAND_VIEW]
+        ROLE_COUNTRY_FULL: [ROLE_COUNTRY_VIEW]
+        ROLE_STORE_FULL: [ROLE_STORE_VIEW]
+        ROLE_PARAMETER_VALUE_FULL: [ROLE_PARAMETER_VALUE_VIEW]
+        ROLE_TRANSPORT_TYPE_FULL: [ROLE_TRANSPORT_TYPE_VIEW]
+        ROLE_SEO_FULL: [ROLE_SEO_VIEW]
+        ROLE_CATEGORY_SEO_FULL: [ROLE_CATEGORY_SEO_VIEW]
+        ROLE_FRIENDLY_URL_FULL: [ROLE_FRIENDLY_URL_VIEW]
+        ROLE_CONTACT_FORM_FULL: [ROLE_CONTACT_FORM_VIEW]
+        ROLE_STOCK_FULL: [ROLE_STOCK_VIEW]
+        ROLE_HEUREKA_FULL: [ROLE_HEUREKA_VIEW]
+        ROLE_SCRIPT_FULL: [ROLE_SCRIPT_VIEW]
+        ROLE_LANGUAGE_CONSTANTS_FULL: [ROLE_LANGUAGE_CONSTANTS_VIEW]
+
+    providers:
+        administrators:
+            id: Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorUserProvider
+
+        user_identities:
+            id: Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider
+
+        frontend_api_user_identities:
+            id: Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider
+
+    firewalls:
+        # see Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade
+        administration:
+            pattern: ^/(%admin_url%/|efconnect|elfinder)
+            user_checker: Shopsys\FrameworkBundle\Model\Security\AdministratorChecker
+            provider: administrators
+            access_denied_url: "/%admin_url%/access-denied/"
+            entry_point: form_login
+            login_throttling:
+                max_attempts: 5
+                interval: '1 minute'
+            form_login:
+                check_path: admin_login_check
+                login_path: admin_login
+                default_target_path: admin_default_dashboard
+                use_referer: true
+                username_parameter: "admin_login_form[username]"
+                password_parameter: "admin_login_form[password]"
+                csrf_parameter: "admin_login_form[_token]"
+            logout:
+                path: admin_logout
+                csrf_parameter: _csrf_token
+                csrf_token_generator: security.csrf.token_manager
+                csrf_token_id: admin_logout
+                invalidate_session: false
+            two_factor:
+                auth_form_path: 2fa_login    # The route name you have used in the routes.yaml
+                check_path: 2fa_login_check  # The route name you have used in the routes.yaml
+        frontend_api:
+            pattern: ^/graphql
+            provider: frontend_api_user_identities
+            stateless: true
+            login_throttling:
+                max_attempts: 5
+                interval: '1 minute'
+            custom_authenticators:
+                - App\FrontendApi\Model\Token\TokenAuthenticator
+
+    access_control:
+        # This makes the logout route accessible during two-factor authentication. Allows the user to
+        # cancel two-factor authentication, if they need to.
+        - { path: ^/%admin_url%/logout, role: PUBLIC_ACCESS }
+        # This ensures that the form can only be accessed when two-factor authentication is in progress.
+        - { path: ^/%admin_url%/2fa, role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
+        # same pattern must be in routing_front.yaml
+        - { path: ^/%admin_url%/superadmin/, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/%admin_url%/cron/detail/*, roles: ROLE_ADMIN }
+        - { path: ^/%admin_url%/cron/*, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/%admin_url%/currency/, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/%admin_url%/translation/list/$, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/%admin_url%/$, roles: PUBLIC_ACCESS }
+        - { path: ^/%admin_url%/authorization/$, roles: PUBLIC_ACCESS }
+        # orders
+        - { path: ^/%admin_url%/order/edit, roles: ROLE_ORDER_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/order/delete, roles: ROLE_ORDER_FULL }
+        - { path: ^/%admin_url%/order/add-product/, roles: ROLE_ORDER_FULL }
+        - { path: ^/%admin_url%/order/, roles: ROLE_ORDER_VIEW }
+        # customers
+        - { path: ^/%admin_url%/customer/new, roles: ROLE_CUSTOMER_FULL }
+        - { path: ^/%admin_url%/customer/edit, roles: ROLE_CUSTOMER_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/customer/delete, roles: ROLE_CUSTOMER_FULL }
+        - { path: ^/%admin_url%/customer/login-as-user/, roles: ROLE_CUSTOMER_FULL }
+        - { path: ^/%admin_url%/customer/, roles: ROLE_CUSTOMER_VIEW }
+        # newsletter
+        - { path: ^/%admin_url%/newsletter/delete, roles: ROLE_NEWSLETTER_FULL }
+        - { path: ^/%admin_url%/newsletter/export-csv, roles: ROLE_NEWSLETTER_FULL }
+        - { path: ^/%admin_url%/newsletter/, roles: ROLE_NEWSLETTER_VIEW }
+        # promo codes
+        - { path: ^/%admin_url%/promo-code/new, roles: ROLE_PROMO_CODE_FULL }
+        - { path: ^/%admin_url%/promo-code/edit, roles: ROLE_PROMO_CODE_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/promo-code/new-mass-generate, roles: ROLE_PROMO_CODE_FULL }
+        - { path: ^/%admin_url%/promo-code/delete, roles: ROLE_PROMO_CODE_FULL }
+        - { path: ^/%admin_url%/promo-code/, roles: ROLE_PROMO_CODE_VIEW }
+        # products, top/bestselling products, flags, parameters, and units
+        - { path: ^/%admin_url%/product/list, roles: ROLE_PRODUCT_FULL, methods: [POST] } # mass edit form
+        - { path: ^/%admin_url%/product/new, roles: ROLE_PRODUCT_FULL }
+        - { path: ^/%admin_url%/product/edit/catnum-exists, roles: ROLE_PRODUCT_VIEW, methods: [POST] }
+        - { path: ^/%admin_url%/product/edit, roles: ROLE_PRODUCT_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/product/create-variant, roles: ROLE_PRODUCT_FULL }
+        - { path: ^/%admin_url%/product/delete, roles: ROLE_PRODUCT_FULL }
+        - { path: ^/%admin_url%/product/top-product, roles: ROLE_TOP_PRODUCT_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/product/top-product, roles: ROLE_TOP_PRODUCT_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/product/bestselling-product, roles: ROLE_BESTSELLING_PRODUCT_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/product/bestselling-product, roles: ROLE_BESTSELLING_PRODUCT_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/product/flag/delete, roles: ROLE_FLAG_FULL }
+        - { path: ^/%admin_url%/product/flag/new, roles: ROLE_FLAG_FULL }
+        - { path: ^/%admin_url%/product/flag/edit, roles: ROLE_FLAG_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/product/flag/edit, roles: ROLE_FLAG_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/product/flag/, roles: ROLE_FLAG_VIEW }
+        - { path: ^/%admin_url%/product/parameter/delete, roles: ROLE_PARAMETER_FULL }
+        - { path: ^/%admin_url%/product/parameter/, roles: ROLE_PARAMETER_VIEW }
+        - { path: ^/%admin_url%/product/unit/delete, roles: ROLE_UNIT_FULL }
+        - { path: ^/%admin_url%/product/unit/, roles: ROLE_UNIT_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/product/unit/, roles: ROLE_UNIT_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/product/, roles: ROLE_PRODUCT_VIEW }
+        # categories and top categories
+        - { path: ^/%admin_url%/category/new, roles: ROLE_CATEGORY_FULL }
+        - { path: ^/%admin_url%/category/edit, roles: ROLE_CATEGORY_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/category/delete, roles: ROLE_CATEGORY_FULL }
+        - { path: ^/%admin_url%/category/save-order/, roles: ROLE_CATEGORY_FULL }
+        - { path: ^/%admin_url%/category/apply-sorting/, roles: ROLE_CATEGORY_FULL }
+        - { path: ^/%admin_url%/category/top-category, roles: ROLE_TOP_CATEGORY_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/category/top-category, roles: ROLE_TOP_CATEGORY_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/category/, roles: ROLE_CATEGORY_VIEW }
+        # pricing groups
+        - { path: ^/%admin_url%/pricing/group/delete, roles: ROLE_PRICING_GROUP_FULL }
+        - { path: ^/%admin_url%/pricing/group/, roles: ROLE_PRICING_GROUP_VIEW }
+        # vats
+        - { path: ^/%admin_url%/vat/delete, roles: ROLE_VAT_FULL }
+        - { path: ^/%admin_url%/vat/, roles: ROLE_VAT_VIEW }
+        # articles
+        - { path: ^/%admin_url%/article/delete, roles: ROLE_ARTICLE_FULL }
+        - { path: ^/%admin_url%/article/new, roles: ROLE_ARTICLE_FULL }
+        - { path: ^/%admin_url%/article/edit, roles: ROLE_ARTICLE_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/article/save-ordering/, roles: ROLE_ARTICLE_FULL }
+        - { path: ^/%admin_url%/article/, roles: ROLE_ARTICLE_VIEW }
+        # adverts
+        - { path: ^/%admin_url%/advert/new, roles: ROLE_ADVERT_FULL }
+        - { path: ^/%admin_url%/advert/edit, roles: ROLE_ADVERT_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/advert/delete, roles: ROLE_ADVERT_FULL }
+        - { path: ^/%admin_url%/advert/, roles: ROLE_ADVERT_VIEW }
+        # slider items
+        - { path: ^/%admin_url%/slider/item/new, roles: ROLE_SLIDER_ITEM_FULL }
+        - { path: ^/%admin_url%/slider/item/delete, roles: ROLE_SLIDER_ITEM_FULL }
+        - { path: ^/%admin_url%/slider/item/edit, roles: ROLE_SLIDER_ITEM_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/slider/, roles: ROLE_SLIDER_ITEM_VIEW }
+        # navigation
+        - { path: ^/%admin_url%/navigation/new, roles: ROLE_NAVIGATION_FULL }
+        - { path: ^/%admin_url%/navigation/edit, roles: ROLE_NAVIGATION_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/navigation/delete, roles: ROLE_NAVIGATION_FULL }
+        - { path: ^/%admin_url%/navigation/, roles: ROLE_NAVIGATION_VIEW }
+        # blog categories
+        - { path: ^/%admin_url%/blog/category/new, roles: ROLE_BLOG_CATEGORY_FULL }
+        - { path: ^/%admin_url%/blog/category/edit, roles: ROLE_BLOG_CATEGORY_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/blog/category/delete, roles: ROLE_BLOG_CATEGORY_FULL }
+        - { path: ^/%admin_url%/blog/category/apply-sorting/, roles: ROLE_BLOG_CATEGORY_FULL }
+        - { path: ^/%admin_url%/blog/category/, roles: ROLE_BLOG_CATEGORY_VIEW }
+        # blog articles
+        - { path: ^/%admin_url%/blog/article/new, roles: ROLE_BLOG_ARTICLE_FULL }
+        - { path: ^/%admin_url%/blog/article/edit, roles: ROLE_BLOG_ARTICLE_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/blog/article/delete, roles: ROLE_BLOG_ARTICLE_FULL }
+        - { path: ^/%admin_url%/blog/article/, roles: ROLE_BLOG_ARTICLE_VIEW }
+        # notification bar
+        - { path: ^/%admin_url%/notification-bar/new, roles: ROLE_NOTIFICATION_BAR_FULL }
+        - { path: ^/%admin_url%/notification-bar/edit, roles: ROLE_NOTIFICATION_BAR_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/notification-bar/delete, roles: ROLE_NOTIFICATION_BAR_FULL }
+        - { path: ^/%admin_url%/notification-bar/, roles: ROLE_NOTIFICATION_BAR_VIEW }
+        # order submitted page setting
+        - { path: ^/%admin_url%/customer-communication/order-submitted, roles: ROLE_ORDER_SUBMITTED_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/customer-communication/order-submitted, roles: ROLE_ORDER_SUBMITTED_FULL, methods: [POST] }
+        # legal conditions setting
+        - { path: ^/%admin_url%/legal-conditions/setting, roles: ROLE_LEGAL_CONDITIONS_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/legal-conditions/setting, roles: ROLE_LEGAL_CONDITIONS_FULL, methods: [POST] }
+        # privacy policy setting
+        - { path: ^/%admin_url%/legal-conditions/privacy-policy, roles: ROLE_PRIVACY_POLICY_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/legal-conditions/privacy-policy, roles: ROLE_PRIVACY_POLICY_FULL, methods: [POST] }
+        # personal data access setting
+        - { path: ^/%admin_url%/personal-data/setting, roles: ROLE_PERSONAL_DATA_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/personal-data/setting, roles: ROLE_PERSONAL_DATA_FULL, methods: [POST] }
+        # cookies article setting
+        - { path: ^/%admin_url%/cookies/setting, roles: ROLE_COOKIES_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/cookies/setting, roles: ROLE_COOKIES_FULL, methods: [POST] }
+        # administrators
+        - { path: ^/%admin_url%/administrator/new, roles: ROLE_ADMINISTRATOR_FULL }
+        - { path: ^/%admin_url%/administrator/delete, roles: ROLE_ADMINISTRATOR_FULL }
+        - { path: ^/%admin_url%/administrator/edit/, roles: ROLE_ADMIN } # @see \App\Controller\Admin\AdministratorController::denyAccessUnlessHimselfOrGranted
+        - { path: ^/%admin_url%/administrator/my-account/, roles: ROLE_ADMIN }
+        - { path: ^/%admin_url%/administrator/enable-two-factor-authentication/, roles: ROLE_ADMIN }
+        - { path: ^/%admin_url%/administrator/disable-two-factor-authentication/, roles: ROLE_ADMIN }
+        - { path: ^/%admin_url%/administrator/groups/list/, roles: ROLE_ADMINISTRATOR_VIEW }
+        - { path: ^/%admin_url%/administrator/groups/edit/, roles: ROLE_ADMINISTRATOR_FULL }
+        - { path: ^/%admin_url%/administrator/groups/new/, roles: ROLE_ADMINISTRATOR_FULL }
+        - { path: ^/%admin_url%/administrator/groups/copy/, roles: ROLE_ADMINISTRATOR_FULL }
+        - { path: ^/%admin_url%/administrator/groups/delete/, roles: ROLE_ADMINISTRATOR_FULL }
+        - { path: ^/%admin_url%/administrator/, roles: ROLE_ADMINISTRATOR_VIEW }
+        # domains
+        - { path: ^/%admin_url%/domain/, roles: ROLE_DOMAIN_VIEW }
+        # shop info
+        - { path: ^/%admin_url%/shop-info/setting, roles: ROLE_SHOP_INFO_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/shop-info/setting, roles: ROLE_SHOP_INFO_FULL, methods: [POST] }
+        # mail setting
+        - { path: ^/%admin_url%/mail/setting, roles: ROLE_MAIL_SETTING_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/mail/setting, roles: ROLE_MAIL_SETTING_FULL, methods: [POST] }
+        # mail templates
+        - { path: ^/%admin_url%/mail/create, roles: ROLE_MAIL_TEMPLATE_FULL }
+        - { path: ^/%admin_url%/mail/edit, roles: ROLE_MAIL_TEMPLATE_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/mail/delete, roles: ROLE_MAIL_TEMPLATE_FULL }
+        - { path: ^/%admin_url%/mail/edit/, roles: ROLE_MAIL_TEMPLATE_VIEW }
+        - { path: ^/%admin_url%/mail/template/, roles: ROLE_MAIL_TEMPLATE_VIEW }
+        # transports and payments
+        - { path: ^/%admin_url%/transport-and-payment/free-transport-and-payment-limit/, roles: ROLE_FREE_TRANSPORT_AND_PAYMENT_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/transport-and-payment/free-transport-and-payment-limit/, roles: ROLE_FREE_TRANSPORT_AND_PAYMENT_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/transport-and-payment/list, roles: ROLE_TRANSPORT_AND_PAYMENT_VIEW }
+        - { path: ^/%admin_url%/transport/new, roles: ROLE_TRANSPORT_AND_PAYMENT_FULL }
+        - { path: ^/%admin_url%/transport/edit, roles: ROLE_TRANSPORT_AND_PAYMENT_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/transport/delete, roles: ROLE_TRANSPORT_AND_PAYMENT_FULL }
+        - { path: ^/%admin_url%/transport/, roles: ROLE_TRANSPORT_AND_PAYMENT_VIEW }
+        - { path: ^/%admin_url%/payment/new, roles: ROLE_TRANSPORT_AND_PAYMENT_FULL }
+        - { path: ^/%admin_url%/payment/edit, roles: ROLE_TRANSPORT_AND_PAYMENT_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/payment/delete, roles: ROLE_TRANSPORT_AND_PAYMENT_FULL }
+        - { path: ^/%admin_url%/payment/, roles: ROLE_TRANSPORT_AND_PAYMENT_VIEW }
+        # order statuses
+        - { path: ^/%admin_url%/order-status/delete, roles: ROLE_ORDER_STATUS_FULL }
+        - { path: ^/%admin_url%/order-status/, roles: ROLE_ORDER_STATUS_VIEW }
+        # brands
+        - { path: ^/%admin_url%/brand/new, roles: ROLE_BRAND_FULL }
+        - { path: ^/%admin_url%/brand/edit, roles: ROLE_BRAND_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/brand/delete, roles: ROLE_BRAND_FULL }
+        - { path: ^/%admin_url%/brand/, roles: ROLE_BRAND_VIEW }
+        # countries
+        - { path: ^/%admin_url%/country/new, roles: ROLE_COUNTRY_FULL }
+        - { path: ^/%admin_url%/country/edit, roles: ROLE_COUNTRY_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/country/, roles: ROLE_COUNTRY_VIEW }
+        # stores
+        - { path: ^/%admin_url%/store/new, roles: ROLE_STORE_FULL }
+        - { path: ^/%admin_url%/store/edit, roles: ROLE_STORE_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/store/delete, roles: ROLE_STORE_FULL }
+        - { path: ^/%admin_url%/store/setdefault/, roles: ROLE_STORE_FULL }
+        - { path: ^/%admin_url%/store/, roles: ROLE_STORE_VIEW }
+        # parameter values
+        - { path: ^/%admin_url%/parameter-value/, roles: ROLE_PARAMETER_VALUE_VIEW, method: [GET] }
+        - { path: ^/%admin_url%/parameter-value/, roles: ROLE_PARAMETER_VALUE_FULL, method: [POST] }
+        # transport types
+        - { path: ^/%admin_url%/transport-type/, roles: ROLE_TRANSPORT_TYPE_VIEW, method: [GET] }
+        - { path: ^/%admin_url%/transport-type/, roles: ROLE_TRANSPORT_TYPE_FULL, method: [POST] }
+        # image sizes
+        - { path: ^/%admin_url%/image/overview, roles: ROLE_IMAGE_SIZE_VIEW }
+        # SEO
+        - { path: ^/%admin_url%/seo/category/new/ready-combination/category/, roles: ROLE_CATEGORY_SEO_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/seo/category/new/ready-combination/category/, roles: ROLE_CATEGORY_SEO_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/seo/category/new, roles: ROLE_CATEGORY_SEO_FULL }
+        - { path: ^/%admin_url%/seo/category/ready-combination/delete, roles: ROLE_CATEGORY_SEO_FULL }
+        - { path: ^/%admin_url%/seo/category, roles: ROLE_CATEGORY_SEO_VIEW }
+        - { path: ^/%admin_url%/seo/, roles: ROLE_SEO_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/seo/, roles: ROLE_SEO_FULL, methods: [POST] }
+        # friendly URLs
+        - { path: ^/%admin_url%/unused-friendly-url/delete, roles: ROLE_FRIENDLY_URL_FULL }
+        - { path: ^/%admin_url%/unused-friendly-url/, roles: ROLE_FRIENDLY_URL_VIEW }
+        # contact form
+        - { path: ^/%admin_url%/contact-form/, roles: ROLE_CONTACT_FORM_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/contact-form/, roles: ROLE_CONTACT_FORM_FULL, methods: [POST] }
+        # stocks
+        - { path: ^/%admin_url%/stock/new, roles: ROLE_STOCK_FULL }
+        - { path: ^/%admin_url%/stock/edit, roles: ROLE_STOCK_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/stock/delete, roles: ROLE_STOCK_FULL }
+        - { path: ^/%admin_url%/stock/savesettings/, roles: ROLE_STOCK_FULL }
+        - { path: ^/%admin_url%/stock/setdefault/, roles: ROLE_STOCK_FULL }
+        - { path: ^/%admin_url%/stock/, roles: ROLE_STOCK_VIEW }
+        # feeds
+        - { path: ^/%admin_url%/feed/list/, roles: ROLE_FEED_VIEW }
+        # Heureka
+        - { path: ^/%admin_url%/heureka/setting/, roles: ROLE_HEUREKA_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/heureka/setting/, roles: ROLE_HEUREKA_FULL, methods: [POST] }
+        # scripts
+        - { path: ^/%admin_url%/script/new, roles: ROLE_SCRIPT_FULL }
+        - { path: ^/%admin_url%/script/edit, roles: ROLE_SCRIPT_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/script/delete, roles: ROLE_SCRIPT_FULL }
+        - { path: ^/%admin_url%/script/, roles: ROLE_SCRIPT_VIEW, methods: [GET] }
+        - { path: ^/%admin_url%/script/, roles: ROLE_SCRIPT_FULL, methods: [POST] }
+        # language constants
+        - { path: ^/%admin_url%/constant/edit, roles: ROLE_LANGUAGE_CONSTANTS_FULL }
+        - { path: ^/%admin_url%/constant/delete, roles: ROLE_LANGUAGE_CONSTANTS_FULL }
+        - { path: ^/%admin_url%/constant/list/, roles: ROLE_LANGUAGE_CONSTANTS_VIEW }
+        # transfers
+        - { path: ^/%admin_url%/transfer/list/, roles: ROLE_TRANSFER_VIEW }
+        # special paths for file manager in wysiwyg, product picker, grid, domain selector, login as user.
+        - { path: ^/%admin_url%/product-picker/, roles: ROLE_ADMIN }
+        - { path: ^/%admin_url%/_grid/, roles: ROLE_ADMIN }
+        - { path: ^/%admin_url%/multidomain/select-domain/, roles: ROLE_ADMIN }
+        - { path: ^/%admin_url%/sso/, roles: ROLE_ADMIN }
+        - { path: ^/efconnect, roles: ROLE_ADMIN }
+        - { path: ^/elfinder, roles: ROLE_ADMIN }
+        # error pages preview
+        - { path: ^/%admin_url%/_error/, roles: PUBLIC_ACCESS }
+        # dashboard and the rest of pages
+        - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
+        - { path: ^/%admin_url%/, roles: ROLE_ALL }
+        - { path: ^/, roles: PUBLIC_ACCESS }

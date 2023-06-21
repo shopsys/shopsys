@@ -1,0 +1,5 @@
+fragment BreadcrumbFragment on Link {
+    __typename
+    name
+    slug
+}

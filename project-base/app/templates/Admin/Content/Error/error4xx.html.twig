@@ -1,0 +1,12 @@
+{% extends 'Admin/Layout/errorLayout.html.twig' %}
+
+{% block error_content %}
+    <h1>{{ 'We have nothing to show you at this url.'|trans }}</h1>
+    <p>
+        {{ 'But at other addresses we have a lot for you...'|trans }}
+    </p>
+    <img
+        src="{{ asset('public/admin/images/404.png') }}"
+        alt="{{ status_code }} {{ status_text }}"
+    >
+{% endblock %}

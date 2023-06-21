@@ -4,7 +4,7 @@ parameters:
         maximumNumberOfProcesses: 5
     treatPhpDocTypesAsCertain: false
     symfony:
-        containerXmlPath: '%currentWorkingDirectory%/project-base/var/cache/dev/App_KernelDevDebugContainer.xml'
+        containerXmlPath: '%currentWorkingDirectory%/project-base/app/var/cache/dev/App_KernelDevDebugContainer.xml'
         constantHassers: false
 
     ignoreErrors:
@@ -25,23 +25,23 @@ parameters:
         -
             # We need to have undefined variable for testing purposes
             message: '#^Undefined variable: \$undefined$#'
-            path: %currentWorkingDirectory%/project-base/src/Controller/Test/ErrorHandlerController.php
+            path: %currentWorkingDirectory%/project-base/app/src/Controller/Test/ErrorHandlerController.php
         -
             # We need to have undefined variable for testing purposes
             message: '#^Expression "\$undefined\[42\]" on a separate line does not do anything\.$#'
-            path: %currentWorkingDirectory%/project-base/src/Controller/Test/ErrorHandlerController.php
+            path: %currentWorkingDirectory%/project-base/app/src/Controller/Test/ErrorHandlerController.php
         -
             # Ignore annotations in generated code
             message: '#^PHPDoc tag @(param|return) has invalid value (.|\n)+ expected type at offset \d+$#'
-            path: %currentWorkingDirectory%/project-base/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
+            path: %currentWorkingDirectory%/project-base/app/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
         -
             # Ignore annotations in generated code
             message: '#^PHPDoc tag @throws with type .+ is not subtype of Throwable$#'
-            path: %currentWorkingDirectory%/project-base/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
+            path: %currentWorkingDirectory%/project-base/app/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
         -
             # Ignore annotations in generated code
             message: '#^PHPDoc tag @param for parameter \$function with type callable is not subtype of native type Closure.$#'
-            path: %currentWorkingDirectory%/project-base/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
+            path: %currentWorkingDirectory%/project-base/app/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
         -
             # phpstan-symfony extension cannot work right with symfony test container at the moment https://github.com/phpstan/phpstan-symfony/issues/27
             message: '#^Service "[^"]+" is private.$#'
@@ -51,14 +51,14 @@ parameters:
             path: %currentWorkingDirectory%/*/tests/*
         -
             message: '#^Service "snc_redis.test" is not registered in the container.$#'
-            path: %currentWorkingDirectory%/project-base/tests/App/Functional/Component/Redis/Redis*FacadeTest.php
+            path: %currentWorkingDirectory%/project-base/app/tests/App/Functional/Component/Redis/Redis*FacadeTest.php
         -
             message: '#^Service "doctrine.orm.default_metadata_driver" is private.$#'
             path: %currentWorkingDirectory%/packages/framework/src/DependencyInjection/Compiler/RegisterExtendedEntitiesCompilerPass.php
         -
-            # Annotations in Codeception are not well describing
-            message: '#^Parameter \#(\d+) (\$cssOrXPath|\$cssOrXPathOrRegex|\$field|\$selector|\$element) of method (Tests\\(.*)\\Codeception\\(.*)|Codeception\\Module\\WebDriver::moveMouseOver\(\)) expects (.*)#'
-            path: %currentWorkingDirectory%/project-base/tests/App/*
+            # in fact, anything can be passed to the load function, it just has a bad annotation
+            message: '#^Parameter \#1 \$key of method Overblog\\DataLoader\\DataLoaderInterface::load\(\) expects string#'
+            path: %currentWorkingDirectory%/project-base/app/src/FrontendApi/*
     excludePaths:
         # Exclude coding standards from packages as it is in incompatible version
         - %currentWorkingDirectory%/packages/coding-standards/*
@@ -67,7 +67,7 @@ parameters:
         # Exclude backend api package as the integration is currently removed
         - %currentWorkingDirectory%/packages/backend-api/*
         # Exclude coding standards for generated files
-        - %currentWorkingDirectory%/project-base/tests/App/Test/Codeception/_generated/*
+        - %currentWorkingDirectory%/project-base/app/tests/App/Test/Codeception/_generated/*
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon

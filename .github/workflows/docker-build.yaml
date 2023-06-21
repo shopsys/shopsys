@@ -33,24 +33,28 @@ jobs:
                     password: ${{ secrets.GITHUB_TOKEN }}
             -   name: Extract branch name to ENV variable BRANCH_NAME
                 run: echo "BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
-            -   name: Check if PHP-FPM image exists
+            -   name: Check if PHP-FPM image and Storefront image exists
                 env:
                     DOCKER_USERNAME: ${{ github.repository_owner }}
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 run: |
-                    DOCKER_PHP_FPM_IMAGE_TAG=github-action-`find project-base/docker/php-fpm -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    DOCKER_PHP_FPM_IMAGE_TAG=github-action-`find project-base/app/docker/php-fpm -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    DOCKER_STOREFRONT_IMAGE_TAG=github-action-storefront-${{ github.sha }}
                     echo "DOCKER_PHP_FPM_IMAGE_TAG=${DOCKER_PHP_FPM_IMAGE_TAG}" >> $GITHUB_ENV
+                    echo "DOCKER_STOREFRONT_IMAGE_TAG=${DOCKER_STOREFRONT_IMAGE_TAG}" >> $GITHUB_ENV
                     echo "DOCKER_USERNAME=${DOCKER_USERNAME}" >> $GITHUB_ENV
                     DOCKER_PHP_FPM_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} php-fpm ${DOCKER_PHP_FPM_IMAGE_TAG} ${GITHUB_TOKEN} > /dev/null ; echo $?`
                     echo "DOCKER_PHP_FPM_IMAGE_EXISTS=${DOCKER_PHP_FPM_IMAGE_EXISTS}" >> $GITHUB_ENV
             -   name: Build PHP-FPM image and push it to Github Container Registry
                 if: env.DOCKER_PHP_FPM_IMAGE_EXISTS == 0
                 run: .github/build-php-fpm-image.sh
-            -   name: Check if Elasticseach image exists
+            -   name: Build Storefront image and push it to Docker Hub
+                run: .github/build-storefront-image.sh
+            -   name: Check if Elasticsearch image exists
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 run: |
-                    DOCKER_ELASTICSEARCH_IMAGE_TAG=github-action-`find project-base/docker/elasticsearch -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    DOCKER_ELASTICSEARCH_IMAGE_TAG=github-action-`find project-base/app/docker/elasticsearch -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
                     echo "DOCKER_ELASTICSEARCH_IMAGE_TAG=${DOCKER_ELASTICSEARCH_IMAGE_TAG}" >> $GITHUB_ENV
                     DOCKER_ELASTICSEARCH_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} elasticsearch ${DOCKER_ELASTICSEARCH_IMAGE_TAG} ${GITHUB_TOKEN} > /dev/null ; echo $?`
                     echo "DOCKER_ELASTICSEARCH_IMAGE_EXISTS=${DOCKER_ELASTICSEARCH_IMAGE_EXISTS}" >> $GITHUB_ENV
@@ -61,13 +65,17 @@ jobs:
                 run: cp -f ./docker/conf/docker-compose.github-actions.yml.dist ./docker-compose.yml
             -   name: Update docker-compose.yml file with right PHP-FPM image
                 run: "sed -i \"s#php-fpm-image#ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}-${{ github.sha }}#\" ./docker-compose.yml"
-            -   name: Update docker-compose.yml file with right Elastichsearch image
+            -   name: Update docker-compose.yml file with right Storefront image
+                run: "sed -i \"s#storefront-image#ghcr.io/${DOCKER_USERNAME}/storefront:${DOCKER_STOREFRONT_IMAGE_TAG}#\" ./docker-compose.yml"
+            -   name: Update docker-compose.yml file with right Elasticsearch image
                 run: "sed -i \"s#elasticsearch-image#ghcr.io/${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG}#\" ./docker-compose.yml"
             -   name: Copy and rename docker-compose.github-actions.review.yml.dist to docker-compose.review.yml
                 run: cp -f ./docker/conf/docker-compose.github-actions.review.yml.dist ./docker-compose.review.yml
             -   name: Update docker-compose.review.yml file with right PHP-FPM image
                 run: "sed -i \"s#php-fpm-image#ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}-${{ github.sha }}#\" ./docker-compose.review.yml"
-            -   name: Update docker-compose.review.yml file with right Elastichsearch image
+            -   name: Update docker-compose.review.yml file with right Storefront image
+                run: "sed -i \"s#storefront-image#ghcr.io/${DOCKER_USERNAME}/storefront:${DOCKER_STOREFRONT_IMAGE_TAG}#\" ./docker-compose.review.yml"
+            -   name: Update docker-compose.yml file with right Elasticsearch image
                 run: "sed -i \"s#elasticsearch-image#ghcr.io/${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG}#\" ./docker-compose.review.yml"
             -   name: Set TRAEFIK_HOSTS ENV variables
                 run: |
@@ -116,8 +124,38 @@ jobs:
                 run: docker-compose up -d php-fpm
             -   name: Check standards
                 run: |
-                    docker-compose exec -T php-fpm mv ./project-base/PRODUCTION ./project-base/DEVELOPMENT
+                    docker-compose exec -T php-fpm mv ./project-base/app/PRODUCTION ./project-base/app/DEVELOPMENT
                     docker-compose exec -T php-fpm php phing -D production.confirm.action=y composer-dev standards
+            -   name: Check GraphQl schema
+                run: docker-compose exec -T php-fpm project-base/app/check-schema.sh
+    standards-storefront:
+        name: Check standards on storefront
+        needs: build-docker-images
+        runs-on: ubuntu-22.04
+        steps:
+            -   name: GIT checkout branch - ${{ github.ref }}
+                uses: actions/checkout@v3
+                with:
+                    ref: ${{ github.ref }}
+            -   name: Prepare PNPM
+                run:  |
+                    corepack enable
+                    corepack prepare --activate pnpm@8.6.0
+                    pnpm config set store-dir .pnpm-store
+            -   name: Copy necessary files
+                run: cp ./project-base/app/schema.graphql ./project-base/storefront/schema.graphql
+            -   name: Install dependencies
+                run: pnpm install --frozen-lockfile
+                working-directory: ./project-base/storefront
+            -   name: Check code generation
+                run: bash ./check-code-gen.sh
+                working-directory: ./project-base/storefront
+            -   name: Check standards
+                run: pnpm run check
+                working-directory: ./project-base/storefront
+            -   name: Check no NEXT_PUBLIC_ variables is used
+                run: ./check-next-public-variable.sh
+                working-directory: ./project-base/storefront
     tests-unit-functional-smoke:
         name: Run unit, functional and smoke tests
         needs: build-docker-images
@@ -133,8 +171,8 @@ jobs:
                     name: docker-compose
             -   name: Build application
                 run: |
-                    docker-compose pull --parallel postgres elasticsearch redis php-fpm
-                    docker-compose up -d postgres elasticsearch redis php-fpm
+                    docker-compose pull --parallel postgres webserver elasticsearch redis php-fpm storefront
+                    docker-compose up -d postgres webserver elasticsearch redis php-fpm storefront
                     docker-compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change test-dirs-create db-create test-db-create db-demo elasticsearch-index-recreate elasticsearch-export error-pages-generate
             -   name: Run tests
                 run: docker-compose exec -T php-fpm php phing -D production.confirm.action=y tests
@@ -156,7 +194,7 @@ jobs:
                     name: docker-compose
             -   name: Build application
                 run: |
-                    docker-compose pull --parallel webserver postgres elasticsearch redis php-fpm selenium-server
+                    docker-compose pull --parallel webserver postgres elasticsearch redis php-fpm storefront selenium-server
                     docker-compose up -d
                     docker-compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change dirs-create test-dirs-create db-create test-db-create db-demo error-pages-generate test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build
             -   name: Run acceptance tests
@@ -166,13 +204,13 @@ jobs:
                 run: docker-compose logs php-fpm
             -   name: Copy Codeception logs from container
                 if: ${{ failure() }}
-                run: docker cp shopsys-framework-php-fpm:/var/www/html/project-base/var/log ./project-base/var/log
+                run: docker cp shopsys-framework-php-fpm:/var/www/html/project-base/app/var/log ./project-base/app/var/log
             -   name: Upload Codeception logs to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v3
                 with:
                     name: acceptance-logs
-                    path: ./project-base/var/log/
+                    path: ./project-base/app/var/log/
     build-fork-docker-images:
         if: github.event.pull_request.head.repo.full_name != 'shopsys/shopsys'
         name: Build application and run standards checks and tests
@@ -187,7 +225,7 @@ jobs:
                     DOCKER_USERNAME: ${{ github.repository_owner }}
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 run: |
-                    DOCKER_PHP_FPM_IMAGE_TAG=github-action-`find project-base/docker/php-fpm -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    DOCKER_PHP_FPM_IMAGE_TAG=github-action-`find project-base/app/docker/php-fpm -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
                     echo "DOCKER_PHP_FPM_IMAGE_TAG=${DOCKER_PHP_FPM_IMAGE_TAG}" >> $GITHUB_ENV
                     echo "DOCKER_USERNAME=${DOCKER_USERNAME}" >> $GITHUB_ENV
                     DOCKER_PHP_FPM_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} php-fpm ${DOCKER_PHP_FPM_IMAGE_TAG} ${GITHUB_TOKEN} > /dev/null ; echo $?`
@@ -197,18 +235,18 @@ jobs:
                 if: env.DOCKER_PHP_FPM_IMAGE_EXISTS == 0
                 run: |
                     docker image build \
-                        --build-arg project_root=project-base \
+                        --build-arg project_root=project-base/app \
                         --build-arg www_data_uid=$(id -u) \
                         --build-arg www_data_gid=$(id -g) \
                         --tag ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG} \
                         --target production \
                         --no-cache \
                         --compress \
-                        -f project-base/docker/php-fpm/Dockerfile \
+                        -f project-base/app/docker/php-fpm/Dockerfile \
                         .
             -   name: Check if Elasticseach image exists
                 run: |
-                    DOCKER_ELASTICSEARCH_IMAGE_TAG=github-action-`find project-base/docker/elasticsearch -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    DOCKER_ELASTICSEARCH_IMAGE_TAG=github-action-`find project-base/app/docker/elasticsearch -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
                     echo "DOCKER_ELASTICSEARCH_IMAGE_TAG=${DOCKER_ELASTICSEARCH_IMAGE_TAG}" >> $GITHUB_ENV
                     DOCKER_ELASTICSEARCH_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} elasticsearch ${DOCKER_ELASTICSEARCH_IMAGE_TAG} ${GITHUB_TOKEN} > /dev/null ; echo $?`
                     echo "DOCKER_ELASTICSEARCH_IMAGE_EXISTS=${DOCKER_ELASTICSEARCH_IMAGE_EXISTS}" >> $GITHUB_ENV
@@ -219,7 +257,7 @@ jobs:
                         --tag ghcr.io/${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG} \
                         --no-cache \
                         --compress \
-                        -f project-base/docker/elasticsearch/Dockerfile \
+                        -f project-base/app/docker/elasticsearch/Dockerfile \
                         .
             -   name: Copy and rename docker-compose.github-actions.yml.dist to docker-compose.yml
                 run: cp -f ./docker/conf/docker-compose.github-actions.yml.dist ./docker-compose.yml
@@ -247,13 +285,13 @@ jobs:
                 run: docker-compose logs php-fpm
             -   name: Copy Codeception logs from container
                 if: ${{ failure() }}
-                run: docker cp shopsys-framework-php-fpm:/var/www/html/project-base/var/log ./project-base/var/log
+                run: docker cp shopsys-framework-php-fpm:/var/www/html/project-base/app/var/log ./project-base/app/var/log
             -   name: Upload Codeception logs to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v3
                 with:
                     name: acceptance-logs
-                    path: ./project-base/var/log/
+                    path: ./project-base/app/var/log/
     build-successful:
         if: ${{ always() }}
         name: Build successful

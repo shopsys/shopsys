@@ -1,0 +1,31 @@
+DeliveryAddress:
+    type: object
+    config:
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID"
+            companyName:
+                type: "String"
+                description: "Delivery address company name"
+            street:
+                type: "String"
+                description: "Delivery address street name"
+            city:
+                type: "String"
+                description: "Delivery address city name"
+            postcode:
+                type: "String"
+                description: "Delivery address zip code"
+            telephone:
+                type: "String"
+                description: "Delivery address telephone"
+            country:
+                type: "Country"
+                description: "Delivery address country"
+            firstName:
+                type: "String"
+                description: "Delivery address firstname"
+            lastName:
+                type: "String"
+                description: "Delivery address lastname"

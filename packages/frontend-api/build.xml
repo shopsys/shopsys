@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="frontend_api">
+    <property name="env.lang.english" value="LANG=en_US.UTF-8"/>
     <property name="path.openssl.executable" value="openssl"/>
 
     <target name="frontend-api-generate-new-keys" depends="production-protection" description="Generates keys and parameter for signing tokens.">
@@ -20,13 +21,30 @@
     </target>
 
     <target name="frontend-api-enable" depends="frontend-api-generate-new-keys" description="Enable frontend API for all domains.">
-        <copy file="${path.frontend-api}/src/Resources/config/frontend_api.yaml.dist" tofile="${path.config}/packages/frontend_api.yaml" overwrite="true">
-        </copy>
+        <copy file="${path.frontend-api}/src/Resources/config/frontend_api.yaml.dist" tofile="${path.config}/packages/frontend_api.yaml" overwrite="true" />
     </target>
 
     <target name="frontend-api-disable" description="Disable frontend API for all domains.">
         <delete file="${path.config}/frontend-api/private.key" />
         <delete file="${path.config}/frontend-api/public.key" />
         <delete file="${path.config}/packages/frontend_api.yaml" />
+    </target>
+
+    <target name="frontend-api-generate-graphql-schema" description="Generates schema.graphql in root directory">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="graphql:dump-schema"/>
+            <arg value="--file"/>
+            <arg value="${path.root}/schema.graphql"/>
+            <arg value="--format"/>
+            <arg value="graphql"/>
+            <arg value="--modern"/>
+        </exec>
+        <exec executable="${env.lang.english}" passthru="true" checkreturn="true">
+            <arg value="node"/>
+            <arg value="${path.node_modules.bin}/format-graphql"/>
+            <arg value="--write"/>
+            <arg value="${path.root}/schema.graphql"/>
+        </exec>
     </target>
 </project>

@@ -1,9 +1,0 @@
-mutation {
-    CreateOrder(
-        input: {
-            note:"Thank You"
-        }
-    ) {
-        uuid
-    }
-}

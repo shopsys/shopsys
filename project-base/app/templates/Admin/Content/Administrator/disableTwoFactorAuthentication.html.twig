@@ -1,0 +1,28 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}
+    - {{ 'Disable two factor authentication'|trans }}
+{% endblock %}
+
+{% block h1 %}{{ 'Disable two factor authentication'|trans }}{% endblock %}
+
+{% block main_content %}
+    <div class="wrap-divider">
+        {% if administrator.emailAuthEnabled %}
+            {{ 'Enter a 6 digit authentication from your email. You need to request it by button bellow first.'|trans }}
+        {% elseif administrator.googleAuthenticatorEnabled %}
+            {{ 'Enter a 6 digit authentication from your two factor authentication mobile application.'|trans }}
+        {% endif %}
+
+        {{ form_start(formVerification) }}
+        {{ form_errors(formVerification) }}
+        {{ form_end(formVerification) }}
+    </div>
+    {% if administrator.emailAuthEnabled %}
+        <div class="wrap-divider">
+            {{ form_start(formSendEmail) }}
+            {{ form_errors(formSendEmail) }}
+            {{ form_end(formSendEmail) }}
+        </div>
+    {% endif %}
+{% endblock %}

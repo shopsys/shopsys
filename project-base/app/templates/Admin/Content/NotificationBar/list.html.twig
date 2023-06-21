@@ -1,0 +1,15 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Notifikační lišta'|trans }}{% endblock %}
+{% block h1 %}{{ 'Notifikační lišta'|trans }}{% endblock %}
+
+{% block btn %}
+    <a href="{{ url('admin_notificationbar_new') }}" class="btn btn--plus wrap-bar__btn">
+        <i class="btn__icon">+</i>{{ 'Vytvořit notifikační lištu'|trans }}
+    </a>
+{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
+    {{ gridView.render() }}
+{% endblock %}

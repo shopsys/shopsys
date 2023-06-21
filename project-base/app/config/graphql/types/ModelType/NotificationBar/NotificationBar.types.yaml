@@ -1,0 +1,33 @@
+NotificationBar:
+    type: object
+    config:
+        description: "Represents a notification supposed to be displayed on all pages"
+        fields:
+            text:
+                type: "String!"
+                description: "Message of the notification"
+            rgbColor:
+                type: "String!"
+                description: "Color of the notification"
+            images:
+                type: "[Image!]!"
+                description: "Notification bar images"
+                resolve: '@=query("imagesByEntityPromiseQuery", value, args["type"], args["sizes"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    sizes:
+                        type: "[String!]"
+                        defaultValue: null
+            mainImage:
+                type: "Image"
+                description: "Notification bar image by params"
+                resolve: '@=query("mainImageByEntityPromiseQuery", value, args["type"], args["size"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    size:
+                        type: "String"
+                        defaultValue: null

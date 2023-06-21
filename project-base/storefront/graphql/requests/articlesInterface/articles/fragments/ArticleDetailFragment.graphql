@@ -1,0 +1,14 @@
+fragment ArticleDetailFragment on ArticleSite {
+    __typename
+    uuid
+    slug
+    placement
+    articleName: name
+    text
+    breadcrumb {
+        ...BreadcrumbFragment
+    }
+    seoTitle
+    seoMetaDescription
+    createdAt
+}

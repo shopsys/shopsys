@@ -10,9 +10,9 @@ FIRST_DOMAIN_HOSTNAME=${JOB_NAME}.${DEVELOPMENT_SERVER_DOMAIN}
 SECOND_DOMAIN_HOSTNAME=2.${JOB_NAME}.${DEVELOPMENT_SERVER_DOMAIN}
 
 # Set domains_urls
-cp project-base/config/domains_urls.yaml.dist project-base/config/domains_urls.yaml
-yq write --inplace project-base/config/domains_urls.yaml domains_urls[0].url http://${FIRST_DOMAIN_HOSTNAME}:${NGINX_INGRESS_CONTROLLER_HOST_PORT}
-yq write --inplace project-base/config/domains_urls.yaml domains_urls[1].url http://${SECOND_DOMAIN_HOSTNAME}:${NGINX_INGRESS_CONTROLLER_HOST_PORT}
+cp project-base/app/config/domains_urls.yaml.dist project-base/app/config/domains_urls.yaml
+yq write --inplace project-base/app/config/domains_urls.yaml domains_urls[0].url http://${FIRST_DOMAIN_HOSTNAME}:${NGINX_INGRESS_CONTROLLER_HOST_PORT}
+yq write --inplace project-base/app/config/domains_urls.yaml domains_urls[1].url http://${SECOND_DOMAIN_HOSTNAME}:${NGINX_INGRESS_CONTROLLER_HOST_PORT}
 
 # Pull or build Docker images for the current commit
 DOCKER_IMAGE_TAG=ci-commit-${GIT_COMMIT}
@@ -26,11 +26,11 @@ docker run -v "${WORKSPACE}":/var/www/html mkdocs-build:latest mkdocs build --si
 docker image pull ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG} || (
     echo "Image not found (see warning above), building it instead..." &&
     docker image build \
-        --build-arg project_root=project-base \
+        --build-arg project_root=project-base/app \
         --tag ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG} \
         --target ci \
         --no-cache \
-        -f project-base/docker/php-fpm/Dockerfile \
+        -f project-base/app/docker/php-fpm/Dockerfile \
         . &&
     docker image push ${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
 )
@@ -40,20 +40,20 @@ docker image pull ${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTIC_IMAGE_TAG} |
     echo "Image not found (see warning above), building it instead..." &&
     docker image build \
         --tag ${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTIC_IMAGE_TAG} \
-        -f project-base/docker/elasticsearch/Dockerfile \
+        -f project-base/app/docker/elasticsearch/Dockerfile \
         . &&
     docker image push ${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTIC_IMAGE_TAG}
 )
 
 DOCKER_PHP_FPM_IMAGE=${DOCKER_USERNAME}/php-fpm:${DOCKER_IMAGE_TAG}
 DOCKER_ELASTIC_IMAGE=${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTIC_IMAGE_TAG}
-PATH_CONFIG_DIRECTORY='/var/www/html/project-base/config'
+PATH_CONFIG_DIRECTORY='/var/www/html/project-base/app/config'
 GOOGLE_CLOUD_STORAGE_BUCKET_NAME=''
 GOOGLE_CLOUD_PROJECT_ID=''
 # Change "OVERWRITE_DOMAIN_URL" parameter for Selenium tests as containers "webserver" and "php-fpm" are bundled together in a pod "webserver-php-fpm"
 OVERWRITE_DOMAIN_URL='http://webserver-php-fpm:8080'
 
-FILES=$( find project-base/kubernetes -type f )
+FILES=$( find project-base/app/kubernetes -type f )
 VARS=(
     FIRST_DOMAIN_HOSTNAME
     SECOND_DOMAIN_HOSTNAME
@@ -76,7 +76,7 @@ unset VARS
 # Deploy application using kubectl
 kubectl delete namespace ${JOB_NAME} || true
 kubectl create namespace ${JOB_NAME}
-cd project-base/kubernetes/kustomize
+cd project-base/app/kubernetes/kustomize
 
 # Echo Kustomize build for debugging
 kustomize build overlays/ci

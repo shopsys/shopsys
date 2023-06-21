@@ -1,0 +1,24 @@
+fragment AdvertsFragment on Advert {
+    __typename
+    uuid
+    name
+    positionName
+    type
+    categories {
+        ...SimpleCategoryFragment
+    }
+    ... on AdvertCode {
+        code
+    }
+    ... on AdvertImage {
+        link
+        images(type: "web") {
+            position
+            ...ImageSizesFragment
+        }
+        imageMobile: images(type: "mobile") {
+            position
+            ...ImageSizesFragment
+        }
+    }
+}
