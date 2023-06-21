@@ -4,6 +4,7 @@ import {
     orderNote,
     payment,
     products,
+    zeroRate,
     standartRate,
     totalPrice,
     transport,
@@ -122,7 +123,7 @@ it('Creating an order as unlogged user with one item, Czech post and cash on del
         payment.onDelivery.name,
         payment.onDelivery.priceWithVat,
         '1', // item quantity
-        standartRate,
+        zeroRate,
         payment.onDelivery.priceWithoutVat,
         payment.onDelivery.priceWithVat,
     );

@@ -4,7 +4,7 @@ import { checkUserIsLoggedIn, clickOnUserIconInHeader } from './header';
 export function loginFromHeader(email, password) {
     clickOnUserIconInHeader();
     fillInEmailAndPasswordInLoginPopup(email, password);
-    cy.get('[data-testid="layout-popup"]').contains(buttonName.login).click();
+    cy.get('[data-testid="layout-popup"]').get('button').contains(buttonName.login).click();
     checkUserIsLoggedIn();
 }
 
