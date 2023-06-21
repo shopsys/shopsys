@@ -1,14 +1,16 @@
+const priceWithVatHelloKitty = '€139.96';
+
 export const brandSencor = 'Sencor';
 export const buttonName = {
-    login: 'Přihlásit',
+    login: 'Login',
 };
 export const categories = {
     elektro: {
-        name: 'Elektro',
-        url: '/elektro',
+        name: 'Electronics',
+        url: '/electronics',
     },
 };
-export const countryCZ = 'Česká republika';
+export const countryCZ = 'Czech republic';
 export const customer1 = {
     email: 'no-reply123@shopsys.com',
     emailRegistered: 'no-reply@shopsys.com',
@@ -21,34 +23,34 @@ export const customer1 = {
     password: 'user123',
 };
 export const flashMessages = {
-    successfulSaveCookiesOptions: 'Vaše nastavení souborů cookies bylo uloženo.',
+    successfulSaveCookiesOptions: 'Your cookie preferences have been set.',
 };
-export const freePrice = 'Zdarma';
+export const freePrice = 'Free';
 export const link = {
-    orderDetail: 'zde',
-    loginInHeader: 'Přihlášení',
-    myAccount: 'Můj účet',
+    orderDetail: 'Track',
+    loginInHeader: 'Log-in',
+    myAccount: 'My account',
 };
 export const orderNote = 'poznámka v objednávce';
 export const payment = {
-    cash: 'Hotově',
+    cash: 'Cash',
     onDelivery: {
-        name: 'Dobírka',
-        priceWithVat: '60 Kč',
-        priceWithoutVat: '49,59 Kč',
+        name: 'Cash on delivery',
+        priceWithVat: '€2.00',
+        priceWithoutVat: '€2.00',
     },
 };
 export const placeholder = {
-    password: 'Heslo',
-    email: 'Váš e-mail',
-    phone: 'Telefon',
-    firstName: 'Jméno',
-    lastName: 'Příjmení',
-    street: 'Ulice a č. popisné',
-    city: 'Město',
-    postCode: 'PSČ',
-    coupone: 'Kupón',
-    note: 'Poznámka',
+    password: 'Password',
+    email: 'Your email',
+    phone: 'Phone',
+    firstName: 'First Name',
+    lastName: 'Last Name',
+    street: 'Street and house no.',
+    city: 'City',
+    postCode: 'Postcode',
+    coupone: 'Coupon',
+    note: 'Note',
 };
 export const products = {
     helloKitty: {
@@ -56,8 +58,8 @@ export const products = {
         namePrefixSuffix: 'Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová',
         catnum: '9177759',
         urlPrefixSuffix: '/televize-22-sencor-sle-22f46dm4-hello-kitty-plazmova',
-        priceWithVat: '3 499 Kč',
-        priceWithoutVat: '2 891,74 Kč',
+        priceWithVat: priceWithVatHelloKitty,
+        priceWithoutVat: '€115.67',
     },
     philips32PFL4308: {
         name: 'Philips 32PFL4308',
@@ -70,18 +72,19 @@ export const products = {
         catnum: '9176588',
     },
 };
-export const quantityUnit = 'ks';
+export const quantityUnit = 'pc';
+export const zeroRate = '0 %';
 export const standartRate = '21 %';
-export const textCode = 'Kód';
+export const textCode = 'Code';
 
 export const totalPrice = {
-    cart1: '3 499 Kč',
-    cart2: '12 310 Kč',
-    order1: '3 680 Kč',
+    cart1: priceWithVatHelloKitty,
+    cart2: '€492.40',
+    order1: '€146.80',
 };
 export const transport = {
     personalCollection: {
-        name: 'Osobní převzetí',
+        name: 'Personal collection',
         storeOstrava: {
             name: 'Ostrava',
             street: 'Koksární 10',
@@ -90,21 +93,20 @@ export const transport = {
         },
     },
     czechPost: {
-        name: 'Česká pošta - balík do ruky',
-        priceWithVat: '121 Kč',
-        priceWithoutVat: '100 Kč',
+        name: 'Czech post',
+        priceWithVat: '€4.84',
+        priceWithoutVat: '€4',
     },
 };
 export const url = {
-    cart: '/kosik',
-    search: '/hledani?q=',
-    brandOverwiev: '/prehled-znacek',
+    cart: '/cart',
+    search: '/search?q=',
+    brandOverwiev: '/brands-overview',
     order: {
-        secondStep: '/objednavka/doprava-a-platba',
-        thirdStep: '/objednavka/kontaktni-udaje',
-        thanYouPage: '/potvrzeni-objednavky',
-        detail: '/detail-objednavky/',
+        secondStep: '/order/transport-and-payment',
+        thirdStep: '/order/contact-information',
+        thanYouPage: '/order-confirmation',
+        detail: '/order-detail/',
     },
-    login: '/prihlaseni',
+    login: '/login',
 };
-export const zeroRate = '0 %';
