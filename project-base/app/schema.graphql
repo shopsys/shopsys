@@ -871,6 +871,7 @@ type MainVariant implements Product & Breadcrumb & Slug {
   partNumber: String
   """Product price"""
   price: ProductPrice!
+  productVideos: [VideoToken!]!
   """List of related products"""
   relatedProducts: [Product!]!
   """Seo first level heading of product"""
@@ -1501,6 +1502,7 @@ interface Product {
   partNumber: String
   """Product price"""
   price: ProductPrice!
+  productVideos: [VideoToken!]!
   """List of related products"""
   relatedProducts: [Product!]!
   """Seo first level heading of product"""
@@ -1877,6 +1879,7 @@ type RegularProduct implements Product & Breadcrumb & Slug {
   partNumber: String
   """Product price"""
   price: ProductPrice!
+  productVideos: [VideoToken!]!
   """List of related products"""
   relatedProducts: [Product!]!
   """Seo first level heading of product"""
@@ -2157,6 +2160,7 @@ type Variant implements Product & Breadcrumb & Slug {
   partNumber: String
   """Product price"""
   price: ProductPrice!
+  productVideos: [VideoToken!]!
   """List of related products"""
   relatedProducts: [Product!]!
   """Seo first level heading of product"""
@@ -2178,4 +2182,9 @@ type Variant implements Product & Breadcrumb & Slug {
   usps: [String!]!
   """UUID"""
   uuid: Uuid!
+}
+
+type VideoToken {
+  description: String!
+  token: String!
 }

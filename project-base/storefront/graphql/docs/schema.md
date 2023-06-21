@@ -205,6 +205,11 @@ Returns list of adverts, optionally filtered by `positionName`
 </td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">categoryUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" align="right" valign="top">positionName</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
@@ -4564,6 +4569,11 @@ Product price
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>productVideos</strong></td>
+<td valign="top">[<a href="#videotoken">VideoToken</a>!]!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>relatedProducts</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td>
@@ -6795,6 +6805,11 @@ Product price
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>productVideos</strong></td>
+<td valign="top">[<a href="#videotoken">VideoToken</a>!]!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>relatedProducts</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td>
@@ -7998,6 +8013,11 @@ Product price
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>productVideos</strong></td>
+<td valign="top">[<a href="#videotoken">VideoToken</a>!]!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>relatedProducts</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td>
@@ -8091,6 +8111,31 @@ List of product's unique selling propositions
 UUID
 
 </td>
+</tr>
+</tbody>
+</table>
+
+### VideoToken
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>description</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>token</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -10507,6 +10552,11 @@ Product part number
 Product price
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>productVideos</strong></td>
+<td valign="top">[<a href="#videotoken">VideoToken</a>!]!</td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>relatedProducts</strong></td>
