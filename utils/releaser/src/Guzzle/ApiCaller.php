@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\Releaser\Guzzle;
 
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Promise\Utils;
 use GuzzleHttp\Psr7\Request;
 use Nette\Utils\Json;
-use function GuzzleHttp\Promise\unwrap;
 
 final class ApiCaller
 {
@@ -48,7 +48,7 @@ final class ApiCaller
 
         // Wait on all of the requests to complete. Throws a ConnectException if any of the requests fail
         /** @var \Psr\Http\Message\ResponseInterface[] $responses */
-        $responses = unwrap($promises);
+        $responses = Utils::unwrap($promises);
 
         $stringResponses = [];
 
