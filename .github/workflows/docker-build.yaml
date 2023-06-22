@@ -484,7 +484,7 @@ jobs:
                     cd ${BRANCH_NAME}
                     chmod +x set-urls-for-review.sh
                     ./set-urls-for-review.sh setDomainsToDockerCompose
-                    docker compose down -v --remove-orphansx || true
+                    docker compose down -v --remove-orphans || true
                     docker compose pull --parallel webserver postgres redis php-fpm elasticsearch smtp-server
                     docker compose up -d --force-recreate
                     ./set-urls-for-review.sh setUrlsToDomainsUrls
