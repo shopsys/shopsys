@@ -461,6 +461,7 @@ jobs:
                 env:
                     BRANCH_NAME: ${{ needs.variables.outputs.BRANCH_NAME }}
                 run: |
+                    echo "${BRANCH_NAME}"
                     rm -rf ${BRANCH_NAME}
                     mkdir ${BRANCH_NAME}
             -   name: Set ENV variables required for review
