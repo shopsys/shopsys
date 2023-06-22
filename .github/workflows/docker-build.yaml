@@ -458,7 +458,9 @@ jobs:
         runs-on: [self-hosted, linux, review-stage]
         steps:
             -   name: Extract branch name to ENV variable BRANCH_NAME
-                run: echo "BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
+                run: |
+                    BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}} | sed s/-/_/g 
+                    echo BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_ENV
             -   name: Create branch directory
                 run: |
                     rm -rf ${BRANCH_NAME}
