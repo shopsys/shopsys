@@ -24,17 +24,14 @@ jobs:
             DOCKER_STOREFRONT_CI_IMAGE_EXISTS: ${{ steps.variables.outputs.DOCKER_STOREFRONT_CI_IMAGE_EXISTS }}
             DOCKER_ELASTICSEARCH_REPOSITORY_TAG: ${{ steps.variables.outputs.DOCKER_ELASTICSEARCH_REPOSITORY_TAG }}
             DOCKER_ELASTICSEARCH_IMAGE_EXISTS: ${{ steps.variables.outputs.DOCKER_ELASTICSEARCH_IMAGE_EXISTS }}
+            BRANCH_NAME: ${{ steps.variables.outputs.BRANCH_NAME }}
+            BRANCH_NAME_ESCAPED: ${{ steps.variables.outputs.BRANCH_NAME_ESCAPED }}
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
                 uses: actions/checkout@v3
                 with:
                     ref: ${{ github.ref }}
-            -   name: Extract branch name to ENV variable and output
-                run: |
-                    BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
-                    echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_ENV
-                    echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_OUTPUT
-            -   name: Check if PHP-FPM image and Storefront image exists
+            -   name: Extract variables to output
                 id: variables
                 env:
                     DOCKER_USERNAME: ${{ github.repository_owner }}
@@ -51,6 +48,10 @@ jobs:
                     DOCKER_ELASTICSEARCH_IMAGE_TAG=github-action-`find project-base/app/docker/elasticsearch -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
                     DOCKER_ELASTICSEARCH_REPOSITORY_TAG=ghcr.io/${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG}
                     DOCKER_ELASTICSEARCH_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} elasticsearch ${DOCKER_ELASTICSEARCH_IMAGE_TAG} ${GITHUB_TOKEN} > /dev/null ; echo $?`
+                    BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
+                    BRANCH_NAME_ESCAPED="${BRANCH_NAME//./-}"
+                    echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_OUTPUT
+                    echo "BRANCH_NAME_ESCAPED=${BRANCH_NAME_ESCAPED}" >> $GITHUB_OUTPUT
                     echo "DOCKER_PHP_FPM_REPOSITORY_TAG=${DOCKER_PHP_FPM_REPOSITORY_TAG}" >> $GITHUB_OUTPUT
                     echo "DOCKER_PHP_FPM_IMAGE_EXISTS=${DOCKER_PHP_FPM_IMAGE_EXISTS}" >> $GITHUB_OUTPUT
                     echo "DOCKER_STOREFRONT_REPOSITORY_TAG=${DOCKER_STOREFRONT_REPOSITORY_TAG}" >> $GITHUB_OUTPUT
@@ -76,10 +77,10 @@ jobs:
                 run: "sed -i \"s#elasticsearch-image#${{ steps.variables.outputs.DOCKER_ELASTICSEARCH_REPOSITORY_TAG }}#\" ./docker-compose.review.yml"
             -   name: Set TRAEFIK_HOSTS ENV variables
                 run: |
-                    HOST=${BRANCH_NAME}.${{ vars.REVIEW_STAGE_URL }}
+                    HOST=${{ steps.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
                     echo "TRAEFIK_HOSTS=\`$HOST\`, \`cz.$HOST\`" >> $GITHUB_ENV
-            -   name: Update docker-compose.review.yml file with BRANCH_NAME ENV variable
-                run: "sed -i \"s#BRANCH_NAME#${BRANCH_NAME}#\" ./docker-compose.review.yml"
+            -   name: Update docker-compose.review.yml file with BRANCH_NAME_ESCAPED ENV variable
+                run: "sed -i \"s#BRANCH_NAME#${{ steps.variables.outputs.BRANCH_NAME_ESCAPED }}#\" ./docker-compose.review.yml"
             -   name: Update docker-compose.review.yml file with TRAEFIK_HOSTS ENV variable
                 run: "sed -i \"s#TRAEFIK_HOSTS#${TRAEFIK_HOSTS}#\" ./docker-compose.review.yml"
             -   name: Copy and rename docker-compose.github-actions.cypress.yml.dist to docker-compose.cypress.yml
@@ -444,7 +445,7 @@ jobs:
                     path: ./project-base/app/var/log/
     review:
         name: Review
-        needs: [build-php-fpm-image, build-storefront-image, build-elasticsearch-image]
+        needs: [variables, build-php-fpm-image, build-storefront-image, build-elasticsearch-image]
         if: |
             always() && !failure() && !cancelled() &&
             github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' &&
@@ -452,16 +453,17 @@ jobs:
             (needs.build-storefront-image.result == 'success' || needs.build-storefront-image.result == 'skipped') &&
             (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped')
         runs-on: [self-hosted, linux, review-stage]
+        env:
+            BRANCH_NAME: ${{ needs.variables.outputs.BRANCH_NAME }}
+            BRANCH_NAME_ESCAPED: ${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}
         steps:
-            -   name: Extract branch name to ENV variable BRANCH_NAME
-                run: echo "BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_ENV
             -   name: Create branch directory
                 run: |
                     rm -rf ${BRANCH_NAME}
                     mkdir ${BRANCH_NAME}
             -   name: Set ENV variables required for review
                 run: |
-                    HOST=${BRANCH_NAME}.${{ vars.REVIEW_STAGE_URL }}
+                    HOST=${BRANCH_NAME_ESCAPED}.${{ vars.REVIEW_STAGE_URL }}
                     echo "HOSTS=${HOST}, cz.${HOST}" >> $GITHUB_ENV
             -   name: Download docker-compose.review.yml from artifacts
                 uses: actions/download-artifact@v3
