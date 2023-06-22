@@ -466,7 +466,7 @@ jobs:
                     mkdir ${BRANCH_NAME}
             -   name: Set ENV variables required for review
                 run: |
-                    HOST=${BRANCH_NAME_ESCPAED}.${{ vars.REVIEW_STAGE_URL }}
+                    HOST=${BRANCH_NAME_ESCAPED}.${{ vars.REVIEW_STAGE_URL }}
                     echo "HOSTS=${HOST}, cz.${HOST}" >> $GITHUB_ENV
             -   name: Download docker-compose.review.yml from artifacts
                 uses: actions/download-artifact@v3
