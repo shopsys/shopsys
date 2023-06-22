@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception;
 
 use Exception;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class UploadedFileEntityConfigNotFoundException extends Exception implements UploadedFileConfigException
+class UploadedFileEntityConfigNotFoundException extends NotFoundHttpException implements UploadedFileConfigException
 {
     /**
      * @param string $entityClassOrName
@@ -16,6 +17,6 @@ class UploadedFileEntityConfigNotFoundException extends Exception implements Upl
     {
         $message = sprintf('Not found uploaded file config for entity "%s"', $entityClassOrName);
 
-        parent::__construct($message, 0, $previous);
+        parent::__construct($message, $previous);
     }
 }
