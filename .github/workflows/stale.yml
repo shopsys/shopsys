@@ -1,0 +1,30 @@
+name: Close stale issues
+on:
+    schedule:
+        -   cron: '5 0 * * *'
+jobs:
+    stale:
+        runs-on: ubuntu-latest
+        permissions:
+            issues: write
+            pull-requests: write
+        steps:
+            -   uses: actions/stale@v4.1.1
+                with:
+                    repo-token: ${{ secrets.GITHUB_TOKEN }}
+                    days-before-stale: 120
+                    days-before-close: 60
+                    stale-issue-label: Stale
+                    close-pr-message: > 
+                        This pull request has been automatically closed because there was no activity within the last half a year.
+                    close-issue-message: >
+                        This issue has been automatically closed because there was no activity within the last half a year.
+                    stale-issue-message: >
+                        This issue has been automatically marked as stale because there was no activity within the last 4 months (and it is quite a long time).
+                        It will be closed if no further activity occurs.
+                    stale-pr-message: >
+                        This pull request has been automatically marked as stale because there was no activity within the last 4 months (and it is quite a long time).
+                        It will be closed if no further activity occurs.
+                    exempt-all-milestones: true
+                    exempt-issue-labels: 'Security,Status: in implementation,Priority,In Backlog'
+                    exempt-pr-labels: 'Security,Status: in implementation,Priority,In Backlog'
