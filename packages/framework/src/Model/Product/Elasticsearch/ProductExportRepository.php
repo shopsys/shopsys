@@ -228,8 +228,8 @@ class ProductExportRepository
             'name' => $product->getName($locale),
             'description' => $product->getDescription($domainId),
             'short_description' => $product->getShortDescription($domainId),
-            'brand' => $product->getBrand() ? $product->getBrand()->getId() : '',
-            'brand_name' => $product->getBrand() ? $product->getBrand()->getName() : '',
+            'brand' => $product->getBrand() ? $product->getBrand()->getId() : null,
+            'brand_name' => $product->getBrand() ? $product->getBrand()->getName() : null,
             'brand_url' => $this->getBrandUrlForDomainByProduct($product, $domainId),
             'flags' => $flagIds,
             'categories' => $categoryIds,
@@ -437,14 +437,14 @@ class ProductExportRepository
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
-     * @return string
+     * @return string|null
      */
-    protected function getBrandUrlForDomainByProduct(Product $product, int $domainId): string
+    protected function getBrandUrlForDomainByProduct(Product $product, int $domainId): ?string
     {
         $brand = $product->getBrand();
 
         if ($brand === null) {
-            return '';
+            return null;
         }
 
         return $this->brandCachedFacade->getBrandUrlByDomainId($brand->getId(), $domainId);

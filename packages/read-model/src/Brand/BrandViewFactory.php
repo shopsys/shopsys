@@ -28,6 +28,6 @@ class BrandViewFactory
      */
     public function createFromProductArray(array $productArray): BrandView
     {
-        return new BrandView((int)$productArray['brand'], $productArray['brand_name'], $productArray['brand_url']);
+        return new BrandView($productArray['brand'], $productArray['brand_name'], $productArray['brand_url']);
     }
 }

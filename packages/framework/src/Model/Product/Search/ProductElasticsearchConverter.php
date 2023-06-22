@@ -41,8 +41,8 @@ class ProductElasticsearchConverter
 
         // unknown default value, used for filtering only
         $result['brand'] = $product['brand'] ?? null;
-        $result['brand_name'] = $product['brand_name'] ?? '';
-        $result['brand_url'] = $product['brand_url'] ?? '';
+        $result['brand_name'] = $product['brand_name'] ?? null;
+        $result['brand_url'] = $product['brand_url'] ?? null;
         $result['main_category_id'] = $product['main_category_id'] ?? null;
 
         $result['seo_h1'] = $product['seo_h1'] ?? null;

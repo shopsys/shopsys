@@ -119,11 +119,16 @@ class ProductDetailViewElasticsearchFactory
             $parameterViews[] = $this->parameterViewFactory->createFromParameterArray($parameterArray);
         }
 
+        $brandView = null;
+        if ($productArray['brand'] !== null) {
+            $brandView = $this->brandViewFactory->createFromProductArray($productArray);
+        }
+
         return $this->createInstance(
             $productArray,
             $this->imageViewFacade->getAllImagesByEntityId(Product::class, $productArray['id']),
             $parameterViews,
-            $this->brandViewFactory->createFromProductArray($productArray),
+            $brandView,
             $this->getListedProductViewsByProductIds($productArray['accessories']),
             $this->getListedProductViewsByProductIds($productArray['variants'])
         );
@@ -133,7 +138,7 @@ class ProductDetailViewElasticsearchFactory
      * @param array $productArray
      * @param \Shopsys\ReadModelBundle\Image\ImageView[] $imageViews
      * @param \Shopsys\ReadModelBundle\Parameter\ParameterView[] $parameterViews
-     * @param \Shopsys\ReadModelBundle\Brand\BrandView $brandView
+     * @param \Shopsys\ReadModelBundle\Brand\BrandView|null $brandView
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[] $accessories
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[] $variants
      * @return \Shopsys\ReadModelBundle\Product\Detail\ProductDetailView
@@ -142,7 +147,7 @@ class ProductDetailViewElasticsearchFactory
         array $productArray,
         array $imageViews,
         array $parameterViews,
-        BrandView $brandView,
+        ?BrandView $brandView,
         array $accessories,
         array $variants
     ): ProductDetailView {
