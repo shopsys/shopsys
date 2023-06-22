@@ -459,7 +459,8 @@ jobs:
         steps:
             -   name: Extract branch name to ENV variable BRANCH_NAME
                 run: |
-                    BRANCH_NAME="${${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}//-/_}"
+                    BRANCH_NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
+                    BRANCH_NAME="${BRANCH_NAME//./-}"
                     echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_ENV
             -   name: Create branch directory
                 run: |
