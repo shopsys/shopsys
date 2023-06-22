@@ -456,17 +456,15 @@ jobs:
             (needs.build-storefront-image.result == 'success' || needs.build-storefront-image.result == 'skipped') &&
             (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped')
         runs-on: [self-hosted, linux, review-stage]
+        env:
+            BRANCH_NAME: ${{ needs.variables.outputs.BRANCH_NAME }}
+            BRANCH_NAME_ESCAPED: ${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}
         steps:
             -   name: Create branch directory
-                env:
-                    BRANCH_NAME: ${{ needs.variables.outputs.BRANCH_NAME }}
                 run: |
-                    echo "${{ needs.variables.outputs.BRANCH_NAME }}"
                     rm -rf ${BRANCH_NAME}
                     mkdir ${BRANCH_NAME}
             -   name: Set ENV variables required for review
-                env:
-                    BRANCH_NAME_ESCAPED: ${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}
                 run: |
                     HOST=${BRANCH_NAME_ESCPAED}.${{ vars.REVIEW_STAGE_URL }}
                     echo "HOSTS=${HOST}, cz.${HOST}" >> $GITHUB_ENV
@@ -479,14 +477,10 @@ jobs:
                 with:
                     name: set-urls-for-review
             -   name: Move artifacts to branch folder
-                env:
-                    BRANCH_NAME: ${{ needs.variables.outputs.BRANCH_NAME }}
                 run: |
                     mv docker-compose.review.yml ${BRANCH_NAME}/docker-compose.yml
                     mv set-urls-for-review.sh ${BRANCH_NAME}/set-urls-for-review.sh
             -   name: Start project
-                env:
-                    BRANCH_NAME: ${{ needs.variables.outputs.BRANCH_NAME }}
                 run: |
                     cd ${BRANCH_NAME}
                     chmod +x set-urls-for-review.sh
