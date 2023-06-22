@@ -3,8 +3,9 @@
 namespace Shopsys\FrameworkBundle\Component\Image\Config\Exception;
 
 use Exception;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ImageSizeNotFoundException extends Exception implements ImageConfigException
+class ImageSizeNotFoundException extends NotFoundHttpException implements ImageConfigException
 {
     /**
      * @var string
@@ -28,7 +29,6 @@ class ImageSizeNotFoundException extends Exception implements ImageConfigExcepti
 
         parent::__construct(
             'Image size "' . $sizeName . '" not found for entity "' . $entityClass . '".',
-            0,
             $previous
         );
     }
