@@ -448,7 +448,7 @@ jobs:
                     path: ./project-base/app/var/log/
     review:
         name: Review
-        needs: [build-php-fpm-image, build-storefront-image, build-elasticsearch-image]
+        needs: [variables, build-php-fpm-image, build-storefront-image, build-elasticsearch-image]
         if: |
             always() && !failure() && !cancelled() &&
             github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' &&
