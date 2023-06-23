@@ -1,0 +1,8 @@
+query($wishlistUuid: Uuid){
+    wishlist(wishlistUuid: $wishlistUuid){
+        uuid
+        products{
+            name
+        }
+    }
+}
