@@ -95,6 +95,7 @@
     * [Unit](#unit)
     * [Variant](#variant)
     * [VideoToken](#videotoken)
+    * [Wishlist](#wishlist)
   * [Inputs](#inputs)
     * [AddToCartInput](#addtocartinput)
     * [ApplyPromoCodeToCartInput](#applypromocodetocartinput)
@@ -1033,6 +1034,20 @@ Returns available transport methods based on the current cart state
 <td valign="top"><a href="#variant">Variant</a></td>
 <td></td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>wishlist</strong></td>
+<td valign="top"><a href="#wishlist">Wishlist</a></td>
+<td>
+
+Get wishlist by uuid or if customer is logged, try find for logged customer.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">wishlistUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
+</tr>
 </tbody>
 </table>
 
@@ -1064,6 +1079,25 @@ Add product to Comparison and create if not exists.
 <tr>
 <td colspan="2" align="right" valign="top">productUuid</td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>addProductToWishlist</strong></td>
+<td valign="top"><a href="#wishlist">Wishlist</a>!</td>
+<td>
+
+Add product to wishlist and create if not exists.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">productUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">wishlistUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
 <td></td>
 </tr>
 <tr>
@@ -1175,6 +1209,20 @@ Remove all products from Comparison and remove it.
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">comparisonUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>cleanWishlist</strong></td>
+<td valign="top"><a href="#wishlist">Wishlist</a></td>
+<td>
+
+Remove all products from wishlist and remove it.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">wishlistUuid</td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td></td>
 </tr>
@@ -1359,6 +1407,25 @@ Remove product from Comparison and if is Comparison empty remove it.
 <tr>
 <td colspan="2" align="right" valign="top">productUuid</td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>removeProductFromWishlist</strong></td>
+<td valign="top"><a href="#wishlist">Wishlist</a></td>
+<td>
+
+Remove product from wishlist and if is wishlist empty remove it.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">productUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">wishlistUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
 <td></td>
 </tr>
 <tr>
@@ -8312,6 +8379,39 @@ UUID
 <td colspan="2" valign="top"><strong>token</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
+</tr>
+</tbody>
+</table>
+
+### Wishlist
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>products</strong></td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
+<td>
+
+List of wishlist products
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+Wishlist identifier
+
+</td>
 </tr>
 </tbody>
 </table>

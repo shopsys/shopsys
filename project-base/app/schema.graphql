@@ -902,6 +902,8 @@ scalar Money
 type Mutation {
   """Add product to Comparison and create if not exists."""
   addProductToComparison(comparisonUuid: Uuid, productUuid: Uuid!): Comparison!
+  """Add product to wishlist and create if not exists."""
+  addProductToWishlist(productUuid: Uuid!, wishlistUuid: Uuid): Wishlist!
   """Add product to cart for future checkout"""
   AddToCart(input: AddToCartInput!): AddToCartResult!
   """Apply new promo code for the future checkout"""
@@ -918,6 +920,8 @@ type Mutation {
   CheckPaymentStatus(orderUuid: Uuid!): Boolean!
   """Remove all products from Comparison and remove it."""
   cleanComparison(comparisonUuid: Uuid): String!
+  """Remove all products from wishlist and remove it."""
+  cleanWishlist(wishlistUuid: Uuid): Wishlist
   """Send message to the site owner"""
   Contact(input: ContactInput!): Boolean!
   """Creates complete order with products and addresses"""
@@ -947,6 +951,8 @@ type Mutation {
   RemoveFromCart(input: RemoveFromCartInput!): Cart!
   """Remove product from Comparison and if is Comparison empty remove it."""
   removeProductFromComparison(comparisonUuid: Uuid, productUuid: Uuid!): Comparison
+  """Remove product from wishlist and if is wishlist empty remove it."""
+  removeProductFromWishlist(productUuid: Uuid!, wishlistUuid: Uuid): Wishlist
   """Remove already used promo code from cart"""
   RemovePromoCodeFromCart(input: RemovePromoCodeFromCartInput!): Cart!
   """Request password recovery - email with hash will be sent"""
@@ -1772,6 +1778,8 @@ type Query {
   """Returns available transport methods based on the current cart state"""
   transports(cartUuid: Uuid): [Transport!]!
   Variant: Variant
+  """Get wishlist by uuid or if customer is logged, try find for logged customer."""
+  wishlist(wishlistUuid: Uuid): Wishlist
 }
 
 input RecoverPasswordInput {
@@ -2210,4 +2218,11 @@ type Variant implements Product & Breadcrumb & Slug {
 type VideoToken {
   description: String!
   token: String!
+}
+
+type Wishlist {
+  """List of wishlist products"""
+  products: [Product!]!
+  """Wishlist identifier"""
+  uuid: Uuid!
 }
