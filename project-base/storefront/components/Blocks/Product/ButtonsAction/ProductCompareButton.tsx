@@ -33,7 +33,7 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
                 onClick={onProductInComparisonClick}
             >
                 <Icon
-                    className={twMergeCustom('text-grey', isProductInComparison && 'text-green')}
+                    className={twMergeCustom('m-2 text-grey', isProductInComparison && 'text-green')}
                     iconType="icon"
                     icon="Compare"
                 />

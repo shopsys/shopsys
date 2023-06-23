@@ -34,6 +34,7 @@ export const useAuth = (): { login: typeof login; logout: typeof logout } => {
     const [, logoutMutation] = useLogoutApi();
     const t = useTypedTranslationFunction();
     const updateUserState = usePersistStore((store) => store.updateUserState);
+    const clearWishlistUuid = usePersistStore((s) => s.clearWishlistUuid);
     const updateLoginLoadingState = usePersistStore((store) => store.updateLoginLoadingState);
 
     const router = useRouter();
@@ -68,6 +69,7 @@ export const useAuth = (): { login: typeof login; logout: typeof logout } => {
 
         if (logoutResult.data?.Logout) {
             removeTokensFromCookies();
+            clearWishlistUuid();
             showSuccessMessage(t('Successfully logged out'));
 
             if (canUseDom()) {

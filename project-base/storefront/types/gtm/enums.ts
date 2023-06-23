@@ -38,6 +38,8 @@ export enum GtmProductListNameType {
     product_comparison_page = 'product comparison page',
     product_detail = 'product detail',
     autocomplete_search_results = 'autocomplete_search_results',
+    wishlist = 'wishlist',
+    sharedWishlist = 'sharedWishlist',
 }
 
 export enum GtmEventType {

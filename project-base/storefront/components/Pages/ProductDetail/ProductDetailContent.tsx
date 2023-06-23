@@ -22,6 +22,8 @@ import { useGtmProductDetailViewEvent } from 'hooks/gtm/useGtmProductDetailViewE
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useRouter } from 'next/router';
 import { Fragment, useRef } from 'react';
+import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
+import { useWishlist } from 'hooks/useWishlist';
 
 type ProductDetailContentProps = {
     product: ProductDetailFragmentApi;
@@ -35,6 +37,8 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
     const scrollTarget = useRef<HTMLUListElement>(null);
     const router = useRouter();
     const { isProductInComparison, handleProductInComparison } = useComparison();
+    const { handleProductInWishlist, isProductInWishlist } = useWishlist();
+
     useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), fetching);
 
     return (
@@ -66,13 +70,20 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, f
                         </div>
                         <ProductDetailAddToCart product={product} />
                         <ProductDetailAvailability scrollTarget={scrollTarget} product={product} />
-                        <ProductCompareButton
-                            className="mt-3"
-                            isMainVariant={product.isMainVariant}
-                            isWithText
-                            isProductInComparison={isProductInComparison(product.uuid)}
-                            onProductInComparisonClick={() => handleProductInComparison(product.uuid)}
-                        />
+                        <div className="mt-3 flex flex-col gap-4 vl:flex-row">
+                            <ProductCompareButton
+                                isMainVariant={product.isMainVariant}
+                                isWithText
+                                isProductInComparison={isProductInComparison(product.uuid)}
+                                onProductInComparisonClick={() => handleProductInComparison(product.uuid)}
+                            />
+                            <ProductWishlistButton
+                                isMainVariant={product.isMainVariant}
+                                isWithText
+                                isInWishlist={isProductInWishlist(product.uuid)}
+                                handleProductInWishlist={() => handleProductInWishlist(product.uuid)}
+                            />
+                        </div>
                     </ProductDetailInfo>
                 </ProductDetail>
             </Webline>

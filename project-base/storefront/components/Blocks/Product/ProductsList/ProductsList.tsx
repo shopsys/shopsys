@@ -4,6 +4,7 @@ import { DEFAULT_PAGE_SIZE } from 'components/Blocks/Pagination/Pagination';
 import { CategoryDetailFragmentApi, ListedProductFragmentApi } from 'graphql/generated';
 import { createEmptyArray } from 'helpers/arrayUtils';
 import { useQueryParams } from 'hooks/useQueryParams';
+import { useWishlist } from 'hooks/useWishlist';
 import React from 'react';
 import { GtmMessageOriginType, GtmProductListNameType } from 'types/gtm/enums';
 import { ProductItemSkeleton } from './ProductItemSkeleton';
@@ -31,6 +32,7 @@ export const ProductsList: FC<ProductsListProps> = ({
     const { currentPage } = useQueryParams();
     const { isPopupCompareOpen, handleProductInComparison, setIsPopupCompareOpen, isProductInComparison } =
         useComparison();
+    const { handleProductInWishlist, isProductInWishlist } = useWishlist();
 
     if (!products?.length && !fetching) {
         return <CategoryDetailContentMessage />;
@@ -52,6 +54,8 @@ export const ProductsList: FC<ProductsListProps> = ({
                             gtmMessageOrigin={gtmMessageOrigin}
                             isProductInComparison={isProductInComparison(product.uuid)}
                             onProductInComparisonClick={() => handleProductInComparison(product.uuid)}
+                            handleProductInWishlist={() => handleProductInWishlist(product.uuid)}
+                            isInWishlist={isProductInWishlist(product.uuid)}
                         />
                     ))}
 

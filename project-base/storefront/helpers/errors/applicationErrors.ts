@@ -22,6 +22,9 @@ export const ApplicationErrors = {
     'comparison-not-found': 'comparison-not-found',
     'compared-item-not-found': 'compared-item-not-found',
     'compared-item-already-exists': 'compared-item-already-exists',
+    'wishlist-not-found': 'wishlist-not-found',
+    'wishlist-item-already-exists': 'wishlist-item-already-exists',
+    'wishlist-item-not-found': 'wishlist-item-not-found',
 } as const;
 
 export type ApplicationErrorsType = keyof typeof ApplicationErrors;

@@ -18,6 +18,7 @@ import {
 import schema from 'schema.graphql.json';
 
 const keyNull = () => null;
+const keyWishlist = () => 'wishlist';
 const keyUuid = (data: Data) => data.uuid as string | null;
 const keyName = (data: Data) => data.name as string | null;
 const keyCode = (data: Data) => data.code as string | null;
@@ -91,14 +92,15 @@ export const cache = cacheExchange({
         TransportType: keyCode,
         Unit: keyName,
         Variant: keyUuid,
+        Wishlist: keyWishlist,
     },
     updates: {
         Mutation: {
             Login(_result, _args, cache) {
-                invalidateFields(cache, ['cart']);
+                invalidateFields(cache, ['cart', 'wishlist']);
             },
             Logout(_result, _args, cache) {
-                invalidateFields(cache, ['cart']);
+                invalidateFields(cache, ['cart', 'wishlist']);
             },
             DeleteDeliveryAddress(_result, _args, cache) {
                 invalidateFields(cache, ['currentCustomerUser']);
@@ -152,6 +154,15 @@ export const cache = cacheExchange({
             },
             cleanComparison(result, _args, cache) {
                 invalidateFields(cache, ['comparison']);
+            },
+            addProductToWishlist(_result, _args, cache) {
+                invalidateFields(cache, ['wishlist']);
+            },
+            removeProductFromWishlist(_result, _args, cache) {
+                invalidateFields(cache, ['wishlist']);
+            },
+            cleanWishlist(_result, _args, cache) {
+                invalidateFields(cache, ['wishlist']);
             },
         },
     },

@@ -1,0 +1,5 @@
+mutation CleanWishlistMutation($wishlistUuid: Uuid){
+    cleanWishlist(wishlistUuid: $wishlistUuid) {
+        ...WishlistFragment
+    }
+}
