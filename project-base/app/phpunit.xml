@@ -42,7 +42,9 @@
         </testsuite>
         <testsuite name="Functional">
             <directory>tests/App/Functional</directory>
-            <directory>tests/*Bundle/Functional</directory>
+        </testsuite>
+        <testsuite name="FrontendApiFunctional">
+            <directory>tests/FrontendApiBundle/Functional</directory>
         </testsuite>
         <testsuite name="Smoke">
             <directory>tests/App/Smoke</directory>
