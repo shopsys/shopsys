@@ -278,9 +278,9 @@ jobs:
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker compose logs php-fpm
-            -   name: PHP-FPM container logs
+            -   name: Nginx container logs
                 if: ${{ failure() }}
-                run: docker compose exec storefront ls -la
+                run: docker compose logs webserver
     tests-unit-functional-smoke:
         name: Run unit, functional and smoke tests
         needs: [build-php-fpm-image, build-elasticsearch-image]
@@ -302,12 +302,19 @@ jobs:
                 run: |
                     docker-compose pull --parallel postgres webserver elasticsearch redis php-fpm storefront
                     docker-compose up -d postgres webserver elasticsearch redis php-fpm storefront
+                    docker compose exec -T --user root storefront chown -R node:node /home/node/app
                     docker-compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change test-dirs-create db-create test-db-create db-demo elasticsearch-index-recreate elasticsearch-export error-pages-generate
             -   name: Run tests
                 run: docker-compose exec -T php-fpm php phing -D production.confirm.action=y tests
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker-compose logs php-fpm
+            -   name: Storefront container logs
+                if: ${{ failure() }}
+                run: docker compose logs storefront
+            -   name: Nginx container logs
+                if: ${{ failure() }}
+                run: docker compose logs webserver
     tests-acceptance:
         name: Run acceptance tests
         needs: [build-php-fpm-image, build-elasticsearch-image]
