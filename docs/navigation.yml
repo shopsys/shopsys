@@ -10,5 +10,4 @@ arrange:
     - frontend-api
     - extensibility
     - automated-testing
-    - kubernetes
     - contributing

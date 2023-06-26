@@ -34,8 +34,6 @@ If you are struggling with Docker, [Docker Troubleshooting](./docker/docker-trou
     * How to customize the behavior of Shopsys Framework to suit your needs.
 * [Automated Testing](./automated-testing/index.md)
     * Information about available types of tests and how to run them.
-* [Orchestration](./kubernetes/index.md)
-    * Orchestration, Google Cloud, and Kubernetes-related articles and guides.
 * [Contributing](./contributing/index.md)
     * Guidelines and handy information for Shopsys Framework contributors.
 

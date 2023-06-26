@@ -18,43 +18,13 @@ For better understanding [visit the whole documentation here](https://symfony.co
 
 When `.env` files are not enough for your purpose you may override environment variables directly by webserver setting. These settings override any variables configured in `.env` files.
 
-The most common uses are: Kubernetes, Docker or native installation.
-
 !!! note
     
     Bellow is described the easiest way. For better understanding, we recommend finding out the documentation of the specific platform.
 
-### Kubernetes
-
-When you are using kubernetes on CI server change your configuration of:
-
-- `kubernetes/kustomize/overlays/ci/kustomization.yaml`
-
-```diff
-        path: ./ingress-patch.yaml
-+   -   target:
-+           group: apps
-+           version: v1
-+           kind: Deployment
-+           name: webserver-php-fpm
-+       path: ./webserver-php-fpm-patch.yaml
-configMapGenerator:
-    -   name: nginx-configuration
-```
-
-- create `kubernetes/kustomize/overlays/ci/webserver-php-fpm-patch.yaml` containing
-
-```diff
-+-   op: add
-+    path: /spec/template/spec/containers/0/env/-
-+    value:
-+        name: REDIS_PREFIX
-+        value: 'my_awesome_app'
-```
-
 ### Docker
 
-When using docker containers without kubernetes, add the environment variable to the `docker-compose.yml` file to `php-fpm` definition like in the example below
+When using docker containers, add the environment variable to the `docker-compose.yml` file to `php-fpm` definition like in the example below
 
 ```diff
     php-fpm:

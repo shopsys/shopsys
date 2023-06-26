@@ -1,7 +1,6 @@
 arrange:
     - index.md
     - dumping-and-importing-the-database.md
-    - jenkins-configuration.md
     - adding-a-new-entity.md
     - adding-new-attribute-to-an-entity.md
     - adding-a-new-elasticsearch-index.md
