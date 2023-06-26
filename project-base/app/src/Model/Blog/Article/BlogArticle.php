@@ -278,9 +278,6 @@ class BlogArticle extends AbstractTranslatableEntity
     }
 
     /**;
-     *
-     * @param $domainId
-     * @return bool
      */
 
     /**
