@@ -1,7 +1,6 @@
 # Cookbook
 
 * [Dumping and Importing the Database](./dumping-and-importing-the-database.md)
-* [Configuring Jenkins for Continuous Integration](./jenkins-configuration.md)
 * [Adding a New Entity](./adding-a-new-entity.md)
 * [Adding New Attribute to an Entity](./adding-new-attribute-to-an-entity.md)
 * [Adding a New Elasticsearch Index](./adding-a-new-elasticsearch-index.md)

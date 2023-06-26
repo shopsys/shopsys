@@ -73,9 +73,6 @@ Most important build command for production. Cleans cache, installs composer dep
 #### build-demo-ci
 Most important build command for continuous integration server. Builds the whole application and after that runs all coding standards checks and all tests.
 
-!!! tip
-    More about how to build your CI and check your application there can be found in [Configuring Jenkins for Continuous Integration](../cookbook/jenkins-configuration.md)
-
 #### build-demo-dev
 Builds the application for development with clean demo DB and runs checks on changed files.
 
