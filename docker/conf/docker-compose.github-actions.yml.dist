@@ -32,6 +32,8 @@ services:
         restart: always
         image: storefront-image
         container_name: shopsys-framework-storefront
+        command:
+            - dev
         ports:
             - "3000:3000"
         volumes:
