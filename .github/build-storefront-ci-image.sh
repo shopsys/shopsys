@@ -7,5 +7,5 @@ docker image build \
     --target development \
     --no-cache \
     --compress \
-    -f ./project-base/storefront/docker/dev.Dockerfile \
+    -f ./project-base/storefront/docker/ci.Dockerfile \
     ./project-base/storefront
