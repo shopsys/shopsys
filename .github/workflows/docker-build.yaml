@@ -236,13 +236,13 @@ jobs:
                 with:
                     name: docker-compose
             -   name: Build application
-                run: docker-compose up -d php-fpm
+                run: docker compose up -d php-fpm
             -   name: Check standards
                 run: |
-                    docker-compose exec -T php-fpm mv ./project-base/app/PRODUCTION ./project-base/app/DEVELOPMENT
-                    docker-compose exec -T php-fpm php phing -D production.confirm.action=y composer-dev standards
+                    docker compose exec -T php-fpm mv ./project-base/app/PRODUCTION ./project-base/app/DEVELOPMENT
+                    docker compose exec -T php-fpm php phing -D production.confirm.action=y composer-dev standards
             -   name: Check GraphQl schema
-                run: docker-compose exec -T php-fpm project-base/app/check-schema.sh
+                run: docker compose exec -T php-fpm project-base/app/check-schema.sh
     standards-storefront:
         name: Check Storefront standards
         needs: [build-php-fpm-image, build-storefront-ci-image]
@@ -312,15 +312,15 @@ jobs:
                     name: docker-compose
             -   name: Build application
                 run: |
-                    docker-compose pull --parallel postgres webserver elasticsearch redis php-fpm storefront
-                    docker-compose up -d postgres webserver elasticsearch redis php-fpm storefront
+                    docker compose pull --parallel postgres webserver elasticsearch redis php-fpm storefront
+                    docker compose up -d postgres webserver elasticsearch redis php-fpm storefront
                     docker compose exec -T --user root storefront chown -R node:node /home/node/app
-                    docker-compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change test-dirs-create db-create test-db-create db-demo elasticsearch-index-recreate elasticsearch-export error-pages-generate
+                    docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change test-dirs-create db-create test-db-create db-demo elasticsearch-index-recreate elasticsearch-export error-pages-generate
             -   name: Run tests
-                run: docker-compose exec -T php-fpm php phing -D production.confirm.action=y tests
+                run: docker compose exec -T php-fpm php phing -D production.confirm.action=y tests
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
-                run: docker-compose logs php-fpm
+                run: docker compose logs php-fpm
             -   name: Storefront container logs
                 if: ${{ failure() }}
                 run: docker compose logs storefront
@@ -347,14 +347,14 @@ jobs:
                     name: docker-compose
             -   name: Build application
                 run: |
-                    docker-compose pull --parallel webserver postgres elasticsearch redis php-fpm storefront selenium-server
-                    docker-compose up -d
-                    docker-compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change dirs-create test-dirs-create db-create test-db-create db-demo error-pages-generate test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build
+                    docker compose pull --parallel webserver postgres elasticsearch redis php-fpm storefront selenium-server
+                    docker compose up -d
+                    docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change dirs-create test-dirs-create db-create test-db-create db-demo error-pages-generate test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build
             -   name: Run acceptance tests
-                run: docker-compose exec -T php-fpm php phing -D production.confirm.action=y tests-acceptance
+                run: docker compose exec -T php-fpm php phing -D production.confirm.action=y tests-acceptance
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
-                run: docker-compose logs php-fpm
+                run: docker compose logs php-fpm
             -   name: Copy Codeception logs from container
                 if: ${{ failure() }}
                 run: docker cp shopsys-framework-php-fpm:/var/www/html/project-base/app/var/log ./project-base/app/var/log
@@ -448,25 +448,25 @@ jobs:
             -   name: Build PHP-FPM part of application
                 run: |
                     cat docker-compose.yml
-                    docker-compose pull --parallel webserver postgres redis selenium-server php-fpm elasticsearch storefront
-                    docker-compose up -d --force-recreate
+                    docker compose pull --parallel webserver postgres redis selenium-server php-fpm elasticsearch storefront
+                    docker compose up -d --force-recreate
                     docker cp ./ shopsys-framework-php-fpm:/var/www/html
-                    docker-compose exec -T --user root php-fpm chown -R www-data:www-data /var/www/html
-                    docker-compose exec -T php-fpm rm -rf /var/www/html/composer.lock /var/www/html/project-base/package-lock.json /var/www/html/project-base/migrations-lock.yml
-                    docker-compose exec -T php-fpm composer install --optimize-autoloader --no-interaction
-                    docker-compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change dirs-create test-dirs-create assets npm build-version-generate frontend-api-enable db-create test-db-create db-demo elasticsearch-index-recreate elasticsearch-export error-pages-generate test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build
+                    docker compose exec -T --user root php-fpm chown -R www-data:www-data /var/www/html
+                    docker compose exec -T php-fpm rm -rf /var/www/html/composer.lock /var/www/html/project-base/package-lock.json /var/www/html/project-base/migrations-lock.yml
+                    docker compose exec -T php-fpm composer install --optimize-autoloader --no-interaction
+                    docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change dirs-create test-dirs-create assets npm build-version-generate frontend-api-enable db-create test-db-create db-demo elasticsearch-index-recreate elasticsearch-export error-pages-generate test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build
             -   name: Check standards
-                run: docker-compose exec -T php-fpm php phing standards
+                run: docker compose exec -T php-fpm php phing standards
             -   name: Run tests
-                run: docker-compose exec -T php-fpm php phing tests
+                run: docker compose exec -T php-fpm php phing tests
             -   name: Run acceptance tests
-                run: docker-compose exec -T php-fpm php phing tests-acceptance
+                run: docker compose exec -T php-fpm php phing tests-acceptance
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
-                run: docker-compose logs php-fpm
+                run: docker compose logs php-fpm
             -   name: Storefront container logs
                 if: ${{ failure() }}
-                run: docker-compose logs storefront
+                run: docker compose logs storefront
             -   name: Copy Codeception logs from container
                 if: ${{ failure() }}
                 run: docker cp shopsys-framework-php-fpm:/var/www/html/project-base/app/var/log ./project-base/app/var/log
