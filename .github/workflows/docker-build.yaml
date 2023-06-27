@@ -40,7 +40,7 @@ jobs:
                     DOCKER_PHP_FPM_IMAGE_TAG=github-action-`find project-base/app/docker/php-fpm -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
                     DOCKER_PHP_FPM_REPOSITORY_TAG=ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}
                     DOCKER_PHP_FPM_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} php-fpm ${DOCKER_PHP_FPM_IMAGE_TAG} ${GITHUB_TOKEN} > /dev/null ; echo $?`
-                    DOCKER_STOREFRONT_IMAGE_TAG=github-action-`find project-base/storefront/docker -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`-${{ github.sha }}
+                    DOCKER_STOREFRONT_IMAGE_TAG=github-action-${{ github.sha }}
                     DOCKER_STOREFRONT_REPOSITORY_TAG=ghcr.io/${DOCKER_USERNAME}/storefront:${DOCKER_STOREFRONT_IMAGE_TAG}
                     DOCKER_STOREFRONT_CI_IMAGE_TAG=github-action-`find project-base/storefront/docker -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`-ci
                     DOCKER_STOREFRONT_CI_REPOSITORY_TAG=ghcr.io/${DOCKER_USERNAME}/storefront:${DOCKER_STOREFRONT_CI_IMAGE_TAG}
@@ -63,7 +63,7 @@ jobs:
                 run: cp -f ./docker/conf/docker-compose.github-actions.yml.dist ./docker-compose.yml
             -   name: Update docker-compose.yml file with right PHP-FPM image
                 run: "sed -i \"s#php-fpm-image#${{ steps.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}-${{ github.sha }}#\" ./docker-compose.yml"
-            -   name: Update docker-compose.yml file with right Elasticsearch image
+            -   name: Update docker-compose.yml file with right Storefront image
                 run: "sed -i \"s#storefront-image#${{ steps.variables.outputs.DOCKER_STOREFRONT_CI_REPOSITORY_TAG }}#\" ./docker-compose.yml"
             -   name: Update docker-compose.yml file with right Elasticsearch image
                 run: "sed -i \"s#elasticsearch-image#${{ steps.variables.outputs.DOCKER_ELASTICSEARCH_REPOSITORY_TAG }}#\" ./docker-compose.yml"
