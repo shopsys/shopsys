@@ -185,7 +185,7 @@
         "phpstan/phpstan-symfony": "^1.1.8",
         "phpunit/phpunit": "^9.5.20",
         "psr/event-dispatcher": "^1.0.0",
-        "slevomat/coding-standard": "^8.11.1",
+        "slevomat/coding-standard": "^8.13.1",
         "squizlabs/php_codesniffer": "^3.6.2",
         "sspooky13/yaml-standards": "^7.0.1",
         "symfony/var-dumper": "^5.4",
