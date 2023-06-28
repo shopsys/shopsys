@@ -3463,7 +3463,7 @@ export type CategoryProductsQueryVariablesApi = Exact<{
   endCursor: Scalars['String'];
   orderingMode: Maybe<ProductOrderingModeEnumApi>;
   filter: Maybe<ProductFilterApi>;
-  uuid: Maybe<Scalars['Uuid']>;
+  urlSlug: Maybe<Scalars['String']>;
   pageSize: Maybe<Scalars['Int']>;
 }>;
 
@@ -5766,8 +5766,8 @@ export function useBrandProductsQueryApi(options: Omit<Urql.UseQueryArgs<BrandPr
   return Urql.useQuery<BrandProductsQueryApi>({ query: BrandProductsQueryDocumentApi, ...options });
 };
 export const CategoryProductsQueryDocumentApi = gql`
-    query CategoryProductsQuery($endCursor: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $uuid: Uuid, $pageSize: Int) {
-  category(uuid: $uuid) {
+    query CategoryProductsQuery($endCursor: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $urlSlug: String, $pageSize: Int) {
+  category(urlSlug: $urlSlug) {
     products(
       after: $endCursor
       orderingMode: $orderingMode
