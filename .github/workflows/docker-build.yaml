@@ -16,7 +16,7 @@ jobs:
     build-docker-images:
         if: |
             github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' || 
-            github.event.push.ref == 'refs/heads/master'
+            github.event.ref == 'refs/heads/master'
         name: Build PHP-FPM and Elasticsearch images
         runs-on: ubuntu-20.04
         permissions:
@@ -178,7 +178,7 @@ jobs:
     build-fork-docker-images:
         if: |
             github.event.pull_request.head.repo.full_name != 'shopsys/shopsys' && 
-            github.event.push.ref != 'refs/heads/master'
+            github.event.ref != 'refs/heads/master'
         name: Build application and run standards checks and tests
         runs-on: ubuntu-20.04
         steps:
@@ -280,7 +280,7 @@ jobs:
     review:
         if: |
             github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' || 
-            github.event.push.ref == 'refs/heads/master'
+            github.event.ref == 'refs/heads/master'
         name: Review
         needs: build-docker-images
         runs-on: [self-hosted, linux, review-stage]
