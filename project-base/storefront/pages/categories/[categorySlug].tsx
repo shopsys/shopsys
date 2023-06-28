@@ -91,10 +91,11 @@ export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient
     const page = parsePageNumberFromQuery(context.query[PAGE_QUERY_PARAMETER_NAME]);
 
     if (isRedirectedFromSsr(context.req.headers)) {
+        const urlSlug = getSlugFromServerSideUrl(context.req.url ?? '');
         const categoryDetailResponse: OperationResult<CategoryDetailQueryApi, CategoryDetailQueryVariablesApi> =
             await client!
                 .query(CategoryDetailQueryDocumentApi, {
-                    urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
+                    urlSlug,
                     filter: mapParametersFilter(optionsFilter),
                     orderingMode,
                 })
@@ -105,7 +106,7 @@ export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient
                 endCursor: getEndCursor(page),
                 orderingMode,
                 filter: mapParametersFilter(optionsFilter),
-                uuid: categoryDetailResponse.data?.category?.uuid,
+                urlSlug,
                 pageSize: DEFAULT_PAGE_SIZE,
             })
             .toPromise();

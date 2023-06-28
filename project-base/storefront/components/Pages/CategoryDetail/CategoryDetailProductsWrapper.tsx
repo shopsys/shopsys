@@ -33,7 +33,7 @@ export const CategoryDetailProductsWrapper: FC<CategoryDetailProps> = ({ categor
                 endCursor: getEndCursor(currentPage),
                 filter: mapParametersFilter(parametersFilter),
                 orderingMode,
-                uuid: category.uuid,
+                urlSlug: category.slug,
                 pageSize: DEFAULT_PAGE_SIZE,
             },
         }),
