@@ -115,7 +115,6 @@ jobs:
                     name: set-urls-for-review
                     path: ./.github/set-urls-for-review.sh
     build-php-fpm-image:
-        if: github.event.pull_request.head.repo.full_name == 'shopsys/shopsys'
         name: Build PHP-FPM image
         runs-on: ubuntu-22.04
         needs: variables
