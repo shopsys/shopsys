@@ -11,6 +11,7 @@ import { useFilterShowLess } from 'hooks/filter/useFilterShowLess';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useState } from 'react';
+import { useSessionStore } from 'store/zustand/useSessionStore';
 
 type FilterFieldType = 'flags' | 'brands';
 
@@ -34,6 +35,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
     const t = useTypedTranslationFunction();
     const [isGroupOpen, setIsGroupOpen] = useState(true);
     const { filter, updateFilterFlags, updateFilterBrands } = useQueryParams();
+    const defaultSelectedFlags = useSessionStore((s) => s.defaultProductFiltersMap.flags);
 
     const selectedItems = filter && filter[filterField];
 
@@ -64,7 +66,9 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
                 {defaultOptions && (
                     <>
                         {defaultOptions.map((option, index) => {
-                            const isChecked = !!selectedItems?.includes(option.uuid);
+                            const isFlagAndSelectedByDefault =
+                                filterField === 'flags' && defaultSelectedFlags.has(option.uuid);
+                            const isChecked = !!selectedItems?.includes(option.uuid) || isFlagAndSelectedByDefault;
 
                             return (
                                 <FilterGroupContentItem

@@ -13,6 +13,8 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useQueryParams } from 'hooks/useQueryParams';
 import { useState } from 'react';
 import { ParametersType } from 'types/productFilter';
+import { useSessionStore } from 'store/zustand/useSessionStore';
+import { DefaultProductFiltersMapType } from 'store/zustand/slices/createSeoCategorySlice';
 
 type FilterGroupParametersProps = {
     title: string;
@@ -33,6 +35,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
     const t = useTypedTranslationFunction();
     const [isGroupCollapsed, setIsGroupCollapsed] = useState(parameter.isCollapsed);
     const { filter, updateFilterParameters } = useQueryParams();
+    const defaultSelectedParameters = useSessionStore((s) => s.defaultProductFiltersMap.parameters);
 
     const selectedParameter = filter?.parameters?.find((p) => p.parameter === parameter.uuid);
 
@@ -62,23 +65,30 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
             <FilterGroupContent isOpen={!isGroupCollapsed}>
                 {isCheckboxType && (
                     <>
-                        {defaultOptions.map((parameterOption, index) => {
-                            const isChecked = !!selectedParameter?.values?.includes(parameterOption.uuid);
+                        {defaultOptions.map((parameterValueOption, index) => {
+                            const isChecked = getIsSelectedParameterValue(
+                                defaultSelectedParameters,
+                                selectedParameter?.values,
+                                parameter.uuid,
+                                parameterValueOption.uuid,
+                            );
                             const id = `parameters.${parameterIndex}.values.${index}.checked`;
 
                             return (
                                 <FilterGroupContentItem
-                                    key={parameterOption.uuid}
-                                    isDisabled={parameterOption.count === 0 && !isChecked}
+                                    key={parameterValueOption.uuid}
+                                    isDisabled={parameterValueOption.count === 0 && !isChecked}
                                     dataTestId={getDataTestId(parameterIndex) + '-' + index}
                                 >
                                     <Checkbox
                                         id={id}
                                         name={id}
-                                        label={parameterOption.text}
-                                        onChange={() => updateFilterParameters(parameter.uuid, parameterOption.uuid)}
+                                        label={parameterValueOption.text}
+                                        onChange={() =>
+                                            updateFilterParameters(parameter.uuid, parameterValueOption.uuid)
+                                        }
                                         value={isChecked}
-                                        count={parameterOption.count}
+                                        count={parameterValueOption.count}
                                     />
                                 </FilterGroupContentItem>
                             );
@@ -93,21 +103,26 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
 
                 {parameter.__typename === 'ParameterColorFilterOption' && (
                     <div className="flex flex-wrap">
-                        {parameter.values.map((parameterOption, index) => {
-                            const isChecked = !!selectedParameter?.values?.includes(parameterOption.uuid);
+                        {parameter.values.map((parameterValue, index) => {
+                            const isChecked = getIsSelectedParameterValue(
+                                defaultSelectedParameters,
+                                selectedParameter?.values,
+                                parameter.uuid,
+                                parameterValue.uuid,
+                            );
                             const id = `parameters.${parameterIndex}.values.${index}.checked`;
 
                             return (
                                 <CheckboxColor
-                                    key={parameterOption.uuid}
-                                    bgColor={parameterOption.rgbHex ?? undefined}
+                                    key={parameterValue.uuid}
+                                    bgColor={parameterValue.rgbHex ?? undefined}
                                     dataTestId={getDataTestId(index)}
                                     id={id}
                                     name={id}
-                                    disabled={parameterOption.count === 0 && !isChecked}
-                                    onChange={() => updateFilterParameters(parameter.uuid, parameterOption.uuid)}
+                                    disabled={parameterValue.count === 0 && !isChecked}
+                                    onChange={() => updateFilterParameters(parameter.uuid, parameterValue.uuid)}
                                     value={isChecked}
-                                    label={parameterOption.text}
+                                    label={parameterValue.text}
                                 />
                             );
                         })}
@@ -140,4 +155,15 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
             </FilterGroupContent>
         </FilterGroupWrapper>
     );
+};
+
+const getIsSelectedParameterValue = (
+    defaultSelectedParameters: DefaultProductFiltersMapType['parameters'],
+    parameterValues: string[] | undefined,
+    parameterUuid: string,
+    parameterValueUuid: string,
+) => {
+    const isSelectedByDefault = !!defaultSelectedParameters.get(parameterUuid)?.has(parameterValueUuid);
+    const isSelectedByUser = !!parameterValues?.includes(parameterValueUuid) || isSelectedByDefault;
+    return isSelectedByDefault || isSelectedByUser;
 };
