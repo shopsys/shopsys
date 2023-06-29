@@ -6,11 +6,11 @@ export const mapParametersFilter = (parametersFilter: FilterOptionsUrlQueryType 
         return null;
     }
 
-    const parameters = parametersFilter.parameters?.map((parameter) => ({
-        ...parameter,
-        values: parameter.values ?? null,
-        maximalValue: parameter.maximalValue ?? null,
-        minimalValue: parameter.minimalValue ?? null,
+    const parameters = parametersFilter.parameters?.map((parameterOption) => ({
+        ...parameterOption,
+        values: parameterOption.values ?? [],
+        maximalValue: parameterOption.maximalValue ?? null,
+        minimalValue: parameterOption.minimalValue ?? null,
     }));
 
     return {

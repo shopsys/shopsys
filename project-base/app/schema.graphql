@@ -1279,7 +1279,7 @@ input ParameterFilter {
   """Uuid of filtered parameter"""
   parameter: Uuid!
   """Array of uuids representing parameter values to be filtered by"""
-  values: [Uuid!] = []
+  values: [Uuid!]! = []
 }
 
 """Represents parameter filter option"""
