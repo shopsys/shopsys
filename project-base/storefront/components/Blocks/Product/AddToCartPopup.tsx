@@ -1,3 +1,4 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Image } from 'components/Basic/Image/Image';
@@ -10,7 +11,6 @@ import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import NextLink from 'next/link';
 
 type AddToCartPopupProps = {
     isVisible: boolean;
@@ -54,7 +54,9 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({
                 )}
                 <div className="w-full md:pl-4 lg:flex lg:items-center lg:justify-between">
                     <div className="block break-words text-primary" data-testid={TEST_IDENTIFIER + '-name'}>
-                        <NextLink href={product.slug}>{product.fullName}</NextLink>
+                        <ExtendedNextLink href={product.slug} type="product">
+                            {product.fullName}
+                        </ExtendedNextLink>
                     </div>
                     <div className="mt-2 lg:mt-0 lg:w-5/12 lg:pl-4 lg:text-right">
                         <div className="block text-primary" data-testid={TEST_IDENTIFIER + '-price'}>

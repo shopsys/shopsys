@@ -2,7 +2,7 @@ import { dedupExchange } from './dedupExchange';
 import { devtoolsExchange } from '@urql/devtools';
 import { authExchange } from '@urql/exchange-auth';
 import { removeTokensFromCookies } from 'helpers/auth/tokens';
-import { GetServerSidePropsContext } from 'next';
+import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { SSRExchange } from 'next-urql';
 import { ClientOptions, CombinedError, errorExchange, fetchExchange } from 'urql';
 import { getAuthExchangeOptions } from 'urql/authExchange';
@@ -10,7 +10,7 @@ import { cache } from 'urql/cacheExchange';
 
 export const getUrqlExchanges = (
     ssrExchange: SSRExchange,
-    context?: GetServerSidePropsContext,
+    context?: GetServerSidePropsContext | NextPageContext,
 ): ClientOptions['exchanges'] => [
     devtoolsExchange,
     dedupExchange,

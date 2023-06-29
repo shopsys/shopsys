@@ -1,6 +1,6 @@
 import { ImageSizesFragmentApi } from 'graphql/generated';
 
-export type ListedItemPropType =
+export type ListedItemPropType = (
     | {
           slug: string;
           images: ImageSizesFragmentApi[];
@@ -15,4 +15,7 @@ export type ListedItemPropType =
     | {
           slug: string;
           name: string;
-      };
+      }
+) & {
+    __typename?: 'ArticleSite' | 'BlogArticle' | 'Category' | 'Brand';
+};

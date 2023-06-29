@@ -1,4 +1,3 @@
-import { CategoryDetailContentMessage } from './CategoryDetailContentMessage';
 import { DEFAULT_PAGE_SIZE, Pagination } from 'components/Blocks/Pagination/Pagination';
 import { getEndCursor } from 'components/Blocks/Product/Filter/helpers/getEndCursor';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
@@ -51,20 +50,14 @@ export const CategoryDetailProductsWrapper: FC<CategoryDetailProps> = ({ categor
 
     return (
         <>
-            {categoryListedProducts && categoryListedProducts.length !== 0 ? (
-                <>
-                    <ProductsList
-                        gtmProductListName={gtmProductListName}
-                        products={categoryListedProducts}
-                        fetching={fetching}
-                        category={category}
-                        gtmMessageOrigin={GtmMessageOriginType.other}
-                    />
-                    <Pagination containerWrapRef={containerWrapRef} totalCount={category.products.totalCount} />
-                </>
-            ) : (
-                <CategoryDetailContentMessage />
-            )}
+            <ProductsList
+                gtmProductListName={gtmProductListName}
+                products={categoryListedProducts}
+                fetching={fetching}
+                category={category}
+                gtmMessageOrigin={GtmMessageOriginType.other}
+            />
+            <Pagination containerWrapRef={containerWrapRef} totalCount={category.products.totalCount} />
         </>
     );
 };

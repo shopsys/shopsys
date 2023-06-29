@@ -1,4 +1,4 @@
-import NextLink from 'next/link';
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { twJoin } from 'tailwind-merge';
 
 type BlogSignpostItemProps = {
@@ -8,7 +8,7 @@ type BlogSignpostItemProps = {
 };
 
 export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({ children, href, isActive, itemLevel, dataTestId }) => (
-    <NextLink href={href} passHref>
+    <ExtendedNextLink type="blogCategory" href={href} passHref>
         <a
             className={twJoin(
                 'relative flex items-center rounded py-3 pr-9 pl-3 underline hover:no-underline',
@@ -22,5 +22,5 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({ children, href, is
         >
             {children}
         </a>
-    </NextLink>
+    </ExtendedNextLink>
 );

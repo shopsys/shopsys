@@ -1,5 +1,5 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { NavigationSubCategoriesLinkFragmentApi } from 'graphql/generated';
-import NextLink from 'next/link';
 
 type NavigationSubListProps = {
     columnCategoryChildren: NavigationSubCategoriesLinkFragmentApi['children'];
@@ -11,9 +11,9 @@ export const NavigationSubList: FC<NavigationSubListProps> = ({ columnCategoryCh
     <ul className="flex w-full flex-col pl-0" data-testid={TEST_IDENTIFIER}>
         {columnCategoryChildren.map((columnCategoryChild, subListIndex) => (
             <li className="w-full" key={subListIndex} data-testid={TEST_IDENTIFIER + '-' + subListIndex}>
-                <NextLink href={columnCategoryChild.slug} passHref>
+                <ExtendedNextLink type="category" href={columnCategoryChild.slug} passHref>
                     <a className="mb-1 block text-sm text-dark no-underline">{columnCategoryChild.name}</a>
-                </NextLink>
+                </ExtendedNextLink>
             </li>
         ))}
     </ul>

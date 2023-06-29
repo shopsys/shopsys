@@ -1,0 +1,5 @@
+query FlagDetailQuery($urlSlug: String, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) {
+    flag(urlSlug: $urlSlug) {
+        ...FlagDetailFragment
+    }
+}

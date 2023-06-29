@@ -1,6 +1,6 @@
-import { getQueryWithoutAllParameterFromQueryString } from 'helpers/filterOptions/getQueryWithoutAllParameter';
+import { getQueryWithoutSlugTypeParameterFromQueryString } from 'helpers/filterOptions/getQueryWithoutAllParameter';
 import { getUrlWithoutGetParameters } from 'helpers/parsing/getUrlWithoutGetParameters';
-import { GetServerSidePropsContext } from 'next';
+import { GetServerSidePropsContext, NextPageContext } from 'next';
 import getConfig from 'next/config';
 
 type Url = string | { url: string; param: string | undefined | null };
@@ -24,10 +24,17 @@ export const getInternationalizedStaticUrls = (urls: Url[], domainUrl: string): 
     return urls.map((url) => getInternationalizedStaticUrl(url, domainUrl));
 };
 
-export const getServerSideInternationalizedStaticUrl = (context: GetServerSidePropsContext, domainUrl: string) => {
+export const getServerSideInternationalizedStaticUrl = (
+    context: GetServerSidePropsContext | NextPageContext,
+    domainUrl: string,
+) => {
+    if (!('resolvedUrl' in context)) {
+        return { trimmedUrlWithoutQueryParams: '/', queryParams: null };
+    }
+
     const trimmedUrlWithoutQueryParams = getUrlWithoutGetParameters(context.resolvedUrl);
     const result = getInternationalizedStaticUrl(trimmedUrlWithoutQueryParams, domainUrl);
-    const queryParams = getQueryWithoutAllParameterFromQueryString(context.resolvedUrl.split('?')[1]);
+    const queryParams = getQueryWithoutSlugTypeParameterFromQueryString(context.resolvedUrl.split('?')[1]);
 
     return {
         trimmedUrlWithoutQueryParams: result || trimmedUrlWithoutQueryParams,

@@ -1,5 +1,5 @@
 import { DomainConfigType, getDomainConfig } from 'helpers/domain/domain';
-import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+import { GetServerSideProps } from 'next';
 import { RedisClientType, RedisModules, RedisScripts } from 'redis';
 
 export const getServerSidePropsWithRedisClient =
@@ -8,8 +8,8 @@ export const getServerSidePropsWithRedisClient =
             redisClient: RedisClientType<any & RedisModules, RedisScripts>,
             domainConfig: DomainConfigType,
         ) => GetServerSideProps,
-    ): GetServerSideProps<any> =>
-    async (context: GetServerSidePropsContext) => {
+    ): any =>
+    async (context: any) => {
         const domainConfig = getDomainConfig(context.req.headers.host!);
         const createRedisClient = (await import('redis')).createClient;
         const redisClient = createRedisClient({

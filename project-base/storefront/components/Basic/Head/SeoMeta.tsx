@@ -3,7 +3,7 @@ import useSeo from 'hooks/seo/useSeo';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type SeoMetaProps = {
     defaultTitle?: string | null;

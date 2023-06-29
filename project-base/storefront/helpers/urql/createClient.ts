@@ -1,4 +1,4 @@
-import { GetServerSidePropsContext } from 'next';
+import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { initUrqlClient, SSRExchange } from 'next-urql';
 import getConfig from 'next/config';
 import { RedisClientType, RedisModules, RedisScripts } from 'redis';
@@ -7,7 +7,7 @@ import { getUrqlExchanges } from 'urql/exchanges';
 import { fetcher } from 'urql/fetcher';
 
 export const createClient = (
-    context: GetServerSidePropsContext,
+    context: GetServerSidePropsContext | NextPageContext,
     publicGraphqlEndpoint: string,
     ssrCache: SSRExchange,
     redisClient: RedisClientType<any & RedisModules, RedisScripts>,

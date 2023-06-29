@@ -1,3 +1,4 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { IconName } from 'components/Basic/Icon/IconsSvgMap';
@@ -9,7 +10,6 @@ import { useHandleCompare } from 'hooks/product/useHandleCompare';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
-import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -98,22 +98,22 @@ export const MenuIconic: FC = () => {
                     )}
                 </MenuIconicItem>
                 <MenuIconicItem data-testid={TEST_IDENTIFIER + '-3'}>
-                    <NextLink href={productsComparisonUrl} passHref>
+                    <ExtendedNextLink href={productsComparisonUrl} passHref type="static">
                         <MenuIconicItemLink>
                             <MenuIconicItemIcon icon="Compare" />
                             {t('Comparison')}
                             {getComparisonProducts().length > 0 && <span>({getComparisonProducts().length})</span>}
                         </MenuIconicItemLink>
-                    </NextLink>
+                    </ExtendedNextLink>
                 </MenuIconicItem>
             </ul>
             <div className="order-2 ml-1 flex h-10 w-10 cursor-pointer items-center justify-center text-lg outline-none lg:hidden ">
                 {isUserLoggedIn ? (
-                    <NextLink href={customerUrl} passHref>
+                    <ExtendedNextLink href={customerUrl} passHref type="static">
                         <div className="relative flex h-full w-full items-center justify-center text-white transition-colors">
                             <MenuIconicItemIcon icon="User" />
                         </div>
-                    </NextLink>
+                    </ExtendedNextLink>
                 ) : (
                     <div
                         className="relative flex h-full w-full items-center justify-center text-white transition-colors"
@@ -153,11 +153,11 @@ const MenuIconicSubItemLink: FC<{ onClick?: () => void; href?: string }> = ({
         </a>
     );
 
-    if (href !== undefined) {
+    if (href) {
         return (
-            <NextLink href={href} passHref>
+            <ExtendedNextLink href={href} passHref type="static">
                 {content}
-            </NextLink>
+            </ExtendedNextLink>
         );
     }
 
@@ -177,11 +177,11 @@ const MenuIconicItemLink: FC<{ onClick?: () => void; href?: string }> = ({ child
         </a>
     );
 
-    if (href !== undefined) {
+    if (href) {
         return (
-            <NextLink href={href} passHref>
+            <ExtendedNextLink href={href} passHref type="static">
                 {content}
-            </NextLink>
+            </ExtendedNextLink>
         );
     }
 

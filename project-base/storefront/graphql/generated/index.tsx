@@ -2855,6 +2855,13 @@ export type AdvertsQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 export type AdvertsQueryApi = { __typename?: 'Query', adverts: Array<{ __typename: 'AdvertCode', code: string, uuid: string, name: string, positionName: string, type: string, categories: Array<{ __typename: 'Category', name: string, slug: string }> } | { __typename: 'AdvertImage', link: Maybe<string>, uuid: string, name: string, positionName: string, type: string, images: Array<{ __typename: 'Image', position: Maybe<number>, name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, imageMobile: Array<{ __typename: 'Image', position: Maybe<number>, name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, categories: Array<{ __typename: 'Category', name: string, slug: string }> }> };
 
+export type ArticleDetailQueryVariablesApi = Exact<{
+  urlSlug: Maybe<Scalars['String']>;
+}>;
+
+
+export type ArticleDetailQueryApi = { __typename?: 'Query', article: Maybe<{ __typename?: 'ArticleLink' } | { __typename: 'ArticleSite', uuid: string, slug: string, placement: string, text: Maybe<string>, seoTitle: Maybe<string>, seoMetaDescription: Maybe<string>, createdAt: any, articleName: string, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }> }> };
+
 export type CookiesArticleUrlQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
@@ -2901,6 +2908,13 @@ export type SimpleBlogArticleFragmentApi = { __typename: 'BlogArticle', name: st
 export type BlogArticleImageListFragmentApi = { __typename?: 'BlogArticle', images: Array<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }> };
 
 export type BlogArticleImageListGridFragmentApi = { __typename?: 'BlogArticle', images: Array<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }> };
+
+export type BlogArticleDetailQueryVariablesApi = Exact<{
+  urlSlug: Maybe<Scalars['String']>;
+}>;
+
+
+export type BlogArticleDetailQueryApi = { __typename?: 'Query', blogArticle: Maybe<{ __typename: 'BlogArticle', id: number, uuid: string, name: string, slug: string, link: string, text: Maybe<string>, publishDate: any, seoTitle: Maybe<string>, seoMetaDescription: Maybe<string>, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, images: Array<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }> }> };
 
 export type BlogArticlesQueryVariablesApi = Exact<{
   first: Maybe<Scalars['Int']>;
@@ -2961,6 +2975,13 @@ export type BlogCategoryArticlesVariablesApi = Exact<{
 
 export type BlogCategoryArticlesApi = { __typename?: 'Query', blogCategory: Maybe<{ __typename?: 'BlogCategory', blogArticles: { __typename: 'BlogArticleConnection', totalCount: number, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: Maybe<string>, endCursor: Maybe<string> }, edges: Maybe<Array<Maybe<{ __typename: 'BlogArticleEdge', node: Maybe<{ __typename: 'BlogArticle', uuid: string, name: string, link: string, publishDate: any, perex: Maybe<string>, slug: string, blogCategories: Array<{ __typename: 'BlogCategory', uuid: string, name: string, link: string, parent: Maybe<{ __typename?: 'BlogCategory', name: string }> }>, images: Array<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }> }> }>>> } }> };
 
+export type BlogCategoryQueryVariablesApi = Exact<{
+  urlSlug: Maybe<Scalars['String']>;
+}>;
+
+
+export type BlogCategoryQueryApi = { __typename?: 'Query', blogCategory: Maybe<{ __typename: 'BlogCategory', uuid: string, name: string, seoTitle: Maybe<string>, seoMetaDescription: Maybe<string>, articlesTotalCount: number, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, blogCategoriesTree: Array<{ __typename: 'BlogCategory', uuid: string, name: string, link: string, children: Array<{ __typename: 'BlogCategory', uuid: string, name: string, link: string, children: Array<{ __typename: 'BlogCategory', uuid: string, name: string, link: string, children: Array<{ __typename: 'BlogCategory', uuid: string, name: string, link: string, children: Array<{ __typename: 'BlogCategory', uuid: string, name: string, link: string, parent: Maybe<{ __typename?: 'BlogCategory', name: string }> }>, parent: Maybe<{ __typename?: 'BlogCategory', name: string }> }>, parent: Maybe<{ __typename?: 'BlogCategory', name: string }> }>, parent: Maybe<{ __typename?: 'BlogCategory', name: string }> }>, parent: Maybe<{ __typename?: 'BlogCategory', name: string }> }> }> };
+
 export type BlogUrlQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
@@ -2973,6 +2994,15 @@ export type ListedBrandFragmentApi = { __typename: 'Brand', uuid: string, name: 
 export type SimpleBrandFragmentApi = { __typename: 'Brand', name: string, slug: string };
 
 export type BrandImageDefaultFragmentApi = { __typename?: 'Brand', images: Array<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }> };
+
+export type BrandDetailQueryVariablesApi = Exact<{
+  urlSlug: Maybe<Scalars['String']>;
+  orderingMode: Maybe<ProductOrderingModeEnumApi>;
+  filter: Maybe<ProductFilterApi>;
+}>;
+
+
+export type BrandDetailQueryApi = { __typename?: 'Query', brand: Maybe<{ __typename: 'Brand', id: number, uuid: string, slug: string, name: string, seoH1: Maybe<string>, description: Maybe<string>, seoTitle: Maybe<string>, seoMetaDescription: Maybe<string>, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, images: Array<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, products: { __typename: 'ProductConnection', orderingMode: ProductOrderingModeEnumApi, defaultOrderingMode: Maybe<ProductOrderingModeEnumApi>, totalCount: number, productFilterOptions: { __typename: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Maybe<Array<{ __typename: 'BrandFilterOption', count: number, brand: { __typename: 'Brand', uuid: string, name: string } }>>, flags: Maybe<Array<{ __typename: 'FlagFilterOption', count: number, isSelected: boolean, flag: { __typename: 'Flag', uuid: string, name: string, rgbColor: string } }>>, parameters: Maybe<Array<{ __typename: 'ParameterCheckboxFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueFilterOption', uuid: string, text: string, count: number, isSelected: boolean }> } | { __typename: 'ParameterColorFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueColorFilterOption', uuid: string, text: string, count: number, rgbHex: Maybe<string>, isSelected: boolean }> } | { __typename: 'ParameterSliderFilterOption', name: string, uuid: string, minimalValue: number, maximalValue: number, isCollapsed: boolean, selectedValue: Maybe<number>, unit: Maybe<{ __typename: 'Unit', name: string }> }>> } } }> };
 
 export type BrandsQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
@@ -3067,6 +3097,15 @@ export type SimpleCategoryConnectionFragmentApi = { __typename: 'CategoryConnect
 
 export type SimpleCategoryFragmentApi = { __typename: 'Category', name: string, slug: string };
 
+export type CategoryDetailQueryVariablesApi = Exact<{
+  urlSlug: Maybe<Scalars['String']>;
+  orderingMode: Maybe<ProductOrderingModeEnumApi>;
+  filter: Maybe<ProductFilterApi>;
+}>;
+
+
+export type CategoryDetailQueryApi = { __typename?: 'Query', category: Maybe<{ __typename: 'Category', id: number, uuid: string, slug: string, originalCategorySlug: Maybe<string>, name: string, description: Maybe<string>, seoH1: Maybe<string>, seoTitle: Maybe<string>, seoMetaDescription: Maybe<string>, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, children: Array<{ __typename: 'Category', uuid: string, name: string, slug: string, products: { __typename: 'ProductConnection', totalCount: number }, images: Array<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }> }>, linkedCategories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string, products: { __typename: 'ProductConnection', totalCount: number }, images: Array<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }> }>, readyCategorySeoMixLinks: Array<{ __typename: 'Link', name: string, slug: string }>, products: { __typename: 'ProductConnection', orderingMode: ProductOrderingModeEnumApi, defaultOrderingMode: Maybe<ProductOrderingModeEnumApi>, totalCount: number, productFilterOptions: { __typename: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Maybe<Array<{ __typename: 'BrandFilterOption', count: number, brand: { __typename: 'Brand', uuid: string, name: string } }>>, flags: Maybe<Array<{ __typename: 'FlagFilterOption', count: number, isSelected: boolean, flag: { __typename: 'Flag', uuid: string, name: string, rgbColor: string } }>>, parameters: Maybe<Array<{ __typename: 'ParameterCheckboxFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueFilterOption', uuid: string, text: string, count: number, isSelected: boolean }> } | { __typename: 'ParameterColorFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueColorFilterOption', uuid: string, text: string, count: number, rgbHex: Maybe<string>, isSelected: boolean }> } | { __typename: 'ParameterSliderFilterOption', name: string, uuid: string, minimalValue: number, maximalValue: number, isCollapsed: boolean, selectedValue: Maybe<number>, unit: Maybe<{ __typename: 'Unit', name: string }> }>> } } }> };
+
 export type PromotedCategoriesQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
@@ -3139,6 +3178,15 @@ export type IsCustomerUserRegisteredQueryApi = { __typename?: 'Query', isCustome
 export type FlagDetailFragmentApi = { __typename: 'Flag', uuid: string, slug: string, name: string, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, products: { __typename: 'ProductConnection', orderingMode: ProductOrderingModeEnumApi, defaultOrderingMode: Maybe<ProductOrderingModeEnumApi>, totalCount: number, productFilterOptions: { __typename: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Maybe<Array<{ __typename: 'BrandFilterOption', count: number, brand: { __typename: 'Brand', uuid: string, name: string } }>>, flags: Maybe<Array<{ __typename: 'FlagFilterOption', count: number, isSelected: boolean, flag: { __typename: 'Flag', uuid: string, name: string, rgbColor: string } }>>, parameters: Maybe<Array<{ __typename: 'ParameterCheckboxFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueFilterOption', uuid: string, text: string, count: number, isSelected: boolean }> } | { __typename: 'ParameterColorFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueColorFilterOption', uuid: string, text: string, count: number, rgbHex: Maybe<string>, isSelected: boolean }> } | { __typename: 'ParameterSliderFilterOption', name: string, uuid: string, minimalValue: number, maximalValue: number, isCollapsed: boolean, selectedValue: Maybe<number>, unit: Maybe<{ __typename: 'Unit', name: string }> }>> } } };
 
 export type SimpleFlagFragmentApi = { __typename: 'Flag', uuid: string, name: string, rgbColor: string };
+
+export type FlagDetailQueryVariablesApi = Exact<{
+  urlSlug: Maybe<Scalars['String']>;
+  orderingMode: Maybe<ProductOrderingModeEnumApi>;
+  filter: Maybe<ProductFilterApi>;
+}>;
+
+
+export type FlagDetailQueryApi = { __typename?: 'Query', flag: Maybe<{ __typename: 'Flag', uuid: string, slug: string, name: string, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, products: { __typename: 'ProductConnection', orderingMode: ProductOrderingModeEnumApi, defaultOrderingMode: Maybe<ProductOrderingModeEnumApi>, totalCount: number, productFilterOptions: { __typename: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Maybe<Array<{ __typename: 'BrandFilterOption', count: number, brand: { __typename: 'Brand', uuid: string, name: string } }>>, flags: Maybe<Array<{ __typename: 'FlagFilterOption', count: number, isSelected: boolean, flag: { __typename: 'Flag', uuid: string, name: string, rgbColor: string } }>>, parameters: Maybe<Array<{ __typename: 'ParameterCheckboxFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueFilterOption', uuid: string, text: string, count: number, isSelected: boolean }> } | { __typename: 'ParameterColorFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueColorFilterOption', uuid: string, text: string, count: number, rgbHex: Maybe<string>, isSelected: boolean }> } | { __typename: 'ParameterSliderFilterOption', name: string, uuid: string, minimalValue: number, maximalValue: number, isCollapsed: boolean, selectedValue: Maybe<number>, unit: Maybe<{ __typename: 'Unit', name: string }> }>> } } }> };
 
 export type AdditionalSizeFragmentApi = { __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> };
 
@@ -3440,6 +3488,13 @@ export type FlagProductsQueryVariablesApi = Exact<{
 
 export type FlagProductsQueryApi = { __typename?: 'Query', flag: Maybe<{ __typename?: 'Flag', products: { __typename: 'ProductConnection', orderingMode: ProductOrderingModeEnumApi, defaultOrderingMode: Maybe<ProductOrderingModeEnumApi>, totalCount: number, productFilterOptions: { __typename: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands: Maybe<Array<{ __typename: 'BrandFilterOption', count: number, brand: { __typename: 'Brand', uuid: string, name: string } }>>, flags: Maybe<Array<{ __typename: 'FlagFilterOption', count: number, isSelected: boolean, flag: { __typename: 'Flag', uuid: string, name: string, rgbColor: string } }>>, parameters: Maybe<Array<{ __typename: 'ParameterCheckboxFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueFilterOption', uuid: string, text: string, count: number, isSelected: boolean }> } | { __typename: 'ParameterColorFilterOption', name: string, uuid: string, isCollapsed: boolean, values: Array<{ __typename: 'ParameterValueColorFilterOption', uuid: string, text: string, count: number, rgbHex: Maybe<string>, isSelected: boolean }> } | { __typename: 'ParameterSliderFilterOption', name: string, uuid: string, minimalValue: number, maximalValue: number, isCollapsed: boolean, selectedValue: Maybe<number>, unit: Maybe<{ __typename: 'Unit', name: string }> }>> }, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: Maybe<string>, endCursor: Maybe<string> }, edges: Maybe<Array<Maybe<{ __typename: 'ProductEdge', node: Maybe<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, image: Maybe<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, image: Maybe<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, image: Maybe<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename: 'Category', name: string }> }> }>>> } }> };
 
+export type ProductDetailQueryVariablesApi = Exact<{
+  urlSlug: Maybe<Scalars['String']>;
+}>;
+
+
+export type ProductDetailQueryApi = { __typename?: 'Query', product: Maybe<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, namePrefix: Maybe<string>, nameSuffix: Maybe<string>, catalogNumber: string, ean: Maybe<string>, description: Maybe<string>, stockQuantity: number, isSellingDenied: boolean, seoTitle: Maybe<string>, seoMetaDescription: Maybe<string>, isMainVariant: boolean, variants: Array<{ __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, isMainVariant: boolean, storeAvailabilities: Array<{ __typename: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: AvailabilityStatusEnumApi, store: Maybe<{ __typename: 'Store', uuid: string, slug: string, description: Maybe<string>, street: string, city: string, postcode: string, openingHours: Maybe<string>, contactInfo: Maybe<string>, specialMessage: Maybe<string>, locationLatitude: Maybe<string>, locationLongitude: Maybe<string>, storeName: string, country: { __typename: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, storeImages: Array<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }> }> }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, image: Maybe<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename: 'Category', name: string }> }>, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, images: Array<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, accessories: Array<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, image: Maybe<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, image: Maybe<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, image: Maybe<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename: 'Category', name: string }> }>, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename?: 'Category', name: string }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, productVideos: Array<{ __typename: 'VideoToken', description: string, token: string }> } | { __typename: 'RegularProduct', shortDescription: Maybe<string>, availableStoresCount: number, exposedStoresCount: number, id: number, uuid: string, slug: string, fullName: string, name: string, namePrefix: Maybe<string>, nameSuffix: Maybe<string>, catalogNumber: string, ean: Maybe<string>, description: Maybe<string>, stockQuantity: number, isSellingDenied: boolean, seoTitle: Maybe<string>, seoMetaDescription: Maybe<string>, isMainVariant: boolean, storeAvailabilities: Array<{ __typename: 'StoreAvailability', exposed: boolean, availabilityInformation: string, availabilityStatus: AvailabilityStatusEnumApi, store: Maybe<{ __typename: 'Store', uuid: string, slug: string, description: Maybe<string>, street: string, city: string, postcode: string, openingHours: Maybe<string>, contactInfo: Maybe<string>, specialMessage: Maybe<string>, locationLatitude: Maybe<string>, locationLongitude: Maybe<string>, storeName: string, country: { __typename: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, storeImages: Array<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }> }> }>, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, images: Array<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, parameters: Array<{ __typename: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename: 'ParameterValue', uuid: string, text: string }> }>, accessories: Array<{ __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, image: Maybe<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, image: Maybe<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, name: string, stockQuantity: number, isSellingDenied: boolean, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, isMainVariant: boolean, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, image: Maybe<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename: 'Category', name: string }> }>, brand: Maybe<{ __typename: 'Brand', name: string, slug: string }>, categories: Array<{ __typename?: 'Category', name: string }>, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, availability: { __typename: 'Availability', name: string, status: AvailabilityStatusEnumApi }, productVideos: Array<{ __typename: 'VideoToken', description: string, token: string }> } | { __typename?: 'Variant', mainVariant: Maybe<{ __typename?: 'MainVariant', slug: string }> }> };
+
 export type ProductsByCatnumsVariablesApi = Exact<{
   catnums: Array<Scalars['String']> | Scalars['String'];
 }>;
@@ -3533,6 +3588,13 @@ export type SliderItemsQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 export type SliderItemsQueryApi = { __typename?: 'Query', sliderItems: Array<{ __typename: 'SliderItem', uuid: string, name: string, link: string, extendedText: Maybe<string>, extendedTextLink: Maybe<string>, webImages: Array<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }>, mobileImages: Array<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }> }> };
 
+export type SlugTypeQueryVariablesApi = Exact<{
+  slug: Scalars['String'];
+}>;
+
+
+export type SlugTypeQueryApi = { __typename?: 'Query', slug: Maybe<{ __typename: 'ArticleSite' } | { __typename: 'BlogArticle' } | { __typename: 'BlogCategory' } | { __typename: 'Brand' } | { __typename: 'Category' } | { __typename: 'Flag' } | { __typename: 'MainVariant' } | { __typename: 'RegularProduct' } | { __typename: 'Store' } | { __typename: 'Variant' }> };
+
 export type SlugQueryVariablesApi = Exact<{
   slug: Scalars['String'];
   orderingMode: Maybe<ProductOrderingModeEnumApi>;
@@ -3549,6 +3611,13 @@ export type ListedStoreConnectionFragmentApi = { __typename: 'StoreConnection', 
 export type ListedStoreFragmentApi = { __typename: 'Store', slug: string, name: string, description: Maybe<string>, openingHoursHtml: Maybe<string>, locationLatitude: Maybe<string>, locationLongitude: Maybe<string>, street: string, postcode: string, city: string, identifier: string, country: { __typename: 'Country', name: string, code: string } };
 
 export type StoreDetailFragmentApi = { __typename: 'Store', uuid: string, slug: string, description: Maybe<string>, street: string, city: string, postcode: string, openingHours: Maybe<string>, contactInfo: Maybe<string>, specialMessage: Maybe<string>, locationLatitude: Maybe<string>, locationLongitude: Maybe<string>, storeName: string, country: { __typename: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, storeImages: Array<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }> };
+
+export type StoreDetailQueryVariablesApi = Exact<{
+  urlSlug: Maybe<Scalars['String']>;
+}>;
+
+
+export type StoreDetailQueryApi = { __typename?: 'Query', store: Maybe<{ __typename: 'Store', uuid: string, slug: string, description: Maybe<string>, street: string, city: string, postcode: string, openingHours: Maybe<string>, contactInfo: Maybe<string>, specialMessage: Maybe<string>, locationLatitude: Maybe<string>, locationLongitude: Maybe<string>, storeName: string, country: { __typename: 'Country', name: string, code: string }, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, storeImages: Array<{ __typename: 'Image', name: Maybe<string>, sizes: Array<{ __typename: 'ImageSize', size: string, url: string, width: Maybe<number>, height: Maybe<number>, additionalSizes: Array<{ __typename: 'AdditionalSize', height: Maybe<number>, media: string, url: string, width: Maybe<number> }> }> }> }> };
 
 export type StoreQueryVariablesApi = Exact<{
   uuid: Maybe<Scalars['Uuid']>;
@@ -4972,6 +5041,17 @@ export const AdvertsQueryDocumentApi = gql`
 export function useAdvertsQueryApi(options: Omit<Urql.UseQueryArgs<AdvertsQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<AdvertsQueryApi>({ query: AdvertsQueryDocumentApi, ...options });
 };
+export const ArticleDetailQueryDocumentApi = gql`
+    query ArticleDetailQuery($urlSlug: String) {
+  article(urlSlug: $urlSlug) {
+    ...ArticleDetailFragment
+  }
+}
+    ${ArticleDetailFragmentApi}`;
+
+export function useArticleDetailQueryApi(options: Omit<Urql.UseQueryArgs<ArticleDetailQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<ArticleDetailQueryApi>({ query: ArticleDetailQueryDocumentApi, ...options });
+};
 export const CookiesArticleUrlQueryDocumentApi = gql`
     query CookiesArticleUrlQuery {
   cookiesArticle {
@@ -5020,6 +5100,17 @@ export const ArticlesQueryDocumentApi = gql`
 
 export function useArticlesQueryApi(options: Omit<Urql.UseQueryArgs<ArticlesQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<ArticlesQueryApi>({ query: ArticlesQueryDocumentApi, ...options });
+};
+export const BlogArticleDetailQueryDocumentApi = gql`
+    query BlogArticleDetailQuery($urlSlug: String) {
+  blogArticle(urlSlug: $urlSlug) {
+    ...BlogArticleDetailFragment
+  }
+}
+    ${BlogArticleDetailFragmentApi}`;
+
+export function useBlogArticleDetailQueryApi(options: Omit<Urql.UseQueryArgs<BlogArticleDetailQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<BlogArticleDetailQueryApi>({ query: BlogArticleDetailQueryDocumentApi, ...options });
 };
 export const BlogArticlesQueryDocumentApi = gql`
     query BlogArticlesQuery($first: Int, $onlyHomepageArticles: Boolean) @redisCache(ttl: 3600) {
@@ -5090,6 +5181,17 @@ export const BlogCategoryArticlesDocumentApi = gql`
 export function useBlogCategoryArticlesApi(options: Omit<Urql.UseQueryArgs<BlogCategoryArticlesVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<BlogCategoryArticlesApi>({ query: BlogCategoryArticlesDocumentApi, ...options });
 };
+export const BlogCategoryQueryDocumentApi = gql`
+    query BlogCategoryQuery($urlSlug: String) {
+  blogCategory(urlSlug: $urlSlug) {
+    ...BlogCategoryDetailFragment
+  }
+}
+    ${BlogCategoryDetailFragmentApi}`;
+
+export function useBlogCategoryQueryApi(options: Omit<Urql.UseQueryArgs<BlogCategoryQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<BlogCategoryQueryApi>({ query: BlogCategoryQueryDocumentApi, ...options });
+};
 export const BlogUrlQueryDocumentApi = gql`
     query BlogUrlQuery {
   blogCategories {
@@ -5100,6 +5202,17 @@ export const BlogUrlQueryDocumentApi = gql`
 
 export function useBlogUrlQueryApi(options: Omit<Urql.UseQueryArgs<BlogUrlQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<BlogUrlQueryApi>({ query: BlogUrlQueryDocumentApi, ...options });
+};
+export const BrandDetailQueryDocumentApi = gql`
+    query BrandDetailQuery($urlSlug: String, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) {
+  brand(urlSlug: $urlSlug) {
+    ...BrandDetailFragment
+  }
+}
+    ${BrandDetailFragmentApi}`;
+
+export function useBrandDetailQueryApi(options: Omit<Urql.UseQueryArgs<BrandDetailQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<BrandDetailQueryApi>({ query: BrandDetailQueryDocumentApi, ...options });
 };
 export const BrandsQueryDocumentApi = gql`
     query BrandsQuery {
@@ -5219,6 +5332,17 @@ export const MinimalCartQueryDocumentApi = gql`
 export function useMinimalCartQueryApi(options: Omit<Urql.UseQueryArgs<MinimalCartQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<MinimalCartQueryApi>({ query: MinimalCartQueryDocumentApi, ...options });
 };
+export const CategoryDetailQueryDocumentApi = gql`
+    query CategoryDetailQuery($urlSlug: String, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) {
+  category(urlSlug: $urlSlug) {
+    ...CategoryDetailFragment
+  }
+}
+    ${CategoryDetailFragmentApi}`;
+
+export function useCategoryDetailQueryApi(options: Omit<Urql.UseQueryArgs<CategoryDetailQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<CategoryDetailQueryApi>({ query: CategoryDetailQueryDocumentApi, ...options });
+};
 export const PromotedCategoriesQueryDocumentApi = gql`
     query PromotedCategoriesQuery {
   promotedCategories {
@@ -5318,6 +5442,17 @@ export const IsCustomerUserRegisteredQueryDocumentApi = gql`
 
 export function useIsCustomerUserRegisteredQueryApi(options: Omit<Urql.UseQueryArgs<IsCustomerUserRegisteredQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<IsCustomerUserRegisteredQueryApi>({ query: IsCustomerUserRegisteredQueryDocumentApi, ...options });
+};
+export const FlagDetailQueryDocumentApi = gql`
+    query FlagDetailQuery($urlSlug: String, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) {
+  flag(urlSlug: $urlSlug) {
+    ...FlagDetailFragment
+  }
+}
+    ${FlagDetailFragmentApi}`;
+
+export function useFlagDetailQueryApi(options: Omit<Urql.UseQueryArgs<FlagDetailQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<FlagDetailQueryApi>({ query: FlagDetailQueryDocumentApi, ...options });
 };
 export const NavigationQueryDocumentApi = gql`
     query NavigationQuery @redisCache(ttl: 3600) {
@@ -5677,6 +5812,28 @@ export const FlagProductsQueryDocumentApi = gql`
 export function useFlagProductsQueryApi(options: Omit<Urql.UseQueryArgs<FlagProductsQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<FlagProductsQueryApi>({ query: FlagProductsQueryDocumentApi, ...options });
 };
+export const ProductDetailQueryDocumentApi = gql`
+    query ProductDetailQuery($urlSlug: String) {
+  product(urlSlug: $urlSlug) {
+    ... on Product {
+      ...ProductDetailFragment
+    }
+    ... on MainVariant {
+      ...MainVariantDetailFragment
+    }
+    ... on Variant {
+      mainVariant {
+        slug
+      }
+    }
+  }
+}
+    ${ProductDetailFragmentApi}
+${MainVariantDetailFragmentApi}`;
+
+export function useProductDetailQueryApi(options: Omit<Urql.UseQueryArgs<ProductDetailQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<ProductDetailQueryApi>({ query: ProductDetailQueryDocumentApi, ...options });
+};
 export const ProductsByCatnumsDocumentApi = gql`
     query ProductsByCatnums($catnums: [String!]!) {
   productsByCatnums(catnums: $catnums) {
@@ -5823,6 +5980,17 @@ export const SliderItemsQueryDocumentApi = gql`
 export function useSliderItemsQueryApi(options: Omit<Urql.UseQueryArgs<SliderItemsQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<SliderItemsQueryApi>({ query: SliderItemsQueryDocumentApi, ...options });
 };
+export const SlugTypeQueryDocumentApi = gql`
+    query SlugTypeQuery($slug: String!) {
+  slug(slug: $slug) {
+    __typename
+  }
+}
+    `;
+
+export function useSlugTypeQueryApi(options: Omit<Urql.UseQueryArgs<SlugTypeQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<SlugTypeQueryApi>({ query: SlugTypeQueryDocumentApi, ...options });
+};
 export const SlugQueryDocumentApi = gql`
     query SlugQuery($slug: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) {
   slug(slug: $slug) {
@@ -5873,6 +6041,17 @@ ${BlogCategoryDetailFragmentApi}`;
 
 export function useSlugQueryApi(options: Omit<Urql.UseQueryArgs<SlugQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<SlugQueryApi>({ query: SlugQueryDocumentApi, ...options });
+};
+export const StoreDetailQueryDocumentApi = gql`
+    query StoreDetailQuery($urlSlug: String) {
+  store(urlSlug: $urlSlug) {
+    ...StoreDetailFragment
+  }
+}
+    ${StoreDetailFragmentApi}`;
+
+export function useStoreDetailQueryApi(options: Omit<Urql.UseQueryArgs<StoreDetailQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<StoreDetailQueryApi>({ query: StoreDetailQueryDocumentApi, ...options });
 };
 export const StoreQueryDocumentApi = gql`
     query StoreQuery($uuid: Uuid) {

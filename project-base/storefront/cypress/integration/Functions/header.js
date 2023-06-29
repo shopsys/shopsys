@@ -3,7 +3,7 @@ import { link, url } from '../../fixtures/demodata';
 export function clickOnCategoryFromMenu(categoryName) {
     cy.get('[data-testid="layout-header-navigation"] [data-testid="layout-header-navigation-navigationitem"]')
         .contains(categoryName)
-        .click({ force: true });
+        .click();
 }
 
 export function searchProductByNameTypeEnterAndCheckResult(productName, productCatnum) {

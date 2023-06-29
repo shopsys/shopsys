@@ -1,3 +1,4 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { TableGrid, TableGridColumn } from 'components/Basic/TableGrid/TableGrid';
 import { TableGridColumns } from 'components/Basic/TableGrid/TableGridElements';
@@ -7,7 +8,6 @@ import { BreadcrumbFragmentApi, OrderDetailFragmentApi } from 'graphql/generated
 import { formatDateAndTime } from 'helpers/formaters/formatDate';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import NextLink from 'next/link';
 
 type OrderDetailContentProps = {
     order: OrderDetailFragmentApi;
@@ -53,9 +53,9 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order, breadcr
                                     <td>{t('Package number')}:</td>
                                     <td className="text-right" data-testid={TEST_IDENTIFIER + 'trackingUrl'}>
                                         {order.trackingUrl && (
-                                            <NextLink href={order.trackingUrl} passHref>
+                                            <ExtendedNextLink href={order.trackingUrl} passHref type="static">
                                                 <a target="_blank">{order.trackingNumber}</a>
-                                            </NextLink>
+                                            </ExtendedNextLink>
                                         )}
                                         {order.trackingUrl === null && order.trackingNumber}
                                     </td>

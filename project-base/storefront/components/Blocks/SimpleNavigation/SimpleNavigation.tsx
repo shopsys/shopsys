@@ -2,6 +2,7 @@ import { ListItem } from './ListItem';
 import { Slider } from './Slider';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
+import { getSearchResultLinkType } from 'helpers/mappers/simpleNavigation';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
 import { useState } from 'react';
@@ -36,7 +37,11 @@ export const SimpleNavigation: FC<SimpleNavigationProps> = ({ listedItems, image
                 >
                     {listedItems.map((listedItem, key) => (
                         <li className="text-center lg:text-left" key={key} data-testid={TEST_IDENTIFIER + '-' + key}>
-                            <ListItem listedItem={listedItem} imageType={imageType}>
+                            <ListItem
+                                linkType={getSearchResultLinkType(listedItem)}
+                                listedItem={listedItem}
+                                imageType={imageType}
+                            >
                                 {listedItem.name}
                             </ListItem>
                         </li>

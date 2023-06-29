@@ -37,19 +37,18 @@ const SearchPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
     const router = useRouter();
     const { url } = useDomainConfig();
-    const searchProductsSort = getProductListSort(
-        parseProductListSortFromQuery(router.query[SORT_QUERY_PARAMETER_NAME]),
+    const orderingMode = getProductListSort(parseProductListSortFromQuery(router.query[SORT_QUERY_PARAMETER_NAME]));
+    const filter = mapParametersFilter(
+        getFilterOptions(parseFilterOptionsFromQuery(router.query[FILTER_QUERY_PARAMETER_NAME])),
     );
-    const searchParametersFilter = getFilterOptions(
-        parseFilterOptionsFromQuery(router.query[FILTER_QUERY_PARAMETER_NAME]),
-    );
-    const searchQuery = getStringFromUrlQuery(router.query[SEARCH_QUERY_PARAMETER_NAME]);
-    const [{ data: searchData }] = useQueryError(
+    const search = getStringFromUrlQuery(router.query[SEARCH_QUERY_PARAMETER_NAME]);
+
+    const [{ data: searchData, fetching }] = useQueryError(
         useSearchQueryApi({
             variables: {
-                search: searchQuery,
-                orderingMode: searchProductsSort,
-                filter: mapParametersFilter(searchParametersFilter),
+                search,
+                orderingMode,
+                filter,
                 pageSize: DEFAULT_PAGE_SIZE,
             },
         }),
@@ -79,7 +78,7 @@ const SearchPage: FC<ServerSidePropsType> = () => {
         <>
             <MetaRobots content="noindex, nofollow" />
             <CommonLayout title={title}>
-                <SearchContent searchResults={searchData} breadcrumbs={breadcrumbs} />
+                <SearchContent searchResults={searchData} breadcrumbs={breadcrumbs} fetching={fetching} />
             </CommonLayout>
         </>
     );
@@ -101,6 +100,7 @@ export const getServerSideProps = getServerSidePropsWithRedisClient((redisClient
                     search,
                     orderingMode,
                     filter,
+                    pageSize: DEFAULT_PAGE_SIZE,
                 },
             },
             {

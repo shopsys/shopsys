@@ -1,0 +1,5 @@
+query ArticleDetailQuery($urlSlug: String) {
+    article(urlSlug: $urlSlug) {
+        ...ArticleDetailFragment
+    }
+}

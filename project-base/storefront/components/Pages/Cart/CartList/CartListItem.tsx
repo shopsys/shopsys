@@ -1,3 +1,4 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { CartListItemInfo } from './CartListItemInfo';
 import { Image } from 'components/Basic/Image/Image';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
@@ -7,7 +8,6 @@ import { mapPriceForCalculations } from 'helpers/mappers/price';
 import { AddToCartAction } from 'hooks/cart/useAddToCart';
 import { useFormatPrice } from 'hooks/formatting/useFormatPrice';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
-import NextLink from 'next/link';
 import { MouseEventHandler, useRef } from 'react';
 
 type CartListItemProps = {
@@ -48,15 +48,15 @@ export const CartListItem: FC<CartListItemProps> = ({ item, listIndex, onItemRem
             data-testid={TEST_IDENTIFIER + itemCatnum}
         >
             <div className="mb-6 flex w-[93px] pr-4 vl:mb-0" data-testid={TEST_IDENTIFIER + 'image'}>
-                <NextLink href={item.product.slug} passHref>
-                    <a className="h-fulll relative w-full">
+                <ExtendedNextLink href={item.product.slug} passHref type="product">
+                    <a className="relative h-full w-full">
                         <Image
                             image={item.product.image}
                             type="thumbnailExtraSmall"
                             alt={item.product.image?.name || item.product.fullName}
                         />
                     </a>
-                </NextLink>
+                </ExtendedNextLink>
             </div>
             <div className="mb-5 flex w-[calc(100%-93px)] flex-col items-start pr-7 text-sm font-bold vl:mb-0 vl:flex-1 vl:flex-row vl:items-center vl:pr-4">
                 <CartListItemInfo item={item} />

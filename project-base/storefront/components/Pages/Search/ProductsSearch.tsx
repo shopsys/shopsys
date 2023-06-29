@@ -57,7 +57,7 @@ export const ProductsSearch: FC<ProductsSearchProps> = ({ productsSearch }) => {
                     />
                 </div>
                 <Overlay isActive={isPanelOpen} onClick={handlePanelOpenerClick} />
-                <div className="flex flex-1 flex-col overflow-hidden vl:pl-12">
+                <div className="flex flex-1 flex-col vl:pl-12">
                     <div
                         className="relative mb-3 flex h-12 w-full cursor-pointer flex-row justify-center rounded-xl bg-primary py-3 px-8 font-bold uppercase leading-7 text-white vl:hidden"
                         onClick={handlePanelOpenerClick}

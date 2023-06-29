@@ -1,0 +1,7 @@
+query SlugTypeQuery(
+    $slug: String!
+) {
+    slug(slug: $slug) {
+        __typename
+    }
+}

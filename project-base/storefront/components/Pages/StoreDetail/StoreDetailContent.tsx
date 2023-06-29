@@ -1,4 +1,5 @@
 import { Gallery } from 'components/Basic/Gallery/Gallery';
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Heading } from 'components/Basic/Heading/Heading';
 import { Icon } from 'components/Basic/Icon/Icon';
 import { Image } from 'components/Basic/Image/Image';
@@ -9,7 +10,6 @@ import { getInternationalizedStaticUrls } from 'helpers/localization/getInternat
 import { createMapMarker } from 'helpers/map/createMapMarker';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useDomainConfig } from 'hooks/useDomainConfig';
-import NextLink from 'next/link';
 
 type StoreDetailContentProps = {
     store: StoreDetailFragmentApi;
@@ -74,11 +74,11 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                     <a className="flex items-center justify-between rounded-xl border border-greyLighter py-4 pr-4 pl-6 transition hover:no-underline vl:hover:-translate-x-1 vl:hover:shadow-lg">
                         <div className="flex flex-row items-center text-lg text-primary">
                             <Icon iconType="icon" icon="Chat" className="mr-3 w-6 text-2xl text-orange xl:mr-5" />
-                            <NextLink href={contactUrl} passHref>
+                            <ExtendedNextLink href={contactUrl} passHref type="static">
                                 <a className="relative flex-grow text-primary md:text-lg">
                                     {t('Do you have any questions?')}
                                 </a>
-                            </NextLink>
+                            </ExtendedNextLink>
                         </div>
                         <div className="flex flex-row items-center text-lg text-primary">
                             <a className="relative flex-grow text-primary md:text-lg">{t('Customer Centre')}</a>
@@ -86,8 +86,8 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                         </div>
                     </a>
                 </div>
-                <div className="mt-10 bg-greyVeryLight p-3">
-                    {store.storeImages.length > 0 && (
+                {store.storeImages.length > 0 && (
+                    <div className="mt-10 bg-greyVeryLight p-3">
                         <Gallery selector=".lightboxItem">
                             <div className="flex flex-wrap justify-center lg:justify-start">
                                 {store.storeImages.map((image, index) => (
@@ -107,8 +107,8 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                                 ))}
                             </div>
                         </Gallery>
-                    )}
-                </div>
+                    </div>
+                )}
             </div>
         </Webline>
     );

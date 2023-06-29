@@ -1,3 +1,4 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { DropdownMenuContext } from 'components/Layout/Header/DropdownMenu/DropdownMenuContext';
 import { DropdownSlideRight } from 'components/Layout/Header/DropdownMenu/DropdownSlideRight';
 import {
@@ -5,7 +6,6 @@ import {
     ColumnCategoryFragmentApi,
     NavigationSubCategoriesLinkFragmentApi,
 } from 'graphql/generated';
-import NextLink from 'next/link';
 import { useContext, useEffect, useState } from 'react';
 import * as smoothscroll from 'smoothscroll-polyfill';
 import { twJoin } from 'tailwind-merge';
@@ -62,7 +62,7 @@ export const DropdownItem: FC<DropdownItemProps> = ({
             onClick={scrollToTop}
             data-testid={TEST_IDENTIFIER}
         >
-            <NextLink href={itemLink} passHref>
+            <ExtendedNextLink type="category" href={itemLink} passHref>
                 <a
                     className={twJoin(
                         'flex-1 font-bold text-dark no-underline',
@@ -72,7 +72,7 @@ export const DropdownItem: FC<DropdownItemProps> = ({
                 >
                     {itemName}
                 </a>
-            </NextLink>
+            </ExtendedNextLink>
             {hasChildren && <DropdownSlideRight goToMenu={goToMenu} index={index} />}
         </div>
     );
