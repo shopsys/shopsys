@@ -5,17 +5,18 @@ name: Rebuild Docker images
 jobs:
     rebuild-master-images:
         name: Rebuild ${{ matrix.branches }} branch Docker images in Github Container Registry
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-22.04
         strategy:
             matrix:
                 branches: ['master', '9.1', '10.0', '11.0', '12.0']
             fail-fast: false
+            max-parallel: 1
         permissions:
             contents: read
             packages: write
         steps:
             -   name: GIT checkout branch - refs/heads/${{ matrix.branches }}
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     ref: refs/heads/${{ matrix.branches }}
             -   name: Login to GitHub Container Registry
