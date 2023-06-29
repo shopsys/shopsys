@@ -46,6 +46,8 @@ services:
             - web-volume:/var/www/html/project-base/app/web
             - nginx-conf:/var/www/html/docker/nginx
             - postgres-conf:/var/www/html/project-base/app/docker/postgres
+        depends_on:
+            - postgres
         environment:
             IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK: 1
         networks:
