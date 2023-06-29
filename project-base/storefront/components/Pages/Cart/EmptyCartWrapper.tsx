@@ -24,7 +24,7 @@ export const EmptyCartWrapper: FC<EmptyCartWrapperProps> = ({
     enableHandling = true,
 }) => {
     const router = useRouter();
-    const loginLoading = usePersistStore((s) => s.loginLoading);
+    const loginLoading = usePersistStore((store) => store.loginLoading);
     const { url } = useDomainConfig();
     const [transportAndPaymentUrl] = getInternationalizedStaticUrls(['/order/transport-and-payment'], url);
     const [initiatedLoading, setInitiatedLoading] = useState(false);

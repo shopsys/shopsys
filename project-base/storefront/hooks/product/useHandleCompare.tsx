@@ -29,8 +29,8 @@ export const useHandleCompare = (
     const [, addProductToComparison] = useAddProductToComparisonMutationApi();
     const [, removeProductFromComparison] = useRemoveProductFromComparisonMutationApi();
     const [, cleanComparison] = useCleanComparisonMutationApi();
-    const productsComparisonUuid = usePersistStore((s) => s.productsComparisonUuid);
-    const updateUserState = usePersistStore((s) => s.updateUserState);
+    const productsComparisonUuid = usePersistStore((store) => store.productsComparisonUuid);
+    const updateUserState = usePersistStore((store) => store.updateUserState);
     const [result] = useComparisonQueryApi({
         variables: { comparisonUuid: productsComparisonUuid },
         requestPolicy: 'network-only',

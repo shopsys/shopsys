@@ -8,7 +8,6 @@ import { extend, locale } from 'dayjs';
 import 'dayjs/locale/cs';
 import 'dayjs/locale/sk';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
-import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
 import { getDomainConfig } from 'helpers/domain/domain';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { ServerSidePropsType } from 'helpers/misc/initServerSideProps';
@@ -28,6 +27,7 @@ import { PropsWithChildren, ReactElement, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { usePersistStore } from 'store/zustand/usePersistStore';
 import { getUrqlExchanges } from 'urql/exchanges';
 
 extend(LocalizedFormat);
@@ -44,7 +44,7 @@ type AppProps = {
 function MyApp({ Component, pageProps, err }: AppProps): ReactElement {
     const router = useRouter();
     const { url, defaultLocale } = pageProps.domainConfig;
-    const userConsentCookie = getUserConsentCookie();
+    const userConsent = usePersistStore((store) => store.userConsent);
     const { publicRuntimeConfig } = getConfig();
 
     useSetDomainConfig(pageProps.domainConfig);
@@ -145,7 +145,7 @@ function MyApp({ Component, pageProps, err }: AppProps): ReactElement {
             <LoadingHandler />
             <ToastContainer autoClose={6000} position="top-center" theme="colored" />
             <ErrorBoundary FallbackComponent={Error500ContentWithBoundary}>
-                {userConsentCookie === null && !isConsentUpdatePage && <UserConsentContainer />}
+                {!userConsent && !isConsentUpdatePage && <UserConsentContainer />}
                 {pageProps.isMaintenance ? <Error503Content /> : <Component {...pageProps} err={err} />}
             </ErrorBoundary>
         </>

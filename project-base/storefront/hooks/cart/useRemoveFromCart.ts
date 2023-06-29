@@ -13,8 +13,8 @@ export type RemoveFromCartHandler = (
 export const useRemoveFromCart = (gtmProductListName: GtmProductListNameType): [RemoveFromCartHandler, boolean] => {
     const [{ fetching }, removeItemFromCart] = useRemoveFromCartMutationApi();
     const { url, currencyCode } = useDomainConfig();
-    const cartUuid = usePersistStore((s) => s.cartUuid);
-    const updateUserState = usePersistStore((s) => s.updateUserState);
+    const cartUuid = usePersistStore((store) => store.cartUuid);
+    const updateUserState = usePersistStore((store) => store.updateUserState);
 
     const removeItemFromCartAction = async (cartItem: CartItemFragmentApi, listIndex: number) => {
         const removeItemFromCartActionResult = await removeItemFromCart({

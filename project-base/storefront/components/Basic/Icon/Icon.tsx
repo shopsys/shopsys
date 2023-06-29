@@ -1,5 +1,5 @@
-import { IconName } from './IconsSvgMap';
 import { IconSvg } from './IconSvg';
+import { IconName } from './IconsSvgMap';
 import { HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 

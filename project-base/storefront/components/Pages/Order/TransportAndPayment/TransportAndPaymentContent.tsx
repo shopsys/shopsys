@@ -11,7 +11,6 @@ import {
 import { hasValidationErrors } from 'helpers/errors/hasValidationErrors';
 import { getGtmPickupPlaceFromLastOrder, getGtmPickupPlaceFromStore } from 'helpers/gtm/mappers';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
-import { getPacketeryCookie } from 'helpers/packetery';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
@@ -19,6 +18,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
+import { usePersistStore } from 'store/zustand/usePersistStore';
 import { GtmMessageOriginType } from 'types/gtm/enums';
 
 type TransportAndPaymentContentProps = {
@@ -61,6 +61,7 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
     const t = useTypedTranslationFunction();
     const { transport, pickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
     const [isErrorPopupVisible, setErrorPopupVisibility] = useState(false);
+    const packeteryPickupPoint = usePersistStore((store) => store.packeteryPickupPoint);
 
     const [cartUrl, contactInformationUrl] = getInternationalizedStaticUrls(
         ['/cart', '/order/contact-information'],
@@ -125,10 +126,8 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
             return null;
         }
 
-        const packeteryCookie = getPacketeryCookie();
-
-        if (packeteryCookie?.identifier === lastOrder.pickupPlaceIdentifier) {
-            return packeteryCookie;
+        if (packeteryPickupPoint?.identifier === lastOrder.pickupPlaceIdentifier) {
+            return packeteryPickupPoint;
         }
 
         if (pickupPlaceData?.store !== undefined && pickupPlaceData.store !== null) {
@@ -136,7 +135,7 @@ export const TransportAndPaymentContent: FC<TransportAndPaymentContentProps> = (
         }
 
         return getGtmPickupPlaceFromLastOrder(lastOrder.pickupPlaceIdentifier, lastOrder);
-    }, [lastOrder, pickupPlaceData?.store]);
+    }, [lastOrder, packeteryPickupPoint, pickupPlaceData?.store]);
 
     return (
         <>

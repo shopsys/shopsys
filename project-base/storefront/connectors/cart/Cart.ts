@@ -11,7 +11,6 @@ import {
 } from 'graphql/generated';
 import { ApplicationErrors } from 'helpers/errors/applicationErrors';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
-import { getPacketeryCookie } from 'helpers/packetery';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
@@ -25,8 +24,9 @@ import { CombinedError, OperationContext } from 'urql';
 
 export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const { isUserLoggedIn } = useCurrentUserData();
-    const cartUuid = usePersistStore((s) => s.cartUuid);
+    const cartUuid = usePersistStore((store) => store.cartUuid);
     const t = useTypedTranslationFunction();
+    const packeteryPickupPoint = usePersistStore((store) => store.packeteryPickupPoint);
 
     const [result, refetchCart] = useQueryError(
         useCartQueryApi({
@@ -61,6 +61,7 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
             pickupPlace: getSelectedPickupPlace(
                 result.data.cart.transport,
                 result.data.cart.selectedPickupPlaceIdentifier,
+                packeteryPickupPoint,
             ),
             payment: result.data.cart.payment,
             paymentGoPayBankSwift: result.data.cart.paymentGoPayBankSwift,
@@ -70,7 +71,17 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
             modifications: result.data.cart.modifications,
             refetchCart,
         };
-    }, [result.data, result.error, result.fetching, result.stale, cartUuid, isUserLoggedIn, refetchCart, t]);
+    }, [
+        result.error,
+        result.data,
+        result.fetching,
+        result.stale,
+        cartUuid,
+        isUserLoggedIn,
+        packeteryPickupPoint,
+        refetchCart,
+        t,
+    ]);
 };
 
 const getEmptyCart = (
@@ -208,13 +219,14 @@ const handleCartPromoCodeModifications = (
 const getSelectedPickupPlace = (
     transport: TransportWithAvailablePaymentsAndStoresFragmentApi | null,
     pickupPlaceIdentifier: string | null | undefined,
+    packeteryPickupPoint: ListedStoreFragmentApi | null,
 ): ListedStoreFragmentApi | null => {
     if (transport === null || pickupPlaceIdentifier === null) {
         return null;
     }
 
     if (transport.transportType.code === 'packetery') {
-        return getPacketeryCookie();
+        return packeteryPickupPoint;
     }
 
     const pickupPlace = transport.stores?.edges?.find(

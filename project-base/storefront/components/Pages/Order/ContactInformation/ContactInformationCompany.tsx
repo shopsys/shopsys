@@ -8,7 +8,7 @@ import { ContactInformation } from 'store/zustand/slices/createContactInformatio
 import { usePersistStore } from 'store/zustand/usePersistStore';
 
 export const ContactInformationCompany: FC = () => {
-    const updateContactInformationState = usePersistStore((s) => s.updateContactInformationState);
+    const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<ContactInformation>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
@@ -38,7 +38,7 @@ export const ContactInformationCompany: FC = () => {
                     required: true,
                     type: 'text',
                     autoComplete: 'organization',
-                    onBlur: () => updateContactInformationState({ companyName: companyNameValue }),
+                    onBlur: () => updateContactInformation({ companyName: companyNameValue }),
                 }}
             />
             <TextInputControlled
@@ -54,7 +54,7 @@ export const ContactInformationCompany: FC = () => {
                     label: formMeta.fields.companyNumber.label,
                     required: true,
                     type: 'text',
-                    onBlur: () => updateContactInformationState({ companyNumber: companyNumberValue }),
+                    onBlur: () => updateContactInformation({ companyNumber: companyNumberValue }),
                 }}
             />
             <TextInputControlled
@@ -70,7 +70,7 @@ export const ContactInformationCompany: FC = () => {
                     label: formMeta.fields.companyTaxNumber.label,
                     required: false,
                     type: 'text',
-                    onBlur: () => updateContactInformationState({ companyTaxNumber: companyTaxNumberValue }),
+                    onBlur: () => updateContactInformation({ companyTaxNumber: companyTaxNumberValue }),
                 }}
             />
         </>

@@ -3,7 +3,6 @@ import { Heading } from 'components/Basic/Heading/Heading';
 import { Button } from 'components/Forms/Button/Button';
 import { ToggleSwitchControlled } from 'components/Forms/ToggleSwitch/ToggleSwitchControlled';
 import { useCookiesArticleUrlQueryApi } from 'graphql/generated';
-import { setUserConsentCookie } from 'helpers/cookies/setUserConsentCookie';
 import { onGtmConsentUpdateEventHandler } from 'helpers/gtm/eventHandlers';
 import { getGtmConsentInfo } from 'helpers/gtm/gtm';
 import { useQueryError } from 'hooks/graphQl/useQueryError';
@@ -11,6 +10,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslatio
 import Trans from 'next-translate/Trans';
 import { useCallback } from 'react';
 import { FormProvider } from 'react-hook-form';
+import { usePersistStore } from 'store/zustand/usePersistStore';
 import { UserConsentFormType } from 'types/form';
 
 type UserConsentFormProps = {
@@ -23,16 +23,18 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
     const formMeta = useUserConsentFormMeta();
     const [{ data: cookiesArticleUrlData }] = useQueryError(useCookiesArticleUrlQueryApi());
     const cookiesArticleUrl = cookiesArticleUrlData?.cookiesArticle?.slug;
+    const userConsent = usePersistStore((store) => store.userConsent);
+    const setUserConsent = usePersistStore((store) => store.setUserConsent);
 
     const saveCookieChoices = useCallback(() => {
         const formValues = formProviderMethods.getValues();
-        setUserConsentCookie(formValues);
-        onGtmConsentUpdateEventHandler(getGtmConsentInfo());
+        setUserConsent(formValues);
+        onGtmConsentUpdateEventHandler(getGtmConsentInfo(userConsent));
 
         if (onSetCallback) {
             onSetCallback();
         }
-    }, [formProviderMethods, onSetCallback]);
+    }, [formProviderMethods, onSetCallback, setUserConsent, userConsent]);
 
     const acceptAllCookieChoices = useCallback(() => {
         for (const key in formMeta.fields) {

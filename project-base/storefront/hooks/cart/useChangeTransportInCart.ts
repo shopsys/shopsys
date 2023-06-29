@@ -16,7 +16,7 @@ export type ChangeTransportHandler = (
 
 export const useChangeTransportInCart = (): [ChangeTransportHandler, boolean] => {
     const [{ fetching }, changeTransportInCart] = useChangeTransportInCartMutationApi();
-    const cartUuid = usePersistStore((s) => s.cartUuid);
+    const cartUuid = usePersistStore((store) => store.cartUuid);
     const t = useTypedTranslationFunction();
     const { gtmCartInfo } = useGtmCartInfo();
 

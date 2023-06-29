@@ -8,7 +8,7 @@ export const useHandleContactInformationNonTextChanges = (
     control: Control<ContactInformation>,
     formMeta: ReturnType<typeof useContactInformationFormMeta>,
 ): void => {
-    const updateContactInformationState = usePersistStore((s) => s.updateContactInformationState);
+    const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const [
         customerValue,
         countryValue,
@@ -27,22 +27,22 @@ export const useHandleContactInformationNonTextChanges = (
     });
 
     useEffect(() => {
-        updateContactInformationState({ customer: customerValue });
-    }, [customerValue, updateContactInformationState]);
+        updateContactInformation({ customer: customerValue });
+    }, [customerValue, updateContactInformation]);
 
     useEffect(() => {
-        updateContactInformationState({ country: countryValue });
-    }, [countryValue, updateContactInformationState]);
+        updateContactInformation({ country: countryValue });
+    }, [countryValue, updateContactInformation]);
 
     useEffect(() => {
-        updateContactInformationState({ differentDeliveryAddress: differentDeliveryAddressValue });
-    }, [differentDeliveryAddressValue, updateContactInformationState]);
+        updateContactInformation({ differentDeliveryAddress: differentDeliveryAddressValue });
+    }, [differentDeliveryAddressValue, updateContactInformation]);
 
     useEffect(() => {
-        updateContactInformationState({ deliveryCountry: deliveryCountryValue });
-    }, [deliveryCountryValue, updateContactInformationState]);
+        updateContactInformation({ deliveryCountry: deliveryCountryValue });
+    }, [deliveryCountryValue, updateContactInformation]);
 
     useEffect(() => {
-        updateContactInformationState({ newsletterSubscription: newsletterSubscriptionValue });
-    }, [updateContactInformationState, newsletterSubscriptionValue]);
+        updateContactInformation({ newsletterSubscription: newsletterSubscriptionValue });
+    }, [updateContactInformation, newsletterSubscriptionValue]);
 };

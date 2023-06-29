@@ -30,7 +30,7 @@ const TEST_IDENTIFIER = 'blocks-popup-login';
 
 export const Login: FC<LoginProps> = ({ defaultEmail }) => {
     const t = useTypedTranslationFunction();
-    const cartUuid = usePersistStore((s) => s.cartUuid);
+    const cartUuid = usePersistStore((store) => store.cartUuid);
     const { url } = useDomainConfig();
     const [resetPasswordUrl, registrationUrl] = getInternationalizedStaticUrls(
         ['/reset-password', '/registration'],

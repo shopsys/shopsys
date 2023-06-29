@@ -1,7 +1,6 @@
 import { PacketeryExtendedPoint, PacketeryPickFunction } from './types';
 import { ListedStoreFragmentApi } from 'graphql/generated';
 import { canUseDom } from 'helpers/misc/canUseDom';
-import nookies from 'nookies';
 
 /**
  * @see https://docs.packetery.com/01-pickup-point-selection/02-widget-v6.html
@@ -56,26 +55,4 @@ export const mapPacketeryExtendedPoint = (packeteryExtendedPoint: PacketeryExten
  */
 const parsePacketeryOpeningHours = (openingHours: string) => {
     return openingHours.replaceAll(/<(\/?strong\s?(style='color: red;')?)>/g, '');
-};
-
-export const getPacketeryCookie = (): ListedStoreFragmentApi | null => {
-    const cookies = nookies.get();
-    if ('packeteryPickupPoint' in cookies) {
-        return JSON.parse(cookies.packeteryPickupPoint);
-    }
-
-    return null;
-};
-
-export const setPacketeryCookie = (mappedPacketeryPoint: ListedStoreFragmentApi): void => {
-    nookies.set(undefined, 'packeteryPickupPoint', JSON.stringify(mappedPacketeryPoint), {
-        path: '/',
-        maxAge: 60 * 60 * 24 * 30,
-    });
-};
-
-export const removePacketeryCookie = (): void => {
-    nookies.destroy(undefined, 'packeteryPickupPoint', {
-        path: '/',
-    });
 };

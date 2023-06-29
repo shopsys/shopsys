@@ -19,7 +19,7 @@ export function fillBillingAdressInThirdStep(street, city, postCode) {
     cy.get('#contact-information-form-city').should('have.attr', 'placeholder', placeholder.city).type(city);
     cy.get('#contact-information-form-postcode')
         .should('have.attr', 'placeholder', placeholder.postCode)
-        .type(postCode, { force: true });
+        .type(postCode);
 }
 
 export function clickOnSendOrderButton() {

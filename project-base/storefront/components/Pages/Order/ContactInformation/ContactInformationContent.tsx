@@ -26,7 +26,7 @@ import { twJoin } from 'tailwind-merge';
 
 export const ContactInformationContent: FC = () => {
     const t = useTypedTranslationFunction();
-    const updateContactInformationState = usePersistStore((s) => s.updateContactInformationState);
+    const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const formProviderMethods = useFormContext<ContactInformation>();
     const { trigger, formState } = formProviderMethods;
     const formMeta = useContactInformationFormMeta(formProviderMethods);
@@ -93,7 +93,7 @@ export const ContactInformationContent: FC = () => {
                     required: true,
                     type: 'email',
                     autoComplete: 'email',
-                    onBlur: () => updateContactInformationState({ email: emailValue }),
+                    onBlur: () => updateContactInformation({ email: emailValue }),
                 }}
             />
             {isEmailAlreadyRegistered && !isUserLoggedIn && (

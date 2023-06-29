@@ -1,13 +1,13 @@
-import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
 import { useShopsysForm } from 'hooks/forms/useShopsysForm';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
+import { usePersistStore } from 'store/zustand/usePersistStore';
 import { UserConsentFormType } from 'types/form';
 
 export const useUserConsentForm = (): [UseFormReturn<UserConsentFormType>, UserConsentFormType] => {
-    const userContentCookie = getUserConsentCookie();
+    const userConsent = usePersistStore((store) => store.userConsent);
 
-    const defaultValues = userContentCookie ?? {
+    const defaultValues = userConsent ?? {
         statistics: false,
         marketing: false,
         preferences: false,

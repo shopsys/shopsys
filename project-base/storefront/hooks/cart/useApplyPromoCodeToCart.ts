@@ -13,7 +13,7 @@ type ApplyPromoCodeHandler = (
 
 export const useApplyPromoCodeToCart = (): [ApplyPromoCodeHandler, boolean] => {
     const [{ fetching }, applyPromoCodeToCart] = useApplyPromoCodeToCartMutationApi();
-    const cartUuid = usePersistStore((s) => s.cartUuid);
+    const cartUuid = usePersistStore((store) => store.cartUuid);
     const t = useTypedTranslationFunction();
 
     const applyPromoCodeHandler = useCallback<ApplyPromoCodeHandler>(

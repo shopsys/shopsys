@@ -24,7 +24,7 @@ export const Cart: FC = () => {
     const { cart, isCartEmpty, isInitiallyLoaded } = useCurrentCart();
     const { url } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
-    const loginLoading = usePersistStore((s) => s.loginLoading);
+    const loginLoading = usePersistStore((store) => store.loginLoading);
     const [removeItemFromCart, isRemovingItem] = useRemoveFromCart(GtmProductListNameType.cart);
 
     return (

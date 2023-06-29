@@ -27,7 +27,9 @@ import { useCurrentUserContactInformation } from 'hooks/user/useCurrentUserConta
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { useMemo } from 'react';
 import { ContactInformation } from 'store/zustand/slices/createContactInformationSlice';
+import { usePersistStore } from 'store/zustand/usePersistStore';
 import { CurrentCustomerType } from 'types/customer';
+import { UserConsentFormType } from 'types/form';
 import { FriendlyUrlPageType } from 'types/friendlyUrl';
 import {
     GtmEventType,
@@ -246,6 +248,7 @@ export const useGtmStaticPageViewEvent = (
     const domainConfig = useDomainConfig();
     const userContactInformation = useCurrentUserContactInformation();
     const { user } = useCurrentUserData();
+    const userConsent = usePersistStore((store) => store.userConsent);
 
     return useMemo(
         () =>
@@ -256,8 +259,9 @@ export const useGtmStaticPageViewEvent = (
                 user,
                 userContactInformation,
                 domainConfig,
+                userConsent,
             ),
-        [gtmCartInfo, domainConfig, isCartLoaded, pageType, user, userContactInformation, breadcrumbs],
+        [pageType, breadcrumbs, gtmCartInfo, isCartLoaded, user, userContactInformation, domainConfig, userConsent],
     );
 };
 
@@ -268,6 +272,7 @@ export const useGtmFriendlyPageViewEvent = (
     const domainConfig = useDomainConfig();
     const userContactInformation = useCurrentUserContactInformation();
     const { user } = useCurrentUserData();
+    const userConsent = usePersistStore((store) => store.userConsent);
 
     return useMemo(
         () =>
@@ -278,24 +283,26 @@ export const useGtmFriendlyPageViewEvent = (
                 user,
                 userContactInformation,
                 domainConfig,
+                userConsent,
             ),
-        [gtmCartInfo, friendlyUrlPageData, domainConfig, isCartLoaded, userContactInformation, user],
+        [friendlyUrlPageData, gtmCartInfo, isCartLoaded, user, userContactInformation, domainConfig, userConsent],
     );
 };
 
-export const getGtmPageViewEvent = (
+const getGtmPageViewEvent = (
     pageInfo: GtmPageInfoType,
     gtmCartInfo: GtmCartInfoType | null,
     isCartLoaded: boolean,
     user: CurrentCustomerType | null | undefined,
     userContactInformation: ContactInformation,
     domainConfig: DomainConfigType,
+    userConsent: UserConsentFormType | null,
 ): GtmPageViewEventType => ({
     event: GtmEventType.page_view,
     page: pageInfo,
     user: getGtmUserInfo(user, userContactInformation),
     device: getGtmDeviceType(),
-    consent: getGtmConsentInfo(),
+    consent: getGtmConsentInfo(userConsent),
     currencyCode: domainConfig.currencyCode,
     language: domainConfig.defaultLocale,
     cart: gtmCartInfo,

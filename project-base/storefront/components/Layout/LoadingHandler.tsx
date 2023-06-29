@@ -5,8 +5,8 @@ import { usePersistStore } from 'store/zustand/usePersistStore';
 
 export const LoadingHandler: FC = () => {
     const t = useTypedTranslationFunction();
-    const loginLoading = usePersistStore((s) => s.loginLoading);
-    const updateGeneralState = usePersistStore((s) => s.updateLoginLoadingState);
+    const loginLoading = usePersistStore((store) => store.loginLoading);
+    const updateGeneralState = usePersistStore((store) => store.updateLoginLoadingState);
 
     useEffect(() => {
         if (loginLoading === 'not-loading') {

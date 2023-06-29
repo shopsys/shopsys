@@ -15,7 +15,7 @@ import { ContactInformation } from 'store/zustand/slices/createContactInformatio
 import { usePersistStore } from 'store/zustand/usePersistStore';
 
 export const ContactInformationAddress: FC = () => {
-    const updateContactInformationState = usePersistStore((s) => s.updateContactInformationState);
+    const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<ContactInformation>();
     const { setValue } = formProviderMethods;
@@ -54,7 +54,7 @@ export const ContactInformationAddress: FC = () => {
                         required: true,
                         type: 'text',
                         autoComplete: 'street-address',
-                        onBlur: (event) => updateContactInformationState({ street: event.currentTarget.value }),
+                        onBlur: (event) => updateContactInformation({ street: event.currentTarget.value }),
                     }}
                 />
             </FormLine>
@@ -69,7 +69,7 @@ export const ContactInformationAddress: FC = () => {
                         required: true,
                         type: 'text',
                         autoComplete: 'address-level2',
-                        onBlur: (event) => updateContactInformationState({ city: event.currentTarget.value }),
+                        onBlur: (event) => updateContactInformation({ city: event.currentTarget.value }),
                     }}
                 />
                 <TextInputControlled
@@ -86,7 +86,7 @@ export const ContactInformationAddress: FC = () => {
                         required: true,
                         type: 'text',
                         autoComplete: 'postal-code',
-                        onBlur: (event) => updateContactInformationState({ postcode: event.currentTarget.value }),
+                        onBlur: (event) => updateContactInformation({ postcode: event.currentTarget.value }),
                     }}
                 />
             </FormColumn>

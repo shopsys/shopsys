@@ -56,18 +56,19 @@ const defaultContactInformation: ContactInformation = {
     note: '',
 };
 
-export type ContactInformationSlice = ContactInformation & {
-    updateContactInformationState: (value: Partial<ContactInformationSlice>) => void;
-    resetContactInformationState: () => void;
+export type ContactInformationSlice = {
+    contactInformation: ContactInformation;
+    updateContactInformation: (value: Partial<ContactInformation>) => void;
+    resetContactInformation: () => void;
 };
 
 export const createContactInformationSlice: StateCreator<ContactInformationSlice> = (set) => ({
-    ...defaultContactInformation,
+    contactInformation: defaultContactInformation,
 
-    updateContactInformationState: (value) => {
-        set(value);
+    updateContactInformation: (value) => {
+        set((store) => ({ ...store, contactInformation: { ...store.contactInformation, ...value } }));
     },
-    resetContactInformationState: () => {
-        set(defaultContactInformation);
+    resetContactInformation: () => {
+        set({ contactInformation: defaultContactInformation });
     },
 });

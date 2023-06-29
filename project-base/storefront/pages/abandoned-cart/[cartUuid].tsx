@@ -10,7 +10,7 @@ type AbandonedCartPageProps = { cartUuid?: string };
 const AbandonedCartPage: FC<AbandonedCartPageProps> = ({ cartUuid }) => {
     const router = useRouter();
     const { url } = useDomainConfig();
-    const updateUserState = usePersistStore((s) => s.updateUserState);
+    const updateUserState = usePersistStore((store) => store.updateUserState);
 
     useEffect(() => {
         if (typeof cartUuid === 'string') {

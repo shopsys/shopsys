@@ -26,7 +26,7 @@ const TEST_IDENTIFIER = 'pages-login-submit';
 
 export const LoginContent: FC<LoginContentProps> = ({ breadcrumbs }) => {
     const t = useTypedTranslationFunction();
-    const cartUuid = usePersistStore((s) => s.cartUuid);
+    const cartUuid = usePersistStore((store) => store.cartUuid);
     const { url } = useDomainConfig();
     const router = useRouter();
     const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: '', password: '' });

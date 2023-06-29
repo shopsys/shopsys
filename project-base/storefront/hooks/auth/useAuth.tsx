@@ -34,8 +34,8 @@ export const useAuth = (): { login: typeof login; logout: typeof logout } => {
     const [, loginMutation] = useLoginApi();
     const [, logoutMutation] = useLogoutApi();
     const t = useTypedTranslationFunction();
-    const updateUserState = usePersistStore((s) => s.updateUserState);
-    const updateGeneralState = usePersistStore((s) => s.updateLoginLoadingState);
+    const updateUserState = usePersistStore((store) => store.updateUserState);
+    const updateGeneralState = usePersistStore((store) => store.updateLoginLoadingState);
 
     const router = useRouter();
 

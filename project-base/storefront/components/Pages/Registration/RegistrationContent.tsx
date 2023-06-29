@@ -1,8 +1,8 @@
 import { Address } from './Address';
 import { Company } from './Company';
-import { useRegistrationForm, useRegistrationFormMeta } from './formMeta';
 import { Password } from './Password';
 import { User } from './User';
+import { useRegistrationForm, useRegistrationFormMeta } from './formMeta';
 import { Button } from 'components/Forms/Button/Button';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form } from 'components/Forms/Form/Form';
@@ -32,7 +32,7 @@ type RegistrationContentProps = {
 export const RegistrationContent: FC<RegistrationContentProps> = ({ breadcrumbs }) => {
     const t = useTypedTranslationFunction();
     const [, register] = useRegistrationMutationApi();
-    const cartUuid = usePersistStore((s) => s.cartUuid);
+    const cartUuid = usePersistStore((store) => store.cartUuid);
     const [formProviderMethods, defaultValues] = useRegistrationForm();
     const formMeta = useRegistrationFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);

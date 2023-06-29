@@ -22,7 +22,7 @@ import { GtmPageType } from 'types/gtm/enums';
 
 const TransportAndPaymentPage: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
-    const cartUuid = usePersistStore((s) => s.cartUuid);
+    const cartUuid = usePersistStore((store) => store.cartUuid);
     const { isUserLoggedIn } = useCurrentUserData();
     const [{ data: transportsData }] = useQueryError(
         useTransportsQueryApi({ variables: { cartUuid }, requestPolicy: 'cache-and-network' }),

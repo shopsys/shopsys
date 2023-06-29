@@ -17,7 +17,7 @@ type ProductsComparisonProps = {
 export const ProductsComparison: FC<ProductsComparisonProps> = ({ breadcrumb }) => {
     const t = useTypedTranslationFunction();
 
-    const productsComparisonUuid = usePersistStore((s) => s.productsComparisonUuid);
+    const productsComparisonUuid = usePersistStore((store) => store.productsComparisonUuid);
     const [result] = useComparisonQueryApi({ variables: { comparisonUuid: productsComparisonUuid } });
     const comparedProducts = result.data?.comparison?.products ?? [];
     const isLoading = result.fetching;

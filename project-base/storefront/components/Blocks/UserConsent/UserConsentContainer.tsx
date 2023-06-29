@@ -1,17 +1,18 @@
 import { UserConsentForm } from './UserConsentForm';
-import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
 import { useCallback, useState } from 'react';
+import { usePersistStore } from 'store/zustand/usePersistStore';
 
 const TEST_IDENTIFIER = 'blocks-userconsent';
 
 export const UserConsentContainer: FC = () => {
     const [isUserConsentVisible, setUserConsentVisibility] = useState(true);
+    const userConsent = usePersistStore((store) => store.userConsent);
 
     const onSetCallback = useCallback(() => {
-        if (getUserConsentCookie() !== null) {
+        if (userConsent) {
             setUserConsentVisibility(false);
         }
-    }, []);
+    }, [userConsent]);
 
     if (!isUserConsentVisible) {
         return null;

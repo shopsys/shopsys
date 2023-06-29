@@ -23,7 +23,7 @@ import { usePersistStore } from 'store/zustand/usePersistStore';
 import { SelectOptionType } from 'types/selectOptions';
 
 export const ContactInformationDeliveryAddress: FC = () => {
-    const updateContactInformationState = usePersistStore((s) => s.updateContactInformationState);
+    const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const t = useTypedTranslationFunction();
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
@@ -70,7 +70,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                 setValue(formMeta.fields.deliveryCity.name, pickupPlace.city);
                 setValue(formMeta.fields.deliveryPostcode.name, pickupPlace.postcode);
                 setValue(formMeta.fields.deliveryCountry.name, selectedCountryOption);
-                updateContactInformationState({ ...pickupPlace, country: selectedCountryOption });
+                updateContactInformation({ ...pickupPlace, country: selectedCountryOption });
             }
         }
     }, [
@@ -87,7 +87,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
         formMeta.fields.deliveryCity.name,
         formMeta.fields.deliveryPostcode.name,
         formMeta.fields.deliveryCountry.name,
-        updateContactInformationState,
+        updateContactInformation,
     ]);
 
     useEffect(() => {
@@ -233,7 +233,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                     type: 'text',
                                                     autoComplete: 'given-name',
                                                     onBlur: (event) => {
-                                                        updateContactInformationState({
+                                                        updateContactInformation({
                                                             deliveryFirstName: event.currentTarget.value,
                                                         });
                                                     },
@@ -254,7 +254,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                     type: 'text',
                                                     autoComplete: 'family-name',
                                                     onBlur: (event) =>
-                                                        updateContactInformationState({
+                                                        updateContactInformation({
                                                             deliveryLastName: event.currentTarget.value,
                                                         }),
                                                 }}
@@ -274,7 +274,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                 type: 'text',
                                                 autoComplete: 'organization',
                                                 onBlur: (event) =>
-                                                    updateContactInformationState({
+                                                    updateContactInformation({
                                                         deliveryCompanyName: event.currentTarget.value,
                                                     }),
                                             }}
@@ -294,7 +294,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                 type: 'tel',
                                                 autoComplete: 'tel',
                                                 onBlur: (event) =>
-                                                    updateContactInformationState({
+                                                    updateContactInformation({
                                                         deliveryTelephone: event.currentTarget.value,
                                                     }),
                                             }}
@@ -316,7 +316,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                         type: 'text',
                                                         autoComplete: 'street-address',
                                                         onBlur: (event) =>
-                                                            updateContactInformationState({
+                                                            updateContactInformation({
                                                                 deliveryStreet: event.currentTarget.value,
                                                             }),
                                                     }}
@@ -335,7 +335,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                             type: 'text',
                                                             autoComplete: 'address-level2',
                                                             onBlur: (event) =>
-                                                                updateContactInformationState({
+                                                                updateContactInformation({
                                                                     deliveryCity: event.currentTarget.value,
                                                                 }),
                                                         }}
@@ -358,7 +358,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                             type: 'text',
                                                             autoComplete: 'postal-code',
                                                             onBlur: (event) =>
-                                                                updateContactInformationState({
+                                                                updateContactInformation({
                                                                     deliveryPostcode: event.currentTarget.value,
                                                                 }),
                                                         }}
@@ -375,7 +375,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                                     options={countriesAsSelectOptions}
                                                                     onChange={(...data) => {
                                                                         field.onChange(...data);
-                                                                        updateContactInformationState({
+                                                                        updateContactInformation({
                                                                             deliveryCountry:
                                                                                 data[0] as SelectOptionType,
                                                                         });

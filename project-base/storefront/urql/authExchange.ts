@@ -1,8 +1,8 @@
-import { CombinedError, makeOperation, Operation, OperationContext, OperationResult, TypedDocumentNode } from 'urql';
 import { DocumentNode } from 'graphql';
 import { RefreshTokensDocumentApi } from 'graphql/generated';
 import { getTokensFromCookies, removeTokensFromCookies, setTokensToCookie } from 'helpers/auth/tokens';
 import { GetServerSidePropsContext } from 'next';
+import { CombinedError, makeOperation, Operation, OperationContext, OperationResult, TypedDocumentNode } from 'urql';
 import { TokenType } from 'urql/types';
 
 const isRefreshTokenMutation = (operation: Operation) => {

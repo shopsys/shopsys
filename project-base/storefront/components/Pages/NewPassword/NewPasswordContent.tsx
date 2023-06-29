@@ -40,7 +40,7 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ breadcrumbs, e
     const formMeta = useRecoveryPasswordFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useErrorPopupVisibility(formProviderMethods);
     const { login } = useAuth();
-    const cartUuid = usePersistStore((s) => s.cartUuid);
+    const cartUuid = usePersistStore((store) => store.cartUuid);
     const {
         fieldState: { invalid: isNewPasswordInvalid },
         field: { value: newPasswordValue },

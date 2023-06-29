@@ -27,8 +27,8 @@ export const useAddToCart = (
     const { isUserLoggedIn } = useCurrentUserData();
     const { cart } = useCurrentCart();
     const domainConfig = useDomainConfig();
-    const cartUuid = usePersistStore((s) => s.cartUuid);
-    const updateUserState = usePersistStore((s) => s.updateUserState);
+    const cartUuid = usePersistStore((store) => store.cartUuid);
+    const updateUserState = usePersistStore((store) => store.updateUserState);
 
     const addToCartAction = useCallback<AddToCartAction>(
         async (productUuid, quantity, listIndex, isAbsoluteQuantity = false) => {

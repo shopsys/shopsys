@@ -15,7 +15,7 @@ import {
 } from 'graphql/generated';
 import { logException } from 'helpers/errors/logException';
 import { getFirstImageOrNull } from 'helpers/mappers/image';
-import { mapPacketeryExtendedPoint, packeteryPick, removePacketeryCookie, setPacketeryCookie } from 'helpers/packetery';
+import { mapPacketeryExtendedPoint, packeteryPick } from 'helpers/packetery';
 import { PacketeryExtendedPoint } from 'helpers/packetery/types';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
 import { ChangeTransportHandler } from 'hooks/cart/useChangeTransportInCart';
@@ -25,6 +25,7 @@ import { useEffectOnce } from 'hooks/ui/useEffectOnce';
 import { useDomainConfig } from 'hooks/useDomainConfig';
 import getConfig from 'next/config';
 import { useCallback, useState } from 'react';
+import { usePersistStore } from 'store/zustand/usePersistStore';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -58,6 +59,8 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     );
     const { transport, pickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
     const [getGoPaySwiftsResult] = useQueryError(useGoPaySwiftsQueryApi({ variables: { currencyCode } }));
+    const setPacketeryPickupPoint = usePersistStore((store) => store.setPacketeryPickupPoint);
+    const clearPacketeryPickupPoint = usePersistStore((store) => store.clearPacketeryPickupPoint);
 
     const isPickupPlaceSelected = pickupPlace !== null;
 
@@ -68,11 +71,11 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
         ) => {
             if (packeteryPoint !== null) {
                 const mappedPacketeryPoint = mapPacketeryExtendedPoint(packeteryPoint);
-                setPacketeryCookie(mappedPacketeryPoint);
+                setPacketeryPickupPoint(mappedPacketeryPoint);
                 changeTransportInCart(packeteryTransport.uuid, mappedPacketeryPoint);
             }
         },
-        [changeTransportInCart],
+        [changeTransportInCart, setPacketeryPickupPoint],
     );
 
     const openPacketeryPopup = useCallback(
@@ -104,10 +107,10 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                 return;
             }
 
-            removePacketeryCookie();
+            clearPacketeryPickupPoint();
             setPreselectedTransport(newTransport);
         },
-        [openPacketeryPopup],
+        [clearPacketeryPickupPoint, openPacketeryPopup],
     );
 
     const handlePaymentChange = useCallback(
@@ -185,7 +188,7 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     const resetAll = async () => {
         await handleTransportChange(null);
         await handlePaymentChange(null);
-        removePacketeryCookie();
+        clearPacketeryPickupPoint();
     };
 
     const onChangePickupPlaceHandler = (selectedPickupPlace: ListedStoreFragmentApi | null) => {
@@ -193,14 +196,14 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
             changeTransportInCart(preSelectedTransport.uuid, selectedPickupPlace);
         } else {
             handleTransportChange(null);
-            removePacketeryCookie();
+            clearPacketeryPickupPoint();
         }
 
         setPreselectedTransport(null);
     };
 
     const onClosePickupPlacePopupHandler = () => {
-        removePacketeryCookie();
+        clearPacketeryPickupPoint();
         setPreselectedTransport(null);
     };
 

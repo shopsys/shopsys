@@ -5,7 +5,7 @@ import { usePersistStore } from 'store/zustand/usePersistStore';
 
 export const useCurrentUserContactInformation = (): ContactInformation => {
     const currentUserContactInformationApiData = useCurrentCustomerContactInformationQuery();
-    const currentUserContactInformationFromStore = usePersistStore();
+    const currentUserContactInformationFromStore = usePersistStore((store) => store.contactInformation);
 
     const currentUserContactInformationFromApi = useMemo<Partial<ContactInformation>>(
         () => ({

@@ -9,7 +9,6 @@ import {
     CartFragmentApi,
     CategoryDetailFragmentApi,
 } from 'graphql/generated';
-import { getUserConsentCookie } from 'helpers/cookies/getUserConsentCookie';
 import { DomainConfigType } from 'helpers/domain/domain';
 import { getInternationalizedStaticUrls } from 'helpers/localization/getInternationalizedStaticUrls';
 import { canUseDom } from 'helpers/misc/canUseDom';
@@ -19,6 +18,7 @@ import { useMemo } from 'react';
 import { ContactInformation } from 'store/zustand/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 import { CurrentCustomerType, CustomerTypeEnum } from 'types/customer';
+import { UserConsentFormType } from 'types/form';
 import { FriendlyUrlPageType } from 'types/friendlyUrl';
 import {
     GtmConsent,
@@ -43,7 +43,7 @@ import {
 
 export const useGtmCartInfo = (): { gtmCartInfo: GtmCartInfoType | null; isCartLoaded: boolean } => {
     const { cart, isInitiallyLoaded, promoCode } = useCurrentCart();
-    const cartUuid = usePersistStore((s) => s.cartUuid);
+    const cartUuid = usePersistStore((store) => store.cartUuid);
     const { isUserLoggedIn } = useCurrentUserData();
     const domainConfig = useDomainConfig();
 
@@ -202,15 +202,11 @@ export const gtmSafePushEvent = (event: GtmEventInterface<GtmEventType, unknown>
     }
 };
 
-export const getGtmConsentInfo = (): GtmConsentInfoType => {
-    const userConsentCookie = getUserConsentCookie();
-
-    return {
-        marketing: userConsentCookie?.marketing ? GtmConsent.granted : GtmConsent.denied,
-        statistics: userConsentCookie?.statistics ? GtmConsent.granted : GtmConsent.denied,
-        preferences: userConsentCookie?.preferences ? GtmConsent.granted : GtmConsent.denied,
-    };
-};
+export const getGtmConsentInfo = (userConsent: UserConsentFormType | null): GtmConsentInfoType => ({
+    marketing: userConsent?.marketing ? GtmConsent.granted : GtmConsent.denied,
+    statistics: userConsent?.statistics ? GtmConsent.granted : GtmConsent.denied,
+    preferences: userConsent?.preferences ? GtmConsent.granted : GtmConsent.denied,
+});
 
 export const getGtmUserInfo = (
     currentSignedInCustomer: CurrentCustomerType | null | undefined,

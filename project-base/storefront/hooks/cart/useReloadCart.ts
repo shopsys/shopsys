@@ -14,7 +14,7 @@ export const useReloadCart = (): void => {
     const router = useRouter();
     const slug = useMemo(() => getUrlWithoutGetParameters(router.asPath), [router.asPath]);
     const { isUserLoggedIn } = useCurrentUserData();
-    const cartUuid = usePersistStore((s) => s.cartUuid);
+    const cartUuid = usePersistStore((store) => store.cartUuid);
 
     useEffect(() => {
         if (cartUuid !== null || isUserLoggedIn) {

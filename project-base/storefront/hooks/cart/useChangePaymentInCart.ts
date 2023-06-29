@@ -16,7 +16,7 @@ export type ChangePaymentHandler = (
 
 export const useChangePaymentInCart = (): [ChangePaymentHandler, boolean] => {
     const [{ fetching }, changePaymentInCart] = useChangePaymentInCartMutationApi();
-    const cartUuid = usePersistStore((s) => s.cartUuid);
+    const cartUuid = usePersistStore((store) => store.cartUuid);
     const t = useTypedTranslationFunction();
     const { gtmCartInfo } = useGtmCartInfo();
 

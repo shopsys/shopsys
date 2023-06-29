@@ -9,7 +9,7 @@ import { ContactInformation } from 'store/zustand/slices/createContactInformatio
 import { usePersistStore } from 'store/zustand/usePersistStore';
 
 export const ContactInformationUser: FC = () => {
-    const updateContactInformationState = usePersistStore((s) => s.updateContactInformationState);
+    const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext<ContactInformation>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
@@ -31,7 +31,7 @@ export const ContactInformationUser: FC = () => {
                     required: true,
                     type: 'tel',
                     autoComplete: 'tel',
-                    onBlur: (event) => updateContactInformationState({ telephone: event.currentTarget.value }),
+                    onBlur: (event) => updateContactInformation({ telephone: event.currentTarget.value }),
                 }}
             />
             <FormColumn className="lg:w-[calc(65%+0.75rem)]">
@@ -49,7 +49,7 @@ export const ContactInformationUser: FC = () => {
                         required: true,
                         type: 'text',
                         autoComplete: 'given-name',
-                        onBlur: (event) => updateContactInformationState({ firstName: event.currentTarget.value }),
+                        onBlur: (event) => updateContactInformation({ firstName: event.currentTarget.value }),
                     }}
                 />
                 <TextInputControlled
@@ -66,7 +66,7 @@ export const ContactInformationUser: FC = () => {
                         required: true,
                         type: 'text',
                         autoComplete: 'family-name',
-                        onBlur: (event) => updateContactInformationState({ lastName: event.currentTarget.value }),
+                        onBlur: (event) => updateContactInformation({ lastName: event.currentTarget.value }),
                     }}
                 />
             </FormColumn>

@@ -47,7 +47,10 @@ import { GtmMessageOriginType, GtmPageType } from 'types/gtm/enums';
 const ContactInformationPage: FC<ServerSidePropsType> = () => {
     const router = useRouter();
     const domainConfig = useDomainConfig();
-    const { cartUuid, updateUserState, resetContactInformationState, customer } = usePersistStore();
+    const cartUuid = usePersistStore((store) => store.cartUuid);
+    const updateUserState = usePersistStore((store) => store.updateUserState);
+    const resetContactInformation = usePersistStore((store) => store.resetContactInformation);
+    const customer = usePersistStore((store) => store.contactInformation.customer);
     const [transportAndPaymentUrl, orderConfirmationUrl] = getInternationalizedStaticUrls(
         ['/order/transport-and-payment', '/order-confirmation'],
         domainConfig.url,
@@ -175,7 +178,7 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
             updateUserState({
                 cartUuid: null,
             });
-            resetContactInformationState();
+            resetContactInformation();
 
             router.replace(
                 {
