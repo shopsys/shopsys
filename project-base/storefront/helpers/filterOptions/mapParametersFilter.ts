@@ -8,7 +8,7 @@ export const mapParametersFilter = (parametersFilter: FilterOptionsUrlQueryType 
 
     const parameters = parametersFilter.parameters?.map((parameter) => ({
         ...parameter,
-        values: parameter.values ?? null,
+        values: parameter.values ?? [],
         maximalValue: parameter.maximalValue ?? null,
         minimalValue: parameter.minimalValue ?? null,
     }));

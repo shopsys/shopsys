@@ -1591,7 +1591,7 @@ export type ParameterFilterApi = {
   /** Uuid of filtered parameter */
   parameter: Scalars['Uuid'];
   /** Array of uuids representing parameter values to be filtered by */
-  values: Maybe<Array<Scalars['Uuid']>>;
+  values: Array<Scalars['Uuid']>;
 };
 
 /** Represents parameter filter option */
