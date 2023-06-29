@@ -16,7 +16,7 @@ import { getDomainConfig } from 'helpers/domain/domain';
 import { getFilterOptions } from 'helpers/filterOptions/getFilterOptions';
 import { mapParametersFilter } from 'helpers/filterOptions/mapParametersFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/parseFilterOptionsFromQuery';
-import { getDefaultFilterFromFilterOptions } from 'helpers/filterOptions/seoCategories';
+import { useHandleDefaultFiltersUpdate, useHandleSeoCategorySlugUpdate } from 'helpers/filterOptions/seoCategories';
 import { useGtmFriendlyPageViewEvent } from 'helpers/gtm/eventFactories';
 import { getServerSidePropsWithRedisClient } from 'helpers/misc/getServerSidePropsWithRedisClient';
 import { initServerSideProps } from 'helpers/misc/initServerSideProps';
@@ -37,8 +37,6 @@ import { useSeoTitleWithPagination } from 'hooks/seo/useSeoTitleWithPagination';
 import { useQueryParams } from 'hooks/useQueryParams';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { useSessionStore } from 'store/zustand/useSessionStore';
 import { OperationResult, ssrExchange } from 'urql';
 import { getSlugFromServerSideUrl, getSlugFromUrl } from 'utils/getSlugFromUrl';
 
@@ -46,7 +44,6 @@ const CategoryDetailPage: NextPage = () => {
     const router = useRouter();
     const slug = getUrlWithoutGetParameters(router.asPath);
     const { sort, filter } = useQueryParams();
-    const setDefaultProductFiltersMap = useSessionStore((s) => s.setDefaultProductFiltersMap);
 
     const [{ data: categoryData, fetching }] = useQueryError(
         useCategoryDetailQueryApi({
@@ -58,16 +55,8 @@ const CategoryDetailPage: NextPage = () => {
         }),
     );
 
-    useEffect(() => {
-        setDefaultProductFiltersMap(
-            getDefaultFilterFromFilterOptions(
-                categoryData?.category?.products.productFilterOptions,
-                categoryData?.category?.products.defaultOrderingMode,
-            ),
-        );
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [categoryData?.category?.products.productFilterOptions, categoryData?.category?.products.defaultOrderingMode]);
+    useHandleDefaultFiltersUpdate(categoryData?.category?.products);
+    useHandleSeoCategorySlugUpdate(categoryData?.category);
 
     const seoTitle = useSeoTitleWithPagination(
         categoryData?.category?.products.totalCount,

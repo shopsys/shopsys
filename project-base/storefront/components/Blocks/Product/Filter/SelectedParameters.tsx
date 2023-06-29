@@ -141,10 +141,7 @@ export const SelectedParameters: FC<SelectedParametersProps> = ({ filterOptions 
                                         {selectedValue.text}
                                         <SelectedParametersIcon
                                             onClick={() =>
-                                                updateFilterParameters(
-                                                    selectedParameterOptions?.uuid,
-                                                    selectedValue.uuid,
-                                                )
+                                                updateFilterParameters(selectedParameter.parameter, selectedValue.uuid)
                                             }
                                             dataTestId={TEST_IDENTIFIER + 'remove-' + index}
                                         />
