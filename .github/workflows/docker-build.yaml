@@ -608,7 +608,7 @@ jobs:
                     ./set-urls-for-review.sh setDomainsToDockerCompose
                     docker compose down -v --remove-orphans || true
                     docker compose pull --parallel webserver postgres redis php-fpm elasticsearch smtp-server storefront
-                    docker compose up -d --force-recreate
+                    docker compose up -d --wait --force-recreate
                     ./set-urls-for-review.sh setUrlsToDomainsUrls
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y db-create demo-data error-pages-generate warmup
                     ./set-urls-for-review.sh printDomains
