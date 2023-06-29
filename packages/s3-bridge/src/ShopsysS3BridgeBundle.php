@@ -6,6 +6,6 @@ namespace Shopsys\S3Bridge;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class S3BridgeBundle extends Bundle
+class ShopsysS3BridgeBundle extends Bundle
 {
 }
