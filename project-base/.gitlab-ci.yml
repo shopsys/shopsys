@@ -67,13 +67,16 @@ test:storefront-standards-with-codegen:
     needs:
         - build-storefront
     before_script:
+        - corepack enable
+        - corepack prepare --activate pnpm@8.6.0
+        - pnpm config set store-dir .pnpm-store
         - cp ./app/schema.graphql ./storefront/schema.graphql
         - cd ./storefront
-        - npm ci
     script:
+        - pnpm install --frozen-lockfile
         - ./check-next-public-variable.sh
         - ./check-code-gen.sh
-        - npm run check
+        - pnpm run check
     interruptible: true
 
 tests:functional-and-acceptance:
