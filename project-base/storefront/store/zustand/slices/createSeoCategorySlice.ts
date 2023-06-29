@@ -9,13 +9,19 @@ export type DefaultProductFiltersMapType = {
 };
 
 export type SeoCategorySlice = {
+    originalCategorySlug: string | undefined;
+    setOriginalCategorySlug: (value: string | undefined) => void;
     defaultProductFiltersMap: DefaultProductFiltersMapType;
     setDefaultProductFiltersMap: (value: DefaultProductFiltersMapType) => void;
 };
 
 export const createSeoCategorySlice: StateCreator<SeoCategorySlice> = (set) => ({
     defaultProductFiltersMap: getEmptyDefaultProductFiltersMap(),
+    originalCategorySlug: undefined,
 
+    setOriginalCategorySlug: (value: string | undefined) => {
+        set({ originalCategorySlug: value });
+    },
     setDefaultProductFiltersMap: (value: DefaultProductFiltersMapType) => {
         set({ defaultProductFiltersMap: value });
     },
