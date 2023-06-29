@@ -7,6 +7,7 @@ import {
     getChangedDefaultFiltersAfterMaximumPriceChange,
     getChangedDefaultFiltersAfterMinimumPriceChange,
     getChangedDefaultFiltersAfterParameterChange,
+    getChangedDefaultFiltersAfterSliderParameterChange,
 } from 'helpers/filterOptions/seoCategories';
 import {
     FILTER_QUERY_PARAMETER_NAME,
@@ -137,7 +138,13 @@ export const useQueryParams = () => {
         if (originalCategorySlug) {
             if (!paramaterOptionUuid) {
                 pushQueryFilter(
-                    getChangedDefaultFilters(defaultProductFiltersMap, filter),
+                    getChangedDefaultFiltersAfterSliderParameterChange(
+                        defaultProductFiltersMap,
+                        filter,
+                        parameterUuid,
+                        minimalValue,
+                        maximalValue,
+                    ),
                     originalCategorySlug,
                     defaultProductFiltersMap.sort,
                 );

@@ -8,7 +8,7 @@ import router from 'next/router';
 import { useEffect } from 'react';
 import { DefaultProductFiltersMapType } from 'store/zustand/slices/createSeoCategorySlice';
 import { useSessionStore } from 'store/zustand/useSessionStore';
-import { FilterOptionsUrlQueryType } from 'types/productFilter';
+import { FilterOptionsParameterUrlQueryType, FilterOptionsUrlQueryType } from 'types/productFilter';
 
 export const getEmptyDefaultProductFiltersMap = (): DefaultProductFiltersMapType => ({
     flags: new Set(),
@@ -82,6 +82,33 @@ export const getChangedDefaultFiltersAfterParameterChange = (
     return getChangedDefaultFilters(defaultProductFiltersMap, filter);
 };
 
+export const getChangedDefaultFiltersAfterSliderParameterChange = (
+    defaultProductFiltersMap: DefaultProductFiltersMapType,
+    filter: FilterOptionsUrlQueryType,
+    changedaParameterUuid: string,
+    minimalValue: number | undefined,
+    maximalValue: number | undefined,
+): FilterOptionsUrlQueryType => {
+    const selectedParameters: FilterOptionsParameterUrlQueryType[] = Array.from(defaultProductFiltersMap.parameters)
+        .map(([defaultParameterUuid, defaultParameterValues]) => ({
+            parameter: defaultParameterUuid,
+            values: Array.from(defaultParameterValues),
+        }))
+        .filter(({ values }) => values.length !== 0);
+
+    selectedParameters.push({
+        parameter: changedaParameterUuid,
+        minimalValue,
+        maximalValue,
+    });
+
+    return {
+        ...filter,
+        flags: Array.from(defaultProductFiltersMap.flags),
+        parameters: selectedParameters,
+    };
+};
+
 export const getChangedDefaultFiltersAfterMinimumPriceChange = (
     defaultProductFiltersMap: DefaultProductFiltersMapType,
     filter: FilterOptionsUrlQueryType,
@@ -99,15 +126,15 @@ export const getChangedDefaultFiltersAfterMaximumPriceChange = (
 };
 
 export const getChangedDefaultFilters = (
-    defaultProductFiltersMap: DefaultProductFiltersMapType,
+    updatedProductFiltersMap: DefaultProductFiltersMapType,
     filter: FilterOptionsUrlQueryType,
 ) => ({
     ...filter,
-    flags: Array.from(defaultProductFiltersMap.flags),
-    parameters: Array.from(defaultProductFiltersMap.parameters)
-        .map(([defaultParameterUuid, defaultParameterValues]) => ({
-            parameter: defaultParameterUuid,
-            values: Array.from(defaultParameterValues),
+    flags: Array.from(updatedProductFiltersMap.flags),
+    parameters: Array.from(updatedProductFiltersMap.parameters)
+        .map(([updatedParameterUuid, updatedParameterValues]) => ({
+            parameter: updatedParameterUuid,
+            values: Array.from(updatedParameterValues),
         }))
         .filter(({ values }) => values.length !== 0),
 });
