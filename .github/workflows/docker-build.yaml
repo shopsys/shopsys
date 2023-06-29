@@ -82,6 +82,7 @@ jobs:
                     docker run -d --name php-fpm ghcr.io/${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}
                     docker cp ./ php-fpm:/var/www/html
                     docker exec --user root php-fpm chown -R www-data:www-data /var/www/html
+                    docker exec php-fpm composer update
                     docker exec php-fpm rm -rf /var/www/html/composer.lock /var/www/html/project-base/package-lock.json /var/www/html/project-base/migrations-lock.yml
                     docker exec php-fpm php phing -D production.confirm.action=y build-version-generate frontend-api-enable
             -   name: Push branch specific PHP-FPM image to Github Container Registry
