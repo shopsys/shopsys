@@ -1342,7 +1342,9 @@
         </trycatch>
     </target>
 
-    <target name="tests-functional" depends="production-protection,clean,test-clean-redis,domains-info-load" description="Runs functional tests.">
+    <target name="tests-functional" depends="tests-functional-application,tests-functional-frontend-api" description="Runs functional tests."/>
+
+    <target name="tests-functional-application" depends="production-protection,clean,test-clean-redis,domains-info-load" description="Runs application functional tests." hidden="true">
         <if>
             <istrue value="${domains-info.is-multidomain}"/>
             <then>
@@ -1370,6 +1372,34 @@
         </if>
     </target>
 
+    <target name="tests-functional-frontend-api" depends="production-protection,clean,test-clean-redis,domains-info-load" description="Runs Frontend API functional tests." hidden="true">
+        <if>
+            <istrue value="${domains-info.is-multidomain}"/>
+            <then>
+                <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
+                    <arg value="--colors=always"/>
+                    <arg value="--testsuite"/>
+                    <arg value="FrontendApiFunctional"/>
+                    <arg value="--exclude-group"/>
+                    <arg value="singledomain"/>
+                    <arg value="--configuration"/>
+                    <arg value="${path.root}/phpunit.xml"/>
+                </exec>
+            </then>
+            <else>
+                <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
+                    <arg value="--colors=always"/>
+                    <arg value="--testsuite"/>
+                    <arg value="FrontendApiFunctional"/>
+                    <arg value="--exclude-group"/>
+                    <arg value="multidomain"/>
+                    <arg value="--configuration"/>
+                    <arg value="${path.root}/phpunit.xml"/>
+                </exec>
+            </else>
+        </if>
+    </target>
+
     <target name="tests-functional-single" depends="set-functional-test-name,production-protection,clean,test-clean-redis,domains-info-load" description="Runs custom functional test.">
         <if>
             <istrue value="${domains-info.is-multidomain}"/>
@@ -1380,7 +1410,7 @@
                         <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
                             <arg value="--colors=always"/>
                             <arg value="--testsuite"/>
-                            <arg value="Functional"/>
+                            <arg value="Functional,FrontendApiFunctional"/>
                             <arg value="--exclude-group"/>
                             <arg value="singledomain"/>
                             <arg value="--configuration"/>
@@ -1398,7 +1428,7 @@
                         <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
                             <arg value="--colors=always"/>
                             <arg value="--testsuite"/>
-                            <arg value="Functional"/>
+                            <arg value="Functional,FrontendApiFunctional"/>
                             <arg value="--exclude-group"/>
                             <arg value="multidomain"/>
                             <arg value="--configuration"/>
