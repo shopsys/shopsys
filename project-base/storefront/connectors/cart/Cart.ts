@@ -6,21 +6,20 @@ import {
     CartPromoCodeModificationsFragmentApi,
     CartTransportModificationsFragmentApi,
     ListedStoreFragmentApi,
+    Maybe,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
     useCartQueryApi,
 } from 'graphql/generated';
 import { ApplicationErrors } from 'helpers/errors/applicationErrors';
 import { getUserFriendlyErrors } from 'helpers/errors/friendlyErrorMessageParser';
 import { ChangePaymentHandler } from 'hooks/cart/useChangePaymentInCart';
-import { useQueryError } from 'hooks/graphQl/useQueryError';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { Translate } from 'next-translate';
-import { useMemo } from 'react';
 import { usePersistStore } from 'store/zustand/usePersistStore';
 import { CurrentCartType } from 'types/cart';
 import { GtmMessageOriginType } from 'types/gtm/enums';
-import { CombinedError, OperationContext } from 'urql';
+import { CombinedError } from 'urql';
 
 export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const { isUserLoggedIn } = useCurrentUserData();
@@ -28,79 +27,35 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const t = useTypedTranslationFunction();
     const packeteryPickupPoint = usePersistStore((store) => store.packeteryPickupPoint);
 
-    const [result, refetchCart] = useQueryError(
-        useCartQueryApi({
-            variables: { cartUuid },
-            pause: cartUuid === null && !isUserLoggedIn,
-            requestPolicy: fromCache ? 'cache-first' : 'network-only',
-        }),
-    );
+    const [result, refetchCart] = useCartQueryApi({
+        variables: { cartUuid },
+        pause: !cartUuid && !isUserLoggedIn,
+        requestPolicy: fromCache ? 'cache-first' : 'network-only',
+    });
 
-    return useMemo(() => {
-        if (result.error !== undefined) {
-            // EXTEND CART ERRORS HERE
-            handleCartError(result.error, t);
-        }
+    if (result.error) {
+        // EXTEND CART ERRORS HERE
+        handleCartError(result.error, t);
+    }
 
-        if (
-            result.data === undefined ||
-            result.fetching ||
-            (cartUuid === null && !isUserLoggedIn) ||
-            result.error !== undefined ||
-            result.data.cart === null
-        ) {
-            return getEmptyCart(!result.fetching, result.stale, refetchCart);
-        }
-
-        // EXTEND CART UPDATE HERE
-
-        return {
-            cart: result.data.cart,
-            isCartEmpty: result.data.cart.items.length === 0,
-            transport: result.data.cart.transport,
-            pickupPlace: getSelectedPickupPlace(
-                result.data.cart.transport,
-                result.data.cart.selectedPickupPlaceIdentifier,
-                packeteryPickupPoint,
-            ),
-            payment: result.data.cart.payment,
-            paymentGoPayBankSwift: result.data.cart.paymentGoPayBankSwift,
-            promoCode: result.data.cart.promoCode,
-            isLoading: result.stale,
-            isInitiallyLoaded: !result.fetching,
-            modifications: result.data.cart.modifications,
-            refetchCart,
-        };
-    }, [
-        result.error,
-        result.data,
-        result.fetching,
-        result.stale,
-        cartUuid,
-        isUserLoggedIn,
-        packeteryPickupPoint,
+    return {
+        cart: result.data?.cart ?? null,
+        isCartEmpty: !result.data?.cart?.items.length,
+        transport: result.data?.cart?.transport ?? null,
+        pickupPlace: getSelectedPickupPlace(
+            result.data?.cart?.transport,
+            result.data?.cart?.selectedPickupPlaceIdentifier,
+            packeteryPickupPoint,
+        ),
+        payment: result.data?.cart?.payment ?? null,
+        paymentGoPayBankSwift: result.data?.cart?.paymentGoPayBankSwift ?? null,
+        promoCode: result.data?.cart?.promoCode ?? null,
+        isLoading: result.stale,
+        isFetching: result.fetching,
+        modifications: result.data?.cart?.modifications ?? null,
         refetchCart,
-        t,
-    ]);
+    };
 };
-
-const getEmptyCart = (
-    isInitiallyLoaded: boolean,
-    isLoading: boolean,
-    refetchCart: (opts?: Partial<OperationContext> | undefined) => void,
-): CurrentCartType => ({
-    cart: null,
-    isCartEmpty: true,
-    transport: null,
-    pickupPlace: null,
-    payment: null,
-    paymentGoPayBankSwift: null,
-    promoCode: null,
-    isLoading,
-    isInitiallyLoaded,
-    modifications: null,
-    refetchCart,
-});
 
 const handleCartError = (error: CombinedError, t: Translate) => {
     const { userError, applicationError } = getUserFriendlyErrors(error, t);
@@ -217,11 +172,11 @@ const handleCartPromoCodeModifications = (
 };
 
 const getSelectedPickupPlace = (
-    transport: TransportWithAvailablePaymentsAndStoresFragmentApi | null,
+    transport: Maybe<TransportWithAvailablePaymentsAndStoresFragmentApi> | undefined,
     pickupPlaceIdentifier: string | null | undefined,
     packeteryPickupPoint: ListedStoreFragmentApi | null,
 ): ListedStoreFragmentApi | null => {
-    if (transport === null || pickupPlaceIdentifier === null) {
+    if (!transport || !pickupPlaceIdentifier) {
         return null;
     }
 

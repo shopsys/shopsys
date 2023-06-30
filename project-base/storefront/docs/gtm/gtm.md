@@ -22,12 +22,12 @@ export const useGtmCartInfo = (): { gtmCartInfo: GtmCartInfoType | null; isCartL
     return useMemo(
         () => {
             if ((cartUuid === null && !isUserLoggedIn) || cart === null) {
-                return { gtmCartInfo: null, isCartLoaded: isInitiallyLoaded };
+                return { gtmCartInfo: null, isCartLoaded: !isFetching };
             }
 
             return {
                 gtmCartInfo: getGtmMappedCart(cart, promoCode, isUserLoggedIn, domain, cartUuid),
-                isCartLoaded: isInitiallyLoaded,
+                isCartLoaded: !isFetching,
             };
         },
         [

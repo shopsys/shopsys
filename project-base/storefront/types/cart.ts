@@ -2,21 +2,22 @@ import {
     CartFragmentApi,
     CartModificationsFragmentApi,
     ListedStoreFragmentApi,
+    Maybe,
     SimplePaymentFragmentApi,
     TransportWithAvailablePaymentsAndStoresFragmentApi,
 } from 'graphql/generated';
 import { OperationContext } from 'urql';
 
 export type CurrentCartType = {
-    cart: CartFragmentApi | null;
+    cart: Maybe<CartFragmentApi>;
     isCartEmpty: boolean;
-    transport: TransportWithAvailablePaymentsAndStoresFragmentApi | null;
-    pickupPlace: ListedStoreFragmentApi | null;
-    payment: SimplePaymentFragmentApi | null;
-    paymentGoPayBankSwift: string | null;
-    promoCode: string | null;
+    transport: Maybe<TransportWithAvailablePaymentsAndStoresFragmentApi>;
+    pickupPlace: Maybe<ListedStoreFragmentApi>;
+    payment: Maybe<SimplePaymentFragmentApi>;
+    paymentGoPayBankSwift: Maybe<string>;
+    promoCode: Maybe<string>;
     isLoading: boolean;
-    isInitiallyLoaded: boolean;
-    modifications: CartModificationsFragmentApi | null;
-    refetchCart: (opts?: Partial<OperationContext> | undefined) => void;
+    isFetching: boolean;
+    modifications: Maybe<CartModificationsFragmentApi>;
+    refetchCart: (opts?: Partial<OperationContext>) => void;
 };

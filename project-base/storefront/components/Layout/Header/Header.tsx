@@ -40,9 +40,7 @@ export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
                         <HamburgerMenu onMenuToggleHandler={onMenuToggleHandler} isMenuOpened={isMenuOpened} />
                         <DropdownMenu onMenuToggleHandler={onMenuToggleHandler} isMenuOpened={isMenuOpened} />
                     </div>
-                    <div className="relative order-3 flex vl:order-4">
-                        <Cart />
-                    </div>
+                    <Cart className="order-3 vl:order-4" />
                     <Overlay isActive={isMenuOpened} onClick={onMenuToggleHandler} isHiddenOnDesktop />
                 </>
             )}
