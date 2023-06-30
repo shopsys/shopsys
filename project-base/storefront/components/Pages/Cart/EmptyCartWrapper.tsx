@@ -30,7 +30,6 @@ export const EmptyCartWrapper: FC<EmptyCartWrapperProps> = ({
     const [initiatedLoading, setInitiatedLoading] = useState(false);
     const [isLoadingVisible, setIsLoadingVisible] = useState(true);
     const isLoading = currentCart.isFetching || currentCart.isLoading;
-    const isLoginLoading = loginLoading !== 'not-loading';
 
     useEffect(() => {
         if (enableHandling === false) {
@@ -64,7 +63,7 @@ export const EmptyCartWrapper: FC<EmptyCartWrapperProps> = ({
         enableHandling,
     ]);
 
-    if (isLoadingVisible || isLoginLoading) {
+    if (isLoadingVisible || loginLoading) {
         return isCartPage ? (
             <CommonLayout title={title}>
                 <CartLoading />

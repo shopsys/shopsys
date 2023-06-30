@@ -27,32 +27,32 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const t = useTypedTranslationFunction();
     const packeteryPickupPoint = usePersistStore((store) => store.packeteryPickupPoint);
 
-    const [result, refetchCart] = useCartQueryApi({
+    const [{ data: cartData, error: cartError, stale, fetching }, refetchCart] = useCartQueryApi({
         variables: { cartUuid },
         pause: !cartUuid && !isUserLoggedIn,
         requestPolicy: fromCache ? 'cache-first' : 'network-only',
     });
 
-    if (result.error) {
+    if (cartError) {
         // EXTEND CART ERRORS HERE
-        handleCartError(result.error, t);
+        handleCartError(cartError, t);
     }
 
     return {
-        cart: result.data?.cart ?? null,
-        isCartEmpty: !result.data?.cart?.items.length,
-        transport: result.data?.cart?.transport ?? null,
+        cart: cartData?.cart ?? null,
+        isCartEmpty: !cartData?.cart?.items.length,
+        transport: cartData?.cart?.transport ?? null,
         pickupPlace: getSelectedPickupPlace(
-            result.data?.cart?.transport,
-            result.data?.cart?.selectedPickupPlaceIdentifier,
+            cartData?.cart?.transport,
+            cartData?.cart?.selectedPickupPlaceIdentifier,
             packeteryPickupPoint,
         ),
-        payment: result.data?.cart?.payment ?? null,
-        paymentGoPayBankSwift: result.data?.cart?.paymentGoPayBankSwift ?? null,
-        promoCode: result.data?.cart?.promoCode ?? null,
-        isLoading: result.stale,
-        isFetching: result.fetching,
-        modifications: result.data?.cart?.modifications ?? null,
+        payment: cartData?.cart?.payment ?? null,
+        paymentGoPayBankSwift: cartData?.cart?.paymentGoPayBankSwift ?? null,
+        promoCode: cartData?.cart?.promoCode ?? null,
+        isLoading: stale,
+        isFetching: fetching,
+        modifications: cartData?.cart?.modifications ?? null,
         refetchCart,
     };
 };

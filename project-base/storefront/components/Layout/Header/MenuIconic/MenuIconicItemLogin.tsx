@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { useCurrentUserData } from 'hooks/user/useCurrentUserData';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 
-const TEST_IDENTIFIER = 'layout-header-menuiconic';
+const TEST_IDENTIFIER = 'layout-header-menuiconic-login';
 
 export const MenuIconicItemLogin: FC = () => {
     const t = useTypedTranslationFunction();
@@ -30,6 +30,7 @@ export const MenuIconicItemLogin: FC = () => {
             <MenuIconicItemLink
                 href={customerUrl}
                 className="rounded-t-xl p-3 group-hover:bg-white group-hover:text-dark max-vl:hidden"
+                dataTestId={TEST_IDENTIFIER + '-my-account'}
             >
                 <MenuIconicItemIcon icon="User" className="group-hover:text-dark" />
                 {t('My account')}
@@ -51,7 +52,11 @@ export const MenuIconicItemLogin: FC = () => {
             </ul>
         </div>
     ) : (
-        <MenuIconicItemLink onClick={handleLogin} className="cursor-pointer max-vl:hidden">
+        <MenuIconicItemLink
+            onClick={handleLogin}
+            className="cursor-pointer max-vl:hidden"
+            dataTestId={TEST_IDENTIFIER + '-link-popup'}
+        >
             <MenuIconicItemIcon icon="User" />
             {t('Login')}
         </MenuIconicItemLink>

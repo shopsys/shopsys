@@ -11,30 +11,27 @@ const TEST_IDENTIFIER = 'layout-header-menuiconic';
 export const MenuIconic: FC = () => {
     const t = useTypedTranslationFunction();
     const { url } = useDomainConfig();
-    const [storesUrl, productsComparisonUrl] = getInternationalizedStaticUrls(
-        ['/stores', '/customer', '/customer/orders', '/customer/edit-profile', '/products-comparison'],
-        url,
-    );
+    const [storesUrl, productsComparisonUrl] = getInternationalizedStaticUrls(['/stores', '/products-comparison'], url);
     const { comparisonProducts } = useHandleCompare('');
 
     return (
-        <ul className="hidden lg:flex" data-testid={TEST_IDENTIFIER}>
-            <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-0'}>
+        <ul className="flex" data-testid={TEST_IDENTIFIER}>
+            <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-chat'} className="max-vl:hidden">
                 <MenuIconicItemLink href="/">
                     <MenuIconicItemIcon icon="Chat" />
                     {t('Customer service')}
                 </MenuIconicItemLink>
             </MenuIconicItem>
-            <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-1'}>
+            <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-stores'} className="max-vl:hidden">
                 <MenuIconicItemLink href={storesUrl}>
                     <MenuIconicItemIcon icon="Marker" />
                     {t('Stores')}
                 </MenuIconicItemLink>
             </MenuIconicItem>
-            <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-2'}>
+            <MenuIconicItem dataTestId={TEST_IDENTIFIER + '-login'} className="max-vl:mr-0">
                 <MenuIconicItemLogin />
             </MenuIconicItem>
-            <MenuIconicItem data-testid={TEST_IDENTIFIER + '-3'}>
+            <MenuIconicItem data-testid={TEST_IDENTIFIER + '-comparison'} className="max-vl:hidden">
                 <ExtendedNextLink href={productsComparisonUrl} passHref type="static">
                     <MenuIconicItemLink>
                         <MenuIconicItemIcon icon="Compare" />

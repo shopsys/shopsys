@@ -36,7 +36,7 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({ children, h
 
 export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    ({ children, className, href, onClick }, _) => {
+    ({ children, className, dataTestId, href, onClick }, _) => {
         const Tag = href ? 'a' : 'span';
 
         const content = (
@@ -46,6 +46,7 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
                     className,
                 )}
                 onClick={onClick}
+                data-testid={dataTestId}
             >
                 {children}
             </Tag>

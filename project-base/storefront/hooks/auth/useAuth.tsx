@@ -34,7 +34,7 @@ export const useAuth = (): { login: typeof login; logout: typeof logout } => {
     const [, logoutMutation] = useLogoutApi();
     const t = useTypedTranslationFunction();
     const updateUserState = usePersistStore((store) => store.updateUserState);
-    const updateGeneralState = usePersistStore((store) => store.updateLoginLoadingState);
+    const updateLoginLoadingState = usePersistStore((store) => store.updateLoginLoadingState);
 
     const router = useRouter();
 
@@ -51,9 +51,9 @@ export const useAuth = (): { login: typeof login; logout: typeof logout } => {
                 cartUuid: null,
             });
 
-            updateGeneralState({
-                loginLoading: loginResult.data.Login.showCartMergeInfo ? 'loading-with-cart-modifications' : 'loading',
-            });
+            updateLoginLoadingState(
+                loginResult.data.Login.showCartMergeInfo ? 'loading-with-cart-modifications' : 'loading',
+            );
 
             if (canUseDom()) {
                 window.location.href = rewriteUrl ?? router.asPath;

@@ -1,17 +1,17 @@
 import { StateCreator } from 'zustand';
 
-type LoginLoadingStatus = 'not-loading' | 'loading' | 'loading-with-cart-modifications';
+type LoginLoadingStatus = 'loading' | 'loading-with-cart-modifications';
 
 export type LoginLoadingSlice = {
-    loginLoading: LoginLoadingStatus;
+    loginLoading: LoginLoadingStatus | null;
 
-    updateLoginLoadingState: (value: Partial<LoginLoadingSlice>) => void;
+    updateLoginLoadingState: (value: LoginLoadingStatus | null) => void;
 };
 
 export const createLoginLoadingSlice: StateCreator<LoginLoadingSlice> = (set) => ({
-    loginLoading: 'not-loading',
+    loginLoading: null,
 
     updateLoginLoadingState: (value) => {
-        set(value);
+        set({ loginLoading: value });
     },
 });
