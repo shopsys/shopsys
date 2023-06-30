@@ -2,6 +2,7 @@ import { Icon } from 'components/Basic/Icon/Icon';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
+import { DEFAULT_SORT } from 'helpers/filterOptions/seoCategories';
 import { useTypedTranslationFunction } from 'hooks/typescript/useTypedTranslationFunction';
 import { useGetWindowSize } from 'hooks/ui/useGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/useResizeWidthEffect';
@@ -29,9 +30,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount }) => {
         { stateValue: ProductOrderingModeEnumApi.PriceDescApi, displayValue: t('price descending') },
     ];
 
-    const selectedSortOption = sortValues.find(
-        (v) => v.stateValue === (sortSelected || sorting || ProductOrderingModeEnumApi.PriorityApi),
-    );
+    const selectedSortOption = sortValues.find((v) => v.stateValue === (sortSelected || sorting || DEFAULT_SORT));
 
     useResizeWidthEffect(
         width,

@@ -2,6 +2,7 @@ import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { getQueryWithoutSlugTypeParameter } from 'helpers/filterOptions/getQueryWithoutAllParameter';
 import { getFilteredQueries } from 'helpers/queryParams/queryHandlers';
 import {
+    DEFAULT_SORT,
     getChangedDefaultFilters,
     getChangedDefaultFiltersAfterFlagChange,
     getChangedDefaultFiltersAfterMaximumPriceChange,
@@ -268,7 +269,7 @@ export const useQueryParams = () => {
             [FILTER_QUERY_PARAMETER_NAME]: isWithFilterParams ? JSON.stringify(newFilter) : undefined,
         } as const;
 
-        if (sortOverride) {
+        if (sortOverride && sortOverride !== DEFAULT_SORT) {
             newQuery[SORT_QUERY_PARAMETER_NAME] = sortOverride;
         }
 

@@ -10,9 +10,11 @@ import { DefaultProductFiltersMapType } from 'store/zustand/slices/createSeoCate
 import { useSessionStore } from 'store/zustand/useSessionStore';
 import { FilterOptionsParameterUrlQueryType, FilterOptionsUrlQueryType } from 'types/productFilter';
 
+export const DEFAULT_SORT = ProductOrderingModeEnumApi.PriorityApi as const;
+
 export const getEmptyDefaultProductFiltersMap = (): DefaultProductFiltersMapType => ({
     flags: new Set(),
-    sort: ProductOrderingModeEnumApi.PriorityApi,
+    sort: DEFAULT_SORT,
     parameters: new Map(),
 });
 
