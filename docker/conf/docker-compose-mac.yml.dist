@@ -45,8 +45,8 @@ services:
 
     cypress:
         build:
-            context: ./project-base/storefront
-            dockerfile: ./cypress/docker/Dockerfile
+            context: ./project-base/storefront/cypress
+            dockerfile: ./docker/Dockerfile
         container_name: shopsys-framework-cypress
         volumes:
             - ./project-base/storefront/cypress:/app:delegated
